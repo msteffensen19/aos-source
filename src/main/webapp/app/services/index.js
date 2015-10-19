@@ -3,4 +3,4 @@
  */
 'use strict';
 
-define(['./productService'], function() {});
+define(['./productService', './categoryService', './responseHandleService'], function() {});

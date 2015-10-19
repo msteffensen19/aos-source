@@ -1,23 +1,24 @@
 /**
- * Created by kubany on 10/13/2015.
+ * Created by kubany on 10/18/2015.
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('productService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
-        // Return public API.
-        return({
-            getProducts: getProducts
-        });
+    services.service('categoryService', ['$http', '$q','resHandleService', function ($http, $q, responseService) {
 
-        function getProducts() {
+        return{
+            getCategories : getCategories
+        }
+
+        function getCategories() {
             var request = $http({
                 method: "get",
-                url: "/api/products"
+                url: "/api/category"
                 //params: {
                 //    action: "get"
                 //}
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
+
     }]);
 });

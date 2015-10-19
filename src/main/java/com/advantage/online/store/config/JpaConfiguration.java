@@ -52,7 +52,7 @@ public class JpaConfiguration {
         Properties extraProperties = new Properties();
 //        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
 //        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
-//        extraProperties.put(ENV_HIBERNATE_HBM2DDL_AUTO, env.getProperty(ENV_HIBERNATE_HBM2DDL_AUTO));
+        extraProperties.put(ENV_HIBERNATE_HBM2DDL_AUTO, "create-drop");
         if (log.isDebugEnabled()) {
             log.debug(" hibernate.dialect @" + env.getProperty(ENV_HIBERNATE_DIALECT));
         }
