@@ -28,7 +28,7 @@ public class DataSourceConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/advantage-online-store?loglevel=0");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/advantage-online-shopping?loglevel=0");
         dataSource.setUsername("postgres");
         dataSource.setPassword("admin");
         return dataSource;
@@ -39,7 +39,7 @@ public class DataSourceConfiguration {
         SpringLiquibase liquibase = new SpringLiquibase();
 
         liquibase.setDataSource(dataSource());
-        liquibase.setChangeLog("classpath:db.changelog-master.xml");
+        liquibase.setChangeLog("classpath:db.changelog-master-test.xml");
 
         return liquibase;
     }

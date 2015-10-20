@@ -1,6 +1,8 @@
 package com.advantage.online.store.dao;
 
 import com.advantage.online.store.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,6 +15,7 @@ import java.util.List;
 @Repository
 public class ProductRepositoryImpl{
 
+    private static final Logger log = LoggerFactory.getLogger(ProductRepositoryImpl.class);
     private static final int MAX_NUM_OF_PRODUCTS = 100;
     @PersistenceContext
     private EntityManager em;
@@ -28,6 +31,7 @@ public class ProductRepositoryImpl{
 
 
     public List<Product> getAllProducts() {
+        log.info("getAllProducts");
         List<Product> products = em.createNamedQuery(Product.GET_ALL, Product.class)
                 .setMaxResults(MAX_NUM_OF_PRODUCTS)
                 .getResultList();

@@ -29,16 +29,6 @@
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
     </properties>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>plugins</id>
-            <url>${baseNexusURL}/content/groups/plugins</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <!--<dependencyManagement>-->
         <!--<dependencies>-->
             <!--<dependency>-->

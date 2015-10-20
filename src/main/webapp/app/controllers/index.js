@@ -3,4 +3,4 @@
  */
 'use strict';
 
-define(['./mainCtrl'], function() {});
+define(['./mainCtrl', './categoryCtrl'], function() {});

@@ -17,16 +17,35 @@ public class Product {
 
     public static final String GET_ALL = "product.getAll";
 
-    public Long getId() {
-        return id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
 
     @Column(name = "product_name")
     private String productName;
+    private int price;
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+
+    public Product() {
+    }
+
+    public Product(String name, String description, int price, Category category) {
+        this.productName = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
 
     public String getDescription() {
         return description;
@@ -36,18 +55,29 @@ public class Product {
         this.description = description;
     }
 
-    private String description;
+    public int getPrice() {
+        return price;
+    }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     public Product(String name) {
         this.productName = name;
     }
 
-    public Product() {
-    }
-
-
     public String getProductName() {
+
         return productName;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
 }
