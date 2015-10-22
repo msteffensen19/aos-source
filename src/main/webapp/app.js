@@ -24,6 +24,7 @@ define([
             AOS : 'AOS',
             LOGIN: 'Login',
             LOGOUT: 'This is a paragraph.',
+            SPACIAL_OFFER : 'SPACIAL OFFER'
         });
         $translateProvider.preferredLanguage('en');
     });
