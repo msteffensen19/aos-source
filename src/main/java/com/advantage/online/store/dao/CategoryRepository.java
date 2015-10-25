@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryRepository {
 
     private static final Logger log = LoggerFactory.getLogger(CategoryRepository.class);
-    private static final int MAX_NUM_OF_CATEGORIES = 5;
+    private static final int MAX_NUM_OF_CATEGORIES = 6;
 
     @PersistenceContext
     private EntityManager em;
