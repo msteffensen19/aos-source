@@ -1,4 +1,4 @@
-package com.advantage.online.store.dao;
+package com.advantage.online.store.model;
 
 public enum DealType {
 

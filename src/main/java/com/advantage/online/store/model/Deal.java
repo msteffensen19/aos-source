@@ -1,6 +1,4 @@
-package com.advantage.online.store.dao;
-
-import com.advantage.online.store.model.Product;
+package com.advantage.online.store.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
