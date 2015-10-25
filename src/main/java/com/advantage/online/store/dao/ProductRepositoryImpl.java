@@ -13,16 +13,12 @@ import java.util.List;
  * Created by kubany on 10/13/2015.
  */
 @Repository
-public class ProductRepositoryImpl{
+public class ProductRepositoryImpl extends AbstractRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(ProductRepositoryImpl.class);
     private static final int MAX_NUM_OF_PRODUCTS = 100;
-    @PersistenceContext
-    private EntityManager em;
-
 
     public void save(Product p) {
-        em.merge(p);
+        entityManager.merge(p);
     }
 
 
@@ -32,7 +28,7 @@ public class ProductRepositoryImpl{
 
     public List<Product> getAllProducts() {
         log.info("getAllProducts");
-        List<Product> products = em.createNamedQuery(Product.GET_ALL, Product.class)
+        List<Product> products = entityManager.createNamedQuery(Product.GET_ALL, Product.class)
                 .setMaxResults(MAX_NUM_OF_PRODUCTS)
                 .getResultList();
 
