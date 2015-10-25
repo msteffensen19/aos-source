@@ -10,11 +10,9 @@ define([
     'jPushMenu',
     './app/controllers/index',
     './app/services/index',
-    './app/directives/index',
-    './app/filters/index'
 ], function(angular) {
     // Declare app level module which depends on views, and components
-    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives', 'pascalprecht.translate']).config(function($translateProvider) {
+    return angular.module('aos', ['aos.controllers', 'aos.services', 'pascalprecht.translate']).config(function($translateProvider) {
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
         $translateProvider.translations('en', {
             OUR_PRODUCTS : 'Our Products',
