@@ -1,11 +1,11 @@
 @import "jPushMenu.css";
-
+@font-face {
+    font-family: RobotoBlack;
+    src: url(fonts/Roboto-Black.ttf);
+}
 body {
     height: 1366px;
-    padding-top: 70px;
-}
-.container{
-    height: 25%;
+    /*padding-top: 70px;*/
 }
 .page{
     min-height: 400px;
@@ -18,6 +18,42 @@ footer{
 
 .toolbar{
     margin:10px;
+}
+.row-no-gutter {
+    margin-right: 0;
+    margin-left: 0;
+}
+.col-md-no-padding{
+    padding-left: 0;
+    padding-right: 0;
+}
+.square {
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: cover;
+}
+.inner-image{
+    background: gray;
+}
+.promotion-content{
+    top: 20%;
+    left: 25%;
+    position: absolute;
+    color: white;
+}
+.home_page_label_container{
+    position: absolute;
+    padding-top: 78%;
+    font-size: 1.7vw;
+    padding-left: 5%;
+
+}
+.home_page_bg_with_txt{
+    font-family: RobotoBlack;
+    background-size: 62%;
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-color: #E6E6E6;
 }
 /*a.btn, button{
     min-width: 100px !important;   

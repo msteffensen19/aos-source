@@ -24,7 +24,8 @@ define([
             AOS : 'AOS',
             LOGIN: 'Login',
             LOGOUT: 'This is a paragraph.',
-            SPACIAL_OFFER : 'SPACIAL OFFER'
+            SPACIAL_OFFER : 'SPACIAL OFFER',
+            SHOP_NOW : 'SHOP NOW'
         });
         $translateProvider.preferredLanguage('en');
     });
