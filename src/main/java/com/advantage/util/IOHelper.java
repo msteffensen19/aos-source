@@ -1,6 +1,10 @@
 package com.advantage.util;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * A helper class for input / output operations.
@@ -17,8 +21,8 @@ public abstract class IOHelper {
      * @param filePath the path of the file to get it's content as a byte array.
      * @return the content of the file in the given file path, as a byte array.
      * @throws IOException if an I/O error occurs.
-     * @throws IllegalArgumentException if the given file path argument references <b>null</b>, or if it <b>is</b> a
-     * blank string.
+     * @throws IllegalArgumentException if the given file path argument references
+     * <b>null</b>, or if it <b>is</b> a blank string.
      */
     public static byte[] fileContentToByteArray(final String filePath) throws IOException {
 
@@ -30,7 +34,8 @@ public abstract class IOHelper {
     }
 
     /**
-     * Read from the given input and write the content that was read to the given output stream.
+     * Read from the given input and write the content that was read to the given output
+     * stream.
      * @param in the input stream to read from.
      * @param out the output stream to write to.
      * @throws IOException if an I/O error occurs.
