@@ -38,11 +38,36 @@ public class DealRepositoryTests {
     @Test
     public void testDeals() {
 
+    	final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+    	final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+    	final Category category = categoryRepository.createCategory("LAPTOPS",
+   	                                                                new byte[]{1, 2, 3, 4});
+    	final Product product = productRepository.createProduct("LG G3",
+    			                                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    			                                                400, category);
+
+    	for (int i = 0; i < 10; i++) {
+
+    		final String dealName = "test deal" + i;
+	    	dealRepository.createDeal(DealType.WEEKLY, dealName, "test deal", product);
+    	}
+
+    	transactionManager.commit(transactionStatusForCreation);
     	final List<Deal> deals = dealRepository.getAllDeals();
-    	System.out.println(deals.size());
-        Assert.assertEquals(0, deals.size());
+    	Assert.assertNotNull(deals);
+    	Assert.assertEquals(10, deals.size());
+    	final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+    	
+    	for (final Deal deal : deals) {
+
+    		dealRepository.deleteDeal(deal);
+    	}
+
+    	productRepository.deleteProduct(product);
+    	categoryRepository.deleteCategory(category);
+    	transactionManager.commit(transactionStatusForDeletion);
     }
-    
+
     @Test
     public void testDealCreation() throws IOException {
 
@@ -53,7 +78,7 @@ public class DealRepositoryTests {
     	final Product product = productRepository.createProduct("LG G3",
     			                                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     			                                                400, category);
-    	final Deal deal = dealRepository.createDeal(DealType.DAILY, "test deal", "test deal",
+    	final Deal deal = dealRepository.createDeal(DealType.WEEKLY, "test deal", "test deal",
     			                                    product);
     	transactionManager.commit(transactionStatusForCreation);
     	Assert.assertNotNull(deal);

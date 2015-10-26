@@ -16,6 +16,9 @@ public abstract class JPAQueryHelper {
 	 * @param pkFieldName the name of the primary key field, of the entity to delete.
 	 * @param pkFieldValue (the value of) the primary key, of the entity to delete.
 	 * @return a HQL string.
+	 * @throws IllegalArgumentException if any one of the arguments references <b>null</b>, or
+	 * if the primary key field name argument is a blank string, or if the primary key field
+	 * value argument is a blank string.
 	 */
 	public static String getDeleteByPkFieldQuery(final Class<?> entityClass,
 	 final String pkFieldName, final Object pkFieldValue) {
