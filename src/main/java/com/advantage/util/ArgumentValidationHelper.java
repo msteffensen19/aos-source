@@ -29,8 +29,10 @@ public abstract class ArgumentValidationHelper {
 
         ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
         ArgumentValidationHelper.validateArgumentIsNotNull(argument, argumentInformativeName);
+        final String trimmedArgument = argument.trim();
+        final int trimmedArgumentLength = trimmedArgument.length();
 
-        if (argument.trim().length() == 0) {
+        if (trimmedArgumentLength == 0) {
 
             final String messageString = ArgumentValidationHelper.getBlankStringArgumentMessage(argumentInformativeName);
             throw new IllegalArgumentException(messageString);
@@ -71,11 +73,5 @@ public abstract class ArgumentValidationHelper {
         message.append(argumentInformativeName);
         message.append("]");
         return message.toString();
-    }
-
-    public static void main(String[] args) {
-
-        ArgumentValidationHelper.validateArgumentIsNotNull("kuku", " 7");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(null, "kuku");
     }
 }

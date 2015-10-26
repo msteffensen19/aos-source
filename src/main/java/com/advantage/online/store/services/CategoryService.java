@@ -17,6 +17,12 @@ public class CategoryService {
     @Autowired
     public CategoryRepository categoryRepository;
 
+    @Transactional
+    public Category createCategory(final String name, final byte[] image) {
+    	
+    	return categoryRepository.createCategory(name, image);
+    }
+
     @Transactional(readOnly = true)
     public List<Category> getAllCategories() {
         return categoryRepository.getAllCategories();
