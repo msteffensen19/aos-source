@@ -18,9 +18,11 @@ import java.util.List;
 @Repository
 public class DefaultDealRepository extends AbstractRepository implements DealRepository {
 
+	@Override
 	public Deal createDeal(final DealType dealType, final String name,
      final String description, final Product product) {
 
+		log.info("createDeal");
     	final Deal deal = new Deal(dealType, name, description, product);
     	entityManager.persist(deal);
     	return deal;
@@ -37,6 +39,7 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 		query.executeUpdate();
 	}
 
+	@Override
     @SuppressWarnings("unchecked")
 	public List<Deal> getAllDeals() {
 
@@ -45,6 +48,7 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
         return query.getResultList();
     }
 
+	@Override
     public Deal getDealOfTheDay() {
 
         log.info("getDealOfTheDay");
