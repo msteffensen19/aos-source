@@ -6,8 +6,9 @@
  */
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('categoryCtrl', ['$scope', 'categoryService', '$sce', function ($scope, categoryService, $sce) {
+    controllers.controller('categoryCtrl', ['$scope', 'categoryService', 'dealService', '$sce', function ($scope, categoryService, dealService, $sce) {
         $scope.categories = [];
+        $scope.deal = "";
         // I contain the ngModel values for form interaction.
         $scope.form = {
             name: ""
@@ -25,6 +26,9 @@ define(['./module'], function (controllers) {
                 .then(function( categories ) {
                     applyRemoteData( categories );
                 });
+            dealService.getDealOfTheDay().then(function( deal ) {
+                $scope.deal = deal;
+            });
         }
     }]);
 });

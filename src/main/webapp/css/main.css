@@ -1,7 +1,24 @@
 @import "jPushMenu.css";
+@import "button.css";
 @font-face {
     font-family: RobotoBlack;
     src: url(fonts/Roboto-Black.ttf);
+}
+@font-face {
+    font-family: RobotoBold;
+    src: url(fonts/Roboto-Bold.ttf);
+}
+@font-face {
+    font-family: RobotoLight;
+    src: url(fonts/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: RobotoMedium;
+    src: url(fonts/Roboto-Medium.ttf);
+}
+@font-face {
+    font-family: RobotoRegular;
+    src: url(fonts/Roboto-Regular.ttf);
 }
 body {
     height: 1366px;
@@ -52,8 +69,11 @@ footer{
     font-family: RobotoBlack;
     background-size: 62%;
     background-repeat: no-repeat;
-    background-position-x: 90%;
+    background-position-x: 100%;
     background-color: #E6E6E6;
+}
+.row{
+    margin-right: 0px;
 }
 /*a.btn, button{
     min-width: 100px !important;   
