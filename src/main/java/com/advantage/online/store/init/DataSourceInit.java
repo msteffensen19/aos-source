@@ -50,7 +50,7 @@ public class DataSourceInit {
         session.persist(new Product("Samsung Galaxy S4", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 300, category));
         session.persist(new Product("iPhone 6S", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 1000, category));
 
-        session.persist(new Deal(DealType.DAILY,  "daily", "daily", product));
+        session.persist(new Deal(DealType.DAILY,  "30% OFF", "Free shipping & free returns <br /> Up to $40", product));
         session.persist(new Deal(DealType.WEEKLY,  "weekly", "weekly", product));
 
         transaction.commit();

@@ -39,17 +39,5 @@
                 initiallyDeferred="true"
                 tableName="CATEGORY"/>
     </changeSet>
-    <changeSet author="Eli" id="0000-2">
-        <createTable tableName="DEALS">
-            <column autoIncrement="true" name="ID" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" />
-            </column>
-            <column name="DEAL_TYPE" type="SMALLINT"/>
-            <column name="NAME" type="VARCHAR(255)" />
-            <column name="DESCRIPTION" type="VARCHAR(255)" />
-            <column name="PRODUCT_ID" type="BIGINT" />
-        </createTable>
-        <addForeignKeyConstraint baseTableName="DEALS" baseColumnNames="PRODUCT_ID" constraintName="fk_deals_prods"
-                                 referencedTableName="PRODUCT" referencedColumnNames="ID" />
-    </changeSet>
+
 </databaseChangeLog>

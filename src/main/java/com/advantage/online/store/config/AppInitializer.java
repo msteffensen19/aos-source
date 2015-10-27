@@ -1,9 +1,12 @@
 package com.advantage.online.store.config;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 /**
  * Created by kubany on 10/11/2015.
@@ -14,6 +17,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         return new Class[]{
                 AppConfiguration.class,
                 DataSourceConfiguration.class,
+                AppSecurityConfig.class,
                 JpaConfiguration.class,
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class

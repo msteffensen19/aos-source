@@ -63,7 +63,11 @@ footer{
     padding-top: 78%;
     font-size: 1.7vw;
     padding-left: 5%;
+    font-family: RobotoRegular;
 
+}
+label{
+    font-weight: normal;
 }
 .home_page_bg_with_txt{
     font-family: RobotoBlack;
@@ -74,6 +78,15 @@ footer{
 }
 .row{
     margin-right: 0px;
+}
+.searchbox{
+    position:relative;
+    height:50px;
+    width:100%;
+    float:right;
+}
+.collapse.navbar-collapse.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left.cbp-spmenu-open > ul > li.hidden_item{
+    display: none;
 }
 /*a.btn, button{
     min-width: 100px !important;   

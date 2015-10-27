@@ -25,7 +25,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(value = "category", method = RequestMethod.GET)
+    @RequestMapping(value = "/category", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
         List<Category> category = categoryService.getAllCategories();
         return new ResponseEntity<Object>(category, HttpStatus.OK);

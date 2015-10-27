@@ -12,7 +12,7 @@ define(['./module'], function (services) {
         function getProducts() {
             var request = $http({
                 method: "get",
-                url: "/api/products"
+                url: "api/products"
                 //params: {
                 //    action: "get"
                 //}

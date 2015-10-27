@@ -12,7 +12,7 @@ define(['./module'], function (services) {
         function getCategories() {
             var request = $http({
                 method: "get",
-                url: "/api/category"
+                url: "api/category"
                 //params: {
                 //    action: "get"
                 //}
