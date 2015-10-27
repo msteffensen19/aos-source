@@ -2,6 +2,10 @@ package com.advantage.online.store.dao;
 
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
+import com.advantage.online.store.model.Product;
+import com.advantage.util.ArgumentValidationHelper;
+import com.advantage.util.JPAQueryHelper;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -14,29 +18,53 @@ import java.util.List;
 @Repository
 public class DefaultDealRepository extends AbstractRepository implements DealRepository {
 
-    public List<Deal> getAllDeals() {
+	@Override
+	public Deal createDeal(final DealType dealType, final String name,
+     final String description, final Product product) {
+
+		log.info("createDeal");
+    	final Deal deal = new Deal(dealType, name, description, product);
+    	entityManager.persist(deal);
+    	return deal;
+    }
+
+	@Override
+	public void deleteDeal(final Deal deal) {
+
+		ArgumentValidationHelper.validateArgumentIsNotNull(deal, "deal");
+		log.info("deleteDeal");
+		final Long dealId = deal.getId();
+		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Deal.class, "id", dealId);
+		final Query query = entityManager.createQuery(hql);
+		query.executeUpdate();
+	}
+
+	@Override
+    @SuppressWarnings("unchecked")
+	public List<Deal> getAllDeals() {
 
         log.info("getAllDeals");
         final Query query = entityManager.createNamedQuery(Deal.QUERY_GET_ALL);
         return query.getResultList();
     }
 
+	@Override
     public Deal getDealOfTheDay() {
 
         log.info("getDealOfTheDay");
         final Query query = entityManager.createNamedQuery(Deal.QUERY_GET_BY_TYPE);
-        query.setParameter("dealType", DealType.DAILY.getDealTypeCode());
-        final List<Deal> deals = query.getResultList();
+        final Integer dealtypeCode = DealType.DAILY.getDealTypeCode();
+        query.setParameter("dealType", dealtypeCode);
+        @SuppressWarnings("unchecked")
+		final List<Deal> deals = query.getResultList();
         final Deal dealOfTheDay;
 
         if (deals.isEmpty()) {
 
-            System.out.println("kuku");
             dealOfTheDay = null;
         } else {
 
             dealOfTheDay = deals.get(0);
-            System.out.println(dealOfTheDay.getName());
         }
 
         return dealOfTheDay;

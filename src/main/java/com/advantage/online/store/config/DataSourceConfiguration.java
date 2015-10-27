@@ -1,14 +1,16 @@
 package com.advantage.online.store.config;
 
-import com.advantage.online.store.init.DataSourceInit;
-import liquibase.integration.spring.SpringLiquibase;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import com.advantage.online.store.init.DataSourceInit;
+
+import liquibase.integration.spring.SpringLiquibase;
 
 /**
  * Created by kubany on 10/11/2015.

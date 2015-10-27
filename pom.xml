@@ -85,6 +85,15 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+              <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Run only tests whose name end with "UnitTest" -->
+                    <includes>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <!-- Spring BOM -->

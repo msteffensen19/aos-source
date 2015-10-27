@@ -3,6 +3,7 @@ package com.advantage.online.store.api;
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.model.Product;
 import com.advantage.online.store.services.ProductService;
+import com.advantage.util.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,18 @@ public class ProductController {
     @RequestMapping(value = "products", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.getAllProducts();
+        return new ResponseEntity<Object>(products, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "categoryProducts", method = RequestMethod.GET)
+    public ResponseEntity<Object> getCategoryProducts(final HttpServletRequest request,
+     final HttpServletResponse response) {
+
+        ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
+        ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
+        final String categoryIdParameter = request.getParameter("category_id");
+        final Long categoryId = Long.valueOf(categoryIdParameter);
+        final List<Product> products = productService.getCategoryProducts(categoryId);
         return new ResponseEntity<Object>(products, HttpStatus.OK);
     }
 }
