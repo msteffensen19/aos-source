@@ -9,13 +9,19 @@ import javax.persistence.*;
 @Table(name = "PRODUCT")
 @NamedQueries({
         @NamedQuery(
-                name = Product.GET_ALL,
+                name = Product.QUERY_GET_ALL,
                 query = "select p from Product p"
         )
 })
 public class Product {
 
-    public static final String GET_ALL = "product.getAll";
+    public static final String QUERY_GET_ALL = "product.getAll";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CATEGORY_ID = "category.categoryId";
+
+    public static final String PARAM_ID = "PARAM_PRODUCT_ID";
+    public static final String PARAM_CATEGORY_ID = "PARAM_PRODUCT_CATEGORY_ID";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +36,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
+    private String color;
 
     public Product() {
     }
@@ -80,4 +88,13 @@ public class Product {
         this.category = category;
     }
 
+    public void setColor(final String color) {
+
+    	this.color = color;
+    }
+
+    public String getColor() {
+
+    	return color;
+    }
 }

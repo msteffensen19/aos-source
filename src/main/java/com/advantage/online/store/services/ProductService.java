@@ -1,13 +1,14 @@
 package com.advantage.online.store.services;
 
-import com.advantage.online.store.dao.ProductRepositoryImpl;
-import com.advantage.online.store.model.Product;
-import com.advantage.util.ArgumentValidationHelper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.advantage.online.store.dao.ProductRepository;
+import com.advantage.online.store.model.Product;
+import com.advantage.util.ArgumentValidationHelper;
 
 /**
  * Created by kubany on 10/13/2015.
@@ -16,7 +17,7 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    public ProductRepositoryImpl productRepository;
+    public ProductRepository productRepository;
 
     @Transactional(readOnly = true)
     public List<Product> getAllProducts() {

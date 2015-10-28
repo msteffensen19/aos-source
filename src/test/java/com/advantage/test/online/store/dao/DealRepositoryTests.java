@@ -8,14 +8,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.advantage.online.store.dao.CategoryRepository;
 import com.advantage.online.store.dao.DealRepository;
-import com.advantage.online.store.dao.ProductRepositoryImpl;
+import com.advantage.online.store.dao.ProductRepository;
 import com.advantage.online.store.model.Category;
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
@@ -24,21 +23,18 @@ import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={AdvantageTestContextConfiguration.class})
-public class DealRepositoryTests {
+public class DealRepositoryTests extends GenericRepositoryTests {
 
 	@Autowired
     private CategoryRepository categoryRepository;
 	@Autowired
-	private ProductRepositoryImpl productRepository;
+	private ProductRepository productRepository;
     @Autowired
     private DealRepository dealRepository;
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Test
-    public void testDeals() {
+    public void testGetAllDeals() {
 
-    	final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
     	final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
     	final Category category = categoryRepository.createCategory("LAPTOPS",
    	                                                                new byte[]{1, 2, 3, 4});
@@ -57,7 +53,7 @@ public class DealRepositoryTests {
     	Assert.assertNotNull(deals);
     	Assert.assertEquals(10, deals.size());
     	final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-    	
+
     	for (final Deal deal : deals) {
 
     		dealRepository.deleteDeal(deal);

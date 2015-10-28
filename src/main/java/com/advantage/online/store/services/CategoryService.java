@@ -1,12 +1,13 @@
 package com.advantage.online.store.services;
 
-import com.advantage.online.store.dao.CategoryRepository;
-import com.advantage.online.store.model.Category;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.advantage.online.store.dao.CategoryRepository;
+import com.advantage.online.store.model.Category;
 
 /**
  * Created by kubany on 10/18/2015.

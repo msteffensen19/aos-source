@@ -1,22 +1,21 @@
 package com.advantage.online.store.dao;
 
-import com.advantage.online.store.model.Product;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.Collection;
 import java.util.List;
+
+import com.advantage.online.store.model.Category;
+import com.advantage.online.store.model.Product;
 
 /**
  * Created by kubany on 10/13/2015.
  */
-@Repository
 public interface ProductRepository {
 
-    public void save(Product p);
-    public void delete(Product p);
-    List<Product> getAllProducts();
-    boolean insertProduct(Product p);
-    boolean updateProduct(Product p);
-    boolean deleteProduct(Product p);
+	Product createProduct(String name, String description, int price, Category category);
+	int deleteProduct(Product product);
+	int deleteProductsByIds(Collection<Long> productIds);
+	int deleteProducts(Collection<Product> products);
+	List<Product> getAllProducts();
+	List<Product> getCategoryProducts(Long categoryId);
+	List<Product> getCategoryProducts(Category category);
 }

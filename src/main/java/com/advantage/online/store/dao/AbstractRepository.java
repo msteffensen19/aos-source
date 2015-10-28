@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-class AbstractRepository {
+abstract class AbstractRepository {
 
     @PersistenceContext
     protected EntityManager entityManager;
