@@ -31,21 +31,22 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     }
 
     @Override
-    public void deleteCategory(final Category category) {
+    public int deleteCategory(final Category category) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
 		log.info("deleteCategory");
 		final Long categoryId = category.getCategoryId();
 		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Category.class,
-				                                                  "categoryId", categoryId);
+				                                                  Category.FIELD_CATEGORY_ID,
+				                                                  categoryId);
 		final Query query = entityManager.createQuery(hql);
-		query.executeUpdate();
+		return query.executeUpdate();
 	}
 
     @Override
     public List<Category> getAllCategories() {
         log.info("getAllCategories");
-        List<Category> categories = entityManager.createNamedQuery(Category.GET_ALL, Category.class)
+        List<Category> categories = entityManager.createNamedQuery(Category.QUERY_GET_ALL, Category.class)
                 .setMaxResults(MAX_NUM_OF_CATEGORIES)
                 .getResultList();
 

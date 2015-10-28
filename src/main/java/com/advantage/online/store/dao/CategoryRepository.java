@@ -7,6 +7,6 @@ import com.advantage.online.store.model.Category;
 public interface CategoryRepository {
 
 	Category createCategory(String name, byte[] image);
-	void deleteCategory(Category category);
+	int deleteCategory(Category category);
 	List<Category> getAllCategories();
 }

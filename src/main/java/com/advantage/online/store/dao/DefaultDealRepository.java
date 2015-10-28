@@ -34,7 +34,8 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 		ArgumentValidationHelper.validateArgumentIsNotNull(deal, "deal");
 		log.info("deleteDeal");
 		final Long dealId = deal.getId();
-		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Deal.class, "id", dealId);
+		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Deal.class, Deal.FIELD_ID,
+				                                                  dealId);
 		final Query query = entityManager.createQuery(hql);
 		return query.executeUpdate();
 	}
@@ -54,7 +55,7 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
         log.info("getDealOfTheDay");
         final Query query = entityManager.createNamedQuery(Deal.QUERY_GET_BY_TYPE);
         final Integer dealtypeCode = DealType.DAILY.getDealTypeCode();
-        query.setParameter("dealType", dealtypeCode);
+        query.setParameter(Deal.PARAM_DEAL_TYPE, dealtypeCode);
         @SuppressWarnings("unchecked")
 		final List<Deal> deals = query.getResultList();
         final Deal dealOfTheDay;

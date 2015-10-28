@@ -28,7 +28,9 @@ public class Deal {
     public static final String QUERY_GET_ALL = "deal.getAll";
     public static final String QUERY_GET_BY_TYPE = "deal.getByType";
 
-    public static final String PARAM_DEAL_TYPE = "dealType";
+    public static final String FIELD_ID = "id";
+
+    public static final String PARAM_DEAL_TYPE = "DEAL_PARAM_DEALTYPE";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

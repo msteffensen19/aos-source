@@ -11,13 +11,15 @@ import java.util.Set;
 //, uniqueConstraints = {@UniqueConstraint(columnNames = "CATEGORY_NAME")})
 @NamedQueries({
         @NamedQuery(
-                name = Category.GET_ALL,
+                name = Category.QUERY_GET_ALL,
                 query = "select c from Category c"
         )
 })
 public class Category {
 
-    public static final String GET_ALL = "category.getAll";
+    public static final String QUERY_GET_ALL = "category.getAll";
+
+    public static final String FIELD_CATEGORY_ID = "categoryId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
