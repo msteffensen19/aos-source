@@ -11,7 +11,7 @@ abstract class GenericRepositoryTests {
     PlatformTransactionManager transactionManager;
 	final TransactionDefinition transactionDefinition;
 
-	public GenericRepositoryTests() {
+	GenericRepositoryTests() {
 
 		transactionDefinition = new DefaultTransactionDefinition();
 	}
