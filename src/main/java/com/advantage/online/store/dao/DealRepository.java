@@ -9,7 +9,7 @@ import java.util.List;
 public interface DealRepository {
 
 	Deal createDeal(DealType dealType, String name, String description, Product product);
-	void deleteDeal(Deal deal);
+	int deleteDeal(Deal deal);
     List<Deal> getAllDeals();
     Deal getDealOfTheDay();
 }

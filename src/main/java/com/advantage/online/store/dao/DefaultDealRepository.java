@@ -29,14 +29,14 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
     }
 
 	@Override
-	public void deleteDeal(final Deal deal) {
+	public int deleteDeal(final Deal deal) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(deal, "deal");
 		log.info("deleteDeal");
 		final Long dealId = deal.getId();
 		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Deal.class, "id", dealId);
 		final Query query = entityManager.createQuery(hql);
-		query.executeUpdate();
+		return query.executeUpdate();
 	}
 
 	@Override

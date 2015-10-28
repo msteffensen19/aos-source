@@ -57,7 +57,8 @@ public abstract class ArgumentValidationHelper {
      final String argumentInformativeName) {
 
         ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
-        ArgumentValidationHelper.validateArgumentIsNotNull(argument, argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentIsNotNull(argument,
+        		                                           argumentInformativeName);
         final String trimmedArgument = argument.trim();
         final int trimmedArgumentLength = trimmedArgument.length();
 
@@ -87,12 +88,74 @@ public abstract class ArgumentValidationHelper {
      final String argumentInformativeName) {
 
     	ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
-    	ArgumentValidationHelper.validateArgumentIsNotNull(argument, argumentInformativeName);
+    	ArgumentValidationHelper.validateArgumentIsNotNull(argument,
+    			                                           argumentInformativeName);
 
     	if (argument.isEmpty()) {
 
     		final StringBuilder message = new StringBuilder("Could not accept an empty collection for argument [");
             message.append(argumentInformativeName);
+            message.append("]");
+            final String messageString = message.toString();
+            throw new IllegalArgumentException(messageString);
+    	}
+    }
+
+    /**
+     * Validate that the given array argument does not reference <b>null</b>, and that it is
+     * <b>not</b> a zero length array.
+     * <br/>
+     * <b>If no {@link IllegalArgumentException} was throw, than the validation has been
+     * successful.</b>
+     * @param argument the array argument to validate that it does not reference <b>null</b>,
+     * and that it is <b>not</b> a zero length array.
+     * @param argumentInformativeName the informative name of the argument, to use for the
+     * error message, if the validation didn't pass.
+     * @throws IllegalArgumentException if the given argument to validate (first argument)
+     * references <b>null</b>, or if it <b>is</b> a zero length array, or if the given
+     * argument-informative-name argument references <b>null</b>, or if it <b>is</b> a blank
+     * string.
+     */
+    public static void validateArrayArgumentIsNotNullAndNotZeroLength(final Object[] argument,
+     final String argumentInformativeName) {
+
+    	ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+    	ArgumentValidationHelper.validateArgumentIsNotNull(argument,
+                                                           argumentInformativeName);
+
+    	if (argument.length == 0) {
+
+    		final StringBuilder message = new StringBuilder("Could not accept a zero length array for argument [");
+            message.append(argumentInformativeName);
+            message.append("]");
+            final String messageString = message.toString();
+            throw new IllegalArgumentException(messageString);
+    	}
+    }
+
+    /**
+     * Validate that the given number argument <b>is</b> positive.
+     * <br/>
+     * <b>If no {@link IllegalArgumentException} was throw, than the validation has been
+     * successful.</b>
+     * @param argument the number argument to validate that it <b>is</b> positive.
+     * @param argumentInformativeName the informative name of the argument, to use for the
+     * error message, if the validation didn't pass.
+     * @throws IllegalArgumentException if the given number argument to validate (first
+     * argument) <b>is not</b> positive, or if the given argument-informative-name argument
+     * references <b>null</b>, or if it <b>is</b> a blank string.
+     */
+    public static void validateNumberArgumentIsPositive(final int argument,
+     final String argumentInformativeName) {
+
+    	ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+
+    	if (argument <= 0) {
+
+    		final StringBuilder message = new StringBuilder("Could not accept a non positive value for argument [");
+            message.append(argumentInformativeName);
+            message.append("]: [");
+            message.append(argument);
             message.append("]");
             final String messageString = message.toString();
             throw new IllegalArgumentException(messageString);
