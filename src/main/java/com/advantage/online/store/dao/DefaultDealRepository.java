@@ -1,17 +1,18 @@
 package com.advantage.online.store.dao;
 
-import com.advantage.online.store.model.Deal;
-import com.advantage.online.store.model.DealType;
-import com.advantage.online.store.model.Product;
-import com.advantage.util.ArgumentValidationHelper;
-import com.advantage.util.JPAQueryHelper;
+import java.util.List;
+
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
-import java.util.List;
+import com.advantage.online.store.model.Deal;
+import com.advantage.online.store.model.DealType;
+import com.advantage.online.store.model.Product;
+import com.advantage.util.ArgumentValidationHelper;
+import com.advantage.util.JPAQueryHelper;
 
 @Component
 @Qualifier("dealRepository")
@@ -22,7 +23,6 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 	public Deal createDeal(final DealType dealType, final String name,
      final String description, final Product product) {
 
-		log.info("createDeal");
     	final Deal deal = new Deal(dealType, name, description, product);
     	entityManager.persist(deal);
     	return deal;
@@ -32,7 +32,6 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 	public int deleteDeal(final Deal deal) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(deal, "deal");
-		log.info("deleteDeal");
 		final Long dealId = deal.getId();
 		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Deal.class, Deal.FIELD_ID,
 				                                                  dealId);
@@ -44,7 +43,6 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
     @SuppressWarnings("unchecked")
 	public List<Deal> getAllDeals() {
 
-        log.info("getAllDeals");
         final Query query = entityManager.createNamedQuery(Deal.QUERY_GET_ALL);
         return query.getResultList();
     }
@@ -52,7 +50,6 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 	@Override
     public Deal getDealOfTheDay() {
 
-        log.info("getDealOfTheDay");
         final Query query = entityManager.createNamedQuery(Deal.QUERY_GET_BY_TYPE);
         final Integer dealtypeCode = DealType.DAILY.getDealTypeCode();
         query.setParameter(Deal.PARAM_DEAL_TYPE, dealtypeCode);

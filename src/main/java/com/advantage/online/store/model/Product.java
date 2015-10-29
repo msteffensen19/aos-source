@@ -33,11 +33,14 @@ public class Product {
     private int price;
     private String description;
 
+    @Column(name = "color", nullable = true)
+    private Integer color;
+    @Column(name = "color_name", nullable = true)
+    private String colorName;
+    
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
-
-    private String color;
 
     public Product() {
     }
@@ -88,13 +91,23 @@ public class Product {
         this.category = category;
     }
 
-    public void setColor(final String color) {
+    public void setColor(final Integer color) {
 
     	this.color = color;
     }
 
-    public String getColor() {
+    public Integer getColor() {
 
     	return color;
+    }
+
+    public void setColorName(final String colorName) {
+
+    	this.colorName = colorName;
+    }
+
+    public String getColorName() {
+
+    	return colorName;
     }
 }

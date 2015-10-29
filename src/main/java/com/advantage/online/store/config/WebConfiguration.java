@@ -93,6 +93,7 @@ public class WebConfiguration extends SpringDataWebConfiguration {
         jackson2Converter.setObjectMapper(objectMapper);
 
         messageConverters.add(jackson2Converter);
+        
         return messageConverters;
     }
 }

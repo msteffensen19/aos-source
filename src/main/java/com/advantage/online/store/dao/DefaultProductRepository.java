@@ -38,7 +38,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 	public int deleteProduct(final Product product) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(product, "product");
-		log.info("deleteProduct");
 		final Long productId = product.getId();
 		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Product.class,
 				                                                  Product.FIELD_ID,
@@ -52,7 +51,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
     	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(productIds,
     			                                                                "product ids");
-    	log.info("deleteProductsByIds");
     	final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Product.class,
     			                                                   Product.FIELD_ID,
     			                                                   Product.PARAM_ID);
@@ -66,7 +64,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
     	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(products,
                                                                                 "products");
-    	log.info("deleteProducts");
     	final int productsCount = products.size();
     	final Collection<Long> productIds = new ArrayList<Long>(productsCount);
     	
@@ -81,7 +78,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
     @Override
     public List<Product> getAllProducts() {
-        log.info("getAllProducts");
+
         List<Product> products = entityManager.createNamedQuery(Product.QUERY_GET_ALL, Product.class)
                 .setMaxResults(MAX_NUM_OF_PRODUCTS)
                 .getResultList();

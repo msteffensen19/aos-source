@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class ArgumentValidationHelper {
 
+	private static final String ARGUMENT_INFORMATIVE_NAME = "argument informative name";
+
     private ArgumentValidationHelper() {
 
         throw new UnsupportedOperationException();
@@ -176,7 +178,7 @@ public abstract class ArgumentValidationHelper {
 
         if (argumentInformativeName == null) {
 
-            final String messageString = ArgumentValidationHelper.getNullArgumentMessage("argument informative name");
+            final String messageString = ArgumentValidationHelper.getNullArgumentMessage(ArgumentValidationHelper.ARGUMENT_INFORMATIVE_NAME);
             throw new IllegalArgumentException(messageString);
         }
 
@@ -185,12 +187,14 @@ public abstract class ArgumentValidationHelper {
 
         if (trimmedArgumentInformativeNameLength == 0) {
 
-            final String messageString = ArgumentValidationHelper.getBlankStringArgumentMessage("argument informative name");
+            final String messageString = ArgumentValidationHelper.getBlankStringArgumentMessage(ArgumentValidationHelper.ARGUMENT_INFORMATIVE_NAME);
             throw new IllegalArgumentException(messageString);
         }
     }
 
     private static String getBlankStringArgumentMessage(final String argumentInformativeName) {
+
+    	assert StringUtils.isNoneBlank(argumentInformativeName);
 
         final StringBuilder message = new StringBuilder("Could not accept a blank string for argument [");
         message.append(argumentInformativeName);

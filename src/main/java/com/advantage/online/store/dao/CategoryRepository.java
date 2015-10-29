@@ -8,5 +8,6 @@ public interface CategoryRepository {
 
 	Category createCategory(String name, byte[] image);
 	int deleteCategory(Category category);
+	int deleteCategories(Category... category);
 	List<Category> getAllCategories();
 }

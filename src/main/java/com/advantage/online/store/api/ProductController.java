@@ -42,7 +42,7 @@ public class ProductController {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
-        HttpServletHelper.validateParametersExistanceInRequest(request, true,
+        HttpServletHelper.validateParametersExistenceInRequest(request, true,
         		                                               ProductController.REQUEST_PARAM_CATEGORY_ID);
         final String categoryIdParameter = request.getParameter(ProductController.REQUEST_PARAM_CATEGORY_ID);
         final Long categoryId = Long.valueOf(categoryIdParameter);

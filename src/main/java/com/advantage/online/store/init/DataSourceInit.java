@@ -44,6 +44,7 @@ public class DataSourceInit {
         session.persist(new Category("BAGS & CASES", IOHelper.fileContentToByteArray("C:/Temp/advantage/Bags.png")));
 
         Product product = new Product("HP EliteBook Folio", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 550, category);
+        product.setColorName("yellow");
         session.persist(product);
         session.persist(new Product("LG G3", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category));
         session.persist(new Product("Samsung Galaxy S5", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 600, category));

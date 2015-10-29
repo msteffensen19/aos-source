@@ -3,6 +3,7 @@ package com.advantage.online.store.config;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.advantage.online.store.Constants;
 
 @Configuration
+@EnableAspectJAutoProxy
 @ComponentScan(
         basePackageClasses = {Constants.class},
         excludeFilters = {

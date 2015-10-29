@@ -20,7 +20,8 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 AppSecurityConfig.class,
                 JpaConfiguration.class,
                 DataJpaConfiguration.class,
-                JacksonObjectMapperConfiguration.class
+                JacksonObjectMapperConfiguration.class,
+                AdvantageAspects.class
         };
     }
 

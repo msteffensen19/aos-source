@@ -61,9 +61,7 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     	final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
     	productRepository.deleteProducts(category1Products);
     	productRepository.deleteProducts(category2Products);
-    	categoryRepository.deleteCategory(category1);
-    	categoryRepository.deleteCategory(category2);
-    	categoryRepository.deleteCategory(category3);
+    	categoryRepository.deleteCategories(category1, category2, category3);
     	transactionManager.commit(transactionStatusForDeletion);
 	}
 }

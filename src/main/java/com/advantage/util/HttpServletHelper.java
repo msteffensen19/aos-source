@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * A helper class for the HTTP servlet API.
+ */
 public abstract class HttpServletHelper {
 
 	private HttpServletHelper() {
@@ -16,7 +19,17 @@ public abstract class HttpServletHelper {
 		throw new UnsupportedOperationException();
 	}
 
-	public static void validateParametersExistanceInRequest(final HttpServletRequest request,
+	/**
+	 * Validate that the given request, contains all of the given parameters.
+	 * @param request the request to check that it contains certain parameters.
+	 * @param considerBlankStringAsNotExist a flag for telling the method to treat a parameter
+	 * blank with a blank string value, as a non existing parameter. 
+	 * @param parameterNames the parameter to check their existence in the given request.
+	 * @throws IllegalArgumentException if the given HTTP servlet request argument references
+	 * <b>null</b>, or if the given array argument of parameter names references <b>null</b>,
+	 * or if it <b>is</b> a zero length array.
+	 */
+	public static void validateParametersExistenceInRequest(final HttpServletRequest request,
      final boolean considerBlankStringAsNotExist, final String... parameterNames) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");

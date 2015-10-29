@@ -1,5 +1,7 @@
 package com.advantage.online.store.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -34,7 +36,6 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     public int deleteCategory(final Category category) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
-		log.info("deleteCategory");
 		final Long categoryId = category.getCategoryId();
 		final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Category.class,
 				                                                  Category.FIELD_CATEGORY_ID,
@@ -44,8 +45,30 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
 	}
 
     @Override
+    public int deleteCategories(final Category... categories) {
+
+    	ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(categories,
+    			                                                                "categories");
+    	final int categoriesCount = categories.length;
+    	final Collection<Long> categoryIds = new ArrayList<Long>(categoriesCount);
+    	
+    	for (final Category category : categories) {
+
+    		final Long categoryId = category.getCategoryId();
+    		categoryIds.add(categoryId);
+    	}
+
+    	final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Category.class,
+    			                                                   Category.FIELD_CATEGORY_ID,
+    			                                                   Category.PARAM_CATEGORY_ID);
+		final Query query = entityManager.createQuery(hql);
+		query.setParameter(Category.PARAM_CATEGORY_ID, categoryIds);
+		return query.executeUpdate();
+    }
+
+    @Override
     public List<Category> getAllCategories() {
-        log.info("getAllCategories");
+
         List<Category> categories = entityManager.createNamedQuery(Category.QUERY_GET_ALL, Category.class)
                 .setMaxResults(MAX_NUM_OF_CATEGORIES)
                 .getResultList();
