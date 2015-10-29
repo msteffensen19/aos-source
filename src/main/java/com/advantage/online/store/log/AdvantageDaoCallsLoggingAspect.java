@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import com.advantage.util.ArgumentValidationHelper;
 
+/**
+ * An aspect class for logging data access object methods calls.
+ */
 @Aspect
 public class AdvantageDaoCallsLoggingAspect {
 
