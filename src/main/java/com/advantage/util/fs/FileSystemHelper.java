@@ -96,6 +96,17 @@ public abstract class FileSystemHelper {
 		return extension;
 	}
 
+	/**
+	 * Get the files of the directory in the given path. Optionally, this method can filter
+	 * the files, so that only files with an extension that matches one of the given
+	 * file extensions (if passed), will be returned.
+	 * @param directoryPath the path of the directory to get the files of.
+	 * @param extensions an optional argument - if extensions are passed to the method, only
+	 * files with a matching extension will be returned.
+	 * @return the files of the directory in the given path.
+	 * @throws IllegalArgumentException if the given directory path argument references
+	 * <b>null</b>, or if it <b>is</b> a blank string.
+	 */
 	public static File[] getDirectoryFiles(final String directoryPath,
 	 final String... extensions) {
 
@@ -114,23 +125,5 @@ public abstract class FileSystemHelper {
 		}
 
 		return files;
-	}
-
-	public static void main(String[] args) {
-
-		/*System.out.println(FileSystemHelper.isDirectoryExist("C:\\Temp\\advantage"));
-		System.out.println(FileSystemHelper.isDirectoryExist("C:\\Temp\\advantage1"));
-		System.out.println(FileSystemHelper.isDirectoryExist("C:\\Temp\\advantage1\\Bags.png"));
-		
-		System.out.println(FileSystemHelper.isFileExist("C:\\Temp\\advantage"));
-		System.out.println(FileSystemHelper.isFileExist("C:\\Temp\\advantage1"));
-		System.out.println(FileSystemHelper.isFileExist("C:\\Temp\\advantage\\Bags.png"));
-		System.out.println(getFileExtension("C:\\Temp\\advantage\\Bags."));*/
-		final File[] files = FileSystemHelper.getDirectoryFiles("C:\\Temp\\advantage", "png");
-		
-		for (final File file : files) {
-			
-			System.out.println(file.getAbsolutePath());
-		}
 	}
 }
