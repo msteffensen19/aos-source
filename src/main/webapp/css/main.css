@@ -74,7 +74,6 @@ label{
     background-size: 62%;
     background-repeat: no-repeat;
     background-position-x: 100%;
-    background-color: #E6E6E6;
 }
 .row{
     margin-right: 0px;
@@ -87,6 +86,16 @@ label{
 }
 .collapse.navbar-collapse.cbp-spmenu.cbp-spmenu-vertical.cbp-spmenu-left.cbp-spmenu-open > ul > li.hidden_item{
     display: none;
+}
+.product_div_gradient{
+    background: rgba(232,231,226,1);
+    background: -moz-linear-gradient(top, rgba(232,231,226,1) 0%, rgba(242,241,237,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(232,231,226,1)), color-stop(100%, rgba(242,241,237,1)));
+    background: -webkit-linear-gradient(top, rgba(232,231,226,1) 0%, rgba(242,241,237,1) 100%);
+    background: -o-linear-gradient(top, rgba(232,231,226,1) 0%, rgba(242,241,237,1) 100%);
+    background: -ms-linear-gradient(top, rgba(232,231,226,1) 0%, rgba(242,241,237,1) 100%);
+    background: linear-gradient(to bottom, rgba(232,231,226,1) 0%, rgba(242,241,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e7e2', endColorstr='#f2f1ed', GradientType=0 );
 }
 /*a.btn, button{
     min-width: 100px !important;   

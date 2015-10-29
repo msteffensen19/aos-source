@@ -38,7 +38,7 @@ define([
                 }).
                 when('/category/:id', {
                     controller: 'categoryCtrl',
-                    templateUrl: './app/views/category.html',
+                    templateUrl: './app/views/category-page.html',
                 }).
                 when('/', {
                     controller: 'categoriesCtrl',
@@ -47,7 +47,7 @@ define([
                 otherwise({
                     redirectTo: '/',
                     controller: 'categoriesCtrl',
-                    templateUrl: './app/views/main1.html',
+                    templateUrl: './app/views/home-page.html',
                 });
         $translateProvider.preferredLanguage('en');
     });

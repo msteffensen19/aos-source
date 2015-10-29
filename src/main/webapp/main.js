@@ -2,6 +2,7 @@
  * Created by kubany on 10/12/2015.
  */
 require.config({
+    "waitSeconds" : 600,
     paths: {
         angular: 'webjars/angularjs/1.4.7/angular.min',
         'angular-translate': 'webjars/angular-translate/2.7.2/angular-translate',
