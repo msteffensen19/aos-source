@@ -75,4 +75,31 @@ public abstract class IOHelper {
         ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
         IOHelper.outputInput(in, out, 512);
     }
+
+    /**
+     * Close the given input stream, if it does not reference <b>null</b>.
+     * @param in the input stream to close, if it does not reference <b>null</b>.
+     * @throws IOException if an I/O error occurs.
+     */
+    public static void closeInputStreamIfNotNull(final InputStream in) throws IOException {
+
+    	if (in != null) {
+
+    		in.close();
+    	}
+    }
+
+    /**
+     * Close the given output stream, if it does not reference <b>null</b>.
+     * @param out the output stream to close, if it does not reference <b>null</b>.
+     * @throws IOException if an I/O error occurs.
+     */
+    public static void closeOutputStreamIfNotNull(final OutputStream out)
+     throws IOException {
+
+    	if (out != null) {
+
+    		out.close();
+    	}
+    }
 }
