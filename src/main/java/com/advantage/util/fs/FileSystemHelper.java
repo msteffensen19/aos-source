@@ -109,24 +109,7 @@ public abstract class FileSystemHelper {
 			files = directory.listFiles();
 		} else {
 
-			final FilenameFilter filenameFilter = new FilenameFilter() {
-
-				@Override
-				public boolean accept(final File dir, final String name) {
-
-					boolean accept = false;
-
-					for (int i = 0; i < extensions.length && accept == false; i++) {
-
-						final String extension = extensions[i];
-						final String fileExtension = FileSystemHelper.extractFileExtension(name);
-						accept = extension.equalsIgnoreCase(fileExtension);
-					}
-
-					return accept;
-				}
-			};
-
+			final FilenameFilter filenameFilter = new ExtensionsFilenameFilter(extensions);
 			files = directory.listFiles(filenameFilter);
 		}
 
@@ -143,7 +126,7 @@ public abstract class FileSystemHelper {
 		System.out.println(FileSystemHelper.isFileExist("C:\\Temp\\advantage1"));
 		System.out.println(FileSystemHelper.isFileExist("C:\\Temp\\advantage\\Bags.png"));
 		System.out.println(getFileExtension("C:\\Temp\\advantage\\Bags."));*/
-		final File[] files = FileSystemHelper.getDirectoryFiles("C:\\Temp\\advantage", "png", "JPg");
+		final File[] files = FileSystemHelper.getDirectoryFiles("C:\\Temp\\advantage", "png");
 		
 		for (final File file : files) {
 			
