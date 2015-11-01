@@ -94,12 +94,29 @@ public abstract class IOHelper {
     }
 
     /**
+     * Write the content of the given byte array, to the given output stream.
+     * @param content the content to write to the given output stream.
+     * @param out the output stream to write to.
+     * @throws IOException if an I/O error occurs.
+     * @throws IllegalArgumentException if any one of the given arguments references
+     * <b>null</b>.
+     */
+    public static void outputInput(final byte[] content, final OutputStream out)
+     throws IOException {
+
+    	ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
+    	ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
+    	final ByteArrayInputStream in = new ByteArrayInputStream(content);
+    	IOHelper.outputInput(in, out);
+    }
+
+    /**
      * Write the content of the given byte array, to the file in the given file path.
      * @param content the content to write to the file in the given path.
      * @param filePath the file of the file to write the given content, to.
      * @throws IOException if an I/O error occurs.
-     * @throws IllegalArgumentException if any one of the arguments references <b>null</b>,
-	 * or if the given file path argument <b>is</b> a blank string.
+     * @throws IllegalArgumentException if any one of the given arguments references
+     * <b>null</b>, or if the given file path argument <b>is</b> a blank string.
      */
     public static void outputInput(final byte[] content, final String filePath)
      throws IOException {
@@ -107,13 +124,12 @@ public abstract class IOHelper {
     	ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
     	ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
                                                                             "file path");
-    	final ByteArrayInputStream in = new ByteArrayInputStream(content);
     	OutputStream out = null;
 
     	try {
 
     		out = new FileOutputStream(filePath);
-    		IOHelper.outputInput(in, out);
+    		IOHelper.outputInput(content, out);
     	} finally {
 
     		IOHelper.closeOutputStreamIfNotNull(out);
