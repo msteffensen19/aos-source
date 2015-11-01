@@ -1,8 +1,10 @@
 package com.advantage.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -89,6 +91,33 @@ public abstract class IOHelper {
     	ArgumentValidationHelper.validateArgumentIsNotNull(in, "input stream");
         ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
         IOHelper.outputInput(in, out, 512);
+    }
+
+    /**
+     * Write the content of the given byte array, to the file in the given file path.
+     * @param content the content to write to the file in the given path.
+     * @param filePath the file of the file to write the given content, to.
+     * @throws IOException if an I/O error occurs.
+     * @throws IllegalArgumentException if any one of the arguments references <b>null</b>,
+	 * or if the given file path argument <b>is</b> a blank string.
+     */
+    public static void outputInput(final byte[] content, final String filePath)
+     throws IOException {
+
+    	ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
+    	ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
+                                                                            "file path");
+    	final ByteArrayInputStream in = new ByteArrayInputStream(content);
+    	OutputStream out = null;
+
+    	try {
+
+    		out = new FileOutputStream(filePath);
+    		IOHelper.outputInput(in, out);
+    	} finally {
+
+    		IOHelper.closeOutputStreamIfNotNull(out);
+    	}
     }
 
     /**
