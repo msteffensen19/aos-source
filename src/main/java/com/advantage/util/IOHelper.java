@@ -1,6 +1,7 @@
 package com.advantage.util;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +33,20 @@ public abstract class IOHelper {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         IOHelper.outputInput(in, out);
         return out.toByteArray();
+    }
+
+    /**
+     * Get the content of the given file, as a byte array.
+     * @param file the file to get it's content as a byte array.
+     * @return the content of the given file, as a byte array.
+     * @throws IOException if an I/O error occurs.
+     * @throws IllegalArgumentException if the given file argument references ,<b>null</b>.
+     */
+    public static byte[] fileContentToByteArray(final File file) throws IOException {
+
+    	ArgumentValidationHelper.validateArgumentIsNotNull(file, "file");
+    	final String filePath = file.getAbsolutePath();
+    	return IOHelper.fileContentToByteArray(filePath);
     }
 
     /**
