@@ -15,6 +15,9 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.advantage.online.store.image.ImageManagement;
+import com.advantage.online.store.image.ImageManagementAccess;
+
 @Configuration
 @ComponentScan({"com.advantage.online.store.services",
 	            "com.advantage.online.store.dao",
@@ -59,4 +62,10 @@ public class AdvantageTestContextConfiguration {
 
         return entityManagerFactoryBean;
     }
+    
+    @Bean(name = "imageManagement")
+	public ImageManagement getImageManagement() {
+
+		return ImageManagementAccess.getImageManagement("C:/Temp/advantage");
+	}
 }

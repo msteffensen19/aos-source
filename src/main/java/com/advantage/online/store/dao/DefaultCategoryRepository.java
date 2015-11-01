@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.model.Category;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
@@ -24,10 +26,13 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
 
     private static final int MAX_NUM_OF_CATEGORIES = 6;
 
+    @Autowired
+    private ImageManagement imageManagement;
+
     @Override
     public Category createCategory(final String name, final byte[] image) {
 
-    	final Category category = new Category("LAPTOPS", image);
+    	final Category category = new Category(name, image);
     	entityManager.persist(category);
     	return category;
     }

@@ -5,6 +5,10 @@
     <servlet>
         <servlet-class>com.advantage.online.store.servlet.FetchImageHttpServlet</servlet-class>
         <servlet-name>FetchImageHttpServlet</servlet-name>
+        <init-param>
+	        <param-name>repository-directory-path</param-name>
+	        <param-value>C:/Temp/advantage</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>

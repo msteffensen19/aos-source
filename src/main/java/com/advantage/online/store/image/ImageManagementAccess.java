@@ -32,18 +32,4 @@ public abstract class ImageManagementAccess {
 
 		return imageManagement;
 	}
-	
-	public static void main(String[] args) {
-		
-		try {
-			
-			ImageManagement ima = ImageManagementAccess.getImageManagement("c:/temp/kuku");
-			ima.addManagedImage("C:\\Temp\\Laptop.jpg", true);
-			ima.addManagedImage("C:\\Temp\\instegram.jpg", true);
-			ima.persist();
-		} catch (Exception ex) {
-			
-			ex.printStackTrace();
-		}
-	}
 }

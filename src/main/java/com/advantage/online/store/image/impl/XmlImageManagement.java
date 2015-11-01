@@ -92,7 +92,8 @@ class XmlImageManagement implements ImageManagement {
 		final String uidString = uid.toString();
 		final XmlManagedImage managedImage = new XmlManagedImage(this, uidString, imageFile);
 		final String managedImageId = managedImage.getId();
-		return managedImagesMap.put(managedImageId, managedImage);
+		managedImagesMap.put(managedImageId, managedImage);
+		return managedImage;
 	}
 
 	@Override

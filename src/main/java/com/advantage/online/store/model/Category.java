@@ -32,6 +32,8 @@ public class Category {
     private String categoryName;
 
     private byte[] image;
+    @Column(name = "managed_image_id")
+    private String managedImageId;
 
     @OneToMany(mappedBy="category")
     private Set<Product> products;
@@ -39,6 +41,12 @@ public class Category {
     public Category(String categoryName, byte[] photoBytes) {
         this.image = photoBytes;
         this.categoryName = categoryName;
+    }
+    
+    public Category(String categoryName, final String managedImageId) {
+    	
+        this.categoryName = categoryName;
+        this.managedImageId = managedImageId;
     }
 
     public Category(){
@@ -67,5 +75,15 @@ public class Category {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+    
+    public void setManagedImageId(final String managedImageId) {
+    	
+    	this.managedImageId = managedImageId;
+    }
+
+    public String getManagedImageId() {
+
+    	return managedImageId;
     }
 }
