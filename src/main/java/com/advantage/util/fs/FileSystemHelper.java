@@ -137,4 +137,27 @@ public abstract class FileSystemHelper {
 
 		return System.getProperty("file.separator", "/");
 	}
+
+	/**
+	 * Make the directory that has the given path, if it does not exist.
+	 * @param path the path of the directory to make.
+	 * @return <b>true</>, if the directory has been created, or <b>false</b>, if it has not.
+	 * If the directory existed before the call to this method, <b>false</b> will be
+	 * returned.
+	 */
+	public static boolean makeDirectory(final String directoryPath) {
+
+		final boolean directoryCreated;
+
+		if (FileSystemHelper.isDirectoryExist(directoryPath)) {
+
+			directoryCreated = false;
+		} else {
+
+			final File directory = new File(directoryPath);
+			directoryCreated = directory.mkdirs();
+		}
+
+		return directoryCreated;
+	}
 }
