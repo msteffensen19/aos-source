@@ -126,4 +126,15 @@ public abstract class FileSystemHelper {
 
 		return files;
 	}
+
+	/**
+	 * Get a file separator string. This method will try to get the file separator that is
+	 * configured in the Java system properties. If there is no such a property, it will
+	 * return, by default, the string <b>&quot;/&quot;</b>.
+	 * @return a file separator string.
+	 */
+	public static String getFileSeparator() {
+
+		return System.getProperty("file.separator", "/");
+	}
 }
