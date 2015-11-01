@@ -48,16 +48,13 @@ public abstract class XmlHelper {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
 				                                                            "file path");
+		final DocumentBuilder documentBuilder = XmlHelper.getDocumentBuilder();
 		InputStream in = null;
 
 		try {
 
-			final DocumentBuilder documentBuilder = XmlHelper.getDocumentBuilder();
 			in = new FileInputStream(filePath);
 			return documentBuilder.parse(in);
-		} catch (final ParserConfigurationException ex) {
-
-			throw new RuntimeException(ex);
 		} catch (final SAXException ex) {
 
 			throw new RuntimeException(ex);
@@ -67,18 +64,24 @@ public abstract class XmlHelper {
 		}
 	}
 
-	public static Document newDocument() throws ParserConfigurationException {
+	/**
+	 * Create A new document.
+	 * @return the newly created document.
+	 */
+	public static Document newDocument() {
 
 		final DocumentBuilder documentBuilder = XmlHelper.getDocumentBuilder();
-		return documentBuilder.newDocument();
+		return documentBuilder.newDocument();		
 	}
 
-	private static DocumentBuilder getDocumentBuilder() throws ParserConfigurationException {
-
-		final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		return documentBuilderFactory.newDocumentBuilder();
-	}
-
+	/**
+	 * Persist the given document, in the file in the given path.
+	 * @param document the document to persist.
+	 * @param filePath the path of the file to persist the document in.
+	 * @throws IOException if an I/O error occurs.
+	 * @throws IllegalArgumentException if any one of the arguments references <b>null</b>,
+	 * or if the given file path argument <b>is</b> a blank string.
+	 */
 	public static void persistDocument(final Document document, final String filePath)
 	 throws IOException {
 
@@ -101,6 +104,19 @@ public abstract class XmlHelper {
 		} finally {
 
 			IOHelper.closeOutputStreamIfNotNull(out);
+		}
+	}
+
+	private static DocumentBuilder getDocumentBuilder() {
+
+		final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+
+		try {
+
+			return documentBuilderFactory.newDocumentBuilder();
+		} catch (final ParserConfigurationException ex) {
+
+			throw new RuntimeException(ex);
 		}
 	}
 }
