@@ -10,10 +10,20 @@ import org.w3c.dom.NodeList;
 
 import com.advantage.util.ArgumentValidationHelper;
 
+/**
+ * A helper class for the interaction with a XML element.
+ * <br/>
+ * @author eli.dali@hpe.com
+ */
 public class XmlItem {
 
 	private Element element;
 
+	/**
+	 * Create a new instance, based on the given element.
+	 * @param element the element to base the new XML item instance on.
+	 * @throws IllegalArgumentException if the given element references <b>null</b>.
+	 */
 	public XmlItem(final Element element) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(element, "element");
@@ -135,6 +145,7 @@ public class XmlItem {
 	
 	public void removeChild(final XmlItem childXmlItem) {
 
+		ArgumentValidationHelper.validateArgumentIsNotNull(childXmlItem, "child XML item");
 		element.removeChild(childXmlItem.element);
 	}
 }
