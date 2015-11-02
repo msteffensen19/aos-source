@@ -7,7 +7,7 @@ define(['./module'], function (directives) {
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: './app/partials/product-tpl.html',
+            templateUrl: './app/partials/popular-Items-tpl.html',
             controller: function($scope, $element){
                 $scope.name = $scope.name + "Second ";
             },

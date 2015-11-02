@@ -3,8 +3,8 @@
     padding: 10px 22px;
 }
 .btn-primary.outline {
-    border: 1px solid #000000;
-    color: #000000;
+    border: 1px solid #54b3ad;
+    color: #2a2a2a;
     border-radius: 0px;
 }
 .btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
@@ -15,4 +15,8 @@
     border-color: #007299;
     color: #007299;
     box-shadow: none;
+}
+.btn-medium-txt{
+    font-family: RobotoMedium;
+    font-size: 0.73vw;
 }

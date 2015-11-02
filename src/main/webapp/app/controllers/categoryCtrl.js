@@ -20,15 +20,16 @@ define(['./module'], function (controllers) {
 
             function loadRemoteData() {
                 categoryService.getCategoryProducts($scope.catId)
-                    .then(function( products ) {
-                        applyRemoteData( products );
+                    .then(function( category ) {
+                        applyRemoteData( category );
                     });
             }
 
-            function applyRemoteData( products ) {
-                $scope.products = products;
-                $scope.categoryName = products.length > 0 ? products[0].category.categoryName : "";
-                $scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");
+            function applyRemoteData( category ) {
+                $scope.categoryData = category;
+                $scope.products = category.products;
+                $scope.categoryName = category.categoryName;
+                //$scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");
             }
 
     }]);
