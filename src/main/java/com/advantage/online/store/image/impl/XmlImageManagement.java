@@ -22,6 +22,7 @@ import com.advantage.util.xml.XmlItem;
 
 class XmlImageManagement implements ImageManagement {
 
+	private static final String FILE_NAME_IMAGE_MANAGEMENT_XML = "imageManagement.xml";
 	private static final String TAG_IMAGE_MANAGEMENT = "ImageManagement";
 
 	private static final String ATT_REPOSITORY_PATH = "repository-path";
@@ -34,8 +35,10 @@ class XmlImageManagement implements ImageManagement {
 
 	XmlImageManagement(final String repositoryDirectoryPath) throws IOException {
 
+		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(repositoryDirectoryPath,
+				                                                            "repository directory path");
 		this.repositoryDirectoryPath = repositoryDirectoryPath;
-		repositoryXmlPath = repositoryDirectoryPath + "/imageManagement.xml";
+		repositoryXmlPath = repositoryDirectoryPath + "/" + XmlImageManagement.FILE_NAME_IMAGE_MANAGEMENT_XML;
 		managedImagesMap = new HashMap<String, XmlManagedImage>();
 		FileSystemHelper.makeDirectory(repositoryDirectoryPath);
 
@@ -70,6 +73,8 @@ class XmlImageManagement implements ImageManagement {
 	
 					addManagedImage(file, false);
 				}
+				
+				persist();
 			}
 		}
 	}
