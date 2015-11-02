@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -31,51 +32,23 @@ class XmlImageManagement implements ImageManagement {
 	private final String repositoryDirectoryPath;
 	private final String repositoryXmlPath;
 	private final Map<String, XmlManagedImage> managedImagesMap;
-	private final XmlItem imageManagementXmlItem;
+	private XmlItem imageManagementXmlItem;
 
 	XmlImageManagement(final String repositoryDirectoryPath) throws IOException {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(repositoryDirectoryPath,
 				                                                            "repository directory path");
-		this.repositoryDirectoryPath = repositoryDirectoryPath;
-		repositoryXmlPath = repositoryDirectoryPath + "/" + XmlImageManagement.FILE_NAME_IMAGE_MANAGEMENT_XML;
+		this.repositoryDirectoryPath = repositoryDirectoryPath; 
+		repositoryXmlPath = figureRepositoryXmlPath(repositoryDirectoryPath);
 		managedImagesMap = new HashMap<String, XmlManagedImage>();
 		FileSystemHelper.makeDirectory(repositoryDirectoryPath);
 
 		if (FileSystemHelper.isFileExist(repositoryXmlPath)) {
 
-			final Document document = XmlHelper.getDocument(repositoryXmlPath);
-			final Element documentElement = document.getDocumentElement();
-			imageManagementXmlItem = new XmlItem(documentElement);
-			final List<XmlItem> managedImagesXmlItems = imageManagementXmlItem.getChildrenByTagName(XmlManagedImage.TAG_MANAGED_IMAGE);
-
-			for (final XmlItem managedImageXmlItem : managedImagesXmlItems) {
-
-				final XmlManagedImage managedImage = new XmlManagedImage(this,
-						                                                 managedImageXmlItem);
-				final String managedImageId = managedImage.getId();
-				managedImagesMap.put(managedImageId, managedImage);
-			} 
+			initByExistingRepositoryXml();
 		} else {
 
-			final Document document = XmlHelper.newDocument();
-			final Element element = document.createElement(XmlImageManagement.TAG_IMAGE_MANAGEMENT);
-			imageManagementXmlItem = new XmlItem(element);
-			element.setAttribute(XmlImageManagement.ATT_REPOSITORY_PATH, repositoryDirectoryPath);
-			element.setAttribute(XmlImageManagement.ATT_REPOSITORY_XML, repositoryXmlPath);
-			document.appendChild(element);
-			final File[] files = FileSystemHelper.getDirectoryFiles(repositoryDirectoryPath,
-					                                                "png", "jpg", "gif");
-
-			if (files != null) {
-
-				for (final File file : files) {
-	
-					addManagedImage(file, false);
-				}
-				
-				persist();
-			}
+			initWithoutRepositoryXml(repositoryDirectoryPath);
 		}
 	}
 
@@ -165,5 +138,69 @@ class XmlImageManagement implements ImageManagement {
 		filePath.append(fileSeparator);
 		filePath.append(fileName);
 		return filePath.toString();
+	}
+
+	private String figureRepositoryXmlPath(final String repositoryDirectoryPath) {
+
+		assert StringUtils.isNotBlank(repositoryDirectoryPath);
+
+		final StringBuilder repositoryXmlPathStringBuilder = new StringBuilder(repositoryDirectoryPath);
+		final String fileSeparator = FileSystemHelper.getFileSeparator();
+		repositoryXmlPathStringBuilder.append(fileSeparator);
+		repositoryXmlPathStringBuilder.append(XmlImageManagement.FILE_NAME_IMAGE_MANAGEMENT_XML);
+		return repositoryXmlPathStringBuilder.toString();
+	}
+
+	private void initByExistingRepositoryXml() throws IOException {
+
+		final Document document = XmlHelper.getDocument(repositoryXmlPath);
+		final Element documentElement = document.getDocumentElement();
+		imageManagementXmlItem = new XmlItem(documentElement);
+		final String repositoryDirectoryPathFromXml = imageManagementXmlItem.getAttribute(XmlImageManagement.ATT_REPOSITORY_PATH);
+
+		if (StringUtils.isBlank(repositoryDirectoryPathFromXml)) {
+
+			imageManagementXmlItem.setAttribute(XmlImageManagement.ATT_REPOSITORY_PATH,
+					                            repositoryDirectoryPath);
+			persist();
+		} else if (FileSystemHelper.matchingFileSystemPaths(repositoryDirectoryPath, repositoryDirectoryPathFromXml) == false) {
+
+			throw new RuntimeException("Wrong image management repository directory path: " + repositoryDirectoryPathFromXml);
+		}
+
+		final List<XmlItem> managedImagesXmlItems = imageManagementXmlItem.getChildrenByTagName(XmlManagedImage.TAG_MANAGED_IMAGE);
+
+		for (final XmlItem managedImageXmlItem : managedImagesXmlItems) {
+
+			final XmlManagedImage managedImage = new XmlManagedImage(this,
+					                                                 managedImageXmlItem);
+			final String managedImageId = managedImage.getId();
+			managedImagesMap.put(managedImageId, managedImage);
+		}
+	}
+
+	private void initWithoutRepositoryXml(final String repositoryDirectoryPath)
+	 throws IOException {
+
+		assert StringUtils.isNotBlank(repositoryDirectoryPath);
+
+		final Document document = XmlHelper.newDocument();
+		final Element element = document.createElement(XmlImageManagement.TAG_IMAGE_MANAGEMENT);
+		imageManagementXmlItem = new XmlItem(element);
+		element.setAttribute(XmlImageManagement.ATT_REPOSITORY_PATH, repositoryDirectoryPath);
+		element.setAttribute(XmlImageManagement.ATT_REPOSITORY_XML, repositoryXmlPath);
+		document.appendChild(element);
+		final File[] files = FileSystemHelper.getDirectoryFiles(repositoryDirectoryPath,
+				                                                "png", "jpg", "gif");
+
+		if (files != null) {
+
+			for (final File file : files) {
+
+				addManagedImage(file, false);
+			}
+
+			persist();
+		}
 	}
 }

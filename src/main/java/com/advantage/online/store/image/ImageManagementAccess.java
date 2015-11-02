@@ -14,20 +14,23 @@ public abstract class ImageManagementAccess {
 		throw new UnsupportedOperationException();
 	}
 
-	public static synchronized ImageManagement getImageManagement(final String repositoryDirectoryPath) {
+	public static ImageManagement getImageManagement(final String repositoryDirectoryPath) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(repositoryDirectoryPath,
 				                                                            "repository directory path");
 		final ImageManagement imageManagement;
 
-		if (imageManagementsMap.containsKey(repositoryDirectoryPath)) {
+		synchronized (imageManagementsMap) {
 
-			imageManagement = imageManagementsMap.get(repositoryDirectoryPath);
-		} else {
+			if (imageManagementsMap.containsKey(repositoryDirectoryPath)) {
 
-			final ImageManagementFactory imageManagementFactory = ImageManagementFactory.getImageManagementFactory();
-			imageManagement = imageManagementFactory.getImageManagement(repositoryDirectoryPath);
-			imageManagementsMap.put(repositoryDirectoryPath, imageManagement);
+				imageManagement = imageManagementsMap.get(repositoryDirectoryPath);
+			} else {
+
+				final ImageManagementFactory imageManagementFactory = ImageManagementFactory.getImageManagementFactory();
+				imageManagement = imageManagementFactory.getImageManagement(repositoryDirectoryPath);
+				imageManagementsMap.put(repositoryDirectoryPath, imageManagement);
+			}
 		}
 
 		return imageManagement;

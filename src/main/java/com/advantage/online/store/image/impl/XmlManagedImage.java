@@ -46,7 +46,7 @@ class XmlManagedImage implements ManagedImage {
 		ArgumentValidationHelper.validateArgumentIsNotNull(imageFile, "image file");
 		final XmlItem imageManagementXmlItem = xmlImageManagement.getImageManagementXmlItem();
 		managedImageXmlItem = imageManagementXmlItem.addChildXmlItem(XmlManagedImage.TAG_MANAGED_IMAGE,
-				                                         null);
+				                                                     null);
 		managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_ID, id);
 		final String type = FileSystemHelper.extractFileExtension(imageFile.getName());
 		managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_TYPE, type);
