@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.image.ImageManagementAccess;
 import com.advantage.online.store.image.ManagedImage;
@@ -24,9 +26,19 @@ public class FetchImageHttpServlet extends HttpServlet {
 	private ImageManagement imageManagement;
 
 	@Override
-	public void init() {
+	public void init() throws ServletException {
 
 		final String repositoryDirectoryPath = getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+
+		if (StringUtils.isBlank(repositoryDirectoryPath)) {
+
+			final StringBuilder errorMessage = new StringBuilder("Init parameter [");
+			errorMessage.append(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+			errorMessage.append("] must be set");
+			final String errorMessageString = errorMessage.toString();
+			throw new ServletException(errorMessageString);
+		}
+
 		imageManagement = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
 	}
 
@@ -37,7 +49,7 @@ public class FetchImageHttpServlet extends HttpServlet {
 		ArgumentValidationHelper.validateArgumentIsNotNull(req,  "HTTP servlet request");
 		ArgumentValidationHelper.validateArgumentIsNotNull(res,  "HTTP servlet response");
 		final String imageId = req.getParameter(FetchImageHttpServlet.REQUEST_PARAM_IMAGE_ID);
-		final ManagedImage managedImage = imageManagement.getManagedImage(imageId);
+		final ManagedImage managedImage = imageManagement.getManagedImage(imageId);		
 		final StringBuilder contentType = new StringBuilder("image/");
 		final String imageType = managedImage.getType();
 		contentType.append(imageType);
