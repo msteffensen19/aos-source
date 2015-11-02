@@ -18,7 +18,8 @@ class XmlManagedImage implements ManagedImage {
 
 	private static final String CHILD_TAG_ID = "Id";
 	private static final String CHILD_TAG_TYPE = "Type";
-	private static final String CHILD_TAG_FILE_NAME = "FileName";
+	private static final String CHILD_TAG_MANAGED_FILE_NAME = "ManagedFileName";
+	private static final String CHILD_TAG_ORIGINAL_FILE_NAME = "OriginalFileName";
 
 	private final XmlImageManagement xmlImageManagement;
 	private final XmlItem managedImageXmlItem;
@@ -38,7 +39,7 @@ class XmlManagedImage implements ManagedImage {
 	}
 
 	XmlManagedImage(final XmlImageManagement xmlImageManagement, final String id,
-	 final File imageFile) {
+	 final File imageFile, final boolean copyToRepository) throws IOException {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(xmlImageManagement,
                                                            "xml image management");
@@ -50,8 +51,24 @@ class XmlManagedImage implements ManagedImage {
 		managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_ID, id);
 		final String type = FileSystemHelper.extractFileExtension(imageFile.getName());
 		managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_TYPE, type);
-		final String fileName = imageFile.getName();
-		managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_FILE_NAME, fileName);
+		final String originalFileName = imageFile.getName();
+		managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_ORIGINAL_FILE_NAME,
+				                            originalFileName);
+
+		if (copyToRepository) {
+
+			final String managedFileName = id + "." + type;
+			final String managedFilePath = xmlImageManagement.figureManagedImageFilePath(managedFileName);
+			final byte[] originalFileContent = IOHelper.fileContentToByteArray(imageFile);
+			IOHelper.outputInput(originalFileContent, managedFilePath);
+			managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_MANAGED_FILE_NAME,
+                                                managedFileName);
+		} else {
+
+			managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_MANAGED_FILE_NAME,
+                                                originalFileName);
+		}
+
 		this.xmlImageManagement = xmlImageManagement;
 	}
 
@@ -74,15 +91,21 @@ class XmlManagedImage implements ManagedImage {
 	}
 
 	@Override
-	public String getFileName() {
+	public String getManagedFileName() {
 
-		return managedImageXmlItem.getFirstChildTextContent(XmlManagedImage.CHILD_TAG_FILE_NAME);
+		return managedImageXmlItem.getFirstChildTextContent(XmlManagedImage.CHILD_TAG_MANAGED_FILE_NAME);
+	}
+
+	@Override
+	public String getOriginalFileName() {
+
+		return managedImageXmlItem.getFirstChildTextContent(XmlManagedImage.CHILD_TAG_ORIGINAL_FILE_NAME);
 	}
 
 	@Override
 	public byte[] getContent() throws IOException {
 
-		final String fileName = getFileName();
+		final String fileName = getManagedFileName();
 		final String filePathString = xmlImageManagement.figureManagedImageFilePath(fileName);
 		return IOHelper.fileContentToByteArray(filePathString);
 	}

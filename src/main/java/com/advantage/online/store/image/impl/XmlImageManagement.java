@@ -16,7 +16,6 @@ import org.w3c.dom.Element;
 import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.image.ManagedImage;
 import com.advantage.util.ArgumentValidationHelper;
-import com.advantage.util.IOHelper;
 import com.advantage.util.fs.FileSystemHelper;
 import com.advantage.util.xml.XmlHelper;
 import com.advantage.util.xml.XmlItem;
@@ -57,18 +56,10 @@ class XmlImageManagement implements ImageManagement {
 	 final boolean copyToRepository) throws IOException {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(imageFile, "image file");
-
-		if (copyToRepository) {
-
-			final byte[] fileContent = IOHelper.fileContentToByteArray(imageFile);
-			final String imageFileName = imageFile.getName();
-			final String newImageFilePath = figureManagedImageFilePath(imageFileName);
-			IOHelper.outputInput(fileContent, newImageFilePath);
-		}
-
 		final UUID uid = UUID.randomUUID();
 		final String uidString = uid.toString();
-		final XmlManagedImage managedImage = new XmlManagedImage(this, uidString, imageFile);
+		final XmlManagedImage managedImage = new XmlManagedImage(this, uidString, imageFile,
+				                                                 copyToRepository);
 		final String managedImageId = managedImage.getId();
 		managedImagesMap.put(managedImageId, managedImage);
 		return managedImage;

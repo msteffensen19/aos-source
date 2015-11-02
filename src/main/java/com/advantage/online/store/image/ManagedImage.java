@@ -7,6 +7,7 @@ public interface ManagedImage {
 	ImageManagement getImageManagement();
 	String getId();
 	String getType();
-	String getFileName();
+	String getManagedFileName();
+	String getOriginalFileName();
 	byte[] getContent() throws IOException;
 }
