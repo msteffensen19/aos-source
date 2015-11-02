@@ -160,4 +160,42 @@ public abstract class FileSystemHelper {
 
 		return directoryCreated;
 	}
+
+	/**
+	 * Check if the two given file system paths, are the same. The paths will be considered
+	 * as matching, even if they don't use the same file separator string, and even if there
+	 * is no match in the letters case.
+	 * <br/>
+	 * For example:
+	 * <ul>
+	 *     <li>
+	 *         if path 1 is <b>&quot;C:\Temp/test.txt&quot;</b>, and path 2 is
+	 *         <b>&quot;c:/temp/test.TXT&quot;</b>, the method will return <b>true</b>.
+	 *     </li>
+	 *     <li>
+	 *         if path 1 is <b>&quot;C:/Temp&quot;</b>, and path 2 is
+	 *         <b>&quot;c:\temp&quot;</b>, the method will return <b>true</b>.
+	 *     </li>
+	 *     <li>
+	 *         if path 1 is <b>&quot;D:/Temp&quot;</b>, and path 2 is
+	 *         <b>&quot;c:\temp&quot;</b>, the method will return <b>false</b>.
+	 *     </li>
+	 * </ul>
+	 * @param path1 a file system path to match.
+	 * @param path2 a file system path to match.
+	 * @return <b>true</b>, if path 1 and path 2 are the same path, or <b>false</b>
+	 * otherwise.
+	 * @throws IllegalArgumentException if any one of the arguments references <b>null</b>,
+	 * or <b>is</b> a blank string.
+	 */
+	public static boolean matchingFileSystemPaths(final String path1, final String path2) {
+
+		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(path1, "path 1");
+		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(path2, "path 2");
+		final String trimmedPath1 = path1.trim();
+		final String trimmedPath2 = path2.trim();
+		final String fixedPath1 = trimmedPath1.replace('\\', '/');
+		final String fixedPath2 = trimmedPath2.replace('\\', '/');
+		return fixedPath1.equalsIgnoreCase(fixedPath2);
+	}
 }
