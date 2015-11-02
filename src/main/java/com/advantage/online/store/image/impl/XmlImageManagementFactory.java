@@ -13,6 +13,7 @@ public class XmlImageManagementFactory extends ImageManagementFactory {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(repositoryDirectoryPath,
                                                                             "repository directory path");
+
 		try {
 
 			return new XmlImageManagement(repositoryDirectoryPath);

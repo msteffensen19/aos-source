@@ -5,9 +5,13 @@ import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.env.Environment;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,6 +19,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.advantage.online.store.config.ImageManagementConfiguration;
 import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.image.ImageManagementAccess;
 
@@ -22,7 +27,11 @@ import com.advantage.online.store.image.ImageManagementAccess;
 @ComponentScan({"com.advantage.online.store.services",
 	            "com.advantage.online.store.dao",
                 "com.advantage.online.store.init"})
+@PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
+
+	@Autowired
+	private Environment environment;
 
 	@Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory,
@@ -66,6 +75,7 @@ public class AdvantageTestContextConfiguration {
     @Bean(name = "imageManagement")
 	public ImageManagement getImageManagement() {
 
-		return ImageManagementAccess.getImageManagement("C:/Temp/advantage");
+    	final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
+		return ImageManagementAccess.getImageManagement(imageManagementRepository);
 	}
 }

@@ -33,15 +33,17 @@ public class DataSourceInit {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        final ManagedImage managedImage1 = imageManagement.addManagedImage("C:/Temp/advantage/Laptop.jpg", false);
-        final Category category1 = new Category("LAPTOPS", managedImage1.getContent());
-        category1.setManagedImageId(managedImage1.getId());
-        session.persist(category1);
-
+        
         final ManagedImage managedImage2 = imageManagement.addManagedImage("C:/Temp/advantage/Headphones.png", false);
         final Category category2 = new Category("HEADPHONES", managedImage2.getContent());
         category2.setManagedImageId(managedImage2.getId());
         session.persist(category2);
+        
+        final ManagedImage managedImage1 = imageManagement.addManagedImage("C:/Temp/advantage/Laptop.jpg", false);
+        final Category category1 = new Category("LAPTOPS", managedImage1.getContent());
+        category1.setManagedImageId(managedImage1.getId());
+        session.persist(category1);
+        
 
         final ManagedImage managedImage3 = imageManagement.addManagedImage("C:/Temp/advantage/Tablet.jpg", false);
         final Category category3 = new Category("TABLETS", managedImage3.getContent());
@@ -62,6 +64,7 @@ public class DataSourceInit {
         final Category category6 = new Category("BAGS & CASES", managedImage6.getContent());
         category6.setManagedImageId(managedImage6.getId());
         session.persist(category6);
+        imageManagement.persist();
 
         Product product = new Product("HP EliteBook Folio", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 550, category1);
         product.setColorName("yellow");
