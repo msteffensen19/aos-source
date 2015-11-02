@@ -29,12 +29,9 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
 	public void testGetCategoryProductsFetch() {
 
     	final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-    	final Category category1 = categoryRepository.createCategory("LAPTOPS",
-   	                                                                new byte[]{1, 2, 3, 4});
-    	final Category category2 = categoryRepository.createCategory("CELL PHONES",
-                                                                     new byte[]{1, 2, 3, 4});
-    	final Category category3 = categoryRepository.createCategory("KEYBOARDS",
-                                                                     new byte[]{1, 2, 3, 4});
+    	final Category category1 = categoryRepository.createCategory("LAPTOPS", "1234");
+    	final Category category2 = categoryRepository.createCategory("CELL PHONES", "1234");
+    	final Category category3 = categoryRepository.createCategory("KEYBOARDS", "1234");
     	final int CATEGORY1_PRODUCTS_COUNT = 10;
     	final int CATEGORY2_PRODUCTS_COUNT = 5;
 

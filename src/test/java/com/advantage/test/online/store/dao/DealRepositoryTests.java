@@ -37,7 +37,7 @@ public class DealRepositoryTests extends GenericRepositoryTests {
 
     	final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
     	final Category category = categoryRepository.createCategory("LAPTOPS",
-   	                                                                new byte[]{1, 2, 3, 4});
+   	                                                                "1234");
     	final Product product = productRepository.createProduct("LG G3",
     			                                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     			                                                400, category);
@@ -70,7 +70,7 @@ public class DealRepositoryTests extends GenericRepositoryTests {
     	final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
     	final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
     	final Category category = categoryRepository.createCategory("LAPTOPS",
-   	                                                                new byte[]{1, 2, 3, 4});
+    			                                                    "1234");
     	final Product product = productRepository.createProduct("LG G3",
     			                                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     			                                                400, category);

@@ -1,7 +1,13 @@
 package com.advantage.online.store.model;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * Created by kubany on 10/15/2015.
@@ -31,20 +37,14 @@ public class Category {
     @Column(name = "category_name")
     private String categoryName;
 
-    private byte[] image;
     @Column(name = "managed_image_id")
     private String managedImageId;
 
-    @OneToMany(mappedBy="category")
-    private Set<Product> products;
+    //@OneToMany(mappedBy="category")
+    //private Set<Product> products;
 
-    public Category(String categoryName, byte[] photoBytes) {
-        this.image = photoBytes;
-        this.categoryName = categoryName;
-    }
-    
-    public Category(String categoryName, final String managedImageId) {
-    	
+    public Category(final String categoryName, final String managedImageId) {
+
         this.categoryName = categoryName;
         this.managedImageId = managedImageId;
     }
@@ -69,15 +69,7 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-    
-    public void setManagedImageId(final String managedImageId) {
+     public void setManagedImageId(final String managedImageId) {
     	
     	this.managedImageId = managedImageId;
     }
