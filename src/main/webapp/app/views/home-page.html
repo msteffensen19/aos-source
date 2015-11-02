@@ -2,7 +2,8 @@
     <div id="our_products" class="row">
         <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[0].categoryId)">
             <div class="square home_page_bg_with_txt"
-                 style="background-image: url({{categories[0].image}});background-position: 85% 40%;background-size: 55%">
+                 ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[0].managedImageId+')'} : {}"
+                 style="background-position: 85% 40%;background-size: 55%">
                 <div class="home_page_label_container">
                     <label class="home_page_cat_title" style="display: block;">{{categories[0].categoryName}}</label>
                     <label class="home_page_cat_sub_title txt_green_color">{{ 'SHOP_NOW' | translate }}</label>
@@ -10,7 +11,8 @@
             </div>
         </div>
         <div class="col-xs-4 col-md-no-padding products_cursor_pointer" ng-click="goToCategory(categories[1].categoryId)">
-            <div class="square" style="background-image: url({{categories[1].image}})">
+            <div class="square"
+                 ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[1].managedImageId+')'} : {}">
                 <div class="home_page_label_container">
                     <label class="home_page_cat_title" style="display: block;">{{categories[1].categoryName}}</label>
                     <label class="home_page_cat_sub_title txt_green_color">{{ 'SHOP_NOW' | translate }}</label>
@@ -19,7 +21,8 @@
         </div>
         <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[2].categoryId)">
             <div class="square home_page_bg_with_txt"
-                 style="background-image: url({{categories[2].image}});background-size: 47%;background-position-y: 30%;">
+                 ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[2].managedImageId+')'} : {}"
+                 style="background-size: 47%;background-position-y: 30%;">
                 <div class="home_page_label_container">
                     <label class="home_page_cat_title" style="display: block;">{{categories[2].categoryName}}</label>
                     <label class="home_page_cat_sub_title txt_green_color">{{ 'SHOP_NOW' | translate }}</label>
@@ -30,7 +33,8 @@
 
     <div class="row">
     <div class="col-xs-4 col-md-no-padding products_cursor_pointer" ng-click="goToCategory(categories[3].categoryId)">
-        <div class="square " style="background-image: url({{categories[3].image}})">
+        <div class="square "
+             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[3].managedImageId+')'} : {}">
             <div class="home_page_label_container">
                 <label class="home_page_cat_title" style="display: block;">{{categories[3].categoryName}}</label>
                 <label class="home_page_cat_sub_title txt_green_color">{{ 'SHOP_NOW' | translate }}</label>
@@ -39,7 +43,8 @@
     </div>
     <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[4].categoryId)">
         <div class="square home_page_bg_with_txt"
-             style="background-image: url({{categories[4].image}});background-position-y: 70%;">
+             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[4].managedImageId+')'} : {}"
+             style="background-position-y: 70%;">
             <div class="home_page_label_container">
                 <label class="home_page_cat_title" style="display: block;">{{categories[4].categoryName}}</label>
                 <label class="home_page_cat_sub_title txt_green_color">{{ 'SHOP_NOW' | translate }}</label>
@@ -48,7 +53,9 @@
 
     </div>
     <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[5].categoryId)">
-        <div class="square home_page_bg_with_txt" style="background-image: url({{categories[5].image}});background-size: 73%;
+        <div class="square home_page_bg_with_txt"
+             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[5].managedImageId+')'} : {}"
+             style="background-size: 73%;
     background-position-x: 90%;
     background-position-y: 21%;">
             <div class="home_page_label_container">

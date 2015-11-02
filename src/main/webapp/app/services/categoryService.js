@@ -7,7 +7,8 @@ define(['./module'], function (services) {
 
         return{
             getCategories : getCategories,
-            getCategoryProducts : getCategoryProducts
+            getCategoryProducts : getCategoryProducts,
+            getMockData : getMockData
         }
 
         function getCategories() {
@@ -25,6 +26,17 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 url: "api/categoryProducts?category_id=" + id
+                //params: {
+                //    action: "get"
+                //}
+            });
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+        }
+
+        function getMockData(id) {
+            var request = $http({
+                method: "get",
+                url: "app/categoryProducts.json"
                 //params: {
                 //    action: "get"
                 //}
