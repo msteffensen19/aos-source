@@ -19,9 +19,9 @@ public class CategoryService {
     public CategoryRepository categoryRepository;
 
     @Transactional
-    public Category createCategory(final String name, final byte[] image) {
+    public Category createCategory(final String name, final String managedImageId) {
     	
-    	return categoryRepository.createCategory(name, image);
+    	return categoryRepository.createCategory(name, managedImageId);
     }
 
     @Transactional(readOnly = true)
