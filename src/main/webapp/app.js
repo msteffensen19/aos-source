@@ -42,7 +42,7 @@ define([
                 }).
                 when('/', {
                     controller: 'categoriesCtrl',
-                    templateUrl: './app/views/home-page.html',
+                    templateUrl: 'app/views/home-page.html',
                 }).
                 otherwise({
                     redirectTo: '/',

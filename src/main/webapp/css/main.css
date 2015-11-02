@@ -1,5 +1,6 @@
 @import "jPushMenu.css";
 @import "button.css";
+@import "category-hover.css";
 @font-face {
     font-family: RobotoBlack;
     src: url(fonts/Roboto-Black.ttf);
@@ -19,6 +20,10 @@
 @font-face {
     font-family: RobotoRegular;
     src: url(fonts/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: RobotoThin;
+    src: url(fonts/Roboto-Thin.ttf);
 }
 body {
     height: 1366px;
@@ -61,10 +66,28 @@ footer{
 .home_page_label_container{
     position: absolute;
     padding-top: 78%;
-    font-size: 1.7vw;
     padding-left: 5%;
-    font-family: RobotoRegular;
+}
+.home_page_label_container label, .products_cursor_pointer{
+    cursor: pointer;
+}
+.home_page_cat_title{
+    font-family: RobotoBold;
+    font-size: 1.15vw;
+    color: #2a2a2a;
+}
 
+.home_page_cat_sub_title{
+    font-family: RobotoRegular;
+    font-size: 0.9vw;
+}
+.home_page_section_title{
+    font-size: 1.46vw;
+    font-family: RobotoRegular;
+    color: #2a2a2a;
+}
+.txt_green_color{
+    color: #54b3ad;
 }
 label{
     font-weight: normal;
