@@ -34,37 +34,30 @@ public class DataSourceInit {
         Transaction transaction = session.beginTransaction();
 
         
-        final ManagedImage managedImage2 = imageManagement.addManagedImage("C:/Temp/advantage/Headphones.png", false);
-        final Category category2 = new Category("HEADPHONES", managedImage2.getContent());
-        category2.setManagedImageId(managedImage2.getId());
-        session.persist(category2);
-        
-        final ManagedImage managedImage1 = imageManagement.addManagedImage("C:/Temp/advantage/Laptop.jpg", false);
-        final Category category1 = new Category("LAPTOPS", managedImage1.getContent());
-        category1.setManagedImageId(managedImage1.getId());
+        //final ManagedImage managedImage2 = imageManagement.addManagedImage("C:/Temp/advantage/Headphones.png", false);
+        final Category category1 = new Category("HEADPHONES", "1234");
         session.persist(category1);
         
+        //final ManagedImage managedImage1 = imageManagement.addManagedImage("C:/Temp/advantage/Laptop.jpg", false);
+        final Category category2 = new Category("LAPTOPS", "1235");
+        session.persist(category2);
 
-        final ManagedImage managedImage3 = imageManagement.addManagedImage("C:/Temp/advantage/Tablet.jpg", false);
-        final Category category3 = new Category("TABLETS", managedImage3.getContent());
-        category3.setManagedImageId(managedImage3.getId());
+        //final ManagedImage managedImage3 = imageManagement.addManagedImage("C:/Temp/advantage/Tablet.jpg", false);
+        final Category category3 = new Category("TABLETS", "1236");
         session.persist(category3);
 
-        final ManagedImage managedImage4 = imageManagement.addManagedImage("C:/Temp/advantage/Speakers.png", false);
-        final Category category4 = new Category("SPEAKERS", managedImage4.getContent());
-        category4.setManagedImageId(managedImage4.getId());
+        //final ManagedImage managedImage4 = imageManagement.addManagedImage("C:/Temp/advantage/Speakers.png", false);
+        final Category category4 = new Category("SPEAKERS", "1237");
         session.persist(category4);
         
-        final ManagedImage managedImage5 = imageManagement.addManagedImage("C:/Temp/advantage/Mice.png", false);
-        final Category category5 = new Category("MICE", managedImage5.getContent());
-        category5.setManagedImageId(managedImage5.getId());
+        //final ManagedImage managedImage5 = imageManagement.addManagedImage("C:/Temp/advantage/Mice.png", false);
+        final Category category5 = new Category("MICE", "1238");
         session.persist(category5);
         
-        final ManagedImage managedImage6 = imageManagement.addManagedImage("C:/Temp/advantage/Bags.png", false);
-        final Category category6 = new Category("BAGS & CASES", managedImage6.getContent());
-        category6.setManagedImageId(managedImage6.getId());
+        //final ManagedImage managedImage6 = imageManagement.addManagedImage("C:/Temp/advantage/Bags.png", false);
+        final Category category6 = new Category("BAGS & CASES", "1239");
         session.persist(category6);
-        imageManagement.persist();
+        //imageManagement.persist();
 
         Product product = new Product("HP EliteBook Folio", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 550, category1);
         product.setColorName("yellow");
