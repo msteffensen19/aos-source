@@ -11,8 +11,6 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.advantage.online.store.image.ImageManagement;
-import com.advantage.online.store.image.ManagedImage;
 import com.advantage.online.store.model.Category;
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
@@ -22,8 +20,8 @@ import com.advantage.online.store.model.Product;
 public class DataSourceInit {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
-    @Autowired
-    private ImageManagement imageManagement;
+    //@Autowired
+    //private ImageManagement imageManagement;
 
 
     public void init() throws Exception {
