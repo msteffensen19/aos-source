@@ -4,3 +4,8 @@ AOS.iml
 AOS.iml
 application.log
 application.log.1
+src/main/webapp/node_modules/*
+src/main/webapp/target/*
+src/main/webapp/vendor/*
+AOS.iml
+src/main/webapp/npm-debug.log
