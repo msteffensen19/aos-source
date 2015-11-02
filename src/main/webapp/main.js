@@ -4,12 +4,12 @@
 require.config({
     "waitSeconds" : 600,
     paths: {
-        angular: 'webjars/angularjs/1.4.7/angular.min',
-        'angular-translate': 'webjars/angular-translate/2.7.2/angular-translate',
-        'bootstrap' : 'webjars/bootstrap/3.3.5/js/bootstrap.min',
-        'jquery' : 'webjars/jquery/2.1.4/jquery.min',
+        angular: 'vendor/angular/angular.min',
+        'angular-translate': 'vendor/angular-translate/angular-translate.min',
+        'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
+        'jquery' : 'vendor/jquery/dist/jquery.min',
         'jPushMenu' : 'utils/jPushMenu',
-        'angularRoute': 'webjars/angularjs/1.4.7/angular-route.min',
+        'angularRoute': 'vendor/angular-route/angular-route.min',
     },
     shim: {
         'angular' : {'exports' : 'angular'},

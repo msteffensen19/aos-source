@@ -13,9 +13,6 @@ define(['./module'], function (controllers) {
             };
             loadRemoteData();
             function applyRemoteData( categories ) {
-                angular.forEach(categories, function(value, key){
-                    value.image = 'data:image/jpeg;base64,' + value.image;
-                });
                 $scope.categories = categories;
             }
 

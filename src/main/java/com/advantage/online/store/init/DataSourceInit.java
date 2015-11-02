@@ -11,6 +11,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.advantage.online.store.image.ImageManagement;
+import com.advantage.online.store.image.ManagedImage;
 import com.advantage.online.store.model.Category;
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
@@ -20,8 +22,8 @@ import com.advantage.online.store.model.Product;
 public class DataSourceInit {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
-    //@Autowired
-    //private ImageManagement imageManagement;
+    @Autowired
+    private ImageManagement imageManagement;
 
 
     public void init() throws Exception {
@@ -32,30 +34,41 @@ public class DataSourceInit {
         Transaction transaction = session.beginTransaction();
 
         
-        //final ManagedImage managedImage2 = imageManagement.addManagedImage("C:/Temp/advantage/Headphones.png", false);
-        final Category category1 = new Category("HEADPHONES", "1234");
-        session.persist(category1);
-        
-        //final ManagedImage managedImage1 = imageManagement.addManagedImage("C:/Temp/advantage/Laptop.jpg", false);
-        final Category category2 = new Category("LAPTOPS", "1235");
+        final ManagedImage managedImage2 = imageManagement.addManagedImage("C:/Temp/advantage/Headphones.png", false);
+        final Category category2 = new Category("HEADPHONES", managedImage2.getContent());
+        category2.setManagedImageId(managedImage2.getId());
         session.persist(category2);
 
-        //final ManagedImage managedImage3 = imageManagement.addManagedImage("C:/Temp/advantage/Tablet.jpg", false);
-        final Category category3 = new Category("TABLETS", "1236");
+        final ManagedImage managedImage3 = imageManagement.addManagedImage("C:/Temp/advantage/Tablet.jpg", false);
+        final Category category3 = new Category("TABLETS", managedImage3.getContent());
+        category3.setManagedImageId(managedImage3.getId());
         session.persist(category3);
 
-        //final ManagedImage managedImage4 = imageManagement.addManagedImage("C:/Temp/advantage/Speakers.png", false);
-        final Category category4 = new Category("SPEAKERS", "1237");
+        final ManagedImage managedImage4 = imageManagement.addManagedImage("C:/Temp/advantage/Speakers.png", false);
+        final Category category4 = new Category("SPEAKERS", managedImage4.getContent());
+        category4.setManagedImageId(managedImage4.getId());
         session.persist(category4);
+
+        final ManagedImage managedImage1 = imageManagement.addManagedImage("C:/Temp/advantage/Laptop.jpg", false);
+        final Category category1 = new Category("LAPTOPS", managedImage1.getContent());
+        category1.setManagedImageId(managedImage1.getId());
+        session.persist(category1);
         
-        //final ManagedImage managedImage5 = imageManagement.addManagedImage("C:/Temp/advantage/Mice.png", false);
-        final Category category5 = new Category("MICE", "1238");
+
+
+
+
+        
+        final ManagedImage managedImage5 = imageManagement.addManagedImage("C:/Temp/advantage/Mice.png", false);
+        final Category category5 = new Category("MICE", managedImage5.getContent());
+        category5.setManagedImageId(managedImage5.getId());
         session.persist(category5);
         
-        //final ManagedImage managedImage6 = imageManagement.addManagedImage("C:/Temp/advantage/Bags.png", false);
-        final Category category6 = new Category("BAGS & CASES", "1239");
+        final ManagedImage managedImage6 = imageManagement.addManagedImage("C:/Temp/advantage/Bags.png", false);
+        final Category category6 = new Category("BAGS & CASES", managedImage6.getContent());
+        category6.setManagedImageId(managedImage6.getId());
         session.persist(category6);
-        //imageManagement.persist();
+        imageManagement.persist();
 
         Product product = new Product("HP EliteBook Folio", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 550, category1);
         product.setColorName("yellow");
