@@ -44,8 +44,10 @@ module.exports = function(grunt) {
 
                 ]
             }
-        }
+        },
+        clean: ["target"]
 
     });
-    grunt.registerTask('default', ['requirejs', 'copy', 'cssmin']);
+    grunt.registerTask('default', ['clean','requirejs', 'copy', 'cssmin']);
+    grunt.registerTask('build', ['clean']);
 };

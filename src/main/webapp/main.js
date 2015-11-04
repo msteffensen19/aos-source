@@ -10,6 +10,7 @@ require.config({
         'jquery' : 'vendor/jquery/dist/jquery.min',
         'jPushMenu' : 'utils/jPushMenu',
         'angularRoute': 'vendor/angular-route/angular-route.min',
+        'angularAnimate' : 'vendor/angular-animate/angular-animate.min'
     },
     shim: {
         'angular' : {'exports' : 'angular'},
@@ -20,6 +21,7 @@ require.config({
             deps: ['angular']
         },
         'angularRoute': ['angular'],
+        'angularAnimate': ['angular'],
         'bootstrap': {
             deps: ['jquery']
         },
@@ -29,7 +31,7 @@ require.config({
     }
 });
 window.name = "NG_DEFER_BOOTSTRAP!";
-require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu', 'angularRoute'], function(angular, app)
+require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu', 'angularRoute', 'angularAnimate'], function(angular, app)
     {
         angular.element().ready(function() {
             // bootstrap the app manually

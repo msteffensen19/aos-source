@@ -12,7 +12,7 @@ define(['./module'], function (controllers) {
             smoothScroll.scrollTo(eID);
 
         };
-
+        $scope.showCategoryHeader = $location.path() === '/category';
         angular.element(document).ready(function () {
             $('.toggle-menu').jPushMenu({closeOnClickLink: false});
             $('.dropdown-toggle').dropdown();

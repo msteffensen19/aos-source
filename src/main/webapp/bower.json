@@ -1,7 +1,9 @@
 {
   "name": "AOS",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "angularjs-slider": "~1.0.0"
+  },
   "devDependencies": {
     "angular": "~1.4.7",
     "requirejs": "~2.1.20",

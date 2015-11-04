@@ -19,7 +19,7 @@ define(['./module'], function (controllers) {
             loadRemoteData();
 
             function loadRemoteData() {
-                categoryService.getCategoryProducts($scope.catId)
+                categoryService.getMockData($scope.catId)
                     .then(function( category ) {
                         applyRemoteData( category );
                     });
@@ -27,6 +27,7 @@ define(['./module'], function (controllers) {
 
             function applyRemoteData( category ) {
                 $scope.categoryData = category;
+                $scope.categoryAttributes = category.attributes;
                 $scope.products = category.products;
                 $scope.categoryName = category.categoryName;
                 //$scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");

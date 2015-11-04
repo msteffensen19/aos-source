@@ -13,7 +13,7 @@ define([
     './app/directives/index'
 ], function(angular) {
     // Declare app level module which depends on views, and components
-    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives', 'pascalprecht.translate', 'ngRoute'])
+    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives', 'pascalprecht.translate', 'ngRoute', 'ngAnimate'])
         .config(function($translateProvider, $routeProvider, $locationProvider) {
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
         $translateProvider.translations('en', {
@@ -25,11 +25,14 @@ define([
             LOGIN: 'Login',
             LOGOUT: 'This is a paragraph.',
             SPACIAL_OFFER : 'SPECIAL OFFER',
-            SPECIAL_OFFER_ITEMS : 'SPACIAL OFFER ITEMS',
-            SHOP_NOW : 'SHOP NOW',
+            SPECIAL_OFFER_ITEMS : 'SPECIAL OFFER ITEMS',
+            'SHOP_NOW' : 'SHOP NOW',
             POPULAR_ITEMS : 'POPULAR ITEMS',
             FOLLOW_US : 'FOLLOW US',
-            'LEGALS_FOOTER' : '© 2015 Hewlett-Packard Development Company.'
+            'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
+            'BY' : 'BY',
+            'ADD_TO_CART' : 'ADD TO CART',
+            'HOME' : 'HOME',
         });
             $routeProvider.
                 when('/AddNewOrder', {

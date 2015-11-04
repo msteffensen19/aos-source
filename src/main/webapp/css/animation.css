@@ -1,0 +1,50 @@
+.thumb-hover{
+    opacity: 0.5;
+    transition: opacity 0s;
+}
+.product-hover:hover .thumbnail.thumb-hover
+{
+    opacity: 1;
+    transition: opacity 0s;
+}
+.add-to-cart-div{
+    visibility: hidden;
+    opacity: 0.5;
+
+}
+.product-hover:hover .add-to-cart-div{
+    visibility: visible;
+    opacity: 1;
+
+}
+
+
+/*.ng-enter,*/
+/*.ng-leave {*/
+    /*-webkit-transition:0.5s linear all;*/
+    /*transition:0.5s linear all;*/
+/*}*/
+
+/*.ng-enter,*/
+/*.ng-leave.ng-leave-active {*/
+    /*opacity:0;*/
+/*}*/
+/*.ng-leave,*/
+/*.ng-enter.ng-enter-active {*/
+    /*opacity:1;*/
+/*}*/
+
+/*.insert-enter {*/
+    /*-webkit-transform:scale(0);*/
+    /*-webkit-transition-property: all;*/
+    /*-webkit-transition-timing-function: ease-out-cubic;*/
+    /*-webkit-transition-duration: 400ms;*/
+    /*transform: scale(0);*/
+    /*transition-property: all;*/
+    /*transition-timing-function: ease-out-cubic;*/
+    /*transition-duration: 400ms;*/
+/*}*/
+/*.insert-enter.insert-enter-active {*/
+    /*-webkit-transform:scale(1);*/
+    /*transform:scale(1);*/
+/*}*/

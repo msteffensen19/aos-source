@@ -1,0 +1,256 @@
+{
+    "id": 1,
+    "categoryName": "LAPTOPS",
+  "attributes" : [
+    {"attributeName" : "CUSTOMIZATION", "attributeValues" : ["Business", "Gaming", "Simplicity", "2-in-1", "Powerful PCs"], "attributeId" : 1},
+    {"attributeName" : "PRICE", "attributeValues" : [100, 200, 300, 400], "attributeId" : 4},
+    {"attributeName" : "COLOR", "attributeValues" : ["FFFFFF", "000000", "FA4b35"], "attributeId" : 2},
+    {"attributeName" : "OPERATING SYSTEM", "attributeValues" : ["Chrome", "Windows 10", "Windows 8"], "attributeId" : 3},
+    {"attributeName" : "PROCESSOR", "attributeValues" : ["intel(R) Core(TM) i5-6300HQ"], "attributeId" : 5},
+    {"attributeName" : "DISPLAY", "attributeValues" : [], "attributeId" : 6},
+    {"attributeName" : "MEMORY", "attributeValues" : [], "attributeId" : 7}
+  ],
+    "products": [
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Business"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Business"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Business"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "HP EliteBook Folio",
+        "price": 550,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+        "attributes" : [
+          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+          {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+          {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+          {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+          {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+          {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+        ]
+      }
+    ]
+}
+
