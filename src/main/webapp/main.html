@@ -25,24 +25,26 @@
 </head>
 
 <body>
-<nav role="navigation" class="navbar navbar-default navbar-static-top" ng-controller="mainCtrl" style="    border-color: white;background-color: white;">
+<nav role="navigation" class="navbar navbar-default navbar-static-top" ng-controller="mainCtrl"
+     style="     margin-top: 0.5vw;
+    margin-bottom: 0.5vw;   border-color: white;background-color: white;">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    <div class="navbar-header" style="padding-left: 1vw;">
         <button type="button" data-target="#navbarCollapse" style="float: left;" data-toggle="collapse"
                 class="navbar-toggle toggle-menu menu-left push-body">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </button>
-        <a href="#/" class="navbar-brand">
-            <img src="css/images/logo.png" style="float: left;display: inline-block;">
+        </button><a style="background-image: url('css/images/logo.png'); background-repeat: no-repeat;width: 50vw;" class="navbar-brand" href="/"></a>
+        <!--<a href="#/" class="navbar-brand">-->
+            <!--<img src="css/images/logo.png" style="float: left;display: inline-block;">-->
             <!--<label>Online shopping</label>-->
         </a>
     </div>
     <!-- Collection of nav links and other content for toggling -->
     <div class="" style="    float: right;">
-        <div id="navbarCollapse" class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" style="   font-family: RobotoLight;font-size: 0.8vw;">
+        <div id="navbarCollapse" class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left roboto-ligh" style="font-size: 0.8vw;">
             <ul class="nav navbar-nav">
                 <li class="hidden_item" >
                     <a style="cursor: pointer;" ng-click="gotoElement('our_products')">{{'OUR_PRODUCTS' | translate}}</a>

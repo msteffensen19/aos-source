@@ -10,3 +10,4 @@ src/main/webapp/vendor/*
 AOS.iml
 src/main/webapp/npm-debug.log
 src/main/webapp/node_modules/*
+*.iml

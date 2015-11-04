@@ -29,5 +29,9 @@ define(['./module'], function (controllers) {
             $scope.goToCategory = function(id) {
                 $location.path('/category/' + id);
             };
+
+            $scope.uri = "http://localhost:8080/";
+            $scope.images = [0, 1, 2];
+
         }]);
 });

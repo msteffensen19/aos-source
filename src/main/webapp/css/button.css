@@ -1,6 +1,5 @@
 .btn.outline {
     background: none;
-    padding: 10px 22px;
 }
 .btn-primary.outline {
     border: 1px solid #54b3ad;
@@ -17,7 +16,6 @@
     box-shadow: none;
 }
 .btn-medium-txt{
-    font-family: RobotoMedium;
     font-size: 0.73vw;
 }
 .checkbox label:after,

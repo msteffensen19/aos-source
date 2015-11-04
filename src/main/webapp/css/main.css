@@ -68,7 +68,6 @@ footer{
     cursor: pointer;
 }
 .home_page_cat_title{
-    font-family: RobotoBold;
     font-size: 1.15vw;
     color: #2a2a2a;
 }
@@ -81,10 +80,10 @@ footer{
     margin: 0 5%;
     font-size: 0.9vw;
     line-height: 1.25em;
+    cursor: pointer;
 }
 .home_page_section_title{
     font-size: 1.46vw;
-    font-family: RobotoRegular;
     color: #2a2a2a;
 }
 .txt_green_color{
@@ -94,7 +93,6 @@ label{
     font-weight: normal;
 }
 .home_page_bg_with_txt{
-    font-family: RobotoBlack;
     background-size: 62%;
     background-repeat: no-repeat;
     background-position-x: 100%;
@@ -175,9 +173,10 @@ label{
     left: 0;
     background: rgba(0,0,0,.75);
      opacity: 0;
-    -webkit-transition: .3s;
-    transition: .3s;
+    -webkit-transition: .5s;
+    transition: .5s;
     z-index: 1;
+
 }
 
 .square.home_page_bg_with_txt:hover .overlay,

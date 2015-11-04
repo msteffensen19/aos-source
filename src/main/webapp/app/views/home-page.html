@@ -1,11 +1,11 @@
 <div  class="" >
     <div id="our_products" class="row">
         <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[0].categoryId)">
-            <div class="square home_page_bg_with_txt"
+            <div class="square home_page_bg_with_txt roboto-bold"
                  ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[0].managedImageId+')'} : {}"
                  style="background-position: 85% 40%;background-size: 55%">
                 <div class="home_page_label_container">
-                    <label class="home_page_cat_title" style="display: block;">{{categories[0].categoryName}}</label>
+                    <label class="home_page_cat_title roboto-bold" style="display: block;">{{categories[0].categoryName}}</label>
 
                 </div>
                 <div class="overlay">
@@ -18,7 +18,7 @@
             <div class="square home-page-bg-no-txt"
                  ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[1].managedImageId+')'} : {}">
                 <div class="home_page_label_container">
-                    <label class="home_page_cat_title" style="display: block;">{{categories[1].categoryName}}</label>
+                    <label class="home_page_cat_title roboto-bold" style="display: block;">{{categories[1].categoryName}}</label>
                 </div>
                 <div class="overlay">
                     <label class="home_page_cat_sub_title txt_green_color roboto-regular">{{ 'SHOP_NOW' | translate }}</label>
@@ -27,11 +27,11 @@
             </div>
         </div>
         <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[2].categoryId)">
-            <div class="square home_page_bg_with_txt"
+            <div class="square home_page_bg_with_txt roboto-bold"
                  ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[2].managedImageId+')'} : {}"
                  style="background-size: 47%;background-position-y: 30%;">
                 <div class="home_page_label_container">
-                    <label class="home_page_cat_title" style="display: block;">{{categories[2].categoryName}}</label>
+                    <label class="home_page_cat_title roboto-bold" style="display: block;">{{categories[2].categoryName}}</label>
                 </div>
                 <div class="overlay">
                     <label class="home_page_cat_sub_title txt_green_color roboto-regular">{{ 'SHOP_NOW' | translate }}</label>
@@ -46,7 +46,7 @@
         <div class="square home-page-bg-no-txt"
              ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[3].managedImageId+')'} : {}">
             <div class="home_page_label_container">
-                <label class="home_page_cat_title" style="display: block;">{{categories[3].categoryName}}</label>
+                <label class="home_page_cat_title roboto-bold" style="display: block;">{{categories[3].categoryName}}</label>
             </div>
             <div class="overlay">
                 <label class="home_page_cat_sub_title txt_green_color roboto-regular">{{ 'SHOP_NOW' | translate }}</label>
@@ -55,11 +55,11 @@
         </div>
     </div>
     <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[4].categoryId)">
-        <div class="square home_page_bg_with_txt"
+        <div class="square home_page_bg_with_txt roboto-bold"
              ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[4].managedImageId+')'} : {}"
              style="background-position-y: 70%;">
             <div class="home_page_label_container">
-                <label class="home_page_cat_title" style="display: block;">{{categories[4].categoryName}}</label>
+                <label class="home_page_cat_title roboto-bold" style="display: block;">{{categories[4].categoryName}}</label>
             </div>
             <div class="overlay">
                 <label class="home_page_cat_sub_title txt_green_color roboto-regular">{{ 'SHOP_NOW' | translate }}</label>
@@ -69,13 +69,13 @@
 
     </div>
     <div class="col-xs-4 col-md-no-padding product_div_gradient products_cursor_pointer" ng-click="goToCategory(categories[5].categoryId)">
-        <div class="square home_page_bg_with_txt"
+        <div class="square home_page_bg_with_txt roboto-bold"
              ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[5].managedImageId+')'} : {}"
              style="background-size: 73%;
     background-position-x: 90%;
     background-position-y: 21%;">
             <div class="home_page_label_container">
-                <label class="home_page_cat_title" style="display: block;">{{categories[5].categoryName}}</label>
+                <label class="home_page_cat_title roboto-bold" style="display: block;">{{categories[5].categoryName}}</label>
             </div>
             <div class="overlay">
                 <label class="home_page_cat_sub_title txt_green_color roboto-regular">{{ 'SHOP_NOW' | translate }}</label>
@@ -88,7 +88,7 @@
 
     <div style="padding-top: 10px;"></div>
     <div id="special_offer_items" class="row" style="text-align: center">
-        <div class="col-xs-12 col-md-no-padding home_page_section_title" style="padding-top: 3%;">{{'SPACIAL_OFFER' | translate}}
+        <div class="col-xs-12 col-md-no-padding home_page_section_title roboto-regular" style="padding-top: 3%;">{{'SPACIAL_OFFER' | translate}}
         </div>
     </div>
     <div class="row">
@@ -99,20 +99,38 @@
             <!--<img class="img-responsive" src="css/images/Special-offer.jpg">-->
         </div>
         <div class="col-xs-3 col-md-no-padding" style="    padding-top: 8%;">
-            <label class="col-xs-12 col-md-no-padding"
-                   style="font-family: RobotoLight;font-size: 1.6vw;color: #2a2a2a;">{{deal.name}}</label>
-            <label style="font-family: RobotoThin; font-size: 1.7vw;color: #2a2a2a;" class="col-xs-12 col-md-no-padding">{{deal.product.productName}}</label>
-            <label style="font-family: RobotoLight;font-size: 0.834vw;color: #9d9d9d;" class="col-xs-12 col-md-no-padding">{{deal.description}}</label>
-            <button class="col-xs-4 col-md-no-padding btn btn-primary btn-lg outline btn-medium-txt" type="button">{{ 'SHOP_NOW' | translate}}</button>
+            <label class="col-xs-12 col-md-no-padding roboto-light"
+                   style="font-size: 1.6vw;color: #2a2a2a;">{{deal.name}}</label>
+            <label style=" font-size: 1.7vw;color: #2a2a2a;" class="col-xs-12 col-md-no-padding roboto-thin">{{deal.product.productName}}</label>
+            <label style="font-size: 0.834vw;color: #9d9d9d;" class="col-xs-12 col-md-no-padding roboto-light">{{deal.description}}</label>
+            <button class="col-xs-4 col-md-no-padding btn btn-primary btn-lg outline roboto-medium" type="button">{{ 'SHOP_NOW' | translate}}</button>
         </div>
     </div>
     <div style="padding-top: 10px;"></div>
 
     <div class="row">
         <div class="col-xs-12 col-md-no-padding ">
-            <div class="square"
-                 style="background-image: url('css/images/Banner2.jpg');background-size: 100%;background-repeat: no-repeat;padding-bottom: 33%;">
-            </div>
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" ng-repeat="img in images" class="{active : ({{img === 0}})}" data-slide-to="{{img}}"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div ng-class="{item: true, active : (img === 0)}" ng-repeat="img in images">
+                                <div class="square"
+                                     style="background-image: url('css/images/Banner2.jpg');background-size: 100%;background-repeat: no-repeat;padding-bottom: 33%;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.carousel -->
+
+                    <!-- Fixed navbar -->
+
+            <!--<div class="square"-->
+                 <!--style="background-image: url('css/images/Banner2.jpg');background-size: 100%;background-repeat: no-repeat;padding-bottom: 33%;">-->
+            <!--</div>-->
         </div>
     </div>
     <div style="padding-top: 3%;"></div>
