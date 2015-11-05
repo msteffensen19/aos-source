@@ -10,7 +10,8 @@
     "angular-translate": "~2.7.2",
     "jquery": "2.1.4",
     "bootstrap": "~3.3.5",
-    "angular-route": "~1.4.7"
+    "angular-route": "~1.4.7",
+    "angular-animate": "~1.4.7"
   },
   "resolutions": {
     "angular": "~1.4.7"
