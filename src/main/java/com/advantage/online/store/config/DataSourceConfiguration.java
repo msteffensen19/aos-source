@@ -18,6 +18,10 @@ import liquibase.integration.spring.SpringLiquibase;
 @Configuration
 public class DataSourceConfiguration {
 
+    public static final String ENV_HIBERNATE_DB_LOGIN = "hibernate.db.login";
+    public static final String ENV_HIBERNATE_DB_PASSWORD = "hibernate.db.password";
+    public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "hibernate.db.driver_classname";
+    public static final String ENV_HIBERNATE_DB_URL = "hibernate.db.url";
     @Inject
     private Environment env;
 
@@ -29,10 +33,11 @@ public class DataSourceConfiguration {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/advantage-online-shopping?loglevel=0");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("admin");
+        dataSource.setDriverClassName(env.getProperty(ENV_HIBERNATE_DB_DRIVER_CLASSNAME));
+        dataSource.setUrl(env.getProperty(ENV_HIBERNATE_DB_URL));
+        dataSource.setUsername(env.getProperty(ENV_HIBERNATE_DB_LOGIN));
+        dataSource.setPassword(env.getProperty(ENV_HIBERNATE_DB_PASSWORD));
+
         return dataSource;
     }
 
