@@ -26,43 +26,69 @@ define(['./module'], function (directives) {
                 scope.attributeChecked = [];
 
 
-                scope.productsFilter = function(product) {
-                    //if (scope.productsInclude.length > 0) {
-                    //    if ($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: attributeVal}, false)[0]),
-                    //            $.map(product.attributes, JSON.stringify) ) < 0)
-                    //        return;
-                    //}
+                //scope.productsFilter = function(product) {
+                //    //if (scope.productsInclude.length > 0) {
+                //    //    if ($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: attributeVal}, false)[0]),
+                //    //            $.map(product.attributes, JSON.stringify) ) < 0)
+                //    //        return;
+                //    //}
+                //
+                //    return product;
+                //}
 
-                    return product;
-                }
+                scope.includeProducts = function($event, attributeVal, attributesName) {
 
-                scope.includeProducts = function($event, attributeVal) {
-
-                    var i = $.inArray(attributeVal, scope.productsInclude);
+                    var i = $.inArray(attributeVal, scope.productsInclude[attributesName]);
                     if (i > -1) {
-                        scope.productsInclude.splice(i, 1);
+                        scope.productsInclude[attributesName].splice(i, 1);
+                        if(scope.productsInclude[attributesName].length == 0)
+                            delete scope.productsInclude[attributesName];
                     } else {
-                        scope.productsInclude.push(attributeVal);
+                        if(scope.productsInclude[attributesName] != undefined)
+                            scope.productsInclude[attributesName].push(attributeVal);
+                        else
+                        {
+                            scope.productsInclude[attributesName] = [];
+                            scope.productsInclude[attributesName].push(attributeVal);
+                        }
                     }
 
                 }
 
                 scope.productsFilter = function(product) {
-                    if (scope.productsInclude.length > 0) {
-                        var found = false;
-                        for(var i = 0; i < scope.productsInclude.length;i++){
-                            if($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: scope.productsInclude[i]}, false)[0]),
-                                    $.map(product.attributes, JSON.stringify)) > 0)
-                                return product;
+                    if (Object.keys(scope.productsInclude).length > 0) {
+                        var found = 0;
+                        for (var key in scope.productsInclude){
+                            for(var i = 0; i < scope.productsInclude[key].length; i++)
+                                if($.inArray(JSON.stringify($filter('filter')(product.attributes,
+                                            {attributeValue: scope.productsInclude[key][i]},
+                                            false)[0]),
+                                        $.map(product.attributes, JSON.stringify)) > -1)
+                                    found++;
                         }
+                        if(found == Object.keys(scope.productsInclude).length)
+                            return product;
                     }
                     else
                         return product;
+                    //if (scope.productsInclude.length > 0) {
+                    //    var found = 0;
+                    //    for(var i = 0; i < scope.productsInclude.length;i++){
+                    //        if($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: scope.productsInclude[i]}, false)[0]),
+                    //                $.map(product.attributes, JSON.stringify)) > 0)
+                    //            found++;
+                    //    }
+                    //    if(found == scope.productsInclude.length)
+                    //        return product;
+                    //}
+                    //else
+                    //    return product;
 
                 };
 
                 scope.clearSelection = function(){
-                    scope.productsInclude = [];
+                    for (var key in scope.productsInclude)
+                        delete scope.productsInclude[key];
                     $('.products-attribute').each(function(){
                         this.checked = false;
                     })

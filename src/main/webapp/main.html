@@ -25,7 +25,8 @@
 </head>
 
 <body>
-<nav role="navigation" class="navbar navbar-default navbar-static-top" ng-controller="mainCtrl"
+<a class="back-to-top">Back to Top</a>
+<nav role="navigation" class="navbar navbar-default navbar-static-top" data-ng-controller="mainCtrl" data-ng-init="init()"
      style="     margin-top: 0.5vw;
     margin-bottom: 0.5vw;   border-color: white;background-color: white;">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,14 +47,14 @@
     <div class="" style="    float: right;">
         <div id="navbarCollapse" class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left roboto-ligh" style="font-size: 0.8vw;">
             <ul class="nav navbar-nav">
-                <li class="hidden_item" >
-                    <a style="cursor: pointer;" ng-click="gotoElement('our_products')">{{'OUR_PRODUCTS' | translate}}</a>
+                <li class="hidden_item" ng-show="showCategoryHeader">
+                    <a style="cursor: pointer;" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
                 </li>
                 <li class="hidden_item" >
-                    <a style="cursor: pointer;" ng-click="gotoElement('special_offer_items')">{{'SPECIAL_OFFER_ITEMS' | translate}}</a>
+                    <a style="cursor: pointer;" ng-show="showCategoryHeader" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
                 </li>
                 <li class="hidden_item" >
-                    <a style="cursor: pointer;" ng-click="gotoElement('popular_items')">{{'POPULAR_ITEMS' | translate}}</a>
+                    <a style="cursor: pointer;" ng-show="showCategoryHeader" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
                 </li>
                 <li>
                         <a style="display: inline-block;" href="#" ><img src="css/images/Sesrch.jpg" id="search_image"></a>

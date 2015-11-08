@@ -12,7 +12,7 @@
                     <div class="panel panel-default panel-border-no-radius" >
                         <div class="panel-heading">
                             <h4 class="panel-title roboto-regular" >
-                                <a id="panel-heading-a{{attrib.attributeId}}" data-toggle="collapse" data-target="#collapseOne"
+                                <a style="text-decoration: none;cursor: pointer;" id="panel-heading-a{{attrib.attributeId}}" data-toggle="collapse" data-target="#collapseOne"
                                    ng-click="toggleColapse(attrib.attributeId)" class="collapsed">
                                     {{'BY' | translate }}&nbsp;{{attrib.attributeName}}
                                 </a>
@@ -23,7 +23,7 @@
                             <div class="panel-body" ng-repeat="attrVal in attrib.attributeValues">
                                 <div class="checkbox">
                                     <label style="padding-left: 0px" >
-                                        <input type="checkbox" class="products-attribute" ng-click="includeProducts($event, attrVal)" ng-model="item.selected">
+                                        <input type="checkbox" class="products-attribute" ng-click="includeProducts($event, attrVal, attrib.attributeName)" ng-model="item.selected">
                                         <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                         {{attrVal}}
                                     </label>

@@ -11,9 +11,14 @@ define(['./module'], function (controllers) {
             $scope.form = {
                 name: ""
             };
+            $scope.popularProducts = ""
+
             loadRemoteData();
             function applyRemoteData( categories ) {
                 $scope.categories = categories;
+                $('.carousel').carousel({
+                    interval: 5000
+                });
             }
 
             function loadRemoteData() {
@@ -24,6 +29,9 @@ define(['./module'], function (controllers) {
                 dealService.getDealOfTheDay().then(function( deal ) {
                     $scope.deal = deal;
                 });
+                categoryService.getPopularProducts().then(function(popularProducts){
+                    $scope.popularProducts = popularProducts;
+                })
             }
 
             $scope.goToCategory = function(id) {

@@ -1,6 +1,27 @@
 {
     "id": 1,
     "categoryName": "LAPTOPS",
+  "catImageUrl" : 1240,
+  "promotedProduct" : {
+    "id": 3,
+    "productName": "HP Spectre x2",
+    "staringPrice" : 490,
+    "promotionHeader" : "EXPLORE THE NEW DESIGN",
+    "promotionSubHeader" : "Supremely thin, yet incredibly durable",
+    "price": 550,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+    "promotionImageId" : "1240",
+    "attributes" : [
+      {"attributeName" : "PRICE", "attributeValue" : 400},
+      {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+      {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
+      {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+      {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+      {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+      {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+    ]
+  },
   "attributes" : [
     {"attributeName" : "CUSTOMIZATION", "attributeValues" : ["Business", "Gaming", "Simplicity", "2-in-1", "Powerful PCs"], "attributeId" : 1},
     {"attributeName" : "PRICE", "attributeValues" : [100, 200, 300, 400], "attributeId" : 4},
@@ -34,7 +55,7 @@
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
         "attributes" : [
-          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "PRICE", "attributeValue" : 100},
           {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
           {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
           {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
@@ -82,7 +103,7 @@
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
         "attributes" : [
-          {"attributeName" : "PRICE", "attributeValue" : 400},
+          {"attributeName" : "PRICE", "attributeValue" : 100},
           {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
           {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome"},
           {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Business"},

@@ -8,7 +8,8 @@ define(['./module'], function (services) {
         return{
             getCategories : getCategories,
             getCategoryProducts : getCategoryProducts,
-            getMockData : getMockData
+            getMockData : getMockData,
+            getPopularProducts : getPopularProducts
         }
 
         function getCategories() {
@@ -37,6 +38,16 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 url: "app/categoryProducts.json"
+                //params: {
+                //    action: "get"
+                //}
+            });
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+        };
+        function getPopularProducts() {
+            var request = $http({
+                method: "get",
+                url: "app/popularProducts.json"
                 //params: {
                 //    action: "get"
                 //}

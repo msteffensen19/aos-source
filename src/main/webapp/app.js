@@ -33,6 +33,9 @@ define([
             'BY' : 'BY',
             'ADD_TO_CART' : 'ADD TO CART',
             'HOME' : 'HOME',
+            'BUY_NOW' : 'BUY NOW',
+            'STARTING_AT' : 'Starting at',
+            'SEE_OFFER' : 'SEE OFFER'
         });
             $routeProvider.
                 when('/AddNewOrder', {

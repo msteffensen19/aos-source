@@ -12,7 +12,26 @@ define(['./module'], function (controllers) {
             smoothScroll.scrollTo(eID);
 
         };
-        $scope.showCategoryHeader = $location.path() === '/category';
+
+        $scope.init = function(){
+            var amountScrolled = 300;
+
+            $(window).scroll(function() {
+                if ( $(window).scrollTop() > amountScrolled ) {
+                    $('a.back-to-top').fadeIn('slow');
+                } else {
+                    $('a.back-to-top').fadeOut('slow');
+                }
+            });
+            $('a.back-to-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 700);
+                return false;
+            });
+        };
+        $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
+
         angular.element(document).ready(function () {
             $('.toggle-menu').jPushMenu({closeOnClickLink: false});
             $('.dropdown-toggle').dropdown();
@@ -22,6 +41,7 @@ define(['./module'], function (controllers) {
                 e.preventDefault();
                 productSearchInput.animate({width:'toggle'}, 'fast');
             });
+
         });
     }]);
 });

@@ -1,41 +1,28 @@
 <div id="popular_items">
     <div class="row">
     <div class="col-xs-12 col-md-no-padding roboto-regular" style="font-size: 1.7vw; text-align: center;">
-        <label class="home_page_section_title roboto-regular" style="font-weight: normal;">{{ 'POPULAR_ITEMS' | translate}}</label>
+        <label class="home_page_section_title roboto-regular" style="font-weight: normal;" translate="POPULAR_ITEMS"></label>
     </div>
 </div>
-<div class="row">
-    <div class="col-xs-4">
-        <img class="img-responsive" src="css/images/Popular-item3.jpg" style="margin: auto;"/>
+<div class="row" >
+    <div class="col-xs-4" ng-repeat="product in popularProducts" ng-if="popularProducts.length > 0">
+        <img class="img-responsive" src="{{product.imageUrl}}" style="margin: auto;"/>
     </div>
 
-    <div class="col-xs-4">
-        <img class="img-responsive" src="css/images/Popular-item2.jpg" style="margin: auto;" />
-    </div>
-
-    <div class="col-xs-4">
-        <img class="img-responsive" src="css/images/Popular-item1.jpg" style="margin: auto;" />
-    </div>
 </div>
-<div class="row" style="text-align: center;">
-    <div class="col-xs-4 col-md-no-padding ">
+<div class="row" style="text-align: center;" >
+    <div class="col-xs-4 col-md-no-padding " ng-repeat="product in popularProducts">
         <div class="row">
             <div class="col-xs-12 col-md-no-padding ">
-                <label>AAA</label>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-4 col-md-no-padding ">
-        <div class="row">
-            <div class="col-xs-12 col-md-no-padding ">
-                <label>BBB</label>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-4 col-md-no-padding ">
-        <div class="row">
-            <div class="col-xs-12 col-md-no-padding ">
-                <label>CCC</label>
+                <label style="display: block;text-align: center;">{{product.productName}}</label>
+                <div>
+                    <label class=" txt_green_color roboto-regular" style="">{{ 'SHOP_NOW' |
+                        translate
+                        }}</label>
+                    <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+    padding-bottom: 0.5%;
+    display: initial;" class="img-responsive ">
+                </div>
             </div>
         </div>
     </div>
