@@ -30,11 +30,11 @@ public abstract class HttpServletHelper {
 	 * or if it <b>is</b> a zero length array.
 	 */
 	public static void validateParametersExistenceInRequest(final HttpServletRequest request,
-     final boolean considerBlankStringAsNotExist, final String... parameterNames) {
+															final boolean considerBlankStringAsNotExist, final String... parameterNames) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
 		ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(parameterNames,
-				                                                                "parameter names");
+			"parameter names");
 		final Collection<String> nonExistingParameters = new ArrayList<String>();
 
 		for (final String parameterName : parameterNames) {
@@ -45,7 +45,7 @@ public abstract class HttpServletHelper {
 				(considerBlankStringAsNotExist && StringUtils.isBlank(parameterValue))) {
 
 				nonExistingParameters.add(parameterName);
-			} 
+			}
 		}
 
 		if (nonExistingParameters.isEmpty() == false) {
@@ -73,7 +73,7 @@ public abstract class HttpServletHelper {
 				errorMessage.append(", ");
 			}
 		}
-		
+
 		errorMessage.append("]");
 		final String errorMessageString = errorMessage.toString();
 		throw new RuntimeException(errorMessageString);

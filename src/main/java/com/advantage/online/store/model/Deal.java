@@ -1,5 +1,7 @@
 package com.advantage.online.store.model;
 
+import com.advantage.online.store.model.product.Product;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -2,7 +2,7 @@ package com.advantage.online.store.dao;
 
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
-import com.advantage.online.store.model.Product;
+import com.advantage.online.store.model.product.Product;
 
 import java.util.List;
 
