@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface DealRepository {
 
-	Deal createDeal(DealType dealType, String name, String description, Product product);
+	Deal createDeal(DealType dealType, String name, String description, double discount,
+			String dateFrom, String dateTo, Product product, String managedImageId);
 	int deleteDeal(Deal deal);
     List<Deal> getAllDeals();
     Deal getDealOfTheDay();
