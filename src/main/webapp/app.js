@@ -10,11 +10,13 @@ define([
     'jPushMenu',
     './app/controllers/index',
     './app/services/index',
-    './app/directives/index'
-], function(angular) {
+    './app/directives/index',
+    './app/templates/module',
+], function(angular, templates) {
     // Declare app level module which depends on views, and components
-    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives', 'pascalprecht.translate', 'ngRoute', 'ngAnimate'])
-        .config(function($translateProvider, $routeProvider, $locationProvider) {
+    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives', 'aos.templates', 'pascalprecht.translate', 'ngRoute', 'ngAnimate'])
+        .config(function($translateProvider, $routeProvider, $locationProvider, $httpProvider) {
+            $httpProvider.defaults.cache = true;
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
         $translateProvider.translations('en', {
             OUR_PRODUCTS : 'OUR PRODUCTS',
@@ -49,6 +51,9 @@ define([
                 when('/', {
                     controller: 'categoriesCtrl',
                     templateUrl: 'app/views/home-page.html',
+                }).
+                when('/welcome', {
+                    templateUrl: 'app/views/welcome.html',
                 }).
                 otherwise({
                     redirectTo: '/',
