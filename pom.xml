@@ -58,7 +58,7 @@
                                 <id>exec-bower-install</id>
                                 <phase>generate-sources</phase>
                                 <configuration>
-                                    <executable>bower</executable>
+                                    <executable>bower.json</executable>
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
@@ -167,7 +167,7 @@
                                 <id>exec-bower-install</id>
                                 <phase>generate-sources</phase>
                                 <configuration>
-                                    <executable>bower</executable>
+                                    <executable>bower.json</executable>
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
