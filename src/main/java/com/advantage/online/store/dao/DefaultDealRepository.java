@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.advantage.online.store.model.product.Product;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
-import com.advantage.online.store.model.Product;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
 

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.advantage.online.store.model.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.advantage.online.store.Constants;
-import com.advantage.online.store.model.Product;
 import com.advantage.online.store.services.ProductService;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.HttpServletHelper;
@@ -25,7 +25,7 @@ import com.advantage.util.HttpServletHelper;
 @RequestMapping(value = Constants.URI_API)
 public class ProductController {
 
-	private static final String REQUEST_PARAM_CATEGORY_ID = "category_id";
+    private static final String REQUEST_PARAM_CATEGORY_ID = "category_id";
 
     @Autowired
     private ProductService productService;
@@ -38,12 +38,12 @@ public class ProductController {
 
     @RequestMapping(value = "categoryProducts", method = RequestMethod.GET)
     public ResponseEntity<Object> getCategoryProducts(final HttpServletRequest request,
-     final HttpServletResponse response) {
+                                                      final HttpServletResponse response) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
         HttpServletHelper.validateParametersExistenceInRequest(request, true,
-        		                                               ProductController.REQUEST_PARAM_CATEGORY_ID);
+            ProductController.REQUEST_PARAM_CATEGORY_ID);
         final String categoryIdParameter = request.getParameter(ProductController.REQUEST_PARAM_CATEGORY_ID);
         final Long categoryId = Long.valueOf(categoryIdParameter);
         final List<Product> products = productService.getCategoryProducts(categoryId);

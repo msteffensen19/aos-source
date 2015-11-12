@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class ArgumentValidationHelper {
 
-	private static final String ARGUMENT_INFORMATIVE_NAME = "argument informative name";
+    private static final String ARGUMENT_INFORMATIVE_NAME = "argument informative name";
 
     private ArgumentValidationHelper() {
 
@@ -29,7 +29,7 @@ public abstract class ArgumentValidationHelper {
      * <b>null</b>, or if it <b>is</b> a blank string.
      */
     public static void validateArgumentIsNotNull(final Object argument,
-     final String argumentInformativeName) {
+                                                 final String argumentInformativeName) {
 
         ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
 
@@ -56,11 +56,11 @@ public abstract class ArgumentValidationHelper {
      * string.
      */
     public static void validateStringArgumentIsNotNullAndNotBlank(final String argument,
-     final String argumentInformativeName) {
+                                                                  final String argumentInformativeName) {
 
         ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
         ArgumentValidationHelper.validateArgumentIsNotNull(argument,
-        		                                           argumentInformativeName);
+            argumentInformativeName);
         final String trimmedArgument = argument.trim();
         final int trimmedArgumentLength = trimmedArgument.length();
 
@@ -87,20 +87,20 @@ public abstract class ArgumentValidationHelper {
      * string.
      */
     public static void validateCollectionArgumentIsNotNullAndNotEmpty(final Collection<?> argument,
-     final String argumentInformativeName) {
+                                                                      final String argumentInformativeName) {
 
-    	ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
-    	ArgumentValidationHelper.validateArgumentIsNotNull(argument,
-    			                                           argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentIsNotNull(argument,
+            argumentInformativeName);
 
-    	if (argument.isEmpty()) {
+        if (argument.isEmpty()) {
 
-    		final StringBuilder message = new StringBuilder("Could not accept an empty collection for argument [");
+            final StringBuilder message = new StringBuilder("Could not accept an empty collection for argument [");
             message.append(argumentInformativeName);
             message.append("]");
             final String messageString = message.toString();
             throw new IllegalArgumentException(messageString);
-    	}
+        }
     }
 
     /**
@@ -119,20 +119,20 @@ public abstract class ArgumentValidationHelper {
      * string.
      */
     public static void validateArrayArgumentIsNotNullAndNotZeroLength(final Object[] argument,
-     final String argumentInformativeName) {
+                                                                      final String argumentInformativeName) {
 
-    	ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
-    	ArgumentValidationHelper.validateArgumentIsNotNull(argument,
-                                                           argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentIsNotNull(argument,
+            argumentInformativeName);
 
-    	if (argument.length == 0) {
+        if (argument.length == 0) {
 
-    		final StringBuilder message = new StringBuilder("Could not accept a zero length array for argument [");
+            final StringBuilder message = new StringBuilder("Could not accept a zero length array for argument [");
             message.append(argumentInformativeName);
             message.append("]");
             final String messageString = message.toString();
             throw new IllegalArgumentException(messageString);
-    	}
+        }
     }
 
     /**
@@ -148,20 +148,20 @@ public abstract class ArgumentValidationHelper {
      * references <b>null</b>, or if it <b>is</b> a blank string.
      */
     public static void validateNumberArgumentIsPositive(final int argument,
-     final String argumentInformativeName) {
+                                                        final String argumentInformativeName) {
 
-    	ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
 
-    	if (argument <= 0) {
+        if (argument <= 0) {
 
-    		final StringBuilder message = new StringBuilder("Could not accept a non positive value for argument [");
+            final StringBuilder message = new StringBuilder("Could not accept a non positive value for argument [");
             message.append(argumentInformativeName);
             message.append("]: [");
             message.append(argument);
             message.append("]");
             final String messageString = message.toString();
             throw new IllegalArgumentException(messageString);
-    	}
+        }
     }
 
     private static String getNullArgumentMessage(final String argumentInformativeName) {
@@ -194,7 +194,7 @@ public abstract class ArgumentValidationHelper {
 
     private static String getBlankStringArgumentMessage(final String argumentInformativeName) {
 
-    	assert StringUtils.isNoneBlank(argumentInformativeName);
+        assert StringUtils.isNoneBlank(argumentInformativeName);
 
         final StringBuilder message = new StringBuilder("Could not accept a blank string for argument [");
         message.append(argumentInformativeName);

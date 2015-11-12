@@ -27,7 +27,7 @@ public class ExtensionsFilenameFilter implements FilenameFilter {
 	public ExtensionsFilenameFilter(final String... fileExtensions) {
 
 		ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(fileExtensions,
-				                                                                "file extensions");
+			"file extensions");
 		this.fileExtensions = fileExtensions;
 	}
 
@@ -49,7 +49,7 @@ public class ExtensionsFilenameFilter implements FilenameFilter {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(directory, "directory");
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(fileName,
-				                                                            "file name");
+			"file name");
 		boolean accept = false;
 
 		for (int i = 0; i < fileExtensions.length && accept == false; i++) {

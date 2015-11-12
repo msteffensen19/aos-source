@@ -44,10 +44,10 @@ public abstract class XmlHelper {
 	 * <b>null</b>, or if it <b>is</b> a blank string.
 	 */
 	public static Document getDocument(final String filePath)
-	 throws IOException {
+		throws IOException {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
-				                                                            "file path");
+			"file path");
 		final DocumentBuilder documentBuilder = XmlHelper.getDocumentBuilder();
 		InputStream in = null;
 
@@ -71,7 +71,7 @@ public abstract class XmlHelper {
 	public static Document newDocument() {
 
 		final DocumentBuilder documentBuilder = XmlHelper.getDocumentBuilder();
-		return documentBuilder.newDocument();		
+		return documentBuilder.newDocument();
 	}
 
 	/**
@@ -83,11 +83,11 @@ public abstract class XmlHelper {
 	 * or if the given file path argument <b>is</b> a blank string.
 	 */
 	public static void persistDocument(final Document document, final String filePath)
-	 throws IOException {
+		throws IOException {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(document, "document");
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
-                                                                            "file path");
+			"file path");
 		final TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		OutputStream out = null;
 

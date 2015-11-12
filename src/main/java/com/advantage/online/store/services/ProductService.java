@@ -2,12 +2,12 @@ package com.advantage.online.store.services;
 
 import java.util.List;
 
+import com.advantage.online.store.model.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advantage.online.store.dao.ProductRepository;
-import com.advantage.online.store.model.Product;
 import com.advantage.util.ArgumentValidationHelper;
 
 /**

@@ -30,7 +30,7 @@ public abstract class IOHelper {
     public static byte[] fileContentToByteArray(final String filePath) throws IOException {
 
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
-        		                                                            "file path");
+            "file path");
         final InputStream in = new FileInputStream(filePath);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         IOHelper.outputInput(in, out);
@@ -46,9 +46,9 @@ public abstract class IOHelper {
      */
     public static byte[] fileContentToByteArray(final File file) throws IOException {
 
-    	ArgumentValidationHelper.validateArgumentIsNotNull(file, "file");
-    	final String filePath = file.getAbsolutePath();
-    	return IOHelper.fileContentToByteArray(filePath);
+        ArgumentValidationHelper.validateArgumentIsNotNull(file, "file");
+        final String filePath = file.getAbsolutePath();
+        return IOHelper.fileContentToByteArray(filePath);
     }
 
     /**
@@ -62,7 +62,7 @@ public abstract class IOHelper {
      * <b>null</b>, or if the given buffer size argument is not positive.
      */
     public static void outputInput(final InputStream in, final OutputStream out,
-     final int bufferSize) throws IOException {
+                                   final int bufferSize) throws IOException {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(in, "input stream");
         ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
@@ -86,9 +86,9 @@ public abstract class IOHelper {
      * <b>null</b>.
      */
     public static void outputInput(final InputStream in, final OutputStream out)
-     throws IOException {
+        throws IOException {
 
-    	ArgumentValidationHelper.validateArgumentIsNotNull(in, "input stream");
+        ArgumentValidationHelper.validateArgumentIsNotNull(in, "input stream");
         ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
         IOHelper.outputInput(in, out, 512);
     }
@@ -102,12 +102,12 @@ public abstract class IOHelper {
      * <b>null</b>.
      */
     public static void outputInput(final byte[] content, final OutputStream out)
-     throws IOException {
+        throws IOException {
 
-    	ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
-    	ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
-    	final ByteArrayInputStream in = new ByteArrayInputStream(content);
-    	IOHelper.outputInput(in, out);
+        ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
+        ArgumentValidationHelper.validateArgumentIsNotNull(out, "output stream");
+        final ByteArrayInputStream in = new ByteArrayInputStream(content);
+        IOHelper.outputInput(in, out);
     }
 
     /**
@@ -119,21 +119,21 @@ public abstract class IOHelper {
      * <b>null</b>, or if the given file path argument <b>is</b> a blank string.
      */
     public static void outputInput(final byte[] content, final String filePath)
-     throws IOException {
+        throws IOException {
 
-    	ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
-    	ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
-                                                                            "file path");
-    	OutputStream out = null;
+        ArgumentValidationHelper.validateArgumentIsNotNull(content, "content");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
+            "file path");
+        OutputStream out = null;
 
-    	try {
+        try {
 
-    		out = new FileOutputStream(filePath);
-    		IOHelper.outputInput(content, out);
-    	} finally {
+            out = new FileOutputStream(filePath);
+            IOHelper.outputInput(content, out);
+        } finally {
 
-    		IOHelper.closeOutputStreamIfNotNull(out);
-    	}
+            IOHelper.closeOutputStreamIfNotNull(out);
+        }
     }
 
     /**
@@ -143,10 +143,10 @@ public abstract class IOHelper {
      */
     public static void closeInputStreamIfNotNull(final InputStream in) throws IOException {
 
-    	if (in != null) {
+        if (in != null) {
 
-    		in.close();
-    	}
+            in.close();
+        }
     }
 
     /**
@@ -155,11 +155,11 @@ public abstract class IOHelper {
      * @throws IOException if an I/O error occurs.
      */
     public static void closeOutputStreamIfNotNull(final OutputStream out)
-     throws IOException {
+        throws IOException {
 
-    	if (out != null) {
+        if (out != null) {
 
-    		out.close();
-    	}
+            out.close();
+        }
     }
 }
