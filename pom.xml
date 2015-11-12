@@ -54,7 +54,7 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
                         <executions>
-                            <execution>
+                            <!--execution>
                                 <id>exec-bower-install</id>
                                 <phase>generate-sources</phase>
                                 <configuration>
@@ -67,12 +67,12 @@
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
-                            </execution>
+                            </execution-->
                             <execution>
                                 <id>exec-grunt</id>
                                 <phase>process-resources</phase>
                                 <configuration>
-                                    <executable>grunt</executable>
+                                    <executable>gruntfile.js</executable>
                                     <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
@@ -163,7 +163,7 @@
                                     <goal>exec</goal>
                                 </goals>
                             </execution-->
-                            <execution>
+                            <!--execution>
                                 <id>exec-bower-install</id>
                                 <phase>generate-sources</phase>
                                 <configuration>
@@ -176,12 +176,12 @@
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
-                            </execution>
+                            </execution-->
                             <execution>
                                 <id>exec-grunt</id>
                                 <phase>process-resources</phase>
                                 <configuration>
-                                    <executable>grunt</executable>
+                                    <executable>gruntfile.js</executable>
                                     <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                                     <arguments><argument>build</argument></arguments>
                                 </configuration>
