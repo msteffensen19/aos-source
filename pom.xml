@@ -181,7 +181,8 @@
                                 <id>exec-grunt</id>
                                 <phase>process-resources</phase>
                                 <configuration>
-                                    <executable>gruntfile.js</executable>
+                                    <gruntExecutable>node_modules/grunt/lib/grunt/cli.js</gruntExecutable>
+									<runGruntWithNode>true</runGruntWithNode>
                                     <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                                     <arguments><argument>build</argument></arguments>
                                 </configuration>
