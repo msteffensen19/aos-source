@@ -62,7 +62,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/AppData/Roaming/npm-1.4.9</workingDirectory>
+                                    <workingDirectory>C:/Users/demoapp/AppData/Roaming/npm-1.4.9</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -171,7 +171,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/AppData/Roaming/npm-1.4.9</workingDirectory>
+                                    <workingDirectory>C:/Users/demoapp/AppData/Roaming/npm-1.4.9</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
