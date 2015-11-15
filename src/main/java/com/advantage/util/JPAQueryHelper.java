@@ -21,11 +21,11 @@ public abstract class JPAQueryHelper {
 	 * value argument is a blank string.
 	 */
 	public static String getDeleteByPkFieldQuery(final Class<?> entityClass,
-	 final String pkFieldName, final Object pkFieldValue) {
+												 final String pkFieldName, final Object pkFieldValue) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(entityClass, "entity class");
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(pkFieldName,
-				                                                            "pk field name");
+			"pk field name");
 		ArgumentValidationHelper.validateArgumentIsNotNull(pkFieldValue, "pk field value");
 		final StringBuilder hql = new StringBuilder("DELETE FROM ");
 		final String entityClassName = entityClass.getName();
@@ -49,13 +49,13 @@ public abstract class JPAQueryHelper {
 	 * field values argument <b>is</b> a blank string.
 	 */
 	public static String getDeleteByPkFieldsQuery(final Class<?> entityClass,
-	 final String pkFieldName, final String pkFieldValuesParamName) {
+												  final String pkFieldName, final String pkFieldValuesParamName) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(entityClass, "entity class");
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(pkFieldName,
-				                                                            "pk field name");
+			"pk field name");
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(pkFieldValuesParamName,
-				                                                            "pk field values param name");
+			"pk field values param name");
 		final StringBuilder hql = new StringBuilder("DELETE FROM ");
 		final String entityClassName = entityClass.getName();
 		hql.append(entityClassName);
@@ -64,6 +64,23 @@ public abstract class JPAQueryHelper {
 		hql.append(" IN ( :");
 		hql.append(pkFieldValuesParamName);
 		hql.append(")");
+		return hql.toString();
+	}
+
+	public static String getSelectByPkFieldQuery(final Class<?> entityClass,
+												 final String pkFieldName, final Object pkFieldValue) {
+
+		ArgumentValidationHelper.validateArgumentIsNotNull(entityClass, "entity class");
+		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(pkFieldName,
+			"pk field name");
+		ArgumentValidationHelper.validateArgumentIsNotNull(pkFieldValue, "pk field value");
+		final StringBuilder hql = new StringBuilder("FROM ");
+		final String entityClassName = entityClass.getName();
+		hql.append(entityClassName);
+		hql.append(" WHERE ");
+		hql.append(pkFieldName);
+		hql.append(" = ");
+		hql.append(pkFieldValue);
 		return hql.toString();
 	}
 }

@@ -3,8 +3,8 @@ package com.advantage.online.store.dao;
 import java.util.Collection;
 import java.util.List;
 
-import com.advantage.online.store.model.Category;
-import com.advantage.online.store.model.Product;
+import com.advantage.online.store.model.category.Category;
+import com.advantage.online.store.model.product.Product;
 
 /**
  * Created by kubany on 10/13/2015.

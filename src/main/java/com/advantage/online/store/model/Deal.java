@@ -1,5 +1,7 @@
 package com.advantage.online.store.model;
 
+import com.advantage.online.store.model.product.Product;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +43,7 @@ public class Deal {
     private Long id;
     @Column(name = "DEAL_TYPE")
     private Integer dealType;
+<<<<<<< HEAD
     
     private String name;
     private String description;
@@ -53,10 +56,19 @@ public class Deal {
     @Column(name = "DATE_TO")
     private String dateTo;		//	Datetime when deal ends in format "YYYY-MM-DD HH24:MM:SS"
     
+=======
+    private String description;
+    private String promotionHeader;
+    private String promotionSubHeader;
+    private String staringPrice;
+    private String managedImageId;
+
+>>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
 
+<<<<<<< HEAD
     //@Column(name = "managed_image_id")
     private String managedImageId;
 
@@ -105,6 +117,24 @@ public class Deal {
     			final String managedImageId) {
 
         this(dealType.getDealTypeCode(), name, description, discount, dateFrom, dateTo, product, managedImageId);
+=======
+    public Deal(final Integer dealType, final String description, String promotionHeader,
+                String  promotionSubHeader, String staringPrice, String managedImageId, final Product product) {
+        this.dealType = dealType;
+        this.description = description;
+        this.product = product;
+        this.promotionHeader = promotionHeader;
+        this.promotionSubHeader = promotionSubHeader;
+        this.staringPrice = staringPrice;
+        this.managedImageId = managedImageId;
+    }
+
+    public Deal(final DealType dealType,  final String description, String promotionHeader,
+                String  promotionSubHeader, String staringPrice, String managedImageId, final Product product) {
+
+        this(dealType.getDealTypeCode(), description, promotionHeader, promotionSubHeader,staringPrice, managedImageId,
+            product);
+>>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
     }
 
     /**
@@ -150,6 +180,7 @@ public class Deal {
         return dealType;
     }
 
+<<<<<<< HEAD
     /**
      * Get <code>name</code> property value
      * @param name
@@ -171,6 +202,8 @@ public class Deal {
      * Set <code>description</code> property value
      * @param description
      */
+=======
+>>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
     public void setDescription(final String description) {
         this.description = description;
     }
@@ -312,6 +345,7 @@ public class Deal {
         return product;
     }
 
+<<<<<<< HEAD
     /**
      * Set <code>managedImageId</code> property value
      * @param managedImageId
@@ -326,5 +360,37 @@ public class Deal {
      */
     public String getManagedImageId() {
     	return managedImageId;
+=======
+    public String getPromotionHeader() {
+        return promotionHeader;
+    }
+
+    public void setPromotionHeader(String promotionHeader) {
+        this.promotionHeader = promotionHeader;
+    }
+
+    public String getPromotionSubHeader() {
+        return promotionSubHeader;
+    }
+
+    public void setPromotionSubHeader(String promotionSubHeader) {
+        this.promotionSubHeader = promotionSubHeader;
+    }
+
+    public String getStaringPrice() {
+        return staringPrice;
+    }
+
+    public void setStaringPrice(String staringPrice) {
+        this.staringPrice = staringPrice;
+    }
+
+    public String getManagedImageId() {
+        return managedImageId;
+    }
+
+    public void setManagedImageId(String managedImageId) {
+        this.managedImageId = managedImageId;
+>>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
     }
 }

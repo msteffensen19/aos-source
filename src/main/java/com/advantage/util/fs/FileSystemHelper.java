@@ -32,7 +32,7 @@ public abstract class FileSystemHelper {
 	public static boolean isFileExist(final String filePath) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(filePath,
-				                                                            "file path");
+			"file path");
 		final File file = new File(filePath);
 		return file.exists() && file.isFile() && file.isDirectory() == false;
 	}
@@ -49,7 +49,7 @@ public abstract class FileSystemHelper {
 	public static boolean isDirectoryExist(final String directoryPath) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(directoryPath,
-				                                                            "directory path");
+			"directory path");
 		final File directory = new File(directoryPath);
 		return directory.exists() && directory.isDirectory() && directory.isFile() == false;
 	}
@@ -80,7 +80,7 @@ public abstract class FileSystemHelper {
 	public static String extractFileExtension(final String fileNameOrFilePath) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(fileNameOrFilePath,
-                                                                            "file name");
+			"file name");
 		final int lastIndexOfDot = fileNameOrFilePath.lastIndexOf(".");
 		final String extension;
 
@@ -108,10 +108,10 @@ public abstract class FileSystemHelper {
 	 * <b>null</b>, or if it <b>is</b> a blank string.
 	 */
 	public static File[] getDirectoryFiles(final String directoryPath,
-	 final String... extensions) {
+										   final String... extensions) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(directoryPath,
-                                                                            "directory path");
+			"directory path");
 		final File directory = new File(directoryPath);
 		final File[] files;
 
@@ -140,7 +140,7 @@ public abstract class FileSystemHelper {
 
 	/**
 	 * Make the directory that has the given path, if it does not exist.
-	 * @param path the path of the directory to make.
+	 * @param directoryPath the path of the directory to make.
 	 * @return <b>true</>, if the directory has been created, or <b>false</b>, if it has not.
 	 * If the directory existed before the call to this method, <b>false</b> will be
 	 * returned.

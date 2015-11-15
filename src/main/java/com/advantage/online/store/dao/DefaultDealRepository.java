@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.advantage.online.store.model.product.Product;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
-import com.advantage.online.store.model.Product;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
 
@@ -20,6 +20,7 @@ import com.advantage.util.JPAQueryHelper;
 public class DefaultDealRepository extends AbstractRepository implements DealRepository {
 
 	@Override
+<<<<<<< HEAD
 	public Deal createDeal(final DealType dealType, 
 							final String name,
 							final String description,
@@ -30,6 +31,13 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 							final String managedImageId) {
 
     	final Deal deal = new Deal(dealType, name, description, discount, dateFrom, dateTo, product, managedImageId);
+=======
+	public Deal createDeal(DealType dealType,  String description, String promotionHeader,
+                           String  promotionSubHeader, String staringPrice, String managedImageId, Product product) {
+
+    	final Deal deal = new Deal(dealType, description, promotionHeader, promotionSubHeader, staringPrice,
+            managedImageId, product);
+>>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
     	entityManager.persist(deal);
     	return deal;
     }

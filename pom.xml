@@ -58,11 +58,11 @@
                                 <id>exec-npm-install</id>
                                 <phase>generate-sources</phase>
                                 <configuration>
-                                    <executable>npm</executable>
+                                    <executable>npm.cmd</executable>
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>${basedir}/AppData/Roaming/npm-1.4.9</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -171,7 +171,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>${basedir}/AppData/Roaming/npm-1.4.9</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -410,6 +410,18 @@
             <artifactId>liquibase-core</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <!--Swagger-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>swagger-ui</artifactId>
+            <version>2.0.24</version>
+        </dependency>
+        <!--Swagger-->
 
         <!--webjars -->
         <!--<dependency>-->

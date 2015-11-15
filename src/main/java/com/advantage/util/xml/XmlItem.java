@@ -33,7 +33,7 @@ public class XmlItem {
 	public void setAttribute(final String attributeName, final String attributeValue) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(attributeName,
-				                                                            "attribute name");
+			"attribute name");
 
 		if (attributeValue == null) {
 
@@ -46,7 +46,7 @@ public class XmlItem {
 	public String getAttribute(final String attributeName) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(attributeName,
-                                                                            "attribute name");
+			"attribute name");
 		return element.getAttribute(attributeName);
 	}
 
@@ -85,7 +85,7 @@ public class XmlItem {
 	public List<XmlItem> getChildrenByTagName(final String childElementTagName) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(childElementTagName,
-                                                                            "child element tag name");
+			"child element tag name");
 		final NodeList nodeList = element.getElementsByTagName(childElementTagName);
 		final int elementsCount = nodeList.getLength();
 		final List<XmlItem> children = new ArrayList<>(elementsCount);
@@ -103,7 +103,7 @@ public class XmlItem {
 	public XmlItem getFirstChildByTagName(final String childElementTagName) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(childElementTagName,
-				                                                            "child element tag name");
+			"child element tag name");
 		final NodeList nodeList = element.getElementsByTagName(childElementTagName);
 		final int elementsCount = nodeList.getLength();
 		final XmlItem child;
@@ -123,7 +123,7 @@ public class XmlItem {
 	public String getFirstChildTextContent(final String childElementTagName) {
 
 		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(childElementTagName,
-                                                                            "child element tag name");
+			"child element tag name");
 		final XmlItem xmlItem = getFirstChildByTagName(childElementTagName);
 		final String content;
 
@@ -142,7 +142,7 @@ public class XmlItem {
 
 		return element.getOwnerDocument();
 	}
-	
+
 	public void removeChild(final XmlItem childXmlItem) {
 
 		ArgumentValidationHelper.validateArgumentIsNotNull(childXmlItem, "child XML item");
