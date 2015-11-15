@@ -2,6 +2,7 @@ package com.advantage.test.online.store.dao;
 
 import java.util.List;
 
+import com.advantage.online.store.model.product.Product;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +11,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 
-import com.advantage.online.store.dao.CategoryRepository;
+import com.advantage.online.store.dao.category.CategoryRepository;
 import com.advantage.online.store.dao.ProductRepository;
-import com.advantage.online.store.model.Category;
-import com.advantage.online.store.model.Product;
+import com.advantage.online.store.model.category.Category;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
