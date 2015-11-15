@@ -14,12 +14,6 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-<<<<<<< HEAD
-//import com.advantage.online.store.image.ImageManagement;
-//import com.advantage.online.store.image.ManagedImage;
-import com.advantage.online.store.model.Category;
-=======
->>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
 import com.advantage.online.store.model.product.Product;
@@ -67,19 +61,6 @@ public class DataSourceInit {
         //final ManagedImage managedImage6 = imageManagement.addManagedImage("C:/Temp/advantage/Bags.png", false);
         final Category category6 = new Category("BAGS & CASES", "1239");
         session.persist(category6);
-<<<<<<< HEAD
-        
-        Product product = new Product("HP EliteBook Folio", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 550, category1);
-        product.setColorName("yellow");
-        session.persist(product);
-        session.persist(new Product("LG G3", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category1));
-        session.persist(new Product("Samsung Galaxy S5", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 600, category1));
-        session.persist(new Product("Samsung Galaxy S4", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 300, category1));
-        session.persist(new Product("iPhone 6S", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 1000, category1));
-
-        session.persist(new Deal(DealType.DAILY,  "30% OFF", "Up to $40 off select bose speakers with purchase of this pc", 30.00, "2015-11-09 00:00:00", "2015-11-20 23:59:59", product, "default-daily-deal-image"));
-        session.persist(new Deal(DealType.WEEKLY,  "weekly", "weekly", 25.00, "2015-11-08 00:00:00", "2015-11-28 23:59:59", product, "default-weekly-deal-image"));
-=======
 
         /*Attributes INIT*/
         Attribute attribute1 = new Attribute();
@@ -230,7 +211,6 @@ public class DataSourceInit {
         entityAttribute3.setValue("Windows 7");
         entityAttribute3.setEntityKey(attribute1.getId());
         entityAttribute3.setEntityType(EntityType.ATTRIBUTE_TITLE.getEntityTypeCode());*/
->>>>>>> e91b911e98c2286ef0a2c3026cb95336d9b8ce0f
 
         transaction.commit();
     }
