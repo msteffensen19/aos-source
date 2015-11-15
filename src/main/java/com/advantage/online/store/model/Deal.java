@@ -40,25 +40,32 @@ public class Deal {
     private Long id;
     @Column(name = "DEAL_TYPE")
     private Integer dealType;
-    private String name;
     private String description;
+    private String promotionHeader;
+    private String promotionSubHeader;
+    private String staringPrice;
+    private String managedImageId;
+
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
 
-    public Deal(final Integer dealType, final String name, final String description,
-     final Product product) {
-
+    public Deal(final Integer dealType, final String description, String promotionHeader,
+                String  promotionSubHeader, String staringPrice, String managedImageId, final Product product) {
         this.dealType = dealType;
-        this.name = name;
         this.description = description;
         this.product = product;
+        this.promotionHeader = promotionHeader;
+        this.promotionSubHeader = promotionSubHeader;
+        this.staringPrice = staringPrice;
+        this.managedImageId = managedImageId;
     }
 
-    public Deal(final DealType dealType, final String name, final String description,
-     final Product product) {
+    public Deal(final DealType dealType,  final String description, String promotionHeader,
+                String  promotionSubHeader, String staringPrice, String managedImageId, final Product product) {
 
-        this(dealType.getDealTypeCode(), name, description, product);
+        this(dealType.getDealTypeCode(), description, promotionHeader, promotionSubHeader,staringPrice, managedImageId,
+            product);
     }
 
     public Deal() {
@@ -85,16 +92,6 @@ public class Deal {
         return dealType;
     }
 
-    public void setName(final String name) {
-
-        this.name = name;
-    }
-
-    public String getName() {
-
-        return name;
-    }
-
     public void setDescription(final String description) {
 
         this.description = description;
@@ -113,5 +110,37 @@ public class Deal {
     public Product getProduct() {
 
         return product;
+    }
+
+    public String getPromotionHeader() {
+        return promotionHeader;
+    }
+
+    public void setPromotionHeader(String promotionHeader) {
+        this.promotionHeader = promotionHeader;
+    }
+
+    public String getPromotionSubHeader() {
+        return promotionSubHeader;
+    }
+
+    public void setPromotionSubHeader(String promotionSubHeader) {
+        this.promotionSubHeader = promotionSubHeader;
+    }
+
+    public String getStaringPrice() {
+        return staringPrice;
+    }
+
+    public void setStaringPrice(String staringPrice) {
+        this.staringPrice = staringPrice;
+    }
+
+    public String getManagedImageId() {
+        return managedImageId;
+    }
+
+    public void setManagedImageId(String managedImageId) {
+        this.managedImageId = managedImageId;
     }
 }

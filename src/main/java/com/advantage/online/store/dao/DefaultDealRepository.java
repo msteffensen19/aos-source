@@ -20,10 +20,11 @@ import com.advantage.util.JPAQueryHelper;
 public class DefaultDealRepository extends AbstractRepository implements DealRepository {
 
 	@Override
-	public Deal createDeal(final DealType dealType, final String name,
-     final String description, final Product product) {
+	public Deal createDeal(DealType dealType,  String description, String promotionHeader,
+                           String  promotionSubHeader, String staringPrice, String managedImageId, Product product) {
 
-    	final Deal deal = new Deal(dealType, name, description, product);
+    	final Deal deal = new Deal(dealType, description, promotionHeader, promotionSubHeader, staringPrice,
+            managedImageId, product);
     	entityManager.persist(deal);
     	return deal;
     }

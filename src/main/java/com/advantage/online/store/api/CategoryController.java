@@ -103,8 +103,8 @@ public class CategoryController {
 
         categoryDto.setProducts(productDtos);
         Deal deal = dealService.getDealOfTheDay();
-        //todo promotionProductService (Deal service) to fetch real data from DB
-        categoryDto.setPromotedProduct(new PromotedProductDto("100", "default", "default", "1234",
+        categoryDto.setPromotedProduct(new PromotedProductDto(deal.getStaringPrice(), deal.getPromotionHeader(),
+            deal.getPromotionSubHeader(), deal.getManagedImageId(),
             new ProductDto(dealService.getDealOfTheDay().getProduct())));
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
