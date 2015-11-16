@@ -28,9 +28,9 @@ public class AppUser {
     private String password;
 
     @Column(name="USER_TYPE")
-    private Integer appUserType;        //  by enum AppUserType
+    private int appUserType;        //  by enum AppUserType
 
-    private int country;                //  by Country
+    private Integer country;                //  by Country
 
     @Column(name="STATE_PROVINCE")
     private String stateProvince;
@@ -49,7 +49,7 @@ public class AppUser {
 
     private String email;
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, int country, String phoneNumber, String email) {
+    public AppUser(int appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String email) {
         this.appUserType = appUserType;
         this.setLastName(lastName);
         this.setFirstName(firstName);
@@ -60,11 +60,11 @@ public class AppUser {
         this.setEmail(email);
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, int country, String phoneNumber, String email) {
+    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String email) {
         this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, email);
     }
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, int country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email) {
+    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email) {
         this.appUserType = appUserType;
         this.setLastName(lastName);
         this.setFirstName(firstName);
@@ -80,7 +80,7 @@ public class AppUser {
         this.setEmail(email);
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, int country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email) {
+    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email) {
         this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email);
     }
 
@@ -132,11 +132,11 @@ public class AppUser {
         this.appUserType = appUserType;
     }
 
-    public int getCountry() {
+    public Integer getCountry() {
         return country;
     }
 
-    public void setCountry(int country) {
+    public void setCountry(Integer country) {
         this.country = country;
     }
 
