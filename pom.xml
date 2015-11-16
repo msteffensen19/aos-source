@@ -62,7 +62,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/AppData/Roaming/npm-1.4.9</workingDirectory>
+                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -171,7 +171,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/AppData/Roaming/npm-1.4.9</workingDirectory>
+                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -197,7 +197,7 @@
                                 <configuration>
                                     <executable>grunt</executable>
                                     <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
-                                    <arguments><argument>build</argument></arguments>
+                                    <arguments><argument>dev</argument></arguments>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
