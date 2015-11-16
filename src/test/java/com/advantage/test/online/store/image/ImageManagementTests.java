@@ -55,7 +55,7 @@ public class ImageManagementTests {
 		int managedImagesCount = im.getManagedImages().size();
 		System.out.println(managedImagesCount);
 		
-		Assert.assertEquals(10, managedImagesCount);
+		Assert.assertEquals(5, managedImagesCount);
 	}
 	
 	/**
