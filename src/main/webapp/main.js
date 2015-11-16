@@ -54,7 +54,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMen
         'slider', 'uiRouter', 'angularAnimate','ui-bootstrap'], function(angular, app)
     {
         angular.element().ready(function() {
-            // bootstrap the app manually
+            // bootstrap the app
             angular.bootstrap(document, ['aos']);
             angular.resumeBootstrap();
         });
