@@ -15,7 +15,9 @@ import com.advantage.online.store.dao.category.CategoryRepository;
 import com.advantage.online.store.dao.ProductRepository;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;
-
+/**
+ * @author Binyamin Regev
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={AdvantageTestContextConfiguration.class})
 public class ProductRepositoryTests extends GenericRepositoryTests {
@@ -36,25 +38,27 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     	final int CATEGORY2_PRODUCTS_COUNT = 5;
 
     	for (int i = 0; i < CATEGORY1_PRODUCTS_COUNT; i++) {
-
     		final String productName = "product" + i;
 			productRepository.createProduct("LG G3", productName, 400, category1);
     	}
 
     	for (int i = 0; i < CATEGORY2_PRODUCTS_COUNT; i++) {
-
     		final String nameAndDescriptionForTest = "product" + i;
 			productRepository.createProduct(nameAndDescriptionForTest,
 					                        nameAndDescriptionForTest, 400, category2);
     	}
 
     	transactionManager.commit(transactionStatusForCreation);
+    	
     	final List<Product> category1Products = productRepository.getCategoryProducts(category1);
     	Assert.assertEquals(CATEGORY1_PRODUCTS_COUNT, category1Products.size());
+    	
     	final List<Product> category2Products = productRepository.getCategoryProducts(category2);
     	Assert.assertEquals(CATEGORY2_PRODUCTS_COUNT, category2Products.size());
+    	
     	final List<Product> category3Products = productRepository.getCategoryProducts(category3);
     	Assert.assertTrue(category3Products.isEmpty());
+    	
     	final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
     	productRepository.deleteProducts(category1Products);
     	productRepository.deleteProducts(category2Products);
