@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                     // includes files within path
                     {expand: true, src: ['css/fonts/*', 'css/images/*', '!css/*.css'], dest: 'target', filter: 'isFile'},
                     {expand: true, src: ['app/views/*', 'app/partials/*', 'app/templates/*'], dest: 'target', filter: 'isFile'},
-                    {expand: true, src: ['app/categoryProducts.json', 'app/popularProducts.json'], dest: 'target', filter: 'isFile'},
+                    {expand: true, src: ['main.html', 'app/categoryProducts_4.json', 'app/popularProducts.json'], dest: 'target', filter: 'isFile'},
 
                 ]
             }
@@ -70,10 +70,29 @@ module.exports = function(grunt) {
             }
 
         },
-        clean: ["target", "app/templates"]
+        clean: ["target", "app/templates"],
+        usemin : {
+            html : [ 'target/main.html' ]
+        },
+        'regex-replace': {
+            dist: {
+                src: ['main.html'],
+                dest:     'target',
+                actions: [
+                    {
+                        name: 'requirejs-onefile',
+                        search: '<script data-main=".*" src="vendor/requirejs/require.js"></script>',
+                        replace: '<script data-main="main.min" type="text/javascript" src="vendor/requirejs/require.js"></script>'
+                    }
+                ]
+            }
+        }
+
 
     });
-    grunt.registerTask('default', ['clean', 'ngtemplates', 'requirejs', 'copy', 'cssmin']);
+    grunt.registerTask('default', ['clean', 'ngtemplates', 'requirejs', 'copy', 'regex-replace', 'usemin', 'cssmin']);
     grunt.registerTask('dev', ['clean', 'ngtemplates']);
     grunt.registerTask('ngTemplatesBuild', ['ngtemplates']);
+    grunt.registerTask('useminTest', ['copy', 'regex-replace', 'usemin']);
+
 };
