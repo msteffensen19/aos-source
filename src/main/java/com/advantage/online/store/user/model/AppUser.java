@@ -64,7 +64,7 @@ public class AppUser {
         this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, email);
     }
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email) {
+    public AppUser(int appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email) {
         this.appUserType = appUserType;
         this.setLastName(lastName);
         this.setFirstName(firstName);
