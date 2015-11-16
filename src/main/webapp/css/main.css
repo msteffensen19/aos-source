@@ -2,10 +2,10 @@
 @import "button.css";
 @import "animation.css";
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700);
-body {
-    height: 1366px;
-    /*padding-top: 70px;*/
+html, body {
+    height: 100%;
 }
+
 .page{
     min-height: 400px;
 }
@@ -233,7 +233,8 @@ a.back-to-top {
     z-index: 999;
     right: 20px;
     bottom: 20px;
-    background: #27AE61 url("up-arrow.png") no-repeat center 43%;
+    background: url("images/GoUp.png") no-repeat center 43%;
+
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
@@ -305,3 +306,29 @@ a.back-to-top {
 /*a.btn, button{
     min-width: 100px !important;   
 }*/
+body.welcome-page {
+    background-image: url('images/Welcome.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+@media only screen and (max-width: 767px) {
+    body.welcome-page {
+        background-image: url('images/Welcome_320.jpg');
+    }
+}
+body.under-construction {
+    background-image: url('images/Under_construction.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+@media only screen and (max-width: 767px) {
+    body.under-construction {
+        background-image: url('images/Under_construction_320.jpg');
+    }
+}

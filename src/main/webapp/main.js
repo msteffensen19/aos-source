@@ -7,9 +7,11 @@ require.config({
         angular: 'vendor/angular/angular.min',
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
         'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
+        'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
         'jquery' : 'vendor/jquery/dist/jquery.min',
         'jPushMenu' : 'utils/jPushMenu',
-        'angularRoute': 'vendor/angular-route/angular-route.min',
+        "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
+        //'angularRoute': 'vendor/angular-route/angular-route.min',
         'angularAnimate' : 'vendor/angular-animate/angular-animate.min'
     },
     shim: {
@@ -20,18 +22,22 @@ require.config({
         'angular-translate': {
             deps: ['angular']
         },
-        'angularRoute': ['angular'],
+        //'angularRoute': ['angular'],
+        'ui-bootstrap': ['angular'],
         'angularAnimate': ['angular'],
         'bootstrap': {
             deps: ['jquery']
         },
         'jPushMenu': {
             deps: ['jquery']
+        },
+        'uiRouter':{
+            deps: ['angular']
         }
     }
 });
 window.name = "NG_DEFER_BOOTSTRAP!";
-require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu', 'angularRoute', 'angularAnimate'], function(angular, app)
+require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu', 'uiRouter', 'angularAnimate','ui-bootstrap'], function(angular, app)
     {
         angular.element().ready(function() {
             // bootstrap the app manually

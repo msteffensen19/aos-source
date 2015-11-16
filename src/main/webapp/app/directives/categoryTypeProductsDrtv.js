@@ -6,11 +6,11 @@
  */
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', function ($filter, $animate) {
+    directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', '$templateCache', function ($filter, $animate, $templateCache) {
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: './app/partials/category_type_products_tpl.html',
+            template: $templateCache.get('app/partials/category_type_products_tpl.html'),
             scope: {
                 category: '='
             },

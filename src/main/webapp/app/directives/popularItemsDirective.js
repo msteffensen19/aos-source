@@ -3,11 +3,11 @@
  */
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('popularItemsDrtv', [ function () {
+    directives.directive('popularItemsDrtv', ['$templateCache', function ($templateCache) {
         return {
             restrict: 'E',
             replace: 'true',
-            templateUrl: './app/partials/popular-Items-tpl.html',
+            template: $templateCache.get('app/partials/popular-Items-tpl.html'),
             scope: {
                 popularProducts: '='
             },

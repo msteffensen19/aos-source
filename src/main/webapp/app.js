@@ -8,58 +8,40 @@ define([
     'jquery',
     'bootstrap',
     'jPushMenu',
+    './app/catalog/config/catalogConfig',
+    './app/user/userConfig',
     './app/controllers/index',
+    './app/user/controllers/index',
+    './app/user/services/index',
     './app/services/index',
     './app/directives/index',
+    './app/user/directives/index',
     './app/templates/module',
-], function(angular, templates) {
+
+], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig) {
     // Declare app level module which depends on views, and components
-    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives', 'aos.templates', 'pascalprecht.translate', 'ngRoute', 'ngAnimate'])
-        .config(function($translateProvider, $routeProvider, $locationProvider, $httpProvider) {
-            $httpProvider.defaults.cache = true;
-        $translateProvider.useSanitizeValueStrategy('escapeParameters');
-        $translateProvider.translations('en', {
-            OUR_PRODUCTS : 'OUR PRODUCTS',
-            HOT_PRODUCTS : 'Hot Products',
-            DEAL_OF_THE_DAY : 'Deal of the Day',
-            CONTACT_US : 'Contact Us',
-            AOS : 'AOS',
-            LOGIN: 'Login',
-            LOGOUT: 'This is a paragraph.',
-            SPACIAL_OFFER : 'SPECIAL OFFER',
-            SPECIAL_OFFER_ITEMS : 'SPECIAL OFFER ITEMS',
-            'SHOP_NOW' : 'SHOP NOW',
-            POPULAR_ITEMS : 'POPULAR ITEMS',
-            FOLLOW_US : 'FOLLOW US',
-            'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
-            'BY' : 'BY',
-            'ADD_TO_CART' : 'ADD TO CART',
-            'HOME' : 'HOME',
-            'BUY_NOW' : 'BUY NOW',
-            'STARTING_AT' : 'Starting at',
-            'SEE_OFFER' : 'SEE OFFER'
+    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives',
+        'aos.templates', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap',
+        'ngAnimate','aos.user.controllers', 'aos.user.services', 'aos.user.directives'])
+        .config(catalogConfig).config(userConfig).run(function ($rootScope, $state) {
+
+            $rootScope.$on('$stateChangeError', function(event) {
+                $state.go('404');
+            });
+
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+                var requireLogin = toState.data.requireLogin;
+                var showWelcome = toState.data.showWelcome;
+                var underConstruction = toState.data.underConstruction;
+                showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
+                underConstruction != 'undefined' && underConstruction ?
+                    $(document.body).addClass('under-construction') :
+                    $(document.body).removeClass('under-construction');
+                if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+                    event.preventDefault();
+                    // get me a login modal!
+                }
+            });
+
         });
-            $routeProvider.
-                when('/AddNewOrder', {
-                    templateUrl: 'templates/add_order.html',
-                    controller: 'AddOrderController'
-                }).
-                when('/category/:id', {
-                    controller: 'categoryCtrl',
-                    templateUrl: './app/views/category-page.html',
-                }).
-                when('/', {
-                    controller: 'categoriesCtrl',
-                    templateUrl: 'app/views/home-page.html',
-                }).
-                when('/welcome', {
-                    templateUrl: 'app/views/welcome.html',
-                }).
-                otherwise({
-                    redirectTo: '/',
-                    controller: 'categoriesCtrl',
-                    templateUrl: './app/views/home-page.html',
-                });
-        $translateProvider.preferredLanguage('en');
-    });
 });

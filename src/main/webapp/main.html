@@ -70,13 +70,13 @@
                     <input id="product_search" auto-complete ui-items="names" ng-model="selected" style="display: inline-block;float: left;margin-top: 6%;">
 
                 </li>
-                <li style="    cursor: pointer;"><a href="#"><img src="css/images/User.jpg"></a></li>
+                <li style="    cursor: pointer;"><a href="#" ng-click="open()" ng-controller="userController"><img src="css/images/User.jpg"></a></li>
                 <li style="    cursor: pointer;"><a href="#"><img src="css/images/Cart.jpg"></a></li>
             </ul>
         </div>
     </div>
 </nav>
-<ng-view></ng-view>
+<div ui-view></div>
 <script type="text/javascript" data-main="main"
         src="vendor/requirejs/require.js"></script>
 </body>

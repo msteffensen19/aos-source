@@ -2,7 +2,9 @@
   "name": "AOS",
   "version": "0.0.1",
   "dependencies": {
-    "angularjs-slider": "~1.0.0"
+    "angularjs-slider": "~1.0.0",
+    "angular-bootstrap": "~0.14.3",
+    "angular-ui-router": "~0.2.15"
   },
   "devDependencies": {
     "angular": "~1.4.7",

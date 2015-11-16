@@ -6,17 +6,17 @@
  */
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('categoryCtrl', ['$scope', '$routeParams', 'categoryService',
-        function ($scope, $routeParams, categoryService) {
-            $scope.catId = $routeParams.id;
-            $scope.category = "";
+    controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',
+        function ($scope, $stateParams, categoryService, category) {
+            $scope.catId = $stateParams.id;
+            $scope.category = category;
             $scope.deal = "";
             // I contain the ngModel values for form interaction.
             $scope.form = {
                 name: ""
             };
 
-            loadRemoteData();
+            applyRemoteData(category);
 
             function loadRemoteData() {
                 categoryService.getMockData($scope.catId)
