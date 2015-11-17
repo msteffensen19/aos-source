@@ -5,13 +5,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-abstract class GenericRepositoryTests {
+public abstract class GenericRepositoryTests {
 
 	@Autowired
-    PlatformTransactionManager transactionManager;
+	protected PlatformTransactionManager transactionManager;
 	final TransactionDefinition transactionDefinition;
 
-	GenericRepositoryTests() {
+	public GenericRepositoryTests() {
 
 		transactionDefinition = new DefaultTransactionDefinition();
 	}
