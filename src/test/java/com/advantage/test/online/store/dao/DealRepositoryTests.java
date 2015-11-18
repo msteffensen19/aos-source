@@ -46,7 +46,7 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         List<Deal> deals = new ArrayList<>();
         for (int i = 1; i <= DEALS_COUNT; i++) {
             final String description = "test deal" + i;
-            dealRepository.createDeal(DealType.WEEKLY, description, "header", "header", "200", "1234", product);
+            dealRepository.createDeal(DealType.WEEKLY, description, "header", "header", "200", "1234", 30, "2015-11-15 00:00:00", "2015-11-30 23:59:59", product);
 
             deals = dealRepository.getAllDeals();
             Assert.assertNotNull(deals);
@@ -73,7 +73,8 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         final Product product = productRepository.createProduct("LG G3",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category);
         final Deal deal = dealRepository.createDeal(DealType.WEEKLY, "description", "header", "header", "200", "1234",
-            product);
+                                                    30, "2015-11-15 00:00:00", "2015-11-30 23:59:59",
+                                                    product);
         transactionManager.commit(transactionStatusForCreation);
         Assert.assertNotNull(deal);
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
