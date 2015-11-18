@@ -7,7 +7,7 @@
         <servlet-name>FetchImageHttpServlet</servlet-name>
         <init-param>
 	        <param-name>repository-directory-path</param-name>
-	        <param-value>C:/Temp/advantage</param-value>
+	        <param-value>src/main/webapp/image_repository</param-value>
         </init-param>
     </servlet>
     
