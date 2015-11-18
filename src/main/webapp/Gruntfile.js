@@ -86,6 +86,15 @@ module.exports = function(grunt) {
                     }
                 ]
             }
+        },
+        watch: {
+            scripts: {
+                files: ['app/**/*.html'],
+                tasks: ['ngTemplatesBuild'],
+                options: {
+                    spawn: false
+                }
+            }
         }
 
 

@@ -1,4 +1,22 @@
-<div>
+<div style="text-align: center;padding-top: 5%">
+    <img style="display: block;margin-left: auto;margin-right: auto;" src="../../css/images/logo.png">
+    <label translate="ONLINE_SHOPPING"></label>
+    <div style="background: #46629E;margin-top: 3%;margin-left: 10%;margin-right: 10%;padding-bottom: 3%;padding-top: 3%;">
+        <img style="    padding-right: 1%;" src="../../css/images/FacebookLogo.png">
+        <span style="color: #ffffff" translate="FACEBOOK_SIGN_IN"></span>
+    </div>
+    <div style="margin-top: 3%;margin-left: 10%;margin-right: 10%;padding-bottom: 3%;">
+        <label translate="OR" style="display: block;padding-bottom: 3%;"></label>
+        <input class="login border-top-bottom" placeholder="{{'NAME' | translate }}" type="text" ng-model="userName">
+        <input class="login border-bottom" placeholder="{{'PASSWORD' | translate }}" type="text" ng-model="userPassword">
+        <input class="login border-bottom" placeholder="{{'EMAIL' | translate }}" type="text" ng-model="userEmail">
+    </div>
+    <div style="border: 2px solid #000000;margin-top: 3%;margin-left: 10%;margin-right: 10%;padding-bottom: 3%;padding-top: 3%;">
+        <span translate="SIGN_IN"></span>
+    </div>
+    <label style="display: block;padding-top: 2%" translate="FORGOT_PASSWORD"></label>
+    <label style="padding-top: 3%;padding-bottom: 2%;" translate="CREATE_NEW_ACCOUNT"></label>
+
     <!--<div class="modal-header">-->
         <!--<h3 class="modal-title">I'm a modal!</h3>-->
     <!--</div>-->
@@ -10,8 +28,8 @@
         <!--</ul>-->
         <!--Selected: <b>{{ selected.item }}</b>-->
     <!--</div>-->
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="ok()">Sign In</button>
+    <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-primary" type="button" ng-click="ok()">Sign In</button>-->
 
-    </div>
+    <!--</div>-->
 </div>
