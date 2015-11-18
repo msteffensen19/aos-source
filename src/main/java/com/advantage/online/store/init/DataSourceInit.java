@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.product.ProductAttributes;
+import com.advantage.online.store.user.model.Country;
 import javafx.scene.effect.SepiaTone;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -161,6 +162,15 @@ public class DataSourceInit {
                 "EXPLORE THE NEW DESIGN", "Supremely thin, yet incredibly durable", "490", "1240",
                 30, "2015-11-15 00:00:00", "2015-11-30 23:59:59", product1));
 
+        //  Binyamin Regev 2015-11-18
+        session.persist(new Country("Israel", "il", 972));
+        session.persist(new Country("Ukraine", "ua", 380));
+        session.persist(new Country("Canada", "ca", 1));
+        session.persist(new Country("Russia", "ru", 7));
+        session.persist(new Country("United Kingdom", "uk", 44));
+        session.persist(new Country("United States", "us", 1));
+        //  Binyamin Regev 2015-11-18 - End
+
         session.persist(attribute1);
         session.persist(attribute2);
         session.persist(attribute3);
@@ -170,6 +180,7 @@ public class DataSourceInit {
         session.persist(attribute7);
 
         productAttributes.forEach(session::save);
+
 
 
         /*EntityAttribute entityAttribute = new EntityAttribute();

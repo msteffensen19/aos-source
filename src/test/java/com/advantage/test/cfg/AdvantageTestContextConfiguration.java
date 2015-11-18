@@ -27,6 +27,7 @@ import com.advantage.online.store.image.ImageManagementAccess;
 @ComponentScan({"com.advantage.online.store.services",
                 "com.advantage.online.store.dao",
                 "com.advantage.online.store.user.dao",
+                "com.advantage.online.store.user.model",
                 "com.advantage.online.store.init"})
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
@@ -58,7 +59,7 @@ public class AdvantageTestContextConfiguration {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.online.store.model"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.online.store.model","com.advantage.online.store.user.model"});
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 

@@ -8,9 +8,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.metamodel.Metamodel;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Binyamin Regev on 16/11/2015.
@@ -51,6 +57,8 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         ArgumentValidationHelper.validateArgumentIsNotNull(country, "Country is null");
 
         entityManager.persist(country);
+        //entityManager.persist(new Country(name, isoName, phonePrefix));
+
         return country;
     }
 
