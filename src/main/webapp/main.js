@@ -48,6 +48,7 @@ require.config({
         }
     }
 });
+
 window.name = "NG_DEFER_BOOTSTRAP!";
 require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu','mainScript',
         'accordion',
