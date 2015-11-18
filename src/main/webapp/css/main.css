@@ -1,4 +1,7 @@
-
+@import "UI.css";
+@import "views/home_page.css";
+@import "views/categoryPage.css";
+@import "views/category_type_products_tpl.css";
 *{
     margin: 0;
     padding: 0;
