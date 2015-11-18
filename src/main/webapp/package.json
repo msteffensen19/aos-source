@@ -17,7 +17,9 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "^0.6.1",
     "grunt-piece-modulejs": "~0.1.3",
+    "grunt-regex-replace": "^0.2.6",
     "grunt-usemin": "~3.1.1",
     "load-grunt-tasks": "~0.1.0"
   }

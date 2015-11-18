@@ -1,0 +1,32 @@
+
+<div id="popular_items">
+    <div class="row">
+    <div class="col-xs-12 col-md-no-padding roboto-regular" style="font-size: 1.7vw; text-align: center;">
+        <label class="home_page_section_title roboto-regular" style="font-weight: normal;" translate="POPULAR_ITEMS"></label>
+    </div>
+</div>
+<div class="row" >
+    <div class="col-xs-4" ng-repeat="product in popularProducts" ng-if="popularProducts.length > 0">
+        <img class="img-responsive" src="{{product.imageUrl}}" style="margin: auto;"/>
+    </div>
+
+</div>
+<div class="row" style="text-align: center;" >
+    <div class="col-xs-4 col-md-no-padding " ng-repeat="product in popularProducts">
+        <div class="row">
+            <div class="col-xs-12 col-md-no-padding ">
+                <label style="display: block;">{{product.productName}}</label>
+                <div>
+                    <label class=" txt_green_color roboto-regular" style="">{{ 'SHOP_NOW' |
+                        translate
+                        }}</label>
+                    <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+    padding-bottom: 0.5%;
+    display: initial;" class="img-responsive ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+

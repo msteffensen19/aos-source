@@ -24,7 +24,16 @@ define([],function(){
             'HOME' : 'HOME',
             'BUY_NOW' : 'BUY NOW',
             'STARTING_AT' : 'Starting at',
-            'SEE_OFFER' : 'SEE OFFER'
+            'SEE_OFFER' : 'SEE OFFER',
+            'ONLINE_SHOPPING' : 'Online shopping',
+            'FACEBOOK_SIGN_IN' : 'SIGN IN WITH FACEBOOK',
+            'OR' : 'OR',
+            'NAME' : 'Name',
+            'PASSWORD' : 'Password',
+            'EMAIL' : 'Email',
+            'SIGN_IN' : 'SIGN IN',
+            'FORGOT_PASSWORD' : 'Forgot your password?',
+            'CREATE_NEW_ACCOUNT' : 'CREATE NEW ACCOUNT'
         });
         $stateProvider.state('view1',{
             url: '/',

@@ -1,72 +1,51 @@
 <div>
-    <div class="col-xs-12 col-xs-no-padding roboto-regular" style="font-size: 1.3vw;">{{filtered.length}} ITEMS</div>
-    <div class="col-xs-2 col-xs-no-padding" style="    padding-top: 2%;">
-        <div class="well" style="">
-            <label class="roboto-medium" style="float: left;font-size: 1vw;">EXPLORE CHOICE:</label>
-            <label class="roboto-medium" style="float: right;cursor: pointer  " ng-click="clearSelection()">Clear</label>
-        </div>
-        <div class="row margin-bottom-xs"></div>
-        <div id="midCol" ng-repeat="attrib in categoryAttributes">
-            <div class="well" >
-                <div class="panel-group" >
-                    <div class="panel panel-default panel-border-no-radius" >
-                        <div class="panel-heading">
-                            <h4 class="panel-title roboto-regular" >
-                                <a style="text-decoration: none;cursor: pointer;" id="panel-heading-a{{attrib.attributeId}}" data-toggle="collapse" data-target="#collapseOne"
-                                   ng-click="toggleColapse(attrib.attributeId)" class="collapsed">
-                                    {{'BY' | translate }}&nbsp;{{attrib.attributeName}}
-                                </a>
-                            </h4>
 
-                        </div>
-                        <div id="{{attrib.attributeId}}" class="panel-collapse collapse" ng-if="attrib.attributeName != 'COLOR'">
-                            <div class="panel-body" ng-repeat="attrVal in attrib.attributeValues">
-                                <div class="checkbox">
-                                    <label style="padding-left: 0px" >
-                                        <input type="checkbox" class="products-attribute" ng-click="includeProducts($event, attrVal, attrib.attributeName)" ng-model="item.selected">
-                                        <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                        {{attrVal}}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="{{attrib.attributeId}}" class="panel-collapse collapse" ng-if="attrib.attributeName == 'COLOR'">
-                            <div class="panel-body">
-                                <div  class="col-xs-3" ng-repeat="attrVal in attrib.attributeValues">
-                                    <button type="button" class="btn btn-default btn-circle" ng-click="includeProducts($event, attrVal, attrib.attributeName)"
-                                            ng-style="{'background-color' : '#' + attrVal}"><i class=""></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
 
-            </div>
-        </div>
+    <div class="cell categoryLeft">
+
+        <p class="filterCount">{{filtered.length}} ITEMS</p>
+        <label class="roboto-medium">EXPLORE CHOICE:</label>
+        <label class="roboto-medium" ng-click="clearSelection()">Clear</label>
+        <ul>
+            <li ng-repeat="attrib in categoryAttributes">
+                <h4 class="roboto-regular">
+                    <a id="panel-heading-a{{attrib.attributeId}}"
+                       ng-click="toggleColapse(attrib.attributeId)">
+                        {{'BY' | translate }} {{attrib.attributeName}}
+                    </a>
+                </h4>
+
+                <div id="{{attrib.attributeId}}" ng-if="attrib.attributeName != 'COLOR'">
+                    <div ng-repeat="attrVal in attrib.attributeValues">
+                        <input type="checkbox" ng-model="item.selected"
+                               ng-click="includeProducts($event, attrVal, attrib.attributeName)">
+                        <span class="cr"><i></i>{{attrVal}}</span>
+                    </div>
+                    <div ng-repeat="attrVal in attrib.attributeValues">
+                        <button type="button" ng-style="{'background-color' : '#' + attrVal}"
+                                ng-click="includeProducts($event, attrVal, attrib.attributeName)">
+                            <i></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="cell categoryRight">
+        <ul>
+            <li ng-repeat="product in filtered = ( products | filter:productsFilter)"
+                ng-style="{ transitionDelay:($index *500) + 'ms' }">
+                <div class="AddToCard">
+                    <label>{{'ADD_TO_CART' | translate}}</label>
+                    <img class="" src="css/images/Cart.jpg" />
+                </div>
+                <img alt="" class="imgProduct" ng-src="fetchImage?image_id={{product.imageUrl}}">
+
+                <p><a>{{product.productName}}</a></p>
+                <p><a>{{product.price}}</a></p>
+            </li>
+        </ul>
     </div>
 
-
-    <div class="col-xs-10">
-        <div class="item">
-            <div class="row">
-                <div class="col-xs-3"
-                     ng-repeat="product in filtered = (products | filter:productsFilter)"
-                     ng-style="{transitionDelay:($index *500) +'ms'}">
-                    <div style="background-color: #f9f9f9;" class="product-hover">
-                        <div class="row add-to-cart-div" style="    float: right;
-                                padding-right: 2%;">
-                            <label>{{'ADD_TO_CART' | translate}}</label>
-                            <img src="css/images/Cart.jpg"></im>
-                        </div>
-                        <a class="thumbnail thumb-hover" href="#" style="text-align: center;margin: 9%;background-color: #f9f9f9;border: none;">
-                            <img alt="" ng-src="fetchImage?image_id={{product.imageUrl}}">
-                            <div class="row">{{product.productName}}</div>
-                            <div class="row">{{product.price}}</div>
-                        </a>
-                    </div>
-
-                </div>
-                </div>
-            </div>
-    </div>
 </div>
+
