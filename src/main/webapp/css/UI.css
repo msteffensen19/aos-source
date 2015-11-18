@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+
+.roboto-thin {
+    font-family: 'Roboto';
+    font-weight: 100;
+}
+.roboto-light {
+    font-family: 'Roboto';
+    font-weight: 300;
+}
+.roboto-regular {
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+.roboto-medium {
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+.roboto-bold {
+    font-family: 'Roboto';
+    font-weight: 700;
+}
+
+.center{
+    text-align: center;
+    margin: 0 auto;
+}

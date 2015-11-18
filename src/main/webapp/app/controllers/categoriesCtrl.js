@@ -39,7 +39,10 @@ define(['./module'], function (controllers) {
             };
 
             $scope.uri = "http://localhost:8080/";
-            $scope.images = [{imageName : 'Banner1.jpg', imageId : 0},{imageName : 'Banner2.jpg', imageId : 1},{imageName : 'Banner3.jpg', imageId : 2}];
+            $scope.images = [
+                {imageName : 'Banner1.jpg', imageId : 0},
+                {imageName : 'Banner2.jpg', imageId : 1},
+                {imageName : 'Banner3.jpg', imageId : 2}];
 
         }]);
 });

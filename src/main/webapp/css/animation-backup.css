@@ -1,0 +1,104 @@
+
+
+.thumb-hover{
+    opacity: 1;
+    transition: opacity 0s;
+}
+
+/*.product-hover:hover .thumbnail.thumb-hover*/
+/*{*/
+    /*opacity: 1;*/
+    /*transition: opacity 0s;*/
+/*}*/
+.add-to-cart-div{
+    visibility: hidden;
+    opacity: 0.5;
+
+}
+.product-hover:hover .add-to-cart-div{
+    visibility: visible;
+    opacity: 1;
+
+}
+
+.product_animated_container:hover div.animated_image_div
+{
+    -webkit-transform: translate3d(40px,0,0);
+    transform: translate3d(5%,0,0);
+}
+.product_animated_container:hover div.animated_image_div_cover
+{
+    background-position:left;
+}
+.product_animated_container:hover div.animated_image_div
+{
+    -webkit-transform: translate3d(40px,0,0);
+    transform: translate3d(5%,0,0);
+}
+.animated_image_div
+{
+    max-width: none;
+    width: -webkit-calc(100% + 50px);
+    width: calc(100% + 50px);
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: translate3d(0,0, 0);
+    transform: translate3d(0,0,0);
+}
+.animated_image_div_cover
+{
+    background-position:right;
+    -webkit-transition:background-position .3s ease-in;
+    -moz-transition:background-position .3s ease-in;
+    -o-transition:background-position .3s ease-in;
+    transition:background-position .3s ease-in;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+.home_page_label_container{
+    -webkit-transform: translate3d(0,40px,0);
+    transform: translate3d(0,0,0);
+    -webkit-transition: -webkit-transform 0.35s;
+    transition: transform 0.35s;
+}
+.product_animated_container:hover div.home_page_label_container{
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,-40px,0);
+    -webkit-transition-delay: 0.05s;
+    transition-delay: 0.05s;
+    -webkit-transition-duration: 0.35s;
+    transition-duration: 0.35s;
+}
+
+
+
+/*.ng-enter,*/
+/*.ng-leave {*/
+    /*-webkit-transition:0.5s linear all;*/
+    /*transition:0.5s linear all;*/
+/*}*/
+
+/*.ng-enter,*/
+/*.ng-leave.ng-leave-active {*/
+    /*opacity:0;*/
+/*}*/
+/*.ng-leave,*/
+/*.ng-enter.ng-enter-active {*/
+    /*opacity:1;*/
+/*}*/
+
+/*.insert-enter {*/
+    /*-webkit-transform:scale(0);*/
+    /*-webkit-transition-property: all;*/
+    /*-webkit-transition-timing-function: ease-out-cubic;*/
+    /*-webkit-transition-duration: 400ms;*/
+    /*transform: scale(0);*/
+    /*transition-property: all;*/
+    /*transition-timing-function: ease-out-cubic;*/
+    /*transition-duration: 400ms;*/
+/*}*/
+/*.insert-enter.insert-enter-active {*/
+    /*-webkit-transform:scale(1);*/
+    /*transform:scale(1);*/
+/*}*/

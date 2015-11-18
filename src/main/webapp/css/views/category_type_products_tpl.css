@@ -1,0 +1,52 @@
+*{
+    font-family: 'Roboto';
+}
+
+.categoryLeft{
+    width: 200px;
+    background-color: lime;
+    vertical-align: top;
+}
+
+.categoryLeft .filterCount{
+
+}
+
+.categoryRight ul {
+    text-align: center;
+}
+
+.categoryRight ul li {
+
+    display: inline-block;
+    width: 150px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f9f9f9;
+}
+
+
+.categoryRight ul li .imgProduct{
+width: 100%
+}
+
+
+.categoryRight ul li .AddToCard{
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.categoryRight ul li:hover .AddToCard{
+    opacity: 1;
+}
+
+.categoryRight ul li:hover p a{
+    text-decoration: underline;
+}
+
+.categoryRight ul li .AddToCard > img{
+    width: 20px;
+    height: 20px;
+}
+
+
