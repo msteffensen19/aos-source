@@ -1,0 +1,42 @@
+<div  class="" >
+    <div class="row">
+        <div class="col-xs-12 col-md-no-padding">
+            <div class="square home_page_bg_with_txt roboto-bold"
+                 style="
+                 background-image:url(fetchImage?image_id=1240););
+                 background-position: 85% 100%;
+                 background-size: 100%;
+                 background-repeat: no-repeat;
+                 padding-bottom: 22%;
+                 ">
+                <div class="promotion-txt" style="position: absolute; bottom: 50%; left: 0; padding: 5%; width: 100%; height: 30%; color: white;">
+                    <label class="promotion-header roboto-bold"
+                           style="display: block; font-size: 40px;">{{categoryData.promotedProduct.promotionHeader}}</label>
+                    <label class="promotion-sub-header roboto-light"
+                           style="display: block; font-size: 20px;">{{categoryData.promotedProduct.promotionSubHeader}}</label>
+                    <label class="promotion-pricing roboto-light"
+                           style="display: block; font-size: 18px;padding-top: 1%;padding-bottom: 1%;">{{categoryData.promotedProduct.productName}} | {{ 'STARTING_AT' | translate }} ${{categoryData.promotedProduct.staringPrice}}</label>
+                    <button class="btn btn-primary btn-lg outline roboto-medium roboto-bold"
+                            style="border-color: #ffffff;color: #ffffff" type="button" translate="BUY_NOW">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-no-padding" ng-click="goToCategory(categories[0].categoryId)">
+            <div class="home_page_bg_with_txt roboto-bold" style="background-color: #454545;">
+                <label class="roboto-medium" style="margin-bottom: 0px;    padding-left: 2%;color: grey;font-size: 1vw;" translate="HOME&nbsp;&nbsp;/"></label>
+                <label class="roboto-medium" style="margin-bottom: 0px;color: white;font-size: 1vw;">&nbsp;&nbsp{{categoryName}}</label>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;"><h2>{{categoryName}}</h2></div>
+
+
+
+    <category-type-products-drtv category="categoryData"></category-type-products-drtv>
+
+
+
+</div>

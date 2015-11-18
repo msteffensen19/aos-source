@@ -1,0 +1,327 @@
+
+
+/* end five images */
+
+
+.container {
+    width: 100%;
+    font-size: 0;
+    background: #e8e7e2;
+    background: -moz-linear-gradient(top,  #e8e7e2 0%, #f2f1ed 100%);
+    background: -webkit-linear-gradient(top,  #e8e7e2 0%,#f2f1ed 100%);
+    background: linear-gradient(to bottom,  #e8e7e2 0%,#f2f1ed 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e7e2', endColorstr='#f2f1ed',GradientType=0 );
+    margin: 15px 0;
+    margin-bottom: 45px;
+}
+
+.container > div{
+    display: inline-block;
+}
+
+.container .bigSection{
+    width: 64%;
+}
+
+.container .smollSection{
+    width: 36%;
+    vertical-align: top;
+}
+
+.smoll-boxes, .big-box{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    cursor: pointer;
+}
+
+.smoll-boxes{
+    box-sizing: border-box;
+    display: inline-block;
+    width: 50%;
+    padding-bottom: 30%;
+}
+
+.big-box{
+    padding-bottom: 106%;
+    background-size: 100%;
+    background-position: top center;
+}
+
+.smoll-boxes:nth-child(1), .smoll-boxes:nth-child(4){
+    background-size: 40%;
+    background-position: 90% 50%;
+}
+
+
+.shop_now{
+    color: #2a2a2a;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    font-size: 10px;
+    padding: 0 30px 28px 14px;
+}
+
+.shop_now:after{
+    content: "SHOP NOW";
+    color: #54b3ad;
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    left: 14px;
+    white-space: nowrap;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    background-image: url("../../css/images/arrow_right.png");
+    background-repeat:no-repeat;
+    background-position:95% 50%;
+}
+
+
+label.shop_now{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 35px;
+}
+
+
+label.shop_now:after{
+    left: 0;
+    background-position:63% 50%;
+}
+/* end five images */
+
+
+
+
+
+
+
+
+/* special offer */
+#img-special-offer {
+    display: table-cell;
+    width: 65%;
+}
+
+h3.roboto-regular{
+    font-size: 1.46vW;
+    color: #2a2a2a;
+}
+
+#img-special-offer img{
+    width: 100%;
+}
+
+#div-special-offer {
+    display: table-cell;
+position: relative;
+}
+
+#div-special-offer div{
+    display: block;
+    vertical-align: middle;
+    position: absolute;
+    top:12%;
+    margin: 10%;
+}
+
+#div-special-offer h1 {
+    font-size: 1.7vw;
+    color: #2a2a2a;
+}
+
+#div-special-offer label {
+    font-size: 0.834vw;
+    color: #9d9d9d;
+}
+
+#div-special-offer button {
+    font-size: 14px;
+    border: 1px solid #54b3ad;
+    background-color: transparent;
+    padding: 10px;
+    margin: 4px 0;
+}
+
+#div-special-offer button:hover {
+    color: #54b3ad;
+}
+
+#div-special-offer button:active {
+    background-color: #0000ff;
+}
+
+/* end special offer */
+
+
+
+
+
+/* slider */
+
+.slider {
+    margin: 20px 0;
+    font-size: 0;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.slider  div.slider-length  {
+    position: relative;
+    display: inline;
+    right: 0;
+}
+
+.slider  div.slider-length > div {
+    display: inline;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    /*font-size: 12px;*/
+}
+
+.slider div div img {
+    width: 100%;
+    opacity: 1;
+}
+
+
+.slider-steps {
+    position: absolute;
+    bottom: 28px;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+}
+
+.slider-steps span {
+    display: inline-block;
+    margin: 0px 2px;
+    border: solid white 1px;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+}
+
+.slider-steps span.selected {
+    background-color: white;
+}
+
+/* end slider */
+
+
+
+
+
+/* POPULAR ITEMS */
+
+.grid-table > div {
+    display: table-cell;
+    width: 33.3%;
+    position: relative;
+}
+
+.grid-table > div figure img{
+    width: 100%;
+    padding-bottom: 50px;
+}
+
+/* end POPULAR ITEMS */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FOLLOW US ----- footer*/
+
+footer{
+    background-color: #F4F4F2;
+    font-size: 0;
+}
+
+footer > div{
+    padding: 30px 0 10px 0;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+footer img{
+    margin: 25px 0;
+}
+
+
+footer label{
+    font-size: 14px;
+}
+
+footer .splitter{
+    display: none;
+}
+
+
+/* end FOLLOW US */
+
+
+
+
+
+
+
+/*
+
+  background-color: rgba(210, 0, 0, 0.1);
+
+*/
+
+@media screen and (max-width: 780px) {
+
+    .container .bigSection{
+        width: 100%;
+    }
+
+    .container .smollSection{
+        width: 100%;
+    }
+
+    footer img{
+        width: 25%;
+    }
+
+}
+
+
+
+@media screen and (max-width: 500px) {
+
+    footer .splitter{
+        display: block;
+    }
+
+}
+
+
+

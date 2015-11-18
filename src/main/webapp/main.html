@@ -10,75 +10,95 @@
 
     <title>&nbsp;Advantage Shopping</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"
-          media="screen">
-    <!-- build:css css/main.min.css -->
-    <link href="css/main.css" rel="stylesheet">
-    <!-- endbuild -->
+    <!-- Bootstrap core CSS
+        <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    -->
 
+
+    <!-- SECorrenti styles -->
+    <link href="css/main.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
+    <!--
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
 </head>
-
 <body>
-<a class="back-to-top">Back to Top</a>
-<nav role="navigation" ng-show="welcome" class="navbar navbar-default navbar-static-top" data-ng-controller="mainCtrl" data-ng-init="init()"
-     style="     margin-top: 0.5vw;
-    margin-bottom: 0.5vw;   border-color: white;background-color: white;">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header" style="padding-left: 1vw;">
-        <button type="button" data-target="#navbarCollapse" style="float: left;" data-toggle="collapse"
-                class="navbar-toggle toggle-menu menu-left push-body">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a href="#/" class="navbar-brand pull-left" style="padding: 0px;"><img src="css/images/logo.png"></a>
-        <button ng-show="!showCategoryHeader" type="button" class="navbar-toggle"
-                style="display: block;margin-top: 15px;border-color: transparent;    margin-left: 15px;">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <!--<a style="background-image: url('css/images/logo.png'); background-repeat: no-repeat;width: 50vw;" class="navbar-brand" href="/"></a>-->
-        <!--<a href="#/" class="navbar-brand">-->
-            <!--<img src="css/images/logo.png" style="float: left;display: inline-block;">-->
-            <!--<label>Online shopping</label>-->
-        </a>
-    </div>
-    <!-- Collection of nav links and other content for toggling -->
-    <div class="" style="    float: right;">
-        <div id="navbarCollapse" class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left roboto-ligh" style="font-size: 0.8vw;">
-            <ul class="nav navbar-nav">
-                <li class="hidden_item" ng-show="showCategoryHeader">
-                    <a style="cursor: pointer;" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
-                </li>
-                <li class="hidden_item" >
-                    <a style="cursor: pointer;" ng-show="showCategoryHeader" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
-                </li>
-                <li class="hidden_item" >
-                    <a style="cursor: pointer;" ng-show="showCategoryHeader" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
-                </li>
-                <li>
-                        <a style="display: inline-block;" href="#" ><img src="css/images/Sesrch.jpg" id="search_image"></a>
-                    <input id="product_search" auto-complete ui-items="names" ng-model="selected" style="display: inline-block;float: left;margin-top: 6%;">
 
-                </li>
-                <li style="    cursor: pointer;"><a href="#" ng-click="open()" ng-controller="userController"><img src="css/images/User.jpg"></a></li>
-                <li style="    cursor: pointer;"><a href="#"><img src="css/images/Cart.jpg"></a></li>
-            </ul>
+
+
+<img src="css/images/GoUp.png" id="scrollToTop" />
+
+
+<!-- mobile slider -->
+<aside id="mobile-section">
+    <ul>
+        <li>
+            <a class="img"><img src="css/images/Cart.jpg" /></a>
+        </li>
+        <li>
+            <a class="img"><img src="css/images/User.jpg" /></a>
+        </li>
+        <li>
+            <a class="img"><img src="css/images/Sesrch.jpg" /></a>
+        </li>
+    </ul>
+</aside>
+<!-- end mobile slider -->
+
+
+
+
+<!-- navegation -->
+<header data-ng-controller="mainCtrl" ng-show="welcome">
+    <nav>
+        <ul class="roboto-light desktop-handler">
+            <li>
+                <a class="img"><img src="css/images/Cart.jpg" /></a>
+            </li>
+            <li>
+                <a class="img"><img src="css/images/User.jpg" /></a>
+            </li>
+            <li>
+                <a class="img">
+                    <img id="product_search_img" src="css/images/Sesrch.jpg" />
+                    <input id="product_search" ui-items="names" ng-model="selected"
+                           style=" "  auto-complete >
+                </a>
+            </li>
+            <li>
+                <a ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
+            </li>
+            <li>
+                <a ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
+            </li>
+            <li>
+                <a ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
+            </li>
+        </ul>
+        <div class="logo">
+            <div id="mobile-btn" class="mobile-btn-handler">
+                <span></span><span></span><span></span>
+            </div>
+            <img src="css/images/logo.png" />
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
+<!-- end navegation -->
+
+
+
+
 <div ui-view></div>
-<script data-main="main.min" type="text/javascript" src="vendor/requirejs/require.js"></script>
+
+
+
+<script type="text/javascript" data-main="main" src="vendor/requirejs/require.js"></script>
+
+
+
 </body>
-
 </html>
-

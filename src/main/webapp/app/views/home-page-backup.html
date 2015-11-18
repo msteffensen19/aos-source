@@ -1,0 +1,165 @@
+
+
+
+<div class="">
+    <div class="">
+        <div class="row table-row">
+
+            <div class="col-sm-8 col-md-no-padding image-col cursor_pointer">
+                <div class="row row-no-gutter">
+                    <div class="col-xs-6 col-md-no-padding product_div_gradient" ng-click="goToCategory(categories[2].categoryId)">
+                        <div class="img"
+                             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[2].managedImageId+')'} : {}"
+                             style="    background-size: 40%;background-position: 90% 50%;"></div>
+                        <div class="home_page_label_container">
+                            <label class="home_page_cat_title roboto-bold"
+                                   style="display: block;">{{categories[2].categoryName}}</label>
+
+                            <div>
+                                <label class=" txt_green_color roboto-regular" style="float: left;">{{ 'SHOP_NOW' | translate }}</label>
+                                <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+                        padding-top: 0.5%;" class="img-responsive ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-no-padding product_div_gradient cursor_pointer"
+                         ng-click="goToCategory(categories[1].categoryId)">
+                        <div class="img"
+                             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[1].managedImageId+')'} : {}"></div>
+                        <div class="home_page_label_container">
+                            <label class="home_page_cat_title roboto-bold"
+                                   style="display: block;">{{categories[1].categoryName}}</label>
+
+                            <div>
+                                <label class=" txt_green_color roboto-regular" style="float: left;">{{ 'SHOP_NOW' |
+                                    translate
+                                    }}</label>
+                                <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+                        padding-top: 0.5%;" class="img-responsive ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-no-gutter">
+                    <div class="col-xs-6 col-md-no-padding product_div_gradient cursor_pointer" ng-click="goToCategory(categories[3].categoryId)">
+                        <div class="img"
+                             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[3].managedImageId+')'} : {}"></div>
+                        <div class="home_page_label_container">
+                            <label class="home_page_cat_title roboto-bold"
+                                   style="display: block;">{{categories[3].categoryName}}</label>
+
+                            <div>
+                                <label class=" txt_green_color roboto-regular" style="float: left;">{{ 'SHOP_NOW' |
+                                    translate
+                                    }}</label>
+                                <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+                        padding-top: 0.5%;" class="img-responsive ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-no-padding product_div_gradient cursor_pointer" ng-click="goToCategory(categories[4].categoryId)">
+                        <div class="img"
+                             ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[4].managedImageId+')'} : {}"
+                             style="    background-size: 40%;background-position: 90% 50%;"></div>
+                        <div class="home_page_label_container">
+                            <label class="home_page_cat_title roboto-bold"
+                                   style="display: block;">{{categories[4].categoryName}}</label>
+
+                            <div>
+                                <label class=" txt_green_color roboto-regular" style="float: left;">{{ 'SHOP_NOW' |
+                                    translate
+                                    }}</label>
+                                <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+                        padding-top: 0.5%;" class="img-responsive ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-no-padding product_div_gradient cursor_pointer"
+                 ng-click="goToCategory(categories[0].categoryId)">
+                <div class=""
+                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[0].managedImageId+')'} : {}"
+                     style="     background-size: cover;background-repeat: no-repeat;    padding-bottom: 120%;"></div>
+                <div class="home_page_label_container" style="height: 15%;">
+                    <label class="home_page_cat_title roboto-bold"
+                           style="display: block;">{{categories[0].categoryName}}</label>
+
+                    <div>
+                        <label class=" txt_green_color roboto-regular" style="float: left;">{{ 'SHOP_NOW' |
+                            translate
+                            }}</label>
+                        <img src="css/images/arrow_right.png" style="    padding-left: 2%;
+                        padding-top: 0.5%;" class="img-responsive ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-xs-8">-->
+    <!--<div class="row">-->
+    <!--<div class="col-xs-6">SPEAKERS</div>-->
+    <!--<div class="col-xs-6">TABLETS</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+    <!--<div class="col-xs-6">LAPTOPS</div>-->
+    <!--<div class="col-xs-6">MICES</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-xs-4">HEADPHONES</div>-->
+</div>
+<div style="padding-top: 10px;"></div>
+<div id="special_offer_items" class="row" style="text-align: center">
+    <div class="col-xs-12 col-md-no-padding home_page_section_title roboto-regular" style="padding-top: 3%;">
+        {{'SPACIAL_OFFER' | translate}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-8 col-md-no-padding ">
+        <div class="square "
+             style="background-image: url('css/images/Special-offer.jpg');background-size: 90%;background-repeat: no-repeat;padding-bottom: 50%;">
+        </div>
+        <!--<img class="img-responsive" src="css/images/Special-offer.jpg">-->
+    </div>
+    <div class="col-xs-2 col-md-no-padding" style="    padding-top: 8%;">
+        <label class="col-xs-12 col-md-no-padding roboto-light"
+               style="font-size: 1.6vw;color: #2a2a2a;">{{deal.name}}</label>
+        <label style=" font-size: 1.7vw;color: #2a2a2a;" class="col-xs-12 col-md-no-padding roboto-thin">{{deal.product.productName}}</label>
+        <label style="font-size: 0.834vw;color: #9d9d9d;" class="col-xs-12 col-md-no-padding roboto-light">{{deal.description}}</label>
+        <button style="font-size: 14px;" class="col-xs-5 col-md-no-padding btn btn-primary btn-lg outline roboto-medium" type="button">{{
+            'SEE_OFFER' | translate}}
+        </button>
+    </div>
+</div>
+<div style="padding-top: 10px;"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-no-padding ">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" ng-repeat="img in images" class="{active : ({{img.imageId === 0}})}"
+                    data-slide-to="{{img.imageId}}"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div ng-class="{item: true, active : (img.imageId === 0)}" ng-repeat="img in images">
+                    <div class="square" ng-click="goToCategory(img.imageId)"
+                         style="background-image: url('css/images/{{img.imageName}}');background-size: 100%;background-repeat: no-repeat;padding-bottom: 33%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.carousel -->
+
+        <!-- Fixed navbar -->
+
+        <!--<div class="square"-->
+        <!--style="background-image: url('css/images/Banner2.jpg');background-size: 100%;background-repeat: no-repeat;padding-bottom: 33%;">-->
+        <!--</div>-->
+    </div>
+</div>
+<div style="padding-top: 3%;"></div>
+<popular-items-drtv popular-products="popularProducts"></popular-items-drtv>
+<div style="padding-top: 3%;"></div>
+<social-media-drtv></social-media-drtv>
+</div>

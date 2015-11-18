@@ -19,44 +19,47 @@ import com.advantage.util.IOHelper;
 @SuppressWarnings("serial")
 public class FetchImageHttpServlet extends HttpServlet {
 
-	private static final String INIT_PARAM_REPOSITORY_DIRECTORY_PATH = "repository-directory-path";
+    private static final String INIT_PARAM_REPOSITORY_DIRECTORY_PATH = "repository-directory-path";
 
-	public static final String REQUEST_PARAM_IMAGE_ID = "image_id";
+    public static final String REQUEST_PARAM_IMAGE_ID = "image_id";
 
-	private ImageManagement imageManagement;
+    private ImageManagement imageManagement;
 
-	@Override
-	public void init() throws ServletException {
+    @Override
+    public void init() throws ServletException {
+        final String repositoryDirectoryPath = getPath();
+        if (StringUtils.isBlank(repositoryDirectoryPath)) {
 
-		final String repositoryDirectoryPath = getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+            final StringBuilder errorMessage = new StringBuilder("Init parameter [");
+            errorMessage.append(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+            errorMessage.append("] must be set");
+            final String errorMessageString = errorMessage.toString();
+            throw new ServletException(errorMessageString);
+        }
 
-		if (StringUtils.isBlank(repositoryDirectoryPath)) {
+        imageManagement = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
+    }
 
-			final StringBuilder errorMessage = new StringBuilder("Init parameter [");
-			errorMessage.append(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
-			errorMessage.append("] must be set");
-			final String errorMessageString = errorMessage.toString();
-			throw new ServletException(errorMessageString);
-		}
+    @Override
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse res)
+        throws ServletException, IOException {
 
-		imageManagement = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
-	}
+        ArgumentValidationHelper.validateArgumentIsNotNull(req, "HTTP servlet request");
+        ArgumentValidationHelper.validateArgumentIsNotNull(res, "HTTP servlet response");
+        final String imageId = req.getParameter(FetchImageHttpServlet.REQUEST_PARAM_IMAGE_ID);
+        final ManagedImage managedImage = imageManagement.getManagedImage(imageId);
+        final StringBuilder contentType = new StringBuilder("image/");
+        final String imageType = managedImage.getType();
+        contentType.append(imageType);
+        final String contentTypeString = contentType.toString();
+        res.setContentType(contentTypeString);
+        final OutputStream out = res.getOutputStream();
+        final byte[] imageContent = managedImage.getContent();
+        IOHelper.outputInput(imageContent, out);
+    }
 
-	@Override
-	protected void doGet(final HttpServletRequest req, final HttpServletResponse res)
-	 throws ServletException, IOException {
-
-		ArgumentValidationHelper.validateArgumentIsNotNull(req,  "HTTP servlet request");
-		ArgumentValidationHelper.validateArgumentIsNotNull(res,  "HTTP servlet response");
-		final String imageId = req.getParameter(FetchImageHttpServlet.REQUEST_PARAM_IMAGE_ID);
-		final ManagedImage managedImage = imageManagement.getManagedImage(imageId);		
-		final StringBuilder contentType = new StringBuilder("image/");
-		final String imageType = managedImage.getType();
-		contentType.append(imageType);
-		final String contentTypeString = contentType.toString();
-		res.setContentType(contentTypeString);
-		final OutputStream out = res.getOutputStream();
-		final byte[] imageContent = managedImage.getContent();
-		IOHelper.outputInput(imageContent, out);
-	}
+    private String getPath() {
+        String path = getServletContext().getRealPath("/WEB-INF/").split("target")[0];
+        return path + getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+    }
 }
