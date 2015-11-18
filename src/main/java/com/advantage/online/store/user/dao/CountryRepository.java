@@ -15,8 +15,8 @@ public interface CountryRepository {
     Country createCountry(String name, String isoName, int phonePrefix);
 
     int deleteCountry(Country country);
-    int deleteCountriesbyNames(Collection<String> names);
-    int deleteCountriesbyIsoName(Collection<String> isoNames);
+    int deleteCountriesByNames(Collection<String> names);
+    int deleteCountriesByIsoName(Collection<String> isoNames);
 
     List<Country> getAllCountries();
     List<Country> getCountriesByIsoNames(Collection<String> isoNames);
