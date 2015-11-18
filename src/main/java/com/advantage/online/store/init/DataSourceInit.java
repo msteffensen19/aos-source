@@ -155,9 +155,11 @@ public class DataSourceInit {
         productAttributes.add(productAttribute7);
 
         session.persist(new Deal(DealType.DAILY, "Free shipping & free returns <br /> Up to $40",
-            "EXPLORE THE NEW DESIGN", "Supremely thin, yet incredibly durable", "490", "1240", product1));
+                "EXPLORE THE NEW DESIGN", "Supremely thin, yet incredibly durable", "490", "1240",
+                30, "2015-11-15 00:00:00", "2015-11-30 23:59:59", product1));
         session.persist(new Deal(DealType.WEEKLY, "Free shipping & free returns <br /> Up to $40",
-            "EXPLORE THE NEW DESIGN", "Supremely thin, yet incredibly durable", "490", "1240", product1));
+                "EXPLORE THE NEW DESIGN", "Supremely thin, yet incredibly durable", "490", "1240",
+                30, "2015-11-15 00:00:00", "2015-11-30 23:59:59", product1));
 
         session.persist(attribute1);
         session.persist(attribute2);

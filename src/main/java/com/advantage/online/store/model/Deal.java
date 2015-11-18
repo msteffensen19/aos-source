@@ -45,13 +45,18 @@ public class Deal {
     private String promotionSubHeader;
     private String staringPrice;
     private String managedImageId;
+    private double discount;
+    private String dateFrom;
+    private String dateTo;
 
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
 
     public Deal(final Integer dealType, final String description, String promotionHeader,
-                String  promotionSubHeader, String staringPrice, String managedImageId, final Product product) {
+                String  promotionSubHeader, String staringPrice, String managedImageId,
+                double discount, String dateFrom, String dateTo,
+                final Product product) {
         this.dealType = dealType;
         this.description = description;
         this.product = product;
@@ -59,12 +64,15 @@ public class Deal {
         this.promotionSubHeader = promotionSubHeader;
         this.staringPrice = staringPrice;
         this.managedImageId = managedImageId;
+        this.discount = discount;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
     }
 
     public Deal(final DealType dealType,  final String description, String promotionHeader,
-                String  promotionSubHeader, String staringPrice, String managedImageId, final Product product) {
+                String  promotionSubHeader, String staringPrice, String managedImageId, double discount, String dateFrom, String dateTo, final Product product) {
 
-        this(dealType.getDealTypeCode(), description, promotionHeader, promotionSubHeader,staringPrice, managedImageId,
+        this(dealType.getDealTypeCode(), description, promotionHeader, promotionSubHeader,staringPrice, managedImageId, discount, dateFrom, dateTo,
             product);
     }
 
@@ -143,4 +151,17 @@ public class Deal {
     public void setManagedImageId(String managedImageId) {
         this.managedImageId = managedImageId;
     }
+
+    public double getDiscount() { return discount; }
+
+    public void setDiscount(double discount) { this.discount = discount; }
+
+    public String getDateFrom() { return dateFrom; }
+
+    public void setDateFrom(String dateFrom) { this.dateFrom = dateFrom; }
+
+    public String getDateTo() { return dateTo; }
+
+    public void setDateTo(String dateTo) { this.dateTo = dateTo; }
+
 }

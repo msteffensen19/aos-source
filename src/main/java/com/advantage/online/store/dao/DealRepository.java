@@ -9,7 +9,9 @@ import java.util.List;
 public interface DealRepository {
 
 	Deal createDeal(DealType dealType, String description, String promotionHeader,
-                    String  promotionSubHeader, String staringPrice, String managedImageId, Product product);
+                    String  promotionSubHeader, String staringPrice, String managedImageId,
+                    double discount, String dateFrom, String dateTo,
+                    Product product);
 	int deleteDeal(Deal deal);
     List<Deal> getAllDeals();
     Deal getDealOfTheDay();

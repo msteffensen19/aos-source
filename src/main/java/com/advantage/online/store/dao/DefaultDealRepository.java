@@ -21,10 +21,12 @@ public class DefaultDealRepository extends AbstractRepository implements DealRep
 
 	@Override
 	public Deal createDeal(DealType dealType,  String description, String promotionHeader,
-                           String  promotionSubHeader, String staringPrice, String managedImageId, Product product) {
+                           String  promotionSubHeader, String staringPrice, String managedImageId,
+                           double discount, String dateFrom, String dateTo,
+                           Product product) {
 
     	final Deal deal = new Deal(dealType, description, promotionHeader, promotionSubHeader, staringPrice,
-            managedImageId, product);
+            managedImageId, discount, dateFrom, dateTo, product);
     	entityManager.persist(deal);
     	return deal;
     }
