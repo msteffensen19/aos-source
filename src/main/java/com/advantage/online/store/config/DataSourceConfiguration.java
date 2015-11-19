@@ -3,6 +3,7 @@ package com.advantage.online.store.config;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import com.advantage.online.store.init.DataSourceInit4Json;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -25,9 +26,14 @@ public class DataSourceConfiguration {
     @Inject
     private Environment env;
 
-    @Bean(initMethod = "init")
+    /*@Bean(initMethod = "init")
     public DataSourceInit initTestData() {
         return new DataSourceInit();
+    }*/
+
+    @Bean(initMethod = "init")
+    public DataSourceInit4Json initTestData() {
+        return new DataSourceInit4Json();
     }
 
     @Bean

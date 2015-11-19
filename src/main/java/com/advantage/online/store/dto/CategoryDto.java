@@ -1,18 +1,14 @@
 package com.advantage.online.store.dto;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.advantage.online.store.model.category.Category;
 import com.advantage.util.ArgumentValidationHelper;
 
 public class CategoryDto {
-
-    private Long categoryId;
+    private Long id;
     private String categoryName;
-    private String managedImageId;
+    private String catImageUrl;
     private PromotedProductDto promotedProduct;
     private List<AttributeDto> attributes;
     private List<ProductDto> products;
@@ -21,23 +17,18 @@ public class CategoryDto {
         return attributes;
     }
 
-    public void setAttributes(Map<String, Set<String>> attributes) {
-        List<AttributeDto> attributeItems = new ArrayList<>();
-        for (Map.Entry<String, Set<String>> item : attributes.entrySet()) {
-            attributeItems.add(new AttributeDto(item.getKey(), item.getValue()));
-        }
-
+    public void setAttributes(List<AttributeDto> attributeItems) {
         this.attributes = attributeItems;
     }
 
-    public Long getCategoryId() {
+    public Long getId() {
 
-        return categoryId;
+        return id;
     }
 
-    public void setCategoryId(final Long categoryId) {
+    public void setId(final Long categoryId) {
 
-        this.categoryId = categoryId;
+        this.id = categoryId;
     }
 
     public String getCategoryName() {
@@ -52,7 +43,7 @@ public class CategoryDto {
 
     public void applyCategory(final Category category) {
         ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
-        setCategoryId(category.getCategoryId());
+        setId(category.getCategoryId());
         setCategoryName(category.getCategoryName());
         setManagedImageId(category.getManagedImageId());
 
@@ -60,12 +51,12 @@ public class CategoryDto {
 
     public String getManagedImageId() {
 
-        return managedImageId;
+        return catImageUrl;
     }
 
     public void setManagedImageId(String managedImageId) {
 
-        this.managedImageId = managedImageId;
+        this.catImageUrl = managedImageId;
     }
 
     public List<ProductDto> getProducts() {

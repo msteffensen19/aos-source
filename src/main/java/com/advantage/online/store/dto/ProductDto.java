@@ -1,6 +1,5 @@
 package com.advantage.online.store.dto;
 
-import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 
@@ -13,7 +12,7 @@ public class ProductDto {
     private String productName;
     private int price;
     private String description;
-    private String managedImageId;
+    private String imageUrl;
     private List<AttributeItem> attributes;
 
     public ProductDto() {
@@ -24,7 +23,7 @@ public class ProductDto {
         this.productName = product.getProductName();
         this.price = product.getPrice();
         this.description = product.getDescription();
-        this.managedImageId = product.getManagedImageId();
+        this.imageUrl = product.getManagedImageId();
         this.attributes = fillAttributes(product);
     }
 
@@ -60,22 +59,28 @@ public class ProductDto {
         this.description = description;
     }
 
-    public String getManagedImageId() {
-        return managedImageId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setManagedImageId(String managedImageId) {
-        this.managedImageId = managedImageId;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
+
+
 
     public List<AttributeItem> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Product product) {
-        this.attributes = fillAttributes(product);
+    public void setAttributes(List<AttributeItem> attributes) {
+        this.attributes = attributes;
     }
 
+   /* public void setAttributes(Product product) {
+        this.attributes = fillAttributes(product);
+    }
+*/
     private List<AttributeItem> fillAttributes(Product product) {
         Set<ProductAttributes> productAttributes = product.getProductAttributes();
         List<AttributeItem> items = new ArrayList<>();
@@ -86,29 +91,4 @@ public class ProductDto {
         return items;
     }
 
-    private static class AttributeItem {
-        private String attributeName;
-        private String attributeValue;
-
-        public AttributeItem(String attributeName, String attributeValue) {
-            this.attributeName = attributeName;
-            this.attributeValue = attributeValue;
-        }
-
-        public String getAttributeName() {
-            return attributeName;
-        }
-
-        public void setAttributeName(String attributeName) {
-            this.attributeName = attributeName;
-        }
-
-        public String getAttributeValue() {
-            return attributeValue;
-        }
-
-        public void setAttributeValue(String attributeValue) {
-            this.attributeValue = attributeValue;
-        }
-    }
 }
