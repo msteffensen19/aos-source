@@ -9,7 +9,7 @@ public abstract class GenericRepositoryTests {
 
 	@Autowired
 	protected PlatformTransactionManager transactionManager;
-	final TransactionDefinition transactionDefinition;
+	protected TransactionDefinition transactionDefinition;
 
 	public GenericRepositoryTests() {
 

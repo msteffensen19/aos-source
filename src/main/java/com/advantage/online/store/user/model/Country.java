@@ -30,7 +30,7 @@ public class Country {
 //    public static final String QUERY_GET_COUNTRIES_BY_PARTIAL_NAME = "country.getCountriesByPartialName";
 
 
-    public static final String FIELD_ID = "COUNTRY_ID";
+    public static final String FIELD_ID = "ID"; //  COUNTRY_ID
 
     public static final String FIELD_NAME = "NAME";
     public static final String PARAM_COUNTRY_NAME = "PARAM_COUNTRY_COUNTRY_NAME";
