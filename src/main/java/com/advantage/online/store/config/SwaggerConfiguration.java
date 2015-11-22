@@ -23,6 +23,7 @@ public class SwaggerConfiguration {
             .apis(RequestHandlerSelectors.any())
             .paths(regex("/api/.*"))
             .build()
+            .enableUrlTemplating(false)
             .apiInfo(apiInfo());
     }
 

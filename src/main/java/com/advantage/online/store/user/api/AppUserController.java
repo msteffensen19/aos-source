@@ -30,17 +30,18 @@ public class AppUserController {
     private AppUserService appUserService;
 
     @RequestMapping(value = "appUsers", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
         List<AppUser> appUsers = appUserService.getAllAppUsers();
-        return new ResponseEntity<Object>(appUsers, HttpStatus.OK);
+
+        return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/appUserData/login", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
-                                                                                    appUser.getLoginPassword(),
-                                                                                    appUser.getEmail());
+            appUser.getLoginPassword(),
+            appUser.getEmail());
 
         if (appUserResponseStatus.isSuccess())
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);

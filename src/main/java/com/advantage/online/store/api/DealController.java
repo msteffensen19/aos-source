@@ -25,22 +25,23 @@ public class DealController {
     private DealService dealService;
 
     @RequestMapping(value = "deals", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllDeals(final HttpServletRequest request,
+    public ResponseEntity<List<Deal>> getAllDeals(final HttpServletRequest request,
      final HttpServletResponse response) {
 
     	ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
         final List<Deal> deals = dealService.getAllDeals();
-        return new ResponseEntity<Object>(deals, HttpStatus.OK);
+
+        return new ResponseEntity<>(deals, HttpStatus.OK);
     }
 
     @RequestMapping(value = "dealOfDay", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDealOfTheDay(final HttpServletRequest request,
+    public ResponseEntity<Deal> getDealOfTheDay(final HttpServletRequest request,
      final HttpServletResponse response) {
-
     	ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
         final Deal dealOfTheDay = dealService.getDealOfTheDay();
-        return new ResponseEntity<Object>(dealOfTheDay, HttpStatus.OK);
+
+        return new ResponseEntity<>(dealOfTheDay, HttpStatus.OK);
     }
 }
