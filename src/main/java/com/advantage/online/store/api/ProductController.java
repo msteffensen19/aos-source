@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.advantage.online.store.Constants;
@@ -31,22 +32,25 @@ public class ProductController {
     private ProductService productService;
 
     @RequestMapping(value = "products", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<List<Product>> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.getAllProducts();
-        return new ResponseEntity<Object>(products, HttpStatus.OK);
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @RequestMapping(value = "categoryProducts", method = RequestMethod.GET)
-    public ResponseEntity<Object> getCategoryProducts(final HttpServletRequest request,
-                                                      final HttpServletResponse response) {
-
+    public ResponseEntity<List<Product>> getCategoryProducts(final HttpServletRequest request,
+                        final HttpServletResponse response,
+                        @RequestParam(ProductController.REQUEST_PARAM_CATEGORY_ID) Long categoryId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
-        HttpServletHelper.validateParametersExistenceInRequest(request, true,
-            ProductController.REQUEST_PARAM_CATEGORY_ID);
-        final String categoryIdParameter = request.getParameter(ProductController.REQUEST_PARAM_CATEGORY_ID);
-        final Long categoryId = Long.valueOf(categoryIdParameter);
+        HttpServletHelper.validateParametersExistenceInRequest(request, true, ProductController.REQUEST_PARAM_CATEGORY_ID);
+       /* final String categoryIdParameter = request.getParameter(ProductController.REQUEST_PARAM_CATEGORY_ID);
+        final Long categoryId = Long.valueOf(categoryIdParameter);*/
         final List<Product> products = productService.getCategoryProducts(categoryId);
-        return new ResponseEntity<Object>(products, HttpStatus.OK);
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+
 }

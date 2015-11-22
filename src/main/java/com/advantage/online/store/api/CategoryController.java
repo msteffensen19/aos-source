@@ -42,13 +42,14 @@ public class CategoryController {
     private DealService dealService;
 
     @RequestMapping(value = "/category", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
         List<Category> category = categoryService.getAllCategories();
+
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/categoryData/{category_id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getCategoryData(@PathVariable("category_id") String id) {
+    public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
 
         /*ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");

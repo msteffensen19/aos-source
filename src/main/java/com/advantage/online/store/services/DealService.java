@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class DealService {
 
-    @Autowired()
+    @Autowired
     @Qualifier("dealRepository")
     public DealRepository dealRepository;
 
