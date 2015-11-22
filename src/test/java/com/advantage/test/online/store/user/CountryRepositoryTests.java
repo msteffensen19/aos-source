@@ -1,8 +1,6 @@
 package com.advantage.test.online.store.user;
 
-import com.advantage.online.store.Constants;
 import com.advantage.online.store.user.dao.CountryRepository;
-import com.advantage.online.store.user.dao.DefaultCountryRepository;
 import com.advantage.online.store.user.model.Country;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.test.online.store.dao.GenericRepositoryTests;
@@ -15,6 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Binyamin Regev on 16/11/2015.
@@ -24,113 +25,18 @@ import java.io.IOException;
 public class CountryRepositoryTests extends GenericRepositoryTests {
 
     private final String name = "Israel";
+    private final String isoName = "il";
+    private final int phonePrefix = 972;
 
     @Autowired
     CountryRepository countryRepository;
 
-    /**
-     * Test {@link Country} class constructor <@code Country(Sting, String)}
-     * @throws IOException
-     */
-//    @Test
-//    public void testConstructorCountry_CountryAndIsoNames() throws IOException {
-//
-//        System.out.println("Testing public void testConstructorCountry_CountryAndIsoNames()");
-//        String isoName = "il";
-//        final Country country = new Country(name, isoName);
-//        Assert.assertNotNull(country);
-//        System.out.println(country);
-//
-//        System.out.println(Constants.SPACE);
-//
-//        Assert.assertTrue(true);
-//
-//    }
-//
-//    /**
-//     * Test {@link Country} class constructor <@code Country(Sting, int)}
-//     * @throws IOException
-//     */
-//    @Test
-//    public void testConstructorCountry_CountryAndPhonePrefix() throws IOException {
-//
-//        System.out.println("Testing public void testConstructorCountry_CountryAndPhonePrefix()");
-//        int phonePrefix = 972;
-//        final Country country = new Country(name, phonePrefix);
-//        Assert.assertNotNull(country);
-//        System.out.println(country);
-//
-//        System.out.println(Constants.SPACE);
-//
-//        Assert.assertTrue(true);
-//
-//    }
-//
-//    /**
-//     * Test {@link Country} class constructor <@code Country(Sting, String, int)}
-//     * @throws IOException
-//     */
-//    @Test
-//    public void testConstructorCountry_AllFields() throws IOException {
-//
-//        System.out.println("Testing public void testConstructorCountry_AllFields()");
-//        final Country country = new Country("Israel", "il", 972);
-//        Assert.assertNotNull(country);
-//        System.out.println(country);
-//
-//        System.out.println(Constants.SPACE);
-//
-//        Assert.assertTrue(true);
-//
-//    }
-
-//    @Test
-//    public void testCreateCountry_CountryAndIsoNames() throws IOException {
-//
-//        System.out.println("Create Country ISRAEL - Str1ing, String");
-//        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-//        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-//
-//        final Country country = countryRepository.createCountry("Israel", "il");
-//        transactionManager.commit(transactionStatusForCreation);
-//        Assert.assertNotNull(country);
-//
-//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-//        countryRepository.deleteCountry(country);
-//        transactionManager.commit(transactionStatusForDeletion);
-//
-//        Assert.assertTrue(true);
-//
-//    }
-
-//    @Test
-//    public void testCreateCountry_CountryAndPhonePrefix() throws IOException {
-//
-//        System.out.println("Create Country ISRAEL - String, int");
-//        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-//        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-//
-//        final Country country = countryRepository.createCountry("Israel", 972);
-//        transactionManager.commit(transactionStatusForCreation);
-//        Assert.assertNotNull(country);
-//
-//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-//        countryRepository.deleteCountry(country);
-//        transactionManager.commit(transactionStatusForDeletion);
-//
-//        Assert.assertTrue(true);
-//
-//    }
-
     @Test
-    public void testCreateCountry_AllFields() throws IOException {
-
-        System.out.println("Create Country ISRAEL - String, String, int");
-
+    public void testCreateCountry_CountryAndIsoNames() throws IOException {
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-
-        Country country = countryRepository.createCountry("Israel", "il", 972);
+        final Country country = countryRepository.createCountry(name, isoName);
         transactionManager.commit(transactionStatusForCreation);
+
         Assert.assertNotNull(country);
 
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
@@ -138,6 +44,79 @@ public class CountryRepositoryTests extends GenericRepositoryTests {
         transactionManager.commit(transactionStatusForDeletion);
 
         Assert.assertTrue(true);
+
+    }
+
+    @Test
+    public void testCreateCountry_CountryAndPhonePrefix() throws IOException {
+        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+        final Country country = countryRepository.createCountry(name, phonePrefix);
+        transactionManager.commit(transactionStatusForCreation);
+
+        Assert.assertNotNull(country);
+
+        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+        countryRepository.deleteCountry(country);
+        transactionManager.commit(transactionStatusForDeletion);
+
+        Assert.assertTrue(true);
+
+    }
+
+    @Test
+    public void testCreateCountry_AllFields() throws IOException {
+        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+        Country country = countryRepository.createCountry(name, isoName, phonePrefix);
+        transactionManager.commit(transactionStatusForCreation);
+
+        Assert.assertNotNull(country);
+
+        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+        countryRepository.deleteCountry(country);
+        transactionManager.commit(transactionStatusForDeletion);
+
+        Assert.assertTrue(true);
+
+    }
+
+    @Test
+    public void testGetCountryIdByCountryName() {
+        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+        Country country = new Country();
+
+        country = countryRepository.createCountry("Austria", "at", 43);
+        country = countryRepository.createCountry("Australia", "au", 61);
+        country = countryRepository.createCountry("Cayman Islands", "ky", 1345);
+        country = countryRepository.createCountry("Bahamas", "bs", 1242);
+        country = countryRepository.createCountry("Uruguay", "uy", 598);
+        country = countryRepository.createCountry("Solomon Islands", "sb", 677);
+        country = countryRepository.createCountry("Falkland Islands", "fk", 500);
+        country = countryRepository.createCountry("Ukraine", "ua", 380);
+        country = countryRepository.createCountry("Cook Islands", "ck", 682);
+        country = countryRepository.createCountry("Israel", "il", 972);
+        country = countryRepository.createCountry("Canada", "ca", 1);
+        country = countryRepository.createCountry("Russia", "ru", 7);
+        country = countryRepository.createCountry("United Kingdom", "uk", 44);
+        country = countryRepository.createCountry("United States", "us", 1);
+        country = countryRepository.createCountry("Iceland", "is", 354);
+        country = countryRepository.createCountry("Uzbekistan", "uz", 998);
+
+        transactionManager.commit(transactionStatusForCreation);
+
+        final String countryName = "Israel";
+        final Integer countryId = countryRepository.getCountryIdByName(countryName);
+        System.out.println("The Country-ID of " + countryName + " is " + countryId);
+
+        Assert.assertTrue("[CountryId] is Negative or 0", countryId > 0);
+
+        final List<Country> countries = countryRepository.getAllCountries();
+
+        final Collection<Integer> countryIds = new ArrayList<Integer>(countries.size());
+
+        for (final Country c : countries) {
+            final Integer id = c.getId();
+            countryIds.add(id);
+        }
 
     }
 }

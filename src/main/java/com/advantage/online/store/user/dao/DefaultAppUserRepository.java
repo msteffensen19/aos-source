@@ -1,7 +1,9 @@
 package com.advantage.online.store.user.dao;
 
 import com.advantage.online.store.dao.AbstractRepository;
+import com.advantage.online.store.user.dto.AppUserResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
+import com.advantage.online.store.user.util.UserPassword;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,11 +23,6 @@ import java.util.List;
 public class DefaultAppUserRepository extends AbstractRepository implements AppUserRepository {
 
     public static final int MAX_NUM_OF_APP_USER = 50;
-
-    @Override
-    public int returnSomething() {
-        return 777;
-    }
 
     @Override
     public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
@@ -86,10 +83,10 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(logins,
     			                                                                "application users logins");
     	final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(AppUser.class,
-    			                                                   AppUser.FIELD_LOGIN,
-    			                                                   AppUser.PARAM_LOGIN);
+    			                                                   AppUser.FIELD_USER_LOGIN,
+    			                                                   AppUser.PARAM_USER_LOGIN);
         final Query query = entityManager.createQuery(hql);
-        query.setParameter(AppUser.PARAM_LOGIN, logins);
+        query.setParameter(AppUser.PARAM_USER_LOGIN, logins);
 
         return query.executeUpdate();
     }
@@ -99,6 +96,9 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
                 .setMaxResults(MAX_NUM_OF_APP_USER)
                 .getResultList();
+
+//        //  Encrypt the password before updating it into the database
+//        String encryptedPassword = userPassword.decryptText(password);
 
         return appUsers.isEmpty() ? null : appUsers;
     }
@@ -114,12 +114,63 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     @Override
-    public List<AppUser> getAppUsersByEmail(Collection<String> email) {
-        return null;
+    public AppUser getAppUserByLogin(String userLogin) {
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(userLogin, "user login name");
+
+        final Query query = entityManager.createNamedQuery(AppUser.QUERY_GET_BY_USER_LOGIN);
+
+        query.setParameter(AppUser.PARAM_USER_LOGIN, userLogin);
+
+        @SuppressWarnings("unchecked")
+
+        List<AppUser> appUsers = query.getResultList();
+
+        final AppUser user;
+
+        if (appUsers.isEmpty()) {
+
+            user = null;
+        } else {
+
+            user = appUsers.get(0);
+        }
+
+        return user;
+
     }
 
     @Override
-    public List<AppUser> getAppUsersByLogin(Collection<String> login) {
-        return null;
+    public AppUserResponseStatus doLogin(String loginUser, String loginPassword, String email) {
+
+        AppUser appUser = getAppUserByLogin(loginUser);
+
+        if (appUser == null) {
+            return new AppUserResponseStatus(false, "Invalid user login.", -1);
+        }
+
+        if (loginPassword != null) {
+            if (appUser.getPassword().compareTo(loginPassword) != 0) {
+                return new AppUserResponseStatus(false, "Invalid user-name and password combination. Count not find user-name with this password.", appUser.getId());
+            }
+        }
+        else
+            return new AppUserResponseStatus(false, "Invalid login, password is empty.", appUser.getId());
+
+
+        if (email != null) {
+            if (appUser.getEmail() != null) {
+                if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
+                    return new AppUserResponseStatus(false, "Login email does not match the email set in user details.", appUser.getId());
+                }
+            } else {
+                return new AppUserResponseStatus(false, "No emails was set in user details.", appUser.getId());
+            }
+
+//        } else {
+//            return new AppUserResponseStatus(false, "Login email is empty.", appUser.getId());
+        }
+
+            return new AppUserResponseStatus(true, "Login Successful", appUser.getId());
     }
+
 }

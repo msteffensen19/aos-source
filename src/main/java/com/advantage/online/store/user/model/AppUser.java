@@ -1,6 +1,7 @@
 package com.advantage.online.store.user.model;
 
 import com.advantage.online.store.Constants;
+import com.advantage.online.store.user.util.UserPassword;
 import com.advantage.util.ArgumentValidationHelper;
 
 import javax.persistence.*;
@@ -14,15 +15,20 @@ import javax.persistence.*;
         @NamedQuery(
                 name = AppUser.QUERY_GET_ALL,
                 query = "select u from AppUser u"
-        ),
-        @NamedQuery(
+        )
+        ,@NamedQuery(
+                name = AppUser.QUERY_GET_BY_USER_LOGIN,
+                query = "select u from AppUser u where " + AppUser.FIELD_USER_LOGIN + " = :" + AppUser.PARAM_USER_LOGIN
+        )
+        ,@NamedQuery(
                 name = AppUser.QUERY_GET_USERS_BY_COUNTRY,
                 query = "select u from AppUser u where " + AppUser.FIELD_COUNTRY + " = :" + AppUser.PARAM_COUNTRY
-)
+        )
 })
 public class AppUser {
 
     public static final String QUERY_GET_ALL = "appUser.getAll";
+    public static final String QUERY_GET_BY_USER_LOGIN = "appUser.getAppUserByLogin";
     public static final String QUERY_GET_USERS_BY_COUNTRY = "appUser.getAppUsersByCountry";
 
     public static final String FIELD_ID = "USER_ID";
@@ -30,8 +36,8 @@ public class AppUser {
     public static final String FIELD_EMAIL = "EMAIL";
     public static final String PARAM_EMAIL = "PARAM_USER_EMAIL";
 
-    public static final String FIELD_LOGIN = "LOGIN_NAME";
-    public static final String PARAM_LOGIN = "PARAM_USER_LOGIN";
+    public static final String FIELD_USER_LOGIN = "LOGIN_NAME";
+    public static final String PARAM_USER_LOGIN = "PARAM_USER_LOGIN";
 
     public static final String FIELD_COUNTRY = "COUNTRY";
     public static final String PARAM_COUNTRY = "PARAM_USER_COUNTRY";
@@ -47,7 +53,7 @@ public class AppUser {
     @Column(name="FIRST_NAME")
     private String firstName;
 
-    @Column(name= FIELD_LOGIN)
+    @Column(name= FIELD_USER_LOGIN)
     private String loginName;
 
     private String password;
@@ -78,6 +84,10 @@ public class AppUser {
 
     @Column(name="AGREE_TO_RECEIVE_OFFERS")
     private char agreeToReceiveOffersAndPromotions;  //   'Y' = Yes ; 'N' = No
+
+    public AppUser() {
+
+    }
 
     public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
 
@@ -153,11 +163,13 @@ public class AppUser {
     }
 
     public String getPassword() {
-        return password;
+        UserPassword userPassword = new UserPassword();
+        return userPassword.decryptText(password);
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        UserPassword userPassword = new UserPassword();
+        this.password = userPassword.encryptText(password);
     }
 
     public Integer getAppUserType() {

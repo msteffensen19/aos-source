@@ -1,6 +1,7 @@
 package com.advantage.online.store.user.services;
 
 import com.advantage.online.store.user.dao.AppUserRepository;
+import com.advantage.online.store.user.dto.AppUserResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
 import com.advantage.util.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,20 @@ public class AppUserService {
     @Qualifier("appUserRepository")
     public AppUserRepository appUserRepository;
 
+
+    @Transactional(readOnly = true)
+    public AppUser getAppUserByLogin(final String loginUser) {
+        return appUserRepository.getAppUserByLogin(loginUser);
+    }
+
+    @Transactional(readOnly = true)
+    public AppUserResponseStatus doLogin(final String loginUser, final String loginPassword, final String email) {
+        return appUserRepository.doLogin(loginUser, loginPassword, email);
+    }
+
     @Transactional(readOnly = true)
     public List<AppUser> getAllAppUsers() {
         return appUserRepository.getAllAppUsers();
-    }
-
-
-    @Transactional(readOnly = true)
-    public List<AppUser> getAppUsersByCountry(final Integer countryId) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(countryId, "country id");
-        return appUserRepository.getAppUsersByCountry(countryId);
     }
 
 }

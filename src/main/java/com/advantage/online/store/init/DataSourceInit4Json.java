@@ -10,6 +10,10 @@ import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
+import com.advantage.online.store.user.model.AppUser;
+import com.advantage.online.store.user.model.AppUserType;
+import com.advantage.online.store.user.model.Country;
+import com.advantage.online.store.user.model.YesNoReply;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -135,6 +139,45 @@ public class DataSourceInit4Json {
             p.getPromotionImageId(), 0, "", "",  parent);
 
         session.persist(deal);
+
+
+        /*USER*/
+
+
+        //  Binyamin Regev 2015-11-18
+        session.persist(new Country("Austria", "at", 43));
+        session.persist(new Country("Australia", "au", 61));
+        session.persist(new Country("Cayman Islands", "ky", 1345));
+        session.persist(new Country("Bahamas", "bs", 1242));
+        session.persist(new Country("Uruguay", "uy", 598));
+        session.persist(new Country("Solomon Islands", "sb", 677));
+        session.persist(new Country("Falkland Islands", "fk", 500));
+        session.persist(new Country("Ukraine", "ua", 380));
+        session.persist(new Country("Cook Islands", "ck", 682));
+        session.persist(new Country("Israel", "il", 972));
+        session.persist(new Country("Canada", "ca", 1));
+        session.persist(new Country("Russia", "ru", 7));
+        session.persist(new Country("United Kingdom", "uk", 44));
+        session.persist(new Country("United States", "us", 1));
+        session.persist(new Country("Iceland", "is", 354));
+        session.persist(new Country("Uzbekistan", "uz", 998));
+        //  Binyamin Regev 2015-11-18 - End
+
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "King", "David", "king.david", "kingdavid", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "Avraham", "avinu.avraham", "aloneimamreh", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "itshak", "avinu.itshak", "aloneimamreh", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "jakob", "avinu.jakob", "aloneimamreh", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Sara", "imenu.sara", "aloneimamreh", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Rivka", "imenu.rivka", "aloneimamreh", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Lea", "imenu.lea", "aloneimamreh", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Rachel", "imenu.rachel", "aloneimamreh", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
+
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "King", "solomon", "king.solomon", "kingsolomon", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Sheeba", "queen.sheeba", "queensheeba", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Bat Sheva", "queen.bat-sheva", "queenbatsheva", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Ben Tsruya", "Yoav", "ben-tsruya.yoav", "bentsruyayoav", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
+
         transaction.commit();
     }
 

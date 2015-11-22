@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +28,6 @@ import java.util.Map;
 public class DefaultCountryRepository extends AbstractRepository implements CountryRepository {
 
     public static final int MAX_NUM_OF_COUNTRIES = 50;
-
-//    @Autowired
-//    protected PlatformTransactionManager transactionManager;
-//    final TransactionDefinition transactionDefinition;
-
-//    public DefaultCountryRepository() {
-//        transactionDefinition = new DefaultTransactionDefinition();
-//    }
 
     @Override
     public Country createCountry(String name, int phonePrefix) {
@@ -77,34 +70,69 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     }
 
     @Override
-    public int deleteCountriesByNames(Collection<String> names) {
+    public int deleteCountries(Collection<Country> countries) {
 
-    	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(names,
-    			                                                                "countries names");
-    	final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Country.class,
-    			                                                   Country.FIELD_NAME,
-    			                                                   Country.PARAM_COUNTRY_NAME);
+        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(countries,
+                                                                                "countries list");
 
-        final Query query = entityManager.createQuery(hql);
-        query.setParameter(Country.PARAM_COUNTRY_NAME, names);
-        return query.executeUpdate();
+        final int countriesCount = countries.size();
+        final Collection<Integer> countryIds = new ArrayList<Integer>(countriesCount);
+
+        for (final Country country : countries) {
+            final Integer countryId = country.getId();
+            countryIds.add(countryId);
+        }
+
+        return deleteCountriesByIds(countryIds);
 
     }
 
     @Override
-    public int deleteCountriesByIsoName(Collection<String> isoNames) {
+    public int deleteCountriesByNames(Collection<String> names) {
 
-        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(isoNames,
-                "countries ISO names");
+    	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(names,
+    			                                                                "countries names");
 
-        final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Country.class,
-                                                                   Country.FIELD_ISO_NAME,
-                                                                   Country.PARAM_ISO_NAME);
+        final int namesCount = names.size();
+        final Collection<Integer> countryIds = new ArrayList<Integer>(namesCount);
 
-        final Query query = entityManager.createQuery(hql);
-        query.setParameter(Country.PARAM_ISO_NAME, isoNames);
-        return query.executeUpdate();
+        for (final String name : names) {
 
+            final Integer countryId = this.getCountryIdByName(name);
+            countryIds.add(countryId);
+        }
+
+        return deleteCountriesByIds(countryIds);
+
+    }
+
+    public int deleteCountriesByIds(Collection<Integer> countryIds) {
+        return 0;
+    }
+
+    @Override
+    public Integer getCountryIdByName(String countryName) {
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(countryName, "country name");
+
+        final Query query = entityManager.createNamedQuery(Country.QUERY_GET_BY_COUNTRY_NAME);
+
+        query.setParameter(Country.PARAM_COUNTRY_NAME, countryName);
+
+        @SuppressWarnings("unchecked")
+
+        List<Country> countries = query.getResultList();
+
+        final Integer countryId;
+
+        if (countries.isEmpty()) {
+
+            countryId = -1;
+        } else {
+
+            countryId = countries.get(0).getId();
+        }
+
+        return countryId;
     }
 
     @Override
@@ -119,32 +147,14 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
 
     @Override
     public List<Country> getCountriesByIsoNames(Collection<String> isoNames) {
+
         return null;
     }
 
     @Override
     public List<Country> getCountriesByPartialName(String partialName) {
+
         return null;
     }
 
-//    public void callCreateCountry() {
-//        System.out.println("Create Country ISRAEL - String, String, int");
-//
-//        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-//
-//        final Country country = this.createCountry("Israel", "il", 972);
-//        transactionManager.commit(transactionStatusForCreation);
-//
-//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-//        this.deleteCountry(country);
-//        transactionManager.commit(transactionStatusForDeletion);
-//    }
-//
-//    public static void main(String[] args) {
-//
-//        DefaultCountryRepository defaultCountryRepository = new DefaultCountryRepository();
-//
-//        defaultCountryRepository.callCreateCountry();
-//
-//    }
 }

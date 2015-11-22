@@ -10,7 +10,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -21,11 +20,12 @@ import java.security.NoSuchAlgorithmException;
  */
 public class UserPassword {
 
+    //  Array of characters in Hex
     private static byte[] sharedvector = { 0x01, 0x02, 0x03, 0x05, 0x07, 0x0B, 0x0D, 0x11 };
 
-    public String encryptText(String RawText)
+    public String encryptText(String testToEncrypt)
     {
-        String EncText = "";
+        String encryptedText = "";
         byte[] keyArray = new byte[24];
         byte[] temporaryKey;
         String key = "developersnotedotcom";
@@ -34,7 +34,7 @@ public class UserPassword {
         try
         {
 
-            toEncryptArray =  RawText.getBytes("UTF-8");
+            toEncryptArray =  testToEncrypt.getBytes("UTF-8");
             MessageDigest m = MessageDigest.getInstance("MD5");
             temporaryKey = m.digest(key.getBytes("UTF-8"));
 
@@ -50,7 +50,7 @@ public class UserPassword {
             Cipher c = Cipher.getInstance("DESede/CBC/PKCS5Padding");
             c.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyArray, "DESede"), new IvParameterSpec(sharedvector));
             byte[] encrypted = c.doFinal(toEncryptArray);
-            EncText = Base64.encodeBase64String(encrypted);
+            encryptedText = Base64.encodeBase64String(encrypted);
 
         }
         catch(NoSuchAlgorithmException | UnsupportedEncodingException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException NoEx)
@@ -58,13 +58,13 @@ public class UserPassword {
             JOptionPane.showMessageDialog(null, NoEx);
         }
 
-        return EncText;
+        return encryptedText;
     }
 
-    public String decryptText(String EncText)
+    public String decryptText(String encryptedText)
     {
 
-        String RawText = "";
+        String decryptedText = "";
         byte[] keyArray = new byte[24];
         byte[] temporaryKey;
         String key = "developersnotedotcom";
@@ -78,7 +78,7 @@ public class UserPassword {
             if(temporaryKey.length < 24) // DESede require 24 byte length key
             {
                 int index = 0;
-                for(int i=temporaryKey.length;i< 24;i++)
+                for(int i=temporaryKey.length;i < 24;i++)
                 {
                     keyArray[i] =  temporaryKey[index];
                 }
@@ -86,16 +86,16 @@ public class UserPassword {
 
             Cipher c = Cipher.getInstance("DESede/CBC/PKCS5Padding");
             c.init(Cipher.DECRYPT_MODE, new SecretKeySpec(keyArray, "DESede"), new IvParameterSpec(sharedvector));
-            byte[] decrypted = c.doFinal(Base64.decodeBase64(EncText));
+            byte[] decrypted = c.doFinal(Base64.decodeBase64(encryptedText));
 
-            RawText = new String(decrypted, "UTF-8");
+            decryptedText = new String(decrypted, "UTF-8");
         }
         catch(NoSuchAlgorithmException | UnsupportedEncodingException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException NoEx)
         {
             JOptionPane.showMessageDialog(null, NoEx);
         }
 
-        return RawText;
+        return decryptedText;
     }
 
 }
