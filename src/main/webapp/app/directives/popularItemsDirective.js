@@ -8,17 +8,18 @@ define(['./module'], function (directives) {
             restrict: 'E',
             replace: 'true',
             template: $templateCache.get('app/partials/popular-Items-tpl.html'),
+            //templateUrl: 'app/partials/popular-Items-tpl.html',
             scope: {
                 popularProducts: '='
             },
             controller: function($scope, $element){
-                $scope.name = $scope.name + "Second ";
+                //$scope.name = $scope.name + "Second ";
             },
             link: function(scope, el, attr) {
-                scope.name = scope.name + "Third ";
-                scope.$watch('popularProducts', function(popularProducts) {
-                    scope.popularProducts = popularProducts;
-                })
+                //scope.name = scope.name + "Third ";
+                //scope.$watch('popularProducts', function(popularProducts) {
+                //    scope.popularProducts = popularProducts;
+                //})
             }
         };
     }]);

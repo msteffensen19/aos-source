@@ -48,13 +48,14 @@ require.config({
         }
     }
 });
+
 window.name = "NG_DEFER_BOOTSTRAP!";
 require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu','mainScript',
         'accordion',
         'slider', 'uiRouter', 'angularAnimate','ui-bootstrap'], function(angular, app)
     {
         angular.element().ready(function() {
-            // bootstrap the app manually
+            // bootstrap the app
             angular.bootstrap(document, ['aos']);
             angular.resumeBootstrap();
         });

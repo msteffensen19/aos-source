@@ -17,15 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class UserPasswordTests extends GenericRepositoryTests {
 
     @Test
-    public void testEncryptText() {
-
-    }
-
-    @Test
-    public void testDecryptText() {
-
-    }
-
     public void testEncryptAndDecryptText() {
         final UserPassword userPassword = new UserPassword();
 

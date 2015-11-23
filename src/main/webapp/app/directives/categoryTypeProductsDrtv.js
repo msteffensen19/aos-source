@@ -15,26 +15,9 @@ define(['./module'], function (directives) {
                 category: '='
             },
             link: function (scope, element, attrs) {
-                scope.getStyle = function(index){
-                    //var delay = (index * 500);
-                    //return {"-webkit-transition-delay": + delay  + "ms;transition-delay ": + delay + 'ms;color:red;"};
 
-
-                };
-                console.log($animate);
                 scope.productsInclude = [];
                 scope.attributeChecked = [];
-
-
-                //scope.productsFilter = function(product) {
-                //    //if (scope.productsInclude.length > 0) {
-                //    //    if ($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: attributeVal}, false)[0]),
-                //    //            $.map(product.attributes, JSON.stringify) ) < 0)
-                //    //        return;
-                //    //}
-                //
-                //    return product;
-                //}
 
                 scope.includeProducts = function($event, attributeVal, attributesName) {
 
@@ -133,6 +116,23 @@ define(['./module'], function (directives) {
                     }
 
                 })
+
+
+
+                scope.getStyle = function(index){
+                    //var delay = (index * 500);
+                    //return {"-webkit-transition-delay": + delay  + "ms;transition-delay ": + delay + 'ms;color:red;"};
+                };
+                //console.log($animate);
+                //scope.productsFilter = function(product) {
+                //    //if (scope.productsInclude.length > 0) {
+                //    //    if ($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: attributeVal}, false)[0]),
+                //    //            $.map(product.attributes, JSON.stringify) ) < 0)
+                //    //        return;
+                //    //}
+                //    return product;
+                //}
+
             }
         };
     }]);
