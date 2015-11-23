@@ -15,9 +15,11 @@ public interface CountryRepository {
     Country createCountry(String name, String isoName, int phonePrefix);
 
     int deleteCountry(Country country);
-    int deleteCountriesbyNames(Collection<String> names);
-    int deleteCountriesbyIsoName(Collection<String> isoNames);
+    int deleteCountriesByIds(Collection<Integer> countryIds);
+    int deleteCountries(Collection<Country> countries);
+    int deleteCountriesByNames(Collection<String> names);
 
+    Integer getCountryIdByName(String countryName);
     List<Country> getAllCountries();
     List<Country> getCountriesByIsoNames(Collection<String> isoNames);
     List<Country> getCountriesByPartialName(String partialName);

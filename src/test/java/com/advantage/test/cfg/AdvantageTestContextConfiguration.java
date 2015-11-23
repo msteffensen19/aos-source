@@ -25,15 +25,17 @@ import com.advantage.online.store.image.ImageManagementAccess;
 
 @Configuration
 @ComponentScan({"com.advantage.online.store.services",
-	            "com.advantage.online.store.dao",
+                "com.advantage.online.store.dao",
+                "com.advantage.online.store.user.dao",
+                "com.advantage.online.store.user.model",
                 "com.advantage.online.store.init"})
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
 
-	@Autowired
-	private Environment environment;
+    @Autowired
+    private Environment environment;
 
-	@Bean(name = "transactionManager")
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory,
                                                          DriverManagerDataSource dataSource) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -57,7 +59,7 @@ public class AdvantageTestContextConfiguration {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.online.store.model"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.online.store.model","com.advantage.online.store.user.model"});
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
@@ -71,11 +73,11 @@ public class AdvantageTestContextConfiguration {
 
         return entityManagerFactoryBean;
     }
-    
-    @Bean(name = "imageManagement")
-	public ImageManagement getImageManagement() {
 
-    	final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
-		return ImageManagementAccess.getImageManagement(imageManagementRepository);
-	}
+    @Bean(name = "imageManagement")
+    public ImageManagement getImageManagement() {
+
+        final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
+        return ImageManagementAccess.getImageManagement(imageManagementRepository);
+    }
 }

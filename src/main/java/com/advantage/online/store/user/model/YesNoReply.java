@@ -5,23 +5,18 @@ package com.advantage.online.store.user.model;
  */
 public enum YesNoReply {
 
-    YES ('Y', "Yes"),
-    NO ('N', "No");
+    YES ('Y'),
+    NO ('N');
 
     private char replyTypeChar;
 
     private String replyTypeString;
 
-    YesNoReply(char replyTypeChar, String replyTypeString) {
+    YesNoReply(char replyTypeChar) {
         this.replyTypeChar = replyTypeChar;
-        this.replyTypeString = replyTypeString;
     }
 
     public char getReplyTypeChar() {
         return replyTypeChar;
-    }
-
-    public String getReplyTypeString() {
-        return replyTypeString;
     }
 }

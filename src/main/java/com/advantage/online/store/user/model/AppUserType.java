@@ -5,22 +5,13 @@ package com.advantage.online.store.user.model;
  */
 public enum AppUserType {
 
-    ADMIN (10, "Admin"),
-    USER (20, "User");
+    ADMIN(10),
+    USER(20);
 
-    private int appUserTypeCode;
+    private Integer appUserTypecode;
 
-    private String appUserTypeName;
+    AppUserType(Integer appUserTypecode) { this.appUserTypecode = appUserTypecode;}
 
+    public Integer getAppUserTypeCode() { return appUserTypecode; }
 
-    AppUserType(int appUserTypeCode, String appUserTypeName) {
-    }
-
-    public int getAppUserTypeCode() {
-        return appUserTypeCode;
-    }
-
-    public String getAppUserTypeName() {
-        return appUserTypeName;
-    }
 }

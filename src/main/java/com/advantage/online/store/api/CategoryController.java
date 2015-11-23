@@ -6,19 +6,12 @@ import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
 import com.advantage.online.store.dto.PromotedProductDto;
 import com.advantage.online.store.model.Deal;
-import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.product.Product;
-//import com.advantage.online.store.model.attribute.EntityAttribute;
 import com.advantage.online.store.model.category.Category;
-import com.advantage.online.store.model.entity.EntityType;
-//import com.advantage.online.store.services.AttributeTitleService;
 import com.advantage.online.store.model.product.ProductAttributes;
 import com.advantage.online.store.services.CategoryService;
-//import com.advantage.online.store.services.EntityAttributeService;
 import com.advantage.online.store.services.DealService;
 import com.advantage.online.store.services.ProductService;
-import com.advantage.util.ArgumentValidationHelper;
-import com.advantage.util.HttpServletHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,13 +42,14 @@ public class CategoryController {
     private DealService dealService;
 
     @RequestMapping(value = "/category", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
         List<Category> category = categoryService.getAllCategories();
+
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/categoryData/{category_id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getCategoryData(@PathVariable("category_id") String id) {
+    public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
 
         /*ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
@@ -90,7 +84,13 @@ public class CategoryController {
             }
         }
 
-        categoryDto.setAttributes(attrCollection);
+        List<AttributeDto> attributeItems = new ArrayList<>();
+
+        for (Map.Entry<String, Set<String>> item : attrCollection.entrySet()) {
+            attributeItems.add(new AttributeDto(item.getKey(), item.getValue()));
+        }
+
+        categoryDto.setAttributes(attributeItems);
 
         final int categoryProductsCount = categoryProducts.size();
         final List<ProductDto> productDtos = new ArrayList<>(categoryProductsCount);
@@ -102,9 +102,9 @@ public class CategoryController {
         }
 
         categoryDto.setProducts(productDtos);
-        Deal deal = dealService.getDealOfTheDay();
-        categoryDto.setPromotedProduct(new PromotedProductDto(deal.getStaringPrice(), deal.getPromotionHeader(),
-            deal.getPromotionSubHeader(), deal.getManagedImageId(),
+        Deal promotion = dealService.getDealOfTheDay();
+        categoryDto.setPromotedProduct(new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
+            promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
             new ProductDto(dealService.getDealOfTheDay().getProduct())));
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
