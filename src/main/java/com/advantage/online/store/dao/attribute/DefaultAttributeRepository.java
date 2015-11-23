@@ -20,10 +20,8 @@ import javax.persistence.Query;
 @Qualifier("attributeRepository")
 @Repository
 public class DefaultAttributeRepository extends AbstractRepository implements AttributeRepository {
-
-
     @Override
-    public Attribute createAttribute(String name) {
+    public Attribute create(String name) {
         Attribute attribute = new Attribute(name);
         entityManager.persist(attribute);
 
@@ -31,22 +29,12 @@ public class DefaultAttributeRepository extends AbstractRepository implements At
     }
 
     @Override
-    public int deleteAttribute(Attribute attribute) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(attribute, "attribute");
-        Long id = attribute.getId();
-        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Attribute.class, Attribute.FIELD_ID, id);
-        Query query = entityManager.createQuery(hql);
-
-        return query.executeUpdate();
-    }
-
-    @Override
-    public int deleteAttributes(Attribute... attributes) {
-        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(attributes, "attributes");
-        int categoriesCount = attributes.length;
+    public int delete(Attribute... entities) {
+        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "attributes");
+        int categoriesCount = entities.length;
         Collection<Long> ids = new ArrayList<>(categoriesCount);
 
-        for (Attribute attribute : attributes) {
+        for (Attribute attribute : entities) {
             Long id = attribute.getId();
             ids.add(id);
         }
@@ -59,17 +47,27 @@ public class DefaultAttributeRepository extends AbstractRepository implements At
     }
 
     @Override
-    public List<Attribute> getAllAttributes() {
+    public List<Attribute> getAll() {
         return entityManager.createNamedQuery(Attribute.QUERY_GET_ALL, Attribute.class)
             .getResultList();
     }
 
     @Override
-    public Attribute getAttribute(Long id) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(id, "attribute id");
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Attribute.class, Attribute.FIELD_ID, id);
+    public Attribute get(Long entityId) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "attribute id");
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Attribute.class, Attribute.FIELD_ID, entityId);
         Query query = entityManager.createQuery(hql);
 
         return (Attribute) query.getSingleResult();
+    }
+
+    @Override
+    public Attribute get(String name) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(name, "attribute name");
+        Query query = entityManager.createNamedQuery(Attribute.QUERY_ATTRIBUTE_GET_BY_NAME);
+        query.setParameter(Attribute.PARAM_ATTRIBUTE_NAME, name);
+        List<Attribute> attributes = query.getResultList();
+
+        return attributes.isEmpty() ? null : attributes.get(0);
     }
 }

@@ -1,7 +1,7 @@
 package com.advantage.online.store.api;
 
 import com.advantage.online.store.Constants;
-import com.advantage.online.store.dao.ProductRepository;
+import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.dao.category.CategoryRepository;
 import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.CategoryDto;
@@ -46,14 +46,14 @@ public class ServiceController {
     @RequestMapping(value = "/initdb", method = RequestMethod.POST)
     public Boolean initDb(@RequestBody CategoryDto dto) {
         try {
-            Category category = categoryRepository.getCategory(dto.getId());
+            Category category = categoryRepository.get(dto.getId());
             SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
 
             Map<Long, Product> productMap = new HashMap<>();
-            List<Product> productList = productRepository.getAllProducts();
+            List<Product> productList = productRepository.getAll();
             for (Product product : productList) {
                 productMap.put(product.getId(), product);
             }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advantage.online.store.dao.ProductRepository;
+import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.util.ArgumentValidationHelper;
 
 /**
@@ -22,7 +22,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
 
-        return productRepository.getAllProducts();
+        return productRepository.getAll();
     }
 
     @Transactional(readOnly = true)

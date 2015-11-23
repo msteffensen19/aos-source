@@ -27,12 +27,12 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<Category> getAllCategories() {
-        return categoryRepository.getAllCategories();
+        return categoryRepository.getAll();
     }
 
     @Transactional(readOnly = true)
     public Category getCategory(final Long categoryId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(categoryId, "category id");
-        return categoryRepository.getCategory(categoryId);
+        return categoryRepository.get(categoryId);
     }
 }

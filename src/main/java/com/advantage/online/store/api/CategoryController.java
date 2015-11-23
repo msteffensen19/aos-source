@@ -31,12 +31,9 @@ import java.util.*;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-    /* @Autowired
-     private EntityAttributeService entityAttributeService;*/
+
     @Autowired
     private ProductService productService;
-   /* @Autowired
-    private AttributeTitleService attributeTitleService;*/
 
     @Autowired
     private DealService dealService;

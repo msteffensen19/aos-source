@@ -15,9 +15,6 @@ import com.advantage.online.store.model.category.Category;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
 
-/**
- * Created by kubany on 10/18/2015.
- */
 @Component
 @Qualifier("categoryRepository")
 @Repository
@@ -27,49 +24,33 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
 
     @Override
     public Category createCategory(final String name, final String managedImageId) {
-
-        final Category category = new Category(name, managedImageId);
+        Category category = new Category(name, managedImageId);
         entityManager.persist(category);
+
         return category;
     }
 
     @Override
-    public int deleteCategory(final Category category) {
+    public int delete(Category... entities) {
+        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "categories");
+        int categoriesCount = entities.length;
+        Collection<Long> categoryIds = new ArrayList<>(categoriesCount);
 
-        ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
-        final Long categoryId = category.getCategoryId();
-        final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Category.class,
-            Category.FIELD_CATEGORY_ID,
-            categoryId);
-        final Query query = entityManager.createQuery(hql);
-        return query.executeUpdate();
-    }
-
-    @Override
-    public int deleteCategories(final Category... categories) {
-
-        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(categories,
-            "categories");
-        final int categoriesCount = categories.length;
-        final Collection<Long> categoryIds = new ArrayList<Long>(categoriesCount);
-
-        for (final Category category : categories) {
-
-            final Long categoryId = category.getCategoryId();
+        for (Category category : entities) {
+            Long categoryId = category.getCategoryId();
             categoryIds.add(categoryId);
         }
 
-        final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Category.class,
-            Category.FIELD_CATEGORY_ID,
+        String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Category.class, Category.FIELD_CATEGORY_ID,
             Category.PARAM_CATEGORY_ID);
-        final Query query = entityManager.createQuery(hql);
+        Query query = entityManager.createQuery(hql);
         query.setParameter(Category.PARAM_CATEGORY_ID, categoryIds);
+
         return query.executeUpdate();
     }
 
     @Override
-    public List<Category> getAllCategories() {
-
+    public List<Category> getAll() {
         List<Category> categories = entityManager.createNamedQuery(Category.QUERY_GET_ALL, Category.class)
             .setMaxResults(MAX_NUM_OF_CATEGORIES)
             .getResultList();
@@ -78,12 +59,12 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     }
 
     @Override
-    public Category getCategory(final Long categoryId) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(categoryId, "category id");
-        final String selectCategoryHql = JPAQueryHelper.getSelectByPkFieldQuery(Category.class,
-            Category.FIELD_CATEGORY_ID,
-            categoryId);
-        final Query query = entityManager.createQuery(selectCategoryHql);
+    public Category get(Long entityId) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "category id");
+        String selectCategoryHql = JPAQueryHelper.getSelectByPkFieldQuery(Category.class, Category.FIELD_CATEGORY_ID,
+            entityId);
+        Query query = entityManager.createQuery(selectCategoryHql);
+
         return (Category) query.getSingleResult();
     }
 }

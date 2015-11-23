@@ -42,6 +42,7 @@ public class Product {
     
     @ManyToOne
     @JoinColumn(name="category_id")
+    @JsonIgnore
     private Category category;
 
     @OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

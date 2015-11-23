@@ -1,15 +1,14 @@
 package com.advantage.online.store.dao.attribute;
 
-import java.util.List;
-
+import com.advantage.online.store.dao.DefaultCRUDOperations;
 import com.advantage.online.store.model.attribute.Attribute;
-import com.advantage.online.store.model.category.Category;
 
-public interface AttributeRepository {
+public interface AttributeRepository extends DefaultCRUDOperations<Attribute> {
+    /**
+     * Get entity by record nane
+     * @param name Name of the category
+     * @return entity reference
+     */
+    Attribute get(String name);
 
-	Attribute createAttribute(String name);
-	int deleteAttribute(Attribute attribute);
-	int deleteAttributes(Attribute... attributes);
-	List<Attribute> getAllAttributes();
-	Attribute getAttribute(Long id);
 }

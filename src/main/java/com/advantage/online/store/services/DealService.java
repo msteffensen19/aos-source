@@ -1,6 +1,6 @@
 package com.advantage.online.store.services;
 
-import com.advantage.online.store.dao.DealRepository;
+import com.advantage.online.store.dao.deal.DealRepository;
 import com.advantage.online.store.model.Deal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +19,7 @@ public class DealService {
     @Transactional(readOnly = true)
     public List<Deal> getAllDeals() {
 
-        return dealRepository.getAllDeals();
+        return dealRepository.getAll();
     }
 
     @Transactional(readOnly = true)

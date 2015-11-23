@@ -1,5 +1,6 @@
 package com.advantage.online.store.services;
 
+import com.advantage.online.store.dao.attribute.AttributeRepository;
 import com.advantage.online.store.dao.attribute.DefaultAttributeRepository;
 import com.advantage.online.store.model.attribute.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,15 @@ import java.util.List;
 @Service
 public class AttributeService {
     @Autowired
-    DefaultAttributeRepository attributeRepository;
+    AttributeRepository attributeRepository;
 
     @Transactional(readOnly = true)
     public List<Attribute> getAllAttribute(){
-        return attributeRepository.getAllAttributes();
+        return attributeRepository.getAll();
+    }
+
+    @Transactional(readOnly = true)
+    public  Attribute getAttributeByName(String name) {
+        return attributeRepository.get(name);
     }
 }
