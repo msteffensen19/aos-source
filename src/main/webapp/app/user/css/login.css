@@ -1,0 +1,117 @@
+
+.PopUp img{
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.PopUp input{
+    width: 100%;
+}
+
+.PopUp label{
+    display: block;
+    margin: 8px;
+}
+
+.PopUp img{
+
+    display: block;
+    margin: 5px auto;
+}
+
+.facebook {
+    cursor: pointer;
+    color: white;
+    display: block;
+    font-weight: 100;
+    padding: 15px;
+    margin: 20px 0 ;
+    text-align: center;
+    background-color: #46629E;
+    background-image: url("../../../css/images/FacebookLogo.png") ;
+    background-repeat:no-repeat;
+    background-position: 20% center;
+}
+
+.or{
+    display: block;
+    padding-bottom: 3%;
+}
+
+
+.PopUp input[type=text]{
+    border-bottom: 1px solid #CECCCC;
+    border-top: 1px solid #CECCCC;
+}
+
+
+input[type="text"]{
+    border-top: 1px solid #CECCCC;
+    border-bottom: 1px solid #CECCCC;
+}
+
+input[type="text"], input[type="password"] {
+    display: block;
+    margin: 0;
+    font-size: 18px;
+    border: none;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    outline: none;
+}
+
+input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder,
+input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder,
+input[type="text"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder {
+    color: #000000;
+    font-family: 'Roboto';
+    font-weight: 300;
+}
+
+.login .sing-in{
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid #000000;
+    font-weight: bolder;
+    font-size: 17px;
+    opacity: 0.8;
+    margin: 25px 0 5px 0;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.forgot-Passwowd{
+    display: block;
+    opacity: .5;
+    cursor: pointer;
+}
+
+.create-new-account{
+    cursor: pointer;
+}
+
+.login{
+    position: relative;
+}
+
+.login #response{
+    color:red;
+    display: none;
+}
+
+.login #message {
+    position: absolute;
+    top: 43%;
+    left: 0;
+    right: 0;
+    font-size: 28px;
+    white-space: nowrap;
+    color: lime;
+    opacity: 0;
+    transform: scale(2);
+    text-shadow: -1px 1px 0 rgba(100, 100, 100, 0.5),
+    -1px -1px 0 rgba(100, 100, 100, 0.5), 0 0 4px black;
+}
+
