@@ -6,7 +6,7 @@
  */
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('loginModal', ['$rootScope', 'userService', '$cookieStore',
+    directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie',
         function($rootScope, userService, $cookie) {
             return {
                 restrict: 'E',
@@ -30,7 +30,8 @@ define(['./module'], function (directives) {
                                 if(response.id != -1) {
                                     userCookie.fillParams(user.username, /*response.id*/ 5, user.email, new Date());
                                     $rootScope.userCookie = userCookie;
-                                    $cookie.put("userCookie", $rootScope.userCookie)
+                                    //ipCookie(key, value, { expires: 21 });
+                                    $cookie("userCookie", $rootScope.userCookie)
                                     if($scope.rememberMe)
                                     {
                                         alert("")
