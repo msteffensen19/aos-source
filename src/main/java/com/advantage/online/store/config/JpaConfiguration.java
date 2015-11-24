@@ -1,12 +1,8 @@
 package com.advantage.online.store.config;
 
-/**
- * Created by kubany on 10/11/2015.
- */
-
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -18,12 +14,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Properties;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 
 
 @Configuration
-@EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
-public class JpaConfiguration {
+@EnableTransactionManagement
+public class JpaConfiguration  {
 
     private static final Logger log = LoggerFactory.getLogger(JpaConfiguration.class);
 
@@ -38,7 +33,7 @@ public class JpaConfiguration {
     @Inject
     private DataSource dataSource;
 
-    @Bean
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
@@ -62,9 +57,11 @@ public class JpaConfiguration {
         return extraProperties;
     }
 
-    @Bean
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager() {
-        return new JpaTransactionManager(entityManagerFactory().getObject());
-    }
+        JpaTransactionManager tm = new JpaTransactionManager();
+        tm.setEntityManagerFactory(entityManagerFactory().getObject());
 
+        return tm;
+    }
 }

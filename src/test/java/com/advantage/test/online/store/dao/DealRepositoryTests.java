@@ -41,7 +41,7 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
         final Category category = categoryRepository.createCategory("LAPTOPS", "1234");
         final Product product = productRepository.create("LG G3",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category);
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, "1234", category);
 
         List<Deal> deals = new ArrayList<>();
         for (int i = 1; i <= DEALS_COUNT; i++) {
@@ -71,7 +71,7 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
         final Category category = categoryRepository.createCategory("LAPTOPS", "1234");
         final Product product = productRepository.create("LG G3",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category);
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, "1234", category);
         final Deal deal = dealRepository.create(DealType.WEEKLY, "description", "header", "header", "200", "1234",
             30, "2015-11-15 00:00:00", "2015-11-30 23:59:59",
             product);

@@ -39,13 +39,13 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
 
     	for (int i = 0; i < CATEGORY1_PRODUCTS_COUNT; i++) {
     		final String productName = "product" + i;
-			productRepository.create("LG G3", productName, 400, category1);
+			productRepository.create("LG G3", productName, 400, "1234", category1);
     	}
 
     	for (int i = 0; i < CATEGORY2_PRODUCTS_COUNT; i++) {
     		final String nameAndDescriptionForTest = "product" + i;
 			productRepository.create(nameAndDescriptionForTest,
-				nameAndDescriptionForTest, 400, category2);
+				nameAndDescriptionForTest, 400, "1234", category2);
     	}
 
     	transactionManager.commit(transactionStatusForCreation);

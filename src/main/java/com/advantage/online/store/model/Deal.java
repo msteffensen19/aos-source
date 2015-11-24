@@ -33,6 +33,7 @@ public class Deal {
     public static final String FIELD_ID = "id";
 
     public static final String PARAM_DEAL_TYPE = "DEAL_PARAM_DEALTYPE";
+    public static final String PARAM_DEAL_ID = "DEAL_PARAM_DEAL_ID";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

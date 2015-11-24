@@ -1,6 +1,7 @@
 package com.advantage.online.store.dao.deal;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -61,8 +62,16 @@ public class DefaultDealRepository extends AbstractRepository implements  DealRe
             dealIds.add(entity.getId());
         }
 
-        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Deal.class, Deal.FIELD_ID, dealIds);
-        final Query query = entityManager.createQuery(hql);
+        return deleteByIds(dealIds);
+    }
+
+    @Override
+    public int deleteByIds(Collection<Long> ids) {
+        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(ids, "deal ids");
+        String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Deal.class, Deal.FIELD_ID, Deal.PARAM_DEAL_ID);
+        Query query = entityManager.createQuery(hql);
+        query.setParameter(Deal.PARAM_DEAL_ID, ids);
+
         return query.executeUpdate();
     }
 

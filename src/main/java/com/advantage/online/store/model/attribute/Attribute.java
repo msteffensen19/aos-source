@@ -15,7 +15,7 @@ import java.util.Set;
     ),
     @NamedQuery(
         name = Attribute.QUERY_ATTRIBUTE_GET_BY_NAME,
-        query = "SELECT a from Attribute a where id = :" + Attribute.PARAM_ATTRIBUTE_NAME
+        query = "SELECT a from Attribute a where name = :" + Attribute.PARAM_ATTRIBUTE_NAME
     )
 })
 public class Attribute {

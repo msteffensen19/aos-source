@@ -1,59 +1,47 @@
 package com.advantage.online.store.dao.product;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import com.advantage.online.store.dao.AbstractRepository;
+import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.Product;
+import com.advantage.util.ArgumentValidationHelper;
+import com.advantage.util.JPAQueryHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.advantage.online.store.model.category.Category;
-import com.advantage.util.ArgumentValidationHelper;
-import com.advantage.util.JPAQueryHelper;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Component
 @Qualifier("productRepository")
 @Repository
 public class DefaultProductRepository extends AbstractRepository implements ProductRepository {
-
     private static final int MAX_NUM_OF_PRODUCTS = 100;
 
     @Override
-    @Transactional
-    public Product create(String name, String description, int price, Category category) {
-
+    public Product create(String name, String description, int price, String imgUrl, Category category) {
         Product product = new Product(name, description, price, category);
-        product.setManagedImageId("1234");
+        product.setManagedImageId(imgUrl);
     	entityManager.persist(product);
-        entityManager.flush();
 
     	return product;
     }
 
     @Override
-    @Transactional
-    public void create(Product product) {
-        product.setManagedImageId("1234");
+    public Long create(Product product) {
         entityManager.persist(product);
-        entityManager.flush();
 
+        return product.getId();
     }
 
     @Override
-    public int deleteByIds(Collection<Long> productIds) {
-
-    	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(productIds, "product ids");
+    public int deleteByIds(Collection<Long> ids) {
+    	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(ids, "product ids");
     	String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Product.class, Product.FIELD_ID, Product.PARAM_ID);
     	Query query = entityManager.createQuery(hql);
-    	query.setParameter(Product.PARAM_ID, productIds);
+    	query.setParameter(Product.PARAM_ID, ids);
 
     	return query.executeUpdate();
     }
@@ -121,11 +109,10 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
     @Override
     public int delete(final Collection<Product> products) {
-
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(products,
             "products");
         final int productsCount = products.size();
-        final Collection<Long> productIds = new ArrayList<Long>(productsCount);
+        final Collection<Long> productIds = new ArrayList<>(productsCount);
 
         for (final Product product : products) {
 
