@@ -11,13 +11,23 @@ import java.util.regex.Pattern;
  */
 public class ValidationHelper {
 
+    //    private static final String PHONE_PATTERN = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    private static final String PHONE_PATTERN = "^\\+(([0-9]{1,3}))?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
                                                 "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     //  Contain 3-15 characters of: Digits 0-9, UPPER case (A-Z), lower case (a-z), underscore (_) and hyphen (-)
     private static final String LOGIN_PATTERN = "^[A-Za-z0-9_.-]{3,15}$";
 
-    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+    /**
+     * <ul><code>Password</code> must be compliant with <b>AOS policy</b></ul>:
+     * Password length must be 5 to 10 characters.
+     * Password must contain one or more numerical digits and
+     * both UPPER-CASE and lower-case characters (case sensitivity)
+     */
+    //private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%\\.\\-\\+\\*]).{6,20})";
+    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,10})";
 
     private static final String TIME_24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
 
@@ -62,6 +72,12 @@ public class ValidationHelper {
 
     }
 
+    /**
+     * Checks if <code>password</code> complies with AOS policy as a valid password.
+     * @param password {@link String} to check for valid time format.
+     * @return <code>true</code> when <code>time24h</code> is a valid time format,
+     * otherwise <code>false</code>.
+     */
     public static boolean isValidPassword(final String password) {
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
@@ -75,6 +91,12 @@ public class ValidationHelper {
 
     }
 
+    /**
+     * Check that <code>time24h</code> is a valid 24-hours time format.
+     * @param time24h {@link String} to check for valid time format.
+     * @return <code>true</code> when <code>time24h</code> is a valid time format,
+     * otherwise <code>false</code>.
+     */
     public static boolean isValidTime24h(final String time24h) {
 
         pattern = Pattern.compile(TIME_24HOURS_PATTERN);
@@ -88,6 +110,14 @@ public class ValidationHelper {
 
     }
 
+    /**
+     * Check that <code>stringDate</code> is a valid date format, either
+     * EUROPEAN, AMERICAN or SCANDINAVIAN.
+     * <br/>
+     * @param stringDate {@link String} to check for valid date format.
+     * @return <code>true</code> when <code>stringDate</code> is a valid date format,
+     * otherwise <code>false</code>.
+     */
     public static boolean isValidDate(final String stringDate) {
         SimpleDateFormat dateFormat;
 
@@ -113,37 +143,6 @@ public class ValidationHelper {
 
     }
 
-    public static boolean isValidDateYyyymmdd(final String yyyymmdd) {
-
-        pattern = Pattern.compile(DATE_YYYYMMDD_PATTERN);
-
-        Matcher matcher = pattern.matcher(yyyymmdd);
-
-        final boolean isValid = matcher.matches();
-        if (isValid) {
-            try {
-                DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT); // YYYY-MM-DD
-                System.out.println(df);
-
-                df.setLenient(false);   // this is important!
-                df.parse(yyyymmdd);
-            }
-            catch (ParseException e) {
-                System.out.println(yyyymmdd +" : DateFormat not valid");
-                return false;
-            }
-            catch (IllegalArgumentException e) {
-                System.out.println(yyyymmdd +" : DateFormat not valid");
-                return false;
-            }
-            System.out.println(yyyymmdd +" : DateFormat is valid");
-            return true;
-        }
-
-        return isValid;
-
-    }
-
     public static void main(String[] args) {
         //ValidationHelper validationHelper = new ValidationHelper();
 
@@ -159,7 +158,8 @@ public class ValidationHelper {
         ValidationHelper.isValidEmail("a@b.com");
         ValidationHelper.isValidLogin("king.david");
         ValidationHelper.isValidTime24h("23:59:60");
-        ValidationHelper.isValidPassword("kingdavid");
-        ValidationHelper.isValidDateYyyymmdd("2011-02-28");
+
+        ValidationHelper.isValidPassword("King1david");
+        ValidationHelper.isValidPassword("king2David");
     }
 }
