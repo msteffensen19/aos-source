@@ -6,13 +6,25 @@ define(['./module'], function (services) {
     services.service('productService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
         // Return public API.
         return({
-            getProducts: getProducts
+            getProducts: getProducts,
+            getProductById : getProductById
         });
 
         function getProducts() {
             var request = $http({
                 method: "get",
                 url: "api/products"
+                //params: {
+                //    action: "get"
+                //}
+            });
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+        }
+
+        function getProductById(id) {
+            var request = $http({
+                method: "get",
+                url: 'app/product.json'
                 //params: {
                 //    action: "get"
                 //}

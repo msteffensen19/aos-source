@@ -1,31 +1,20 @@
+
 <div>
-
-
     <div class="cell categoryLeft">
-
         <p class="filterCount">{{filtered.length}} ITEMS</p>
         <label class="roboto-medium">EXPLORE CHOICE:</label>
-        <label class="roboto-medium" ng-click="clearSelection()">Clear</label>
+        <label class="roboto-medium clear" ng-click="clearSelection()">Clear</label>
         <ul>
             <li ng-repeat="attrib in categoryAttributes">
-                <h4 class="roboto-regular">
-                    <a id="panel-heading-a{{attrib.attributeId}}"
-                       ng-click="toggleColapse(attrib.attributeId)">
+                <h4 class="accordion roboto-regular arrowDown" ng-click="toggleColapse(attrib.attributeId)" >
                         {{'BY' | translate }} {{attrib.attributeName}}
-                    </a>
                 </h4>
-
-                <div id="{{attrib.attributeId}}" ng-if="attrib.attributeName != 'COLOR'">
+                <!-- ng-if="attrib.attributeName != 'COLOR'" -->
+                <div class="option">
                     <div ng-repeat="attrVal in attrib.attributeValues">
                         <input type="checkbox" ng-model="item.selected"
                                ng-click="includeProducts($event, attrVal, attrib.attributeName)">
-                        <span class="cr"><i></i>{{attrVal}}</span>
-                    </div>
-                    <div ng-repeat="attrVal in attrib.attributeValues">
-                        <button type="button" ng-style="{'background-color' : '#' + attrVal}"
-                                ng-click="includeProducts($event, attrVal, attrib.attributeName)">
-                            <i></i>
-                        </button>
+                        <span>{{attrVal}}</span>
                     </div>
                 </div>
             </li>
@@ -33,19 +22,23 @@
     </div>
     <div class="cell categoryRight">
         <ul>
-            <li ng-repeat="product in filtered = ( products | filter:productsFilter)"
-                ng-style="{ transitionDelay:($index *500) + 'ms' }">
+            <li ng-repeat="product in filtered = ( products | filter:productsFilter)">
                 <div class="AddToCard">
-                    <label>{{'ADD_TO_CART' | translate}}</label>
-                    <img class="" src="css/images/Cart.jpg" />
+                    <label> {{'ADD_TO_CART' | translate}} </label>
+                    <img alt="" src="css/images/Cart.jpg"  />
                 </div>
-                <img alt="" class="imgProduct" ng-src="fetchImage?image_id={{product.imageUrl}}">
+                <img alt="" class="imgProduct" ng-src="fetchImage?image_id={{product.imageUrl}}"
+                     ng-click="gotoItem(product.id)">
 
                 <p><a>{{product.productName}}</a></p>
-                <p><a>{{product.price}}</a></p>
+                <p><a>{{product.price | currency:"$"}}</a></p>
             </li>
         </ul>
     </div>
-
 </div>
+
+
+
+
+
 

@@ -25,6 +25,9 @@ define(['./module'], function (services) {
             // Otherwise, use expected error message.
             return( $q.reject( response.data.message ) );
         }
+
+
+
         // I transform the successful response, unwrapping the application data
         // from the API response payload.
         function handleSuccess( response ) {

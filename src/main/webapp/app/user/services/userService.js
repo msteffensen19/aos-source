@@ -3,22 +3,76 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('userService',['$rootScope', '$q',
-        function ($rootScope, $q) {
+    services.service('userService',['$rootScope', '$q', '$http', "resHandleService",
+
+        function ($rootScope, $q, $http, responseService) {
+
             // I represent the currently active modal window instance.
             var modal = {
                 deferred: null,
                 params: null
             };
+
+
+
             // Return the public API.
             return ({
                 open: open,
                 params: params,
                 proceedTo: proceedTo,
                 reject: reject,
-                resolve: resolve
+                resolve: resolve,
+                login: login,
+                createNewAccount: createNewAccount,
+                forgotPassword: forgotPassword
             });
-            // ---
+
+
+
+
+            function login (user){
+                var request = $http({
+                    method: "get",
+                    url:"api/category",
+                });
+                return( request.then(
+                    responseService.handleSuccess,
+                    responseService.handleError
+                ));
+            }
+
+
+
+
+
+            function createNewAccount(){
+                var request = $http({
+                    method: "post",
+                    url:"api/category",
+                });
+                return( request.then(
+                    responseService.handleSuccess,
+                    responseService.handleError
+                ));
+            }
+
+
+
+
+            function forgotPassword(){
+                var request = $http({
+                    method: "post",
+                    url:"api/category",
+                });
+                return( request.then(
+                    responseService.handleSuccess,
+                    responseService.handleError
+                ));
+            }
+
+
+
+                // ---
             // PULBIC METHODS.s
             // ---
             // I open a modal of the given type, with the given params. If a modal
@@ -41,6 +95,8 @@ define(['./module'], function (services) {
                 } else if (previousDeferred) {
                     previousDeferred.reject();
                 }
+
+
                 // Since the service object doesn't (and shouldn't) have any direct
                 // reference to the DOM, we are going to use events to communicate
                 // with a directive that will help manage the DOM elements that
@@ -53,10 +109,20 @@ define(['./module'], function (services) {
                 return ( modal.deferred.promise );
             }
 
+
+
+
+
+
             // I return the params associated with the current params.
             function params() {
                 return ( modal.params || {} );
             }
+
+
+
+
+
 
             // I open a modal window with the given type and pipe the new window's
             // response into the current window's response without rejecting it
@@ -67,6 +133,11 @@ define(['./module'], function (services) {
             function proceedTo(type, params) {
                 return ( open(type, params, true) );
             }
+
+
+
+
+
 
             // I reject the current modal with the given reason.
             function reject(reason) {
@@ -79,6 +150,12 @@ define(['./module'], function (services) {
                 $rootScope.$emit("modals.close");
             }
 
+
+
+
+
+
+
             // I resolve the current modal with the given response.
             function resolve(response) {
                 if (!modal.deferred) {
@@ -89,6 +166,9 @@ define(['./module'], function (services) {
                 // Tell the modal directive to close the active modal window.
                 $rootScope.$emit("modals.close");
             }
+
+
+
         }
     ]);
 });

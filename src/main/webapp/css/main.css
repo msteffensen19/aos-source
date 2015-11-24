@@ -1,12 +1,26 @@
-@import "UI.css";
+
 @import "views/home_page.css";
 @import "views/categoryPage.css";
 @import "views/category_type_products_tpl.css";
+@import "views/productPage.css";
+@import "UI.css";
+#png{
+    position: absolute;
+    z-index: 90000;
+    top:0;
+    opacity: 0.2;
+}
+
+/*@import "modal.css";*/
 *{
     margin: 0;
     padding: 0;
     font-family: 'Roboto';
+    outline: none;
+
 }
+
+
 
 body{
     position: relative;
@@ -42,6 +56,7 @@ div.mobile-btn-handler span{
 #mobile-section{
     background-color: #e7e7e7;
     position: absolute;
+    left: 9999px;
 }
 
 #mobile-section img{
@@ -56,9 +71,8 @@ div.mobile-btn-handler span{
 
 nav ul {
     float: right;
-    direction: rtl;
     display: inline-block;
-    margin: 15px 15px 0 0;
+    margin: 15px 0 0 0;
 }
 
 nav ul li {
@@ -67,25 +81,42 @@ nav ul li {
 }
 
 nav ul li a{
-    font-size:10px;
+    font-size:16px;
     cursor: pointer;
     display: block;
     text-decoration: none;
-    padding:10px 15px;
+    padding:9px;
+}
+
+nav ul li a.menu{
+    padding:10px 66px;
+}
+
+nav ul li:nth-child(3) a.menu{
+    padding-right: 53px;
 }
 
 nav ul li a:not(.img){
     opacity: .8;
-    padding:18px 15px;
+    padding:15px 18px;
 }
 
 nav ul li a:not(.img):hover{
     opacity: 1;
 }
 
+nav .img {
+    position: relative;
+}
+
 nav .img > img {
     height: 25px;
 }
+nav .img > .hi-user{
+    font-size: 23px;
+
+}
+
 
 div.logo img{
     vertical-align: top;
@@ -133,14 +164,7 @@ div.logo img{
 }
 
 
-@media screen and (max-width: 950px)
-{
-    nav ul li a{
-        padding:10px 8px;
-    }
-}
-
-@media screen and (max-width: 750px)
+@media screen and (max-width: 1100px)
 {
     .desktop-handler{
         display: none;
@@ -154,6 +178,16 @@ div.logo img{
     }
     div.mobile-btn-handler{
         display: inline-block;
+    }
+}
+
+
+
+@media screen and (max-width: 765px)
+{
+
+    body{
+        opacity: 0.1;
     }
 }
 
