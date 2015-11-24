@@ -5,7 +5,7 @@ require.config({
     "waitSeconds" : 600,
     paths: {
         'angular': 'vendor/angular/angular.min',
-        'angular-cookies': 'vendor/angular-cookies/angular-cookies.min',
+        'angular-cookies': 'vendor/angular-cookie/angular-cookie.min',
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
         'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
