@@ -11,11 +11,6 @@ define(['./module'], function (controllers) {
 
             $scope.product = product;
 
-            $(document).mousemove(function(e){
-                $("#x").text(e.clientX);
-                $("#y").text(e.clientY);
-            });
-
             $scope.addToCart = function(){
 
                 var img = $("#imgToBuy").clone();
@@ -44,6 +39,7 @@ define(['./module'], function (controllers) {
 
             }
 
+            $("nav .navLinks").css("display", "none");
         }]);
     });
 
