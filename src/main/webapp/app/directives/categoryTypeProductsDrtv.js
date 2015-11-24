@@ -6,7 +6,8 @@
  */
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', '$templateCache', function ($filter, $animate, $templateCache) {
+    directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', '$templateCache',
+        '$location', function ($filter, $animate, $templateCache, $location) {
         return {
             restrict: 'E',
             replace: 'true',
@@ -18,6 +19,10 @@ define(['./module'], function (directives) {
 
                 scope.productsInclude = [];
                 scope.attributeChecked = [];
+
+                scope.gotoItem = function(id){
+                    $location.path('/product/' + id);
+                }
 
                 scope.includeProducts = function($event, attributeVal, attributesName) {
 
@@ -35,10 +40,10 @@ define(['./module'], function (directives) {
                             scope.productsInclude[attributesName].push(attributeVal);
                         }
                     }
-
                 }
 
                 scope.productsFilter = function(product) {
+                    //console.log(product)
                     if (Object.keys(scope.productsInclude).length > 0) {
                         var found = 0;
                         for (var key in scope.productsInclude){
@@ -70,22 +75,16 @@ define(['./module'], function (directives) {
                 };
 
                 scope.clearSelection = function(){
-                    for (var key in scope.productsInclude)
+                    for (var key in scope.productsInclude) {
+                        console.log(scope.productsInclude)
                         delete scope.productsInclude[key];
-                    $('.products-attribute').each(function(){
+                    }
+                    $('.option input[type=checkbox]').each(function(){
                         this.checked = false;
                     })
                 };
 
-                scope.toggleColapse = function(id){
-                     if(id){
-                         $('#' + id).collapse('toggle');
-                         $('#panel-heading-a' + id).hasClass('collapsed') ? $('#panel-heading-a' + id).removeClass('collapsed') : $('#panel-heading-a' + id).addClass('collapsed')
-                     }
-                };
-                //scope.filteredProducts = function(attributeValue){
-                //
-                //};
+
                 scope.manipulateProductsByCustomization = function() {
                     scope.businessCustom = [];
                     scope.gamingCustom = [];
