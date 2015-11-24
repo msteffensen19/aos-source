@@ -1,6 +1,7 @@
 /**
  * Created by kubany on 10/13/2015.
  */
+
 define([],function(){
     function config($translateProvider, $httpProvider, $stateProvider) {
         $httpProvider.defaults.cache = true;
@@ -33,8 +34,24 @@ define([],function(){
             'EMAIL' : 'Email',
             'SIGN_IN' : 'SIGN IN',
             'FORGOT_PASSWORD' : 'Forgot your password?',
-            'CREATE_NEW_ACCOUNT' : 'CREATE NEW ACCOUNT'
-        });
+            'CREATE_NEW_ACCOUNT' : 'CREATE NEW ACCOUNT',
+            'REMEMBER_ME' : 'REMEMBER ME',
+
+
+            'hi' : 'hi',
+            'SING_OUT' : 'sing out',
+            'PERSONAL_AREA' : 'personal area',
+            'ADD_TO_CART' : 'ADD TO CART',
+            "PRODUCT_SPECIFICATIONS" : "PRODUCT SPECIFICATIONS",
+            "View_details" : "View Details",
+            'Shop_Now' : 'Shop Now',
+            'EXPLORE_NOW' : 'EXPLORE NOW',
+            'Quantity:' : 'Quantity:',
+
+
+
+         });
+
         $stateProvider.state('view1',{
             url: '/',
             templateUrl: 'app/views/home-page.html',
@@ -64,36 +81,61 @@ define([],function(){
                     }
                 }
             })
+            .state('product',{
+                url: '/product/:id',
+                templateUrl: 'app/views/product-page.html',
+                controller: 'productCtrl',
+                data: {
+                    requireLogin: false // this property will apply to all children of 'app'
+                },
+                resolve : {
+                    product: function (productService, $stateParams) {
+                        return productService.getProductById($stateParams.id);
+                    }
+                }
+            })
             .state('404',{
                 url: '/404',
+                templateUrl: 'app/views/404.html',
                 data: {
-                    underConstruction: true// this property will apply to all children of 'app'
+                    underConstruction: true // this property will apply to all children of 'app'
                 }
             });
-        //$routeProvider.
-        //    when('/AddNewOrder', {
-        //        templateUrl: 'templates/add_order.html',
-        //        controller: 'AddOrderController'
-        //    }).
-        //    when('/category/:id', {
-        //        controller: 'categoryCtrl',
-        //        templateUrl: './app/views/category-page.html',
-        //    }).
-        //    when('/', {
-        //        controller: 'categoriesCtrl',
-        //        templateUrl: 'app/views/home-page.html',
-        //    }).
-        //    when('/welcome', {
-        //        templateUrl: 'app/views/welcome.html',
-        //    }).
-        //    otherwise({
-        //        redirectTo: '/',
-        //        controller: 'categoriesCtrl',
-        //        templateUrl: './app/views/home-page.html',
-        //    });
+
         $translateProvider.preferredLanguage('en');
     }
     config.$inject=['$translateProvider', '$httpProvider', '$stateProvider'];
 
     return config;
 });
+
+
+
+
+
+
+
+
+
+
+//$routeProvider.
+//    when('/AddNewOrder', {
+//        templateUrl: 'templates/add_order.html',
+//        controller: 'AddOrderController'
+//    }).
+//    when('/category/:id', {
+//        controller: 'categoryCtrl',
+//        templateUrl: './app/views/category-page.html',
+//    }).
+//    when('/', {
+//        controller: 'categoriesCtrl',
+//        templateUrl: 'app/views/home-page.html',
+//    }).
+//    when('/welcome', {
+//        templateUrl: 'app/views/welcome.html',
+//    }).
+//    otherwise({
+//        redirectTo: '/',
+//        controller: 'categoriesCtrl',
+//        templateUrl: './app/views/home-page.html',
+//    });
