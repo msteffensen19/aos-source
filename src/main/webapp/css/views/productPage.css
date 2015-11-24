@@ -190,6 +190,9 @@
     .topSpace{
         padding-top: 94px;
     }
+    .list label.attr{
+        padding-left: 20px;
+    }
 }
 
 
