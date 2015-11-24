@@ -15,19 +15,36 @@ define([
     './app/user/services/index',
     './app/services/index',
     './app/directives/index',
+    './app/filters/index',
     './app/user/directives/index',
     './app/templates/module',
 
 ], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig) {
     // Declare app level module which depends on views, and components
-    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives',
-        'aos.templates', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap',
+    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives','aos.filters',
+        'aos.templates', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ngCookies',
         'ngAnimate','aos.user.controllers', 'aos.user.services', 'aos.user.directives'])
-        .config(catalogConfig).config(userConfig).run(function ($rootScope, $state) {
+
+        .config(catalogConfig).config(userConfig)
+
+        .run(function ($rootScope, $state, $cookieStore) {
+
+            var cookie = $cookieStore.get("userCookie");
+            if(cookie)
+            {
+                $rootScope.userCookie = cookie;
+            }
+
+
+
 
             $rootScope.$on('$stateChangeError', function(event) {
                 $state.go('404');
             });
+
+
+
+
 
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
                 var requireLogin = toState.data.requireLogin;
@@ -42,6 +59,5 @@ define([
                     // get me a login modal!
                 }
             });
-
         });
 });
