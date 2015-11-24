@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.advantage.online.store.dao.AbstractRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Qualifier("productRepository")
@@ -24,15 +27,28 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     private static final int MAX_NUM_OF_PRODUCTS = 100;
 
     @Override
-    public Product createProduct(String name, String description, int price, Category category) {
+    @Transactional
+    public Product create(String name, String description, int price, Category category) {
+
         Product product = new Product(name, description, price, category);
+        product.setManagedImageId("1234");
     	entityManager.persist(product);
+        entityManager.flush();
 
     	return product;
     }
 
     @Override
-    public int deleteProductsByIds(Collection<Long> productIds) {
+    @Transactional
+    public void create(Product product) {
+        product.setManagedImageId("1234");
+        entityManager.persist(product);
+        entityManager.flush();
+
+    }
+
+    @Override
+    public int deleteByIds(Collection<Long> productIds) {
 
     	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(productIds, "product ids");
     	String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Product.class, Product.FIELD_ID, Product.PARAM_ID);
@@ -76,13 +92,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public int delete(Product... entities) {
         ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "products");
         int productsCount = entities.length;
-        Collection<Long> productIds = new ArrayList<Long>(productsCount);
+        Collection<Long> productIds = new ArrayList<>(productsCount);
 
         for (final Product product : entities) {
             productIds.add(product.getId());
         }
 
-        return deleteProductsByIds(productIds);
+        return deleteByIds(productIds);
     }
 
     @Override
@@ -104,7 +120,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     }
 
     @Override
-    public int deleteProducts(final Collection<Product> products) {
+    public int delete(final Collection<Product> products) {
 
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(products,
             "products");
@@ -117,6 +133,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             productIds.add(productId);
         }
 
-        return deleteProductsByIds(productIds);
+        return deleteByIds(productIds);
     }
 }

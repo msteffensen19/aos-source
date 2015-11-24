@@ -3,33 +3,89 @@
 }
 
 .categoryLeft{
-    width: 200px;
-    background-color: lime;
+    width: 250px;
     vertical-align: top;
+    padding: 15px ;
 }
 
 .categoryLeft .filterCount{
+    padding: 15px 0;
+}
 
+.categoryLeft ul {
+    padding: 10px 0;
+}
+
+.categoryLeft ul li{
+    list-style: none;
+}
+
+.categoryLeft .clear
+{
+    cursor: pointer;
+    float: right;
+}
+
+.categoryLeft ul li h4{
+    padding: 10px 0;
+    margin: 10px 0;
+    border-top: solid gray 1px;
+    border-bottom: solid gray 1px;
+    position: relative;
+    cursor: cell;
+}
+
+.categoryLeft ul li h4:before {
+    content:"";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 10px;
+    z-index: 2;
+    border-bottom: 4px solid gray;
+    border-right: 4px solid gray;
+    transition: transform .5s ease, top .5s ease ;
+}
+
+.arrowDown:before{
+    top:10px;
+    transform: rotate(45deg);
+}
+
+.arrowUp:before{
+    top:15px;
+    transform: rotate(-135deg);
+}
+
+.categoryLeft .option > div {
+    position: relative;
 }
 
 .categoryRight ul {
-    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .categoryRight ul li {
-
+    text-align: center;
     display: inline-block;
-    width: 150px;
+    width: 300px;
     padding: 10px;
     margin: 10px;
+    box-sizing: border-box;
     background-color: #f9f9f9;
 }
 
-
 .categoryRight ul li .imgProduct{
-width: 100%
+    width: 100%;
+    cursor: pointer;
+    transition: all ease 3s;
+    position: relative;
 }
 
+.categoryRight ul li .imgProduct:hover{
+    transform: scale(0.9);
+}
 
 .categoryRight ul li .AddToCard{
     white-space: nowrap;
@@ -40,7 +96,11 @@ width: 100%
     opacity: 1;
 }
 
-.categoryRight ul li:hover p a{
+.categoryRight ul li .AddToCard:hover {
+    cursor: pointer;
+}
+
+.categoryRight ul li .AddToCard:hover *{
     text-decoration: underline;
 }
 
@@ -49,4 +109,36 @@ width: 100%
     height: 20px;
 }
 
+.categoryRight ul li:hover p a{
+    text-decoration: underline;
+}
 
+@media screen and (max-width: 1920px) {
+    .categoryRight ul li {
+        width: 23.2%;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .categoryRight ul li{
+        width: 31.1%;
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .categoryRight ul li {
+        width: 46.1%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .categoryRight ul li {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+
+}

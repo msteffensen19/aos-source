@@ -1,5 +1,7 @@
 package com.advantage.online.store.dao;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.List;
 
 public interface DefaultCRUDOperations<T> {
@@ -10,7 +12,7 @@ public interface DefaultCRUDOperations<T> {
      * @return reference of a new object
      */
     default T create(String name) {
-        return null;
+        throw new NotImplementedException();
     }
 
     /**

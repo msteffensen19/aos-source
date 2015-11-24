@@ -3,8 +3,10 @@
  */
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('categoriesCtrl', ['$scope', 'categoryService', 'dealService', '$sce', '$location',
+    controllers.controller('categoriesCtrl', ['$scope', 'categoryService',
+        'dealService', '$sce', '$location',
         function ($scope, categoryService, dealService, $sce, $location) {
+
             $scope.categories = [];
             $scope.deal = "";
             // I contain the ngModel values for form interaction.
@@ -39,10 +41,22 @@ define(['./module'], function (controllers) {
             };
 
             $scope.uri = "http://localhost:8080/";
-            $scope.images = [
-                {imageName : 'Banner1.jpg', imageId : 0},
-                {imageName : 'Banner2.jpg', imageId : 1},
-                {imageName : 'Banner3.jpg', imageId : 2}];
+
+            $scope.images = [{
+                    imageName : 'Banner1.jpg',
+                    imageId : 0,
+                    message : "ALL YOU WANT FROM A TABLET"
+            },
+                {
+                    imageName : 'Banner2.jpg',
+                    imageId : 1,
+                    message : "EXPLORE OUR LASTEST <br />INNOVATIVE PRODUCTS"
+                },
+                {
+                    imageName : 'Banner3.jpg',
+                    imageId : 2,
+                    message : "START EXPLORING HP NOTEBOOKS"
+                }];
 
         }]);
 });

@@ -1,0 +1,59 @@
+{
+  "id": 1,
+  "productAlias": "Laptops",
+  "productName": "HP Pavilion 15t Touch Laptop",
+  "price": 519.99,
+  "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+  "imageUrl": "1241",
+  "colors" : [
+    {
+      "color" :"#FFF"
+    },
+    {
+      "color" :"rgb(70, 70, 70)"
+    },
+    {
+      "color" :"rgba(100, 100, 100, .2)"
+    },
+    {
+      "color" :"hsl(80, 60%, 50%)"
+    },
+    {
+      "color" :"#009DB2"
+    },
+    {
+      "color" :"tomato"
+    }
+  ],
+  "attributes": [
+    {
+      "attributeName": "PRICE",
+      "attributeValue": 519.99
+    },
+    {
+      "attributeName": "COLOR",
+      "attributeValue": "C0C0C0"
+    },
+    {
+      "attributeName": "OPERATING SYSTEM",
+      "attributeValue": "Windows 10"
+    },
+    {
+      "attributeName": "CUSTOMIZATION",
+      "attributeValue": "Gaming"
+    },
+    {
+      "attributeName": "PROCESSOR",
+      "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
+    },
+    {
+      "attributeName": "DISPLAY",
+      "attributeValue": "15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen"
+    },
+    {
+      "attributeName": "MEMORY",
+      "attributeValue": "16GB DDR3 - 2 DIMM"
+    }
+  ]
+}
+

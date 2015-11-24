@@ -1,43 +1,60 @@
 
+<!--
+<section id="png">
+    <img src="../../css/images/homepage.png" />
+</section>
+-->
+
 <section>
 
-    <!-- {{ 'SHOP_NOW' | translate }} -->
+    <!--  five pictures  -->
 
-
-
-
-    <!--  five pictures -->
     <article id="our_products">
         <div class="container">
-            <div class="bigSection">
-                <div class="smoll-boxes"
-                     ng-click="goToCategory(categories[2].categoryId)"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[2].managedImageId+')'} : {}" >
-                    <span class="shop_now roboto-bold">{{::categories[2].categoryName}}</span>
-                </div>
-                <div class="smoll-boxes"
-                     ng-click="goToCategory(categories[1].categoryId)"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[1].managedImageId+')'} : {}" >
-                    <span class="shop_now">{{::categories[1].categoryName}}</span>
-                </div>
-                <div class="smoll-boxes"
-                     ng-click="goToCategory(categories[3].categoryId)"
+
+            <div class="rowSection">
+                <div ng-click="goToCategory(categories[3].categoryId)" class="positionRight"
                      ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[3].managedImageId+')'} : {}" >
-                    <span class="shop_now">{{::categories[3].categoryName}}</span>
+                    <div>
+                        <span class="shop_now roboto-bold">{{::categories[3].categoryName}}</span>
+                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate  }} </label>
+                    </div>
                 </div>
-                <div class="smoll-boxes"
-                     ng-click="goToCategory(categories[4].categoryId)"
+                <div ng-click="goToCategory(categories[2].categoryId)"
+                      ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[2].managedImageId+')'} : {}">
+                    <div>
+                        <span class="shop_now">{{::categories[2].categoryName}}</span>
+                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                    </div>
+                </div>
+                <div class="emptyCell">
+                </div>
+            </div>
+
+            <div class="rowSection">
+                <div ng-click="goToCategory(categories[0].categoryId)"
+                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[0].managedImageId+')'} : {}">
+                    <div>
+                        <span class="shop_now">{{::categories[0].categoryName}}</span>
+                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                    </div>
+                </div>
+                <div ng-click="goToCategory(categories[4].categoryId)" class="mices"
                      ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[4].managedImageId+')'} : {}" >
-                    <span class="shop_now">{{::categories[4].categoryName}}</span>
+                    <div>
+                        <span class="shop_now">{{::categories[4].categoryName}}</span>
+                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                    </div>
+                </div>
+                <div ng-click="goToCategory(categories[1].categoryId)" class="twoRows"
+                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[1].managedImageId+')'} : {}">
+                    <div>
+                        <span class="shop_now">{{::categories[1].categoryName}}</span>
+                        <label class="shop_nowSub">{{ 'Shop_Now' | translate }} </label>
+                    </div>
                 </div>
             </div>
-            <div class="smollSection">
-                <div class="big-box"
-                     ng-click="goToCategory(categories[0].categoryId)"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[0].managedImageId+')'} : {}" >
-                    <span class="shop_now">{{::categories[0].categoryName}}</span>
-                </div>
-            </div>
+
         </div>
     </article>
     <!-- end five pictures -->
@@ -54,23 +71,28 @@
         <h3 class="roboto-regular center" >
             {{'SPACIAL_OFFER' | translate}}
         </h3>
-        <div id="img-special-offer">
-            <figure>
-                <img src="css/images/Special-offer.jpg" alt="Special-offer" >
-            </figure>
-        </div>
-        <div id="div-special-offer">
-            <div>
-                <h1>HP EliteBook Folio</h1>
-                <label>Free shipping & free returns <br /> Up to $40</label>
-                <br />
-                <button>SEE OFFER</button>
+        <div>
+            <div id="img-special-offer">
+                <figure>
+                    <img src="css/images/Special-offer.jpg" alt="Special-offer" >
+                </figure>
+            </div>
+            <div id="div-special-offer">
+                <div>
+                    <span class="roboto-light">30% OFF</span>
+                    <h1 class="roboto-thin" >HP EliteBook Folio</h1>
+                    <p>Free shipping & free returns  <br/> Up to $40x</p>
+                    <button>{{ 'SEE_OFFER' | translate}}</button>
+                </div>
             </div>
         </div>
     </article>
     <!-- end SPACIAL OFFER -->
 
 
+
+
+    <!-- check directive -->
 
 
 
@@ -82,11 +104,24 @@
     <article>
         <div class="slider">
             <div class="slider-length">
-                <div ng-repeat="img in images" >
-                    <img data-ng-src="../../css/images/{{img.imageName}}" ng-click="goToCategory(img.imageId)" />
+                <div ng-repeat="img in images" class="imgSection" >
+                    <div class="imgContainer">
+                        <img data-ng-src="../../css/images/{{img.imageName}}" ng-click="goToCategory(img.imageId)"  />
+                    </div>
+                    <div class="container">
+                        <h2 ng-bind-html='img.message | trustHtml'></h2>
+                        <button>{{ 'EXPLORE_NOW' | translate}}</button>
+                    </div>
                 </div>
-                <div>
-                    <img data-ng-src="../../css/images/{{images[0].imageName}}" ng-click="goToCategory(images[0].imageId)" />
+                <div class="imgSection" >
+                    <div class="imgContainer">
+                        <img data-ng-src="../../css/images/{{images[0].imageName}}"
+                             ng-click="goToCategory(images[0].imageId)" />
+                    </div>
+                    <div class="container">
+                        <h2>{{img.message}}</h2>
+                        <button>{{ 'EXPLORE_NOW' | translate}}</button>
+                    </div>
                 </div>
             </div>
             <div class="slider-steps" >
@@ -112,15 +147,14 @@
     -->
 
     <article id="popular_items">
-        <h3 class="roboto-regular center" translate="POPULAR_ITEMS">
-            <!-- {{'SPACIAL_OFFER' | translate}} -->
-        </h3>
-        <div class="grid-table">
+        <h3 class="roboto-regular center" translate="POPULAR_ITEMS"></h3>
+        <div class="grid-table center">
             <div ng-repeat="product in popularProducts" ng-if="popularProducts.length > 0">
                 <figure>
                     <img data-ng-src="{{product.imageUrl}}" alt="Special-offer" >
                 </figure>
-                <label class="shop_now center">{{product.productName}}</label>
+                <p class="center productName roboto-medium">{{product.productName | uppercase}}</p>
+                <label class="shop_nowSub viewDetail" translate="View_details"></label>
             </div>
         </div>
     </article>
@@ -132,32 +166,7 @@
 
 
 
-
-
-
-
-
-
-
-<!-- FOLLOW US -->
-<footer>
-    <div>
-        <h3 class="roboto-regular center" >
-            FOLLOW US <!-- {{'FOLLOW_US' | translate}} -->
-        </h3>
-        <div id="follow" class="center">
-            <img src="css/images/facebook.png" />
-            <img src="css/images/twitter.png" />
-            <img src="css/images/Pinterest.png" />
-            <img src="css/images/instegram.png" />
-        </div>
-        <label > © Advantage Inc, 2016. </label>
-    </div>
-</footer>
-<!-- end FOLLOW US
 <social-media-drtv></social-media-drtv>
--->
-
 
 
 

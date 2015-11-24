@@ -3,7 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('categoryService', ['$http', '$q','resHandleService', function ($http, $q, responseService) {
+    services.service('categoryService', ['$http', '$q',
+        'resHandleService', function ($http, $q, responseService) {
 
         return{
             getCategories : getCategories,
@@ -15,12 +16,17 @@ define(['./module'], function (services) {
         function getCategories() {
             var request = $http({
                 method: "get",
-                url: "api/category"
+                url: "api/category",
                 //params: {
                 //    action: "get"
                 //}
             });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+
+            return( request.then(
+                responseService.handleSuccess,
+                responseService.handleError
+                )
+            );
         }
 
         function getCategoryProducts(id) {
@@ -31,7 +37,10 @@ define(['./module'], function (services) {
                 //    action: "get"
                 //}
             });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+            return( request.then(
+                responseService.handleSuccess,
+                responseService.handleError )
+            );
         }
 
         function getMockData(id) {
@@ -44,6 +53,7 @@ define(['./module'], function (services) {
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         };
+
         function getPopularProducts() {
             var request = $http({
                 method: "get",

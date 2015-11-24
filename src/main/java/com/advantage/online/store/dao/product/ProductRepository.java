@@ -6,6 +6,7 @@ import java.util.List;
 import com.advantage.online.store.dao.DefaultCRUDOperations;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.Product;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ProductRepository extends DefaultCRUDOperations<Product> {
 	/**
@@ -16,14 +17,17 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
 	 * @param category
 	 * @return entity reference
 	 */
-	Product createProduct(String name, String description, int price, Category category);
+	Product create(String name, String description, int price, Category category);
+
+	@Transactional
+	void create(Product product);
 
 	/**
 	 * Delete entities by ids
 	 * @param productIds Id's collection
 	 * @return he number of entities deleted
 	 */
-	int deleteProductsByIds(Collection<Long> productIds);
+	int deleteByIds(Collection<Long> productIds);
 
 	/**
 	 * Get product categories by categoryId
@@ -39,5 +43,5 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
 	 */
 	List<Product> getCategoryProducts(Category category);
 
-	int deleteProducts(final Collection<Product> products);
+	int delete(final Collection<Product> products);
 }

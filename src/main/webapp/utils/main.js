@@ -34,20 +34,37 @@ $(document).on({
             }
         });
 
-        _resize();
-        function _resize() {
-            $("#mobile-section").height($(window).height() + "px");
-        }
+
+
 
         $('#product_search_img').click(function (e) {
             $('#product_search').css("display", "inline-block");
-            $('#product_search').animate({ "width": $('#product_search').width() > 0 ? 0 : "150px" }, 500, function(){
-                if($('#product_search').width() == 0 ){
-                    $(this).css("display", "none");
-                }
+            $('#product_search').animate({ "width": $('#product_search').width() > 0 ? 0 : "150px" },
+                500, function(){
+                    if($('#product_search').width() == 0 ){
+                        $(this).css("display", "none");
+                    }
             } );
         });
 
+
+
+        $(".containMiniTitle").click(function(){
+            $(this).find(".mini-title").fadeToggle(300);
+        });
+
+        $(document).on("click", ".accordion", function() {
+            $(this).toggleClass('arrowUp');
+            $(this).parent().find(".option").slideToggle(300);
+        });
+
+
+        _resize();
+        function _resize() {
+            $(".mini-title").css("display", "none");
+            $("body").css("left", "0px")
+            $("#mobile-section").height($(window).height() + "px");
+        }
 
     },
 });

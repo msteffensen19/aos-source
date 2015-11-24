@@ -8,10 +8,22 @@ $(document).on({
 
     ready: function() {
 
-        ____moveSlider = setInterval(moveSlider, 3000)
-
+        ____moveSlider = setInterval(moveSlider, 9910000)
 
         $(window).on({ resize: _resize });
+
+
+        $(document).on("click", ".slider-steps > span", function(a){
+            clearInterval(____moveSlider)
+            $(".slider-steps span").removeClass("selected");
+            $(this).addClass("selected");
+            $(".slider-length").stop().animate({
+                "right" : ($(this).index()) * parseInt($(window).width()) + "px"
+            }, 1000, function(){
+                ____moveSlider = setInterval(moveSlider, 10000)
+            });
+        });
+
 
         function _resize() {
             $(".slider-length").css("right", "0px");

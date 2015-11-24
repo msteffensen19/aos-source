@@ -4,7 +4,8 @@
 require.config({
     "waitSeconds" : 600,
     paths: {
-        angular: 'vendor/angular/angular.min',
+        'angular': 'vendor/angular/angular.min',
+        'angular-cookies': 'vendor/angular-cookies/angular-cookies.min',
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
         'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -12,6 +13,8 @@ require.config({
         'jPushMenu' : 'utils/jPushMenu',
         'mainScript' : 'utils/main',
         'accordion' : 'utils/accordion',
+        'wrongDirection' : 'utils/wrongDirection',
+        'UserCookie' : 'utils/Models/UserCookie',
         'slider' : 'utils/slider',
         "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
         //'angularRoute': 'vendor/angular-route/angular-route.min',
@@ -20,6 +23,9 @@ require.config({
     shim: {
         'angular' : {'exports' : 'angular'},
         'app': {
+            deps: ['angular']
+        },
+        'angular-cookies': {
             deps: ['angular']
         },
         'angular-translate': {
@@ -43,6 +49,9 @@ require.config({
         'slider': {
             deps: ['jquery']
         },
+        'wrongDirection': {
+            deps: ['jquery']
+        },
         'uiRouter':{
             deps: ['angular']
         }
@@ -50,9 +59,11 @@ require.config({
 });
 
 window.name = "NG_DEFER_BOOTSTRAP!";
-require(['angular', 'app', 'angular-translate', 'bootstrap', 'jquery', 'jPushMenu','mainScript',
-        'accordion',
-        'slider', 'uiRouter', 'angularAnimate','ui-bootstrap'], function(angular, app)
+require(['angular', 'app', 'angular-translate', 'bootstrap',
+         'jquery', 'jPushMenu','mainScript',
+        'accordion', 'wrongDirection', 'UserCookie',
+        'slider', 'uiRouter', 'angular-cookies',
+        'angularAnimate','ui-bootstrap'], function(angular, app)
     {
         angular.element().ready(function() {
             // bootstrap the app

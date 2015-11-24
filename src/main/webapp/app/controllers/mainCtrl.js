@@ -5,9 +5,45 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll', '$location', '$rootScope',
-        function ($scope, productService, smoothScroll, $location, $rootScope) {
+    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll', '$location', '$cookieStore',
+        '$rootScope', function ($scope, productService, smoothScroll, $location, $cookie, $rootScope) {
 
+            $scope.accountSection = function(){
+                alert("user account section! --- Method not done yet!");
+            }
+
+            $scope.singOut = function(){
+                $cookie.remove("userCookie");
+                $rootScope.userCookie = undefined;
+            }
+
+            $scope.openOptions = function(){
+                $()
+            }
+
+            $scope.login = function (size) {
+
+                $("body").css({
+                    "overflow": "hidden",
+                    "left": "0px",
+                })
+                $(".PopUp").fadeIn(100, function () {
+                    $(".PopUp > div:nth-child(1)").animate({
+                        "top": $(window).height() < 700 ? "5%" : "18%"
+                    }, 600);
+                });
+                $(".PopUp").click(function (e) {
+                    $("body").css("overflow", "scroll")
+                    $(".PopUp > div:nth-child(1)").animate({
+                        "top": "-150%"
+                    }, 600, function () {
+                        $(".PopUp").fadeOut(100);
+                    });
+                });
+                $(".PopUp > div").click(function (e) {
+                    e.stopPropagation();
+                });
+            }
 
 
 
@@ -21,9 +57,6 @@ define(['./module'], function (controllers) {
                 }, 1000)
 
             };
-
-
-
 
 
 
