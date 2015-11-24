@@ -3,10 +3,10 @@
  */
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('userController', ['$scope', '$uibModal', '$log', '$cookieStore',
+    controllers.controller('userController', ['$scope', '$uibModal', '$log', 'ipCookie',
         function ($scope, $uibModal, $log, $cookie) {
 
-            $scope.user = { username: '', password: '', email: '', }
+            $scope.user = { username: '', password: '', email: ''}
             $scope.rememberMe= true;
 
             $scope.accountSection = function(){

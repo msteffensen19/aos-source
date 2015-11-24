@@ -22,14 +22,14 @@ define([
 ], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig) {
     // Declare app level module which depends on views, and components
     return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives','aos.filters',
-        'aos.templates', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ngCookies',
+        'aos.templates', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ipCookie',
         'ngAnimate','aos.user.controllers', 'aos.user.services', 'aos.user.directives'])
 
         .config(catalogConfig).config(userConfig)
 
-        .run(function ($rootScope, $state, $cookieStore) {
+        .run(function ($rootScope, $state, ipCookie) {
 
-            var cookie = $cookieStore.get("userCookie");
+            var cookie = ipCookie("userCookie");
             if(cookie)
             {
                 $rootScope.userCookie = cookie;

@@ -5,7 +5,7 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll', '$location', '$cookieStore',
+    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll', '$location', 'ipCookie',
         '$rootScope', function ($scope, productService, smoothScroll, $location, $cookie, $rootScope) {
 
             $scope.accountSection = function(){
