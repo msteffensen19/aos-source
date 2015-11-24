@@ -106,7 +106,7 @@ public class DataSourceInit4Json {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CategoryDto dto = objectMapper.readValue(json, CategoryDto.class);
-        Category category = categoryRepository.getCategory(dto.getId());
+        Category category = categoryRepository.get(dto.getId());
 
         transaction = session.beginTransaction();
 
