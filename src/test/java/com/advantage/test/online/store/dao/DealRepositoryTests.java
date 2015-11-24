@@ -17,8 +17,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 
-import com.advantage.online.store.dao.DealRepository;
-import com.advantage.online.store.dao.ProductRepository;
+import com.advantage.online.store.dao.deal.DealRepository;
+import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.Deal;
 import com.advantage.online.store.model.DealType;
@@ -40,15 +40,15 @@ public class DealRepositoryTests extends GenericRepositoryTests {
     public void testGetAllDeals() {
         TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
         final Category category = categoryRepository.createCategory("LAPTOPS", "1234");
-        final Product product = productRepository.createProduct("LG G3",
+        final Product product = productRepository.create("LG G3",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category);
 
         List<Deal> deals = new ArrayList<>();
         for (int i = 1; i <= DEALS_COUNT; i++) {
             final String description = "test deal" + i;
-            dealRepository.createDeal(DealType.WEEKLY, description, "header", "header", "200", "1234", 30, "2015-11-15 00:00:00", "2015-11-30 23:59:59", product);
+            dealRepository.create(DealType.WEEKLY, description, "header", "header", "200", "1234", 30, "2015-11-15 00:00:00", "2015-11-30 23:59:59", product);
 
-            deals = dealRepository.getAllDeals();
+            deals = dealRepository.getAll();
             Assert.assertNotNull(deals);
         }
 
@@ -57,10 +57,10 @@ public class DealRepositoryTests extends GenericRepositoryTests {
 
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
 
-        deals.forEach(dealRepository::deleteDeal);
+        deals.forEach(dealRepository::delete);
 
-        productRepository.deleteProduct(product);
-        categoryRepository.deleteCategory(category);
+        productRepository.delete(product);
+        categoryRepository.delete(category);
         transactionManager.commit(transactionStatusForDeletion);
     }
 
@@ -70,17 +70,17 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
         final Category category = categoryRepository.createCategory("LAPTOPS", "1234");
-        final Product product = productRepository.createProduct("LG G3",
+        final Product product = productRepository.create("LG G3",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit", 400, category);
-        final Deal deal = dealRepository.createDeal(DealType.WEEKLY, "description", "header", "header", "200", "1234",
-                                                    30, "2015-11-15 00:00:00", "2015-11-30 23:59:59",
-                                                    product);
+        final Deal deal = dealRepository.create(DealType.WEEKLY, "description", "header", "header", "200", "1234",
+            30, "2015-11-15 00:00:00", "2015-11-30 23:59:59",
+            product);
         transactionManager.commit(transactionStatusForCreation);
         Assert.assertNotNull(deal);
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-        dealRepository.deleteDeal(deal);
-        productRepository.deleteProduct(product);
-        categoryRepository.deleteCategory(category);
+        dealRepository.delete(deal);
+        productRepository.delete(product);
+        categoryRepository.delete(category);
         transactionManager.commit(transactionStatusForDeletion);
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 
 import com.advantage.online.store.dao.category.CategoryRepository;
-import com.advantage.online.store.dao.ProductRepository;
+import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 /**
@@ -39,13 +39,13 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
 
     	for (int i = 0; i < CATEGORY1_PRODUCTS_COUNT; i++) {
     		final String productName = "product" + i;
-			productRepository.createProduct("LG G3", productName, 400, category1);
+			productRepository.create("LG G3", productName, 400, category1);
     	}
 
     	for (int i = 0; i < CATEGORY2_PRODUCTS_COUNT; i++) {
     		final String nameAndDescriptionForTest = "product" + i;
-			productRepository.createProduct(nameAndDescriptionForTest,
-					                        nameAndDescriptionForTest, 400, category2);
+			productRepository.create(nameAndDescriptionForTest,
+				nameAndDescriptionForTest, 400, category2);
     	}
 
     	transactionManager.commit(transactionStatusForCreation);
@@ -60,9 +60,9 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     	Assert.assertTrue(category3Products.isEmpty());
     	
     	final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-    	productRepository.deleteProducts(category1Products);
-    	productRepository.deleteProducts(category2Products);
-    	categoryRepository.deleteCategories(category1, category2, category3);
+    	productRepository.delete(category1Products);
+    	productRepository.delete(category2Products);
+    	categoryRepository.delete(category1, category2, category3);
     	transactionManager.commit(transactionStatusForDeletion);
 	}
 }
