@@ -36,7 +36,14 @@ module.exports = function(grunt) {
                     src: ['*.css', '!*.min.css'],
                     dest: 'target/css',
                     ext: '.min.css'
-                }]
+                },
+                    {
+                        expand: true,
+                        cwd: 'app/user/css',
+                        src: ['*.css', '!*.min.css'],
+                        dest: 'target/app/user/css',
+                        ext: '.min.css'
+                    }]
             }
         },
         copy: {
@@ -52,7 +59,7 @@ module.exports = function(grunt) {
         },
         ngtemplates:  {
             app:        {
-                src:      ['app/partials/**.html'],
+                src:      ['app/partials/**.html', 'app/user/partials/**.html'],
                 dest:     'app/templates/module.js',
                 options: {
                     bootstrap:  function(module, script) {
