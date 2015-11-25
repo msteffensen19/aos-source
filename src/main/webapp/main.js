@@ -5,7 +5,7 @@ require.config({
     "waitSeconds" : 600,
     paths: {
         'angular': 'vendor/angular/angular.min',
-        'angular-cookies': 'vendor/angular-cookie/angular-cookie.min',
+        'angular-cookie': 'vendor/angular-cookie/angular-cookie.min',
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
         'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -25,7 +25,7 @@ require.config({
         'app': {
             deps: ['angular']
         },
-        'angular-cookies': {
+        'angular-cookie': {
             deps: ['angular']
         },
         'angular-translate': {
@@ -62,7 +62,7 @@ window.name = "NG_DEFER_BOOTSTRAP!";
 require(['angular', 'app', 'angular-translate', 'bootstrap',
          'jquery', 'jPushMenu','mainScript',
         'accordion', 'wrongDirection', 'UserCookie',
-        'slider', 'uiRouter', 'angular-cookies',
+        'slider', 'uiRouter', 'angular-cookie',
         'angularAnimate','ui-bootstrap'], function(angular, app)
     {
         angular.element().ready(function() {

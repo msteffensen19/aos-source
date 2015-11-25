@@ -108,7 +108,6 @@
     font-size: 14px;
 }
 
-
 .mini-title .option:hover{
     text-decoration: underline;
 }
@@ -117,13 +116,12 @@
     display: block;
 }
 
-
 button {
     transition: all linear .2s;
 }
 
 button:hover {
     border-color: #54b3ad !important;
-    background-color: #54b3ad;
-    color: white;
+    background-color: #54b3ad !important;
+    color: white !important;
 }

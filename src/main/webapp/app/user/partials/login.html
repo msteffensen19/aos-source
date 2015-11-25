@@ -7,19 +7,16 @@
     <div>
         <div class="login" ng-controller="userController">
 
-            <span id="message"></span>
             <img src="../../css/images/logo.png">
-
 
             <label translate="ONLINE_SHOPPING"></label>
             <span class="facebook" translate="FACEBOOK_SIGN_IN" data-ng-click="singWithFacebook()"></span>
             <label class="or" translate="OR" style=""></label>
 
 
-            <input placeholder="{{'NAME' | translate }}" type="text" ng-model="user.username" />
-            <input placeholder="{{'PASSWORD' | translate }}" type="password" ng-model="user.password" />
+            <input placeholder="{{'NAME' | translate }}" type="text" ng-model="user.loginUser" />
+            <input placeholder="{{'PASSWORD' | translate }}" type="password" ng-model="user.loginPassword" />
             <input placeholder="{{'EMAIL' | translate }}" type="text" ng-model="user.email" />
-
 
             <div class="left option display">
                 <input type="checkbox" ng-model="rememberMe" > <span translate="REMEMBER_ME"></span>
@@ -27,7 +24,7 @@
 
 
             <button class="sing-in" translate="SIGN_IN"
-                    data-ng-click="signIn(user)"></button>
+                    data-ng-click="singIn(user, rememberMe)"></button>
             <label class="forgot-Passwowd" translate="FORGOT_PASSWORD"
                    data-ng-click="forgotPassword()"></label>
 

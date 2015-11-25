@@ -31,9 +31,15 @@ define(['./module'], function (services) {
 
 
             function login (user){
+
+                console.log(JSON.stringify(user))
+                console.log("api/appUserData/login")
                 var request = $http({
-                    method: "get",
-                    url:"api/category",
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "method": "post",
+                    "url": "api/appUserData/login",
+                    "data": JSON.stringify(user) ,
+
                 });
                 return( request.then(
                     responseService.handleSuccess,
@@ -55,6 +61,7 @@ define(['./module'], function (services) {
                     responseService.handleError
                 ));
             }
+
 
 
 

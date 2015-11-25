@@ -6,9 +6,6 @@ define(['./module'], function (controllers) {
     controllers.controller('userController', ['$scope', '$uibModal', '$log', 'ipCookie',
         function ($scope, $uibModal, $log, $cookie) {
 
-            $scope.user = { username: '', password: '', email: ''}
-            $scope.rememberMe= true;
-
             $scope.accountSection = function(){
                 $rootScope.userid = null;
                 $cookie.remove("userCookie");

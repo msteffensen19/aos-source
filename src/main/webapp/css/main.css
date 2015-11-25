@@ -3,7 +3,11 @@
 @import "views/categoryPage.css";
 @import "views/category_type_products_tpl.css";
 @import "views/productPage.css";
+@import "modals/popUp.css";
+
+@import "../app/user/css/login.css";
 @import "UI.css";
+
 #png{
     position: absolute;
     z-index: 90000;

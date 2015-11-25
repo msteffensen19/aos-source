@@ -11,30 +11,35 @@ define(['./module'], function (directives) {
             return {
                 restrict: 'E',
                 replace:false,
-                scope: {},
                 templateUrl: 'app/user/partials/login.html',
                 controller: function ($scope) {
 
-                    $scope.signIn = function(user) {
+                    $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+                    $scope.rememberMe = false;
 
+                    $scope.singIn = function(user, rememberMe) {
 
-                        if(user.username.trim() == '')
-                        { alert("Username required!"); return; }
-                        if(user.password.trim() == '')
-                        { alert("Password required!"); return; }
-                        if(user.email.trim() == '')
-                        { alert("Email required!"); return; }
+                        console.log(incrementLogins())
+
+                        return;
 
                         userService.login(user).then(function (response) {
 
-                                if(response.id != -1) {
-                                    userCookie.fillParams(user.username, /*response.id*/ 5, user.email, new Date());
+                                console.log(response);
+                                console.log(response.success);
+                                console.log(response.userId);
+                                console.log(response.reason);
+
+                                if(response.userId != -1) {
+
+                                    userCookie.fillParams($scope.user.loginUser, /*response.id*/ 5,
+                                        $scope.user.email, new Date());
+
                                     $rootScope.userCookie = userCookie;
-                                    //ipCookie(key, value, { expires: 21 });
-                                    $cookie("userCookie", $rootScope.userCookie)
-                                    if($scope.rememberMe)
+
+                                    if(rememberMe)
                                     {
-                                        alert("")
+                                        $cookie("userCookie", $rootScope.userCookie, { expires: 21 });
                                     }
                                     wellcome(user.username)
                                 }
@@ -43,6 +48,7 @@ define(['./module'], function (directives) {
                                 }
                             },
                             function (error) {
+                                //alert()
                                 console.log(error);
                             });
                     }
@@ -63,32 +69,24 @@ define(['./module'], function (directives) {
         }
     ]);
 });
-
+var incrementLogins = function (){
+    var loginsCounter = 0;
+    return function(){
+        return ++loginsCounter;
+    }
+}();
 
 
 
 
 
 function wellcome(name) {
-    $(".login *:not('#message')").css("opacity", "0.2")
-    $("#message").text("Wellcome " + name + "!")
-    $("#message").animate({
-        "font-size": "38px",
-        "opacity": 1,
-    }, 500);
+    $(".login").css("opacity", "0.2")
+    $(".PopUp > div:nth-child(1)").animate({ "top": "-150%" }, 600, function () {
 
-    $("#message").animate({ "top":"25%", }, 500, function () {
-
-        $(this).delay(400).animate({ "font-size": "0px", "opacity": 0.2 }, 500, function () {
-
-            $(".PopUp > div:nth-child(1)").animate({ "top": "-150%" }, 600, function () {
-
-                $(".PopUp").fadeOut(100);
-                $("body").css("overflow", "scroll")
-                $(".login *:not('#message')").css("opacity", "1")
-                $("#message").css("top","43%");
-            });
-        });
+        $(".PopUp").fadeOut(100);
+        $("body").css("overflow", "scroll")
+        $(".login").css("opacity", "1")
     });
 }
 
