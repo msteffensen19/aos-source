@@ -2,6 +2,7 @@ package com.advantage.test.online.store.user;
 
 import com.advantage.online.store.user.dao.AppUserRepository;
 import com.advantage.online.store.user.dao.CountryRepository;
+import com.advantage.online.store.user.dto.AppUserResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
 import com.advantage.online.store.user.model.AppUserType;
 //import com.advantage.online.store.user.model.Country;
@@ -72,7 +73,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         final int COUNTRY2_APP_USERS_COUNT = 10;
 
         //  Testing method: public AppUser(int appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String email) {
-        final String lastName = "Kind";
+        final String lastName = "King";
         final String firstName = "David";
         final String loginName = "kingdavid";
         final String password = "jerusalem3000!";
@@ -101,23 +102,23 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
 
         System.out.println("Create 1st AppUser ...");
+        //AppUserResponseStatus appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
         AppUser appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
-                                                            lastName,
-                                                            firstName,
-                                                            loginName,
-                                                            password,
-                                                            country,
-                                                            phoneNumber,
-                                                            stateProvince,
-                                                            cityName,
-                                                            address1,
-                                                            address2,
-                                                            zipcode,
-                                                            email,
-                                                            YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
+                                                                                        lastName,
+                                                                                        firstName,
+                                                                                        loginName,
+                                                                                        password,
+                                                                                        country,
+                                                                                        phoneNumber,
+                                                                                        stateProvince,
+                                                                                        cityName,
+                                                                                        address1,
+                                                                                        address2,
+                                                                                        zipcode,
+                                                                                        email,
+                                                                                        YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
 
         transactionManager.commit(transactionStatusForCreation);
-        Assert.assertNotNull(appUser);
 
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
         appUserRepository.deleteAppUser(appUser);
@@ -190,43 +191,8 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
     }
 
     @Test
-    public void testDeleteAppUser_ByEmail() throws IOException {
-        List<String> emails = new ArrayList<String>();
-
-        emails.add("koi@israel.gov.il");
-        emails.add("koi@israel.co.il");
-        emails.add("koi@israel.com.il");
-
-//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-//        appUserRepository.deleteAppUsersByEmails(emails);
-//        transactionManager.commit(transactionStatusForDeletion);
-
-        Assert.assertTrue(true);
-    }
-
-    @Test
-    public void testDeleteAppUser_ByLogin() throws IOException {
-        List<String> logins = new ArrayList<String>();
-
-        logins.add("kingdavid");
-        logins.add("kingDavid");
-        logins.add("KingDavid");
-
-//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-//        appUserRepository.deleteAppUsersByLogins(logins);
-//        transactionManager.commit(transactionStatusForDeletion);
-
-        Assert.assertTrue(true);
-    }
-
-    @Test
     public void testGetAppUsers_All() throws IOException {
-        Assert.assertTrue(true);
-    }
-
-    @Test
-    public void testGetAppUsers_ByCountry() throws IOException {
-        final Integer countryId = 10;
+        System.out.println("Testing public void testGetAppUsers_All()");
 
         final String lastName = "Kind";
         final String firstName = "David";
@@ -236,69 +202,82 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         final String phoneNumber = "777-7777777";
         final String stateProvince = "Jerusalem Region";
         final String cityName = "Jerusalem";
-        final String address1 = "1st Guy st.";
+        final String address1 = "Guy st.";
         final String address2 = "Old City";
-        final String zipCode = "9876543";   //   7-Digits zip (postal) code
+        final String zipcode = "9876543";   //   7-Digits zip (postal) code
         final String email = "koi@israel.gov.il";   //  koi = King of Israel
-
-        AppUser appUser = new AppUser();
 
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
 
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "King", "David", "king.david", password, country, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "Avraham", "avinu.avraham", "aloneimamreh", 12, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "itshak", "avinu.itshak", "aloneimamreh", 12, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "jakob", "avinu.jakob", "aloneimamreh", 12, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
+        System.out.println((AppUserType.USER.getAppUserTypeCode() == null ? "AppUserType.USER.getAppUserTypeCode()=NULL" : "AppUserType.USER.getAppUserTypeCode()=" + AppUserType.USER.getAppUserTypeCode()));
+        Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
 
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Sara", "imenu.sara", "aloneimamreh", 18, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Rivka", "imenu.rivka", "aloneimamreh", 18, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Lea", "imenu.lea", "aloneimamreh", 18, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Rachel", "imenu.rachel", "aloneimamreh", 18, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "King", "solomon", "king.solomon", password, country, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Sheeba", "queen.sheeba", password, country, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Bat Sheva", "queen.bat-sheva", password, country, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(), "Ben Tsruya", "Yoav", "ben-tsruya.yoav", password, country, phoneNumber, stateProvince, cityName, address1, address2, zipCode, email,YesNoReply.YES.getReplyTypeChar());
+        System.out.println("Create 1st AppUser ...");
+        //AppUserResponseStatus appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        AppUser appUser;
+        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+                "king",         /*  last name       */
+                "david",        /*  first name      */
+                "king.david",   /*  login-name      */
+                "King8david",   /*  password        */
+                10,             /*  country         */
+                "",             /*  phone number    */
+                "Jerusalem Region",
+                "Jerusalem",
+                "",             /*  address 1       */
+                "",             /*  address 2       */
+                "",             /*  zipcode         */
+                "ks@gov.il",    /*  email           */
+                YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
+        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+                "king",         /*  last name       */
+                "solomon",      /*  first name      */
+                "king.solomon", /*  login-name      */
+                "solomonK2",    /*  password        */
+                10,             /*  country         */
+                "",             /*  phone number    */
+                "Jerusalem Region",
+                "Jerusalem",
+                "",             /*  address 1       */
+                "",             /*  address 2       */
+                "",             /*  zipcode         */
+                "ks@gov.il",    /*  email           */
+                YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
+        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+                "hanavi",       /*  last name       */
+                "Yermiyahu",    /*  first name      */
+                "hanavi.jeremaya", /*  login-name      */
+                "jeremayaP1",   /*  password        */
+                10,             /*  country         */
+                "",             /*  phone number    */
+                "Jerusalem Region",
+                "Jerusalem",
+                "",             /*  address 1       */
+                "",             /*  address 2       */
+                "",             /*  zipcode         */
+                "hy@gov.il",    /*  email           */
+                YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
+        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+                "hanavi",       /*  last name       */
+                "Eliayu",       /*  first name      */
+                "hanavi.eliyahu", /*  login-name      */
+                "jeremayaP1",   /*  password        */
+                10,             /*  country         */
+                "",             /*  phone number    */
+                "Jerusalem Region",
+                "Jerusalem",
+                "",             /*  address 1       */
+                "",             /*  address 2       */
+                "",             /*  zipcode         */
+                "he@gov.il",    /*  email           */
+                YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
 
         transactionManager.commit(transactionStatusForCreation);
 
-        Assert.assertNotNull(appUser);
-
-
-        final List<AppUser> appUsers = appUserRepository.getAppUsersByCountry(countryId);
-        if (appUsers != null) {
-            for (int i = 0; i < appUsers.size(); i++)
-                System.out.println(appUsers.get(i));
-        }
-
-        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-        appUserRepository.deleteAppUser(appUser);
-        transactionManager.commit(transactionStatusForDeletion);
-
-        Assert.assertTrue(true);
-    }
-
-    @Test
-    public void testGetAppUsers_ByEmails() throws IOException {
-        List<String> emails = new ArrayList<String>();
-
-        emails.add("koi@israel.gov.il");
-        emails.add("koi@israel.co.il");
-        emails.add("koi@israel.com.il");
-
-        Assert.assertTrue(true);
-    }
-
-    @Test
-    public void testGetAppUsers_ByLogins() throws IOException {
-        List<String> logins = new ArrayList<String>();
-
-        logins.add("kingdavid");
-        logins.add("kingDavid");
-        logins.add("KingDavid");
-
-        Assert.assertTrue(true);
+        List<AppUser> appUsers = appUserRepository.getAllAppUsers();
+        Assert.assertNotNull(appUsers);
+        Assert.assertTrue(appUsers.size() > 0);
     }
 
 }
