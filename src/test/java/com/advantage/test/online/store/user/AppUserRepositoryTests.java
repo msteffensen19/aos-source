@@ -75,15 +75,15 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         //  Testing method: public AppUser(int appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String email) {
         final String lastName = "King";
         final String firstName = "David";
-        final String loginName = "kingdavid";
-        final String password = "jerusalem3000!";
+        final String loginName = "king.david";
+        final String password = "King6David";
         final Integer country = 1;
-        final String phoneNumber = "777-7777777";
+        final String phoneNumber = "+972 2 7654321";
         final String stateProvince = "Jerusalem Region";
         final String cityName = "Jerusalem";
-        final String address1 = "Guy st.";
-        final String address2 = "Old City";
-        final String zipcode = "9876543";   //   7-Digits zip (postal) code
+        final String address1 = "";
+        final String address2 = "";
+        final String zipcode = "";   //   7-Digits zip (postal) code
         final String email = "koi@israel.gov.il";   //  koi = King of Israel
 
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();

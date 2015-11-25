@@ -248,11 +248,9 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
         //  Check phone number validation if not null
-        if (phoneNumber != null) {
+        if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {
             if (! ValidationHelper.isValidPhoneNumber(phoneNumber)) {
-                appUserResponseStatus.setSuccess(false);
-                appUserResponseStatus.setReason("Invalid phone number.");
-                appUserResponseStatus.setUserId(-1);
+                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid phone number.", -1);
 
                 return false;
             }
@@ -261,9 +259,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Check e-mail address validation if not null
         if (email != null) {
             if (! ValidationHelper.isValidEmail(email)) {
-                appUserResponseStatus.setSuccess(false);
-                appUserResponseStatus.setReason("Invalid e-mail address.");
-                appUserResponseStatus.setUserId(-1);
+                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid e-mail address.", -1);
 
                 return false;
             }
