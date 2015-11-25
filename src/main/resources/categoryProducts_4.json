@@ -1,0 +1,196 @@
+{
+  "id": 1,
+  "categoryName": "LAPTOPS",
+  "catImageUrl" : 1240,
+  "promotedProduct" : {
+    "id": 3,
+    "productName": "HP Spectre x2",
+    "staringPrice" : 490,
+    "promotionHeader" : "EXPLORE THE NEW DESIGN",
+    "promotionSubHeader" : "Supremely thin, yet incredibly durable",
+    "price": 550,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "imageUrl" : "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+    "promotionImageId" : "1240",
+    "attributes" : [
+      {"attributeName" : "PRICE", "attributeValue" : 400},
+      {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+      {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome OS"},
+      {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+      {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+      {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+      {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+    ]
+  },
+  "attributes" : [
+    {"attributeName" : "CUSTOMIZATION", "attributeValues" : ["Business", "Gaming", "Simplicity", "2-in-1", "Powerful PCs"], "attributeId" : 1},
+    {"attributeName" : "PRICE", "attributeValues" : [100, 200, 300, 400], "attributeId" : 4},
+    {"attributeName" : "COLOR", "attributeValues" : ["FFFFFF", "000000", "BB59A1","C0C0C0","0000A0"], "attributeId" : 2},
+    {"attributeName" : "OPERATING SYSTEM", "attributeValues" : ["Chrome OS", "Windows 10", "Windows 8.1"], "attributeId" : 3},
+    {"attributeName" : "PROCESSOR", "attributeValues" : ["intel(R) Core(TM) i5-6300HQ","Intel(R) Core(TM) i5-6200U Dual CoreProcessor","Intel(R) Core(TM) i7-5500U Dual Core Processor","Intel® Core™ i7-5500U with Intel HD Graphics 5500","Intel Turbo Boost Technology","Intel® Celeron® processor"], "attributeId" : 5},
+    {"attributeName" : "MEMORY", "attributeValues" : ["16GB DDR3 - 2 DIMM","8GB DDR3L - 1 DIMM","8 GB DDR3L SDRAM","2 GB 1333 MHz DDR3 SDRAM"], "attributeId" : 7}
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productName": "HP Pavilion 15t Touch Laptop",
+      "price": 519.99,
+      "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+      "imageUrl" : "1241",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 519.99},
+        {"attributeName" : "COLOR", "attributeValue" : "C0C0C0"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen"},
+        {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+      ]
+    },
+    {
+      "id": 2,
+      "productName": "HP Pavilion 15z Laptop",
+      "price": 549.99,
+      "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+      "imageUrl" : "1242",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 549.99},
+        {"attributeName" : "COLOR", "attributeValue" : "000000"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+      ]
+    },
+    {
+      "id": 3,
+      "productName": "HP ENVY - 15t Laptop",
+      "price": 549.99,
+      "description": "Designed for style and comfort",
+      "imageUrl" : "1243",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 549.99},
+        {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel(R) Core(TM) i7-5500U Dual Core Processor "},
+        {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal QHD+ WLED-backlit UWVA Display (3200x1800)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+      ]
+    },
+    {
+      "id": 4,
+      "productName": "HP Spectre x360 - 13-4101dx",
+      "price": 1169.99,
+      "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
+      "imageUrl" : "1244",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 1169.99},
+        {"attributeName" : "COLOR", "attributeValue" : "FFFFFF"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "2-in-1"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel® Core™ i7-5500U with Intel HD Graphics 5500"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "13.3-diagonal FHD Radiance Infinity LED-backlit touch screen (1920 x 1080)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "8 GB DDR3L SDRAM"}
+      ]
+    },
+    {
+      "id": 5,
+      "productName": "HP Stream - 11-d020nr Laptop",
+      "price": 179.99,
+      "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
+      "imageUrl" : "1245",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 179.99},
+        {"attributeName" : "COLOR", "attributeValue" : "FFC0CB"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 8.1"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Gaming"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel Turbo Boost Technology"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "11.6-diagonal HD anti-glare WLED-backlit (1366 x 768)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "2 GB 1333 MHz DDR3 SDRAM"}
+      ]
+    },
+    {
+      "id": 6,
+      "productName": "HP ENVY x360 - 15t Laptop",
+      "price": 699.99,
+      "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
+      "imageUrl" : "1246",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 699.99},
+        {"attributeName" : "COLOR", "attributeValue" : "C0C0C0"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "2-in-1"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal Full HD WLED-backlit IPS Display (1920x1080) Touchscreen"},
+        {"attributeName" : "MEMORY", "attributeValue" : "8GB DDR3L - 1 DIMM"}
+      ]
+    },
+    {
+      "id": 7,
+      "productName": "HP ENVY - 17t Touch Laptop",
+      "price": 949.99,
+      "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
+      "imageUrl" : "1247",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 949.99},
+        {"attributeName" : "COLOR", "attributeValue" : "000000"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Business"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel(R) Core(TM) i7-5500U Dual Core Processor"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "17.3-inch diagonal Full HD WLED-backlit IPS Display (1920x1080) Touchscreen"},
+        {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+      ]
+    },
+    {
+      "id": 8,
+      "productName": "HP ENVY - 17t Touch Laptop",
+      "price": 419.99,
+      "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
+      "imageUrl" : "1248",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 419.99},
+        {"attributeName" : "COLOR", "attributeValue" : "0000A0"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD WLED-backlit Display (1366x768)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "8GB DDR3L - 1 DIMM"}
+      ]
+    },
+    {
+      "id": 9,
+      "productName": "HP Chromebook 14 G1(ENERGY STAR)",
+      "price": 299.99,
+      "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
+      "imageUrl" : "1249",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 299.99},
+        {"attributeName" : "COLOR", "attributeValue" : "C0C0C0"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome OS"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Simplicity"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel® Celeron® processor"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "14-diagonal HD WLED Brightview flat SVA (1366 x 768)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+      ]
+    },
+    {
+      "id": 10,
+      "productName": "HP Chromebook 14 G1(ENERGY STAR)",
+      "price": 1261.99,
+      "description": "Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
+      "imageUrl" : "1250",
+      "attributes" : [
+        {"attributeName" : "PRICE", "attributeValue" : 1261.99},
+        {"attributeName" : "COLOR", "attributeValue" : "C0C0C0"},
+        {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
+        {"attributeName" : "CUSTOMIZATION", "attributeValue" : "Business"},
+        {"attributeName" : "PROCESSOR", "attributeValue" : "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"},
+        {"attributeName" : "DISPLAY", "attributeValue" : "14-inch diagonal LED-backlit HD+ SVA Anti-Glare (1600x900)"},
+        {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
+      ]
+    }
+  ]
+}
+

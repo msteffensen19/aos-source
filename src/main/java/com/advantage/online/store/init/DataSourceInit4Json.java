@@ -22,10 +22,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
@@ -101,8 +103,16 @@ public class DataSourceInit4Json {
         /**/
 
         /*Load JSON File*/
-        String filePath = getPath() + "\\src\\main\\webapp\\app\\categoryProducts_4.json";
-        File json = new File(filePath);
+       // String filePath = getPath() + "\\src\\main\\webapp\\app\\categoryProducts_4.json";
+        //String filePath = getPath() + "\\categoryProducts_4.json";
+//File json = new File(filePath);
+
+
+        ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
+        File json = filePath.getFile();
+
+
+
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CategoryDto dto = objectMapper.readValue(json, CategoryDto.class);
@@ -180,12 +190,19 @@ public class DataSourceInit4Json {
         transaction.commit();
     }
 
-    private String getPath() throws UnsupportedEncodingException {
+    private String getPath() throws IOException {
         String path = this.getClass().getClassLoader().getResource("").getPath();
         String fullPath = URLDecoder.decode(path, "UTF-8");
         String pathArr[] = fullPath.split("/target/");
         fullPath = pathArr[0];
 
         return fullPath.substring(1);
+
+        /*File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
+        File propertyFile = new File(catalinaBase, "webapps/root/app");
+
+        return propertyFile.getAbsolutePath();*/
+
+       // return new java.io.File( ".").getCanonicalPath().split("bin")[0];
     }
 }
