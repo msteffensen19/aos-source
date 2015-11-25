@@ -85,6 +85,12 @@ public class AppUser {
     @Column(name="AGREE_TO_RECEIVE_OFFERS")
     private char agreeToReceiveOffersAndPromotions;  //   'Y' = Yes ; 'N' = No
 
+    @Column
+    private int unsuccessfulLoginAttempts;
+
+    @Column
+    private String userBlockedFromLoginUntil;
+
     public AppUser() {
 
     }
@@ -123,7 +129,8 @@ public class AppUser {
         this.setZipcode(zipcode);
         this.setEmail(email);
         this.setAgreeToReceiveOffersAndPromotions(agreeToReceiveOffersAndPromotions);
-
+        this.setUnsuccessfulLoginAttempts(0);   //  Initial default value
+        this.setUserBlockedFromLoginUntil("");  //  initial default value
     }
 
     public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
@@ -250,6 +257,20 @@ public class AppUser {
 
     public void setAgreeToReceiveOffersAndPromotions(char agreeToReceiveOffersAndPromotions) {
         this.agreeToReceiveOffersAndPromotions = agreeToReceiveOffersAndPromotions;
+    }
+
+    public int getUnsuccessfulLoginAttempts() { return unsuccessfulLoginAttempts; }
+
+    public void setUnsuccessfulLoginAttempts(int unsuccessfulLoginAttempts) {
+        this.unsuccessfulLoginAttempts = unsuccessfulLoginAttempts;
+    }
+
+    public String getUserBlockedFromLoginUntil() {
+        return userBlockedFromLoginUntil;
+    }
+
+    public void setUserBlockedFromLoginUntil(String userBlockedFromLoginUntil) {
+        this.userBlockedFromLoginUntil = userBlockedFromLoginUntil;
     }
 
     @Override

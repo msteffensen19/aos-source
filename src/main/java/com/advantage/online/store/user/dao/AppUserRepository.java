@@ -16,14 +16,19 @@ public interface AppUserRepository {
                           String cityName, String address1, String address2, String zipcode, String email,
                           char agreeToReceiveOffersAndPromotions);
 
+    //  For User-Management API
+    AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName,
+                                 String password, Integer country, String phoneNumber, String stateProvince,
+                                 String cityName, String address1, String address2, String zipcode, String email,
+                                 char agreeToReceiveOffersAndPromotions);
+
     int deleteAppUser(AppUser appUser);
-    int deleteAppUsersByEmails(Collection<String> emails);
-    int deleteAppUsersByLogins(Collection<String> logins);
+//    int deleteAppUsersByEmails(Collection<String> emails);
+//    int deleteAppUsersByLogins(Collection<String> logins);
 
 
-    AppUserResponseStatus doLogin(String login, String password, String email);
     AppUser getAppUserByLogin(String login);
-
+    AppUserResponseStatus doLogin(String login, String password, String email);
 
     List<AppUser> getAllAppUsers();
     List<AppUser> getAppUsersByCountry(Integer countryId);
