@@ -72,18 +72,19 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(country, "country id");
 
-        //  Validate String Arguments
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(lastName, "last name");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(firstName, "first name");
+        //  Validate String Arguments - Mandatory columns
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(password, "user password");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(lastName, "last name");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(firstName, "first name");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
 
         if (ValidationHelper.isValidLogin(loginName)) {
             if (ValidationHelper.isValidPassword(password)) {
