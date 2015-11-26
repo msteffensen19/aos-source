@@ -67,7 +67,7 @@ define(['./module'], function (controllers) {
             });
 
 
-
+            Main.miniItemPopUp();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
 
 
