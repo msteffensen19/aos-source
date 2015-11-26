@@ -46,7 +46,8 @@ define(['./module'], function (services) {
         function getMockData(id) {
             var request = $http({
                 method: "get",
-                url: 'app/categoryProducts_' + id +'.json'
+                url: '/api/categoryData/' + id ,
+                //url: 'app/categoryProducts_' + id +'.json'
                 //params: {
                 //    action: "get"
                 //}

@@ -1,10 +1,10 @@
 
+@import "animation.css";
 @import "views/home_page.css";
 @import "views/categoryPage.css";
 @import "views/category_type_products_tpl.css";
 @import "views/productPage.css";
 @import "modals/popUp.css";
-
 @import "../app/user/css/login.css";
 @import "UI.css";
 
@@ -21,7 +21,6 @@
     padding: 0;
     font-family: 'Roboto';
     outline: none;
-
 }
 
 
@@ -76,7 +75,7 @@ div.mobile-btn-handler span{
 nav ul {
     float: right;
     display: inline-block;
-    margin: 15px 0 0 0;
+    margin: 7px 0;
 }
 
 nav ul li {
@@ -111,6 +110,7 @@ nav ul li a:not(.img):hover{
 
 nav .img {
     position: relative;
+    top:4px;
 }
 
 nav .img > img {
@@ -146,14 +146,23 @@ div.logo img{
 
 #scrollToTop{
     position: fixed;
-    margin: 20px;
+    margin: 70px 20px;
     bottom: 0;
     right: 0;
     opacity: .8;
     transition: all 1s ease;
     display: none;
     z-index: 9999;
+    border-radius: 100%;
 }
+
+#scrollToTop p{
+    transform:scale(0.8);
+    bottom: -100px;
+    position: relative;
+
+}
+
 
 #scrollToTop:hover{
     opacity: 1;

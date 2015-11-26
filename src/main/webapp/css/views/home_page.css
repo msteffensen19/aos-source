@@ -31,10 +31,15 @@
     position: relative;
     cursor: pointer;
 }
+.rowSection > div.laptopImg{
+    background-repeat: no-repeat;
+    background-size: 146%;
+    background-position: 19% 100%;
+}
 
-.rowSection .positionRight, .rowSection .mices{
+.rowSection .SpeaakersImg, .rowSection .micesImg{
     background-size: 50%;
-    background-position: 90% 31%;
+    background-position: 90% 49%;
 }
 
 .rowSection > div.emptyCells{
@@ -141,7 +146,6 @@ h3.roboto-regular{
 #div-special-offer span{
     display: block;
     font-size: 30px;
-    padding: 10px 0;
 }
 
 #div-special-offer > div{
@@ -185,7 +189,7 @@ h3.roboto-regular{
 /* slider */
 
 .slider {
-    margin: 44px 0;
+    margin-top: 44px;
     font-size: 0;
     white-space: nowrap;
     width: 100%;
@@ -195,12 +199,22 @@ h3.roboto-regular{
 
 .slider *{
     background-color: transparent;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .slider  div.slider-length  {
     position: relative;
     display: inline;
     right: 0;
+}
+
+.slider  div.transition {
+    -webkit-transition: right 2s cubic-bezier(.51,.06,.05,.07);
+    transition: right 2s cubic-bezier(.51,.06,.05,.07);
+    transition-delay:0.5s;
 }
 
 .slider  div.slider-length > div.imgSection {
@@ -229,27 +243,49 @@ h3.roboto-regular{
 }
 
 .slider .container h2{
-    font-size: 76px;
+    font-size: 50px;
     text-align: center;
     margin-top: 8%;
     margin-bottom: 41px;
     color: white;
+    position: relative;
+    animation-duration: 2s;
 }
+
 
 .slider-length div:nth-child(2) .container h2{
     color: black;
-    margin-top: 6%;
+    margin-top: 9%;
 }
 
+
 .slider .container button{
-    background-col: transparent;
+    background-color: transparent;
     border: solid 2px white;
     color:white;
     padding: 16px 40px;
     font-size: 29px;
+    position: relative;
+    animation-duration: 2.3s;
 }
 
+.slider-length div:nth-child(2) .container button{
+    border: solid 2px #54b3ad;
+    color:#2a2a2a;
+}
 
+.slider-length div:nth-child(1) .container button:hover,
+.slider-length div:nth-child(3) .container button:hover {
+    background-color: #54b3ad !important;
+    border: solid 2px black !important;
+    color: black !important;
+}
+
+.slider-length div:nth-child(2) .container button:hover{
+    background-color: #54b3ad !important;
+    border: solid 2px white !important;
+    color: white;
+}
 .slider-steps {
     position: absolute !important;
     bottom: 10px;
@@ -259,12 +295,15 @@ h3.roboto-regular{
 }
 
 .slider-steps span {
+
     display: inline-block;
     margin: 0px 5px;
     border: solid white 1px;
     border-radius: 50%;
     height: 10px;
     width: 10px;
+    transition: 1s all ease;
+    transition-delay:0.5s;
 }
 
 .slider-steps span.selected {
@@ -292,14 +331,10 @@ h3.roboto-regular{
 }
 
 .grid-table .viewDetail{
+    font-size: 15px;
     position: relative;
-    bottom: 0;
     left: 0;
-}
-
-.grid-table .viewDetail{
-    position: relative;
-    bottom: 0;
+    bottom: -8px;
 }
 
 /* end POPULAR ITEMS */
@@ -339,7 +374,7 @@ footer img{
 
 footer label{
     font-size: 14px;
-    padding: 34px 0;
+    padding: 34px 0 0 0 ;
     color: #6c6c6c;
     display: block;
 }
@@ -390,6 +425,14 @@ footer .splitter{
 
 }
 
+
+@media screen and (max-width: 1300px) {
+
+    .slider .container h2{
+        font-size: 40px;
+        margin-top: 8%;
+    }
+}
 
 @media screen and (max-width: 1000px) {
 

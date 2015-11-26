@@ -18,22 +18,20 @@
 
 #cover{
     white-space: nowrap;
-    overflow-x: auto;
 }
 
-#length{
+#length {
     display: inline;
     font-size: 0;
 }
 
-.imageAlias{
+.imageAlias {
     width: 25%;
     display: inline-block;
     box-sizing: border-box;
  }
 
-.imageAlias img{
-    margin: 0px auto;
+.imageAlias img {
     padding-top: 20px;
     margin: 0 10px;
     text-align: center;
