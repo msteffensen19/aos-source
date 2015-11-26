@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.ProductApiDto;
+import com.advantage.online.store.dto.ProductInfoDto;
 import com.advantage.online.store.dto.ProductResponseStatus;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
@@ -44,16 +45,13 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "categoryProducts", method = RequestMethod.GET)
-    public ResponseEntity<List<Product>> getCategoryProducts(final HttpServletRequest request,
-                        final HttpServletResponse response,
-                        @RequestParam(ProductController.REQUEST_PARAM_CATEGORY_ID) Long categoryId) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
-        ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
-        HttpServletHelper.validateParametersExistenceInRequest(request, true, ProductController.REQUEST_PARAM_CATEGORY_ID);
-        final List<Product> products = productService.getCategoryProducts(categoryId);
+    @RequestMapping(value = "/product/{product_id}", method = RequestMethod.GET)
+    public ResponseEntity<ProductInfoDto> getProductById(@PathVariable ("product_id") Long id){
+        Product product = productService.getProductById(id);
 
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        ProductInfoDto dto = new ProductInfoDto(product);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
@@ -67,7 +65,4 @@ public class ProductController {
         return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
             new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
     }
-
-
-
 }

@@ -38,6 +38,10 @@ public class ProductService {
         return productRepository.getCategoryProducts(categoryId);
     }
 
+    public Product getProductById(Long id) {
+        return productRepository.get(id);
+    }
+
     @Transactional
     public ProductResponseStatus createProduct(ProductApiDto dto) {
         Category category = categoryService.getCategory(dto.getCategoryId());

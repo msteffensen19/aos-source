@@ -20,8 +20,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.advantage.online.store.dao.deal.DealRepository;
 import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.model.category.Category;
-import com.advantage.online.store.model.Deal;
-import com.advantage.online.store.model.DealType;
+import com.advantage.online.store.model.deal.Deal;
+import com.advantage.online.store.model.deal.DealType;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)

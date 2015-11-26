@@ -5,7 +5,7 @@ import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
 import com.advantage.online.store.dto.PromotedProductDto;
-import com.advantage.online.store.model.Deal;
+import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.Product;
@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
 

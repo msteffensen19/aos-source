@@ -7,7 +7,7 @@ import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
 import com.advantage.online.store.dto.PromotedProductDto;
-import com.advantage.online.store.model.Deal;
+import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.Product;
