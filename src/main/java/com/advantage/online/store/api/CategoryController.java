@@ -5,10 +5,12 @@ import com.advantage.online.store.dto.AttributeDto;
 import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
 import com.advantage.online.store.dto.PromotedProductDto;
+import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.ProductAttributes;
+import com.advantage.online.store.services.AttributeService;
 import com.advantage.online.store.services.CategoryService;
 import com.advantage.online.store.services.DealService;
 import com.advantage.online.store.services.ProductService;
@@ -38,6 +40,9 @@ public class CategoryController {
     @Autowired
     private DealService dealService;
 
+    @Autowired
+    private AttributeService attributeService;
+
     @RequestMapping(value = "/category", method = RequestMethod.GET)
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
         List<Category> category = categoryService.getAllCategories();
@@ -64,7 +69,11 @@ public class CategoryController {
 
         final List<Product> categoryProducts = productService.getCategoryProducts(categoryId);
 
-        Map<String, Set<String>> attrCollection = new HashMap<>();
+        Map<String, Set<String>> attrCollection = new LinkedHashMap<>();
+        List<Attribute> allAttributed = attributeService.getAllAttributes();
+        for (Attribute attribute : allAttributed) {
+            attrCollection.put(attribute.getName(), null);
+        }
 
         for (Product product : categoryProducts) {
             Set<ProductAttributes> productAttributes = product.getProductAttributes();

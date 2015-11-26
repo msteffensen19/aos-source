@@ -60,7 +60,7 @@ public class ServiceController {
 
             Map<String, Attribute> defAttributes = new HashMap<>();
 
-            List<Attribute> attributeList = attributeService.getAllAttribute();
+            List<Attribute> attributeList = attributeService.getAllAttributes();
             for (Attribute attribute : attributeList) {
                 defAttributes.put(attribute.getName().toUpperCase(), attribute);
             }

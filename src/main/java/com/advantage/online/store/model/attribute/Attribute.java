@@ -28,7 +28,7 @@ public class Attribute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = FIELD_ID, nullable = false)
+    @Column(name = FIELD_ID)
 
     private Long id;
     @Column(name = "NAME", length = 150, nullable = false)

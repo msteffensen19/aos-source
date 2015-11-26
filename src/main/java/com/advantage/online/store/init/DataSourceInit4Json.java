@@ -67,25 +67,29 @@ public class DataSourceInit4Json {
         /*Attributes INIT*/
         Map<String, Attribute> defAttributes = new HashMap<>();
         Attribute attribute1 = new Attribute();
-        attribute1.setName("Operating System");
-
         Attribute attribute2 = new Attribute();
-        attribute2.setName("Price");
-
         Attribute attribute3 = new Attribute();
-        attribute3.setName("Color");
-
         Attribute attribute4 = new Attribute();
-        attribute4.setName("Customization");
-
         Attribute attribute5 = new Attribute();
-        attribute5.setName("Processor");
-
         Attribute attribute6 = new Attribute();
-        attribute6.setName("Display");
-
         Attribute attribute7 = new Attribute();
+
+        attribute1.setName("Operating System");
+        attribute2.setName("Price");
+        attribute3.setName("Color");
+        attribute4.setName("Customization");
+        attribute5.setName("Processor");
+        attribute6.setName("Display");
         attribute7.setName("Memory");
+
+        session.persist(attribute4);
+        session.persist(attribute1);
+        session.persist(attribute5);
+        session.persist(attribute7);
+        session.persist(attribute6);
+        session.persist(attribute3);
+        session.persist(attribute2);
+
         transaction.commit();
 
         defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
