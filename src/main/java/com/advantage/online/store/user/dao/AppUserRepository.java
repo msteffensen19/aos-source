@@ -22,6 +22,10 @@ public interface AppUserRepository {
                                  String cityName, String address1, String address2, String zipcode, String email,
                                  char agreeToReceiveOffersAndPromotions);
 
+    AppUser addUnsuccessfulLoginAttempt(AppUser appUser);
+    String getBlockedUntilTimestamp(long milliSeconds);
+    AppUser updateAppUser(AppUser appUser);
+
     int deleteAppUser(AppUser appUser);
 //    int deleteAppUsersByEmails(Collection<String> emails);
 //    int deleteAppUsersByLogins(Collection<String> logins);

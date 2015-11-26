@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -37,16 +38,23 @@ public class AppUserController {
     }
 
     @RequestMapping(value = "/appUserData/login", method = RequestMethod.POST)
-    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser) {
+    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
                 appUser.getLoginPassword(),
                 appUser.getEmail());
 
-        if (appUserResponseStatus.isSuccess())
+        if (appUserResponseStatus.isSuccess()) {
+            HttpSession session = request.getSession();
+            session.setAttribute(Constants.UserSession.TOKEN, appUserResponseStatus.getToken());
+            session.setAttribute(Constants.UserSession.USER_ID, appUserResponseStatus.getUserId());
+            session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
+
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
-        else
+        }
+        else {
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.NOT_FOUND);
+        }
 
     }
 

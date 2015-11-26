@@ -1,9 +1,10 @@
+
 package com.advantage.online.store.user.dao;
 
 import com.advantage.online.store.dao.AbstractRepository;
+import com.advantage.online.store.user.config.AppUserConfiguration;
 import com.advantage.online.store.user.dto.AppUserResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
-import com.advantage.online.store.user.util.UserPassword;
 import com.advantage.online.store.user.util.ValidationHelper;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.util.Collection;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 /**
@@ -26,6 +28,18 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     private AppUserResponseStatus appUserResponseStatus;
 
     public static final int MAX_NUM_OF_APP_USER = 50;
+
+    /*  Default application user configuration values - Begin   */
+    //  3 failed login attempts will cause the user to be blocked for INTERVAL milliseconds.
+    public static final int ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT = 3;
+
+    //  Default 5 minutes
+    public static final long ENV_DEFAULT_USER_LOGIN_ATTEMPTS_BLOCKED_INTERVAL = 300000;
+
+    //  e-mail address is not mandatory in user details and does not take part in login/sign-in
+    public static final String ENV_EMAIL_ADDRESS_IN_LOGIN = "NO";
+    /*  Default application user configuration values - End     */
+
 
     /**
      * Create a new {@link AppUser} in the database.
@@ -116,8 +130,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
 
         return new AppUserResponseStatus(appUserResponseStatus.isSuccess(),
-                                        appUserResponseStatus.getReason(),
-                                        appUserResponseStatus.getUserId());
+                appUserResponseStatus.getReason(),
+                appUserResponseStatus.getUserId());
     }
 
     @Override
@@ -210,6 +224,10 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     @Override
     public AppUserResponseStatus doLogin(String loginUser, String loginPassword, String email) {
 
+//        //  Get Application User Configuration values from "AppUserConfiguration.properties" file
+//        AppUserConfiguration appUserConfiguration = new AppUserConfiguration();
+//        appUserConfiguration.getAppUserConfiguration();
+
         AppUser appUser = getAppUserByLogin(loginUser);
 
         if (appUser == null) {
@@ -219,11 +237,13 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
         if (loginPassword != null) {
             if (appUser.getPassword().compareTo(loginPassword) != 0) {
+                appUser = addUnsuccessfulLoginAttempt(appUser);
                 return new AppUserResponseStatus(false, "Invalid user-name and password.", appUser.getId());
             }
         }
         else {
             //  password is empty
+            appUser = addUnsuccessfulLoginAttempt(appUser);
             return new AppUserResponseStatus(false, "Invalid user-name and password.", appUser.getId());
         }
 
@@ -232,10 +252,12 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             if (appUser.getEmail() != null) {
                 if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
                     //  email does not match the email set in user details
+                    appUser = addUnsuccessfulLoginAttempt(appUser);
                     return new AppUserResponseStatus(false, "Invalid email address.", appUser.getId());
                 }
             } else {
                 //
+                appUser = addUnsuccessfulLoginAttempt(appUser);
                 return new AppUserResponseStatus(false, "No emails exists for user.", appUser.getId());
             }
 
@@ -243,7 +265,15 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 //            return new AppUserResponseStatus(false, "Login email is empty.", appUser.getId());
         }
 
-            return new AppUserResponseStatus(true, "Login Successful", appUser.getId());
+        //  Reset user-blocking
+        appUser.setUnsuccessfulLoginAttempts(0);
+        appUser.setUserBlockedFromLoginUntil("");
+
+        //  Update changes
+        updateAppUser(appUser);
+
+        //  Return: Successful login attempt
+        return new AppUserResponseStatus(true, "Login Successful", appUser.getId(), getTokenKey());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -266,5 +296,46 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         }
 
         return true;
+    }
+
+    @Override
+    public AppUser addUnsuccessfulLoginAttempt(AppUser appUser) {
+        //  Another unsuccessful (failed) login attempt
+        appUser.setUnsuccessfulLoginAttempts(appUser.getUnsuccessfulLoginAttempts() + 1);
+
+        //  Check the number of unsuccessful login attempts, block user if reached the limit
+        if (appUser.getUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+            //  Update AppUser class with timestamp when user can attempt login again according to configuration interval
+            appUser.setUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(ENV_DEFAULT_USER_LOGIN_ATTEMPTS_BLOCKED_INTERVAL));
+        }
+
+        //  Update data changes made for application user into application users table
+        appUser = updateAppUser(appUser);
+
+        return appUser;
+    }
+
+    @Override
+    public String getBlockedUntilTimestamp(long milliSeconds) {
+        return AppUser.addMillisecondsIntervalToTimestamp(milliSeconds);
+    }
+
+    /**
+     * Update table with data-changes made to application user detail.
+     * @param appUser Application User to update changes.
+     * @return Updated Application User class.
+     */
+    @Override
+    public AppUser updateAppUser(AppUser appUser) {
+        entityManager.persist(appUser);
+        return appUser;
+    }
+
+    /**
+     * Produce a random {@link BigInteger} number as {@code TokenKey}.
+     * @return Random {@link BigInteger} number.
+     */
+    private String getTokenKey() {
+        return new BigInteger(130, new SecureRandom()).toString(32);
     }
 }

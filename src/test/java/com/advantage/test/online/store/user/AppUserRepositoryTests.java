@@ -49,7 +49,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                                             "Login",                            /*  String loginName                        */
                                             "UserPassword",                     /*  String password                         */
                                             1,                                  /*  Integer country                         */
-                                            "077-7777777",                      /*  String phoneNumber                      */
+                                            "+972 54 1234567",                  /*  String phoneNumber                      */
                                             "province",                         /*  String stateProvince                    */
                                             "CityName",                         /*  String cityName                         */
                                             "Address1",                         /*  String address1                         */
@@ -194,17 +194,17 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
     public void testGetAppUsers_All() throws IOException {
         System.out.println("Testing public void testGetAppUsers_All()");
 
-        final String lastName = "Kind";
+        final String lastName = "King";
         final String firstName = "David";
-        final String loginName = "kingdavid";
-        final String password = "jerusalem3000!";
+        final String loginName = "king.david";
+        final String password = "King5David";
         final Integer country = 1;
-        final String phoneNumber = "777-7777777";
+        final String phoneNumber = "+972 2 7654321";
         final String stateProvince = "Jerusalem Region";
         final String cityName = "Jerusalem";
-        final String address1 = "Guy st.";
-        final String address2 = "Old City";
-        final String zipcode = "9876543";   //   7-Digits zip (postal) code
+        final String address1 = "";
+        final String address2 = "";
+        final String zipcode = "";   //   7-Digits zip (postal) code
         final String email = "koi@israel.gov.il";   //  koi = King of Israel
 
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();

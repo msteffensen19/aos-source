@@ -6,6 +6,9 @@ import com.advantage.util.ArgumentValidationHelper;
 
 import javax.persistence.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author Binyamin Regev on 15/11/2015.
  */
@@ -24,12 +27,18 @@ import javax.persistence.*;
                 name = AppUser.QUERY_GET_USERS_BY_COUNTRY,
                 query = "select u from AppUser u where " + AppUser.FIELD_COUNTRY + " = :" + AppUser.PARAM_COUNTRY
         )
+//        ,@NamedQuery(
+//        name = AppUser.QUERY_GET_CURRENT_TIMESTAMP,
+//        query = "select to_char(current_timestamp, 'YYYY-MM-DD HH24:MI:SS')"
+//        )
 })
 public class AppUser {
 
     public static final String QUERY_GET_ALL = "appUser.getAll";
     public static final String QUERY_GET_BY_USER_LOGIN = "appUser.getAppUserByLogin";
     public static final String QUERY_GET_USERS_BY_COUNTRY = "appUser.getAppUsersByCountry";
+
+//    public static final String QUERY_GET_CURRENT_TIMESTAMP = "appUser.getCurrentTimestamp";
 
     public static final String FIELD_ID = "USER_ID";
 
@@ -41,6 +50,9 @@ public class AppUser {
 
     public static final String FIELD_COUNTRY = "COUNTRY";
     public static final String PARAM_COUNTRY = "PARAM_USER_COUNTRY";
+
+//    public static final String QUERY_GET_TIMESTAMP_WITH_INTERVAL = "appUser.getTimestampWithInterval";
+//    public static final String PARAM_USER_LOGIN_BLOCKING = "PARAM_USER_LOGIN_BLOCKING";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -270,8 +282,58 @@ public class AppUser {
         return userBlockedFromLoginUntil;
     }
 
+
+    public void setUserBlockedFromLoginUntil(long milliSeconds) {
+        setUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(milliSeconds));
+    }
+
     public void setUserBlockedFromLoginUntil(String userBlockedFromLoginUntil) {
         this.userBlockedFromLoginUntil = userBlockedFromLoginUntil;
+    }
+
+    /**
+     * Add milliseconds value interval to current {@link Date} and return the new {@link Date}
+     * value as a {@link String} in &quat;yyyy-MM-dd HH:mm:ss&quat; date format.
+     * @param milliSeconds Number of milliseconds to add to current {@link Date}.
+     * @return Current {@link Date} after adding milliseconds interval.
+     */
+    public static String addMillisecondsIntervalToTimestamp(long milliSeconds) {
+        ///*  For DEBUGGING - Begin   */
+        //final long ONE_DAY_IN_MILLISECONDS = 86400000;
+        //final long ONE_HOUR_IN_MILLISECONDS = 3600000;
+        //final long ONE_MINUTE_IN_MILLISECONDS = 60000;
+        //
+        //StringBuilder date = new StringBuilder("milliseconds interval in words=\"");
+        //
+        //if (milliSeconds >= ONE_DAY_IN_MILLISECONDS) {
+        //    date.append((milliSeconds / ONE_DAY_IN_MILLISECONDS) + " days ");
+        //    milliSeconds %= ONE_DAY_IN_MILLISECONDS;
+        //}
+        //
+        //if (milliSeconds >= ONE_HOUR_IN_MILLISECONDS) {
+        //    date.append((milliSeconds / ONE_HOUR_IN_MILLISECONDS) + " hours ");
+        //    milliSeconds %= ONE_HOUR_IN_MILLISECONDS;
+        //}
+        //
+        //if (milliSeconds >= ONE_MINUTE_IN_MILLISECONDS) {
+        //    date.append((milliSeconds / ONE_MINUTE_IN_MILLISECONDS) + " minutes ");
+        //    milliSeconds %= ONE_MINUTE_IN_MILLISECONDS;
+        //}
+        //
+        //if (milliSeconds > 0) {
+        //    date.append(milliSeconds + " seconds");
+        //}
+        //
+        //System.out.println(date.append("\""));
+        ///*  For DEBUGGING - End */
+
+        Date dateAfter = new Date(new Date().getTime() + milliSeconds);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        System.out.println("date with milliseconds interval=" + format.format(dateAfter));
+
+        return format.format(dateAfter);
     }
 
     @Override
@@ -309,7 +371,12 @@ public class AppUser {
                 "address 1=\"" + this.getAddress1() + "\" " +
                 "address 2=\"" + this.getAddress2() + "\" " +
                 "postal code=" + this.getZipcode() + Constants.SPACE +
+                "number of unsuccessful login attempts=" + this.getUnsuccessfulLoginAttempts() + Constants.SPACE +
+                "user blocked from login until=\"" + this.getUserBlockedFromLoginUntil() + "\" " +
                 "agree to receive offers and promotions=" + this.getAgreeToReceiveOffersAndPromotions();
     }
 
+//    public static void main(String[] args) {
+//        new AppUser().addMillisecondsIntervalToTimestamp(30000000);
+//    }
 }
