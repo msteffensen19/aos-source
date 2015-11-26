@@ -2,9 +2,21 @@
  * Created by correnti on 16/11/2015.
  */
 
+var Main = Main || {};
+
+Main.miniItemPopUp = function(){
+
+    $(".containMiniTitle").click(function(){
+        $(this).find(".mini-title").fadeToggle(300);
+    });
+}
+
+
+
 $(document).on({
 
     ready: function() {
+
 
         // Mobile section handler
         var mobile_section_moved = $("#mobile-section").width();
@@ -18,8 +30,20 @@ $(document).on({
 
 
 
-        $('#scrollToTop').click(function () {
-            $('body, html').animate({ scrollTop: 0 }, 1000);
+
+        $('#scrollToTop').on({
+            click: function () {
+                $('body, html').animate({ scrollTop: 0 }, 1000);
+                $(this).find("p").animate({
+                    bottom: -100,
+                }, 1000);
+            },
+            mouseover: function () {
+                $(this).find("p").animate({
+                    bottom: 0
+                }, 400);
+            },
+
         });
 
 
@@ -49,9 +73,6 @@ $(document).on({
 
 
 
-        $(".containMiniTitle").click(function(){
-            $(this).find(".mini-title").fadeToggle(300);
-        });
 
         $(document).on("click", ".accordion", function() {
             $(this).toggleClass('arrowUp');
