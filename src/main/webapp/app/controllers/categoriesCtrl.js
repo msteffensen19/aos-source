@@ -58,5 +58,9 @@ define(['./module'], function (controllers) {
                     message : "START EXPLORING HP NOTEBOOKS"
                 }];
 
+
+            Slider.AddSliderListener();
+            $("nav .navLinks").css("display" , "block");
+
         }]);
 });

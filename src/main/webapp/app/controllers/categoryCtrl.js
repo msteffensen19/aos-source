@@ -8,6 +8,8 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',
         function ($scope, $stateParams, categoryService, category) {
+
+
             $scope.catId = $stateParams.id;
             $scope.category = category;
             $scope.deal = "";
@@ -51,6 +53,8 @@ define(['./module'], function (controllers) {
   //              console.log($scope.categoryName)
     //            console.log("")
                 //$scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");
+
+                $("nav .navLinks").css("display" , "none");
 
             }
 

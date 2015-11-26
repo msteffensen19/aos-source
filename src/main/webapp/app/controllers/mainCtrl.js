@@ -8,17 +8,18 @@ define(['./module'], function (controllers) {
     controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll', '$location', 'ipCookie',
         '$rootScope', function ($scope, productService, smoothScroll, $location, $cookie, $rootScope) {
 
+
+
             $scope.accountSection = function(){
                 alert("user account section! --- Method not done yet!");
             }
 
-            $scope.singOut = function(){
-                $cookie.remove("userCookie");
+            $scope.signOut = function(){
+                $cookie.remove("userCookie" + $rootScope.userCookie.id);
                 $rootScope.userCookie = undefined;
             }
 
             $scope.openOptions = function(){
-                $()
             }
 
             $scope.login = function (size) {
@@ -67,21 +68,7 @@ define(['./module'], function (controllers) {
 
 
 
-
-
-
-            //angular.element(document).ready(function () {
-              //  $('.toggle-menu').jPushMenu({closeOnClickLink: false});
-                //$('.dropdown-toggle').dropdown();
-//                var productSearchInput = $('#product_search');
-  //              productSearchInput.animate({width: 'toggle'}, 0);
-    //            $('#search_image').click(function (e) {
-      //              e.preventDefault();
-        //            productSearchInput.animate({width: 'toggle'}, 'fast');
-          //      });
-            //});
-
-
+            $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
 
 
         }]);
