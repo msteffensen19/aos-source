@@ -6,12 +6,12 @@
  */
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie',
-        function($rootScope, userService, $cookie) {
+    directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie', '$templateCache',
+        function($rootScope, userService, $cookie, $templateCache) {
             return {
                 restrict: 'E',
                 replace:false,
-                templateUrl: 'app/user/partials/login.html',
+                template: $templateCache.get('app/user/partials/login.html'),
                 controller: function ($scope) {
 
                     $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
@@ -19,27 +19,28 @@ define(['./module'], function (directives) {
 
                     $scope.singIn = function(user, rememberMe) {
 
-                        console.log(incrementLogins())
-
-                        return;
-
                         userService.login(user).then(function (response) {
 
-                                console.log(response);
-                                console.log(response.success);
-                                console.log(response.userId);
-                                console.log(response.reason);
 
                                 if(response.userId != -1) {
 
-                                    userCookie.fillParams($scope.user.loginUser, /*response.id*/ 5,
-                                        $scope.user.email, new Date());
+                                    $cookie.remove("loginsCounter");
+                                    console.log($cookie("loginsCounter"))
+                                    console.log(JSON.stringify(response));
 
+                                    userCookie.fillParams($scope.user.loginUser, response.userId,
+                                        $scope.user.email, new Date());
                                     $rootScope.userCookie = userCookie;
 
-                                    if(rememberMe)
-                                    {
-                                        $cookie("userCookie", $rootScope.userCookie, { expires: 21 });
+                                    console.log(userCookie)
+
+                                    if(rememberMe){
+
+                                        $cookie("userCookieLastEntry", response.userId, { expires: 365 });
+                                        $cookie("userCookie" + response.userId, $rootScope.userCookie, { expires: 365 });
+                                    }
+                                    else{
+                                        $cookie.remove("userCookie" + $scope.user.email);
                                     }
                                     wellcome(user.username)
                                 }
@@ -48,10 +49,40 @@ define(['./module'], function (directives) {
                                 }
                             },
                             function (error) {
-                                //alert()
+
+                                var count = incrementLogins();
+                                if(count >= 3)
+                                {
+                                    alert(count);
+                                }
+                                return;
+
                                 console.log(error);
+
                             });
                     }
+
+                    var incrementLogins = function (){
+                        var test = $cookie("loginsCounter");
+                        var loginsCounter = test === undefined ? -1 : test;
+
+                        return function(){
+                            if(loginsCounter == -1)
+                            {
+                                var test = $cookie("loginsCounter");
+                                if(test === undefined)
+                                {
+                                    test = 0;
+                                }
+                                loginsCounter = test;
+                            }
+                            var count = ++loginsCounter;
+                            $cookie("loginsCounter", count, { expires: 365 });
+                            console.log(count);
+                            return count;
+                        }
+                    }();
+
 
                     $scope.forgotPassword = function() {
                         alert("forgotPassword");
@@ -69,14 +100,6 @@ define(['./module'], function (directives) {
         }
     ]);
 });
-var incrementLogins = function (){
-    var loginsCounter = 0;
-    return function(){
-        return ++loginsCounter;
-    }
-}();
-
-
 
 
 
@@ -84,13 +107,13 @@ function wellcome(name) {
     $(".login").css("opacity", "0.2")
     $(".PopUp > div:nth-child(1)").animate({ "top": "-150%" }, 600, function () {
 
+        $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
         $(".PopUp").fadeOut(100);
         $("body").css("overflow", "scroll")
-        $(".login").css("opacity", "1")
+        $(".login").css("opacity", "1");
+
     });
 }
-
-
 
 
 function wrongFields(){
@@ -99,4 +122,5 @@ function wrongFields(){
     setTimeout(function(){
         $("#response").css("display", "none");
     }, 2000);
+
 }

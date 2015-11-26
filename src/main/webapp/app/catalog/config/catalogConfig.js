@@ -38,16 +38,16 @@ define([],function(){
             'REMEMBER_ME' : 'REMEMBER ME',
 
 
-            'hi' : 'hi',
-            'SING_OUT' : 'sing out',
-            'PERSONAL_AREA' : 'personal area',
+            'hi' : 'Hi',
+            'SIGN_OUT' : 'Sign out',
+            'PERSONAL_AREA' : 'Personal area',
             'ADD_TO_CART' : 'ADD TO CART',
             "PRODUCT_SPECIFICATIONS" : "PRODUCT SPECIFICATIONS",
             "View_details" : "View Details",
             'Shop_Now' : 'Shop Now',
             'EXPLORE_NOW' : 'EXPLORE NOW',
             'Quantity:' : 'Quantity:',
-
+            'GO_UP' : 'GO UP'
 
 
          });
@@ -58,7 +58,7 @@ define([],function(){
             controller: 'categoriesCtrl',
             data: {
                 requireLogin: false // this property will apply to all children of 'app'
-            }
+            },
         })
             .state('welcome',{
                 url: '/welcome',

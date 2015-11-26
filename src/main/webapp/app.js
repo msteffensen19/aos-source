@@ -29,10 +29,14 @@ define([
 
         .run(function ($rootScope, $state, ipCookie) {
 
-            var cookie = ipCookie("userCookie");
-            if(cookie)
+            var userCookieLastEntry = ipCookie("userCookieLastEntry");
+            if(userCookieLastEntry)
             {
-                $rootScope.userCookie = cookie;
+                var cookie = ipCookie("userCookie" + userCookieLastEntry);
+                if(cookie)
+                {
+                    $rootScope.userCookie = cookie;
+                }
             }
 
 
@@ -50,10 +54,12 @@ define([
                 var requireLogin = toState.data.requireLogin;
                 var showWelcome = toState.data.showWelcome;
                 var underConstruction = toState.data.underConstruction;
+
                 showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
                 underConstruction != 'undefined' && underConstruction ?
                     $(document.body).addClass('under-construction') :
                     $(document.body).removeClass('under-construction');
+
                 if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
                     event.preventDefault();
                     // get me a login modal!

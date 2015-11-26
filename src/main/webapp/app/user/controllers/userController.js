@@ -7,6 +7,7 @@ define(['./module'], function (controllers) {
         function ($scope, $uibModal, $log, $cookie) {
 
             $scope.accountSection = function(){
+
                 $rootScope.userid = null;
                 $cookie.remove("userCookie");
             }
