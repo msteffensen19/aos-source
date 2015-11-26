@@ -7,7 +7,7 @@
         <servlet-name>FetchImageHttpServlet</servlet-name>
         <init-param>
 	        <param-name>repository-directory-path</param-name>
-	        <param-value>src/main/webapp/image_repository</param-value>
+	        <param-value>/image_repository</param-value>
         </init-param>
     </servlet>
     
@@ -42,4 +42,8 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
+
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
 </web-app>

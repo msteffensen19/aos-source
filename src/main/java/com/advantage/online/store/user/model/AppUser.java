@@ -85,6 +85,12 @@ public class AppUser {
     @Column(name="AGREE_TO_RECEIVE_OFFERS")
     private char agreeToReceiveOffersAndPromotions;  //   'Y' = Yes ; 'N' = No
 
+    @Column
+    private int unsuccessfulLoginAttempts;
+
+    @Column
+    private String userBlockedFromLoginUntil;
+
     public AppUser() {
 
     }
@@ -97,16 +103,17 @@ public class AppUser {
         ArgumentValidationHelper.validateNumberArgumentIsPositive(country, "country id");
 
         //  Validate String Arguments
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(lastName, "last name");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(firstName, "first name");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(password, "user password");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(lastName, "last name");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(firstName, "first name");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
 
         this.setAppUserType(appUserType);
@@ -123,7 +130,8 @@ public class AppUser {
         this.setZipcode(zipcode);
         this.setEmail(email);
         this.setAgreeToReceiveOffersAndPromotions(agreeToReceiveOffersAndPromotions);
-
+        this.setUnsuccessfulLoginAttempts(0);   //  Initial default value
+        this.setUserBlockedFromLoginUntil("");  //  initial default value
     }
 
     public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
@@ -250,6 +258,20 @@ public class AppUser {
 
     public void setAgreeToReceiveOffersAndPromotions(char agreeToReceiveOffersAndPromotions) {
         this.agreeToReceiveOffersAndPromotions = agreeToReceiveOffersAndPromotions;
+    }
+
+    public int getUnsuccessfulLoginAttempts() { return unsuccessfulLoginAttempts; }
+
+    public void setUnsuccessfulLoginAttempts(int unsuccessfulLoginAttempts) {
+        this.unsuccessfulLoginAttempts = unsuccessfulLoginAttempts;
+    }
+
+    public String getUserBlockedFromLoginUntil() {
+        return userBlockedFromLoginUntil;
+    }
+
+    public void setUserBlockedFromLoginUntil(String userBlockedFromLoginUntil) {
+        this.userBlockedFromLoginUntil = userBlockedFromLoginUntil;
     }
 
     @Override

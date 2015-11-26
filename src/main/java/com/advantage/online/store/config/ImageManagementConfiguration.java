@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 
 import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.image.ImageManagementAccess;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import java.net.URLDecoder;
 @Configuration
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class ImageManagementConfiguration {
-
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
     @Autowired
@@ -26,18 +26,15 @@ public class ImageManagementConfiguration {
 
     @Bean(name = "imageManagement")
     public ImageManagement getImageManagement() throws IOException {
-
         final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
         return ImageManagementAccess.getImageManagement(getPath() + imageManagementRepository);
     }
 
-    private String getPath() throws UnsupportedEncodingException {
-        String path = this.getClass().getClassLoader().getResource("").getPath();
-        String fullPath = URLDecoder.decode(path, "UTF-8");
-        //String pathArr[] = fullPath.split("/WEB-INF/classes/");
-        String pathArr[] = fullPath.split("/target/");
-        fullPath = pathArr[0];
+    private String getPath() throws IOException {
+        ClassPathResource filePath = new ClassPathResource("app.properties");
+        File file = filePath.getFile();
+        System.out.println(file.getPath());
 
-        return fullPath.substring(1);
+        return file.getPath().split("WEB-INF")[0];
     }
 }

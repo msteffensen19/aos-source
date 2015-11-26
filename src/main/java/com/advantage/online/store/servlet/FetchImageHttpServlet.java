@@ -1,5 +1,6 @@
 package com.advantage.online.store.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -15,6 +16,7 @@ import com.advantage.online.store.image.ImageManagementAccess;
 import com.advantage.online.store.image.ManagedImage;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.IOHelper;
+import org.springframework.core.io.ClassPathResource;
 
 @SuppressWarnings("serial")
 public class FetchImageHttpServlet extends HttpServlet {
@@ -27,17 +29,19 @@ public class FetchImageHttpServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        final String repositoryDirectoryPath = getPath();
-        if (StringUtils.isBlank(repositoryDirectoryPath)) {
+        final String repositoryDirectoryPath;
+        try {
+            repositoryDirectoryPath = getPath();
+            if (StringUtils.isBlank(repositoryDirectoryPath)) {
+                final String errorMessageString =
+                    "Init parameter [" + FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH + "] must be set";
+                throw new ServletException(errorMessageString);
+            }
 
-            final StringBuilder errorMessage = new StringBuilder("Init parameter [");
-            errorMessage.append(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
-            errorMessage.append("] must be set");
-            final String errorMessageString = errorMessage.toString();
-            throw new ServletException(errorMessageString);
+            imageManagement = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        imageManagement = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
     }
 
     @Override
@@ -58,8 +62,13 @@ public class FetchImageHttpServlet extends HttpServlet {
         IOHelper.outputInput(imageContent, out);
     }
 
-    private String getPath() {
-        String path = getServletContext().getRealPath("/WEB-INF/").split("target")[0];
-        return path + getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+    private String getPath() throws IOException {
+        ClassPathResource filePath = new ClassPathResource("app.properties");
+        File file = filePath.getFile();
+        System.out.println(file.getPath());
+
+        return file.getPath().split("WEB-INF")[0] +
+            getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
+
     }
 }
