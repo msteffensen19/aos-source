@@ -10,7 +10,6 @@ require.config({
         'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
         'jquery' : 'vendor/jquery/dist/jquery.min',
-        'jquery-bez' : 'utils/jquery.bez.min',
         'jPushMenu' : 'utils/jPushMenu',
         'mainScript' : 'utils/main',
         'accordion' : 'utils/accordion',
@@ -38,9 +37,6 @@ require.config({
         'bootstrap': {
             deps: ['jquery']
         },
-        'jquery-bez': {
-            deps: ['jquery']
-        },
         'jPushMenu': {
             deps: ['jquery']
         },
@@ -66,7 +62,7 @@ window.name = "NG_DEFER_BOOTSTRAP!";
 require(['angular', 'app', 'angular-translate', 'bootstrap',
          'jquery', 'jPushMenu','mainScript',
         'accordion', 'wrongDirection', 'UserCookie',
-        'slider', 'jquery-bez', 'uiRouter', 'angular-cookie',
+        'slider', 'uiRouter', 'angular-cookie',
         'angularAnimate','ui-bootstrap'], function(angular, app)
     {
         angular.element().ready(function() {
