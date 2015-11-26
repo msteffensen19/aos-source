@@ -65,7 +65,7 @@ public class DefaultAttributeRepository extends AbstractRepository implements At
     public Attribute get(String name) {
         ArgumentValidationHelper.validateArgumentIsNotNull(name, "attribute name");
         Query query = entityManager.createNamedQuery(Attribute.QUERY_ATTRIBUTE_GET_BY_NAME);
-        query.setParameter(Attribute.PARAM_ATTRIBUTE_NAME, name);
+        query.setParameter(Attribute.PARAM_ATTRIBUTE_NAME, name.toUpperCase());
         List<Attribute> attributes = query.getResultList();
 
         return attributes.isEmpty() ? null : attributes.get(0);

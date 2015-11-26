@@ -1,4 +1,4 @@
-package com.advantage.online.store.model;
+package com.advantage.online.store.model.deal;
 
 import com.advantage.online.store.model.product.Product;
 
@@ -27,7 +27,7 @@ import javax.persistence.Table;
 })
 public class Deal {
 
-    public static final String QUERY_GET_ALL = "deal.getAll";
+    public static final String QUERY_GET_ALL = "deal.getAllDeals";
     public static final String QUERY_GET_BY_TYPE = "deal.getByType";
 
     public static final String FIELD_ID = "id";

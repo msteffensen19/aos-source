@@ -1,7 +1,7 @@
 package com.advantage.online.store.services;
 
 import com.advantage.online.store.dao.deal.DealRepository;
-import com.advantage.online.store.model.Deal;
+import com.advantage.online.store.model.deal.Deal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

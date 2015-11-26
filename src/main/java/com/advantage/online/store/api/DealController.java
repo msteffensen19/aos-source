@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.advantage.online.store.Constants;
-import com.advantage.online.store.model.Deal;
+import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.services.DealService;
 import com.advantage.util.ArgumentValidationHelper;
 

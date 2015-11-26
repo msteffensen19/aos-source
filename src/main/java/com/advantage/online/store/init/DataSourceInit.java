@@ -5,26 +5,23 @@ package com.advantage.online.store.init;
 
 import javax.persistence.EntityManagerFactory;
 
+import com.advantage.online.store.model.deal.Deal;
+import com.advantage.online.store.model.deal.DealType;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.product.ProductAttributes;
 import com.advantage.online.store.user.model.Country;
-import javafx.scene.effect.SepiaTone;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.advantage.online.store.model.Deal;
-import com.advantage.online.store.model.DealType;
 import com.advantage.online.store.model.product.Product;
 //import com.advantage.online.store.model.attribute.EntityAttribute;
 import com.advantage.online.store.model.category.Category;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 //import com.advantage.online.store.model.category.CategoryAttributeTitleAssociation;
 
 

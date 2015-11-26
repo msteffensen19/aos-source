@@ -15,7 +15,7 @@ import java.util.Set;
     ),
     @NamedQuery(
         name = Attribute.QUERY_ATTRIBUTE_GET_BY_NAME,
-        query = "SELECT a from Attribute a where name = :" + Attribute.PARAM_ATTRIBUTE_NAME
+        query = "SELECT a from Attribute a where UPPER(name) = :" + Attribute.PARAM_ATTRIBUTE_NAME
     )
 })
 public class Attribute {
@@ -28,7 +28,7 @@ public class Attribute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = FIELD_ID, nullable = false)
+    @Column(name = FIELD_ID)
 
     private Long id;
     @Column(name = "NAME", length = 150, nullable = false)
@@ -61,7 +61,7 @@ public class Attribute {
 
     public void setName(final String name) {
 
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
 

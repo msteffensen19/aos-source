@@ -1,11 +1,9 @@
 package com.advantage.online.store.dao.deal;
 
 import com.advantage.online.store.dao.DefaultCRUDOperations;
-import com.advantage.online.store.model.Deal;
-import com.advantage.online.store.model.DealType;
+import com.advantage.online.store.model.deal.Deal;
+import com.advantage.online.store.model.deal.DealType;
 import com.advantage.online.store.model.product.Product;
-
-import java.util.List;
 
 public interface DealRepository  extends DefaultCRUDOperations<Deal> {
     /**

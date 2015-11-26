@@ -7,7 +7,7 @@ import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
 import com.advantage.online.store.dto.PromotedProductDto;
-import com.advantage.online.store.model.Deal;
+import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.Product;
@@ -60,7 +60,7 @@ public class ServiceController {
 
             Map<String, Attribute> defAttributes = new HashMap<>();
 
-            List<Attribute> attributeList = attributeService.getAllAttribute();
+            List<Attribute> attributeList = attributeService.getAllAttributes();
             for (Attribute attribute : attributeList) {
                 defAttributes.put(attribute.getName().toUpperCase(), attribute);
             }

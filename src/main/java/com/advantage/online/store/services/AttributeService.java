@@ -15,12 +15,17 @@ public class AttributeService {
     AttributeRepository attributeRepository;
 
     @Transactional(readOnly = true)
-    public List<Attribute> getAllAttribute(){
+    public List<Attribute> getAllAttributes(){
         return attributeRepository.getAll();
     }
 
     @Transactional(readOnly = true)
     public  Attribute getAttributeByName(String name) {
         return attributeRepository.get(name);
+    }
+
+    @Transactional
+    public Attribute createAttribute(String name) {
+        return attributeRepository.create(name.toUpperCase());
     }
 }

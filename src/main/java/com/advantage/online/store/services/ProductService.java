@@ -38,6 +38,10 @@ public class ProductService {
         return productRepository.getCategoryProducts(categoryId);
     }
 
+    public Product getProductById(Long id) {
+        return productRepository.get(id);
+    }
+
     @Transactional
     public ProductResponseStatus createProduct(ProductApiDto dto) {
         Category category = categoryService.getCategory(dto.getCategoryId());
@@ -55,8 +59,13 @@ public class ProductService {
             productAttributes.setProduct(product);
 
             Attribute attribute = getAttributeByDto(item);
-            if (attribute == null) return new ProductResponseStatus(false, -1, "Could not find attribute " +
-                item.getAttributeName());
+            if (attribute == null) {
+                attribute = attributeService.createAttribute(item.getAttributeName());
+
+               /* return new ProductResponseStatus(false, -1, "Could not find attribute " +
+                    item.getAttributeName());*/
+            }
+
             productAttributes.setAttribute(attribute);
             product.getProductAttributes().add(productAttributes);
         }

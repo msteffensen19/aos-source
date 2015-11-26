@@ -11,13 +11,12 @@ import java.util.Set;
 @Entity
 @Table(name = "PRODUCT")
 @NamedQueries({
-        @NamedQuery(
-                name = Product.QUERY_GET_ALL,
-                query = "select p from Product p"
-        )
+    @NamedQuery(
+            name = Product.QUERY_GET_ALL,
+            query = "select p from Product p"
+    )
 })
 public class Product {
-
     public static final String QUERY_GET_ALL = "product.getAll";
 
     public static final String FIELD_ID = "product_id";
@@ -25,7 +24,6 @@ public class Product {
 
     public static final String PARAM_ID = "PARAM_PRODUCT_ID";
     public static final String PARAM_CATEGORY_ID = "PARAM_PRODUCT_CATEGORY_ID";
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +46,9 @@ public class Product {
     @OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductAttributes> productAttributes = new HashSet<>();
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<ColorAttribute> colors = new HashSet<>();
 
     public Product() {
     }
@@ -112,6 +113,14 @@ public class Product {
 
     public void setManagedImageId(String managedImageId) {
         this.managedImageId = managedImageId;
+    }
+
+    public Set<ColorAttribute> getColors() {
+        return colors;
+    }
+
+    public void setColors(Set<ColorAttribute> colors) {
+        this.colors = colors;
     }
 
     @JsonIgnore
