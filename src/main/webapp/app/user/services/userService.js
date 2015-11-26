@@ -24,16 +24,34 @@ define(['./module'], function (services) {
                 resolve: resolve,
                 login: login,
                 createNewAccount: createNewAccount,
-                forgotPassword: forgotPassword
+                forgotPassword: forgotPassword,
+                blockPc: blockPc
             });
 
 
 
+            function blockPc () {
+                alert()
+                /*var request = $http({
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "method": "post",
+                    "url": "api/appUserData/login",
+                    "data": JSON.stringify(user) ,
+
+                });
+                return( request.then(
+                    responseService.handleSuccess,
+                    responseService.handleError
+                ));
+                */
+                var def = $q.defer();
+
+                return def.resolve("{ success: " + true + "}") ;
+            }
+
 
             function login (user){
 
-                console.log(JSON.stringify(user))
-                console.log("api/appUserData/login")
                 var request = $http({
                     "Content-Type": "application/json;charset=UTF-8",
                     "method": "post",

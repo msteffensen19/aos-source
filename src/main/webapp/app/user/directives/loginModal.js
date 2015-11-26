@@ -14,30 +14,42 @@ define(['./module'], function (directives) {
                 template: $templateCache.get('app/user/partials/login.html'),
                 controller: function ($scope) {
 
-                    $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+                    $scope.user = {  email: '',loginPassword: '', loginUser: '', }
+                    //$scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+
                     $scope.rememberMe = false;
+                    $scope.failed = "";
 
                     $scope.singIn = function(user, rememberMe) {
+
 
                         userService.login(user).then(function (response) {
 
 
+                                console.log(JSON.stringify(response));
                                 if(response.userId != -1) {
 
+                                    if(response.userId === undefined)
+                                    {
+                                        if(response.data !== undefined)
+                                        {
+                                            $scope.failed = response.data.reason;
+                                            var count = incrementLogins();
+                                            if(count >= 3) {
+                                                    $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
+                                                    //question: Ask maria what to show!
+                                            }
+                                        }
+                                        return;
+                                    }
                                     $cookie.remove("loginsCounter");
-                                    console.log($cookie("loginsCounter"))
-                                    console.log(JSON.stringify(response));
-
                                     userCookie.fillParams($scope.user.loginUser, response.userId,
                                         $scope.user.email, new Date());
                                     $rootScope.userCookie = userCookie;
 
-                                    console.log(userCookie)
-
                                     if(rememberMe){
-
-                                        $cookie("userCookieLastEntry", response.userId, { expires: 365 });
-                                        $cookie("userCookie" + response.userId, $rootScope.userCookie, { expires: 365 });
+                                        $cookie("userCookieLastEntry", response.userId, { expirationUnit: 'minutes', expires: 60 });
+                                        $cookie("userCookie" + response.userId, $rootScope.userCookie, { expirationUnit: 'minutes', expires: 60 });
                                     }
                                     else{
                                         $cookie.remove("userCookie" + $scope.user.email);
@@ -47,18 +59,6 @@ define(['./module'], function (directives) {
                                 else {
                                     wrongFields();
                                 }
-                            },
-                            function (error) {
-
-                                var count = incrementLogins();
-                                if(count >= 3)
-                                {
-                                    alert(count);
-                                }
-                                return;
-
-                                console.log(error);
-
                             });
                     }
 
@@ -85,15 +85,18 @@ define(['./module'], function (directives) {
 
 
                     $scope.forgotPassword = function() {
-                        alert("forgotPassword");
+                        console.log("forgotPassword");
+                        $location.path('404');
                     }
 
                     $scope.createNewAccount = function(user) {
-                        alert("createNewAccount");
+                        console.log("createNewAccount");
+                        $location.path('404');
                     }
 
                     $scope.singWithFacebook = function(user) {
-                        alert("singWithFacebook");
+                        console.log("singWithFacebook");
+                        $location.path('404');
                     }
                 }
             };

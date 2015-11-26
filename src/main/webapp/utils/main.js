@@ -11,6 +11,19 @@ Main.miniItemPopUp = function(){
     });
 }
 
+Main.productHover = function(){
+
+    console.log("he!")
+
+    $(document).on("mouseover", ".categoryRight ul li", function(){
+        $(this).siblings().stop().animate({ "opacity" : "0.3", }, 500);
+    });
+    $(document).on("mouseout", ".categoryRight ul li", function(){
+        $(this).siblings().stop().animate({ "opacity" : "1", }, 1000);
+    });
+
+}
+
 
 
 $(document).on({

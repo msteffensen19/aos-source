@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 
+
+input, select, button, #follow img, .slider-steps span, #scrollToTop img{
+
+    cursor: pointer;
+}
+
 .roboto-thin {
     font-family: 'Roboto';
     font-weight: 100;
@@ -42,8 +48,8 @@
     background-position: center center;
     background-size: contain;
     position: absolute;
-    bottom: 6px;
-    cursor: pointer;
+    top: 7px;
+    vertical-align: top;
 }
 
 .option input[type=checkbox]:not(:checked) {
@@ -56,6 +62,7 @@
 .option input[type=checkbox]:checked {
     width: 20px;
     height: 20px;
+    top: 4px;
     background-image: url("images/checkbox-checked.png");
 }
 

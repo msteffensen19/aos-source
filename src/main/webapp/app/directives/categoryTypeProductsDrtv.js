@@ -106,6 +106,8 @@ define(['./module'], function (directives) {
                         scope.products = catData.products;
                         //scope.productsInclude = catData.products;
                         scope.categoryAttributes = catData.attributes;
+                        console.log("scope.categoryAttributes")
+                        console.log(scope.categoryAttributes)
                         $('.panel-collapse').collapse({toggle: false});
                         $('.carousel').carousel({
                             interval: false

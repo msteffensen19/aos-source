@@ -12,7 +12,7 @@
     position: absolute;
     z-index: 90000;
     top:0;
-    opacity: 0.2;
+    opacity: 0.39;
 }
 
 /*@import "modal.css";*/
@@ -193,15 +193,6 @@ div.logo img{
     }
 }
 
-
-
-@media screen and (max-width: 765px)
-{
-
-    body{
-        opacity: 0.1;
-    }
-}
 
 
 

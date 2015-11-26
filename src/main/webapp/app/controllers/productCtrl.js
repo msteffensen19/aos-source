@@ -7,12 +7,13 @@ define(['./module'], function (controllers) {
     controllers.controller('productCtrl', ['$scope', 'productService', 'product',
         function ($scope, productService, product) {
 
-            $scope.Quantity = 2;
+            $scope.Quantity = 1;
 
             $scope.product = product;
 
             $scope.addToCart = function(){
 
+                /*
                 var img = $("#imgToBuy").clone();
                 var imgPoss = $("#imgToBuy").offset();
                 var mainCartPossition = $("#mainCart").offset();
@@ -36,7 +37,7 @@ define(['./module'], function (controllers) {
                         //$rootScope.user.cart.laptops.push($scope.product) = get user
                     });
                 })
-
+                */
             }
 
             $("nav .navLinks").css("display", "none");

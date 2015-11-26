@@ -1,19 +1,15 @@
 
 
 .categoryData{
-    padding: 100px 50px 10px 50px;
     color:white;
     background-image:url(../../fetchImage?image_id=1240););
-    background-position: 85% 100%;
+    background-position: 57% 138%;
     background-size: cover;
     background-repeat: no-repeat;
+    padding: 6% 5% 4.55% 5%;
 
 }
 
-
-.categoryData h1, .categoryData h2, .categoryData h3{
-padding: 10px 0;
-}
 
 .categoryData h1{
     font-size: 40px;
@@ -29,12 +25,20 @@ padding: 10px 0;
     font-size: 18px;
 }
 
+.categoryData h2, .categoryData h3{
+    padding: 12px 0;
+}
+
 
 .categoryData button {
     border: solid 1px #ffffff;
     color: #ffffff;
     padding: 12px 15px;
     background-color: transparent;
+    width: 185px;
+    margin: 20px 5px;
+    font-size: 18px;
+    letter-spacing: 2px;
 }
 
 
@@ -75,8 +79,7 @@ a.select{
 .categoryTitle{
     font-size: 35px;
     text-align: center;
-    padding: 10px;
-    font-weight: 100;
+    padding: 17px;
 }
 
 

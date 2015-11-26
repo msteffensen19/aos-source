@@ -1,26 +1,29 @@
-
+<!--
+<div id="png">
+    <img src="../../css/images/Category_01.png" alt="img" >
+</div>
+-->
 <section>
     <article>
 
         <div class="categoryData">
             <h1 class="roboto-bold"> {{categoryData.promotedProduct.promotionHeader}}</h1>
-            <h2 class="roboto-bold"> {{categoryData.promotedProduct.promotionSubHeader}}</h2>
-            <h3 class="roboto-bold">
+            <h2 class="roboto-thin"> {{categoryData.promotedProduct.promotionSubHeader}}</h2>
+            <h3 class="roboto-thin">
                 {{categoryData.promotedProduct.productName}} |
                 {{ 'STARTING_AT' | translate }} ${{categoryData.promotedProduct.staringPrice}}
             </h3>
-            <button class="btn btn-primary btn-lg outline roboto-medium roboto-bold"
-                     translate="BUY_NOW">
+            <button class="roboto-medium" translate="BUY_NOW">
             </button>
         </div>
         <div>
             <nav class="pages">
                 <a translate="HOME" ></a>
-                <a class="select"> {{categoryName}} </a>
+                <a class="select "> {{categoryName}} </a>
             </nav>
         </div>
 
-        <h2 class="categoryTitle">{{categoryName}}</h2>
+        <h3 class="categoryTitle roboto-medium">{{categoryName}}</h3>
 
         <category-type-products-drtv category="categoryData"></category-type-products-drtv>
 

@@ -258,7 +258,6 @@ h3.roboto-regular{
     margin-top: 9%;
 }
 
-
 .slider .container button{
     background-color: transparent;
     border: solid 2px white;
@@ -479,7 +478,25 @@ footer .splitter{
         font-size: 24px;
     }
 
+}
 
+
+@media screen and (max-width: 768px) {
+
+/*
+    .rowSection > div {
+        display: block;
+        width: 100%;
+    }
+    .rowSection > div div {
+        display: block;
+        width: 100%;
+    }
+    .rowSection > div.emptyCell
+    {
+        display: none;
+    }
+*/
 }
 
 

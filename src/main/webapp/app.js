@@ -4,6 +4,7 @@
 'use strict';
 
 define([
+
     'angular',
     'jquery',
     'bootstrap',
@@ -29,6 +30,17 @@ define([
 
         .run(function ($rootScope, $state, ipCookie) {
 
+
+            var pcBlocked = ipCookie("pcBlocked");
+            if(pcBlocked)
+            {
+                if(new Date().getTime() > pcBlocked) {
+                    ipCookie.remove("pcBlocked");
+                }
+                else{
+                    $state.go('404');
+                }
+            }
             var userCookieLastEntry = ipCookie("userCookieLastEntry");
             if(userCookieLastEntry)
             {

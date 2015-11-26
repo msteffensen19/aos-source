@@ -11,7 +11,8 @@ define(['./module'], function (controllers) {
 
 
             $scope.accountSection = function(){
-                alert("user account section! --- Method not done yet!");
+                console.log("user account section! --- Method not done yet!");
+                $location.path('404');
             }
 
             $scope.signOut = function(){

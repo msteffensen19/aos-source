@@ -54,7 +54,10 @@ define(['./module'], function (controllers) {
     //            console.log("")
                 //$scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");
 
+
+                Main.productHover();
                 $("nav .navLinks").css("display" , "none");
+
 
             }
 
