@@ -76,6 +76,11 @@
     position: relative;
 }
 
+.categoryLeft .option .fill{
+    display: block !important;
+    width: 184px;
+}
+
 .productColor{
     border:solid 1px #9d9d9d;
     width: 15px;

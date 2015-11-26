@@ -15,14 +15,13 @@
                     <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block" ng-switch on="attrib.attributeName">
                         <span ng-switch-when="Color" class="productColor" ng-style="{'backgroundColor': '#' + attrVal}">
                         </span>
-                        <div ng-switch-default>
+                        <div ng-switch-default class="fill">
                             <input type="checkbox" ng-model="item.selected"
                                    ng-click="includeProducts($event, attrVal, attrib.attributeName)">
                             <span>{{attrVal}}</span>
                         </div>
                     </div>
                 </div>
-
             </li>
         </ul>
     </div>
