@@ -23,4 +23,9 @@ public class AttributeService {
     public  Attribute getAttributeByName(String name) {
         return attributeRepository.get(name);
     }
+
+    @Transactional
+    public Attribute createAttribute(String name) {
+        return attributeRepository.create(name.toUpperCase());
+    }
 }

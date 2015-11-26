@@ -59,8 +59,13 @@ public class ProductService {
             productAttributes.setProduct(product);
 
             Attribute attribute = getAttributeByDto(item);
-            if (attribute == null) return new ProductResponseStatus(false, -1, "Could not find attribute " +
-                item.getAttributeName());
+            if (attribute == null) {
+                attribute = attributeService.createAttribute(item.getAttributeName());
+
+               /* return new ProductResponseStatus(false, -1, "Could not find attribute " +
+                    item.getAttributeName());*/
+            }
+
             productAttributes.setAttribute(attribute);
             product.getProductAttributes().add(productAttributes);
         }
