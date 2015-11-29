@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +29,6 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
     private AppUserResponseStatus appUserResponseStatus;
 
-    public static final int MAX_NUM_OF_APP_USER = 50;
-
     /*  Default application user configuration values - Begin   */
     //  3 failed login attempts will cause the user to be blocked for INTERVAL milliseconds.
     public static final int ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT = 3;
@@ -40,7 +39,6 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     //  e-mail address is not mandatory in user details and does not take part in login/sign-in
     public static final String ENV_EMAIL_ADDRESS_IN_LOGIN = "NO";
     /*  Default application user configuration values - End     */
-
 
     /**
      * Create a new {@link AppUser} in the database.
@@ -177,7 +175,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     @Override
     public List<AppUser> getAllAppUsers() {
         List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
-                .setMaxResults(MAX_NUM_OF_APP_USER)
+                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
                 .getResultList();
 
 //        //  Encrypt the password before updating it into the database
@@ -190,7 +188,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     public List<AppUser> getAppUsersByCountry(Integer countryId) {
         List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_USERS_BY_COUNTRY, AppUser.class)
                 .setParameter(AppUser.PARAM_COUNTRY, countryId)
-                .setMaxResults(MAX_NUM_OF_APP_USER)
+                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
                 .getResultList();
 
         return appUsers.isEmpty() ? null : appUsers;
@@ -229,23 +227,52 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 //        AppUserConfiguration appUserConfiguration = new AppUserConfiguration();
 //        appUserConfiguration.getAppUserConfiguration();
 
+        //  Check arguments: Not NULL and Not BLANK
+        if ((loginUser == null) || (loginUser.length() == 0)) {
+            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+        }
+
+        if ((loginPassword == null) || (loginPassword.length() == 0)) {
+            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+        }
+
+        if ((email == null) || (email.length() == 0)) {
+            return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+        }
+
+        //  Try to get user details by login user-name
         AppUser appUser = getAppUserByLogin(loginUser);
 
         if (appUser == null) {
             //  Invalid user login.
-            return new AppUserResponseStatus(false, "Invalid user-name and password.", -1);
+            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+        }
+
+        final long currentTimestamp = new Date().getTime();
+        if (appUser.getInternalUserBlockedFromLoginUntil() > 0) {
+
+            if (appUser.getInternalUserBlockedFromLoginUntil() < currentTimestamp) {
+                //  User is no longer blocked from attempting to login - Reset INTERNAL fields
+                appUser.setInternalUnsuccessfulLoginAttempts(0);
+                appUser.setInternalUserBlockedFromLoginUntil(0);
+            }
+
+            if (appUser.getInternalUserBlockedFromLoginUntil() >= currentTimestamp) {
+                //  User is still blocked from login attempt
+                return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_IS_BLOCKED_FROM_LOGIN, -1);
+            }
         }
 
         if (loginPassword != null) {
             if (appUser.getPassword().compareTo(loginPassword) != 0) {
                 appUser = addUnsuccessfulLoginAttempt(appUser);
-                return new AppUserResponseStatus(false, "Invalid user-name and password.", appUser.getId());
+                return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
             }
         }
         else {
             //  password is empty
             appUser = addUnsuccessfulLoginAttempt(appUser);
-            return new AppUserResponseStatus(false, "Invalid user-name and password.", appUser.getId());
+            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
         }
 
 
@@ -254,12 +281,12 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
                 if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
                     //  email does not match the email set in user details
                     appUser = addUnsuccessfulLoginAttempt(appUser);
-                    return new AppUserResponseStatus(false, "Invalid email address.", appUser.getId());
+                    return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
                 }
             } else {
                 //
                 appUser = addUnsuccessfulLoginAttempt(appUser);
-                return new AppUserResponseStatus(false, "No emails exists for user.", appUser.getId());
+                return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
             }
 
 //        } else {
@@ -267,8 +294,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         }
 
         //  Reset user-blocking
-        appUser.setUnsuccessfulLoginAttempts(0);
-        appUser.setUserBlockedFromLoginUntil("");
+        appUser.setInternalUnsuccessfulLoginAttempts(0);
+        appUser.setInternalUserBlockedFromLoginUntil(0);
 
         //  Update changes
         updateAppUser(appUser);
@@ -302,12 +329,12 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     @Override
     public AppUser addUnsuccessfulLoginAttempt(AppUser appUser) {
         //  Another unsuccessful (failed) login attempt
-        appUser.setUnsuccessfulLoginAttempts(appUser.getUnsuccessfulLoginAttempts() + 1);
+        appUser.setInternalUnsuccessfulLoginAttempts(appUser.getInternalUnsuccessfulLoginAttempts() + 1);
 
         //  Check the number of unsuccessful login attempts, block user if reached the limit
-        if (appUser.getUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+        if (appUser.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
             //  Update AppUser class with timestamp when user can attempt login again according to configuration interval
-            appUser.setUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(ENV_DEFAULT_USER_LOGIN_ATTEMPTS_BLOCKED_INTERVAL));
+            appUser.setInternalUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(ENV_DEFAULT_USER_LOGIN_ATTEMPTS_BLOCKED_INTERVAL));
         }
 
         //  Update data changes made for application user into application users table
@@ -318,7 +345,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
     @Override
     public String getBlockedUntilTimestamp(long milliSeconds) {
-        return AppUser.addMillisecondsIntervalToTimestamp(milliSeconds);
+        //return AppUser.addMillisecondsIntervalToTimestamp(milliSeconds);
+        return AppUser.convertMillisecondsDateToString(AppUser.addMillisecondsIntervalToTimestamp(milliSeconds));
     }
 
     /**
