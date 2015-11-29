@@ -1,9 +1,6 @@
 /**
  * Created by kubany on 10/29/2015.
  */
-/**
- * Created by kubany on 10/14/2015.
- */
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie', '$templateCache',
@@ -18,30 +15,31 @@ define(['./module'], function (directives) {
                     //$scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
 
                     $scope.rememberMe = false;
-                    $scope.failed = "";
+                    $scope.message = "";
 
                     $scope.singIn = function(user, rememberMe) {
 
-
                         userService.login(user).then(function (response) {
 
-
-                                console.log(JSON.stringify(response));
                                 if(response.userId != -1) {
 
                                     if(response.userId === undefined)
                                     {
                                         if(response.data !== undefined)
                                         {
-                                            $scope.failed = response.data.reason;
+                                            $scope.message = response.data.reason;
                                             var count = incrementLogins();
+                                            console.log(count);
                                             if(count >= 3) {
-                                                    $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
-                                                    //question: Ask maria what to show!
+                                                console.log(count);
+                                                $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
+                                                //question: Ask maria what to show!
                                             }
                                         }
                                         return;
                                     }
+                                    alert()
+                                    return;
                                     $cookie.remove("loginsCounter");
                                     userCookie.fillParams($scope.user.loginUser, response.userId,
                                         $scope.user.email, new Date());
@@ -78,7 +76,7 @@ define(['./module'], function (directives) {
                             }
                             var count = ++loginsCounter;
                             $cookie("loginsCounter", count, { expires: 365 });
-                            console.log(count);
+                            //console.log(count);
                             return count;
                         }
                     }();

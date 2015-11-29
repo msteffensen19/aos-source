@@ -98,7 +98,6 @@ input[type="text"]:-ms-input-placeholder, input[type="password"]:-ms-input-place
 
 .login #response{
     color:red;
-    display: none;
 }
 
 .login #message {
