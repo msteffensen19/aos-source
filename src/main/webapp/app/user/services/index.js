@@ -3,4 +3,6 @@
  */
 'use strict';
 
-define(['./userService'], function() {});
+define(['./userService',
+        './registerService',
+        ], function() {});
