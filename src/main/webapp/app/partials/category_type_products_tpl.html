@@ -2,28 +2,30 @@
 
 <div>
     <div class="cell categoryLeft">
-        <p class="filterCount">{{filtered.length}} ITEMS</p>
-        <label class="roboto-medium">EXPLORE CHOICE:</label>
-        <label class="roboto-medium clear" ng-click="clearSelection()">Clear</label>
+        <p class="filterCount roboto-light">{{filtered.length}} ITEMS</p>
+        <label class="roboto-regular">EXPLORE CHOICE:</label>
+        <label class="roboto-regular clear" ng-click="clearSelection()">Clear</label>
         <ul>
             <li ng-repeat="attrib in categoryAttributes">
-                <h4 class="accordion roboto-light arrowDown" ng-click="toggleColapse(attrib.attributeId)" >
+                <h4 class="accordion roboto-regular arrowDown" ng-click="toggleColapse(attrib.attributeId)" >
                     {{'BY' | translate }} {{attrib.attributeName}}
                 </h4>
-                <!-- ng-if=" != ''"   https://bitbucket.org/account/signup/ -->
                 <div class="option" >
                     <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block" ng-switch on="attrib.attributeName">
-                        <span ng-switch-when="Color" class="productColor" ng-style="{'backgroundColor': '#' + attrVal}">
+                        <span ng-switch-when="COLOR" class="productColor " ng-click="includeProducts($event, attrVal, attrib.attributeName)"
+                              ng-class="{ 'unknowColor' : $last }"
+                              ng-style="{'backgroundColor': '#' + attrVal}">
                         </span>
                         <div ng-switch-default class="fill">
                             <input type="checkbox" ng-model="item.selected"
                                    ng-click="includeProducts($event, attrVal, attrib.attributeName)">
-                            <span>{{attrVal}}</span>
+                            <span class="roboto-regular">{{attrVal}}</span>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
+
     </div>
     <div class="cell categoryRight">
         <ul>

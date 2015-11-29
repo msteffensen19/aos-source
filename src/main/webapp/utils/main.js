@@ -13,14 +13,13 @@ Main.miniItemPopUp = function(){
 
 Main.productHover = function(){
 
-    console.log("he!")
+    //console.log("he!")
 
-    $(document).on("mouseover", ".categoryRight ul li", function(){
-        $(this).siblings().stop().animate({ "opacity" : "0.3", }, 500);
-    });
-    $(document).on("mouseout", ".categoryRight ul li", function(){
-        $(this).siblings().stop().animate({ "opacity" : "1", }, 1000);
-    });
+
+}
+
+Main.addAccordionEventListener = function(){
+
 
 }
 
@@ -85,13 +84,22 @@ $(document).on({
         });
 
 
+        $(document).on("mouseover", ".categoryRight ul li", function(){
+            $(this).siblings().stop().animate({ "opacity" : "0.3", }, 500);
+        });
 
+        $(document).on("mouseout", ".categoryRight ul li", function(){
+            $(this).siblings().stop().animate({ "opacity" : "1", }, 1000);
+        });
 
         $(document).on("click", ".accordion", function() {
             $(this).toggleClass('arrowUp');
             $(this).parent().find(".option").slideToggle(300);
         });
 
+        $(document).on("click", ".productColor ", function() {
+            $(this).toggleClass('selected');
+        });
 
         _resize();
         function _resize() {

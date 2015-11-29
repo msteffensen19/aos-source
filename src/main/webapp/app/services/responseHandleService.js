@@ -16,8 +16,6 @@ define(['./module'], function (services) {
             // nomralized format. However, if the request was not handled by the
             // server (or what not handles properly - ex. server error), then we
             // may have to normalize it on our end, as best we can.
-            console.log("handleError");
-            console.log(response);
             if (
                 ! angular.isObject( response.data ) ||
                 ! response.data.message

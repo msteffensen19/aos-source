@@ -34,6 +34,13 @@ import java.util.Date;
 })
 public class AppUser {
 
+    public static final int MAX_NUM_OF_APP_USER = 50;
+
+    public static final String MESSAGE_USER_LOGIN_FAILED = "Invalid user-name and password";
+    public static final String MESSAGE_USER_IS_BLOCKED_FROM_LOGIN = "User is temporary blocked from login";
+    public static final String MESSAGE_INVALID_EMAIL_ADDRESS = "Invalid email address.";
+    public static final String MESSAGE_NO_EMAIL_EXISTS_FOR_USER = "No emails exists for user.";
+
     public static final String QUERY_GET_ALL = "appUser.getAll";
     public static final String QUERY_GET_BY_USER_LOGIN = "appUser.getAppUserByLogin";
     public static final String QUERY_GET_USERS_BY_COUNTRY = "appUser.getAppUsersByCountry";
@@ -98,10 +105,13 @@ public class AppUser {
     private char agreeToReceiveOffersAndPromotions;  //   'Y' = Yes ; 'N' = No
 
     @Column
-    private int unsuccessfulLoginAttempts;
+    private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
 
     @Column
-    private String userBlockedFromLoginUntil;
+    private long internalUserBlockedFromLoginUntil; //  Managed Internally
+
+    @Column
+    private long internalLastSuccesssulLogin;   //  Managed Internally
 
     public AppUser() {
 
@@ -142,8 +152,9 @@ public class AppUser {
         this.setZipcode(zipcode);
         this.setEmail(email);
         this.setAgreeToReceiveOffersAndPromotions(agreeToReceiveOffersAndPromotions);
-        this.setUnsuccessfulLoginAttempts(0);   //  Initial default value
-        this.setUserBlockedFromLoginUntil("");  //  initial default value
+        this.setInternalUnsuccessfulLoginAttempts(0);   //  Initial default value
+        this.setInternalUserBlockedFromLoginUntil(0);   //  initial default value
+        this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
     public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
@@ -272,23 +283,30 @@ public class AppUser {
         this.agreeToReceiveOffersAndPromotions = agreeToReceiveOffersAndPromotions;
     }
 
-    public int getUnsuccessfulLoginAttempts() { return unsuccessfulLoginAttempts; }
+    public int getInternalUnsuccessfulLoginAttempts() { return internalUnsuccessfulLoginAttempts; }
 
-    public void setUnsuccessfulLoginAttempts(int unsuccessfulLoginAttempts) {
-        this.unsuccessfulLoginAttempts = unsuccessfulLoginAttempts;
+    public void setInternalUnsuccessfulLoginAttempts(int internalUnsuccessfulLoginAttempts) {
+        this.internalUnsuccessfulLoginAttempts = internalUnsuccessfulLoginAttempts;
     }
 
-    public String getUserBlockedFromLoginUntil() {
-        return userBlockedFromLoginUntil;
+    public long getInternalUserBlockedFromLoginUntil() {
+        return internalUserBlockedFromLoginUntil;
     }
 
-
-    public void setUserBlockedFromLoginUntil(long milliSeconds) {
-        setUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(milliSeconds));
+    private String getUserBlockedFromLoginUntilAsString() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(internalUserBlockedFromLoginUntil);
     }
 
-    public void setUserBlockedFromLoginUntil(String userBlockedFromLoginUntil) {
-        this.userBlockedFromLoginUntil = userBlockedFromLoginUntil;
+    public void setInternalUserBlockedFromLoginUntil(long internalUserBlockedFromLoginUntil) {
+        this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
+    }
+
+    public long getInternalLastSuccesssulLogin() {
+        return internalLastSuccesssulLogin;
+    }
+
+    public void setInternalLastSuccesssulLogin(long internalLastSuccesssulLogin) {
+        this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
     }
 
     /**
@@ -297,7 +315,7 @@ public class AppUser {
      * @param milliSeconds Number of milliseconds to add to current {@link Date}.
      * @return Current {@link Date} after adding milliseconds interval.
      */
-    public static String addMillisecondsIntervalToTimestamp(long milliSeconds) {
+    public static long addMillisecondsIntervalToTimestamp(long milliSeconds) {
         ///*  For DEBUGGING - Begin   */
         //final long ONE_DAY_IN_MILLISECONDS = 86400000;
         //final long ONE_HOUR_IN_MILLISECONDS = 3600000;
@@ -329,11 +347,16 @@ public class AppUser {
 
         Date dateAfter = new Date(new Date().getTime() + milliSeconds);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ////  Display user unblock Timestamp as String
+        //System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateAfter));
 
-        System.out.println("date with milliseconds interval=" + format.format(dateAfter));
+        //  user unblock Timestamp in milliseconds
+        return new Date().getTime() + milliSeconds;
+    }
 
-        return format.format(dateAfter);
+    public static String convertMillisecondsDateToString(long milliSecondsDate) {
+        //System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate));
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate);
     }
 
     @Override
@@ -371,12 +394,17 @@ public class AppUser {
                 "address 1=\"" + this.getAddress1() + "\" " +
                 "address 2=\"" + this.getAddress2() + "\" " +
                 "postal code=" + this.getZipcode() + Constants.SPACE +
-                "number of unsuccessful login attempts=" + this.getUnsuccessfulLoginAttempts() + Constants.SPACE +
-                "user blocked from login until=\"" + this.getUserBlockedFromLoginUntil() + "\" " +
+                "number of unsuccessful login attempts=" + this.getInternalUnsuccessfulLoginAttempts() + Constants.SPACE +
+                "user blocked from login until=\"" + this.getUserBlockedFromLoginUntilAsString() + "\" " +
+                "last successful login=\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getInternalLastSuccesssulLogin()) + "\"" +
                 "agree to receive offers and promotions=" + this.getAgreeToReceiveOffersAndPromotions();
     }
 
 //    public static void main(String[] args) {
-//        new AppUser().addMillisecondsIntervalToTimestamp(30000000);
+//        //new AppUser().addMillisecondsIntervalToTimestamp(30000000);
+//        Date date = new Date(new Date().getTime());
+//
+//        System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 //    }
+
 }

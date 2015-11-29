@@ -13,28 +13,33 @@
     font-size: 20px;
 }
 
+.categoryLeft label{
+    font-size: 13px;
+}
+
 .categoryLeft ul {
     padding: 15px 0;
+    width: 184px;
 }
 
 .categoryLeft ul li{
     list-style: none;
 }
 
-.categoryLeft .clear
-{
+.categoryLeft .clear {
     cursor: pointer;
     float: right;
-    color: #9d9d9d;
-
+    color: #828282;
+    padding-right: 30px;
 }
 
 .categoryLeft ul li h4{
     padding: 4px 0;
-    border-top: solid #9d9d9d 1px;
-    color: #9d9d9d;
+    border-top: solid #2a2a2a 1px;
+    color: #2a2a2a;
     position: relative;
     cursor: pointer;
+    font-size: 13px;
 }
 
 .categoryLeft ul li:last-child h4{
@@ -45,10 +50,11 @@
     content:"";
     position: absolute;
     right: 10px;
+    top: 9px;
     z-index: 2;
     border-right: solid 5px transparent;
     border-left: solid 5px transparent;
-    border-bottom: solid 5px #9d9d9d;
+    border-bottom: solid 5px #2a2a2a;
     transition: transform .5s linear, top .5s linear;
 }
 
@@ -59,7 +65,7 @@
 
 
 .arrowUp{
-    border-bottom: solid #9d9d9d 1px;
+    border-bottom: solid #2a2a2a 1px;
 }
 
 .arrowUp:before{
@@ -81,19 +87,43 @@
     width: 184px;
 }
 
-.productColor{
-    border:solid 1px #9d9d9d;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin: 5px 14px;
-    padding: 0px !important;
+.categoryLeft .option .fill span{
+    color:#828282;
 }
 
+
+
+.productColor{
+    border:solid 1px #9d9d9d;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    margin: 5px 15px;
+    padding: 0px !important;
+    cursor: pointer;
+}
+
+.productColor.selected {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #c1c1c1
+}
+
+.option .unknowColor {
+    background: -moz-linear-gradient(45deg,  rgba(255,255,255,0) 0%, rgba(255,255,255,0) 12%, rgba(255,255,255,1) 14%, rgba(255,255,255,1) 26%, rgba(255,255,255,0) 29%, rgba(255,255,255,0) 41%, rgba(255,255,255,1) 44%, rgba(255,255,255,1) 56%, rgba(255,255,255,0) 58%, rgba(255,255,255,0) 73%, rgba(255,255,255,1) 76%, rgba(255,255,255,1) 86%, rgba(255,255,255,0) 89%, rgba(255,255,255,0) 100%);
+    background: -webkit-linear-gradient(45deg,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 12%,rgba(255,255,255,1) 14%,rgba(255,255,255,1) 26%,rgba(255,255,255,0) 29%,rgba(255,255,255,0) 41%,rgba(255,255,255,1) 44%,rgba(255,255,255,1) 56%,rgba(255,255,255,0) 58%,rgba(255,255,255,0) 73%,rgba(255,255,255,1) 76%,rgba(255,255,255,1) 86%,rgba(255,255,255,0) 89%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(45deg,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 12%,rgba(255,255,255,1) 14%,rgba(255,255,255,1) 26%,rgba(255,255,255,0) 29%,rgba(255,255,255,0) 41%,rgba(255,255,255,1) 44%,rgba(255,255,255,1) 56%,rgba(255,255,255,0) 58%,rgba(255,255,255,0) 73%,rgba(255,255,255,1) 76%,rgba(255,255,255,1) 86%,rgba(255,255,255,0) 89%,rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 );
+}
+
+.cell.categoryRight{
+    width: calc(100% - 184px);
+    width: 80%;
+}
 
 .categoryRight ul {
     display: flex;
     flex-flow: row wrap;
+    width: 100%;
+
 }
 
 .categoryRight ul li {
@@ -120,6 +150,8 @@
 .categoryRight ul li .AddToCard{
     white-space: nowrap;
     opacity: 0;
+    float: right;
+    padding-bottom: 10px;
 }
 
 .categoryRight ul li:hover .AddToCard{
@@ -130,13 +162,18 @@
     cursor: pointer;
 }
 
-.categoryRight ul li .AddToCard:hover *{
-    text-decoration: underline;
+
+.categoryRight ul li .AddToCard label {
+    color: #2a2a2a;
+    font-size: 11px;
+    cursor: pointer;
 }
+
 
 .categoryRight ul li .AddToCard > img{
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 
 .categoryRight ul li .productPrice{

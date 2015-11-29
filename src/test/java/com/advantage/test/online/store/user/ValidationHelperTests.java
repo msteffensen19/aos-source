@@ -35,6 +35,13 @@ public class ValidationHelperTests extends GenericRepositoryTests {
     @Test
     public void testIsValidEmail() {
         Assert.assertEquals(true, ValidationHelper.isValidEmail("a@b.com"));
+        Assert.assertEquals(true, ValidationHelper.isValidEmail("user2015@hpe.com"));
+        Assert.assertEquals(true, ValidationHelper.isValidEmail("pmoi@gov.il"));
+        Assert.assertEquals(true, ValidationHelper.isValidEmail("user_2015@java.org.il"));
+
+        Assert.assertEquals(false, ValidationHelper.isValidEmail("pmoi#@gov.il"));
+        Assert.assertEquals(false, ValidationHelper.isValidEmail("pmoi#gov.il"));
+        Assert.assertEquals(false, ValidationHelper.isValidEmail("pmoi@.com"));
     }
 
     /**
@@ -42,8 +49,20 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidLogin() {
-
+        Assert.assertEquals(true, ValidationHelper.isValidLogin("user2015"));
+        Assert.assertEquals(true, ValidationHelper.isValidLogin("kingdavid"));
         Assert.assertEquals(true, ValidationHelper.isValidLogin("king.david"));
+        Assert.assertEquals(true, ValidationHelper.isValidLogin("king.solomon"));
+
+        // =================================================
+        // Invalid login user-names
+        // =================================================
+
+        // Shorter than 3 characters
+        Assert.assertEquals(false, ValidationHelper.isValidLogin("kd"));
+
+        //  Invalid User-name: longer than 15 characters
+        Assert.assertEquals(false, ValidationHelper.isValidLogin("inspector.gadget"));
     }
 
     /**
@@ -51,8 +70,26 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidPassword() {
-        //Assert.assertEquals(true, ValidationHelper.isValidPassword("kingdavid"));
-        Assert.assertTrue(true);
+        //Assert.assertEquals(true, ValidationHelper.);
+        //  Valid Password. 5-10 characters long, containing digits, UPPER and lower case letters
+        Assert.assertEquals(true, ValidationHelper.isValidPassword("davidK7"));
+        Assert.assertEquals(true, ValidationHelper.isValidPassword("King7david"));
+
+        // =================================================
+        // Invalid passwords
+        // =================================================
+
+        //  Less than 5-chracters long
+        Assert.assertEquals(false, ValidationHelper.isValidPassword("Kd5"));
+
+        //  Password does not contain any digits or UPPER-case letter
+        Assert.assertEquals(false, ValidationHelper.isValidPassword("kingdavid"));
+
+        //  Password does not contain any digits
+        Assert.assertEquals(false, ValidationHelper.isValidPassword("Kingdavid"));
+
+        //  Password too long: contains more than 10 characters
+        Assert.assertEquals(false, ValidationHelper.isValidPassword("KingSolomon2"));
     }
 
     /**
@@ -60,8 +97,14 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidTime24h() {
+        Assert.assertEquals(true, ValidationHelper.isValidTime24h("00:00:00"));
+        Assert.assertEquals(true, ValidationHelper.isValidTime24h("02:34:56"));
+        Assert.assertEquals(true, ValidationHelper.isValidTime24h("12:34:56"));
+        Assert.assertEquals(true, ValidationHelper.isValidTime24h("13:14:15"));
         Assert.assertEquals(true, ValidationHelper.isValidTime24h("23:59:59"));
-
+        Assert.assertEquals(false, ValidationHelper.isValidTime24h("23:60:59"));
+        Assert.assertEquals(false, ValidationHelper.isValidTime24h("23:59:60"));
+        Assert.assertEquals(false, ValidationHelper.isValidTime24h("24:59:59"));
     }
 
     /**
@@ -74,13 +117,15 @@ public class ValidationHelperTests extends GenericRepositoryTests {
 
         //  European Date Format
         Assert.assertEquals(true, ValidationHelper.isValidDate("29.02.2012"));
+        Assert.assertEquals(false, ValidationHelper.isValidDate("29.02.2013"));
 
         //  American Date Format
         Assert.assertEquals(true, ValidationHelper.isValidDate("02/29/2012"));
+        Assert.assertEquals(false, ValidationHelper.isValidDate("02/29/2013"));
 
         //  Scandinavian Date Format
         Assert.assertEquals(true, ValidationHelper.isValidDate("2012-02-29"));
-
+        Assert.assertEquals(false, ValidationHelper.isValidDate("2013-02-29"));
     }
 
 }
