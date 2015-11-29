@@ -30,7 +30,6 @@
     cursor: pointer;
     float: right;
     color: #828282;
-    padding-right: 30px;
 }
 
 .categoryLeft ul li h4{
@@ -115,8 +114,7 @@
 }
 
 .cell.categoryRight{
-    width: calc(100% - 184px);
-    width: 80%;
+    width: 100%;
 }
 
 .categoryRight ul {
@@ -201,7 +199,7 @@
 @media screen and (max-width: 850px) {
     .categoryRight ul li {
         width: 90%;
-        margin: 0 auto;
+        margin: 10px auto;
     }
 }
 

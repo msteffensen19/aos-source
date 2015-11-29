@@ -9,7 +9,7 @@ define(['./module'], function (directives) {
     directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', '$templateCache',
         '$location', function ($filter, $animate, $templateCache, $location) {
         return {
-            restrict: 'E',
+            restrict: 'EA',
             replace: 'true',
             template: $templateCache.get('app/partials/category_type_products_tpl.html'),
             scope: {
@@ -25,10 +25,6 @@ define(['./module'], function (directives) {
                 }
 
                 scope.includeProducts = function($event, attributeVal, attributesName) {
-
-                    //console.log($event)
-                    //console.log(this)
-                    //console.log(attributeVal + "  " + attributesName)
 
                     var i = $.inArray(attributeVal, scope.productsInclude[attributesName]);
                     if (i > -1) {
@@ -80,12 +76,12 @@ define(['./module'], function (directives) {
 
                 scope.clearSelection = function(){
                     for (var key in scope.productsInclude) {
-                        //console.log(scope.productsInclude)
                         delete scope.productsInclude[key];
                     }
                     $('.option input[type=checkbox]').each(function(){
                         this.checked = false;
                     })
+                    $('.option .productColor').removeClass('selected');
                 };
 
 

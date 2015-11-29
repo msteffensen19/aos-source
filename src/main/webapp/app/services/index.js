@@ -3,4 +3,10 @@
  */
 'use strict';
 
-define(['./productService', './categoryService', './dealService', './responseHandleService', './smoothScroll'], function() {});
+define([
+    './productService',
+    './registerService',
+    './categoryService',
+    './dealService',
+    './responseHandleService',
+    './smoothScroll'], function() {});
