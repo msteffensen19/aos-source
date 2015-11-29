@@ -51,6 +51,8 @@ define([],function(){
             'CREATE_ACCOUNT' : 'CREATE ACCOUNT',
             'this_is_a_demo' : 'this is a demo',
             'Please_enter_a_fake_data' : 'Please enter a fake data',
+            'NOTIC' : 'NOTIC',
+            'Laptops' : 'Laptops'
          });
 
         $stateProvider.state('view1',{

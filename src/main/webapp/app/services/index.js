@@ -5,7 +5,6 @@
 
 define([
     './productService',
-    './registerService',
     './categoryService',
     './dealService',
     './responseHandleService',

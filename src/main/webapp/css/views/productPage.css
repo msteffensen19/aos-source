@@ -198,6 +198,74 @@
 
 
 
+@media screen and (max-width: 750px) {
+
+    #product-image{
+        float: none;
+        margin: 50px auto;
+    }
+
+    #description {
+        max-width: 434px;
+        width: auto;
+        margin: 0 auto;
+        padding: 10px 40px;
+        display: block;
+    }
+
+    #description h1{
+        text-align: center;
+        padding-bottom: 50px;
+    }
+
+    #productProperties {
+        padding: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .product_specifications{
+        text-align: center;
+    }
+
+    .list{
+        padding: 13px 50px;
+    }
+
+    .list label{
+        display: block;
+        padding-left: 20px;
+    }
+
+    .topSpace{
+        top: 0
+    }
+}
+
+
+
+
+
+
+@media screen and (max-width: 580px) {
+
+    #product-image{
+        width: 90%;
+    }
+}
+
+
+
+@media screen and (max-width: 450px) {
+
+    .product_specifications{
+        font-size: 18px;
+    }
+
+}
+
+
+
 
 
 

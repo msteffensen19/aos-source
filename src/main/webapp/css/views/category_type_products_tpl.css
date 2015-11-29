@@ -207,3 +207,25 @@
 
 
 }
+
+@media screen and (max-width: 608px) {
+
+    .cell.categoryLeft, .cell.categoryRight{
+        display: block;
+   }
+
+    .cell.categoryLeft{
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .cell.categoryLeft ul {
+        width: 100%;
+    }
+
+    .cell.categoryLeft ul .fill{
+    vertical-align: top;
+        display: inline-block !important;
+    }
+
+}
