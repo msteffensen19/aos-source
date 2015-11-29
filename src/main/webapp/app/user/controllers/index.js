@@ -3,4 +3,4 @@
  */
 'use strict';
 
-define(['./userController'], function() {});
+define(['./userController', './registerCtrl'], function() {});

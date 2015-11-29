@@ -1,0 +1,35 @@
+
+#cover{
+    width: 100%;
+    max-width: 1366px;
+    margin: 0 auto;
+}
+
+#infoDemo, #form{
+    display: table-cell;
+}
+
+#infoDemo{
+    background-color:red;
+}
+
+#infoDemo > div {
+    background-color: rgba(0, 194, 194, 0.47);
+    padding: 50px;
+    margin: 50px;
+    position: relative;
+}
+
+#infoDemo > div:before {
+    background-color: rgba(200, 0, 194, 0.47);
+ position: absolute;
+    top:0;
+    width: 1px;
+    height: 65px;
+    color:#454545;
+}
+
+#form{
+    width: 1000px;
+    background-color:lime;
+}
