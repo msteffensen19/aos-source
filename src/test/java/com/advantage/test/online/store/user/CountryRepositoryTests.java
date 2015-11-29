@@ -32,23 +32,10 @@ public class CountryRepositoryTests extends GenericRepositoryTests {
     CountryRepository countryRepository;
 
     @Test
-    public void testCreateCountry_CountryAndIsoNames() throws IOException {
-        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-        final Country country = countryRepository.createCountry(name, isoName);
-        transactionManager.commit(transactionStatusForCreation);
-
-        Assert.assertNotNull(country);
-
-        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-        countryRepository.deleteCountry(country);
-        transactionManager.commit(transactionStatusForDeletion);
-
-        Assert.assertTrue(true);
-
-    }
-
-    @Test
     public void testCreateCountry_CountryAndPhonePrefix() throws IOException {
+        final String name = "Israel";
+        final int phonePrefix = 972;
+
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
         final Country country = countryRepository.createCountry(name, phonePrefix);
         transactionManager.commit(transactionStatusForCreation);

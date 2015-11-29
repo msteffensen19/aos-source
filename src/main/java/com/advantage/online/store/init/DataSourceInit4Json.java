@@ -1,5 +1,6 @@
 package com.advantage.online.store.init;
 
+import com.advantage.online.store.Constants;
 import com.advantage.online.store.dao.category.CategoryRepository;
 import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.CategoryDto;
@@ -14,6 +15,7 @@ import com.advantage.online.store.user.model.AppUser;
 import com.advantage.online.store.user.model.AppUserType;
 import com.advantage.online.store.user.model.Country;
 import com.advantage.online.store.user.model.YesNoReply;
+import com.advantage.util.fs.FileSystemHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -114,7 +116,9 @@ public class DataSourceInit4Json {
         ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
         File json = filePath.getFile();
 
-
+        //  Get countries list in CSV (Comma Separated Values) file
+        ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
+        File coutriesCSV = filePathCSV.getFile();
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -154,27 +158,51 @@ public class DataSourceInit4Json {
         session.persist(deal);
 
 
-        /*USER*/
+        /* Countries */
+        List<String> countries = FileSystemHelper.readFileCsv(coutriesCSV.getAbsolutePath());
+
+        if (countries != null) {
+            for (String str : countries) {
+                String[] substrings = str.split(",");
+
+            /*
+             *  substrings[0] = country name in Hebrew
+             *  substrings[1] = country name in English
+             *  substrings[2] = country ISO name in English
+             *  substrings[3] = international phone country code prefix
+             */
+                System.out.println("Country: " + substrings[1] +
+                        Constants.SPACE + substrings[2] +
+                        Constants.SPACE + substrings[3]);
+
+                session.persist(new Country(substrings[1], substrings[2], (int)Integer.valueOf(substrings[3])));
+            }
+
+            System.out.println("Total of " + countries.size() + " countries loaded");
+        }
+        else {
+            System.out.println("Countries CSV file might be empty.");
+        }
 
 
-        //  Binyamin Regev 2015-11-18
-        session.persist(new Country("Austria", "at", 43));
-        session.persist(new Country("Australia", "au", 61));
-        session.persist(new Country("Cayman Islands", "ky", 1345));
-        session.persist(new Country("Bahamas", "bs", 1242));
-        session.persist(new Country("Uruguay", "uy", 598));
-        session.persist(new Country("Solomon Islands", "sb", 677));
-        session.persist(new Country("Falkland Islands", "fk", 500));
-        session.persist(new Country("Ukraine", "ua", 380));
-        session.persist(new Country("Cook Islands", "ck", 682));
-        session.persist(new Country("Israel", "il", 972));
-        session.persist(new Country("Canada", "ca", 1));
-        session.persist(new Country("Russia", "ru", 7));
-        session.persist(new Country("United Kingdom", "uk", 44));
-        session.persist(new Country("United States", "us", 1));
-        session.persist(new Country("Iceland", "is", 354));
-        session.persist(new Country("Uzbekistan", "uz", 998));
-        //  Binyamin Regev 2015-11-18 - End
+        ////  Binyamin Regev 2015-11-18
+        //session.persist(new Country("Austria", "at", 43));
+        //session.persist(new Country("Australia", "au", 61));
+        //session.persist(new Country("Cayman Islands", "ky", 1345));
+        //session.persist(new Country("Bahamas", "bs", 1242));
+        //session.persist(new Country("Uruguay", "uy", 598));
+        //session.persist(new Country("Solomon Islands", "sb", 677));
+        //session.persist(new Country("Falkland Islands", "fk", 500));
+        //session.persist(new Country("Ukraine", "ua", 380));
+        //session.persist(new Country("Cook Islands", "ck", 682));
+        //session.persist(new Country("Israel", "il", 972));
+        //session.persist(new Country("Canada", "ca", 1));
+        //session.persist(new Country("Russia", "ru", 7));
+        //session.persist(new Country("United Kingdom", "uk", 44));
+        //session.persist(new Country("United States", "us", 1));
+        //session.persist(new Country("Iceland", "is", 354));
+        //session.persist(new Country("Uzbekistan", "uz", 998));
+        ////  Binyamin Regev 2015-11-18 - End
 
         session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "Avraham", "avinu.avraham", "Avraham1", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
         session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "itshak", "avinu.itshak", "Itshak1", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address1", "address2", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
