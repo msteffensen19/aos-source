@@ -61,9 +61,6 @@ public class ProductService {
             Attribute attribute = getAttributeByDto(item);
             if (attribute == null) {
                 attribute = attributeService.createAttribute(item.getAttributeName());
-
-               /* return new ProductResponseStatus(false, -1, "Could not find attribute " +
-                    item.getAttributeName());*/
             }
 
             productAttributes.setAttribute(attribute);
@@ -75,5 +72,51 @@ public class ProductService {
 
     private Attribute getAttributeByDto(AttributeItem attribute) {
         return attributeService.getAttributeByName(attribute.getAttributeName());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public ProductResponseStatus updateProduct(ProductApiDto dto, Long id) {
+        Product product = productRepository.get(id);
+
+        if(product == null) return new ProductResponseStatus(false, -1, "Product wasn't found");
+
+        Category category = categoryService.getCategory(dto.getCategoryId());
+        if (category == null) return new ProductResponseStatus(false, -1, "Could not find category");
+
+        product.setProductName(dto.getProductName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setManagedImageId(dto.getImageUrl());
+        product.setCategory(category);
+
+        for (AttributeItem item : dto.getAttributes()) {
+            String attrName = item.getAttributeName();
+            String attrValue = item.getAttributeValue();
+
+            ProductAttributes productAttributes = new ProductAttributes();
+            boolean isAttributeExist = product.getProductAttributes().stream().
+                anyMatch(i -> i.getAttribute().getName().equalsIgnoreCase(attrName));
+
+            if(isAttributeExist) {
+                productAttributes = product.getProductAttributes().stream().
+                    filter(x -> x.getAttribute().getName().equalsIgnoreCase(attrName)).
+                    findFirst().get();
+
+                productAttributes.setAttributeValue(attrValue);
+            }
+
+            Attribute attribute = getAttributeByDto(item);
+            if (attribute == null) {
+                attribute = attributeService.createAttribute(attrName);
+            }
+
+            productAttributes.setAttributeValue(attrValue);
+            productAttributes.setProduct(product);
+
+            productAttributes.setAttribute(attribute);
+            product.getProductAttributes().add(productAttributes);
+        }
+
+        return new ProductResponseStatus(true, product.getId(), "Product was updated successful");
     }
 }

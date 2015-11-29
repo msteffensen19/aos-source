@@ -9,6 +9,15 @@ public class ProductApiDto {
     private String imageUrl;
     private List<AttributeItem> attributes;
     private Long categoryId;
+    private Long productId;
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 
     public Long getCategoryId() {
         return categoryId;

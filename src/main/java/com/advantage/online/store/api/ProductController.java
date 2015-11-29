@@ -38,7 +38,7 @@ public class ProductController {
     @Autowired
     private AttributeService attributeService;
 
-    @RequestMapping(value = "products", method = RequestMethod.GET)
+    @RequestMapping(value = "/product/products", method = RequestMethod.GET)
     public ResponseEntity<List<Product>> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.getAllProducts();
 
@@ -54,7 +54,7 @@ public class ProductController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @RequestMapping(value = "/product/create", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductApiDto product) {
         if(product == null)  {
             return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
@@ -64,5 +64,11 @@ public class ProductController {
 
         return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
             new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/product/update/{product_id}", method = RequestMethod.POST)
+    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductApiDto product, @PathVariable ("product_id") Long id) {
+        ProductResponseStatus responseStatus = productService.updateProduct(product, id);
+        return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 }
