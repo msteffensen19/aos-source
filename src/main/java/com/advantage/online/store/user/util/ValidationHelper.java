@@ -1,5 +1,10 @@
 package com.advantage.online.store.user.util;
 
+import com.advantage.online.store.Constants;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
@@ -139,6 +144,20 @@ public class ValidationHelper {
 
         System.out.println(stringDate +" : True");
         return true;
+
+    }
+
+    /**
+     * Check the users authorization
+     * @param session {@link HttpSession} value  from HTTP request
+     * @param token {@link String} token key
+     * @return <b>true</b> when {@code token} is a valid
+     */
+    public static boolean isAuthorized(HttpSession session, String token) {
+        return !(session.getAttribute(Constants.UserSession.IS_SUCCESS) == null ||
+            session.getAttribute(Constants.UserSession.TOKEN) == null ||
+            !(Boolean) session.getAttribute(Constants.UserSession.IS_SUCCESS) ||
+            session.getAttribute(Constants.UserSession.TOKEN).toString().compareTo(token) != 0);
 
     }
 

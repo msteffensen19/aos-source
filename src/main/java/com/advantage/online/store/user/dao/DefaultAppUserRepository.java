@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Binyamin Regev on 16/11/2015.
@@ -332,10 +333,10 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     /**
-     * Produce a random {@link BigInteger} number as {@code TokenKey}.
-     * @return Random {@link BigInteger} number.
+     * Produce a random {@link UUID} string as {@code TokenKey}.
+     * @return Random {@link UUID} string.
      */
     private String getTokenKey() {
-        return new BigInteger(130, new SecureRandom()).toString(32);
+        return UUID.randomUUID().toString();
     }
 }
