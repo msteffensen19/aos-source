@@ -1,7 +1,7 @@
 package com.advantage.util.fs;
 
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.*;
+import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -197,5 +197,41 @@ public abstract class FileSystemHelper {
 		final String fixedPath1 = trimmedPath1.replace('\\', '/');
 		final String fixedPath2 = trimmedPath2.replace('\\', '/');
 		return fixedPath1.equalsIgnoreCase(fixedPath2);
+	}
+
+	/**
+	 * Utility which reads a CSV (Comma Separated Values) file and converts it to
+	 * {@link ArrayList} of {@link String} using {@code split} operation.
+	 * <br/>
+	 * @param csvFilePath e.g. "/Users/regevb/Downloads/countries_20150630.csv"
+	 * @return
+	 */
+	public static ArrayList<String> readFileCsv(final String csvFilePath) {
+
+		BufferedReader csvBuffer = null;
+		ArrayList<String> linesResult = new ArrayList<String>();
+
+		try {
+			String csvLine;
+			csvBuffer = new BufferedReader(new FileReader(csvFilePath));
+
+			// How to read file in java line by line?
+			while ((csvLine = csvBuffer.readLine()) != null) {
+				System.out.println("Raw CSV data: " + csvLine);
+				linesResult.add(csvLine);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (csvBuffer != null) csvBuffer.close();
+			} catch (IOException csvException) {
+				csvException.printStackTrace();
+			}
+		}
+
+
+		return linesResult;
 	}
 }
