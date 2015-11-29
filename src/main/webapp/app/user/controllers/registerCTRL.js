@@ -8,6 +8,8 @@ define(['./module'], function (controllers) {
     controllers.controller('registerCtrl', ['$scope', 'registerService', '$location',
         function ($scope, registerService, $location) {
 
+
+
             $scope.model = {
                 username : '',
                 email : '',
