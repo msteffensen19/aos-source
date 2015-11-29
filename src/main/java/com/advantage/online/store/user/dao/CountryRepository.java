@@ -1,5 +1,6 @@
 package com.advantage.online.store.user.dao;
 
+import com.advantage.online.store.user.dto.CountryResponseStatus;
 import com.advantage.online.store.user.model.Country;
 
 import java.util.Collection;
@@ -11,8 +12,13 @@ import java.util.List;
 public interface CountryRepository {
 
     Country createCountry(String name, int phonePrefix);
-    Country createCountry(String name, String isoName);
     Country createCountry(String name, String isoName, int phonePrefix);
+
+    //  For Country-Management API
+    CountryResponseStatus create(String name, int phonePrefix);
+    CountryResponseStatus create(String name, String isoName, int phonePrefix);
+
+    int fillCountryTable(final String csvFilePath);
 
     int deleteCountry(Country country);
     int deleteCountriesByIds(Collection<Integer> countryIds);
@@ -21,7 +27,7 @@ public interface CountryRepository {
 
     Integer getCountryIdByName(String countryName);
     List<Country> getAllCountries();
-    List<Country> getCountriesByIsoNames(Collection<String> isoNames);
     List<Country> getCountriesByPartialName(String partialName);
+    List<Country> getCountriesByPhonePrefix(int phonePrefix);
 
 }
