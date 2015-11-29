@@ -13,16 +13,18 @@
 
 .categoryData h1{
     font-size: 40px;
+    position: relative;
+    padding: 6px 0;
 }
 
 
 .categoryData h2{
-    font-size: 20px;
+    font-size: 15px;
 }
 
 
 .categoryData h3{
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .categoryData h2, .categoryData h3{
@@ -31,11 +33,11 @@
 
 
 .categoryData button {
-    border: solid 1px #ffffff;
+    border: solid 2px #ffffff;
     color: #ffffff;
     padding: 12px 15px;
     background-color: transparent;
-    width: 185px;
+    width: 183px;
     margin: 20px 5px;
     font-size: 18px;
     letter-spacing: 2px;
@@ -77,7 +79,7 @@ a.select{
 }
 
 .categoryTitle{
-    font-size: 35px;
+    font-size: 28px;
     text-align: center;
     padding: 17px;
 }

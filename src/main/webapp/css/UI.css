@@ -48,7 +48,7 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     background-position: center center;
     background-size: contain;
     position: absolute;
-    top: 7px;
+    top: 5px;
     vertical-align: top;
 }
 
@@ -62,12 +62,12 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
 .option input[type=checkbox]:checked {
     width: 20px;
     height: 20px;
-    top: 4px;
+    top: 2px;
     background-image: url("images/checkbox-checked.png");
 }
 
 .option span{
-    font-size: 15px;
+    font-size: 13px;
     padding: 5px;
     display: inline-block;
     padding-left: 25px;

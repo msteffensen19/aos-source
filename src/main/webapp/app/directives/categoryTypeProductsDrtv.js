@@ -26,6 +26,10 @@ define(['./module'], function (directives) {
 
                 scope.includeProducts = function($event, attributeVal, attributesName) {
 
+                    //console.log($event)
+                    //console.log(this)
+                    //console.log(attributeVal + "  " + attributesName)
+
                     var i = $.inArray(attributeVal, scope.productsInclude[attributesName]);
                     if (i > -1) {
                         scope.productsInclude[attributesName].splice(i, 1);
@@ -76,7 +80,7 @@ define(['./module'], function (directives) {
 
                 scope.clearSelection = function(){
                     for (var key in scope.productsInclude) {
-                        console.log(scope.productsInclude)
+                        //console.log(scope.productsInclude)
                         delete scope.productsInclude[key];
                     }
                     $('.option input[type=checkbox]').each(function(){
@@ -106,8 +110,8 @@ define(['./module'], function (directives) {
                         scope.products = catData.products;
                         //scope.productsInclude = catData.products;
                         scope.categoryAttributes = catData.attributes;
-                        console.log("scope.categoryAttributes")
-                        console.log(scope.categoryAttributes)
+                        //console.log("scope.categoryAttributes")
+                        //console.log(scope.categoryAttributes)
                         $('.panel-collapse').collapse({toggle: false});
                         $('.carousel').carousel({
                             interval: false

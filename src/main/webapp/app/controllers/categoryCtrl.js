@@ -30,32 +30,21 @@ define(['./module'], function (controllers) {
             function applyRemoteData(category) {
 
                 $scope.categoryData = category;
-//                console.log("$scope.categoryData")
-  //              console.log($scope.categoryData)
-    //            console.log("")
-
 
                 $scope.categoryAttributes = category.attributes;
-//                console.log("$scope.categoryAttributes")
-  //              console.log($scope.categoryAttributes)
-    //            console.log("")
-
 
                 $scope.products = category.products;
-                console.log("$scope.products")
-                console.log($scope.products)
-                console.log("")
+//                console.log("$scope.products")
+  //              console.log($scope.products)
+    //            console.log("")
 
 
 
                 $scope.categoryName = category.categoryName;
-//                console.log("$scope.categoryName")
-  //              console.log($scope.categoryName)
-    //            console.log("")
                 //$scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");
 
-
                 Main.productHover();
+                Main.addAccordionEventListener();
                 $("nav .navLinks").css("display" , "none");
 
 
