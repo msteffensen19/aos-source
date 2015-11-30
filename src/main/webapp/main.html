@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="css/images/favicon.ico">
-
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <title>&nbsp;Advantage Shopping</title>
     <!-- SECorrenti styles -->
     <link href="css/main.css" rel="stylesheet">
@@ -49,13 +49,13 @@
         </li>
         <li>
             <a class="img center">
-                    <span ng-hide="!userCookie.id" class="hi-user containMiniTitle block" >
-                        {{ "hi" | translate}} {{userCookie.name}}!
-                        <div class="mini-title">
-                            <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
-                            <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
-                        </div>
-                    </span>
+                <span ng-hide="!userCookie.id" class="hi-user containMiniTitle block" >
+                    {{ "hi" | translate}} {{userCookie.name}}!
+                    <div class="mini-title">
+                        <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
+                        <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
+                    </div>
+                </span>
                 <img ng-hide="userCookie.id" ng-click="login()" src="css/images/User.jpg" />
             </a>
         </li>

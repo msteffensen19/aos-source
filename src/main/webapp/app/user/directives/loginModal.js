@@ -38,8 +38,7 @@ define(['./module'], function (directives) {
                                         }
                                         return;
                                     }
-                                    alert()
-                                    return;
+
                                     $cookie.remove("loginsCounter");
                                     userCookie.fillParams($scope.user.loginUser, response.userId,
                                         $scope.user.email, new Date());

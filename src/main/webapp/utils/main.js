@@ -9,6 +9,7 @@ Main.miniItemPopUp = function(){
     $(".containMiniTitle").click(function(){
         $(this).find(".mini-title").fadeToggle(300);
     });
+
 }
 
 Main.productHover = function(){
@@ -16,7 +17,6 @@ Main.productHover = function(){
 }
 
 Main.addAccordionEventListener = function(){
-
 
 }
 
@@ -30,13 +30,12 @@ $(document).on({
         // Mobile section handler
         var mobile_section_moved = $("#mobile-section").width();
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-        $("#mobile-btn").click(function () {
+        $(document).on("click", "#mobile-btn", function () {
             $("body").animate({
                 left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
             }, 200);
         });
         // end Mobile section handler
-
 
 
 
