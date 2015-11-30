@@ -27,14 +27,14 @@ public class ImageManagementConfiguration {
     @Bean(name = "imageManagement")
     public ImageManagement getImageManagement() throws IOException {
         final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
-        return ImageManagementAccess.getImageManagement(getPath() + imageManagementRepository);
+        return ImageManagementAccess.getImageManagement(getPath(imageManagementRepository));
     }
 
-    private String getPath() throws IOException {
+    public static String getPath(String pathArg) throws IOException {
         ClassPathResource filePath = new ClassPathResource("app.properties");
         File file = filePath.getFile();
         System.out.println(file.getPath());
 
-        return file.getPath().split("WEB-INF")[0];
+        return file.getPath().split("WEB-INF")[0] + pathArg;
     }
 }

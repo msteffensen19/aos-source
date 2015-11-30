@@ -36,8 +36,15 @@ class XmlManagedImage implements ManagedImage {
         this(xmlImageManagement, new XmlItem(element));
     }
 
+
     XmlManagedImage(final XmlImageManagement xmlImageManagement, final String id,
                     final File imageFile, final boolean copyToRepository) throws IOException {
+
+        this(xmlImageManagement, id, IOHelper.fileContentToByteArray(imageFile), imageFile.getName(), copyToRepository);
+    }
+
+    XmlManagedImage(final XmlImageManagement xmlImageManagement, final String id,
+                    final byte[] imageFile, String originalFileName, final boolean copyToRepository) throws IOException {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(xmlImageManagement, "xml image management");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(id, "id");
@@ -45,18 +52,16 @@ class XmlManagedImage implements ManagedImage {
 
         final XmlItem imageManagementXmlItem = xmlImageManagement.getImageManagementXmlItem();
         managedImageXmlItem = imageManagementXmlItem.addChildXmlItem(XmlManagedImage.TAG_MANAGED_IMAGE, null);
-        String idValue = copyToRepository ? id : imageFile.getName().split("\\.")[0];
+        String idValue = copyToRepository ? id : originalFileName.split("\\.")[0];
         managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_ID, idValue);
-        final String type = FileSystemHelper.extractFileExtension(imageFile.getName());
+        final String type = FileSystemHelper.extractFileExtension(originalFileName);
         managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_TYPE, type);
-        final String originalFileName = imageFile.getName();
         managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_ORIGINAL_FILE_NAME, originalFileName);
 
         if (copyToRepository) {
             final String managedFileName = id + "." + type;
             final String managedFilePath = xmlImageManagement.figureManagedImageFilePath(managedFileName);
-            final byte[] originalFileContent = IOHelper.fileContentToByteArray(imageFile);
-            IOHelper.outputInput(originalFileContent, managedFilePath);
+            IOHelper.outputInput(imageFile, managedFilePath);
             managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_MANAGED_FILE_NAME, managedFileName);
         } else {
             managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_MANAGED_FILE_NAME,

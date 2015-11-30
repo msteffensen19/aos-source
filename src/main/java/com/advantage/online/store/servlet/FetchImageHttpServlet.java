@@ -65,7 +65,6 @@ public class FetchImageHttpServlet extends HttpServlet {
     private String getPath() throws IOException {
         ClassPathResource filePath = new ClassPathResource("app.properties");
         File file = filePath.getFile();
-        System.out.println(file.getPath());
 
         return file.getPath().split("WEB-INF")[0] +
             getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
