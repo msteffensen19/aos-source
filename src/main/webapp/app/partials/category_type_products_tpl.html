@@ -3,12 +3,12 @@
 <div>
     <div class="cell categoryLeft">
         <p class="filterCount roboto-light">{{filtered.length}} ITEMS</p>
-        <label class="roboto-regular">EXPLORE CHOICE:</label>
+        <label class="roboto-regular" >{{ 'FILTER_BY' | translate }} </label>
         <label class="roboto-regular clear" ng-click="clearSelection()">Clear</label>
         <ul>
             <li ng-repeat="attrib in categoryAttributes">
                 <h4 class="accordion roboto-regular arrowDown" ng-click="toggleColapse(attrib.attributeId)" >
-                    {{'BY' | translate }} {{attrib.attributeName}}
+                    {{attrib.attributeName}}
                 </h4>
                 <div class="option" >
                     <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block" ng-switch on="attrib.attributeName">

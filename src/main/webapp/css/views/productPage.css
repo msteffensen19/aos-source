@@ -16,7 +16,7 @@
     margin-bottom: 20px;
 }
 
-#cover{
+#product-image #cover{
     white-space: nowrap;
 }
 
@@ -57,7 +57,9 @@
     background-color: black;
 }
 
-
+.option{
+    display: none;
+}
 
 #description {
     display: inline-block;

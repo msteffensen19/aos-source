@@ -2,7 +2,7 @@
 
 
 <section id="png">
-    <img src="../../css/images/mariaDesigns/Register.png" />
+    <img src="../..bb/css/images/mariaDesigns/Register.png" />
 </section>
 
 
@@ -12,7 +12,7 @@
 </nav>
 <section>
     <article>
-        <div id="cover">
+        <div id="registerCover">
             <h3 class="roboto-regular" translate="CREATE_ACCOUNT"></h3>
             <div id="infoDemo">
                 <div>
@@ -24,14 +24,41 @@
             <div id="form">
                 <form ng-submit="register()">
 
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
-                    <input ng-model="" type="text" >
+                    <div id="formCover">
+
+                        <div>
+                            <h3 translate="ACCOUNT_DETAILS"></h3>
+                            <div>
+                                <span class="titleAnim">{{'User_Name' | translate }}</span>
+                                <input ng-model="username" type="text" placeholder="{{'User_Name' | translate }}" >
+                            </div>
+                            <input ng-model="email" type="text" placeholder="{{'Email' | translate }}"  >
+                            <input ng-model="password" type="text" placeholder="{{'Password' | translate }}"  >
+                            <input ng-model="confirm_password" type="text" placeholder="{{'Confirm_Password' | translate }}"  >
+                        </div>
+
+                        <div>
+                            <h3 translate="PERSONAL_DETAILS"></h3>
+                            <input ng-model="firstName" type="text" placeholder="{{'First_Name' | translate }}"  >
+                            <input ng-model="lastName" type="text" placeholder="{{'Last_Name' | translate }}"  >
+                            <input ng-model="phoneNumber" type="text" placeholder="{{'Phone_Number' | translate }}"  >
+                        </div>
+
+                        <div>
+                            <h3 translate="ADDRESS"></h3>
+                            <input ng-model="country" type="text" placeholder="{{'Country' | translate }}"  >
+                            <input ng-model="city" type="text" placeholder="{{'City' | translate }}"  >
+                            <input ng-model="address" type="text" placeholder="{{'Address' | translate }}"  >
+                            <input ng-model="state" type="text" placeholder="{{'State__Province__Region' | translate }}"  >
+                            <input ng-model="postalCode" type="text" placeholder="{{'Postal_Code' | translate }}"  >
+                            <div class="option" >
+                                <input ng-model="offers_promotion" type="checkbox" />
+                                <span class="roboto-regular">{{'offers_promotion' | translate }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
 
                 </form>
             </div>
@@ -43,6 +70,8 @@
 
 
 
+
+<social-media-drtv></social-media-drtv>
 
 
 
