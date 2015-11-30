@@ -50,6 +50,9 @@ public class AppUserController {
             session.setAttribute(Constants.UserSession.USER_ID, appUserResponseStatus.getUserId());
             session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
 
+            //  Set SessionID to Response Entity
+            appUserResponseStatus.setSessionId(session.getId());
+
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
         }
         else {

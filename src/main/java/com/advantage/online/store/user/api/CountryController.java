@@ -40,21 +40,21 @@ public class CountryController {
             return new ResponseEntity<>(countryResponseStatus, HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/countryData/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/countryData/getAll", method = RequestMethod.GET)
     public ResponseEntity<List<Country>> getAllCountries(HttpServletRequest request, HttpServletResponse response) {
         List<Country> countries = countryService.getAllCountries();
 
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/countryData/getCountriesByPartialCountryName", method = RequestMethod.POST)
+    @RequestMapping(value = "/countryData/getCountriesByPartialCountryName", method = RequestMethod.GET)
     public ResponseEntity<List<Country>> getCountriesByPartialCountryName(@RequestBody CountryDto country, HttpServletRequest request) {
         List<Country> countries = countryService.getCountriesByPartialName(country.getName());
 
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/countryData/getCountriesByInternationalCountryCode", method = RequestMethod.POST)
+    @RequestMapping(value = "/countryData/getCountriesByInternationalCountryCode", method = RequestMethod.GET)
     public ResponseEntity<List<Country>> getCountriesByInternationalCountryCode(@RequestBody CountryDto country, HttpServletRequest request) {
         List<Country> countries = countryService.getCountriesByPhonePrefix(country.getPhonePrefix());
 

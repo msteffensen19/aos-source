@@ -8,6 +8,7 @@ public class AppUserResponseStatus {
     long userId;        //  -1 = Invalid user login name
     String reason;
     String token;
+    String sessionId;
 
     /**
      *
@@ -99,4 +100,15 @@ public class AppUserResponseStatus {
         this.token = token;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getSessionId() { return sessionId; }
+
+    /**
+     *
+     * @param sessionId
+     */
+    public void setSessionId(String sessionId) { this.sessionId = sessionId; }
 }
