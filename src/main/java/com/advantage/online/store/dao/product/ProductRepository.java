@@ -12,10 +12,10 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
     /**
      * Create Product entity
      *
-     * @param name
-     * @param description
-     * @param price
-     * @param category
+     * @param name {@link String} product name
+     * @param description {@link String} product description
+     * @param price {@link Integer} product price
+     * @param category {@link Category} category which be related with product
      * @return entity reference
      */
     @Transactional
@@ -23,18 +23,23 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
     /**
      * Get product categories by categoryId
      *
-     * @param categoryId Category id
-     * @return
+     * @param categoryId {@link Long} Category id
+     * @return Product collection
      */
     List<Product> getCategoryProducts(Long categoryId);
 
     /**
      * Get product categories by Category
      *
-     * @param category Category of a product
+     * @param category {@link Category} Category of a product
      * @return Product collection
      */
     List<Product> getCategoryProducts(Category category);
 
+    /**
+     * Delete collection of a product
+     * @param products {@link List<Product>} product collection
+     * @return  the number of entities deleted
+     */
     int delete(final Collection<Product> products);
 }
