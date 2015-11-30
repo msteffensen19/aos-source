@@ -40,8 +40,7 @@ public class DealController {
     }
 
     @RequestMapping(value = "dealOfDay", method = RequestMethod.GET)
-    public ResponseEntity<Deal> getDealOfTheDay(@RequestHeader(value = "User-Token") String token,
-                                                final HttpServletRequest request,
+    public ResponseEntity<Deal> getDealOfTheDay(final HttpServletRequest request,
                                                 final HttpServletResponse response) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
