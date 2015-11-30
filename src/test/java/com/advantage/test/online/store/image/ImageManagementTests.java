@@ -3,10 +3,13 @@ package com.advantage.test.online.store.image;
 //import java.util.HashMap;
 //import java.util.Map;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.apache.commons.io.FileUtils;
+import org.junit.*;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,32 +21,33 @@ import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.fs.FileSystemHelper;
 
-/** 
+/**
  * @author Binyamin Regev
- * <br/>
- * This class purpose is to test ImageManagement interface, Abstract 
- * class and API.
- * <br/>
+ *         <br/>
+ *         This class purpose is to test ImageManagement interface, Abstract
+ *         class and API.
+ *         <br/>
  * @see ImageManagement
  * @see ImageManagementAccess
  * @see ManagedImage
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={AdvantageTestContextConfiguration.class})
+@ContextConfiguration(classes = {AdvantageTestContextConfiguration.class})
 public class ImageManagementTests {
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+    //private static final Map<String, ImageManagement> imageManagementsMap = new HashMap<String, ImageManagement>();
 
-	//private static final Map<String, ImageManagement> imageManagementsMap = new HashMap<String, ImageManagement>();
+    /**
+     * @throws IOException
+     * @author: Binyamin Regev
+     * <br/>
+     * Copy 5 files from <i>"C:\\Temp"</i> to <i>"C:\\Temp\\advantage1"</i> and then
+     * use <ul>{@link Assert></ul> to verify that only 5 files were copied.
+     */
+    @Test
+    public void testAddManagedImage() throws IOException {
 
-	/**
-	 * @author: Binyamin Regev
-	 * <br/>
-	 * Copy 5 files from <i>"C:\\Temp"</i> to <i>"C:\\Temp\\advantage1"</i> and then 
-	 * use <ul>{@link Assert></ul> to verify that only 5 files were copied. 
-	 * @throws IOException
-	 */
-	@Test
-	public void testAddManagedImage() throws IOException {
-		
 //		ImageManagement im = ImageManagementAccess.getImageManagement("C:\\Temp\\advantage1");
 //
 //		im.addManagedImage("C:\\Temp\\image1.jpg", true);
@@ -56,71 +60,80 @@ public class ImageManagementTests {
 //		System.out.println(managedImagesCount);
 //
 //		Assert.assertEquals(5, managedImagesCount);
-		Assert.assertTrue(true);
-	}
-	
-	/**
-	 * @author: Binyamin Regev
-	 * <br/>
-	 * Use immediate <b>IIF</b> and <u>{@link Assert></u> to verify that the XML 
-	 * repository file <b>"imageManagement.xml"</b> exists in directory 
-	 * <b>"C:\\Temp\\advantage"</b>
-	 * @throws IOException 
-	 */
-	@Test
-	public void testIsFileExists() throws IOException {
-		
-		ImageManagement im = ImageManagementAccess.getImageManagement("C:\\Temp\\advantage");
-		
-		im.persist();
-		
-		int isFileExists = FileSystemHelper.isFileExist("C:\\Temp\\advantage\\imageManagement.xml") ? 1 : 0;
+        Assert.assertTrue(true);
+    }
 
-		Assert.assertEquals(isFileExists, 1);
-	}
-	
-	/**
-	 * Use {@link ImageManagementAccess} to add an image to directory "C:\\Temp\\advantage1", 
-	 * then verify the image exists in the repository, by its ID. Then use method 
-	 * <i>"removeManagedImage(managedImageId)"</i> to remove image from the repository, and 
-	 * finally verify the image is no longer in the repository.
-	 * <br/> 
-	 * After calling method <i>removeManagedImage(imageId)</i> we expect calling 
-	 * <i>getManagedFileName()</i> will return <b>Null</b>. 
-	 * @throws IOException 
-	 * @see ImageManagementAccess
-	 * @see ManagedImage
-	 */
-	@Test(expected=NullPointerException.class)
-	public void testImageExistsById() throws IOException {
-		
-		final String repositoryDirectoryPath = "C:\\Temp\\advantage1";
+    /**
+     * @throws IOException
+     * @author: Binyamin Regev
+     * <br/>
+     * Use immediate <b>IIF</b> and <u>{@link Assert></u> to verify that the XML
+     * repository file <b>"imageManagement.xml"</b> exists in directory
+     * <b>"C:\\Temp\\advantage"</b>
+     */
+    @Test
+    public void testIsFileExists() throws IOException {
 
-		ImageManagement im = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
-		
-		ManagedImage managedImage = im.addManagedImage("C:\\Temp\\image11.jpg", false);
-		
-		final String imageId = managedImage.getId();
-		
-		managedImage = im.getManagedImage(imageId);
-		
-		String expectedOutput = "image11.jpg";
-		String actualOutput = im.getManagedImage(imageId).getManagedFileName();
+        ImageManagement im = ImageManagementAccess.getImageManagement("C:\\Temp\\advantage");
 
-		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(repositoryDirectoryPath,
-                															"repository directory path");
-		
-		ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(actualOutput, "Image Name");
+        im.persist();
 
-		Assert.assertEquals(expectedOutput, actualOutput);
-		
-		im.removeManagedImage(imageId);
+        int isFileExists = FileSystemHelper.isFileExist("C:\\Temp\\advantage\\imageManagement.xml") ? 1 : 0;
 
-		actualOutput = im.getManagedImage(imageId).getManagedFileName();
+        Assert.assertEquals(isFileExists, 1);
+    }
 
-		/* Test Failed: we did not get NullPointerException in the previous line */ 
-		Assert.fail("Expected Null, but got [" + actualOutput + "]");
+    /**
+     * Use {@link ImageManagementAccess} to add an image to directory "C:\\Temp\\advantage1",
+     * then verify the image exists in the repository, by its ID. Then use method
+     * <i>"removeManagedImage(managedImageId)"</i> to remove image from the repository, and
+     * finally verify the image is no longer in the repository.
+     * <br/>
+     * After calling method <i>removeManagedImage(imageId)</i> we expect calling
+     * <i>getManagedFileName()</i> will return <b>Null</b>.
+     *
+     * @throws IOException
+     * @see ImageManagementAccess
+     * @see ManagedImage
+     */
+    @Test(expected = NullPointerException.class)
+    public void testImageExistsById() throws IOException {
 
-	}
-	
+
+        File createdFile = folder.newFile("myfile.jpg");
+        byte[] b = new byte[20];
+        new Random().nextBytes(b);
+        FileUtils.writeByteArrayToFile(createdFile, b);
+        final String repositoryDirectoryPath = createdFile.getAbsolutePath();
+
+        ImageManagement im = ImageManagementAccess.getImageManagement(repositoryDirectoryPath);
+
+        ManagedImage managedImage = im.addManagedImage(createdFile, false);
+
+        final String imageId = managedImage.getId();
+
+        managedImage = im.getManagedImage(imageId);
+
+        String expectedOutput = "myfile.jpg";
+        String actualOutput = im.getManagedImage(imageId).getManagedFileName();
+
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(repositoryDirectoryPath,
+            "repository directory path");
+
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(actualOutput, "Image Name");
+
+        Assert.assertEquals(expectedOutput, actualOutput);
+
+        im.removeManagedImage(imageId);
+
+        actualOutput = im.getManagedImage(imageId).getManagedFileName();
+
+		/* Test Failed: we did not get NullPointerException in the previous line */
+        Assert.fail("Expected Null, but got [" + actualOutput + "]");
+    }
+/*
+    @After
+    public void deleteTempFolder() {
+        folder.delete();
+    }*/
 }
