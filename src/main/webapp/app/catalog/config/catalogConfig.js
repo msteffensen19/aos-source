@@ -20,7 +20,7 @@ define([],function(){
             POPULAR_ITEMS : 'POPULAR ITEMS',
             FOLLOW_US : 'FOLLOW US',
             'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
-            'BY' : 'BY',
+            'FILTER_BY' : 'FILTER BY',
             'ADD_TO_CART' : 'ADD TO CART',
             'HOME' : 'HOME',
             'BUY_NOW' : 'BUY NOW',
@@ -29,9 +29,9 @@ define([],function(){
             'ONLINE_SHOPPING' : 'Online shopping',
             'FACEBOOK_SIGN_IN' : 'SIGN IN WITH FACEBOOK',
             'OR' : 'OR',
-            'NAME' : 'Name',
-            'PASSWORD' : 'Password',
-            'EMAIL' : 'Email',
+            'Name' : 'Name',
+            'Password' : 'Password',
+            'Email' : 'Email',
             'SIGN_IN' : 'SIGN IN',
             'FORGOT_PASSWORD' : 'Forgot your password?',
             'CREATE_NEW_ACCOUNT' : 'CREATE NEW ACCOUNT',
@@ -41,7 +41,6 @@ define([],function(){
             'hi' : 'Hi',
             'SIGN_OUT' : 'Sign out',
             'PERSONAL_AREA' : 'Personal area',
-            'ADD_TO_CART' : 'ADD TO CART',
             "PRODUCT_SPECIFICATIONS" : "PRODUCT SPECIFICATIONS",
             "View_details" : "View Details",
             'Shop_Now' : 'Shop Now',
@@ -52,8 +51,24 @@ define([],function(){
             'this_is_a_demo' : 'this is a demo',
             'Please_enter_a_fake_data' : 'Please enter a fake data',
             'NOTIC' : 'NOTIC',
-            'Laptops' : 'Laptops'
-         });
+            'Laptops' : 'Laptops',
+            'ACCOUNT_DETAILS' : 'ACCOUNT DETAILS',
+            'PERSONAL_DETAILS' : 'PERSONAL DETAILS',
+            'ADDRESS' : 'ADDRESS',
+            'User_Name' : 'User Name',
+            'Password' : 'Password',
+            'Confirm_Password' : 'Confirm Password',
+            'First_Name' : 'First Name',
+            'Last_Name' : 'Last Name',
+            'Phone_Number' : 'Phone_Number',
+            'Country' : 'Country',
+            'City' : 'City',
+            'Address' : 'Address',
+            'Postal_Code' : 'Postal Code', 
+            'State__Province__Region' : 'State / Province / Region',
+            'offers_promotion' :  'Recieve exclisive offers and promotions from Advantage'
+
+        });
 
         $stateProvider.state('view1',{
             url: '/',

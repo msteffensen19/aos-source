@@ -6,10 +6,6 @@ var Main = Main || {};
 
 Main.miniItemPopUp = function(){
 
-    $(".containMiniTitle").click(function(){
-        $(this).find(".mini-title").fadeToggle(300);
-    });
-
 }
 
 Main.productHover = function(){
@@ -37,6 +33,10 @@ $(document).on({
         });
         // end Mobile section handler
 
+
+        $(document).on("click", ".containMiniTitle", function () {
+            $(this).find(".mini-title").fadeToggle(300);
+        });
 
 
         $('#scrollToTop').on({

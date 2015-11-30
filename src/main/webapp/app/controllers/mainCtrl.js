@@ -25,15 +25,21 @@ define(['./module'], function (controllers) {
 
             $scope.login = function (size) {
 
-                $("body").css({
-                    "overflow": "hidden",
-                    "left": "0px",
-                })
+                var windowsWidht = $(window).width();
+                var top = "5%";
+
+                if(windowsWidht < 480) { top = "0"; }
+
+                else if(windowsWidht < 700) { top = "18%"; }
+
+                $("body").css({ "overflow": "hidden", "left": "0px", })
+
+                $(".PopUp").css({ "overflow-y": "scroll" })
+
                 $(".PopUp").fadeIn(100, function () {
-                    $(".PopUp > div:nth-child(1)").animate({
-                        "top": $(window).height() < 700 ? "5%" : "18%"
-                    }, 600);
+                    $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
                 });
+
                 $(".PopUp").click(function (e) {
                     $("body").css("overflow", "scroll")
                     $(".PopUp > div:nth-child(1)").animate({
@@ -42,6 +48,7 @@ define(['./module'], function (controllers) {
                         $(".PopUp").fadeOut(100);
                     });
                 });
+
                 $(".PopUp > div").click(function (e) {
                     e.stopPropagation();
                 });

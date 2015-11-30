@@ -30,6 +30,7 @@ define(['./module'], function (controllers) {
                     });
                 dealService.getDealOfTheDay().then(function( deal ) {
                     $scope.deal = deal;
+                    console.log($scope.deal)
                 });
                 categoryService.getPopularProducts().then(function(popularProducts){
                     $scope.popularProducts = popularProducts;
@@ -50,7 +51,7 @@ define(['./module'], function (controllers) {
                 {
                     imageName : 'Banner2.jpg',
                     imageId : 1,
-                    message : "EXPLORE OUR LASTEST <br />INNOVATIVE PRODUCTS"
+                    message : "EXPLORE OUR LATEST <br />INNOVATIVE PRODUCTS"
                 },
                 {
                     imageName : 'Banner3.jpg',

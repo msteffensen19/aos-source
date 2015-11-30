@@ -1,5 +1,5 @@
 
-#cover{
+#registerCover{
     width: 100%;
     max-width: 1366px;
     margin: 0 auto;
@@ -7,9 +7,16 @@
 
 #infoDemo, #form{
     display: table-cell;
+    vertical-align: top;
 }
 
+#form *{
+    color:#2a2a2a;
+}
+
+
 #infoDemo{
+white-space: nowrap;
 }
 
 #infoDemo > div {
@@ -49,5 +56,110 @@
 
 #form{
     width: 1000px;
-    background-color:lime;
 }
+
+
+#formCover > div {
+    max-width: 815px;
+}
+
+
+#formCover > div h3 {
+    margin: 30px  0  15px  0 ;
+}
+
+
+#formCover > div input[type=text] {
+    display: inline-block;
+    width: 350px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+}
+
+
+
+#formCover > div input[type=text].titleAnim {
+    position: relative;
+    background-color: red;
+}
+
+#formCover > div input[type=text].titleAnim:before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    z-index: 1;
+}
+
+#formCover > div .option {
+    margin: 20px 0;
+    display: block;
+}
+
+@media screen and (max-width: 1200px)
+{
+
+    #formCover > div input[type=text] {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 1000px)
+{
+
+    #formCover > div input[type=text] {
+//        display: inline-block;
+  //      width: 100%;
+    //    margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 940px)
+{
+
+    #infoDemo{
+        margin: 0 auto;
+        display: block;
+    }
+
+    #form{
+        padding: 25px 50px;
+        box-sizing: border-box;
+        width: 100%;
+        background-clip: content-box;
+    }
+
+
+    #infoDemo{
+        width: 340px;
+        margin: 10px auto;
+    }
+
+
+    #formCover > div input[type=text] {
+        display: inline-block;
+        width: 42%;
+        margin-right: 25px;
+        margin-left: 25px;
+    }
+}
+
+
+@media screen and (max-width: 780px)
+{
+
+    #form{
+        width: 100%;
+        display: block;
+    }
+
+    #formCover > div input[type=text] {
+        display: block;
+        width: 100%;
+        margin: 0px;
+    }
+}
+
+
+

@@ -12,7 +12,6 @@ html, body{
 }
 
 input, select, button, #follow img, .slider-steps span, #scrollToTop img{
-
     cursor: pointer;
 }
 
@@ -43,10 +42,11 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
 input[type="text"], input[type="password"] {
     display: block;
     margin: 0;
-    font-size: 18px;
-    border: none;
+    font-size: 14px;
     height: 38px;
+    border: none;
     outline: none;
+    cursor: text;
 }
 
 
@@ -54,12 +54,14 @@ input[type=text]{
     border-bottom: 1px solid #CECCCC !important;
 }
 
+
 input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder,
 input[type="text"]:-moz-placeholder, input[type="password"]:-moz-placeholder,
 input[type="text"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder {
-    color: #000000;
     font-family: 'Roboto';
     font-weight: 300;
+    font-size: 14px;
+    color: #2a2a2a;
 }
 
 
@@ -82,8 +84,8 @@ h3.roboto-regular{
 
 .option {
     position: relative;
-    display: none;
 }
+
 .option input[type=checkbox] {
     display: inline-block;
     -webkit-appearance: none;

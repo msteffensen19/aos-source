@@ -1,4 +1,5 @@
 
+@import "UI.css";
 @import "animation.css";
 @import "views/home_page.css";
 @import "views/categoryPage.css";
@@ -7,7 +8,7 @@
 @import "modals/popUp.css";
 @import "../app/user/css/login.css";
 @import "../app/user/css/register.css";
-@import "UI.css";
+
 
 #png{
     position: absolute;
