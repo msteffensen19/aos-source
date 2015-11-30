@@ -560,11 +560,11 @@ footer .splitter{
     }
 
     .slider-length div:nth-child(2) .imgContainer img {
-        left: -745px;
+        left: -567px;
     }
 
     .slider-length div:nth-child(3) .imgContainer img {
-        left: -610px;
+        left: -580px;
     }
 
     .slider .imgContainer img h2 {
@@ -603,7 +603,7 @@ footer .splitter{
     footer img{
         width: 80px;
     }
-    
+
 
 }
 
