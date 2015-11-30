@@ -1,0 +1,53 @@
+
+#cover{
+    width: 100%;
+    max-width: 1366px;
+    margin: 0 auto;
+}
+
+#infoDemo, #form{
+    display: table-cell;
+}
+
+#infoDemo{
+}
+
+#infoDemo > div {
+    padding: 22px 23px;
+    margin: 34px 50px;
+    position: relative;
+    border: solid 1px #454545;
+}
+
+#infoDemo > div:before {
+    content: "";
+    position: absolute;
+    top:31px;
+    left: 28px;
+    width: 2px;
+    height: 65px;
+    background-color:#454545;
+    z-index: 50;
+}
+
+#infoDemo > div h4 {
+    background-image: url(../../../css/images/Bell.png);
+    background-repeat:no-repeat;
+    background-position: 12% 50%;
+    font-size: 20px;
+    font-weight: bold;
+    text-indent: 45px;
+}
+
+#infoDemo > div p {
+    font-size: 15px;
+    font-weight: bold;
+    text-indent: 15px;
+    padding: 3px;
+    margin: 2px;
+}
+
+#form{
+    width: 1000px;
+    background-color:lime;
+}

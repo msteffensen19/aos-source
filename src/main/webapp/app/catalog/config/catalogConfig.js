@@ -47,9 +47,12 @@ define([],function(){
             'Shop_Now' : 'Shop Now',
             'EXPLORE_NOW' : 'EXPLORE NOW',
             'Quantity:' : 'Quantity:',
-            'GO_UP' : 'GO UP'
-
-
+            'GO_UP' : 'GO UP',
+            'CREATE_ACCOUNT' : 'CREATE ACCOUNT',
+            'this_is_a_demo' : 'this is a demo',
+            'Please_enter_a_fake_data' : 'Please enter a fake data',
+            'NOTIC' : 'NOTIC',
+            'Laptops' : 'Laptops'
          });
 
         $stateProvider.state('view1',{
@@ -66,6 +69,19 @@ define([],function(){
                 data: {
                     requireLogin: false,
                     showWelcome : true// this property will apply to all children of 'app'
+                }
+            })
+            .state('register',{
+                url: '/register',
+                templateUrl: 'app/user/views/register-page.html',
+                controller: 'registerCtrl',
+                data: {
+                    requireLogin: false // this property will apply to all children of 'app'
+                },
+                resolve : {
+                    product: function (productService, $stateParams) {
+                    //    return productService.getProductById($stateParams.id);
+                    }
                 }
             })
             .state('category',{

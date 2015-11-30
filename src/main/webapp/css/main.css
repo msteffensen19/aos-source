@@ -6,6 +6,7 @@
 @import "views/productPage.css";
 @import "modals/popUp.css";
 @import "../app/user/css/login.css";
+@import "../app/user/css/register.css";
 @import "UI.css";
 
 #png{
@@ -192,7 +193,6 @@ div.logo img{
         display: inline-block;
     }
 }
-
 
 
 

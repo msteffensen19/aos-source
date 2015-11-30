@@ -3,7 +3,7 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('productService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
+    services.service('registerService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
         // Return public API.
         return({
             getProducts: getProducts,
@@ -13,7 +13,7 @@ define(['./module'], function (services) {
         function getProducts() {
             var request = $http({
                 method: "get",
-                url: "api/product/products"
+                url: "api/products"
                 //params: {
                 //    action: "get"
                 //}

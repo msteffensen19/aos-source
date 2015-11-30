@@ -25,18 +25,16 @@
                 </div>
             </li>
         </ul>
-
     </div>
     <div class="cell categoryRight">
         <ul>
             <li ng-repeat="product in filtered = ( products | filter:productsFilter)">
                 <div class="AddToCard">
                     <label> {{'ADD_TO_CART' | translate}} </label>
-                    <img alt="" src="css/images/Cart.jpg"  />
+                    <img alt="" src="../../css/images/add_cart_with_plus.png"  />
                 </div>
                 <img alt="" class="imgProduct" ng-src="fetchImage?image_id={{product.imageUrl}}"
                      ng-click="gotoItem(product.id)">
-
                 <p><a>{{product.productName}}</a></p>
                 <p><a class="productPrice">{{product.price | currency:"$"}}</a></p>
             </li>

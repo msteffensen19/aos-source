@@ -3,4 +3,9 @@
  */
 'use strict';
 
-define(['./productService', './categoryService', './dealService', './responseHandleService', './smoothScroll'], function() {});
+define([
+    './productService',
+    './categoryService',
+    './dealService',
+    './responseHandleService',
+    './smoothScroll'], function() {});

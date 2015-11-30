@@ -13,9 +13,6 @@ Main.miniItemPopUp = function(){
 
 Main.productHover = function(){
 
-    //console.log("he!")
-
-
 }
 
 Main.addAccordionEventListener = function(){
