@@ -3,6 +3,8 @@ package com.advantage.online.store.dao.deal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.persistence.Query;
 
@@ -16,6 +18,8 @@ import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.deal.DealType;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.JPAQueryHelper;
+
+import static java.util.stream.Collectors.toCollection;
 
 @Component
 @Qualifier("dealRepository")
@@ -50,6 +54,14 @@ public class DefaultDealRepository extends AbstractRepository implements  DealRe
         }
 
         return dealOfTheDay;
+    }
+
+    @Override
+    public Deal getDealOfTheDay(Long categoryId) {
+        List<Deal> dealStream = getAll().stream().
+            filter(d -> Objects.equals(d.getProduct().getCategory().getCategoryId(), categoryId)).
+            collect(toCollection(ArrayList<Deal>::new));
+        return dealStream.isEmpty() ? null : dealStream.get(0);
     }
 
     @Override

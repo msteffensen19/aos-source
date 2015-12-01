@@ -8,6 +8,8 @@ public class ProductApiDto {
     private String description;
     private String imageUrl;
     private List<AttributeItem> attributes;
+    private List<String> colors;
+    private List<String> images;
     private Long categoryId;
     private Long productId;
 
@@ -63,7 +65,23 @@ public class ProductApiDto {
         return attributes;
     }
 
+    public List<String> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<String> colors) {
+        this.colors = colors;
+    }
+
     public void setAttributes(List<AttributeItem> attributes) {
         this.attributes = attributes;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

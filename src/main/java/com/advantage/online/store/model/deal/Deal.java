@@ -34,6 +34,7 @@ public class Deal {
 
     public static final String PARAM_DEAL_TYPE = "DEAL_PARAM_DEALTYPE";
     public static final String PARAM_DEAL_ID = "DEAL_PARAM_DEAL_ID";
+    public static final String DEAL_GET_BY_PRODUCT_CATEGORY = "deal.getByProductCategory";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

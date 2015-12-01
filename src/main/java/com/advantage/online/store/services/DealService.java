@@ -27,4 +27,9 @@ public class DealService {
 
         return dealRepository.getDealOfTheDay();
     }
+
+    public Deal getDealOfTheDay(Long categoryId) {
+
+        return dealRepository.getDealOfTheDay(categoryId);
+    }
 }
