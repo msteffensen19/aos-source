@@ -1,14 +1,15 @@
 package com.advantage.online.store.user.config;
 
+import com.advantage.online.store.user.dto.AppUserConfigurationResponseStatus;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * =================================================
- * Testing Application User Configuration
- * =================================================
  * Application User configuration class
  * @author Binyamin Regev on 24/11/2015.
  */
@@ -21,98 +22,86 @@ public class AppUserConfiguration {
     @Inject
     private Environment env;
 
-    private AppUserConfig appUserConfig = new AppUserConfig();
+    //private AppUserConfig appUserConfig = new AppUserConfig();
 
-    //  In milliseconds
-    private int loginBlockingInMilliseconds;
-    private int numberOfLoginTriesBeforeBlocking;
-    private String emailAddressInLogin;             //  in UPPER case: YES / NO
+    public static int NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING;  //numberOfFailedLoginAttemptsBeforeBlocking
+    public static long LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS; //loginBlockingIntervalInMilliSeconds
+    public static String EMAIL_ADDRESS_IN_LOGIN;   //emailAddressInLogin
 
-    public AppUserConfiguration() {
+//      //  Class that is called must have a method "public void init() throws Exception"
+//    @Bean(initMethod = "init")
+//    public AppUserConfig initAppUserConfiguration() {
+//        return new AppUserConfig();
+//    }
 
+    @Bean
+    public int getAppUserConfiguration() {
+        this.setNumberOfLoginAttemptsBeforeBlocking(ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING);
+        this.setLoginBlockingIntervalInMilliseconds(ENV_USER_LOGIN_BLOCKING);
+        this.setEmailAddressInLogin(ENV_ADD_EMAIL_FIELD_TO_LOGIN);
 
-//        stringValue = env.getProperty(ENV_ADD_EMAIL_FIELD_TO_LOGIN);
-//        if (stringValue != null) {
-//            stringValue = stringValue.toUpperCase();
-//            this.setEmailAddressInLogin(stringValue);
-//        }
+        System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS=" + this.getLoginBlockingIntervalInMilliseconds());
+        System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
+        System.out.println("Configuration: getEmailAddressInLogin=\"" + this.getEmailAddressInLogin() + "\"");
+
+        return 1;   //  Successful
     }
 
-    public void getAppUserConfiguration() {
-        this.loginBlockingInMilliseconds = appUserConfig.getLoginBlockingInMilliseconds();
-        this.numberOfLoginTriesBeforeBlocking = appUserConfig.getNumberOfLoginTriesBeforeBlocking();
-        this.emailAddressInLogin = appUserConfig.getEmailAddressInLogin();
+    /**
+     * <ul>Get configuration value:</ul> <br/>
+     * Number of unsuccessful login attempts before blocking the user from attempting to login again.
+     * @return Number of unsuccessful login attempts.
+     */
+    public int getNumberOfLoginAttemptsBeforeBlocking() {
+        return this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING;
     }
 
-//    public int getLoginBlockingInMilliseconds() {
-//        return loginBlockingInMilliseconds;
-//    }
-//
-//    public void setLoginBlockingInMilliseconds(int loginBlockingInMilliseconds) {
-//        this.loginBlockingInMilliseconds = loginBlockingInMilliseconds;
-//    }
-//
-//    public int getNumberOfLoginTriesBeforeBlocking() {
-//        return numberOfLoginTriesBeforeBlocking;
-//    }
-//
-//    public void setNumberOfLoginTriesBeforeBlocking(int numberOfLoginTriesBeforeBlocking) {
-//        this.numberOfLoginTriesBeforeBlocking = numberOfLoginTriesBeforeBlocking;
-//    }
-//
-//    public String getLoginBlockingIntervalString() {
-//        return loginBlockingIntervalString;
-//    }
-//
-//    public void setLoginBlockingIntervalString(String loginBlockingIntervalString) {
-//        this.loginBlockingIntervalString = loginBlockingIntervalString;
-//    }
-//
-//    public String getEmailAddressInLogin() { return emailAddressInLogin; }
-//
-//    public void setEmailAddressInLogin(String emailAddressInLogin) {
-//        this.emailAddressInLogin = emailAddressInLogin;
-//    }
-//
-//    private String convertMillisecondsToStringInterval(int milliSeconds) {
-//        final int SECONDS_IN_A_MINUTE = 60;
-//        final int SECONDS_IN_A_HOUR = 3600;
-//        final int SECONDS_IN_A_DAY = 86400;
-//
-//        int seconds = milliSeconds / 1000;
-//        int numberOfDays = 0;
-//        int numberOfHours = 0;
-//        int numberOfMinutes = 0;
-//
-//        if (seconds >= SECONDS_IN_A_DAY) {
-//            numberOfDays = seconds / SECONDS_IN_A_DAY;
-//            seconds %= SECONDS_IN_A_DAY;
-//        }
-//
-//        if (seconds >= SECONDS_IN_A_HOUR) {
-//            numberOfHours = seconds / SECONDS_IN_A_HOUR;
-//            seconds %= SECONDS_IN_A_HOUR;
-//        }
-//
-//        if (seconds >= SECONDS_IN_A_MINUTE) {
-//            numberOfMinutes = seconds / SECONDS_IN_A_MINUTE;
-//            seconds %= SECONDS_IN_A_MINUTE;
-//        }
-//
-//        return (numberOfDays > 0 ? numberOfDays + " days " : "") +
-//                (numberOfHours > 0 ? numberOfHours + " hours " : "") +
-//                (numberOfMinutes > 0 ? numberOfMinutes + " minutes" : "") +
-//                (seconds > 0 ? seconds + " seconds" : "");
-//    }
+    private void setNumberOfLoginAttemptsBeforeBlocking(final String environmentKey) {
+        this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING = (env.getProperty(environmentKey) != null ? Integer.valueOf(env.getProperty(environmentKey)) : 0);
+    }
 
+    /**
+     * <ul>Get configuration value:</ul> <br/>
+     * How much time the user is blocked from attempting login again? Data in milli-seconds.
+     * @return How much time the user is blocked from attempting login again?
+     */
+    public long getLoginBlockingIntervalInMilliseconds() {
+        return this.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS;
+    }
 
+    private void setLoginBlockingIntervalInMilliseconds(final String environmentKey) {
+        this.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS = (env.getProperty(environmentKey) != null ? Integer.valueOf(env.getProperty(environmentKey)) : 0);
+    }
 
+    /**
+     * <ul>Get configuration value:</ul> <br/>
+     * Whether {@code e-mail} field is displayed in user login page. Valid values are &quat;YES&quat; or &quat;NO&quat;.
+     * In case of &quat;YES&quat; {@code e-mail} becomes mandatory field in creating a new user.
+     * @return Whether {@code e-mail} field is displayed in user login page.
+     */
+    public String getEmailAddressInLogin() {
+        return this.EMAIL_ADDRESS_IN_LOGIN;
+    }
 
-//    public static void main(String[] args) {
-//        AppUserConfiguration appUserConfiguration = new AppUserConfiguration();
-//
-//        System.out.println("loginBlockingInMilliseconds=" + appUserConfiguration.getLoginBlockingInMilliseconds());
-//        System.out.println("numberOfLoginTriesBeforeBlocking=" + appUserConfiguration.getNumberOfLoginTriesBeforeBlocking());
-//        System.out.println("loginBlockingIntervalString=\"" + appUserConfiguration.getLoginBlockingIntervalString() + "\"");
-//    }
+    private void setEmailAddressInLogin(final String environmentKey) {
+        this.EMAIL_ADDRESS_IN_LOGIN = (env.getProperty(environmentKey) != null ? env.getProperty(environmentKey) : "");
+    }
+
+    public List<String> getAllParameters() {
+        List<String> parameters = new ArrayList<String>();
+
+        parameters.add("boolean,EMAIL_ADDRESS_IN_LOGIN," + ( EMAIL_ADDRESS_IN_LOGIN.toUpperCase() == "YES" ? true : false));
+        parameters.add("long,LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS," + LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS);
+        parameters.add("int,NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING," + NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING);
+
+        return parameters;
+    }
+
+    public AppUserConfigurationResponseStatus getAllConfigurationParameters() {
+        return new AppUserConfigurationResponseStatus(this.getNumberOfLoginAttemptsBeforeBlocking(),
+                this.getLoginBlockingIntervalInMilliseconds(),
+                (this.getEmailAddressInLogin().toUpperCase() == "YES"));
+
+    }
+
 }

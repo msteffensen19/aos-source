@@ -354,11 +354,6 @@ public class AppUser {
         return new Date().getTime() + milliSeconds;
     }
 
-    public static String convertMillisecondsDateToString(long milliSecondsDate) {
-        //System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate));
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate);
-    }
-
     @Override
     public boolean equals(Object obj) {
         AppUser compareTo = (AppUser) obj;
@@ -398,6 +393,49 @@ public class AppUser {
                 "user blocked from login until=\"" + this.getUserBlockedFromLoginUntilAsString() + "\" " +
                 "last successful login=\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getInternalLastSuccesssulLogin()) + "\"" +
                 "agree to receive offers and promotions=" + this.getAgreeToReceiveOffersAndPromotions();
+    }
+
+    public static String convertMillisecondsDateToString(long milliSecondsDate) {
+        //System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate));
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate);
+    }
+
+    public static String convertMillisecondsIntervalToString(long milliSeconds) {
+        final int MILLISECONDS_IN_A_SECOND =  1000;
+        final int MILLISECONDS_IN_A_MINUTE = 60000;
+        final int MILLISECONDS_IN_A_HOUR = 3600000;
+        final int MILLISECONDS_IN_A_DAY = 86400000;
+
+        int numberOfDays = 0;
+        int numberOfHours = 0;
+        int numberOfMinutes = 0;
+        int numberOfSeconds = 0;
+
+        if (milliSeconds >= MILLISECONDS_IN_A_DAY) {
+            numberOfDays = (int) (milliSeconds / MILLISECONDS_IN_A_DAY);
+            milliSeconds %= MILLISECONDS_IN_A_DAY;
+        }
+
+        if (milliSeconds >= MILLISECONDS_IN_A_HOUR) {
+            numberOfHours = (int) (milliSeconds / MILLISECONDS_IN_A_HOUR);
+            milliSeconds %= MILLISECONDS_IN_A_HOUR;
+        }
+
+        if (milliSeconds >= MILLISECONDS_IN_A_MINUTE) {
+            numberOfMinutes = (int) (milliSeconds / MILLISECONDS_IN_A_MINUTE);
+            milliSeconds %= MILLISECONDS_IN_A_MINUTE;
+        }
+
+        if (milliSeconds >= MILLISECONDS_IN_A_SECOND) {
+            numberOfSeconds = (int) (milliSeconds / MILLISECONDS_IN_A_SECOND);
+            milliSeconds %= MILLISECONDS_IN_A_SECOND;
+        }
+
+        return (numberOfDays > 0 ? numberOfDays + " days " : "") +
+                (numberOfHours > 0 ? numberOfHours + " hours " : "") +
+                (numberOfMinutes > 0 ? numberOfMinutes + " minutes" : "") +
+                (numberOfSeconds > 0 ? numberOfSeconds + " seconds" : "") +
+                (milliSeconds > 0 ? milliSeconds + " milliseconds" : "");
     }
 
 //    public static void main(String[] args) {

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -332,9 +330,11 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         appUser.setInternalUnsuccessfulLoginAttempts(appUser.getInternalUnsuccessfulLoginAttempts() + 1);
 
         //  Check the number of unsuccessful login attempts, block user if reached the limit
-        if (appUser.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+        //if (appUser.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+        if (appUser.getInternalUnsuccessfulLoginAttempts() == AppUserConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
+
             //  Update AppUser class with timestamp when user can attempt login again according to configuration interval
-            appUser.setInternalUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(ENV_DEFAULT_USER_LOGIN_ATTEMPTS_BLOCKED_INTERVAL));
+            appUser.setInternalUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(AppUserConfiguration.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS));
         }
 
         //  Update data changes made for application user into application users table
