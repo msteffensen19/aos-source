@@ -30,4 +30,6 @@ public interface DealRepository  extends DefaultCRUDOperations<Deal> {
      * @return entity reference of a Deal
      */
     Deal getDealOfTheDay();
+
+    Deal getDealOfTheDay(Long categoryId);
 }

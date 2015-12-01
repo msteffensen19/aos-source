@@ -46,9 +46,13 @@ public class Product {
     @OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductAttributes> productAttributes = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<ColorAttribute> colors = new HashSet<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<ImageAttribute> images = new HashSet<>();
 
     public Product() {
     }
@@ -121,6 +125,14 @@ public class Product {
 
     public void setColors(Set<ColorAttribute> colors) {
         this.colors = colors;
+    }
+
+    public Set<ImageAttribute> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<ImageAttribute> images) {
+        this.images = images;
     }
 
     @JsonIgnore

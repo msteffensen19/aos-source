@@ -71,9 +71,9 @@ public class CategoryController {
 
         Map<String, Set<String>> attrCollection = new LinkedHashMap<>();
         List<Attribute> allAttributed = attributeService.getAllAttributes();
-        for (Attribute attribute : allAttributed) {
+        /*for (Attribute attribute : allAttributed) {
             attrCollection.put(attribute.getName(), null);
-        }
+        }*/
 
         for (Product product : categoryProducts) {
             Set<ProductAttributes> productAttributes = product.getProductAttributes();
@@ -81,7 +81,9 @@ public class CategoryController {
                 String attrName = attribute.getAttribute().getName();
                 String attrValue = attribute.getAttributeValue();
 
+                if (!attrCollection.containsKey(attrName)) attrCollection.put(attrName, null);
                 Set<String> item = attrCollection.get(attrName);
+
                 if(item == null){
                     item = new HashSet<>();
                     attrCollection.put(attrName, item);
@@ -108,10 +110,12 @@ public class CategoryController {
         }
 
         categoryDto.setProducts(productDtos);
-        Deal promotion = dealService.getDealOfTheDay();
-        categoryDto.setPromotedProduct(new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
-            promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
-            new ProductDto(dealService.getDealOfTheDay().getProduct())));
+        Deal promotion = dealService.getDealOfTheDay(categoryId);
+        PromotedProductDto promotedProductDto = promotion == null ? null :
+            new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
+                promotion.getPromotionSubHeader(), promotion.getManagedImageId(), new ProductDto(promotion.getProduct()));
+
+        categoryDto.setPromotedProduct(promotedProductDto);
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }

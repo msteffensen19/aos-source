@@ -1,12 +1,17 @@
 package com.advantage.online.store.services;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.ProductApiDto;
 import com.advantage.online.store.dto.ProductResponseStatus;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
+import com.advantage.online.store.model.product.ColorAttribute;
+import com.advantage.online.store.model.product.ImageAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,11 +72,20 @@ public class ProductService {
             product.getProductAttributes().add(productAttributes);
         }
 
-        return new ProductResponseStatus(true, product.getId(), "Product was created successful");
-    }
+        if(dto.getColors().size() == 0) {
+            dto.getColors().add(dto.getAttributes()
+                .stream()
+                .filter(x -> x.getAttributeName().equalsIgnoreCase("color")).findFirst().get().getAttributeValue());
+        }
 
-    private Attribute getAttributeByDto(AttributeItem attribute) {
-        return attributeService.getAttributeByName(attribute.getAttributeName());
+        if(dto.getImages().size() == 0) {
+            dto.getImages().add(product.getManagedImageId());
+        }
+
+        product.setColors(getColorAttributes(dto.getColors(), product));
+        product.setImages(getImageAttribute(dto.getImages(), product));
+
+        return new ProductResponseStatus(true, product.getId(), "Product was created successful");
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -88,6 +102,22 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setManagedImageId(dto.getImageUrl());
         product.setCategory(category);
+
+        Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
+        Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        for (String s : dto.getColors()) {
+            ColorAttribute colorAttribute  =new ColorAttribute(s);
+            colorAttribute.setProduct(product);
+            colorAttributes.add(colorAttribute);
+        }
+        for (String s : dto.getImages()) {
+            ImageAttribute imageAttribute  = new ImageAttribute(s);
+            imageAttribute.setProduct(product);
+            imageAttributes.add(imageAttribute);
+        }
+
+        product.setColors(colorAttributes);
+        product.setImages(imageAttributes);
 
         for (AttributeItem item : dto.getAttributes()) {
             String attrName = item.getAttributeName();
@@ -118,5 +148,31 @@ public class ProductService {
         }
 
         return new ProductResponseStatus(true, product.getId(), "Product was updated successful");
+    }
+
+    private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
+        Set<ImageAttribute> imageAttributes = new HashSet<>();
+        for (String s : images) {
+            ImageAttribute image = new ImageAttribute(s);
+            image.setProduct(product);
+            imageAttributes.add(image);
+        }
+
+        return imageAttributes;
+    }
+
+    private  Set<ColorAttribute> getColorAttributes(Collection<String> colors, Product product) {
+        Set<ColorAttribute> colorAttributes = new HashSet<>();
+        for (String s : colors) {
+            ColorAttribute color = new ColorAttribute(s);
+            color.setProduct(product);
+            colorAttributes.add(color);
+        }
+
+        return colorAttributes;
+    }
+
+    private Attribute getAttributeByDto(AttributeItem attribute) {
+        return attributeService.getAttributeByName(attribute.getAttributeName());
     }
 }
