@@ -73,8 +73,7 @@ public class AppUserController {
                 appUser.getPhoneNumber(),
                 appUser.getStateProvince(),
                 appUser.getCityName(),
-                appUser.getAddress1(),
-                appUser.getAddress2(),
+                appUser.getAddress(),
                 appUser.getZipcode(),
                 appUser.getEmail(),
                 appUser.getAgreeToReceiveOffersAndPromotions());

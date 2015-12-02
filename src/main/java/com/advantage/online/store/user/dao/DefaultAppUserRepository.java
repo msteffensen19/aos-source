@@ -60,8 +60,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * @param phoneNumber Phone number including international country-code and area code.
      * @param stateProvince State/province/region of residence.
      * @param cityName City-name of residence.
-     * @param address1 1st line of postal address.
-     * @param address2 2nd line of new-user's postal address.
+     * @param address postal address.
      * @param zipcode new-user's zip-code of postal address.
      * @param email New user's e-mail address.
      * @param agreeToReceiveOffersAndPromotions
@@ -73,8 +72,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * <br/>
      */
     @Override
-    //public AppUserResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-    public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    //public AppUserResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
@@ -93,14 +92,13 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
-        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
-        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address, "address");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
 
         if (ValidationHelper.isValidLogin(loginName)) {
             if (ValidationHelper.isValidPassword(password)) {
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
-                    AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
+                    AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, agreeToReceiveOffersAndPromotions);
                     entityManager.persist(appUser);
 
                     appUserResponseStatus = new AppUserResponseStatus(true, "New user created successfully.", appUser.getId());
@@ -123,8 +121,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
     }
 
-    public AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-        AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
+    public AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+        AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, agreeToReceiveOffersAndPromotions);
 
         return new AppUserResponseStatus(appUserResponseStatus.isSuccess(),
                 appUserResponseStatus.getReason(),

@@ -15,14 +15,14 @@ public interface AppUserRepository extends DefaultCRUDOperations<AppUser> {
 
     AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
                           String password, Integer country, String phoneNumber, String stateProvince,
-                          String cityName, String address1, String address2, String zipcode, String email,
+                          String cityName, String address, String zipcode, String email,
                           char agreeToReceiveOffersAndPromotions);
 
     //  For User-Management API
     @Transactional
     AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName,
                                  String password, Integer country, String phoneNumber, String stateProvince,
-                                 String cityName, String address1, String address2, String zipcode, String email,
+                                 String cityName, String address, String zipcode, String email,
                                  char agreeToReceiveOffersAndPromotions);
 
     AppUser addUnsuccessfulLoginAttempt(AppUser appUser);
