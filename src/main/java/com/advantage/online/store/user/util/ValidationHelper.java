@@ -39,6 +39,31 @@ public class ValidationHelper {
     private static final String EUROPEAN_DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01]).(0?[1-9]|1[012]).((19|20)\\d\\d)";
     private static final String SCANDINAVIAN_DATE_PATTERN = "((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"; //YYYY-MM-DD
 
+    //  Credit/Debit cards numbers validation patterns
+    //  Visa: 13 or 16 digits, starting with 4.
+    private static final String VISA_CARD_NUMBER_PATTERN = "^4[0-9]{12}(?:[0-9]{3})?$";
+    //  MasterCard: 16 digits, starting with 51 through 55.
+    private static final String MASTER_CARD_NUMBER_PATTERN = "^5[1-5][0-9]{14}$";
+    //  American Express(AMEX): 15 digits, starting with 34 or 37.
+    private static final String AMEX_CARD_NUMBER_PATTERN = "^3[47][0-9]{13}$";
+    private static final String CARTE_BLANCHE_CARD_NUMBER_PATTERN = "^389[0-9]{11}$";
+    //  Diners Club: 14 digits, starting with 300 through 305, 36, or 38.
+    private static final String DINERS_CLUB_CARD_NUMBER_PATTERN = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
+    //  Discover: 16 digits, starting with 6011 or 65.
+    private static final String DISCOVER_CARD_NUMBER_PATTERN = "^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$";
+    //  JCB: 15 digits, starting with 2131 or 1800, or 16 digits starting with 35.
+    private static final String JCB_CARD_NUMBER_PATTERN = "^(?:2131|1800|35\\d{3})\\d{11}$";
+    private static final String INSTA_PAYMENT_CARD_NUMBER_PATTERN = "^63[7-9][0-9]{13}$";
+    private static final String LAZER_CARD_NUMBER_PATTERN = "^(6304|6706|6709|6771)[0-9]{12,15}$";
+    private static final String MAESTRO_CARD_NUMBER_PATTERN = "^(5018|5020|5038|6304|6759|6761|6763)[0-9]{8,15}$";
+    private static final String SOLO_CARD_NUMBER_PATTERN = "^(6334|6767)[0-9]{12}|(6334|6767)[0-9]{14}|(6334|6767)[0-9]{15}$";
+    private static final String SWITCH_CARD_NUMBER_PATTERN = "^(4903|4905|4911|4936|6333|6759)[0-9]{12}|(4903|4905|4911|4936|6333|6759)[0-9]{14}|(4903|4905|4911|4936|6333|6759)[0-9]{15}|564182[0-9]{10}|564182[0-9]{12}|564182[0-9]{13}|633110[0-9]{10}|633110[0-9]{12}|633110[0-9]{13}$";
+    private static final String UNION_PAY_CARD_NUMBER_PATTERN = "^(62[0-9]{14,17})$";
+    private static final String KOREAN_LOCAL_CARD_NUMBER_PATTERN = "^9[0-9]{15}$";
+    private static final String BCGLOBAL_CARD_NUMBER_PATTERN = "^(6541|6556)[0-9]{12}$";
+    private static final String MESSAGE_UNKNOWN_CREADIT_DEBIT_CARD_COMPANY = "Unknown credit/debit card company";
+
+
     private static Pattern pattern;
 
     public ValidationHelper() {
@@ -147,6 +172,85 @@ public class ValidationHelper {
 
     }
 
+    public static boolean isValidCreaditDebitCardNumber(final String cardCompanyName, final String cardNumber) {
+
+        //  Determine RegEx pattern by credit/debit card company name
+        switch (cardCompanyName.toUpperCase()) {
+            case "VISA" :
+            case "VISA CARD" :
+                pattern = Pattern.compile(VISA_CARD_NUMBER_PATTERN);
+                break;
+            case "MASTER" :
+            case "MasterCard" :
+            case "MASTER CARD" :
+                pattern = Pattern.compile(MASTER_CARD_NUMBER_PATTERN);
+                break;
+            case "AMEX" :
+            case "AMEX CARD" :
+            case "American Express" :
+                pattern = Pattern.compile(AMEX_CARD_NUMBER_PATTERN);
+                break;
+            case "CARTE BLANCHE" :
+            case "CARTE BLANCHE CARD" :
+                pattern = Pattern.compile(CARTE_BLANCHE_CARD_NUMBER_PATTERN);
+                break;
+            case "DINERS" :
+            case "DINERS CLUB" :
+                pattern = Pattern.compile(DINERS_CLUB_CARD_NUMBER_PATTERN);
+                break;
+            case "DISCOVER" :
+            case "DISCOVER CARD" :
+                pattern = Pattern.compile(DISCOVER_CARD_NUMBER_PATTERN);
+                break;
+            case "JCB" :
+            case "JCB CARD" :
+                pattern = Pattern.compile(JCB_CARD_NUMBER_PATTERN);
+                break;
+            case "INSTA PAYMENT CARD" :
+                pattern = Pattern.compile(INSTA_PAYMENT_CARD_NUMBER_PATTERN);
+                break;
+            case "LAZER CARD" :
+                pattern = Pattern.compile(LAZER_CARD_NUMBER_PATTERN);
+                break;
+            case "MAESTRO" :
+            case "MAESTRO CARD" :
+                pattern = Pattern.compile(MAESTRO_CARD_NUMBER_PATTERN);
+                break;
+            case "SOLO" :
+            case "SOLO CARD" :
+                pattern = Pattern.compile(SOLO_CARD_NUMBER_PATTERN);
+                break;
+            case "SWITCH" :
+            case "SWITCH CARD" :
+                pattern = Pattern.compile(SWITCH_CARD_NUMBER_PATTERN);
+                break;
+            case "UNION PAY" :
+            case "UNION PAY CARD" :
+                pattern = Pattern.compile(UNION_PAY_CARD_NUMBER_PATTERN);
+                break;
+            case "KOREAN LOCAL" :
+            case "KOREAN LOCAL CARD" :
+                pattern = Pattern.compile(KOREAN_LOCAL_CARD_NUMBER_PATTERN);
+                break;
+            case "BCGLOBAL" :
+            case "BCGLOBAL CARD" :
+                pattern = Pattern.compile(BCGLOBAL_CARD_NUMBER_PATTERN);
+                break;
+
+            default :
+                //  Company not part of known companies - can't validate card number
+                System.err.println(MESSAGE_UNKNOWN_CREADIT_DEBIT_CARD_COMPANY);
+                return false;
+        }
+
+        //  Validate card number
+        final boolean isValid = pattern.matcher(cardNumber).matches();
+
+        System.out.println(cardCompanyName + " card number " + cardNumber +" is valid? "+ isValid);
+
+        return isValid;
+    }
+
     /**
      * Check the users authorization
      * @param session {@link HttpSession} value  from HTTP request
@@ -186,5 +290,7 @@ public class ValidationHelper {
 
         ValidationHelper.isValidPassword("King1david");
         ValidationHelper.isValidPassword("king2David");
+
+        ValidationHelper.isValidCreaditDebitCardNumber("Visa", "4580120780141723");
     }
 }
