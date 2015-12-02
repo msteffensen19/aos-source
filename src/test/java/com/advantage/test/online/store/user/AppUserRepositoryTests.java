@@ -160,8 +160,8 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
 //                                            YesNoReply.YES.getReplyTypeChar());
 //        }
 //
-//        System.out.println("Calling appUserRepository.getAllAppUsers() ...");
-//        final List<AppUser> appUsers = appUserRepository.getAllAppUsers();
+//        System.out.println("Calling appUserRepository.getAll() ...");
+//        final List<AppUser> appUsers = appUserRepository.getAll();
 //        //Assert.assertEquals("appUsers size is " + appUsers.size(), (COUNTRY1_APP_USERS_COUNT + COUNTRY2_APP_USERS_COUNT + 1), appUsers.size());
 //
 //        System.out.println("Application Users: ");
@@ -275,7 +275,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
 
         transactionManager.commit(transactionStatusForCreation);
 
-        List<AppUser> appUsers = appUserRepository.getAllAppUsers();
+        List<AppUser> appUsers = appUserRepository.getAll();
         Assert.assertNotNull(appUsers);
         Assert.assertTrue(appUsers.size() > 0);
     }

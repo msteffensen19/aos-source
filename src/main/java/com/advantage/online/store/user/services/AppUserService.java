@@ -38,7 +38,7 @@ public class AppUserService {
 
     @Transactional(readOnly = true)
     public List<AppUser> getAllAppUsers() {
-        return appUserRepository.getAllAppUsers();
+        return appUserRepository.getAll();
     }
 
 }

@@ -1,7 +1,9 @@
 package com.advantage.online.store.user.dao;
 
+import com.advantage.online.store.dao.DefaultCRUDOperations;
 import com.advantage.online.store.user.dto.AppUserResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
 /**
  * @author Binyamin Regev on 16/11/2015.
  */
-public interface AppUserRepository {
+public interface AppUserRepository extends DefaultCRUDOperations<AppUser> {
 
     AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
                           String password, Integer country, String phoneNumber, String stateProvince,
@@ -17,6 +19,7 @@ public interface AppUserRepository {
                           char agreeToReceiveOffersAndPromotions);
 
     //  For User-Management API
+    @Transactional
     AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName,
                                  String password, Integer country, String phoneNumber, String stateProvince,
                                  String cityName, String address1, String address2, String zipcode, String email,
@@ -34,7 +37,6 @@ public interface AppUserRepository {
     AppUser getAppUserByLogin(String login);
     AppUserResponseStatus doLogin(String login, String password, String email);
 
-    List<AppUser> getAllAppUsers();
     List<AppUser> getAppUsersByCountry(Integer countryId);
 
 }

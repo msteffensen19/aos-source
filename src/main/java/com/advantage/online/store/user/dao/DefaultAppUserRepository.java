@@ -171,18 +171,6 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 //    }
 
     @Override
-    public List<AppUser> getAllAppUsers() {
-        List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
-                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
-                .getResultList();
-
-//        //  Encrypt the password before updating it into the database
-//        String encryptedPassword = userPassword.decryptText(password);
-
-        return appUsers.isEmpty() ? null : appUsers;
-    }
-
-    @Override
     public List<AppUser> getAppUsersByCountry(Integer countryId) {
         List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_USERS_BY_COUNTRY, AppUser.class)
                 .setParameter(AppUser.PARAM_COUNTRY, countryId)
@@ -273,22 +261,24 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
         }
 
-
-        if (email != null) {
-            if (appUser.getEmail() != null) {
-                if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
-                    //  email does not match the email set in user details
+        //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
+        if (AppUserConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
+            if ((!email.isEmpty()) && (email.trim().length() > 0)) {
+                if ((!appUser.getEmail().isEmpty()) && (appUser.getEmail().trim().length() > 0)) {
+                    if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
+                        //  email does not match the email set in user details
+                        appUser = addUnsuccessfulLoginAttempt(appUser);
+                        return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
+                    }
+                } else {
+                    //
                     appUser = addUnsuccessfulLoginAttempt(appUser);
-                    return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
+                    return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
                 }
-            } else {
-                //
-                appUser = addUnsuccessfulLoginAttempt(appUser);
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
-            }
 
-//        } else {
-//            return new AppUserResponseStatus(false, "Login email is empty.", appUser.getId());
+            } else {
+                return new AppUserResponseStatus(false, AppUser.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, appUser.getId());
+            }
         }
 
         //  Reset user-blocking
@@ -366,5 +356,28 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      */
     private String getTokenKey() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public int delete(AppUser... entities) {
+        return 0;
+    }
+
+    @Override
+    public List<AppUser> getAll() {
+        List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
+                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
+                .getResultList();
+
+        return appUsers.isEmpty() ? null : appUsers;
+    }
+
+    @Override
+    public AppUser get(Long entityId) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(AppUser.class, AppUser.FIELD_ID, entityId);
+        Query query = entityManager.createQuery(hql);
+
+        return (AppUser) query.getSingleResult();
     }
 }

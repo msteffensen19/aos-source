@@ -30,14 +30,14 @@ public class AppUserController {
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping(value = "/appUserData/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/users", method = RequestMethod.GET)
     public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
         List<AppUser> appUsers = appUserService.getAllAppUsers();
 
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/appUserData/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/login", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
@@ -61,7 +61,7 @@ public class AppUserController {
 
     }
 
-    @RequestMapping(value = "/appUserData/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/user", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(appUser.getAppUserType(),
