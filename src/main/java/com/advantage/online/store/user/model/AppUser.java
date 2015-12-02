@@ -40,6 +40,7 @@ public class AppUser {
     public static final String MESSAGE_USER_IS_BLOCKED_FROM_LOGIN = "User is temporary blocked from login";
     public static final String MESSAGE_INVALID_EMAIL_ADDRESS = "Invalid email address.";
     public static final String MESSAGE_NO_EMAIL_EXISTS_FOR_USER = "No emails exists for user.";
+    public static final String MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY = "Login e-mail address is empty.";
 
     public static final String QUERY_GET_ALL = "appUser.getAll";
     public static final String QUERY_GET_BY_USER_LOGIN = "appUser.getAppUserByLogin";
