@@ -91,7 +91,6 @@
 }
 
 
-
 .productColor{
     border:solid 1px #9d9d9d;
     width: 13px;
@@ -100,10 +99,6 @@
     margin: 5px 15px;
     padding: 0px !important;
     cursor: pointer;
-}
-
-.productColor.selected {
-    box-shadow: 0 0 0 2px white, 0 0 0 4px #c1c1c1
 }
 
 .option .unknowColor {
@@ -119,7 +114,7 @@
 
 .categoryRight ul {
     display: flex;
-    flex-flow: row wrap;
+    display: inline-block;
     width: 100%;
 
 }
@@ -137,12 +132,7 @@
 .categoryRight ul li .imgProduct{
     width: 100%;
     cursor: pointer;
-    transition: all ease 3s;
     position: relative;
-}
-
-.categoryRight ul li .imgProduct:hover{
-    transform: scale(0.9);
 }
 
 .categoryRight ul li .AddToCard{
@@ -212,7 +202,7 @@
 
     .cell.categoryLeft, .cell.categoryRight{
         display: block;
-   }
+    }
 
     .cell.categoryLeft{
         width: 80%;
@@ -226,6 +216,10 @@
     .cell.categoryLeft ul .fill{
     vertical-align: top;
         display: inline-block !important;
+    }
+
+    .cell.categoryRight{
+        text-align: center;
     }
 
 }

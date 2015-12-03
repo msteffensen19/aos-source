@@ -43,6 +43,13 @@
 }
 
 
+.categoryData button:hover {
+    border: solid 2px rgb(169, 169, 169);
+    color: rgb(169, 169, 169);
+    background-color: #ffffff;
+}
+
+
 nav.pages {
     background-color: #454545;
     position: relative;

@@ -46,9 +46,7 @@ define(['./module'], function (services) {
                     y += node.offsetTop;
                 } return y;
             }
-
         };
-
     }])
 });
 

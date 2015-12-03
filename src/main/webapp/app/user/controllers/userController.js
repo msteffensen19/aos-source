@@ -11,5 +11,8 @@ define(['./module'], function (controllers) {
                 $rootScope.userid = null;
                 $cookie.remove("userCookie");
             }
+
+
+
         }]);
 });
