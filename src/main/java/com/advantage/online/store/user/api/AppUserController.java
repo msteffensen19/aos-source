@@ -64,10 +64,11 @@ public class AppUserController {
     @RequestMapping(value = "/account/users", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
 
-        final AppUserResponseStatus appUserResponseStatus = appUserService.create(appUser.getAppUserType(),
+        final AppUserResponseStatus appUserResponseStatus = appUserService.create(
+                appUser.getAppUserType(),
                 appUser.getLastName(),
                 appUser.getFirstName(),
-                appUser.getCityName(),
+                appUser.getLoginName(),
                 appUser.getPassword(),
                 appUser.getCountry(),
                 appUser.getPhoneNumber(),
@@ -81,7 +82,7 @@ public class AppUserController {
         if (appUserResponseStatus.isSuccess())
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
         else
-            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.CONFLICT);
 
     }
 }

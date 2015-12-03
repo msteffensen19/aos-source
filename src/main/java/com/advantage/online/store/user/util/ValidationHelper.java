@@ -14,8 +14,9 @@ import java.util.regex.Pattern;
  */
 public class ValidationHelper {
 
-    //    private static final String PHONE_PATTERN = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
-    private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3}))?[-.\\s]?)\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
                                                 "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -262,7 +263,6 @@ public class ValidationHelper {
             session.getAttribute(Constants.UserSession.TOKEN) == null ||
             !(Boolean) session.getAttribute(Constants.UserSession.IS_SUCCESS) ||
             session.getAttribute(Constants.UserSession.TOKEN).toString().compareTo(token) != 0);
-
     }
 
     public static void main(String[] args) {
@@ -278,6 +278,7 @@ public class ValidationHelper {
         ValidationHelper.isValidDate("2011-02-29"); //  invalid SCANDINAVIAN date-format: no Feb 29th in 2011
 
         ValidationHelper.isValidLogin("king.david");
+
         ValidationHelper.isValidEmail("a@b.com");
         ValidationHelper.isValidTime24h("23:59:60");
 

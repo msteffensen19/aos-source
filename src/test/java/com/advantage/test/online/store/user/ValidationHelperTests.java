@@ -18,12 +18,15 @@ public class ValidationHelperTests extends GenericRepositoryTests {
 
     @Test
     public void testIsValidPhoneNumber() {
+        Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("054 123 4567"));
+        Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("(054) 1234567"));
+        Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("(054) 123 4567"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("+1 123 456 7890"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("+972 54 123 4567"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("+972 54 1234567"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("+44 123 4567890"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("+44 1234567890"));
-        Assert.assertEquals(false, ValidationHelper.isValidPhoneNumber("+441234567890"));
+        Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("+441234567890"));
         Assert.assertEquals(false, ValidationHelper.isValidPhoneNumber("441234567890"));
     }
 

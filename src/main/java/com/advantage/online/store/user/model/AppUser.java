@@ -121,7 +121,7 @@ public class AppUser {
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(country, "country id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
 
         //  Validate String Arguments
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
