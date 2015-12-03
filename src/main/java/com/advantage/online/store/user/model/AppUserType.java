@@ -6,7 +6,8 @@ package com.advantage.online.store.user.model;
 public enum AppUserType {
 
     ADMIN(10),
-    USER(20);
+    USER(20),
+    GUEST(30);
 
     private Integer appUserTypecode;
 

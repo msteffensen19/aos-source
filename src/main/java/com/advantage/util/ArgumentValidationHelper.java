@@ -59,8 +59,7 @@ public abstract class ArgumentValidationHelper {
                                                                   final String argumentInformativeName) {
 
         ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
-        ArgumentValidationHelper.validateArgumentIsNotNull(argument,
-            argumentInformativeName);
+        ArgumentValidationHelper.validateArgumentIsNotNull(argument, argumentInformativeName);
         final String trimmedArgument = argument.trim();
         final int trimmedArgumentLength = trimmedArgument.length();
 
@@ -155,6 +154,97 @@ public abstract class ArgumentValidationHelper {
         if (argument <= 0) {
 
             final StringBuilder message = new StringBuilder("Could not accept a non positive value for argument [");
+            message.append(argumentInformativeName);
+            message.append("]: [");
+            message.append(argument);
+            message.append("]");
+            final String messageString = message.toString();
+            throw new IllegalArgumentException(messageString);
+        }
+    }
+
+    /**
+     * Validate that the given number argument <b>is</b> positive.
+     * <br/>
+     * <b>If no {@link IllegalArgumentException} was throw, than the validation has been
+     * successful.</b>
+     * @param argument the number argument to validate that it <b>is</b> positive.
+     * @param argumentInformativeName the informative name of the argument, to use for the
+     * error message, if the validation didn't pass.
+     * @throws IllegalArgumentException if the given number argument to validate (first
+     * argument) <b>is not</b> positive, or if the given argument-informative-name argument
+     * references <b>null</b>, or if it <b>is</b> a blank string.
+     */
+    public static void validateDoubleArgumentIsPositive(final double argument,
+                                                        final String argumentInformativeName) {
+
+        ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+
+        if (argument <= 0) {
+
+            final StringBuilder message = new StringBuilder("Could not accept a non positive value for argument [");
+            message.append(argumentInformativeName);
+            message.append("]: [");
+            message.append(argument);
+            message.append("]");
+            final String messageString = message.toString();
+            throw new IllegalArgumentException(messageString);
+        }
+    }
+
+    /**
+     * Validate that the given number argument <b>is</b> positive.
+     * <br/>
+     * <b>If no {@link IllegalArgumentException} was throw, than the validation has been
+     * successful.</b>
+     * @param argument the number argument to validate that it <b>is</b> positive or zero (0).
+     * @param argumentInformativeName the informative name of the argument, to use for the
+     * error message, if the validation didn't pass.
+     * @throws IllegalArgumentException if the given number argument to validate (first
+     * argument) <b>is not</b> zero or positive, or if the given argument-informative-name argument
+     * references <b>null</b>, or if it <b>is</b> a blank string.
+     * <br/>
+     * Created by Binyamin Regev on 03/12/2015 - not to change method {@code validateNumberArgumentIsPositive}
+     * which is already in use.
+     */
+    public static void validateNumberArgumentIsPositiveOrZero(final int argument,
+                                                        final String argumentInformativeName) {
+
+        ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+
+        if (argument < 0) {
+            final StringBuilder message = new StringBuilder("Could not accept a value for argument which is not 0 and not positive [");
+            message.append(argumentInformativeName);
+            message.append("]: [");
+            message.append(argument);
+            message.append("]");
+            final String messageString = message.toString();
+            throw new IllegalArgumentException(messageString);
+        }
+    }
+
+    /**
+     * Validate that the given number argument <b>is</b> positive.
+     * <br/>
+     * <b>If no {@link IllegalArgumentException} was throw, than the validation has been
+     * successful.</b>
+     * @param argument the number argument to validate that it <b>is</b> positive or zero (0).
+     * @param argumentInformativeName the informative name of the argument, to use for the
+     * error message, if the validation didn't pass.
+     * @throws IllegalArgumentException if the given number argument to validate (first
+     * argument) <b>is not</b> zero or positive, or if the given argument-informative-name argument
+     * references <b>null</b>, or if it <b>is</b> a blank string.
+     * <br/>
+     * Created by Binyamin Regev on 03/12/2015 - not to change method {@code validateNumberArgumentIsPositive}
+     * which is already in use.
+     */
+    public static void validateDoubleArgumentIsPositiveOrZero(final double argument,
+                                                              final String argumentInformativeName) {
+
+        ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
+
+        if (argument < 0) {
+            final StringBuilder message = new StringBuilder("Could not accept a value for argument which is not 0 and not positive [");
             message.append(argumentInformativeName);
             message.append("]: [");
             message.append(argument);

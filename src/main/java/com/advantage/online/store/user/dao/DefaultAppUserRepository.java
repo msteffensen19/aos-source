@@ -80,7 +80,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         ArgumentValidationHelper.validateArgumentIsNotNull(country, "country id");
 
         ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(country, "country id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
 
         //  Validate String Arguments - Mandatory columns
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");

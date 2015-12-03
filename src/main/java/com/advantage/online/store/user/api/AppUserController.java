@@ -61,7 +61,7 @@ public class AppUserController {
 
     }
 
-    @RequestMapping(value = "/account/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/users", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(appUser.getAppUserType(),
