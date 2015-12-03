@@ -1,5 +1,7 @@
 package com.advantage.online.store.order.model;
 
+import com.advantage.online.store.Constants;
+
 import javax.persistence.*;
 
 /**
@@ -31,14 +33,8 @@ public class ShoppingCart {
     @Column(name = "color_image_url")
     private  String colorImageUrl;
 
-    @Column(name = "original_price")
-    private double originalPrice;
-
-    @Column(name = "discount_percent")
-    private double discountPercent;
-
-    @Column(name = "price_after_discount")
-    private double priceAfterDiscount;
+    @Column(name = "price")
+    private double price;
 
     @Column(name = "quantity")
     private int quantity;
@@ -58,9 +54,7 @@ public class ShoppingCart {
         this.managedImageId = managedImageId;
         this.colorName = colorName;
         this.colorImageUrl = colorImageUrl;
-        this.originalPrice = originalPrice;
-        this.discountPercent = discountPercent;
-        this.priceAfterDiscount = priceAfterDiscount;
+        this.price = price;
         this.quantity = quantity;
         this.productTotal = productTotal;
         this.active = active;
@@ -88,17 +82,9 @@ public class ShoppingCart {
 
     public void setColorImageUrl(String colorImageUrl) { this.colorImageUrl = colorImageUrl; }
 
-    public double getOriginalPrice() { return originalPrice; }
+    public double getPrice() { return this.price; }
 
-    public void setOriginalPrice(double originalPrice) { this.originalPrice = originalPrice; }
-
-    public double getDiscountPercent() { return discountPercent; }
-
-    public void setDiscountPercent(double discountPercent) { this.discountPercent = discountPercent; }
-
-    public double getPriceAfterDiscount() { return priceAfterDiscount; }
-
-    public void setPriceAfterDiscount(double priceAfterDiscount) { this.priceAfterDiscount = priceAfterDiscount; }
+    public void setPrice(double price) { this.price = price; }
 
     public int getQuantity() { return quantity; }
 
@@ -112,5 +98,34 @@ public class ShoppingCart {
 
     public void setActive(boolean active) { this.active = active; }
 
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                " id=" + id +
+                ", loginName='" + this.getLoginName() + '\'' +
+                ", productId=" + this.getProductId() +
+                ", managedImageId='" + this.getManagedImageId() + '\'' +
+                ", colorName='" + this.getColorName() + '\'' +
+                ", colorImageUrl='" + this.getColorImageUrl()+ '\'' +
+                ", price=" + this.getPrice() +
+                ", quantity=" + this.getQuantity() +
+                ", productTotal=" + this.getProductTotal() +
+                ", active=" + this.isActive() + " }";
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+
+        ShoppingCart compareTo = (ShoppingCart) obj;
+
+        return ((this.getLoginName().equals(compareTo.getLoginName())) &&
+                (this.getProductId() == compareTo.getProductId()) &&
+                (this.getManagedImageId().equalsIgnoreCase(compareTo.getManagedImageId())) &&
+                (this.getColorName().equalsIgnoreCase(compareTo.getColorName())) &&
+                (this.getColorImageUrl().equalsIgnoreCase(compareTo.getColorImageUrl())) &&
+                (this.getPrice() == compareTo.getPrice()) &&
+                (this.getQuantity() == compareTo.getQuantity()) &&
+                (this.getProductTotal() == compareTo.getProductTotal())
+                );
+    }
 }

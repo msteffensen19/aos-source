@@ -2,6 +2,7 @@ package com.advantage.online.store.order.doa;
 
 import com.advantage.online.store.dao.AbstractRepository;
 import com.advantage.online.store.order.model.ShoppingCart;
+import com.advantage.util.ArgumentValidationHelper;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +12,20 @@ import java.util.List;
  */
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository{
     @Override
-    public ShoppingCart createShoppingCart() {
+    public ShoppingCart createShoppingCart(final String loginName, final Long productId, final String managedImageId, final String colorName, final String colorImageUrl, double price, final int quantity, double productTotal) {
+
+        //  Validate Numeric Arguments
+        ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
+
+        ArgumentValidationHelper.validateDoubleArgumentIsPositive(price, "total price");
+        ArgumentValidationHelper.validateDoubleArgumentIsPositiveOrZero(quantity, "quantity");
+        ArgumentValidationHelper.validateDoubleArgumentIsPositiveOrZero(productTotal, "total for product");
+
+        //  Validate String Arguments - Mandatory columns
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(managedImageId, "managed image id");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(colorName, "color name");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(colorImageUrl, "color image URL");
+
         return null;
     }
 

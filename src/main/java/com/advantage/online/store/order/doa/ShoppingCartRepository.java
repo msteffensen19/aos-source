@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCart> {
 
-    ShoppingCart createShoppingCart();
+    ShoppingCart createShoppingCart(final String loginName, final Long productId, final String managedImageId, final String colorName, final String colorImageUrl, double price, final int quantity, double productTotal);
     int deleteShoppingCart(final Long id);
     int deleteShoppingCartsByLogin(final String loginName);
     List<ShoppingCart> getAllShoppingCards();
