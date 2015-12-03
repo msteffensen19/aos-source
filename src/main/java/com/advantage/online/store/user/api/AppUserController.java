@@ -76,7 +76,7 @@ public class AppUserController {
                 appUser.getAddress(),
                 appUser.getZipcode(),
                 appUser.getEmail(),
-                appUser.getOffersPromotion());
+                appUser.getAllowOffersPromotion());
 
         if (appUserResponseStatus.isSuccess())
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);

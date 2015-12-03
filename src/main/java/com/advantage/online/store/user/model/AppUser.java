@@ -101,7 +101,7 @@ public class AppUser {
     private String email;
 
     @Column(name="AGREE_TO_RECEIVE_OFFERS")
-    private char offersPromotion;  //   'Y' = Yes ; 'N' = No
+    private char allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
 
     @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -148,7 +148,7 @@ public class AppUser {
         this.setAddress(address);
         this.setZipcode(zipcode);
         this.setEmail(email);
-        this.setOffersPromotion(offersPromotion);
+        this.setAllowOffersPromotion(offersPromotion);
         this.setInternalUnsuccessfulLoginAttempts(0);   //  Initial default value
         this.setInternalUserBlockedFromLoginUntil(0);   //  initial default value
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
@@ -262,12 +262,10 @@ public class AppUser {
         this.email = email;
     }
 
-    public char getOffersPromotion() {
-        return offersPromotion;
-    }
+    public char getAllowOffersPromotion() { return this.allowOffersPromotion; }
 
-    public void setOffersPromotion(char offersPromotion) {
-        this.offersPromotion = offersPromotion;
+    public void setAllowOffersPromotion(char allowOffersPromotion) {
+        this.allowOffersPromotion = allowOffersPromotion;
     }
 
     public int getInternalUnsuccessfulLoginAttempts() { return internalUnsuccessfulLoginAttempts; }
@@ -348,7 +346,7 @@ public class AppUser {
                 "number of unsuccessful login attempts=" + this.getInternalUnsuccessfulLoginAttempts() + Constants.SPACE +
                 "user blocked from login until=\"" + this.getUserBlockedFromLoginUntilAsString() + "\" " +
                 "last successful login=\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getInternalLastSuccesssulLogin()) + "\"" +
-                "agree to receive offers and promotions=" + this.getOffersPromotion();
+                "agree to receive offers and promotions=" + this.getAllowOffersPromotion();
     }
 
     public static String convertMillisecondsDateToString(long milliSecondsDate) {
