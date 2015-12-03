@@ -101,7 +101,7 @@ public class AppUser {
     private String email;
 
     @Column(name="AGREE_TO_RECEIVE_OFFERS")
-    private char agreeToReceiveOffersAndPromotions;  //   'Y' = Yes ; 'N' = No
+    private char offersPromotion;  //   'Y' = Yes ; 'N' = No
 
     @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -116,7 +116,7 @@ public class AppUser {
 
     }
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
@@ -134,7 +134,7 @@ public class AppUser {
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address, "address");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(offersPromotion), "agree to receive offers and promotions");
 
         this.setAppUserType(appUserType);
         this.setLastName(lastName);
@@ -148,14 +148,14 @@ public class AppUser {
         this.setAddress(address);
         this.setZipcode(zipcode);
         this.setEmail(email);
-        this.setAgreeToReceiveOffersAndPromotions(agreeToReceiveOffersAndPromotions);
+        this.setOffersPromotion(offersPromotion);
         this.setInternalUnsuccessfulLoginAttempts(0);   //  Initial default value
         this.setInternalUserBlockedFromLoginUntil(0);   //  initial default value
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, agreeToReceiveOffersAndPromotions);
+    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
     public long getId() {
@@ -262,12 +262,12 @@ public class AppUser {
         this.email = email;
     }
 
-    public char getAgreeToReceiveOffersAndPromotions() {
-        return agreeToReceiveOffersAndPromotions;
+    public char getOffersPromotion() {
+        return offersPromotion;
     }
 
-    public void setAgreeToReceiveOffersAndPromotions(char agreeToReceiveOffersAndPromotions) {
-        this.agreeToReceiveOffersAndPromotions = agreeToReceiveOffersAndPromotions;
+    public void setOffersPromotion(char offersPromotion) {
+        this.offersPromotion = offersPromotion;
     }
 
     public int getInternalUnsuccessfulLoginAttempts() { return internalUnsuccessfulLoginAttempts; }
@@ -348,7 +348,7 @@ public class AppUser {
                 "number of unsuccessful login attempts=" + this.getInternalUnsuccessfulLoginAttempts() + Constants.SPACE +
                 "user blocked from login until=\"" + this.getUserBlockedFromLoginUntilAsString() + "\" " +
                 "last successful login=\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getInternalLastSuccesssulLogin()) + "\"" +
-                "agree to receive offers and promotions=" + this.getAgreeToReceiveOffersAndPromotions();
+                "agree to receive offers and promotions=" + this.getOffersPromotion();
     }
 
     public static String convertMillisecondsDateToString(long milliSecondsDate) {
