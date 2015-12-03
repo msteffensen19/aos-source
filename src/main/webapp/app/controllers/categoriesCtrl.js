@@ -24,6 +24,7 @@ define(['./module'], function (controllers) {
             }
 
             function loadRemoteData() {
+
                 categoryService.getCategories()
                     .then(function( categories ) {
                         applyRemoteData( categories );

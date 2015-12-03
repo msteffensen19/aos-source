@@ -10,7 +10,7 @@ define(['./module'], function (controllers) {
             $scope.Quantity = 1;
 
             $scope.product = product;
-
+            $scope.colorSelected = '';
             $scope.addToCart = function(){
 
                 /*
@@ -40,7 +40,11 @@ define(['./module'], function (controllers) {
                 */
             }
 
+            $scope.setColor = function(num){
+                $scope.colorSelectedId = num;
+            }
             $("nav .navLinks").css("display", "none");
+
         }]);
     });
 

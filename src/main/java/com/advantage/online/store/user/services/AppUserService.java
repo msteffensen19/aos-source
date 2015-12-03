@@ -22,8 +22,8 @@ public class AppUserService {
 
 
     @Transactional
-    public AppUserResponseStatus create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Integer country, final String phoneNumber, final String stateProvince, final String cityName, final String address1, final String address2, final String zipcode, final String email, final char agreeToReceiveOffersAndPromotions) {
-        return appUserRepository.create(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
+    public AppUserResponseStatus create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Integer country, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final char allowOffersPromotion) {
+        return appUserRepository.create(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +38,7 @@ public class AppUserService {
 
     @Transactional(readOnly = true)
     public List<AppUser> getAllAppUsers() {
-        return appUserRepository.getAllAppUsers();
+        return appUserRepository.getAll();
     }
 
 }

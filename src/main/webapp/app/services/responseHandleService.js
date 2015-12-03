@@ -7,9 +7,18 @@ define(['./module'], function (services) {
 
         return({
             handleError: handleError,
-            handleSuccess : handleSuccess
+            handleSuccess : handleSuccess,
+            getAllCountries : getAllCountries,
         });
 
+        function getAllCountries() {
+            var request = $http({
+                method: "get",
+                url: "api/account/countries",
+            });
+            console.log(request);
+            return( request.then( this.handleSuccess, this.handleError ) );
+        }
 
         function handleError( response ) {
             // The API response from the server should be returned in a

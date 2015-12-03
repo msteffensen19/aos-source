@@ -111,6 +111,11 @@
     border-radius: 50%;
     background: white;
     box-shadow: 0 0 0 1px #d0d0d0;
+    border:solid 1px #9d9d9d;
+}
+
+#productProperties .colors span.selected{
+
 }
 
 

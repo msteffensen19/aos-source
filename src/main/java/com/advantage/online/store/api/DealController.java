@@ -28,7 +28,7 @@ public class DealController {
     @Autowired
     private DealService dealService;
 
-    @RequestMapping(value = "deals", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog/deals", method = RequestMethod.GET)
     public ResponseEntity<List<Deal>> getAllDeals(final HttpServletRequest request,
                                                   final HttpServletResponse response) {
 
@@ -39,7 +39,7 @@ public class DealController {
         return new ResponseEntity<>(deals, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "dealOfDay", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog/deals/0", method = RequestMethod.GET)
     public ResponseEntity<Deal> getDealOfTheDay(final HttpServletRequest request,
                                                 final HttpServletResponse response) {
 

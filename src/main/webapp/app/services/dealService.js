@@ -13,10 +13,7 @@ define(['./module'], function (services) {
         function getDeals() {
             var request = $http({
                 method: "get",
-                url: "api/deal"
-                //params: {
-                //    action: "get"
-                //}
+                url: "api/catalog/deals"
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
@@ -24,10 +21,7 @@ define(['./module'], function (services) {
         function getDealOfTheDay() {
             var request = $http({
                 method: "get",
-                url: "api/dealOfDay"
-                //params: {
-                //    action: "get"
-                //}
+                url: "api/catalog/deals/0"
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }

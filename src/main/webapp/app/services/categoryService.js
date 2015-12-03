@@ -9,7 +9,7 @@ define(['./module'], function (services) {
         return{
             getCategories : getCategories,
             getCategoryProducts : getCategoryProducts,
-            getMockData : getMockData,
+            getCategoryById : getCategoryById,
             getPopularProducts : getPopularProducts
         }
 
@@ -17,40 +17,25 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 url: "api/category",
-                //params: {
-                //    action: "get"
-                //}
+                //url: "api/catalog/categories",
             });
-
-            return( request.then(
-                responseService.handleSuccess,
-                responseService.handleError
-                )
-            );
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
         function getCategoryProducts(id) {
-            var request = $http({
-                method: "get",
-                url: "api/categoryProducts?category_id=" + id
-                //params: {
-                //    action: "get"
-                //}
-            });
-            return( request.then(
-                responseService.handleSuccess,
-                responseService.handleError )
+                var request = $http({
+                    method: "get",
+                    url: "api/categoryProducts?category_id=" + id
+                });
+                return( request.then( responseService.handleSuccess, responseService.handleError )
             );
         }
 
-        function getMockData(id) {
+        function getCategoryById(id) {
             var request = $http({
                 method: "get",
-                url: '/api/categoryData/' + id ,
-                //url: 'app/categoryProducts_' + id +'.json'
-                //params: {
-                //    action: "get"
-                //}
+                url: "api/categoryData/" + id
+                //url: "api/catalog/categories/" + id
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         };
@@ -59,9 +44,6 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 url: "app/popularProducts.json"
-                //params: {
-                //    action: "get"
-                //}
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }

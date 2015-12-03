@@ -6,30 +6,49 @@ define(['./module'], function (services) {
     services.service('registerService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
         // Return public API.
         return({
-            getProducts: getProducts,
-            getProductById : getProductById
+            register: register,
+            getAllCountries: getAllCountries,
         });
 
-        function getProducts() {
+
+        function getAllCountries(model) {
+            return responseService.getAllCountries();
+        }
+
+        function register(model) {
+            console.log("model")
+            console.log(model)
+
+            var expectToReceive = {
+                "address": model.address ,
+                "allowOffersPromotion":  model.offers_promotion ? 'Y' : 'N',
+                "appUserType": 10,
+                "cityName": model.city,
+                "country": model.country.id,
+                "email": model.email,
+                "firstName": model.firstName,
+                "id": 0,
+                "internalLastSuccesssulLogin": 0,
+                "internalUnsuccessfulLoginAttempts": 0,
+                "internalUserBlockedFromLoginUntil": 0,
+                "lastName": model.lastName,
+                "loginName": model.username,
+                "password": model.password,
+                "phoneNumber": model.phoneNumber,
+                "stateProvince": model.state,
+                "zipcode": model.postalCode,
+            }
+            console.log(expectToReceive);
+            console.log(JSON.stringify(expectToReceive))
+
+
             var request = $http({
-                method: "get",
-                url: "api/products"
-                //params: {
-                //    action: "get"
-                //}
+                method: "post",
+                url: "api/account/users",
+                data: JSON.stringify(expectToReceive),
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
-        function getProductById(id) {
-            var request = $http({
-                method: "get",
-                url: 'app/product.json'
-                //params: {
-                //    action: "get"
-                //}
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
-        }
     }]);
 });

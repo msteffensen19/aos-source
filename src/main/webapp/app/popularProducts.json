@@ -24,7 +24,8 @@
     {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
     {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
     {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
-  ]},{"id": 3,
+  ]},
+  {"id": 3,
   "productName": "HP EliteBook Folio",
   "price": 550,
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
