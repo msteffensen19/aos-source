@@ -4,3 +4,4 @@ target/*
 *.log
 *.iml
 src/main/webapp/vendor/*
+src/main/webapp/app/templates/*
