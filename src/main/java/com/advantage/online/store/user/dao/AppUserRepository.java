@@ -29,6 +29,8 @@ public interface AppUserRepository extends DefaultCRUDOperations<AppUser> {
     String getBlockedUntilTimestamp(long milliSeconds);
     AppUser updateAppUser(AppUser appUser);
 
+    String getFailureMessage();
+
     int deleteAppUser(AppUser appUser);
 //    int deleteAppUsersByEmails(Collection<String> emails);
 //    int deleteAppUsersByLogins(Collection<String> logins);

@@ -114,12 +114,26 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                                                                                         zipcode,
                                                                                         email,
                                                                                         YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
+        /**
+         * I tried to create a user with {@code loginName} which already exists for
+         * another application user. Expected {@code failureMessage} NOT to be EMPTY
+         * and {@code appUser} to be {@code null}.
+         */
+        Assert.assertFalse(appUserRepository.getFailureMessage().isEmpty());
 
-        transactionManager.commit(transactionStatusForCreation);
+        if (appUser != null) {
+            //  In case test has failed
+            transactionManager.commit(transactionStatusForCreation);
 
-        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-        appUserRepository.deleteAppUser(appUser);
-        transactionManager.commit(transactionStatusForDeletion);
+            System.out.println("Going to delete appUser " + appUser);
+            final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+            appUserRepository.deleteAppUser(appUser);
+            transactionManager.commit(transactionStatusForDeletion);
+        }
+        else {
+            //  Show message about expected error
+            System.out.println("createAppUser(..) FAILED! " + appUserRepository.getFailureMessage());
+        }
 
 //        System.out.println("Create COUNTRY1 AppUsers ...");
 //        for (int i = 0; i < COUNTRY1_APP_USERS_COUNT; i++) {
