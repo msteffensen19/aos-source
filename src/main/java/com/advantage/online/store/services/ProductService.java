@@ -5,9 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.advantage.online.store.config.ImageManagementConfiguration;
 import com.advantage.online.store.dto.AttributeItem;
+import com.advantage.online.store.dto.ImageUrlResponseStatus;
 import com.advantage.online.store.dto.ProductApiDto;
 import com.advantage.online.store.dto.ProductResponseStatus;
+import com.advantage.online.store.image.ImageManagement;
+import com.advantage.online.store.image.ImageManagementAccess;
+import com.advantage.online.store.image.ManagedImage;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.ColorAttribute;
@@ -15,11 +20,15 @@ import com.advantage.online.store.model.product.ImageAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.util.ArgumentValidationHelper;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -31,6 +40,8 @@ public class ProductService {
     CategoryService categoryService;
     @Autowired
     private AttributeService attributeService;
+    @Autowired
+    private Environment environment;
 
     public List<Product> getAllProducts() {
 
@@ -148,6 +159,25 @@ public class ProductService {
         }
 
         return new ProductResponseStatus(true, product.getId(), "Product was updated successful");
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public ImageUrlResponseStatus fileUpload(MultipartFile file) {
+        String imageManagementRepository =
+            environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
+        try {
+            byte[] bytes = file.getBytes();
+            String originalFileName = file.getOriginalFilename();
+            ImageManagement imageManagement = ImageManagementAccess.getImageManagement(
+                ImageManagementConfiguration.getPath(imageManagementRepository));
+
+            ManagedImage managedImage = imageManagement.addManagedImage(bytes, originalFileName, true);
+            imageManagement.persist();
+
+            return new ImageUrlResponseStatus(managedImage.getId(), true, "Image successfully uploaded");
+        } catch (Exception e) {
+            return new ImageUrlResponseStatus("", false, "Failed to upload " + e.getMessage());
+        }
     }
 
     private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
