@@ -76,21 +76,21 @@ public class DataSourceInit4Json {
         Attribute attribute6 = new Attribute();
         Attribute attribute7 = new Attribute();
 
-        attribute1.setName("Operating System");
-        attribute2.setName("Price");
-        attribute3.setName("Color");
-        attribute4.setName("Customization");
-        attribute5.setName("Processor");
-        attribute6.setName("Display");
-        attribute7.setName("Memory");
+        attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
+        attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
+        attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
+        attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
+        attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
+        attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
+        attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
 
-        session.persist(attribute4);
         session.persist(attribute1);
-        session.persist(attribute5);
-        session.persist(attribute7);
-        session.persist(attribute6);
-        session.persist(attribute3);
         session.persist(attribute2);
+        session.persist(attribute3);
+        session.persist(attribute4);
+        session.persist(attribute5);
+        session.persist(attribute6);
+        session.persist(attribute7);
 
         transaction.commit();
 
