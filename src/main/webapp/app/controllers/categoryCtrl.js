@@ -21,7 +21,8 @@ define(['./module'], function (controllers) {
             applyRemoteData(category);
 
             function loadRemoteData() {
-                categoryService.getMockData($scope.catId)
+
+                categoryService.getCategoryById($scope.catId)
                     .then(function( category ) {
                         applyRemoteData( category );
                     });

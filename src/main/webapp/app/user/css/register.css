@@ -54,13 +54,9 @@ white-space: nowrap;
     margin: 2px;
 }
 
-#form{
-    width: 1000px;
-}
-
-
 #formCover > div {
-    max-width: 815px;
+    max-width:  942px;
+    margin: 0 0 47px 0;
 }
 
 
@@ -69,54 +65,113 @@ white-space: nowrap;
 }
 
 
-#formCover > div input[type=text] {
+#formCover > div span{
     display: inline-block;
     width: 350px;
     margin-right: 50px;
-    margin-bottom: 10px;
 }
 
-
-
-#formCover > div input[type=text].titleAnim {
-    position: relative;
-    background-color: red;
+#formCover > div input[type=text],
+#formCover > div input[type=password],
+#formCover > div .inputtext{
+    width: 100%;
 }
 
-#formCover > div input[type=text].titleAnim:before {
-    content: "";
+.animPlaceholderUp img {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    z-index: 1;
+    right: 0px;
+    top: 12px;
 }
 
-#formCover > div .option {
+
+#formCover .option {
     margin: 20px 0;
     display: block;
+}
+
+#formCover .option span{
+    width: 100%;
+}
+
+#form input[type=submit]{
+    border:  solid 1px #2a2a2a;
+    color:#2a2a2a;
+    background-color: white;
+    width: 330px;
+    font-size: 16px;
+    height: 47px;
+    display: block;
+    margin: 20px auto;
+    transition: all .3s ease;
+}
+
+#form input[type=submit]:hover{
+    border:  solid 1px white;
+    color: white;
+    background-color:#2a2a2a;
+}
+
+#form input[type=submit]:hover{
+    color: white;
+    background-color:#2a2a2a;
+    width: 330px;
+}
+
+.ALREADY_HAVE_AN_ACCOUNT{
+    font-size: 12px;
+    color:#2a2a2a;
+    display: block;
+    text-align: center;
+}
+
+#formCover .must{
+    position: absolute;
+    top:12px;
+    left:-12px;
+    color: #ff454f !important;
+}
+
+#form .invalid{
+    color: #ff454f !important;
+}
+
+#form .center{
+    display: block;
+    text-align: center;
+    padding: 20px;
+}
+
+#form .invalidInput{
+    border-bottom: solid #ff454f 1px;
+}
+
+#form .opacityButtonDisable{
+    opacity: 0.32;
+    cursor: default;
+}
+
+#form .opacityButtonDisable:hover{
+    background-color: white !important;
+    color: #2a2a2a !important;
+    border:  solid #2a2a2a 1px !important;
 }
 
 @media screen and (max-width: 1200px)
 {
 
-    #formCover > div input[type=text] {
+    #formCover > div span {
         width: 40%;
     }
-}
 
-@media screen and (max-width: 1000px)
-{
-
-    #formCover > div input[type=text] {
-//        display: inline-block;
-  //      width: 100%;
-    //    margin-right: 50px;
-    }
 }
 
 @media screen and (max-width: 940px)
 {
+
+    #infoDemo, #form{
+        display: block;
+    }
+
 
     #infoDemo{
         margin: 0 auto;
@@ -124,10 +179,11 @@ white-space: nowrap;
     }
 
     #form{
-        padding: 25px 50px;
         box-sizing: border-box;
         width: 100%;
         background-clip: content-box;
+        padding: 25px 20px;
+
     }
 
 
@@ -136,29 +192,35 @@ white-space: nowrap;
         margin: 10px auto;
     }
 
-
-    #formCover > div input[type=text] {
+    #formCover{
+        width: 100%;
+    }
+    #formCover > div span {
         display: inline-block;
-        width: 42%;
+        width: 45.5%;
         margin-right: 25px;
         margin-left: 25px;
     }
+
 }
 
 
 @media screen and (max-width: 780px)
 {
-
     #form{
         width: 100%;
         display: block;
     }
 
-    #formCover > div input[type=text] {
-        display: block;
+    #formCover > div span {
         width: 100%;
         margin: 0px;
+        margin-top: 10px;
     }
+    .animPlaceholderUp *{
+        white-space: normal;
+    }
+
 }
 
 

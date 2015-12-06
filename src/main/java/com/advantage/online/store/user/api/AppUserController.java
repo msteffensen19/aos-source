@@ -30,14 +30,14 @@ public class AppUserController {
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping(value = "/appUserData/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/users", method = RequestMethod.GET)
     public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
         List<AppUser> appUsers = appUserService.getAllAppUsers();
 
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/appUserData/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/login", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
@@ -61,28 +61,28 @@ public class AppUserController {
 
     }
 
-    @RequestMapping(value = "/appUserData/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/users", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
 
-        final AppUserResponseStatus appUserResponseStatus = appUserService.create(appUser.getAppUserType(),
+        final AppUserResponseStatus appUserResponseStatus = appUserService.create(
+                appUser.getAppUserType(),
                 appUser.getLastName(),
                 appUser.getFirstName(),
-                appUser.getCityName(),
+                appUser.getLoginName(),
                 appUser.getPassword(),
                 appUser.getCountry(),
                 appUser.getPhoneNumber(),
                 appUser.getStateProvince(),
                 appUser.getCityName(),
-                appUser.getAddress1(),
-                appUser.getAddress2(),
+                appUser.getAddress(),
                 appUser.getZipcode(),
                 appUser.getEmail(),
-                appUser.getAgreeToReceiveOffersAndPromotions());
+                appUser.getAllowOffersPromotion());
 
         if (appUserResponseStatus.isSuccess())
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
         else
-            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.CONFLICT);
 
     }
 }

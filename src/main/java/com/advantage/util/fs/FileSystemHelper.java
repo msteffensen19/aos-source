@@ -217,7 +217,7 @@ public abstract class FileSystemHelper {
 
 			// How to read file in java line by line?
 			while ((csvLine = csvBuffer.readLine()) != null) {
-				System.out.println("Raw CSV data: " + csvLine);
+				//System.out.println("Raw CSV data: " + csvLine);
 				linesResult.add(csvLine);
 			}
 

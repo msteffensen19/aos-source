@@ -20,7 +20,7 @@ define([],function(){
             POPULAR_ITEMS : 'POPULAR ITEMS',
             FOLLOW_US : 'FOLLOW US',
             'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
-            'FILTER_BY' : 'FILTER BY',
+            'FILTER_BY' : 'FILTER BY: ',
             'ADD_TO_CART' : 'ADD TO CART',
             'HOME' : 'HOME',
             'BUY_NOW' : 'BUY NOW',
@@ -56,7 +56,6 @@ define([],function(){
             'PERSONAL_DETAILS' : 'PERSONAL DETAILS',
             'ADDRESS' : 'ADDRESS',
             'User_Name' : 'User Name',
-            'Password' : 'Password',
             'Confirm_Password' : 'Confirm Password',
             'First_Name' : 'First Name',
             'Last_Name' : 'Last Name',
@@ -64,9 +63,25 @@ define([],function(){
             'Country' : 'Country',
             'City' : 'City',
             'Address' : 'Address',
-            'Postal_Code' : 'Postal Code', 
+            'Postal_Code' : 'Postal Code',
             'State__Province__Region' : 'State / Province / Region',
-            'offers_promotion' :  'Recieve exclisive offers and promotions from Advantage'
+            'offers_promotion' :  'Recieve exclisive offers and promotions from Advantage',
+            'REGISTER' : 'REGISTER',
+            'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT',
+
+
+
+
+            'User_Name_required' : 'User Name required!',
+            'Email_field_required' : 'Email field required!',
+            'confirm_password_required' : 'Confirm password required!',
+            'Password_not_match' : "Password not match!",
+            'Invalid_email_address' : 'Invalid email address',
+            'Password_field_required' : 'Password field required',
+            'Password_5_minlength_field_error' : 'Password requires at least 5 characters',
+            'Password_10_maxlength_field_error' : 'Password requires a maximum of 10 characters',
+            'Password_regex' : 'uppercase, lowercase and number required',
+            'User_Name_pattern' : "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
 
         });
 
@@ -108,7 +123,7 @@ define([],function(){
                 },
                 resolve : {
                     category: function (categoryService, $stateParams) {
-                        return categoryService.getMockData($stateParams.id);
+                        return categoryService.getCategoryById($stateParams.id);
                     }
                 }
             })

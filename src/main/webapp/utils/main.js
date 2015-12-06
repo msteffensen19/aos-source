@@ -3,17 +3,27 @@
  */
 
 var Main = Main || {};
+Main.miniItemPopUp = function(){ }
+Main.productHover = function(){ }
+Main.addAccordionEventListener = function(){ }
 
-Main.miniItemPopUp = function(){
 
-}
 
-Main.productHover = function(){
+Main.addAnimPlaceholderEventListener = function(){
 
-}
+    $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
+        $(this).siblings().animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
+    })
 
-Main.addAccordionEventListener = function(){
+    $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').blur(function(){
+        if($(this).val() == '') { $(this).siblings().animate({'top': '11px'}, 800, $.bez([0.62,-0.14,0.35,1.34])); }
+    });
 
+    $(".animPlaceholderUp label").click(function() {
+        $(this).parent().find("label").animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
+        console.log($(this).parent().find("label, a"))
+        $(this).prev('input').focus();
+    });
 }
 
 
@@ -21,6 +31,8 @@ Main.addAccordionEventListener = function(){
 $(document).on({
 
     ready: function() {
+
+
 
 
         // Mobile section handler
@@ -80,13 +92,13 @@ $(document).on({
         });
 
 
-        $(document).on("mouseover", ".categoryRight ul li", function(){
-            $(this).siblings().stop().animate({ "opacity" : "0.3", }, 500);
-        });
+//        $(document).on("mouseover", ".categoryRight ul li", function(){
+  //          $(this).siblings().stop().animate({ "opacity" : "0.3", }, 500);
+    //    });
 
-        $(document).on("mouseout", ".categoryRight ul li", function(){
-            $(this).siblings().stop().animate({ "opacity" : "1", }, 1000);
-        });
+//        $(document).on("mouseout", ".categoryRight ul li", function(){
+  //          $(this).siblings().stop().animate({ "opacity" : "1", }, 1000);
+    //    });
 
         $(document).on("click", ".accordion", function() {
             $(this).toggleClass('arrowUp');
@@ -94,14 +106,14 @@ $(document).on({
         });
 
         $(document).on("click", ".productColor ", function() {
-            $(this).toggleClass('selected');
+            $(this).toggleClass('colorSelected');
         });
+
 
         _resize();
         function _resize() {
             $(".mini-title").css("display", "none");
             $("body").css("left", "0px")
-            $("#mobile-section").height($(window).height() + "px");
         }
 
     },

@@ -52,8 +52,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                                             "+972 54 1234567",                  /*  String phoneNumber                      */
                                             "province",                         /*  String stateProvince                    */
                                             "CityName",                         /*  String cityName                         */
-                                            "Address1",                         /*  String address1                         */
-                                            "Address2",                         /*  String address2                         */
+                                            "Address",                         /*  String address1                         */
                                             "7654321",                          /*  String zipcode                          */
                                             "koi@israel.gov.il",                /*  String email                            */
                                             YesNoReply.YES.getReplyTypeChar()); /*  char agreeToReceiveOffersAndPromotions  */
@@ -81,8 +80,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         final String phoneNumber = "+972 2 7654321";
         final String stateProvince = "Jerusalem Region";
         final String cityName = "Jerusalem";
-        final String address1 = "";
-        final String address2 = "";
+        final String address = "";
         final String zipcode = "";   //   7-Digits zip (postal) code
         final String email = "koi@israel.gov.il";   //  koi = King of Israel
 
@@ -112,8 +110,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                                                                                         phoneNumber,
                                                                                         stateProvince,
                                                                                         cityName,
-                                                                                        address1,
-                                                                                        address2,
+                                                                                        address,
                                                                                         zipcode,
                                                                                         email,
                                                                                         YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
@@ -160,8 +157,8 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
 //                                            YesNoReply.YES.getReplyTypeChar());
 //        }
 //
-//        System.out.println("Calling appUserRepository.getAllAppUsers() ...");
-//        final List<AppUser> appUsers = appUserRepository.getAllAppUsers();
+//        System.out.println("Calling appUserRepository.getAll() ...");
+//        final List<AppUser> appUsers = appUserRepository.getAll();
 //        //Assert.assertEquals("appUsers size is " + appUsers.size(), (COUNTRY1_APP_USERS_COUNT + COUNTRY2_APP_USERS_COUNT + 1), appUsers.size());
 //
 //        System.out.println("Application Users: ");
@@ -225,8 +222,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  phone number    */
                 "Jerusalem Region",
                 "Jerusalem",
-                "",             /*  address 1       */
-                "",             /*  address 2       */
+                "",             /*  address         */
                 "",             /*  zipcode         */
                 "ks@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
@@ -239,8 +235,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  phone number    */
                 "Jerusalem Region",
                 "Jerusalem",
-                "",             /*  address 1       */
-                "",             /*  address 2       */
+                "",             /*  address         */
                 "",             /*  zipcode         */
                 "ks@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
@@ -253,8 +248,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  phone number    */
                 "Jerusalem Region",
                 "Jerusalem",
-                "",             /*  address 1       */
-                "",             /*  address 2       */
+                "",             /*  address         */
                 "",             /*  zipcode         */
                 "hy@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
@@ -267,15 +261,14 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  phone number    */
                 "Jerusalem Region",
                 "Jerusalem",
-                "",             /*  address 1       */
-                "",             /*  address 2       */
+                "",             /*  address         */
                 "",             /*  zipcode         */
                 "he@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
 
         transactionManager.commit(transactionStatusForCreation);
 
-        List<AppUser> appUsers = appUserRepository.getAllAppUsers();
+        List<AppUser> appUsers = appUserRepository.getAll();
         Assert.assertNotNull(appUsers);
         Assert.assertTrue(appUsers.size() > 0);
     }

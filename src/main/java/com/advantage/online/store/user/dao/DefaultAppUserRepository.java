@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -62,11 +60,10 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * @param phoneNumber Phone number including international country-code and area code.
      * @param stateProvince State/province/region of residence.
      * @param cityName City-name of residence.
-     * @param address1 1st line of postal address.
-     * @param address2 2nd line of new-user's postal address.
+     * @param address postal address.
      * @param zipcode new-user's zip-code of postal address.
      * @param email New user's e-mail address.
-     * @param agreeToReceiveOffersAndPromotions
+     * @param allowOffersPromotion
      * @return {@link AppUserResponseStatus} when successful:
      * <br/>
      * <b>{@code success}</b> = true, <b>{@code reason}</b> = &quat;New user created successfully&quat; <b>{@code userId}</b> = user-id of newly created user.
@@ -75,34 +72,33 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * <br/>
      */
     @Override
-    //public AppUserResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-    public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    //public AppUserResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(country, "country id");
 
         ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(country, "country id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
 
         //  Validate String Arguments - Mandatory columns
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(password, "user password");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(allowOffersPromotion), "agree to receive offers and promotions");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(lastName, "last name");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(firstName, "first name");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
-        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
-        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address, "address");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
 
         if (ValidationHelper.isValidLogin(loginName)) {
             if (ValidationHelper.isValidPassword(password)) {
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
-                    AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
+                    AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
                     entityManager.persist(appUser);
 
                     appUserResponseStatus = new AppUserResponseStatus(true, "New user created successfully.", appUser.getId());
@@ -125,8 +121,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
     }
 
-    public AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-        AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
+    public AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
+        AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
         return new AppUserResponseStatus(appUserResponseStatus.isSuccess(),
                 appUserResponseStatus.getReason(),
@@ -171,18 +167,6 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 //
 //        return query.executeUpdate();
 //    }
-
-    @Override
-    public List<AppUser> getAllAppUsers() {
-        List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
-                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
-                .getResultList();
-
-//        //  Encrypt the password before updating it into the database
-//        String encryptedPassword = userPassword.decryptText(password);
-
-        return appUsers.isEmpty() ? null : appUsers;
-    }
 
     @Override
     public List<AppUser> getAppUsersByCountry(Integer countryId) {
@@ -275,22 +259,24 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
         }
 
-
-        if (email != null) {
-            if (appUser.getEmail() != null) {
-                if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
-                    //  email does not match the email set in user details
+        //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
+        if (AppUserConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
+            if ((!email.isEmpty()) && (email.trim().length() > 0)) {
+                if ((!appUser.getEmail().isEmpty()) && (appUser.getEmail().trim().length() > 0)) {
+                    if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
+                        //  email does not match the email set in user details
+                        appUser = addUnsuccessfulLoginAttempt(appUser);
+                        return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
+                    }
+                } else {
+                    //
                     appUser = addUnsuccessfulLoginAttempt(appUser);
-                    return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
+                    return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
                 }
-            } else {
-                //
-                appUser = addUnsuccessfulLoginAttempt(appUser);
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
-            }
 
-//        } else {
-//            return new AppUserResponseStatus(false, "Login email is empty.", appUser.getId());
+            } else {
+                return new AppUserResponseStatus(false, AppUser.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, appUser.getId());
+            }
         }
 
         //  Reset user-blocking
@@ -332,9 +318,11 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         appUser.setInternalUnsuccessfulLoginAttempts(appUser.getInternalUnsuccessfulLoginAttempts() + 1);
 
         //  Check the number of unsuccessful login attempts, block user if reached the limit
-        if (appUser.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+        //if (appUser.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+        if (appUser.getInternalUnsuccessfulLoginAttempts() == AppUserConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
+
             //  Update AppUser class with timestamp when user can attempt login again according to configuration interval
-            appUser.setInternalUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(ENV_DEFAULT_USER_LOGIN_ATTEMPTS_BLOCKED_INTERVAL));
+            appUser.setInternalUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(AppUserConfiguration.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS));
         }
 
         //  Update data changes made for application user into application users table
@@ -366,5 +354,28 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      */
     private String getTokenKey() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public int delete(AppUser... entities) {
+        return 0;
+    }
+
+    @Override
+    public List<AppUser> getAll() {
+        List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
+                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
+                .getResultList();
+
+        return appUsers.isEmpty() ? null : appUsers;
+    }
+
+    @Override
+    public AppUser get(Long entityId) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(AppUser.class, AppUser.FIELD_ID, entityId);
+        Query query = entityManager.createQuery(hql);
+
+        return (AppUser) query.getSingleResult();
     }
 }

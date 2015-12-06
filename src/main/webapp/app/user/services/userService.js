@@ -14,7 +14,6 @@ define(['./module'], function (services) {
             };
 
 
-
             // Return the public API.
             return ({
                 open: open,
@@ -25,28 +24,21 @@ define(['./module'], function (services) {
                 login: login,
                 createNewAccount: createNewAccount,
                 forgotPassword: forgotPassword,
-                blockPc: blockPc
+                getConfiguration : getConfiguration,
             });
 
+            function getConfiguration(){
 
+                var request = $http({
+                 //"Content-Type": "application/json;charset=UTF-8",
+                 "method": "get",
+                 "url": "api/appUserConfiguration/getAll",
+                 });
+                 return( request.then(
+                 responseService.handleSuccess,
+                 responseService.handleError
+                 ));
 
-            function blockPc () {
-                alert()
-                /*var request = $http({
-                    "Content-Type": "application/json;charset=UTF-8",
-                    "method": "post",
-                    "url": "api/appUserData/login",
-                    "data": JSON.stringify(user) ,
-
-                });
-                return( request.then(
-                    responseService.handleSuccess,
-                    responseService.handleError
-                ));
-                */
-                var def = $q.defer();
-
-                return def.resolve("{ success: " + true + "}") ;
             }
 
 
@@ -55,14 +47,14 @@ define(['./module'], function (services) {
                 var request = $http({
                     "Content-Type": "application/json;charset=UTF-8",
                     "method": "post",
-                    "url": "api/appUserData/login",
+                    "url": "api/account/login",
                     "data": JSON.stringify(user) ,
-
                 });
                 return( request.then(
                     responseService.handleSuccess,
                     responseService.handleError
                 ));
+
             }
 
 

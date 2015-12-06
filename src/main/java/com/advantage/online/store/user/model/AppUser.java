@@ -40,6 +40,7 @@ public class AppUser {
     public static final String MESSAGE_USER_IS_BLOCKED_FROM_LOGIN = "User is temporary blocked from login";
     public static final String MESSAGE_INVALID_EMAIL_ADDRESS = "Invalid email address.";
     public static final String MESSAGE_NO_EMAIL_EXISTS_FOR_USER = "No emails exists for user.";
+    public static final String MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY = "Login e-mail address is empty.";
 
     public static final String QUERY_GET_ALL = "appUser.getAll";
     public static final String QUERY_GET_BY_USER_LOGIN = "appUser.getAppUserByLogin";
@@ -89,9 +90,7 @@ public class AppUser {
     @Column(name="CITY_NAME")
     private String cityName;
 
-    private String address1;
-
-    private String address2;
+    private String address;
 
     private String zipcode;
 
@@ -102,7 +101,7 @@ public class AppUser {
     private String email;
 
     @Column(name="AGREE_TO_RECEIVE_OFFERS")
-    private char agreeToReceiveOffersAndPromotions;  //   'Y' = Yes ; 'N' = No
+    private char allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
 
     @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -117,12 +116,12 @@ public class AppUser {
 
     }
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(country, "country id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
 
         //  Validate String Arguments
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
@@ -133,10 +132,9 @@ public class AppUser {
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(phoneNumber, "phone number");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(stateProvince, "state/provice/region");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(cityName, "city name");
-        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address1, "address line 1");
-        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address2, "address line 2");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(address, "address");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(offersPromotion), "agree to receive offers and promotions");
 
         this.setAppUserType(appUserType);
         this.setLastName(lastName);
@@ -147,18 +145,17 @@ public class AppUser {
         this.setPhoneNumber(phoneNumber);
         this.setStateProvince(stateProvince);
         this.setCityName(cityName);
-        this.setAddress1(address1);
-        this.setAddress2(address2);
+        this.setAddress(address);
         this.setZipcode(zipcode);
         this.setEmail(email);
-        this.setAgreeToReceiveOffersAndPromotions(agreeToReceiveOffersAndPromotions);
+        this.setAllowOffersPromotion(offersPromotion);
         this.setInternalUnsuccessfulLoginAttempts(0);   //  Initial default value
         this.setInternalUserBlockedFromLoginUntil(0);   //  initial default value
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address1, String address2, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address1, address2, zipcode, email, agreeToReceiveOffersAndPromotions);
+    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
     public long getId() {
@@ -235,20 +232,10 @@ public class AppUser {
         this.cityName = cityName;
     }
 
-    public String getAddress1() {
-        return address1;
-    }
+    public String getAddress() { return address; }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getZipcode() {
@@ -275,12 +262,10 @@ public class AppUser {
         this.email = email;
     }
 
-    public char getAgreeToReceiveOffersAndPromotions() {
-        return agreeToReceiveOffersAndPromotions;
-    }
+    public char getAllowOffersPromotion() { return this.allowOffersPromotion; }
 
-    public void setAgreeToReceiveOffersAndPromotions(char agreeToReceiveOffersAndPromotions) {
-        this.agreeToReceiveOffersAndPromotions = agreeToReceiveOffersAndPromotions;
+    public void setAllowOffersPromotion(char allowOffersPromotion) {
+        this.allowOffersPromotion = allowOffersPromotion;
     }
 
     public int getInternalUnsuccessfulLoginAttempts() { return internalUnsuccessfulLoginAttempts; }
@@ -316,35 +301,6 @@ public class AppUser {
      * @return Current {@link Date} after adding milliseconds interval.
      */
     public static long addMillisecondsIntervalToTimestamp(long milliSeconds) {
-        ///*  For DEBUGGING - Begin   */
-        //final long ONE_DAY_IN_MILLISECONDS = 86400000;
-        //final long ONE_HOUR_IN_MILLISECONDS = 3600000;
-        //final long ONE_MINUTE_IN_MILLISECONDS = 60000;
-        //
-        //StringBuilder date = new StringBuilder("milliseconds interval in words=\"");
-        //
-        //if (milliSeconds >= ONE_DAY_IN_MILLISECONDS) {
-        //    date.append((milliSeconds / ONE_DAY_IN_MILLISECONDS) + " days ");
-        //    milliSeconds %= ONE_DAY_IN_MILLISECONDS;
-        //}
-        //
-        //if (milliSeconds >= ONE_HOUR_IN_MILLISECONDS) {
-        //    date.append((milliSeconds / ONE_HOUR_IN_MILLISECONDS) + " hours ");
-        //    milliSeconds %= ONE_HOUR_IN_MILLISECONDS;
-        //}
-        //
-        //if (milliSeconds >= ONE_MINUTE_IN_MILLISECONDS) {
-        //    date.append((milliSeconds / ONE_MINUTE_IN_MILLISECONDS) + " minutes ");
-        //    milliSeconds %= ONE_MINUTE_IN_MILLISECONDS;
-        //}
-        //
-        //if (milliSeconds > 0) {
-        //    date.append(milliSeconds + " seconds");
-        //}
-        //
-        //System.out.println(date.append("\""));
-        ///*  For DEBUGGING - End */
-
         Date dateAfter = new Date(new Date().getTime() + milliSeconds);
 
         ////  Display user unblock Timestamp as String
@@ -352,11 +308,6 @@ public class AppUser {
 
         //  user unblock Timestamp in milliseconds
         return new Date().getTime() + milliSeconds;
-    }
-
-    public static String convertMillisecondsDateToString(long milliSecondsDate) {
-        //System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate));
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate);
     }
 
     @Override
@@ -371,8 +322,7 @@ public class AppUser {
                     (this.getCountry() == compareTo.getCountry()) &&
                     (this.getStateProvince() == compareTo.getStateProvince()) &&
                     (this.getCityName() == compareTo.getCityName()) &&
-                    (this.getAddress1() == compareTo.getAddress1()) &&
-                    (this.getAddress2() == compareTo.getAddress2()) &&
+                    (this.getAddress() == compareTo.getAddress()) &&
                     (this.getZipcode() == compareTo.getZipcode()) &&
                     (this.getPhoneNumber() == compareTo.getPhoneNumber()) &&
                     (this.getEmail() == compareTo.getEmail())
@@ -391,13 +341,55 @@ public class AppUser {
                 "country=" + this.getCountry() + Constants.SPACE +
                 "state/province/region=\"" + this.getStateProvince() + "\" " +
                 "city=\"" + this.getCityName() + "\" " +
-                "address 1=\"" + this.getAddress1() + "\" " +
-                "address 2=\"" + this.getAddress2() + "\" " +
+                "address=\"" + this.getAddress() + "\" " +
                 "postal code=" + this.getZipcode() + Constants.SPACE +
                 "number of unsuccessful login attempts=" + this.getInternalUnsuccessfulLoginAttempts() + Constants.SPACE +
                 "user blocked from login until=\"" + this.getUserBlockedFromLoginUntilAsString() + "\" " +
                 "last successful login=\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getInternalLastSuccesssulLogin()) + "\"" +
-                "agree to receive offers and promotions=" + this.getAgreeToReceiveOffersAndPromotions();
+                "agree to receive offers and promotions=" + this.getAllowOffersPromotion();
+    }
+
+    public static String convertMillisecondsDateToString(long milliSecondsDate) {
+        //System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate));
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(milliSecondsDate);
+    }
+
+    public static String convertMillisecondsIntervalToString(long milliSeconds) {
+        final int MILLISECONDS_IN_A_SECOND =  1000;
+        final int MILLISECONDS_IN_A_MINUTE = 60000;
+        final int MILLISECONDS_IN_A_HOUR = 3600000;
+        final int MILLISECONDS_IN_A_DAY = 86400000;
+
+        int numberOfDays = 0;
+        int numberOfHours = 0;
+        int numberOfMinutes = 0;
+        int numberOfSeconds = 0;
+
+        if (milliSeconds >= MILLISECONDS_IN_A_DAY) {
+            numberOfDays = (int) (milliSeconds / MILLISECONDS_IN_A_DAY);
+            milliSeconds %= MILLISECONDS_IN_A_DAY;
+        }
+
+        if (milliSeconds >= MILLISECONDS_IN_A_HOUR) {
+            numberOfHours = (int) (milliSeconds / MILLISECONDS_IN_A_HOUR);
+            milliSeconds %= MILLISECONDS_IN_A_HOUR;
+        }
+
+        if (milliSeconds >= MILLISECONDS_IN_A_MINUTE) {
+            numberOfMinutes = (int) (milliSeconds / MILLISECONDS_IN_A_MINUTE);
+            milliSeconds %= MILLISECONDS_IN_A_MINUTE;
+        }
+
+        if (milliSeconds >= MILLISECONDS_IN_A_SECOND) {
+            numberOfSeconds = (int) (milliSeconds / MILLISECONDS_IN_A_SECOND);
+            milliSeconds %= MILLISECONDS_IN_A_SECOND;
+        }
+
+        return (numberOfDays > 0 ? numberOfDays + " days " : "") +
+                (numberOfHours > 0 ? numberOfHours + " hours " : "") +
+                (numberOfMinutes > 0 ? numberOfMinutes + " minutes" : "") +
+                (numberOfSeconds > 0 ? numberOfSeconds + " seconds" : "") +
+                (milliSeconds > 0 ? milliSeconds + " milliseconds" : "");
     }
 
 //    public static void main(String[] args) {

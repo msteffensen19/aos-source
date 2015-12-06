@@ -3,21 +3,36 @@
  */
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie', '$templateCache',
-        function($rootScope, userService, $cookie, $templateCache) {
+    directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie',
+        '$templateCache', '$location', '$timeout',
+        function($rootScope, userService, $cookie, $templateCache, $location, $timeout) {
             return {
                 restrict: 'E',
                 replace:false,
                 template: $templateCache.get('app/user/partials/login.html'),
                 controller: function ($scope) {
 
-                    $scope.user = {  email: '',loginPassword: '', loginUser: '', }
-                    //$scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
 
+                    /* VARIABLES */
+                    $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+                    //$scope.user = {  email: '',loginPassword: '', loginUser: '', }
                     $scope.rememberMe = false;
                     $scope.message = "";
+                    $scope.config = null;
+                    /*================================ END VARIABLES ======================================*/
 
-                    $scope.singIn = function(user, rememberMe) {
+
+                    /* Get configuration */
+                    userService.getConfiguration().then(function(response){
+                        //console.log(response)
+                        $scope.config = response;
+                    });
+                    /*===========================  end Get configuration ============================*/
+
+
+
+                    /* Sign in */
+                    $scope.signIn = function(user, rememberMe) {
 
                         userService.login(user).then(function (response) {
 
@@ -27,13 +42,17 @@ define(['./module'], function (directives) {
                                     {
                                         if(response.data !== undefined)
                                         {
+                                            $timeout(function(){
+                                                $scope.message = "";
+                                            }, 2000)
                                             $scope.message = response.data.reason;
+
                                             var count = incrementLogins();
-                                            console.log(count);
                                             if(count >= 3) {
                                                 console.log(count);
                                                 $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
                                                 //question: Ask maria what to show!
+                                                return;
                                             }
                                         }
                                         return;
@@ -51,14 +70,20 @@ define(['./module'], function (directives) {
                                     else{
                                         $cookie.remove("userCookie" + $scope.user.email);
                                     }
-                                    wellcome(user.username)
+                                    wellcome()
                                 }
                                 else {
                                     wrongFields();
                                 }
                             });
                     }
+                    /*=============================== end Sign in ===============================*/
 
+
+
+
+
+                    /* increment logins */
                     var incrementLogins = function (){
                         var test = $cookie("loginsCounter");
                         var loginsCounter = test === undefined ? -1 : test;
@@ -68,9 +93,8 @@ define(['./module'], function (directives) {
                             {
                                 var test = $cookie("loginsCounter");
                                 if(test === undefined)
-                                {
-                                    test = 0;
-                                }
+                                { test = 0; }
+
                                 loginsCounter = test;
                             }
                             var count = ++loginsCounter;
@@ -79,6 +103,7 @@ define(['./module'], function (directives) {
                             return count;
                         }
                     }();
+                    /*=============================== end increment logins ===============================*/
 
 
                     $scope.forgotPassword = function() {
@@ -86,10 +111,14 @@ define(['./module'], function (directives) {
                         $location.path('404');
                     }
 
+
+
                     $scope.createNewAccount = function(user) {
-                        console.log("createNewAccount");
-                        $location.path('404');
+                        wellcome();
+                        $location.path('register');
                     }
+
+
 
                     $scope.singWithFacebook = function(user) {
                         console.log("singWithFacebook");
@@ -103,7 +132,7 @@ define(['./module'], function (directives) {
 
 
 
-function wellcome(name) {
+function wellcome() {
     $(".login").css("opacity", "0.2")
     $(".PopUp > div:nth-child(1)").animate({ "top": "-150%" }, 600, function () {
 
@@ -111,7 +140,6 @@ function wellcome(name) {
         $(".PopUp").fadeOut(100);
         $("body").css("overflow", "scroll")
         $(".login").css("opacity", "1");
-
     });
 }
 

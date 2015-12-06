@@ -32,7 +32,8 @@ import com.advantage.online.store.Constants;
 )
 @PropertySources(value = {
         @PropertySource("classpath:/app.properties"),
-        @PropertySource("classpath:/database.properties")})
+        @PropertySource("classpath:/database.properties"),
+        @PropertySource("classpath:/DemoApp.properties")})
 public class AppConfiguration {
 
 }

@@ -8,10 +8,7 @@ import com.advantage.online.store.user.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +24,7 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
-    @RequestMapping(value = "/countryData/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/countries", method = RequestMethod.POST)
     public ResponseEntity<CountryResponseStatus> create(@RequestBody Country country) {
 
         final CountryResponseStatus countryResponseStatus = countryService.create(country.getName(),
@@ -40,23 +37,24 @@ public class CountryController {
             return new ResponseEntity<>(countryResponseStatus, HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/countryData/getAll", method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> getAllCountries(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/account/countries", method = RequestMethod.GET)
+    public ResponseEntity<List<Country>> getAllCountries() {
         List<Country> countries = countryService.getAllCountries();
 
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/countryData/getCountriesByPartialCountryName", method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> getCountriesByPartialCountryName(@RequestBody CountryDto country, HttpServletRequest request) {
-        List<Country> countries = countryService.getCountriesByPartialName(country.getName());
+    @RequestMapping(value = "/account/countries/from_name/{start_of_name}", method = RequestMethod.GET)
+    public ResponseEntity<List<Country>> getCountriesByPartialCountryName(@PathVariable("start_of_name") String partialCountryName) {
+
+        List<Country> countries = countryService.getCountriesByPartialName(partialCountryName);
 
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/countryData/getCountriesByInternationalCountryCode", method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> getCountriesByInternationalCountryCode(@RequestBody CountryDto country, HttpServletRequest request) {
-        List<Country> countries = countryService.getCountriesByPhonePrefix(country.getPhonePrefix());
+    @RequestMapping(value = "/account/countries/phone_prefix/{international_phone_prefix}", method = RequestMethod.GET)
+    public ResponseEntity<List<Country>> getCountriesByInternationalCountryCode(@PathVariable("international_phone_prefix") Integer phonePrefix) {
+        List<Country> countries = countryService.getCountriesByPhonePrefix(phonePrefix);
 
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }

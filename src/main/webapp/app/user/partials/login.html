@@ -15,26 +15,22 @@
 
 
             <input placeholder="{{'Name' | translate }}" type="text" ng-model="user.loginUser" />
-            <input placeholder="{{'Password' | translate }}" type="password" ng-model="user.loginPassword" />
-            <input placeholder="{{'Email' | translate }}" type="text" ng-model="user.email" />
+            <input ng-class="{bottomLine : config.emailAddressInLogin}" placeholder="{{'Password' | translate }}" type="password" ng-model="user.loginPassword" />
+            <input ng-if="config.emailAddressInLogin" placeholder="{{'Email' | translate }}" type="text" ng-model="user.email" />
 
-            <div class="left option display">
+            <div class="left option">
                 <input type="checkbox" ng-model="rememberMe" > <span translate="REMEMBER_ME"></span>
             </div>
 
-
             <button class="sing-in" translate="SIGN_IN"
-                    data-ng-click="singIn(user, rememberMe)"></button>
+                    data-ng-click="signIn(user, rememberMe)"></button>
             <label class="forgot-Passwowd" translate="FORGOT_PASSWORD"
                    data-ng-click="forgotPassword()"></label>
-
 
             <label class="create-new-account" translate="CREATE_NEW_ACCOUNT"
                    data-ng-click="createNewAccount()"></label>
 
             <span id="response"> {{message}}</span>
-
-            <!-- <button data-ng-click="removeCookie()">removeCookie</button> -->
 
         </div>
     </div>

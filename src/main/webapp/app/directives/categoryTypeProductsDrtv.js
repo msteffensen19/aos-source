@@ -81,7 +81,7 @@ define(['./module'], function (directives) {
                     $('.option input[type=checkbox]').each(function(){
                         this.checked = false;
                     })
-                    $('.option .productColor').removeClass('selected');
+                    $('.option .productColor').removeClass('colorSelected');
                 };
 
 
