@@ -120,7 +120,7 @@ public class ProductController {
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/products/categories/{category_id}/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories/{category_id}/products", method = RequestMethod.GET)
     public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
         final Long categoryId = Long.valueOf(id);
         final Category category = categoryService.getCategory(categoryId);
