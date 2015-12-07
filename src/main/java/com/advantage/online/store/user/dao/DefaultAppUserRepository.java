@@ -26,6 +26,7 @@ import java.util.UUID;
 public class DefaultAppUserRepository extends AbstractRepository implements AppUserRepository {
 
     private AppUserResponseStatus appUserResponseStatus;
+    private String failureMessage;
 
     /*  Default application user configuration values - Begin   */
     //  3 failed login attempts will cause the user to be blocked for INTERVAL milliseconds.
@@ -37,6 +38,10 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     //  e-mail address is not mandatory in user details and does not take part in login/sign-in
     public static final String ENV_EMAIL_ADDRESS_IN_LOGIN = "NO";
     /*  Default application user configuration values - End     */
+
+    public String getFailureMessage() {
+        return this.failureMessage;
+    }
 
     /**
      * Create a new {@link AppUser} in the database.
@@ -98,24 +103,39 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         if (ValidationHelper.isValidLogin(loginName)) {
             if (ValidationHelper.isValidPassword(password)) {
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
-                    AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
-                    entityManager.persist(appUser);
+                    if (getAppUserByLogin(loginName) == null) {
+                        AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+                        entityManager.persist(appUser);
 
-                    appUserResponseStatus = new AppUserResponseStatus(true, "New user created successfully.", appUser.getId());
+                        //  New user created successfully.
+                        this.failureMessage = "New user created successfully.";
+                        appUserResponseStatus = new AppUserResponseStatus(true, AppUser.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, appUser.getId());
 
-                    return appUser;
+                        return appUser;
+                    }
+                    else {
+                        //  User with this login already exists
+                        this.failureMessage = "User with this login already exists.";
+                        appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+                        return null;
+
+                    }
                 } else {
                     //  appUserResponseStatus is already set with values.
                     return null;
                 }
             }
             else {
-                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid login password.", -1);
+                //  Invalid password
+                this.failureMessage = "Invalid password.";
+                appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
                 return null;
             }
         }
         else {
-            appUserResponseStatus = new AppUserResponseStatus(false, "Invalid login user-name.", -1);
+            //  Invalid login user-name.
+            this.failureMessage = "Invalid login user-name.";
+            appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
             return null;
         }
 
@@ -131,10 +151,13 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
     @Override
     public int deleteAppUser(AppUser appUser) {
+        System.out.println("int deleteAppUser(AppUser appUser) - Strat");
+
         ArgumentValidationHelper.validateArgumentIsNotNull(appUser, "application user");
 
         final Long userId = appUser.getId();
 
+        System.out.println("int deleteAppUser(AppUser appUser) - Building HQL");
         final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(AppUser.class,
                 AppUser.FIELD_ID,
                 userId);
@@ -247,7 +270,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             }
         }
 
-        if (loginPassword != null) {
+        if ((! loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
             if (appUser.getPassword().compareTo(loginPassword) != 0) {
                 appUser = addUnsuccessfulLoginAttempt(appUser);
                 return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());

@@ -7,6 +7,7 @@ public class ProductResponseStatus {
     boolean success;
     long id;        //  -1 = Invalid
     String reason;
+    String imageId;
 
     public ProductResponseStatus(boolean success, long id, String reason) {
         this.success = success;
@@ -36,5 +37,13 @@ public class ProductResponseStatus {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 }

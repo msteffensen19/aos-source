@@ -1,62 +1,61 @@
 package com.advantage.online.store.api;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.advantage.online.store.dto.AttributeItem;
-import com.advantage.online.store.dto.ProductApiDto;
-import com.advantage.online.store.dto.ProductInfoDto;
-import com.advantage.online.store.dto.ProductResponseStatus;
+import com.advantage.online.store.Constants;
+import com.advantage.online.store.dto.*;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
+import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 import com.advantage.online.store.services.AttributeService;
 import com.advantage.online.store.services.CategoryService;
+import com.advantage.online.store.services.DealService;
+import com.advantage.online.store.services.ProductService;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.advantage.online.store.Constants;
-import com.advantage.online.store.services.ProductService;
-import com.advantage.util.ArgumentValidationHelper;
-import com.advantage.util.HttpServletHelper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
-@RequestMapping(value = Constants.URI_API)
+@RequestMapping(value = Constants.URI_API + "/catalog")
 public class ProductController {
-
-    private static final String REQUEST_PARAM_CATEGORY_ID = "category_id";
-
     @Autowired
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private AttributeService attributeService;
+    @Autowired
+    private DealService dealService;
 
-    @RequestMapping(value = "/product/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<List<Product>> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.getAllProducts();
 
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/product/{product_id}", method = RequestMethod.GET)
-    public ResponseEntity<ProductInfoDto> getProductById(@PathVariable ("product_id") Long id){
+    @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
+    public ResponseEntity<ProductInfoDto> getProductById(@PathVariable("product_id") Long id) {
         Product product = productService.getProductById(id);
-
         ProductInfoDto dto = new ProductInfoDto(product);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/product/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductApiDto product) {
-        if(product == null)  {
+        if (product == null) {
             return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
 
@@ -66,9 +65,117 @@ public class ProductController {
             new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/product/update/{product_id}", method = RequestMethod.POST)
-    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductApiDto product, @PathVariable ("product_id") Long id) {
+    @RequestMapping(value = "/products/images", method = RequestMethod.POST)
+    public ResponseEntity<ProductResponseStatus> createProductWithImage(@RequestParam("product") String product,
+                                                                        @RequestParam("file") MultipartFile file) {
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+            JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        ProductApiDto dto = null;
+        try {
+            dto = objectMapper.readValue(product, ProductApiDto.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            new ResponseEntity<>(new ProductResponseStatus(false, -1, "json not valid"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (dto == null) {
+            return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
+        }
+        if (file.isEmpty()) {
+            return new ResponseEntity<>(new ProductResponseStatus(false, -1, "File was empty"), HttpStatus.NO_CONTENT);
+        }
+
+        ImageUrlResponseStatus imageResponseStatus = productService.fileUpload(file);
+
+        if (!imageResponseStatus.isSuccess()) {
+            return new ResponseEntity<>(new ProductResponseStatus(false, -1, imageResponseStatus.getReason()),
+                HttpStatus.BAD_REQUEST);
+        }
+        dto.setImageUrl(imageResponseStatus.getId());
+        ProductResponseStatus responseStatus = productService.createProduct(dto);
+        responseStatus.setImageId(imageResponseStatus.getId());
+
+        return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
+            new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
+    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductApiDto product,
+                                                               @PathVariable("product_id") Long id) {
         ProductResponseStatus responseStatus = productService.updateProduct(product, id);
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/products/categories/{category_id}/products", method = RequestMethod.GET)
+    public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
+        final Long categoryId = Long.valueOf(id);
+        final Category category = categoryService.getCategory(categoryId);
+        final CategoryDto categoryDto = new CategoryDto();
+        categoryDto.applyCategory(category);
+        final List<Product> categoryProducts = productService.getCategoryProducts(categoryId);
+
+        Map<String, Set<String>> attrCollection = new LinkedHashMap<>();
+        List<Attribute> allAttributed = attributeService.getAllAttributes();
+        for (Attribute attribute : allAttributed) {
+            attrCollection.put(attribute.getName(), null);
+        }
+
+        for (Product product : categoryProducts) {
+            Set<ProductAttributes> productAttributes = product.getProductAttributes();
+            for (ProductAttributes attribute : productAttributes) {
+                String attrName = attribute.getAttribute().getName();
+                String attrValue = attribute.getAttributeValue();
+
+                //if (!attrCollection.containsKey(attrName)) attrCollection.put(attrName, null);
+                Set<String> item = attrCollection.get(attrName);
+
+                if (item == null) {
+                    item = new HashSet<>();
+                    attrCollection.put(attrName, item);
+                }
+                item.add(attrValue);
+            }
+        }
+
+        List<AttributeDto> attributeItems = new ArrayList<>();
+
+        for (Map.Entry<String, Set<String>> item : attrCollection.entrySet()) {
+            if (item.getValue() == null) continue;
+            attributeItems.add(new AttributeDto(item.getKey(), item.getValue()));
+        }
+
+        categoryDto.setAttributes(attributeItems);
+
+        final int categoryProductsCount = categoryProducts.size();
+        final List<ProductDto> productDtos = new ArrayList<>(categoryProductsCount);
+
+        for (final Product categoryProduct : categoryProducts) {
+            final ProductDto productDto = new ProductDto(categoryProduct);
+
+            productDtos.add(productDto);
+        }
+
+        categoryDto.setProducts(productDtos);
+        Deal promotion = dealService.getDealOfTheDay(categoryId);
+        PromotedProductDto promotedProductDto = promotion == null ? null :
+            new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
+                promotion.getPromotionSubHeader(), promotion.getManagedImageId(), new ProductDto(promotion.getProduct()));
+
+        categoryDto.setPromotedProduct(promotedProductDto);
+
+        return new ResponseEntity<>(categoryDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/images", method = RequestMethod.POST)
+    public ResponseEntity<ImageUrlResponseStatus> imageUpload(@RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            ImageUrlResponseStatus responseStatus = productService.fileUpload(file);
+            return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
+                new ResponseEntity<>(responseStatus, HttpStatus.EXPECTATION_FAILED);
+        } else {
+            return new ResponseEntity<>(new ImageUrlResponseStatus("", false,
+                "Failed to upload, file was empty."), HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }

@@ -34,89 +34,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private DealService dealService;
-
-    @Autowired
-    private AttributeService attributeService;
-
-    @RequestMapping(value = "/category", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
         List<Category> category = categoryService.getAllCategories();
 
         return new ResponseEntity<>(category, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/categoryData/{category_id}", method = RequestMethod.GET)
-    public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
-
-        /*ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
-        ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
-        HttpServletHelper.validateParametersExistenceInRequest(request, true,
-            RequestParameters.CATEGORY_ID);*/
-        //final String categoryIdParameter = request.getParameter(RequestParameters.CATEGORY_ID);
-
-        final Long categoryId = Long.valueOf(id);
-
-        final Category category = categoryService.getCategory(categoryId);
-
-        final CategoryDto categoryDto = new CategoryDto();
-
-        categoryDto.applyCategory(category);
-
-        final List<Product> categoryProducts = productService.getCategoryProducts(categoryId);
-
-        Map<String, Set<String>> attrCollection = new LinkedHashMap<>();
-        List<Attribute> allAttributed = attributeService.getAllAttributes();
-        /*for (Attribute attribute : allAttributed) {
-            attrCollection.put(attribute.getName(), null);
-        }*/
-
-        for (Product product : categoryProducts) {
-            Set<ProductAttributes> productAttributes = product.getProductAttributes();
-            for (ProductAttributes attribute : productAttributes) {
-                String attrName = attribute.getAttribute().getName();
-                String attrValue = attribute.getAttributeValue();
-
-                if (!attrCollection.containsKey(attrName)) attrCollection.put(attrName, null);
-                Set<String> item = attrCollection.get(attrName);
-
-                if(item == null){
-                    item = new HashSet<>();
-                    attrCollection.put(attrName, item);
-                }
-                item.add(attrValue);
-            }
-        }
-
-        List<AttributeDto> attributeItems = new ArrayList<>();
-
-        for (Map.Entry<String, Set<String>> item : attrCollection.entrySet()) {
-            attributeItems.add(new AttributeDto(item.getKey(), item.getValue()));
-        }
-
-        categoryDto.setAttributes(attributeItems);
-
-        final int categoryProductsCount = categoryProducts.size();
-        final List<ProductDto> productDtos = new ArrayList<>(categoryProductsCount);
-
-        for (final Product categoryProduct : categoryProducts) {
-            final ProductDto productDto = new ProductDto(categoryProduct);
-
-            productDtos.add(productDto);
-        }
-
-        categoryDto.setProducts(productDtos);
-        Deal promotion = dealService.getDealOfTheDay(categoryId);
-        PromotedProductDto promotedProductDto = promotion == null ? null :
-            new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
-                promotion.getPromotionSubHeader(), promotion.getManagedImageId(), new ProductDto(promotion.getProduct()));
-
-        categoryDto.setPromotedProduct(promotedProductDto);
-
-        return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 }

@@ -1,5 +1,9 @@
 package com.advantage.online.store;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Constants {
 	/**
 	 * Keyboard special characters
@@ -29,5 +33,13 @@ public class Constants {
 
 	}
 
-    
+	public static class AttributeNames {
+		public static final String ATTRIBUTE_PRICE = "Price";
+		public static final String ATTRIBUTE_CUSTOMIZATION = "Customization";
+		public static final String ATTRIBUTE_OPERATING_SYSTEM = "Operating System";
+		public static final String ATTRIBUTE_PROCESSOR = "Processor";
+		public static final String ATTRIBUTE_MEMORY = "Memory";
+		public static final String ATTRIBUTE_COLOR = "Color";
+		public static final String ATTRIBUTE_DISPLAY = "Display";
+	}
 }

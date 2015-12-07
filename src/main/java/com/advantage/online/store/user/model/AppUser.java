@@ -36,6 +36,8 @@ public class AppUser {
 
     public static final int MAX_NUM_OF_APP_USER = 50;
 
+
+    public static final String MESSAGE_NEW_USER_CREATED_SUCCESSFULLY = "New user created successfully.";
     public static final String MESSAGE_USER_LOGIN_FAILED = "Invalid user-name and password";
     public static final String MESSAGE_USER_IS_BLOCKED_FROM_LOGIN = "User is temporary blocked from login";
     public static final String MESSAGE_INVALID_EMAIL_ADDRESS = "Invalid email address.";

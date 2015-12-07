@@ -10,17 +10,10 @@ import com.advantage.util.fs.FileSystemHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Binyamin Regev on 16/11/2015.
@@ -137,6 +130,23 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     }
 
     @Override
+    public int deleteCountriesByIds(Collection<Integer> countryIds) {
+        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(countryIds, "countries IDs");
+
+        for (Integer countryId: countryIds ) {
+            final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Country.class,
+                    Country.FIELD_ID,
+                    countryId);
+
+            Query query = entityManager.createQuery(hql);
+
+            query.executeUpdate();
+        }
+
+        return 1;
+    }
+
+    @Override
     public int deleteCountries(Collection<Country> countries) {
 
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(countries,
@@ -171,10 +181,6 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
 
         return deleteCountriesByIds(countryIds);
 
-    }
-
-    public int deleteCountriesByIds(Collection<Integer> countryIds) {
-        return 0;
     }
 
     @Override

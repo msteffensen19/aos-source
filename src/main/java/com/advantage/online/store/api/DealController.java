@@ -49,14 +49,4 @@ public class DealController {
 
         return new ResponseEntity<>(dealOfTheDay, HttpStatus.OK);
     }
-
-
-    @RequestMapping(value = "testAuthMethod", method = RequestMethod.GET)
-    @AppUserAuthorize
-    public ResponseEntity<Deal> testAuthMethod(@RequestHeader(value = "User-Token") String token,
-                                                final HttpServletRequest request,
-                                                final HttpServletResponse response) {
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

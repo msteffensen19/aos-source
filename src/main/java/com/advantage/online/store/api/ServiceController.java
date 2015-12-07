@@ -8,6 +8,7 @@ import com.advantage.online.store.dto.*;
 import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.image.ImageManagementAccess;
 import com.advantage.online.store.image.ManagedImage;
+import com.advantage.online.store.log.AppUserAuthorize;
 import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,30 +104,12 @@ public class ServiceController {
         }
     }
 
-    @Autowired
-    private Environment environment;
+    @RequestMapping(value = "/tests/auth_method", method = RequestMethod.GET)
+    @AppUserAuthorize
+    public ResponseEntity<Deal> testAuthMethod(@RequestHeader(value = "User-Token") String token,
+                                               final HttpServletRequest request,
+                                               final HttpServletResponse response) {
 
-    @RequestMapping(value="/uploadImage", method=RequestMethod.POST)
-    public ResponseEntity<ImageUrlResponseStatus> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                ImageManagement imageManagement = ImageManagementAccess.getImageManagement(
-                    ImageManagementConfiguration.getPath(imageManagementRepository));
-
-                ManagedImage managedImage = imageManagement.addManagedImage(bytes, file.getOriginalFilename(), true);
-                imageManagement.persist();
-
-                return new ResponseEntity<>(new ImageUrlResponseStatus(managedImage.getId(), true,
-                    "Image successfully uploaded"), HttpStatus.OK);
-            } catch (Exception e) {
-                return new ResponseEntity<>(new ImageUrlResponseStatus("", false,
-                    "Failed to upload " + e.getMessage()), HttpStatus.EXPECTATION_FAILED);
-            }
-        } else {
-            return new ResponseEntity<>(new ImageUrlResponseStatus("", false,
-                "Failed to upload, file was empty."), HttpStatus.EXPECTATION_FAILED);
-        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
