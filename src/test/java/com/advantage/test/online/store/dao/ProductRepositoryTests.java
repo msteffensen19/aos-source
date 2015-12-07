@@ -30,7 +30,7 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     public static final String IMAGE_ID = "1234";
     public static final String PRODUCT_NAME = "LG G3";
     public static final String PRODUCT_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
-    public static final int PRODUCT_PRICE = 400;
+    public static final double PRODUCT_PRICE = 400;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -90,7 +90,7 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
         Assert.assertNotNull(id);
         Assert.assertEquals(PRODUCT_NAME, product.getProductName());
         Assert.assertEquals(PRODUCT_DESCRIPTION, product.getDescription());
-        Assert.assertEquals(PRODUCT_PRICE, product.getPrice());
+        Assert.assertEquals(PRODUCT_PRICE, product.getPrice(), 0.5);
         Assert.assertEquals(IMAGE_ID, product.getManagedImageId());
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
 

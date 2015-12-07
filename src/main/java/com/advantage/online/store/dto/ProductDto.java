@@ -6,13 +6,15 @@ import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 public class ProductDto {
-    private Long id;
+    private Long productId;
+    private Long categoryId;
     private String productName;
-    private int price;
+    private double price;
     private String description;
     private String imageUrl;
     private List<AttributeItem> attributes;
@@ -23,7 +25,8 @@ public class ProductDto {
     }
 
     public ProductDto(Product product) {
-        this.id = product.getId();
+        this.productId = product.getId();
+        this.categoryId = product.getCategory().getCategoryId();
         this.productName = product.getProductName();
         this.price = product.getPrice();
         this.description = product.getDescription();
@@ -48,7 +51,6 @@ public class ProductDto {
         }
 
         return images;
-
     }
 
     public List<String> getImages() {
@@ -59,14 +61,6 @@ public class ProductDto {
         this.images = images;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getProductName() {
         return productName;
     }
@@ -75,11 +69,11 @@ public class ProductDto {
         this.productName = productName;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -113,6 +107,22 @@ public class ProductDto {
 
     public void setColors(List<String> colors) {
         this.colors = colors;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     /**

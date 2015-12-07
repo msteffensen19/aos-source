@@ -1,13 +1,9 @@
 package com.advantage.online.store.api;
 
 import com.advantage.online.store.Constants;
-import com.advantage.online.store.config.ImageManagementConfiguration;
 import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.dao.category.CategoryRepository;
 import com.advantage.online.store.dto.*;
-import com.advantage.online.store.image.ImageManagement;
-import com.advantage.online.store.image.ImageManagementAccess;
-import com.advantage.online.store.image.ManagedImage;
 import com.advantage.online.store.log.AppUserAuthorize;
 import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
@@ -19,11 +15,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
@@ -48,10 +42,10 @@ public class ServiceController {
     private ProductRepository productRepository;
 
 
-    @RequestMapping(value = "/initdb", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/initdb", method = RequestMethod.POST)
     public Boolean initDb(@RequestBody CategoryDto dto) {
         try {
-            Category category = categoryRepository.get(dto.getId());
+            Category category = categoryRepository.get(dto.getCategoryId());
             SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
             Session session = sessionFactory.openSession();
@@ -70,7 +64,7 @@ public class ServiceController {
                 defAttributes.put(attribute.getName().toUpperCase(), attribute);
             }
 
-            /*PRODUCT*/
+            *//*PRODUCT*//*
             for (ProductDto p : dto.getProducts()) {
                 Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
                 product.setManagedImageId(p.getImageUrl());
@@ -102,7 +96,7 @@ public class ServiceController {
         catch (Exception e) {
             return false;
         }
-    }
+    }*/
 
     @RequestMapping(value = "/tests/auth_method", method = RequestMethod.GET)
     @AppUserAuthorize
