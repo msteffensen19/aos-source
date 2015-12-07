@@ -101,6 +101,7 @@
   "products": [
     {
       "id": 1,
+	  "categoryId":1,
       "productName": "HP Pavilion 15t Touch Laptop",
       "price": 519,
       "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
@@ -138,6 +139,7 @@
     },
     {
       "id": 2,
+	  "categoryId":1,
       "productName": "HP Pavilion 15z Laptop",
       "price": 549,
       "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
@@ -175,6 +177,7 @@
     },
     {
       "id": 3,
+	  "categoryId":1,
       "productName": "HP ENVY - 15t Laptop",
       "price": 549,
       "description": "Designed for style and comfort",
@@ -212,6 +215,7 @@
     },
     {
       "id": 4,
+	  "categoryId":1,
       "productName": "HP Spectre x360 - 13-4101dx",
       "price": 1169,
       "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
@@ -249,6 +253,7 @@
     },
     {
       "id": 5,
+	  "categoryId":1,
       "productName": "HP Stream - 11-d020nr Laptop",
       "price": 179,
       "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
@@ -286,6 +291,7 @@
     },
     {
       "id": 6,
+	  "categoryId":1,
       "productName": "HP ENVY x360 - 15t Laptop",
       "price": 699,
       "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
@@ -323,6 +329,7 @@
     },
     {
       "id": 7,
+	  "categoryId":1,
       "productName": "HP ENVY - 17t Touch Laptop",
       "price": 949,
       "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
@@ -360,6 +367,7 @@
     },
     {
       "id": 8,
+	  "categoryId":1,
       "productName": "HP ENVY - 17t Touch Laptop",
       "price": 419,
       "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
@@ -397,6 +405,7 @@
     },
     {
       "id": 9,
+	  "categoryId":1,
       "productName": "HP Chromebook 14 G1(ENERGY STAR)",
       "price": 299,
       "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
@@ -434,6 +443,7 @@
     },
     {
       "id": 10,
+	  "categoryId":1,
       "productName": "HP Chromebook 14 G1(ENERGY STAR)",
       "price": 1261,
       "description": "Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
