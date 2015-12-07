@@ -1,17 +1,22 @@
 package com.advantage.online.store.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import com.advantage.online.store.model.category.Category;
 import com.advantage.util.ArgumentValidationHelper;
 
 public class CategoryDto {
-    private Long id;
+    private Long categoryId;
     private String categoryName;
-    private String catImageUrl;
+    private String categoryImageId;
     private PromotedProductDto promotedProduct;
     private List<AttributeDto> attributes;
     private List<ProductDto> products;
+    private Set<String> colors;
+    private String minPrice;
+    private String maxPrice;
+
 
     public List<AttributeDto> getAttributes() {
         return attributes;
@@ -21,14 +26,14 @@ public class CategoryDto {
         this.attributes = attributeItems;
     }
 
-    public Long getId() {
+    public Long getCategoryId() {
 
-        return id;
+        return categoryId;
     }
 
-    public void setId(final Long categoryId) {
+    public void setCategoryId(final Long categoryId) {
 
-        this.id = categoryId;
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {
@@ -43,20 +48,20 @@ public class CategoryDto {
 
     public void applyCategory(final Category category) {
         ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
-        setId(category.getCategoryId());
+        setCategoryId(category.getCategoryId());
         setCategoryName(category.getCategoryName());
-        setManagedImageId(category.getManagedImageId());
+        setCategoryImageId(category.getManagedImageId());
 
     }
 
-    public String getManagedImageId() {
+    public String getCategoryImageId() {
 
-        return catImageUrl;
+        return categoryImageId;
     }
 
-    public void setManagedImageId(String managedImageId) {
+    public void setCategoryImageId(String managedImageId) {
 
-        this.catImageUrl = managedImageId;
+        this.categoryImageId = managedImageId;
     }
 
     public List<ProductDto> getProducts() {
@@ -75,6 +80,30 @@ public class CategoryDto {
 
     public void setPromotedProduct(PromotedProductDto promotedProduct) {
         this.promotedProduct = promotedProduct;
+    }
+
+    public String getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public String getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public Set<String> getColors() {
+        return colors;
+    }
+
+    public void setColors(Set<String> colors) {
+        this.colors = colors;
     }
 }
 

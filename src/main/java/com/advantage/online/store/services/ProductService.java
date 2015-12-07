@@ -1,15 +1,10 @@
 package com.advantage.online.store.services;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.advantage.online.store.config.ImageManagementConfiguration;
-import com.advantage.online.store.dto.AttributeItem;
-import com.advantage.online.store.dto.ImageUrlResponseStatus;
-import com.advantage.online.store.dto.ProductApiDto;
-import com.advantage.online.store.dto.ProductResponseStatus;
+import com.advantage.online.store.dto.*;
 import com.advantage.online.store.image.ImageManagement;
 import com.advantage.online.store.image.ImageManagementAccess;
 import com.advantage.online.store.image.ManagedImage;
@@ -21,8 +16,6 @@ import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +52,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponseStatus createProduct(ProductApiDto dto) {
+    public ProductResponseStatus createProduct(ProductDto dto) {
         Category category = categoryService.getCategory(dto.getCategoryId());
 
         if (category == null) return new ProductResponseStatus(false, -1, "Could not find category");
@@ -83,12 +76,6 @@ public class ProductService {
             product.getProductAttributes().add(productAttributes);
         }
 
-        if(dto.getColors().size() == 0) {
-            dto.getColors().add(dto.getAttributes()
-                .stream()
-                .filter(x -> x.getAttributeName().equalsIgnoreCase("color")).findFirst().get().getAttributeValue());
-        }
-
         if(dto.getImages().size() == 0) {
             dto.getImages().add(product.getManagedImageId());
         }
@@ -100,7 +87,7 @@ public class ProductService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ProductResponseStatus updateProduct(ProductApiDto dto, Long id) {
+    public ProductResponseStatus updateProduct(ProductDto dto, Long id) {
         Product product = productRepository.get(id);
 
         if(product == null) return new ProductResponseStatus(false, -1, "Product wasn't found");
@@ -200,6 +187,43 @@ public class ProductService {
         }
 
         return colorAttributes;
+    }
+
+    /**
+     * Return colors unique set from Products collection
+     * @param products Product collection
+     * @return {@link HashSet} unique set of products colors
+     */
+    public Set<String> getColorsSet(Collection<Product> products) {
+        Set<String> colors = new HashSet<>();
+        for (Product product : products) {
+            Set<ColorAttribute> set = product.getColors();
+            colors.addAll(set.stream().map(ColorAttribute::getColor).collect(Collectors.toList()));
+        }
+
+        return colors;
+    }
+
+    /**
+     * Return minimum price value from Product collection
+     * @param products Product collection
+     * @return {@link Double} price value
+     */
+    public String getMinPrice(List<Product> products){
+        double price = products.stream().min(Comparator.comparing(Product::getPrice)).get().getPrice();
+
+        return  Double.toString(price);
+    }
+
+    /**
+     * Return maximum price value from Product collection
+     * @param products Product collection
+     * @return {@link Double} price value
+     */
+    public String geMaxPrice(List<Product> products){
+        double price = products.stream().max(Comparator.comparing(Product::getPrice)).get().getPrice();
+
+        return  Double.toString(price);
     }
 
     private Attribute getAttributeByDto(AttributeItem attribute) {

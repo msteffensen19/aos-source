@@ -190,19 +190,19 @@ public class DataSourceInit {
         /*EntityAttribute entityAttribute2 = new EntityAttribute();
         entityAttribute2.setAttribute(attribute1);
         entityAttribute2.setValue("Windows 7");
-        entityAttribute2.setEntityKey(product.getId());
+        entityAttribute2.setEntityKey(product.getCategoryId());
         entityAttribute2.setEntityType(EntityType.PRODUCT.getEntityTypeCode());
 
         EntityAttribute entityAttribute4 = new EntityAttribute();
         entityAttribute4.setAttribute(attribute2);
         entityAttribute4.setValue("400");
-        entityAttribute4.setEntityKey(product.getId());
+        entityAttribute4.setEntityKey(product.getCategoryId());
         entityAttribute4.setEntityType(EntityType.PRODUCT.getEntityTypeCode());
 
         EntityAttribute entityAttribute5 = new EntityAttribute();
         entityAttribute5.setAttribute(attribute3);
         entityAttribute5.setValue("FFFFFF");
-        entityAttribute5.setEntityKey(product.getId());
+        entityAttribute5.setEntityKey(product.getCategoryId());
         entityAttribute5.setEntityType(EntityType.PRODUCT.getEntityTypeCode());*/
 
 
