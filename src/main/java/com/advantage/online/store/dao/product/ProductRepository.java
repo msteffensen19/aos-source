@@ -19,7 +19,7 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      * @return entity reference
      */
     @Transactional
-    Product create(String name, String description, int price, String imgUrl, Category category);
+    Product create(String name, String description, double price, String imgUrl, Category category);
     /**
      * Get product categories by categoryId
      *

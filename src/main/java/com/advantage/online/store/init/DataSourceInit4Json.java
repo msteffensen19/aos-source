@@ -9,6 +9,8 @@ import com.advantage.online.store.dto.PromotedProductDto;
 import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
+import com.advantage.online.store.model.product.ColorAttribute;
+import com.advantage.online.store.model.product.ImageAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 import com.advantage.online.store.user.model.AppUser;
@@ -76,42 +78,35 @@ public class DataSourceInit4Json {
         Attribute attribute6 = new Attribute();
         Attribute attribute7 = new Attribute();
 
-        attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
+       // attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
         attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
         attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
         attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
         attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-        attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
+       // attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
         attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
 
-        session.persist(attribute1);
+        //session.persist(attribute1);
         session.persist(attribute2);
         session.persist(attribute3);
         session.persist(attribute4);
         session.persist(attribute5);
-        session.persist(attribute6);
+        //session.persist(attribute6);
         session.persist(attribute7);
 
         transaction.commit();
 
-        defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
+        //defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
         defAttributes.put(attribute2.getName().toUpperCase(), attribute2);
         defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
         defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
         defAttributes.put(attribute5.getName().toUpperCase(), attribute5);
-        defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
+       // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
         defAttributes.put(attribute7.getName().toUpperCase(), attribute7);
 
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
             session.save(entry.getValue());
         }
-        /**/
-
-        /*Load JSON File*/
-       // String filePath = getPath() + "\\src\\main\\webapp\\app\\categoryProducts_4.json";
-        //String filePath = getPath() + "\\categoryProducts_4.json";
-//File json = new File(filePath);
-
 
         ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
         File json = filePath.getFile();
@@ -123,7 +118,7 @@ public class DataSourceInit4Json {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CategoryDto dto = objectMapper.readValue(json, CategoryDto.class);
-        Category category = categoryRepository.get(dto.getId());
+        Category category = categoryRepository.get(dto.getCategoryId());
 
         transaction = session.beginTransaction();
 
@@ -146,8 +141,18 @@ public class DataSourceInit4Json {
 
             }
 
+
+            if(p.getImages().size() == 0) {
+                p.getImages().add(product.getManagedImageId());
+            }
+
+            product.setColors(getColorAttributes(p.getColors(), product));
+            product.setImages(getImageAttribute(p.getImages(), product));
+
             productMap.put(product.getId(), product);
         }
+
+
 
         PromotedProductDto p = dto.getPromotedProduct();
         Product parent = productMap.get(p.getId());
@@ -235,5 +240,27 @@ public class DataSourceInit4Json {
         return propertyFile.getAbsolutePath();*/
 
        // return new java.io.File( ".").getCanonicalPath().split("bin")[0];
+    }
+
+    private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
+        Set<ImageAttribute> imageAttributes = new HashSet<>();
+        for (String s : images) {
+            ImageAttribute image = new ImageAttribute(s);
+            image.setProduct(product);
+            imageAttributes.add(image);
+        }
+
+        return imageAttributes;
+    }
+
+    private  Set<ColorAttribute> getColorAttributes(Collection<String> colors, Product product) {
+        Set<ColorAttribute> colorAttributes = new HashSet<>();
+        for (String s : colors) {
+            ColorAttribute color = new ColorAttribute(s);
+            color.setProduct(product);
+            colorAttributes.add(color);
+        }
+
+        return colorAttributes;
     }
 }
