@@ -1,0 +1,115 @@
+{"products":[
+    {
+      "id": 11,
+	  "categoryId":1,
+      "productName": "HP Z4000 Purple Wireless Mouse",
+      "price": 26,
+      "description": "The sleek and low-profiled design make the Z4000 the must-have companion to every thin notebook or tablet. Style and comfort within a dynamic ultra-mobile wireless mouse.",
+      "imageUrl": "m2000",
+      "attributes": [
+        {
+          "attributeName": "WEIGHT",
+          "attributeValue": "0.2 lb"
+        },
+        {
+          "attributeName": "BUTTONS",
+          "attributeValue": "Three standard buttons and scroll wheel"
+        },
+        {
+          "attributeName": "COLOR",
+          "attributeValue": "Purple"
+        },
+        {
+          "attributeName": "CONNECTOR",
+          "attributeValue": "USB wireless receiver at 2.4 GHz"
+        }
+      ],
+      "colors": [
+        "Purple"
+      ],
+      "images": [
+        "m2001",
+        "m2003",
+        "m2002"
+      ]
+    },
+    {
+      "id": 12,
+	  "categoryId":2,
+      "productName": "HP Z8000 Bluetooth Mouse",
+      "price": 51,
+      "description": "The exquisite HP Z8000 Bluetooth Mouse is only 18mm (.7in) height, saves power with Bluetooth® Low Energy connectivity, and provides effortless capacitive touch control. The future is here.",
+      "imageUrl": "m2004",
+      "attributes": [
+        {
+          "attributeName": "WEIGHT",
+          "attributeValue": "0.16 lb"
+        },
+        {
+          "attributeName": "BATTERY",
+          "attributeValue": "2 AAA"
+        },
+        {
+          "attributeName": "BUTTONS",
+          "attributeValue": "2 buttons and scroll controls enabling clicking or scrolling anywhere on the top surface of the mouse"
+        },
+        {
+          "attributeName": "CONNECTOR",
+          "attributeValue": "Bluetooth 3.0"
+        },
+        {
+          "attributeName": "COLOR",
+          "attributeValue": "Black"
+        }
+      ],
+      "colors": [
+        "Black",
+        "Aluminium",
+        "Silver"
+      ],
+      "images": [
+        "m2005",
+        "m2006"
+      ]
+    },
+    {
+      "id": 13,
+	  "categoryId":1,
+      "productName": "HP X7500 Bluetooth Wireless Mouse",
+      "price": 42,
+      "description": "Functional art blended with high-tech performance is the HP X7500 mouse. With hyper-fast scrolling, Bluetooth connectivity, and 5 customizable buttons, even your computer will be proud.",
+      "imageUrl": "m2007",
+      "attributes": [
+        {
+          "attributeName": "BATTERY",
+          "attributeValue": "2 AAA"
+        },
+        {
+          "attributeName": "BUTTONS",
+          "attributeValue": "2 buttons and scroll"
+        },
+        {
+          "attributeName": "CONNECTOR",
+          "attributeValue": "Bluetooth 3.0"
+        },
+        {
+          "attributeName": "COLOR",
+          "attributeValue": "White"
+        },
+        {
+          "attributeName": "WEIGHT",
+          "attributeValue": "0.18 lb"
+        }
+      ],
+      "colors": [
+        "White"
+      ],
+      "images": [
+        "m2007"
+      ]
+    }
+  ],
+  "minPrice": 125,
+  "maxPrice":250,
+  "colors":["color1","color2"]
+}

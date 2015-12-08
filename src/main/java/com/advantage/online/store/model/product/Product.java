@@ -32,7 +32,7 @@ public class Product {
 
     @Column(name = "product_name")
     private String productName;
-    private int price;
+    private double price;
     private String description;
 
     @Column(name = "managed_image_id")
@@ -63,7 +63,7 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, int price, Category category) {
+    public Product(String name, String description, double price, Category category) {
         this.productName = name;
         this.description = description;
         this.price = price;
@@ -82,11 +82,11 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

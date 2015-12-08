@@ -39,22 +39,35 @@ public class ProductController {
     private DealService dealService;
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public ResponseEntity<List<Product>> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.getAllProducts();
+        List<ProductDto> productDtos = new ArrayList<>(products.size());
 
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        for (Product product : products) {
+            ProductDto productDto = new ProductDto(product);
+            productDtos.add(productDto);
+        }
+
+        ProductCollectionDto dto = new ProductCollectionDto();
+        dto.setProducts(productDtos);
+        dto.setColors(productService.getColorsSet(products));
+        dto.setMinPrice(productService.getMinPrice(products));
+        dto.setMaxPrice(productService.geMaxPrice(products));
+
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
-    public ResponseEntity<ProductInfoDto> getProductById(@PathVariable("product_id") Long id) {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id) {
         Product product = productService.getProductById(id);
-        ProductInfoDto dto = new ProductInfoDto(product);
+        ProductDto dto = new ProductDto(product);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
-    public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductApiDto product) {
+    public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductDto product) {
         if (product == null) {
             return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
@@ -71,9 +84,9 @@ public class ProductController {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
             JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-        ProductApiDto dto = null;
+        ProductDto dto = null;
         try {
-            dto = objectMapper.readValue(product, ProductApiDto.class);
+            dto = objectMapper.readValue(product, ProductDto.class);
         } catch (IOException e) {
             e.printStackTrace();
             new ResponseEntity<>(new ProductResponseStatus(false, -1, "json not valid"), HttpStatus.BAD_REQUEST);
@@ -101,13 +114,13 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
-    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductApiDto product,
+    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductDto product,
                                                                @PathVariable("product_id") Long id) {
         ProductResponseStatus responseStatus = productService.updateProduct(product, id);
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/products/categories/{category_id}/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories/{category_id}/products", method = RequestMethod.GET)
     public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
         final Long categoryId = Long.valueOf(id);
         final Category category = categoryService.getCategory(categoryId);
@@ -163,6 +176,9 @@ public class ProductController {
                 promotion.getPromotionSubHeader(), promotion.getManagedImageId(), new ProductDto(promotion.getProduct()));
 
         categoryDto.setPromotedProduct(promotedProductDto);
+        categoryDto.setMaxPrice(productService.geMaxPrice(categoryProducts));
+        categoryDto.setMinPrice(productService.getMinPrice(categoryProducts));
+        categoryDto.setColors(productService.getColorsSet(categoryProducts));
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }

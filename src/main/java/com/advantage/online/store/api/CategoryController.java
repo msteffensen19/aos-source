@@ -34,7 +34,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    @RequestMapping(value = "/catalog/categories", method = RequestMethod.GET)
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
         List<Category> category = categoryService.getAllCategories();
 

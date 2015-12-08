@@ -21,7 +21,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     private static final int MAX_NUM_OF_PRODUCTS = 100;
 
     @Override
-    public Product create(String name, String description, int price, String imgUrl, Category category) {
+    public Product create(String name, String description, double price, String imgUrl, Category category) {
         Product product = new Product(name, description, price, category);
         product.setManagedImageId(imgUrl);
     	entityManager.persist(product);

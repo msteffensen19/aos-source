@@ -14,7 +14,8 @@ public class PromotedProductDto {
     @JsonIgnore
     private ProductDto product;
     private String productName;
-    private int price;
+    private double price;
+    private String color;
     private String description;
     private String imageUrl;
     private List<AttributeItem> attributes;
@@ -34,7 +35,7 @@ public class PromotedProductDto {
         this.description = product.getDescription();
         this.imageUrl = product.getImageUrl();
         this.attributes = product.getAttributes();
-        this.id = product.getId();
+        this.id = product.getProductId();
     }
 
     public String getProductName() {
@@ -45,11 +46,11 @@ public class PromotedProductDto {
         this.productName = productName;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -123,5 +124,13 @@ public class PromotedProductDto {
 
     public void setPromotionImageId(String promotionImageId) {
         this.promotionImageId = promotionImageId;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
