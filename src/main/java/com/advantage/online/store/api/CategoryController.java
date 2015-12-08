@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @RestController
-@RequestMapping(value = Constants.URI_API)
+@RequestMapping(value = Constants.URI_API + "/catalog")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
