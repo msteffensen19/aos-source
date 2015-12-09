@@ -42,4 +42,19 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      * @return  the number of entities deleted
      */
     int delete(final Collection<Product> products);
+
+    /**
+     * Search products by name pattern
+     * @param pattern name pattern
+     * @param quantity quantity of products
+     * @return {@link List} collection of Products
+     */
+    List<Product> filterByName(String pattern, int quantity);
+
+    /**
+     * Search products by name pattern
+     * @param pattern name pattern
+     * @return {@link List} collection of Products
+     */
+    List<Product> filterByName(String pattern);
 }
