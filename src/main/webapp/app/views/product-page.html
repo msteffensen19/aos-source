@@ -26,13 +26,10 @@
                 <figure>
                     <img alt="" id="imgToBuy" ng-src="fetchImage?image_id={{::product.imageUrl}}">
                 </figure>
-                <div id="cover">
+                <div id="cover" ng-if="product.images.length > 1">
                     <div id="length">
-                        <div class="imageAlias">
-                            <img alt="" ng-src="fetchImage?image_id={{::product.imageUrl}}">
-                        </div>
-                        <div class="imageAlias">
-                            <img alt="" ng-src="fetchImage?image_id={{::product.imageUrl}}">
+                        <div class="imageAlias" ng-repeat="img in product.images">
+                            <img alt="" ng-src="fetchImage?image_id={{::img}}">
                         </div>
                     </div>
                 </div>
@@ -48,7 +45,7 @@
             <p class="roboto-light"> {{::product.description }} </p>
         </div>
         <div id="productProperties">
-            <div class="colors">
+            <div class="colors" ng-if="product.colors.length > 0">
                 <span data-ng-repeat="color in product.colors"
                       data-ng-style="{'background-color':'{{color.color}}'}"
                       data-ng-class='{ colorSelected : colorSelected == color.color } '
@@ -66,7 +63,7 @@
 
     </article>
 
-    <article class="max-width topSpace">
+    <article class="max-width topSpace" >
         <h2 class="roboto-regular product_specifications" translate="PRODUCT_SPECIFICATIONS"></h2>
         <div class="roboto-light list" ng-repeat="attr in product.attributes">
             <label class="attr">{{ attr.attributeName | uppercase}}</label>

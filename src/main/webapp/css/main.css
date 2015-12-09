@@ -5,6 +5,8 @@
 @import "views/categoryPage.css";
 @import "views/category_type_products_tpl.css";
 @import "views/productPage.css";
+@import "views/toolTipCart.css";
+@import "views/shoppingCart.css";
 @import "modals/popUp.css";
 @import "../app/user/css/login.css";
 @import "../app/user/css/register.css";
@@ -31,7 +33,6 @@ body{
     left: 0;
     overflow-x: hidden;
 }
-
 
 /* start mobile button */
 
@@ -79,19 +80,33 @@ font-size: 0;
 /* end mobile button */
 
 
-
+.uiview {
+    padding-top: 65px;
+}
 
 /* navagation */
+header{
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    z-index: 999;
+}
+
+nav{
+}
 
 nav ul {
     float: right;
     display: inline-block;
-    margin: 7px 0;
+    margin: 7px 15px 0 0;
 }
 
 nav ul li {
     display: inline-block;
     vertical-align: top;
+}
+nav ul li > ul{
+    font-size: 0;
 }
 
 nav ul li a{
@@ -100,6 +115,14 @@ nav ul li a{
     display: block;
     text-decoration: none;
     padding:9px;
+}
+
+nav ul li a span.cart{
+    position: absolute;
+    font-size:13px;
+    top: -3px;
+    right: -2px;
+
 }
 
 nav ul li a.menu{

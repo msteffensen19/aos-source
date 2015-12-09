@@ -4,9 +4,26 @@
 
 var userCookie = userCookie || {};
 
-userCookie.fillParams = function(name, id, email, date){
+userCookie.fillParams = function(name, email, response){
       this.name = name;
-      this.id = id;
       this.email = email;
-      this.date = date;
+      this.response = response;
+//    this.sessionId = sessionId;
+//    this.id = id;
+//    this.token = token;
 }
+
+userCookie.getKey = function(lastUser){
+
+      if(lastUser)
+      {
+            if(lastUser.response)
+            {
+                  return "userCookie" +
+                      lastUser.response.userId +
+                      lastUser.response.sessionId;
+            }
+      }
+      return "guestCookie";
+}
+

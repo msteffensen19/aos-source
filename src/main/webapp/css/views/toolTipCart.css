@@ -1,0 +1,136 @@
+#toolTipCart{
+    border: solid 1px #d0d0d0;
+    position: absolute;
+    top: -3px;
+    right: -8px;
+    z-index: 9999;
+    display: none;
+    min-height:100%;
+}
+
+#toolTipCart .cover{
+    max-height: 211px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+#toolTipCart .cover > div{
+    border-bottom: solid 1px #d0d0d0;
+    margin: 7px 5px;
+    padding: 10px 5px;
+    white-space: nowrap;
+}
+
+#toolTipCart .cover div.info{
+    max-width: 90px;
+}
+
+#toolTipCart .cover div.priceSection{
+    direction: rtl;
+    text-align: right;
+}
+
+#toolTipCart .cover div.priceSection *{
+}
+
+
+#toolTipCart .cover > div > div{
+    white-space: normal;
+    display: inline-block;
+    padding: 5px;
+    vertical-align: top;
+}
+
+#toolTipCart .cover .prodImg{
+    height: 100%;
+}
+
+#toolTipCart .cover .imageUrl{
+    width: 56px;
+    vertical-align: middle;
+}
+
+#toolTipCart .cover h3{
+    font-size: 12px;
+}
+
+#toolTipCart .cover label{
+    font-size: 11px;
+    color: #828282;
+}
+
+#toolTipCart .cover span.productColor{
+    position: relative;
+    top:3px;
+    margin: 0 4px;
+}
+
+#toolTipCart .cover .price{
+    font-size: 13px;
+    color: #2a2a2a;
+}
+
+#toolTipCart .cover .removeProduct{
+    margin: 20px 15px 0 15px;
+    transform: scale(0.8);
+}
+
+
+
+
+
+
+
+
+
+
+
+#toolTipCart .tooltipFooter
+{
+    background-color: #f9f9f9;
+    height: 100px;
+}
+
+#toolTipCart .tooltipFooter span
+{
+    font-size: 15px;
+    color: #2a2a2a;
+    margin: 10px;
+    display: inline-block;
+}
+
+#toolTipCart .tooltipFooter span label
+{
+    font-size: 13px;
+    margin: 0 10px 10px 10px;
+    position: relative;
+    top:-1px;
+}
+
+#toolTipCart .tooltipFooter .cart-total
+{
+    text-align: right;
+    float: right;
+}
+
+#toolTipCart .tooltipFooter button
+{
+    width: 245px;
+    font-size: 13px;
+    color: #2a2a2a;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    border: solid 2px #2a2a2a;
+    display: block;
+}
+
+#toolTipCart .tooltipFooter button:hover
+{
+    color: white;
+    margin: 10px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: solid 2px white;
+}

@@ -51,6 +51,51 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
 }
 
 
+nav.pages {
+    background-color: #454545;
+    position: relative;
+    padding: 0 20px;
+}
+
+nav.pages *{
+text-decoration: none;
+}
+
+.pages a{
+    display: inline-block;
+    padding: 8px;
+    color: gray;
+    background-color: #454545;
+    font-size: 16px;
+}
+
+.pages a:after{
+
+    content: "/";
+    position: relative;
+    width: 100%;
+    height: 100%;
+    right: -8px;
+    top:0;
+    z-index: 1;
+}
+
+.pages a:last-child:after{
+
+    content: "";
+}
+
+
+.productColor{
+    display: inline-block;
+    border:solid 1px #9d9d9d;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    margin: 5px 15px;
+    padding: 0px !important;
+    cursor: pointer;
+}
 
 
 input[type="text"], input[type="password"], .inputtext {
@@ -219,8 +264,14 @@ button {
     transition: all linear .2s;
 }
 
-button:hover {
-    border-color: #54b3ad;
+button.cyan {
+    color: black;
+    border: 1px solid #54b3ad;
+    background-color: transparent;
+}
+
+button.cyan:hover {
+    border-color: white;
     background-color: #54b3ad;
     color: white;
 }

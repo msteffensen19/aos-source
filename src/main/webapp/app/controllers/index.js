@@ -7,5 +7,6 @@ define([
     './mainCtrl',
     './categoriesCtrl',
     './categoryCtrl',
-    './productCtrl']
+    './productCtrl',
+    './shoppingCartCtrl']
     , function() {});

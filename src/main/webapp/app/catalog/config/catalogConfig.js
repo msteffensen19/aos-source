@@ -82,6 +82,12 @@ define([],function(){
             'Password_10_maxlength_field_error' : 'Password requires a maximum of 10 characters',
             'Password_regex' : 'uppercase, lowercase and number required',
             'User_Name_pattern' : "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
+            'QTY': 'QTY', //(Quantity)
+            'CHECKOUT': 'CHECKOUT',
+            'TOTAL': 'TOTAL',
+            'Items': 'Items',
+            'Color' : 'Color:',
+            'SHOPPING_CART' : 'SHOPPING CART'
 
         });
 
@@ -111,6 +117,19 @@ define([],function(){
                 resolve : {
                     product: function (productService, $stateParams) {
                     //    return productService.getProductById($stateParams.id);
+                    }
+                }
+            })
+            .state('shoppingCart',{
+                url: '/shoppingCart',
+                templateUrl: 'app/views/shoppingCart.html',
+                controller: 'shoppingCartCtrl',
+                data: {
+                    requireLogin: false // this property will apply to all children of 'app'
+                },
+                resolve : {
+                    category: function (productsCartService, $stateParams) {
+                        return productsCartService.loadCartProducts();
                     }
                 }
             })

@@ -28,8 +28,9 @@ define([
 
         .config(catalogConfig).config(userConfig)
 
-        .run(function ($rootScope, $state, ipCookie) {
+        .run(function ($rootScope, $state, ipCookie, productsCartService) {
 
+            $rootScope.cartProducts = null;
 
             var pcBlocked = ipCookie("pcBlocked");
             if(pcBlocked)
@@ -41,10 +42,11 @@ define([
                     $state.go('404');
                 }
             }
-            var userCookieLastEntry = ipCookie("userCookieLastEntry");
-            if(userCookieLastEntry)
+
+            $rootScope.userCookieLastEntry = ipCookie('lastlogin');
+            if($rootScope.userCookieLastEntry)
             {
-                var cookie = ipCookie("userCookie" + userCookieLastEntry);
+                var cookie = ipCookie($rootScope.userCookieLastEntry);
                 if(cookie)
                 {
                     $rootScope.userCookie = cookie;
@@ -52,14 +54,17 @@ define([
             }
 
 
+            productsCartService.loadCartProducts().then(function(response){
+                $rootScope.cartProducts = response;
+                console.log($rootScope.cartProducts);
+                console.log(JSON.stringify($rootScope.cartProducts));
+            });
+
 
 
             $rootScope.$on('$stateChangeError', function(event) {
                 $state.go('404');
             });
-
-
-
 
 
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
