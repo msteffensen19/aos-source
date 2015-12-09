@@ -9,7 +9,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.ParameterMode;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -92,8 +99,26 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     @Override
     public List<Product> getAll() {
         List<Product> products = entityManager.createNamedQuery(Product.QUERY_GET_ALL, Product.class)
-            .setMaxResults(MAX_NUM_OF_PRODUCTS)
             .getResultList();
+
+        return products.isEmpty() ? null : products;
+    }
+
+    @Override
+    public List<Product> filterByName(String pattern, int quantity) {
+        List<Product> products = entityManager.createNamedQuery(Product.PRODUCT_FILTER_BY_NAME, Product.class)
+                .setParameter("pname", "%"+pattern.toUpperCase()+"%")
+                .setMaxResults(100)
+                .getResultList();
+
+        return products.isEmpty() ? null : products;
+    }
+
+    @Override
+    public List<Product> filterByName(String pattern) {
+        List<Product> products = entityManager.createNamedQuery(Product.PRODUCT_FILTER_BY_NAME, Product.class)
+                .setParameter("pname", "%"+pattern.toUpperCase()+"%")
+                .getResultList();
 
         return products.isEmpty() ? null : products;
     }

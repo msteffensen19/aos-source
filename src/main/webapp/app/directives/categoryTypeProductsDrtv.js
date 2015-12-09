@@ -7,7 +7,7 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', '$templateCache',
-        '$location', function ($filter, $animate, $templateCache, $location) {
+        '$location', 'productsCartService', function ($filter, $animate, $templateCache, $location, cartService) {
         return {
             restrict: 'EA',
             replace: 'true',
@@ -43,14 +43,14 @@ define(['./module'], function (directives) {
                 }
 
                 scope.productsFilter = function(product) {
-                    //console.log(product)
+
                     if (Object.keys(scope.productsInclude).length > 0) {
                         var found = 0;
                         for (var key in scope.productsInclude){
                             for(var i = 0; i < scope.productsInclude[key].length; i++)
                                 if($.inArray(JSON.stringify($filter('filter')(product.attributes,
-                                            {attributeValue: scope.productsInclude[key][i]},
-                                            false)[0]),
+                                        {attributeValue: scope.productsInclude[key][i]},
+                                        false)[0]),
                                         $.map(product.attributes, JSON.stringify)) > -1)
                                     found++;
                         }
@@ -59,20 +59,18 @@ define(['./module'], function (directives) {
                     }
                     else
                         return product;
-                    //if (scope.productsInclude.length > 0) {
-                    //    var found = 0;
-                    //    for(var i = 0; i < scope.productsInclude.length;i++){
-                    //        if($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: scope.productsInclude[i]}, false)[0]),
-                    //                $.map(product.attributes, JSON.stringify)) > 0)
-                    //            found++;
-                    //    }
-                    //    if(found == scope.productsInclude.length)
-                    //        return product;
-                    //}
-                    //else
-                    //    return product;
-
                 };
+
+
+                scope.addProduct = function(product) {
+
+                    cartService.addProduct(product, 1).then(function(result){
+
+                        console.log(result);
+
+                    });
+                };
+
 
                 scope.clearSelection = function(){
                     for (var key in scope.productsInclude) {

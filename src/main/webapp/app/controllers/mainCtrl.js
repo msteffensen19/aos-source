@@ -5,9 +5,30 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll', '$location', 'ipCookie',
-        '$rootScope', function ($scope, productService, smoothScroll, $location, $cookie, $rootScope) {
+    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll',
+                    '$location', 'ipCookie', '$rootScope', 'productsCartService',
+        function ($scope, productService, smoothScroll,
+                        $location, $cookie, $rootScope, productsCartService) {
 
+            $scope.toolTipCartProducts = { products: [], total: 0 };
+
+
+            $scope.removeProduct = function(id){
+                var temp = [];
+                angular.forEach($rootScope.cartProducts.productsInCart, function(prod){
+                    if(prod.id != id) {
+                        temp.push(prod);
+                    }
+                });
+                $rootScope.cartProducts.productsInCart = temp;
+                buildCart();
+                productsCartService.updateRemovedProducts($rootScope.cartProducts);
+                $("#product"+id).css("display", 'none');
+                if(temp.length == 0)
+                {
+                    $('#toolTipCart').slideUp();
+                }
+            }
 
 
             $scope.accountSection = function(){
@@ -15,15 +36,74 @@ define(['./module'], function (controllers) {
                 $location.path('404');
             }
 
+
             $scope.signOut = function(){
-                $cookie.remove("userCookie" + $rootScope.userCookie.id);
+                $cookie.remove('lastlogin');
                 $rootScope.userCookie = undefined;
+                productsCartService.loadCartProducts().then(function(response){
+                    $rootScope.cartProducts = response;
+                });
             }
+
+            function buildCart(){
+                $scope.toolTipCartProducts = { products: [], total: 0 };
+                angular.forEach($rootScope.cartProducts.productsInCart ,function(product){
+                    var find = false;
+                    angular.forEach($scope.toolTipCartProducts.products, function(tolltipProduct){
+                        if(product.id == tolltipProduct.id && product.color == tolltipProduct.color)
+                        {
+                            tolltipProduct.quantity++;
+                            $scope.toolTipCartProducts.total += tolltipProduct.price;
+                            find = true;
+                        }
+                    });
+                    if(!find)
+                    {
+                        $scope.toolTipCartProducts.products.push({
+                            id: product.id,
+                            imageUrl: product.imageUrl,
+                            productName: product.productName,
+                            quantity: product.quantity,
+                            color: product.color,
+                            price: product.price
+                        })
+                        $scope.toolTipCartProducts.total += product.price;
+                    }
+                });
+            }
+
+
+            $scope.openCart = function(){
+
+
+                if($rootScope.cartProducts.productsInCart.length > 0)
+                {
+                    if($('#toolTipCart').css('display') == 'none') {
+                        buildCart();
+                    }
+                    $('#toolTipCart').slideToggle();
+                }
+            }
+
+
+            $scope.enterCart = function(){
+                buildCart();
+                $('#toolTipCart').stop().slideDown();
+            }
+
+            $scope.leaveCart = function(){
+                console.log($rootScope.cartProducts);
+                $('#toolTipCart').stop().slideUp();
+            }
+
 
             $scope.openOptions = function(){
             }
 
+
             $scope.login = function (size) {
+
+                $('#toolTipCart').css('display', 'none');
 
                 var windowsWidht = $(window).width();
                 var top = "5%";
@@ -58,8 +138,6 @@ define(['./module'], function (controllers) {
 
             $scope.gotoElement = function (id) {
 
-                // call $anchorScroll()
-                //smoothScroll.scrollTo(id);
                 console.log(($("#" + id).offset().top) + "px");
                 $("body").animate({
                     scrollTop: ($("#" + id).offset().top) + "px",
@@ -76,7 +154,10 @@ define(['./module'], function (controllers) {
 
 
             Main.miniItemPopUp();
+
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+
+
 
 
         }]);

@@ -19,11 +19,11 @@ define(['./module'], function (services) {
         }
 
         function getProductById(id) {
+
             var request = $http({
                 method: "get",
-                //url: 'api/product/' + id,
-                url: 'app/product.json' ,
-                //url: '/api/catalog/products/' + id
+                url: 'api/catalog/products/' + id,
+                //url: 'app/product.json',
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }

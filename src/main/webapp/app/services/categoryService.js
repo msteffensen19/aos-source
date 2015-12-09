@@ -16,26 +16,25 @@ define(['./module'], function (services) {
         function getCategories() {
             var request = $http({
                 method: "get",
-                url: "api/category",
-                //url: "api/catalog/categories",
+                url: "api/catalog/categories",
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
         function getCategoryProducts(id) {
-                var request = $http({
-                    method: "get",
-                    url: "api/categoryProducts?category_id=" + id
-                });
-                return( request.then( responseService.handleSuccess, responseService.handleError )
-            );
+//                var request = $http({
+  //                  method: "get",
+    //                url: "api/categoryProducts?category_id=" + id
+      //          });
+        //        return( request.then( responseService.handleSuccess, responseService.handleError )
+          //  );
         }
 
         function getCategoryById(id) {
             var request = $http({
                 method: "get",
-                url: "api/categoryData/" + id
-                //url: "api/catalog/categories/" + id
+                //url: "/api/catalog/products/categories/" + id + "/products"
+                url: "/api/catalog/categories/" + id + "/products"
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         };

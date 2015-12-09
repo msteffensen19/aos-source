@@ -41,6 +41,14 @@ public class ProductService {
         return productRepository.getAll();
     }
 
+    public List<Product> filterByName(String pattern, int quantity) {
+        return quantity > 0 ? productRepository.filterByName(pattern, quantity) : filterByName(pattern);
+    }
+
+    public List<Product> filterByName(String pattern) {
+        return productRepository.filterByName(pattern);
+    }
+
     public List<Product> getCategoryProducts(final Long categoryId) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(categoryId, "category id");

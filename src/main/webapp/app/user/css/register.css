@@ -135,6 +135,10 @@ white-space: nowrap;
     color: #ff454f !important;
 }
 
+#form .valid{
+    color: lime !important;
+}
+
 #form .center{
     display: block;
     text-align: center;

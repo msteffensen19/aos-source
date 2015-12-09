@@ -4,6 +4,8 @@
 'use strict';
 
 define([
+
+    './productsCartService',
     './productService',
     './categoryService',
     './dealService',

@@ -1,0 +1,30 @@
+
+<div ng-show="cart.products.length > 0">
+    <div class="cover">
+        <div ng-repeat="product in cart.products" id="product{{::product.id}}">
+            <div class="prodImg">
+                <img class="imageUrl" ng-src="fetchImage?image_id={{::product.imageUrl}}" alt="imgProduct" />
+            </div>
+            <div class="info">
+                <h3>{{::product.productName | uppercase}}</h3>
+                <label>{{'QTY' | translate}} {{::product.quantity}}</label>
+                <br />
+                <label>
+                    {{'Color' | translate }}
+                    <span ng-style="{'backgroundColor': '#' + product.color}" class="productColor"></span>
+                </label>
+            </div>
+            <div class="priceSection">
+                <p class="price roboto-regular">{{ (product.price * product.quantity) | currency:'$' }}</p>
+                <img src="../../css/images/Close.png" class="removeProduct" ng-click="removeProduct(product.id)" alt="X">
+            </div>
+        </div>
+    </div>
+    <div class="tooltipFooter">
+        <span class="roboto-medium">{{'TOTAL' | translate}}
+            <label class="roboto-regular">({{cart.products.length}} {{'Items' | translate}})</label>
+        </span>
+        <span class="roboto-medium cart-total" >{{cart.total | currency:'$'}}</span>
+        <button class="roboto-medium" data-ng-click="checkout()">{{'CHECKOUT' | translate}}</button>
+    </div>
+</div>

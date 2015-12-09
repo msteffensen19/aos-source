@@ -46,11 +46,11 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     /**
      * Create a new {@link AppUser} in the database.
      * 1. Verify all parameters are not <code>null</code> or empty. <br/>
-     * 2. Verify <code>loginName</code> comply with AOS policy. <br/>
-     * 3. Verify <code>password</code> comply with AOS policy. <br/>
+     * 2. Verify {@code loginName} comply with AOS policy. <br/>
+     * 3. Verify {@code password} comply with AOS policy. <br/>
      * 4. Get country-id by country-name. <br/>
-     * 5. Verify <code>phoneNumber</code> comply with AOS policy.
-     * 6. Verify <code>email</code> contains a valid e-mail address. <br/>
+     * 5. Verify {@code phoneNumber} comply with AOS policy.
+     * 6. Verify {@code email} contains a valid e-mail address. <br/>
      * <p>
      * Two more fields are managed and set internally: <br/>
      * unsuccessfulLoginAttempts Number of unsuccessful login attempts in a row made by the user. <br/>
@@ -155,13 +155,13 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
         ArgumentValidationHelper.validateArgumentIsNotNull(appUser, "application user");
 
-        final Long userId = appUser.getId();
+        Long userId = appUser.getId();
 
         System.out.println("int deleteAppUser(AppUser appUser) - Building HQL");
-        final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(AppUser.class,
+        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(AppUser.class,
                 AppUser.FIELD_ID,
                 userId);
-        final Query query = entityManager.createQuery(hql);
+        Query query = entityManager.createQuery(hql);
 
         return query.executeUpdate();
     }
