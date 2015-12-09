@@ -5,10 +5,7 @@ import com.advantage.online.store.model.product.ImageAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ProductDto {
     private Long productId;
@@ -126,11 +123,50 @@ public class ProductDto {
     }
 
     /**
+     * Fill all products DTO parameters
+     * @param products Collection of products
+     * @return {@link List} ProductDto collection
+     */
+    public static List<ProductDto> fillProducts(Collection<Product> products) {
+        if (products == null) return null;
+        List<ProductDto> productDtos = new ArrayList<>(products.size());
+
+        for (Product product : products) {
+            ProductDto productDto = new ProductDto(product);
+            productDtos.add(productDto);
+        }
+
+        return productDtos;
+    }
+
+    /**
+     * Fill default products DTO parameters
+     * @param products Collection products
+     * @return {@link List} ProductDto collection
+     */
+    public static List<ProductDto> fillPureProducts(Collection<Product> products) {
+        if (products == null) return null;
+        List<ProductDto> productDtos = new ArrayList<>(products.size());
+
+        for (Product product : products) {
+            ProductDto productDto = new ProductDto();
+            productDto.productId = product.getId();
+            productDto.categoryId = product.getCategory().getCategoryId();
+            productDto.productName = product.getProductName();
+            productDto.price = product.getPrice();
+            productDto.imageUrl = product.getManagedImageId();
+
+            productDtos.add(productDto);
+        }
+
+        return productDtos;
+    }
+    /**
      * Build AttributeItem collection from Products attributes
      * @param product - Product object
      * @return
      */
-    private List<AttributeItem> fillAttributes(Product product) {
+    private static List<AttributeItem> fillAttributes(Product product) {
         Set<ProductAttributes> productAttributes = product.getProductAttributes();
         List<AttributeItem> items = new ArrayList<>();
         for (ProductAttributes attribute : productAttributes) {

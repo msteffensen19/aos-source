@@ -24,7 +24,7 @@ public class AppUserConfigurationController {
 
     //public ResponseEntity<AppUserConfigurationResponseStatus> getAllConfigurationParameters(HttpServletRequest request, HttpServletResponse response) {
 
-    @RequestMapping(value = "/appUserConfiguration/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/service/clientConfiguration", method = RequestMethod.GET)
     public ResponseEntity<AppUserConfigurationResponseStatus> getAllConfigurationParameters() {
 
         AppUserConfigurationResponseStatus appUserConfigurationResponseStatus = appUserConfigurationService.getAllConfigurationParameters();
