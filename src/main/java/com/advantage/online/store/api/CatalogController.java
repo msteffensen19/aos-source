@@ -117,6 +117,7 @@ public class CatalogController {
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
+    //By Alex Tarasov
     @RequestMapping(value = "/products/search", method = RequestMethod.GET)
     @ApiOperation(value = "Search product by Name")
     public ResponseEntity<List<CategoryDto>> searchProductByName(@RequestParam("name") String name,
@@ -190,6 +191,7 @@ public class CatalogController {
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
+
     //endregion
     @RequestMapping(value = "/images", method = RequestMethod.POST)
     public ResponseEntity<ImageUrlResponseStatus> imageUpload(@RequestParam("file") MultipartFile file) {
