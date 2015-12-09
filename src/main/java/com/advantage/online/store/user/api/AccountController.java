@@ -22,22 +22,22 @@ import java.util.List;
  * @author Binyamin Regev on 16/11/2015.
  */
 @RestController
-@RequestMapping(value = Constants.URI_API)
-public class AppUserController {
+@RequestMapping(value = Constants.URI_API+"/account")
+public class AccountController {
 
     //private static final String REQUEST_PARAM_COUNTRY_ID = "country_id";
 
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping(value = "/account/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
         List<AppUser> appUsers = appUserService.getAllAppUsers();
 
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request, HttpServletResponse response) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
@@ -63,7 +63,7 @@ public class AppUserController {
 
     }
 
-    @RequestMapping(value = "/account/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(
