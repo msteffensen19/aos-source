@@ -1,13 +1,11 @@
 package com.advantage.online.store.model.category;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import com.advantage.online.store.model.product.Product;
+
+import javax.inject.Named;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by kubany on 10/15/2015.
@@ -40,8 +38,8 @@ public class Category {
     @Column(name = "managed_image_id")
     private String managedImageId;
 
-    //@OneToMany(mappedBy="category")
-    //private Set<Product> products;
+    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Product> products = new HashSet<>();
 
     public Category(final String categoryName, final String managedImageId) {
 
@@ -77,5 +75,13 @@ public class Category {
     public String getManagedImageId() {
 
     	return managedImageId;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }

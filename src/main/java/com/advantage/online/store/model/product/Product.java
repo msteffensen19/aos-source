@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.advantage.online.store.model.category.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,9 +15,23 @@ import java.util.Set;
     @NamedQuery(
             name = Product.QUERY_GET_ALL,
             query = "select p from Product p"
+    ),
+    @NamedQuery(
+            name = Product.PRODUCT_FILTER_BY_NAME,
+            query = "select p from Product p where UPPER(p.productName) like :pname"
     )
 })
-public class Product {
+@NamedStoredProcedureQuery(
+        name = "getfilteredproducts",
+        procedureName = "getfilteredproducts",
+        resultClasses = Product.class,
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "quantity"),
+                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "name"),
+                //@StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class),
+        }
+)
+public class Product{
     public static final String QUERY_GET_ALL = "product.getAll";
 
     public static final String FIELD_ID = "product_id";
@@ -24,6 +39,9 @@ public class Product {
 
     public static final String PARAM_ID = "PARAM_PRODUCT_ID";
     public static final String PARAM_CATEGORY_ID = "PARAM_PRODUCT_CATEGORY_ID";
+    public static final String PRODUCT_FILTER_BY_NAME = "product.FilterByName";
+    public static final String GETFILTEREDPRODUCTS = "getfilteredproducts";
+    public static final String PROCEDURE_PROD = "procedure_prod";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

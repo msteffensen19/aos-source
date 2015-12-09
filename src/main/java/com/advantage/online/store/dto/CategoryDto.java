@@ -105,5 +105,21 @@ public class CategoryDto {
     public void setColors(Set<String> colors) {
         this.colors = colors;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CategoryDto that = (CategoryDto) o;
+
+        return !(categoryId != null ? !categoryId.equals(that.categoryId) : that.categoryId != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return categoryId != null ? categoryId.hashCode() : 0;
+    }
 }
 
