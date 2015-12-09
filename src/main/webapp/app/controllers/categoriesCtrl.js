@@ -31,7 +31,6 @@ define(['./module'], function (controllers) {
                     });
                 dealService.getDealOfTheDay().then(function( deal ) {
                     $scope.deal = deal;
-                    console.log($scope.deal)
                 });
                 categoryService.getPopularProducts().then(function(popularProducts){
                     $scope.popularProducts = popularProducts;

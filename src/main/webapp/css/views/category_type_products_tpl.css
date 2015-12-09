@@ -8,6 +8,13 @@
     padding: 0 24px;
 }
 
+.categoryLeft *, .categoryRight *{
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
 .categoryLeft .filterCount{
     padding: 3px 0;
     font-size: 20px;
@@ -75,6 +82,7 @@
 .categoryLeft .option {
     position: relative;
     padding: 10px 0;
+    display: none;
 }
 
 .categoryLeft .option > div {
@@ -90,16 +98,6 @@
     color:#828282;
 }
 
-
-.productColor{
-    border:solid 1px #9d9d9d;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    margin: 5px 15px;
-    padding: 0px !important;
-    cursor: pointer;
-}
 
 .option .unknowColor {
     background: -moz-linear-gradient(45deg,  rgba(255,255,255,0) 0%, rgba(255,255,255,0) 12%, rgba(255,255,255,1) 14%, rgba(255,255,255,1) 26%, rgba(255,255,255,0) 29%, rgba(255,255,255,0) 41%, rgba(255,255,255,1) 44%, rgba(255,255,255,1) 56%, rgba(255,255,255,0) 58%, rgba(255,255,255,0) 73%, rgba(255,255,255,1) 76%, rgba(255,255,255,1) 86%, rgba(255,255,255,0) 89%, rgba(255,255,255,0) 100%);

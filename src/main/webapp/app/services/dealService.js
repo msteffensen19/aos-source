@@ -21,7 +21,8 @@ define(['./module'], function (services) {
         function getDealOfTheDay() {
             var request = $http({
                 method: "get",
-                url: "api/catalog/deals/0"
+                //url: "api/catalog/deals/0"
+                url: "api/catalog/deals?dealOfTheDay=true"
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
