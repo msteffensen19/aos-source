@@ -1,11 +1,13 @@
-#toolTipCart{
-    border: solid 1px #d0d0d0;
+#toolTipCart {
     position: absolute;
     top: -3px;
     right: -8px;
     z-index: 9999;
     display: none;
+}
+#toolTipCart table{
     background-color: white;
+    border: solid 1px #d0d0d0;
 }
 
 #toolTipCart *{

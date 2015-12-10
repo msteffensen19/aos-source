@@ -64,7 +64,7 @@ define(['./module'], function (directives) {
                 var ____closeTooTipCart;
                 scope.addProduct = function(product) {
 
-                   $('#toolTipCart').stop().slideDown().delay(200, function(){
+                   $('#toolTipCart').slideDown(function(){
                         cartService.addProduct(product, 1).then(function(result){
 
                             clearInterval(____closeTooTipCart);

@@ -30,16 +30,14 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            $scope.openCart = function(){
-                $('#toolTipCart').stop().slideToggle();
-            }
-
             $scope.enterCart = function(){
                 $('#toolTipCart').stop().slideDown();
             }
 
             $scope.leaveCart = function(){
-                $('#toolTipCart').stop().slideUp();
+                $('#toolTipCart').stop().slideUp(function(){
+                    //$('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
+                });
             }
 
             $scope.login = function (size) {

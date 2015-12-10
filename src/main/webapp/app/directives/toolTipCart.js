@@ -20,12 +20,7 @@ define(['./module'], function (directives) {
                     console.log(scope.cart);
                 }
                 scope.removeProduct = function(index){
-
-                    console.log("index");
-                    console.log(index);
-                    cartService.removeProduct(index).then(function(){
-
-                    });
+                    cartService.removeProduct(index);
                 }
             }
         };
