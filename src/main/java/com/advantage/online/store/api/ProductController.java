@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -161,6 +160,7 @@ public class ProductController {
     @ApiOperation(value = "Search product by Name")
     public ResponseEntity<List<CategoryDto>> searchProductByName(@RequestParam("name") String name,
         @RequestParam(value = "quantityPerEachCategory", defaultValue = "-1", required = false) Integer quantity) {
+        if(quantity == 0) return new ResponseEntity<>(HttpStatus.OK);
         List<Product> products = productService.filterByName(name, quantity);
         if (products == null) return new ResponseEntity<>(HttpStatus.OK);
         List<ProductDto> productDtos = ProductDto.fillPureProducts(products);
@@ -179,11 +179,9 @@ public class ProductController {
                     .collect(Collectors.toList());
             if (categoryDto.getProducts() == null) {
                 if(productsDtoList.size() > quantity) {
-                    productsDtoList = productsDtoList.subList(0,quantity);
+                    productsDtoList = quantity == -1  ? productsDtoList : productsDtoList.subList(0,quantity);
                 }
                 categoryDto.setProducts(productsDtoList);
-            } else {
-                categoryDto.getProducts().addAll(productsDtoList);
             }
             categoryDtos.add(categoryDto);
         }
@@ -193,8 +191,8 @@ public class ProductController {
 
     /**
      * Fill AttributeDto from ProductAttributes
-     * @param attributeCollection
-     * @param products
+     * @param attributeCollection Attributes collection
+     * @param products Products collection
      * @return AttributeDto collection
      */
     private List<AttributeDto> fillAttributeDto(Collection<Attribute> attributeCollection,
