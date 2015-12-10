@@ -24,12 +24,13 @@ public class ShoppingCartService {
      *
      * @param userId
      * @param productId
-     * @param color
+     * @param stringColor
      * @param quantity
      * @return
      */
     @Transactional
-    public ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity) {
+    public ShoppingCartResponseStatus add(long userId, Long productId, String stringColor, int quantity) {
+        int color = ShoppingCart.convertHexColorToInt(stringColor);
         return shoppingCartRepository.add(userId, productId, color, quantity);
     }
 
@@ -41,11 +42,12 @@ public class ShoppingCartService {
      *
      * @param userId
      * @param productId
-     * @param color
+     * @param stringColor
      * @return
      */
     @Transactional
-    public ShoppingCartResponseStatus removeProductFromUserCart(long userId, Long productId, int color) {
+    public ShoppingCartResponseStatus removeProductFromUserCart(long userId, Long productId, String stringColor) {
+        int color = ShoppingCart.convertHexColorToInt(stringColor);
         return shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
     }
 
@@ -77,16 +79,16 @@ public class ShoppingCartService {
 
     public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
                                                                        @PathVariable("product") Long productId,
-                                                                       @PathVariable("color") Integer color,
+                                                                       @PathVariable("color") String stringColor,
                                                                        @PathVariable("quantity") Integer quantity);
 
     public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@PathVariable("userid") Long userId,
                                                                                 @PathVariable("product") Long productId,
-                                                                                @PathVariable("color") Integer color);
+                                                                                @PathVariable("color") String stringColor);
 
     public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") Long userId,
                                                                                   @PathVariable("product") Long productId,
-                                                                                  @PathVariable("color") String color,
+                                                                                  @PathVariable("color") String stringColor,
                                                                                   @PathVariable("quantity") Integer quantity);
  */
 

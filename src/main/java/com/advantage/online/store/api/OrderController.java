@@ -90,7 +90,7 @@ public class OrderController {
     @RequestMapping(value="/carts/{userid}?product={productid}&color={color}", method=RequestMethod.POST)
     public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
                                                                        @PathVariable("productid") Long productId,
-                                                                       @PathVariable("color") Integer color) {
+                                                                       @PathVariable("color") String color) {
 
 
         System.out.println("addProductToCart Parameters: ");
@@ -105,7 +105,7 @@ public class OrderController {
     @RequestMapping(value="/carts/{userid}?product={productid}&color={color}&quantity={x}", method=RequestMethod.POST)
     public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
                                                                        @PathVariable("productid") Long productId,
-                                                                       @PathVariable("color") Integer color,
+                                                                       @PathVariable("color") String color,
                                                                        @PathVariable("quantity") Integer quantity) {
         System.out.println("addProductToCart Parameters: ");
         System.out.println("   userId=" + userId);
@@ -122,7 +122,7 @@ public class OrderController {
     @RequestMapping(value="/carts/{userid}?product={productid}&color={color}", method=RequestMethod.DELETE)
     public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@PathVariable("userid") Long userId,
                                                                                 @PathVariable("productid") Long productId,
-                                                                                @PathVariable("color") Integer color) {
+                                                                                @PathVariable("color") String color) {
 
         System.out.println("removeProductFromUserCart Parameters: ");
         System.out.println("   userId=" + userId);

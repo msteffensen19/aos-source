@@ -83,7 +83,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
-        ArgumentValidationHelper.validateLongArgumentIsPositive(color, "color id");
+        ArgumentValidationHelper.validateArgumentIsNotNull(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
         //  Check if there is this ShoppingCart already exists
@@ -121,20 +121,21 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      *
      * @param userId
      * @param productId
-     * @param colorId
+     * @param color
      * @param quantity
      * @return
      */
     @Override
-    public ShoppingCart updateShoppingCart(long userId, Long productId, int colorId, int quantity) {
+    public ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity) {
 
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
-        ArgumentValidationHelper.validateLongArgumentIsPositive(colorId, "color id");
+        ArgumentValidationHelper.validateArgumentIsNotNull(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
-        ShoppingCart shoppingCart = getShoppingCartByPrimaryKey(userId, productId, colorId);
+        ShoppingCart shoppingCart = getShoppingCartByPrimaryKey(userId, productId, color);
+        
         if (shoppingCart != null) {
             shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
             entityManager.persist(shoppingCart);
@@ -182,13 +183,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         List<ShoppingCart> existingCart = this.getShoppingCartsByUserId(userId);
         if (existingCart == null) {
-            //  Existing Cart IS EMPTY - Add all items.
+            //  Existing CartProduct IS EMPTY - Add all items.
             for (ShoppingCart cart : cartProducts) {
                 entityManager.persist(cart);
             }
         }
         else {
-            //  MERGE Existing Cart NOT EMPTY- Update existing products, add new items.
+            //  MERGE Existing CartProduct NOT EMPTY- Update existing products, add new items.
             for (ShoppingCart cart : cartProducts) {
                 int i = existingCart.indexOf(cart);
                 if (i != -1) {
