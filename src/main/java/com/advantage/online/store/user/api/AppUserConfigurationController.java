@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 
@@ -25,7 +28,9 @@ public class AppUserConfigurationController {
     //public ResponseEntity<AppUserConfigurationResponseStatus> getAllConfigurationParameters(HttpServletRequest request, HttpServletResponse response) {
 
     @RequestMapping(value = "/service/clientConfiguration", method = RequestMethod.GET)
-    public ResponseEntity<AppUserConfigurationResponseStatus> getAllConfigurationParameters() {
+    public ResponseEntity<AppUserConfigurationResponseStatus> getAllConfigurationParameters(HttpServletRequest request, HttpServletResponse response) {
+
+        response.setHeader("sessionId", request.getSession().getId());
 
         AppUserConfigurationResponseStatus appUserConfigurationResponseStatus = appUserConfigurationService.getAllConfigurationParameters();
 
