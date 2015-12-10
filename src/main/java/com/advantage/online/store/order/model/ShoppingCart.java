@@ -95,7 +95,7 @@ public class ShoppingCart {
      * @param intColor Color value in decimal (base 10).
      * @return {@link String}, color value in Hexadecimal (base 16).
      */
-    private String convertIntColorToHex(final int intColor) {
+    public static String convertIntColorToHex(final int intColor) {
         return Integer.toHexString(intColor);
     }
 
@@ -104,7 +104,7 @@ public class ShoppingCart {
      * @param hexColor Color value in Hexadecimal.
      * @return {@code int}, color value in decimal (base 10).
      */
-    private int convertHexColorToInt(final String hexColor) {
+    public static int convertHexColorToInt(final String hexColor) {
         return Integer.parseInt(hexColor.replaceAll("#", "").trim(), 16);
     }
 
