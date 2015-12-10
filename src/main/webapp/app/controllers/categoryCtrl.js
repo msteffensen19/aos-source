@@ -35,21 +35,14 @@ define(['./module'], function (controllers) {
                 $scope.categoryAttributes = category.attributes;
 
                 $scope.products = category.products;
-//                console.log("$scope.products")
-  //              console.log($scope.products)
-    //            console.log("")
-
-
 
                 $scope.categoryName = category.categoryName;
-                //$scope.catImg = 'data:image/jpeg;base64,' + ( products.length > 0 ? products[0].category.image : "");
 
-                Main.productHover();
-                Main.addAccordionEventListener();
                 $("nav .navLinks").css("display" , "none");
 
-
             }
+
+            Helper.forAllPage();
 
     }]);
 });

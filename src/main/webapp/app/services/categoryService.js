@@ -34,7 +34,7 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 //url: "/api/catalog/products/categories/" + id + "/products"
-                url: "/api/catalog/categories/" + id + "/products"
+                url: "api/catalog/categories/" + id + "/products"
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         };
@@ -49,3 +49,8 @@ define(['./module'], function (services) {
 
     }]);
 });
+
+//url: "api/catalog/products/categories/" + id + "/products"
+//url: "http://localhost:8080/catalog/api/v1/categories/" + id + "/products"
+//url: "http://localhost:8080/catalog/api/v1/" + "categories/" + id + "/products"
+//url: CatalogURIPrefix + "categories/" + id + "/products"",

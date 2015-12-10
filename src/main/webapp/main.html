@@ -104,14 +104,13 @@
                 </a>
             </li>
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" href="/shoppingCart">
+                <a class="img" href="#/shoppingCart">
                     <img id="mainCart" src="css/images/Cart.jpg" data-ng-click="openCart()" />
-                    <!--   -->
-                    <span class="cart" ng-show="cartProducts.productsInCart.length != 0">{{cartProducts.productsInCart.length}}</span>
+                    <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
                 <ul>
                     <li style="position: relative; background-color: white" >
-                        <tool-tip-cart cart="toolTipCartProducts" id="toolTipCart"></tool-tip-cart>
+                        <tool-tip-cart cart="cart" id="toolTipCart"></tool-tip-cart>
                     </li>
                 </ul>
             </li>
@@ -127,7 +126,7 @@
     </nav>
 </header>
 
-<!-- end navegation -->
+<!-- end navegation " ng-show="cartCount != 0 -->
 
 
 

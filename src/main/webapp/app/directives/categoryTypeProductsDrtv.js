@@ -61,13 +61,17 @@ define(['./module'], function (directives) {
                         return product;
                 };
 
-
+                var ____closeTooTipCart;
                 scope.addProduct = function(product) {
 
-                    cartService.addProduct(product, 1).then(function(result){
+                   $('#toolTipCart').stop().slideDown().delay(200, function(){
+                        cartService.addProduct(product, 1).then(function(result){
 
-                        console.log(result);
-
+                            clearInterval(____closeTooTipCart);
+                            ____closeTooTipCart = setTimeout(function(){
+                                $('#toolTipCart').stop().delay(700).slideUp();
+                            }, 2000)
+                        });
                     });
                 };
 

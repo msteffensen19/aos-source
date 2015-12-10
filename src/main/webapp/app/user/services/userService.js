@@ -30,9 +30,8 @@ define(['./module'], function (services) {
             function getConfiguration(){
 
                 var request = $http({
-                 //"Content-Type": "application/json;charset=UTF-8",
                  "method": "get",
-                 "url": "api/appUserConfiguration/getAll",
+                 "url": "api/service/clientConfiguration",
                  });
                  return( request.then(
                  responseService.handleSuccess,

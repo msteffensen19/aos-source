@@ -50,7 +50,7 @@ define([],function(){
             'CREATE_ACCOUNT' : 'CREATE ACCOUNT',
             'this_is_a_demo' : 'this is a demo',
             'Please_enter_a_fake_data' : 'Please enter a fake data',
-            'NOTIC' : 'NOTIC',
+            'NOTICE' : 'NOTICE',
             'Laptops' : 'Laptops',
             'ACCOUNT_DETAILS' : 'ACCOUNT DETAILS',
             'PERSONAL_DETAILS' : 'PERSONAL DETAILS',
@@ -82,7 +82,7 @@ define([],function(){
             'Password_10_maxlength_field_error' : 'Password requires a maximum of 10 characters',
             'Password_regex' : 'uppercase, lowercase and number required',
             'User_Name_pattern' : "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
-            'QTY': 'QTY', //(Quantity)
+            'QTY': 'QTY:', //(Quantity)
             'CHECKOUT': 'CHECKOUT',
             'TOTAL': 'TOTAL',
             'Items': 'Items',

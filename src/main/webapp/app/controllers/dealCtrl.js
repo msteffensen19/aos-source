@@ -7,6 +7,8 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('dealCtrl', ['$scope', 'dealService', '$sce', function ($scope, dealService, $sce) {
+
+
         $scope.deals = [];
         // I contain the ngModel values for form interaction.
         $scope.form = {
@@ -42,5 +44,8 @@ define(['./module'], function (controllers) {
                     applyDealOfTheDay( deal );
                 });
         }
+
+        Helper.forAllPage();
+
     }]);
 });

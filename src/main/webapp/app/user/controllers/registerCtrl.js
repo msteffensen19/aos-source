@@ -19,19 +19,19 @@ define(['./module'], function (controllers) {
                 class: 'invalid'
             }
 
-
+            /*
              $scope.model = { username : 'SECorrenti', email : 'efi.correnti@hpe.com',
              password : 'Aa123456', confirm_password : 'Aa123456', firstName : 'Sergio', lastName : 'Ezequiel',
              phoneNumber : '0507856268', country : {"id":0, "name":"", "isoName":"", "phonePrefix":0} , address : 'Mavo yahalom 3', city : 'Ramat gan',
              postalCode : '5421123', state : 'israel', offers_promotion : true }
+             */
 
-             /*
             $scope.model = {
                 username : '', email : '', password : '', confirm_password : '',
                 firstName : '', lastName : '', phoneNumber : '', country : {} , address : '',
                 city : '', postalCode : '', state : '', offers_promotion : true,
             }
-            */
+
 
 
             $scope.$watch("registerForm.$valid", function (newValue) {

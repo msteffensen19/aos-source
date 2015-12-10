@@ -30,7 +30,6 @@ define([
 
         .run(function ($rootScope, $state, ipCookie, productsCartService) {
 
-            $rootScope.cartProducts = null;
 
             var pcBlocked = ipCookie("pcBlocked");
             if(pcBlocked)
@@ -49,18 +48,12 @@ define([
                 var cookie = ipCookie($rootScope.userCookieLastEntry);
                 if(cookie)
                 {
+                    alert()
                     $rootScope.userCookie = cookie;
                 }
             }
 
-
-            productsCartService.loadCartProducts().then(function(response){
-                $rootScope.cartProducts = response;
-                console.log($rootScope.cartProducts);
-                console.log(JSON.stringify($rootScope.cartProducts));
-            });
-
-
+            productsCartService.loadCartProducts();
 
             $rootScope.$on('$stateChangeError', function(event) {
                 $state.go('404');
