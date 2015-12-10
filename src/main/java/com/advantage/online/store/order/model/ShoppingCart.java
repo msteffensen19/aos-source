@@ -1,131 +1,150 @@
 package com.advantage.online.store.order.model;
 
-import com.advantage.online.store.Constants;
-
 import javax.persistence.*;
 
 /**
+ * The model class for {@code shopping_cart} table entity. Rows can be deleted
+ * (removed) without constraints by primary key columns: {@code user_id},
+ * {@code product_id} and {@code color_id}.
+ * @see ShoppingCartPK
  * @author Binyamin Regev on 03/12/2015.
  */
 @Entity
 @Table(name = "shopping_cart")
+@IdClass(ShoppingCartPK.class)
+@NamedQueries({
+        @NamedQuery(
+                name = ShoppingCart.QUERY_GET_CARTS_BY_USER_ID,
+                query = "select s from ShoppingCart s where " + ShoppingCart.FIELD_USER_ID + " = :" + ShoppingCart.PARAM_USER_ID
+        )
+        ,@NamedQuery(
+                name = ShoppingCart.QUERY_GET_CART_BY_PK_COLUMNS,
+                query = "select s from ShoppingCart s " +
+                        "where " + ShoppingCart.FIELD_USER_ID + " = :" + ShoppingCart.PARAM_USER_ID +
+                        " AND " + ShoppingCart.FIELD_PRODUCT_ID + " = :" + ShoppingCart.PARAM_PRODUCT_ID +
+                        " AND " + ShoppingCart.FIELD_COLOR_ID + " = :" + ShoppingCart.PARAM_COLOR_ID
+        )
+})
 public class ShoppingCart {
 
-    public static final String FIELD_ID = "cart_item_id";
+    public static final int MAX_NUM_OF_SHOPPING_CART_PRODUCTS = 50;
+
+    public static final String MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY = "Shopping cart and all products updated successfully.";
+    public static final String MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY = "New product was updated in shopping cart successfully.";
+    public static final String MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY = "Existing product in shopping cart updated successfully.";
+    public static final String MESSAGE_INVALID_USER_ID = "Invalid user id, not exist.";
+    public static final String MESSAGE_NO_PRODUCTS_TO_UPDATE_IN_SHOPPING_CART = "No products to update in shopping cart.";
+    public static final String MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART = "Product with this color not found in user\'s cart.";
+    public static final String MESSAGE_USER_SHOPPING_CART_WAS_CLEARED = "User shopping cart was emptied.";
+    public static final String MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY = "product was deleted from user cart successfully.";
+
+    public static final String QUERY_GET_CARTS_BY_USER_ID = "shoppingCart.getCartsByUserId";
+    public static final String QUERY_GET_CART_BY_PK_COLUMNS = "shoppingCart.getCartsByPkColumns";
+
+    public static final String FIELD_USER_ID = "user_id";
+    public static final String FIELD_PRODUCT_ID = "product_id";
+    public static final String FIELD_COLOR_ID = "color_id";
+
+    public static final String PARAM_USER_ID = "PARAM_USER_ID";
+    public static final String PARAM_PRODUCT_ID = "PARAM_PRODUCT_ID";
+    public static final String PARAM_COLOR_ID = "PARAM_COLOR_ID";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = FIELD_ID)
-    private Long id;
+    @Column(name = FIELD_USER_ID)
+    private long userId;
 
-    @Column(name = "login_name")
-    private String loginName;
-
-    @Column(name = "product_id")
+    @Id
+    @Column(name = FIELD_PRODUCT_ID)
     private Long productId;
 
-    @Column(name = "managed_image_id")
-    private String managedImageId;
-
-    @Column(name = "color_name")
-    private String colorName;
-
-    @Column(name = "color_image_url")
-    private  String colorImageUrl;
-
-    @Column(name = "price")
-    private double price;
+    @Id
+    @Column(name = FIELD_COLOR_ID)
+    private int color;
 
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name="product_total")
-    private double productTotal;
-
-    @Column(name="active")
-    private boolean active;
-
     public ShoppingCart() {
     }
 
-    public ShoppingCart(String loginName, Long productId, String managedImageId, String colorName, String colorImageUrl, double originalPrice, double discountPercent, double priceAfterDiscount, int quantity, double productTotal, boolean active) {
-        this.loginName = loginName;
+    public ShoppingCart(long userId, Long productId, int color, int quantity) {
+        this.userId = userId;
         this.productId = productId;
-        this.managedImageId = managedImageId;
-        this.colorName = colorName;
-        this.colorImageUrl = colorImageUrl;
-        this.price = price;
+        this.color = color;
         this.quantity = quantity;
-        this.productTotal = productTotal;
-        this.active = active;
     }
 
-    public Long getId() { return id; }
+    public long getUserId() { return this.userId; }
 
-    public String getLoginName() { return this.loginName; }
-
-    public void setLoginName(String loginName) { this.loginName = loginName; }
+    public void setUserId(long userId) { this.userId = userId; }
 
     public Long getProductId() { return productId; }
 
     public void setProductId(Long productId) { this.productId = productId; }
 
-    public String getManagedImageId() { return managedImageId; }
+    public int getColor() { return this.color; }
 
-    public void setManagedImageId(String managedImageId) { this.managedImageId = managedImageId; }
-
-    public String getColorName() { return colorName; }
-
-    public void setColorName(String colorName) { this.colorName = colorName; }
-
-    public String getColorImageUrl() { return colorImageUrl; }
-
-    public void setColorImageUrl(String colorImageUrl) { this.colorImageUrl = colorImageUrl; }
-
-    public double getPrice() { return this.price; }
-
-    public void setPrice(double price) { this.price = price; }
+    public void setColor(int color) { this.color = color; }
 
     public int getQuantity() { return quantity; }
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public double getProductTotal() { return productTotal; }
+    /**
+     * Convert color in decimal (base 10) to Hex (base 16) value.
+     * @param intColor Color value in decimal (base 10).
+     * @return {@link String}, color value in Hexadecimal (base 16).
+     */
+    private String convertIntColorToHex(final int intColor) {
+        return Integer.toHexString(intColor);
+    }
 
-    public void setProductTotal(double productTotal) { this.productTotal = productTotal; }
-
-    public boolean isActive() { return active; }
-
-    public void setActive(boolean active) { this.active = active; }
+    /**
+     * Convert color in Hex (base 16) to decimal (base 10).
+     * @param hexColor Color value in Hexadecimal.
+     * @return {@code int}, color value in decimal (base 10).
+     */
+    private int convertHexColorToInt(final String hexColor) {
+        return Integer.parseInt(hexColor.replaceAll("#", "").trim(), 16);
+    }
 
     @Override
     public String toString() {
         return "ShoppingCart{" +
-                " id=" + id +
-                ", loginName='" + this.getLoginName() + '\'' +
+                " userId='" + this.getUserId() + '\'' +
                 ", productId=" + this.getProductId() +
-                ", managedImageId='" + this.getManagedImageId() + '\'' +
-                ", colorName='" + this.getColorName() + '\'' +
-                ", colorImageUrl='" + this.getColorImageUrl()+ '\'' +
-                ", price=" + this.getPrice() +
-                ", quantity=" + this.getQuantity() +
-                ", productTotal=" + this.getProductTotal() +
-                ", active=" + this.isActive() + " }";
+                ", color='" + this.getColor() + '\'' +
+                ", quantity=" + this.getQuantity() + " }";
     }
 
+    /**
+     * This method determines if 2 ShoppingCart objects are the same.
+     * @param compareTo
+     * @return
+     */
+    public boolean isTheSame(ShoppingCart compareTo) {
+        return ((this.getUserId()== compareTo.getUserId()) &&
+                (this.getProductId() == compareTo.getProductId()) &&
+                (this.getColor() == compareTo.getColor())
+                );
+    }
+
+    /**
+     * Compare one {@code ShoppingCart} object to another. This is
+     * <b>NOT</b> to determine that 2 {@code Products} are the same.
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
 
         ShoppingCart compareTo = (ShoppingCart) obj;
 
-        return ((this.getLoginName().equals(compareTo.getLoginName())) &&
+        return ((this.getUserId()== compareTo.getUserId()) &&
                 (this.getProductId() == compareTo.getProductId()) &&
-                (this.getManagedImageId().equalsIgnoreCase(compareTo.getManagedImageId())) &&
-                (this.getColorName().equalsIgnoreCase(compareTo.getColorName())) &&
-                (this.getColorImageUrl().equalsIgnoreCase(compareTo.getColorImageUrl())) &&
-                (this.getPrice() == compareTo.getPrice()) &&
-                (this.getQuantity() == compareTo.getQuantity()) &&
-                (this.getProductTotal() == compareTo.getProductTotal())
+                (this.getColor() == compareTo.getColor()) &&
+                (this.getQuantity() == compareTo.getQuantity())
                 );
     }
+
 }
