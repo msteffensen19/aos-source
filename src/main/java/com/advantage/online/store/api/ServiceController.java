@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = Constants.URI_API + "/service")
+@RequestMapping(value = "/service"+Constants.URI_API +"/v1")
 public class ServiceController {
     @Autowired
     AttributeService attributeService;

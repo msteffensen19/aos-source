@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = Constants.URI_API + "/catalog")
+@RequestMapping(value = "/catalog"+Constants.URI_API +"/v1")
 public class CatalogController {
     @Autowired
     private ProductService productService;
@@ -218,7 +218,7 @@ public class CatalogController {
     }
 
     //@RequestMapping(value = "/catalog/deals/0", method = RequestMethod.GET)
-    @RequestMapping(value = "/deals?dealOfTheDay=true", method = RequestMethod.GET)
+    @RequestMapping(value = "/deals/search?dealOfTheDay=true", method = RequestMethod.GET)
     public ResponseEntity<Deal> getDealOfTheDay(final HttpServletRequest request,
                                                 final HttpServletResponse response) {
 
