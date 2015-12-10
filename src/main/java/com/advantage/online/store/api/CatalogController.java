@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/catalog" + Constants.URI_API + "/v1")
+@RequestMapping(value = Constants.URI_API+"/catalog"+Constants.URI_API +"/v1")
 public class CatalogController {
     @Autowired
     private ProductService productService;
@@ -147,7 +147,6 @@ public class CatalogController {
         }
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
     }
-
 
     //endregion
     //region /categories
