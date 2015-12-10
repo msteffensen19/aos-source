@@ -8,8 +8,13 @@ define(['./module'], function(controllers){
         function(s, cartService){
 
             s.categoryName = 'MICE';
+            s.cart = null;
+            cartService.getCart().then(function(cart){
+                s.cart = cart;
+            });
+
+
 
             Helper.forAllPage();
-
     }]);
 });

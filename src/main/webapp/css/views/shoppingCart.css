@@ -1,3 +1,201 @@
 #shoppingCart{
-    background-color: red;
+    max-width: 1090px;
+    margin: 45px auto;
 }
+
+#shoppingCart table{
+    width: 100%;
+    border-collapse:collapse;
+}
+
+#shoppingCart table *{
+    padding: 0;
+    margin: 0;
+}
+
+#shoppingCart th {
+    text-align: left;
+    padding: 8px 0;
+}
+
+#shoppingCart tbody td {
+    padding: 20px 0;
+    border-top: #d0d0d0 solid 1px;
+}
+
+#shoppingCart tbody tr:last-child td{
+    border-bottom: #d0d0d0 solid 1px;
+}
+
+#shoppingCart .imgHeader{
+    width: 100px;
+}
+
+#shoppingCart img{
+    width: 100%;
+}
+
+#shoppingCart select{
+    padding: 4px;
+    font-size: 1.2em;
+}
+
+#shoppingCart th:nth-child(2),
+#shoppingCart td:nth-child(2){
+    padding-left: 21px;
+}
+
+#shoppingCart .smollCell{
+    width: 100px;
+    text-align: center;
+
+}
+
+#shoppingCart td button{
+    border: solid 1px #2a2a2a;
+    background-color: transparent;
+    padding: 14px 30px;
+    float: right;
+}
+
+#shoppingCart td button:hover{
+    background-color: #2a2a2a;
+    color: white;
+}
+
+#shoppingCart tfoot td:last-child {
+    text-align: right;
+}
+
+#shoppingCart tfoot span {
+    padding: 20px 0;
+    font-size: 18px;
+    display: inline-block;
+}
+
+#shoppingCart tfoot .icons *{
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-block;
+}
+
+#shoppingCart tfoot .icons > label{
+    font-size: 11px;
+    margin: 20px 2px;
+}
+
+#shoppingCart tfoot ul li{
+    display: inline-block;
+    position: relative;
+    width: 50px;
+    height: 20px;
+    vertical-align: top;
+}
+
+#shoppingCart tfoot ul li:nth-child(3){
+    width: 95px;
+}
+
+#shoppingCart tfoot ul span{
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#shoppingCart tfoot .icons #masterCard{
+    position: absolute;
+    padding: 0;
+    top:2px;
+    left:12px;
+    display: block;
+    width: 15px;
+    height: 15px;
+    font-size: 0;
+    border-radius: 50%;
+    transform: translateX(-5px);
+    background-color: rgba(127, 127, 127, 0.8);
+}
+#shoppingCart tfoot .icons #masterCard:after{
+    content: '';
+    right: 12px;
+    display: block;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #b8b5a6;
+}
+
+#shoppingCart tfoot .icons #visa{
+    position: absolute;
+    padding: 0;
+    font-size: 0.94em;
+    top:-2px;
+    font-weight: 800;
+    color: #a4a6a1;
+    transform: skewX(-19deg) scaleY(1.2);
+}
+
+#shoppingCart tfoot .icons #visa:after{
+    content: '';
+    top:-13px;
+    left: -21px;
+    margin: 18px;
+    display: block;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    background:radial-gradient(circle at 0 100%, transparent 8px, #dde3e8 0);
+    background-position: top left;
+    z-index: 2;
+    transform: skewX(12deg);
+}
+
+#shoppingCart tfoot .icons #discover{
+    position: absolute;
+    padding: 0;
+    font-size: 0.94em;
+    top:1px;
+    font-weight: 600;
+    color: #a4a6a1;
+    transform: scaleY(1.2);
+}
+
+#shoppingCart tfoot .icons #discover:after{
+    content: '';
+    top:2px;
+    left: 35px;
+    display: block;
+    width: 13px;
+    height: 12px;
+    position: absolute;
+    background-color: #e1e1e1;
+    border-radius: 50%;
+}
+
+#shoppingCart tfoot .icons #paypal{
+    position: absolute;
+    padding: 0;
+    font-size: 0.94em;
+    top:3px;
+    font-weight: 600;
+    color: #a4a6a1;
+    transform: scaleY(1.2);
+    font-family: Aharoni;
+    transform: skewX(-19deg) scale(1.2);
+
+}
+
+#shoppingCart tfoot .icons #paypal:after{
+    content: 'Pal';
+    top:0px;
+    left: 27px;
+    display: block;
+    position: absolute;
+    color: #e1e1e1;
+}
+
+
+
