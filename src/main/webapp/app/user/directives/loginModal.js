@@ -4,8 +4,8 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie',
-        '$templateCache', '$location', '$timeout',
-        function($rootScope, userService, $cookie, $templateCache, $location, $timeout) {
+        '$templateCache', '$location', '$timeout', 'productsCartService',
+        function($rootScope, userService, $cookie, $templateCache, $location, $timeout, productsCartService) {
             return {
                 restrict: 'E',
                 replace:false,
@@ -59,18 +59,25 @@ define(['./module'], function (directives) {
                                     }
 
                                     $cookie.remove("loginsCounter");
-                                    userCookie.fillParams($scope.user.loginUser, response.userId,
-                                        $scope.user.email, new Date());
+                                    userCookie.fillParams($scope.user.loginUser, $scope.user.email, response);
                                     $rootScope.userCookie = userCookie;
 
                                     if(rememberMe){
-                                        $cookie("userCookieLastEntry", response.userId, { expirationUnit: 'minutes', expires: 60 });
-                                        $cookie("userCookie" + response.userId, $rootScope.userCookie, { expirationUnit: 'minutes', expires: 60 });
+
+                                         $cookie(userCookie.getKey(userCookie), userCookie, { expirationUnit: 'minutes', expires: 60 });
+                                        $cookie('lastlogin', userCookie.getKey(userCookie));
+                                        console.log($cookie(userCookie.getKey(userCookie)));
                                     }
                                     else{
                                         $cookie.remove("userCookie" + $scope.user.email);
                                     }
-                                    wellcome()
+
+                                    productsCartService.loadCartProducts().then(function(response){
+
+                                        productsCartService.joinCartProducts(response);
+                                    });
+
+                                    wellcome();
                                 }
                                 else {
                                     wrongFields();

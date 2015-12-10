@@ -38,7 +38,7 @@ public class AppUserController {
     }
 
     @RequestMapping(value = "/account/login", method = RequestMethod.POST)
-    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request) {
+    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request, HttpServletResponse response) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
                 appUser.getLoginPassword(),
@@ -51,7 +51,9 @@ public class AppUserController {
             session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
 
             //  Set SessionID to Response Entity
+            //response.getHeader().
             appUserResponseStatus.setSessionId(session.getId());
+
 
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
         }

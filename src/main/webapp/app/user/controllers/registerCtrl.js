@@ -31,14 +31,18 @@ define(['./module'], function (controllers) {
                 firstName : '', lastName : '', phoneNumber : '', country : {} , address : '',
                 city : '', postalCode : '', state : '', offers_promotion : true,
             }
-                */
+            */
+
+
             $scope.$watch("registerForm.$valid", function (newValue) {
                 $scope.isFormValid = newValue;
             });
 
+
             registerService.getAllCountries().then(function(response){
                 $scope.countries = response;
             });
+
 
             $scope.register = function(){
 
@@ -49,10 +53,9 @@ define(['./module'], function (controllers) {
 
                         console.log("response")
                         console.log(response)
-                        return;
+                        $scope.registerAnswer.message = response.reason,
+                        $scope.registerAnswer.class = response.success ? 'valid' : 'invalid';
                     })
-                    $scope.registerAnswer.message = 'Registry failed!',
-                    $scope.registerAnswer.class = 'invalid'
                 }
             }
 

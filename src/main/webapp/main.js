@@ -11,16 +11,16 @@ require.config({
         'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
         'jquery' : 'vendor/jquery/dist/jquery.min',
         'jquery-bez' : 'vendor/jquery-bez/jquery.bez.min',
+        "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
+        //'angularRoute': 'vendor/angular-route/angular-route.min',
+        'angularAnimate' : 'vendor/angular-animate/angular-animate.min',
+
         'jPushMenu' : 'utils/jPushMenu',
         'mainScript' : 'utils/main',
         'accordion' : 'utils/accordion',
         'wrongDirection' : 'utils/wrongDirection',
         'UserCookie' : 'utils/Models/UserCookie',
-        'slider' : 'utils/slider',
-        "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
-        //'angularRoute': 'vendor/angular-route/angular-route.min',
-        'angularAnimate' : 'vendor/angular-animate/angular-animate.min',
-    },
+        'slider' : 'utils/slider', },
     shim: {
         'angular' : {'exports' : 'angular'},
         'app': {

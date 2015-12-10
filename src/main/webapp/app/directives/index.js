@@ -3,4 +3,4 @@
  */
 'use strict';
 
-define(['./popularItemsDirective', './socialMediaDrtv', './categoryTypeProductsDrtv'], function() {});
+define(['./toolTipCart', './popularItemsDirective', './socialMediaDrtv', './categoryTypeProductsDrtv'], function() {});

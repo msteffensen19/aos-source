@@ -44,7 +44,8 @@ public class CountryController {
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account/countries/from_name/{start_of_name}", method = RequestMethod.GET)
+    //@RequestMapping(value = "/account/countries/from_name/{start_of_name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/account/countries?nameStartFrom='{start_of_name}'", method = RequestMethod.GET)
     public ResponseEntity<List<Country>> getCountriesByPartialCountryName(@PathVariable("start_of_name") String partialCountryName) {
 
         List<Country> countries = countryService.getCountriesByPartialName(partialCountryName);
@@ -52,7 +53,8 @@ public class CountryController {
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account/countries/phone_prefix/{international_phone_prefix}", method = RequestMethod.GET)
+    //@RequestMapping(value = "/account/countries/phone_prefix/{international_phone_prefix}", method = RequestMethod.GET)
+    @RequestMapping(value = "/account/countries?phonePrefix={international_phone_prefix}", method = RequestMethod.GET)
     public ResponseEntity<List<Country>> getCountriesByInternationalCountryCode(@PathVariable("international_phone_prefix") Integer phonePrefix) {
         List<Country> countries = countryService.getCountriesByPhonePrefix(phonePrefix);
 
