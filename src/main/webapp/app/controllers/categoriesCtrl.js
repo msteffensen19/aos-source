@@ -10,26 +10,16 @@ define(['./module'], function (controllers) {
 
             $scope.categories = [];
             $scope.deal = "";
-            // I contain the ngModel values for form interaction.
             $scope.form = {
                 name: ""
             };
             $scope.popularProducts = ""
 
             loadRemoteData();
-            function applyRemoteData( categories ) {
-                $scope.categories = categories;
-                $('.carousel').carousel({
-                    interval: 5000
-                });
-            }
-
             function loadRemoteData() {
-
-                categoryService.getCategories()
-                    .then(function( categories ) {
-                        applyRemoteData( categories );
-                    });
+                categoryService.getCategories().then(function( categories ) {
+                    $scope.categories = categories;
+                });
                 dealService.getDealOfTheDay().then(function( deal ) {
                     $scope.deal = deal;
                 });

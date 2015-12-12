@@ -197,5 +197,146 @@
     color: #e1e1e1;
 }
 
+#shoppingCart td .mobileViewer{
+    display: none;
+}
+
+#shoppingCart .smollCell > a span.remove{
+    font-size: 13px;
+    display: inline-block;
+    padding: 10px 0;
+    cursor:pointer;
+}
 
 
+@media only screen and (max-width: 760px) {
+
+    #shoppingCart table, #shoppingCart thead, #shoppingCart tbody,
+    #shoppingCart th, #shoppingCart td, #shoppingCart tr {
+        display: block;
+    }
+
+    #shoppingCart thead tr {
+        display: none;
+    }
+
+    #shoppingCart td {
+        position: relative;
+        direction: ltr;
+    }
+
+    #shoppingCart td *{
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+
+    #shoppingCart td {
+        position: relative;
+        text-align: left;
+    }
+
+    #shoppingCart td:nth-child(2) {
+        padding-left: 0;
+    }
+
+    #shoppingCart tbody tr:nth-child(even) {
+        background: #CCC
+    }
+
+    #shoppingCart tbody tr:nth-child(even) td {
+        border-top:  solid 1px white;
+    }
+
+    #shoppingCart tbody tr td:first-child  {
+        border-top: none 1px transparent;
+    }
+
+    #shoppingCart tbody tr:nth-child(even) .productColor {
+        border:solid 1px white;
+    }
+
+
+    #shoppingCart td .mobileViewer{
+        width: calc(50% - 40px);
+        text-align: right;
+        float: left;
+        padding: 0 20px;
+        display: block;
+    }
+
+    #shoppingCart img {
+        width: 200px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    #shoppingCart h1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    #shoppingCart .quantityMobile {
+        line-height: 2;
+    }
+
+    #shoppingCart .smollCell{
+        width: 100%;
+        text-align: left;
+    }
+
+    #shoppingCart .smollCell > a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #shoppingCart .smollCell > a span.remove{
+        text-align: center;
+        padding: 10px 25px;
+        border: solid 1px;
+        border-radius: 4px;
+        transition: all .3s ease;
+        font-size: 16px;
+    }
+
+    #shoppingCart .smollCell > a span.remove:hover{
+        color:white;
+        background-color: #2a2a2a;
+    }
+
+
+    #shoppingCart tbody tr:last-child td{
+        border-bottom: none;
+    }
+
+
+    #shoppingCart tfoot {
+        width: 100%;
+        display: block;
+        margin-top: 40px;
+    }
+
+    #shoppingCart tfoot td{
+        text-align: center;
+    }
+
+
+    #shoppingCart tfoot .icons #paypal:after{
+    left:39px
+    }
+
+    #shoppingCart tfoot .icons #discover:after{
+        left:44px;
+    }
+
+    #shoppingCart tfoot .icons #visa:after{
+        left:-16px;
+    }
+
+    #shoppingCart tfoot td > span:last-child,
+    #shoppingCart tfoot td > button{
+        margin-right: 25px;
+    }
+
+}

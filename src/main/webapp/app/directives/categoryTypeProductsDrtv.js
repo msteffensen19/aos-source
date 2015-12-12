@@ -61,16 +61,24 @@ define(['./module'], function (directives) {
                         return product;
                 };
 
-                var ____closeTooTipCart;
+                console.log('$(#toolTipCart).offset().top')
                 scope.addProduct = function(product) {
-
                    $('#toolTipCart').slideDown(function(){
                         cartService.addProduct(product, 1).then(function(result){
-
-                            clearInterval(____closeTooTipCart);
-                            ____closeTooTipCart = setTimeout(function(){
-                                $('#toolTipCart').stop().delay(700).slideUp();
-                            }, 2000)
+                            clearInterval(Helper.____closeTooTipCart);
+                            $('#toolTipCart tbody').stop().animate({
+                                scrollTop: 0 + 'px',
+                            }, 500, function(){
+                                var productId = $('#product' + product.productId);
+                                var top = productId.length > 0 ? ($(productId).offset().top) - ($('#toolTipCart').offset().top)
+                                    : $('.lastProduct').offset().top;
+                                $('#toolTipCart tbody').stop().animate({
+                                    scrollTop: (top) + 'px',
+                                }, 500);
+                                Helper.____closeTooTipCart = setTimeout(function(){
+                                    $('#toolTipCart').stop().delay(700).slideUp();
+                                }, 2000)
+                            });
                         });
                     });
                 };

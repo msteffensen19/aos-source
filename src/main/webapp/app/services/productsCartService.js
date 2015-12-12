@@ -28,11 +28,9 @@ define(['./module'], function (services) {
 
             function removeProduct(index){
                 var responce = $q.defer();
-                console.log("index");
                 cart.productsInCart.splice(index, 1);
                 updateCart();
-                console.log(index);
-                responce.resolve(false);
+                responce.resolve(cart);
                 return responce.promise;
             }
 

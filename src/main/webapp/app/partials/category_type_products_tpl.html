@@ -7,11 +7,13 @@
         <label class="roboto-regular clear" ng-click="clearSelection()">Clear</label>
         <ul>
             <li ng-repeat="attrib in categoryAttributes">
-                <h4 class="accordion roboto-regular arrowDown" ng-click="toggleColapse(attrib.attributeId)" >
+                <h4 class="accordion roboto-regular arrowDown"
+                    ng-click="toggleColapse(attrib.attributeId)" >
                     {{attrib.attributeName}}
                 </h4>
                 <div class="option" >
-                    <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block" ng-switch on="attrib.attributeName">
+                    <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block"
+                         ng-switch on="attrib.attributeName">
                         <span ng-switch-when="COLOR" class="productColor "
                               ng-click="includeProducts($event, attrVal, attrib.attributeName)"
                               ng-class="{ 'unknowColor' : $last }"

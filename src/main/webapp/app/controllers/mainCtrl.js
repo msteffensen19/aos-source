@@ -14,6 +14,7 @@ define(['./module'], function (controllers) {
 
             productsCartService.getCart().then(function(cart){
                 $scope.cart = cart;
+                console.log(cart)
             });
 
 
@@ -31,21 +32,20 @@ define(['./module'], function (controllers) {
             }
 
             $scope.enterCart = function(){
+                clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
                 $('#toolTipCart').stop().slideDown();
             }
 
             $scope.leaveCart = function(){
                 $('#toolTipCart').stop().slideUp(function(){
-                    //$('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
+                    $('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
                 });
             }
 
             $scope.login = function (size) {
 
                 $('#toolTipCart').css('display', 'none');
-
                 var windowsWidth = $(window).width();
-
                 var top = "5%";
                 if(windowsWidth < 480) { top = "0"; } else if(windowsWidth < 700) { top = "18%"; }
 

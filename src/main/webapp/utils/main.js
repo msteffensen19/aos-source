@@ -6,6 +6,7 @@ var Helper = Helper || {};
 Helper.forAllPage = function(){
     $("body").scrollTop(0);
 }
+Helper.____closeTooTipCart;
 
 
 

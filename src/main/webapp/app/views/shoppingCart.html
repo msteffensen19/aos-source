@@ -50,21 +50,31 @@
                 <tbody>
                 <tr ng-repeat="product in (cart.productsInCart.slice().reverse()) track by $index">
                     <td>
-                        <img class="imageUrl" ng-src="fetchImage?image_id={{::product.imageUrl}}" alt="imgProduct" />
+                        <img class="imageUrl" ng-src="fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
                     </td>
                     <td>
-                        <h1 class="roboto-regular">{{::product.productName | uppercase}}</h1>
+                        <h1 class="roboto-regular">{{product.productName | uppercase}}</h1>
                     </td>
                     <td class="smollCell">
+                        <label class="roboto-light mobileViewer">
+                            {{'COLOR' | translate}}:
+                        </label>
                         <span ng-style="{'backgroundColor': '#' + product.color}" class="productColor"></span>
                     </td>
-                    <td class="smollCell">
-                        <select ng-model="product.quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9]" ></select>
+                    <td class="smollCell quantityMobile" >
+                        <label class="roboto-light mobileViewer">
+                            {{'QUANTITY' | translate}}:
+                        </label>
+                        <select ng-model="product.quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9] | productQuantity:product.quantity" ></select>
                     </td>
                     <td class="smollCell">
+                        <label class="roboto-light mobileViewer">
+                            {{'PRICE' | translate}}:
+                        </label>
                         <p class="price roboto-regular">
                             {{ (product.price * product.quantity) | currency:'$' }}
                         </p>
+                        <a><span class="remove" data-ng-click="removeProduct(cart.productsInCart.length - 1 - $index)">REMOVE</span></a>
                     </td>
                 </tr>
                 </tbody>

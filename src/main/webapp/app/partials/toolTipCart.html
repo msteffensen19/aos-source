@@ -1,19 +1,19 @@
 <div ng-show="cart.productsInCart.length > 0">
     <table>
         <tbody>
-            <tr ng-repeat="product in (cart.productsInCart.slice().reverse()) track by $index">
+            <tr ng-repeat="product in cart.productsInCart track by $index" id="product{{product.id}}" data-ng-class="{ lastProduct : $last }">
                 <td>
-                    <img class="imageUrl" ng-src="fetchImage?image_id={{::product.imageUrl}}" alt="imgProduct" />
+                    <img class="imageUrl" ng-src="fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
                 </td>
                 <td>
-                    <h3>{{::product.productName | uppercase}}</h3>
+                    <h3>{{product.productName | uppercase}}</h3>
                     <label>{{'QTY' | translate}} {{product.quantity}}</label>
                     <label>{{'Color' | translate }}
                         <span ng-style="{'backgroundColor': '#' + product.color}" class="productColor"></span>
                     </label>
                 </td>
                 <td>
-                    <p class="price roboto-regular">{{ (product.price * product.quantity) | currency:'$' }}</p>
+                    <p class="price roboto-regular">{{ (product.price * product.quantity ) | currency:'$' }}</p>
                     <img src="../../css/images/Close.png" class="removeProduct" ng-click="removeProduct($index)" alt="X">
                 </td>
             </tr>

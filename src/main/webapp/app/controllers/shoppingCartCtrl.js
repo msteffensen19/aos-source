@@ -8,13 +8,19 @@ define(['./module'], function(controllers){
         function(s, cartService){
 
             s.categoryName = 'MICE';
-            s.cart = null;
+            s.cart;
+
             cartService.getCart().then(function(cart){
                 s.cart = cart;
             });
 
-
+            s.removeProduct = function(index){
+                cartService.removeProduct(index).then(function(cart){
+                    s.cart = cart;
+                });
+            }
 
             Helper.forAllPage();
+            $("nav .navLinks").css("display" , "none");
     }]);
 });
