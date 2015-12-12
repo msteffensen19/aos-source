@@ -22,7 +22,7 @@ import java.util.List;
  * @author Binyamin Regev on 16/11/2015.
  */
 @RestController
-@RequestMapping(value = "/account"+Constants.URI_API +"/v1")
+@RequestMapping(value = "/account" + Constants.URI_API + "/v1")
 public class AccountController {
 
     //private static final String REQUEST_PARAM_COUNTRY_ID = "country_id";
@@ -68,7 +68,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
+    public ResponseEntity<AppUserResponseStatus> createUser(@RequestBody AppUser appUser) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(
                 appUser.getAppUserType(),
@@ -93,7 +93,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries", method = RequestMethod.POST)
-    public ResponseEntity<CountryResponseStatus> create(@RequestBody Country country) {
+    public ResponseEntity<CountryResponseStatus> createCountry(@RequestBody Country country) {
 
         final CountryResponseStatus countryResponseStatus = countryService.create(country.getName(),
                 country.getIsoName(),
@@ -119,7 +119,11 @@ public class AccountController {
         } else {//nameStartFrom!=null
             countries = countryService.getCountriesByPartialName(startOfName);
         }
-        return new ResponseEntity<>(countries, HttpStatus.OK);
+        if (countries == null || countries.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(countries, HttpStatus.OK);
+        }
     }
 
 }
