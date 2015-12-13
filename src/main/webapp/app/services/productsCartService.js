@@ -8,13 +8,37 @@ define(['./module'], function (services) {
         function ($http, $q, responseService, $cookie, $rootScope) {
 
             var responce = $q.defer();
+            var cart = null;
+            function getTempCart(){
+                return {
+                    "userId": -1,
+                    "productsInCart": [],
+                }
+            }
 
             return({
                 addProduct : addProduct,
                 loadCartProducts : loadCartProducts,
                 joinCartProducts : joinCartProducts,
-                updateRemovedProducts : updateRemovedProducts
-            })
+                updateRemovedProducts : updateRemovedProducts,
+                getCart: getCart,
+                removeProduct: removeProduct
+            });
+
+
+            function removeProduct(index){
+                var responce = $q.defer();
+                cart.productsInCart.splice(index, 1);
+                updateCart();
+                responce.resolve(cart);
+                return responce.promise;
+            }
+
+            function getCart(){
+                var responce = $q.defer();
+                responce.resolve(cart);
+                return responce.promise;
+            }
 
             function updateRemovedProducts(cart)
             {
@@ -23,7 +47,6 @@ define(['./module'], function (services) {
                 {
                     updateCart(cart)
                 }
-
                 var response = $q.defer()
                 response.resolve('no comments');
                 return response.promise;
@@ -32,7 +55,6 @@ define(['./module'], function (services) {
             function loadCartProducts(){
 
                 var responce = $q.defer();
-
                 var user = $rootScope.userCookie;
                 if(user && user.response) {
                     if (user.response.userId != -1) {
@@ -43,26 +65,23 @@ define(['./module'], function (services) {
                         return( request.then(responseService.handleSuccess, responseService.handleError ));
                     }
                 }
-
-                var guestCart = loadGuestCartProducts();
-                responce.resolve(guestCart);
+                loadGuestCartProducts();
+                responce.resolve(cart);
                 return responce.promise;
             }
 
             function loadGuestCartProducts(){
 
-                var usercart = $cookie("userCart");
-                if(!usercart){
-                    var guestCart = getTempCart();
-                    updateCart(guestCart)
-                    return guestCart;
+                cart = $cookie("userCart");
+                if(!cart){
+                    cart = getTempCart();
+                    updateCart();
                 }
-                return usercart;
             }
 
             function joinCartProducts(userCart){
                 var guestCart = loadGuestCartProducts();
-                var cart = [];
+                var tempCart = [];
                 angular.forEach(userCart.productsInCart, function(userProduct){
                     var find = false;
                     angular.forEach(guestCart.productsInCart, function(guestProduct) {
@@ -72,26 +91,27 @@ define(['./module'], function (services) {
                         }
                     });
                     if(!find){
-                        cart.push(userProduct);
+                        tempCart.push(userProduct);
                     }
                 });
                 angular.forEach(guestCart.productsInCart, function(guestProduct) {
-                    cart.push(guestProduct);
+                    tempCart.push(guestProduct);
                 });
 
-                userCart.productsInCart = cart;
-                $rootScope.cartProducts = userCart;
-                updateUserCart(userCart.productsInCart)
-                $cookie.remove("userCart")
+                userCart.productsInCart = tempCart;
+                cart = userCart;
+                updateUserCart(userCart.productsInCart);
+                $cookie.remove("userCart");
             }
 
 
-            function updateUserCart(cart){
+            function updateUserCart(){
                 var user = $rootScope.userCookie;
                 if(user && user.response) {
                     if (user.response.userId != -1) {
                         $http({
                             method: "get",
+                            //data : JSON.stringify(cart);
                             url: "app/cartProducts.json"
                         });
                         return true;
@@ -100,62 +120,63 @@ define(['./module'], function (services) {
                 return false;
             }
 
-
-            function updateCart(cart){
-                $cookie("userCart", cart , { expires: 365*5 })
-                $rootScope.cartProducts = cart;
+            function updateCart(){
+                $cookie("userCart", cart , { expires: 365*5 });
             }
-
-
-
 
             function addProduct(product, quantity) {
 
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
-                if(user)
-                {
-                    if(user.response)
-                    {
-                        if(user.response.userId != -1)
-                        {
-                            var request = $http({
-                                method: "get",
-                                url: "send to user product"
-                            });
-                            request.then(function(newCart){
-                                updateCart(newCart)
-                                response.resolve({reason: '', success: true});
-                                return response.promise;
-                            })
-                            response.resolve(false);
+                if(user && user.response) {
+                    if (user.response.userId != -1) {
+                        var request = $http({
+                            method: "get",
+                            url: "send to user product"
+                        });
+                        request.then(function (newCart) {
+                            cart = newCart;
+                            updateCart()
+                            response.resolve({reason: '', success: true});
                             return response.promise;
-                        }
-                        alert("ckeck this point");
+                        })
+                        response.resolve(false);
+                        return response.promise;
                     }
+                    alert("ckeck this point");
                 }
-
-                $rootScope.cartProducts.productsInCart.push({
-                    "id": product.productId,
-                    "imageUrl": product.imageUrl,
-                    "productName": product.productName,
-                    "color" : product.colors.length > 0 ? product.colors[0] : 'FFF',
-                    "quantity": quantity,
-                    "price": product.price
+                var find = false;
+                angular.forEach(cart.productsInCart ,function(productInCart){
+                    if(product.productId == productInCart.id)
+                    {
+                        angular.forEach(product.colors, function(color){
+                            if(productInCart.color == color)
+                            {
+                                productInCart.quantity += quantity;
+                                cart.total += (product.price * quantity);
+                                find = true;
+                            }
+                        })
+                    }
                 });
-                updateCart($rootScope.cartProducts)
-
+                if(!find)
+                {
+                    cart.productsInCart.push({
+                        "id": product.productId,
+                        "imageUrl": product.imageUrl,
+                        "productName": product.productName,
+                        "color" : product.colors.length > 0 ? product.colors[0] : 'FFF',
+                        "quantity": quantity,
+                        "price": product.price
+                    });
+                    cart.total += product.price;
+                }
+                updateCart();
                 response.resolve(false);
                 return response.promise;
             }
         }]);
 
 
-    function getTempCart(){
-        return {
-            "userId": -1,
-            "productsInCart": [],
-            "you_may_also_be_interested": []
-        }
-    }
+
 });

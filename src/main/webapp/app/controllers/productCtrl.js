@@ -24,6 +24,7 @@ define(['./module'], function (controllers) {
             }
             $("nav .navLinks").css("display", "none");
 
+            Helper.forAllPage();
         }]);
     });
 

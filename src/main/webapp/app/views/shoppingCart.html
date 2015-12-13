@@ -1,23 +1,111 @@
-
-
-
 <!--
+
 <div id="png">
     <img src="../../css/images/mariaDesigns/cart/cart.png" alt="img" >
 </div>
 -->
-<div>
-    <nav class="pages">
-        <a>{{ 'HOME' | translate }}</a>
-        <a class="select "> {{categoryName}}</a>
-        <a class="select "> {{ 'SHOPPING_CART' | translate }}</a>
-    </nav>
-</div>
-<div id="shoppingCart">
-    hola mundo
-    shoppingCart
-</div>
 
+
+<section>
+    <article>
+
+        <nav class="pages">
+            <a>{{ 'HOME' | translate }}</a>
+            <a class="select "> {{categoryName}}</a>
+            <a class="select "> {{ 'SHOPPING_CART' | translate }}</a>
+        </nav>
+        <h3 class="roboto-regular center" >
+            {{'SHOPPING_CART' | translate}} ({{cart.productsInCart.length}})
+        </h3>
+
+        <div id="shoppingCart">
+
+            <table>
+                <thead>
+                <tr>
+                    <th class="imgHeader">
+                    </th>
+                    <th>
+                        <label class="roboto-light">
+                            {{'PRODUCT_NAME' | translate}}
+                        </label>
+                    </th>
+                    <th class="smollCell">
+                        <label class="roboto-light">
+                            {{'COLOR' | translate}}
+                        </label>
+                    </th>
+                    <th class="smollCell">
+                        <label class="roboto-light">
+                            {{'QUANTITY' | translate}}
+                        </label>
+                    </th>
+                    <th class="smollCell">
+                        <label class="roboto-light">
+                        {{'PRICE' | translate}}
+                        </label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="product in cart.productsInCart track by $index">
+                    <td>
+                        <img class="imageUrl" ng-src="fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
+                    </td>
+                    <td>
+                        <h1 class="roboto-regular">{{product.productName | uppercase}}</h1>
+                    </td>
+                    <td class="smollCell">
+                        <label class="roboto-light mobileViewer">
+                            {{'COLOR' | translate}}:
+                        </label>
+                        <span ng-style="{'backgroundColor': '#' + product.color}" class="productColor"></span>
+                    </td>
+                    <td class="smollCell quantityMobile" >
+                        <label class="roboto-light mobileViewer">
+                            {{'QUANTITY' | translate}}:
+                        </label>
+                        <select ng-model="product.quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9] | productQuantity:product.quantity" ></select>
+                    </td>
+                    <td class="smollCell">
+                        <label class="roboto-light mobileViewer">
+                            {{'PRICE' | translate}}:
+                        </label>
+                        <p class="price roboto-regular">
+                            {{ (product.price * product.quantity) | currency:'$' }}
+                        </p>
+                        <a><span class="remove" data-ng-click="removeProduct($index)">REMOVE</span></a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3" class="icons">
+                        <label>{{'PAYMENT_OPTIONS'  | translate}}: </label>
+                        <ul>
+                            <li><span id="masterCard"></span></li>
+                            <li><span id="visa">VISA</span></li>
+                            <li><span id="discover"> DISCOVER </span></li>
+                            <li><span id="paypal"> Pay </span></li>
+                        </ul>
+                    </td>
+                    <td colspan="2">
+                        <span class="roboto-light" >{{'TOTAL' + ': ' | translate}}</span>
+                        <span class="roboto-medium" >{{cart | productsCartSum | currency:'$'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <button class="roboto-medium" data-ng-click="checkout()">{{'CHECKOUT' | translate}}</button>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+
+    </article>
+</section>
 
 <social-media-drtv></social-media-drtv>
 

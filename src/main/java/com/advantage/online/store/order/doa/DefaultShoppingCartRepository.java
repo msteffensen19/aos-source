@@ -8,8 +8,10 @@ import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.model.ShoppingCartPK;
 import com.advantage.online.store.user.dao.AppUserRepository;
+import com.advantage.online.store.user.dao.DefaultAppUserRepository;
 import com.advantage.online.store.user.model.AppUser;
 import com.advantage.util.ArgumentValidationHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -26,11 +28,13 @@ import java.util.List;
 @Repository
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository{
 
-    private ProductRepository productRepository = new DefaultProductRepository();
+    @Autowired
+    private ProductRepository productRepository;
 
     private ShoppingCartResponseStatus responseStatus;
     private String failureMessage;
 
+    @Autowired
     private AppUserRepository appUserRepository;
 
     //  =================================================
@@ -78,7 +82,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * property {@link ShoppingCartResponseStatus} {@code responseStatus} will contain the details about the error.
      */
     @Override
-    public ShoppingCart addToShoppingCart(long userId, Long productId, int color, int quantity) {
+    public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity) {
 
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
@@ -86,19 +90,16 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateArgumentIsNotNull(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
+        ShoppingCart shoppingCart = null;
+
         //  Check if there is this ShoppingCart already exists
-        ShoppingCart shoppingCart = getShoppingCartByPrimaryKey(userId, productId, color);
-        if (shoppingCart != null) {
+        if (isProductExistsInShoppingCart(userId, productId, color)) {
             //  Existing ShoppingCart
-            shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
-            entityManager.persist(shoppingCart);
+            this.failureMessage = ShoppingCart.MESSAGE_IDENTICAL_PRODUCT_AND_COLOR_ALREADY_EXISTS_IN_SHOPPING_CART;
 
-            //  Existing product in shopping cart updated successfully.
-            this.failureMessage = "";
-
-            responseStatus.setSuccess(true);
-            responseStatus.setReason(ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY);
-            responseStatus.setId(shoppingCart.getProductId());
+            responseStatus = new ShoppingCartResponseStatus(false,
+                                                            ShoppingCart.MESSAGE_IDENTICAL_PRODUCT_AND_COLOR_ALREADY_EXISTS_IN_SHOPPING_CART,
+                                                            -1);
 
         }
         else {
@@ -109,9 +110,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             //  New product in shopping cart created successfully.
             this.failureMessage = "";
 
-            responseStatus.setSuccess(true);
-            responseStatus.setReason(ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY);
-            responseStatus.setId(shoppingCart.getProductId());
+            responseStatus = new ShoppingCartResponseStatus(true,
+                                                            ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
+                                                            shoppingCart.getProductId());
         }
 
         return shoppingCart;
@@ -177,6 +178,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_NO_PRODUCTS_TO_UPDATE_IN_SHOPPING_CART, -1);
         }
 
+        System.out.println("createShoppingCart.userId=" + userId);
+
         if (appUserRepository.get(userId) == null) {
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
@@ -207,7 +210,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Calls method {@link #addToShoppingCart(long, Long, int, int)} to add a single product to a specific user
+     * Calls method {@link #addProductToShoppingCart(long, Long, int, int)} to add a single product to a specific user
      * shopping cart. <br/>
      * @param userId identifies specific {@link AppUser}.
      * @param productId identifies specific {@link Product}
@@ -217,7 +220,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * for the {@code REQUEST}.
      */
     public ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity) {
-        addToShoppingCart(userId, productId, color, quantity);
+        addProductToShoppingCart(userId, productId, color, quantity);
         return responseStatus;
     }
 
@@ -274,6 +277,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
 
+        if (appUserRepository == null) {
+            System.out.println("deleteShoppingCartsByUserId -> AppUserRepository is null");
+            appUserRepository = new DefaultAppUserRepository();
+            System.out.println("deleteShoppingCartsByUserId -> AppUserRepository = " + appUserRepository);
+        }
+
+        System.out.println("deleteShoppingCartsByUserId.userId=" + userId);
+
         //  Verify that exists a User in the application with this userId
         if (appUserRepository.get(userId) == null) {
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
@@ -283,10 +294,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
 
         //  For each {@link ShoppingCart} get its ID and use method
+        if ((shoppingCarts == null) || (shoppingCarts.size() == 0)) {
+            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+        }
+
         for (ShoppingCart cart : shoppingCarts) {
             this.removeProductFromUserCart(userId, cart.getProductId(), cart.getColor());
             if (! responseStatus.isSuccess()) {
-                return responseStatus;
+                return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
             }
         }
 
@@ -404,6 +419,15 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
     }
 
+    public boolean isProductExistsInShoppingCart(long userId, Long productId, int color) {
+        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+
+        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+
+        return (shoppingCart != null);
+
+    }
+
     /**
      * Get a specific {@link ShoppingCart} by values of primary-key columns.
      * @param userId
@@ -417,9 +441,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
         if (shoppingCart == null) {
-            responseStatus.setSuccess(false);
-            responseStatus.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
-            responseStatus.setId(-1);
+            responseStatus = new ShoppingCartResponseStatus(false,
+                                                            ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                                                            -1);
             return null;
         }
 

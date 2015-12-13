@@ -4,7 +4,8 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('toolTipCart', ['$templateCache', '$rootScope', function ($templateCache, $rootScope) {
+    directives.directive('toolTipCart', ['$templateCache', 'productsCartService',
+        function ($templateCache, cartService) {
         return {
             restrict: 'E',
             replace: true,
@@ -14,12 +15,17 @@ define(['./module'], function (directives) {
                 removeProduct: '&'
             },
             controller: 'mainCtrl',
-            link: function(scope, element, attrs, ctrls){
-                scope.checkout = function(){
-                    console.log('scope.cart');
+            link: function(scope, element, attrs, ctrls) {
+
                     console.log(scope.cart);
+
+                    scope.checkout = function () {
+                        console.log('scope.cart');
+                        console.log(scope.cart);
+                    }
+
                 }
-            }
         };
     }]);
 });
+

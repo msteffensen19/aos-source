@@ -14,9 +14,8 @@ define(['./module'], function (services) {
         function getAllCountries() {
             var request = $http({
                 method: "get",
-                url: "api/account/countries",
+                url: server.account.getAllCountries(),
             });
-            console.log(request);
             return( request.then( this.handleSuccess, this.handleError ) );
         }
 

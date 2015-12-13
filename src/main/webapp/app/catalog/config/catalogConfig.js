@@ -46,11 +46,13 @@ define([],function(){
             'Shop_Now' : 'Shop Now',
             'EXPLORE_NOW' : 'EXPLORE NOW',
             'Quantity:' : 'Quantity:',
+            'QUANTITY': 'QUANTITY',
+            'QTY': 'QTY:', //(Quantity)
             'GO_UP' : 'GO UP',
             'CREATE_ACCOUNT' : 'CREATE ACCOUNT',
             'this_is_a_demo' : 'this is a demo',
             'Please_enter_a_fake_data' : 'Please enter a fake data',
-            'NOTIC' : 'NOTIC',
+            'NOTICE' : 'NOTICE',
             'Laptops' : 'Laptops',
             'ACCOUNT_DETAILS' : 'ACCOUNT DETAILS',
             'PERSONAL_DETAILS' : 'PERSONAL DETAILS',
@@ -82,13 +84,13 @@ define([],function(){
             'Password_10_maxlength_field_error' : 'Password requires a maximum of 10 characters',
             'Password_regex' : 'uppercase, lowercase and number required',
             'User_Name_pattern' : "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
-            'QTY': 'QTY', //(Quantity)
             'CHECKOUT': 'CHECKOUT',
             'TOTAL': 'TOTAL',
             'Items': 'Items',
             'Color' : 'Color:',
-            'SHOPPING_CART' : 'SHOPPING CART'
-
+            'SHOPPING_CART' : 'SHOPPING CART',
+            'PAYMENT_OPTIONS' : 'PAYMENT OPTIONS',
+            'PRODUCT_NAME' : 'PRODUCT NAME',
         });
 
         $stateProvider.state('view1',{
@@ -96,8 +98,12 @@ define([],function(){
             templateUrl: 'app/views/home-page.html',
             controller: 'categoriesCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                beforeLoader: false,
+                navLinks: true,
             },
+            resolve : {
+            }
         })
             .state('welcome',{
                 url: '/welcome',

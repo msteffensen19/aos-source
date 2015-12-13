@@ -37,6 +37,8 @@ public class ShoppingCart {
     public static final String MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART = "Product with this color not found in user\'s cart.";
     public static final String MESSAGE_USER_SHOPPING_CART_WAS_CLEARED = "User shopping cart was emptied.";
     public static final String MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY = "product was deleted from user cart successfully.";
+    public static final String MESSAGE_IDENTICAL_PRODUCT_AND_COLOR_ALREADY_EXISTS_IN_SHOPPING_CART = "Identical product and color already exist in shopping cart.";
+    public static final String MESSAGE_SHOPPING_CART_IS_EMPTY = "User\'s shopping cart is empty.";
 
     public static final String QUERY_GET_CARTS_BY_USER_ID = "shoppingCart.getCartsByUserId";
     public static final String QUERY_GET_CART_BY_PK_COLUMNS = "shoppingCart.getCartsByPkColumns";

@@ -14,7 +14,7 @@ import java.util.List;
 public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCart> {
 
     /*  Add a single product to user's ShoppingCart */
-    ShoppingCart addToShoppingCart(long userId, Long productId, int color, int quantity);
+    ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity);
 
     /*  Update a single product in user's ShoppingCart  */
     ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity);

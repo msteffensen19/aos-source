@@ -38,13 +38,10 @@ define(['./module'], function (services) {
                 "stateProvince": model.state,
                 "zipcode": model.postalCode,
             }
-            console.log(expectToReceive);
-            console.log(JSON.stringify(expectToReceive))
-
 
             var request = $http({
                 method: "post",
-                url: "api/account/users",
+                url: server.account.register(model),
                 data: JSON.stringify(expectToReceive),
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );

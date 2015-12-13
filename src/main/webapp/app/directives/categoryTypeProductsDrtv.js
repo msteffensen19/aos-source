@@ -61,15 +61,40 @@ define(['./module'], function (directives) {
                         return product;
                 };
 
-
+                var lastIdAdded = '';
                 scope.addProduct = function(product) {
-
-                    cartService.addProduct(product, 1).then(function(result){
-
-                        console.log(result);
-
+                   $('#toolTipCart').slideDown(function(){
+                        cartService.addProduct(product, 1).then(function(result){
+                            clearInterval(Helper.____closeTooTipCart);
+                            if (lastIdAdded == ('#product' + product.productId))
+                            {
+                                setToolTipCartSlideUp()
+                            }
+                            else {
+                                lastIdAdded = '#product' + product.productId;
+                                $('#toolTipCart tbody').stop().animate({
+                                    scrollTop: 0 + 'px',
+                                }, 500, function () {
+                                    var productId = $('#product' + product.productId);
+                                    var top = productId.length > 0 ? ($(productId).offset().top) - ($('#toolTipCart').offset().top)
+                                        : $('.lastProduct').offset().top;
+                                    $('#toolTipCart tbody').stop().animate({
+                                        scrollTop: (top) + 'px',
+                                    }, 500);
+                                    Helper.____closeTooTipCart = setTimeout(function () {
+                                        $('#toolTipCart').stop().delay(700).slideUp();
+                                    }, 2000)
+                                });
+                            }
+                        });
                     });
                 };
+
+                function setToolTipCartSlideUp() {
+                    Helper.____closeTooTipCart = setTimeout(function(){
+                        $('#toolTipCart').stop().delay(700).slideUp();
+                    }, 2000)
+                }
 
 
                 scope.clearSelection = function(){

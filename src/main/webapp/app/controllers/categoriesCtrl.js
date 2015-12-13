@@ -4,31 +4,22 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoriesCtrl', ['$scope', 'categoryService',
-        'dealService', '$sce', '$location',
-        function ($scope, categoryService, dealService, $sce, $location) {
+        'dealService', '$location',
+        function ($scope, categoryService, dealService, $location) {
+
 
             $scope.categories = [];
             $scope.deal = "";
-            // I contain the ngModel values for form interaction.
             $scope.form = {
                 name: ""
             };
             $scope.popularProducts = ""
 
             loadRemoteData();
-            function applyRemoteData( categories ) {
-                $scope.categories = categories;
-                $('.carousel').carousel({
-                    interval: 5000
-                });
-            }
-
             function loadRemoteData() {
-
-                categoryService.getCategories()
-                    .then(function( categories ) {
-                        applyRemoteData( categories );
-                    });
+                categoryService.getCategories().then(function( categories ) {
+                    $scope.categories = categories;
+                });
                 dealService.getDealOfTheDay().then(function( deal ) {
                     $scope.deal = deal;
                 });
@@ -41,27 +32,9 @@ define(['./module'], function (controllers) {
                 $location.path('/category/' + id);
             };
 
-            $scope.uri = "http://localhost:8080/";
-
-            $scope.images = [{
-                    imageName : 'Banner1.jpg',
-                    imageId : 0,
-                    message : "ALL YOU WANT FROM A TABLET"
-            },
-                {
-                    imageName : 'Banner2.jpg',
-                    imageId : 1,
-                    message : "EXPLORE OUR LATEST <br />INNOVATIVE PRODUCTS"
-                },
-                {
-                    imageName : 'Banner3.jpg',
-                    imageId : 2,
-                    message : "START EXPLORING HP NOTEBOOKS"
-                }];
-
-
             Slider.AddSliderListener();
             $("nav .navLinks").css("display" , "block");
 
+            Helper.forAllPage();
         }]);
 });

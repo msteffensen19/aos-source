@@ -2,12 +2,19 @@
  * Created by correnti on 16/11/2015.
  */
 
+var Helper = Helper || {};
+Helper.forAllPage = function(){
+    $("body").scrollTop(0);
+}
+Helper.____closeTooTipCart;
+
+
+
 var Main = Main || {};
+
 Main.miniItemPopUp = function(){ }
 Main.productHover = function(){ }
 Main.addAccordionEventListener = function(){ }
-
-
 
 Main.addAnimPlaceholderEventListener = function(){
 
@@ -63,9 +70,7 @@ $(document).on({
                     bottom: 0
                 }, 400);
             },
-
         });
-
 
         $(window).on({
             resize: _resize,
@@ -78,9 +83,6 @@ $(document).on({
             }
         });
 
-
-
-
         $('#product_search_img').click(function (e) {
             $('#product_search').css("display", "inline-block");
             $('#product_search').animate({ "width": $('#product_search').width() > 0 ? 0 : "150px" },
@@ -91,15 +93,6 @@ $(document).on({
             } );
         });
 
-
-//        $(document).on("mouseover", ".categoryRight ul li", function(){
-  //          $(this).siblings().stop().animate({ "opacity" : "0.3", }, 500);
-    //    });
-
-//        $(document).on("mouseout", ".categoryRight ul li", function(){
-  //          $(this).siblings().stop().animate({ "opacity" : "1", }, 1000);
-    //    });
-
         $(document).on("click", ".accordion", function() {
             $(this).toggleClass('arrowUp');
             $(this).parent().find(".option").slideToggle(300);
@@ -108,7 +101,6 @@ $(document).on({
         $(document).on("click", ".productColor ", function() {
             $(this).toggleClass('colorSelected');
         });
-
 
         _resize();
         function _resize() {
