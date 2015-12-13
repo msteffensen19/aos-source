@@ -1,17 +1,17 @@
-package com.advantage.online.store.user.api;
+package com.advantage.online.store.api;
 
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.user.dto.AppUserDto;
 import com.advantage.online.store.user.dto.AppUserResponseStatus;
+import com.advantage.online.store.user.dto.CountryResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
+import com.advantage.online.store.user.model.Country;
 import com.advantage.online.store.user.services.AppUserService;
+import com.advantage.online.store.user.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,22 +22,25 @@ import java.util.List;
  * @author Binyamin Regev on 16/11/2015.
  */
 @RestController
-@RequestMapping(value = Constants.URI_API)
-public class AppUserController {
+@RequestMapping(value = "/account" + Constants.URI_API + "/v1")
+public class AccountController {
 
     //private static final String REQUEST_PARAM_COUNTRY_ID = "country_id";
 
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping(value = "/account/users", method = RequestMethod.GET)
+    @Autowired
+    private CountryService countryService;
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
         List<AppUser> appUsers = appUserService.getAllAppUsers();
 
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request, HttpServletResponse response) {
 
         response.setHeader("sessionId", request.getSession().getId());
@@ -58,15 +61,14 @@ public class AppUserController {
 
 
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @RequestMapping(value = "/account/users", method = RequestMethod.POST)
-    public ResponseEntity<AppUserResponseStatus> create(@RequestBody AppUser appUser) {
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    public ResponseEntity<AppUserResponseStatus> createUser(@RequestBody AppUser appUser) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(
                 appUser.getAppUserType(),
@@ -89,4 +91,39 @@ public class AppUserController {
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.CONFLICT);
 
     }
+
+    @RequestMapping(value = "/countries", method = RequestMethod.POST)
+    public ResponseEntity<CountryResponseStatus> createCountry(@RequestBody Country country) {
+
+        final CountryResponseStatus countryResponseStatus = countryService.create(country.getName(),
+                country.getIsoName(),
+                country.getPhonePrefix());
+
+        if (countryResponseStatus.isSuccess())
+            return new ResponseEntity<>(countryResponseStatus, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(countryResponseStatus, HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/countries", method = RequestMethod.GET)
+    public ResponseEntity<List<Country>> getCountries(@RequestParam(value = "phonePrefix", required = false) Integer internationalPhonePrefix,
+                                                      @RequestParam(value = "nameStartFrom", required = false) String startOfName) {
+        List<Country> countries;
+
+        if (internationalPhonePrefix == null && startOfName == null) {
+            countries = countryService.getAllCountries();
+        } else if (internationalPhonePrefix != null && startOfName != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else if (internationalPhonePrefix != null) {
+            countries = countryService.getCountriesByPhonePrefix(internationalPhonePrefix);
+        } else {//nameStartFrom!=null
+            countries = countryService.getCountriesByPartialName(startOfName);
+        }
+        if (countries == null || countries.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(countries, HttpStatus.OK);
+        }
+    }
+
 }

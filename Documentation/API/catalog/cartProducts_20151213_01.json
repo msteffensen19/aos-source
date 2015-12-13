@@ -1,0 +1,18 @@
+{
+  "userId": 12,
+  "productsInCart": [{
+    "id": 4,
+    "imageUrl": "1244",
+    "productName": "HP Spectre x360 - 13-4101dx",
+    "color" :"FFF",
+    "quantity": 1,
+    "price": 0
+  },{
+    "id": 101,
+    "imageUrl": "1241",
+    "productName": "Beats Studio 2 Over-Ear Red Headphones",
+    "color" :"F00",
+    "quantity": 5,
+    "price": 14.99
+  }]
+}
