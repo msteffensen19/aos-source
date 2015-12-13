@@ -396,6 +396,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     @Override
     public AppUser get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
+        System.out.println("DefaultAppUserRepository.get(Long) -> entityId = " + entityId);
+
         String hql = JPAQueryHelper.getSelectByPkFieldQuery(AppUser.class, AppUser.FIELD_ID, entityId);
         Query query = entityManager.createQuery(hql);
 
