@@ -14,9 +14,13 @@ define(['./module'], function (controllers) {
 
             productsCartService.getCart().then(function(cart){
                 $scope.cart = cart;
-                console.log(cart)
             });
 
+            $scope.removeProduct = function (index) {
+                productsCartService.removeProduct(index).then(function (cart) {
+                    $scope.cart = cart;
+                });
+            }
 
             $scope.accountSection = function(){
                 console.log("user account section! --- Method not done yet!");
@@ -76,7 +80,6 @@ define(['./module'], function (controllers) {
 
             $scope.gotoElement = function (id) {
 
-                console.log(($("#" + id).offset().top) + "px");
                 $("body").animate({
                     scrollTop: ($("#" + id).offset().top) + "px",
                 }, 1000)
@@ -92,7 +95,6 @@ define(['./module'], function (controllers) {
 
 
             Main.miniItemPopUp();
-
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
 
 

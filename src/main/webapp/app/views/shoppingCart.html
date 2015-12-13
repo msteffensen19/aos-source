@@ -48,7 +48,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="product in (cart.productsInCart.slice().reverse()) track by $index">
+                <tr ng-repeat="product in cart.productsInCart track by $index">
                     <td>
                         <img class="imageUrl" ng-src="fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
                     </td>
@@ -74,7 +74,7 @@
                         <p class="price roboto-regular">
                             {{ (product.price * product.quantity) | currency:'$' }}
                         </p>
-                        <a><span class="remove" data-ng-click="removeProduct(cart.productsInCart.length - 1 - $index)">REMOVE</span></a>
+                        <a><span class="remove" data-ng-click="removeProduct($index)">REMOVE</span></a>
                     </td>
                 </tr>
                 </tbody>

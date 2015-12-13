@@ -98,8 +98,12 @@ define([],function(){
             templateUrl: 'app/views/home-page.html',
             controller: 'categoriesCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                beforeLoader: false,
+                navLinks: true,
             },
+            resolve : {
+            }
         })
             .state('welcome',{
                 url: '/welcome',

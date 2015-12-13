@@ -4,8 +4,8 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoriesCtrl', ['$scope', 'categoryService',
-        'dealService', '$sce', '$location',
-        function ($scope, categoryService, dealService, $sce, $location) {
+        'dealService', '$location',
+        function ($scope, categoryService, dealService, $location) {
 
 
             $scope.categories = [];

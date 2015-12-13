@@ -12,6 +12,7 @@ define(['./module'], function (directives) {
             template: $templateCache.get('app/partials/toolTipCart.html'),
             scope: {
                 cart: '=',
+                removeProduct: '&'
             },
             controller: 'mainCtrl',
             link: function(scope, element, attrs, ctrls) {
@@ -22,12 +23,7 @@ define(['./module'], function (directives) {
                         console.log('scope.cart');
                         console.log(scope.cart);
                     }
-                    scope.removeProduct = function (index) {
-                        cartService.removeProduct(index).then(function (cart) {
-                            console.log(attrs.cart)
-                            scope.cart = cart;
-                        });
-                    }
+
                 }
         };
     }]);

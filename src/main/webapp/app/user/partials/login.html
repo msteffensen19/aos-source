@@ -15,7 +15,8 @@
 
 
             <input placeholder="{{'Name' | translate }}" type="text" ng-model="user.loginUser" />
-            <input ng-class="{bottomLine : config.emailAddressInLogin}" placeholder="{{'Password' | translate }}" type="password" ng-model="user.loginPassword" />
+            <input ng-class="{bottomLine : config.emailAddressInLogin}" placeholder="{{'Password' | translate }}"
+                   type="password" ng-model="user.loginPassword" />
             <input ng-if="config.emailAddressInLogin" placeholder="{{'Email' | translate }}" type="text" ng-model="user.email" />
 
             <div class="left option">
