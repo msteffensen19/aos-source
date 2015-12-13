@@ -7,3 +7,4 @@ src/main/webapp/vendor/*
 src/main/webapp/app/templates/*
 /application.log.1
 *.~vsdx
+~*.xlsx
