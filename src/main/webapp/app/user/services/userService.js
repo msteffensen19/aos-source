@@ -31,7 +31,7 @@ define(['./module'], function (services) {
 
                 var request = $http({
                  "method": "get",
-                 "url": "api/service/clientConfiguration",
+                 "url": server.service.getConfiguration(),
                  });
                  return( request.then(
                  responseService.handleSuccess,
@@ -46,7 +46,7 @@ define(['./module'], function (services) {
                 var request = $http({
                     "Content-Type": "application/json;charset=UTF-8",
                     "method": "post",
-                    "url": "api/account/login",
+                    "url": server.account.login(user),
                     "data": JSON.stringify(user) ,
                 });
                 return( request.then(

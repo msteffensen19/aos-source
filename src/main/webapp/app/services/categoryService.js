@@ -16,25 +16,21 @@ define(['./module'], function (services) {
         function getCategories() {
             var request = $http({
                 method: "get",
-                url: "api/catalog/categories",
+                url: server.catalog.getCategories()
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
         function getCategoryProducts(id) {
-//                var request = $http({
-  //                  method: "get",
-    //                url: "api/categoryProducts?category_id=" + id
-      //          });
-        //        return( request.then( responseService.handleSuccess, responseService.handleError )
-          //  );
+        //      var request = $http({ method: "get", url: "api/categoryProducts?category_id=" + id });
+        //      return( request.then( responseService.handleSuccess, responseService.handleError )
+        //  );
         }
 
         function getCategoryById(id) {
             var request = $http({
                 method: "get",
-                //url: "/api/catalog/products/categories/" + id + "/products"
-                url: "api/catalog/categories/" + id + "/products"
+                url: server.catalog.getCategoryById(id)
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         };
@@ -42,13 +38,15 @@ define(['./module'], function (services) {
         function getPopularProducts() {
             var request = $http({
                 method: "get",
-                url: "app/popularProducts.json"
+                url: server.catalog.getPopularProducts()
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
     }]);
 });
+
+
 
 //url: "api/catalog/products/categories/" + id + "/products"
 //url: "http://localhost:8080/catalog/api/v1/categories/" + id + "/products"

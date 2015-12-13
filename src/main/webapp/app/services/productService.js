@@ -13,7 +13,7 @@ define(['./module'], function (services) {
         function getProducts() {
             var request = $http({
                 method: "get",
-                url: "api/catalog/products"
+                url: server.catalog.getProducts()
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
@@ -22,8 +22,7 @@ define(['./module'], function (services) {
 
             var request = $http({
                 method: "get",
-                url: 'api/catalog/products/' + id,
-                //url: 'app/product.json',
+                url: server.catalog.getProductById(id)
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
