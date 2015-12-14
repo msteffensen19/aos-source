@@ -20,11 +20,11 @@ var server = {
         },
 
         getPopularProducts : function () {
-            return "app/popularProducts.json";
+            return "/app/popularProducts.json";
         },
 
         getDeals : function () {
-            return catalogKey + "api/v1/deals";
+            return catalogKey + "/api/v1/deals";
         },
 
         getDealOfTheDay : function () {
@@ -32,12 +32,18 @@ var server = {
         },
 
         getProducts : function () {
-            return catalogKey + "api/v1/products.json";
+            return catalogKey + "/api/v1/products.json";
         },
 
         getProductById : function (id) {
             return catalogKey + '/api/v1/products/' + id;
+        },
+
+        getProductsBySearch : function (word, quantity) {
+            return catalogKey + "/api/v1/products/search?name=" + word +
+                "&quantityPerEachCategory=" + quantity;
         }
+
     },
     order: {
 

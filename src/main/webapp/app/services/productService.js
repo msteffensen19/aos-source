@@ -26,5 +26,14 @@ define(['./module'], function (services) {
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
+
+        function getProductsBySearch(word, quantity) {
+
+            var request = $http({
+                method: "get",
+                url: server.catalog.getProductsBySearch(word, quantity)
+            });
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+        }
     }]);
 });

@@ -12,15 +12,11 @@ Helper.____closeTooTipCart;
 
 var Main = Main || {};
 
-Main.miniItemPopUp = function(){ }
-Main.productHover = function(){ }
-Main.addAccordionEventListener = function(){ }
-
 Main.addAnimPlaceholderEventListener = function(){
 
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
         $(this).siblings().animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-    })
+    });
 
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').blur(function(){
         if($(this).val() == '') { $(this).siblings().animate({'top': '11px'}, 800, $.bez([0.62,-0.14,0.35,1.34])); }
@@ -81,16 +77,6 @@ $(document).on({
                 }
                 $('#scrollToTop').fadeOut(300);
             }
-        });
-
-        $('#product_search_img').click(function (e) {
-            $('#product_search').css("display", "inline-block");
-            $('#product_search').animate({ "width": $('#product_search').width() > 0 ? 0 : "150px" },
-                500, function(){
-                    if($('#product_search').width() == 0 ){
-                        $(this).css("display", "none");
-                    }
-            } );
         });
 
         $(document).on("click", ".accordion", function() {
