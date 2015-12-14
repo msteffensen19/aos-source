@@ -9,7 +9,7 @@ define(['./module'], function (controllers) {
 
 
             $scope.categories = [];
-            $scope.deal = "";
+            $scope.deal = {};
             $scope.form = {
                 name: ""
             };
@@ -21,7 +21,10 @@ define(['./module'], function (controllers) {
                     $scope.categories = categories;
                 });
                 dealService.getDealOfTheDay().then(function( deal ) {
+                    console.log("-----------------deal-----------------")
+                    console.log(deal)
                     $scope.deal = deal;
+                    console.log("-----------------deal-----------------")
                 });
                 categoryService.getPopularProducts().then(function(popularProducts){
                     $scope.popularProducts = popularProducts;

@@ -15,7 +15,7 @@ var Main = Main || {};
 Main.addAnimPlaceholderEventListener = function(){
 
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
-        $(this).siblings().animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
+        $(this).siblings().not("img").animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
     });
 
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').blur(function(){

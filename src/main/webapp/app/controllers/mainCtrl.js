@@ -12,6 +12,41 @@ define(['./module'], function (controllers) {
 
             $scope.cart;
 
+            $scope.autoCompleteValue = '';
+            $scope.autoCompleteResult = {};
+
+
+            /* Autocomplete*/
+
+            $scope.checkEnterKey= function(event)
+            {
+                console.log(event)
+                console.log(event.which)
+                if(event.which === 13) {
+
+                }
+            }
+
+            var lastRequest = '';
+            $scope.runAutocomplete = function(){
+//                if($scope.autoCompleteValue.indexOf(lastRequest) == -1 && $scope.autoCompleteResult.length > 0)
+  //              {
+    //                console.log(lastRequest);
+      //              return;
+        //        }
+
+                lastRequest = $scope.autoCompleteValue;
+                if(lastRequest == '')
+                {
+                    $scope.autoCompleteResult = {};
+                    return;
+                }
+
+                productService.getProductsBySearch(lastRequest, 10).then(function(result){
+                    console.log(result);
+                    $scope.autoCompleteResult = result;
+                });
+            }
 
             $scope.openSearchProducts = function(){
                 $("#searchSection").fadeIn(1000);
@@ -19,21 +54,29 @@ define(['./module'], function (controllers) {
                     setTimeout(function(_this){
                         _this.addClass("searchSectionEnabled");
                     }, (500 / 6) * index, $(this))
-                })
+                });
                 setTimeout(function(_this){
                     $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
-                }, 400)
-
+                    $("#searchSection > div > div > span > img").delay(1000).fadeIn(500); // img close
+                }, 400);
             }
 
+
             $scope.closeSearchSection = function(){
-                $("#searchSection").fadeOut(1000);
-                $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
-                $("nav ul li a").each(function(index){
-                    setTimeout(function(_this){
-                        _this.removeClass("searchSectionEnabled");
-                    }, (200 / 6) * index, $(this))
-                })
+
+                $("#searchSection > div > div > span > img").fadeOut(500); // img close
+                setTimeout(function(){
+                    $("#searchSection").fadeOut(1000);
+                    $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
+                    $("nav ul li a").each(function(index){
+                        setTimeout(function(_this){
+                            _this.removeClass("searchSectionEnabled");
+                        }, (200 / 6) * index, $(this))
+                    })
+                    $scope.autoCompleteValue = lastRequest = '';
+                    $scope.autoCompleteResult = {};
+                    $("#autoComplete").focusout();
+                }, 500)
 
             }
 
@@ -46,6 +89,12 @@ define(['./module'], function (controllers) {
                         }
                     } );
             });
+
+            $scope.searchByCategoryId = function(id){
+                alert(id)
+            }
+
+            /* END Autocomplete*/
 
 
 

@@ -7,7 +7,8 @@ define(['./module'], function (services) {
         // Return public API.
         return({
             getProducts: getProducts,
-            getProductById : getProductById
+            getProductById : getProductById,
+            getProductsBySearch : getProductsBySearch
         });
 
         function getProducts() {

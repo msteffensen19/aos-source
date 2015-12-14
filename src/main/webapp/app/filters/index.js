@@ -3,4 +3,4 @@
  */
 'use strict';
 
-define(['./trustHTML','./productsCartCount', './productsCartSum', './productQuantity'], function() {});
+define(['./trustHTML','./productsCartCount', './productsCartSum', './productQuantity', './filterFullArrayforAutoComplate'], function() {});
