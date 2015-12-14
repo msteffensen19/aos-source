@@ -1,6 +1,8 @@
 package com.advantage.online.store.api;
 
 import com.advantage.online.store.Constants;
+import com.advantage.online.store.order.dto.ShoppingCartDto;
+import com.advantage.online.store.order.dto.ShoppingCartProductDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.services.ShoppingCartService;
@@ -21,50 +23,6 @@ import java.util.List;
 @RequestMapping(value = "/order"+Constants.URI_API+"/v1")
 public class OrderController {
 
-    class cartProduct {
-        private Long productId;
-        private String stringColor;
-        private int quantity;
-
-        public cartProduct() {
-        }
-
-        public cartProduct(Long productId, String stringColor) {
-            this.productId = productId;
-            this.stringColor = stringColor;
-        }
-
-        public cartProduct(Long productId, String stringColor, int quantity) {
-            this.productId = productId;
-            this.stringColor = stringColor;
-            this.quantity = quantity;
-        }
-
-        public Long getProductId() {
-            return productId;
-        }
-
-        public void setProductId(Long productId) {
-            this.productId = productId;
-        }
-
-        public String getStringColor() {
-            return stringColor;
-        }
-
-        public void setStringColor(String stringColor) {
-            this.stringColor = stringColor;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-    }
-
     @Autowired
     private ShoppingCartService shoppingCartService;
 
@@ -72,7 +30,7 @@ public class OrderController {
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userid}", method = RequestMethod.GET)
-    @ApiOperation(value = "Get user cart")
+    @ApiOperation(value = "Get user shopping cart")
     public ResponseEntity<List<ShoppingCart>> getUserCart(@PathVariable("userid") Long userId, HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("getUserCart Parameters: ");
@@ -83,39 +41,9 @@ public class OrderController {
         return new ResponseEntity<>(shoppingCarts, HttpStatus.OK);
     }
 
-    /*
-    EXAMPLE:
-    ========
-    @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
-    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductDto product,
-                                                               @PathVariable("product_id") Long id) {
-    */
-    /*  =========================================================================================================   */
-    @RequestMapping(value="/carts/{userid}", method=RequestMethod.PUT)
-    @ApiOperation(value = "Replace user shopping cart")
-    public ResponseEntity<ShoppingCartResponseStatus> replaceUserCart(@RequestBody List<ShoppingCart> shoopingCarts,
-                                                                      @PathVariable("userid") Long userId) {
-
-        System.out.println("replaceUserCart Parameters: ");
-        System.out.println("   userId=" + userId);
-        System.out.println("   shoopingCarts=" + shoopingCarts);
-
-        if (userId != null) {
-            shoppingCartResponseStatus = shoppingCartService.replaceUserCart(Long.valueOf(userId),
-                                                                            shoopingCarts);
-        }
-        else {
-            shoppingCartResponseStatus.setSuccess(false);
-            shoppingCartResponseStatus.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
-            shoppingCartResponseStatus.setId(-1);
-        }
-
-        return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
-    }
-
     /*  =========================================================================================================   */
     @RequestMapping(value="/carts/{userid}", method=RequestMethod.POST)
-    @ApiOperation(value = "Add product to cart")
+    @ApiOperation(value = "Add product to shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
                                                                        @RequestParam("productid") Long productId,
                                                                        @RequestParam(value = "color", required = true) String stringColor,
@@ -133,38 +61,79 @@ public class OrderController {
     }
 
     /*  =========================================================================================================   */
-    @RequestMapping(value="/carts/{userid}?product={productid}&color={color}&quantity={x}", method=RequestMethod.PUT)
-    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") Long userId,
-                                                                                  @PathVariable("product") Long productId,
-                                                                                  @PathVariable("color") String color,
-                                                                                  @PathVariable("quantity") Integer quantity) {
+    /*
+    @RequestMapping(value="/carts/", method=RequestMethod.PUT)
+    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@RequestBody ShoppingCartProductDto cartProduct) {
+    */
+    /*
+    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable int quantity,
+                                                                                  @RequestParam long userId,
+                                                                                  @RequestParam Long productId,
+                                                                                  @RequestParam String hexColor) {
+    */
+    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}&quantity={quantity}", method=RequestMethod.PUT)
+    @ApiOperation(value = "Update quantity of product in shopping cart")
+    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") long userId,
+                                                                                  @PathVariable("productid") Long productId,
+                                                                                  @PathVariable("color") String hexColor,
+                                                                                  @PathVariable("quantity") int quantity) {
+
         System.out.println("updateProductQuantityInCart Parameters: ");
         System.out.println("   userId=" + userId);
         System.out.println("   productId=" + productId);
-        System.out.println("   color=" + color);
+        System.out.println("   color=" + hexColor);
         System.out.println("   quantity=" + quantity);
+
+        shoppingCartService.updateProductQuantityInCart(userId,
+                                                        productId,
+                                                        hexColor,
+                                                        quantity);
 
         return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
     }
 
     /*  =========================================================================================================   */
-    @RequestMapping(value="/carts/{userid}?product={productid}&color={color}", method=RequestMethod.DELETE)
-    public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@PathVariable("userid") Long userId,
-                                                                                @PathVariable("productid") Long productId,
-                                                                                @PathVariable("color") String color) {
+    @RequestMapping(value="/carts/{userid}", method=RequestMethod.PUT)
+    @ApiOperation(value = "Replace user shopping cart")
+    public ResponseEntity<ShoppingCartResponseStatus> replaceUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
+                                                                      @PathVariable("userid") Long userId) {
+
+        System.out.println("replaceUserCart Parameters: ");
+        System.out.println("   userId=" + userId);
+        System.out.println("   shoopingCarts=" + shoopingCartProducts);
+
+        if (userId != null) {
+            shoppingCartResponseStatus = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
+        }
+        else {
+            shoppingCartResponseStatus.setSuccess(false);
+            shoppingCartResponseStatus.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponseStatus.setId(-1);
+        }
+
+        return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value="/carts/", method=RequestMethod.DELETE)
+    @ApiOperation(value = "Remove a product from user shopping cart")
+    public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@RequestBody ShoppingCartProductDto cartProduct) {
 
         System.out.println("removeProductFromUserCart Parameters: ");
-        System.out.println("   userId=" + userId);
-        System.out.println("   productId=" + productId);
-        System.out.println("   color=" + color);
+        System.out.println("   userId=" + cartProduct.getUserId());
+        System.out.println("   productId=" + cartProduct.getProductId());
+        System.out.println("   color=" + cartProduct.getHexColor());
 
-        shoppingCartResponseStatus = shoppingCartService.removeProductFromUserCart(userId, productId, color);
+        shoppingCartResponseStatus = shoppingCartService.removeProductFromUserCart(cartProduct.getUserId(),
+                                                                                    cartProduct.getProductId(),
+                                                                                    cartProduct.getHexColor());
 
         return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
     }
 
     /*  =========================================================================================================   */
     @RequestMapping(value="/carts/{userid}", method=RequestMethod.DELETE)
+    @ApiOperation(value = "Clear user shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> clearUserCart(@PathVariable("userid") Long userId) {
 
         System.out.println("clearUserCart Parameters: ");

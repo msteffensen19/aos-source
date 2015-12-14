@@ -92,6 +92,14 @@ public class AccountController {
 
     }
 
+    @RequestMapping(value = "/countries", method = RequestMethod.GET)
+    public ResponseEntity<List<Country>> getCountries() {
+        List<Country> countries;
+        countries = countryService.getAllCountries();
+        return new ResponseEntity<>(countries, HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/countries", method = RequestMethod.POST)
     public ResponseEntity<CountryResponseStatus> createCountry(@RequestBody Country country) {
 
@@ -105,14 +113,12 @@ public class AccountController {
             return new ResponseEntity<>(countryResponseStatus, HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/countries", method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> getCountries(@RequestParam(value = "phonePrefix", required = false) Integer internationalPhonePrefix,
-                                                      @RequestParam(value = "nameStartFrom", required = false) String startOfName) {
+    @RequestMapping(value = "/countries/search", method = RequestMethod.GET)
+    public ResponseEntity<List<Country>> searchInCountries(@RequestParam(value = "phonePrefix", required = false) Integer internationalPhonePrefix,
+                                                           @RequestParam(value = "nameStartFrom", required = false) String startOfName) {
         List<Country> countries;
 
-        if (internationalPhonePrefix == null && startOfName == null) {
-            countries = countryService.getAllCountries();
-        } else if (internationalPhonePrefix != null && startOfName != null) {
+        if (internationalPhonePrefix != null && startOfName != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else if (internationalPhonePrefix != null) {
             countries = countryService.getCountriesByPhonePrefix(internationalPhonePrefix);

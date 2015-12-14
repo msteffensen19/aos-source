@@ -29,16 +29,17 @@ public class ShoppingCart {
 
     public static final int MAX_NUM_OF_SHOPPING_CART_PRODUCTS = 50;
 
-    public static final String MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY = "Shopping cart and all products updated successfully.";
+    public static final String MESSAGE_INVALID_USER_ID = "Invalid user id, not exist.";
     public static final String MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY = "New product was updated in shopping cart successfully.";
     public static final String MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY = "Existing product in shopping cart updated successfully.";
-    public static final String MESSAGE_INVALID_USER_ID = "Invalid user id, not exist.";
+    public static final String MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY = "Quantity of product shopping cart was updated successfully.";
+    public static final String MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG = "Product not found in products catalog.";
     public static final String MESSAGE_NO_PRODUCTS_TO_UPDATE_IN_SHOPPING_CART = "No products to update in shopping cart.";
     public static final String MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART = "Product with this color not found in user\'s cart.";
-    public static final String MESSAGE_USER_SHOPPING_CART_WAS_CLEARED = "User shopping cart was emptied.";
     public static final String MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY = "product was deleted from user cart successfully.";
-    public static final String MESSAGE_IDENTICAL_PRODUCT_AND_COLOR_ALREADY_EXISTS_IN_SHOPPING_CART = "Identical product and color already exist in shopping cart.";
     public static final String MESSAGE_SHOPPING_CART_IS_EMPTY = "User\'s shopping cart is empty.";
+    public static final String MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY = "Shopping cart and all products updated successfully.";
+    public static final String MESSAGE_USER_SHOPPING_CART_WAS_CLEARED = "User shopping cart was emptied.";
 
     public static final String QUERY_GET_CARTS_BY_USER_ID = "shoppingCart.getCartsByUserId";
     public static final String QUERY_GET_CART_BY_PK_COLUMNS = "shoppingCart.getCartsByPkColumns";

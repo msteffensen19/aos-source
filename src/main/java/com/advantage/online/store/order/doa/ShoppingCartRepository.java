@@ -1,6 +1,7 @@
 package com.advantage.online.store.order.doa;
 
 import com.advantage.online.store.dao.DefaultCRUDOperations;
+import com.advantage.online.store.order.dto.ShoppingCartDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,21 +14,6 @@ import java.util.List;
  */
 public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCart> {
 
-    /*  Add a single product to user's ShoppingCart */
-    ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity);
-
-    /*  Update a single product in user's ShoppingCart  */
-    ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity);
-
-    /*  Add list of product to user's ShoppingCart  */
-    ShoppingCartResponseStatus createShoppingCart(long userId, Collection<ShoppingCart> cartProducts);
-
-    /*  Delete all products of user's ShoppingCart  */
-    ShoppingCartResponseStatus deleteShoppingCartsByUserId(long userId);
-
-    /*  Delete a specific product with specific color from user's ShoppingCart  */
-    ShoppingCartResponseStatus removeProductFromUserCart(long userId, Long productId, int color);
-
     /*  Retrieve all products of user's ShoppingCart    */
     List<ShoppingCart> getShoppingCartsByUserId(long userId);
 
@@ -35,11 +21,23 @@ public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCa
     @Transactional
     ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity);
 
-    /* Update   */
-    @Transactional
-    ShoppingCartResponseStatus Update(long userId, Long productId, int color, int quantity);
+    /*  Add a single product to user's ShoppingCart */
+    ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity);
 
-    /* Replace  */
+    /* Update   */
+    /*  Update a single product in user's ShoppingCart  */
+    ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity);
+
     @Transactional
-    ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCart> cartProducts);
+    ShoppingCartResponseStatus update(long userId, Long productId, int color, int quantity);
+
+    /* Replace user entire shopping cart */
+    @Transactional
+    ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts);
+
+    /*  Delete a specific product with specific color from user's ShoppingCart  */
+    ShoppingCartResponseStatus removeProductFromUserCart(long userId, Long productId, int color);
+
+    /*  Delete all products of user's ShoppingCart  */
+    ShoppingCartResponseStatus clearUserCart(long userId);
 }

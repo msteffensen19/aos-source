@@ -1,6 +1,7 @@
 package com.advantage.online.store.order.services;
 
 import com.advantage.online.store.order.doa.ShoppingCartRepository;
+import com.advantage.online.store.order.dto.ShoppingCartDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,16 @@ public class ShoppingCartService {
     /**
      *
      * @param userId
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<ShoppingCart> getShoppingCartsByUserId(long userId) {
+        return shoppingCartRepository.getShoppingCartsByUserId(userId);
+    }
+
+    /**
+     *
+     * @param userId
      * @param productId
      * @param stringColor
      * @param quantity
@@ -34,7 +45,13 @@ public class ShoppingCartService {
         return shoppingCartRepository.add(userId, productId, color, quantity);
     }
 
-    public ShoppingCartResponseStatus replaceUserCart(long userId, List<ShoppingCart> shoppingCarts) {
+    public ShoppingCartResponseStatus updateProductQuantityInCart(long userId, Long productId, String stringColor, int quantity) {
+        int color = ShoppingCart.convertHexColorToInt(stringColor);
+        System.out.println("ShoppingCartService.updateProductQuantityInCart -> color=" + color);
+        return shoppingCartRepository.update(userId, productId, color, quantity);
+    }
+
+    public ShoppingCartResponseStatus replaceUserCart(long userId, List<ShoppingCartDto> shoppingCarts) {
         return shoppingCartRepository.replace(userId, shoppingCarts);
     }
 
@@ -58,39 +75,8 @@ public class ShoppingCartService {
      */
     @Transactional
     public ShoppingCartResponseStatus clearUserCart(long userId) {
-        return shoppingCartRepository.deleteShoppingCartsByUserId(userId);
+        return shoppingCartRepository.clearUserCart(userId);
     }
-
-    /**
-     *
-     * @param userId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<ShoppingCart> getShoppingCartsByUserId(long userId) {
-        return shoppingCartRepository.getShoppingCartsByUserId(userId);
-    }
-
-/*
-    public ResponseEntity<List<ShoppingCart>> getUserCart(@PathVariable("userid") Long userId, HttpServletRequest request, HttpServletResponse response);
-
-    public ResponseEntity<ShoppingCartResponseStatus> replaceUserCart(@PathVariable("userid") Long userId,
-                                                                      @RequestBody List<ShoppingCart> shoopingCarts);
-
-    public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
-                                                                       @PathVariable("product") Long productId,
-                                                                       @PathVariable("color") String stringColor,
-                                                                       @PathVariable("quantity") Integer quantity);
-
-    public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@PathVariable("userid") Long userId,
-                                                                                @PathVariable("product") Long productId,
-                                                                                @PathVariable("color") String stringColor);
-
-    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") Long userId,
-                                                                                  @PathVariable("product") Long productId,
-                                                                                  @PathVariable("color") String stringColor,
-                                                                                  @PathVariable("quantity") Integer quantity);
- */
 
 }
 

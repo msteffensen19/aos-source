@@ -83,13 +83,13 @@ module.exports = function(grunt) {
         },
         'regex-replace': {
             dist: {
-                src: ['main.html'],
+                src: ['target/main.html'],
                 dest:     'target',
                 actions: [
                     {
                         name: 'requirejs-onefile',
-                        search: '<script data-main=".*" src="vendor/requirejs/require.js"></script>',
-                        replace: '<script data-main="main.min" type="text/javascript" src="vendor/requirejs/require.js"></script>'
+                        search: '<script type="text/javascript" data-main="main" src="vendor/requirejs/require.js"></script>',
+                        replace: '<script type="text/javascript" data-main="main.min" src="vendor/requirejs/require.js"></script>'
                     }
                 ]
             }

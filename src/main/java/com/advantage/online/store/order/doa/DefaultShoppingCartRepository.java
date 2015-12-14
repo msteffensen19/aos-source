@@ -4,6 +4,7 @@ import com.advantage.online.store.dao.AbstractRepository;
 import com.advantage.online.store.dao.product.DefaultProductRepository;
 import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.model.product.Product;
+import com.advantage.online.store.order.dto.ShoppingCartDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.model.ShoppingCartPK;
@@ -15,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
 
@@ -87,19 +91,24 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
-        ArgumentValidationHelper.validateArgumentIsNotNull(color, "color decimal RGB value");
+        ArgumentValidationHelper.validateNumberArgumentIsPositive(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
-        ShoppingCart shoppingCart = null;
+        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+
+        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
         //  Check if there is this ShoppingCart already exists
-        if (isProductExistsInShoppingCart(userId, productId, color)) {
-            //  Existing ShoppingCart
-            this.failureMessage = ShoppingCart.MESSAGE_IDENTICAL_PRODUCT_AND_COLOR_ALREADY_EXISTS_IN_SHOPPING_CART;
+        if (shoppingCart != null) {
 
-            responseStatus = new ShoppingCartResponseStatus(false,
-                                                            ShoppingCart.MESSAGE_IDENTICAL_PRODUCT_AND_COLOR_ALREADY_EXISTS_IN_SHOPPING_CART,
-                                                            -1);
+            //  Existing product in user shopping cart (the same productId + color)
+            shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
+            entityManager.persist(shoppingCart);
+
+            this.failureMessage = "";
+            responseStatus = new ShoppingCartResponseStatus(true,
+                                                            ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
+                                                            shoppingCart.getProductId());
 
         }
         else {
@@ -132,29 +141,29 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
-        ArgumentValidationHelper.validateArgumentIsNotNull(color, "color decimal RGB value");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(Long.valueOf(productId), "product id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositive(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
-        ShoppingCart shoppingCart = getShoppingCartByPrimaryKey(userId, productId, color);
-        
+        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+
+        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+
         if (shoppingCart != null) {
-            shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
-            entityManager.persist(shoppingCart);
+            //  Product with color was found in user cart
+            shoppingCart.setQuantity(quantity);     //  Set argument quantity as product quantity in user cart
+            entityManager.persist(shoppingCart);    //  Update changes
 
-            //  Existing product in shopping cart updated successfully.
-            this.failureMessage = "";
-
+            //  Set RESPONSE object
             responseStatus.setSuccess(true);
             responseStatus.setReason(ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY);
-            responseStatus.setId(shoppingCart.getProductId());
+            responseStatus.setId(productId);
         }
         else {
-            //  Product not found in shopping cart
-            this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART;
-
-            responseStatus.setSuccess(false);
-            responseStatus.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
-            responseStatus.setId(-1);
+            //  Product with color not found in user cart - Set RESPONSE object to FAILURE
+            responseStatus = new ShoppingCartResponseStatus(false,
+                                                            ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                                                            -1);
         }
 
         return shoppingCart;
@@ -171,7 +180,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param cartProducts {@link Collection} of unique products in the {@link ShoppingCart}.
      * @return {@link ShoppingCartResponseStatus} class, properties values: <b>success</b> = {@code true} when successful or {@code false} if failed. <b>reason</b>=success or failure message text. <b>productId</b>=-1 because there are multiple products in the list.
      */
-    @Override
     public ShoppingCartResponseStatus createShoppingCart(long userId, Collection<ShoppingCart> cartProducts) {
 
         if ((cartProducts == null) || (cartProducts.size() == 0)) {
@@ -234,7 +242,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return {@link ShoppingCartResponseStatus} {@code responseStatus} property containing the {@code RESPONSE}
      * for the {@code REQUEST}.
      */
-    public ShoppingCartResponseStatus Update(long userId, Long productId, int color, int quantity) {
+    public ShoppingCartResponseStatus update(long userId, Long productId, int color, int quantity) {
         updateShoppingCart(userId, productId, color, quantity);
         return responseStatus;
     }
@@ -246,9 +254,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
         if (shoppingCart != null) {
-            entityManager.getTransaction().begin();
             entityManager.remove(shoppingCart);
-            entityManager.getTransaction().commit();
 
             responseStatus.setSuccess(true);
             responseStatus.setReason(ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY);
@@ -273,15 +279,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return
      */
     @Override
-    public ShoppingCartResponseStatus deleteShoppingCartsByUserId(long userId) {
+    public ShoppingCartResponseStatus clearUserCart(long userId) {
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
-
-        if (appUserRepository == null) {
-            System.out.println("deleteShoppingCartsByUserId -> AppUserRepository is null");
-            appUserRepository = new DefaultAppUserRepository();
-            System.out.println("deleteShoppingCartsByUserId -> AppUserRepository = " + appUserRepository);
-        }
 
         System.out.println("deleteShoppingCartsByUserId.userId=" + userId);
 
@@ -429,14 +429,26 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Get a specific {@link ShoppingCart} by values of primary-key columns.
+     *  Get a specific {@link ShoppingCart} by values of primary-key columns. <br/>
+     *  <p>
+     *      <ul>Verify {@code userId}</ul> refer to a registered user via <b>REST API</b>. <br/>
+     *      <ul>Verify {@code productId}</ul> refer to a registered user via <b>REST API</b>. <br/>
+     *  </p>
+     *  <p>
+     *     Remember that if the request URL of <b>REST API {@code GET}</b> {@link RequestMethod} includes
+     *     parameters, they must be properly encoded (e.g., a space is &quat;%20&quat;, etc.). The class
+     *     {@link URLEncoder} can be used to perform this encoding.
+     *  </p>
      * @param userId
      * @param productId
      * @param color
      * @return Specific {@link ShoppingCart} uniquely identified by primary key fields values.
      */
-    public ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color) {
+    public ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color) throws UnsupportedEncodingException {
+
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+
+        //String encodedURL = URLEncoder.encode("url-to-encode", "name-of-a-supported-character-encoding");
 
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
@@ -452,8 +464,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 " color=" + shoppingCart.getColor() +
                 " quantity=" + shoppingCart.getQuantity());
 
+        /*  Get Product by productId using REST API */
+        //Product product = productRepository.get(productId);
 
-        Product product = productRepository.get(productId);
 
         /*
         String productManagedImageId = product.getManagedImageId();
@@ -477,7 +490,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     @Override
-    public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCart> cartProducts) {
+    public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts) {
         return null;
     }
 }
