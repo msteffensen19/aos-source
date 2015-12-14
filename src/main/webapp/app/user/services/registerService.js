@@ -18,6 +18,7 @@ define(['./module'], function (services) {
         function register(model) {
             console.log("model")
             console.log(model)
+            console.log(JSON.stringify(model))
 
             var expectToReceive = {
                 "address": model.address ,

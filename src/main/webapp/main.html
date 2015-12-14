@@ -74,8 +74,8 @@
 
 <!-- Searching autocomplite -->
 
-<div id="searchSection">
-    <div id="input">
+<div id="searchSection" ng-click="closeSearchSection()">
+    <div id="input" ng-click="$event.stopPropagation()">
         <div>
             <img src="css/images/Sesrch.jpg"  />
             <span class="animPlaceholderUp">
@@ -88,7 +88,7 @@
             </span>
         </div>
     </div>
-    <div id="output" ng-click="closeSearchSection()" ng-show="autoCompleteResult.length > 0">
+    <div id="output" ng-show="autoCompleteResult.length > 0">
         <div class="searchPopUp" ng-click="$event.stopPropagation()">
             <div class="categories">
                 <h3 class="roboto-medium" translate="CATEGORIES"></h3>
@@ -112,6 +112,7 @@
     </a>
 </div>
 <!-- end searching autocomplite -->
+
 
 
 
@@ -170,6 +171,9 @@
 </header>
 
 <!-- end navegation " ng-show="cartCount != 0 -->
+
+
+
 
 
 

@@ -57,7 +57,7 @@ var server = {
         },
 
         register : function(model){
-            return accountKey + "api/v1/countries";
+            return accountKey + "api/v1/users";
         },
 
         login : function(user){

@@ -28,9 +28,12 @@ define(['./module'], function (services) {
 
             function removeProduct(index){
                 var responce = $q.defer();
+                aler()
+                console.log("index");
                 cart.productsInCart.splice(index, 1);
                 updateCart();
-                responce.resolve(cart);
+                console.log(index);
+                responce.resolve(false);
                 return responce.promise;
             }
 
@@ -80,6 +83,7 @@ define(['./module'], function (services) {
             }
 
             function joinCartProducts(userCart){
+                return;
                 var guestCart = loadGuestCartProducts();
                 var tempCart = [];
                 angular.forEach(userCart.productsInCart, function(userProduct){
