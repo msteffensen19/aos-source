@@ -91,6 +91,7 @@ define([],function(){
             'SHOPPING_CART' : 'SHOPPING CART',
             'PAYMENT_OPTIONS' : 'PAYMENT OPTIONS',
             'PRODUCT_NAME' : 'PRODUCT NAME',
+            'Search' : 'Search'
         });
 
         $stateProvider.state('view1',{

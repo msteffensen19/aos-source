@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "dealType": 10,
+    "description": "Designed for style and comfort",
+    "promotionHeader": "EXPLORE THE NEW DESIGN",
+    "promotionSubHeader": "Supremely thin, yet incredibly durable",
+    "staringPrice": "490",
+    "managedImageId": "1240",
+    "discount": 0,
+    "product": {
+      "id": 3,
+      "productName": "HP ENVY - 15t Laptop",
+      "price": 549.99,
+      "description": "Designed for style and comfort",
+      "managedImageId": "1243"
+    }
+  }
+]

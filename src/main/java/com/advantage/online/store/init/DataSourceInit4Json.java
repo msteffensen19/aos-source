@@ -13,6 +13,7 @@ import com.advantage.online.store.model.product.ColorAttribute;
 import com.advantage.online.store.model.product.ImageAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
+import com.advantage.online.store.services.ProductService;
 import com.advantage.online.store.user.model.AppUser;
 import com.advantage.online.store.user.model.AppUserType;
 import com.advantage.online.store.user.model.Country;
@@ -42,6 +43,9 @@ public class DataSourceInit4Json {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductService productService;
 
     public void init() throws Exception {
 
@@ -146,8 +150,8 @@ public class DataSourceInit4Json {
                 p.getImages().add(product.getManagedImageId());
             }
 
-            product.setColors(getColorAttributes(p.getColors(), product));
-            product.setImages(getImageAttribute(p.getImages(), product));
+            product.setColors(productService.getColorAttributes(p.getColors(), product));
+            product.setImages(productService.getImageAttribute(p.getImages(), product));
 
             productMap.put(product.getId(), product);
         }
@@ -180,7 +184,7 @@ public class DataSourceInit4Json {
                         Constants.SPACE + substrings[2] +
                         Constants.SPACE + substrings[3]);
 
-                session.persist(new Country(substrings[1], substrings[2], (int)Integer.valueOf(substrings[3])));
+                session.persist(new Country(substrings[1], substrings[2], Integer.valueOf(substrings[3])));
             }
 
             System.out.println("Total of " + countries.size() + " countries loaded");
@@ -242,7 +246,7 @@ public class DataSourceInit4Json {
        // return new java.io.File( ".").getCanonicalPath().split("bin")[0];
     }
 
-    private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
+    /*private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
         Set<ImageAttribute> imageAttributes = new HashSet<>();
         for (String s : images) {
             ImageAttribute image = new ImageAttribute(s);
@@ -251,16 +255,16 @@ public class DataSourceInit4Json {
         }
 
         return imageAttributes;
-    }
+    }*/
 
-    private  Set<ColorAttribute> getColorAttributes(Collection<String> colors, Product product) {
+   /* private  Set<ColorAttribute> getColorAttributes(Collection<ColorAttribute> colors, Product product) {
         Set<ColorAttribute> colorAttributes = new HashSet<>();
-        for (String s : colors) {
-            ColorAttribute color = new ColorAttribute(s);
+        for (ColorAttribute s : colors) {
+            ColorAttribute color = new ColorAttribute(s.getColor());
             color.setProduct(product);
+            color.setQuantity(s.getQuantity());
             colorAttributes.add(color);
         }
-
         return colorAttributes;
-    }
+    }*/
 }
