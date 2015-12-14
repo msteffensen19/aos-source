@@ -4,6 +4,8 @@
     right: -8px;
     z-index: 9999;
     display: none;
+    direction: ltr;
+
 }
 #toolTipCart table{
     background-color: white;
@@ -39,6 +41,8 @@
     padding: 18px 5px;
     vertical-align: top;
     position: relative;
+    text-align: left;
+
 }
 
 #toolTipCart tbody td:nth-child(1){

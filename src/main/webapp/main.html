@@ -71,6 +71,43 @@
 
 
 
+<!-- Searching autocomplite -->
+
+<div id="searchSection">
+    <div id="input">
+        <div>
+            <img src="css/images/Sesrch.jpg"  />
+            <span class="animPlaceholderUp">
+                <input ng-model="selected"
+                       ng-autocomplete
+                       options="options"
+                       details="details"
+                       type="text" >
+                <label> {{'Search' | translate }} Advantage.com </label>
+            </span>
+        </div>
+    </div>
+    <div id="output" ng-click="closeSearchSection()">
+        <div class="searchPopUp">
+        <div>
+            <br /> jytgfo
+            <br /> jytgfo
+            <br /> jytgfo
+        </div>
+        <div>
+            <br /> jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg
+            <br /> jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg
+            <br /> jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg
+            <br /> jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg
+            <br /> jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg jytgfo ijhoiu hgiuhg
+        </div>
+        </div>
+    </div>
+    <a href="#/">
+        <img src="css/images/logo.png" />
+    </a>
+</div>
+<!-- end searching autocomplite -->
 
 
 
@@ -79,20 +116,16 @@
 <header ng-show="welcome" data-ng-cloak>
     <nav>
         <ul class="roboto-light desktop-handler">
-            <li>
-                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
-            </li>
-            <li>
-                <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
-            </li>
-            <li>
-                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
-            </li>
-            <li>
-                <a class="img">
-                    <input id="product_search" ui-items="names" ng-model="selected" auto-complete >
-                    <img id="product_search_img" src="css/images/Sesrch.jpg" />
+            <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
+                <a class="img" href="#/shoppingCart" >
+                    <img id="mainCart" src="css/images/Cart.jpg"/>
+                    <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
+                <ul>
+                    <li style="position: relative; background-color: white" >
+                        <tool-tip-cart cart="cart" id="toolTipCart"></tool-tip-cart>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a class="img">
@@ -106,16 +139,19 @@
                     <img ng-hide="userCookie.response" ng-click="login()" src="css/images/User.jpg" />
                 </a>
             </li>
-            <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" href="#/shoppingCart">
-                    <img id="mainCart" src="css/images/Cart.jpg"/>
-                    <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
+            <li>
+                <a class="img">
+                    <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
                 </a>
-                <ul>
-                    <li style="position: relative; background-color: white" >
-                        <tool-tip-cart cart="cart" id="toolTipCart"></tool-tip-cart>
-                    </li>
-                </ul>
+            </li>
+            <li>
+                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
+            </li>
+            <li>
+                <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
+            </li>
+            <li>
+                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
             </li>
         </ul>
         <div class="logo">

@@ -12,6 +12,48 @@ define(['./module'], function (controllers) {
 
             $scope.cart;
 
+
+            $scope.openSearchProducts = function(){
+                $("#searchSection").fadeIn(1000);
+                $("nav ul li a").each(function(index){
+                    setTimeout(function(_this){
+                        _this.addClass("searchSectionEnabled");
+                    }, (500 / 6) * index, $(this))
+                })
+                setTimeout(function(_this){
+                    $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
+                }, 400)
+
+            }
+
+            $scope.closeSearchSection = function(){
+                $("#searchSection").fadeOut(1000);
+                $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
+                $("nav ul li a").each(function(index){
+                    setTimeout(function(_this){
+                        _this.removeClass("searchSectionEnabled");
+                    }, (200 / 6) * index, $(this))
+                })
+
+            }
+
+            $('#product_search_img').click(function (e) {
+                $('#product_search').css("display", "inline-block");
+                $('#product_search').animate({ "width": $('#product_search').width() > 0 ? 0 : "150px" },
+                    500, function(){
+                        if($('#product_search').width() == 0 ){
+                            $(this).css("display", "none");
+                        }
+                    } );
+            });
+
+
+
+
+
+
+
+            /* Cart section */
             productsCartService.getCart().then(function(cart){
                 $scope.cart = cart;
             });
@@ -21,6 +63,28 @@ define(['./module'], function (controllers) {
                     $scope.cart = cart;
                 });
             }
+            $scope.enterCart = function(){
+                clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
+                $('#toolTipCart').stop().slideDown();
+            }
+
+            $scope.leaveCart = function(){
+                $('#toolTipCart').stop().slideUp(function(){
+                    $('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
+                });
+            }
+
+            /* END Cart section */
+
+
+
+
+
+
+
+
+
+            /* User section */
 
             $scope.accountSection = function(){
                 console.log("user account section! --- Method not done yet!");
@@ -35,17 +99,6 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            $scope.enterCart = function(){
-                clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
-                $('#toolTipCart').stop().slideDown();
-            }
-
-            $scope.leaveCart = function(){
-                $('#toolTipCart').stop().slideUp(function(){
-                    $('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
-                });
-            }
-
             $scope.login = function (size) {
 
                 $('#toolTipCart').css('display', 'none');
@@ -54,7 +107,6 @@ define(['./module'], function (controllers) {
                 if(windowsWidth < 480) { top = "0"; } else if(windowsWidth < 700) { top = "18%"; }
 
                 $(".PopUp").css({ "overflow-y": "scroll" })
-
                 $(".PopUp").fadeIn(100, function () {
                     $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
                     $("body").css({ "overflow": "hidden", "left": "0px", })
@@ -76,14 +128,18 @@ define(['./module'], function (controllers) {
                 e.stopPropagation();
             });
 
+            /* END User section */
+
+
+
+
+
 
 
             $scope.gotoElement = function (id) {
-
                 $("body").animate({
                     scrollTop: ($("#" + id).offset().top) + "px",
                 }, 1000)
-
             };
 
 
@@ -94,7 +150,7 @@ define(['./module'], function (controllers) {
             });
 
 
-            Main.miniItemPopUp();
+            Main.addAnimPlaceholderEventListener();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
 
 
