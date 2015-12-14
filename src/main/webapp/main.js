@@ -15,7 +15,7 @@ require.config({
         "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
         //'angularRoute': 'vendor/angular-route/angular-route.min',
         'angularAnimate' : 'vendor/angular-animate/angular-animate.min',
-        'angularAutucomplete' : 'vendor/ngAutocomplete/src/ngAutocomplete.js',
+        'angularAutucomplete' : 'vendor/ngAutocomplete/src/ngAutocomplete',
         'jPushMenu' : 'utils/jPushMenu',
         'mainScript' : 'utils/main',
         'accordion' : 'utils/accordion',
