@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/catalog"+Constants.URI_API +"/v1")
+@RequestMapping(value = "/catalog" + Constants.URI_API + "/v1")
 public class CatalogController {
     @Autowired
     private ProductService productService;
@@ -214,15 +214,20 @@ public class CatalogController {
     }
 
     //@RequestMapping(value = "/catalog/deals/0", method = RequestMethod.GET)
-    @RequestMapping(value = "/deals/search?dealOfTheDay=true", method = RequestMethod.GET)
-    public ResponseEntity<Deal> getDealOfTheDay(final HttpServletRequest request,
+    @RequestMapping(value = "/deals/search", method = RequestMethod.GET)
+    public ResponseEntity<List<Deal>> getDealOfTheDay(@RequestParam(value = "dealOfTheDay", defaultValue = "false") boolean search,
+                                                final HttpServletRequest request,
                                                 final HttpServletResponse response) {
+
+        if(!search) return new ResponseEntity<>(HttpStatus.OK);
 
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
-        final Deal dealOfTheDay = dealService.getDealOfTheDay();
+        List<Deal> deals = new ArrayList<>();
+        Deal dealOfTheDay = dealService.getDealOfTheDay();
+        deals.add(dealOfTheDay);
 
-        return new ResponseEntity<>(dealOfTheDay, HttpStatus.OK);
+        return new ResponseEntity<>(deals, HttpStatus.OK);
     }
     //endregion
 
