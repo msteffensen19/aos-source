@@ -4,7 +4,6 @@ import com.advantage.online.store.model.product.ColorAttribute;
 import com.advantage.online.store.model.product.ImageAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
-
 import java.util.*;
 
 public class ProductDto {
@@ -15,7 +14,7 @@ public class ProductDto {
     private String description;
     private String imageUrl;
     private List<AttributeItem> attributes;
-    private List<String> colors;
+    private List<ColorAttribute> colors;
     private List<String> images;
 
     public ProductDto() {
@@ -29,14 +28,14 @@ public class ProductDto {
         this.description = product.getDescription();
         this.imageUrl = product.getManagedImageId();
         this.attributes = fillAttributes(product);
-        this.colors = fillColors(product.getColors());
+        this.colors = new ArrayList<>(product.getColors());
         this.images = fillImages(product.getImages());
     }
 
-    private List<String> fillColors(Set<ColorAttribute> colorAttributes) {
-        List<String> colors = new ArrayList<>(colorAttributes.size());
+    private List<ColorsValues> fillColors(Set<ColorAttribute> colorAttributes) {
+        List<ColorsValues> colors = new ArrayList<>(colorAttributes.size());
         for (ColorAttribute color : colorAttributes) {
-            colors.add(color.getColor())  ;
+            colors.add(new ColorsValues(color.getColor(), color.getQuantity()))  ;
         }
         return colors;
     }
@@ -98,11 +97,11 @@ public class ProductDto {
         this.attributes = attributes;
     }
 
-    public List<String> getColors() {
+    public List<ColorAttribute> getColors() {
         return colors;
     }
 
-    public void setColors(List<String> colors) {
+    public void setColors(List<ColorAttribute> colors) {
         this.colors = colors;
     }
 
@@ -164,7 +163,7 @@ public class ProductDto {
     /**
      * Build AttributeItem collection from Products attributes
      * @param product - Product object
-     * @return
+     * @return {@link List} collection of attributes
      */
     private static List<AttributeItem> fillAttributes(Product product) {
         Set<ProductAttributes> productAttributes = product.getProductAttributes();
@@ -174,6 +173,32 @@ public class ProductDto {
         }
 
         return items;
+    }
+
+    public static class  ColorsValues {
+        String color;
+        int quantity;
+
+        public ColorsValues(String color, int quantity) {
+            this.color = color;
+            this.quantity = quantity;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
     }
 
 }

@@ -9,21 +9,30 @@ public class ColorAttribute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column(name = "color")
     private String Color;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = Product.FIELD_ID)
     @JsonIgnore
     private Product product;
+
+    @Column(name = "quantity", nullable = false, columnDefinition = "int default 10")
+    private int quantity;
 
     public ColorAttribute() {
     }
 
     public ColorAttribute(String color) {
         Color = color;
+    }
+
+    public ColorAttribute(String color, int quantity) {
+        Color = color;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -40,6 +49,14 @@ public class ColorAttribute {
 
     public Product getProduct() {
         return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setProduct(Product product) {

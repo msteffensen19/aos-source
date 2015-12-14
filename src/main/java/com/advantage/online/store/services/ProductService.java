@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class ProductService {
 
+    public static final String PRODUCT_DEFAULT_QUANTITY = "product.quantity.default.value";
     @Autowired
     public ProductRepository productRepository;
     @Autowired
@@ -109,20 +110,14 @@ public class ProductService {
         product.setManagedImageId(dto.getImageUrl());
         product.setCategory(category);
 
-        Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
         Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
-        for (String s : dto.getColors()) {
-            ColorAttribute colorAttribute  =new ColorAttribute(s);
-            colorAttribute.setProduct(product);
-            colorAttributes.add(colorAttribute);
-        }
         for (String s : dto.getImages()) {
             ImageAttribute imageAttribute  = new ImageAttribute(s);
             imageAttribute.setProduct(product);
             imageAttributes.add(imageAttribute);
         }
 
-        product.setColors(colorAttributes);
+        product.setColors(getColorAttributes(dto.getColors(), product));
         product.setImages(imageAttributes);
 
         for (AttributeItem item : dto.getAttributes()) {
@@ -175,7 +170,7 @@ public class ProductService {
         }
     }
 
-    private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
+    public  Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
         Set<ImageAttribute> imageAttributes = new HashSet<>();
         for (String s : images) {
             ImageAttribute image = new ImageAttribute(s);
@@ -186,12 +181,18 @@ public class ProductService {
         return imageAttributes;
     }
 
-    private  Set<ColorAttribute> getColorAttributes(Collection<String> colors, Product product) {
-        Set<ColorAttribute> colorAttributes = new HashSet<>();
-        for (String s : colors) {
-            ColorAttribute color = new ColorAttribute(s);
-            color.setProduct(product);
-            colorAttributes.add(color);
+    public Set<ColorAttribute> getColorAttributes(Collection<ColorAttribute> colors, Product product) {
+        Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
+        for (ColorAttribute s : colors) {
+            if(!(s.getQuantity() > 0)) s.setQuantity(Integer.parseInt(environment.getProperty(PRODUCT_DEFAULT_QUANTITY)));
+            Optional<ColorAttribute> attribute =
+                    colorAttributes.stream().filter(x -> x.getColor().equalsIgnoreCase(s.getColor())).findFirst();
+            if(attribute.isPresent() && attribute.get().getQuantity() != s.getQuantity()) {
+                attribute.get().setQuantity(s.getQuantity());
+            }
+            s.setColor(s.getColor().toUpperCase());
+            s.setProduct(product);
+            colorAttributes.add(s);
         }
 
         return colorAttributes;
