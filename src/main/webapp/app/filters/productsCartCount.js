@@ -4,6 +4,7 @@
 
 define(['./module'], function (controllers) {
     'use strict';
+
     controllers.filter('productsCartCount', function(){
         return function(cart) {
             var count = 0;
