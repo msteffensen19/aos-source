@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class ProductService {
 
-    public static final String PRODUCT_DEFAULT_QUANTITY = "product.quantity.default.value";
+    public static final String PRODUCT_DEFAULT_QUANTITY = "product.inStock.default.value";
     @Autowired
     public ProductRepository productRepository;
     @Autowired
@@ -184,13 +184,14 @@ public class ProductService {
     public Set<ColorAttribute> getColorAttributes(Collection<ColorAttribute> colors, Product product) {
         Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
         for (ColorAttribute s : colors) {
-            if(!(s.getQuantity() > 0)) s.setQuantity(Integer.parseInt(environment.getProperty(PRODUCT_DEFAULT_QUANTITY)));
+            if(!(s.getInStock() > 0)) s.setInStock(Integer.parseInt(environment.getProperty(PRODUCT_DEFAULT_QUANTITY)));
             Optional<ColorAttribute> attribute =
                     colorAttributes.stream().filter(x -> x.getColor().equalsIgnoreCase(s.getColor())).findFirst();
-            if(attribute.isPresent() && attribute.get().getQuantity() != s.getQuantity()) {
-                attribute.get().setQuantity(s.getQuantity());
+            if(attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
+                attribute.get().setInStock(s.getInStock());
             }
             s.setColor(s.getColor().toUpperCase());
+            s.setCode(s.getCode().toUpperCase());
             s.setProduct(product);
             colorAttributes.add(s);
         }
@@ -207,7 +208,7 @@ public class ProductService {
         Set<String> colors = new HashSet<>();
         for (Product product : products) {
             Set<ColorAttribute> set = product.getColors();
-            colors.addAll(set.stream().map(ColorAttribute::getColor).collect(Collectors.toList()));
+            colors.addAll(set.stream().map(ColorAttribute::getCode).collect(Collectors.toList()));
         }
 
         return colors;

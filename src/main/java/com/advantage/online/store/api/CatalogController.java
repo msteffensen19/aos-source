@@ -181,8 +181,6 @@ public class CatalogController {
                         promotion.getPromotionSubHeader(), promotion.getManagedImageId(), new ProductDto(promotion.getProduct()));
 
         categoryDto.setPromotedProduct(promotedProductDto);
-        categoryDto.setMaxPrice(productService.geMaxPrice(categoryProducts));
-        categoryDto.setMinPrice(productService.getMinPrice(categoryProducts));
         categoryDto.setColors(productService.getColorsSet(categoryProducts));
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);

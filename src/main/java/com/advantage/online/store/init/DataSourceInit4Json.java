@@ -262,7 +262,7 @@ public class DataSourceInit4Json {
         for (ColorAttribute s : colors) {
             ColorAttribute color = new ColorAttribute(s.getColor());
             color.setProduct(product);
-            color.setQuantity(s.getQuantity());
+            color.setInStock(s.getInStock());
             colorAttributes.add(color);
         }
         return colorAttributes;

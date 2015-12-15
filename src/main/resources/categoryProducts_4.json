@@ -35,7 +35,7 @@
       "imageUrl" : "1241",
       "images" : [],
       "colors" : [
-        {"color": "C0C0C0", "quantity": 10}
+        {"code": "C0C0C0", "color": "silver", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -53,7 +53,7 @@
       "imageUrl" : "1242",
       "images" : [],
       "colors" : [
-        {"color": "000000", "quantity": 10}
+        {"code": "000000", "color": "black", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -71,7 +71,7 @@
       "imageUrl" : "1243",
       "images" : [],
       "colors" : [
-        {"color": "FFFFFF", "quantity": 10}
+        {"code": "FFFFFF", "color" : "white", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -89,7 +89,7 @@
       "imageUrl" : "1244",
       "images" : [],
       "colors" : [
-        {"color": "FFFFFF", "quantity": 10}
+        {"code": "FFFFFF", "color": "white", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -107,7 +107,7 @@
       "imageUrl" : "1245",
       "images" : [],
       "colors" : [
-        {"color": "FFC0CB", "quantity": 10}
+        {"code": "FFC0CB", "color" : "pink", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 8.1"},
@@ -125,7 +125,7 @@
       "imageUrl" : "1246",
       "images" : [],
       "colors" : [
-        {"color": "C0C0C0", "quantity": 10}
+        {"code": "C0C0C0", "color": "silver", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -143,7 +143,7 @@
       "imageUrl" : "1247",
       "images" : [],
       "colors" : [
-        {"color": "000000", "quantity": 10}
+        {"code": "000000", "color": "black", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -161,7 +161,7 @@
       "imageUrl" : "1248",
       "images" : [],
       "colors" : [
-        {"color": "0000A0", "quantity": 10}
+        {"code": "0000A0", "color": "blue", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},
@@ -179,7 +179,7 @@
       "imageUrl" : "1249",
       "images" : [],
       "colors" : [
-        {"color": "C0C0C0", "quantity": 10}
+        {"code": "C0C0C0", "color" : "silver", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Chrome OS"},
@@ -197,7 +197,7 @@
       "imageUrl" : "1250",
       "images" : [],
       "colors" : [
-        {"color": "C0C0C0", "quantity": 10}
+        {"code": "C0C0C0", "color":"silver", "inStock": 10}
       ],
       "attributes" : [
         {"attributeName" : "OPERATING SYSTEM", "attributeValue" : "Windows 10"},

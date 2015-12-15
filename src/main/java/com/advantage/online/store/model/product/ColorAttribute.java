@@ -12,6 +12,9 @@ public class ColorAttribute {
     @JsonIgnore
     private Long id;
 
+    @Column(name = "code")
+    private String Code;
+
     @Column(name = "color")
     private String Color;
 
@@ -20,8 +23,8 @@ public class ColorAttribute {
     @JsonIgnore
     private Product product;
 
-    @Column(name = "quantity", nullable = false, columnDefinition = "int default 10")
-    private int quantity;
+    @Column(name = "inStock")
+    private int inStock;
 
     public ColorAttribute() {
     }
@@ -30,9 +33,9 @@ public class ColorAttribute {
         Color = color;
     }
 
-    public ColorAttribute(String color, int quantity) {
+    public ColorAttribute(String color, int inStock) {
         Color = color;
-        this.quantity = quantity;
+        this.inStock = inStock;
     }
 
     public Long getId() {
@@ -47,16 +50,24 @@ public class ColorAttribute {
         Color = color;
     }
 
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String code) {
+        Code = code;
+    }
+
     public Product getProduct() {
         return product;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getInStock() {
+        return inStock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setInStock(int inStock) {
+        this.inStock = inStock;
     }
 
     public void setProduct(Product product) {

@@ -14,24 +14,24 @@
     "imageUrl": "1243",
     "attributes": [
       {
-        "attributeName": "MEMORY",
-        "attributeValue": "16GB DDR3 - 2 DIMM"
-      },
-      {
-        "attributeName": "PROCESSOR",
-        "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor "
-      },
-      {
         "attributeName": "CUSTOMIZATION",
         "attributeValue": "Gaming"
+      },
+      {
+        "attributeName": "OPERATING SYSTEM",
+        "attributeValue": "Windows 10"
       },
       {
         "attributeName": "DISPLAY",
         "attributeValue": "15.6-inch diagonal QHD+ WLED-backlit UWVA Display (3200x1800)"
       },
       {
-        "attributeName": "OPERATING SYSTEM",
-        "attributeValue": "Windows 10"
+        "attributeName": "PROCESSOR",
+        "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor "
+      },
+      {
+        "attributeName": "MEMORY",
+        "attributeValue": "16GB DDR3 - 2 DIMM"
       }
     ]
   },
@@ -100,30 +100,31 @@
       "imageUrl": "1241",
       "attributes": [
         {
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Gaming"
+        },
+        {
           "attributeName": "PROCESSOR",
           "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
+        },
+        {
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Windows 10"
         },
         {
           "attributeName": "DISPLAY",
           "attributeValue": "15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen"
         },
         {
-          "attributeName": "CUSTOMIZATION",
-          "attributeValue": "Gaming"
-        },
-        {
           "attributeName": "MEMORY",
           "attributeValue": "16GB DDR3 - 2 DIMM"
-        },
-        {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Windows 10"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "C0C0C0"
+          "inStock": 10,
+          "color": "SILVER",
+          "code": "C0C0C0"
         }
       ],
       "images": [
@@ -139,10 +140,6 @@
       "imageUrl": "1242",
       "attributes": [
         {
-          "attributeName": "PROCESSOR",
-          "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
-        },
-        {
           "attributeName": "OPERATING SYSTEM",
           "attributeValue": "Windows 10"
         },
@@ -151,18 +148,23 @@
           "attributeValue": "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"
         },
         {
-          "attributeName": "MEMORY",
-          "attributeValue": "16GB DDR3 - 2 DIMM"
+          "attributeName": "PROCESSOR",
+          "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
         },
         {
           "attributeName": "CUSTOMIZATION",
           "attributeValue": "Simplicity"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "16GB DDR3 - 2 DIMM"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "000000"
+          "inStock": 10,
+          "color": "BLACK",
+          "code": "000000"
         }
       ],
       "images": [
@@ -182,26 +184,27 @@
           "attributeValue": "Windows 10"
         },
         {
-          "attributeName": "PROCESSOR",
-          "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor "
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Gaming"
         },
         {
-          "attributeName": "MEMORY",
-          "attributeValue": "16GB DDR3 - 2 DIMM"
+          "attributeName": "PROCESSOR",
+          "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor "
         },
         {
           "attributeName": "DISPLAY",
           "attributeValue": "15.6-inch diagonal QHD+ WLED-backlit UWVA Display (3200x1800)"
         },
         {
-          "attributeName": "CUSTOMIZATION",
-          "attributeValue": "Gaming"
+          "attributeName": "MEMORY",
+          "attributeValue": "16GB DDR3 - 2 DIMM"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "FFFFFF"
+          "inStock": 10,
+          "color": "WHITE",
+          "code": "FFFFFF"
         }
       ],
       "images": [
@@ -221,26 +224,27 @@
           "attributeValue": "13.3-diagonal FHD Radiance Infinity LED-backlit touch screen (1920 x 1080)"
         },
         {
-          "attributeName": "CUSTOMIZATION",
-          "attributeValue": "2-in-1"
+          "attributeName": "MEMORY",
+          "attributeValue": "8 GB DDR3L SDRAM"
         },
         {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Windows 10"
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "2-in-1"
         },
         {
           "attributeName": "PROCESSOR",
           "attributeValue": "Intel® Core™ i7-5500U with Intel HD Graphics 5500"
         },
         {
-          "attributeName": "MEMORY",
-          "attributeValue": "8 GB DDR3L SDRAM"
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Windows 10"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "FFFFFF"
+          "inStock": 10,
+          "color": "WHITE",
+          "code": "FFFFFF"
         }
       ],
       "images": [
@@ -256,16 +260,8 @@
       "imageUrl": "1245",
       "attributes": [
         {
-          "attributeName": "MEMORY",
-          "attributeValue": "2 GB 1333 MHz DDR3 SDRAM"
-        },
-        {
           "attributeName": "DISPLAY",
           "attributeValue": "11.6-diagonal HD anti-glare WLED-backlit (1366 x 768)"
-        },
-        {
-          "attributeName": "CUSTOMIZATION",
-          "attributeValue": "Gaming"
         },
         {
           "attributeName": "OPERATING SYSTEM",
@@ -274,12 +270,21 @@
         {
           "attributeName": "PROCESSOR",
           "attributeValue": "Intel Turbo Boost Technology"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "2 GB 1333 MHz DDR3 SDRAM"
+        },
+        {
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Gaming"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "FFC0CB"
+          "inStock": 10,
+          "color": "PINK",
+          "code": "FFC0CB"
         }
       ],
       "images": [
@@ -295,12 +300,8 @@
       "imageUrl": "1246",
       "attributes": [
         {
-          "attributeName": "DISPLAY",
-          "attributeValue": "15.6-inch diagonal Full HD WLED-backlit IPS Display (1920x1080) Touchscreen"
-        },
-        {
-          "attributeName": "MEMORY",
-          "attributeValue": "8GB DDR3L - 1 DIMM"
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Windows 10"
         },
         {
           "attributeName": "CUSTOMIZATION",
@@ -311,14 +312,19 @@
           "attributeValue": "intel(R) Core(TM) i5-6300HQ"
         },
         {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Windows 10"
+          "attributeName": "DISPLAY",
+          "attributeValue": "15.6-inch diagonal Full HD WLED-backlit IPS Display (1920x1080) Touchscreen"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "8GB DDR3L - 1 DIMM"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "C0C0C0"
+          "inStock": 10,
+          "color": "SILVER",
+          "code": "C0C0C0"
         }
       ],
       "images": [
@@ -334,20 +340,20 @@
       "imageUrl": "1247",
       "attributes": [
         {
-          "attributeName": "CUSTOMIZATION",
-          "attributeValue": "Business"
+          "attributeName": "PROCESSOR",
+          "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor"
         },
         {
           "attributeName": "DISPLAY",
           "attributeValue": "17.3-inch diagonal Full HD WLED-backlit IPS Display (1920x1080) Touchscreen"
         },
         {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Windows 10"
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Business"
         },
         {
-          "attributeName": "PROCESSOR",
-          "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor"
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Windows 10"
         },
         {
           "attributeName": "MEMORY",
@@ -356,8 +362,9 @@
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "000000"
+          "inStock": 10,
+          "color": "BLACK",
+          "code": "000000"
         }
       ],
       "images": [
@@ -373,14 +380,6 @@
       "imageUrl": "1248",
       "attributes": [
         {
-          "attributeName": "MEMORY",
-          "attributeValue": "8GB DDR3L - 1 DIMM"
-        },
-        {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Windows 10"
-        },
-        {
           "attributeName": "CUSTOMIZATION",
           "attributeValue": "Simplicity"
         },
@@ -391,12 +390,21 @@
         {
           "attributeName": "PROCESSOR",
           "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
+        },
+        {
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Windows 10"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "8GB DDR3L - 1 DIMM"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "0000A0"
+          "inStock": 10,
+          "color": "BLUE",
+          "code": "0000A0"
         }
       ],
       "images": [
@@ -412,8 +420,8 @@
       "imageUrl": "1249",
       "attributes": [
         {
-          "attributeName": "PROCESSOR",
-          "attributeValue": "Intel® Celeron® processor"
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Chrome OS"
         },
         {
           "attributeName": "CUSTOMIZATION",
@@ -424,18 +432,19 @@
           "attributeValue": "16GB DDR3 - 2 DIMM"
         },
         {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Chrome OS"
-        },
-        {
           "attributeName": "DISPLAY",
           "attributeValue": "14-diagonal HD WLED Brightview flat SVA (1366 x 768)"
+        },
+        {
+          "attributeName": "PROCESSOR",
+          "attributeValue": "Intel® Celeron® processor"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "C0C0C0"
+          "inStock": 10,
+          "color": "SILVER",
+          "code": "C0C0C0"
         }
       ],
       "images": [
@@ -451,30 +460,31 @@
       "imageUrl": "1250",
       "attributes": [
         {
-          "attributeName": "OPERATING SYSTEM",
-          "attributeValue": "Windows 10"
-        },
-        {
-          "attributeName": "MEMORY",
-          "attributeValue": "16GB DDR3 - 2 DIMM"
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Business"
         },
         {
           "attributeName": "PROCESSOR",
           "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
         },
         {
-          "attributeName": "CUSTOMIZATION",
-          "attributeValue": "Business"
-        },
-        {
           "attributeName": "DISPLAY",
           "attributeValue": "14-inch diagonal LED-backlit HD+ SVA Anti-Glare (1600x900)"
+        },
+        {
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Windows 10"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "16GB DDR3 - 2 DIMM"
         }
       ],
       "colors": [
         {
-          "quantity": 10,
-          "color": "C0C0C0"
+          "inStock": 10,
+          "color": "SILVER",
+          "code": "C0C0C0"
         }
       ],
       "images": [
@@ -488,7 +498,5 @@
     "0000A0",
     "FFFFFF",
     "C0C0C0"
-  ],
-  "minPrice": "179.99",
-  "maxPrice": "1261.99"
+  ]
 }

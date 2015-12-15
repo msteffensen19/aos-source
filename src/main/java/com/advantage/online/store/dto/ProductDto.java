@@ -32,23 +32,6 @@ public class ProductDto {
         this.images = fillImages(product.getImages());
     }
 
-    private List<ColorsValues> fillColors(Set<ColorAttribute> colorAttributes) {
-        List<ColorsValues> colors = new ArrayList<>(colorAttributes.size());
-        for (ColorAttribute color : colorAttributes) {
-            colors.add(new ColorsValues(color.getColor(), color.getQuantity()))  ;
-        }
-        return colors;
-    }
-
-    private List<String> fillImages(Set<ImageAttribute> imageAttributes) {
-        List<String> images = new ArrayList<>(imageAttributes.size());
-        for (ImageAttribute image : imageAttributes) {
-            images.add(image.getImageUrl());
-        }
-
-        return images;
-    }
-
     public List<String> getImages() {
         return images;
     }
@@ -160,6 +143,7 @@ public class ProductDto {
 
         return productDtos;
     }
+
     /**
      * Build AttributeItem collection from Products attributes
      * @param product - Product object
@@ -175,30 +159,17 @@ public class ProductDto {
         return items;
     }
 
-    public static class  ColorsValues {
-        String color;
-        int quantity;
-
-        public ColorsValues(String color, int quantity) {
-            this.color = color;
-            this.quantity = quantity;
+    /**
+     * Build images IDs collection
+     * @param imageAttributes {@link Set} ImageAttribute collection
+     * @return {@link List} images
+     */
+    private List<String> fillImages(Set<ImageAttribute> imageAttributes) {
+        List<String> images = new ArrayList<>(imageAttributes.size());
+        for (ImageAttribute image : imageAttributes) {
+            images.add(image.getImageUrl());
         }
 
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
+        return images;
     }
-
 }

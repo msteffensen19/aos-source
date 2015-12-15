@@ -14,8 +14,6 @@ public class CategoryDto {
     private List<AttributeDto> attributes;
     private List<ProductDto> products;
     private Set<String> colors;
-    private String minPrice;
-    private String maxPrice;
 
 
     public List<AttributeDto> getAttributes() {
@@ -80,22 +78,6 @@ public class CategoryDto {
 
     public void setPromotedProduct(PromotedProductDto promotedProduct) {
         this.promotedProduct = promotedProduct;
-    }
-
-    public String getMinPrice() {
-        return minPrice;
-    }
-
-    public void setMinPrice(String minPrice) {
-        this.minPrice = minPrice;
-    }
-
-    public String getMaxPrice() {
-        return maxPrice;
-    }
-
-    public void setMaxPrice(String maxPrice) {
-        this.maxPrice = maxPrice;
     }
 
     public Set<String> getColors() {
