@@ -42,20 +42,20 @@ public class OrderController {
     }
 
     /*  =========================================================================================================   */
-    @RequestMapping(value="/carts/{userid}", method=RequestMethod.POST)
+    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.POST)
     @ApiOperation(value = "Add product to shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
-                                                                       @RequestParam("productid") Long productId,
-                                                                       @RequestParam(value = "color", required = true) String stringColor,
+                                                                       @PathVariable("productid") Long productId,
+                                                                       @PathVariable("color") String hexColor,
                                                                        @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity) {
 
         System.out.println("addProductToCart Parameters: ");
         System.out.println("   userId=" + userId);
         System.out.println("   productId=" + productId);
-        System.out.println("   color=" + stringColor);
+        System.out.println("   color=" + hexColor);
         System.out.println("   quantity=" + quantity);
 
-        shoppingCartResponseStatus = shoppingCartService.add(userId, productId, stringColor, quantity);
+        shoppingCartResponseStatus = shoppingCartService.add(userId, productId, hexColor, quantity);
 
         return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
     }
