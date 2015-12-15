@@ -71,12 +71,12 @@ public class OrderController {
                                                                                   @RequestParam Long productId,
                                                                                   @RequestParam String hexColor) {
     */
-    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}&quantity={quantity}", method=RequestMethod.PUT)
+    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.PUT)
     @ApiOperation(value = "Update quantity of product in shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") long userId,
                                                                                   @PathVariable("productid") Long productId,
                                                                                   @PathVariable("color") String hexColor,
-                                                                                  @PathVariable("quantity") int quantity) {
+                                                                                  @RequestParam("quantity") int quantity) {
 
         System.out.println("updateProductQuantityInCart Parameters: ");
         System.out.println("   userId=" + userId);
