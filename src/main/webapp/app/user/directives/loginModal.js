@@ -34,6 +34,8 @@ define(['./module'], function (directives) {
                     /* Sign in */
                     $scope.signIn = function(user, rememberMe) {
 
+                        console.log(user)
+                        console.log(JSON.stringify(user))
                         userService.login(user).then(function (response) {
 
                                 if(response.userId != -1) {

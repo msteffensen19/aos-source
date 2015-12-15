@@ -12,35 +12,35 @@ var server = {
     catalog: {
 
         getCategories: function(){
-            return catalogKey + "/api/v1/categories";
+            return catalogKey + "api/v1/categories";
         },
 
         getCategoryById : function(id) {
-            return catalogKey + "/api/v1/categories/" + id + "/products";
+            return catalogKey + "api/v1/categories/" + id + "/products";
         },
 
         getPopularProducts : function () {
-            return "/app/popularProducts.json";
+            return "app/popularProducts.json";
         },
 
         getDeals : function () {
-            return catalogKey + "/api/v1/deals";
+            return catalogKey + "api/v1/deals";
         },
 
         getDealOfTheDay : function () {
-            return catalogKey + "/api/v1/deals/search?dealOfTheDay=true";
+            return catalogKey + "api/v1/deals/search?dealOfTheDay=true";
         },
 
         getProducts : function () {
-            return catalogKey + "/api/v1/products.json";
+            return catalogKey + "api/v1/products.json";
         },
 
         getProductById : function (id) {
-            return catalogKey + '/api/v1/products/' + id;
+            return catalogKey + 'api/v1/products/' + id;
         },
 
         getProductsBySearch : function (word, quantity) {
-            return catalogKey + "/api/v1/products/search?name=" + word +
+            return catalogKey + "api/v1/products/search?name=" + word +
                 "&quantityPerEachCategory=" + quantity;
         }
 
@@ -53,15 +53,15 @@ var server = {
     account: {
 
         getAllCountries : function (){
-            return accountKey + "/api/v1/countries";
+            return accountKey + "api/v1/countries";
         },
 
         register : function(model){
-            return accountKey + "api/account/users";
+            return accountKey + "api/v1/users";
         },
 
         login : function(user){
-            return accountKey + "api/account/login";
+            return accountKey + "api/v1/login";
         },
 
 

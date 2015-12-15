@@ -52,6 +52,7 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
 
 
 nav.pages {
+    direction: ltr;
     background-color: #454545;
     position: relative;
     padding: 0 20px;
