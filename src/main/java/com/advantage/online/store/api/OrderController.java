@@ -115,18 +115,18 @@ public class OrderController {
     }
 
     /*  =========================================================================================================   */
-    @RequestMapping(value="/carts/", method=RequestMethod.DELETE)
+    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.DELETE)
     @ApiOperation(value = "Remove a product from user shopping cart")
-    public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@RequestBody ShoppingCartProductDto cartProduct) {
+    public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@PathVariable("userid") long userId,
+                                                                                @PathVariable("productid") Long productId,
+                                                                                @PathVariable("color") String hexColor) {
 
         System.out.println("removeProductFromUserCart Parameters: ");
-        System.out.println("   userId=" + cartProduct.getUserId());
-        System.out.println("   productId=" + cartProduct.getProductId());
-        System.out.println("   color=" + cartProduct.getHexColor());
+        System.out.println("   userId=" + userId);
+        System.out.println("   productId=" + productId);
+        System.out.println("   color=" + hexColor);
 
-        shoppingCartResponseStatus = shoppingCartService.removeProductFromUserCart(cartProduct.getUserId(),
-                                                                                    cartProduct.getProductId(),
-                                                                                    cartProduct.getHexColor());
+        shoppingCartResponseStatus = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
 
         return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
     }
