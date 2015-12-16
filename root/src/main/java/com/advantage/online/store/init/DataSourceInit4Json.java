@@ -2,18 +2,6 @@ package com.advantage.online.store.init;
 
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.dao.category.CategoryRepository;
-import com.advantage.online.store.dto.AttributeItem;
-import com.advantage.online.store.dto.CategoryDto;
-import com.advantage.online.store.dto.ProductDto;
-import com.advantage.online.store.dto.PromotedProductDto;
-import com.advantage.online.store.model.deal.Deal;
-import com.advantage.online.store.model.attribute.Attribute;
-import com.advantage.online.store.model.category.Category;
-import com.advantage.online.store.model.product.ColorAttribute;
-import com.advantage.online.store.model.product.ImageAttribute;
-import com.advantage.online.store.model.product.Product;
-import com.advantage.online.store.model.product.ProductAttributes;
-import com.advantage.online.store.services.ProductService;
 import com.advantage.online.store.user.model.AppUser;
 import com.advantage.online.store.user.model.AppUserType;
 import com.advantage.online.store.user.model.Country;
@@ -34,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.List;
 
 @Component
 public class DataSourceInit4Json {
@@ -44,76 +32,12 @@ public class DataSourceInit4Json {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @Autowired
-    private ProductService productService;
-
     public void init() throws Exception {
 
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        final Category category1 = new Category("LAPTOPS", "1235");
-        session.persist(category1);
-
-        final Category category2 = new Category("HEADPHONES", "1234");
-        session.persist(category2);
-
-        final Category category3 = new Category("TABLETS", "1236");
-        session.persist(category3);
-
-        final Category category4 = new Category("SPEAKERS", "1237");
-        session.persist(category4);
-
-        final Category category5 = new Category("MICE", "1238");
-        session.persist(category5);
-
-        final Category category6 = new Category("BAGS & CASES", "1239");
-        session.persist(category6);
-
-        /*Attributes INIT*/
-        Map<String, Attribute> defAttributes = new HashMap<>();
-        Attribute attribute1 = new Attribute();
-        Attribute attribute2 = new Attribute();
-        Attribute attribute3 = new Attribute();
-        Attribute attribute4 = new Attribute();
-        Attribute attribute5 = new Attribute();
-        Attribute attribute6 = new Attribute();
-        Attribute attribute7 = new Attribute();
-
-       // attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
-        attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
-        attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
-        attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
-        attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-       // attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
-        attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
-
-        //session.persist(attribute1);
-        session.persist(attribute2);
-        session.persist(attribute3);
-        session.persist(attribute4);
-        session.persist(attribute5);
-        //session.persist(attribute6);
-        session.persist(attribute7);
-
-        transaction.commit();
-
-        //defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
-        defAttributes.put(attribute2.getName().toUpperCase(), attribute2);
-        defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
-        defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
-        defAttributes.put(attribute5.getName().toUpperCase(), attribute5);
-       // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
-        defAttributes.put(attribute7.getName().toUpperCase(), attribute7);
-
-        for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
-            session.save(entry.getValue());
-        }
-
-        ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
-        File json = filePath.getFile();
+        Transaction transaction;
 
         //  Get countries list in CSV (Comma Separated Values) file
         ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
@@ -121,51 +45,8 @@ public class DataSourceInit4Json {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CategoryDto dto = objectMapper.readValue(json, CategoryDto.class);
-        Category category = categoryRepository.get(dto.getCategoryId());
 
         transaction = session.beginTransaction();
-
-        Map<Long, Product> productMap = new HashMap<>();
-
-        /*PRODUCT*/
-        for (ProductDto p : dto.getProducts()) {
-            Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
-            product.setManagedImageId(p.getImageUrl());
-            session.persist(product);
-            //load attributes
-            for (AttributeItem a : p.getAttributes()) {
-                ProductAttributes attributes = new ProductAttributes();
-                attributes.setProduct(product);
-
-                attributes.setAttribute(defAttributes.get(a.getAttributeName().toUpperCase()));
-                attributes.setAttributeValue(a.getAttributeValue());
-
-                session.save(attributes);
-
-            }
-
-
-            if(p.getImages().size() == 0) {
-                p.getImages().add(product.getManagedImageId());
-            }
-
-            product.setColors(productService.getColorAttributes(p.getColors(), product));
-            product.setImages(productService.getImageAttribute(p.getImages(), product));
-
-            productMap.put(product.getId(), product);
-        }
-
-
-
-        PromotedProductDto p = dto.getPromotedProduct();
-        Product parent = productMap.get(p.getId());
-
-        Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
-            p.getPromotionImageId(), 0, "", "",  parent);
-
-        session.persist(deal);
-
 
         /* Countries */
         List<String> countries = FileSystemHelper.readFileCsv(coutriesCSV.getAbsolutePath());

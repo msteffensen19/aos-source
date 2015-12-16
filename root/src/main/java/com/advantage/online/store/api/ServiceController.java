@@ -5,7 +5,6 @@ import com.advantage.online.store.dao.category.CategoryRepository;
 import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.log.AppUserAuthorize;
 import com.advantage.online.store.model.deal.Deal;
-import com.advantage.online.store.services.AttributeService;
 import com.advantage.online.store.user.dto.AppUserConfigurationResponseStatus;
 import com.advantage.online.store.user.services.AppUserConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(value ="/service"+Constants.URI_API +"/v1")
 public class ServiceController {
-    @Autowired
-    AttributeService attributeService;
-
     @Autowired
     CategoryRepository categoryRepository;
 
