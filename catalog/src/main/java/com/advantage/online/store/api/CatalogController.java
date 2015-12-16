@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/catalog_2" + Constants.URI_API + "/v1")
+@RequestMapping(value = Constants.URI_API + "/v1")
 public class CatalogController {
     @Autowired
     private ProductService productService;

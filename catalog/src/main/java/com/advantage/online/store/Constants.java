@@ -1,9 +1,5 @@
 package com.advantage.online.store;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class Constants {
 	/**
 	 * Keyboard special characters
@@ -22,7 +18,7 @@ public class Constants {
 	/**
      * prefix of REST API
      */
-    public static final String URI_API = "/api_2";
+	public static final String URI_API = "/api";
 
     public static final String URI_PRODUCTS = "/products";
 
