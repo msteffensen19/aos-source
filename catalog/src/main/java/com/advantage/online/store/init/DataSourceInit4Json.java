@@ -6,19 +6,12 @@ import com.advantage.online.store.dto.AttributeItem;
 import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
 import com.advantage.online.store.dto.PromotedProductDto;
-import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.attribute.Attribute;
 import com.advantage.online.store.model.category.Category;
-import com.advantage.online.store.model.product.ColorAttribute;
-import com.advantage.online.store.model.product.ImageAttribute;
+import com.advantage.online.store.model.deal.Deal;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.model.product.ProductAttributes;
 import com.advantage.online.store.services.ProductService;
-import com.advantage.online.store.user.model.AppUser;
-import com.advantage.online.store.user.model.AppUserType;
-import com.advantage.online.store.user.model.Country;
-import com.advantage.online.store.user.model.YesNoReply;
-import com.advantage.util.fs.FileSystemHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -34,7 +27,8 @@ import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class DataSourceInit4Json {
@@ -142,9 +136,7 @@ public class DataSourceInit4Json {
                 attributes.setAttributeValue(a.getAttributeValue());
 
                 session.save(attributes);
-
             }
-
 
             if(p.getImages().size() == 0) {
                 p.getImages().add(product.getManagedImageId());
@@ -156,8 +148,6 @@ public class DataSourceInit4Json {
             productMap.put(product.getId(), product);
         }
 
-
-
         PromotedProductDto p = dto.getPromotedProduct();
         Product parent = productMap.get(p.getId());
 
@@ -165,68 +155,6 @@ public class DataSourceInit4Json {
             p.getPromotionImageId(), 0, "", "",  parent);
 
         session.persist(deal);
-
-
-        /* Countries */
-        List<String> countries = FileSystemHelper.readFileCsv(coutriesCSV.getAbsolutePath());
-
-        if (countries != null) {
-            for (String str : countries) {
-                String[] substrings = str.split(",");
-
-            /*
-             *  substrings[0] = country name in Hebrew
-             *  substrings[1] = country name in English
-             *  substrings[2] = country ISO name in English
-             *  substrings[3] = international phone country code prefix
-             */
-                System.out.println("Country: " + substrings[1] +
-                        Constants.SPACE + substrings[2] +
-                        Constants.SPACE + substrings[3]);
-
-                session.persist(new Country(substrings[1], substrings[2], Integer.valueOf(substrings[3])));
-            }
-
-            System.out.println("Total of " + countries.size() + " countries loaded");
-        }
-        else {
-            System.out.println("Countries CSV file might be empty.");
-        }
-
-
-        ////  Binyamin Regev 2015-11-18
-        //session.persist(new Country("Austria", "at", 43));
-        //session.persist(new Country("Australia", "au", 61));
-        //session.persist(new Country("Cayman Islands", "ky", 1345));
-        //session.persist(new Country("Bahamas", "bs", 1242));
-        //session.persist(new Country("Uruguay", "uy", 598));
-        //session.persist(new Country("Solomon Islands", "sb", 677));
-        //session.persist(new Country("Falkland Islands", "fk", 500));
-        //session.persist(new Country("Ukraine", "ua", 380));
-        //session.persist(new Country("Cook Islands", "ck", 682));
-        //session.persist(new Country("Israel", "il", 972));
-        //session.persist(new Country("Canada", "ca", 1));
-        //session.persist(new Country("Russia", "ru", 7));
-        //session.persist(new Country("United Kingdom", "uk", 44));
-        //session.persist(new Country("United States", "us", 1));
-        //session.persist(new Country("Iceland", "is", 354));
-        //session.persist(new Country("Uzbekistan", "uz", 998));
-        ////  Binyamin Regev 2015-11-18 - End
-
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "Avraham", "avinu.avraham", "Avraham1", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "itshak", "avinu.itshak", "Itshak1", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Avinu", "jakob", "avinu.jakob", "Israel7", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Sara", "sara.imenu", "Saramom2", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Rivka", "rivka.imenu", "Rivka2", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Lea", "lea.imenu", "Motherlea2", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "imenu", "Rachel", "rachel.imenu", "Rachel21", 18, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "King", "David", "king.david", "DavidK1", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com",YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "King", "solomon", "king.solomon", "SolomonK2", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Sheeba", "queen.sheeba", "SheebaQ1", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
-        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Bat Sheva", "queen.bat-sheva", "BatShevaQ2", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
-
         transaction.commit();
     }
 
