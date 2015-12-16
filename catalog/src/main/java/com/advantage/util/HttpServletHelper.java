@@ -1,13 +1,12 @@
 package com.advantage.util;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * A helper class for the HTTP servlet API.
@@ -69,7 +68,6 @@ public abstract class HttpServletHelper {
 			errorMessage.append("}");
 
 			if (nonExistingParametersIterator.hasNext()) {
-
 				errorMessage.append(", ");
 			}
 		}
