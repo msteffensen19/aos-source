@@ -17,25 +17,25 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class SwaggerConfiguration {
     @Bean
-    public Docket api(){
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-            .select()
-            .apis(RequestHandlerSelectors.any())
-            .paths(regex(".*/api/.*"))
-            .build()
-            .enableUrlTemplating(false)
-            .apiInfo(apiInfo());
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(regex(".*/api/.*"))
+                .build()
+                .enableUrlTemplating(false)
+                .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
         ApiInfo apiInfo = new ApiInfo(
-            "Advantage REST API",
-            "Description.",
-            null,
-            null,
-            null,
-            null,
-            null
+                "Advantage - ROOT.WAR REST API",
+                "Description.",
+                null,
+                null,
+                null,
+                null,
+                null
         );
         return apiInfo;
     }
