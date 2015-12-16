@@ -5,43 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.advantage.online.store</groupId>
-    <artifactId>main_project</artifactId>
+    <artifactId>catalog</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>main_project</name>
+    <packaging>war</packaging>
+    <name>catalog</name>
 
-    <modules>
-        <module>root</module>
-        <module>catalog</module>
-    </modules>
+    <parent>
+        <groupId>com.advantage.online.store</groupId>
+        <artifactId>main_project</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-    <properties>
-        <aspectj.version>1.8.4</aspectj.version>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.9</slf4j.version>
-        <log4j.version>1.2.17</log4j.version>
-        <querydsl.version>3.6.0</querydsl.version>
-        <spring-framework-version>4.1.6.RELEASE</spring-framework-version>
-        <spring-security.version>4.0.3.RELEASE</spring-security.version>
-        <jsr250.version>1.0</jsr250.version>
-        <spring-session.version>1.0.0.RELEASE</spring-session.version>
-        <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
-        <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
-        <spring-security.version>4.0.1.RELEASE</spring-security.version>
-        <hibernate.version>4.3.9.Final</hibernate.version>
-        <jackson.version>2.4.5</jackson.version>
-        <modelmapper.version>0.7.3</modelmapper.version>
-        <springfox.version>2.0.3</springfox.version>
-        <postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>
-        <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
-        <evg_project_base_dir>${pom.basedir}</evg_project_base_dir>
-    </properties>
     <profiles>
         <profile>
             <id>production</id>
             <build>
-                <finalName>ROOT</finalName>
+                <finalName>catalog</finalName>
                 <resources>
                     <resource>
                         <directory>src/main/resources</directory>
@@ -59,51 +39,51 @@
                     </resource>
                 </resources>
                 <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>exec-npm-install</id>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <executable>npm.cmd</executable>
-                                    <arguments>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/webapp</workingDirectory>
-                                </configuration>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>exec-bower-install</id>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <executable>bower</executable>
-                                    <arguments>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/webapp</workingDirectory>
-                                </configuration>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>exec-grunt</id>
-                                <phase>process-resources</phase>
-                                <configuration>
-                                    <executable>grunt</executable>
-                                    <workingDirectory>src/main/webapp</workingDirectory>
-                                </configuration>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+                    <!--<plugin>-->
+                        <!--<groupId>org.codehaus.mojo</groupId>-->
+                        <!--<artifactId>exec-maven-plugin</artifactId>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<id>exec-npm-install</id>-->
+                                <!--<phase>generate-sources</phase>-->
+                                <!--<configuration>-->
+                                    <!--<executable>npm.cmd</executable>-->
+                                    <!--<arguments>-->
+                                        <!--<argument>install</argument>-->
+                                    <!--</arguments>-->
+                                    <!--<workingDirectory>src/main/webapp</workingDirectory>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+<!--&lt;!&ndash;                            <execution>-->
+                                <!--<id>exec-bower-install</id>-->
+                                <!--<phase>generate-sources</phase>-->
+                                <!--<configuration>-->
+                                    <!--<executable>bower</executable>-->
+                                    <!--<arguments>-->
+                                        <!--<argument>install</argument>-->
+                                    <!--</arguments>-->
+                                    <!--<workingDirectory>src/main/webapp</workingDirectory>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <execution>-->
+                                <!--<id>exec-grunt</id>-->
+                                <!--<phase>process-resources</phase>-->
+                                <!--<configuration>-->
+                                    <!--<executable>grunt</executable>-->
+                                    <!--<workingDirectory>src/main/webapp</workingDirectory>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>&ndash;&gt;-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
@@ -113,7 +93,8 @@
                             <failOnMissingWebXml>false</failOnMissingWebXml>
                             <webResources>
                                 <resource>
-                                    <directory>${basedir}/src/main/webapp/target</directory>
+                                    <!--<directory>${basedir}/src/main/webapp/target</directory>-->
+                                    <directory>../${basedir}</directory>
                                 </resource>
                             </webResources>
                         </configuration>
@@ -150,7 +131,7 @@
         <profile>
             <id>development</id>
             <build>
-                <finalName>ROOT</finalName>
+                <finalName>catalog</finalName>
                 <resources>
                     <resource>
                         <directory>src/main/resources</directory>
@@ -168,52 +149,52 @@
                     </resource>
                 </resources>
                 <plugins>
- <!--                   <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>exec-npm-install</id>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <executable>npm</executable>
-                                    <arguments>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/webapp</workingDirectory>
-                                </configuration>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>exec-bower-install</id>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <executable>bower</executable>
-                                    <arguments>
-                                        <argument>install</argument>
-                                    </arguments>
-                                    <workingDirectory>src/main/webapp</workingDirectory>
-                                </configuration>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>exec-grunt</id>
-                                <phase>process-resources</phase>
-                                <configuration>
-                                    <executable>grunt</executable>
-                                    <workingDirectory>src/main/webapp</workingDirectory>
-                                    <arguments><argument>dev</argument></arguments>
-                                </configuration>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.codehaus.mojo</groupId>-->
+                        <!--<artifactId>exec-maven-plugin</artifactId>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<id>exec-npm-install</id>-->
+                                <!--<phase>generate-sources</phase>-->
+                                <!--<configuration>-->
+                                    <!--<executable>npm</executable>-->
+                                    <!--<arguments>-->
+                                        <!--<argument>install</argument>-->
+                                    <!--</arguments>-->
+                                    <!--<workingDirectory>src/main/webapp</workingDirectory>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+<!--&lt;!&ndash;                            <execution>-->
+                                <!--<id>exec-bower-install</id>-->
+                                <!--<phase>generate-sources</phase>-->
+                                <!--<configuration>-->
+                                    <!--<executable>bower</executable>-->
+                                    <!--<arguments>-->
+                                        <!--<argument>install</argument>-->
+                                    <!--</arguments>-->
+                                    <!--<workingDirectory>src/main/webapp</workingDirectory>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <execution>-->
+                                <!--<id>exec-grunt</id>-->
+                                <!--<phase>process-resources</phase>-->
+                                <!--<configuration>-->
+                                    <!--<executable>grunt</executable>-->
+                                    <!--<workingDirectory>src/main/webapp</workingDirectory>-->
+                                    <!--<arguments><argument>dev</argument></arguments>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>exec</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>&ndash;&gt;-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
@@ -221,6 +202,7 @@
                         <configuration>
                             <warSourceExcludes>node_modules/**</warSourceExcludes>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <outputDirectory>${evg_project_base_dir}</outputDirectory>
                         </configuration>
                     </plugin>
                     <plugin>
