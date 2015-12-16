@@ -13,67 +13,65 @@ import java.util.Iterator;
  */
 public abstract class HttpServletHelper {
 
-	private HttpServletHelper() {
+    private HttpServletHelper() {
+        throw new UnsupportedOperationException();
+    }
 
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * Validate that the given request, contains all of the given parameters.
+     *
+     * @param request                       the request to check that it contains certain parameters.
+     * @param considerBlankStringAsNotExist a flag for telling the method to treat a parameter
+     *                                      blank with a blank string value, as a non existing parameter.
+     * @param parameterNames                the parameter to check their existence in the given request.
+     * @throws IllegalArgumentException if the given HTTP servlet request argument references
+     *                                  <b>null</b>, or if the given array argument of parameter names references <b>null</b>,
+     *                                  or if it <b>is</b> a zero length array.
+     */
+    public static void validateParametersExistenceInRequest(final HttpServletRequest request,
+                                                            final boolean considerBlankStringAsNotExist, final String... parameterNames) {
 
-	/**
-	 * Validate that the given request, contains all of the given parameters.
-	 * @param request the request to check that it contains certain parameters.
-	 * @param considerBlankStringAsNotExist a flag for telling the method to treat a parameter
-	 * blank with a blank string value, as a non existing parameter. 
-	 * @param parameterNames the parameter to check their existence in the given request.
-	 * @throws IllegalArgumentException if the given HTTP servlet request argument references
-	 * <b>null</b>, or if the given array argument of parameter names references <b>null</b>,
-	 * or if it <b>is</b> a zero length array.
-	 */
-	public static void validateParametersExistenceInRequest(final HttpServletRequest request,
-															final boolean considerBlankStringAsNotExist, final String... parameterNames) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
+        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(parameterNames,
+                "parameter names");
+        final Collection<String> nonExistingParameters = new ArrayList<String>();
 
-		ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
-		ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(parameterNames,
-			"parameter names");
-		final Collection<String> nonExistingParameters = new ArrayList<String>();
+        for (final String parameterName : parameterNames) {
 
-		for (final String parameterName : parameterNames) {
+            final String parameterValue = request.getParameter(parameterName);
 
-			final String parameterValue = request.getParameter(parameterName);
+            if (parameterValue == null || (considerBlankStringAsNotExist && StringUtils.isBlank(parameterValue))) {
+                nonExistingParameters.add(parameterName);
+            }
+        }
 
-			if (parameterValue == null ||
-				(considerBlankStringAsNotExist && StringUtils.isBlank(parameterValue))) {
+        if (nonExistingParameters.isEmpty() == false) {
 
-				nonExistingParameters.add(parameterName);
-			}
-		}
+            HttpServletHelper.generateMessageAndThrowError(nonExistingParameters);
+        }
+    }
 
-		if (nonExistingParameters.isEmpty() == false) {
+    private static void generateMessageAndThrowError(final Collection<String> nonExistingParameters) {
 
-			HttpServletHelper.generateMessageAndThrowError(nonExistingParameters);
-		}
-	}
+        assert CollectionUtils.isNotEmpty(nonExistingParameters);
 
-	private static void generateMessageAndThrowError(final Collection<String> nonExistingParameters) {
+        final StringBuilder errorMessage = new StringBuilder("Missing mandatory parameter in HTTP request: [");
+        final Iterator<String> nonExistingParametersIterator = nonExistingParameters.iterator();
 
-		assert CollectionUtils.isNotEmpty(nonExistingParameters);
+        while (nonExistingParametersIterator.hasNext()) {
 
-		final StringBuilder errorMessage = new StringBuilder("Missing mandatory parameter in HTTP request: [");
-		final Iterator<String> nonExistingParametersIterator = nonExistingParameters.iterator();
+            final String parameterName = nonExistingParametersIterator.next();
+            errorMessage.append("{");
+            errorMessage.append(parameterName);
+            errorMessage.append("}");
 
-		while (nonExistingParametersIterator.hasNext()) {
+            if (nonExistingParametersIterator.hasNext()) {
+                errorMessage.append(", ");
+            }
+        }
 
-			final String parameterName = nonExistingParametersIterator.next();
-			errorMessage.append("{");
-			errorMessage.append(parameterName);
-			errorMessage.append("}");
-
-			if (nonExistingParametersIterator.hasNext()) {
-				errorMessage.append(", ");
-			}
-		}
-
-		errorMessage.append("]");
-		final String errorMessageString = errorMessage.toString();
-		throw new RuntimeException(errorMessageString);
-	}
+        errorMessage.append("]");
+        final String errorMessageString = errorMessage.toString();
+        throw new RuntimeException(errorMessageString);
+    }
 }

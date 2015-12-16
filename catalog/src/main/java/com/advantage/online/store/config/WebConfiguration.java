@@ -14,8 +14,6 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
-import org.springframework.web.servlet.resource.AppCacheManifestTransformer;
-import org.springframework.web.servlet.resource.VersionResourceResolver;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -49,13 +47,14 @@ public class WebConfiguration extends SpringDataWebConfiguration {
     private static final int BROWSER_CACHE_CONTROL = 604800;
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/app/**").addResourceLocations("/app/")
                 .setCachePeriod(BROWSER_CACHE_CONTROL);
 
         registry.addResourceHandler("swagger-ui.html")
-            .addResourceLocations("classpath:/META-INF/resources/");
+                .addResourceLocations("classpath:/META-INF/resources/");
     }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
@@ -104,7 +103,7 @@ public class WebConfiguration extends SpringDataWebConfiguration {
         jackson2Converter.setObjectMapper(objectMapper);
 
         messageConverters.add(jackson2Converter);
-        
+
         return messageConverters;
     }
 }
