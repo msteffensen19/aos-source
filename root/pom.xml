@@ -201,7 +201,6 @@
                         <configuration>
                             <warSourceExcludes>node_modules/**</warSourceExcludes>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <outputDirectory>${evg_project_base_dir}</outputDirectory>
                         </configuration>
                     </plugin>
                     <plugin>
