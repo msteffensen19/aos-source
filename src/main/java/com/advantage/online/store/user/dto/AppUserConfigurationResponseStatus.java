@@ -7,13 +7,18 @@ public class AppUserConfigurationResponseStatus {
     private int numberOfFailedLoginAttemptsBeforeBlocking;
     private long loginBlockingIntervalInMilliSeconds;
     private boolean emailAddressInLogin;
+    private int productInStockDefaultValue;
+
+    public AppUserConfigurationResponseStatus() { }
 
     public AppUserConfigurationResponseStatus(int numberOfFailedLoginAttemptsBeforeBlocking,
                                               long loginBlockingIntervalInMilliSeconds,
-                                              boolean emailAddressInLogin) {
+                                              boolean emailAddressInLogin,
+                                              int productInStockDefaultValue) {
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
         this.emailAddressInLogin = emailAddressInLogin;
+        this.productInStockDefaultValue = productInStockDefaultValue;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -38,5 +43,11 @@ public class AppUserConfigurationResponseStatus {
 
     public void setEmailAddressInLogin(boolean emailAddressInLogin) {
         this.emailAddressInLogin = emailAddressInLogin;
+    }
+
+    public int getProductInStockDefaultValue() { return this.productInStockDefaultValue; }
+
+    public void setProductInStockDefaultValue(int productInStockDefaultValue) {
+        this.productInStockDefaultValue = productInStockDefaultValue;
     }
 }
