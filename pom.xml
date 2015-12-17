@@ -5,10 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.advantage.online.store</groupId>
-    <artifactId>ROOT</artifactId>
+    <artifactId>main_project</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>{project.artifactId}</name>
+    <packaging>pom</packaging>
+    <name>main_project</name>
+
+    <modules>
+        <module>root</module>
+        <module>catalog</module>
+    </modules>
 
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
@@ -30,6 +35,7 @@
         <springfox.version>2.0.3</springfox.version>
         <postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
+        <evg_project_base_dir>${pom.basedir}</evg_project_base_dir>
     </properties>
     <profiles>
         <profile>
@@ -65,7 +71,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -79,7 +85,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -90,7 +96,7 @@
                                 <phase>process-resources</phase>
                                 <configuration>
                                     <executable>grunt</executable>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -162,7 +168,7 @@
                     </resource>
                 </resources>
                 <plugins>
-                    <plugin>
+ <!--                   <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
                         <executions>
@@ -174,7 +180,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -188,7 +194,7 @@
                                     <arguments>
                                         <argument>install</argument>
                                     </arguments>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>src/main/webapp</workingDirectory>
                                 </configuration>
                                 <goals>
                                     <goal>exec</goal>
@@ -199,7 +205,7 @@
                                 <phase>process-resources</phase>
                                 <configuration>
                                     <executable>grunt</executable>
-                                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                                    <workingDirectory>src/main/webapp</workingDirectory>
                                     <arguments><argument>dev</argument></arguments>
                                 </configuration>
                                 <goals>
@@ -207,7 +213,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
