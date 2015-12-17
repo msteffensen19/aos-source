@@ -41,7 +41,8 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser,
+                                                         HttpServletRequest request, HttpServletResponse response) {
 
         response.setHeader("sessionId", request.getSession().getId());
 
@@ -68,7 +69,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<AppUserResponseStatus> createUser(@RequestBody AppUser appUser) {
+    public ResponseEntity<AppUserResponseStatus> createUser(@RequestBody AppUser appUser, HttpServletRequest request) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(
                 appUser.getAppUserType(),
@@ -93,7 +94,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries", method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> getCountries() {
+    public ResponseEntity<List<Country>> getCountries(HttpServletRequest request) {
         List<Country> countries;
         countries = countryService.getAllCountries();
         return new ResponseEntity<>(countries, HttpStatus.OK);
@@ -101,7 +102,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries", method = RequestMethod.POST)
-    public ResponseEntity<CountryResponseStatus> createCountry(@RequestBody Country country) {
+    public ResponseEntity<CountryResponseStatus> createCountry(@RequestBody Country country, HttpServletRequest request) {
 
         final CountryResponseStatus countryResponseStatus = countryService.create(country.getName(),
                 country.getIsoName(),
@@ -114,8 +115,10 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries/search", method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> searchInCountries(@RequestParam(value = "phonePrefix", required = false) Integer internationalPhonePrefix,
-                                                           @RequestParam(value = "nameStartFrom", required = false) String startOfName) {
+    public ResponseEntity<List<Country>> searchInCountries(@RequestParam(value = "phonePrefix", required = false)
+                                                           Integer internationalPhonePrefix,
+                                                           @RequestParam(value = "nameStartFrom", required = false)
+                                                           String startOfName, HttpServletRequest request) {
         List<Country> countries;
 
         if (internationalPhonePrefix != null && startOfName != null) {

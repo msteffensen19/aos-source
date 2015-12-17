@@ -129,7 +129,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         String hql = JPAQueryHelper.getSelectByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);
         Query query = entityManager.createQuery(hql);
 
-        return (Product) query.getSingleResult();
+        List<Product> productList = query.getResultList();
+        return productList.size() != 0 ? productList.get(0) : null;
     }
 
     @Override

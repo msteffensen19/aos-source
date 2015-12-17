@@ -2,6 +2,7 @@ package com.advantage.online.store.order.services;
 
 import com.advantage.online.store.order.doa.ShoppingCartRepository;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
+import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +29,8 @@ public class ShoppingCartService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<ShoppingCart> getShoppingCartsByUserId(long userId) {
-        return shoppingCartRepository.getShoppingCartsByUserId(userId);
+    public ShoppingCartResponseDto getShoppingCartsByUserId(long userId) {
+        return shoppingCartRepository.getUserShoppingCart(userId);
     }
 
     /**
@@ -76,6 +78,14 @@ public class ShoppingCartService {
     @Transactional
     public ShoppingCartResponseStatus clearUserCart(long userId) {
         return shoppingCartRepository.clearUserCart(userId);
+    }
+
+    @Transactional
+    public ShoppingCart getCartProductByPrimaryKey(long userId, Long productId, String hexColor) {
+        int color = ShoppingCart.convertHexColorToInt(hexColor);
+        ShoppingCart cartProduct = shoppingCartRepository.getShoppingCartByPrimaryKey(userId, productId, color);
+
+        return cartProduct;
     }
 
 }

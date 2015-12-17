@@ -2,7 +2,7 @@ package com.advantage.online.store.api;
 
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
-import com.advantage.online.store.order.dto.ShoppingCartProductDto;
+import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.services.ShoppingCartService;
@@ -31,14 +31,12 @@ public class OrderController {
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userid}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
-    public ResponseEntity<List<ShoppingCart>> getUserCart(@PathVariable("userid") Long userId, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userid") Long userId,
+                                                               HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println("getUserCart Parameters: ");
-        System.out.println("   userId=" + userId);
+        ShoppingCartResponseDto userShoppingCart = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-        List<ShoppingCart> shoppingCarts = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-
-        return new ResponseEntity<>(shoppingCarts, HttpStatus.OK);
+        return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
     }
 
     /*  =========================================================================================================   */
@@ -47,13 +45,8 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseStatus> addProductToCart(@PathVariable("userid") Long userId,
                                                                        @PathVariable("productid") Long productId,
                                                                        @PathVariable("color") String hexColor,
-                                                                       @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity) {
-
-        System.out.println("addProductToCart Parameters: ");
-        System.out.println("   userId=" + userId);
-        System.out.println("   productId=" + productId);
-        System.out.println("   color=" + hexColor);
-        System.out.println("   quantity=" + quantity);
+                                                                       @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
+                                                                       HttpServletRequest request) {
 
         shoppingCartResponseStatus = shoppingCartService.add(userId, productId, hexColor, quantity);
 
@@ -76,13 +69,8 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") long userId,
                                                                                   @PathVariable("productid") Long productId,
                                                                                   @PathVariable("color") String hexColor,
-                                                                                  @RequestParam("quantity") int quantity) {
-
-        System.out.println("updateProductQuantityInCart Parameters: ");
-        System.out.println("   userId=" + userId);
-        System.out.println("   productId=" + productId);
-        System.out.println("   color=" + hexColor);
-        System.out.println("   quantity=" + quantity);
+                                                                                  @RequestParam("quantity") int quantity,
+                                                                                  HttpServletRequest request) {
 
         shoppingCartService.updateProductQuantityInCart(userId,
                                                         productId,
@@ -96,11 +84,8 @@ public class OrderController {
     @RequestMapping(value="/carts/{userid}", method=RequestMethod.PUT)
     @ApiOperation(value = "Replace user shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> replaceUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
-                                                                      @PathVariable("userid") Long userId) {
-
-        System.out.println("replaceUserCart Parameters: ");
-        System.out.println("   userId=" + userId);
-        System.out.println("   shoopingCarts=" + shoopingCartProducts);
+                                                                      @PathVariable("userid") Long userId,
+                                                                      HttpServletRequest request) {
 
         if (userId != null) {
             shoppingCartResponseStatus = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
@@ -119,12 +104,8 @@ public class OrderController {
     @ApiOperation(value = "Remove a product from user shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> removeProductFromUserCart(@PathVariable("userid") long userId,
                                                                                 @PathVariable("productid") Long productId,
-                                                                                @PathVariable("color") String hexColor) {
-
-        System.out.println("removeProductFromUserCart Parameters: ");
-        System.out.println("   userId=" + userId);
-        System.out.println("   productId=" + productId);
-        System.out.println("   color=" + hexColor);
+                                                                                @PathVariable("color") String hexColor,
+                                                                                HttpServletRequest request) {
 
         shoppingCartResponseStatus = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
 
@@ -134,10 +115,8 @@ public class OrderController {
     /*  =========================================================================================================   */
     @RequestMapping(value="/carts/{userid}", method=RequestMethod.DELETE)
     @ApiOperation(value = "Clear user shopping cart")
-    public ResponseEntity<ShoppingCartResponseStatus> clearUserCart(@PathVariable("userid") Long userId) {
-
-        System.out.println("clearUserCart Parameters: ");
-        System.out.println("   userId=" + userId);
+    public ResponseEntity<ShoppingCartResponseStatus> clearUserCart(@PathVariable("userid") Long userId,
+                                                                    HttpServletRequest request) {
 
         if (userId != null) {
             shoppingCartResponseStatus = shoppingCartService.clearUserCart(Long.valueOf(userId));
@@ -149,6 +128,20 @@ public class OrderController {
         }
 
         return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.GET)
+    @ApiOperation(value = "Get product in user cart by primary-key")
+    public ResponseEntity<ShoppingCart> getCartProductByPrimaryKey(@PathVariable("userid") long userId,
+                                                                   @PathVariable("productid") Long productId,
+                                                                   @PathVariable("color") String hexColor,
+                                                                   HttpServletRequest request) {
+
+        ShoppingCart cartProduct = shoppingCartService.getCartProductByPrimaryKey(userId, productId, hexColor);
+
+        return new ResponseEntity<>(cartProduct, HttpStatus.OK);
+
     }
 
 }
