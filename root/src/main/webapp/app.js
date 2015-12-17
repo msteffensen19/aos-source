@@ -8,7 +8,7 @@ define([
     'angular',
     'jquery',
     'bootstrap',
-    'utils/jPushMenu',
+    'jPushMenu',
     './app/catalog/config/catalogConfig',
     './app/user/userConfig',
     './app/controllers/index',
