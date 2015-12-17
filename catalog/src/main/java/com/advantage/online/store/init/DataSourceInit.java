@@ -19,9 +19,6 @@ import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.advantage.online.store.model.attribute.EntityAttribute;
-//import com.advantage.online.store.model.category.CategoryAttributeTitleAssociation;
-
 
 @Component
 public class DataSourceInit {
