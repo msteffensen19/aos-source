@@ -468,6 +468,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 userCart.addCartProduct(dto.getProductId(),
                         dto.getProductName(),
                         dto.getPrice(),
+                        cart.getQuantity(),
                         dto.getImageUrl(),
                         dto.getColors().get(0).getCode(),
                         dto.getColors().get(0).getColor(),
@@ -508,26 +509,26 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         responseStatus = clearUserCart(userId);
 
-
         if (responseStatus.isSuccess()) {
             //  Clear user cart was successful - add new cart to user
-            responseStatus = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
+        }
+        responseStatus = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
 
-            for (ShoppingCartDto cartProduct : cartProducts) {
-                ShoppingCart shoppingCart = addProductToShoppingCart(userId,
-                                                                    cartProduct.getProductId(),
-                                                                    ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
-                                                                    cartProduct.getQuantity());
+        for (ShoppingCartDto cartProduct : cartProducts) {
+            ShoppingCart shoppingCart = addProductToShoppingCart(userId,
+                                                                cartProduct.getProductId(),
+                                                                ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
+                                                                cartProduct.getQuantity());
 
-                if (shoppingCart == null) {
-                    //  Override SUCCESS data and set failure information
-                    responseStatus = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
+            if (shoppingCart == null) {
+                //  Override SUCCESS data and set failure information
+                responseStatus = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
 
-                    //  Do we want to break out of the loop after 1 product failed to insert, or continue?
-                    //break;  //  Exit the loop
-                }
+                //  Do we want to break out of the loop after 1 product failed to insert, or continue?
+                //break;  //  Exit the loop
             }
         }
+
         return responseStatus;
     }
 

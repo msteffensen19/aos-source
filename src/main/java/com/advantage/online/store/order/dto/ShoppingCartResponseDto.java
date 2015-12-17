@@ -51,29 +51,33 @@ public class ShoppingCartResponseDto {
         private Long productId;
         private String productName;
         private double pricePerItem;
+        private int quantity;
         private String imageUrl;
         private ProductColor color;
 
         /*  private class CartProduct - Construtors  */
-        public CartProduct(Long productId, String productName, double pricePerItem, String imageUrl) {
+        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl) {
             this.productId = productId;
             this.productName = productName;
             this.pricePerItem = pricePerItem;
+            this.quantity = quantity;
             this.imageUrl = imageUrl;
         }
 
-        public CartProduct(Long productId, String productName, double pricePerItem, String imageUrl, ProductColor color) {
+        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, ProductColor color) {
             this.productId = productId;
             this.productName = productName;
             this.pricePerItem = pricePerItem;
+            this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = color;
         }
 
-        public CartProduct(Long productId, String productName, double pricePerItem, String imageUrl, String colorCode, String colorName, int inStock) {
+        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock) {
             this.productId = productId;
             this.productName = productName;
             this.pricePerItem = pricePerItem;
+            this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
         }
@@ -90,6 +94,10 @@ public class ShoppingCartResponseDto {
         public double getPricePerItem() { return this.pricePerItem; }
 
         public void setPricePerItem(double pricePerItem) { this.pricePerItem = pricePerItem; }
+
+        public int getQuantity() { return this.quantity; }
+
+        public void setQuantity(int quantity) { this.quantity = quantity; }
 
         public String getImageUrl() { return this.imageUrl; }
 
@@ -123,8 +131,8 @@ public class ShoppingCartResponseDto {
 
     public void setProductsInCart(List<CartProduct> productsInCart) { this.productsInCart = productsInCart; }
 
-    public boolean addCartProduct(Long productId, String productName, double pricePerItem, String imageUrl, String colorHexCode, String colorName, int inStock) {
-        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, imageUrl, colorHexCode, colorName, inStock);
+    public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock) {
+        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock);
         return this.getProductsInCart().add(cartProduct);
     }
 }
