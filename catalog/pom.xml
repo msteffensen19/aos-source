@@ -93,7 +93,7 @@
                             <failOnMissingWebXml>false</failOnMissingWebXml>
                             <webResources>
                                 <resource>
-                                    <directory>${basedir}/src/main/webapp/target</directory>
+                                    <directory>${basedir}/target</directory>
                                 </resource>
                             </webResources>
                         </configuration>
