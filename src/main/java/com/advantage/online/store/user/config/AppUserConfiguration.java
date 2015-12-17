@@ -18,6 +18,8 @@ public class AppUserConfiguration {
     private final String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
     private final String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
     private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
+    private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
+
 
     @Inject
     private Environment env;
@@ -25,8 +27,9 @@ public class AppUserConfiguration {
     //private AppUserConfig appUserConfig = new AppUserConfig();
 
     public static int NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING;  //numberOfFailedLoginAttemptsBeforeBlocking
-    public static long LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS; //loginBlockingIntervalInMilliSeconds
-    public static String EMAIL_ADDRESS_IN_LOGIN;   //emailAddressInLogin
+    public static long LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS;         //loginBlockingIntervalInMilliSeconds
+    public static String EMAIL_ADDRESS_IN_LOGIN;                        //emailAddressInLogin
+    public static int PRODUCT_IN_STOCK_DEFAULT_VALUE;
 
 //      //  Class that is called must have a method "public void init() throws Exception"
 //    @Bean(initMethod = "init")
@@ -39,6 +42,7 @@ public class AppUserConfiguration {
         this.setNumberOfLoginAttemptsBeforeBlocking(ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING);
         this.setLoginBlockingIntervalInMilliseconds(ENV_USER_LOGIN_BLOCKING);
         this.setEmailAddressInLogin(ENV_ADD_EMAIL_FIELD_TO_LOGIN);
+        this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS=" + this.getLoginBlockingIntervalInMilliseconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
@@ -87,12 +91,19 @@ public class AppUserConfiguration {
         this.EMAIL_ADDRESS_IN_LOGIN = (env.getProperty(environmentKey) != null ? env.getProperty(environmentKey) : "");
     }
 
+    public int getProductInStockDefaultValue() { return this.PRODUCT_IN_STOCK_DEFAULT_VALUE; }
+
+    private void setProductInStockDefaultValue(final String environmentKey) {
+        this.PRODUCT_IN_STOCK_DEFAULT_VALUE = (env.getProperty(environmentKey) != null ? Integer.valueOf(env.getProperty(environmentKey)) : 0);
+    }
+
     public List<String> getAllParameters() {
         List<String> parameters = new ArrayList<String>();
 
         parameters.add("boolean,EMAIL_ADDRESS_IN_LOGIN," + ( EMAIL_ADDRESS_IN_LOGIN.toUpperCase() == "YES" ? true : false));
         parameters.add("long,LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS," + LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS);
         parameters.add("int,NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING," + NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING);
+        parameters.add("int,PRODUCT_IN_STOCK_DEFAULT_VALUE," + PRODUCT_IN_STOCK_DEFAULT_VALUE);
 
         return parameters;
     }
@@ -100,7 +111,8 @@ public class AppUserConfiguration {
     public AppUserConfigurationResponseStatus getAllConfigurationParameters() {
         return new AppUserConfigurationResponseStatus(this.getNumberOfLoginAttemptsBeforeBlocking(),
                 this.getLoginBlockingIntervalInMilliseconds(),
-                (this.getEmailAddressInLogin().toUpperCase() == "YES"));
+                (this.getEmailAddressInLogin().toUpperCase() == "YES"),
+                this.getProductInStockDefaultValue());
 
     }
 
