@@ -24,7 +24,14 @@ public class Constants {
      */
     public static final String URI_API = "/api";
 
-    public static final String URI_PRODUCTS = "/products";
+	//	Binyamin Regev: For now it's here, needs T.B.D.
+	public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
+	public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
+	public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
+	public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
+	//	Binyamin Regev - End
+
+	public static final String URI_PRODUCTS = "/products";
 
 	public static class UserSession {
 		public static final String TOKEN = "token";
