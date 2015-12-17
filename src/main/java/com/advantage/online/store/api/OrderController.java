@@ -2,7 +2,7 @@ package com.advantage.online.store.api;
 
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
-import com.advantage.online.store.order.dto.ShoppingCartProductDto;
+import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.services.ShoppingCartService;
@@ -31,14 +31,14 @@ public class OrderController {
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userid}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
-    public ResponseEntity<List<ShoppingCart>> getUserCart(@PathVariable("userid") Long userId, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userid") Long userId, HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("getUserCart Parameters: ");
         System.out.println("   userId=" + userId);
 
-        List<ShoppingCart> shoppingCarts = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userShoppingCart = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-        return new ResponseEntity<>(shoppingCarts, HttpStatus.OK);
+        return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
     }
 
     /*  =========================================================================================================   */
@@ -149,6 +149,24 @@ public class OrderController {
         }
 
         return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.GET)
+    @ApiOperation(value = "Get product in user cart by primary-key")
+    public ResponseEntity<ShoppingCart> getCartProductByPrimaryKey(@PathVariable("userid") long userId,
+                                                                   @PathVariable("productid") Long productId,
+                                                                   @PathVariable("color") String hexColor) {
+
+        System.out.println("getCartProductByPrimaryKey Parameters: ");
+        System.out.println("   userId=" + userId);
+        System.out.println("   productId=" + productId);
+        System.out.println("   hexColor=" + hexColor);
+
+        ShoppingCart cartProduct = shoppingCartService.getCartProductByPrimaryKey(userId, productId, hexColor);
+
+        return new ResponseEntity<>(cartProduct, HttpStatus.OK);
+
     }
 
 }
