@@ -3,9 +3,7 @@ package com.advantage.online.store.order.doa;
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.dao.AbstractRepository;
 import com.advantage.online.store.dao.product.ProductRepository;
-import com.advantage.online.store.dto.CategoryDto;
 import com.advantage.online.store.dto.ProductDto;
-import com.advantage.online.store.model.category.Category;
 import com.advantage.online.store.model.product.ColorAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
@@ -30,7 +28,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,12 +42,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     //  FINALs for REST API calls - BEGIN
     //  Will be replaces with configuration variables (T.B.D.)
-    private static final String SERVER_ACCOUNT_URI = "http://localhost:8080/account";
-    private static final String SERVER_CATALOG_URI = "http://localhost:8080/catalog";
-    private static final String SERVER_ORDER_URI = "http://localhost:8080/order";
-    private static final String SERVER_SERVICE_URI = "http://localhost:8080/service";
-
-    private static final String CATALOG_SERVICE_URI = Constants.URI_API + "/v1";
     private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
     //  FINALs for REST API calls - END
 
@@ -441,10 +432,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
     }
 
-    @Override
-    public ShoppingCartResponseDto getUserShoppingCart(long userId) {
-        List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
-
+    /**
+     * Get details for each {@link ShoppingCart} {@link Product}
+     * @param shoppingCarts
+     * @return
+     */
+    public ShoppingCartResponseDto getCartProductsDetails(long userId, List<ShoppingCart> shoppingCarts) {
 
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
 
@@ -452,7 +445,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         for (ShoppingCart cart: shoppingCarts) {
 
             /*  Build REQUEST URI */
-            String stringURL = SERVER_CATALOG_URI + CATALOG_SERVICE_URI +
+            String stringURL = Constants.URI_SERVER_CATALOG +
                     CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(cart.getProductId()));
 
             // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
@@ -493,6 +486,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return userCart;
     }
 
+    @Override
+    public ShoppingCartResponseDto getUserShoppingCart(long userId) {
+        List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
+
+        return getCartProductsDetails(userId, shoppingCarts);
+    }
+
     public boolean isProductExistsInShoppingCart(long userId, Long productId, int color) {
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
@@ -512,6 +512,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         if (responseStatus.isSuccess()) {
             //  Clear user cart was successful - add new cart to user
         }
+
         responseStatus = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
 
         for (ShoppingCartDto cartProduct : cartProducts) {
@@ -561,9 +562,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     " color=" + shoppingCart.getColor() +
                     " quantity=" + shoppingCart.getQuantity());
 
-            String stringURL = SERVER_CATALOG_URI +
-                    CATALOG_SERVICE_URI +
-                    CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+            String stringURL = Constants.URI_SERVER_CATALOG +
+                                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 
             // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
             System.out.println("stringURL=\"" + stringURL + "\"");
@@ -632,9 +632,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                  */
             } catch (IOException e) {
                 System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
-                System.out.println("Exception.getMessage() = " + e.getMessage());
-                System.out.println("Exception.getLocalizedMessage() = " + e.getLocalizedMessage());
-                System.out.println("Exception.toString() = " + e.toString());
+                //System.out.println("Exception.getMessage() = " + e.getMessage());
+                //System.out.println("Exception.getLocalizedMessage() = " + e.getLocalizedMessage());
+                //System.out.println("Exception.toString() = " + e.toString());
 
                 e.printStackTrace();
 
@@ -660,10 +660,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         if (conn.getResponseCode() != 200) {
-            System.out.println("httpGet -> conn.getResponseMessage()=" + conn.getResponseMessage());
-            System.out.println("httpGet -> conn.toString()=" + conn.toString());
-            System.out.println("httpGet -> conn.getErrorStream().toString()=" + conn.getErrorStream().toString());
-
             throw new IOException(conn.getResponseMessage());
         }
 
