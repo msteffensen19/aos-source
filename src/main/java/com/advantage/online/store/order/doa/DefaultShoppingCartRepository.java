@@ -1,25 +1,36 @@
 package com.advantage.online.store.order.doa;
 
+import com.advantage.online.store.Constants;
 import com.advantage.online.store.dao.AbstractRepository;
-import com.advantage.online.store.dao.product.DefaultProductRepository;
 import com.advantage.online.store.dao.product.ProductRepository;
+import com.advantage.online.store.dto.CategoryDto;
+import com.advantage.online.store.dto.ProductDto;
+import com.advantage.online.store.model.category.Category;
+import com.advantage.online.store.model.product.ColorAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
+import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.model.ShoppingCartPK;
 import com.advantage.online.store.user.dao.AppUserRepository;
-import com.advantage.online.store.user.dao.DefaultAppUserRepository;
 import com.advantage.online.store.user.model.AppUser;
 import com.advantage.util.ArgumentValidationHelper;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,6 +42,17 @@ import java.util.List;
 @Qualifier("shoppingCartRepository")
 @Repository
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository{
+
+    //  FINALs for REST API calls - BEGIN
+    //  Will be replaces with configuration variables (T.B.D.)
+    private static final String SERVER_ACCOUNT_URI = "http://localhost:8080/account";
+    private static final String SERVER_CATALOG_URI = "http://localhost:8080/catalog";
+    private static final String SERVER_ORDER_URI = "http://localhost:8080/order";
+    private static final String SERVER_SERVICE_URI = "http://localhost:8080/service";
+
+    private static final String CATALOG_SERVICE_URI = Constants.URI_API + "/v1";
+    private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
+    //  FINALs for REST API calls - END
 
     @Autowired
     private ProductRepository productRepository;
@@ -419,6 +441,58 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
     }
 
+    @Override
+    public ShoppingCartResponseDto getUserShoppingCart(long userId) {
+        List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
+
+
+        ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
+
+        /* Scan user shopping cart and add all product to userCart response object  */
+        for (ShoppingCart cart: shoppingCarts) {
+
+            /*  Build REQUEST URI */
+            String stringURL = SERVER_CATALOG_URI + CATALOG_SERVICE_URI +
+                    CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(cart.getProductId()));
+
+            // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
+            System.out.println("stringURL=\"" + stringURL + "\"");
+
+            try {
+                String stringResponse = httpGet(stringURL);
+                System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+                final ProductDto dto = getProductDtofromJsonObjectString(stringResponse);
+
+                /*  Add a product to user shopping cart response class  */
+                userCart.addCartProduct(dto.getProductId(),
+                        dto.getProductName(),
+                        dto.getPrice(),
+                        cart.getQuantity(),
+                        dto.getImageUrl(),
+                        dto.getColors().get(0).getCode(),
+                        dto.getColors().get(0).getColor(),
+                        dto.getColors().get(0).getInStock());
+
+                System.out.println("Received Product information: ");
+                System.out.println("   product id = " + dto.getProductId());
+                System.out.println("   product name = " + dto.getProductName());
+                System.out.println("   price per item = " + dto.getPrice());
+                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                System.out.println("   ColorAttrubute.Code (hex) = \"" + dto.getColors().get(0).getCode() + "\"");
+                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getColor() + "\"");
+                System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+
+            } catch (IOException e) {
+                System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
+                e.printStackTrace();
+            }
+        }
+
+        //return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
+        return userCart;
+    }
+
     public boolean isProductExistsInShoppingCart(long userId, Long productId, int color) {
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
@@ -427,6 +501,37 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return (shoppingCart != null);
 
     }
+
+    @Override
+    public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts) {
+
+        ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
+
+        responseStatus = clearUserCart(userId);
+
+        if (responseStatus.isSuccess()) {
+            //  Clear user cart was successful - add new cart to user
+        }
+        responseStatus = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
+
+        for (ShoppingCartDto cartProduct : cartProducts) {
+            ShoppingCart shoppingCart = addProductToShoppingCart(userId,
+                                                                cartProduct.getProductId(),
+                                                                ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
+                                                                cartProduct.getQuantity());
+
+            if (shoppingCart == null) {
+                //  Override SUCCESS data and set failure information
+                responseStatus = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
+
+                //  Do we want to break out of the loop after 1 product failed to insert, or continue?
+                //break;  //  Exit the loop
+            }
+        }
+
+        return responseStatus;
+    }
+
 
     /**
      *  Get a specific {@link ShoppingCart} by values of primary-key columns. <br/>
@@ -444,53 +549,152 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param color
      * @return Specific {@link ShoppingCart} uniquely identified by primary key fields values.
      */
-    public ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color) throws UnsupportedEncodingException {
+    @Override
+    public ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color) {
 
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
-
-        //String encodedURL = URLEncoder.encode("url-to-encode", "name-of-a-supported-character-encoding");
-
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
-        if (shoppingCart == null) {
+        if (shoppingCart != null) {
+            System.out.println("userId=" + shoppingCart.getUserId() +
+                    " productId=" + shoppingCart.getProductId() +
+                    " color=" + shoppingCart.getColor() +
+                    " quantity=" + shoppingCart.getQuantity());
+
+            String stringURL = SERVER_CATALOG_URI +
+                    CATALOG_SERVICE_URI +
+                    CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+
+            // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
+            System.out.println("stringURL=\"" + stringURL + "\"");
+
+            try {
+                String stringResponse = httpGet(stringURL);
+                System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+                ProductDto dto = getProductDtofromJsonObjectString(stringResponse);
+
+                List<ColorAttribute> colors = dto.getColors();
+                double pricePerItem = dto.getPrice();
+                String name = dto.getProductName();
+                String description = dto.getDescription();
+                String managedImageId = dto.getImageUrl();
+
+                System.out.println("Received Product information: ");
+                System.out.println("   product id = " + dto.getProductId());
+                System.out.println("   product name = " + name);
+                System.out.println("   product Description = " + description);
+                System.out.println("   price per item = " + pricePerItem);
+                System.out.println("   managedImageId = \"" + managedImageId + "\"");
+                System.out.println("   ColorAttrubute.HexColor = \"" + colors.get(0).getCode() + "\"");
+                System.out.println("   ColorAttrubute.Color = \"" + colors.get(0).getColor() + "\"");
+                System.out.println("   ColorAttrubute.inStock = " + colors.get(0).getInStock());
+
+                /*
+                {
+                    "productId":1,
+                    "categoryId":1,
+                    "productName":"HP Pavilion 15t Touch Laptop",
+                    "price":519.99,
+                    "description":"Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+                    "imageUrl":"1241",
+                    "attributes":[
+                                    {
+                                    "attributeName":"PROCESSOR",
+                                    "attributeValue":"Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
+                                    },
+                                    {
+                                    "attributeName":"CUSTOMIZATION",
+                                    "attributeValue":"Gaming"},
+                                    {
+                                    "attributeName":"OPERATING SYSTEM",
+                                    "attributeValue":"Windows 10"
+                                    },
+                                    {
+                                    "attributeName":"DISPLAY",
+                                    "attributeValue":"15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen"
+                                    },
+                                    {
+                                    "attributeName":"MEMORY","attributeValue":"16GB DDR3 - 2 DIMM"
+                                    }
+                                 ],
+                    "colors":   [
+                                    {
+                                    "inStock":10,
+                                    "color":"SILVER",
+                                    "code":"C0C0C0"
+                                    }
+                                ],
+                    "images":   [
+                                    "1241"
+                                ]
+                }
+                 */
+            } catch (IOException e) {
+                System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
+                System.out.println("Exception.getMessage() = " + e.getMessage());
+                System.out.println("Exception.getLocalizedMessage() = " + e.getLocalizedMessage());
+                System.out.println("Exception.toString() = " + e.toString());
+
+                e.printStackTrace();
+
+            }
+
+        } else {
+            //  shoppingCart is null
+            System.out.println("userId=" + shoppingCart.getUserId() +
+                    " productId=" + shoppingCart.getProductId() +
+                    " color=" + shoppingCart.getColor() +
+                    " quantity=" + shoppingCart.getQuantity() + " - product not found");
+
             responseStatus = new ShoppingCartResponseStatus(false,
-                                                            ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
-                                                            -1);
-            return null;
+                    ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                    -1);
         }
-
-        System.out.println("userId=" + shoppingCart.getUserId() +
-                " productId=" + shoppingCart.getProductId() +
-                " color=" + shoppingCart.getColor() +
-                " quantity=" + shoppingCart.getQuantity());
-
-        /*  Get Product by productId using REST API */
-        //Product product = productRepository.get(productId);
-
-
-        /*
-        String productManagedImageId = product.getManagedImageId();
-        double productPricePerItem = product.getPrice();
-        String productName = product.getName();
-        String productDescription = product.getDescription();
-        */
-
-        /*
-        List<ShoppingCart> shoppingCarts = entityManager.createNamedQuery(ShoppingCart.QUERY_GET_CART_BY_PK_COLUMNS, ShoppingCart.class)
-                .setParameter(ShoppingCart.PARAM_USER_ID, userId)
-                .setParameter(ShoppingCart.PARAM_PRODUCT_ID, productId)
-                .setParameter(ShoppingCart.PARAM_COLOR_ID, colorId)
-                .setMaxResults(ShoppingCart.MAX_NUM_OF_SHOPPING_CART_PRODUCTS)
-                .getResultList();
-
-        return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts.get(0);
-        */
 
         return shoppingCart;
     }
 
-    @Override
-    public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts) {
-        return null;
+    public static String httpGet(String urlStr) throws IOException {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        if (conn.getResponseCode() != 200) {
+            System.out.println("httpGet -> conn.getResponseMessage()=" + conn.getResponseMessage());
+            System.out.println("httpGet -> conn.toString()=" + conn.toString());
+            System.out.println("httpGet -> conn.getErrorStream().toString()=" + conn.getErrorStream().toString());
+
+            throw new IOException(conn.getResponseMessage());
+        }
+
+        // Buffer the result into a string
+        InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+        BufferedReader bufferedReader = new BufferedReader(inputStream);
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            sb.append(line);
+        }
+        bufferedReader.close();
+
+        conn.disconnect();
+        return sb.toString();
+    }
+
+    private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
+
+        //JsonReader jsonReader = Json.createReader(new StringReader(jsonObjectString));
+        //JsonObject object = jsonReader.readObject();
+        //jsonReader.close();
+
+        //ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
+        //File json = filePath.getFile();
+
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
+
+        return dto;
     }
 }

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @author Binyamin Regev on 19/11/2015.
  */
 public class ValidationHelper {
-    private static final String COLOR_HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+    private static final String COLOR_HEX_PATTERN = "^#([A-Fa-f0-9]{1,6})$";
 
     //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
     //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";

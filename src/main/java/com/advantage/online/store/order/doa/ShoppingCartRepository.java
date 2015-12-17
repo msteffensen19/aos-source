@@ -2,6 +2,7 @@ package com.advantage.online.store.order.doa;
 
 import com.advantage.online.store.dao.DefaultCRUDOperations;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
+import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCa
 
     /*  Retrieve all products of user's ShoppingCart    */
     List<ShoppingCart> getShoppingCartsByUserId(long userId);
+
+    @Transactional
+    ShoppingCartResponseDto getUserShoppingCart(long userId);
 
     /*  Add     */
     @Transactional
@@ -40,4 +44,8 @@ public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCa
 
     /*  Delete all products of user's ShoppingCart  */
     ShoppingCartResponseStatus clearUserCart(long userId);
+
+    /*  Get specific product from user shopping cart    */
+    @Transactional
+    ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color);
 }
