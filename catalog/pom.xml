@@ -93,8 +93,7 @@
                             <failOnMissingWebXml>false</failOnMissingWebXml>
                             <webResources>
                                 <resource>
-                                    <!--<directory>${basedir}/src/main/webapp/target</directory>-->
-                                    <directory>../${basedir}</directory>
+                                    <directory>${basedir}/src/main/webapp/target</directory>
                                 </resource>
                             </webResources>
                         </configuration>
@@ -119,7 +118,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <!-- Run only tests whose name end with "UnitTest" -->
+                            <!-- Run only tests whose name end with "Test" -->
                             <includes>
                                 <include>**/*Tests.java</include>
                             </includes>

@@ -8,4 +8,4 @@
 *.~vsdx
 ~*.xlsx
 *.war
-
+/root/src/main/webapp/target
