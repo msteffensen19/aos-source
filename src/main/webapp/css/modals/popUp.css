@@ -22,11 +22,25 @@
     top:-180%;
 }
 
+.closePopUpBtn{
+    position: absolute;
+    background-color: white;
+    top: 16px;
+    right: 16px;
+    height: 16px;
+    width: 16px;
+    background-image: url(../images/closeDark.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor:pointer;
+}
+
 
 @media screen and (max-width: 480px) {
 
     .PopUp{
         top: 0;
+        overflow-y: scroll
     }
 
     .PopUp > div:nth-child(1) {

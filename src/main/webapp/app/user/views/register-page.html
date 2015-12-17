@@ -17,7 +17,7 @@
             <div id="infoDemo">
                 <div>
                     <h4 translate="NOTICE" ></h4>
-                    <p class="roboto-light" translate="this_is_a_demo"></p>
+                    <p class="roboto-light" translate="This_is_a_demo"></p>
                     <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
                 </div>
             </div>
@@ -32,17 +32,24 @@
 
                             <span class="animPlaceholderUp">
                                 <a class="must">*</a>
-                                <input ng-model="model.username" type="text" name="username" required autocomplete="off" ng-pattern="/^[A-Za-z0-9_.-]{3,15}$/"
+
+                                <input type="text" name="username" required autocomplete="off"
+                                       ng-model="model.username"
+                                       ng-pattern="/^[A-Za-z0-9_.-]{3,15}$/"
                                        ng-class="{ invalidInput : registerForm.username.$error.required && registerForm.username.$dirty  }" >
+
                                 <label class="invalid" ng-show="registerForm.username.$error.required && registerForm.username.$dirty">
                                     {{'User_Name_required' | translate }}
                                 </label>
+
                                 <label class="invalid" ng-show="registerForm.username.$error.pattern && registerForm.username.$dirty">
                                     {{'User_Name_pattern' | translate }}
                                 </label>
+
                                 <label ng-hide="(registerForm.username.$error.required || registerForm.username.$error.pattern) && registerForm.username.$dirty" >
                                     {{'User_Name' | translate }}
                                 </label>
+
                             </span>
 
                             <span class="animPlaceholderUp">
@@ -78,8 +85,17 @@
                             </span>
 
                             <span class="animPlaceholderUp">
+                                <div class="validationInfo">
+                                    <ul>
+                                        <li><span>info 1</span></li>
+                                        <li><span>info 2</span></li>
+                                        <li><span>info info info info info info info 3</span></li>
+                                        <li><span>info 4</span></li>
+                                        <li><span>info 5</span></li>
+                                    </ul>
+                                </div>
                                 <a class="must">*</a>
-                                <img src="../../../css/images/Info.png" ng-show="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
+                                <img src="../../../css/images/Info.png" class="validationInfoImg" ng-show="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
                                 <img src="../../../css/images/invalidInfo.png" ng-hide="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
                                 <input ng-model="model.confirm_password" type="password" required sec-compare="password" name="confirm_password" id="confirm_password" autocomplete="off"
                                        ng-class="{ invalidInput : ( registerForm.confirm_password.$error.secCompare ) }">
@@ -125,13 +141,21 @@
                                 <input ng-model="model.offers_promotion" type="checkbox" autocomplete="off" />
                                 <span class="roboto-regular">{{'offers_promotion' | translate }}</span>
                             </div>
+                            <div class="option" >
+                                <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" autocomplete="off" required="required" />
+                                <span class="roboto-regular">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
+                                <label class="invalid" ng-style="registerForm.agree_Agreement.$error.required && registerForm.agree_Agreement.$dirty ? { } : { opacity: 0 }" >
+                                    {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
+                                </label>
+                                <!-- ng-show="registerForm.agree_Agreement.$error.required && registerForm.agree_Agreement.$dirty" -->
+                            </div>
                         </div>
                     </div>
 
                     <input class="roboto-medium" ng-disabled="registerForm.$invalid" ng-class="{ opacityButtonDisable : registerForm.$invalid }"
                            type="submit" id="registerButton" value="{{'REGISTER' | translate}}" />
                     <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
-                    <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" translate="ALREADY_HAVE_AN_ACCOUNT"> </label>
+                    <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" > <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()" ></a></label>
 
                 </form>
             </div>

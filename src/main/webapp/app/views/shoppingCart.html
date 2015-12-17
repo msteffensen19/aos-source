@@ -7,14 +7,13 @@
 
 
 <section>
-    <article>
+    <article class="sp">
 
-        <nav class="pages">
-            <a>{{ 'HOME' | translate }}</a>
-            <a class="select "> {{categoryName}}</a>
+        <nav class="pages fixedImportant ">
+            <a translate="HOME" href="#/" ></a>
             <a class="select "> {{ 'SHOPPING_CART' | translate }}</a>
         </nav>
-        <h3 class="roboto-regular center" >
+        <h3 class="roboto-regular center sticky fixedImportant" >
             {{'SHOPPING_CART' | translate}} ({{cart.productsInCart.length}})
         </h3>
 
@@ -53,13 +52,13 @@
                         <img class="imageUrl" ng-src="fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
                     </td>
                     <td>
-                        <h1 class="roboto-regular">{{product.productName | uppercase}}</h1>
+                        <label class="roboto-regular productName">{{product.productName | uppercase}}</label>
                     </td>
                     <td class="smollCell">
                         <label class="roboto-light mobileViewer">
                             {{'COLOR' | translate}}:
                         </label>
-                        <span ng-style="{'backgroundColor': '#' + product.color}" class="productColor"></span>
+                        <span ng-style="{'backgroundColor': '#' + product.color.code }" class="productColor"></span>
                     </td>
                     <td class="smollCell quantityMobile" >
                         <label class="roboto-light mobileViewer">
@@ -74,7 +73,10 @@
                         <p class="price roboto-regular">
                             {{ (product.price * product.quantity) | currency:'$' }}
                         </p>
-                        <a><span class="remove" data-ng-click="removeProduct($index)">REMOVE</span></a>
+                        <span class="actions">
+                            <a class="remove" href="#/product/{{product.id}}">{{ 'EDIT' | translate }}</a>
+                            <a class="separator">|<a> <a class="remove" data-ng-click="removeProduct($index)">{{ 'REMOVE' | translate }}</a>
+                        </span>
                     </td>
                 </tr>
                 </tbody>

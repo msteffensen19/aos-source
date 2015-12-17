@@ -7,8 +7,6 @@ define(['./module'], function (controllers) {
     controllers.controller('productCtrl', ['$scope', 'productService', 'product',
         function ($scope, productService, product) {
 
-            console.log(product)
-
             $scope.Quantity = 1;
 
             $scope.product = product;

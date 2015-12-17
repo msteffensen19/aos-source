@@ -3,9 +3,20 @@
     margin: 45px auto;
 }
 
+.sticky.fixedImportant + #shoppingCart{
+    margin-top:130px;
+}
+
 #shoppingCart table{
     width: 100%;
+    margin-top:140px;
     border-collapse:collapse;
+}
+
+.fixedImportant{
+    position: fixed;
+    width: 100%;
+
 }
 
 #shoppingCart table *{
@@ -50,6 +61,12 @@
     text-align: center;
 
 }
+
+#shoppingCart .smollCell span a{
+    color: #2a2a2a;
+    text-decoration: none !important;
+}
+
 
 #shoppingCart td button{
     border: solid 1px #2a2a2a;
@@ -201,13 +218,12 @@
     display: none;
 }
 
-#shoppingCart .smollCell > a span.remove{
-    font-size: 13px;
+#shoppingCart .smollCell > span a.remove{
+    font-size: 10px;
     display: inline-block;
     padding: 10px 0;
     cursor:pointer;
 }
-
 
 @media only screen and (max-width: 760px) {
 
@@ -223,17 +239,13 @@
     #shoppingCart td {
         position: relative;
         direction: ltr;
+        text-align: left;
     }
 
     #shoppingCart td *{
         display: inline-block;
         margin: 0;
         padding: 0;
-    }
-
-    #shoppingCart td {
-        position: relative;
-        text-align: left;
     }
 
     #shoppingCart td:nth-child(2) {
@@ -265,6 +277,11 @@
         display: block;
     }
 
+    #shoppingCart .productName {
+        text-align: center;
+        display: block;
+    }
+
     #shoppingCart img {
         width: 200px;
         margin: 0 auto;
@@ -285,13 +302,24 @@
         text-align: left;
     }
 
-    #shoppingCart .smollCell > a {
-        display: block;
+    #shoppingCart .smollCell > span {
         text-align: center;
-        margin-top: 20px;
     }
 
-    #shoppingCart .smollCell > a span.remove{
+    #shoppingCart .smollCell > span a {
+        width: 100px;
+    }
+
+    #shoppingCart .smollCell > span.actions {
+        display: block;
+        margin: 30px;
+    }
+
+    #shoppingCart .smollCell > span .separator {
+        display: none;
+    }
+
+    #shoppingCart .smollCell > span a.remove{
         text-align: center;
         padding: 10px 25px;
         border: solid 1px;
@@ -300,7 +328,7 @@
         font-size: 16px;
     }
 
-    #shoppingCart .smollCell > a span.remove:hover{
+    #shoppingCart .smollCell > span a.remove:hover{
         color:white;
         background-color: #2a2a2a;
     }

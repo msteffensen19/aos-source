@@ -3,4 +3,10 @@
  */
 'use strict';
 
-define(['./toolTipCart', './popularItemsDirective', './socialMediaDrtv', './categoryTypeProductsDrtv'], function() {});
+define([
+    './toolTipCart',
+    './popularItemsDirective',
+    './socialMediaDrtv',
+    './categoryTypeProductsDrtv',
+    './scrollToTop'],
+function() {});

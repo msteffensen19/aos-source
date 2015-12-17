@@ -8,11 +8,13 @@
 
 .PopUp input{
     width: 100%;
+    position: relative;
+    top: 7px;
 }
 
 .PopUp label{
     display: block;
-    margin: 8px;
+    margin: 8px 0;
 }
 
 .PopUp img{
@@ -32,12 +34,21 @@
     background-color: #46629E;
     background-image: url("../../../css/images/FacebookLogo.png") ;
     background-repeat:no-repeat;
-    background-position: 20% center;
+    background-position: 16% center;
 }
 
 .or{
     display: block;
     padding-bottom: 3%;
+}
+
+.PopUp span.animPlaceholderUp{
+    padding-bottom: 0;
+    width: 100%;
+}
+
+.PopUp span.animPlaceholderUp span{
+    padding: 0;
 }
 
 
@@ -62,7 +73,7 @@
     font-weight: bolder;
     font-size: 17px;
     opacity: 0.8;
-    margin: 25px 0 5px 0;
+    margin: 36px 0 5px 0;
     padding: 15px;
     cursor: pointer;
 }
@@ -81,6 +92,8 @@
 
 .create-new-account{
     cursor: pointer;
+    position: relative;
+    top: -5px;
 }
 
 .login{

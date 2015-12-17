@@ -14,8 +14,8 @@ define(['./module'], function (directives) {
 
 
                     /* VARIABLES */
-                    $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
-                    //$scope.user = {  email: '',loginPassword: '', loginUser: '', }
+                    //$scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+                    $scope.user = {  email: '',loginPassword: '', loginUser: '', }
                     $scope.rememberMe = false;
                     $scope.message = "";
                     $scope.config = null;

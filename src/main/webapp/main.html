@@ -26,21 +26,16 @@
 </head>
 
 
+
+
 <body data-ng-controller="mainCtrl">
+
 
 
 
 <login-modal></login-modal>
 
 
-
-
-<!-- fixed button to scroll up -->
-<div id="scrollToTop">
-    <img src="css/images/GoUp.png" alt="GO UP"  />
-    <p translate="GO_UP"></p>
-</div>
-<!-- end fixed button to scroll up -->
 
 
 
@@ -99,6 +94,7 @@
             </div>
             <div>
                 <h3 class="roboto-medium" >{{ 'TOP_RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
+                <label  class="roboto-medium viewAll" translate="View_All"></label>
                 <div class="product"  ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult">
                     <img ng-src="fetchImage?image_id={{product.imageUrl}}" />
                     <p class="roboto-regular">{{product.productName | uppercase}}</p>
@@ -150,22 +146,20 @@
                 </a>
             </li>
             <li>
-                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
+                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
             </li>
             <li>
                 <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
             </li>
             <li>
-                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
+                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
             </li>
         </ul>
         <div class="logo">
-            <div id="mobile-btn" class="mobile-btn-handler">
+            <a href="#/"> <img src="css/images/logo.png" /></a>
+            <div id="mobile-btn" class="mobile-btn-handler" ng-click="openMobileSection()">
                 <span></span><span></span><span></span>
             </div>
-            <a href="#/">
-                <img src="css/images/logo.png" />
-            </a>
         </div>
     </nav>
 </header>

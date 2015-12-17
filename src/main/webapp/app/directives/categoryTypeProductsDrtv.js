@@ -17,6 +17,7 @@ define(['./module'], function (directives) {
             },
             link: function (scope, element, attrs) {
 
+                scope.showClear = false;
                 scope.productsInclude = [];
                 scope.attributeChecked = [];
 
@@ -40,6 +41,11 @@ define(['./module'], function (directives) {
                             scope.productsInclude[attributesName].push(attributeVal);
                         }
                     }
+
+                    var counter = 0;
+                    for(i in scope.productsInclude){ counter++; }
+                    scope.showClear = counter > 0;
+
                 }
 
                 scope.productsFilter = function(product) {
@@ -61,41 +67,6 @@ define(['./module'], function (directives) {
                         return product;
                 };
 
-                var lastIdAdded = '';
-                scope.addProduct = function(product) {
-                   $('#toolTipCart').slideDown(function(){
-                        cartService.addProduct(product, 1).then(function(result){
-                            clearInterval(Helper.____closeTooTipCart);
-                            if (lastIdAdded == ('#product' + product.productId))
-                            {
-                                setToolTipCartSlideUp()
-                            }
-                            else {
-                                lastIdAdded = '#product' + product.productId;
-                                $('#toolTipCart tbody').stop().animate({
-                                    scrollTop: 0 + 'px',
-                                }, 500, function () {
-                                    var productId = $('#product' + product.productId);
-                                    var top = productId.length > 0 ? ($(productId).offset().top) - ($('#toolTipCart').offset().top)
-                                        : $('.lastProduct').offset().top;
-                                    $('#toolTipCart tbody').stop().animate({
-                                        scrollTop: (top) + 'px',
-                                    }, 500);
-                                    Helper.____closeTooTipCart = setTimeout(function () {
-                                        $('#toolTipCart').stop().delay(700).slideUp();
-                                    }, 2000)
-                                });
-                            }
-                        });
-                    });
-                };
-
-                function setToolTipCartSlideUp() {
-                    Helper.____closeTooTipCart = setTimeout(function(){
-                        $('#toolTipCart').stop().delay(700).slideUp();
-                    }, 2000)
-                }
-
 
                 scope.clearSelection = function(){
                     for (var key in scope.productsInclude) {
@@ -105,6 +76,8 @@ define(['./module'], function (directives) {
                         this.checked = false;
                     })
                     $('.option .productColor').removeClass('colorSelected');
+                    scope.showClear = false;
+
                 };
 
 
@@ -124,38 +97,15 @@ define(['./module'], function (directives) {
                 };
 
                 scope.$watch('category', function(catData) {
+
                     if(catData){
                         scope.category = catData;
                         scope.products = catData.products;
-                        //scope.productsInclude = catData.products;
                         scope.categoryAttributes = catData.attributes;
-                        //console.log("scope.categoryAttributes")
-                        //console.log(scope.categoryAttributes)
-                        $('.panel-collapse').collapse({toggle: false});
-                        $('.carousel').carousel({
-                            interval: false
-                        })
                         scope.manipulateProductsByCustomization();
-
                     }
-
                 })
 
-
-
-                scope.getStyle = function(index){
-                    //var delay = (index * 500);
-                    //return {"-webkit-transition-delay": + delay  + "ms;transition-delay ": + delay + 'ms;color:red;"};
-                };
-                //console.log($animate);
-                //scope.productsFilter = function(product) {
-                //    //if (scope.productsInclude.length > 0) {
-                //    //    if ($.inArray(JSON.stringify($filter('filter')(product.attributes, {attributeValue: attributeVal}, false)[0]),
-                //    //            $.map(product.attributes, JSON.stringify) ) < 0)
-                //    //        return;
-                //    //}
-                //    return product;
-                //}
 
             }
         };

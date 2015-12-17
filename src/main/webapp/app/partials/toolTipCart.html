@@ -9,12 +9,14 @@
                     <h3>{{product.productName | uppercase}}</h3>
                     <label>{{'QTY' | translate}} {{product.quantity}}</label>
                     <label>{{'Color' | translate }}
-                        <span ng-style="{'backgroundColor': '#' + product.color}" class="productColor"></span>
+                        <span>{{product.color.color}}</span>
                     </label>
                 </td>
                 <td>
                     <p class="price roboto-regular">{{ (product.price * product.quantity ) | currency:'$' }}</p>
-                    <img src="../../css/images/Close.png" class="removeProduct" ng-click="removeProduct($index)" alt="X">
+                    <div class="closeDiv"  >
+                        <img src="../../css/images/Close.png" class="removeProduct" ng-click="removeProduct($index)" alt="X">
+                    </div>
                 </td>
             </tr>
         </tbody>

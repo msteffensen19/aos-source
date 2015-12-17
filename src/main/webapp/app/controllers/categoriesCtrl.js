@@ -7,7 +7,6 @@ define(['./module'], function (controllers) {
         'dealService', '$location',
         function ($scope, categoryService, dealService, $location) {
 
-
             $scope.categories = [];
             $scope.specialOffer= {};
             $scope.form = {

@@ -5,7 +5,8 @@
 
 <div class="PopUp">
     <div>
-        <div class="login" ng-controller="userController">
+        <div class="closePopUpBtn" ></div>
+        <div class="login" ng-controller="userController" >
 
             <img src="../../css/images/logo.png">
 
@@ -14,14 +15,36 @@
             <label class="or" translate="OR" style=""></label>
 
 
+            <span class="animPlaceholderUp">
+                <input type="text" ng-model="user.loginUser" />
+                <label>{{'Name' | translate }}</label>
+            </span>
+
+            <span class="animPlaceholderUp">
+                <input ng-model="user.loginPassword" class="bottomLine" type="Password" autocomplete="off" >
+                <label>{{'Password' | translate }}</label>
+            </span>
+
+
+            <!--ng-class="{bottomLine : config.emailAddressInLogin}"-->
+            <span class="animPlaceholderUp">
+                <input ng-model="model.firstName" type="text"
+                       autocomplete="off" >
+                <label>{{'Email' | translate }}</label>
+            </span>
+
+            <!--
             <input placeholder="{{'Name' | translate }}" type="text" ng-model="user.loginUser" />
-            <input ng-class="{bottomLine : config.emailAddressInLogin}" placeholder="{{'Password' | translate }}"
+
+            <input ng-class="{bottomLine : config.emailAddressInLogin}"
+                placeholder="{{'Password' | translate }}"
                    type="password" ng-model="user.loginPassword" />
             <input ng-if="config.emailAddressInLogin" placeholder="{{'Email' | translate }}" type="text" ng-model="user.email" />
 
             <div class="left option">
                 <input type="checkbox" ng-model="rememberMe" > <span translate="REMEMBER_ME"></span>
             </div>
+            -->
 
             <button class="sing-in" translate="SIGN_IN"
                     data-ng-click="signIn(user, rememberMe)"></button>

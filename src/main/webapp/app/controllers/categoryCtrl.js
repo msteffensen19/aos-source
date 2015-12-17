@@ -12,6 +12,7 @@ define(['./module'], function (controllers) {
 
             $scope.catId = $stateParams.id;
             $scope.category = category;
+
             $scope.deal = "";
             // I contain the ngModel values for form interaction.
             $scope.form = {
@@ -37,6 +38,11 @@ define(['./module'], function (controllers) {
                 $scope.products = category.products;
 
                 $scope.categoryName = category.categoryName;
+
+                console.log($scope.category)
+                console.log($scope.products)
+                console.log($scope.categoryName)
+                console.log($scope.attributes)
 
                 $("nav .navLinks").css("display" , "none");
 

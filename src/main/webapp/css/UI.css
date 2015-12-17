@@ -50,6 +50,17 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     font-weight: 700;
 }
 
+.fixed{
+    position: fixed !important;
+    width: 100%;
+    z-index: 90;
+    top:65px;
+}
+
+/*.Breadcrumb {
+//    top:65px;
+//}
+*/
 
 nav.pages {
     direction: ltr;

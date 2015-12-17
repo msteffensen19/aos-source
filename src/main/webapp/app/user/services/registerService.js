@@ -19,13 +19,16 @@ define(['./module'], function (services) {
             console.log("model")
             console.log(model)
             console.log(JSON.stringify(model))
+            console.log(model.country)
+            console.log(model.country.id)
+            console.log(model.country.id || 0 )
 
             var expectToReceive = {
                 "address": model.address ,
                 "allowOffersPromotion":  model.offers_promotion ? 'Y' : 'N',
                 "appUserType": 10,
                 "cityName": model.city,
-                "country": model.country.id,
+                "country": model.country.id || 0 ,
                 "email": model.email,
                 "firstName": model.firstName,
                 "id": 0,

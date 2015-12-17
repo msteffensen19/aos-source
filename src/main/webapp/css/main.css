@@ -134,6 +134,7 @@ nav ul li a span.cart{
 
 }
 
+
 nav ul li a.menu{
     padding:10px 66px;
 }
@@ -356,6 +357,14 @@ div.logo img{
     color: #2a2a2a;
 }
 
+#searchSection .searchPopUp .viewAll  {
+    position: absolute;
+    top:23px;
+    right:35px;
+    font-size: 13px;
+    color: #54d3ad;
+}
+
 #searchSection .searchPopUp > div .product span {
     font-size: 14px;
     padding: 10px 0;
@@ -415,7 +424,7 @@ div.logo img{
     }
     div.logo img{
         vertical-align: top;
-        padding: 4px 0;
+        padding: 10px 0;
     }
     div.mobile-btn-handler{
         display: inline-block;

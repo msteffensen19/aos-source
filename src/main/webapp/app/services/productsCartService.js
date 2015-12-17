@@ -28,12 +28,9 @@ define(['./module'], function (services) {
 
             function removeProduct(index){
                 var responce = $q.defer();
-                aler()
-                console.log("index");
                 cart.productsInCart.splice(index, 1);
                 updateCart();
-                console.log(index);
-                responce.resolve(false);
+                responce.resolve(cart);
                 return responce.promise;
             }
 
@@ -149,23 +146,25 @@ define(['./module'], function (services) {
                     }
                     alert("ckeck this point");
                 }
-                var find = false;
-                angular.forEach(cart.productsInCart ,function(productInCart){
+                var find = null;
+                var productIndex = 0;
+                angular.forEach(cart.productsInCart ,function(productInCart, index){
                     if(product.productId == productInCart.id)
                     {
                         angular.forEach(product.colors, function(color){
-                            if(productInCart.color == color)
+                            if(productInCart.color.code == color.code)
                             {
+                                productIndex = index;
                                 productInCart.quantity += quantity;
                                 cart.total += (product.price * quantity);
-                                find = true;
+                                find = product;
                             }
-                        })
+                        });
                     }
                 });
-                if(!find)
-                {
-                    cart.productsInCart.push({
+
+                if(!find) {
+                    cart.productsInCart.unshift({
                         "id": product.productId,
                         "imageUrl": product.imageUrl,
                         "productName": product.productName,
@@ -173,8 +172,11 @@ define(['./module'], function (services) {
                         "quantity": quantity,
                         "price": product.price
                     });
-                    cart.total += product.price;
                 }
+                else{
+                    cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
+                }
+                cart.total += product.price;
                 updateCart();
                 response.resolve(false);
                 return response.promise;

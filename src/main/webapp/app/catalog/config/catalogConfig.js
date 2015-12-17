@@ -21,6 +21,7 @@ define([],function(){
             FOLLOW_US : 'FOLLOW US',
             'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
             'FILTER_BY' : 'FILTER BY: ',
+            'SHOP_NOW' : 'SHOP NOW',
             'ADD_TO_CART' : 'ADD TO CART',
             'HOME' : 'HOME',
             'BUY_NOW' : 'BUY NOW',
@@ -50,7 +51,7 @@ define([],function(){
             'QTY': 'QTY:', //(Quantity)
             'GO_UP' : 'GO UP',
             'CREATE_ACCOUNT' : 'CREATE ACCOUNT',
-            'this_is_a_demo' : 'this is a demo',
+            'This_is_a_demo' : 'This is a demo',
             'Please_enter_a_fake_data' : 'Please enter a fake data',
             'NOTICE' : 'NOTICE',
             'Laptops' : 'Laptops',
@@ -61,7 +62,7 @@ define([],function(){
             'Confirm_Password' : 'Confirm Password',
             'First_Name' : 'First Name',
             'Last_Name' : 'Last Name',
-            'Phone_Number' : 'Phone_Number',
+            'Phone_Number' : 'Phone Number',
             'Country' : 'Country',
             'City' : 'City',
             'Address' : 'Address',
@@ -70,7 +71,7 @@ define([],function(){
             'offers_promotion' :  'Recieve exclisive offers and promotions from Advantage',
             'REGISTER' : 'REGISTER',
             'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT',
-
+            'Clear' : 'Clear',
 
 
 
@@ -84,6 +85,8 @@ define([],function(){
             'Password_10_maxlength_field_error' : 'Password requires a maximum of 10 characters',
             'Password_regex' : 'uppercase, lowercase and number required',
             'User_Name_pattern' : "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
+            'I_agree_to_the_Advantage_com_Agreement' : 'I agree to the Advantage.com Agreement',
+            'Must_agree_to_the_Advantage_com_Agreement' : 'Agreement to the Advantage.com is must',
             'CHECKOUT': 'CHECKOUT',
             'TOTAL': 'TOTAL',
             'Items': 'Items',
@@ -93,8 +96,11 @@ define([],function(){
             'PRODUCT_NAME' : 'PRODUCT NAME',
             'Search' : 'Search',
             'CATEGORIES' : 'CATEGORIES',
-            'TOP_RESULTS_FOR' : 'TOP RESULTS FOR'
-        });
+            'TOP_RESULTS_FOR' : 'TOP RESULTS FOR',
+            'View_All' : 'View All',
+            'EDIT' : 'EDIT',
+            'REMOVE': 'REMOVE'
+    });
 
         $stateProvider.state('view1',{
             url: '/',

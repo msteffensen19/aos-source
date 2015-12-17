@@ -29,24 +29,14 @@ define(['./module'], function (controllers) {
 
             var lastRequest = '';
             $scope.runAutocomplete = function(){
-//                if($scope.autoCompleteValue.indexOf(lastRequest) == -1 && $scope.autoCompleteResult.length > 0)
-  //              {
-    //                console.log(lastRequest);
-      //              return;
-        //        }
-
                 lastRequest = $scope.autoCompleteValue;
-                if(lastRequest == '')
-                {
-                    $scope.autoCompleteResult = {};
-                    return;
-                }
+                if(lastRequest == '') { $scope.autoCompleteResult = {}; return; }
 
                 productService.getProductsBySearch(lastRequest, 10).then(function(result){
-                    console.log(result);
                     $scope.autoCompleteResult = result;
                 });
             }
+
 
             $scope.openSearchProducts = function(){
                 $("#searchSection").fadeIn(1000);
@@ -91,7 +81,7 @@ define(['./module'], function (controllers) {
             });
 
             $scope.searchByCategoryId = function(id){
-                alert(id)
+                alert(id);
             }
 
             /* END Autocomplete*/
@@ -112,12 +102,43 @@ define(['./module'], function (controllers) {
                     $scope.cart = cart;
                 });
             }
+
+
+            var lastIdAdded = '';
+            $scope.addProduct = function(product) {
+                clearInterval(Helper.____closeTooTipCart);
+                $('#toolTipCart').slideDown(function(){
+                    productsCartService.addProduct(product, 1).then(function(result){
+                        if (lastIdAdded == ('#product' + product.productId))
+                        {
+                            setToolTipCartSlideUp()
+                        }
+                        else {
+                            lastIdAdded = '#product' + product.productId;
+                            $('#toolTipCart tbody').stop().animate({
+                                scrollTop: 0 + 'px',
+                            }, 500, function () {
+                                setToolTipCartSlideUp()
+                            });
+                        }
+                    });
+                });
+            };
+
+            function setToolTipCartSlideUp() {
+                clearInterval(Helper.____closeTooTipCart);
+                Helper.____closeTooTipCart = setTimeout(function(){
+                    $('#toolTipCart').stop().slideUp();
+                }, 8000)
+            }
+
             $scope.enterCart = function(){
                 clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
                 $('#toolTipCart').stop().slideDown();
             }
 
             $scope.leaveCart = function(){
+
                 $('#toolTipCart').stop().slideUp(function(){
                     $('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
                 });
@@ -153,16 +174,18 @@ define(['./module'], function (controllers) {
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();
                 var top = "5%";
-                if(windowsWidth < 480) { top = "0"; } else if(windowsWidth < 700) { top = "18%"; }
+                if(windowsWidth < 480) {
+                    top = "0";
+                }
+                else if(windowsWidth < 700) { top = "18%"; }
 
-                $(".PopUp").css({ "overflow-y": "scroll" })
                 $(".PopUp").fadeIn(100, function () {
                     $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
-                    $("body").css({ "overflow": "hidden", "left": "0px", })
+                    $("body").css({ "left": "0px", })
                 });
             }
 
-            $(".PopUp").click(function (e) {
+            $(".PopUp, .closePopUpBtn").click(function (e) {
 
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
@@ -187,7 +210,7 @@ define(['./module'], function (controllers) {
 
             $scope.gotoElement = function (id) {
                 $("body").animate({
-                    scrollTop: ($("#" + id).offset().top) + "px",
+                    scrollTop: ($("#" + id).offset().top - 65) + "px",
                 }, 1000)
             };
 
@@ -196,14 +219,20 @@ define(['./module'], function (controllers) {
             $rootScope.$on('$locationChangeSuccess', function (event) {
                 $scope.welcome = $location.path().indexOf('/welcome') <= -1 &&  $location.path().indexOf('/404') <= -1;
                 $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
+                Helper.UpdatePageFixed();
+
             });
 
 
             Main.addAnimPlaceholderEventListener();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+            var mobile_section_moved = $("#mobile-section").width();
 
-
-
+            $scope.openMobileSection = function(){
+                $("body").animate({
+                    left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
+                }, 200);
+            }
 
         }]);
 });

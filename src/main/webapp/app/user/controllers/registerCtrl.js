@@ -8,8 +8,8 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location',
-        function ($scope, registerService, $location) {
+    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout',
+        function ($scope, registerService, $location, $timeout) {
 
             $scope.formSender = false;
             $scope.isFormValid = false;
@@ -50,12 +50,14 @@ define(['./module'], function (controllers) {
                 if($scope.isFormValid && !$('#registerButton').hasClass('opacityButtonDisable'))
                 {
                     registerService.register($scope.model).then(function(response){
-
-                        console.log("response")
-                        console.log(response)
                         $scope.registerAnswer.message = response.reason,
                         $scope.registerAnswer.class = response.success ? 'valid' : 'invalid';
-                    })
+                        $timeout(function(){
+                            $scope.registerAnswer = { message: '', class: 'invalid' }
+                            window.history.back();
+                        }, 4000)
+                    });
+
                 }
             }
 

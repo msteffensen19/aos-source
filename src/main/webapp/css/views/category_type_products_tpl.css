@@ -37,6 +37,8 @@
     cursor: pointer;
     float: right;
     color: #828282;
+    position: relative;
+    top: 4px;
 }
 
 .categoryLeft ul li h4{
@@ -125,11 +127,13 @@
     margin: 10px;
     box-sizing: border-box;
     background-color: #f9f9f9;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    vertical-align: top;
 }
 
 .categoryRight ul li .imgProduct{
-    width: 100%;
-    cursor: pointer;
+    width: 90%;
     position: relative;
 }
 
@@ -137,28 +141,22 @@
     white-space: nowrap;
     opacity: 0;
     float: right;
-    padding-bottom: 10px;
 }
 
 .categoryRight ul li:hover .AddToCard{
     opacity: 1;
 }
 
-.categoryRight ul li .AddToCard:hover {
-    cursor: pointer;
-}
-
-
 .categoryRight ul li .AddToCard label {
     color: #2a2a2a;
     font-size: 11px;
-    cursor: pointer;
+    position: relative;
+    top: -4px;
+    letter-spacing: 0.5px;
 }
 
 
 .categoryRight ul li .AddToCard > img{
-    width: 20px;
-    height: 20px;
     cursor: pointer;
 }
 
