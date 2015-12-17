@@ -43,7 +43,7 @@ public class CatalogController {
 
     //region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public ResponseEntity<ProductCollectionDto> getAllProducts() {
+    public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
         List<Product> products = productService.getAllProducts();
         List<ProductDto> productDtos = ProductDto.fillProducts(products);
         ProductCollectionDto dto = new ProductCollectionDto();
@@ -56,15 +56,18 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
-    public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id) {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id,
+                                                     HttpServletRequest request) {
         Product product = productService.getProductById(id);
+        if(product == null) return new ResponseEntity<>(HttpStatus.CONFLICT);
         ProductDto dto = new ProductDto(product);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
-    public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductDto product) {
+    public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductDto product,
+                                                               HttpServletRequest request) {
         if (product == null) {
             return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
@@ -77,7 +80,8 @@ public class CatalogController {
 
     @RequestMapping(value = "/products/images", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseStatus> createProductWithImage(@RequestParam("product") String product,
-                                                                        @RequestParam("file") MultipartFile file) {
+                                                                        @RequestParam("file") MultipartFile file,
+                                                                        HttpServletRequest request) {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
                 JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
@@ -112,7 +116,8 @@ public class CatalogController {
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
     public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductDto product,
-                                                               @PathVariable("product_id") Long id) {
+                                                               @PathVariable("product_id") Long id,
+                                                               HttpServletRequest request) {
         ProductResponseStatus responseStatus = productService.updateProduct(product, id);
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
@@ -120,7 +125,9 @@ public class CatalogController {
     @RequestMapping(value = "/products/search", method = RequestMethod.GET)
     @ApiOperation(value = "Search product by Name")
     public ResponseEntity<List<CategoryDto>> searchProductByName(@RequestParam("name") String name,
-                                                                 @RequestParam(value = "quantityPerEachCategory", defaultValue = "-1", required = false) Integer quantity) {
+                                                                 @RequestParam(value = "quantityPerEachCategory",
+                                                                         defaultValue = "-1", required = false) Integer quantity,
+                                                                 HttpServletRequest request) {
         if (quantity == 0) return new ResponseEntity<>(HttpStatus.OK);
         List<Product> products = productService.filterByName(name, quantity);
         if (products == null) return new ResponseEntity<>(HttpStatus.OK);
@@ -151,14 +158,15 @@ public class CatalogController {
     //endregion
     //region /categories
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
-    public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request) {
         List<Category> category = categoryService.getAllCategories();
 
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/categories/{category_id}/products", method = RequestMethod.GET)
-    public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id) {
+    public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id,
+                                                       HttpServletRequest request) {
         final Long categoryId = Long.valueOf(id);
         final Category category = categoryService.getCategory(categoryId);
         final CategoryDto categoryDto = new CategoryDto();
@@ -188,7 +196,8 @@ public class CatalogController {
 
     //endregion
     @RequestMapping(value = "/images", method = RequestMethod.POST)
-    public ResponseEntity<ImageUrlResponseStatus> imageUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<ImageUrlResponseStatus> imageUpload(@RequestParam("file") MultipartFile file,
+                                                              HttpServletRequest request) {
         if (!file.isEmpty()) {
             ImageUrlResponseStatus responseStatus = productService.fileUpload(file);
             return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
@@ -214,10 +223,10 @@ public class CatalogController {
     //@RequestMapping(value = "/catalog/deals/0", method = RequestMethod.GET)
     @RequestMapping(value = "/deals/search", method = RequestMethod.GET)
     public ResponseEntity<List<Deal>> getDealOfTheDay(@RequestParam(value = "dealOfTheDay", defaultValue = "false") boolean search,
-                                                final HttpServletRequest request,
-                                                final HttpServletResponse response) {
+                                                      final HttpServletRequest request,
+                                                      final HttpServletResponse response) {
 
-        if(!search) return new ResponseEntity<>(HttpStatus.OK);
+        if (!search) return new ResponseEntity<>(HttpStatus.OK);
 
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
