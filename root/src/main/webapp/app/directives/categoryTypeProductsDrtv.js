@@ -42,29 +42,41 @@ define(['./module'], function (directives) {
                         }
                     }
 
-                    var counter = 0;
-                    for(i in scope.productsInclude){ counter++; }
-                    scope.showClear = counter > 0;
-
+                    scope.showClear = Object.keys(scope.productsInclude).length > 0;
                 }
 
                 scope.productsFilter = function(product) {
 
-                    if (Object.keys(scope.productsInclude).length > 0) {
+                    if (Object.keys(scope.productsInclude).length > 0)
+                    {
                         var found = 0;
-                        for (var key in scope.productsInclude){
+                        for (var key in scope.productsInclude)
+                        {
                             for(var i = 0; i < scope.productsInclude[key].length; i++)
+                            {
                                 if($.inArray(JSON.stringify($filter('filter')(product.attributes,
                                         {attributeValue: scope.productsInclude[key][i]},
-                                        false)[0]),
-                                        $.map(product.attributes, JSON.stringify)) > -1)
+                                        false)[0]), $.map(product.attributes, JSON.stringify)) > -1)
+                                {
                                     found++;
+                                }
+                                angular.forEach(product.colors, function(color){
+                                    if(color.code == scope.productsInclude[key][i])
+                                    {
+                                        found++;
+                                    }
+                                });
+                            }
                         }
                         if(found == Object.keys(scope.productsInclude).length)
+                        {
                             return product;
+                        }
                     }
                     else
+                    {
                         return product;
+                    }
                 };
 
 
@@ -80,8 +92,14 @@ define(['./module'], function (directives) {
 
                 };
 
+                scope.toggleColapse = function(id){
+                    console.log(id)
+                    $('#' + id).siblings('.option').slideToggle(300);
+                    $('#' + id).toggleClass('arrowUp');
+                }
 
                 scope.manipulateProductsByCustomization = function() {
+
                     scope.businessCustom = [];
                     scope.gamingCustom = [];
                     scope.simplicityCustom = [];
@@ -103,6 +121,10 @@ define(['./module'], function (directives) {
                         scope.products = catData.products;
                         scope.categoryAttributes = catData.attributes;
                         scope.manipulateProductsByCustomization();
+
+                        console.log(scope.category);
+                        console.log(scope.products);
+                        console.log(scope.categoryAttributes);
                     }
                 })
 

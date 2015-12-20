@@ -128,19 +128,11 @@ $(document).on({
                 $('#scrollToTop').fadeOut(300);
             }
 
-
             Helper.checkPagePossitions();
             Helper.closeToolTipCart();
-
-
         }
         });
 
-
-        $(document).on("click", ".accordion", function() {
-            $(this).toggleClass('arrowUp');
-            $(this).parent().find(".option").slideToggle(300);
-        });
 
         $(document).on("click", ".productColor ", function() {
             $(this).toggleClass('colorSelected');
