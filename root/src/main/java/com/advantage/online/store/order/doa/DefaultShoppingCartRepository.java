@@ -20,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
 

@@ -26,10 +26,10 @@ import com.advantage.online.store.image.ImageManagementAccess;
 @Configuration
 @ComponentScan({"com.advantage.online.store.services",
                 "com.advantage.online.store.dao",
-                "com.advantage.online.store.user.dao",
-                "com.advantage.online.store.user.model",
                 "com.advantage.online.store.order.dao",
                 "com.advantage.online.store.order.model",
+                "com.advantage.online.store.user.dao",
+                "com.advantage.online.store.user.model",
                 "com.advantage.online.store.init"})
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
