@@ -95,8 +95,7 @@ public class AccountController {
 
     @RequestMapping(value = "/countries", method = RequestMethod.GET)
     public ResponseEntity<List<Country>> getCountries(HttpServletRequest request) {
-        List<Country> countries;
-        countries = countryService.getAllCountries();
+        List<Country> countries = countryService.getAllCountries();
         return new ResponseEntity<>(countries, HttpStatus.OK);
 
     }
