@@ -139,29 +139,29 @@ public class OrderController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    /*  =========================================================================================================   */
-    /**
-     * This method/Request is only for testing and an example on how to call REST
-     * API from Java©. <br/>
-     * <b>DELETE</b> this after finishing testing, <b><ul>BEFORE</ul></b> moving
-     * it to <b>&quat;in Testing&quat;</b>. <br/>
-     * @param userId
-     * @param productId
-     * @param hexColor
-     * @param request
-     * @return
-     */
-    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.GET)
-    @ApiOperation(value = "Get product in user cart by primary-key")
-    public ResponseEntity<ShoppingCart> getCartProductByPrimaryKey(@PathVariable("userid") long userId,
-                                                                   @PathVariable("productid") Long productId,
-                                                                   @PathVariable("color") String hexColor,
-                                                                   HttpServletRequest request) {
-
-        ShoppingCart cartProduct = shoppingCartService.getCartProductByPrimaryKey(userId, productId, hexColor);
-
-        return new ResponseEntity<>(cartProduct, HttpStatus.OK);
-
-    }
+//    /*  =========================================================================================================   */
+//    /**
+//     * This method/Request is only for testing and an example on how to call REST
+//     * API from Java©. <br/>
+//     * <b>DELETE</b> this after finishing testing, <b><ul>BEFORE</ul></b> moving
+//     * it to <b>&quat;in Testing&quat;</b>. <br/>
+//     * @param userId
+//     * @param productId
+//     * @param hexColor
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.GET)
+//    @ApiOperation(value = "Get product in user cart by primary-key")
+//    public ResponseEntity<ShoppingCart> getCartProductByPrimaryKey(@PathVariable("userid") long userId,
+//                                                                   @PathVariable("productid") Long productId,
+//                                                                   @PathVariable("color") String hexColor,
+//                                                                   HttpServletRequest request) {
+//
+//        ShoppingCart cartProduct = shoppingCartService.getCartProductByPrimaryKey(userId, productId, hexColor);
+//
+//        return new ResponseEntity<>(cartProduct, HttpStatus.OK);
+//
+//    }
 
 }

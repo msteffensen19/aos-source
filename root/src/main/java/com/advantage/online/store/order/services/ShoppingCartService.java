@@ -80,14 +80,6 @@ public class ShoppingCartService {
         return shoppingCartRepository.clearUserCart(userId);
     }
 
-    @Transactional
-    public ShoppingCart getCartProductByPrimaryKey(long userId, Long productId, String hexColor) {
-        int color = ShoppingCart.convertHexColorToInt(hexColor);
-        ShoppingCart cartProduct = shoppingCartRepository.getShoppingCartByPrimaryKey(userId, productId, color);
-
-        return cartProduct;
-    }
-
     /**
      * Verify quantities of all products in user cart.
      * @param userId Unique user identity.
@@ -100,6 +92,21 @@ public class ShoppingCartService {
 
         return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
     }
+
+//    /**
+//     * Method for testing calling <b>REST API</b> {@code GET} request.
+//     * @param userId
+//     * @param productId
+//     * @param hexColor
+//     * @return
+//     */
+//    @Transactional
+//    public ShoppingCart getCartProductByPrimaryKey(long userId, Long productId, String hexColor) {
+//        int color = ShoppingCart.convertHexColorToInt(hexColor);
+//        ShoppingCart cartProduct = shoppingCartRepository.getShoppingCartByPrimaryKey(userId, productId, color);
+//
+//        return cartProduct;
+//    }
 
 }
 
