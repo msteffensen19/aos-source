@@ -1,4 +1,4 @@
-/shipex/src/main/java/store/advantage/shipex/service
+/shipex/src/main/java/store/advantage/shipex/service/*
 .idea/*
 */src/main/webapp/node_modules/*
 */target/*
@@ -8,5 +8,4 @@
 */application.log.1
 *.~vsdx
 ~*.xlsx
-*.war
 /root/src/main/webapp/target
