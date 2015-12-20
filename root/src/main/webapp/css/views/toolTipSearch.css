@@ -1,0 +1,193 @@
+
+
+/*
+#product_search_img{
+
+    vertical-align: top;
+}
+
+#product_search{
+    position: relative;
+    right: 10px;
+    width:40%;
+}
+*/
+#searchSection {
+    direction: ltr;
+    position: fixed;
+    width: 60%;
+    left: 0;
+    right: 0;
+    top:0;
+    margin: 0 auto;
+    overflow: hidden;
+    z-index: 1000;
+    display: none;
+    text-align: left;
+}
+
+#searchSection > div {
+
+    display: block;
+    width: 100%;
+    background-color: transparent;
+}
+
+#searchSection > div:first-child {
+    padding: 11px 0 ;
+}
+
+
+#searchSection > div#output{
+    height: 100%;
+}
+
+#searchSection > div > div{
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    background-color: rgba(246, 246, 246, 0.95);
+}
+
+
+#searchSection > div#input > div{
+    transform: translateX(500px);
+    opacity: 0;
+    background-color: white;
+    transition: transform 0.5s ease, opacity 0.2s ease;
+}
+
+#searchSection > div#input > div.searchSectionEnabled{
+    transform: translateX(0px);
+    opacity: 1;
+}
+
+
+#searchSection .searchPopUp {
+    /* height: 400px; */
+
+}
+
+#searchSection .searchPopUp > div{
+    overflow: hidden;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    top: 0;
+    width: calc(100% - 166px);
+    padding: 20px;
+    padding-bottom: 44px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+#searchSection .searchPopUp > div:nth-child(1){
+    width: 160px;
+}
+
+#searchSection .searchPopUp > div:nth-child(2){
+    background-color: rgba(255, 255, 255, .66);
+}
+
+#searchSection  > div > div > span{
+    width: calc(100% - 60px);
+    padding-bottom: 0;
+}
+
+#searchSection  div input{
+    width: 96%;
+    font-size: 16px;
+    color: #2a2a2a;
+}
+
+#searchSection  div .animPlaceholderUp label{
+    color: #828282;
+    font-size: 16px;
+}
+
+#searchSection > div > div > span > img{
+    transform: scale(0.8);
+    display: none;
+    float: right;
+    position: absolute;
+}
+
+#searchSection > div > div > img{
+    padding: 8px;
+    height: 27px;
+    width: 27px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+#searchSection .searchPopUp > div h3{
+    font-size: 14px;
+    color:#2a2a2a;
+    padding: 4px;
+}
+
+#searchSection .searchPopUp div.categories h3{
+    font-size: 14px;
+    color:#2a2a2a;
+    padding-bottom: 10px;
+}
+
+#searchSection div.categories label{
+    font-size: 14px;
+    color:#2a2a2a;
+    padding: 6px 4px;
+    display: block;
+    cursor: pointer;
+}
+
+#searchSection div.categories label:first-letter{
+    text-transform: uppercase;
+}
+
+#searchSection .searchPopUp > div .product{
+    width: 33.333%;
+    height: 180px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    padding: 24px 30px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/*
+#searchSection .searchPopUp > div .product.ng-enter { opacity: 0; transform: translateX(80px)}
+#searchSection .searchPopUp > div .product.ng-active { opacity: 1; transform: translateX(0px)}
+#searchSection .asearchPopUp > div .product.ng-leave { opacity: 1; transform: translateX(0px) }
+#searchSection .asearchPopUp > div .product.ng-leave-active{ opacity: 0; transform: translateX(80px) }
+*/
+
+#searchSection .searchPopUp > div .product img{
+    width: calc(100% - 10px);
+    box-sizing: border-box;
+}
+
+#searchSection .searchPopUp > div .product p {
+    font-size: 13px;
+    color: #2a2a2a;
+}
+
+#searchSection .searchPopUp .viewAll  {
+    position: absolute;
+    top:23px;
+    right:35px;
+    font-size: 13px;
+    color: #54d3ad;
+}
+
+#searchSection .searchPopUp > div .product span {
+    font-size: 14px;
+    padding: 10px 0;
+    color: #54d3ad;
+}
+
+
+/* end searchSection */
+

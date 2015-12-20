@@ -76,11 +76,22 @@ white-space: nowrap;
     width: 100%;
 }
 
+.animPlaceholderUp > .validationInfo label{
+display: block;
+}
+
+
+.animPlaceholderUp .validationInfo{
+    display: none;
+}
+
 .animPlaceholderUp img {
     position: absolute;
     right: 0px;
     top: 12px;
 }
+
+/*
 
 #formCover .validationInfo{
     display: none;
@@ -113,6 +124,7 @@ white-space: nowrap;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
 }
+*/
 
 #formCover .validationInfo ul li span{
     color: #ff454f;

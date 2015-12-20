@@ -146,9 +146,10 @@ input[type="password"]:-ms-input-placeholder,
     position: relative;
     display: inline-block;
     padding-bottom: 15px;
+    vertical-align: top;
 }
 
-.animPlaceholderUp label, .animPlaceholderUp a {
+.animPlaceholderUp > label, .animPlaceholderUp > a {
     white-space: nowrap;
     top: 11px;
     position: absolute;

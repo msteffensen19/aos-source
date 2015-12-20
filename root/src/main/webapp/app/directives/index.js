@@ -4,6 +4,7 @@
 'use strict';
 
 define([
+    './toolTipSearch',
     './toolTipCart',
     './popularItemsDirective',
     './socialMediaDrtv',

@@ -3,6 +3,9 @@
  */
 'use strict';
 
+
+alert('evg7');
+
 define([
 
     'angular',

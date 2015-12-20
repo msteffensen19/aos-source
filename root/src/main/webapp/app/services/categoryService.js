@@ -23,8 +23,7 @@ define(['./module'], function (services) {
 
         function getCategoryProducts(id) {
         //      var request = $http({ method: "get", url: "api/categoryProducts?category_id=" + id });
-        //      return( request.then( responseService.handleSuccess, responseService.handleError )
-        //  );
+        //      return( request.then( responseService.handleSuccess, responseService.handleError ));
         }
 
         function getCategoryById(id) {

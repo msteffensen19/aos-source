@@ -1,0 +1,43 @@
+
+<div id="searchSection" ng-click="closeSearchSection()">
+    <div id="input" ng-click="$event.stopPropagation()">
+        <div>
+            <img src="css/images/Sesrch.jpg"  />
+            <span class="animPlaceholderUp">
+                <!--  -->
+                <input id="autoComplete" type="text" class="roboto-regular"
+                       placeholder="{{'Search' | translate }} Advantage.com"
+                       data-ng-keypress="checkEnterKey($event)"
+                       data-ng-model="autoCompleteValue"
+                       data-ng-keyup="runAutocomplete()"
+                       data-ng-blur="closeSearchSection()" >
+
+
+
+                <img src="css/images/Close.png" data-ng-click="closeSearchSection()"  />
+            </span>
+        </div>
+    </div>
+    <div id="output" ng-show="autoCompleteResult.length > 0">
+        <div class="searchPopUp" ng-click="$event.stopPropagation()">
+            <div class="categories">
+                <h3 class="roboto-medium" translate="CATEGORIES"></h3>
+                <label class="roboto-light" ng-repeat="result in autoCompleteResult"
+                       ng-click="searchByCategoryId(result.categoryId)">
+                    {{result.categoryName | lowercase}}
+                </label>
+            </div>
+            <div>
+                <h3 class="roboto-medium" >{{ 'TOP_RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
+                <label  class="roboto-medium viewAll" translate="View_All"></label>
+                <a class="product" href="#/product/{{product.productId}}"
+                   data-ng-click="closeSearchSection()"
+                   data-ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult">
+                    <img ng-src="fetchImage?image_id={{product.imageUrl}}" />
+                    <p class="roboto-regular">{{product.productName | uppercase}}</p>
+                    <span>{{product.price | currency:'$'}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

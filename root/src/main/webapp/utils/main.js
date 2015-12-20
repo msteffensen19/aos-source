@@ -1,29 +1,42 @@
 /**
  * Created by correnti on 16/11/2015.
  */
-
-var Helper = Helper || {};
-Helper.forAllPage = function(){
-    $("body").scrollTop(0);
-}
-Helper.____closeTooTipCart;
 var startPossition = 900000000;
 var pagesPossition = startPossition;
 var stickyPossition = startPossition;
 
-Helper.UpdatePageFixed = function(){
 
+var Helper = Helper || {};
+Helper.____closeTooTipCart;
+
+Helper.forAllPage = function(){
+    $("body").scrollTop(0);
+    Helper.UpdatePageFixed();
+}
+
+Helper.UpdatePageFixed = function(){
     $('.pages').removeClass('fixed');
     $('.sticky').removeClass('fixed');
     pagesPossition = startPossition;
     stickyPossition = startPossition;
     Helper.checkPagePossitions()
-
 };
+
+Helper.closeToolTipCart = function (){
+
+    var toolTipCart = $('#toolTipCart');
+    if(toolTipCart.length > 0)
+    {
+        toolTipCart.stop().slideUp(function(){
+            $('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
+        });
+    }
+}
 
 Helper.checkPagePossitions = function(){
 
     if ($('.pages').length > 0) {
+
         if (pagesPossition < $('body').scrollTop() + $('header').height()) {
             $('.pages').addClass('fixed');
         }
@@ -50,24 +63,26 @@ var Main = Main || {};
 Main.addAnimPlaceholderEventListener = function(){
 
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
+        //$(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
         $(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
+        $(this).siblings(".validationInfo").fadeIn();
     });
 
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').blur(function(){
         if($(this).val() == '') { $(this).siblings().not("img").not('.validationInfo').animate({'top': '11px'}, 800, $.bez([0.62,-0.14,0.35,1.34])); }
+        $(this).siblings(".validationInfo").delay(200).fadeOut();
     });
 
     $(".animPlaceholderUp label").click(function() {
         $(this).parent().children().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
         $(this).prev('input').focus();
+        $(".animPlaceholderUp > .validationInfo").slideDown();
     });
 
 
-    $(".validationInfoImg").click(function() {
-        $(this).parent().find(".validationInfo").fadeToggle(500);
-    });
-
-
+//    $(".validationInfoImg").click(function() {
+  //      $(this).parent().find(".validationInfo").fadeToggle(500);
+    //});
 
 }
 
@@ -113,7 +128,10 @@ $(document).on({
                 $('#scrollToTop').fadeOut(300);
             }
 
+
             Helper.checkPagePossitions();
+            Helper.closeToolTipCart();
+
 
         }
         });
