@@ -7,19 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Return {@code userId} and user {@link ShoppingCart} with {@link Product} details.
- *
+ * Return {@code userId} and user {@link ShoppingCart} with {@link Product} details. <br/>
+ * Contains inner classes {@link CartProduct} and {@link CartProduct.ProductColor}. <br/>
+ * To add a product to user cart use: <br/>
+ * {@link #addCartProduct(Long, String, double, int, String, String, String, int)} <br/>
+ * <b>or</b> <br/>
+ * {@link #addCartProduct(Long, String, double, int, String, String, String, int, boolean)}
  * @author Binyamin Regev on 16/12/2015.
  */
 public class ShoppingCartResponseDto {
 
     /**
-     * Private class for products in user cart.
+     * Public inner class for products in user cart.
      */
     public class CartProduct {
 
         /**
-         * Private class for color attribute of product in user cart.
+         * Private inner class for color attribute of product in user cart.
          */
         private class ProductColor {
 
@@ -67,7 +71,8 @@ public class ShoppingCartResponseDto {
         private double pricePerItem;
         private int quantity;
         private String imageUrl;
-        private ProductColor color;
+        private ProductColor color;     //  Inner class of ShoppingCartResponseDto
+        private boolean isExists;
 
         /*  private class CartProduct - Construtors  */
         public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl) {
@@ -94,6 +99,17 @@ public class ShoppingCartResponseDto {
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
+            this.isExists = true;
+        }
+
+        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock, boolean isExists) {
+            this.productId = productId;
+            this.productName = productName;
+            this.pricePerItem = pricePerItem;
+            this.quantity = quantity;
+            this.imageUrl = imageUrl;
+            this.color = new ProductColor(colorCode, colorName, inStock);
+            this.isExists = isExists;
         }
 
         /*  private class CartProduct - Getters and Setters  */
@@ -144,6 +160,10 @@ public class ShoppingCartResponseDto {
         public void setColor(ProductColor color) {
             this.color = color;
         }
+
+        public boolean isExists() { return isExists; }
+
+        public void setExists(boolean exists) { isExists = exists; }
     }
 
     /*  public class ShoppingCartResponseDto - properties   */
@@ -152,7 +172,7 @@ public class ShoppingCartResponseDto {
 
     /* public class ShoppingCartResponseDto - Constructors  */
     public ShoppingCartResponseDto() {
-        super();
+
     }
 
     public ShoppingCartResponseDto(long userId) {
@@ -183,6 +203,11 @@ public class ShoppingCartResponseDto {
 
     public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock) {
         CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock);
+        return this.getProductsInCart().add(cartProduct);
+    }
+
+    public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock, boolean isExists) {
+        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock, isExists);
         return this.getProductsInCart().add(cartProduct);
     }
 }

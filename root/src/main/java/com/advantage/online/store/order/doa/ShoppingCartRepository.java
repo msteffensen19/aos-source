@@ -48,4 +48,6 @@ public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCa
     /*  Get specific product from user shopping cart    */
     @Transactional
     ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color);
+
+    ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts);
 }

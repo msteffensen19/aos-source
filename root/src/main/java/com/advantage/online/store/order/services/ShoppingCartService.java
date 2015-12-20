@@ -88,5 +88,18 @@ public class ShoppingCartService {
         return cartProduct;
     }
 
+    /**
+     * Verify quantities of all products in user cart.
+     * @param userId Unique user identity.
+     * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in user cart to verify quantities.
+     * @return {@link ShoppingCartResponseDto} products that had higher quantity in cart than in stock. {@code null}
+     */
+    @Transactional
+    public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
+        System.out.println("ShoppingCartService -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
+
+        return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
+    }
+
 }
 

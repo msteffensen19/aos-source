@@ -54,16 +54,6 @@ public class OrderController {
     }
 
     /*  =========================================================================================================   */
-    /*
-    @RequestMapping(value="/carts/", method=RequestMethod.PUT)
-    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@RequestBody ShoppingCartProductDto cartProduct) {
-    */
-    /*
-    public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable int quantity,
-                                                                                  @RequestParam long userId,
-                                                                                  @RequestParam Long productId,
-                                                                                  @RequestParam String hexColor) {
-    */
     @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.PUT)
     @ApiOperation(value = "Update quantity of product in shopping cart")
     public ResponseEntity<ShoppingCartResponseStatus> updateProductQuantityInCart(@PathVariable("userid") long userId,
@@ -131,6 +121,36 @@ public class OrderController {
     }
 
     /*  =========================================================================================================   */
+
+    /**
+     * <b>REST API</b> {@code PUT} request to verify quantities of all products in user cart.
+     * @param shoopingCartProducts {@link List} of {@link ShoppingCartDto} products in user cart to verify quantities.
+     * @param userId Unique user identity.
+     * @return {@link ShoppingCartResponseDto} products that had higher quantity in cart than in stock. {@code null}
+     * when all products quantities less or equal to their quantities in stock.
+     */
+    @RequestMapping(value="/carts/{userid}/quantity", method=RequestMethod.PUT)
+    @ApiOperation(value = "Verify products quantities in user cart")
+    public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
+                                                                                      @PathVariable("userid") long userId) {
+
+        System.out.println("OrderController -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
+        ShoppingCartResponseDto responseDto = shoppingCartService.verifyProductsQuantitiesInUserCart(userId, shoopingCartProducts);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    /*  =========================================================================================================   */
+    /**
+     * This method/Request is only for testing and an example on how to call REST
+     * API from Java©. <br/>
+     * <b>DELETE</b> this after finishing testing, <b><ul>BEFORE</ul></b> moving
+     * it to <b>&quat;in Testing&quat;</b>. <br/>
+     * @param userId
+     * @param productId
+     * @param hexColor
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.GET)
     @ApiOperation(value = "Get product in user cart by primary-key")
     public ResponseEntity<ShoppingCart> getCartProductByPrimaryKey(@PathVariable("userid") long userId,
