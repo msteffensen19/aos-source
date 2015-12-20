@@ -76,12 +76,12 @@ public class DataSourceInit4Json {
         Attribute attribute6 = new Attribute();
         Attribute attribute7 = new Attribute();
 
-       // attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
+        // attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
         attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
         attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
         attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
         attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-       // attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
+        // attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
         attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
 
         //session.persist(attribute1);
@@ -99,7 +99,7 @@ public class DataSourceInit4Json {
         defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
         defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
         defAttributes.put(attribute5.getName().toUpperCase(), attribute5);
-       // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
+        // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
         defAttributes.put(attribute7.getName().toUpperCase(), attribute7);
 
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
@@ -138,7 +138,7 @@ public class DataSourceInit4Json {
                 session.save(attributes);
             }
 
-            if(p.getImages().size() == 0) {
+            if (p.getImages().size() == 0) {
                 p.getImages().add(product.getManagedImageId());
             }
 
@@ -152,7 +152,7 @@ public class DataSourceInit4Json {
         Product parent = productMap.get(p.getId());
 
         Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
-            p.getPromotionImageId(), 0, "", "",  parent);
+                p.getPromotionImageId(), 0, "", "", parent);
 
         session.persist(deal);
         transaction.commit();
@@ -171,7 +171,7 @@ public class DataSourceInit4Json {
 
         return propertyFile.getAbsolutePath();*/
 
-       // return new java.io.File( ".").getCanonicalPath().split("bin")[0];
+        // return new java.io.File( ".").getCanonicalPath().split("bin")[0];
     }
 
     /*private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
