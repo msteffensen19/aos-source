@@ -20,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
 
@@ -569,15 +567,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      *  Get a specific {@link ShoppingCart} by values of primary-key columns. <br/>
-     *  <p>
+     *  <pre>
      *      <ul>Verify {@code userId}</ul> refer to a registered user via <b>REST API</b>. <br/>
      *      <ul>Verify {@code productId}</ul> refer to a registered user via <b>REST API</b>. <br/>
-     *  </p>
-     *  <p>
-     *     Remember that if the request URL of <b>REST API {@code GET}</b> {@link RequestMethod} includes
-     *     parameters, they must be properly encoded (e.g., a space is &quat;%20&quat;, etc.). The class
-     *     {@link URLEncoder} can be used to perform this encoding.
-     *  </p>
+     *  </pre>
      * @param userId
      * @param productId
      * @param color
@@ -609,47 +602,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
             System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getColor() + "\"");
             System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
-
-            /*
-            {
-                "productId":1,
-                "categoryId":1,
-                "productName":"HP Pavilion 15t Touch Laptop",
-                "price":519.99,
-                "description":"Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
-                "imageUrl":"1241",
-                "attributes":[
-                                {
-                                "attributeName":"PROCESSOR",
-                                "attributeValue":"Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
-                                },
-                                {
-                                "attributeName":"CUSTOMIZATION",
-                                "attributeValue":"Gaming"},
-                                {
-                                "attributeName":"OPERATING SYSTEM",
-                                "attributeValue":"Windows 10"
-                                },
-                                {
-                                "attributeName":"DISPLAY",
-                                "attributeValue":"15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen"
-                                },
-                                {
-                                "attributeName":"MEMORY","attributeValue":"16GB DDR3 - 2 DIMM"
-                                }
-                             ],
-                "colors":   [
-                                {
-                                "inStock":10,
-                                "color":"SILVER",
-                                "code":"C0C0C0"
-                                }
-                            ],
-                "images":   [
-                                "1241"
-                            ]
-            }
-             */
 
         } else {
             //  shoppingCart is null

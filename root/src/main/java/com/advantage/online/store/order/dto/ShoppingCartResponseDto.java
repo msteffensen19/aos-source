@@ -72,7 +72,7 @@ public class ShoppingCartResponseDto {
         private int quantity;
         private String imageUrl;
         private ProductColor color;     //  Inner class of ShoppingCartResponseDto
-        private boolean isExists;
+        private boolean exists;
 
         /*  private class CartProduct - Construtors  */
         public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl) {
@@ -81,6 +81,7 @@ public class ShoppingCartResponseDto {
             this.pricePerItem = pricePerItem;
             this.quantity = quantity;
             this.imageUrl = imageUrl;
+            this.exists = true;
         }
 
         public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, ProductColor color) {
@@ -90,6 +91,7 @@ public class ShoppingCartResponseDto {
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = color;
+            this.exists = true;
         }
 
         public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock) {
@@ -99,17 +101,17 @@ public class ShoppingCartResponseDto {
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
-            this.isExists = true;
+            this.exists = true;
         }
 
-        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock, boolean isExists) {
+        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock, boolean exists) {
             this.productId = productId;
             this.productName = productName;
             this.pricePerItem = pricePerItem;
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
-            this.isExists = isExists;
+            this.exists = exists;
         }
 
         /*  private class CartProduct - Getters and Setters  */
@@ -161,9 +163,9 @@ public class ShoppingCartResponseDto {
             this.color = color;
         }
 
-        public boolean isExists() { return isExists; }
+        public boolean isExists() { return this.exists; }
 
-        public void setExists(boolean exists) { isExists = exists; }
+        public void setExists(boolean exists) { this.exists = exists; }
     }
 
     /*  public class ShoppingCartResponseDto - properties   */
@@ -206,8 +208,8 @@ public class ShoppingCartResponseDto {
         return this.getProductsInCart().add(cartProduct);
     }
 
-    public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock, boolean isExists) {
-        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock, isExists);
+    public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock, boolean exists) {
+        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock, exists);
         return this.getProductsInCart().add(cartProduct);
     }
 }

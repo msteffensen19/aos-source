@@ -115,20 +115,11 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         return countries.size();
     }
 
-    @Override
-    public int deleteCountry(Country country) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(country, "country");
-
-        final Integer countryId= country.getId();
-
-        final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Country.class,
-                Country.FIELD_ID,
-                countryId);
-        final Query query = entityManager.createQuery(hql);
-
-        return query.executeUpdate();
-    }
-
+    /**
+     * <b>DELETE</b> list of countries by IDs in {@link Collection} of {@link Integer}.
+     * @param countryIds {@link Collection} of {@link Integer} containing {@code countryId}s to delete.
+     * @return {@code int} 1 when successful.
+     */
     @Override
     public int deleteCountriesByIds(Collection<Integer> countryIds) {
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(countryIds, "countries IDs");
@@ -146,24 +137,11 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         return 1;
     }
 
-    @Override
-    public int deleteCountries(Collection<Country> countries) {
-
-        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(countries,
-                                                                                "countries list");
-
-        final int countriesCount = countries.size();
-        final Collection<Integer> countryIds = new ArrayList<Integer>(countriesCount);
-
-        for (final Country country : countries) {
-            final Integer countryId = country.getId();
-            countryIds.add(countryId);
-        }
-
-        return deleteCountriesByIds(countryIds);
-
-    }
-
+    /**
+     * <b>DELETE</b> list of countries, names are in {@link Collection} of {@link String}.
+     * @param names {@link Collection} of {@link String} containing names of countries to delete.
+     * @return {@code int} result of <b>DELETE</b>.
+     */
     @Override
     public int deleteCountriesByNames(Collection<String> names) {
 
@@ -183,6 +161,11 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
 
     }
 
+    /**
+     * Get {@code countryId} value by country name.
+     * @param countryName Name of the county which we are interested to get value of {@code countryId}.
+     * @return {@link Integer} value of {@code countryId}.
+     */
     @Override
     public Integer getCountryIdByName(String countryName) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(countryName, "country name");
@@ -208,11 +191,18 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         return countryId;
     }
 
+    /**
+     * Get {@link List} of all countries (about 243 in total). <br/>
+     * <b>DO NOT</b> limit the number of countries retrieved.
+     * @return {@link List} of {@code Country}.
+     */
     @Override
     public List<Country> getAllCountries() {
 
+        //List<Country> countries = entityManager.createNamedQuery(Country.QUERY_GET_ALL, Country.class)
+        //        .setMaxResults(Country.MAX_NUM_OF_COUNTRIES)
+        //        .getResultList();
         List<Country> countries = entityManager.createNamedQuery(Country.QUERY_GET_ALL, Country.class)
-                .setMaxResults(Country.MAX_NUM_OF_COUNTRIES)
                 .getResultList();
 
         return countries.isEmpty() ? null : countries;

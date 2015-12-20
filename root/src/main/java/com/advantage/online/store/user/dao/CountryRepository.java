@@ -20,9 +20,7 @@ public interface CountryRepository {
 
     int fillCountryTable(final String csvFilePath);
 
-    int deleteCountry(Country country);
     int deleteCountriesByIds(Collection<Integer> countryIds);
-    int deleteCountries(Collection<Country> countries);
     int deleteCountriesByNames(Collection<String> names);
 
     Integer getCountryIdByName(String countryName);
