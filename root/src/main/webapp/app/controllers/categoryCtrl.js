@@ -39,11 +39,6 @@ define(['./module'], function (controllers) {
 
                 $scope.categoryName = category.categoryName;
 
-                console.log($scope.category)
-                console.log($scope.products)
-                console.log($scope.categoryName)
-                console.log($scope.attributes)
-
                 $("nav .navLinks").css("display" , "none");
 
             }

@@ -80,13 +80,33 @@ public class ShoppingCartService {
         return shoppingCartRepository.clearUserCart(userId);
     }
 
+    /**
+     * Verify quantities of all products in user cart.
+     * @param userId Unique user identity.
+     * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in user cart to verify quantities.
+     * @return {@link ShoppingCartResponseDto} products that had higher quantity in cart than in stock. {@code null}
+     */
     @Transactional
-    public ShoppingCart getCartProductByPrimaryKey(long userId, Long productId, String hexColor) {
-        int color = ShoppingCart.convertHexColorToInt(hexColor);
-        ShoppingCart cartProduct = shoppingCartRepository.getShoppingCartByPrimaryKey(userId, productId, color);
+    public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
+        System.out.println("ShoppingCartService -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
 
-        return cartProduct;
+        return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
     }
+
+//    /**
+//     * Method for testing calling <b>REST API</b> {@code GET} request.
+//     * @param userId
+//     * @param productId
+//     * @param hexColor
+//     * @return
+//     */
+//    @Transactional
+//    public ShoppingCart getCartProductByPrimaryKey(long userId, Long productId, String hexColor) {
+//        int color = ShoppingCart.convertHexColorToInt(hexColor);
+//        ShoppingCart cartProduct = shoppingCartRepository.getShoppingCartByPrimaryKey(userId, productId, color);
+//
+//        return cartProduct;
+//    }
 
 }
 

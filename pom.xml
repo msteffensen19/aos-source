@@ -13,6 +13,7 @@
     <modules>
         <module>root</module>
         <module>catalog</module>
+        <module>shipex</module>
     </modules>
 
     <properties>

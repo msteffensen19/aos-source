@@ -2,9 +2,7 @@ package com.advantage.online.store.order.doa;
 
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.dao.AbstractRepository;
-import com.advantage.online.store.dao.product.ProductRepository;
 import com.advantage.online.store.dto.ProductDto;
-import com.advantage.online.store.model.product.ColorAttribute;
 import com.advantage.online.store.model.product.Product;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
@@ -22,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,8 +41,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
     //  FINALs for REST API calls - END
 
-    @Autowired
-    private ProductRepository productRepository;
+    private static String NOT_FOUND = "NOT FOUND";
 
     private ShoppingCartResponseStatus responseStatus;
     private String failureMessage;
@@ -433,6 +428,54 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
+     * Get a single {@link Product} details using <b>REST API</b> {@code GET} request.
+     * @param productId Idetity of the product to get details.
+     * @return {@link ProductDto} containing the JSON with requsted product details.
+     */
+    public ProductDto getProductDetails(Long productId) {
+        /*  Build REQUEST URI */
+        String stringURL = Constants.URI_SERVER_CATALOG +
+                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+
+        // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
+        System.out.println("stringURL=\"" + stringURL + "\"");
+
+        ProductDto dto = null;
+
+        try {
+            String stringResponse = httpGet(stringURL);
+            System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+            if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
+                //  Product not found (409)
+                dto = new ProductDto();
+                dto.setProductId(productId);
+                dto.setProductName(NOT_FOUND);
+                dto.setImageUrl(NOT_FOUND);
+                dto.setDescription(stringURL);  //  REST API URI for GET request
+                dto.setPrice(-999999.99);       //  Price that makes no sense
+            } else {
+                dto = getProductDtofromJsonObjectString(stringResponse);
+
+                System.out.println("Received Product information: ");
+                System.out.println("   product id = " + dto.getProductId());
+                System.out.println("   product name = " + dto.getProductName());
+                System.out.println("   price per item = " + dto.getPrice());
+                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                System.out.println("   ColorAttrubute.Code (hex) = \"" + dto.getColors().get(0).getCode() + "\"");
+                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getColor() + "\"");
+                System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
+            e.printStackTrace();
+        }
+
+        return dto;
+    }
+
+    /**
      * Get details for each {@link ShoppingCart} {@link Product}
      * @param shoppingCarts
      * @return
@@ -444,19 +487,19 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         /* Scan user shopping cart and add all product to userCart response object  */
         for (ShoppingCart cart: shoppingCarts) {
 
-            /*  Build REQUEST URI */
-            String stringURL = Constants.URI_SERVER_CATALOG +
-                    CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(cart.getProductId()));
+            final ProductDto dto = getProductDetails(cart.getProductId());
+            if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                userCart.addCartProduct(dto.getProductId(),
+                        dto.getProductName(),   //  "NOT FOUND"
+                        dto.getPrice(),         //  -999999.99
+                        cart.getQuantity(),
+                        dto.getImageUrl(),      //  "NOT FOUND"
+                        "000000",
+                        "BLACK",
+                        0,
+                        false); //  isExists = false
 
-            // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
-            System.out.println("stringURL=\"" + stringURL + "\"");
-
-            try {
-                String stringResponse = httpGet(stringURL);
-                System.out.println("stringResponse = \"" + stringResponse + "\"");
-
-                final ProductDto dto = getProductDtofromJsonObjectString(stringResponse);
-
+            } else {
                 /*  Add a product to user shopping cart response class  */
                 userCart.addCartProduct(dto.getProductId(),
                         dto.getProductName(),
@@ -466,23 +509,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         dto.getColors().get(0).getCode(),
                         dto.getColors().get(0).getColor(),
                         dto.getColors().get(0).getInStock());
-
-                System.out.println("Received Product information: ");
-                System.out.println("   product id = " + dto.getProductId());
-                System.out.println("   product name = " + dto.getProductName());
-                System.out.println("   price per item = " + dto.getPrice());
-                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                System.out.println("   ColorAttrubute.Code (hex) = \"" + dto.getColors().get(0).getCode() + "\"");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getColor() + "\"");
-                System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
-
-            } catch (IOException e) {
-                System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
-                e.printStackTrace();
             }
+
         }
 
-        //return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
+        //return ((userCart == null) || (userCart.isEmpty())) ? null : userCart;
         return userCart;
     }
 
@@ -536,15 +567,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      *  Get a specific {@link ShoppingCart} by values of primary-key columns. <br/>
-     *  <p>
+     *  <pre>
      *      <ul>Verify {@code userId}</ul> refer to a registered user via <b>REST API</b>. <br/>
      *      <ul>Verify {@code productId}</ul> refer to a registered user via <b>REST API</b>. <br/>
-     *  </p>
-     *  <p>
-     *     Remember that if the request URL of <b>REST API {@code GET}</b> {@link RequestMethod} includes
-     *     parameters, they must be properly encoded (e.g., a space is &quat;%20&quat;, etc.). The class
-     *     {@link URLEncoder} can be used to perform this encoding.
-     *  </p>
+     *  </pre>
      * @param userId
      * @param productId
      * @param color
@@ -562,83 +588,20 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     " color=" + shoppingCart.getColor() +
                     " quantity=" + shoppingCart.getQuantity());
 
-            String stringURL = Constants.URI_SERVER_CATALOG +
-                                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+            final ProductDto dto = getProductDetails(shoppingCart.getProductId());
 
-            // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
-            System.out.println("stringURL=\"" + stringURL + "\"");
+            String name = dto.getProductName();
+            double pricePerItem = dto.getPrice();
+            String managedImageId = dto.getImageUrl();
 
-            try {
-                String stringResponse = httpGet(stringURL);
-                System.out.println("stringResponse = \"" + stringResponse + "\"");
-
-                ProductDto dto = getProductDtofromJsonObjectString(stringResponse);
-
-                List<ColorAttribute> colors = dto.getColors();
-                double pricePerItem = dto.getPrice();
-                String name = dto.getProductName();
-                String description = dto.getDescription();
-                String managedImageId = dto.getImageUrl();
-
-                System.out.println("Received Product information: ");
-                System.out.println("   product id = " + dto.getProductId());
-                System.out.println("   product name = " + name);
-                System.out.println("   product Description = " + description);
-                System.out.println("   price per item = " + pricePerItem);
-                System.out.println("   managedImageId = \"" + managedImageId + "\"");
-                System.out.println("   ColorAttrubute.HexColor = \"" + colors.get(0).getCode() + "\"");
-                System.out.println("   ColorAttrubute.Color = \"" + colors.get(0).getColor() + "\"");
-                System.out.println("   ColorAttrubute.inStock = " + colors.get(0).getInStock());
-
-                /*
-                {
-                    "productId":1,
-                    "categoryId":1,
-                    "productName":"HP Pavilion 15t Touch Laptop",
-                    "price":519.99,
-                    "description":"Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
-                    "imageUrl":"1241",
-                    "attributes":[
-                                    {
-                                    "attributeName":"PROCESSOR",
-                                    "attributeValue":"Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
-                                    },
-                                    {
-                                    "attributeName":"CUSTOMIZATION",
-                                    "attributeValue":"Gaming"},
-                                    {
-                                    "attributeName":"OPERATING SYSTEM",
-                                    "attributeValue":"Windows 10"
-                                    },
-                                    {
-                                    "attributeName":"DISPLAY",
-                                    "attributeValue":"15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen"
-                                    },
-                                    {
-                                    "attributeName":"MEMORY","attributeValue":"16GB DDR3 - 2 DIMM"
-                                    }
-                                 ],
-                    "colors":   [
-                                    {
-                                    "inStock":10,
-                                    "color":"SILVER",
-                                    "code":"C0C0C0"
-                                    }
-                                ],
-                    "images":   [
-                                    "1241"
-                                ]
-                }
-                 */
-            } catch (IOException e) {
-                System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
-                //System.out.println("Exception.getMessage() = " + e.getMessage());
-                //System.out.println("Exception.getLocalizedMessage() = " + e.getLocalizedMessage());
-                //System.out.println("Exception.toString() = " + e.toString());
-
-                e.printStackTrace();
-
-            }
+            System.out.println("Received Product information: ");
+            System.out.println("   product id = " + dto.getProductId());
+            System.out.println("   product name = " + name);
+            System.out.println("   price per item = " + pricePerItem);
+            System.out.println("   managedImageId = \"" + managedImageId + "\"");
+            System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
+            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getColor() + "\"");
+            System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
 
         } else {
             //  shoppingCart is null
@@ -655,36 +618,107 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return shoppingCart;
     }
 
+    /**
+     * Verify the quantity of each product in user cart exists in stock. If quantity
+     * in user cart is greater than the quantity in stock than add the product with
+     * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
+     * @see #getProductDetails(Long)
+     * @param userId Unique identity of the user.
+     * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in
+     *                             shopping cart to verify their quantities.
+     * @return {@code null} when all quantities of the products in the user cart <b>are
+     * equal or Less than</b> the quantities in stock. If the quantity of any cart product
+     * <b>is greater than</b> the quantity in stock then the product will be added to the
+     * list of products in the cart with the <ul>quantity in stock</ul>.
+     */
+    public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
+
+        System.out.println("DefaultShoppingCartRepository -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
+
+        ShoppingCartResponseDto responseDto = new ShoppingCartResponseDto(userId);
+
+        for (ShoppingCartDto cartProduct : shoppingCartProducts) {
+
+            ProductDto dto = getProductDetails(cartProduct.getProductId());
+
+            if (cartProduct.getQuantity() > dto.getColors().get(0).getInStock()) {
+
+                ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId,
+                        cartProduct.getProductId(),
+                        ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()));
+                ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+
+                if (shoppingCart != null) {
+                    //  Update quantity of cart product to product's quantity in stock
+                    shoppingCart.setQuantity(dto.getColors().get(0).getInStock());
+                    entityManager.persist(shoppingCart);
+                } else {
+                    //  Unlikely, since we already got the product details and compare its quantity in stock to the same product in cart.
+                    System.out.println("Product \"" + dto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
+                }
+
+                responseDto.addCartProduct(cartProduct.getProductId(),
+                        dto.getProductName(),
+                        dto.getPrice(),
+                        dto.getColors().get(0).getInStock(),
+                        dto.getImageUrl(),
+                        dto.getColors().get(0).getCode(),
+                        dto.getColors().get(0).getColor(),
+                        dto.getColors().get(0).getInStock());
+
+            }
+
+        }
+
+        //  If there are no protducts to update in user cart the return null
+        if (responseDto.getProductsInCart().size() == 0) {
+            responseDto = null;
+        }
+
+        return responseDto;
+    }
+
     public static String httpGet(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        if (conn.getResponseCode() != 200) {
-            throw new IOException(conn.getResponseMessage());
-        }
+        int responseCode = conn.getResponseCode();
 
-        // Buffer the result into a string
-        InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-        BufferedReader bufferedReader = new BufferedReader(inputStream);
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            sb.append(line);
+        String returnValue;
+
+        if (responseCode == 200) {
+            // Buffer the result into a string
+            InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStream);
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            bufferedReader.close();
+            returnValue = sb.toString();
+
+        } else {
+            switch (responseCode) {
+                case 409:
+                    //  Product not found
+                    returnValue = "Not found";
+                    break;
+
+                default:
+                    System.out.println("httpGet -> responseCode=" + responseCode);
+                    throw new IOException(conn.getResponseMessage());
+            }
         }
-        bufferedReader.close();
 
         conn.disconnect();
-        return sb.toString();
+
+        return returnValue;
     }
 
     private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
-
-        //JsonReader jsonReader = Json.createReader(new StringReader(jsonObjectString));
-        //JsonObject object = jsonReader.readObject();
-        //jsonReader.close();
-
-        //ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
-        //File json = filePath.getFile();
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -693,4 +727,5 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         return dto;
     }
+
 }

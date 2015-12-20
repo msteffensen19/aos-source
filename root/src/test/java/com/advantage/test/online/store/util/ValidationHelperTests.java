@@ -1,4 +1,4 @@
-package com.advantage.test.online.store.user;
+package com.advantage.test.online.store.util;
 
 import com.advantage.online.store.user.util.ValidationHelper;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;

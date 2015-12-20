@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
@@ -29,6 +30,7 @@ public class CountryRepositoryTests extends GenericRepositoryTests {
     private final int phonePrefix = 972;
 
     @Autowired
+    @Qualifier("countryRepository")
     CountryRepository countryRepository;
 
     @Test
@@ -42,11 +44,10 @@ public class CountryRepositoryTests extends GenericRepositoryTests {
 
         Assert.assertNotNull(country);
 
-        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-        countryRepository.deleteCountry(country);
-        transactionManager.commit(transactionStatusForDeletion);
-
-        Assert.assertTrue(true);
+        //final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+        //countryRepository.deleteCountry(country);
+        //transactionManager.commit(transactionStatusForDeletion);
+        //Assert.assertTrue(true);
 
     }
 
@@ -58,11 +59,10 @@ public class CountryRepositoryTests extends GenericRepositoryTests {
 
         Assert.assertNotNull(country);
 
-        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-        countryRepository.deleteCountry(country);
-        transactionManager.commit(transactionStatusForDeletion);
-
-        Assert.assertTrue(true);
+        //final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+        //countryRepository.deleteCountry(country);
+        //transactionManager.commit(transactionStatusForDeletion);
+        //Assert.assertTrue(true);
 
     }
 

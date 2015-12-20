@@ -67,49 +67,6 @@
 
 
 
-<!-- Searching autocomplite -->
-
-<div id="searchSection" ng-click="closeSearchSection()">
-    <div id="input" ng-click="$event.stopPropagation()">
-        <div>
-            <img src="css/images/Sesrch.jpg"  />
-            <span class="animPlaceholderUp">
-                <input id="autoComplete" type="text" class="roboto-regular"
-                       ng-keypress="checkEnterKey($event)"
-                       ng-model="autoCompleteValue"
-                       ng-keyup="runAutocomplete()" >
-                <img src="css/images/Close.png" ng-click="closeSearchSection()"  />
-                <label class="roboto-regular"> {{'Search' | translate }} Advantage.com </label>
-            </span>
-        </div>
-    </div>
-    <div id="output" ng-show="autoCompleteResult.length > 0">
-        <div class="searchPopUp" ng-click="$event.stopPropagation()">
-            <div class="categories">
-                <h3 class="roboto-medium" translate="CATEGORIES"></h3>
-                <label class="roboto-light" ng-repeat="result in autoCompleteResult"
-                       ng-click="searchByCategoryId(result.categoryId)">
-                    {{result.categoryName | lowercase}}
-                </label>
-            </div>
-            <div>
-                <h3 class="roboto-medium" >{{ 'TOP_RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
-                <label  class="roboto-medium viewAll" translate="View_All"></label>
-                <div class="product"  ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult">
-                    <img ng-src="fetchImage?image_id={{product.imageUrl}}" />
-                    <p class="roboto-regular">{{product.productName | uppercase}}</p>
-                    <span>{{product.price | currency:'$'}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="#/">
-        <img src="css/images/logo.png" />
-    </a>
-</div>
-<!-- end searching autocomplite -->
-
-
 
 
 
@@ -144,6 +101,7 @@
                 <a class="img">
                     <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
                 </a>
+                <tool-tip-search></tool-tip-search>
             </li>
             <li>
                 <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
