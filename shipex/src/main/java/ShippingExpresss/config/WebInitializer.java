@@ -1,13 +1,12 @@
 package ShippingExpresss.config;
 
-import ShippingExpresss.ShipExApplication;
-import javafx.application.Application;
+import ShippingExpresss.ShipexApplication;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 public class WebInitializer extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(ShipExApplication.class);
+        return application.sources(ShipexApplication.class);
     }
 }
