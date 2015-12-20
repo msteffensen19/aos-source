@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @Configuration
 @ComponentScan
-public class ShipExApplication {
+public class ShipexApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShipExApplication.class, args);
+        SpringApplication.run(ShipexApplication.class, args);
     }
 }
