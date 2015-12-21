@@ -1,6 +1,7 @@
 package com.advantage.online.store.user.model;
 
 import com.advantage.online.store.Constants;
+import com.advantage.online.store.user.dto.AppUserType;
 import com.advantage.online.store.user.util.UserPassword;
 import com.advantage.util.ArgumentValidationHelper;
 

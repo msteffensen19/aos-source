@@ -1,25 +1,18 @@
-
-
 <div>
     <div class="cell categoryLeft">
         <p class="filterCount roboto-light">{{filtered.length}} ITEMS</p>
         <label class="roboto-regular" >{{ 'FILTER_BY' | translate }} </label>
         <label class="roboto-regular clear" ng-click="clearSelection()" translate="Clear" ng-show="showClear"></label>
         <ul>
+            <!--- attributes Section -->
             <li ng-repeat="attrib in categoryAttributes">
-                <h4 class="accordion roboto-regular arrowDown"
-                    ng-click="toggleColapse(attrib.attributeId)" >
+                <h4 class="accordion roboto-regular arrowDown" id="accordionAttrib{{$index}}"
+                    ng-click="toggleColapse('accordionAttrib' + $index)" >
                     {{attrib.attributeName}}
                 </h4>
                 <div class="option" >
-                    <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block"
-                         ng-switch on="attrib.attributeName">
-                        <span ng-switch-when="COLOR" class="productColor "
-                              ng-click="includeProducts($event, attrVal, attrib.attributeName)"
-                              ng-class="{ 'unknowColor' : $last }"
-                              ng-style="{'backgroundColor': '#' + attrVal}">
-                        </span>
-                        <div ng-switch-default class="fill">
+                    <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block" >
+                        <div class="fill">
                             <input type="checkbox" ng-model="item.selected"
                                    ng-click="includeProducts($event, attrVal, attrib.attributeName)">
                             <span class="roboto-regular">{{attrVal}}</span>
@@ -27,11 +20,42 @@
                     </div>
                 </div>
             </li>
+            <!--- END attributes Section -->
+            <!--- color Section -->
+            <li>
+                <h4 class="accordion roboto-regular arrowDown" id="accordionColor"
+                    ng-click="toggleColapse('accordionColor')" >
+                    {{'COLOR' | translate }}
+                </h4>
+                <div class="option" >
+                    <div ng-repeat="color in category.colors" style="display: inline-block">
+                        <span class="productColor "
+                              ng-click="includeProducts($event, color, 'COLOR')"
+                              ng-style="{'backgroundColor': '#' + color}">
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <!--- END color Section -->
+            <!--- Price Section -->
+            <li>
+                <h4 class="accordion roboto-regular arrowDown"
+                    ng-click="toggleColapse(attrib.attributeId)" >
+                    {{'PRICE' | translate }}
+                </h4>
+                <div class="option">
+                    <!-- <div slider ng-model="single" start='1' end='10'></div>
+                    <div slider ng-from="test.from" ng-to="test.to" start=0 end=100 step=5></div> -->
+                </div>
+            </li>
+            <!--- Price Section -->
         </ul>
     </div>
     <div class="cell categoryRight">
         <ul>
-            <li ng-repeat="product in filtered = ( products | filter:productsFilter)" ng-click="gotoItem(product.productId)" >
+
+            <li ng-repeat="product in filtered = ( products | filter:productsFilter)"
+                ng-click="gotoItem(product.productId)" >
                 <div class="AddToCard">
                     <label> {{'SHOP_NOW' | translate}} </label>
                     <img alt="" src="../../css/images/cart_18x18.png"  />

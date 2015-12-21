@@ -3,9 +3,6 @@
  */
 'use strict';
 
-
-alert('evg7');
-
 define([
 
     'angular',
@@ -51,7 +48,6 @@ define([
                 var cookie = ipCookie($rootScope.userCookieLastEntry);
                 if(cookie)
                 {
-                    alert()
                     $rootScope.userCookie = cookie;
                 }
             }

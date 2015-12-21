@@ -275,18 +275,14 @@ h3.roboto-regular{
 
 button {
     transition: all linear .2s;
+    border: solid 1px #2a2a2a;
+    background-color:transparent;
+    color: #2a2a2a;
 }
 
-button.cyan {
-    color: black;
-    border: 1px solid #54b3ad;
-    background-color: transparent;
-}
-
-button.cyan:hover {
-    border-color: white;
-    background-color: #54b3ad;
+button:hover {
     color: white;
+    background-color:#2a2a2a;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {

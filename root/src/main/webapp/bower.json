@@ -4,7 +4,8 @@
   "dependencies": {
     "angularjs-slider": "~1.0.0",
     "angular-bootstrap": "~0.14.3",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "angular-nouislider": "~0.3.1"
   },
   "devDependencies": {
     "angular": "~1.4.7",
@@ -17,7 +18,8 @@
     "angular-cookie": "~4.0.9",
     "jquery-bez": "1.0.11",
     "jquery-color-animation": "~1.6.0",
-    "ngAutocomplete": "~1.0.0"
+    "ngAutocomplete": "~1.0.0",
+    "angular-nouislider": "~0.3.1"
   },
   "resolutions": {
     "angular": "~1.4.7"

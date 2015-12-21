@@ -16,7 +16,6 @@ define([],function(){
             LOGOUT: 'This is a paragraph.',
             SPACIAL_OFFER : 'SPECIAL OFFER',
             SPECIAL_OFFER_ITEMS : 'SPECIAL OFFER ITEMS',
-            'SHOP_NOW' : 'SHOP NOW',
             POPULAR_ITEMS : 'POPULAR ITEMS',
             FOLLOW_US : 'FOLLOW US',
             'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
@@ -37,7 +36,7 @@ define([],function(){
             'FORGOT_PASSWORD' : 'Forgot your password?',
             'CREATE_NEW_ACCOUNT' : 'CREATE NEW ACCOUNT',
             'REMEMBER_ME' : 'REMEMBER ME',
-
+            'PRICE' : 'PRICE',
 
             'hi' : 'Hi',
             'SIGN_OUT' : 'Sign out',
