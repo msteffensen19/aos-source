@@ -30,7 +30,7 @@
 
 
 .categoryData h2{
-    font-size: 24px;
+    font-size: 15px;
 }
 
 
@@ -38,9 +38,10 @@
     font-size: 15px;
 }
 
-.categoryData h3{
-    padding: 21px 0;
+.categoryData h2, .categoryData h3{
+    padding: 12px 0;
 }
+
 
 .categoryData button {
     border: solid 2px #ffffff;
@@ -55,6 +56,7 @@
 
 
 .categoryData button:hover {
+    border: solid 2px rgb(169, 169, 169);
     color: rgb(169, 169, 169);
     background-color: #ffffff;
 }

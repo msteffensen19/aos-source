@@ -110,6 +110,9 @@ $(document).on({
             $(this).find(".mini-title").fadeToggle(300);
         });
 
+        if($('.sticky').length > 0) {
+
+        }
 
 
         var test = 0;
@@ -130,6 +133,10 @@ $(document).on({
         }
         });
 
+
+        $(document).on("click", ".productColor ", function() {
+            $(this).toggleClass('colorSelected');
+        });
 
         _resize();
         function _resize() {

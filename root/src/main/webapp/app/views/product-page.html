@@ -47,20 +47,17 @@
         <div id="productProperties">
             <div class="colors" ng-if="product.colors.length > 0">
                 <h2 translate="Color" class="Colors roboto-light" class="roboto-light" ></h2>
-                <span data-ng-repeat="color in product.colors" class="productColor"
-                      data-ng-style=" color.code == 'FFFFFF' ?
-                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
-                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
-                      data-ng-class='{ colorSelected : colorSelected.color == color.color } '
-                      data-ng-click="setColor(color)" >
-                            <label>{{color.color}}</label>
+                <span data-ng-repeat="color in product.colors"
+                      data-ng-style="{'background-color':'{{color.color}}'}"
+                      data-ng-class='{ colorSelected : colorSelected == color.color } '
+                      data-ng-click="setColor(color.color)" >
                 </span>
             </div>
             <br />
             <label class="Quantity roboto-light" translate="Quantity:" ></label>
             <select ng-model="Quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9]" ></select>
             <br />
-            <button class="roboto-medium" translate="ADD_TO_CART"  ng-click="addToCart()"> </button>
+            <button class="roboto-medium" translate="ADD_TO_CART"  ng-click="addProduct(product)"> </button>
         </div>
         <!-- end description section -->
 

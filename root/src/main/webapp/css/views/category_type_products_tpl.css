@@ -71,6 +71,7 @@
     transform: rotate(180deg);
 }
 
+
 .arrowUp{
     border-bottom: solid #d0d0d0 1px;
 }
@@ -88,7 +89,6 @@
 
 .categoryLeft .option > div {
     position: relative;
-    display: inline-block
 }
 
 .categoryLeft .option .fill{

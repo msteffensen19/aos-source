@@ -20,19 +20,9 @@ define(['./module'], function (directives) {
                 scope.showClear = false;
                 scope.productsInclude = [];
                 scope.attributeChecked = [];
-                scope.productsColors = [];
-
-                scope.options = {
-                    start: [20, 70],
-                    range: {min: 0, max: 100}
-                }
 
                 scope.gotoItem = function(id){
                     $location.path('/product/' + id);
-                }
-
-                scope.toggleColorSelectedClass = function(code) {
-                    $("#productsColors" + code).toggleClass('colorSelected');
                 }
 
                 scope.includeProducts = function($event, attributeVal, attributesName) {
@@ -71,7 +61,7 @@ define(['./module'], function (directives) {
                                     found++;
                                 }
                                 angular.forEach(product.colors, function(color){
-                                    if(color.code == scope.productsInclude[key][i].code)
+                                    if(color.code == scope.productsInclude[key][i])
                                     {
                                         found++;
                                     }
@@ -120,6 +110,7 @@ define(['./module'], function (directives) {
                             scope.gamingCustom.push(value);
                         if($filter('filter')(value.attributes, {attributeValue: 'Simplicity'}, false).length > 0)
                             scope.simplicityCustom.push(value);
+
                     });
                 };
 
@@ -130,28 +121,14 @@ define(['./module'], function (directives) {
                         scope.products = catData.products;
                         scope.categoryAttributes = catData.attributes;
                         scope.manipulateProductsByCustomization();
-                        scope.productsColors = getColorsInProducts(scope.products);
+
+                        console.log(scope.category);
+                        console.log(scope.products);
+                        console.log(scope.categoryAttributes);
                     }
                 })
 
-                function getColorsInProducts(products){
-                    var productsColors = [];
-                    angular.forEach(products, function(product){
-                        angular.forEach(product.colors, function(color) {
-                            var find = false;
-                            angular.forEach(productsColors, function(productColors) {
-                                if(productColors.color == color.color)
-                                {
-                                    find= true;
-                                }
-                            });
-                            if(!find){
-                                productsColors.push(color)
-                            }
-                        });
-                    });
-                    return productsColors;
-                }
+
             }
         };
     }]);

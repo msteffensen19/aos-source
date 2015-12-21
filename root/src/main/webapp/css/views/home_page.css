@@ -247,32 +247,28 @@ label.shop_now:after{
     animation-duration: 2.3s;
 }
 
-.slider-length div .container button:hover {
-    color: #2a2a2a;
-    background-color: #ffffff;
-}
-
 .slider-length div:nth-child(2) .container h2{
     color: black;
 }
 
+
 .slider-length div:nth-child(2) .container button{
     background-color: transparent !important;
     border: solid 2px black !important;
-    color: #2a2a2a;
+    color: black;
 }
 
 .slider-length div:nth-child(2) .container button:hover{
     color: white;
-    background-color: #2a2a2a !important;
+}
+
+
+.slider-length div .container button:hover {
+    border: solid 2px transparent !important;
+    background-color: black !important;
 }
 
 /*
-
-
-.categoryData button:hover {
-}
-
 .slider-length div:nth-child(2) .container button:hover{
     background-color: transparent !important;
     border: solid 2px black !important;
@@ -283,7 +279,7 @@ label.shop_now:after{
     position: absolute !important;
     bottom: 10px;
     width: 100%;
-    z-index: 990;
+    z-index: 999;
     text-align: center;
 }
 

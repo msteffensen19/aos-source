@@ -67,12 +67,7 @@ define(['./module'], function (controllers) {
                     return false;
                 }
             });
-
-
-
             Main.addAnimPlaceholderEventListener();
-            $("nav .navLinks").css("display" , "none");
-
         }])
 
         .directive("secCompare", function(){
