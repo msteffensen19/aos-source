@@ -8,7 +8,14 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
+            <includes>
+                <include>*.properties</include>
+            </includes>
             <directory>${project.basedir}/resources</directory>
+            <outputDirectory></outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/resources/${resources.source.path}</directory>
             <outputDirectory></outputDirectory>
         </fileSet>
     </fileSets>
