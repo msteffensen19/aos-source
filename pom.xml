@@ -12,6 +12,7 @@
     <module>root</module>
     <module>catalog</module>
     <module>shipex</module>
+    <module>mastercredit</module>
   </modules>
   <properties>
     <aspectj.version>1.8.4</aspectj.version>
@@ -61,7 +62,7 @@
     </profile>
   </profiles>
   <build>
-    <finalName>ROOT</finalName>
+    <!--<finalName>ROOT</finalName>-->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

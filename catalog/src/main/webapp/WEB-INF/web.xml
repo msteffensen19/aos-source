@@ -45,7 +45,7 @@
 
     <filter-mapping>
         <filter-name>ExpiresFilter</filter-name>
-        EVG SPLIT
+        <!--EVG SPLIT-->
         <url-pattern>/*</url-pattern>
         <!--EVG SPLIT WRONG<url-pattern>*/catalog</url-pattern>-->
         <dispatcher>REQUEST</dispatcher>

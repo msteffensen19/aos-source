@@ -9,3 +9,4 @@
 *.~vsdx
 ~*.xlsx
 /root/src/main/webapp/target
+*.war
