@@ -1,19 +1,14 @@
 package com.advantage.online.store.config;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.advantage.online.store.Constants;
+import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by kubany on 10/11/2015.
  */
-import com.advantage.online.store.Constants;
 
 @Configuration
 @EnableAspectJAutoProxy
@@ -32,7 +27,9 @@ import com.advantage.online.store.Constants;
 )
 @PropertySources(value = {
         @PropertySource("classpath:/app.properties"),
-        @PropertySource("classpath:/database.properties"),
+        //@PropertySource("classpath:/database.properties"),
+        @PropertySource("classpath:/global.properties"),
+        @PropertySource("classpath:/services.properties"),
         @PropertySource("classpath:/DemoApp.properties")})
 public class AppConfiguration {
 
