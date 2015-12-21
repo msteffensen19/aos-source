@@ -107,6 +107,46 @@ text-decoration: none;
     margin: 5px 15px;
     padding: 0px !important;
     cursor: pointer;
+    text-align: center;
+}
+
+.productColor > label{
+    display: none;
+    padding: 6px;
+    border: solid 1px #D1D1D1;
+    position: absolute;
+    top:-35px;
+    background-color: white;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    width: 59px;
+    font-size: 13px;
+}
+
+.productColor > label:before{
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+    border-top: solid 10px #D1D1D1;
+    left:11px;
+}
+
+.productColor > label:after{
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+    border-top: solid 10px white;
+    left:11px;
+}
+
+.productColor:hover > label{
+    display: block;
 }
 
 

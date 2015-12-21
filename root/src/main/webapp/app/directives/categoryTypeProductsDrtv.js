@@ -26,6 +26,11 @@ define(['./module'], function (directives) {
                 scope.minPriceToFilter = 0;
                 scope.maxPriceToFilter = 0;
 
+                scope.options = {
+                    start: [20, 70],
+                    range: {min: 0, max: 100}
+                }
+
                 scope.gotoItem = function(id){
                     $location.path('/product/' + id);
                 }
@@ -61,6 +66,39 @@ define(['./module'], function (directives) {
                     console.log(slider.noUiSlider.end == scope.maxPriceToFilter;
 */
                 }
+
+
+                    if (Object.keys(scope.productsInclude).length > 0)
+                    {
+                        var found = 0;
+                        for (var key in scope.productsInclude)
+                        {
+                            for(var i = 0; i < scope.productsInclude[key].length; i++)
+                            {
+                                if($.inArray(JSON.stringify($filter('filter')(product.attributes,
+                                        {attributeValue: scope.productsInclude[key][i]},
+                                        false)[0]), $.map(product.attributes, JSON.stringify)) > -1)
+                                {
+                                    found++;
+                                }
+                                angular.forEach(product.colors, function(color){
+                                    if(color.code == scope.productsInclude[key][i].code)
+                                    {
+                                        found++;
+                                    }
+                                });
+                            }
+                        }
+                        if(found == Object.keys(scope.productsInclude).length)
+                        {
+                            return product;
+                        }
+                    }
+                    else
+                    {
+                        return product;
+                    }
+                };
 
 
                 scope.clearSelection = function(){
@@ -105,6 +143,7 @@ define(['./module'], function (directives) {
                         setMinAndMaxPriceToFilter(scope.products);
                         configSlider();
                         scope.manipulateProductsByCustomization();
+                        scope.productsColors = getColorsInProducts(scope.products);
                     }
                 })
 
@@ -143,7 +182,7 @@ define(['./module'], function (directives) {
                     });
                     return productsColors;
                 }
-
+            }
                 function configSlider(){
                     slider = document.getElementById('slider');
                     var step = scope.maxPriceToFilter - scope.minPriceToFilter;

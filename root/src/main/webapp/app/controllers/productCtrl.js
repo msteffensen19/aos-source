@@ -11,15 +11,18 @@ define(['./module'], function (controllers) {
 
             $scope.product = product;
 
-            $scope.colorSelected = '';
+            $scope.colorSelected = product.colors[0];
 
             $scope.addToCart = function(){
-
+                var productToAdd = angular.copy(product);
+                productToAdd.colors = [$scope.colorSelected];
+                $scope.$parent.addProduct(productToAdd, $scope.Quantity);
             }
 
-            $scope.setColor = function(num){
-                $scope.colorSelectedId = num;
+            $scope.setColor = function(color){
+                $scope.colorSelected = color;
             }
+
             $("nav .navLinks").css("display", "none");
 
             Helper.forAllPage();
