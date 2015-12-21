@@ -7,6 +7,7 @@ require.config({
         'angular': 'vendor/angular/angular.min',
         'angular-cookie': 'vendor/angular-cookie/angular-cookie.min',
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
+        'angular-nouislider': 'vendor/nouislider-angular/nouislider.min',
         'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
         'jquery' : 'vendor/jquery/dist/jquery.min',
@@ -33,6 +34,9 @@ require.config({
         },
         'angular-translate': {
             deps: ['angular']
+        },
+        'angular-nouislider' : {
+            deps:[ 'angular' ]
         },
         'angularAutucomplete' : {
             deps: ['angular']
@@ -71,7 +75,7 @@ require.config({
 });
 
 window.name = "NG_DEFER_BOOTSTRAP!";
-require(['angular', 'app', 'angular-translate', 'bootstrap',
+require(['angular', 'app', 'angular-translate', 'angular-nouislider', 'bootstrap',
          'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
         'accordion', 'wrongDirection', 'UserCookie',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutucomplete',
