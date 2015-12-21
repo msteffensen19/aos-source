@@ -1,17 +1,14 @@
 package com.advantage.online.store.config;
 
-import javax.inject.Inject;
-import javax.sql.DataSource;
-
 import com.advantage.online.store.init.DataSourceInit4Json;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import com.advantage.online.store.init.DataSourceInit;
-
-import liquibase.integration.spring.SpringLiquibase;
+import javax.inject.Inject;
+import javax.sql.DataSource;
 
 /**
  * Created by kubany on 10/11/2015.
@@ -19,10 +16,10 @@ import liquibase.integration.spring.SpringLiquibase;
 @Configuration
 public class DataSourceConfiguration {
 
-    public static final String ENV_HIBERNATE_DB_LOGIN = "hibernate.db.login";
-    public static final String ENV_HIBERNATE_DB_PASSWORD = "hibernate.db.password";
+    public static final String ENV_HIBERNATE_DB_LOGIN = "catalog.hibernate.db.login";
+    public static final String ENV_HIBERNATE_DB_PASSWORD = "catalog.hibernate.db.password";
     public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "hibernate.db.driver_classname";
-    public static final String ENV_HIBERNATE_DB_URL = "hibernate.db.url";
+    public static final String ENV_HIBERNATE_DB_URL = "catalog.hibernate.db.url";
     @Inject
     private Environment env;
 
