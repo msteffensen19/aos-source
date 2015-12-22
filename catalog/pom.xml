@@ -96,8 +96,8 @@
                     </goals>
                     <configuration>
                         <files>
-                            <file>${basedir}/target/generated-resources/services.properties</file>
-                            <file>${basedir}/target/generated-resources/global.properties</file>
+                            <file>${project.build.directory}/generated-resources/services.properties</file>
+                            <file>${project.build.directory}/generated-resources/global.properties</file>
                         </files>
                     </configuration>
                 </execution>

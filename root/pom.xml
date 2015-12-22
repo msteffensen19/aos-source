@@ -194,15 +194,15 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>${basedir}/target/generated-resources/services.properties</file>
-                                <file>${basedir}/target/generated-resources/global.properties</file>
+                                <file>${project.build.directory}/generated-resources/services.properties</file>
+                                <file>${project.build.directory}/generated-resources/global.properties</file>
                             </files>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <!--echo property test-->
-            <!--            <plugin>
+            <plugin>
                             <groupId>com.soebes.maven.plugins</groupId>
                             <artifactId>echo-maven-plugin</artifactId>
                             <version>0.2</version>
@@ -216,12 +216,20 @@
                             </executions>
                             <configuration>
                                 <echos>
+                                    <echo>basedir=${basedir}</echo>
+                                    <echo>project.basedir=${project.basedir}</echo>
+                                    <echo>project.parent.basedir=${project.parent.basedir}</echo>
+                                    <echo>project.build.directory=${project.build.directory}</echo>
+
+                                    <!--suppress MavenModelInspection -->
                                     <echo>account.service.url.port is ${account.service.url.port}</echo>
+                                    <!--suppress MavenModelInspection -->
                                     <echo>EVG!!! hibernate.db.driver_classname=${hibernate.db.driver_classname}</echo>
+                                    <!--suppress MavenModelInspection -->
                                     <echo>db url=${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}:postgres</echo>
                                 </echos>
                             </configuration>
-                        </plugin>-->
+            </plugin>
 
             <!--run sql-->
             <plugin>

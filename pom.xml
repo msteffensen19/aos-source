@@ -12,7 +12,7 @@
     <module>root</module>
     <module>catalog</module>
     <module>shipex</module>
-    <!--<module>mastercredit</module>-->
+      <module>mastercredit</module>
   </modules>
   <properties>
     <aspectj.version>1.8.4</aspectj.version>
@@ -39,7 +39,11 @@
     <!--<profile xmlns="http://maven.apache.org/POM/4.0.0"><id>production</id><build><plugins>/*prod plugins vvv*//*prod plugins ^^^*/</plugins></build></profile>-->
     <profile>
       <id>development</id>
-      <build>
+        <properties>
+            <resources.source.path>dev</resources.source.path>
+        </properties>
+
+        <build>
         <plugins>
           <!--dev plugins vvv-->
           <plugin>
@@ -60,28 +64,16 @@
         </plugins>
       </build>
     </profile>
+      <profile>
+          <id>production</id>
+          <properties>
+              <resources.source.path>prod</resources.source.path>
+          </properties>
+      </profile>
   </profiles>
   <build>
     <!--<finalName>ROOT</finalName>-->
     <plugins>
-        <!--      <plugin>
-                <groupId>com.soebes.maven.plugins</groupId>
-                <artifactId>echo-maven-plugin</artifactId>
-                <version>0.2</version>
-                <executions>
-                  <execution>
-                    <phase>initialize</phase>
-                    <goals>
-                      <goal>echo</goal>
-                    </goals>
-                  </execution>
-                </executions>
-                <configuration>
-                  <echos>
-                    <echo>This is the Text which will be printed out.</echo>
-                  </echos>
-                </configuration>
-              </plugin>-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
