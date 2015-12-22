@@ -12,7 +12,7 @@
     <module>root</module>
     <module>catalog</module>
     <module>shipex</module>
-    <module>mastercredit</module>
+    <!--<module>mastercredit</module>-->
   </modules>
   <properties>
     <aspectj.version>1.8.4</aspectj.version>
@@ -39,10 +39,6 @@
     <!--<profile xmlns="http://maven.apache.org/POM/4.0.0"><id>production</id><build><plugins>/*prod plugins vvv*//*prod plugins ^^^*/</plugins></build></profile>-->
     <profile>
       <id>development</id>
-      <properties>
-          <resources.source.path>dev</resources.source.path>
-      </properties>
-
       <build>
         <plugins>
           <!--dev plugins vvv-->
@@ -64,12 +60,6 @@
         </plugins>
       </build>
     </profile>
-      <profile>
-          <id>production</id>
-          <properties>
-              <resources.source.path>prod</resources.source.path>
-          </properties>
-      </profile>
   </profiles>
   <build>
     <!--<finalName>ROOT</finalName>-->

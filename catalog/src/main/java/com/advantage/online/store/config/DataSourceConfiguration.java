@@ -16,17 +16,10 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfiguration {
 
-    public static final String ENV_DB_URL_HOST = "catalog.hibernate.db.url.host";
-    public static final String ENV_DB_URL_PORT = "catalog.hibernate.db.url.port";
-    public static final String ENV_DB_URL_NAME = "catalog.hibernate.db.name";
-
-    public static final String ENV_DB_URL_PREFIX = "db.url.prefix";
-    public static final String ENV_DB_URL_QUERY = "db.url.query";
-
     public static final String ENV_HIBERNATE_DB_LOGIN = "catalog.hibernate.db.login";
     public static final String ENV_HIBERNATE_DB_PASSWORD = "catalog.hibernate.db.password";
     public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "hibernate.db.driver_classname";
-
+    public static final String ENV_HIBERNATE_DB_URL = "catalog.hibernate.db.url";
     @Inject
     private Environment env;
 
@@ -42,10 +35,9 @@ public class DataSourceConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        String ENV_HIBERNATE_DB_URL = String.format("%s://%s:%s/%s?%s", env.getProperty(ENV_DB_URL_PREFIX), env.getProperty(ENV_DB_URL_HOST), env.getProperty(ENV_DB_URL_PORT), env.getProperty(ENV_DB_URL_NAME), env.getProperty(ENV_DB_URL_QUERY));
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty(ENV_HIBERNATE_DB_DRIVER_CLASSNAME));
-        dataSource.setUrl(ENV_HIBERNATE_DB_URL);
+        dataSource.setUrl(env.getProperty(ENV_HIBERNATE_DB_URL));
         dataSource.setUsername(env.getProperty(ENV_HIBERNATE_DB_LOGIN));
         dataSource.setPassword(env.getProperty(ENV_HIBERNATE_DB_PASSWORD));
 
