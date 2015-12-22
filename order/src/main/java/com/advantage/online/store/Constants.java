@@ -1,10 +1,15 @@
 package com.advantage.online.store;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.env.Environment;
 
+@PropertySources(value = {@PropertySource("classpath:/services.properties")})
 public class Constants {
+    @Autowired
+    private static Environment environment;
+
     /**
      * Keyboard special characters
      */
@@ -25,9 +30,10 @@ public class Constants {
     public static final String URI_API = "/api";
 
     //	Binyamin Regev: For now it's here, needs T.B.D.
-    public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
-    public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
-    public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
+    public static final String SERVICE_URL_FORMAT = "http://%s:%s/%s" + URI_API + "/v1";
+    public static final String URI_SERVER_ACCOUNT = String.format(SERVICE_URL_FORMAT, environment.getProperty("account.service.url.host"), environment.getProperty("account.service.url.port"), environment.getProperty("account.service.url.suffix"));
+    public static final String URI_SERVER_CATALOG = String.format(SERVICE_URL_FORMAT, environment.getProperty("catalog.service.url.host"), environment.getProperty("catalog.service.url.port"), environment.getProperty("catalog.service.url.suffix"));
+    public static final String URI_SERVER_ORDER = String.format(SERVICE_URL_FORMAT, environment.getProperty("order.service.url.host"), environment.getProperty("order.service.url.port"), environment.getProperty("order.service.url.suffix"));
     public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
     //	Binyamin Regev - End
 
