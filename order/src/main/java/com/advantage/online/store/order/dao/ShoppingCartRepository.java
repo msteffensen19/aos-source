@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Binyamin Regev on 03/12/2015.
  */
-public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCart> {
+public interface ShoppingCartRepository {
 
     /*  Retrieve all products of user's ShoppingCart    */
     List<ShoppingCart> getShoppingCartsByUserId(long userId);
