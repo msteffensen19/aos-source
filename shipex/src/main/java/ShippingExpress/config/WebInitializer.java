@@ -1,6 +1,6 @@
-package ShippingExpresss.config;
+package ShippingExpress.config;
 
-import ShippingExpresss.ShipexApplication;
+import ShippingExpress.ShipexApplication;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 

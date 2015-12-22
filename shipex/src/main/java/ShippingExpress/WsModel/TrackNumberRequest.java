@@ -1,7 +1,6 @@
 
-package ShippingExpresss.WsModel;
+package ShippingExpress.WsModel;
 
-import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,8 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "TrackNumberRequest", namespace = "http://advantage.store/shipex/service")
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2015-12-14T03:37:12+02:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@XmlRootElement(name = "TrackNumberRequest", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
 public class TrackNumberRequest {
 
 
