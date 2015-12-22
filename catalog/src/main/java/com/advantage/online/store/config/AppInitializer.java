@@ -23,6 +23,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 //EVG Split AppUserConfiguration.class,
                 //EVG Split AdvantageAspects.class,
                 ImageManagementConfiguration.class
+                //,SwaggerConfiguration.class //Because in this class added @Inject Environment
         };
     }
 

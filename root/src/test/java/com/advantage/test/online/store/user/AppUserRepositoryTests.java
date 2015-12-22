@@ -2,11 +2,10 @@ package com.advantage.test.online.store.user;
 
 import com.advantage.online.store.user.dao.AppUserRepository;
 import com.advantage.online.store.user.dao.CountryRepository;
-import com.advantage.online.store.user.dto.AppUserResponseStatus;
 import com.advantage.online.store.user.model.AppUser;
-import com.advantage.online.store.user.model.AppUserType;
+import com.advantage.online.store.user.dto.AppUserType;
 //import com.advantage.online.store.user.model.Country;
-import com.advantage.online.store.user.model.YesNoReply;
+import com.advantage.online.store.user.dto.YesNoReply;
 import com.advantage.test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.test.online.store.dao.GenericRepositoryTests;
 import org.junit.Assert;

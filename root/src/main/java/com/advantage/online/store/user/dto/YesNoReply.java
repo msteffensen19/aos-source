@@ -1,4 +1,4 @@
-package com.advantage.online.store.user.model;
+package com.advantage.online.store.user.dto;
 
 import java.util.ArrayList;
 import java.util.List;
