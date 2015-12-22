@@ -14,21 +14,23 @@ public class ArgumentValidationHelper {
     public static final String STATUS_ERROR_ADDRESS_LINE_2 = "ERROR. Address Line 2 is too long";
     public static final String STATUS_ERROR_AMOUNT_VALUE = "ERROR. Amount value is not valid";
     public static final String STATUS_ERROR_ORDER_NUMBER = "ERROR. OrderNumber value is not valid";
+    public static final String ERROR_TRANSACTION_TYPE = "ERROR. Transaction type is not valid";
+    public static final String TRANSACTION_TYPE_PLACE_ORDER = "PlaceShippingOrder";
 
     public static String shippingCostRequestValidation(ShippingCostRequest request) {
-        if(!countryValidation(request.getCountry())) {
+        if(!countryValidation(request.getSEAddress().getCountry())) {
             return STATUS_ERROR_COUNTRY_CODE;
         }
-        if (!cityValidation(request.getCity())) {
+        if (!cityValidation(request.getSEAddress().getCity())) {
             return STATUS_ERROR_CITY_VALUE;
         }
-        if (!stateValidation(request.getState())) {
+        if (!stateValidation(request.getSEAddress().getState())) {
             return STATUS_ERROR_STATE_VALUE;
         }
-        if (!addressLineValidation(request.getAddressLine1())) {
+        if (!addressLineValidation(request.getSEAddress().getAddressLine1())) {
             return STATUS_ERROR_ADDRESS_LINE1;
         }
-        if (!addressLine2Validation(request.getAddressLine2())) {
+        if (!addressLine2Validation(request.getSEAddress().getAddressLine2())) {
             return STATUS_ERROR_ADDRESS_LINE_2;
         }
 
@@ -45,20 +47,23 @@ public class ArgumentValidationHelper {
         if(!orderNumberValidation(request.getOrderNumber())) {
             return STATUS_ERROR_ORDER_NUMBER;
         }
-        if (!cityValidation(request.getCity())) {
+        if (!cityValidation(request.getSEAddress().getCity())) {
             return STATUS_ERROR_CITY_VALUE;
         }
-        if (!stateValidation(request.getState())) {
+        if (!stateValidation(request.getSEAddress().getState())) {
             return STATUS_ERROR_STATE_VALUE;
         }
-        if (!addressLineValidation(request.getAddressLine1())) {
+        if (!addressLineValidation(request.getSEAddress().getAddressLine1())) {
             return STATUS_ERROR_ADDRESS_LINE1;
         }
-        if (!addressLine2Validation(request.getAddressLine2())) {
+        if (!addressLine2Validation(request.getSEAddress().getAddressLine2())) {
             return STATUS_ERROR_ADDRESS_LINE_2;
         }
         if(!doubleTryParse(request.getAmount())) {
             return STATUS_ERROR_AMOUNT_VALUE;
+        }
+        if(!request.getSETransactionType().equalsIgnoreCase(TRANSACTION_TYPE_PLACE_ORDER)) {
+            return ERROR_TRANSACTION_TYPE;
         }
 
         return STATUS_OK;

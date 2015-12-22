@@ -15,16 +15,23 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="SEAddress">
+        <xs:sequence>
+            <sx:element name="City" type="xs:string"/>
+            <sx:element name="Country" type="xs:string"/>
+            <sx:element name="State" type="xs:string"/>
+            <sx:element name="PostalCode" type="xs:string"/>
+            <xs:element name="AddressLine1" type="xs:string"/>
+            <xs:element name="AddressLine2" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="ShippingCostRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="country" type="xs:string"/>
-                <xs:element name="city" type="xs:string"/>
-                <xs:element name="state" type="xs:string"/>
-                <xs:element name="postalCode" type="xs:string"/>
-                <xs:element name="addressLine1" type="xs:string"/>
-                <xs:element name="addressLine2" type="xs:string"/>
-                <xs:element name="numberOfProducts" type="xs:int"/>
+                <sx:element name="SETransactionType" type="xs:string"/>
+                <sx:element name="SEAddress" type="tns:SEAddress"/>
+                <xs:element name="SENumberOfProducts" type="xs:int"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -32,10 +39,11 @@
     <xs:element name="ShippingCostResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="status" type="xs:string"/>
-                <xs:element name="amount" type="xs:string"/>
-                <xs:element name="currency" type="xs:string"/>
-                <xs:element name="transactionDate" type="xs:string"/>
+                <xs:element name="SETransactionType" type="xs:string"/>
+                <xs:element name="Status" type="xs:string"/>
+                <xs:element name="Amount" type="xs:string"/>
+                <xs:element name="Currency" type="xs:string"/>
+                <xs:element name="TransactionDate" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -43,16 +51,12 @@
     <xs:element name="PlaceShippingOrderRequest">
         <xs:complexType>
             <xs:sequence>
-                <sx:element name="city" type="xs:string"/>
-                <sx:element name="country" type="xs:string"/>
-                <sx:element name="state" type="xs:string"/>
-                <sx:element name="postalCode" type="xs:string"/>
-                <xs:element name="addressLine1" type="xs:string"/>
-                <xs:element name="addressLine2" type="xs:string"/>
+                <sx:element name="SETransactionType" type="xs:string"/>
+                <sx:element name="SEAddress" type="tns:SEAddress"/>
                 <xs:element name="SEProducts" type="tns:SEProducts" form="qualified"/>
-                <xs:element name="orderNumber" type="xs:string"/>
-                <xs:element name="amount" type="xs:string"/>
-                <xs:element name="currency" type="xs:string"/>
+                <xs:element name="OrderNumber" type="xs:string"/>
+                <xs:element name="Amount" type="xs:string"/>
+                <xs:element name="Currency" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -60,9 +64,10 @@
     <xs:element name="PlaceShippingOrderResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="status" type="xs:string"/>
-                <xs:element name="transactionReference" type="xs:string"/>
-                <xs:element name="transactionDate" type="xs:string"/>
+                <sx:element name="SETransactionType" type="xs:string"/>
+                <xs:element name="Status" type="xs:string"/>
+                <xs:element name="TransactionReference" type="xs:string"/>
+                <xs:element name="TransactionDate" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

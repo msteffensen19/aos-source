@@ -18,13 +18,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="state" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="postalCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="addressLine1" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="addressLine2" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="numberOfProducts" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="SETransactionType" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="SEAddress" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}SEAddress"/>
+ *         &lt;element name="SENumberOfProducts" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,190 +31,82 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "country",
-    "city",
-    "state",
-    "postalCode",
-    "addressLine1",
-    "addressLine2",
-    "numberOfProducts"
+    "seTransactionType",
+    "seAddress",
+    "seNumberOfProducts"
 })
 @XmlRootElement(name = "ShippingCostRequest", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
 public class ShippingCostRequest {
 
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String country;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String city;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String state;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String postalCode;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String addressLine1;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String addressLine2;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
-    protected int numberOfProducts;
+    @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String seTransactionType;
+    @XmlElement(name = "SEAddress", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected SEAddress seAddress;
+    @XmlElement(name = "SENumberOfProducts", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+    protected int seNumberOfProducts;
 
     /**
-     * Gets the value of the country property.
+     * Gets the value of the seTransactionType property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCountry() {
-        return country;
+    public String getSETransactionType() {
+        return seTransactionType;
     }
 
     /**
-     * Sets the value of the country property.
+     * Sets the value of the seTransactionType property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCountry(String value) {
-        this.country = value;
+    public void setSETransactionType(String value) {
+        this.seTransactionType = value;
     }
 
     /**
-     * Gets the value of the city property.
+     * Gets the value of the seAddress property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link SEAddress }
      *     
      */
-    public String getCity() {
-        return city;
+    public SEAddress getSEAddress() {
+        return seAddress;
     }
 
     /**
-     * Sets the value of the city property.
+     * Sets the value of the seAddress property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link SEAddress }
      *     
      */
-    public void setCity(String value) {
-        this.city = value;
+    public void setSEAddress(SEAddress value) {
+        this.seAddress = value;
     }
 
     /**
-     * Gets the value of the state property.
+     * Gets the value of the seNumberOfProducts property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getState() {
-        return state;
+    public int getSENumberOfProducts() {
+        return seNumberOfProducts;
     }
 
     /**
-     * Sets the value of the state property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setState(String value) {
-        this.state = value;
-    }
-
-    /**
-     * Gets the value of the postalCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    /**
-     * Sets the value of the postalCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPostalCode(String value) {
-        this.postalCode = value;
-    }
-
-    /**
-     * Gets the value of the addressLine1 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAddressLine1() {
-        return addressLine1;
-    }
-
-    /**
-     * Sets the value of the addressLine1 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAddressLine1(String value) {
-        this.addressLine1 = value;
-    }
-
-    /**
-     * Gets the value of the addressLine2 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    /**
-     * Sets the value of the addressLine2 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAddressLine2(String value) {
-        this.addressLine2 = value;
-    }
-
-    /**
-     * Gets the value of the numberOfProducts property.
+     * Sets the value of the seNumberOfProducts property.
      * 
      */
-    public int getNumberOfProducts() {
-        return numberOfProducts;
-    }
-
-    /**
-     * Sets the value of the numberOfProducts property.
-     * 
-     */
-    public void setNumberOfProducts(int value) {
-        this.numberOfProducts = value;
+    public void setSENumberOfProducts(int value) {
+        this.seNumberOfProducts = value;
     }
 
 }

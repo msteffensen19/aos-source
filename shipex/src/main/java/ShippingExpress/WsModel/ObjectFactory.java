@@ -70,6 +70,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SEAddress }
+     * 
+     */
+    public SEAddress createSEAddress() {
+        return new SEAddress();
+    }
+
+    /**
      * Create an instance of {@link SEProducts }
      * 
      */

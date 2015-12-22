@@ -12,6 +12,8 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class ShipExEndpoint {
+    public static final String TRANSACTION_TYPE_SHIPPINGCOST = "SHIPPINGCOST";
+    public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
     private ShippingExpressService shippingService;
 
     @Autowired
@@ -26,10 +28,11 @@ public class ShipExEndpoint {
         String validation = ArgumentValidationHelper.shippingCostRequestValidation(request);
         if(!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
             response.setStatus(validation);
+            response.setSETransactionType(TRANSACTION_TYPE_SHIPPINGCOST);
             return response;
         }
 
-        response.setAmount(shippingService.getShippingCost(request.getCountry(), request.getNumberOfProducts()));
+        response.setAmount(shippingService.getShippingCost(request.getSEAddress().getCountry(), request.getSENumberOfProducts()));
         response.setCurrency(shippingService.getCurrency());
         response.setTransactionDate(shippingService.getFormatTimeNow());
         response.setStatus(ArgumentValidationHelper.shippingCostResponseValidation(response));
@@ -53,6 +56,7 @@ public class ShipExEndpoint {
         String validation = ArgumentValidationHelper.placeShippingOrderRequestValidation(request);
         if(!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
             response.setStatus(validation);
+            response.setSETransactionType(TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
             return response;
         }
         response.setTransactionDate(shippingService.getFormatTimeNow());

@@ -18,10 +18,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="currency" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="transactionDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="SETransactionType" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Amount" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Currency" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="TransactionDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,6 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "seTransactionType",
     "status",
     "amount",
     "currency",
@@ -40,14 +42,40 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "ShippingCostResponse", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
 public class ShippingCostResponse {
 
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String seTransactionType;
+    @XmlElement(name = "Status", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String status;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "Amount", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String amount;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "Currency", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String currency;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "TransactionDate", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String transactionDate;
+
+    /**
+     * Gets the value of the seTransactionType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSETransactionType() {
+        return seTransactionType;
+    }
+
+    /**
+     * Sets the value of the seTransactionType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSETransactionType(String value) {
+        this.seTransactionType = value;
+    }
 
     /**
      * Gets the value of the status property.
