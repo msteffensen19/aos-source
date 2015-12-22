@@ -1,10 +1,11 @@
 package advantage.online.store.services;
 
 import advantage.online.store.dto.MasterCreditDto;
-import advantage.online.store.dto.MasterCreditResponseStatus;
+import advantage.online.store.dto.MasterCreditResponse;
 import advantage.online.store.dto.ResponseEnum;
 import advantage.online.store.dto.TransactionTypeEnum;
 import advantage.util.ArgumentValidationHelper;
+import advantage.util.StringHelper;
 import advantage.util.ValidationHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <b>MasterCredit</b> MOCK server service. <br/>
- * The {@link MasterCreditResponseStatus#MCRefNumber} is set from {@code static}
+ * The {@link MasterCreditResponse#referenceNumber} is set from {@code static}
  * {@link AtomicLong} type property.
  * @see AtomicLong
  * @author Binyamin Regev on 21/12/2015.
@@ -24,7 +25,21 @@ import java.util.concurrent.atomic.AtomicLong;
 @Transactional
 public class MasterCreditService {
 
-    private static AtomicLong masterCreditRefNumber = new AtomicLong(new Date().getTime());
+    private static AtomicLong masterCreditRefNumber;
+
+    public MasterCreditService() {
+
+        long result = new Date().getTime();
+
+        //  If more than 10 digits than take the 10 right-most digits
+        if (result > 9999999999L) { result %= 10000000000L; }
+
+        //  10 - 10 = 0 => Math.pow(10, 0) = 1 => result *= 1 = result
+        int power = 10 - String.valueOf(result).length();
+        result *= Math.pow(10, power);
+
+        masterCreditRefNumber = new AtomicLong(result);
+    }
 
     /**
      * {@link AtomicLong#getAndIncrement()} increments the value by 1 and
@@ -40,46 +55,49 @@ public class MasterCreditService {
      * Payment is successful unless{@link MasterCreditDto} {@code transactionDate}
      * did not occur yet (is in the future).
      * @param masterCreditDto {@link MasterCreditDto} with payment {@code request} data.
-     * @return {@link MasterCreditResponseStatus} <b>MasterCredit</b> server {@code response} information.
+     * @return {@link MasterCreditResponse} <b>MasterCredit</b> server {@code response} information.
      */
     @Transactional
-    public MasterCreditResponseStatus doPayment(MasterCreditDto masterCreditDto) {
+    public MasterCreditResponse doPayment(MasterCreditDto masterCreditDto) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(masterCreditDto, "MasterCredit request data");
-        ArgumentValidationHelper.validateLongArgumentIsPositive(masterCreditDto.getMCCardNumber(), "MasterCredit card number");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(masterCreditDto.getCardNumber(), "MasterCredit card number");
 
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getMCTransactionType(), "MasterCredit transaction type");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getMCExpirationdate(), "MasterCredit expiration date");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getMCCustomerName(), "MasterCredit customer name");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getCustomerphone(), "MasterCredit customer phone");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getMCCVVNumber(), "MasterCredit CVV number");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionType(), "MasterCredit transaction type");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getExpirationDate(), "MasterCredit expiration date");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getCustomerName(), "MasterCredit customer name");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getCustomerPhone(), "MasterCredit customer phone");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(masterCreditDto.getCvvNumber()), "MasterCredit CVV number");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionDate(), "MasterCredit transaction date");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getAccountNumber(), "MasterCredit receiving card account number");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(masterCreditDto.getAccountNumber()), "MasterCredit receiving card account number");
 
-        boolean isValid = ValidationHelper.isValidDate(masterCreditDto.getTransactionDate().substring(1, 2) + "." +
-                                                        masterCreditDto.getTransactionDate().substring(4, 5) + "." +
-                                                        masterCreditDto.getTransactionDate().substring(6, 8));
+        String transactionDate = masterCreditDto.getTransactionDate().substring(0, 2) + "." +
+                                masterCreditDto.getTransactionDate().substring(2, 4) + "." +
+                                masterCreditDto.getTransactionDate().substring(4, 8);
+        boolean isValid = ValidationHelper.isValidDate(transactionDate);
 
-        isValid = isValid && ValidationHelper.isValidMasterCreditCVVNumber(masterCreditDto.getMCCVVNumber());
+        isValid = isValid && ValidationHelper.isValidMasterCreditCVVNumber(String.valueOf(masterCreditDto.getCvvNumber()));
 
         isValid = isValid && ValidationHelper.isValidDate("01." +
-                                    masterCreditDto.getMCExpirationdate().substring(1, 2) + "." +
-                                    masterCreditDto.getMCExpirationdate().substring(3, 6));
+                                    masterCreditDto.getExpirationDate().substring(0, 2) + "." +
+                                    masterCreditDto.getExpirationDate().substring(2, 6));
 
-        isValid = isValid && ValidationHelper.isValidMasterCreditCVVNumber(masterCreditDto.getMCCVVNumber());
-        isValid = isValid && ValidationHelper.isValidFullName(masterCreditDto.getMCCustomerName());
+        isValid = isValid && ValidationHelper.isValidMasterCreditCVVNumber(String.valueOf(masterCreditDto.getCvvNumber()));
+        isValid = isValid && ValidationHelper.isValidFullName(masterCreditDto.getCustomerName());
 
-        MasterCreditResponseStatus responseStatus = new MasterCreditResponseStatus();
+        MasterCreditResponse responseStatus = new MasterCreditResponse();
 
-        responseStatus.setMCTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
-        responseStatus.setMCRefNumber(this.referenceNumberNextValue());
-        //responseStatus.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));
+        responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
+        responseStatus.setReferenceNumber(this.referenceNumberNextValue());
+        //responseStatus.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));   //  Transaction date from current date
         responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
 
-        if (isValid) {
-            responseStatus.setMCResponse(ResponseEnum.APPROVED.getStringCode());
+        //  Check if Transaction Date to determine if transaction APPROVED or REJECTED
+        Date date = StringHelper.convertStringToDate(transactionDate, "dd.MM.yyyy");
+        if (date.getTime() > new Date().getTime()) {
+            responseStatus.setResponse(ResponseEnum.REJECTED.getStringCode());
         } else {
-            responseStatus.setMCResponse(ResponseEnum.REJECTED.getStringCode());
+            responseStatus.setResponse(ResponseEnum.APPROVED.getStringCode());
         }
 
         return responseStatus;
@@ -89,15 +107,15 @@ public class MasterCreditService {
      * Do <i>Refund</i> {@code request} received and return {@code response}
      * @param paymentId {@code long}. <b>MasterCredit</b> unique payment identification.
      * @param dto {@code request} data.
-     * @return {@link MasterCreditResponseStatus} <b>MasterCredit</b> server {@code response} to {@code request} received.
+     * @return {@link MasterCreditResponse} <b>MasterCredit</b> server {@code response} to {@code request} received.
      */
     @Transactional
-    public MasterCreditResponseStatus doRefund(long paymentId, MasterCreditDto dto) {
-        MasterCreditResponseStatus responseStatus = new MasterCreditResponseStatus();
+    public MasterCreditResponse doRefund(long paymentId, MasterCreditDto dto) {
+        MasterCreditResponse responseStatus = new MasterCreditResponse();
 
-        responseStatus.setMCTransactionType(TransactionTypeEnum.REFUND.getStringCode());
-        responseStatus.setMCResponse(ResponseEnum.APPROVED.getStringCode());
-        responseStatus.setMCRefNumber(this.referenceNumberNextValue());
+        responseStatus.setTransactionType(TransactionTypeEnum.REFUND.getStringCode());
+        responseStatus.setResponse(ResponseEnum.APPROVED.getStringCode());
+        responseStatus.setReferenceNumber(this.referenceNumberNextValue());
         responseStatus.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));
 
         return responseStatus;
