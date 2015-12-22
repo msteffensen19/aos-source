@@ -164,6 +164,17 @@
     color: #54d3ad;
 }
 
+.option > .sliderSteps {
+    font-size: 12px;
+    position: relative;
+    top:-5px
+}
+
+.option > #slider {
+    width: 83% !important;
+    margin: 0 auto
+}
+
 @media screen and (max-width: 1550px) {
     .categoryRight ul li {
         width: 23%;

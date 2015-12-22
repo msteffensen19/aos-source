@@ -11,7 +11,7 @@
                     {{attrib.attributeName}}
                 </h4>
                 <div class="option" >
-                    <div ng-repeat="attrVal in attrib.attributeValues" style="display: inline-block" >
+                    <div ng-repeat="attrVal in attrib.attributeValues" >
                         <div class="fill">
                             <input type="checkbox" ng-model="item.selected"
                                    ng-click="includeProducts($event, attrVal, attrib.attributeName)">
@@ -27,34 +27,41 @@
                     ng-click="toggleColapse('accordionColor')" >
                     {{'COLOR' | translate }}
                 </h4>
+
                 <div class="option" >
-                    <div ng-repeat="color in category.colors" style="display: inline-block">
-                        <span class="productColor "
-                              ng-click="includeProducts($event, color, 'COLOR')"
-                              ng-style="{'backgroundColor': '#' + color}">
+                    <div ng-repeat="color in productsColors" >
+                        <span class="productColor " id="productsColors{{color.code}}"
+                              ng-click="includeProducts($event, color, 'COLOR'); toggleColorSelectedClass(color.code)"
+                              ng-style=" color.code == 'FFFFFF' ?
+                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
+                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
+                            <label>{{color.color}}</label>
                         </span>
                     </div>
                 </div>
             </li>
             <!--- END color Section -->
-            <!--- Price Section -->
+            <!--- Price Section-->
             <li>
-                <h4 class="accordion roboto-regular arrowDown"
-                    ng-click="toggleColapse(attrib.attributeId)" >
+                <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
+                    ng-click="toggleColapse('accordionPrice')" >
                     {{'PRICE' | translate }}
                 </h4>
                 <div class="option">
-                    <!-- <div slider ng-model="single" start='1' end='10'></div>
-                    <div slider ng-from="test.from" ng-to="test.to" start=0 end=100 step=5></div> -->
-                </div>
-            </li>
+                    <div id="slider"></div>
+                    <br />
+                    <p class="sliderSteps" style="float: right" >{{minPriceToFilter}}</p>
+                    <p class="sliderSteps" style="float: left">{{maxPriceToFilter}}</p>
+            </div>
+
+
+        </li>
             <!--- Price Section -->
         </ul>
     </div>
     <div class="cell categoryRight">
         <ul>
-
-            <li ng-repeat="product in filtered = ( products | filter:productsFilter)"
+            <li ng-repeat="product in products | productsFilter:maxPriceToFilter:minPriceToFilter:productsInclude"
                 ng-click="gotoItem(product.productId)" >
                 <div class="AddToCard">
                     <label> {{'SHOP_NOW' | translate}} </label>
