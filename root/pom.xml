@@ -164,7 +164,7 @@
                                     <!--suppress MavenModelInspection -->
                                     <password>${account.hibernate.db.password}</password>
                                     <autocommit>true</autocommit>
-                                    <sqlCommand>create database "${account.hibernate.db.name}555"</sqlCommand>
+                                    <sqlCommand>create database "${account.hibernate.db.name}"</sqlCommand>
                                     <!-- ignore error when database already exists -->
                                     <onError>continue</onError>
                                 </configuration>
