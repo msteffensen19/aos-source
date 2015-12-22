@@ -17,7 +17,7 @@
     </parent>
 
     <build>
-        <!-- <finalName>res</finalName>-->
+        <finalName>res</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
