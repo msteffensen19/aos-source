@@ -20,7 +20,7 @@ import java.util.List;
  * @author Binyamin Regev on 09/12/2015.
  */
 @RestController
-@RequestMapping(value = "/order"+Constants.URI_API+"/v1")
+@RequestMapping(value = Constants.URI_API + "/v1")
 public class OrderController {
 
     @Autowired
