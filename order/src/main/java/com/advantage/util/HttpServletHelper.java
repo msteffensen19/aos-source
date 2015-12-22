@@ -1,13 +1,12 @@
 package com.advantage.util;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * A helper class for the HTTP servlet API.
@@ -36,7 +35,7 @@ public abstract class HttpServletHelper {
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(parameterNames,
                 "parameter names");
-        final Collection<String> nonExistingParameters = new ArrayList<String>();
+        final Collection<String> nonExistingParameters = new ArrayList<>();
 
         for (final String parameterName : parameterNames) {
 
