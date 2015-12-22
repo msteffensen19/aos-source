@@ -12,6 +12,7 @@
         <module>root</module>
         <module>catalog</module>
         <module>order</module>
+        <module>account</module>
         <module>shipex</module>
         <module>mastercredit</module>
     </modules>
