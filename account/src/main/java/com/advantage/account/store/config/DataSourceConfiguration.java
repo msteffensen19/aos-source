@@ -27,14 +27,8 @@ public class DataSourceConfiguration {
     public static final String ENV_HIBERNATE_DB_PASSWORD = "account.hibernate.db.password";
     public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "hibernate.db.driver_classname";
 
-
     @Inject
     private Environment env;
-
-    /*@Bean(initMethod = "init")
-    public DataSourceInit initTestData() {
-        return new DataSourceInit();
-    }*/
 
     @Bean(initMethod = "init")
     public DataSourceInit4Json initTestData() {

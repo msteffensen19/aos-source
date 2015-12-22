@@ -1,7 +1,6 @@
 package com.advantage.account.store.init;
 
 import com.advantage.account.store.Constants;
-import com.advantage.account.store.dao.category.CategoryRepository;
 import com.advantage.account.store.user.dto.AppUserType;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.store.user.model.AppUser;
@@ -28,9 +27,6 @@ import java.util.List;
 public class DataSourceInit4Json {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
-
-    @Autowired
-    CategoryRepository categoryRepository;
 
     public void init() throws Exception {
 
@@ -117,34 +113,5 @@ public class DataSourceInit4Json {
         fullPath = pathArr[0];
 
         return fullPath.substring(1);
-
-        /*File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
-        File propertyFile = new File(catalinaBase, "webapps/root/app");
-
-        return propertyFile.getAbsolutePath();*/
-
-        // return new java.io.File( ".").getCanonicalPath().split("bin")[0];
     }
-
-    /*private Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
-        Set<ImageAttribute> imageAttributes = new HashSet<>();
-        for (String s : images) {
-            ImageAttribute image = new ImageAttribute(s);
-            image.setProduct(product);
-            imageAttributes.add(image);
-        }
-
-        return imageAttributes;
-    }*/
-
-   /* private  Set<ColorAttribute> getColorAttributes(Collection<ColorAttribute> colors, Product product) {
-        Set<ColorAttribute> colorAttributes = new HashSet<>();
-        for (ColorAttribute s : colors) {
-            ColorAttribute color = new ColorAttribute(s.getColor());
-            color.setProduct(product);
-            color.setInStock(s.getInStock());
-            colorAttributes.add(color);
-        }
-        return colorAttributes;
-    }*/
 }
