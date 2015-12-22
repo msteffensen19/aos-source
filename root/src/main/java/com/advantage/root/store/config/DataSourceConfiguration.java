@@ -1,6 +1,5 @@
 package com.advantage.root.store.config;
 
-import com.advantage.root.store.init.DataSourceInit4Json;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,19 +26,8 @@ public class DataSourceConfiguration {
     public static final String ENV_HIBERNATE_DB_PASSWORD = "account.hibernate.db.password";
     public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "hibernate.db.driver_classname";
 
-
     @Inject
     private Environment env;
-
-    /*@Bean(initMethod = "init")
-    public DataSourceInit initTestData() {
-        return new DataSourceInit();
-    }*/
-
-    @Bean(initMethod = "init")
-    public DataSourceInit4Json initTestData() {
-        return new DataSourceInit4Json();
-    }
 
     @Bean
     public DataSource dataSource() {
