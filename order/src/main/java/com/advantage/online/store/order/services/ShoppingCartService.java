@@ -1,6 +1,6 @@
 package com.advantage.online.store.order.services;
 
-import com.advantage.online.store.order.doa.ShoppingCartRepository;
+import com.advantage.online.store.order.dao.ShoppingCartRepository;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
