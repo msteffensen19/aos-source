@@ -16,14 +16,14 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 @Aspect
 public class AdvantageDaoCallsLoggingAspect {
 
-    @Before("execution(* com.advantage.online.store.dao.*.*(..))")
+    @Before("execution(* com.advantage.catalog.store.dao.*.*(..))")
     public void logBeforeDaoCall(final JoinPoint joinPoint) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(joinPoint, "join point");
         logDaoCall(joinPoint, true);
     }
 
-    @After("execution(* com.advantage.online.store.dao.*.*(..))")
+    @After("execution(* com.advantage.catalog.store.dao.*.*(..))")
     public void logAfterDaoCall(final JoinPoint joinPoint) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(joinPoint, "join point");

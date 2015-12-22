@@ -24,11 +24,11 @@ import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
 
 @Configuration
-@ComponentScan({"com.advantage.online.store.services",
-        "com.advantage.online.store.dao",
-        "com.advantage.online.store.user.dao",
-        "com.advantage.online.store.user.model",
-        "com.advantage.online.store.init"})
+@ComponentScan({"com.advantage.catalog.store.services",
+        "com.advantage.catalog.store.dao",
+        "com.advantage.catalog.store.user.dao",
+        "com.advantage.catalog.store.user.model",
+        "com.advantage.catalog.store.init"})
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
 
@@ -59,7 +59,7 @@ public class AdvantageTestContextConfiguration {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.online.store.model", "com.advantage.online.store.user.model"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.catalog.store.model", "com.advantage.catalog.store.user.model"});
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 

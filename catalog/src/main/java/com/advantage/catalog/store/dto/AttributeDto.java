@@ -2,9 +2,6 @@ package com.advantage.catalog.store.dto;
 
 import java.util.*;
 
-//import com.advantage.online.store.model.attribute.EntityAttribute;
-
-
 public class AttributeDto {
 
     private String attributeName;

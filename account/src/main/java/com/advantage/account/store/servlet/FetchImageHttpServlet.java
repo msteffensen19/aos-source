@@ -1,4 +1,4 @@
-package advantage.online.store.servlet;
+package com.advantage.account.store.servlet;
 
 import com.advantage.account.store.image.ImageManagement;
 import com.advantage.account.store.image.ImageManagementAccess;

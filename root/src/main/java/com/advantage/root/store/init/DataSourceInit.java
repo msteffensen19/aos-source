@@ -3,14 +3,12 @@
  */
 package com.advantage.root.store.init;
 
-import javax.persistence.EntityManagerFactory;
-
 import com.advantage.root.store.model.attribute.Attribute;
+import com.advantage.root.store.model.category.Category;
+import com.advantage.root.store.model.deal.Deal;
 import com.advantage.root.store.model.deal.DealType;
 import com.advantage.root.store.model.product.Product;
-import com.advantage.root.store.model.deal.Deal;
 import com.advantage.root.store.model.product.ProductAttributes;
-import com.advantage.root.store.model.category.Category;
 import com.advantage.root.store.user.model.Country;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,11 +16,9 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-//import com.advantage.online.store.model.attribute.EntityAttribute;
-
+import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.List;
-//import com.advantage.online.store.model.category.CategoryAttributeTitleAssociation;
 
 
 @Component

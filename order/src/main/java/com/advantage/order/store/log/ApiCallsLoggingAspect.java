@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Aspect
 public class ApiCallsLoggingAspect {
-    @Before("execution(* com.advantage.online.store.api.*.*(..))")
+    @Before("execution(* com.advantage.order.store.api.*.*(..))")
     public void logApiRequest(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = null;
@@ -27,7 +27,7 @@ public class ApiCallsLoggingAspect {
         if (request != null) logApiRequest(request);
     }
 
-    @AfterReturning(value = "execution(* com.advantage.online.store.api.*.*(..))", returning = "result")
+    @AfterReturning(value = "execution(* com.advantage.order.store.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
         Logger logger = getLoggerFactory("HttpResponse");
         String builder = joinPoint.getSignature().getName() +

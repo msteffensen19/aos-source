@@ -15,14 +15,14 @@ import org.slf4j.LoggerFactory;
 @Aspect
 public class AdvantageDaoCallsLoggingAspect {
 
-    @Before("execution(* com.advantage.online.store.dao.*.*(..))")
+    @Before("execution(* com.advantage.root.store.dao.*.*(..))")
     public void logBeforeDaoCall(final JoinPoint joinPoint) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(joinPoint, "join point");
         logDaoCall(joinPoint, true);
     }
 
-    @After("execution(* com.advantage.online.store.dao.*.*(..))")
+    @After("execution(* com.advantage.root.store.dao.*.*(..))")
     public void logAfterDaoCall(final JoinPoint joinPoint) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(joinPoint, "join point");

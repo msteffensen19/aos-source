@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.advantage.online.store"})
+@EnableJpaRepositories(basePackages = {"com.advantage.account.store"})
 public class DataJpaConfiguration {
 }

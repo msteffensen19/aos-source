@@ -1,16 +1,10 @@
 package com.advantage.root_test.cfg;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-
+import com.advantage.root.store.config.ImageManagementConfiguration;
+import com.advantage.root.store.image.ImageManagement;
+import com.advantage.root.store.image.ImageManagementAccess;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -19,16 +13,16 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.advantage.root.store.config.ImageManagementConfiguration;
-import com.advantage.root.store.image.ImageManagement;
-import com.advantage.root.store.image.ImageManagementAccess;
+import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
-@ComponentScan({"com.advantage.online.store.services",
-        "com.advantage.online.store.dao",
-        "com.advantage.online.store.user.dao",
-        "com.advantage.online.store.user.model",
-        "com.advantage.online.store.init"})
+@ComponentScan({"com.advantage.root.store.services",
+        "com.advantage.root.store.dao",
+        "com.advantage.root.store.user.dao",
+        "com.advantage.root.store.user.model",
+        "com.advantage.root.store.init"})
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
 
@@ -59,7 +53,7 @@ public class AdvantageTestContextConfiguration {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.online.store.model", "com.advantage.online.store.user.model"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.root.store.model", "com.advantage.root.store.user.model"});
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
