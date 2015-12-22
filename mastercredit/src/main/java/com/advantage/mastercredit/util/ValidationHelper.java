@@ -1,0 +1,138 @@
+package com.advantage.mastercredit.util;
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
+
+/**
+ * @author Binyamin Regev on 19/11/2015.
+ */
+public class ValidationHelper {
+    private static final String FULL_NAME_PATTERN = "^[\\p{L} .'-]+$";
+
+    private static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
+
+    //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3}))?[-.\\s]?)\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+
+    private static final String TIME_24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
+
+    //  EUROPEAN_DATE_FORMAT = "dd.MM.yyyy" ; AMERICAN_DATE_FORMAT = "MM/dd/yyyy" ; SCANDINAVIAN_DATE_FORMAT = "yyyy-MM-dd"
+    private static final String AMERICAN_DATE_PATTERN = "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)";
+    private static final String EUROPEAN_DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01]).(0?[1-9]|1[012]).((19|20)\\d\\d)";
+    private static final String SCANDINAVIAN_DATE_PATTERN = "((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"; //YYYY-MM-DD
+
+    private static Pattern pattern;
+
+    public ValidationHelper() {
+
+    }
+
+    public static boolean isValidPhoneNumber(final String phoneNumber) {
+        pattern = Pattern.compile(PHONE_PATTERN);
+
+        final boolean isValid = pattern.matcher(phoneNumber).matches();
+        System.out.println(phoneNumber + " : " + isValid);
+
+        return isValid;
+    }
+
+    /**
+     * Check that {@code time24h} is a valid 24-hours time format.
+     *
+     * @param time24h {@link String} to verify as a having a valid 24-hours time format.
+     * @return <b>true</b> when {@code time24h} is a valid time format, otherwise <b>false</b>.
+     */
+    public static boolean isValidTime24h(final String time24h) {
+        pattern = Pattern.compile(TIME_24HOURS_PATTERN);
+
+        final boolean isValid = pattern.matcher(time24h).matches();
+        System.out.println(time24h + " : " + isValid);
+
+        return isValid;
+
+    }
+
+    /**
+     * Check that {@code stringDate} is a valid date format, either EUROPEAN, AMERICAN or SCANDINAVIAN.
+     * <br/>
+     *
+     * @param stringDate {@link String} verify as having a valid date format.
+     * @return <b>true</b> when {@code stringDate} is a valid date format, otherwise <b>false</b>.
+     */
+    public static boolean isValidDate(final String stringDate) {
+        SimpleDateFormat dateFormat;
+
+        if (Pattern.compile(AMERICAN_DATE_PATTERN).matcher(stringDate).matches()) {
+            dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        } else if (Pattern.compile(EUROPEAN_DATE_PATTERN).matcher(stringDate).matches()) {
+            dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        } else if (Pattern.compile(SCANDINAVIAN_DATE_PATTERN).matcher(stringDate).matches()) {
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        } else {
+            //  invalid date format
+            return false;
+        }
+
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(stringDate.trim());
+        } catch (ParseException pe) {
+            System.out.println(stringDate + " : False");
+            return false;
+        }
+
+        System.out.println(stringDate + " : True");
+        return true;
+
+    }
+
+    public static boolean isValidMasterCreditCVVNumber(final String cvvNumber) {
+        pattern = Pattern.compile(MASTER_CREDIT_CVV_NUMBER_PATTERN);
+
+        //  Validate MasterCredit CVV number
+        final boolean isValid = pattern.matcher(cvvNumber).matches();
+
+        System.out.println("MasterCredit CVV number=" + cvvNumber + " is valid? " + isValid);
+
+        return isValid;
+    }
+
+    public static boolean isValidFullName(final String fullName) {
+        pattern = Pattern.compile(FULL_NAME_PATTERN);
+
+        //  Validate Full Name
+        final boolean isValid = pattern.matcher(fullName).matches();
+
+        System.out.println("Full name=\"" + fullName + "\" is valid? " + isValid);
+
+        return isValid;
+    }
+
+    public static void main(String[] args) {
+        //ValidationHelper validationHelper = new ValidationHelper();
+
+        ValidationHelper.isValidDate("29.02.2012"); //  European - Valid
+        ValidationHelper.isValidDate("29.02.2013"); //  European - INVALID
+
+        ValidationHelper.isValidDate("02/29/2012"); //  American - Valid
+        ValidationHelper.isValidDate("02/29/2011"); //  American - INVALID
+
+        ValidationHelper.isValidDate("2012-02-29"); //  Scandinavian - Valid
+        ValidationHelper.isValidDate("2011-02-29"); //  Scandinavian - INVALID
+
+        //  All are public figures
+        ValidationHelper.isValidFullName("King David");
+        ValidationHelper.isValidFullName("Solomon Ben-David");
+        ValidationHelper.isValidFullName("Ben E. King");
+        ValidationHelper.isValidFullName("James T. Kirk");
+        ValidationHelper.isValidFullName("J'kar");
+
+        ValidationHelper.isValidMasterCreditCVVNumber("404");   //  "0" (zero)
+        ValidationHelper.isValidMasterCreditCVVNumber("4O4");   //  "O" (UPPER case) is not numeric
+        ValidationHelper.isValidMasterCreditCVVNumber("777");
+
+    }
+}

@@ -1,10 +1,10 @@
 package advantage.online.store.servlet;
 
-import com.advantage.online.store.image.ImageManagement;
-import com.advantage.online.store.image.ImageManagementAccess;
-import com.advantage.online.store.image.ManagedImage;
-import com.advantage.util.ArgumentValidationHelper;
-import com.advantage.util.IOHelper;
+import com.advantage.account.store.image.ImageManagement;
+import com.advantage.account.store.image.ImageManagementAccess;
+import com.advantage.account.store.image.ManagedImage;
+import com.advantage.account.util.ArgumentValidationHelper;
+import com.advantage.account.util.IOHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 
