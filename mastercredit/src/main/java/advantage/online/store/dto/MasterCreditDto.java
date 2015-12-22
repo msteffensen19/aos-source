@@ -1,140 +1,135 @@
 package advantage.online.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MasterCreditDto {
 
-    private class ReceivingAmount {
-        private double value;           //  Cart total cost: XXXXXXXXXX.XX (12,2)
-        private String currency;        //  3 characters. Default "USD"
+    @JsonProperty("MCTransactionType")
+    private String transactionType;   //  PAYMENT - TransactioTypeEnum.PAYMENT
 
-        public ReceivingAmount(double value, String currency) {
-            this.value = value;
-            this.currency = currency;
-        }
+    @JsonProperty("MCCardNumber")
+    private long cardNumber;          //  16 digits
 
-        public double getValue() { return this.value; }
+    @JsonProperty("MCExpirationDate")
+    private String expirationDate;       //   6 digits: MMYYYY
 
-        public void setValue(double value) { this.value = value; }
+    @JsonProperty("MCCustomerName")
+    private String customerName;      //  2-30 characters ([A-Za-z]{2,30})
 
-        public String getCurrency() { return this.currency; }
+    @JsonProperty("MCCustomerPhone")
+    private String customerPhone;       //  0-20 digits and special characters
 
-        public void setCurrency(String currency) { this.currency = currency; }
-    }
+    @JsonProperty("MCCVVNumber")
+    private int cvvNumber;         //  3 digits
 
-    private String MCTransactionType;   //  PAYMENT - TransactioTypeEnum.PAYMENT
-    private long MCCardNumber;          //  16 digits
-    private String MCExpirationdate;       //   6 digits: MMYYYY
-    private String MCCustomerName;      //  2-30 characters ([A-Za-z]{2,30})
-    private String Customerphone;       //  0-20 digits and special characters
-    private String MCCVVNumber;         //  3 digits
-    private String TransactionDate;     //  8 digits: DDMMYYYY
-    //private String MCReceivingCard_AccountNumber;       //  fixed 12 digits. String because can start with "0".
-    private String AccountNumber;       //  fixed 12 digits. String because can start with "0".
+    @JsonProperty("MCTransactionDate")
+    private String transactionDate;     //  8 digits: DDMMYYYY
 
-    private ReceivingAmount MCReceivingAmount;
+    @JsonProperty("MCRecevingCard.AccountNumber")
+    private long accountNumber;       //  fixed 12 digits. String because can start with "0".
+
+    @JsonProperty("MCRecevingAmount.Value")
+    private double value;           //  Cart total cost: XXXXXXXXXX.XX (12,2 = 12 digits 2 of them decimal)
+
+    @JsonProperty("MCRecevingCard.Currency")
+    private String currency;        //  3 characters. Default "USD"
 
     public MasterCreditDto() { }
 
-    public MasterCreditDto(String MCTransactionType, long MCCardNumber, String MCExpirationdate, String MCCustomerName, String Customerphone, String mcCVVNumber, String transactionDate, String accountNumber, double value, String currency) {
-        this.MCTransactionType = MCTransactionType;
-        this.MCCardNumber = MCCardNumber;
-        this.MCExpirationdate = MCExpirationdate;
-        this.MCCustomerName = MCCustomerName;
-        this.Customerphone = Customerphone;
-        this.MCCVVNumber = mcCVVNumber;
-        this.TransactionDate = transactionDate;
-        this.AccountNumber = accountNumber;
-
-        this.setReceivingAmount(value, currency);
+    public MasterCreditDto(String transactionType, long cardNumber, String expirationDate, String customerName, String customerPhone, int cvvNumber, String transactionDate, long accountNumber, double value, String currency) {
+        this.transactionType = transactionType;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+        this.customerName = customerName;
+        this.customerPhone = customerPhone;
+        this.cvvNumber = cvvNumber;
+        this.transactionDate = transactionDate;
+        this.accountNumber = accountNumber;
+        this.value = value;
+        this.currency = currency;
     }
 
-    public String getMCTransactionType() {
-        return MCTransactionType;
+    public String getTransactionType() {
+        return transactionType;
     }
 
-    public void setMCTransactionType(String MCTransactionType) {
-        this.MCTransactionType = MCTransactionType;
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 
-    public long getMCCardNumber() {
-        return MCCardNumber;
+    public long getCardNumber() {
+        return cardNumber;
     }
 
-    public void setMCCardNumber(long MCCardNumber) {
-        this.MCCardNumber = MCCardNumber;
+    public void setCardNumber(long cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public String getMCExpirationdate() {
-        return MCExpirationdate;
+    public String getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setMCExpirationdate(String MCExpirationdate) {
-        this.MCExpirationdate = MCExpirationdate;
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
-    public String getMCCustomerName() {
-        return MCCustomerName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setMCCustomerName(String MCCustomerName) {
-        this.MCCustomerName = MCCustomerName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getCustomerphone() {
-        return Customerphone;
+    public String getCustomerPhone() {
+        return customerPhone;
     }
 
-    public void setCustomerphone(String customerphone) {
-        this.Customerphone = customerphone;
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 
-    public String getMCCVVNumber() {
-        return MCCVVNumber;
+    public int getCvvNumber() {
+        return cvvNumber;
     }
 
-    public void setMCCVVNumber(String MCCVVNumber) {
-        this.MCCVVNumber = MCCVVNumber;
+    public void setCvvNumber(int cvvNumber) {
+        this.cvvNumber = cvvNumber;
     }
 
     public String getTransactionDate() {
-        return TransactionDate;
+        return transactionDate;
     }
 
     public void setTransactionDate(String transactionDate) {
-        this.TransactionDate = transactionDate;
+        this.transactionDate = transactionDate;
     }
 
-    public String getAccountNumber() {
-        return this.AccountNumber;
-    }
+    public long getAccountNumber() { return this.accountNumber; }
 
-    public void setAccountNumber(String accountNumber) {
-        this.AccountNumber = accountNumber;
-    }
+    public void setAccountNumber(long accountNumber) { this.accountNumber = accountNumber; }
 
-    public ReceivingAmount getMCReceivingAmount() {
-        return this.MCReceivingAmount;
-    }
+    public double getValue() { return value; }
 
-    public void setMCReceivingAmount(ReceivingAmount MCReceivingAmount) {
-        this.MCReceivingAmount = MCReceivingAmount;
-    }
+    public void setValue(double value) { this.value = value; }
 
-    public void setReceivingAmount(double value, String currency) {
-        this.MCReceivingAmount = new ReceivingAmount(value, currency);
-    }
+    public String getCurrency() { return currency; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
 
     @Override
     public String toString() {
         return "MasterCreditDto{" +
-                "MCTransactionType='" + MCTransactionType + '\'' +
-                ", MCCardNumber=" + MCCardNumber +
-                ", MCExpirationdate='" + MCExpirationdate + '\'' +
-                ", MCCustomerName='" + MCCustomerName + '\'' +
-                ", Customerphone='" + Customerphone + '\'' +
-                ", MCCVVNumber='" + MCCVVNumber + '\'' +
-                ", TransactionDate='" + TransactionDate + '\'' +
-                ", MCReceivingCard_AccountNumber='" + AccountNumber + '\'' +
-                ", MCReceivingAmount=" + MCReceivingAmount +
+                " MCTransactionType='" + this.getTransactionType() + '\'' +
+                ", MCCardNumber=" + this.getCardNumber() +
+                ", MCExpirationDate='" + this.getExpirationDate() + '\'' +
+                ", MCCustomerName='" + this.getCustomerName() + '\'' +
+                ", CustomerPhone='" + this.getCustomerPhone() + '\'' +
+                ", MCCVVNumber='" + this.getCvvNumber() + '\'' +
+                ", MCTransactionDate='" + this.getTransactionDate() + '\'' +
+                ", MCReceivingCard.AccountNumber='" + this.getAccountNumber() + '\'' +
+                ", MCReceivingAmount.Value=" + this.getValue() +
+                ", MCReceivingAmount.Currency=\'" + this.getCurrency() + "\'" +
                 '}';
     }
 }
