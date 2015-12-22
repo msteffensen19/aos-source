@@ -1,10 +1,35 @@
 package advantage.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Helpful {@link String} methods.
  * @author Binyamin Regev on 21/12/2015.
  */
 public class StringHelper {
+
+    /**
+     * Convert a {@code date} given as {@link String} in {@code dateFormat} to {@link Date}.
+     * @param stringDate {@link String} containing valid date, e.g. "26.03.2011", "1969-06-02", "12/22/1983", etc.
+     * @param dateFormat Valid {@link SimpleDateFormat}, e.g. "dd/MM/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", etc.
+     * @return received date as {@code Java} {@link Date}.
+     */
+    public static Date convertStringToDate(String stringDate, String dateFormat) {
+        Date date = null;
+
+        if (ValidationHelper.isValidDate(stringDate)) {
+            try {
+                date = new SimpleDateFormat(dateFormat).parse(stringDate);
+            } catch (ParseException e) {
+                //e.printStackTrace();
+                date = null;
+            }
+        }
+
+        return date;
+    }
 
     /**
      * Receives {@link String} containing words and capitalize the first

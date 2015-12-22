@@ -1,4 +1,4 @@
-package ShippingExpresss.model;
+package ShippingExpress.model;
 
 public interface ShippingExpressRepository {
     /**
@@ -19,4 +19,11 @@ public interface ShippingExpressRepository {
      * @return {@link Integer}
      */
     int getFreeShippingOption();
+
+    /**
+     * Determines currency name
+     * @return {@link String} 3 chars Currency
+     */
+    String getCurrency();
+
 }

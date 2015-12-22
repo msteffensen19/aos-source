@@ -1,5 +1,5 @@
 
-package ShippingExpresss.WsModel;
+package ShippingExpress.WsModel;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the ShippingExpresss.WsModel package.
+ * generated in the ShippingExpress.WsModel package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -23,10 +23,18 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ShippingExpresss.WsModel
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ShippingExpress.WsModel
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link PlaceShippingOrderResponse }
+     * 
+     */
+    public PlaceShippingOrderResponse createPlaceShippingOrderResponse() {
+        return new PlaceShippingOrderResponse();
     }
 
     /**
@@ -54,11 +62,43 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PlaceShippingOrderRequest }
+     * 
+     */
+    public PlaceShippingOrderRequest createPlaceShippingOrderRequest() {
+        return new PlaceShippingOrderRequest();
+    }
+
+    /**
+     * Create an instance of {@link SEAddress }
+     * 
+     */
+    public SEAddress createSEAddress() {
+        return new SEAddress();
+    }
+
+    /**
+     * Create an instance of {@link SEProducts }
+     * 
+     */
+    public SEProducts createSEProducts() {
+        return new SEProducts();
+    }
+
+    /**
      * Create an instance of {@link ShippingCostRequest }
      * 
      */
     public ShippingCostRequest createShippingCostRequest() {
         return new ShippingCostRequest();
+    }
+
+    /**
+     * Create an instance of {@link Product }
+     * 
+     */
+    public Product createProduct() {
+        return new Product();
     }
 
 }
