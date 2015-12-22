@@ -1,4 +1,4 @@
-package com.advantage.online.store.order.doa;
+package com.advantage.online.store.order.dao;
 
 import com.advantage.online.store.Constants;
 import com.advantage.online.store.dao.AbstractRepository;
@@ -9,20 +9,18 @@ import com.advantage.online.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.online.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.online.store.order.model.ShoppingCart;
 import com.advantage.online.store.order.model.ShoppingCartPK;
-import com.advantage.online.store.user.dao.AppUserRepository;
-import com.advantage.online.store.user.model.AppUser;
 import com.advantage.util.ArgumentValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
@@ -46,8 +44,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private ShoppingCartResponseStatus responseStatus;
     private String failureMessage;
 
-    @Autowired
-    private AppUserRepository appUserRepository;
+    //  ***********************************************
+    //  ******* USE REST API GET REQUEST URI    *******
+    //  ***********************************************
+    //@Autowired
+    //private AppUserRepository appUserRepository;
+    //  ***********************************************
 
     //  =================================================
     //  Local Class Methods
@@ -86,7 +88,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * If <b>an identical product</b> (same product-id and same color) does not exists in the
      * user shopping cart then the method will create a new product in the shopping cart. <br/>
      * otherwise, the method will update the existing identical product found in the user shopping cart. <br />
-     * @param userId identifies specific {@link AppUser}.
+     * @param userId identifies specific {@code AppUser}.
      * @param productId identifies specific {@link Product}
      * @param color identifies specific {@code color} of {@code ColorAttribute}.
      * @param quantity number of product units added to the shopping cart.
@@ -184,7 +186,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * {@link ShoppingCart}. If there is an identical product in {@code cartProducts}
      * and existing {@link ShoppingCart} then the quantity from {@code cartProducts}
      * will be set to the product in the existing {@link ShoppingCart}.
-     * @param userId Id of {@link AppUser} to whom the {@link ShoppingCart} will be created.
+     * @param userId Id of {@code AppUser} to whom the {@link ShoppingCart} will be created.
      * @param cartProducts {@link Collection} of unique products in the {@link ShoppingCart}.
      * @return {@link ShoppingCartResponseStatus} class, properties values: <b>success</b> = {@code true} when successful or {@code false} if failed. <b>reason</b>=success or failure message text. <b>productId</b>=-1 because there are multiple products in the list.
      */
@@ -196,9 +198,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("createShoppingCart.userId=" + userId);
 
-        if (appUserRepository.get(userId) == null) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-        }
+        //  *****************************************************************
+        //  ******* Call "Account Service"REST API GET REQUEST URI    *******
+        //  *****************************************************************
+//        if (appUserRepository.get(userId) == null) {
+//            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+//        }
+        //  *****************************************************************
+
 
         List<ShoppingCart> existingCart = this.getShoppingCartsByUserId(userId);
         if (existingCart == null) {
@@ -228,7 +235,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     /**
      * Calls method {@link #addProductToShoppingCart(long, Long, int, int)} to add a single product to a specific user
      * shopping cart. <br/>
-     * @param userId identifies specific {@link AppUser}.
+     * @param userId identifies specific {@code AppUser}.
      * @param productId identifies specific {@link Product}
      * @param color identifies specific {@code color} of {@code ColorAttribute}.
      * @param quantity number of product units added to the shopping cart.
@@ -243,7 +250,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     /**
      * Calls method {@link #updateShoppingCart(long, Long, int, int)} to update a single product in the user
      * shopping cart. <br/>
-     * @param userId identifies specific {@link AppUser}.
+     * @param userId identifies specific {@code AppUser}.
      * @param productId identifies specific {@link Product}
      * @param color identifies specific {@code color} of {@code ColorAttribute}.
      * @param quantity number of product units added to the shopping cart.
@@ -293,10 +300,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("deleteShoppingCartsByUserId.userId=" + userId);
 
+        //  *****************************************************************
+        //  ******* Call "Account Service"REST API GET REQUEST URI    *******
+        //  *****************************************************************
         //  Verify that exists a User in the application with this userId
-        if (appUserRepository.get(userId) == null) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-        }
+//        if (appUserRepository.get(userId) == null) {
+//            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+//        }
+        //  *****************************************************************
 
         //  Get user's shopping carts
         List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
@@ -678,6 +689,23 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return responseDto;
     }
 
+    /**
+     * Call REST API POST request
+     * @param urlStr
+     * @return
+     */
+    public static String httpPost(String urlStr) throws MalformedURLException {
+        URL url = new URL(urlStr);
+
+        return "";
+    }
+
+    /**
+     * Call REST API GET request
+     * @param urlStr
+     * @return
+     * @throws IOException
+     */
     public static String httpGet(String urlStr) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

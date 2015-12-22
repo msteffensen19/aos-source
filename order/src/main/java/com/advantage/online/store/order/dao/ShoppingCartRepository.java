@@ -1,4 +1,4 @@
-package com.advantage.online.store.order.doa;
+package com.advantage.online.store.order.dao;
 
 import com.advantage.online.store.dao.DefaultCRUDOperations;
 import com.advantage.online.store.order.dto.ShoppingCartDto;
