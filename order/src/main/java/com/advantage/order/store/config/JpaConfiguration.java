@@ -37,7 +37,7 @@ public class JpaConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
-        emf.setPackagesToScan("com.advantage.online.store");
+        emf.setPackagesToScan("com.advantage.order.store");
         emf.setPersistenceProvider(new HibernatePersistenceProvider());
         emf.setJpaProperties(jpaProperties());
         return emf;

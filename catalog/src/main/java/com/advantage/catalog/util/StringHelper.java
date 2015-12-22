@@ -1,4 +1,4 @@
-package com.advantage.account.store.user.util;
+package com.advantage.catalog.util;
 
 /**
  * Helpful {@link String} methods.

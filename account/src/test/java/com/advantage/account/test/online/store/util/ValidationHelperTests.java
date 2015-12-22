@@ -1,7 +1,7 @@
 package com.advantage.account.test.online.store.util;
 
 import com.advantage.account.test.online.store.dao.GenericRepositoryTests;
-import com.advantage.account.store.user.util.ValidationHelper;
+import com.advantage.account.util.ValidationHelper;
 import com.advantage.account.test.cfg.AdvantageTestContextConfiguration;
 import org.junit.Assert;
 import org.junit.Test;

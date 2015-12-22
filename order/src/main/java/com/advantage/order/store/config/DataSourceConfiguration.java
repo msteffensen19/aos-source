@@ -24,7 +24,7 @@ public class DataSourceConfiguration {
 
     public static final String ENV_HIBERNATE_DB_LOGIN = "order.hibernate.db.login";
     public static final String ENV_HIBERNATE_DB_PASSWORD = "order.hibernate.db.password";
-    public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "order.db.driver_classname";
+    public static final String ENV_HIBERNATE_DB_DRIVER_CLASSNAME = "hibernate.db.driver_classname";
 
 
     @Inject

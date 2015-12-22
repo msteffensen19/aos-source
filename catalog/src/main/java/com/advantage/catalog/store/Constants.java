@@ -10,7 +10,6 @@ public class Constants {
     public static final char SLASH = '/';
     public static final char SPACE = ' ';
 
-
     /**
      * prefix of REST API
      */
@@ -23,5 +22,12 @@ public class Constants {
         public static final String ATTRIBUTE_PROCESSOR = "Processor";
         public static final String ATTRIBUTE_MEMORY = "Memory";
         public static final String ATTRIBUTE_DISPLAY = "Display";
+    }
+
+    public static class UserSession {
+        public static final String TOKEN = "token";
+        public static final String IS_SUCCESS = "isSuccess";
+        public static final String USER_ID = "userId";
+
     }
 }

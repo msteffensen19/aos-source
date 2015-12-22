@@ -2,7 +2,7 @@ package com.advantage.account.test.online.store.user;
 
 import com.advantage.account.test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.account.test.online.store.dao.GenericRepositoryTests;
-import com.advantage.account.store.user.util.UserPassword;
+import com.advantage.account.util.UserPassword;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

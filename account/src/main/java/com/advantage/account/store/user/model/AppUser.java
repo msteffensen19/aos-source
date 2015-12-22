@@ -2,7 +2,7 @@ package com.advantage.account.store.user.model;
 
 import com.advantage.account.store.Constants;
 import com.advantage.account.store.user.dto.AppUserType;
-import com.advantage.account.store.user.util.UserPassword;
+import com.advantage.account.util.UserPassword;
 import com.advantage.account.util.ArgumentValidationHelper;
 
 import javax.persistence.*;

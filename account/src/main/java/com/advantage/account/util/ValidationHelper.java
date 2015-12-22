@@ -1,4 +1,4 @@
-package com.advantage.account.store.user.util;
+package com.advantage.account.util;
 
 import com.advantage.account.store.Constants;
 
@@ -163,48 +163,4 @@ public class ValidationHelper {
                 session.getAttribute(Constants.UserSession.TOKEN).toString().compareTo(token) != 0);
     }
 
-    public static void main(String[] args) {
-
-        //  Date
-        ValidationHelper.isValidDate("29.02.2012");         //  valid EUROPEAN date-format
-        ValidationHelper.isValidDate("29.02.2011");         //  invalid EUROPEAN date-format: no Feb 29th in 2011
-
-        ValidationHelper.isValidDate("02/29/2012");         //  valid AMERICAN date-format
-        ValidationHelper.isValidDate("02/29/2011");         //  invalid AMERICAN date-format: no Feb 29th in 2011
-
-        ValidationHelper.isValidDate("2012-02-29");         //  valid SCANDINAVIAN date-format
-        ValidationHelper.isValidDate("2011-02-29");         //  invalid SCANDINAVIAN date-format: no Feb 29th in 2011
-
-        //  24-hours time
-        ValidationHelper.isValidTime24h("11:11:11");        //  true
-        ValidationHelper.isValidTime24h("12:34:56");        //  true
-        ValidationHelper.isValidTime24h("23:59:59");        //  true
-        ValidationHelper.isValidTime24h("23:59:60");        //  false
-        ValidationHelper.isValidTime24h("24:00:00");        //  false
-
-        //  login username
-        ValidationHelper.isValidLogin("king_david");        //  true
-        ValidationHelper.isValidLogin("king.david");        //  true
-        ValidationHelper.isValidLogin("king7david");        //  true
-        ValidationHelper.isValidLogin("king david");        //  false. SPACE is not allowed
-
-        //  login user password
-        ValidationHelper.isValidPassword("King1david");     //  true
-        ValidationHelper.isValidPassword("king2David");     //  true
-        ValidationHelper.isValidPassword("kingDavid12");    //  false. Password too long
-
-        //  e-mail address
-        ValidationHelper.isValidEmail("a#b.com");           //  false, "#" is invalid character
-        ValidationHelper.isValidEmail("a@b.com");           //  true
-        ValidationHelper.isValidEmail("king.david@gov.il"); //  true
-
-        //  International phone number
-        ValidationHelper.isValidPhoneNumber("+1 123 456 7890");
-        ValidationHelper.isValidPhoneNumber("+972 54 123 4567");
-        ValidationHelper.isValidPhoneNumber("+972 54 1234567");
-        ValidationHelper.isValidPhoneNumber("+44 123 4567890");
-        ValidationHelper.isValidPhoneNumber("+44 1234567890");
-        ValidationHelper.isValidPhoneNumber("+441234567890");
-
-    }
 }

@@ -11,7 +11,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "CATEGORY")
-//, uniqueConstraints = {@UniqueConstraint(columnNames = "CATEGORY_NAME")})
 @NamedQueries({
         @NamedQuery(
                 name = Category.QUERY_GET_ALL,

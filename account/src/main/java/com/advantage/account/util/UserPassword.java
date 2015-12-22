@@ -1,4 +1,4 @@
-package com.advantage.account.store.user.util;
+package com.advantage.account.util;
 
 import org.apache.commons.codec.binary.Base64;
 

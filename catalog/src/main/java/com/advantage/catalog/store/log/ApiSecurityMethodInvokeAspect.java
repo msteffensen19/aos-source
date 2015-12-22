@@ -1,4 +1,4 @@
-package com.advantage.account.store.log;
+package com.advantage.catalog.store.log;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.advantage.account.util.ValidationHelper.isAuthorized;
+import static com.advantage.catalog.util.ValidationHelper.isAuthorized;
 
 @Aspect
 public class ApiSecurityMethodInvokeAspect {

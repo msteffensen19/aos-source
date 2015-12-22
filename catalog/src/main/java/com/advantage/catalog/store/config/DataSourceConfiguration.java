@@ -30,11 +30,6 @@ public class DataSourceConfiguration {
     @Inject
     private Environment env;
 
-    /*@Bean(initMethod = "init")
-    public DataSourceInit initTestData() {
-        return new DataSourceInit();
-    }*/
-
     @Bean(initMethod = "init")
     public DataSourceInit4Json initTestData() {
         return new DataSourceInit4Json();
