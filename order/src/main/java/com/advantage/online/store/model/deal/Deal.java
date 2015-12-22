@@ -2,29 +2,6 @@ package com.advantage.online.store.model.deal;
 
 import com.advantage.online.store.model.product.Product;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "DEALS")
-@NamedQueries({
-        @NamedQuery(
-                name = Deal.QUERY_GET_ALL,
-                query = "select d from Deal d"
-        ),
-        @NamedQuery(
-                name = Deal.QUERY_GET_BY_TYPE,
-                query = "select d from Deal d where dealType = :" + Deal.PARAM_DEAL_TYPE
-        )
-})
 public class Deal {
 
     public static final String QUERY_GET_ALL = "deal.getAllDeals";
@@ -36,11 +13,7 @@ public class Deal {
     public static final String PARAM_DEAL_ID = "DEAL_PARAM_DEAL_ID";
     public static final String DEAL_GET_BY_PRODUCT_CATEGORY = "deal.getByProductCategory";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
-    @Column(name = "DEAL_TYPE")
     private Integer dealType;
     private String description;
     private String promotionHeader;
@@ -51,8 +24,6 @@ public class Deal {
     private String dateFrom;
     private String dateTo;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
     public Deal(final Integer dealType, final String description, String promotionHeader,

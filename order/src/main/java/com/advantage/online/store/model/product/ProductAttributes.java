@@ -2,25 +2,14 @@ package com.advantage.online.store.model.product;
 
 import com.advantage.online.store.model.attribute.Attribute;
 
-import javax.persistence.*;
-
 /**
  * Created by dalie on 11/9/2015.
  */
-@Entity
-@Table(name = "PRODUCT_ATTRIBUTES")
-@AssociationOverrides({
-        @AssociationOverride(name = "primaryKey.product",
-                joinColumns = @JoinColumn(name = "product_id")),
-        @AssociationOverride(name = "primaryKey.attribute",
-                joinColumns = @JoinColumn(name = "attribute_id"))
-})
 public class ProductAttributes {
     private ProductAttributeId primaryKey = new ProductAttributeId();
 
     private String attributeValue;
 
-    @EmbeddedId
     public ProductAttributeId getPrimaryKey() {
         return primaryKey;
     }
@@ -29,7 +18,6 @@ public class ProductAttributes {
         this.primaryKey = primaryKey;
     }
 
-    @Transient
     public Product getProduct() {
         return getPrimaryKey().getProduct();
     }
@@ -38,7 +26,6 @@ public class ProductAttributes {
         primaryKey.setProduct(product);
     }
 
-    @Transient
     public Attribute getAttribute() {
         return primaryKey.getAttribute();
     }

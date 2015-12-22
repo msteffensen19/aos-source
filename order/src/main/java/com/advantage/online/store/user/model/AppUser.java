@@ -5,33 +5,12 @@ import com.advantage.online.store.user.dto.AppUserType;
 import com.advantage.online.store.user.util.UserPassword;
 import com.advantage.util.ArgumentValidationHelper;
 
-import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * @author Binyamin Regev on 15/11/2015.
  */
-@Entity
-//@Table(name = "AppUser")
-@NamedQueries({
-        @NamedQuery(
-                name = AppUser.QUERY_GET_ALL,
-                query = "select u from AppUser u"
-        )
-        , @NamedQuery(
-        name = AppUser.QUERY_GET_BY_USER_LOGIN,
-        query = "select u from AppUser u where " + AppUser.FIELD_USER_LOGIN + " = :" + AppUser.PARAM_USER_LOGIN
-)
-        , @NamedQuery(
-        name = AppUser.QUERY_GET_USERS_BY_COUNTRY,
-        query = "select u from AppUser u where " + AppUser.FIELD_COUNTRY + " = :" + AppUser.PARAM_COUNTRY
-)
-//        ,@NamedQuery(
-//        name = AppUser.QUERY_GET_CURRENT_TIMESTAMP,
-//        query = "select to_char(current_timestamp, 'YYYY-MM-DD HH24:MI:SS')"
-//        )
-})
 public class AppUser {
 
     public static final int MAX_NUM_OF_APP_USER = 50;
@@ -64,54 +43,38 @@ public class AppUser {
 //    public static final String QUERY_GET_TIMESTAMP_WITH_INTERVAL = "appUser.getTimestampWithInterval";
 //    public static final String PARAM_USER_LOGIN_BLOCKING = "PARAM_USER_LOGIN_BLOCKING";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = FIELD_ID)
     private long id;
 
-    @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(name = "FIRST_NAME")
     private String firstName;
 
-    @Column(name = FIELD_USER_LOGIN)
     private String loginName;
 
     private String password;
 
-    @Column(name = "USER_TYPE")
     private Integer appUserType;        //  by enum AppUserType
 
-    @Column(name = FIELD_COUNTRY)
     private Integer country;                //  by Country
 
-    @Column(name = "STATE_PROVINCE")
     private String stateProvince;
 
-    @Column(name = "CITY_NAME")
     private String cityName;
 
     private String address;
 
     private String zipcode;
 
-    @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    @Column(name = FIELD_EMAIL)
     private String email;
 
-    @Column(name = "AGREE_TO_RECEIVE_OFFERS")
     private char allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
 
-    @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
 
-    @Column
     private long internalUserBlockedFromLoginUntil; //  Managed Internally
 
-    @Column
     private long internalLastSuccesssulLogin;   //  Managed Internally
 
     public AppUser() {

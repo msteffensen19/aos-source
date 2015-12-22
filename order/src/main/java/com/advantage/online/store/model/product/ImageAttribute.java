@@ -1,22 +1,10 @@
 package com.advantage.online.store.model.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-
-@Entity
 public class ImageAttribute {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "imageUrl")
     private String imageUrl;
 
-    @ManyToOne
-    @JoinColumn(name = Product.FIELD_ID)
-    @JsonIgnore
     private Product product;
 
     public ImageAttribute() {

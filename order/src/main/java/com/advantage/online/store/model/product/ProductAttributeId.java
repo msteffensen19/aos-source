@@ -6,17 +6,12 @@ package com.advantage.online.store.model.product;
 
 import com.advantage.online.store.model.attribute.Attribute;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-@Embeddable
 public class ProductAttributeId implements Serializable {
     private Product product;
     private Attribute attribute;
 
-    @ManyToOne(cascade = CascadeType.ALL)
     public Product getProduct() {
         return product;
     }
@@ -25,7 +20,6 @@ public class ProductAttributeId implements Serializable {
         this.product = product;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
     public Attribute getAttribute() {
         return attribute;
     }

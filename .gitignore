@@ -10,3 +10,7 @@
 ~*.xlsx
 /root/src/main/webapp/target
 *.war
+/shipex/src/main/java/https
+/root/src/main/webapp/global.properties
+/root/src/main/webapp/services.properties
+/root/src/main/webapp/test.properties

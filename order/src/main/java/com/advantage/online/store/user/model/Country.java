@@ -3,37 +3,11 @@ package com.advantage.online.store.user.model;
 import com.advantage.util.ArgumentValidationHelper;
 import com.advantage.util.fs.FileSystemHelper;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
  * @author Binyamin Regev on 15/11/2015.
  */
-@Entity
-@Table(name = "COUNTRY")
-@NamedQueries({
-        @NamedQuery(
-                name = Country.QUERY_GET_ALL,
-                query = "select c from Country c order by NAME"
-        )
-        , @NamedQuery(
-        name = Country.QUERY_GET_BY_COUNTRY_NAME,
-        query = "select c from Country c where NAME = :" + Country.PARAM_COUNTRY_NAME
-)
-        , @NamedQuery(
-        name = Country.QUERY_GET_COUNTRIES_BY_ISO_NAME,
-        query = "select c from Country c where ISO_NAME = :" + Country.PARAM_ISO_NAME + " order by NAME"
-)
-        , @NamedQuery(
-        name = Country.QUERY_GET_COUNTRIES_BY_PHONE_PREFIX,
-        query = "select c from Country c where PHONE_PREFIX = :" + Country.PARAM_PHONE_PREFIX + " order by NAME"
-)
-        , @NamedQuery(
-        name = Country.QUERY_GET_COUNTRIES_BY_PARTIAL_NAME,
-        query = "select c from Country c where NAME like :" +
-                Country.PARAM_COUNTRY_NAME + " order by NAME"
-)
-})
 public class Country {
 
     public static final int MAX_NUM_OF_COUNTRIES = 50;
@@ -54,18 +28,12 @@ public class Country {
     public static final String PARAM_ISO_NAME = "PARAM_COUNTRY_ISO_NAME";
 
     public static final String PARAM_PHONE_PREFIX = "PARAM_COUNTRY_PHONE_PREFIX";
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = FIELD_ID)
     private Integer id;
 
-    @Column(name = FIELD_NAME)
     private String name;
 
-    @Column(name = FIELD_ISO_NAME)
     private String isoName;
 
-    @Column(name = "PHONE_PREFIX")
     private int phonePrefix;
 
     public Country() {

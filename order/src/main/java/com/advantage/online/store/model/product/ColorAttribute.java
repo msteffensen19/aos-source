@@ -1,29 +1,15 @@
 package com.advantage.online.store.model.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-@Entity
 public class ColorAttribute {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
 
-    @Column(name = "code")
     private String Code;
 
-    @Column(name = "color")
     private String Color;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = Product.FIELD_ID)
-    @JsonIgnore
     private Product product;
 
-    @Column(name = "inStock")
     private int inStock;
 
     public ColorAttribute() {

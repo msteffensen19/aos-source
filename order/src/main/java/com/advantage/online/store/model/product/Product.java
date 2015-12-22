@@ -1,36 +1,10 @@
 package com.advantage.online.store.model.product;
 
-import javax.persistence.*;
-
 import com.advantage.online.store.model.category.Category;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "PRODUCT")
-@NamedQueries({
-        @NamedQuery(
-                name = Product.QUERY_GET_ALL,
-                query = "select p from Product p"
-        ),
-        @NamedQuery(
-                name = Product.PRODUCT_FILTER_BY_NAME,
-                query = "select p from Product p where UPPER(p.productName) like :pname"
-        )
-})
-@NamedStoredProcedureQuery(
-        name = "getfilteredproducts",
-        procedureName = "getfilteredproducts",
-        resultClasses = Product.class,
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "quantity"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "name"),
-                //@StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = void.class),
-        }
-)
 public class Product {
     public static final String QUERY_GET_ALL = "product.getAll";
 
@@ -43,33 +17,20 @@ public class Product {
     public static final String GETFILTEREDPRODUCTS = "getfilteredproducts";
     public static final String PROCEDURE_PROD = "procedure_prod";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = FIELD_ID)
     private Long id;
 
-    @Column(name = "product_name")
     private String productName;
     private double price;
     private String description;
 
-    @Column(name = "managed_image_id")
     private String managedImageId;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @JsonIgnore
     private Category category;
 
-    @OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductAttributes> productAttributes = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<ColorAttribute> colors = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<ImageAttribute> images = new HashSet<>();
 
     public Product() {
@@ -153,7 +114,6 @@ public class Product {
         this.images = images;
     }
 
-    @JsonIgnore
     public Set<ProductAttributes> getProductAttributes() {
         return productAttributes;
     }
