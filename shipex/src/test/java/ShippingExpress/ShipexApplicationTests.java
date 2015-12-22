@@ -11,6 +11,7 @@ public class ShipexApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }
