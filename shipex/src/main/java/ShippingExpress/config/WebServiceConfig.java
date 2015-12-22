@@ -23,16 +23,16 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
-        return new ServletRegistrationBean(servlet, "/ShipEx/*");
+        return new ServletRegistrationBean(servlet, "/*");
     }
 
     @Bean(name = "shipex")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema countriesSchema) {
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema serviceSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ShipExPort");
-        wsdl11Definition.setLocationUri("/ShipEx");
+        wsdl11Definition.setLocationUri("/");
         wsdl11Definition.setTargetNamespace(NAMESPACE_URI);
-        wsdl11Definition.setSchema(countriesSchema);
+        wsdl11Definition.setSchema(serviceSchema);
         return wsdl11Definition;
     }
 
