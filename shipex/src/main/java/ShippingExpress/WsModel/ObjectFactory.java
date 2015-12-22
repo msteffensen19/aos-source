@@ -70,11 +70,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Product }
+     * Create an instance of {@link SEProducts }
      * 
      */
-    public Product createProduct() {
-        return new Product();
+    public SEProducts createSEProducts() {
+        return new SEProducts();
     }
 
     /**
@@ -83,6 +83,14 @@ public class ObjectFactory {
      */
     public ShippingCostRequest createShippingCostRequest() {
         return new ShippingCostRequest();
+    }
+
+    /**
+     * Create an instance of {@link Product }
+     * 
+     */
+    public Product createProduct() {
+        return new Product();
     }
 
 }

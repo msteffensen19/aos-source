@@ -9,6 +9,12 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="SEProducts">
+        <xs:sequence>
+            <xs:element name="product" type="tns:product" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="ShippingCostRequest">
         <xs:complexType>
             <xs:sequence>
@@ -43,7 +49,7 @@
                 <sx:element name="postalCode" type="xs:string"/>
                 <xs:element name="addressLine1" type="xs:string"/>
                 <xs:element name="addressLine2" type="xs:string"/>
-                <xs:element name="products" type="tns:product" form="qualified" maxOccurs="unbounded"/>
+                <xs:element name="SEProducts" type="tns:SEProducts" form="qualified"/>
                 <xs:element name="orderNumber" type="xs:string"/>
                 <xs:element name="amount" type="xs:string"/>
                 <xs:element name="currency" type="xs:string"/>

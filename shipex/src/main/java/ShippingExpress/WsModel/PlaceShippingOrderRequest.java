@@ -1,8 +1,6 @@
 
 package ShippingExpress.WsModel;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -26,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="postalCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="addressLine1" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="addressLine2" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="products" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}product" maxOccurs="unbounded" form="qualified"/>
+ *         &lt;element name="SEProducts" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}SEProducts" form="qualified"/>
  *         &lt;element name="orderNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="currency" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -46,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
     "postalCode",
     "addressLine1",
     "addressLine2",
-    "products",
+    "seProducts",
     "orderNumber",
     "amount",
     "currency"
@@ -66,8 +64,8 @@ public class PlaceShippingOrderRequest {
     protected String addressLine1;
     @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String addressLine2;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected List<Product> products;
+    @XmlElement(name = "SEProducts", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected SEProducts seProducts;
     @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String orderNumber;
     @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
@@ -220,32 +218,27 @@ public class PlaceShippingOrderRequest {
     }
 
     /**
-     * Gets the value of the products property.
+     * Gets the value of the seProducts property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the products property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getProducts().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Product }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link SEProducts }
+     *     
      */
-    public List<Product> getProducts() {
-        if (products == null) {
-            products = new ArrayList<Product>();
-        }
-        return this.products;
+    public SEProducts getSEProducts() {
+        return seProducts;
+    }
+
+    /**
+     * Sets the value of the seProducts property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SEProducts }
+     *     
+     */
+    public void setSEProducts(SEProducts value) {
+        this.seProducts = value;
     }
 
     /**
