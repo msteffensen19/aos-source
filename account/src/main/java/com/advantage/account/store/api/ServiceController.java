@@ -14,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "/service" + Constants.URI_API + "/v1")
+@RequestMapping(value = Constants.URI_API + "/v1/service")
 public class ServiceController {
 
     @Autowired
