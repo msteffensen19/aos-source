@@ -22,7 +22,7 @@ import java.util.List;
  * @author Binyamin Regev on 16/11/2015.
  */
 @RestController
-@RequestMapping(value = "/account" + Constants.URI_API + "/v1")
+@RequestMapping(value = Constants.URI_API + "/v1")
 public class AccountController {
 
     //private static final String REQUEST_PARAM_COUNTRY_ID = "country_id";

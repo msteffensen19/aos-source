@@ -29,7 +29,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         ApiInfo apiInfo = new ApiInfo(
-                "Advantage - ROOT.WAR REST API",
+                "Advantage - Account.WAR REST API",
                 "Description.",
                 null,
                 null,
