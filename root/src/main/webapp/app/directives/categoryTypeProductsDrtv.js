@@ -56,50 +56,26 @@ define(['./module'], function (directives) {
                         }
                     }
 
-                    /*
+
                     scope.showClear =
                         Object.keys(scope.productsInclude).length > 0 ||
-                        slider.noUiSlider.start == scope.minPriceToFilter ||
-                        slider.noUiSlider.end == scope.maxPriceToFilter;
-                    console.log(Object.keys(scope.productsInclude).length > 0)
-                    console.log(slider.noUiSlider.start == scope.minPriceToFilter);
-                    console.log(slider.noUiSlider.end == scope.maxPriceToFilter;
-*/
+                        slider.noUiSlider.start != scope.minPriceToFilter ||
+                        slider.noUiSlider.end != scope.maxPriceToFilter;
+
+                    console.log('Object.keys(scope.productsInclude).length > 0')
+                    console.log(Object.keys(scope.productsInclude).length)
+                    console.log("")
+                    console.log("slider.noUiSlider.start == scope.minPriceToFilter");
+                    console.log(slider.noUiSlider.start);
+                    console.log(scope.minPriceToFilter);
+                    console.log("");
+                    console.log("slider.noUiSlider.end == scope.maxPriceToFilter");
+                    console.log(scope.maxPriceToFilter);
+                    console.log(slider.noUiSlider.end);
+                    console.log("");
+                    console.log(scope.showClear);
+
                 }
-
-
-                    if (Object.keys(scope.productsInclude).length > 0)
-                    {
-                        var found = 0;
-                        for (var key in scope.productsInclude)
-                        {
-                            for(var i = 0; i < scope.productsInclude[key].length; i++)
-                            {
-                                if($.inArray(JSON.stringify($filter('filter')(product.attributes,
-                                        {attributeValue: scope.productsInclude[key][i]},
-                                        false)[0]), $.map(product.attributes, JSON.stringify)) > -1)
-                                {
-                                    found++;
-                                }
-                                angular.forEach(product.colors, function(color){
-                                    if(color.code == scope.productsInclude[key][i].code)
-                                    {
-                                        found++;
-                                    }
-                                });
-                            }
-                        }
-                        if(found == Object.keys(scope.productsInclude).length)
-                        {
-                            return product;
-                        }
-                    }
-                    else
-                    {
-                        return product;
-                    }
-                };
-
 
                 scope.clearSelection = function(){
                     for (var key in scope.productsInclude) {
@@ -182,7 +158,7 @@ define(['./module'], function (directives) {
                     });
                     return productsColors;
                 }
-            }
+
                 function configSlider(){
                     slider = document.getElementById('slider');
                     var step = scope.maxPriceToFilter - scope.minPriceToFilter;
