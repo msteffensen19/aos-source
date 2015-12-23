@@ -51,6 +51,7 @@ define(['./module'], function (directives) {
                         }
                     }
 
+                    /*
                     scope.showClear =
                         Object.keys(scope.productsInclude).length > 0 ||
                         slider.noUiSlider.start == scope.minPriceToFilter ||
@@ -58,7 +59,7 @@ define(['./module'], function (directives) {
                     console.log(Object.keys(scope.productsInclude).length > 0)
                     console.log(slider.noUiSlider.start == scope.minPriceToFilter);
                     console.log(slider.noUiSlider.end == scope.maxPriceToFilter;
-
+*/
                 }
 
 
