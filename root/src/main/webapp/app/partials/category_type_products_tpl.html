@@ -4,6 +4,20 @@
         <label class="roboto-regular" >{{ 'FILTER_BY' | translate }} </label>
         <label class="roboto-regular clear" ng-click="clearSelection()" translate="Clear" ng-show="showClear"></label>
         <ul>
+            <!--- Price Section-->
+            <li>
+                <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
+                    ng-click="toggleColapse('accordionPrice')" >
+                    {{'PRICE' | translate }}
+                </h4>
+                <div class="option" style="text-align: center; padding-bottom: 20px">
+                    <div id="slider"></div>
+                    <br />
+                    <p class="sliderSteps" style="float: right" >{{minPriceToFilter | currency:'$'}}</p>
+                    <p class="sliderSteps" style="float: left">{{maxPriceToFilter | currency:'$'}}</p>
+                </div>
+            </li>
+            <!--- Price Section -->
             <!--- attributes Section -->
             <li ng-repeat="attrib in categoryAttributes">
                 <h4 class="accordion roboto-regular arrowDown" id="accordionAttrib{{$index}}"
@@ -41,22 +55,6 @@
                 </div>
             </li>
             <!--- END color Section -->
-            <!--- Price Section-->
-            <li>
-                <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
-                    ng-click="toggleColapse('accordionPrice')" >
-                    {{'PRICE' | translate }}
-                </h4>
-                <div class="option">
-                    <div id="slider"></div>
-                    <br />
-                    <p class="sliderSteps" style="float: right" >{{minPriceToFilter}}</p>
-                    <p class="sliderSteps" style="float: left">{{maxPriceToFilter}}</p>
-            </div>
-
-
-        </li>
-            <!--- Price Section -->
         </ul>
     </div>
     <div class="cell categoryRight">
