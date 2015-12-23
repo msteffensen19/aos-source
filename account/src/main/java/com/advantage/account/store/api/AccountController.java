@@ -8,6 +8,7 @@ import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.services.AppUserService;
 import com.advantage.account.store.user.services.CountryService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,32 @@ public class AccountController {
     private CountryService countryService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @ApiOperation(value = "Get all registered users")
     public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
         List<AppUser> appUsers = appUserService.getAllAppUsers();
 
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/users/{user_id}", method = RequestMethod.GET)
+    @ApiOperation(value = "IsExists registered user by user-id")
+    public ResponseEntity<Boolean> get(@PathVariable("user_id") long userId,
+                                       HttpServletRequest request,
+                                       HttpServletResponse response) {
+
+        Boolean isExists = appUserService.isExists(userId);
+
+        if (isExists) {
+            //  userId belongs to a registered user
+            return new ResponseEntity<>(isExists, HttpStatus.OK);
+        } else {
+            //  userId is not a registered user
+            return new ResponseEntity<>(isExists, HttpStatus.CONFLICT);
+        }
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ApiOperation(value = "Login user")
     public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser,
                                                          HttpServletRequest request, HttpServletResponse response) {
 
@@ -69,6 +89,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @ApiOperation(value = "Register new application user")
     public ResponseEntity<AppUserResponseStatus> createUser(@RequestBody AppUser appUser, HttpServletRequest request) {
 
         final AppUserResponseStatus appUserResponseStatus = appUserService.create(
@@ -94,6 +115,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries", method = RequestMethod.GET)
+    @ApiOperation(value = "Get all countries")
     public ResponseEntity<List<Country>> getCountries(HttpServletRequest request) {
         List<Country> countries = countryService.getAllCountries();
         return new ResponseEntity<>(countries, HttpStatus.OK);
@@ -101,6 +123,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries", method = RequestMethod.POST)
+    @ApiOperation(value = "Create country")
     public ResponseEntity<CountryResponseStatus> createCountry(@RequestBody Country country, HttpServletRequest request) {
 
         final CountryResponseStatus countryResponseStatus = countryService.create(country.getName(),
@@ -114,6 +137,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/countries/search", method = RequestMethod.GET)
+    @ApiOperation(value = "Search for countries")
     public ResponseEntity<List<Country>> searchInCountries(@RequestParam(value = "phonePrefix", required = false)
                                                            Integer internationalPhonePrefix,
                                                            @RequestParam(value = "nameStartFrom", required = false)

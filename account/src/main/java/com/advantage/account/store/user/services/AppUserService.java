@@ -20,7 +20,6 @@ public class AppUserService {
     @Qualifier("appUserRepository")
     public AppUserRepository appUserRepository;
 
-
     @Transactional
     public AppUserResponseStatus create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Integer country, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final char allowOffersPromotion) {
         return appUserRepository.create(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
@@ -39,6 +38,15 @@ public class AppUserService {
     @Transactional(readOnly = true)
     public List<AppUser> getAllAppUsers() {
         return appUserRepository.getAll();
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isExists(long userId) {
+        boolean result = false;
+
+        if (appUserRepository.get(userId) != null) { result = true; }
+
+        return result;
     }
 
 }
