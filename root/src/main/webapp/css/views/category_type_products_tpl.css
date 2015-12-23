@@ -167,15 +167,25 @@
 .option > .sliderSteps {
     font-size: 12px;
     color: #b0b0b0;
+    top:-5px;
     position: relative;
-    top:-5px
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 47%;
+    text-align: right;
+}
+
+.option > .sliderSteps.left {
+    text-align: left;
 }
 
 .option > #slider {
-    width: 81% !important;
+    width: 100% !important;
     margin: 6px auto;
     margin-bottom:13px;
 }
+
 
 @media screen and (max-width: 1550px) {
     .categoryRight ul li {

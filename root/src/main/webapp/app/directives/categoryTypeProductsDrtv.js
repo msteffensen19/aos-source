@@ -18,7 +18,6 @@ define(['./module'], function (directives) {
             link: function (scope, element, attrs) {
 
                 var slider;
-
                 scope.showClear = false;
                 scope.productsInclude = [];
                 scope.attributeChecked = [];
@@ -61,30 +60,22 @@ define(['./module'], function (directives) {
                         Object.keys(scope.productsInclude).length > 0 ||
                         slider.noUiSlider.start != scope.minPriceToFilter ||
                         slider.noUiSlider.end != scope.maxPriceToFilter;
-
-                    console.log('Object.keys(scope.productsInclude).length > 0')
-                    console.log(Object.keys(scope.productsInclude).length)
-                    console.log("")
-                    console.log("slider.noUiSlider.start == scope.minPriceToFilter");
-                    console.log(slider.noUiSlider.start);
-                    console.log(scope.minPriceToFilter);
-                    console.log("");
-                    console.log("slider.noUiSlider.end == scope.maxPriceToFilter");
-                    console.log(scope.maxPriceToFilter);
-                    console.log(slider.noUiSlider.end);
-                    console.log("");
-                    console.log(scope.showClear);
-
                 }
 
                 scope.clearSelection = function(){
+
                     for (var key in scope.productsInclude) {
                         delete scope.productsInclude[key];
                     }
+
                     $('.option input[type=checkbox]').each(function(){
                         this.checked = false;
                     })
+
                     $('.option .productColor').removeClass('colorSelected');
+
+                    slider.noUiSlider.set([slider.noUiSlider.start, slider.noUiSlider.end]);
+
                     scope.showClear = false;
 
                 };
@@ -187,7 +178,7 @@ define(['./module'], function (directives) {
                     // When the slider value changes, update the input and span
                     slider.noUiSlider.on('update', function( values, handle ) {
                         scope.$applyAsync(function(){
-                            if ( handle ) {
+                            if (handle == '0') {
                                 scope.minPriceToFilter = values[handle];
                             } else {
                                 scope.maxPriceToFilter = values[handle];

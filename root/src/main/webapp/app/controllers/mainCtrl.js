@@ -82,7 +82,7 @@ define(['./module'], function (controllers) {
             });
 
             $scope.searchByCategoryId = function(id){
-                alert(id);
+                console.log(id);
             }
 
             /* END Autocomplete*/
@@ -93,7 +93,8 @@ define(['./module'], function (controllers) {
 
 
 
-            /* Cart section */
+            /* Cart section  */
+
             productsCartService.getCart().then(function(cart){
                 $scope.cart = cart;
             });

@@ -23,9 +23,19 @@ define(['./module'], function (services) {
                 updateRemovedProducts : updateRemovedProducts,
                 getCart: getCart,
                 removeProduct: removeProduct,
+                checkout: checkout,
             });
 
+            function checkout() {
+                console.log('cart');
+                console.log(cart);
 
+                // check if user is login
+
+                var responce = $q.defer();
+                responce.resolve(false);
+                return responce.promise;
+            }
 
             function removeProduct(index){
                 var responce = $q.defer();

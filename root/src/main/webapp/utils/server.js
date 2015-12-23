@@ -3,17 +3,6 @@
  */
 
 
-
-
-
-
-
-
-
-
-
-
-
 var fileText;
 (function readTextFile(file)
 {
@@ -78,20 +67,20 @@ arrayApi.forEach(function(a) {
 console.log(services_properties)
 
 
-//var catalogKey = "http://localhost:8080/catalog/";
+//var catalogKey = "http://localhost:8080/catalog";
 var catalogKey = "http://" +
     services_properties['catalog_service_url_host'] + ":" +
     services_properties['catalog_service_url_port'] + "/" +
     services_properties['catalog_service_url_suffix'];
 
 
-//var orderKey = "http://localhost:8080/order/";
+//var orderKey = "http://localhost:8080/order";
 var orderKey = "http://" +
     services_properties['order_service_url_host'] + ":" +
     services_properties['order_service_url_port'] + "/" +
     services_properties['order_service_url_suffix'];
 
-//var accountKey = "http://localhost:8080/account/";
+//var accountKey = "http://localhost:8080/account";
 var accountKey = "http://" +
     services_properties['account_service_url_host'] + ":" +
     services_properties['account_service_url_port'] + "/" +
