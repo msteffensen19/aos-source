@@ -3,6 +3,12 @@ package com.advantage.mastercredit.payment.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * {@code response} for <b>REST API</b> request. <br/>
+ * {@link #transactionType} Values by {@link TransactionTypeEnum}. <br/>
+ * {@link #responseCode} Values by {@link ResponseEnum}. <br/>
+ * {@link #responseReason} "Approved" or "Rejected" + Description. <br/>
+ * {@link #referenceNumber} 10-digits number, only when {@link #responseCode} is "Approved". <br/>
+ * {@link #transactionDate} {@link String} date in format <i>"DDMMYYY"</i>. <br/>
  * @author Binyamin Regev on 20/12/2015.
  */
 public class MasterCreditResponse {
@@ -10,8 +16,11 @@ public class MasterCreditResponse {
     @JsonProperty("MCTransactionType")
     private String transactionType;
 
-    @JsonProperty("MCResponse")
-    private String response;
+    @JsonProperty("MCResponse.Code")
+    private String responseCode;
+
+    @JsonProperty("MCResponse.Reason")
+    private String responseReason;
 
     @JsonProperty("MCRefNumber")
     private long referenceNumber;       //  10 digits
@@ -22,9 +31,10 @@ public class MasterCreditResponse {
     public MasterCreditResponse() {
     }
 
-    public MasterCreditResponse(String transactionType, String response, long referenceNumber, String transactionDate) {
+    public MasterCreditResponse(String transactionType, String responseCode, String responseReason, long referenceNumber, String transactionDate) {
         this.transactionType = transactionType;
-        this.response = response;
+        this.responseCode = responseCode;
+        this.responseReason = responseReason;
         this.referenceNumber = referenceNumber;
         this.transactionDate = transactionDate;
     }
@@ -37,12 +47,20 @@ public class MasterCreditResponse {
         this.transactionType = transactionType;
     }
 
-    public String getResponse() {
-        return this.response;
+    public String getResponseCode() {
+        return this.responseCode;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public String getResponseReason() {
+        return this.responseReason;
+    }
+
+    public void setResponseReason(String responseReason) {
+        this.responseReason = responseReason;
     }
 
     public long getReferenceNumber() {

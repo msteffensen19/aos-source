@@ -48,10 +48,10 @@ public class MasterCreditController {
         //    appUserResponseStatus.setSessionId(session.getId());
         //}
 
-        if (masterCreditResponse.getResponse().equalsIgnoreCase(ResponseEnum.REJECTED.getStringCode())) {
-            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);
-        } else {
+        if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
             return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);
         }
 
     }
@@ -74,10 +74,10 @@ public class MasterCreditController {
 //
 //        MasterCreditResponse masterCreditResponse = masterCreditService.doRefund(paymentId, masterCreditDto);
 //
-//        if (masterCreditResponse.getResponse().equalsIgnoreCase(ResponseEnum.REJECTED.getStringCode())) {
-//            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);   //  Something went wrong
-//        } else {
+//        if (masterCreditResponse.getResponse().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
 //            return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);   //  Something went wrong
 //        }
 //
 //    }
