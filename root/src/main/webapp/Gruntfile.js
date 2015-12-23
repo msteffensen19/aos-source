@@ -51,7 +51,12 @@ module.exports = function(grunt) {
                 files: [
                     // includes files within path
                     {expand: true, src: ['css/fonts/*', 'css/images/*', '!css/*.css'], dest: 'target', filter: 'isFile'},
-                    {expand: true, src: ['app/views/*', 'app/partials/*', 'app/templates/*'], dest: 'target', filter: 'isFile'},
+                    {
+                        expand: true,
+                        src: ['app/views/*', 'app/partials/*', 'app/templates/*', 'app/user/views/*'],
+                        dest: 'target',
+                        filter: 'isFile'
+                    },
                     {expand: true, src: ['main.html', 'app/categoryProducts_4.json', 'app/popularProducts.json'], dest: 'target', filter: 'isFile'},
 
                 ]
