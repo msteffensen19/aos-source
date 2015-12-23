@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -397,8 +398,20 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         System.out.println("DefaultAppUserRepository.get(Long) -> entityId = " + entityId);
 
         String hql = JPAQueryHelper.getSelectByPkFieldQuery(AppUser.class, AppUser.FIELD_ID, entityId);
+
         Query query = entityManager.createQuery(hql);
 
-        return (AppUser) query.getSingleResult();
+        AppUser appUser = null;
+        try {
+            appUser = (AppUser) query.getSingleResult();
+        } catch (NoResultException ex) {
+            //  return null ==> No registered user found for userId.
+            //ex.printStackTrace();
+        } catch (Exception ex) {
+            //  another exception was thrown
+            ex.printStackTrace();
+        }
+
+        return appUser;
     }
 }

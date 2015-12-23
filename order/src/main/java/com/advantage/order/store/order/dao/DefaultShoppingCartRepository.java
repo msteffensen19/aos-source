@@ -21,8 +21,10 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
+//import org.json.JSONObject;
 
 /**
  * Order services - default repository for {@code ShoppingCart}.
@@ -37,6 +39,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     //  FINALs for REST API calls - BEGIN
     //  Will be replaces with configuration variables (T.B.D.)
     private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
+    private static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
     //  FINALs for REST API calls - END
 
     private static String NOT_FOUND = "NOT FOUND";
@@ -108,6 +111,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateNumberArgumentIsPositive(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return null;
+        }
+
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
@@ -157,6 +167,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateNumberArgumentIsPositive(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return null;
+        }
+
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
@@ -200,14 +217,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("createShoppingCart.userId=" + userId);
 
-        //  *****************************************************************
-        //  ******* Call "Account Service"REST API GET REQUEST URI    *******
-        //  *****************************************************************
-//        if (appUserRepository.get(userId) == null) {
-//            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-//        }
-        //  *****************************************************************
-
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+        }
 
         List<ShoppingCart> existingCart = this.getShoppingCartsByUserId(userId);
         if (existingCart == null) {
@@ -266,6 +280,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     @Override
     public ShoppingCartResponseStatus removeProductFromUserCart(long userId, Long productId, int color) {
+
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+        }
+
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
@@ -302,14 +323,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("deleteShoppingCartsByUserId.userId=" + userId);
 
-        //  *****************************************************************
-        //  ******* Call "Account Service"REST API GET REQUEST URI    *******
-        //  *****************************************************************
-        //  Verify that exists a User in the application with this userId
-//        if (appUserRepository.get(userId) == null) {
-//            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-//        }
-        //  *****************************************************************
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+        }
 
         //  Get user's shopping carts
         List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
@@ -339,6 +357,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     @Override
     public List<ShoppingCart> getShoppingCartsByUserId(long userId) {
+
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return null;
+        }
+
         List<ShoppingCart> shoppingCarts = entityManager.createNamedQuery(ShoppingCart.QUERY_GET_CARTS_BY_USER_ID, ShoppingCart.class)
                 .setParameter(ShoppingCart.PARAM_USER_ID, userId)
                 .setMaxResults(ShoppingCart.MAX_NUM_OF_SHOPPING_CART_PRODUCTS)
@@ -404,6 +430,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ShoppingCartResponseDto getCartProductsDetails(long userId, List<ShoppingCart> shoppingCarts) {
 
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return null;
+        }
+
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
 
         /* Scan user shopping cart and add all product to userCart response object  */
@@ -447,6 +480,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     public boolean isProductExistsInShoppingCart(long userId, Long productId, int color) {
+
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return false;
+        }
+
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
@@ -459,6 +500,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts) {
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
+
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+        }
 
         shoppingCartResponse = clearUserCart(userId);
 
@@ -501,6 +548,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     @Override
     public ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color) {
+
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return null;
+        }
 
         ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
         ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
@@ -559,6 +613,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("DefaultShoppingCartRepository -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
 
+        //  Verify userId belongs to a registered user by calling "Account Service"
+        //  REST API GET REQUEST using URI
+        if (! isRegisteredUserExists(userId)) {
+            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return null;
+        }
+
         ShoppingCartResponseDto responseDto = new ShoppingCartResponseDto(userId);
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
@@ -603,15 +664,109 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Call REST API POST request
-     *
-     * @param urlStr
-     * @return
+     * Calling <b>Account Service</b> via REST API GET request - to
+     * check isExists an {@code AppUser} with given {@code userId}.
+     * @param userId {@code long} unique user identification to check.
+     * @return {@code boolean}. <b>true</b> if userId belongs to a registered user,
+     * <b>false</b> otherwise.
      */
-    public static String httpPost(String urlStr) throws MalformedURLException {
+    public boolean isRegisteredUserExists(long userId) {
+        boolean isExists = false;
+
+        /*  Build REQUEST URI */
+        String stringURL = Constants.URI_SERVER_ACCOUNT +
+                this.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+
+        // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
+        System.out.println("stringURL=\"" + stringURL + "\"");
+
+        try {
+            String stringResponse = httpGet(stringURL);
+            System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+            if (stringResponse.equalsIgnoreCase("true")) { isExists = true; }
+
+        } catch (IOException e) {
+            System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
+            e.printStackTrace();
+        }
+
+        return isExists;
+    }
+
+    /**
+     * Call REST API POST request - T.B.D.
+     * @param urlStr
+     * @param paramName {@link String} array containing parameters names.
+     * @param paramVal {@link String} array containing parameters values.
+     * @return {@link String} containing {@code response} data.
+     * @throws Exception
+     */
+    public static String httpPost(String urlStr,
+                                  String[] paramName,
+                                  String[] paramVal) throws Exception {
+
         URL url = new URL(urlStr);
 
-        return "";
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.setUseCaches(false);
+        conn.setAllowUserInteraction(false);
+        //conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        //conn.setRequestProperty("Content-Type", "application/json");    //  Send
+        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); //  Send
+        conn.setRequestProperty("Accept", "application/json");          //  Receive
+        conn.setRequestMethod("POST");
+
+//        //  Prepare the JSON
+//        JSONObject body = new JSONObject();
+//        //body.put("keyName", "keyValue");
+//        //OR
+//        //body.put("keyName", JsonValue);
+//        body.put("username","value");
+//        body.put("password", "value");
+//        body.put("tenantName", "value");
+//        body.put("passwordCredentials", "value");
+
+
+        // Create the form content
+        OutputStream out = conn.getOutputStream();
+        Writer writer = new OutputStreamWriter(out, "UTF-8");
+
+//        out.write(body.toString().getBytes("UTF-8"));   //  Write JSON
+
+        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+//        wr.write(body.toString());
+        for (int i = 0; i < paramName.length; i++) {
+            writer.write(paramName[i]);
+            writer.write("=");
+            writer.write(URLEncoder.encode(paramVal[i], "UTF-8"));
+            writer.write("&");
+        }
+        writer.close();
+        out.close();
+
+
+        //  Get response code, and response data as string
+        if (conn.getResponseCode() != 200) {
+            throw new IOException(conn.getResponseMessage());
+        }
+
+        // Buffer the result into a string
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+
+        rd.close();
+
+        conn.disconnect();
+        return sb.toString();
     }
 
     /**
