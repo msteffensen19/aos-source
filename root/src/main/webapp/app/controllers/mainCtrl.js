@@ -106,10 +106,10 @@ define(['./module'], function (controllers) {
 
 
             var lastIdAdded = '';
-            $scope.addProduct = function(product) {
+            $scope.addProduct = function(product, quantity) {
                 clearInterval(Helper.____closeTooTipCart);
                 $('#toolTipCart').slideDown(function(){
-                    productsCartService.addProduct(product, 1).then(function(result){
+                    productsCartService.addProduct(product, quantity).then(function(result){
                         if (lastIdAdded == ('#product' + product.productId))
                         {
                             setToolTipCartSlideUp()
@@ -208,7 +208,7 @@ define(['./module'], function (controllers) {
 
             $scope.gotoElement = function (id) {
                 $("body").animate({
-                    scrollTop: ($("#" + id).offset().top - 65) + "px",
+                    scrollTop: ($("#" + id).offset().top - 60) + "px",
                 }, 1000)
             };
 
