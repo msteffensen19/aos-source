@@ -49,10 +49,10 @@ define(['./module'], function (directives) {
 
                     if (Object.keys(scope.productsInclude).length > 0)
                     {
-                        var found = 0;
                         for (var key in scope.productsInclude)
                         {
                             for(var i = 0; i < scope.productsInclude[key].length; i++)
+                        var found = 0;
                             {
                                 if($.inArray(JSON.stringify($filter('filter')(product.attributes,
                                         {attributeValue: scope.productsInclude[key][i]},

@@ -22,8 +22,9 @@ define(['./module'], function (services) {
                 joinCartProducts : joinCartProducts,
                 updateRemovedProducts : updateRemovedProducts,
                 getCart: getCart,
-                removeProduct: removeProduct
+                removeProduct: removeProduct,
             });
+
 
 
             function removeProduct(index){
