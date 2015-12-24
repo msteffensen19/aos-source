@@ -36,10 +36,11 @@ public class OrderController {
 
         ShoppingCartResponseDto userShoppingCart = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-        if (userShoppingCart.getProductsInCart().size() > 0) {
+        if (userShoppingCart == null) {
+            return new ResponseEntity<>(userShoppingCart, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
             return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(userShoppingCart, HttpStatus.CONFLICT);
         }
     }
 
