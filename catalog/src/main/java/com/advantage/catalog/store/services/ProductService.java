@@ -190,11 +190,11 @@ public class ProductService {
             if (!(s.getInStock() > 0))
                 s.setInStock(Integer.parseInt(environment.getProperty(PRODUCT_DEFAULT_QUANTITY)));
             Optional<ColorAttribute> attribute =
-                    colorAttributes.stream().filter(x -> x.getColor().equalsIgnoreCase(s.getColor())).findFirst();
+                    colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
             if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
                 attribute.get().setInStock(s.getInStock());
             }
-            s.setColor(s.getColor().toUpperCase());
+            s.setName(s.getName().toUpperCase());
             s.setCode(s.getCode().toUpperCase());
             s.setProduct(product);
             colorAttributes.add(s);

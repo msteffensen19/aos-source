@@ -15,8 +15,8 @@ public class ColorAttribute {
     @Column(name = "code")
     private String Code;
 
-    @Column(name = "color")
-    private String Color;
+    @Column(name = "name")
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = Product.FIELD_ID)
@@ -29,12 +29,12 @@ public class ColorAttribute {
     public ColorAttribute() {
     }
 
-    public ColorAttribute(String color) {
-        Color = color;
+    public ColorAttribute(String name) {
+        this.name = name;
     }
 
-    public ColorAttribute(String color, int inStock) {
-        Color = color;
+    public ColorAttribute(String name, int inStock) {
+        this.name = name;
         this.inStock = inStock;
     }
 
@@ -42,12 +42,12 @@ public class ColorAttribute {
         return id;
     }
 
-    public String getColor() {
-        return Color;
+    public String getName() {
+        return name;
     }
 
-    public void setColor(String color) {
-        Color = color;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCode() {
@@ -81,14 +81,14 @@ public class ColorAttribute {
 
         ColorAttribute that = (ColorAttribute) o;
 
-        if (Color != null ? !Color.equals(that.Color) : that.Color != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return !(product != null ? !product.equals(that.product) : that.product != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = Color != null ? Color.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }
