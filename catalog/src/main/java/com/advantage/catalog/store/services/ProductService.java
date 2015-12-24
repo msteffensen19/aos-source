@@ -3,15 +3,13 @@ package com.advantage.catalog.store.services;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.product.ProductRepository;
-import com.advantage.catalog.store.dto.AttributeItem;
+import com.advantage.catalog.store.dto.*;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.ImageAttribute;
 import com.advantage.catalog.store.config.ImageManagementConfiguration;
-import com.advantage.catalog.store.dto.ImageUrlResponseStatus;
-import com.advantage.catalog.store.dto.ProductDto;
-import com.advantage.catalog.store.dto.ProductResponseStatus;
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
@@ -33,6 +31,8 @@ public class ProductService {
     public static final String PRODUCT_DEFAULT_QUANTITY = "product.inStock.default.value";
     @Autowired
     public ProductRepository productRepository;
+    @Autowired
+    public AttributeRepository attributeRepository;
     @Autowired
     CategoryService categoryService;
     @Autowired
@@ -184,9 +184,9 @@ public class ProductService {
         return imageAttributes;
     }
 
-    public Set<ColorAttribute> getColorAttributes(Collection<ColorAttribute> colors, Product product) {
+    public Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors, Product product) {
         Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
-        for (ColorAttribute s : colors) {
+        for (ColorAttributeDto s : colors) {
             if (!(s.getInStock() > 0))
                 s.setInStock(Integer.parseInt(environment.getProperty(PRODUCT_DEFAULT_QUANTITY)));
             Optional<ColorAttribute> attribute =
@@ -196,8 +196,9 @@ public class ProductService {
             }
             s.setColor(s.getColor().toUpperCase());
             s.setCode(s.getCode().toUpperCase());
-            s.setProduct(product);
-            colorAttributes.add(s);
+            ColorAttribute colorAttribute = new ColorAttribute(s.getColor(), s.getCode(), s.getInStock());
+            colorAttribute.setProduct(product);
+            colorAttributes.add(colorAttribute);
         }
 
         return colorAttributes;
@@ -243,7 +244,121 @@ public class ProductService {
         return Double.toString(price);
     }
 
-    private Attribute getAttributeByDto(AttributeItem attribute) {
-        return attributeService.getAttributeByName(attribute.getAttributeName());
+    /**
+     * Convert ProductAttributes collection to AttributeItem DTO
+     *
+     * @param attributes - ProductAttributes collection
+     * @return AttributeItem DTO collection
+     */
+    public List<AttributeItem> productAttributesToAttributeValues(Collection<ProductAttributes> attributes) {
+        List<AttributeItem> items = new ArrayList<>();
+        for (ProductAttributes attribute : attributes) {
+            String name = attribute.getAttribute().getName();
+            String value = attribute.getAttributeValue();
+            items.add(new AttributeItem(name, value));
+        }
+
+        return items;
     }
+
+    /**
+     * Fill all products DTO parameters
+     *
+     * @param products Collection of products
+     * @return {@link List} ProductDto collection
+     */
+    public List<ProductDto> fillProducts(Collection<Product> products) {
+        if (products == null) return null;
+        List<ProductDto> productDtos = new ArrayList<>(products.size());
+
+        for (Product product : products) {
+            ProductDto productDto = getDtoByEntity(product);
+            productDtos.add(productDto);
+        }
+
+        return productDtos;
+    }
+
+    /**
+     * Fill default products DTO parameters
+     *
+     * @param products Collection products
+     * @return {@link List} ProductDto collection
+     */
+    public List<ProductDto> fillPureProducts(Collection<Product> products) {
+        if (products == null) return null;
+        List<ProductDto> productDtos = new ArrayList<>(products.size());
+
+        for (Product product : products) {
+            ProductDto productDto = new ProductDto();
+            productDto.setProductId(product.getId());
+            productDto.setCategoryId(product.getCategory().getCategoryId());
+            productDto.setProductName(product.getProductName());
+            productDto.setPrice(product.getPrice());
+            productDto.setImageUrl(product.getManagedImageId());
+
+            productDtos.add(productDto);
+        }
+
+        return productDtos;
+    }
+
+    /**
+     * Build AttributeItem collection from Products attributes
+     *
+     * @param product - Product object
+     * @return {@link List} collection of attributes
+     */
+    public List<AttributeItem> fillAttributes(Product product) {
+        Set<ProductAttributes> productAttributes = product.getProductAttributes();
+        List<AttributeItem> items = new ArrayList<>(productAttributes.size());
+        for (ProductAttributes attribute : productAttributes) {
+            items.add(new AttributeItem(attribute.getAttribute().getName(), attribute.getAttributeValue()));
+        }
+
+        return items;
+    }
+
+    public List<ColorAttributeDto> fillColorAttributes(Product product) {
+        Set<ColorAttribute> colorAttributes = product.getColors();
+        List<ColorAttributeDto> dtos = new ArrayList<>(colorAttributes.size());
+        for (ColorAttribute colorAttribute : colorAttributes) {
+            dtos.add(new ColorAttributeDto(colorAttribute.getCode(), colorAttribute.getColor(),
+                    colorAttribute.getInStock()));
+        }
+
+        return dtos;
+    }
+
+    public ProductDto getDtoByEntity(Product product) {
+        return new ProductDto(product.getId(),
+                product.getCategory().getCategoryId(),
+                product.getProductName(),
+                product.getPrice(),
+                product.getDescription(),
+                product.getManagedImageId(),
+                fillAttributes(product),
+                fillColorAttributes(product),
+                fillImages(product.getImages()));
+    }
+
+    /**
+     * Build images IDs collection
+     *
+     * @param imageAttributes {@link Set} ImageAttribute collection
+     * @return {@link List} images
+     */
+    private List<String> fillImages(Set<ImageAttribute> imageAttributes) {
+        List<String> images = new ArrayList<>(imageAttributes.size());
+        for (ImageAttribute image : imageAttributes) {
+            images.add(image.getImageUrl());
+        }
+
+        return images;
+    }
+
+    private Attribute getAttributeByDto(AttributeItem attribute) {
+        return attributeRepository.get(attribute.getAttributeName());
+    }
+
 }

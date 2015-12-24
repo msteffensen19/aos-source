@@ -13,10 +13,10 @@ public class ColorAttribute {
     private Long id;
 
     @Column(name = "code")
-    private String Code;
+    private String code;
 
     @Column(name = "color")
-    private String Color;
+    private String color;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = Product.FIELD_ID)
@@ -30,11 +30,17 @@ public class ColorAttribute {
     }
 
     public ColorAttribute(String color) {
-        Color = color;
+        this.color = color;
     }
 
     public ColorAttribute(String color, int inStock) {
-        Color = color;
+        this.color = color;
+        this.inStock = inStock;
+    }
+
+    public ColorAttribute(String color, String code, int inStock) {
+        this.color = color;
+        this.code = code;
         this.inStock = inStock;
     }
 
@@ -43,19 +49,19 @@ public class ColorAttribute {
     }
 
     public String getColor() {
-        return Color;
+        return color;
     }
 
     public void setColor(String color) {
-        Color = color;
+        this.color = color;
     }
 
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
     public Product getProduct() {
@@ -81,14 +87,14 @@ public class ColorAttribute {
 
         ColorAttribute that = (ColorAttribute) o;
 
-        if (Color != null ? !Color.equals(that.Color) : that.Color != null) return false;
+        if (color != null ? !color.equals(that.color) : that.color != null) return false;
         return !(product != null ? !product.equals(that.product) : that.product != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = Color != null ? Color.hashCode() : 0;
+        int result = color != null ? color.hashCode() : 0;
         result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }
