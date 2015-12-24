@@ -20,6 +20,7 @@
                 <label>{{'Name' | translate }}</label>
             </span>
 
+
             <span class="animPlaceholderUp">
                 <input ng-model="user.loginPassword" type="Password"
                        ng-class="{bottomLine : config.emailAddressInLogin}" autocomplete="off" >
@@ -28,10 +29,12 @@
 
 
 
-            <!--ng-class="{bottomLine : config.emailAddressInLogin}"-->
-            <span class="animPlaceholderUp" ng-if="config.emailAddressInLogin">
+            <!--ng-class="{bottomLine : config.emailAddressInLogin}"
+            ng-if="config.emailAddressInLogin"
+            -->
+            <span class="animPlaceholderUp" >
                 <input type="text" autocomplete="off"
-                       ng-model="model.email" >
+                       ng-model="user.email" >
                 <label>{{'Email' | translate }}</label>
             </span>
 
