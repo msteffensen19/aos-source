@@ -14,7 +14,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class ShipExEndpoint {
     final static Logger logger = Logger.getLogger("ShipEx");
-    public static final String TRANSACTION_TYPE_SHIPPINGCOST = "SHIPPINGCOST";
+    public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
     private ShippingExpressService shippingService;
 
@@ -29,7 +29,7 @@ public class ShipExEndpoint {
         ShippingCostResponse response = new ShippingCostResponse();
         String validation = ArgumentValidationHelper.shippingCostRequestValidation(request);
         logShippingCostRequest(request);
-        response.setSETransactionType(TRANSACTION_TYPE_SHIPPINGCOST);
+        response.setSETransactionType(TRANSACTION_TYPE_SHIPPING_COST);
         if (!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
             response.setStatus(validation);
             logShippingCostResponse(response);
@@ -68,7 +68,7 @@ public class ShipExEndpoint {
             return response;
         }
         response.setTransactionDate(shippingService.getFormatTimeNow());
-        response.setTransactionReference(shippingService.getTransactionReferenceNumber());
+        response.setTransactionReference(Long.toString(shippingService.getTrackNumber()));
         response.setStatus("OK");
         logPlaceOrderResponse(response);
 
@@ -91,8 +91,7 @@ public class ShipExEndpoint {
 
     private void logPlaceOrderRequest(PlaceShippingOrderRequest request) {
         String builder = "TransactionType: " + request.getSETransactionType() + " Request" +
-                "; OrderNumber: " + request.getOrderNumber() +
-                "; SEOrderAmount: " + request.getAmount();
+                "; OrderNumber: " + request.getOrderNumber();
 
         logger.info(builder);
     }

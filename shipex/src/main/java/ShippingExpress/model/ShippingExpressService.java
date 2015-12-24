@@ -51,14 +51,6 @@ public class ShippingExpressService {
     }
 
     /**
-     * Generate transaction reference number
-     * @return {@link String} 10 digits random number
-     */
-    public String getTransactionReferenceNumber() {
-        return getRandomNumber(10);
-    }
-
-    /**
      * Determines currency name
      * @return {@link String} 3 chars Currency
      */
