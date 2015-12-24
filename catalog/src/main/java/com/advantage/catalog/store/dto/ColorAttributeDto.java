@@ -1,33 +1,33 @@
 package com.advantage.catalog.store.dto;
 
 public class ColorAttributeDto {
-    private String Code;
-    private String Color;
+    private String code;
+    private String name;
     private int inStock;
 
     public ColorAttributeDto() {
     }
 
     public ColorAttributeDto(String code, String color, int inStock) {
-        Code = code;
-        Color = color;
+        this.code = code;
+        this.name = color;
         this.inStock = inStock;
     }
 
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
-    public String getColor() {
-        return Color;
+    public String getName() {
+        return name;
     }
 
-    public void setColor(String color) {
-        Color = color;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getInStock() {

@@ -192,7 +192,7 @@ public class DataSourceInit4Json {
    /* private  Set<ColorAttribute> getColorAttributes(Collection<ColorAttribute> colors, Product product) {
         Set<ColorAttribute> colorAttributes = new HashSet<>();
         for (ColorAttribute s : colors) {
-            ColorAttribute color = new ColorAttribute(s.getColor());
+            ColorAttribute color = new ColorAttribute(s.getName());
             color.setProduct(product);
             color.setInStock(s.getInStock());
             colorAttributes.add(color);

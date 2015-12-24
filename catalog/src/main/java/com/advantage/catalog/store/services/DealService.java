@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.services;
 
 import com.advantage.catalog.store.dao.deal.DealRepository;
+import com.advantage.catalog.store.dto.PromotedProductDto;
 import com.advantage.catalog.store.model.deal.Deal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,8 @@ public class DealService {
     @Autowired
     @Qualifier("dealRepository")
     public DealRepository dealRepository;
+    @Autowired
+    private ProductService productService;
 
     @Transactional(readOnly = true)
     public List<Deal> getAllDeals() {
@@ -31,5 +34,16 @@ public class DealService {
     public Deal getDealOfTheDay(Long categoryId) {
 
         return dealRepository.getDealOfTheDay(categoryId);
+    }
+
+    public PromotedProductDto getPromotedProductDtoInCategory(Long categoryId) {
+        return getPromotedProductDto(getDealOfTheDay(categoryId));
+    }
+
+    private PromotedProductDto getPromotedProductDto(Deal promotion) {
+        return promotion == null ? null :
+                new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
+                        promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
+                        productService.getDtoByEntity(promotion.getProduct()));
     }
 }

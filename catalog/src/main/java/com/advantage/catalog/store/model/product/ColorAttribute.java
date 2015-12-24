@@ -38,6 +38,12 @@ public class ColorAttribute {
         this.inStock = inStock;
     }
 
+    public ColorAttribute(String name, String code, int inStock) {
+        this.name = name;
+        this.code = code;
+        this.inStock = inStock;
+    }
+
     public Long getId() {
         return id;
     }
