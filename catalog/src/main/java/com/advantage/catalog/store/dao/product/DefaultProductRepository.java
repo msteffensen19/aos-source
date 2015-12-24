@@ -101,7 +101,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public List<Product> filterByName(String pattern, int quantity) {
         List<Product> products = entityManager.createNamedQuery(Product.PRODUCT_FILTER_BY_NAME, Product.class)
                 .setParameter("pname", "%" + pattern.toUpperCase() + "%")
-                .setMaxResults(100)
+                .setMaxResults(MAX_NUM_OF_PRODUCTS)
                 .getResultList();
 
         return products.isEmpty() ? null : products;

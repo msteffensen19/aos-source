@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by kubany on 10/18/2015.
- */
 @Service
 public class CategoryService {
 
@@ -23,6 +20,8 @@ public class CategoryService {
     private AttributeService attributeService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    DealService dealService;
     @Transactional
     public Category createCategory(final String name, final String managedImageId) {
 
@@ -44,6 +43,9 @@ public class CategoryService {
         CategoryDto dto = applyCategory(categoryId);
         List<Product> categoryProducts = productService.getCategoryProducts(categoryId);
         dto.setAttributes(attributeService.fillAttributeDto(categoryProducts));
+        dto.setProducts(productService.getDtoByEntityCollection(categoryProducts));
+        dto.setPromotedProduct(dealService.getPromotedProductDtoInCategory(categoryId));
+        dto.setColors(productService.getColorsSet(categoryProducts));
 
         return dto;
     }
@@ -54,7 +56,7 @@ public class CategoryService {
         return getCategoryDto(category);
     }
 
-    private CategoryDto getCategoryDto(Category category) {
+    public CategoryDto getCategoryDto(Category category) {
         ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
         CategoryDto dto = new CategoryDto();
         dto.setCategoryId(category.getCategoryId());

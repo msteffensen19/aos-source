@@ -42,15 +42,7 @@ public class CatalogController {
     //region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
-        List<Product> products = productService.getAllProducts();
-        List<ProductDto> productDtos = productService.fillProducts(products);
-        ProductCollectionDto dto = new ProductCollectionDto();
-        dto.setProducts(productDtos);
-        dto.setColors(productService.getColorsSet(products));
-        dto.setMinPrice(productService.getMinPrice(products));
-        dto.setMaxPrice(productService.geMaxPrice(products));
-
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
@@ -138,7 +130,7 @@ public class CatalogController {
             }
             Category category = product.getCategory();
             CategoryDto categoryDto = new CategoryDto();
-            categoryDto.applyCategory(category);
+            categoryService.getCategoryDto(category);
             List<ProductDto> productsDtoList = productDtos.stream()
                     .filter(x -> Long.compare(x.getCategoryId(), categoryDto.getCategoryId()) == 0)
                     .collect(Collectors.toList());
@@ -167,27 +159,6 @@ public class CatalogController {
                                                        HttpServletRequest request) {
         Long categoryId = Long.valueOf(id);
         CategoryDto categoryDto = categoryService.getCategoryDto(categoryId);
-
-        final List<Product> categoryProducts = productService.getCategoryProducts(categoryId); //// TODO: 12/24/2015  
-        categoryDto.setAttributes(attributeService.fillAttributeDto(categoryProducts)); //// TODO: 12/24/2015 DONE
-        final int categoryProductsCount = categoryProducts.size();
-        final List<ProductDto> productDtos = new ArrayList<>(categoryProductsCount);
-
-        for (final Product categoryProduct : categoryProducts) {
-            final ProductDto productDto = productService.getDtoByEntity(categoryProduct);
-
-            productDtos.add(productDto);
-        }
-
-        categoryDto.setProducts(productDtos); //// TODO: 12/24/2015  
-        Deal promotion = dealService.getDealOfTheDay(categoryId);
-        PromotedProductDto promotedProductDto = promotion == null ? null :
-                new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
-                        promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
-                        productService.getDtoByEntity(promotion.getProduct()));
-
-        categoryDto.setPromotedProduct(promotedProductDto); //// TODO: 12/24/2015
-        categoryDto.setColors(productService.getColorsSet(categoryProducts)); //// TODO: 12/24/2015  
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }

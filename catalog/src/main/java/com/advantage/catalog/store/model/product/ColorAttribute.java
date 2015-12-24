@@ -15,8 +15,8 @@ public class ColorAttribute {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "color")
-    private String color;
+    @Column(name = "name")
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = Product.FIELD_ID)
@@ -29,17 +29,17 @@ public class ColorAttribute {
     public ColorAttribute() {
     }
 
-    public ColorAttribute(String color) {
-        this.color = color;
+    public ColorAttribute(String name) {
+        this.name = name;
     }
 
-    public ColorAttribute(String color, int inStock) {
-        this.color = color;
+    public ColorAttribute(String name, int inStock) {
+        this.name = name;
         this.inStock = inStock;
     }
 
-    public ColorAttribute(String color, String code, int inStock) {
-        this.color = color;
+    public ColorAttribute(String name, String code, int inStock) {
+        this.name = name;
         this.code = code;
         this.inStock = inStock;
     }
@@ -48,12 +48,12 @@ public class ColorAttribute {
         return id;
     }
 
-    public String getColor() {
-        return color;
+    public String getName() {
+        return name;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCode() {
@@ -87,14 +87,14 @@ public class ColorAttribute {
 
         ColorAttribute that = (ColorAttribute) o;
 
-        if (color != null ? !color.equals(that.color) : that.color != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return !(product != null ? !product.equals(that.product) : that.product != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = color != null ? color.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }

@@ -36,6 +36,4 @@ public class AttributeItem {
     public void setAttributeValue(String attributeValue) {
         this.attributeValue = attributeValue;
     }
-
-    //// TODO: Move to Service class
 }
