@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.dao;
 
+import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.dto.ProductDto;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
@@ -381,7 +382,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDetails(Long productId) {
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_CATALOG +
+        //String stringURL = Constants.URI_SERVER_CATALOG +
+        //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+        String stringURL = ServiceConfiguration.getUriServerCatalog() +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 
         // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
@@ -432,41 +435,52 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
 
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
+        if (shoppingCarts != null) {
+            if ((shoppingCarts.size() > 0) || (shoppingCarts.isEmpty())) {
 
-        /* Scan user shopping cart and add all product to userCart response object  */
-        for (ShoppingCart cart : shoppingCarts) {
+                /* Scan user shopping cart and add all product to userCart response object  */
+                for (ShoppingCart cart : shoppingCarts) {
 
-            final ProductDto dto = getProductDetails(cart.getProductId());
-            if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
-                userCart.addCartProduct(dto.getProductId(),
-                        dto.getProductName(),   //  "NOT FOUND"
-                        dto.getPrice(),         //  -999999.99
-                        cart.getQuantity(),
-                        dto.getImageUrl(),      //  "NOT FOUND"
-                        "000000",
-                        "BLACK",
-                        0,
-                        false); //  isExists = false
+                    final ProductDto dto = getProductDetails(cart.getProductId());
+                    if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                        userCart.addCartProduct(dto.getProductId(),
+                                dto.getProductName(),   //  "NOT FOUND"
+                                dto.getPrice(),         //  -999999.99
+                                cart.getQuantity(),
+                                dto.getImageUrl(),      //  "NOT FOUND"
+                                "000000",
+                                "BLACK",
+                                0,
+                                false); //  isExists = false
 
-            } else {
-                /*  Add a product to user shopping cart response class  */
-                userCart.addCartProduct(dto.getProductId(),
-                        dto.getProductName(),
-                        dto.getPrice(),
-                        cart.getQuantity(),
-                        dto.getImageUrl(),
-                        dto.getColors().get(0).getCode(),
-                        dto.getColors().get(0).getColor(),
-                        dto.getColors().get(0).getInStock());
+                    } else {
+                        /*  Add a product to user shopping cart response class  */
+                        userCart.addCartProduct(dto.getProductId(),
+                                dto.getProductName(),
+                                dto.getPrice(),
+                                cart.getQuantity(),
+                                dto.getImageUrl(),
+                                dto.getColors().get(0).getCode(),
+                                dto.getColors().get(0).getColor(),
+                                dto.getColors().get(0).getInStock());
+                    }
+                }
             }
-
+            //else {
+            //    //ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY
+            //   userCart = null;
+            //}
         }
+        //else {
+        //    //ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY
+        //   userCart = null;
+        //}
 
         //return ((userCart == null) || (userCart.isEmpty())) ? null : userCart;
         return userCart;
@@ -674,8 +688,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_ACCOUNT +
-                this.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+        //String stringURL = Constants.URI_SERVER_ACCOUNT +
+        //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+        String stringURL = ServiceConfiguration.getUriServerAccount() +
+                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
         System.out.println("stringURL=\"" + stringURL + "\"");

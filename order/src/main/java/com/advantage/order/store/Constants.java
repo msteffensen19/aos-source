@@ -31,23 +31,6 @@ public class Constants {
 
     //	Binyamin Regev: For now it's here, needs T.B.D.
     public static final String SERVICE_URL_FORMAT = "http://%s:%s/%s" + URI_API + "/v1";
-    //  Server ACCOUNT and SERVICE
-    public static final String URI_SERVER_ACCOUNT = String.format(SERVICE_URL_FORMAT, environment.getProperty("account.service.url.host"), environment.getProperty("account.service.url.port"), environment.getProperty("account.service.url.suffix"));
-    public static final String URI_SERVER_CATALOG = String.format(SERVICE_URL_FORMAT, environment.getProperty("catalog.service.url.host"), environment.getProperty("catalog.service.url.port"), environment.getProperty("catalog.service.url.suffix"));
-    public static final String URI_SERVER_ORDER = String.format(SERVICE_URL_FORMAT, environment.getProperty("order.service.url.host"), environment.getProperty("order.service.url.port"), environment.getProperty("order.service.url.suffix"));
-    //"http://localhost:8080/service" + URI_API + "/v1";
-    public static final String URI_SERVER_SERVICE = String.format(SERVICE_URL_FORMAT,
-            environment.getProperty("service.service.url.host"),
-            environment.getProperty("service.service.url.port"),
-            environment.getProperty("service.service.url.suffix"));
-    public static final String URI_SERVER_SAFE_PAY = String.format(SERVICE_URL_FORMAT,
-            environment.getProperty("safepay.service.url.host"),
-            environment.getProperty("safepay.service.url.port"),
-            environment.getProperty("safepay.service.url.suffix"));
-    public static final String URI_SERVER_MASTER_CREDIT = String.format(SERVICE_URL_FORMAT,
-            environment.getProperty("mastercredit.service.url.host"),
-            environment.getProperty("mastercredit.service.url.port"),
-            environment.getProperty("mastercredit.service.url.suffix"));
     //	Binyamin Regev - End
 
     public static final String URI_PRODUCTS = "/products";

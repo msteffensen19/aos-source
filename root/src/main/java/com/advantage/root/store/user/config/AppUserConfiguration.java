@@ -21,7 +21,6 @@ public class AppUserConfiguration {
     private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
     private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
 
-
     @Inject
     private Environment env;
 

@@ -9,7 +9,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * Created by kubany on 10/11/2015.
+ * @author Assaf Kubany on 11/10/2015.
  */
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
@@ -21,7 +21,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 JpaConfiguration.class,
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
-                AppUserConfiguration.class,
+                ServiceConfiguration.class,
                 AdvantageAspects.class,
                 ImageManagementConfiguration.class
         };

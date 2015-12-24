@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 )
 @PropertySources(value = {
         @PropertySource("classpath:/app.properties"),
-        //@PropertySource("classpath:/database.properties"),
         @PropertySource("classpath:/global.properties"),
         @PropertySource("classpath:/services.properties"),
         @PropertySource("classpath:/DemoApp.properties")})

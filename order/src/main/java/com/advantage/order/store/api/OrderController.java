@@ -36,7 +36,11 @@ public class OrderController {
 
         ShoppingCartResponseDto userShoppingCart = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-        return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
+        if (userShoppingCart.getProductsInCart().size() > 0) {
+            return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(userShoppingCart, HttpStatus.CONFLICT);
+        }
     }
 
     /*  =========================================================================================================   */
@@ -115,7 +119,11 @@ public class OrderController {
             shoppingCartResponseStatus.setId(-1);
         }
 
-        return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+        if (shoppingCartResponseStatus.isSuccess()) {
+            return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.CONFLICT);
+        }
     }
 
     /*  =========================================================================================================   */
