@@ -55,8 +55,6 @@
                 <sx:element name="SEAddress" type="tns:SEAddress"/>
                 <xs:element name="SEProducts" type="tns:SEProducts" form="qualified"/>
                 <xs:element name="OrderNumber" type="xs:string"/>
-                <xs:element name="Amount" type="xs:string"/>
-                <xs:element name="Currency" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

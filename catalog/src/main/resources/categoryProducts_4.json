@@ -90,17 +90,17 @@
       "colors": [
         {
           "inStock": 10,
-          "color": "Green",
+          "name": "Green",
           "code": "00FF00"
         },
         {
           "inStock": 10,
-          "color": "BLUE",
+          "name": "BLUE",
           "code": "0000FF"
         },
         {
           "inStock": 10,
-          "color": "SILVER",
+          "name": "SILVER",
           "code": "C0C0C0"
         }
       ],
@@ -137,7 +137,7 @@
       "colors": [
         {
           "code": "000000",
-          "color": "black",
+          "name": "black",
           "inStock": 10
         }
       ],
@@ -174,7 +174,7 @@
       "colors": [
         {
           "code": "FFFFFF",
-          "color": "white",
+          "name": "white",
           "inStock": 10
         }
       ],
@@ -211,7 +211,7 @@
       "colors": [
         {
           "code": "FFFFFF",
-          "color": "white",
+          "name": "white",
           "inStock": 10
         }
       ],
@@ -248,22 +248,22 @@
       "colors": [
         {
           "code": "FFC0CB",
-          "color": "pink",
+          "name": "pink",
           "inStock": 10
         },
         {
           "inStock": 10,
-          "color": "Green",
+          "name": "Green",
           "code": "00FF00"
         },
         {
           "inStock": 10,
-          "color": "YELLOW",
+          "name": "YELLOW",
           "code": "FFFF00"
         },
         {
           "inStock": 10,
-          "color": "SILVER",
+          "name": "SILVER",
           "code": "C0C0C0"
         }
       ],
@@ -300,12 +300,12 @@
       "colors": [
         {
           "code": "C0C0C0",
-          "color": "silver",
+          "name": "silver",
           "inStock": 10
         },
         {
           "code": "F0E68C",
-          "color": "khaki",
+          "name": "khaki",
           "inStock": 10
         }
       ],
@@ -342,7 +342,7 @@
       "colors": [
         {
           "code": "000000",
-          "color": "black",
+          "name": "black",
           "inStock": 10
         }
       ],
@@ -379,7 +379,7 @@
       "colors": [
         {
           "code": "0000A0",
-          "color": "blue",
+          "name": "blue",
           "inStock": 10
         }
       ],
@@ -416,7 +416,7 @@
       "colors": [
         {
           "code": "C0C0C0",
-          "color": "silver",
+          "name": "silver",
           "inStock": 10
         }
       ],
@@ -453,7 +453,7 @@
       "colors": [
         {
           "code": "C0C0C0",
-          "color": "silver",
+          "name": "silver",
           "inStock": 10
         }
       ],

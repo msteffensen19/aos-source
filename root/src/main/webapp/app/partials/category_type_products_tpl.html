@@ -10,11 +10,11 @@
                     ng-click="toggleColapse('accordionPrice')" >
                     {{'PRICE' | translate }}
                 </h4>
-                <div class="option" style="text-align: center; padding-bottom: 20px">
+                <div class="option" style="text-align: center;">
                     <div id="slider"></div>
                     <br />
-                    <p class="sliderSteps" style="float: right" >{{minPriceToFilter | currency:'$'}}</p>
-                    <p class="sliderSteps" style="float: left">{{maxPriceToFilter | currency:'$'}}</p>
+                    <p class="sliderSteps left">{{minPriceToFilter | currency:'$'}}</p>
+                    <p class="sliderSteps " >{{maxPriceToFilter | currency:'$'}}</p>
                 </div>
             </li>
             <!--- Price Section -->
@@ -59,7 +59,7 @@
     </div>
     <div class="cell categoryRight">
         <ul>
-            <li ng-repeat="product in products | productsFilter:maxPriceToFilter:minPriceToFilter:productsInclude"
+            <li ng-repeat="product in products | productsFilter:minPriceToFilter:maxPriceToFilter:productsInclude"
                 ng-click="gotoItem(product.productId)" >
                 <div class="AddToCard">
                     <label> {{'SHOP_NOW' | translate}} </label>

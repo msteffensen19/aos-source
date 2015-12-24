@@ -24,7 +24,7 @@ define(['./module'], function (directives) {
 
                     /* Get configuration */
                     userService.getConfiguration().then(function(response){
-                        //console.log(response)
+                        console.log(response)
                         $scope.config = response;
                     });
                     /*===========================  end Get configuration ============================*/

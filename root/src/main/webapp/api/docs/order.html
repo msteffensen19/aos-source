@@ -33,7 +33,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "/account/v2/api-docs";
+        url = "/order/v2/api-docs";
       }
 
       // Pre load translate...
@@ -98,108 +98,24 @@
         }
       }
   });
-
   </script>
 </head>
 
-
 <body class="swagger-section">
-<button id="d">default</button>
-<div id="default">
-<div id='header' >
+<div id='header'>
   <div class="swagger-ui-wrap">
     <a id="logo" href="http://swagger.io">swagger</a>
     <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" value="http://localhost:8080/account/v2/api-docs" name="baseUrl" type="text"/></div>
+      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
       <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
       <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
     </form>
   </div>
 </div>
+
   <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
   <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
-  <br/><br/><br/><br/><br/><br/>
-</div>
-<button id="c">catalog</button>
-<iframe src="catalog.html"
-        id="catalog"
-        width="100%"
-        height="400"
-        scrolling="no"
-        style="resize: vertical"
-        onClick="toogleIframe('catalog')"
->
-  <p>Your browser does not support iframes.</p>
-</iframe>
-<button id="o">order</button>
-<iframe src="order.html"
-        id="order"
-        width="100%"
-        height="400"
-        scrolling="no"
-        style="resize: vertical"
-        onclick="toogleIframe('order')"
->
-</iframe>
-<button id="m">mastercredit</button>
-<iframe src="mastercredit.html"
-        id="mastercredit"
-        width="100%"
-        height="400"
-        scrolling="no"
-        style="resize: vertical"
-        onclick="toogleIframe('mastercredit')"
->
-</iframe>
-<button id="a">account</button>
-<iframe src="account.html"
-        id="account"
-        width="100%"
-        height="400"
-        scrolling="no"
-        style="resize: vertical"
-        onclick="toogleIframe('mastercredit')"
->
-</iframe>
-<style>
-  button#m, button#c, button#o, button#a,  button#d{
-    width: 100%;
-    font-size: 20px;
-    font-family:Arial, Helvetica, sans-serif;
-    padding: 10px;
-    border: none 1px black;
-    outline: none;
-    letter-spacing: 0px;
-    transition: all ease .3s;
-    text-transform: lowercase;
-    cursor: pointer;
-    color:black;
-    text-shadow: 0 0 0px black;
-  }
-  button#m:hover, button#c:hover, button#o:hover, button#a:hover , button#d:hover {
-    opacity: 1;
-    text-shadow: 0 0 10px black;
-    color:white;
-  }
-</style>
-<script>
-  var catalog = document.getElementById('catalog');
-  console.log($('#catalog'));
-  $('#c').click(function() {
-    $('#catalog').slideToggle();
-  });
-  $('#m').click(function() {
-    $('#mastercredit').slideToggle();
-  });
-  $('#o').click(function() {
-    $('#order').slideToggle();
-  });
-  $('#a').click(function() {
-    $('#account').slideToggle();
-  });
-  $('#d').click(function() {
-    $('#default').slideToggle();
-  });
-</script>
+  <br/><br/><br/>
+
 </body>
 </html>

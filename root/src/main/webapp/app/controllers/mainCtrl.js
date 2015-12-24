@@ -39,19 +39,14 @@ define(['./module'], function (controllers) {
 
 
             $scope.openSearchProducts = function(){
-                $("nav ul li a.navLinks").each(function(index){
-                    setTimeout(function(_this){
-                        _this.addClass("searchSectionEnabled");
-                    }, (500 / 6) * index, $(this))
-                });
+                $("nav ul li a.navLinks").fadeOut(600);
                 setTimeout(function(_this){
                     $("#searchSection").fadeIn(1000);
                     $("#autoComplete").focus();
                     $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
-                    $("#searchSection > div > div > span > img").delay(1000).fadeIn(500); // img close
+                    $("#searchSection > div > div > span > img").delay(500).fadeIn(500); // img close
                 }, 400);
             }
-
 
             $scope.closeSearchSection = function(){
 
@@ -59,16 +54,11 @@ define(['./module'], function (controllers) {
                 setTimeout(function(){
                     $("#searchSection").fadeOut(500);
                     $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
-                    $("nav ul li a").each(function(index){
-                        setTimeout(function(_this){
-                            _this.removeClass("searchSectionEnabled");
-                        }, (300 / 6) * index, $(this))
-                    })
+                    $("nav ul li a.navLinks").fadeIn(600);
                     $scope.autoCompleteValue = lastRequest = '';
                     $scope.autoCompleteResult = {};
                     $("#autoComplete").focusout();
                 }, 200)
-
             }
 
             $('#product_search_img').click(function (e) {
@@ -82,7 +72,7 @@ define(['./module'], function (controllers) {
             });
 
             $scope.searchByCategoryId = function(id){
-                alert(id);
+                console.log(id);
             }
 
             /* END Autocomplete*/
@@ -93,7 +83,8 @@ define(['./module'], function (controllers) {
 
 
 
-            /* Cart section */
+            /* Cart section  */
+
             productsCartService.getCart().then(function(cart){
                 $scope.cart = cart;
             });

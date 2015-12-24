@@ -9,9 +9,13 @@ import java.util.regex.Pattern;
  * @author Binyamin Regev on 19/11/2015.
  */
 public class ValidationHelper {
+
     private static final String FULL_NAME_PATTERN = "^[\\p{L} .'-]+$";
 
     private static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
+
+    private static final String MASTER_CREDIT_CARD_NUMBER_PATTERN = "([0-9]{16})";
+    private static final String MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN = "([0-9]{12})";
 
     //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
     //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
@@ -89,6 +93,27 @@ public class ValidationHelper {
 
     }
 
+    /**
+     * Validates <b>MasterCredit</b> card number.
+     * @param cardNumber <b>MasterCredit</b> card number to validate.
+     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+     */
+    public static boolean isValidMasterCreditCardNumber(final String cardNumber) {
+        pattern = Pattern.compile(MASTER_CREDIT_CARD_NUMBER_PATTERN);
+
+        //  Validate MasterCredit CVV number
+        final boolean isValid = pattern.matcher(cardNumber).matches();
+
+        System.out.println("MasterCredit card number=" + cardNumber + " is valid? " + isValid);
+
+        return isValid;
+    }
+
+    /**
+     * Validates <b>MasterCredit</b> CVV number.
+     * @param cvvNumber <b>MasterCredit</b> CVV number to validate.
+     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+     */
     public static boolean isValidMasterCreditCVVNumber(final String cvvNumber) {
         pattern = Pattern.compile(MASTER_CREDIT_CVV_NUMBER_PATTERN);
 
@@ -100,6 +125,11 @@ public class ValidationHelper {
         return isValid;
     }
 
+    /**
+     * Validates <b>MasterCredit</b> card holder full name.
+     * @param fullName <b>MasterCredit</b> card holder full name to validate.
+     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+     */
     public static boolean isValidFullName(final String fullName) {
         pattern = Pattern.compile(FULL_NAME_PATTERN);
 
@@ -107,6 +137,22 @@ public class ValidationHelper {
         final boolean isValid = pattern.matcher(fullName).matches();
 
         System.out.println("Full name=\"" + fullName + "\" is valid? " + isValid);
+
+        return isValid;
+    }
+
+    /**
+     * Validates <b>MasterCredit</b> account number.
+     * @param accountNumber <b>MasterCredit</b> account number to validate.
+     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+     */
+    public static boolean isValidMasterCreditAccountNumber(final String accountNumber) {
+        pattern = Pattern.compile(MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN);
+
+        //  Validate MasterCredit account number
+        final boolean isValid = pattern.matcher(accountNumber).matches();
+
+        System.out.println("MasterCredit account number=" + accountNumber + " is valid? " + isValid);
 
         return isValid;
     }

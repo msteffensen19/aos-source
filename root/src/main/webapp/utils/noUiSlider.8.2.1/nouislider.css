@@ -59,18 +59,25 @@
 /* Slider size and handle placement;
  */
 .noUi-horizontal {
-	height: 8px;
+	height: 4px;
 }
+
 .noUi-horizontal .noUi-handle {
-	width: 20px;
-	height: 20px;
+	width: 15px;
+	height: 15px;
 	border-radius: 50%;
-	left: -12px;
-	top: -7.55px;
+	left: 0px;
+	top: -6px;
 }
+
+.noUi-horizontal .noUi-origin:nth-child(2) .noUi-handle {
+	left: -15px;
+}
+
 .noUi-vertical {
 	width: 18px;
 }
+
 .noUi-vertical .noUi-handle {
 	width: 28px;
 	height: 34px;
@@ -81,25 +88,16 @@
 /* Styling;
  */
 .noUi-background {
-	background: #FAFAFA;
-	box-shadow: inset 0 1px 1px #f0f0f0;
+	background: #E1E1E1;
 }
 .noUi-connect {
-	background: #505050;
-	box-shadow: inset 0 0 3px rgba(51,51,51,0.45);
+	background: #515151;
 	-webkit-transition: background 450ms;
 	transition: background 450ms;
 }
-.noUi-origin {
-	border-radius: 2px;
-}
 .noUi-target {
-	border-radius: 4px;
-	border: 1px solid #D3D3D3;
-	box-shadow: inset 0 1px 1px #F0F0F0, 0 3px 6px -5px #BBB;
 }
 .noUi-target.noUi-connect {
-	box-shadow: inset 0 0 3px rgba(51,51,51,0.45), 0 3px 6px -5px #BBB;
 }
 
 /* Handles and cursors;
@@ -112,7 +110,6 @@
 }
 .noUi-handle {
 	border: 1px solid #B9A7A7;
-	border-radius: 3px;
 	background: #FFF;
 	cursor: default;
 	/*

@@ -22,8 +22,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="SEAddress" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}SEAddress"/>
  *         &lt;element name="SEProducts" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}SEProducts" form="qualified"/>
  *         &lt;element name="OrderNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Amount" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Currency" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,9 +35,7 @@ import javax.xml.bind.annotation.XmlType;
     "seTransactionType",
     "seAddress",
     "seProducts",
-    "orderNumber",
-    "amount",
-    "currency"
+    "orderNumber"
 })
 @XmlRootElement(name = "PlaceShippingOrderRequest", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
 public class PlaceShippingOrderRequest {
@@ -52,10 +48,6 @@ public class PlaceShippingOrderRequest {
     protected SEProducts seProducts;
     @XmlElement(name = "OrderNumber", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String orderNumber;
-    @XmlElement(name = "Amount", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String amount;
-    @XmlElement(name = "Currency", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String currency;
 
     /**
      * Gets the value of the seTransactionType property.
@@ -151,54 +143,6 @@ public class PlaceShippingOrderRequest {
      */
     public void setOrderNumber(String value) {
         this.orderNumber = value;
-    }
-
-    /**
-     * Gets the value of the amount property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets the value of the amount property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAmount(String value) {
-        this.amount = value;
-    }
-
-    /**
-     * Gets the value of the currency property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCurrency() {
-        return currency;
-    }
-
-    /**
-     * Sets the value of the currency property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCurrency(String value) {
-        this.currency = value;
     }
 
 }

@@ -14,8 +14,17 @@ define(['./module'], function (directives) {
             link: function(scope, element, attrs, ctrls) {
 
                     scope.checkout = function () {
-                        console.log('scope.cart');
-                        console.log(scope.cart);
+
+                        cartService.checkout().then(function(userLogin){
+                            if(!userLogin)
+                            {
+                                console.log(ctrls)
+                                scope.login();
+                            }
+                            else {
+                                console.log("move user to checkout page...");
+                            }
+                        });
                     }
                 }
         };
