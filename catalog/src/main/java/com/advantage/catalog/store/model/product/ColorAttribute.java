@@ -13,7 +13,7 @@ public class ColorAttribute {
     private Long id;
 
     @Column(name = "code")
-    private String Code;
+    private String code;
 
     @Column(name = "name")
     private String name;

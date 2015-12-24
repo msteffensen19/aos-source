@@ -1,13 +1,11 @@
 package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.dto.*;
-import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.services.DealService;
 import com.advantage.catalog.store.Constants;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
-import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
 import com.advantage.catalog.store.services.ProductService;
@@ -45,7 +43,7 @@ public class CatalogController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
         List<Product> products = productService.getAllProducts();
-        List<ProductDto> productDtos = ProductDto.fillProducts(products);
+        List<ProductDto> productDtos = productService.fillProducts(products);
         ProductCollectionDto dto = new ProductCollectionDto();
         dto.setProducts(productDtos);
         dto.setColors(productService.getColorsSet(products));
@@ -60,7 +58,7 @@ public class CatalogController {
                                                      HttpServletRequest request) {
         Product product = productService.getProductById(id);
         if (product == null) return new ResponseEntity<>(HttpStatus.CONFLICT);
-        ProductDto dto = new ProductDto(product);
+        ProductDto dto = productService.getDtoByEntity(product);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -131,7 +129,7 @@ public class CatalogController {
         if (quantity == 0) return new ResponseEntity<>(HttpStatus.OK);
         List<Product> products = productService.filterByName(name, quantity);
         if (products == null) return new ResponseEntity<>(HttpStatus.OK);
-        List<ProductDto> productDtos = ProductDto.fillPureProducts(products);
+        List<ProductDto> productDtos = productService.fillPureProducts(products);
         List<CategoryDto> categoryDtos = new ArrayList<>();
         for (Product product : products) {
             if (categoryDtos.stream()
@@ -167,29 +165,29 @@ public class CatalogController {
     @RequestMapping(value = "/categories/{category_id}/products", method = RequestMethod.GET)
     public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id,
                                                        HttpServletRequest request) {
-        final Long categoryId = Long.valueOf(id);
-        final Category category = categoryService.getCategory(categoryId);
-        final CategoryDto categoryDto = new CategoryDto();
-        categoryDto.applyCategory(category);
-        final List<Product> categoryProducts = productService.getCategoryProducts(categoryId);
-        categoryDto.setAttributes(fillAttributeDto(attributeService.getAllAttributes(), categoryProducts));
+        Long categoryId = Long.valueOf(id);
+        CategoryDto categoryDto = categoryService.getCategoryDto(categoryId);
+
+        final List<Product> categoryProducts = productService.getCategoryProducts(categoryId); //// TODO: 12/24/2015  
+        categoryDto.setAttributes(attributeService.fillAttributeDto(categoryProducts)); //// TODO: 12/24/2015 DONE
         final int categoryProductsCount = categoryProducts.size();
         final List<ProductDto> productDtos = new ArrayList<>(categoryProductsCount);
 
         for (final Product categoryProduct : categoryProducts) {
-            final ProductDto productDto = new ProductDto(categoryProduct);
+            final ProductDto productDto = productService.getDtoByEntity(categoryProduct);
 
             productDtos.add(productDto);
         }
 
-        categoryDto.setProducts(productDtos);
+        categoryDto.setProducts(productDtos); //// TODO: 12/24/2015  
         Deal promotion = dealService.getDealOfTheDay(categoryId);
         PromotedProductDto promotedProductDto = promotion == null ? null :
                 new PromotedProductDto(promotion.getStaringPrice(), promotion.getPromotionHeader(),
-                        promotion.getPromotionSubHeader(), promotion.getManagedImageId(), new ProductDto(promotion.getProduct()));
+                        promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
+                        productService.getDtoByEntity(promotion.getProduct()));
 
-        categoryDto.setPromotedProduct(promotedProductDto);
-        categoryDto.setColors(productService.getColorsSet(categoryProducts));
+        categoryDto.setPromotedProduct(promotedProductDto); //// TODO: 12/24/2015
+        categoryDto.setColors(productService.getColorsSet(categoryProducts)); //// TODO: 12/24/2015  
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
@@ -238,44 +236,4 @@ public class CatalogController {
     }
     //endregion
 
-    /**
-     * Fill AttributeDto from ProductAttributes
-     *
-     * @param attributeCollection Attributes collection
-     * @param products            Products collection
-     * @return AttributeDto collection
-     */
-    private List<AttributeDto> fillAttributeDto(Collection<Attribute> attributeCollection,
-                                                Collection<Product> products) {
-
-        Map<String, Set<String>> attrCollection = new LinkedHashMap<>();
-        for (Attribute attribute : attributeCollection) {
-            attrCollection.put(attribute.getName(), null);
-        }
-
-        for (Product product : products) {
-            Set<ProductAttributes> productAttributes = product.getProductAttributes();
-            for (ProductAttributes attribute : productAttributes) {
-                String attrName = attribute.getAttribute().getName();
-                String attrValue = attribute.getAttributeValue();
-
-                Set<String> item = attrCollection.get(attrName);
-
-                if (item == null) {
-                    item = new HashSet<>();
-                    attrCollection.put(attrName, item);
-                }
-                item.add(attrValue);
-            }
-        }
-
-        List<AttributeDto> attributeItems = new ArrayList<>();
-
-        for (Map.Entry<String, Set<String>> item : attrCollection.entrySet()) {
-            if (item.getValue() == null) continue;
-            attributeItems.add(new AttributeDto(item.getKey(), item.getValue()));
-        }
-
-        return attributeItems;
-    }
 }

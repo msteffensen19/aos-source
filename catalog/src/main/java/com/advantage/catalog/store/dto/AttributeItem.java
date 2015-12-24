@@ -37,20 +37,5 @@ public class AttributeItem {
         this.attributeValue = attributeValue;
     }
 
-    /**
-     * Convert ProductAttributes collection to AttributeItem DTO
-     *
-     * @param attributes - ProductAttributes collection
-     * @return AttributeItem DTO collection
-     */
-    public static List<AttributeItem> productAttributesToAttributeValues(Collection<ProductAttributes> attributes) {
-        List<AttributeItem> items = new ArrayList<>();
-        for (ProductAttributes attribute : attributes) {
-            String name = attribute.getAttribute().getName();
-            String value = attribute.getAttributeValue();
-            items.add(new AttributeItem(name, value));
-        }
-
-        return items;
-    }
+    //// TODO: Move to Service class
 }
