@@ -437,7 +437,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-            return null;
+            return null; //  userId is not a registered user
         }
 
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
@@ -698,9 +698,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         try {
             String stringResponse = httpGet(stringURL);
-            System.out.println("stringResponse = \"" + stringResponse + "\"");
+            System.out.println("Is exists a registered user with " + userId + " as unique id ?" + stringResponse);
 
-            if (stringResponse.equalsIgnoreCase("true")) { isExists = true; }
+            isExists = stringResponse.equalsIgnoreCase("true");
 
         } catch (IOException e) {
             System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
