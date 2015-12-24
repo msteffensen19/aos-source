@@ -66,9 +66,7 @@ public class MasterCreditDto {
         this.cardNumber = cardNumber;
     }
 
-    public String getExpirationDate() {
-        return expirationDate;
-    }
+    public String getExpirationDate() { return expirationDate; }
 
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;

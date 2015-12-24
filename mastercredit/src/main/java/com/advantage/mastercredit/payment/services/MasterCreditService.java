@@ -66,43 +66,108 @@ public class MasterCreditService {
     public MasterCreditResponse doPayment(MasterCreditDto masterCreditDto) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(masterCreditDto, "MasterCredit request data");
-        ArgumentValidationHelper.validateLongArgumentIsPositive(masterCreditDto.getCardNumber(), "MasterCredit card number");
-
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionType(), "MasterCredit transaction type");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getExpirationDate(), "MasterCredit expiration date");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getCustomerName(), "MasterCredit customer name");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getCustomerPhone(), "MasterCredit customer phone");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(masterCreditDto.getCvvNumber()), "MasterCredit CVV number");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionDate(), "MasterCredit transaction date");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(masterCreditDto.getAccountNumber()), "MasterCredit receiving card account number");
-
-        String transactionDate = masterCreditDto.getTransactionDate().substring(0, 2) + "." +
-                masterCreditDto.getTransactionDate().substring(2, 4) + "." +
-                masterCreditDto.getTransactionDate().substring(4, 8);
-        boolean isValid = ValidationHelper.isValidDate(transactionDate);
-
-        isValid = isValid && ValidationHelper.isValidMasterCreditCVVNumber(String.valueOf(masterCreditDto.getCvvNumber()));
-
-        isValid = isValid && ValidationHelper.isValidDate("01." +
-                masterCreditDto.getExpirationDate().substring(0, 2) + "." +
-                masterCreditDto.getExpirationDate().substring(2, 6));
-
-        isValid = isValid && ValidationHelper.isValidMasterCreditCVVNumber(String.valueOf(masterCreditDto.getCvvNumber()));
-        isValid = isValid && ValidationHelper.isValidFullName(masterCreditDto.getCustomerName());
 
         MasterCreditResponse responseStatus = new MasterCreditResponse();
-
         responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
-        responseStatus.setReferenceNumber(this.referenceNumberNextValue());
-        //responseStatus.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));   //  Transaction date from current date
         responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
 
-        //  Check if Transaction Date to determine if transaction APPROVED or REJECTED
-        Date date = StringHelper.convertStringToDate(transactionDate, "dd.MM.yyyy");
-        if (date.getTime() > new Date().getTime()) {
-            responseStatus.setResponse(ResponseEnum.REJECTED.getStringCode());
-        } else {
-            responseStatus.setResponse(ResponseEnum.APPROVED.getStringCode());
+        boolean isValid = true;
+        StringBuilder sb = new StringBuilder();
+
+        //  Validate Request Fields values
+        /*  Card number */
+        if (!ValidationHelper.isValidMasterCreditCardNumber(String.valueOf(masterCreditDto.getCardNumber()))) {
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'card number\' value=" + masterCreditDto.getCardNumber());
+            responseStatus.setReferenceNumber(0);
+            isValid = false;
+        }
+
+        if (isValid) {
+            /*  Expiration Date */
+            sb = new StringBuilder("01.")
+                    .append(masterCreditDto.getExpirationDate().substring(0, 2))
+                    .append('.')
+                    .append(masterCreditDto.getExpirationDate().substring(2, 6));
+            if (!ValidationHelper.isValidDate(sb.toString())) {
+                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                responseStatus.setResponseReason("Wrong field value. Field \'expiration date\' value=" + masterCreditDto.getExpirationDate());
+                responseStatus.setReferenceNumber(0);
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            /*  Card holder full name */
+            if (!ValidationHelper.isValidFullName(masterCreditDto.getCustomerName())) {
+                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                responseStatus.setResponseReason("Wrong field value. Field \'customer name\' value=" + masterCreditDto.getCustomerName());
+                responseStatus.setReferenceNumber(0);
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            /*  Customer phone  */
+            if (!ValidationHelper.isValidPhoneNumber(masterCreditDto.getCustomerPhone())) {
+                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                responseStatus.setResponseReason("Wrong field value. Field \'customer phone\' value=" + masterCreditDto.getCustomerPhone());
+                responseStatus.setReferenceNumber(0);
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            /*  CVV Number  */
+            if (!ValidationHelper.isValidMasterCreditCVVNumber(String.valueOf(masterCreditDto.getCvvNumber()))) {
+                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                responseStatus.setResponseReason("Wrong field value. Field \'CVV Number\' value=" + masterCreditDto.getCvvNumber());
+                responseStatus.setReferenceNumber(0);
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            /*  Transaction Date    */
+            sb = new StringBuilder(masterCreditDto.getTransactionDate().substring(0, 2))
+                    .append('.')
+                    .append(masterCreditDto.getTransactionDate().substring(2, 4))
+                    .append('.')
+                    .append(masterCreditDto.getTransactionDate().substring(4, 8));
+            if (!ValidationHelper.isValidDate(sb.toString())) {
+                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                responseStatus.setResponseReason("Wrong field value. Field \'transaction date\' value=" + masterCreditDto.getTransactionDate());
+                responseStatus.setReferenceNumber(0);
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            /*  receiving card account number   */
+            if (!ValidationHelper.isValidMasterCreditAccountNumber(String.valueOf(masterCreditDto.getAccountNumber()))) {
+                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                responseStatus.setResponseReason("Wrong field value. Field \'receiving card account number\' value=" + masterCreditDto.getAccountNumber());
+                responseStatus.setReferenceNumber(0);
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            /*
+                IF TransactionDate > Today Then Transaction REJECTED (Payment Failed)
+                IF TransactionDate <= Today Then Transaction APPROVED (Payment Successful)
+             */
+            Date date = StringHelper.convertStringToDate(sb.toString(), "dd.MM.yyyy");
+            if (date.getTime() > new Date().getTime()) {
+                responseStatus.setResponseCode(ResponseEnum.REJECTED.getStringCode());
+                responseStatus.setResponseReason("Payment rejected");
+                responseStatus.setReferenceNumber(0);
+            } else {
+                responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());
+                responseStatus.setResponseReason(ResponseEnum.APPROVED.getStringCode());
+                responseStatus.setReferenceNumber(this.referenceNumberNextValue());
+            }
         }
 
         return responseStatus;
@@ -120,7 +185,8 @@ public class MasterCreditService {
         MasterCreditResponse responseStatus = new MasterCreditResponse();
 
         responseStatus.setTransactionType(TransactionTypeEnum.REFUND.getStringCode());
-        responseStatus.setResponse(ResponseEnum.APPROVED.getStringCode());
+        responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());
+        responseStatus.setResponseReason(ResponseEnum.APPROVED.getStringCode());
         responseStatus.setReferenceNumber(this.referenceNumberNextValue());
         responseStatus.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));
 
