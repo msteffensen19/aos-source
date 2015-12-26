@@ -28,6 +28,5 @@ public class Constants {
         public static final String TOKEN = "token";
         public static final String IS_SUCCESS = "isSuccess";
         public static final String USER_ID = "userId";
-
     }
 }
