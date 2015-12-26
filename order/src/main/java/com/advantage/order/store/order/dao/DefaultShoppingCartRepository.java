@@ -20,8 +20,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ import java.util.Map;
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository {
 
     //  FINALs for REST API calls - BEGIN
-    //  Will be replaces with configuration variables (T.B.D.)
+    //  TODO Will be replaces with configuration variables (T.B.D.)
     private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
     private static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
     //  FINALs for REST API calls - END
@@ -420,7 +421,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDetails(Long productId, String hexColor) {
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_CATALOG +
+        //String stringURL = Constants_order.URI_SERVER_CATALOG +
+        //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+        String stringURL = ServiceConfiguration.getUriServerCatalog() +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 //        String stringURL = ServiceConfiguration.getUriServerCatalog() +
 //                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
@@ -798,7 +801,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_ACCOUNT +
+        //String stringURL = Constants_order.URI_SERVER_ACCOUNT +
+        //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+        String stringURL = ServiceConfiguration.getUriServerAccount() +
                 ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
