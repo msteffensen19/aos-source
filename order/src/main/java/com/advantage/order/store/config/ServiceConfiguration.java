@@ -1,6 +1,6 @@
 package com.advantage.order.store.config;
 
-import com.advantage.order.store.Constants;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;

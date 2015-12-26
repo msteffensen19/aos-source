@@ -1,6 +1,6 @@
 package com.advantage.order.store.user.util;
 
-import com.advantage.order.store.Constants;
+import com.advantage.root.string_resources.Constants;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
