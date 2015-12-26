@@ -43,4 +43,9 @@ public class Constants {
         private static final int FILE_SIZE_THRESHOLD = 0; // Size threshold after which files will be written to disk
     }
 
+    public static class Payments {
+        public static final String URI_SERVER_MASTER_CREDIT = "https://www.AdvantageOnlineBanking.com"; //  "/MasterCredit" + URI_API + "/v1";
+        public static final String URI_SERVER_SAFE_PAY = "https://www.AdvantageOnlineBanking.com";      //  "/SafePay" + URI_API + "/v1";
+        //	Binyamin Regev - End
+    }
 }

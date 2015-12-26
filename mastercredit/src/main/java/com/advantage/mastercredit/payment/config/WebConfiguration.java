@@ -1,6 +1,6 @@
 package com.advantage.mastercredit.payment.config;
 
-import com.advantage.mastercredit.payment.Constants;
+import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.*;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
