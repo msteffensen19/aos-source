@@ -2,6 +2,7 @@ package com.advantage.root.store.config;
 
 import com.advantage.root.store.image.ImageManagement;
 import com.advantage.root.store.image.ImageManagementAccess;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +18,13 @@ import java.io.IOException;
 @Configuration
 @PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class ImageManagementConfiguration {
-    public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
     @Autowired
     private Environment environment;
 
     @Bean(name = "imageManagement")
     public ImageManagement getImageManagement() throws IOException {
-        final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
+        final String imageManagementRepository = environment.getProperty(Constants.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
         return ImageManagementAccess.getImageManagement(getPath(imageManagementRepository));
     }
 

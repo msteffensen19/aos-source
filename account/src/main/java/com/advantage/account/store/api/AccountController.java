@@ -1,6 +1,5 @@
 package com.advantage.account.store.api;
 
-import com.advantage.account.store.Constants;
 import com.advantage.account.store.user.dto.AppUserDto;
 import com.advantage.account.store.user.dto.AppUserResponseStatus;
 import com.advantage.account.store.user.dto.CountryResponseStatus;
@@ -8,6 +7,7 @@ import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.services.AppUserService;
 import com.advantage.account.store.user.services.CountryService;
+import com.advantage.root.string_resources.Constants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

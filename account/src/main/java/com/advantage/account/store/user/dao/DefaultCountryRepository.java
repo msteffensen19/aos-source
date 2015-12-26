@@ -1,12 +1,12 @@
 package com.advantage.account.store.user.dao;
 
-import com.advantage.account.store.Constants;
 import com.advantage.account.store.dao.AbstractRepository;
 import com.advantage.account.store.user.dto.CountryResponseStatus;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
 import com.advantage.account.util.fs.FileSystemHelper;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

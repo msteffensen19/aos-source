@@ -1,5 +1,6 @@
 package com.advantage.root.store.config;
 
+import com.advantage.root.string_resources.Constants;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,6 @@ public class JpaConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(JpaConfiguration.class);
 
-    private static final String ENV_HIBERNATE_DIALECT = "hibernate.dialect";
-    private static final String ENV_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
-    private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-    private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
-
     @Inject
     private Environment env;
 
@@ -47,12 +43,12 @@ public class JpaConfiguration {
         Properties extraProperties = new Properties();
 //        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
 //        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
-        extraProperties.put(ENV_HIBERNATE_HBM2DDL_AUTO, "create-drop");
+        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, "create-drop");
         if (log.isDebugEnabled()) {
-            log.debug(" hibernate.dialect @" + env.getProperty(ENV_HIBERNATE_DIALECT));
+            log.debug(" hibernate.dialect @" + env.getProperty(Constants.ENV_HIBERNATE_DIALECT));
         }
-        if (env.getProperty(ENV_HIBERNATE_DIALECT) != null) {
-            extraProperties.put(ENV_HIBERNATE_DIALECT, env.getProperty(ENV_HIBERNATE_DIALECT));
+        if (env.getProperty(Constants.ENV_HIBERNATE_DIALECT) != null) {
+            extraProperties.put(Constants.ENV_HIBERNATE_DIALECT, env.getProperty(Constants.ENV_HIBERNATE_DIALECT));
         }
         return extraProperties;
     }
