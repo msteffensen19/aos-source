@@ -41,11 +41,16 @@
     <profiles>
         <!--<profile xmlns="http://maven.apache.org/POM/4.0.0"><id>production</id><build><plugins>/*prod plugins vvv*//*prod plugins ^^^*/</plugins></build></profile>-->
         <profile>
+            <id>production</id>
+            <properties>
+                <resources.source.path>prod</resources.source.path>
+            </properties>
+        </profile>
+        <profile>
             <id>development</id>
             <properties>
                 <resources.source.path>dev</resources.source.path>
             </properties>
-
             <build>
                 <plugins>
                     <!--dev plugins vvv-->
@@ -67,15 +72,8 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>production</id>
-            <properties>
-                <resources.source.path>prod</resources.source.path>
-            </properties>
-        </profile>
     </profiles>
     <build>
-        <!--<finalName>ROOT</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
