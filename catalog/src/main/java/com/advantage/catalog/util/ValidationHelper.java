@@ -1,6 +1,6 @@
 package com.advantage.catalog.util;
 
-import com.advantage.catalog.store.Constants;
+import com.advantage.root.string_resources.Constants;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;

@@ -1,6 +1,6 @@
 package com.advantage.catalog.store.config;
 
-import com.advantage.catalog.store.Constants;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -24,7 +24,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                        //.paths(regex(".*" + Constants.URI_API + "/.*"))
+                        //.paths(regex(".*" + Constants_catalog.URI_API + "/.*"))
                 .paths(regex(Constants.URI_API + "/.*"))
                 .build()
                 .enableUrlTemplating(false)
