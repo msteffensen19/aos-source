@@ -14,7 +14,6 @@ public class Constants {
     public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
     public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
 
-    public static final String URI_PRODUCTS = "/products";
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
     public static final String ENV_HIBERNATE_DIALECT = "hibernate.dialect";
@@ -29,12 +28,10 @@ public class Constants {
     }
 
     public static class AttributeNames {
-        public static final String ATTRIBUTE_PRICE = "Price";
         public static final String ATTRIBUTE_CUSTOMIZATION = "Customization";
         public static final String ATTRIBUTE_OPERATING_SYSTEM = "Operating System";
         public static final String ATTRIBUTE_PROCESSOR = "Processor";
         public static final String ATTRIBUTE_MEMORY = "Memory";
-        public static final String ATTRIBUTE_COLOR = "Color";
         public static final String ATTRIBUTE_DISPLAY = "Display";
     }
 
