@@ -2,9 +2,9 @@ package com.advantage.mastercredit.payment.api;
 
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
-import com.advantage.mastercredit.payment.Constants;
 import com.advantage.mastercredit.payment.dto.ResponseEnum;
 import com.advantage.mastercredit.payment.services.MasterCreditService;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +39,9 @@ public class MasterCreditController {
         //
         //if (appUserResponseStatus.isSuccess()) {
         //    HttpSession session = request.getSession();
-        //    session.setAttribute(Constants.UserSession.TOKEN, appUserResponseStatus.getToken());
-        //    session.setAttribute(Constants.UserSession.USER_ID, appUserResponseStatus.getUserId());
-        //    session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
+        //    session.setAttribute(Constants_mc.UserSession.TOKEN, appUserResponseStatus.getToken());
+        //    session.setAttribute(Constants_mc.UserSession.USER_ID, appUserResponseStatus.getUserId());
+        //    session.setAttribute(Constants_mc.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
         //
         //    //  Set SessionID to Response Entity
         //    //response.getHeader().

@@ -1,6 +1,5 @@
 package com.advantage.catalog.store.init;
 
-import com.advantage.catalog.store.Constants;
 import com.advantage.catalog.store.dao.category.CategoryRepository;
 import com.advantage.catalog.store.dto.AttributeItem;
 import com.advantage.catalog.store.dto.CategoryDto;
@@ -12,6 +11,7 @@ import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog.store.dto.ProductDto;
 import com.advantage.catalog.store.dto.PromotedProductDto;
 import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -76,12 +76,12 @@ public class DataSourceInit4Json {
         Attribute attribute6 = new Attribute();
         Attribute attribute7 = new Attribute();
 
-        // attribute1.setName(Constants.AttributeNames.ATTRIBUTE_PRICE);
+        // attribute1.setName(Constants_catalog.AttributeNames.ATTRIBUTE_PRICE);
         attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
         attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
         attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
         attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-        // attribute6.setName(Constants.AttributeNames.ATTRIBUTE_COLOR);
+        // attribute6.setName(Constants_catalog.AttributeNames.ATTRIBUTE_COLOR);
         attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
 
         //session.persist(attribute1);

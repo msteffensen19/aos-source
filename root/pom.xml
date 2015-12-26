@@ -2,11 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.advantage.online.store</groupId>
     <artifactId>root</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>root</name>
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
@@ -206,19 +203,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
-                    <!--<execution>-->
-                    <!--<id>unpack-shared-resources-into-webapp</id>-->
-                    <!--<goals>-->
-                    <!--<goal>unpack-dependencies</goal>-->
-                    <!--</goals>-->
-                    <!--<phase>process-resources</phase>-->
-                    <!--<configuration>-->
-                    <!--<outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>-->
-                    <!--<includeArtifactIds>shared_resources</includeArtifactIds>-->
-                    <!--<includeGroupIds>${project.groupId}</includeGroupIds>-->
-                    <!--<excludeTransitive>true</excludeTransitive>-->
-                    <!--</configuration>-->
-                    <!--</execution>-->
                     <execution>
                         <id>unpack-shared-resources</id>
                         <goals>
@@ -231,6 +215,10 @@
                             <includeGroupIds>${project.groupId}</includeGroupIds>
                             <excludeTransitive>true</excludeTransitive>
                         </configuration>
+                    </execution>
+                    <execution>
+                        <id>test</id>
+                        <goals></goals>
                     </execution>
                 </executions>
             </plugin>
@@ -308,7 +296,6 @@
                     </echos>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -318,12 +305,18 @@
                     </includes>
                 </configuration>
             </plugin>
+            <plugin><!-- Build WAR with classes - for sharing with other WARs-->
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <!-- Spring BOM -->
     <dependencies>
-        <!--shared resources-->
-        <dependency>
+        <dependency><!--Use shared resources-->
             <groupId>com.advantage.online.store</groupId>
             <artifactId>shared_resources</artifactId>
             <version>1.0-SNAPSHOT</version>

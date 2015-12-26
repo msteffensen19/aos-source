@@ -1,11 +1,11 @@
 package com.advantage.order.store.api;
 
 import com.advantage.order.store.order.services.ShoppingCartService;
-import com.advantage.order.store.Constants;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
+import com.advantage.root.string_resources.Constants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,12 @@ public class OrderController {
 
         ShoppingCartResponseDto userShoppingCart = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-        return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
+        if (userShoppingCart == null) {
+            return new ResponseEntity<>(userShoppingCart, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
+        }
     }
 
     /*  =========================================================================================================   */
@@ -115,7 +120,11 @@ public class OrderController {
             shoppingCartResponseStatus.setId(-1);
         }
 
-        return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+        if (shoppingCartResponseStatus.isSuccess()) {
+            return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.CONFLICT);
+        }
     }
 
     /*  =========================================================================================================   */

@@ -1,8 +1,8 @@
 package com.advantage.account.store.api;
 
-import com.advantage.account.store.Constants;
 import com.advantage.account.store.user.dto.AppUserConfigurationResponseStatus;
 import com.advantage.account.store.user.services.AppUserConfigurationService;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
