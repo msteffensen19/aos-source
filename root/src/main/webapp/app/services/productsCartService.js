@@ -67,18 +67,34 @@ define(['./module'], function (services) {
 
                 var responce = $q.defer();
                 var user = $rootScope.userCookie;
+                var validUser = false;
                 if(user && user.response) {
                     if (user.response.userId != -1) {
-                        var request = $http({
+                        return $http({
                             method: "get",
-                            url: "app/cartProducts.json"
+                            async: false,
+                            url: server.order.loadCartProducts(user.response.userId)
+                        }).then(function(res){
+                            console.log("data")
+                            console.log(res)
+                            cart = res.data;
+                            responce.resolve(cart);
+                            return responce.promise;
                         });
-                        return( request.then(responseService.handleSuccess, responseService.handleError ));
+                        validUser = true;
                     }
                 }
-                loadGuestCartProducts();
-                responce.resolve(cart);
-                return responce.promise;
+                if(!validUser)
+                {
+                    loadGuestCartProducts();
+                    console.log("");
+                    console.log("");
+                    console.log("");
+                    console.log("cart");
+                    console.log(cart);
+                    responce.resolve(cart);
+                    return responce.promise;
+                }
             }
 
             function loadGuestCartProducts(){
@@ -140,58 +156,60 @@ define(['./module'], function (services) {
 
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
-                if(user && user.response) {
+                if (user && user.response) {
                     if (user.response.userId != -1) {
                         var request = $http({
-                            method: "get",
-                            url: "send to user product"
+                            method: "post",
+                            async: false,
+                            url: server.order.addProductToUser(user.response.userId,
+                                product.productId, product.colors[0].code, quantity),
                         });
                         request.then(function (newCart) {
+
+                            alert('waiting from beni - return newcart')
+
                             cart = newCart;
-                            updateCart()
                             response.resolve({reason: '', success: true});
                             return response.promise;
                         })
-                        response.resolve(false);
-                        return response.promise;
                     }
-                    alert("ckeck this point");
                 }
-                var find = null;
-                var productIndex = 0;
-                angular.forEach(cart.productsInCart ,function(productInCart, index){
-                    if(product.productId == productInCart.id)
-                    {
-                        angular.forEach(product.colors, function(color){
-                            if(productInCart.color.code == color.code)
-                            {
-                                productIndex = index;
-                                productInCart.quantity += quantity;
-                                cart.total += (product.price * quantity);
-                                find = product;
-                            }
+                else {
+                    var find = null;
+                    var productIndex = 0;
+                    angular.forEach(cart.productsInCart, function (productInCart, index) {
+                        if (product.productId == productInCart.id) {
+                            angular.forEach(product.colors, function (color) {
+                                if (productInCart.color.code == color.code) {
+                                    productIndex = index;
+                                    productInCart.quantity += quantity;
+                                    cart.total += (product.price * quantity);
+                                    find = product;
+                                }
+                            });
+                        }
+                    });
+
+                    if (!find) {
+                        cart.productsInCart.unshift({
+                            "id": product.productId,
+                            "imageUrl": product.imageUrl,
+                            "productName": product.productName,
+                            "color": product.colors.length > 0 ? product.colors[0] : 'FFF',
+                            "quantity": quantity,
+                            "price": product.price
                         });
                     }
-                });
-
-                if(!find) {
-                    cart.productsInCart.unshift({
-                        "id": product.productId,
-                        "imageUrl": product.imageUrl,
-                        "productName": product.productName,
-                        "color" : product.colors.length > 0 ? product.colors[0] : 'FFF',
-                        "quantity": quantity,
-                        "price": product.price
-                    });
+                    else {
+                        cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
+                    }
+                    cart.total += product.price;
+                    updateCart();
+                    response.resolve(false);
+                    return response.promise;
                 }
-                else{
-                    cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
-                }
-                cart.total += product.price;
-                updateCart();
-                response.resolve(false);
-                return response.promise;
             }
+
         }]);
 
 

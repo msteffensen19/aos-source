@@ -10,7 +10,6 @@ define(['./module'], function (controllers) {
             $scope.Quantity = 1;
 
             $scope.product = product;
-
             $scope.colorSelected = product.colors[0];
 
             $scope.addToCart = function(){

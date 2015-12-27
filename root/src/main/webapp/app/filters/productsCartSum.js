@@ -7,9 +7,11 @@ define(['./module'], function (controllers) {
     controllers.filter('productsCartSum', function(){
         return function(cart) {
             var count = 0;
-            angular.forEach(cart.productsInCart, function(product){
-                count += (product.price * product.quantity);
-            })
+            if(cart) {
+                angular.forEach(cart.productsInCart, function (product) {
+                    count += (product.price * product.quantity);
+                })
+            }
             return count;
         };
     });
