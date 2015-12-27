@@ -15,7 +15,7 @@ public class ValidationHelper {
     private static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
 
     private static final String MASTER_CREDIT_CARD_NUMBER_PATTERN = "([0-9]{16})";
-    private static final String MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN = "([0-9]{12})";
+    private static final String MASTER_CREDIT_ACCOUNT_NUMBER = "112987298763";
 
     //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
     //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
@@ -147,10 +147,8 @@ public class ValidationHelper {
      * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
     public static boolean isValidMasterCreditAccountNumber(final String accountNumber) {
-        pattern = Pattern.compile(MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN);
-
         //  Validate MasterCredit account number
-        final boolean isValid = pattern.matcher(accountNumber).matches();
+        final boolean isValid = accountNumber.equals(MASTER_CREDIT_ACCOUNT_NUMBER);
 
         System.out.println("MasterCredit account number=" + accountNumber + " is valid? " + isValid);
 
