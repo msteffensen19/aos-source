@@ -65,3 +65,4 @@ crashlytics-build.properties
 fabric.properties
 /test1.gt.txt
 /*.gt
+/*.ggt
