@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.services;
 
+import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 import com.advantage.order.store.order.dao.ShoppingCartRepository;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -90,18 +91,14 @@ public class ShoppingCartService {
     }
 
 //    /**
-//     * Method for testing calling <b>REST API</b> {@code GET} request.
+//     * Call {@link ShoppingCartRepository} to do the order purchase process.
 //     * @param userId
-//     * @param productId
-//     * @param hexColor
+//     * @param orderPurchaseRequest
 //     * @return
 //     */
 //    @Transactional
-//    public ShoppingCart getCartProductByPrimaryKey(long userId, Long productId, String hexColor) {
-//        int color = ShoppingCart.convertHexColorToInt(hexColor);
-//        ShoppingCart cartProduct = shoppingCartRepository.getShoppingCartByPrimaryKey(userId, productId, color);
-//
-//        return cartProduct;
+//    public ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
+//        return shoppingCartRepository.doPurchase(userId, orderPurchaseRequest);
 //    }
 
 }

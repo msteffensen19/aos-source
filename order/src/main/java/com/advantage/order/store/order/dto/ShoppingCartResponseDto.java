@@ -2,6 +2,8 @@ package com.advantage.order.store.order.dto;
 
 import com.advantage.order.store.model.product.Product;
 import com.advantage.order.store.order.model.ShoppingCart;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
  *
  * @author Binyamin Regev on 16/12/2015.
  */
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ShoppingCartResponseDto {
 
     /**
@@ -175,7 +179,7 @@ public class ShoppingCartResponseDto {
 
     /*  public class ShoppingCartResponseDto - properties   */
     private long userId;
-    List<CartProduct> productsInCart = new ArrayList<CartProduct>();
+    List<CartProduct> productsInCart = new ArrayList<>();
 
     /* public class ShoppingCartResponseDto - Constructors  */
     public ShoppingCartResponseDto() {
