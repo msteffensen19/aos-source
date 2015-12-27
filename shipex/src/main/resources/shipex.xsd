@@ -23,6 +23,9 @@
             <sx:element name="PostalCode" type="xs:string"/>
             <xs:element name="AddressLine1" type="xs:string"/>
             <xs:element name="AddressLine2" type="xs:string"/>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="Phone" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
