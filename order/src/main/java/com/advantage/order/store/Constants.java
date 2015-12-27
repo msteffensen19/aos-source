@@ -31,6 +31,12 @@ public class Constants {
 
     //	Binyamin Regev: For now it's here, needs T.B.D.
     public static final String SERVICE_URL_FORMAT = "http://%s:%s/%s" + URI_API + "/v1";
+
+    public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
+    public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
+    public static final String URI_SERVER_MASTER_CREDIT = "http://localhost:8080/MasterCredit" + URI_API + "/v1";
+    public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
+    public static final String URI_SERVER_SERVICE = "http://localhost:8080/account/service" + URI_API + "/v1";
     //	Binyamin Regev - End
 
     public static final String URI_PRODUCTS = "/products";
