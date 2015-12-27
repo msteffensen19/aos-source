@@ -4,46 +4,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SafePayDto {
 
-    @JsonProperty("MCTransactionType")
+    @JsonProperty("SPTransactionType")
     private String transactionType;   //  PAYMENT - TransactioTypeEnum.PAYMENT
 
-    @JsonProperty("MCCardNumber")
-    private long cardNumber;          //  16 digits
+    @JsonProperty("SPUserName")
+    private String userName;          //
 
-    @JsonProperty("MCExpirationDate")
-    private String expirationDate;       //   6 digits: MMYYYY
+    @JsonProperty("SPPassword")
+    private String password;       //
 
-    @JsonProperty("MCCustomerName")
-    private String customerName;      //  2-30 characters ([A-Za-z]{2,30})
+//    @JsonProperty("MCCustomerName")
+//    private String customerName;      //  2-30 characters ([A-Za-z]{2,30})
 
-    @JsonProperty("MCCustomerPhone")
+    @JsonProperty("SPCustomerPhone")
     private String customerPhone;       //  0-20 digits and special characters
 
-    @JsonProperty("MCCVVNumber")
-    private int cvvNumber;         //  3 digits
-
-    @JsonProperty("MCTransactionDate")
+    @JsonProperty("SPTransactionDate")
     private String transactionDate;     //  8 digits: DDMMYYYY
 
-    @JsonProperty("MCRecevingCard.AccountNumber")
+    @JsonProperty("SPReceivingCard.AccountNumber")
     private long accountNumber;       //  fixed 12 digits. String because can start with "0".
 
-    @JsonProperty("MCRecevingAmount.Value")
+    @JsonProperty("SPRecevingAmount.Value")
     private double value;           //  Cart total cost: XXXXXXXXXX.XX (12,2 = 12 digits 2 of them decimal)
 
-    @JsonProperty("MCRecevingCard.Currency")
+    @JsonProperty("SPRecevingCard.Currency")
     private String currency;        //  3 characters. Default "USD"
 
     public SafePayDto() {
     }
 
-    public SafePayDto(String transactionType, long cardNumber, String expirationDate, String customerName, String customerPhone, int cvvNumber, String transactionDate, long accountNumber, double value, String currency) {
+    public SafePayDto(String transactionType, String userName, String password, String customerPhone, String transactionDate, long accountNumber, double value, String currency) {
         this.transactionType = transactionType;
-        this.cardNumber = cardNumber;
-        this.expirationDate = expirationDate;
-        this.customerName = customerName;
+        this.userName = userName;
+        this.password = password;
         this.customerPhone = customerPhone;
-        this.cvvNumber = cvvNumber;
         this.transactionDate = transactionDate;
         this.accountNumber = accountNumber;
         this.value = value;
@@ -58,44 +53,28 @@ public class SafePayDto {
         this.transactionType = transactionType;
     }
 
-    public long getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(long cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
     public String getCustomerPhone() {
         return customerPhone;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
-    }
-
-    public int getCvvNumber() {
-        return cvvNumber;
-    }
-
-    public void setCvvNumber(int cvvNumber) {
-        this.cvvNumber = cvvNumber;
     }
 
     public String getTransactionDate() {
@@ -133,16 +112,31 @@ public class SafePayDto {
     @Override
     public String toString() {
         return "SafePayDto{" +
-                " MCTransactionType='" + this.getTransactionType() + '\'' +
-                ", MCCardNumber=" + this.getCardNumber() +
-                ", MCExpirationDate='" + this.getExpirationDate() + '\'' +
-                ", MCCustomerName='" + this.getCustomerName() + '\'' +
-                ", CustomerPhone='" + this.getCustomerPhone() + '\'' +
-                ", MCCVVNumber='" + this.getCvvNumber() + '\'' +
-                ", MCTransactionDate='" + this.getTransactionDate() + '\'' +
-                ", MCReceivingCard.AccountNumber='" + this.getAccountNumber() + '\'' +
-                ", MCReceivingAmount.Value=" + this.getValue() +
-                ", MCReceivingAmount.Currency=\'" + this.getCurrency() + "\'" +
+                "transactionType='" + transactionType + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", customerPhone='" + customerPhone + '\'' +
+                ", transactionDate='" + transactionDate + '\'' +
+                ", accountNumber=" + accountNumber +
+                ", value=" + value +
+                ", currency='" + currency + '\'' +
                 '}';
     }
+
+    //
+//    @Override
+//    public String toString() {
+//        return "SafePayDto{" +
+//                " MCTransactionType='" + this.getTransactionType() + '\'' +
+//                ", MCCardNumber=" + this.getCardNumber() +
+//                ", MCExpirationDate='" + this.getExpirationDate() + '\'' +
+//                ", MCCustomerName='" + this.getCustomerName() + '\'' +
+//                ", CustomerPhone='" + this.getCustomerPhone() + '\'' +
+//                ", MCCVVNumber='" + this.getCvvNumber() + '\'' +
+//                ", MCTransactionDate='" + this.getTransactionDate() + '\'' +
+//                ", MCReceivingCard.AccountNumber='" + this.getAccountNumber() + '\'' +
+//                ", MCReceivingAmount.Value=" + this.getValue() +
+//                ", MCReceivingAmount.Currency=\'" + this.getCurrency() + "\'" +
+//                '}';
+//    }
 }
