@@ -1,8 +1,6 @@
 package com.advantage.order.store.order.dao;
 
-import com.advantage.order.store.order.dto.ShoppingCartDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
+import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,4 +47,8 @@ public interface ShoppingCartRepository {
     ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color);
 
     ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts);
+
+    //ShipExShippingCostResponse getShippingCostFromShipEx();
+
+    //ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest);
 }
