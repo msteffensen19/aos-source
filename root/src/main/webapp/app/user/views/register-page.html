@@ -1,9 +1,9 @@
 
-<!--
+<!-- -->
 <section id="png">
-    <img src="../...../css/images/mariaDesigns/Register.png" />
+    <img src="../../../csss/images/mariaDesigns/register/Register.png" />
 </section>
--->
+
 
 <nav class="pages">
     <a translate="HOME" href="#/" ></a>
@@ -21,7 +21,8 @@
                 </div>
             </div>
             <div id="form">
-                <form ng-submit="register()" id="register" name="registerForm" >
+
+                <form ng-submit="register()" id="register" name="registerForm" autocomplete="off" autocorrect="off">
 
                     <div id="formCover">
 
@@ -29,6 +30,55 @@
 
                             <h3 translate="ACCOUNT_DETAILS"></h3>
 
+
+                            <validate-input
+                                    sec-placeholder="User name"
+                                    sec-required
+                                    sec-min-length="5"
+                                    sec-max-length="15"
+                                    sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
+                                    pattern-error-attr="Use letters, number and the following symbols only: .-_"
+                                    model-attr="model.username"
+                                    id-attr="username">
+                            </validate-input>
+
+
+                            <validate-input
+                                    sec-placeholder="Email"
+                                    sec-required
+                                    sec-email
+                                    input-type-attr="email"
+                                    model-attr="model.email"
+                                    id-attr="email">
+                            </validate-input>
+
+
+                            <validate-input
+                                    sec-placeholder="Password"
+                                    sec-required
+                                    sec-min-length="4"
+                                    sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
+                                    sec-compare-to="confirm_password"
+                                    compare-to-name="Confirm password"
+                                    pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
+                                    input-type-attr="password"
+                                    model-attr="model.password"
+                                    id-attr="password">
+                            </validate-input>
+
+
+                            <validate-input
+                                    sec-placeholder="Confirm password"
+                                    sec-required
+                                    sec-min-length="5"
+                                    sec-max-length="15"
+                                    sec-compare-from="password"
+                                    input-type-attr="password"
+                                    model-attr="model.confirm_password"
+                                    id-attr="confirm_password">
+                            </validate-input>
+
+                            <!--
                             <span class="animPlaceholderUp">
                                 <a class="must">*</a>
                                 <label> {{'User_Name' | translate }} </label>
@@ -41,44 +91,46 @@
                                     <label class="invalid">{{'User_Name_pattern' | translate }}</label>
                                 </div>
                             </span>
-                            <span class="animPlaceholderUp">
-                                <a class="must" >*</a>
-                                <!--    SECorrenti: email regex   -   /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/     -->
-                                <label>{{'Email' | translate }}</label>
-                                <input ng-model="model.email" name="email" type="email" class="inputtext" required autocomplete="off" ng-class="{ invalidInput : (registerForm.email.$error.email || registerForm.email.$error.required) && registerForm.email.$dirty  }">
-                                <div class="validationInfo">
-                                    <label class="invalid" ng-show="registerForm.email.$error.required">{{'Email_field_required' | translate }}</label>
-                                    <label class="invalid" ng-show="registerForm.email.$error.email">{{'Invalid_email_address' | translate }}</label>
-                                </div>
-                            </span>
+                            -->
 
-                            <span class="animPlaceholderUp">
-                                <a class="must">*</a>
-                                <label>{{'Password' | translate }}</label>
-                                <input ng-model="model.password" type="password" required ng-pattern="/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,10})/"
-                                       ng-class="{ invalidInput : ( registerForm.password.$error.pattern ) }"
-                                       ng-minlength="5" ng-maxlength="10" name="password" id="password" >
+                            <!--<span class="animPlaceholderUp">-->
+                                <!--<a class="must" >*</a>-->
+                                <!--&lt;!&ndash;    SECorrenti: email regex   -   /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/     &ndash;&gt;-->
+                                <!--<label>{{'Email' | translate }}</label>-->
+                                <!--<input ng-model="model.email" name="email" type="email" class="inputtext" required autocomplete="off" ng-class="{ invalidInput : (registerForm.email.$error.email || registerForm.email.$error.required) && registerForm.email.$dirty  }">-->
+                                <!--<div class="validationInfo">-->
+                                    <!--<label class="invalid" ng-show="registerForm.email.$error.required">{{'Email_field_required' | translate }}</label>-->
+                                    <!--<label class="invalid" ng-show="registerForm.email.$error.email">{{'Invalid_email_address' | translate }}</label>-->
+                                <!--</div>-->
+                            <!--</span>-->
 
-                                <div class="validationInfo">
-                                    <label class="invalid" > {{'Password_5_minlength_field_error' | translate }}</label>
-                                    <label class="invalid" > {{'Password_10_maxlength_field_error' | translate }} </label>
-                                    <label class="invalid" > {{'Password_field_required' | translate }} </label>
-                                    <label class="invalid" > {{'Password_regex' | translate }}</label>
-                                </div>
-                            </span>
+                            <!--<span class="animPlaceholderUp">-->
+                                <!--<a class="must">*</a>-->
+                                <!--<label>{{'Password' | translate }}</label>-->
+                                <!--<input ng-model="model.password" type="password" required ng-pattern="/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,10})/"-->
+                                       <!--ng-class="{ invalidInput : ( registerForm.password.$error.pattern ) }"-->
+                                       <!--ng-minlength="5" ng-maxlength="10" name="password" id="password" >-->
 
-                            <span class="animPlaceholderUp">
-                                    <label>{{'Confirm_Password' | translate }}</label>
-                                <a class="must">*</a>
-                                <img src="../../../css/images/Info.png" class="validationInfoImg" ng-show="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
-                                <img src="../../../css/images/invalidInfo.png" ng-hide="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
-                                <input ng-model="model.confirm_password" type="password" required sec-compare="password" name="confirm_password" id="confirm_password" autocomplete="off"
-                                       ng-class="{ invalidInput : ( registerForm.confirm_password.$error.secCompare ) }">
-                                <div class="validationInfo">
-                                    <label class="invalid" >{{'Password_not_match' | translate }}</label>
-                                    <label class="invalid" >{{'confirm_password_required' | translate }}</label>
-                                </div>
-                            </span>
+                                <!--<div class="validationInfo">-->
+                                    <!--<label class="invalid" > {{'Password_5_minlength_field_error' | translate }}</label>-->
+                                    <!--<label class="invalid" > {{'Password_10_maxlength_field_error' | translate }} </label>-->
+                                    <!--<label class="invalid" > {{'Password_field_required' | translate }} </label>-->
+                                    <!--<label class="invalid" > {{'Password_regex' | translate }}</label>-->
+                                <!--</div>-->
+                            <!--</span>-->
+
+                            <!--<span class="animPlaceholderUp">-->
+                                    <!--<label>{{'Confirm_Password' | translate }}</label>-->
+                                <!--<a class="must">*</a>-->
+                                <!--<img src="../../../css/images/Info.png" class="validationInfoImg" ng-show="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />-->
+                                <!--<img src="../../../css/images/invalidInfo.png" ng-hide="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />-->
+                                <!--<input ng-model="model.confirm_password" type="password" required sec-compare="password" name="confirm_password" id="confirm_password" autocomplete="off"-->
+                                       <!--ng-class="{ invalidInput : ( registerForm.confirm_password.$error.secCompare ) }">-->
+                                <!--<div class="validationInfo">-->
+                                    <!--<label class="invalid" >{{'Password_not_match' | translate }}</label>-->
+                                    <!--<label class="invalid" >{{'confirm_password_required' | translate }}</label>-->
+                                <!--</div>-->
+                            <!--</span>-->
                         </div>
 
                         <div>

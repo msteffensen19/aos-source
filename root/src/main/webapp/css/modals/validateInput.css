@@ -1,0 +1,37 @@
+
+.validate-directive {
+    margin: 10px 0;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.validate-directive > .validate-label{
+    position: absolute;
+    display: block;
+    top: 10px;
+    left: 0;
+}
+
+.validate-directive > .validateInvalid{
+    color: red;
+}
+
+
+.validate-directive > .validate-info{
+    display: none;
+}
+
+
+.validate-directive {
+    width:49%;
+}
+
+
+#formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
+{
+    width: 90% !important;
+}
+
+
+
