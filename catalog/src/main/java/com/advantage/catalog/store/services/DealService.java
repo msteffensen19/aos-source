@@ -1,7 +1,7 @@
 package com.advantage.catalog.store.services;
 
 import com.advantage.catalog.store.dao.deal.DealRepository;
-import com.advantage.catalog.store.dto.PromotedProductDto;
+import com.advantage.root.store.dto.PromotedProductDto;
 import com.advantage.catalog.store.model.deal.Deal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

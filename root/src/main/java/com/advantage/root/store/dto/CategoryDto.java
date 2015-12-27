@@ -3,9 +3,6 @@ package com.advantage.root.store.dto;
 import java.util.List;
 import java.util.Set;
 
-import com.advantage.root.store.model.category.Category;
-import com.advantage.root.util.ArgumentValidationHelper;
-
 public class CategoryDto {
     private Long categoryId;
     private String categoryName;
@@ -29,7 +26,7 @@ public class CategoryDto {
         return categoryId;
     }
 
-    public void setCategoryId(final Long categoryId) {
+    public void setCategoryId(Long categoryId) {
 
         this.categoryId = categoryId;
     }
@@ -42,14 +39,6 @@ public class CategoryDto {
     public void setCategoryName(String categoryName) {
 
         this.categoryName = categoryName;
-    }
-
-    public void applyCategory(final Category category) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
-        setCategoryId(category.getCategoryId());
-        setCategoryName(category.getCategoryName());
-        setCategoryImageId(category.getManagedImageId());
-
     }
 
     public String getCategoryImageId() {

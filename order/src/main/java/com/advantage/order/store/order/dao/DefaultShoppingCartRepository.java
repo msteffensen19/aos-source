@@ -2,11 +2,10 @@ package com.advantage.order.store.order.dao;
 
 import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
-import com.advantage.order.store.dto.ProductDto;
-import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.order.util.ArgumentValidationHelper;
+import com.advantage.root.store.dto.ProductDto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -370,7 +369,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDetails(Long productId) {
         /*  Build REQUEST URI */
-        //String stringURL = Constants.URI_SERVER_CATALOG +
+        //String stringURL = Constants_order.URI_SERVER_CATALOG +
         //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
         String stringURL = ServiceConfiguration.getUriServerCatalog() +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
@@ -401,7 +400,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 System.out.println("   price per item = " + dto.getPrice());
                 System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
                 System.out.println("   ColorAttrubute.Code (hex) = \"" + dto.getColors().get(0).getCode() + "\"");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getColor() + "\"");
+                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getName() + "\"");
                 System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
             }
 
@@ -457,7 +456,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                                 cart.getQuantity(),
                                 dto.getImageUrl(),
                                 dto.getColors().get(0).getCode(),
-                                dto.getColors().get(0).getColor(),
+                                dto.getColors().get(0).getName(),
                                 dto.getColors().get(0).getInStock());
                     }
                 }
@@ -586,7 +585,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             System.out.println("   price per item = " + pricePerItem);
             System.out.println("   managedImageId = \"" + managedImageId + "\"");
             System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
-            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getColor() + "\"");
+            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getName() + "\"");
             System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
 
         } else {
@@ -658,7 +657,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         dto.getColors().get(0).getInStock(),
                         dto.getImageUrl(),
                         dto.getColors().get(0).getCode(),
-                        dto.getColors().get(0).getColor(),
+                        dto.getColors().get(0).getName(),
                         dto.getColors().get(0).getInStock());
 
             }

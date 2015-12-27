@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan(
-        basePackageClasses = {Constants.class},
+        //basePackageClasses = {Constants.class},
+        basePackages = "com.advantage.mastercredit",
         excludeFilters = {
                 @Filter(
                         type = FilterType.ANNOTATION,
