@@ -1,4 +1,4 @@
-package com.advantage.mastercredit.payment.dto;
+package com.advantage.safepay.payment.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author Binyamin Regev on 20/12/2015.
  */
 public enum TransactionTypeEnum {
-    PAYMENT("Payment"), REFUND("Refund"); //TODO BENY Make like in word
+    PAYMENT("PAYMENT"), REFUND("REFUND");
 
     private String stringCode;
 

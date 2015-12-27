@@ -69,6 +69,7 @@ public class MasterCreditService {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionType(), "MasterCredit transaction type");
 
         MasterCreditResponse responseStatus = new MasterCreditResponse();
+        //TODO BENY transaction type
         responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
         responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
 
@@ -152,6 +153,9 @@ public class MasterCreditService {
                 isValid = false;
             }
         }
+
+        //TODO BENY Amount
+        //TODO BENY Currency
 
         if (isValid) {
             /*

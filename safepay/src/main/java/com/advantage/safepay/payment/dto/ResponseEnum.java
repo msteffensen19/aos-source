@@ -1,19 +1,19 @@
-package com.advantage.mastercredit.payment.dto;
+package com.advantage.safepay.payment.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * To keep transaction type <b>only</b> within valid values
- *
- * @author Binyamin Regev on 20/12/2015.
+ * @author Binyamin Regev on 21/12/2015.
  */
-public enum TransactionTypeEnum {
-    PAYMENT("Payment"), REFUND("Refund"); //TODO BENY Make like in word
+public enum ResponseEnum {
+    APPROVED("Approved"),
+    ERROR("Error"),
+    REJECTED("Rejected");
 
     private String stringCode;
 
-    TransactionTypeEnum(String stringCode) {
+    ResponseEnum(String stringCode) {
         this.stringCode = stringCode;
     }
 
@@ -21,10 +21,15 @@ public enum TransactionTypeEnum {
         return this.stringCode;
     }
 
+    /**
+     * Return {@link List} of {@link String} with all {@code enum} values.
+     *
+     * @return {@link List} of {@link String} with all {@code enum} values.
+     */
     public static List<String> getAllNames() {
         List<String> values = new ArrayList<>();
 
-        for (TransactionTypeEnum a : TransactionTypeEnum.values()) {
+        for (ResponseEnum a : ResponseEnum.values()) {
             values.add(a.name());
         }
         return values;
@@ -39,7 +44,7 @@ public enum TransactionTypeEnum {
      */
     public static boolean contains(String test) {
 
-        for (TransactionTypeEnum a : TransactionTypeEnum.values()) {
+        for (ResponseEnum a : ResponseEnum.values()) {
             if (a.name().equals(test)) {
                 return true;
             }
