@@ -9,7 +9,7 @@ import java.util.List;
  * @author Binyamin Regev on 20/12/2015.
  */
 public enum TransactionTypeEnum {
-    PAYMENT("Payment"), REFUND("Refund");
+    PAYMENT("PAYMENT"), REFUND("REFUND");
 
     private String stringCode;
 

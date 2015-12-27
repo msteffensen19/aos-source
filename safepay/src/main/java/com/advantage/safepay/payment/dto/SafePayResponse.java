@@ -1,6 +1,7 @@
 package com.advantage.safepay.payment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * {@code response} for <b>REST API</b> request. <br/>
@@ -12,18 +13,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Binyamin Regev on 20/12/2015.
  */
+@JsonPropertyOrder({"SPTransactionType", "SPResponse.Code", "SPResponse.Reason", "SPRefNumber", "TransactionDate"})
 public class SafePayResponse {
 
-    @JsonProperty("MCTransactionType")
+    @JsonProperty("SPTransactionType")
     private String transactionType;
 
-    @JsonProperty("MCResponse.Code")
+    @JsonProperty("SPResponse.Code")
     private String responseCode;
 
-    @JsonProperty("MCResponse.Reason")
+    @JsonProperty("SPResponse.Reason")
     private String responseReason;
 
-    @JsonProperty("MCRefNumber")
+    @JsonProperty("SPRefNumber")
     private long referenceNumber;       //  10 digits
 
     @JsonProperty("TransactionDate")

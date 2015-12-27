@@ -1,12 +1,11 @@
 package com.advantage.safepay.payment.services;
 
+import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.dto.SafePayDto;
 import com.advantage.safepay.payment.dto.SafePayResponse;
-import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.dto.TransactionTypeEnum;
-import com.advantage.safepay.util.StringHelper;
-import com.advantage.safepay.util.ValidationHelper;
 import com.advantage.safepay.util.ArgumentValidationHelper;
+import com.advantage.safepay.util.ValidationHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Transactional
 public class SafePayService {
 
-    private static AtomicLong masterCreditRefNumber;
+    private static AtomicLong safePayRefNumber;
 
     public SafePayService() {
 
@@ -41,7 +40,7 @@ public class SafePayService {
         int power = 10 - String.valueOf(result).length();
         result *= Math.pow(10, power);
 
-        masterCreditRefNumber = new AtomicLong(result);
+        safePayRefNumber = new AtomicLong(result);
     }
 
     /**
@@ -51,7 +50,7 @@ public class SafePayService {
      * @return Value of {@code masterCreditRefNumber} before incrementation.
      */
     public static long referenceNumberNextValue() {
-        return masterCreditRefNumber.getAndIncrement();
+        return safePayRefNumber.getAndIncrement();
     }
 
     /**
@@ -59,70 +58,53 @@ public class SafePayService {
      * Payment is successful unless{@link SafePayDto} {@code transactionDate}
      * did not occur yet (is in the future).
      *
-     * @param masterCreditDto {@link SafePayDto} with payment {@code request} data.
+     * @param safePayDto {@link SafePayDto} with payment {@code request} data.
      * @return {@link SafePayResponse} <b>MasterCredit</b> server {@code response} information.
      */
     @Transactional
-    public SafePayResponse doPayment(SafePayDto masterCreditDto) {
+    public SafePayResponse doPayment(SafePayDto safePayDto) {
 
-        ArgumentValidationHelper.validateArgumentIsNotNull(masterCreditDto, "MasterCredit request data");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionType(), "MasterCredit transaction type");
+        ArgumentValidationHelper.validateArgumentIsNotNull(safePayDto, "SafePay request data");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(safePayDto.getTransactionType(), "SafePay transaction type");
 
         SafePayResponse responseStatus = new SafePayResponse();
-        responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
-        responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
-
         boolean isValid = true;
+        if (!safePayDto.getTransactionType().equals(TransactionTypeEnum.PAYMENT.getStringCode())) {
+            isValid = false;
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'SPTransactionType\' value=" + safePayDto.getTransactionType());
+            responseStatus.setReferenceNumber(0);
+
+        } else {
+            responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
+        }
+        responseStatus.setTransactionDate(safePayDto.getTransactionDate());
+
+
         StringBuilder sb = new StringBuilder();
 
         //  Validate Request Fields values
-        /*  Card number */
-        if (!ValidationHelper.isValidMasterCreditCardNumber(String.valueOf(masterCreditDto.getCardNumber()))) {
+        /*  User name*/
+        if (safePayDto.getUserName() == null | safePayDto.getUserName().length() < 1 || safePayDto.getUserName().length() > 20) {
             responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-            responseStatus.setResponseReason("Wrong field value. Field \'card number\' value=" + masterCreditDto.getCardNumber());
+            responseStatus.setResponseReason("Wrong field value. Field \'SPUserName\' value=" + safePayDto.getUserName());
+            responseStatus.setReferenceNumber(0);
+            isValid = false;
+        }
+
+        /*  User name*/
+        if (safePayDto.getPassword() == null | safePayDto.getPassword().length() < 1 || safePayDto.getPassword().length() > 20) {
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'SPPassword\' value=" + safePayDto.getPassword());
             responseStatus.setReferenceNumber(0);
             isValid = false;
         }
 
         if (isValid) {
-            /*  Expiration Date */
-            sb = new StringBuilder("01.")
-                    .append(masterCreditDto.getExpirationDate().substring(0, 2))
-                    .append('.')
-                    .append(masterCreditDto.getExpirationDate().substring(2, 6));
-            if (!ValidationHelper.isValidDate(sb.toString())) {
-                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'expiration date\' value=" + masterCreditDto.getExpirationDate());
-                responseStatus.setReferenceNumber(0);
-                isValid = false;
-            }
-        }
-
-        if (isValid) {
-            /*  Card holder full name */
-            if (!ValidationHelper.isValidFullName(masterCreditDto.getCustomerName())) {
-                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'customer name\' value=" + masterCreditDto.getCustomerName());
-                responseStatus.setReferenceNumber(0);
-                isValid = false;
-            }
-        }
-
-        if (isValid) {
             /*  Customer phone  */
-            if (!ValidationHelper.isValidPhoneNumber(masterCreditDto.getCustomerPhone())) {
+            if (!ValidationHelper.isValidPhoneNumber(safePayDto.getCustomerPhone())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'customer phone\' value=" + masterCreditDto.getCustomerPhone());
-                responseStatus.setReferenceNumber(0);
-                isValid = false;
-            }
-        }
-
-        if (isValid) {
-            /*  CVV Number  */
-            if (!ValidationHelper.isValidMasterCreditCVVNumber(String.valueOf(masterCreditDto.getCvvNumber()))) {
-                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'CVV Number\' value=" + masterCreditDto.getCvvNumber());
+                responseStatus.setResponseReason("Wrong field value. Field \'SPCustomerPhone\' value=" + safePayDto.getCustomerPhone());
                 responseStatus.setReferenceNumber(0);
                 isValid = false;
             }
@@ -130,14 +112,15 @@ public class SafePayService {
 
         if (isValid) {
             /*  Transaction Date    */
-            sb = new StringBuilder(masterCreditDto.getTransactionDate().substring(0, 2))
+            sb = new StringBuilder(safePayDto.getTransactionDate().substring(0, 2))
                     .append('.')
-                    .append(masterCreditDto.getTransactionDate().substring(2, 4))
+                    .append(safePayDto.getTransactionDate().substring(2, 4))
                     .append('.')
-                    .append(masterCreditDto.getTransactionDate().substring(4, 8));
+                    .append(safePayDto.getTransactionDate().substring(4, 8));
+
             if (!ValidationHelper.isValidDate(sb.toString())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'transaction date\' value=" + masterCreditDto.getTransactionDate());
+                responseStatus.setResponseReason("Wrong field value. Field \'SPTransactionDate\' value=" + safePayDto.getTransactionDate());
                 responseStatus.setReferenceNumber(0);
                 isValid = false;
             }
@@ -145,23 +128,20 @@ public class SafePayService {
 
         if (isValid) {
             /*  receiving card account number   */
-            if (!ValidationHelper.isValidMasterCreditAccountNumber(String.valueOf(masterCreditDto.getAccountNumber()))) {
+            if (!ValidationHelper.isValidSafePayAccountNumber(String.valueOf(safePayDto.getAccountNumber()))) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'receiving card account number\' value=" + masterCreditDto.getAccountNumber());
+                responseStatus.setResponseReason("Wrong field value. Field \'SPReceivingCard.AccountNumber\' value=" + safePayDto.getAccountNumber());
                 responseStatus.setReferenceNumber(0);
                 isValid = false;
             }
         }
+        //TODO Amount
+        //TODO Currency
 
         if (isValid) {
-            /*
-                IF TransactionDate > Today Then Transaction REJECTED (Payment Failed)
-                IF TransactionDate <= Today Then Transaction APPROVED (Payment Successful)
-             */
-            Date date = StringHelper.convertStringToDate(sb.toString(), "dd.MM.yyyy");
-            if (date.getTime() > new Date().getTime()) {
+            if (safePayDto.getUserName().equals(safePayDto.getPassword())) {
                 responseStatus.setResponseCode(ResponseEnum.REJECTED.getStringCode());
-                responseStatus.setResponseReason("Payment rejected");
+                responseStatus.setResponseReason("Payment rejected, invalid user name or password");
                 responseStatus.setReferenceNumber(0);
             } else {
                 responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());

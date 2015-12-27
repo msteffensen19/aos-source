@@ -2,6 +2,17 @@ package com.advantage.safepay.payment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/*@JsonPropertyOrder({
+        "SPTransactionType",
+        "SPUserName",
+        "SPPassword",
+        "SPPassword",
+        "SPCustomerPhone",
+        "SPTransactionDate",
+        "SPReceivingCard.AccountNumber",
+        "SPRecevingAmount.Value",
+        "SPRecevingCard.Currency"
+})*/
 public class SafePayDto {
 
     @JsonProperty("SPTransactionType")
@@ -123,20 +134,4 @@ public class SafePayDto {
                 '}';
     }
 
-    //
-//    @Override
-//    public String toString() {
-//        return "SafePayDto{" +
-//                " MCTransactionType='" + this.getTransactionType() + '\'' +
-//                ", MCCardNumber=" + this.getCardNumber() +
-//                ", MCExpirationDate='" + this.getExpirationDate() + '\'' +
-//                ", MCCustomerName='" + this.getCustomerName() + '\'' +
-//                ", CustomerPhone='" + this.getCustomerPhone() + '\'' +
-//                ", MCCVVNumber='" + this.getCvvNumber() + '\'' +
-//                ", MCTransactionDate='" + this.getTransactionDate() + '\'' +
-//                ", MCReceivingCard.AccountNumber='" + this.getAccountNumber() + '\'' +
-//                ", MCReceivingAmount.Value=" + this.getValue() +
-//                ", MCReceivingAmount.Currency=\'" + this.getCurrency() + "\'" +
-//                '}';
-//    }
 }
