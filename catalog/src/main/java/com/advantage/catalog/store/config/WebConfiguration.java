@@ -26,7 +26,8 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan(
-        basePackageClasses = {Constants.class},
+        //basePackageClasses = {Constants.class},
+        basePackages = {"com.advantage.catalog"},
         useDefaultFilters = false,
         includeFilters = {
                 @ComponentScan.Filter(

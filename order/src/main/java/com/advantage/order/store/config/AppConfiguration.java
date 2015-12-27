@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableAspectJAutoProxy
 @ComponentScan(
         //basePackageClasses = {Constants.class},
-        basePackages = "com.advantage.order.store",
+        basePackages = "com.advantage.order",
         excludeFilters = {
                 @Filter(
                         type = FilterType.ANNOTATION,
