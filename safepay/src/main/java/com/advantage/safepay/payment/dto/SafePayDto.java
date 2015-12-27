@@ -2,7 +2,7 @@ package com.advantage.safepay.payment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MasterCreditDto {
+public class SafePayDto {
 
     @JsonProperty("MCTransactionType")
     private String transactionType;   //  PAYMENT - TransactioTypeEnum.PAYMENT
@@ -34,10 +34,10 @@ public class MasterCreditDto {
     @JsonProperty("MCRecevingCard.Currency")
     private String currency;        //  3 characters. Default "USD"
 
-    public MasterCreditDto() {
+    public SafePayDto() {
     }
 
-    public MasterCreditDto(String transactionType, long cardNumber, String expirationDate, String customerName, String customerPhone, int cvvNumber, String transactionDate, long accountNumber, double value, String currency) {
+    public SafePayDto(String transactionType, long cardNumber, String expirationDate, String customerName, String customerPhone, int cvvNumber, String transactionDate, long accountNumber, double value, String currency) {
         this.transactionType = transactionType;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
@@ -132,7 +132,7 @@ public class MasterCreditDto {
 
     @Override
     public String toString() {
-        return "MasterCreditDto{" +
+        return "SafePayDto{" +
                 " MCTransactionType='" + this.getTransactionType() + '\'' +
                 ", MCCardNumber=" + this.getCardNumber() +
                 ", MCExpirationDate='" + this.getExpirationDate() + '\'' +

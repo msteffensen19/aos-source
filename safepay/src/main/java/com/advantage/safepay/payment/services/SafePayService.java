@@ -1,7 +1,7 @@
 package com.advantage.safepay.payment.services;
 
-import com.advantage.safepay.payment.dto.MasterCreditDto;
-import com.advantage.safepay.payment.dto.MasterCreditResponse;
+import com.advantage.safepay.payment.dto.SafePayDto;
+import com.advantage.safepay.payment.dto.SafePayResponse;
 import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.dto.TransactionTypeEnum;
 import com.advantage.safepay.util.StringHelper;
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <b>MasterCredit</b> MOCK server service. <br/>
- * The {@link MasterCreditResponse#referenceNumber} is set from {@code static}
+ * The {@link SafePayResponse#referenceNumber} is set from {@code static}
  * {@link AtomicLong} type property.
  *
  * @author Binyamin Regev on 21/12/2015.
@@ -24,11 +24,11 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Service
 @Transactional
-public class MasterCreditService {
+public class SafePayService {
 
     private static AtomicLong masterCreditRefNumber;
 
-    public MasterCreditService() {
+    public SafePayService() {
 
         long result = new Date().getTime();
 
@@ -56,19 +56,19 @@ public class MasterCreditService {
 
     /**
      * Do <i>MOCK</i> <b>MasterCredit</b> payment. <br/>
-     * Payment is successful unless{@link MasterCreditDto} {@code transactionDate}
+     * Payment is successful unless{@link SafePayDto} {@code transactionDate}
      * did not occur yet (is in the future).
      *
-     * @param masterCreditDto {@link MasterCreditDto} with payment {@code request} data.
-     * @return {@link MasterCreditResponse} <b>MasterCredit</b> server {@code response} information.
+     * @param masterCreditDto {@link SafePayDto} with payment {@code request} data.
+     * @return {@link SafePayResponse} <b>MasterCredit</b> server {@code response} information.
      */
     @Transactional
-    public MasterCreditResponse doPayment(MasterCreditDto masterCreditDto) {
+    public SafePayResponse doPayment(SafePayDto masterCreditDto) {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(masterCreditDto, "MasterCredit request data");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionType(), "MasterCredit transaction type");
 
-        MasterCreditResponse responseStatus = new MasterCreditResponse();
+        SafePayResponse responseStatus = new SafePayResponse();
         responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
         responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
 
@@ -178,11 +178,11 @@ public class MasterCreditService {
      *
      * @param paymentId {@code long}. <b>MasterCredit</b> unique payment identification.
      * @param dto       {@code request} data.
-     * @return {@link MasterCreditResponse} <b>MasterCredit</b> server {@code response} to {@code request} received.
+     * @return {@link SafePayResponse} <b>MasterCredit</b> server {@code response} to {@code request} received.
      */
     @Transactional
-    public MasterCreditResponse doRefund(long paymentId, MasterCreditDto dto) {
-        MasterCreditResponse responseStatus = new MasterCreditResponse();
+    public SafePayResponse doRefund(long paymentId, SafePayDto dto) {
+        SafePayResponse responseStatus = new SafePayResponse();
 
         responseStatus.setTransactionType(TransactionTypeEnum.REFUND.getStringCode());
         responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());

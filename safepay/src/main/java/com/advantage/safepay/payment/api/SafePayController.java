@@ -1,10 +1,10 @@
 package com.advantage.safepay.payment.api;
 
-import com.advantage.safepay.payment.dto.MasterCreditDto;
-import com.advantage.safepay.payment.dto.MasterCreditResponse;
+import com.advantage.safepay.payment.dto.SafePayDto;
+import com.advantage.safepay.payment.dto.SafePayResponse;
 import com.advantage.safepay.payment.Constants;
 import com.advantage.safepay.payment.dto.ResponseEnum;
-import com.advantage.safepay.payment.services.MasterCreditService;
+import com.advantage.safepay.payment.services.SafePayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +21,20 @@ import javax.servlet.http.HttpServletResponse;
 public class SafePayController {
 
     @Autowired
-    private MasterCreditService masterCreditService;
+    private SafePayService masterCreditService;
 
     /**
-     * @param masterCreditDto
+     * @param safePayDto
      * @param request
      * @param response
-     * @return {@link MasterCreditResponse} <b>MasterCredit</b> server {@code response} for <i>Payment</i> {@code request}
+     * @return {@link SafePayResponse} <b>MasterCredit</b> server {@code response} for <i>Payment</i> {@code request}
      */
     @RequestMapping(value = "/payments/payment", method = RequestMethod.POST)
-    public ResponseEntity<MasterCreditResponse> doPayment(@RequestBody MasterCreditDto masterCreditDto,
+    public ResponseEntity<SafePayResponse> doPayment(@RequestBody SafePayDto safePayDto,
                                                           HttpServletRequest request,
                                                           HttpServletResponse response) {
 
-        MasterCreditResponse masterCreditResponse = masterCreditService.doPayment(masterCreditDto);
+        SafePayResponse safePayResponse = masterCreditService.doPayment(safePayDto);
         //response.setHeader("sessionId", request.getSession().getId());
         //
         //if (appUserResponseStatus.isSuccess()) {
@@ -48,10 +48,10 @@ public class SafePayController {
         //    appUserResponseStatus.setSessionId(session.getId());
         //}
 
-        if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
-            return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);
+        if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
+            return new ResponseEntity<>(safePayResponse, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(safePayResponse, HttpStatus.CONFLICT);
         }
 
     }
@@ -64,15 +64,15 @@ public class SafePayController {
 //     * @param masterCreditDto <b>MasterCredit</b> <i>Refund</i> {@code request} data.
 //     * @param request {@link HttpServletRequest}. Handled Internally.
 //     * @param response {@link HttpServletResponse}. Handled Internally.
-//     * @return {@link MasterCreditResponse} <b>MasterCredit</b> server {@code response} for <i>Refund</i> {@code request}
+//     * @return {@link SafePayResponse} <b>MasterCredit</b> server {@code response} for <i>Refund</i> {@code request}
 //     */
 //    @RequestMapping(value = "/payments/{payment_id}/refund", method = RequestMethod.POST)
-//    public ResponseEntity<MasterCreditResponse> doRefund(@RequestBody MasterCreditDto masterCreditDto,
+//    public ResponseEntity<SafePayResponse> doRefund(@RequestBody SafePayDto masterCreditDto,
 //                                                         @PathVariable("payment_id") long paymentId,
 //                                                         HttpServletRequest request,
 //                                                         HttpServletResponse response) {
 //
-//        MasterCreditResponse masterCreditResponse = masterCreditService.doRefund(paymentId, masterCreditDto);
+//        SafePayResponse masterCreditResponse = masterCreditService.doRefund(paymentId, masterCreditDto);
 //
 //        if (masterCreditResponse.getResponse().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
 //            return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);

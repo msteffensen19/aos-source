@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Binyamin Regev on 20/12/2015.
  */
-public class MasterCreditResponse {
+public class SafePayResponse {
 
     @JsonProperty("MCTransactionType")
     private String transactionType;
@@ -29,10 +29,10 @@ public class MasterCreditResponse {
     @JsonProperty("TransactionDate")
     private String transactionDate; //  DDMMYYYY
 
-    public MasterCreditResponse() {
+    public SafePayResponse() {
     }
 
-    public MasterCreditResponse(String transactionType, String responseCode, String responseReason, long referenceNumber, String transactionDate) {
+    public SafePayResponse(String transactionType, String responseCode, String responseReason, long referenceNumber, String transactionDate) {
         this.transactionType = transactionType;
         this.responseCode = responseCode;
         this.responseReason = responseReason;
