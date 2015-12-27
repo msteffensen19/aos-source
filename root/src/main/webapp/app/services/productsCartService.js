@@ -165,10 +165,7 @@ define(['./module'], function (services) {
                                 product.productId, product.colors[0].code, quantity),
                         });
                         request.then(function (newCart) {
-
-                            alert('waiting from beni - return newcart')
-
-                            cart = newCart;
+                            cart = newCart.data;
                             response.resolve({reason: '', success: true});
                             return response.promise;
                         })
