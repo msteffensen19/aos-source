@@ -20,13 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by kubany on 10/12/2015.
- */
 @Configuration
 @EnableWebMvc
 @ComponentScan(
-        basePackageClasses = {Constants.class},
+        //basePackageClasses = {Constants.class},
+        basePackages = "com.advantage.root.store",
         useDefaultFilters = false,
         includeFilters = {
                 @ComponentScan.Filter(

@@ -1,6 +1,6 @@
 package com.advantage.catalog.store.api;
 
-import com.advantage.catalog.store.dto.*;
+import com.advantage.root.store.dto.*;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.services.DealService;
 import com.advantage.catalog.store.model.deal.Deal;

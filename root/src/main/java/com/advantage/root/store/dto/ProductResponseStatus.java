@@ -1,8 +1,5 @@
 package com.advantage.root.store.dto;
 
-/**
- * Created by dalie on 11/23/2015.
- */
 public class ProductResponseStatus {
     boolean success;
     long id;        //  -1 = Invalid

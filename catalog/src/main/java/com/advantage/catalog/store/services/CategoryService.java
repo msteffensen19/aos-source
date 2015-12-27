@@ -3,7 +3,7 @@ package com.advantage.catalog.store.services;
 import java.util.List;
 
 import com.advantage.catalog.store.dao.category.CategoryRepository;
-import com.advantage.catalog.store.dto.CategoryDto;
+import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.ArgumentValidationHelper;

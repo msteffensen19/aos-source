@@ -3,7 +3,6 @@ package com.advantage.order.store.order.dao;
 import com.advantage.order.store.Constants;
 import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
-import com.advantage.order.store.dto.ProductDto;
 import com.advantage.order.store.model.product.ColorAttribute;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -11,6 +10,7 @@ import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.order.util.ArgumentValidationHelper;
+import com.advantage.root.store.dto.ProductDto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -514,7 +514,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                                 cart.getQuantity(),
                                 dto.getImageUrl(),
                                 dto.getColors().get(0).getCode(),
-                                dto.getColors().get(0).getColor(),
+                                dto.getColors().get(0).getName(),
                                 dto.getColors().get(0).getInStock());
                     }
                 }
@@ -728,7 +728,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         dto.getColors().get(0).getInStock(),
                         dto.getImageUrl(),
                         dto.getColors().get(0).getCode(),
-                        dto.getColors().get(0).getColor(),
+                        dto.getColors().get(0).getName(),
                         dto.getColors().get(0).getInStock());
 
             }
