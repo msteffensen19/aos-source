@@ -5,6 +5,8 @@ import ShippingExpress.WsModel.PlaceShippingOrderRequest;
 import ShippingExpress.WsModel.ShippingCostRequest;
 import ShippingExpress.WsModel.ShippingCostResponse;
 
+import java.util.regex.Pattern;
+
 public class ArgumentValidationHelper {
 
     public static final String STATUS_OK = "OK";
@@ -22,6 +24,8 @@ public class ArgumentValidationHelper {
     public static final int STATE_PATTERN = 10;
     public static final int CITY_PATTERN = 25;
     public static final int COUNTRY_COST_PATTERN = 2;
+    private static final String PHONE_PATTERN = "(^\\+(?:[0-9]){4,19})$";
+    public static final String ERROR_PHONE_NUMBER = "ERROR. Invalid phone number format";
 
     public static String shippingCostRequestValidation(ShippingCostRequest request) {
         if(!countryValidation(request.getSEAddress().getCountry())) {
@@ -48,8 +52,15 @@ public class ArgumentValidationHelper {
         if(!numberOfProductValidation(request.getSENumberOfProducts())) {
             return "ERROR. Wrong format";
         }
+        if(!phoneNumberValidation(request.getSEAddress().getPhone())){
+            return ERROR_PHONE_NUMBER;
+        }
 
         return STATUS_OK;
+    }
+
+    private static boolean phoneNumberValidation(String phone) {
+        return Pattern.compile(PHONE_PATTERN).matcher(phone).matches();
     }
 
     private static boolean postalCodeValidation(String postalCode) {
@@ -87,6 +98,9 @@ public class ArgumentValidationHelper {
         }
         if (!addressLine2Validation(request.getSEAddress().getAddressLine2())) {
             return STATUS_ERROR_ADDRESS_LINE_2;
+        }
+        if(!phoneNumberValidation(request.getSEAddress().getPhone())){
+            return ERROR_PHONE_NUMBER;
         }
         if(!request.getSETransactionType().equalsIgnoreCase(ShipExEndpoint.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER)) {
             return ERROR_TRANSACTION_TYPE;

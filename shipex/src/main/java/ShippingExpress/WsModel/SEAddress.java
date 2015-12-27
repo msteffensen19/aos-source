@@ -23,6 +23,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="PostalCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="AddressLine1" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="AddressLine2" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="FirstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="LastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Phone" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +41,10 @@ import javax.xml.bind.annotation.XmlType;
     "state",
     "postalCode",
     "addressLine1",
-    "addressLine2"
+    "addressLine2",
+    "firstName",
+    "lastName",
+    "phone"
 })
 public class SEAddress {
 
@@ -54,6 +60,12 @@ public class SEAddress {
     protected String addressLine1;
     @XmlElement(name = "AddressLine2", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String addressLine2;
+    @XmlElement(name = "FirstName", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String firstName;
+    @XmlElement(name = "LastName", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String lastName;
+    @XmlElement(name = "Phone", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String phone;
 
     /**
      * Gets the value of the city property.
@@ -197,6 +209,78 @@ public class SEAddress {
      */
     public void setAddressLine2(String value) {
         this.addressLine2 = value;
+    }
+
+    /**
+     * Gets the value of the firstName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Sets the value of the firstName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFirstName(String value) {
+        this.firstName = value;
+    }
+
+    /**
+     * Gets the value of the lastName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets the value of the lastName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLastName(String value) {
+        this.lastName = value;
+    }
+
+    /**
+     * Gets the value of the phone property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * Sets the value of the phone property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPhone(String value) {
+        this.phone = value;
     }
 
 }
