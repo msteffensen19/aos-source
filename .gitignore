@@ -63,3 +63,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+*.lck
+.properties
+.script
+/test1.gt.txt
+/*.gt
+/*.ggt
+/remove from git.bat

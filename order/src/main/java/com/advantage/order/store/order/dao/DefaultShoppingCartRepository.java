@@ -3,9 +3,7 @@ package com.advantage.order.store.order.dao;
 import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.dto.ProductDto;
-import com.advantage.order.store.order.dto.ShoppingCartDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
+import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.order.util.ArgumentValidationHelper;
@@ -21,8 +19,11 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 //import org.json.JSONObject;
 
 /**
@@ -45,17 +46,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     private ShoppingCartResponseStatus shoppingCartResponse;
     private String failureMessage;
-
-    //  ***********************************************
-    //  ******* USE REST API GET REQUEST URI    *******
-    //  ***********************************************
-    //@Autowired
-    //private AppUserRepository appUserRepository;
-    //  ***********************************************
-
-    //  =================================================
-    //  Local Class Methods
-    //  =================================================
 
     /**
      * Gets current state and values of private property {@code shoppingCartResponse}
@@ -380,7 +370,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDetails(Long productId) {
         /*  Build REQUEST URI */
-        //String stringURL = Constants_order.URI_SERVER_CATALOG +
+        //String stringURL = Constants.URI_SERVER_CATALOG +
         //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
         String stringURL = ServiceConfiguration.getUriServerCatalog() +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
@@ -433,16 +423,18 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (!isRegisteredUserExists(userId)) {
+        if (! isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null; //  userId is not a registered user
         }
 
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
+
         if (shoppingCarts != null) {
-            if ((shoppingCarts.size() > 0) || (shoppingCarts.isEmpty())) {
+            if ((shoppingCarts.size() > 0) || (! shoppingCarts.isEmpty())) {
 
                 /* Scan user shopping cart and add all product to userCart response object  */
+                //for (ShoppingCart cart : shoppingCarts) {
                 for (ShoppingCart cart : shoppingCarts) {
 
                     final ProductDto dto = getProductDetails(cart.getProductId());
@@ -472,12 +464,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             }
             //else {
             //    //ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY
-            //   userCart = null;
+            //    userCart.setProductsInCart(new ArrayList<>());
             //}
         }
         //else {
         //    //ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY
-        //   userCart = null;
+        //    userCart.setProductsInCart(new ArrayList<>());
         //}
 
         //return ((userCart == null) || (userCart.isEmpty())) ? null : userCart;
@@ -488,7 +480,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     public ShoppingCartResponseDto getUserShoppingCart(long userId) {
         List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
 
-        return getCartProductsDetails(userId, shoppingCarts);
+        ShoppingCartResponseDto shoppingCartResponse = new ShoppingCartResponseDto(userId);
+        if ((shoppingCarts != null) && (shoppingCarts.size() > 0)) {
+            shoppingCartResponse = getCartProductsDetails(userId, shoppingCarts);
+        }
+
+        return shoppingCartResponse;
     }
 
     public boolean isProductExistsInShoppingCart(long userId, Long productId, int color) {
@@ -621,6 +618,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * list of products in the cart with the <ul>quantity in stock</ul>.
      * @see #getProductDetails(Long)
      */
+    @Override
     public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
 
         System.out.println("DefaultShoppingCartRepository -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
@@ -675,6 +673,54 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return responseDto;
     }
 
+//    /**
+//     * Get shipping cost from {@code ShipEx} service using {@code SOAP} request (<i>WSDL</i>).
+//     * @return {@code SOAP} shipping cost response.
+//     */
+//    @Override
+//    public ShipExShippingCostResponse getShippingCostFromShipEx() {
+//        try {
+//            String stringUrl = ServiceConfiguration.getUriServerShipExWsdlRequest();
+//
+////            URL url = new URL("https://www.aaa.com/myws/MyService?WSDL");
+//            URL url = new URL(stringUrl);
+//            URLConnection uc = url.openConnection();
+//            Map<String, List<String>> fields = uc.getHeaderFields();
+//
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+//    /**
+//     * Do the purchase of products in user cart: <br/>
+//     * * Get shipping cost by calling {@code SOAP} request to <b>ShipEx</b>. <br/>
+//     * *
+//     * @param userId
+//     * @param orderPurchaseRequest
+//     * @return
+//     */
+//    @Override
+//    public ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
+//
+//        System.out.println("DefaultShoppingCartRepository -> doPurchase(): userId=" + userId);
+//
+//        //  Verify userId belongs to a registered user by calling "Account Service"
+//        //  REST API GET REQUEST using URI
+//        if (! isRegisteredUserExists(userId)) {
+//            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+//            return null;
+//        }
+//
+//        ShipExShippingCostResponse response = this.getShippingCostFromShipEx();
+//
+//        return null;
+//    }
+
     /**
      * Calling <b>Account Service</b> via REST API GET request - to
      * check isExists an {@code AppUser} with given {@code userId}.
@@ -686,7 +732,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        //String stringURL = Constants_order.URI_SERVER_ACCOUNT +
+        //String stringURL = Constants.URI_SERVER_ACCOUNT +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         String stringURL = ServiceConfiguration.getUriServerAccount() +
                 ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
@@ -706,6 +752,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         }
 
         return isExists;
+    }
+
+    public boolean isProductExists(Long productId, String hexColor) {
+        boolean result;
+
+        ProductDto productDetails = getProductDetails(productId);
+
+        return false;
     }
 
     /**

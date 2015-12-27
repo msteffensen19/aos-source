@@ -1,5 +1,6 @@
 package com.advantage.order.store.api;
 
+//import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 import com.advantage.order.store.order.services.ShoppingCartService;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ public class OrderController {
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userid}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
-    public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userid") Long userId,
+    public ResponseEntity<ShoppingCartResponseDto> getUserCar4t(@PathVariable("userid") Long userId,
                                                                HttpServletRequest request, HttpServletResponse response) {
 
         ShoppingCartResponseDto userShoppingCart = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
@@ -39,6 +41,12 @@ public class OrderController {
         if (userShoppingCart == null) {
             return new ResponseEntity<>(userShoppingCart, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         }
+//        else if (userShoppingCart.getProductsInCart().size() == 0) {
+//            List<ShoppingCartResponseDto.CartProduct> productsInCart = new ArrayList<>();
+//            userShoppingCart.setProductsInCart(productsInCart);
+//
+//            return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
+//        }
         else {
             return new ResponseEntity<>(userShoppingCart, HttpStatus.OK);
         }
@@ -147,29 +155,18 @@ public class OrderController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-//    /*  =========================================================================================================   */
-//    /**
-//     * This method/Request is only for testing and an example on how to call REST
-//     * API from Java©. <br/>
-//     * <b>DELETE</b> this after finishing testing, <b><ul>BEFORE</ul></b> moving
-//     * it to <b>&quat;in Testing&quat;</b>. <br/>
-//     * @param userId
-//     * @param productId
-//     * @param hexColor
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping(value="/carts/{userid}/product/{productid}/color/{color}", method=RequestMethod.GET)
-//    @ApiOperation(value = "Get product in user cart by primary-key")
-//    public ResponseEntity<ShoppingCart> getCartProductByPrimaryKey(@PathVariable("userid") long userId,
-//                                                                   @PathVariable("productid") Long productId,
-//                                                                   @PathVariable("color") String hexColor,
-//                                                                   HttpServletRequest request) {
+    /*  =========================================================================================================   */
+
+//    @RequestMapping(value = "/carts/{user_id}/purchase", method = RequestMethod.POST)
+//    @ApiOperation(value = "Do purchase of products in cart")
+//    public ResponseEntity<ShoppingCartResponseStatus> doPurchase(@RequestBody OrderPurchaseRequest orderPurchaseRequest,
+//                                                                @PathVariable("user_id") long userId) {
 //
-//        ShoppingCart cartProduct = shoppingCartService.getCartProductByPrimaryKey(userId, productId, hexColor);
+//        System.out.println("OrderController -> doPurchase(): userId=" + userId);
 //
-//        return new ResponseEntity<>(cartProduct, HttpStatus.OK);
+//        ShoppingCartResponseStatus purchaseResponse = shoppingCartService.doPurchase(userId, orderPurchaseRequest);
 //
+//        return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
 //    }
 
 }
