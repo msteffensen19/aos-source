@@ -1,4 +1,4 @@
-package com.advantage.catalog.store.dto;
+package com.advantage.root.store.dto;
 
 public class ColorAttributeDto {
     private String code;
@@ -8,9 +8,9 @@ public class ColorAttributeDto {
     public ColorAttributeDto() {
     }
 
-    public ColorAttributeDto(String code, String color, int inStock) {
+    public ColorAttributeDto(String code, String name, int inStock) {
         this.code = code;
-        this.name = color;
+        this.name = name;
         this.inStock = inStock;
     }
 

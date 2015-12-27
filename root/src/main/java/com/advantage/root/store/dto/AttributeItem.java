@@ -1,11 +1,5 @@
 package com.advantage.root.store.dto;
 
-import com.advantage.root.store.model.product.ProductAttributes;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * Describes the product attribute in the ProductDTO
  */
@@ -35,22 +29,5 @@ public class AttributeItem {
 
     public void setAttributeValue(String attributeValue) {
         this.attributeValue = attributeValue;
-    }
-
-    /**
-     * Convert ProductAttributes collection to AttributeItem DTO
-     *
-     * @param attributes - ProductAttributes collection
-     * @return AttributeItem DTO collection
-     */
-    public static List<AttributeItem> productAttributesToAttributeValues(Collection<ProductAttributes> attributes) {
-        List<AttributeItem> items = new ArrayList<>();
-        for (ProductAttributes attribute : attributes) {
-            String name = attribute.getAttribute().getName();
-            String value = attribute.getAttributeValue();
-            items.add(new AttributeItem(name, value));
-        }
-
-        return items;
     }
 }

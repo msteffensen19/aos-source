@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.product.ProductRepository;
-import com.advantage.catalog.store.dto.*;
+import com.advantage.root.store.dto.*;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.ImageAttribute;
