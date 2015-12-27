@@ -670,12 +670,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return responseDto;
     }
 
-    /**
-     * Get shipping cost from {@code ShipEx} service using {@code SOAP} request (<i>WSDL</i>).
-     * @return {@code SOAP} shipping cost response.
-     */
-    @Override
-    public ShipExShippingCostResponse getShippingCostFromShipEx() {
+//    /**
+//     * Get shipping cost from {@code ShipEx} service using {@code SOAP} request (<i>WSDL</i>).
+//     * @return {@code SOAP} shipping cost response.
+//     */
+//    @Override
+//    public ShipExShippingCostResponse getShippingCostFromShipEx() {
 //        try {
 //            String stringUrl = ServiceConfiguration.getUriServerShipExWsdlRequest();
 //
@@ -690,20 +690,20 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        return null;
-    }
+//        return null;
+//    }
 
-    /**
-     * Do the purchase of products in user cart: <br/>
-     * * Get shipping cost by calling {@code SOAP} request to <b>ShipEx</b>. <br/>
-     * *
-     * @param userId
-     * @param orderPurchaseRequest
-     * @return
-     */
-    @Override
-    public ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
-
+//    /**
+//     * Do the purchase of products in user cart: <br/>
+//     * * Get shipping cost by calling {@code SOAP} request to <b>ShipEx</b>. <br/>
+//     * *
+//     * @param userId
+//     * @param orderPurchaseRequest
+//     * @return
+//     */
+//    @Override
+//    public ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
+//
 //        System.out.println("DefaultShoppingCartRepository -> doPurchase(): userId=" + userId);
 //
 //        //  Verify userId belongs to a registered user by calling "Account Service"
@@ -714,9 +714,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 //        }
 //
 //        ShipExShippingCostResponse response = this.getShippingCostFromShipEx();
-
-        return null;
-    }
+//
+//        return null;
+//    }
 
     /**
      * Calling <b>Account Service</b> via REST API GET request - to
@@ -749,6 +749,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         }
 
         return isExists;
+    }
+
+    public boolean isProductExists(Long productId, String hexColor) {
+        boolean result;
+
+        ProductDto productDetails = getProductDetails(productId);
+
+        return false;
     }
 
     /**
