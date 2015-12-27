@@ -19,7 +19,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="SETransactionType" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Status" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Code" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Amount" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Currency" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="TransactionDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "seTransactionType",
-    "status",
+    "code",
+    "reason",
     "amount",
     "currency",
     "transactionDate"
@@ -44,8 +46,10 @@ public class ShippingCostResponse {
 
     @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String seTransactionType;
-    @XmlElement(name = "Status", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String status;
+    @XmlElement(name = "Code", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String code;
+    @XmlElement(name = "Reason", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String reason;
     @XmlElement(name = "Amount", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String amount;
     @XmlElement(name = "Currency", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
@@ -78,27 +82,51 @@ public class ShippingCostResponse {
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the code property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the code property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setStatus(String value) {
-        this.status = value;
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    /**
+     * Gets the value of the reason property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getReason() {
+        return reason;
+    }
+
+    /**
+     * Sets the value of the reason property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setReason(String value) {
+        this.reason = value;
     }
 
     /**

@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="SEAddress" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}SEAddress"/>
  *         &lt;element name="SEProducts" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}SEProducts" form="qualified"/>
  *         &lt;element name="OrderNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="SECustomerName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="SECustomerPhone" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,7 +37,9 @@ import javax.xml.bind.annotation.XmlType;
     "seTransactionType",
     "seAddress",
     "seProducts",
-    "orderNumber"
+    "orderNumber",
+    "seCustomerName",
+    "seCustomerPhone"
 })
 @XmlRootElement(name = "PlaceShippingOrderRequest", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
 public class PlaceShippingOrderRequest {
@@ -48,6 +52,10 @@ public class PlaceShippingOrderRequest {
     protected SEProducts seProducts;
     @XmlElement(name = "OrderNumber", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String orderNumber;
+    @XmlElement(name = "SECustomerName", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String seCustomerName;
+    @XmlElement(name = "SECustomerPhone", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    protected String seCustomerPhone;
 
     /**
      * Gets the value of the seTransactionType property.
@@ -143,6 +151,54 @@ public class PlaceShippingOrderRequest {
      */
     public void setOrderNumber(String value) {
         this.orderNumber = value;
+    }
+
+    /**
+     * Gets the value of the seCustomerName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSECustomerName() {
+        return seCustomerName;
+    }
+
+    /**
+     * Sets the value of the seCustomerName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSECustomerName(String value) {
+        this.seCustomerName = value;
+    }
+
+    /**
+     * Gets the value of the seCustomerPhone property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSECustomerPhone() {
+        return seCustomerPhone;
+    }
+
+    /**
+     * Sets the value of the seCustomerPhone property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSECustomerPhone(String value) {
+        this.seCustomerPhone = value;
     }
 
 }

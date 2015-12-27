@@ -31,7 +31,8 @@ public class ShipExEndpoint {
         logShippingCostRequest(request);
         response.setSETransactionType(TRANSACTION_TYPE_SHIPPING_COST);
         if (!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
-            response.setStatus(validation);
+            response.setCode(ArgumentValidationHelper.STATUS_ERROR);
+            response.setReason(validation);
             logShippingCostResponse(response);
             return response;
         }
@@ -40,7 +41,7 @@ public class ShipExEndpoint {
                 request.getSENumberOfProducts()));
         response.setCurrency(shippingService.getCurrency());
         response.setTransactionDate(shippingService.getFormatTimeNow());
-        response.setStatus(ArgumentValidationHelper.shippingCostResponseValidation(response));
+        response.setCode(ArgumentValidationHelper.STATUS_OK);
         logShippingCostResponse(response);
 
         return response;
@@ -63,13 +64,14 @@ public class ShipExEndpoint {
         logPlaceOrderRequest(request);
         response.setSETransactionType(TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
         if (!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
-            response.setStatus(validation);
+            response.setCode(ArgumentValidationHelper.STATUS_ERROR);
+            response.setReason(validation);
             logPlaceOrderResponse(response);
             return response;
         }
         response.setTransactionDate(shippingService.getFormatTimeNow());
         response.setTransactionReference(Long.toString(shippingService.getTrackNumber()));
-        response.setStatus("OK");
+        response.setCode(ArgumentValidationHelper.STATUS_OK);
         logPlaceOrderResponse(response);
 
         return response;
@@ -83,7 +85,8 @@ public class ShipExEndpoint {
 
     private void logShippingCostResponse(ShippingCostResponse response) {
         String builder = "TransactionType: " + response.getSETransactionType() + " Response" +
-                "; SEResponse.Status: " + response.getStatus() +
+                "; SEResponse.Code: " + response.getCode() +
+                "; SEResponse.Reason: " + response.getReason() +
                 "; SEResponse.Amount: " + response.getAmount() +
                 "; TransactionDate: " + response.getTransactionDate();
         logger.info(builder);
@@ -98,7 +101,8 @@ public class ShipExEndpoint {
 
     private void logPlaceOrderResponse(PlaceShippingOrderResponse response) {
         String builder = "TransactionType: " + response.getSETransactionType() + " Response" +
-                "; SEResponse.Status: " + response.getStatus() +
+                "; SEResponse.Code: " + response.getCode() +
+                "; SEResponse.Reason: " + response.getReason() +
                 "; SETransactionReference: " + response.getTransactionReference() +
                 "; TransactionDate: " + response.getTransactionDate();
 
