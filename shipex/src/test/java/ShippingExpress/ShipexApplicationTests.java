@@ -2,6 +2,7 @@ package ShippingExpress;
 
 import ShippingExpress.WsModel.*;
 import ShippingExpress.model.ShippingExpressService;
+import ShippingExpress.util.ArgumentValidationHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,22 +37,25 @@ public class ShipexApplicationTests {
         address.setCountry("ua");
         address.setPostalCode("123123");
         address.setState("state");
-        address.setPhone("+1231234567");
-
+        
         costRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_SHIPPING_COST);
         costRequest.setSEAddress(address);
         costRequest.setSENumberOfProducts(5);
+        costRequest.setSECustomerPhone("+1231234567");
+        costRequest.setSECustomerName("name");
 
         orderRequest.setSEAddress(address);
         orderRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
         orderRequest.setOrderNumber("1234567890");
+        orderRequest.setSECustomerPhone("+1231234567");
+        orderRequest.setSECustomerName("name");
     }
 
     @Test
     public void getShippingCostTest() throws IOException {
         ShippingCostResponse response = endpoint.getShippingCost(costRequest);
 
-        Assert.assertEquals("OK", response.getStatus());
+        Assert.assertEquals(ArgumentValidationHelper.STATUS_OK, response.getCode());
         Assert.assertEquals(true, !response.getAmount().isEmpty());
         Assert.assertEquals(true, !response.getCurrency().isEmpty());
         Assert.assertEquals(costRequest.getSETransactionType(), response.getSETransactionType());
@@ -63,68 +67,73 @@ public class ShipexApplicationTests {
         ShippingCostRequest request = getDefaultCostRequest();
         request.setSETransactionType("invalid type");
         ShippingCostResponse response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate addressLine1
         request = getDefaultCostRequest();
         request.getSEAddress().setAddressLine1(createStringWithLength(51));
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate city
         request = getDefaultCostRequest();
         request.getSEAddress().setCity(createStringWithLength(26));
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate state
         request = getDefaultCostRequest();
         request.getSEAddress().setState(createStringWithLength(11));
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate number of products
         request = getDefaultCostRequest();
         request.setSENumberOfProducts(123456);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate phone number
         //phone !contains "+"
         request = getDefaultCostRequest();
-        request.getSEAddress().setPhone("1234567");
+        request.setSECustomerPhone("1234567");
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //pnone=5
-        request.getSEAddress().setPhone("+1234");
+        request.setSECustomerPhone("+1234");
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("OK"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_OK));
 
         //phone>20
-        request.getSEAddress().setPhone("+23567890123456789201");
+        request.setSECustomerPhone("+23567890123456789201");
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //phone<=20
-        request.getSEAddress().setPhone("+2356789012345678920");
+        request.setSECustomerPhone("+2356789012345678920");
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("OK"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_OK));
+
+        //phone is empty
+        request.setSECustomerPhone("");
+        response = endpoint.getShippingCost(request);
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_OK));
 
         //validate country alias
         request = getDefaultCostRequest();
         request.getSEAddress().setCountry(createStringWithLength(3));
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
         request.getSEAddress().setCountry(createStringWithLength(0));
         response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
     }
 
     @Test
     public void PlaceShippingOrderTest() {
         PlaceShippingOrderResponse response = endpoint.placeShippingOrder(orderRequest);
 
-        Assert.assertEquals("OK", response.getStatus());
+        Assert.assertEquals(ArgumentValidationHelper.STATUS_OK, response.getCode());
         Assert.assertEquals(true, !response.getTransactionDate().isEmpty());
         Assert.assertEquals(true, !response.getTransactionReference().isEmpty());
         Assert.assertEquals(10, response.getTransactionReference().length());
@@ -139,11 +148,12 @@ public class ShipexApplicationTests {
         seAddress.setState(costRequest.getSEAddress().getState());
         seAddress.setPostalCode(costRequest.getSEAddress().getPostalCode());
         seAddress.setCity(costRequest.getSEAddress().getCity());
-        seAddress.setPhone(costRequest.getSEAddress().getPhone());
 
         request.setSEAddress(seAddress);
         request.setSETransactionType(costRequest.getSETransactionType());
         request.setSENumberOfProducts(5);
+        request.setSECustomerPhone(costRequest.getSECustomerPhone());
+        request.setSECustomerName(costRequest.getSECustomerName());
 
         return request;
     }
@@ -157,10 +167,11 @@ public class ShipexApplicationTests {
         seAddress.setState(orderRequest.getSEAddress().getState());
         seAddress.setPostalCode(orderRequest.getSEAddress().getPostalCode());
         seAddress.setCity(orderRequest.getSEAddress().getCity());
-        seAddress.setPhone(orderRequest.getSEAddress().getPhone());
 
         request.setSEAddress(seAddress);
         request.setSETransactionType(orderRequest.getSETransactionType());
+        request.setSECustomerPhone(orderRequest.getSECustomerPhone());
+        request.setSECustomerName(request.getSECustomerName());
 
         return request;
     }
@@ -172,34 +183,34 @@ public class ShipexApplicationTests {
 
         request.setSETransactionType("invalid type");
         PlaceShippingOrderResponse response = endpoint.placeShippingOrder(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate addressLine1
         request = getDefaultOrderRequest();
         request.getSEAddress().setAddressLine1(createStringWithLength(51));
         response = endpoint.placeShippingOrder(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate city
         request = getDefaultOrderRequest();
         request.getSEAddress().setCity(createStringWithLength(26));
         response = endpoint.placeShippingOrder(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate state
         request = getDefaultOrderRequest();
         request.getSEAddress().setState(createStringWithLength(11));
         response = endpoint.placeShippingOrder(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
 
         //validate country alias
         request = getDefaultOrderRequest();
         request.getSEAddress().setCountry(createStringWithLength(11));
         response = endpoint.placeShippingOrder(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
         request.getSEAddress().setCountry(createStringWithLength(0));
         response = endpoint.placeShippingOrder(request);
-        Assert.assertEquals(true, response.getStatus().contains("ERROR"));
+        Assert.assertEquals(true, response.getCode().contains(ArgumentValidationHelper.STATUS_ERROR));
     }
 
     private String createStringWithLength(int i) {
