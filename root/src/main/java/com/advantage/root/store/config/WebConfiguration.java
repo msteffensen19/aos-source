@@ -23,8 +23,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan(
-        //basePackageClasses = {Constants.class},
-        basePackages = "com.advantage.root.store",
+        basePackages = "com.advantage.root",
         useDefaultFilters = false,
         includeFilters = {
                 @ComponentScan.Filter(
