@@ -29,17 +29,14 @@
 
 
 
-
 <body data-ng-controller="mainCtrl">
 
 
 <login-modal></login-modal>
 
 
-
-
-
 <!-- mobile slider -->
+
 <aside id="mobile-section">
     <ul>
         <li>
@@ -62,6 +59,7 @@
         </li>
     </ul>
 </aside>
+
 <!-- end mobile slider -->
 
 
@@ -71,6 +69,7 @@
 
 
 <!-- navegation -->
+
 <header ng-show="welcome" data-ng-cloak>
     <nav>
         <ul class="roboto-light desktop-handler">
@@ -81,7 +80,7 @@
                 </a>
                 <ul>
                     <li style="position: relative; background-color: white" >
-                        <tool-tip-cart cart="cart" id="toolTipCart"></tool-tip-cart>
+                        <tool-tip-cart id="toolTipCart"></tool-tip-cart>
                     </li>
                 </ul>
             </li>
@@ -98,23 +97,23 @@
                 </a>
             </li>
             <li>
-                <a class="img">
+                <a class="img" id="openSearch">
                     <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
                 </a>
                 <tool-tip-search></tool-tip-search>
             </li>
             <li>
-                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
+                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
             </li>
             <li>
                 <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
             </li>
             <li>
-                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
+                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
             </li>
         </ul>
         <div class="logo">
-            <a href="#/"> <img src="css/images/logo.png" /></a>
+            <a href="#/" ng-click="go_up()"> <img src="css/images/logo.png" /></a>
             <div id="mobile-btn" class="mobile-btn-handler" ng-click="openMobileSection()">
                 <span></span><span></span><span></span>
             </div>

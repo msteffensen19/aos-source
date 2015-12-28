@@ -70,7 +70,7 @@ public class MasterCreditService {
 
         MasterCreditResponse responseStatus = new MasterCreditResponse();
         //TODO BENY transaction type
-        responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode());
+        responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode().toUpperCase());
         responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
 
         boolean isValid = true;
@@ -188,7 +188,7 @@ public class MasterCreditService {
     public MasterCreditResponse doRefund(long paymentId, MasterCreditDto dto) {
         MasterCreditResponse responseStatus = new MasterCreditResponse();
 
-        responseStatus.setTransactionType(TransactionTypeEnum.REFUND.getStringCode());
+        responseStatus.setTransactionType(TransactionTypeEnum.REFUND.getStringCode().toUpperCase());
         responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());
         responseStatus.setResponseReason(ResponseEnum.APPROVED.getStringCode());
         responseStatus.setReferenceNumber(this.referenceNumberNextValue());

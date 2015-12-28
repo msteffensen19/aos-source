@@ -26,6 +26,8 @@ define(['./module'], function (services) {
                 checkout: checkout,
             });
 
+            /* returned functions */
+
             function checkout() {
                 console.log('cart');
                 console.log(cart);
@@ -51,8 +53,7 @@ define(['./module'], function (services) {
                 return responce.promise;
             }
 
-            function updateRemovedProducts(cart)
-            {
+            function updateRemovedProducts(cart) {
                 var success = updateUserCart(cart);
                 if(!success)
                 {
@@ -132,6 +133,35 @@ define(['./module'], function (services) {
                 $cookie.remove("userCart");
             }
 
+            function loadCartProducts(){
+
+                var responce = $q.defer();
+                var user = $rootScope.userCookie;
+                if(user && user.response) {
+                    if (user.response.userId != -1) {
+                        $http({
+                            method: "get",
+                            url: server.order.loadCartProducts(user.response.userId)
+
+                        }).then(function(cartRes){
+                                alert('cartRes')
+                                console.log('cartRes')
+                                console.log(cartRes)
+                                cart = cartRes;
+                                responce.resolve(cart);
+                            },
+                            function(err){
+                                alert('err')
+                                console.log('error in load cart (productCartService - loadCartProducts)');
+                            });
+                    }
+                }
+                else {
+                    loadGuestCartProducts();
+                    responce.resolve(cart);
+                }
+                return responce.promise;
+            }
 
             function updateUserCart(){
                 var user = $rootScope.userCookie;
@@ -165,10 +195,12 @@ define(['./module'], function (services) {
                                 product.productId, product.colors[0].code, quantity),
                         });
                         request.then(function (newCart) {
+                            console.log(newCart)
                             cart = newCart.data;
-                            response.resolve({reason: '', success: true});
+                            response.resolve(newCart);
                             return response.promise;
                         })
+
                     }
                 }
                 else {
@@ -180,7 +212,6 @@ define(['./module'], function (services) {
                                 if (productInCart.color.code == color.code) {
                                     productIndex = index;
                                     productInCart.quantity += quantity;
-                                    cart.total += (product.price * quantity);
                                     find = product;
                                 }
                             });
@@ -189,7 +220,7 @@ define(['./module'], function (services) {
 
                     if (!find) {
                         cart.productsInCart.unshift({
-                            "id": product.productId,
+                            "productId": product.productId,
                             "imageUrl": product.imageUrl,
                             "productName": product.productName,
                             "color": product.colors.length > 0 ? product.colors[0] : 'FFF',
@@ -200,13 +231,11 @@ define(['./module'], function (services) {
                     else {
                         cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
                     }
-                    cart.total += product.price;
                     updateCart();
-                    response.resolve(false);
+                    response.resolve(cart);
                     return response.promise;
                 }
             }
-
         }]);
 
 

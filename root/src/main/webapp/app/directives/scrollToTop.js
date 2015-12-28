@@ -10,21 +10,16 @@ define(['./module'], function (directives) {
             replace: 'true',
             template: $templateCache.get('app/partials/scrollToTop.html'),
             link: function (scope, element, attr) {
-                element.bind('click', function () {
 
+                element.bind('click', function () {
                     var _this = this;
                     $('body, html').animate({scrollTop: 0}, 1000, function(){
                     });
-                    $(_this).find("p")
-                        .animate({'opacity' : 0}, 500)
-                        .animate({ bottom: -100, }, 1000)
-                        .animate({'opacity' : 1}, 500);
-
+                    $(_this).find("p").animate({'opacity' : 0}, 500)
                 });
+
                 element.bind('mouseover', function () {
-                    $(this).find("p").animate({
-                        bottom: 0
-                    }, 400);
+                    $(this).find("p").animate({'opacity' : 1}, 200)
                 });
             }
         };

@@ -7,26 +7,21 @@ define(['./module'], function (directives) {
     directives.directive('toolTipCart', ['$templateCache', 'productsCartService',
         function ($templateCache, cartService) {
         return {
-            restrict: 'E',
-            replace: true,
             template: $templateCache.get('app/partials/toolTipCart.html'),
-            controller: 'mainCtrl',
-            link: function(scope, element, attrs, ctrls) {
+            link: function(scope) {
 
-                    scope.checkout = function () {
+                scope.checkout = function () {
 
-                        cartService.checkout().then(function(userLogin){
-                            if(!userLogin)
-                            {
-                                console.log(ctrls)
-                                scope.login();
-                            }
-                            else {
-                                console.log("move user to checkout page...");
-                            }
-                        });
-                    }
+                    cartService.checkout().then(function (userLogin) {
+                        if (!userLogin) {
+                            scope.login();
+                        }
+                        else {
+                            console.log("move user to checkout page...");
+                        }
+                    });
                 }
+            }
         };
     }]);
 });
