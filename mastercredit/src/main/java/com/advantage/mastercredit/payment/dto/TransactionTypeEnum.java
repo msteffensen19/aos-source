@@ -9,7 +9,8 @@ import java.util.List;
  * @author Binyamin Regev on 20/12/2015.
  */
 public enum TransactionTypeEnum {
-    PAYMENT("Payment"), REFUND("Refund"); //TODO BENY Make like in word
+    //  When calling "setTransactionType" use "toUpperCase()" as well
+    PAYMENT("Payment"), REFUND("Refund");
 
     private String stringCode;
 
