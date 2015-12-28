@@ -4,19 +4,41 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'productService', 'product',
-        function ($scope, productService, product) {
+    controllers.controller('productCtrl', ['$scope', 'productService', 'product', 'selectedColor', 'quantity', 'pageState',
+        function ($scope, productService, product, selectedColor, quantity, pageState) {
 
-            $scope.Quantity = 1;
+            for(var i = 0; i < product.colors.length; i++){
+                if(product.colors[i].code == selectedColor)
+                {
+                    $scope.colorSelected = product.colors[i];
+                    break;
+                }
+            }
+
+            $scope.quantityOptions = [1,2,3,4,5,6,7,8,9];
+            $scope.quantity = quantity || 1;
+            if(quantity && quantity > 9)
+            {
+                for(var i = 10; i <= quantity; i++)
+                {
+                    $scope.quantityOptions.push(i)
+                }
+            }
 
             $scope.product = product;
-
-            $scope.colorSelected = product.colors[0];
+            $scope.colorSelected = $scope.colorSelected || product.colors[0];
 
             $scope.addToCart = function(){
-                var productToAdd = angular.copy(product);
-                productToAdd.colors = [$scope.colorSelected];
-                $scope.$parent.addProduct(productToAdd, $scope.Quantity);
+                if(pageState == 'edit')
+                {
+
+                }
+                else
+                {
+                    var productToAdd = angular.copy(product);
+                    productToAdd.colors = [$scope.colorSelected];
+                    $scope.$parent.addProduct(productToAdd, $scope.quantity);
+                }
             }
 
             $scope.setColor = function(color){

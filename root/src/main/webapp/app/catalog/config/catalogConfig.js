@@ -69,7 +69,7 @@ define([],function(){
             'State__Province__Region' : 'State / Province / Region',
             'offers_promotion' :  'Receive exclusive offers and promotions from Advantage',
             'REGISTER' : 'REGISTER',
-            'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT',
+            'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT?',
             'Clear' : 'Clear',
 
 
@@ -161,13 +161,22 @@ define([],function(){
                 }
             })
             .state('product',{
-                url: '/product/:id',
+                url: '/product/:id?color&quantity&pageState',
                 templateUrl: 'app/views/product-page.html',
                 controller: 'productCtrl',
                 data: {
                     requireLogin: false // this property will apply to all children of 'app'
                 },
                 resolve : {
+                    selectedColor: function($stateParams){
+                        return $stateParams.color;
+                    },
+                    quantity: function($stateParams){
+                        return $stateParams.quantity;
+                    },
+                    pageState: function($stateParams){
+                        return $stateParams.pageState;
+                    },
                     product: function (productService, $stateParams) {
                         return productService.getProductById($stateParams.id);
                     }

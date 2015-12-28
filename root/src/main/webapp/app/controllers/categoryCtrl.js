@@ -4,6 +4,7 @@
 /**
  * Created by kubany on 10/13/2015.
  */
+
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',

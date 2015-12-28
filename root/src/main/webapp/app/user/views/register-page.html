@@ -1,7 +1,7 @@
 
 <!--
 <section id="png">
-    <img src="../...../css/images/mariaDesigns/Register.png" />
+    <img src="../../../csss/images/mariaDesigns/register/Register.png" />
 </section>
 -->
 
@@ -29,94 +29,115 @@
 
                             <h3 translate="ACCOUNT_DETAILS"></h3>
 
-                            <span class="animPlaceholderUp">
-                                <a class="must">*</a>
-                                <label> {{'User_Name' | translate }} </label>
-                                <input type="text" name="username" required autocomplete="off"
-                                       ng-model="model.username"
-                                       ng-pattern="/^[A-Za-z0-9_.-]{3,15}$/"
-                                       ng-class="{ invalidInput : registerForm.username.$error.required && registerForm.username.$dirty  }" >
-                                <div class="validationInfo">
-                                    <label class="invalid">{{'User_Name_required' | translate }}</label>
-                                    <label class="invalid">{{'User_Name_pattern' | translate }}</label>
-                                </div>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <a class="must" >*</a>
-                                <!--    SECorrenti: email regex   -   /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/     -->
-                                <label>{{'Email' | translate }}</label>
-                                <input ng-model="model.email" name="email" type="email" class="inputtext" required autocomplete="off" ng-class="{ invalidInput : (registerForm.email.$error.email || registerForm.email.$error.required) && registerForm.email.$dirty  }">
-                                <div class="validationInfo">
-                                    <label class="invalid" ng-show="registerForm.email.$error.required">{{'Email_field_required' | translate }}</label>
-                                    <label class="invalid" ng-show="registerForm.email.$error.email">{{'Invalid_email_address' | translate }}</label>
-                                </div>
-                            </span>
+                            <validate-input
+                                    sec-placeholder="User name"
+                                    sec-required
+                                    sec-min-length="5"
+                                    sec-max-length="15"
+                                    sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
+                                    pattern-error-attr="Use letters, number and the following symbols only: .-_"
+                                    model-attr="model.username"
+                                    id-attr="username" >
+                            </validate-input>
 
-                            <span class="animPlaceholderUp">
-                                <a class="must">*</a>
-                                <label>{{'Password' | translate }}</label>
-                                <input ng-model="model.password" type="password" required ng-pattern="/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,10})/"
-                                       ng-class="{ invalidInput : ( registerForm.password.$error.pattern ) }"
-                                       ng-minlength="5" ng-maxlength="10" name="password" id="password" >
 
-                                <div class="validationInfo">
-                                    <label class="invalid" > {{'Password_5_minlength_field_error' | translate }}</label>
-                                    <label class="invalid" > {{'Password_10_maxlength_field_error' | translate }} </label>
-                                    <label class="invalid" > {{'Password_field_required' | translate }} </label>
-                                    <label class="invalid" > {{'Password_regex' | translate }}</label>
-                                </div>
-                            </span>
+                            <validate-input
+                                    sec-placeholder="Email"
+                                    sec-required
+                                    sec-email
+                                    input-type-attr="email"
+                                    model-attr="model.email"
+                                    id-attr="email">
+                            </validate-input>
 
-                            <span class="animPlaceholderUp">
-                                    <label>{{'Confirm_Password' | translate }}</label>
-                                <a class="must">*</a>
-                                <img src="../../../css/images/Info.png" class="validationInfoImg" ng-show="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
-                                <img src="../../../css/images/invalidInfo.png" ng-hide="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
-                                <input ng-model="model.confirm_password" type="password" required sec-compare="password" name="confirm_password" id="confirm_password" autocomplete="off"
-                                       ng-class="{ invalidInput : ( registerForm.confirm_password.$error.secCompare ) }">
-                                <div class="validationInfo">
-                                    <label class="invalid" >{{'Password_not_match' | translate }}</label>
-                                    <label class="invalid" >{{'confirm_password_required' | translate }}</label>
-                                </div>
-                            </span>
+
+                            <validate-input
+                                    sec-placeholder="Password"
+                                    sec-required
+                                    sec-min-length="4"
+                                    sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
+                                    sec-compare-to="confirm_password"
+                                    compare-to-name="Confirm password"
+                                    pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
+                                    input-type-attr="password"
+                                    model-attr="model.password"
+                                    id-attr="password">
+                            </validate-input>
+
+
+                            <validate-input
+                                    sec-placeholder="Confirm password"
+                                    sec-required
+                                    sec-min-length="5"
+                                    sec-max-length="15"
+                                    sec-compare-from="password"
+                                    input-type-attr="password"
+                                    model-attr="model.confirm_password"
+                                    id-attr="confirm_password">
+                            </validate-input>
+
                         </div>
 
                         <div>
                             <h3 translate="PERSONAL_DETAILS"></h3>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.firstName" type="text" autocomplete="off" ><label>{{'First_Name' | translate }}</label>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.lastName" type="text" autocomplete="off" ><label>{{'Last_Name' | translate }}</label>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.phoneNumber" type="text" autocomplete="off" ><label>{{'Phone_Number' | translate }}</label>
-                            </span>
+                            <validate-input
+                                    sec-placeholder="{{'First_Name' | translate }}"
+                                    model-attr="model.firstName"
+                                    id-attr="firstName">
+                            </validate-input>
+                            <validate-input
+                                    sec-placeholder="{{'Last_Name' | translate }}"
+                                    model-attr="model.lastName"
+                                    id-attr="lastName">
+                            </validate-input>
+                            <validate-input
+                                    sec-placeholder="{{'Phone_Number' | translate }}"
+                                    model-attr="model.phoneNumber"
+                                    id-attr="phoneNumber">
+                            </validate-input>
+
+                            <!--
+                                <span class="animPlaceholderUp">
+                                    <input ng-model="model.firstName" type="text" autocomplete="off" ><label>{{'First_Name' | translate }}</label>
+                                </span>
+                                <span class="animPlaceholderUp">
+                                    <input ng-model="model.lastName" type="text" autocomplete="off" ><label>{{'Last_Name' | translate }}</label>
+                                </span>
+                                <span class="animPlaceholderUp">
+                                    <input ng-model="model.phoneNumber" type="text" autocomplete="off" ><label>{{'Phone_Number' | translate }}</label>
+                                </span>
+                            -->
+
                         </div>
 
                         <div>
                             <h3 translate="ADDRESS"></h3>
-                            <span class="animPlaceholderUp">
-                                 <select name="countries" class="inputtext" id="mySelect" ng-options="country.name for country in countries track by country.id"
-                                         ng-model="model.country" ng-change="countriesSelected()"></select>
-                                <label>{{'Country' | translate }}</label>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.city" type="text" autocomplete="off" /><label>{{'City' | translate }}</label>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.address" type="text" autocomplete="off" /><label>{{'Address' | translate }}</label>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.state" type="text" autocomplete="off" ><label>{{'State__Province__Region' | translate }}</label>
-                            </span>
-                            <span class="animPlaceholderUp">
-                                <input ng-model="model.postalCode" type="text" autocomplete="off" ><label>{{'Postal_Code' | translate }}</label>
-                            </span>
+
+
+                            <validate-input sec-placeholder="{{'Country' | translate }}" >
+                                <select name="countries" class="inputtext" id="mySelect"
+                                        ng-options="country.name for country in countries track by country.id"
+                                        ng-model="model.country" ng-change="countriesSelected()"></select>
+                            </validate-input>
+
+
+                            <validate-input sec-placeholder="{{'City' | translate }}"  model-attr="model.city" id-attr="city"> </validate-input>
+
+
+                            <validate-input sec-placeholder="{{'Address' | translate }}" model-attr="model.address" id-attr="address"> </validate-input>
+
+
+                            <validate-input sec-placeholder="{{'State__Province__Region' | translate }}" model-attr="model.state" id-attr="state"> </validate-input>
+
+
+                            <validate-input sec-placeholder="{{'Postal_Code' | translate }}" model-attr="model.postalCode" id-attr="postalCode"> </validate-input>
+
+
                             <div class="option" >
                                 <input ng-model="model.offers_promotion" type="checkbox" autocomplete="off" />
                                 <span class="roboto-regular">{{'offers_promotion' | translate }}</span>
                             </div>
+
                             <div class="option" >
                                 <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" autocomplete="off" required="required" />
                                 <span class="roboto-regular">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
@@ -128,10 +149,15 @@
                         </div>
                     </div>
 
-                    <input class="roboto-medium" ng-disabled="registerForm.$invalid" ng-class="{ opacityButtonDisable : registerForm.$invalid }"
+                    <input class="roboto-medium" ng-disabled="registerForm.$invalid"
+                           ng-class="{ opacityButtonDisable : registerForm.$invalid }"
                            type="submit" id="registerButton" value="{{'REGISTER' | translate}}" />
+
                     <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
-                    <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" > <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()" ></a></label>
+
+                    <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" >
+                        <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()" ></a>
+                    </label>
 
                 </form>
             </div>
@@ -145,7 +171,6 @@
 
 
 <social-media-drtv></social-media-drtv>
-
 
 
 
@@ -190,8 +215,10 @@
                             <span class="animPlaceholderUp">
                                 <a class="must">*</a>
                                 <label> {{'User_Name' | translate }} </label>
-                                <input type="text" name="username" required autocomplete="off"
+                                <input type="text" name="username" id="username" required autocomplete="off"
                                        ng-model="model.username"
+                                       ng-focus="inputFocus('username')"
+                                       ng-blur="inputBlur('username')"
                                        ng-pattern="/^[A-Za-z0-9_.-]{3,15}$/"
                                        ng-class="{ invalidInput : registerForm.username.$error.required && registerForm.username.$dirty  }" >
                                 <div class="validationInfo">
@@ -279,8 +306,6 @@
                                     </ul>
                                 </div>
                                 <a class="must">*</a>
-                                <img src="../../../css/images/Info.png" class="validationInfoImg" ng-show="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
-                                <img src="../../../css/images/invalidInfo.png" ng-hide="(!registerForm.confirm_password.$error.required && !registerForm.confirm_password.$error.secCompare) ||  !registerForm.confirm_password.$dirty" />
                                 <input ng-model="model.confirm_password" type="password" required sec-compare="password" name="confirm_password" id="confirm_password" autocomplete="off"
                                        ng-class="{ invalidInput : ( registerForm.confirm_password.$error.secCompare ) }">
                                 <label class="invalid" ng-show="!registerForm.confirm_password.$error.required && registerForm.confirm_password.$error.secCompare && registerForm.confirm_password.$dirty">{{'Password_not_match' | translate }}</label>
@@ -342,6 +367,8 @@
                     <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" > <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()" ></a></label>
 
                 </form>
+
+
             </div>
         </div>
     </article>
