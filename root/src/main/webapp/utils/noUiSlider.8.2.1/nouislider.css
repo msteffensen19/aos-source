@@ -1,4 +1,3 @@
-
 /* Functional styling;
  * These styles are required for noUiSlider to function.
  * You don't need to change these rules to apply your design.
@@ -14,10 +13,12 @@
 -moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
 .noUi-target {
 	position: relative;
 	direction: ltr;
 }
+
 .noUi-base {
 	width: 100%;
 	height: 100%;
@@ -67,7 +68,7 @@
 	height: 15px;
 	border-radius: 50%;
 	left: 0px;
-	top: -6px;
+	top: -5px;
 }
 
 .noUi-horizontal .noUi-origin:nth-child(2) .noUi-handle {

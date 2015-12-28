@@ -61,7 +61,7 @@ Helper.checkPagePossitions = function(){
 var Main = Main || {};
 
 Main.addAnimPlaceholderEventListener = function(){
-
+/*
     $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
         //$(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
         $(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
@@ -79,7 +79,7 @@ Main.addAnimPlaceholderEventListener = function(){
         $(".animPlaceholderUp > .validationInfo").slideDown();
     });
 
-
+*/
 //    $(".validationInfoImg").click(function() {
   //      $(this).parent().find(".validationInfo").fadeToggle(500);
     //});
@@ -93,26 +93,10 @@ $(document).on({
 
 
 
-       /* // Mobile section handler
-        var mobile_section_moved = $("#mobile-section").width();
-        $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-        $(document).on("click", "#mobile-btn", function () {
-            $("body").animate({
-                left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
-            }, 200);
-        });
-        // end Mobile section handler
-*/
-
-
-
         $(document).on("click", ".containMiniTitle", function () {
             $(this).find(".mini-title").fadeToggle(300);
         });
 
-
-
-        var test = 0;
 
         $(window).on({
         resize: _resize,

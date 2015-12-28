@@ -13,6 +13,7 @@
             <a translate="HOME" href="#/" ></a>
             <a class="select "> {{ 'SHOPPING_CART' | translate }}</a>
         </nav>
+
         <h3 class="roboto-regular center sticky fixedImportant" >
             {{'SHOPPING_CART' | translate}} ({{cart.productsInCart.length}})
         </h3>
@@ -74,7 +75,7 @@
                             {{ (product.price * product.quantity) | currency:'$' }}
                         </p>
                         <span class="actions">
-                            <a class="remove" href="#/product/{{product.id}}">{{ 'EDIT' | translate }}</a>
+                            <a class="remove" href="#/product/{{product.id}}?color={{product.color.code}}&quantity={{product.quantity}}">{{ 'EDIT' | translate }}</a>
                             <a class="separator">|<a> <a class="remove" data-ng-click="removeProduct($index)">{{ 'REMOVE' | translate }}</a>
                         </span>
                     </td>

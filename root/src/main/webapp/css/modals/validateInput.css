@@ -1,4 +1,3 @@
-
 .validate-directive {
     margin: 10px 0;
     position: relative;
@@ -20,6 +19,12 @@
 
 .validate-directive > .validate-info{
     display: none;
+    max-width: 350px;
+}
+
+
+.validate-directive > .validate-info ul {
+    list-style: none;
 }
 
 

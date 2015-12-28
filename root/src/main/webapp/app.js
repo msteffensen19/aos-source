@@ -49,6 +49,7 @@ define([
                 if(cookie)
                 {
                     $rootScope.userCookie = cookie;
+                    console.log(cookie);
                 }
             }
 

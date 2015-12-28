@@ -26,6 +26,7 @@ define(['./module'], function (controllers) {
              postalCode : '5421123', state : 'israel', offers_promotion : true }
              */
 
+
             $scope.model = {
                 username : '', email : '', password : '', confirm_password : '',
                 firstName : '', lastName : '', phoneNumber : '', country : {} , address : '',
@@ -68,11 +69,24 @@ define(['./module'], function (controllers) {
                 }
             });
 
-
-
             Main.addAnimPlaceholderEventListener();
             $("nav .navLinks").css("display" , "none");
 
+            $scope.inputFocus = function(id){
+                console.log($('#'+id));
+                $('#'+id).siblings().not("img").not('.validationInfo').not('.must').animate(
+                    {'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
+                $('#'+id).siblings(".validationInfo").fadeIn();
+
+            }
+            $scope.inputBlur = function(id, validation){
+
+                if($('#'+id).val() == '') {
+                    $('#'+id).siblings().not("img").not('.validationInfo').animate({'top': '11px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
+                }
+                $('#'+id).siblings(".validationInfo").delay(200).fadeOut();
+
+            }
         }])
 
         .directive("secCompare", function(){
@@ -89,5 +103,9 @@ define(['./module'], function (controllers) {
                 }
             }
         })
+
+
+
+
     ;
 });

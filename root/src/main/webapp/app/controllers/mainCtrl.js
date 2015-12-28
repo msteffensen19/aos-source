@@ -16,7 +16,11 @@ define(['./module'], function (controllers) {
             $scope.autoCompleteResult = {};
 
 
-            /* Autocomplete*/
+            $scope.go_up = function(){
+                $('body, html').animate({scrollTop: 0}, 10);
+            }
+
+                /* Autocomplete*/
 
             $scope.checkEnterKey = function(event)
             {
@@ -39,6 +43,7 @@ define(['./module'], function (controllers) {
 
 
             $scope.openSearchProducts = function(){
+                $('#openSearch').fadeOut(400)
                 $("nav ul li a.navLinks").fadeOut(600);
                 setTimeout(function(_this){
                     $("#searchSection").fadeIn(1000);
@@ -49,12 +54,15 @@ define(['./module'], function (controllers) {
             }
 
             $scope.closeSearchSection = function(){
-
+                $('#openSearch').fadeIn(200)
                 $("#searchSection > div > div > span > img").fadeOut(200); // img close
                 setTimeout(function(){
                     $("#searchSection").fadeOut(500);
                     $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
-                    $("nav ul li a.navLinks").fadeIn(600);
+                    if($location.$$path == '/')
+                    {
+                        $("nav ul li a.navLinks").fadeIn(600);
+                    }
                     $scope.autoCompleteValue = lastRequest = '';
                     $scope.autoCompleteResult = {};
                     $("#autoComplete").focusout();
@@ -100,7 +108,8 @@ define(['./module'], function (controllers) {
             $scope.addProduct = function(product, quantity) {
                 clearInterval(Helper.____closeTooTipCart);
                 $('#toolTipCart').slideDown(function(){
-                    productsCartService.addProduct(product, quantity).then(function(result){
+                    productsCartService.addProduct(product, quantity).then(function(cart){
+                        $scope.cart = cart;
                         if (lastIdAdded == ('#product' + product.productId))
                         {
                             setToolTipCartSlideUp()

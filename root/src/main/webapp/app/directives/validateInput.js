@@ -11,6 +11,7 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'E',
                 replace: true,
+                transclude: true,
                 scope: {
                     modelAttr: '=',
                     idAttr: '@'
@@ -38,8 +39,8 @@ define(['./module'], function (directives) {
 
                         checkValidInput(s.warnings, $('#validateInput' + id));
                         if(s.textToShow.valid){
-                            input.siblings(".validate-info").fadeOut(500);
                         }
+                        input.siblings(".validate-info").fadeOut(500);
                     }
 
                     function checkValidInput(warnings, input){

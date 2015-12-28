@@ -7,6 +7,8 @@ define(['./module'], function(controllers){
     controllers.controller('shoppingCartCtrl', ['$scope', 'productsCartService',
         function(s, cartService){
 
+            console.log(s.cart)
+
             Helper.forAllPage();
             $("nav .navLinks").css("display" , "none");
     }]);

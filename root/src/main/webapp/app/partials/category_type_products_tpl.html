@@ -4,7 +4,8 @@
         <label class="roboto-regular" >{{ 'FILTER_BY' | translate }} </label>
         <label class="roboto-regular clear" ng-click="clearSelection()" translate="Clear" ng-show="showClear"></label>
         <ul>
-            <!--- Price Section-->
+
+            <!--- Price filter Section-->
             <li>
                 <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
                     ng-click="toggleColapse('accordionPrice')" >
@@ -13,12 +14,13 @@
                 <div class="option" style="text-align: center;">
                     <div id="slider"></div>
                     <br />
-                    <p class="sliderSteps left">{{minPriceToFilter | currency:'$'}}</p>
-                    <p class="sliderSteps " >{{maxPriceToFilter | currency:'$'}}</p>
+                    <p class="sliderSteps left">${{ minPriceToFilter | number }}</p>
+                    <p class="sliderSteps " >${{ maxPriceToFilter | number }}</p>
                 </div>
             </li>
-            <!--- Price Section -->
-            <!--- attributes Section -->
+            <!--- END Price filter Section -->
+
+            <!--- attributes filter Section -->
             <li ng-repeat="attrib in categoryAttributes">
                 <h4 class="accordion roboto-regular arrowDown" id="accordionAttrib{{$index}}"
                     ng-click="toggleColapse('accordionAttrib' + $index)" >
@@ -34,8 +36,10 @@
                     </div>
                 </div>
             </li>
-            <!--- END attributes Section -->
-            <!--- color Section -->
+            <!--- END attributes filter Section -->
+
+
+            <!--- color filter Section -->
             <li>
                 <h4 class="accordion roboto-regular arrowDown" id="accordionColor"
                     ng-click="toggleColapse('accordionColor')" >
@@ -49,12 +53,13 @@
                               ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
-                            <label>{{color.color}}</label>
+                            <label>{{color.name}}</label>
                         </span>
                     </div>
                 </div>
             </li>
-            <!--- END color Section -->
+            <!--- END color filter Section -->
+
         </ul>
     </div>
     <div class="cell categoryRight">
