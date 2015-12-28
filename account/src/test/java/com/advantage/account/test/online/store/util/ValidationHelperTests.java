@@ -91,7 +91,7 @@ public class ValidationHelperTests extends GenericRepositoryTests {
         Assert.assertEquals(false, ValidationHelper.isValidPassword("Kingdavid"));
 
         //  Password too long: contains more than 10 characters
-        Assert.assertEquals(false, ValidationHelper.isValidPassword("KingSolomon2"));
+        Assert.assertEquals(false, ValidationHelper.isValidPassword("KingSolomon123"));
     }
 
     /**
