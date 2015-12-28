@@ -3,14 +3,15 @@ package com.advantage.order.store.order.dao;
 import com.advantage.order.store.Constants;
 import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
-import com.advantage.order.store.model.product.ColorAttribute;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.order.util.ArgumentValidationHelper;
+import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
+import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -175,7 +176,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
         ArgumentValidationHelper.validateLongArgumentIsPositive(Long.valueOf(productId), "product id");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(color, "color decimal RGB value");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
         //  Verify userId belongs to a registered user by calling "Account Service"
@@ -421,10 +422,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDetails(Long productId, String hexColor) {
         /*  Build REQUEST URI */
-        //String stringURL = Constants_order.URI_SERVER_CATALOG +
-        //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
-        String stringURL = ServiceConfiguration.getUriServerCatalog() +
+        String stringURL = Constants.URI_SERVER_CATALOG +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+        //String stringURL = ServiceConfiguration.getUriServerCatalog() +
+        //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 //        String stringURL = ServiceConfiguration.getUriServerCatalog() +
 //                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 
@@ -803,8 +804,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         /*  Build REQUEST URI */
         //String stringURL = Constants_order.URI_SERVER_ACCOUNT +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
-        String stringURL = ServiceConfiguration.getUriServerAccount() +
-                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
@@ -1015,6 +1014,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         for (ColorAttribute color : colors) {
             color.setColor(getColorName(color.getCode()));
         }
+
+//        List<ColorAttributeDto> colors = dto.getColors();
+//        for (ColorAttributeDto color : colors) {
+//            color.setColor(getColorName(color.getCode()));
+//        }
 
         return dto;
     }
