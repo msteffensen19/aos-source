@@ -135,8 +135,20 @@ public class SafePayService {
                 isValid = false;
             }
         }
-        //TODO Amount
-        //TODO Currency
+
+        if ((safePayDto.getValue() < 0) || (10000000000.00 < safePayDto.getValue())) {
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'receiving amount value\' value=" + safePayDto.getValue());
+            responseStatus.setReferenceNumber(0);
+            isValid = false;
+        }
+
+        if (!ValidationHelper.isValidCurrency(safePayDto.getCurrency())) {
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'receiving amount currency\' value=" + safePayDto.getCurrency());
+            responseStatus.setReferenceNumber(0);
+            isValid = false;
+        }
 
         if (isValid) {
             if (safePayDto.getUserName().equals(safePayDto.getPassword())) {
