@@ -1,9 +1,13 @@
 package com.advantage.order.store.order.dao;
 
+import com.advantage.order.store.Constants;
 import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.dto.ProductDto;
-import com.advantage.order.store.order.dto.*;
+import com.advantage.order.store.model.product.ColorAttribute;
+import com.advantage.order.store.order.dto.ShoppingCartDto;
+import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
+import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.order.util.ArgumentValidationHelper;
@@ -72,9 +76,17 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         this.failureMessage = failureMessage;
     }
 
-    //  =================================================
-    //  Interface Methods
-    //  =================================================
+    public ProductDto setNotFoundProductDto(Long productId) {
+        ProductDto dto = new ProductDto();
+
+        dto.setProductId(productId);
+        dto.setProductName(NOT_FOUND);
+        dto.setImageUrl(NOT_FOUND);
+        dto.setDescription("");
+        dto.setPrice(-999999.99);       //  Price that makes no sense
+
+        return dto;
+    }
 
     /**
      * Add a single product to a specific user shopping cart. <br/>
@@ -94,7 +106,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(color, "color decimal RGB value");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
         //  Verify userId belongs to a registered user by calling "Account Service"
@@ -104,33 +116,45 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             return null;
         }
 
-        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+        ShoppingCart shoppingCart = null;
 
-        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+        if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
 
-        //  Check if there is this ShoppingCart already exists
-        if (shoppingCart != null) {
+            ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+            shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
-            //  Existing product in user shopping cart (the same productId + color)
-            shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
-            entityManager.persist(shoppingCart);
+            //  Check if there is this ShoppingCart already exists
+            if (shoppingCart != null) {
 
-            this.failureMessage = "";
-            shoppingCartResponse = new ShoppingCartResponseStatus(true,
-                    ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
-                    shoppingCart.getProductId());
+                //  Existing product in user shopping cart (the same productId + color)
+                shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
+                entityManager.persist(shoppingCart);
 
-        } else {
-            //  New ShoppingCart
-            shoppingCart = new ShoppingCart(userId, productId, color, quantity);
-            entityManager.persist(shoppingCart);
+                this.failureMessage = "";
+                shoppingCartResponse = new ShoppingCartResponseStatus(true,
+                        ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
+                        shoppingCart.getProductId());
 
+            } else {
+                //  New ShoppingCart
+                shoppingCart = new ShoppingCart(userId, productId, color, quantity);
+                entityManager.persist(shoppingCart);
+
+                //  New product in shopping cart created successfully.
+                this.failureMessage = "";
+
+                shoppingCartResponse = new ShoppingCartResponseStatus(true,
+                                                                ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
+                                                                shoppingCart.getProductId());
+            }
+        }
+        else {
             //  New product in shopping cart created successfully.
-            this.failureMessage = "";
+            this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
-            shoppingCartResponse = new ShoppingCartResponseStatus(true,
-                    ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
-                    shoppingCart.getProductId());
+            shoppingCartResponse = new ShoppingCartResponseStatus(false,
+                                                                ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                                                                productId);
         }
 
         return shoppingCart;
@@ -160,24 +184,38 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             return null;
         }
 
-        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+        ShoppingCart shoppingCart = null;
 
-        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+        if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
 
-        if (shoppingCart != null) {
-            //  Product with color was found in user cart
-            shoppingCart.setQuantity(quantity);     //  Set argument quantity as product quantity in user cart
-            entityManager.persist(shoppingCart);    //  Update changes
+            ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+            shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
-            //  Set RESPONSE object
-            shoppingCartResponse.setSuccess(true);
-            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY);
-            shoppingCartResponse.setId(productId);
-        } else {
-            //  Product with color not found in user cart - Set RESPONSE object to FAILURE
+            if (shoppingCart != null) {
+                //  Product with color was found in user cart
+                shoppingCart.setQuantity(quantity);     //  Set argument quantity as product quantity in user cart
+                entityManager.persist(shoppingCart);    //  Update changes
+
+                //  Set RESPONSE object
+                shoppingCartResponse.setSuccess(true);
+                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY);
+                shoppingCartResponse.setId(productId);
+            }
+            else {
+                //  Product with color NOT FOUND in user cart - Set RESPONSE object to FAILURE
+                this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART;
+                shoppingCartResponse = new ShoppingCartResponseStatus(false,
+                                                                ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                                                                -1);
+            }
+
+        }
+        else {
+            this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
+
             shoppingCartResponse = new ShoppingCartResponseStatus(false,
-                    ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
-                    -1);
+                                                                ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                                                                productId);
         }
 
         return shoppingCart;
@@ -213,7 +251,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         if (existingCart == null) {
             //  Existing CartProduct IS EMPTY - Add all items.
             for (ShoppingCart cart : cartProducts) {
-                entityManager.persist(cart);
+                if (isProductExists(cart.getProductId(), ShoppingCart.convertIntColorToHex(cart.getColor()))) {
+                    //  Product with color was found in CATALOG schema - add to user cart
+                    entityManager.persist(cart);
+                }
             }
         } else {
             //  MERGE Existing CartProduct NOT EMPTY- Update existing products, add new items.
@@ -273,20 +314,32 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
-        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+        ShoppingCart shoppingCart = null;
 
-        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+        if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
+            ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
 
-        if (shoppingCart != null) {
-            entityManager.remove(shoppingCart);
+            shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
-            shoppingCartResponse.setSuccess(true);
-            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY);
-            shoppingCartResponse.setId(productId);
-        } else {
-            shoppingCartResponse.setSuccess(false);
-            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
-            shoppingCartResponse.setId(productId);
+            if (shoppingCart != null) {
+                entityManager.remove(shoppingCart);
+
+                shoppingCartResponse.setSuccess(true);
+                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY);
+                shoppingCartResponse.setId(productId);
+            } else {
+                shoppingCartResponse.setSuccess(false);
+                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
+                shoppingCartResponse.setId(productId);
+            }
+        }
+        else {
+            //  New product in shopping cart created successfully.
+            this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
+
+            shoppingCartResponse = new ShoppingCartResponseStatus(false,
+                    ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                    productId);
         }
 
         return shoppingCartResponse;
@@ -365,12 +418,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
-    public ProductDto getProductDetails(Long productId) {
+    public ProductDto getProductDetails(Long productId, String hexColor) {
         /*  Build REQUEST URI */
-        //String stringURL = Constants.URI_SERVER_CATALOG +
-        //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
-        String stringURL = ServiceConfiguration.getUriServerCatalog() +
+        String stringURL = Constants.URI_SERVER_CATALOG +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+//        String stringURL = ServiceConfiguration.getUriServerCatalog() +
+//                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 
         // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
         System.out.println("stringURL=\"" + stringURL + "\"");
@@ -383,23 +436,24 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
             if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
                 //  Product not found (409)
-                dto = new ProductDto();
-                dto.setProductId(productId);
-                dto.setProductName(NOT_FOUND);
-                dto.setImageUrl(NOT_FOUND);
-                dto.setDescription(stringURL);  //  REST API URI for GET request
-                dto.setPrice(-999999.99);       //  Price that makes no sense
-            } else {
+                dto = setNotFoundProductDto(productId);
+            }
+            else {
                 dto = getProductDtofromJsonObjectString(stringResponse);
 
-                System.out.println("Received Product information: ");
-                System.out.println("   product id = " + dto.getProductId());
-                System.out.println("   product name = " + dto.getProductName());
-                System.out.println("   price per item = " + dto.getPrice());
-                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                System.out.println("   ColorAttrubute.Code (hex) = \"" + dto.getColors().get(0).getCode() + "\"");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getColor() + "\"");
-                System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+                if (isColorExistsInColorsList(hexColor, dto.getColors())) {
+                    System.out.println("Received Product information: ");
+                    System.out.println("   product id = " + dto.getProductId());
+                    System.out.println("   product name = " + dto.getProductName());
+                    System.out.println("   price per item = " + dto.getPrice());
+                    System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                    System.out.println("   ColorAttrubute.Code (hex) = \'" + hexColor + "\'");
+                    System.out.println("   ColorAttrubute.Color (name) = \'" + dto.getColors().get(0).getColor() + "\'");
+                    System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+                } else {
+                    //  Product with requested color NOT FOUND in Product table in CATALOG schema
+                    dto = setNotFoundProductDto(productId);
+                }
             }
 
         } catch (IOException e) {
@@ -434,7 +488,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 //for (ShoppingCart cart : shoppingCarts) {
                 for (ShoppingCart cart : shoppingCarts) {
 
-                    final ProductDto dto = getProductDetails(cart.getProductId());
+                    ProductDto dto = getProductDetails(cart.getProductId(),
+                                                            ShoppingCart.convertIntColorToHex(cart.getColor()));
+
                     if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
                         userCart.addCartProduct(dto.getProductId(),
                                 dto.getProductName(),   //  "NOT FOUND"
@@ -446,7 +502,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                                 0,
                                 false); //  isExists = false
 
-                    } else {
+                    }
+                    else {
                         /*  Add a product to user shopping cart response class  */
                         userCart.addCartProduct(dto.getProductId(),
                                 dto.getProductName(),
@@ -562,40 +619,56 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             return null;
         }
 
-        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
-        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+        ShoppingCart shoppingCart = null;
 
-        if (shoppingCart != null) {
-            System.out.println("userId=" + shoppingCart.getUserId() +
-                    " productId=" + shoppingCart.getProductId() +
-                    " color=" + shoppingCart.getColor() +
-                    " quantity=" + shoppingCart.getQuantity());
+        if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
+            ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+            shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
-            final ProductDto dto = getProductDetails(shoppingCart.getProductId());
+            if (shoppingCart != null) {
+                System.out.println("userId=" + shoppingCart.getUserId() +
+                        " productId=" + shoppingCart.getProductId() +
+                        " color=" + shoppingCart.getColor() +
+                        " quantity=" + shoppingCart.getQuantity());
 
-            String name = dto.getProductName();
-            double pricePerItem = dto.getPrice();
-            String managedImageId = dto.getImageUrl();
+                ProductDto dto = getProductDetails(shoppingCart.getProductId(),
+                                                        ShoppingCart.convertIntColorToHex(color));
+                if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                    String name = dto.getProductName();
+                    double pricePerItem = dto.getPrice();
+                    String managedImageId = dto.getImageUrl();
 
-            System.out.println("Received Product information: ");
-            System.out.println("   product id = " + dto.getProductId());
-            System.out.println("   product name = " + name);
-            System.out.println("   price per item = " + pricePerItem);
-            System.out.println("   managedImageId = \"" + managedImageId + "\"");
-            System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
-            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getColor() + "\"");
-            System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+                    System.out.println("Received Product information: ");
+                    System.out.println("   product id = " + dto.getProductId());
+                    System.out.println("   product name = " + name);
+                    System.out.println("   price per item = " + pricePerItem);
+                    System.out.println("   managedImageId = \"" + managedImageId + "\"");
+                    System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
+                    System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getColor() + "\"");
+                    System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+                } else {
+                    dto = setNotFoundProductDto(productId);
+                }
 
-        } else {
-            //  shoppingCart is null
-            System.out.println("userId=" + shoppingCart.getUserId() +
-                    " productId=" + shoppingCart.getProductId() +
-                    " color=" + shoppingCart.getColor() +
-                    " quantity=" + shoppingCart.getQuantity() + " - product not found");
+            } else {
+                //  shoppingCart is null
+                System.out.println("userId=" + shoppingCart.getUserId() +
+                        " productId=" + shoppingCart.getProductId() +
+                        " color=" + shoppingCart.getColor() +
+                        " quantity=" + shoppingCart.getQuantity() + " - product not found");
+
+                shoppingCartResponse = new ShoppingCartResponseStatus(false,
+                        ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                        -1);
+            }
+        }
+        else {
+            //  New product in shopping cart created successfully.
+            this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
             shoppingCartResponse = new ShoppingCartResponseStatus(false,
-                    ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
-                    -1);
+                                                                ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                                                                productId);
         }
 
         return shoppingCart;
@@ -605,15 +678,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * Verify the quantity of each product in user cart exists in stock. If quantity
      * in user cart is greater than the quantity in stock than add the product with
      * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
-     *
-     * @param userId               Unique identity of the user.
-     * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in
-     *                             shopping cart to verify their quantities.
-     * @return {@code null} when all quantities of the products in the user cart <b>are
-     * equal or Less than</b> the quantities in stock. If the quantity of any cart product
-     * <b>is greater than</b> the quantity in stock then the product will be added to the
-     * list of products in the cart with the <ul>quantity in stock</ul>.
-     * @see #getProductDetails(Long)
+     * @param userId Unique identity of the user.
+     * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in shopping cart to verify their quantities.
+     * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
+     * stock. If the quantity of any cart product <b>is greater than</b> the quantity in stock then the product will be added to
+     * the list of products in the cart with the <ul>quantity in stock</ul>.
+     * @see #getProductDetails(Long, String)
      */
     @Override
     public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
@@ -631,7 +701,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
 
-            ProductDto dto = getProductDetails(cartProduct.getProductId());
+            ProductDto dto = getProductDetails(cartProduct.getProductId(), cartProduct.getHexColor());
 
             if (cartProduct.getQuantity() > dto.getColors().get(0).getInStock()) {
 
@@ -722,17 +792,16 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * Calling <b>Account Service</b> via REST API GET request - to
      * check isExists an {@code AppUser} with given {@code userId}.
      * @param userId {@code long} unique user identification to check.
-     * @return {@code boolean}. <b>true</b> if userId belongs to a registered user,
-     * <b>false</b> otherwise.
+     * @return {@code boolean}. <b>true</b> if userId belongs to a registered user, <b>false</b> otherwise.
      */
     public boolean isRegisteredUserExists(long userId) {
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        //String stringURL = Constants.URI_SERVER_ACCOUNT +
-        //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
-        String stringURL = ServiceConfiguration.getUriServerAccount() +
+        String stringURL = Constants.URI_SERVER_ACCOUNT +
                 ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+//        String stringURL = ServiceConfiguration.getUriServerAccount() +
+//                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
         System.out.println("stringURL=\"" + stringURL + "\"");
@@ -751,12 +820,62 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return isExists;
     }
 
+    /**
+     * Check if a {@code productId} with {@code hexColor} exists in <i>product</i> table in <b>catalog</b> schema.
+     * @param productId Unique product identification to find.
+     * @param hexColor Product Color hexadecimal value to find.
+     * @return <b>true</b> when exists and <b>false</b> if does not exists.
+     */
     public boolean isProductExists(Long productId, String hexColor) {
-        boolean result;
+        boolean result = false;
 
-        ProductDto productDetails = getProductDetails(productId);
+        ProductDto productDetails = getProductDetails(productId, hexColor);
+        if (! productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+            if (productDetails != null) {
+                List<ColorAttribute> colors = productDetails.getColors();
+                for (ColorAttribute color : colors) {
+                    //  Better to compare integers than Strings - no problem with leading zeros
+                    /*if (color.getCode().equalsIgnoreCase(hexColor)) {*/
+                    if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
+                        result = true;
+                    }
+                }
+            }
+        }
 
-        return false;
+        return result;
+    }
+
+    /**
+     * Checks if color RGB hexadecimal value exists in {@link List} of {@link ColorAttribute}s.
+     * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
+     * @param colors colors {@link List} of {@link ColorAttribute}s in which to find {@code hexColor}.
+     * @return {@link ColorAttribute} if the {@code hexColor} was found, {@code null} otherwise.
+     */
+    public ColorAttribute getProductColorAttribute(String hexColor, List<ColorAttribute> colors) {
+        ColorAttribute returnColor = null;
+
+        if ((colors != null) && (colors.size() > 0)) {
+            for (ColorAttribute color : colors) {
+                //  Better to compare integers than Strings - no problem with leading zeros
+                /*if (color.getCode().equalsIgnoreCase(hexColor)) {*/
+                if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
+                    returnColor = color;
+                }
+            }
+        }
+
+        return returnColor;
+    }
+
+    /**
+     * Checks if color RGB hexadecimal value exists in {@link List} of {@link ColorAttribute}s.
+     * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
+     * @param colors {@link List} of {@link ColorAttribute}s in which to find {@code hexColor}.
+     * @return <b>true</b> when exists and <b>false</b> if does not exists.
+     */
+    public boolean isColorExistsInColorsList(String hexColor, List<ColorAttribute> colors) {
+        return (getProductColorAttribute(hexColor, colors) != null ? true : false);
     }
 
     /**
@@ -887,8 +1006,39 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
+        List<ColorAttribute> colors = dto.getColors();
+        for (ColorAttribute color : colors) {
+            color.setColor(getColorName(color.getCode()));
+        }
 
         return dto;
+    }
+
+    private static String getColorName(String hexColor) {
+        switch(hexColor.toUpperCase()) {
+            case "0":
+            case "000000":
+                return "BLACK";
+            case "FF":
+            case "0000FF":
+                return "BLUE";
+            case "FF00":
+            case "00FF00":
+                return "GREEN";
+            case "C0C0C0":
+                return "SILVER";
+            case "FF0000":
+                return "RED";
+            case "FF0E68C":
+                return "KHAKI";
+            case "FFC0CB":
+                return "PINK";
+            case "FFFF00":
+                return "YELLOW";
+            case "FFFFFF":
+                return "WHITE";
+        }
+        return "";
     }
 
 }
