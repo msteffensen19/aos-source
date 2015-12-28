@@ -24,6 +24,12 @@ public class ColorAttribute {
         this.inStock = inStock;
     }
 
+    public ColorAttribute(String color, String name, int inStock) {
+        this.Code = color;
+        this.Color = name;
+        this.inStock = inStock;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,10 +1,6 @@
 package com.advantage.root.string_resources;
 
 public class Constants {
-    public static final char COLLON = ':';
-    public static final char DASH = '-';
-    public static final char SEMI_COLLON = ';';
-    public static final char SLASH = '/';
     public static final char SPACE = ' ';
 
     public static final String URI_API = "/api";
@@ -13,7 +9,7 @@ public class Constants {
     public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
     public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
     public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
-
+    public static final String URI_SERVER_SHIP_EX = "http://localhost:8080/ShipEx";
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
     public static final String ENV_HIBERNATE_DIALECT = "hibernate.dialect";
@@ -46,6 +42,5 @@ public class Constants {
     public static class Payments {
         public static final String URI_SERVER_MASTER_CREDIT = "https://www.AdvantageOnlineBanking.com"; //  "/MasterCredit" + URI_API + "/v1";
         public static final String URI_SERVER_SAFE_PAY = "https://www.AdvantageOnlineBanking.com";      //  "/SafePay" + URI_API + "/v1";
-        //	Binyamin Regev - End
     }
 }
