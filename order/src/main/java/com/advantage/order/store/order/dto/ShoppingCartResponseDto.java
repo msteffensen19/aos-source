@@ -2,7 +2,6 @@ package com.advantage.order.store.order.dto;
 
 import com.advantage.order.store.model.product.Product;
 import com.advantage.order.store.order.model.ShoppingCart;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
@@ -73,46 +72,46 @@ public class ShoppingCartResponseDto {
         /*  private class CartProduct - properties  */
         private Long productId;
         private String productName;
-        private double pricePerItem;
+        private double price;
         private int quantity;
         private String imageUrl;
         private ProductColor color;     //  Inner class of ShoppingCartResponseDto
         private boolean exists;
 
         /*  private class CartProduct - Construtors  */
-        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl) {
+        public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl) {
             this.productId = productId;
             this.productName = productName;
-            this.pricePerItem = pricePerItem;
+            this.price = price;
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.exists = true;
         }
 
-        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, ProductColor color) {
+        public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl, ProductColor color) {
             this.productId = productId;
             this.productName = productName;
-            this.pricePerItem = pricePerItem;
+            this.price = price;
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = color;
             this.exists = true;
         }
 
-        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock) {
+        public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl, String colorCode, String colorName, int inStock) {
             this.productId = productId;
             this.productName = productName;
-            this.pricePerItem = pricePerItem;
+            this.price = price;
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
             this.exists = true;
         }
 
-        public CartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorCode, String colorName, int inStock, boolean exists) {
+        public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl, String colorCode, String colorName, int inStock, boolean exists) {
             this.productId = productId;
             this.productName = productName;
-            this.pricePerItem = pricePerItem;
+            this.price = price;
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
@@ -136,12 +135,12 @@ public class ShoppingCartResponseDto {
             this.productName = productName;
         }
 
-        public double getPricePerItem() {
-            return this.pricePerItem;
+        public double getPrice() {
+            return this.price;
         }
 
-        public void setPricePerItem(double pricePerItem) {
-            this.pricePerItem = pricePerItem;
+        public void setPrice(double price) {
+            this.price = price;
         }
 
         public int getQuantity() {
