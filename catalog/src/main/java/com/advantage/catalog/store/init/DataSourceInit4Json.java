@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -115,46 +116,49 @@ public class DataSourceInit4Json {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CategoryDto dto = objectMapper.readValue(json, CategoryDto.class);
-        Category category = categoryRepository.get(dto.getCategoryId());
-
+        CategoryDto[] dtos = objectMapper.readValue(json, CategoryDto[].class);
         transaction = session.beginTransaction();
-
         Map<Long, Product> productMap = new HashMap<>();
+        for (CategoryDto dto : dtos) {
+            Category category = categoryRepository.get(dto.getCategoryId());
 
-        /*PRODUCT*/
-        for (ProductDto p : dto.getProducts()) {
-            Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
-            product.setManagedImageId(p.getImageUrl());
-            session.persist(product);
-            //load attributes
-            for (AttributeItem a : p.getAttributes()) {
-                ProductAttributes attributes = new ProductAttributes();
-                attributes.setProduct(product);
 
-                attributes.setAttribute(defAttributes.get(a.getAttributeName().toUpperCase()));
-                attributes.setAttributeValue(a.getAttributeValue());
 
-                session.save(attributes);
+            /*PRODUCT*/
+            for (ProductDto p : dto.getProducts()) {
+                Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
+                product.setManagedImageId(p.getImageUrl());
+                session.persist(product);
+                //load attributes
+                for (AttributeItem a : p.getAttributes()) {
+                    ProductAttributes attributes = new ProductAttributes();
+                    attributes.setProduct(product);
+
+                    attributes.setAttribute(defAttributes.get(a.getAttributeName().toUpperCase()));
+                    attributes.setAttributeValue(a.getAttributeValue());
+
+                    session.save(attributes);
+                }
+
+                if (p.getImages().size() == 0) {
+                    p.getImages().add(product.getManagedImageId());
+                }
+
+                product.setColors(productService.getColorAttributes(p.getColors(), product));
+                product.setImages(productService.getImageAttribute(p.getImages(), product));
+
+                productMap.put(product.getId(), product);
             }
 
-            if (p.getImages().size() == 0) {
-                p.getImages().add(product.getManagedImageId());
-            }
+            PromotedProductDto p = dto.getPromotedProduct();
+            Product parent = productMap.get(p.getId());
 
-            product.setColors(productService.getColorAttributes(p.getColors(), product));
-            product.setImages(productService.getImageAttribute(p.getImages(), product));
+            Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
+                    p.getPromotionImageId(), 0, "", "", parent);
 
-            productMap.put(product.getId(), product);
+            session.persist(deal);
+
         }
-
-        PromotedProductDto p = dto.getPromotedProduct();
-        Product parent = productMap.get(p.getId());
-
-        Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
-                p.getPromotionImageId(), 0, "", "", parent);
-
-        session.persist(deal);
         transaction.commit();
     }
 

@@ -1,4 +1,4 @@
-package com.advantage.mastercredit.util;
+package com.advantage.safepay.util;
 
 
 import java.text.ParseException;
@@ -15,7 +15,7 @@ public class ValidationHelper {
     private static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
 
     private static final String MASTER_CREDIT_CARD_NUMBER_PATTERN = "([0-9]{16})";
-    private static final String MASTER_CREDIT_ACCOUNT_NUMBER = "112987298763";
+    private static final String MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN = "([0-9]{12})";
 
     //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
     //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
@@ -27,6 +27,7 @@ public class ValidationHelper {
     private static final String AMERICAN_DATE_PATTERN = "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)";
     private static final String EUROPEAN_DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01]).(0?[1-9]|1[012]).((19|20)\\d\\d)";
     private static final String SCANDINAVIAN_DATE_PATTERN = "((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"; //YYYY-MM-DD
+    private static final String SAFE_PAY_ACCOUNT_NUMBER = "843200971";
 
     private static Pattern pattern;
 
@@ -93,90 +94,69 @@ public class ValidationHelper {
 
     }
 
-    /**
-     * Validates <b>MasterCredit</b> card number.
-     * @param cardNumber <b>MasterCredit</b> card number to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
-     */
-    public static boolean isValidMasterCreditCardNumber(final String cardNumber) {
-        pattern = Pattern.compile(MASTER_CREDIT_CARD_NUMBER_PATTERN);
+//    /**
+//     * Validates <b>MasterCredit</b> card number.
+//     *
+//     * @param cardNumber <b>MasterCredit</b> card number to validate.
+//     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+//     */
+//    public static boolean isValidMasterCreditCardNumber(final String cardNumber) {
+//        pattern = Pattern.compile(MASTER_CREDIT_CARD_NUMBER_PATTERN);
+//
+//        //  Validate MasterCredit CVV number
+//        final boolean isValid = pattern.matcher(cardNumber).matches();
+//
+//        System.out.println("MasterCredit card number=" + cardNumber + " is valid? " + isValid);
+//
+//        return isValid;
+//    }
 
-        //  Validate MasterCredit CVV number
-        final boolean isValid = pattern.matcher(cardNumber).matches();
+//    /**
+//     * Validates <b>MasterCredit</b> CVV number.
+//     *
+//     * @param cvvNumber <b>MasterCredit</b> CVV number to validate.
+//     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+//     */
+//    public static boolean isValidMasterCreditCVVNumber(final String cvvNumber) {
+//        pattern = Pattern.compile(MASTER_CREDIT_CVV_NUMBER_PATTERN);
+//
+//        //  Validate MasterCredit CVV number
+//        final boolean isValid = pattern.matcher(cvvNumber).matches();
+//
+//        System.out.println("MasterCredit CVV number=" + cvvNumber + " is valid? " + isValid);
+//
+//        return isValid;
+//    }
 
-        System.out.println("MasterCredit card number=" + cardNumber + " is valid? " + isValid);
-
-        return isValid;
-    }
-
-    /**
-     * Validates <b>MasterCredit</b> CVV number.
-     * @param cvvNumber <b>MasterCredit</b> CVV number to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
-     */
-    public static boolean isValidMasterCreditCVVNumber(final String cvvNumber) {
-        pattern = Pattern.compile(MASTER_CREDIT_CVV_NUMBER_PATTERN);
-
-        //  Validate MasterCredit CVV number
-        final boolean isValid = pattern.matcher(cvvNumber).matches();
-
-        System.out.println("MasterCredit CVV number=" + cvvNumber + " is valid? " + isValid);
-
-        return isValid;
-    }
-
-    /**
-     * Validates <b>MasterCredit</b> card holder full name.
-     * @param fullName <b>MasterCredit</b> card holder full name to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
-     */
-    public static boolean isValidFullName(final String fullName) {
-        pattern = Pattern.compile(FULL_NAME_PATTERN);
-
-        //  Validate Full Name
-        final boolean isValid = pattern.matcher(fullName).matches();
-
-        System.out.println("Full name=\"" + fullName + "\" is valid? " + isValid);
-
-        return isValid;
-    }
+//    /**
+//     * Validates <b>MasterCredit</b> card holder full name.
+//     *
+//     * @param fullName <b>MasterCredit</b> card holder full name to validate.
+//     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
+//     */
+//    public static boolean isValidFullName(final String fullName) {
+//        pattern = Pattern.compile(FULL_NAME_PATTERN);
+//
+//        //  Validate Full Name
+//        final boolean isValid = pattern.matcher(fullName).matches();
+//
+//        System.out.println("Full name=\"" + fullName + "\" is valid? " + isValid);
+//
+//        return isValid;
+//    }
 
     /**
      * Validates <b>MasterCredit</b> account number.
+     *
      * @param accountNumber <b>MasterCredit</b> account number to validate.
      * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
-    public static boolean isValidMasterCreditAccountNumber(final String accountNumber) {
-        //  Validate MasterCredit account number
-        final boolean isValid = accountNumber.equals(MASTER_CREDIT_ACCOUNT_NUMBER);
+    public static boolean isValidSafePayAccountNumber(final String accountNumber) {
+        final boolean isValid = accountNumber.equals(SAFE_PAY_ACCOUNT_NUMBER);
 
-        System.out.println("MasterCredit account number=" + accountNumber + " is valid? " + isValid);
+        System.out.println("SafePay account number=" + accountNumber + " is valid? " + isValid);
 
         return isValid;
     }
 
-    public static void main(String[] args) {
-        //ValidationHelper validationHelper = new ValidationHelper();
-
-        ValidationHelper.isValidDate("29.02.2012"); //  European - Valid
-        ValidationHelper.isValidDate("29.02.2013"); //  European - INVALID
-
-        ValidationHelper.isValidDate("02/29/2012"); //  American - Valid
-        ValidationHelper.isValidDate("02/29/2011"); //  American - INVALID
-
-        ValidationHelper.isValidDate("2012-02-29"); //  Scandinavian - Valid
-        ValidationHelper.isValidDate("2011-02-29"); //  Scandinavian - INVALID
-
-        //  All are public figures
-        ValidationHelper.isValidFullName("King David");
-        ValidationHelper.isValidFullName("Solomon Ben-David");
-        ValidationHelper.isValidFullName("Ben E. King");
-        ValidationHelper.isValidFullName("James T. Kirk");
-        ValidationHelper.isValidFullName("J'kar");
-
-        ValidationHelper.isValidMasterCreditCVVNumber("404");   //  "0" (zero)
-        ValidationHelper.isValidMasterCreditCVVNumber("4O4");   //  "O" (UPPER case) is not numeric
-        ValidationHelper.isValidMasterCreditCVVNumber("777");
-
-    }
 }
