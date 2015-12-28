@@ -3,6 +3,8 @@ package com.advantage.mastercredit.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -153,6 +155,23 @@ public class ValidationHelper {
         System.out.println("MasterCredit account number=" + accountNumber + " is valid? " + isValid);
 
         return isValid;
+    }
+
+    /**
+     * Validate currency code. For now only <i>USD</i> is a valid currency code.
+     * @param currency Currency code to validate
+     * @return <b>true</b> when valid currency code, <b>false</b> otherwise.
+     */
+    public static boolean isValidCurrency(final String currency) {
+        List<String> currencies = new ArrayList<>();
+
+        currencies.add("USD");
+
+        for (String test : currencies) {
+            if (test.equalsIgnoreCase(test)) { return true; }
+        }
+
+        return false;
     }
 
     public static void main(String[] args) {
