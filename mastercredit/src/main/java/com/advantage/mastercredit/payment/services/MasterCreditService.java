@@ -5,8 +5,8 @@ import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
 import com.advantage.mastercredit.payment.dto.ResponseEnum;
 import com.advantage.mastercredit.payment.dto.TransactionTypeEnum;
 import com.advantage.mastercredit.util.StringHelper;
-import com.advantage.mastercredit.util.ValidationHelper;
 import com.advantage.mastercredit.util.ArgumentValidationHelper;
+import com.advantage.mastercredit.util.ValidationHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,7 +69,7 @@ public class MasterCreditService {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(masterCreditDto.getTransactionType(), "MasterCredit transaction type");
 
         MasterCreditResponse responseStatus = new MasterCreditResponse();
-        //TODO BENY transaction type
+
         responseStatus.setTransactionType(TransactionTypeEnum.PAYMENT.getStringCode().toUpperCase());
         responseStatus.setTransactionDate(masterCreditDto.getTransactionDate());
 
@@ -154,8 +154,19 @@ public class MasterCreditService {
             }
         }
 
-        //TODO BENY Amount
-        //TODO BENY Currency
+        if ((masterCreditDto.getValue() < 0) || (10000000000.00 < masterCreditDto.getValue())) {
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'receiving amount value\' value=" + masterCreditDto.getValue());
+            responseStatus.setReferenceNumber(0);
+            isValid = false;
+        }
+
+        if (!ValidationHelper.isValidCurrency(masterCreditDto.getCurrency())) {
+            responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+            responseStatus.setResponseReason("Wrong field value. Field \'receiving amount currency\' value=" + masterCreditDto.getCurrency());
+            responseStatus.setReferenceNumber(0);
+            isValid = false;
+        }
 
         if (isValid) {
             /*
