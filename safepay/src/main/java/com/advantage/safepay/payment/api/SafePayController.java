@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SafePayController {
 
     @Autowired
-    private SafePayService masterCreditService;
+    private SafePayService safePayService;
 
     /**
      * @param safePayDto
@@ -34,7 +34,7 @@ public class SafePayController {
                                                           HttpServletRequest request,
                                                           HttpServletResponse response) {
 
-        SafePayResponse safePayResponse = masterCreditService.doPayment(safePayDto);
+        SafePayResponse safePayResponse = safePayService.doPayment(safePayDto);
         //response.setHeader("sessionId", request.getSession().getId());
         //
         //if (appUserResponseStatus.isSuccess()) {
