@@ -1,8 +1,5 @@
 package com.advantage.root.store.user.dto;
 
-import com.advantage.root.store.user.model.Country;
-import com.advantage.root.util.ArgumentValidationHelper;
-
 /**
  * Created by regevb on 29/11/2015.
  */
@@ -43,15 +40,5 @@ public class CountryDto {
     public void setPhonePrefix(int phonePrefix) {
         this.phonePrefix = phonePrefix;
     }
-
-    public void applyCountry(final Country country) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(country, "country");
-
-        this.setCountryId(country.getId());
-        this.setName(country.getName());
-        this.setIsoName(country.getIsoName());
-        this.setPhonePrefix(country.getPhonePrefix());
-    }
-
 
 }

@@ -1,8 +1,5 @@
 package com.advantage.root.store.user.dto;
 
-import com.advantage.root.store.user.model.AppUser;
-import com.advantage.root.util.ArgumentValidationHelper;
-
 /**
  * @author Binyamin Regev on 19/11/2015.
  */
@@ -36,11 +33,4 @@ public class AppUserDto {
         this.email = email;
     }
 
-    public void applyAppUser(final AppUser appUser) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(appUser, "application user");
-
-        this.setLoginUser(appUser.getLoginName());
-        this.setLoginPassword(appUser.getPassword());
-        this.setEmail(appUser.getEmail());
-    }
 }
