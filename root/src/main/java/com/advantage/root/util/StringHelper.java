@@ -1,4 +1,9 @@
-package com.advantage.root.store.user.util;
+package com.advantage.root.util;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Helpful {@link String} methods.
@@ -65,5 +70,28 @@ public class StringHelper {
 
         //System.out.print("Result: " + new String(stringArray));
         return new String(stringArray);
+    }
+
+    public static String getStringFromInputStream(InputStream inputStream) {
+        StringBuilder content = new StringBuilder();
+
+        try {
+            // wrap the URLConnection in a BufferedReader
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+
+            // read from the urlconnection via the bufferedreader
+            while ((line = bufferedReader.readLine()) != null) {
+                content.append(line + "\n");
+            }
+            bufferedReader.close();
+            System.out.println("Content: \n" + content.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return content.toString();
     }
 }

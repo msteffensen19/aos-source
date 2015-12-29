@@ -1,6 +1,6 @@
 package com.advantage.order.store.log;
 
-import com.advantage.order.store.user.util.ValidationHelper;
+import com.advantage.root.util.ValidationHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.http.HttpStatus;

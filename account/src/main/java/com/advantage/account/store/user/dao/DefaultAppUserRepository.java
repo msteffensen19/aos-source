@@ -5,7 +5,7 @@ import com.advantage.account.store.dao.AbstractRepository;
 import com.advantage.account.store.user.config.AppUserConfiguration;
 import com.advantage.account.store.user.dto.AppUserResponseStatus;
 import com.advantage.account.store.user.model.AppUser;
-import com.advantage.account.util.ValidationHelper;
+import com.advantage.root.util.ValidationHelper;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
