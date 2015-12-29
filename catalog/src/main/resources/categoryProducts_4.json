@@ -6,15 +6,15 @@
     "promotedProduct": {
       "id": 3,
       "staringPrice": 490,
-      "promotionHeader": "EXPLORE THE NEW DESIGN",
-      "promotionSubHeader": "Supremely thin, yet incredibly durable"
+      "promotionHeader": "EVG c.pP.pH EXPLORE THE NEW DESIGN",
+      "promotionSubHeader": "EVG c.pP.pSH Supremely thin, yet incredibly durable"
     },
     "products": [
       {
         "productId": 1,
-        "productName": "HP Pavilion 15t Touch Laptop",
+        "productName": "pn1 HP Pavilion 15t Touch Laptop",
         "price": 519.99,
-        "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+        "description": "EVG p.d Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1241",
         "images": [],
         "colors": [
@@ -59,9 +59,9 @@
       },
       {
         "productId": 2,
-        "productName": "HP Pavilion 15z Laptop",
+        "productName": "pn2 HP Pavilion 15z Laptop",
         "price": 549.99,
-        "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+        "description": "EVG p.d Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1242",
         "images": [],
         "colors": [
@@ -96,9 +96,9 @@
       },
       {
         "productId": 3,
-        "productName": "HP ENVY - 15t Laptop",
+        "productName": "pn3 HP ENVY - 15t Laptop",
         "price": 549.99,
-        "description": "Designed for style and comfort",
+        "description": "EVG p.d Designed for style and comfort",
         "imageUrl": "1243",
         "images": [],
         "colors": [
@@ -133,9 +133,9 @@
       },
       {
         "productId": 4,
-        "productName": "HP Spectre x360 - 13-4101dx",
+        "productName": "pn4 HP Spectre x360 - 13-4101dx",
         "price": 1169.99,
-        "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
+        "description": "EVG p.d Stunning, ultra-slim convertible PC with a 360° hinge",
         "imageUrl": "1244",
         "images": [],
         "colors": [
@@ -170,9 +170,9 @@
       },
       {
         "productId": 5,
-        "productName": "HP Stream - 11-d020nr Laptop",
+        "productName": "pn5 HP Stream - 11-d020nr Laptop",
         "price": 179.99,
-        "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
+        "description": "EVG p.d Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
         "imageUrl": "1245",
         "images": [],
         "colors": [
@@ -222,9 +222,9 @@
       },
       {
         "productId": 6,
-        "productName": "HP ENVY x360 - 15t Laptop",
+        "productName": "pn6 HP ENVY x360 - 15t Laptop",
         "price": 699.99,
-        "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
+        "description": "EVG p.d We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
         "imageUrl": "1246",
         "images": [],
         "colors": [
@@ -264,9 +264,9 @@
       },
       {
         "productId": 7,
-        "productName": "HP ENVY - 17t Touch Laptop",
+        "productName": "pn7 HP ENVY - 17t Touch Laptop",
         "price": 949.99,
-        "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
+        "description": "EVG p.d We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
         "imageUrl": "1247",
         "images": [],
         "colors": [
@@ -301,9 +301,9 @@
       },
       {
         "productId": 8,
-        "productName": "HP ENVY - 17t Touch Laptop v2",
+        "productName": "EVG p.d HP ENVY - 17t Touch Laptop v2",
         "price": 419.99,
-        "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
+        "description": "pn8 This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
         "imageUrl": "1248",
         "images": [],
         "colors": [
@@ -338,9 +338,9 @@
       },
       {
         "productId": 9,
-        "productName": "HP Chromebook 14 G1(ENERGY STAR)",
+        "productName": "pn9 HP Chromebook 14 G1(ENERGY STAR)",
         "price": 299.99,
-        "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
+        "description": "EVG p.d This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
         "imageUrl": "1249",
         "images": [],
         "colors": [
@@ -375,11 +375,13 @@
       },
       {
         "productId": 10,
-        "productName": "HP Chromebook 14 G1(ES)",
+        "productName": "pn10 HP Chromebook 14 G1(ES)",
         "price": 1261.99,
-        "description": "Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
+        "description": "EVG p.d Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
         "imageUrl": "1250",
-        "images": [],
+        "images": [
+          3100
+        ],
         "colors": [
           {
             "code": "C0C0C0",
