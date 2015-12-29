@@ -807,6 +807,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         //String stringURL = ServiceConfiguration.getUriServerAccount() +
+        //String stringURL = ServiceConfiguration.getUriServerAccount() +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
@@ -1016,6 +1017,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         for (ColorAttribute color : colors) {
             color.setColor(getColorName(color.getCode()));
         }
+
+//        List<ColorAttributeDto> colors = dto.getColors();
+//        for (ColorAttributeDto color : colors) {
+//            color.setColor(getColorName(color.getCode()));
+//        }
 
 //        List<ColorAttributeDto> colors = dto.getColors();
 //        for (ColorAttributeDto color : colors) {
