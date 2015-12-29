@@ -1,7 +1,6 @@
 package com.advantage.order.store.order.dao;
 
-import com.advantage.order.store.Constants;
-import com.advantage.order.store.config.ServiceConfiguration;
+//import com.advantage.order.store.config.ServiceConfiguration;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -98,7 +97,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      *
      * @param userId    identifies specific {@code AppUser}.
      * @param productId identifies specific {@code Product}
-     * @param color     identifies specific {@code color} of {@code ColorAttribute}.
+     * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
      * @param quantity  number of product units added to the shopping cart.
      * @return {@link ShoppingCartResponseStatus} class of the product. If an error occured method will return {@code null} and
      */
@@ -281,7 +280,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      *
      * @param userId    identifies specific {@code AppUser}.
      * @param productId identifies specific {@code Product}
-     * @param color     identifies specific {@code color} of {@code ColorAttribute}.
+     * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
      * @param quantity  number of product units added to the shopping cart.
      * @return {@link ShoppingCartResponseStatus} {@code shoppingCartResponse} property containing the {@code RESPONSE}
      * for the {@code REQUEST}.
@@ -297,7 +296,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      *
      * @param userId    identifies specific {@code AppUser}.
      * @param productId identifies specific {@code Product}
-     * @param color     identifies specific {@code color} of {@code ColorAttribute}.
+     * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
      * @param quantity  number of product units added to the shopping cart.
      * @return {@link ShoppingCartResponseStatus} {@code shoppingCartResponse} property containing the {@code RESPONSE}
      * for the {@code REQUEST}.
@@ -803,7 +802,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         /*  Build REQUEST URI */
         String stringURL = Constants.URI_SERVER_ACCOUNT +
-        //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         //String stringURL = ServiceConfiguration.getUriServerAccount() +
@@ -839,8 +838,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ProductDto productDetails = getProductDetails(productId, hexColor);
         if (! productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
             if (productDetails != null) {
-                List<ColorAttribute> colors = productDetails.getColors();
-                for (ColorAttribute color : colors) {
+                List<ColorAttributeDto> colors = productDetails.getColors();
+                for (ColorAttributeDto color : colors) {
                     //  Better to compare integers than Strings - no problem with leading zeros
                     /*if (color.getCode().equalsIgnoreCase(hexColor)) {*/
                     if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
@@ -854,16 +853,16 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Checks if color RGB hexadecimal value exists in {@link List} of {@link ColorAttribute}s.
+     * Checks if color RGB hexadecimal value exists in {@link List} of {@code ColorAttribute}s.
      * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
-     * @param colors colors {@link List} of {@link ColorAttribute}s in which to find {@code hexColor}.
-     * @return {@link ColorAttribute} if the {@code hexColor} was found, {@code null} otherwise.
+     * @param colors colors {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
+     * @return {@code ColorAttribute} if the {@code hexColor} was found, {@code null} otherwise.
      */
-    public ColorAttribute getProductColorAttribute(String hexColor, List<ColorAttribute> colors) {
-        ColorAttribute returnColor = null;
+    public ColorAttributeDto getProductColorAttribute(String hexColor, List<ColorAttributeDto> colors) {
+        ColorAttributeDto returnColor = null;
 
         if ((colors != null) && (colors.size() > 0)) {
-            for (ColorAttribute color : colors) {
+            for (ColorAttributeDto color : colors) {
                 //  Better to compare integers than Strings - no problem with leading zeros
                 /*if (color.getCode().equalsIgnoreCase(hexColor)) {*/
                 if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
@@ -876,12 +875,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Checks if color RGB hexadecimal value exists in {@link List} of {@link ColorAttribute}s.
+     * Checks if color RGB hexadecimal value exists in {@link List} of {@code ColorAttribute}s.
      * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
-     * @param colors {@link List} of {@link ColorAttribute}s in which to find {@code hexColor}.
+     * @param colors {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
      * @return <b>true</b> when exists and <b>false</b> if does not exists.
      */
-    public boolean isColorExistsInColorsList(String hexColor, List<ColorAttribute> colors) {
+    public boolean isColorExistsInColorsList(String hexColor, List<ColorAttributeDto> colors) {
         return (getProductColorAttribute(hexColor, colors) != null ? true : false);
     }
 
@@ -1013,25 +1012,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
-        List<ColorAttribute> colors = dto.getColors();
-        for (ColorAttribute color : colors) {
-            color.setColor(getColorName(color.getCode()));
-        }
 
-//        List<ColorAttributeDto> colors = dto.getColors();
-//        for (ColorAttributeDto color : colors) {
-//            color.setColor(getColorName(color.getCode()));
-//        }
-
-//        List<ColorAttributeDto> colors = dto.getColors();
-//        for (ColorAttributeDto color : colors) {
-//            color.setColor(getColorName(color.getCode()));
-//        }
-
-//        List<ColorAttributeDto> colors = dto.getColors();
-//        for (ColorAttributeDto color : colors) {
-//            color.setColor(getColorName(color.getCode()));
-//        }
+        //List<ColorAttributeDto> colors = dto.getColors();
+        //for (ColorAttributeDto color : colors) {
+        //    color.setColor(getColorName(color.getCode()));
+        //}
 
         return dto;
     }
@@ -1063,30 +1048,4 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return "";
     }
 
-    private static String getColorName(String hexColor) {
-        switch(hexColor.toUpperCase()) {
-            case "0":
-            case "000000":
-                return "BLACK";
-            case "FF":
-            case "0000FF":
-                return "BLUE";
-            case "FF00":
-            case "00FF00":
-                return "GREEN";
-            case "C0C0C0":
-                return "SILVER";
-            case "FF0000":
-                return "RED";
-            case "FF0E68C":
-                return "KHAKI";
-            case "FFC0CB":
-                return "PINK";
-            case "FFFF00":
-                return "YELLOW";
-            case "FFFFFF":
-                return "WHITE";
-        }
-        return "";
-    }
 }

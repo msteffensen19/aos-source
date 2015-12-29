@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Binyamin Regev on 09/12/2015.
@@ -199,6 +201,11 @@ public class OrderController {
 
         System.out.println("Starting SOAPRequest...");
         try {
+            URL url = new URL(stringURI);
+            URLConnection uc = url.openConnection();
+            System.out.println("url connection=\'" + uc.toString());
+            Map<String, List<String>> fields = uc.getHeaderFields();
+
             System.out.println("SOAPConnectionFactory sfc = SOAPConnectionFactory.newInstance();");
             SOAPConnectionFactory sfc = SOAPConnectionFactory.newInstance();
             System.out.println("SOAPConnectionFactory sfc = " + sfc + "\n");

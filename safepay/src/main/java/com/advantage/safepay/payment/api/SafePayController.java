@@ -2,9 +2,9 @@ package com.advantage.safepay.payment.api;
 
 import com.advantage.safepay.payment.dto.SafePayDto;
 import com.advantage.safepay.payment.dto.SafePayResponse;
-import com.advantage.safepay.payment.Constants;
 import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.services.SafePayService;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
