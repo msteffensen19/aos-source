@@ -13,10 +13,49 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
+    <profiles>
+        <profile>
+            <id>production</id>
+            <properties>
+                <resources.source.path>prod</resources.source.path>
+            </properties>
+        </profile>
+        <!--<profile>-->
+        <!--<id>KUKU</id>-->
+        <!--<properties>-->
+        <!--<resources.source.path>KUKU</resources.source.path>-->
+        <!--</properties>-->
+        <!--</profile>-->
+        <profile>
+            <id>development</id>
+            <properties>
+                <resources.source.path>dev</resources.source.path>
+            </properties>
+        </profile>
+    </profiles>
     <build>
         <finalName>res</finalName>
         <plugins>
+            <plugin>
+                <groupId>com.soebes.maven.plugins</groupId>
+                <artifactId>echo-maven-plugin</artifactId>
+                <version>0.2</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>echo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <echos>
+                        <echo>
+                            ******************************resources.source.path=${resources.source.path}**************************
+                        </echo>
+                    </echos>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
