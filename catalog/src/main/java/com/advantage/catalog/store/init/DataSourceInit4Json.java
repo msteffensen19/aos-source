@@ -144,6 +144,7 @@ public class DataSourceInit4Json {
                     p.getImages().add(product.getManagedImageId());
                 }
 
+            //todo move to the productService
                 product.setColors(productService.getColorAttributes(p.getColors(), product));
                 product.setImages(productService.getImageAttribute(p.getImages(), product));
 

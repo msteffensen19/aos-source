@@ -57,11 +57,11 @@ public class ColorAttribute {
     }
 
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
     public Product getProduct() {

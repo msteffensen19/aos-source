@@ -24,6 +24,11 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+<<<<<<< HEAD
+=======
+import java.net.*;
+import java.util.ArrayList;
+>>>>>>> 89d05773cc65cd538cd3a1105110aba8a1f6bd6e
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -426,8 +431,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
         //String stringURL = ServiceConfiguration.getUriServerCatalog() +
         //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+<<<<<<< HEAD
 //        String stringURL = ServiceConfiguration.getUriServerCatalog() +
 //                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+=======
+>>>>>>> 89d05773cc65cd538cd3a1105110aba8a1f6bd6e
 
         // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
         System.out.println("stringURL=\"" + stringURL + "\"");
@@ -445,6 +453,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             else {
                 dto = getProductDtofromJsonObjectString(stringResponse);
 
+<<<<<<< HEAD
                 if (isColorExistsInColorsList(hexColor, dto.getColors())) {
                     System.out.println("Received Product information: ");
                     System.out.println("   product id = " + dto.getProductId());
@@ -452,12 +461,22 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     System.out.println("   price per item = " + dto.getPrice());
                     System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
                     System.out.println("   ColorAttrubute.Code (hex) = \'" + hexColor + "\'");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getName() + "\"");
+                    System.out.println("   ColorAttrubute.Color (name) = \'" + dto.getColors().get(0).getColor() + "\'");
                     System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
                 } else {
                     //  Product with requested color NOT FOUND in Product table in CATALOG schema
                     dto = setNotFoundProductDto(productId);
                 }
+=======
+                System.out.println("Received Product information: ");
+                System.out.println("   product id = " + dto.getProductId());
+                System.out.println("   product name = " + dto.getProductName());
+                System.out.println("   price per item = " + dto.getPrice());
+                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                System.out.println("   ColorAttrubute.Code (hex) = \"" + dto.getColors().get(0).getCode() + "\"");
+                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getName() + "\"");
+                System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+>>>>>>> 89d05773cc65cd538cd3a1105110aba8a1f6bd6e
             }
 
         } catch (IOException e) {
@@ -623,6 +642,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             return null;
         }
 
+<<<<<<< HEAD
         ShoppingCart shoppingCart = null;
 
         if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
@@ -648,11 +668,36 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     System.out.println("   price per item = " + pricePerItem);
                     System.out.println("   managedImageId = \"" + managedImageId + "\"");
                     System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
-            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getName() + "\"");
+                    System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getColor() + "\"");
                     System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
                 } else {
                     dto = setNotFoundProductDto(productId);
                 }
+=======
+        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
+        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
+
+        if (shoppingCart != null) {
+            System.out.println("userId=" + shoppingCart.getUserId() +
+                    " productId=" + shoppingCart.getProductId() +
+                    " color=" + shoppingCart.getColor() +
+                    " quantity=" + shoppingCart.getQuantity());
+
+            final ProductDto dto = getProductDetails(shoppingCart.getProductId());
+
+            String name = dto.getProductName();
+            double pricePerItem = dto.getPrice();
+            String managedImageId = dto.getImageUrl();
+
+            System.out.println("Received Product information: ");
+            System.out.println("   product id = " + dto.getProductId());
+            System.out.println("   product name = " + name);
+            System.out.println("   price per item = " + pricePerItem);
+            System.out.println("   managedImageId = \"" + managedImageId + "\"");
+            System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
+            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getName() + "\"");
+            System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+>>>>>>> 89d05773cc65cd538cd3a1105110aba8a1f6bd6e
 
             } else {
                 //  shoppingCart is null
@@ -802,12 +847,17 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_ACCOUNT +
+<<<<<<< HEAD
+        //String stringURL = Constants_order.URI_SERVER_ACCOUNT +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+=======
+        String stringURL = Constants.URI_SERVER_ACCOUNT +
+                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         //String stringURL = ServiceConfiguration.getUriServerAccount() +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+>>>>>>> 89d05773cc65cd538cd3a1105110aba8a1f6bd6e
 
         // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
         System.out.println("stringURL=\"" + stringURL + "\"");
@@ -1056,31 +1106,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         }
         return "";
     }
+<<<<<<< HEAD
 
-    private static String getColorName(String hexColor) {
-        switch(hexColor.toUpperCase()) {
-            case "0":
-            case "000000":
-                return "BLACK";
-            case "FF":
-            case "0000FF":
-                return "BLUE";
-            case "FF00":
-            case "00FF00":
-                return "GREEN";
-            case "C0C0C0":
-                return "SILVER";
-            case "FF0000":
-                return "RED";
-            case "FF0E68C":
-                return "KHAKI";
-            case "FFC0CB":
-                return "PINK";
-            case "FFFF00":
-                return "YELLOW";
-            case "FFFFFF":
-                return "WHITE";
-        }
-        return "";
-    }
+=======
+>>>>>>> 89d05773cc65cd538cd3a1105110aba8a1f6bd6e
 }
