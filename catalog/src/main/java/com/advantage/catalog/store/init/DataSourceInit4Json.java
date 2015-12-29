@@ -1,19 +1,16 @@
 package com.advantage.catalog.store.init;
 
 import com.advantage.catalog.store.dao.category.CategoryRepository;
-import com.advantage.root.store.dto.AttributeItem;
-import com.advantage.root.store.dto.CategoryDto;
-import com.advantage.catalog.store.dto.ProductDto;
-import com.advantage.catalog.store.dto.PromotedProductDto;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.ProductService;
+import com.advantage.root.store.dto.AttributeItem;
+import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.store.dto.PromotedProductDto;
-import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -143,7 +140,7 @@ public class DataSourceInit4Json {
                     p.getImages().add(product.getManagedImageId());
                 }
 
-            //TODO move to the productService
+                //TODO move to the productService
                 product.setColors(productService.getColorAttributes(p.getColors(), product));
                 product.setImages(productService.getImageAttribute(p.getImages(), product));
 
