@@ -129,8 +129,7 @@ public class CatalogController {
                 continue;
             }
             Category category = product.getCategory();
-            CategoryDto categoryDto = new CategoryDto();
-            categoryService.getCategoryDto(category);
+            CategoryDto categoryDto = categoryService.getCategoryDto(category);
             List<ProductDto> productsDtoList = productDtos.stream()
                     .filter(x -> Long.compare(x.getCategoryId(), categoryDto.getCategoryId()) == 0)
                     .collect(Collectors.toList());
