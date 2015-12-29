@@ -5,10 +5,81 @@
     "categoryImageId": 1240,
     "promotedProduct": {
       "id": 3,
+      "productName": "HP Spectre x2",
       "staringPrice": 490,
       "promotionHeader": "EXPLORE THE NEW DESIGN",
-      "promotionSubHeader": "Supremely thin, yet incredibly durable"
+      "promotionSubHeader": "Supremely thin, yet incredibly durable",
+      "price": 550,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "imageUrl": "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+      "promotionImageId": "1240",
+      "attributes": [
+        {
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Chrome OS"
+        },
+        {
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Gaming"
+        },
+        {
+          "attributeName": "PROCESSOR",
+          "attributeValue": "intel(R) Core(TM) i5-6300HQ"
+        },
+        {
+          "attributeName": "DISPLAY",
+          "attributeValue": "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "16GB DDR3 - 2 DIMM"
+        }
+      ]
     },
+    "attributes": [
+      {
+        "attributeName": "CUSTOMIZATION",
+        "attributeValues": [
+          "Business",
+          "Gaming",
+          "Simplicity",
+          "2-in-1",
+          "Powerful PCs"
+        ],
+        "attributeId": 1
+      },
+      {
+        "attributeName": "OPERATING SYSTEM",
+        "attributeValues": [
+          "Chrome OS",
+          "Windows 10",
+          "Windows 8.1"
+        ],
+        "attributeId": 3
+      },
+      {
+        "attributeName": "PROCESSOR",
+        "attributeValues": [
+          "intel(R) Core(TM) i5-6300HQ",
+          "Intel(R) Core(TM) i5-6200U Dual CoreProcessor",
+          "Intel(R) Core(TM) i7-5500U Dual Core Processor",
+          "Intel® Core™ i7-5500U with Intel HD Graphics 5500",
+          "Intel Turbo Boost Technology",
+          "Intel® Celeron® processor"
+        ],
+        "attributeId": 5
+      },
+      {
+        "attributeName": "MEMORY",
+        "attributeValues": [
+          "16GB DDR3 - 2 DIMM",
+          "8GB DDR3L - 1 DIMM",
+          "8 GB DDR3L SDRAM",
+          "2 GB 1333 MHz DDR3 SDRAM"
+        ],
+        "attributeId": 7
+      }
+    ],
     "products": [
       {
         "productId": 1,
@@ -379,9 +450,7 @@
         "price": 1261.99,
         "description": "Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
         "imageUrl": "1250",
-        "images": [
-          3100
-        ],
+        "images": [],
         "colors": [
           {
             "code": "C0C0C0",
@@ -417,12 +486,84 @@
   {
     "categoryId": 3,
     "categoryName": "TABLETS",
+    "categoryImageId": 3000,
     "promotedProduct": {
       "id": 12,
+      "productName": "HP Elite x2 1011 G1 Tablet",
       "staringPrice": 1429,
       "promotionHeader": "Built for durability and mobility",
-      "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge."
+      "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge.",
+      "price": 1279,
+      "description": "Ultrabook™[2] Power\nPower up for ultimate power with Windows 8.1,[1] 5th Gen Intel® Core™ M processors,[4] with optional vPro™[5] and long battery life provided by dual tablet and keyboard base batteries.",
+      "imageUrl": "http://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c03889520.png",
+      "promotionImageId": "3000",
+      "attributes": [
+        {
+          "attributeName": "OPERATING SYSTEM",
+          "attributeValue": "Chrome OS"
+        },
+        {
+          "attributeName": "CUSTOMIZATION",
+          "attributeValue": "Gaming"
+        },
+        {
+          "attributeName": "PROCESSOR",
+          "attributeValue": "intel(R) Core(TM) i5-6300HQ"
+        },
+        {
+          "attributeName": "DISPLAY",
+          "attributeValue": "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"
+        },
+        {
+          "attributeName": "MEMORY",
+          "attributeValue": "16GB DDR3 - 2 DIMM"
+        }
+      ]
     },
+    "attributes": [
+      {
+        "attributeName": "CUSTOMIZATION",
+        "attributeValues": [
+          "Business",
+          "Gaming",
+          "Simplicity",
+          "2-in-1",
+          "Powerful PCs"
+        ],
+        "attributeId": 1
+      },
+      {
+        "attributeName": "OPERATING SYSTEM",
+        "attributeValues": [
+          "Chrome OS",
+          "Windows 10",
+          "Windows 8.1"
+        ],
+        "attributeId": 3
+      },
+      {
+        "attributeName": "PROCESSOR",
+        "attributeValues": [
+          "intel(R) Core(TM) i5-6300HQ",
+          "Intel(R) Core(TM) i5-6200U Dual CoreProcessor",
+          "Intel(R) Core(TM) i7-5500U Dual Core Processor",
+          "Intel® Core™ i7-5500U with Intel HD Graphics 5500",
+          "Intel Turbo Boost Technology",
+          "Intel® Celeron® processor"
+        ],
+        "attributeId": 5
+      },
+      {
+        "attributeName": "MEMORY",
+        "attributeValues": [
+          "16GB DDR3 - 2 DIMM",
+          "8GB DDR3L - 1 DIMM",
+          "8 GB DDR3L SDRAM",
+          "2 GB 1333 MHz DDR3 SDRAM"
+        ],
+        "attributeId": 7
+      }
+    ],
     "products": [
       {
         "productId": 11,

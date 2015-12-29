@@ -42,8 +42,11 @@ public class Deal {
     private Long id;
     @Column(name = "DEAL_TYPE")
     private Integer dealType;
+    @Column(length = 2048)
     private String description;
+    @Column(length = 2048)
     private String promotionHeader;
+    @Column(length = 2048)
     private String promotionSubHeader;
     private String staringPrice;
     private String managedImageId;

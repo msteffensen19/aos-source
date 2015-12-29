@@ -9,7 +9,13 @@ public class Constants {
     public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
     public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
     public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
+
+    /* ShipEx URI and transactions types - BEGIN    */
     public static final String URI_SERVER_SHIP_EX = "http://localhost:8080/ShipEx";
+    public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
+    public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
+    /* ShipEx URI and transactions names - END      */
+
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
     public static final String ENV_HIBERNATE_DIALECT = "hibernate.dialect";

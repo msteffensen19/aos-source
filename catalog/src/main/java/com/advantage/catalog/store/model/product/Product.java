@@ -50,6 +50,7 @@ public class Product {
     @Column(name = "product_name")
     private String productName;
     private double price;
+    @Column(length = 2048)
     private String description;
 
     @Column(name = "managed_image_id")

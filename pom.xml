@@ -40,18 +40,8 @@
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
     </properties>
     <profiles>
-        <!--<profile xmlns="http://maven.apache.org/POM/4.0.0"><id>production</id><build><plugins>/*prod plugins vvv*//*prod plugins ^^^*/</plugins></build></profile>-->
-        <profile>
-            <id>production</id>
-            <properties>
-                <resources.source.path>prod</resources.source.path>
-            </properties>
-        </profile>
         <profile>
             <id>development</id>
-            <properties>
-                <resources.source.path>dev</resources.source.path>
-            </properties>
             <build>
                 <plugins>
                     <!--dev plugins vvv-->
@@ -350,11 +340,6 @@
             <artifactId>hsqldb</artifactId>
             <version>2.3.2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.5</version>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>org.webjars</groupId>-->

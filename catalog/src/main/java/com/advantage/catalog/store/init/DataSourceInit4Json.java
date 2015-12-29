@@ -1,16 +1,16 @@
 package com.advantage.catalog.store.init;
 
 import com.advantage.catalog.store.dao.category.CategoryRepository;
-import com.advantage.root.store.dto.AttributeItem;
-import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
+import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.ProductService;
+import com.advantage.root.store.dto.AttributeItem;
+import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.store.dto.PromotedProductDto;
-import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -77,7 +76,7 @@ public class DataSourceInit4Json {
         Attribute attribute6 = new Attribute();
         Attribute attribute7 = new Attribute();
 
-        // attribute1.setName(Constants_catalog.AttributeNames.ATTRIBUTE_PRICE);
+        attribute1.setName("GRAPHICS");
         attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
         attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
         attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
@@ -85,7 +84,7 @@ public class DataSourceInit4Json {
         // attribute6.setName(Constants_catalog.AttributeNames.ATTRIBUTE_COLOR);
         attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
 
-        //session.persist(attribute1);
+        session.persist(attribute1);
         session.persist(attribute2);
         session.persist(attribute3);
         session.persist(attribute4);
@@ -95,7 +94,7 @@ public class DataSourceInit4Json {
 
         transaction.commit();
 
-        //defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
+        defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
         defAttributes.put(attribute2.getName().toUpperCase(), attribute2);
         defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
         defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
@@ -110,10 +109,6 @@ public class DataSourceInit4Json {
         ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
         File json = filePath.getFile();
 
-        //  Get countries list in CSV (Comma Separated Values) file
-        ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
-        File coutriesCSV = filePathCSV.getFile();
-
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CategoryDto[] dtos = objectMapper.readValue(json, CategoryDto[].class);
@@ -122,10 +117,11 @@ public class DataSourceInit4Json {
         for (CategoryDto dto : dtos) {
             Category category = categoryRepository.get(dto.getCategoryId());
 
-
-
             /*PRODUCT*/
             for (ProductDto p : dto.getProducts()) {
+                if (p.getProductId() > 9) {
+                    int iii = 111;
+                }
                 Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
                 product.setManagedImageId(p.getImageUrl());
                 session.persist(product);
@@ -144,7 +140,7 @@ public class DataSourceInit4Json {
                     p.getImages().add(product.getManagedImageId());
                 }
 
-            //todo move to the productService
+                //TODO move to the productService
                 product.setColors(productService.getColorAttributes(p.getColors(), product));
                 product.setImages(productService.getImageAttribute(p.getImages(), product));
 

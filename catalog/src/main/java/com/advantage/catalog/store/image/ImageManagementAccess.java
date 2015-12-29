@@ -1,13 +1,13 @@
 package com.advantage.catalog.store.image;
 
+import com.advantage.catalog.util.ArgumentValidationHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import com.advantage.catalog.util.ArgumentValidationHelper;
-
 public abstract class ImageManagementAccess {
 
-    private static final Map<String, ImageManagement> imageManagementsMap = new HashMap<String, ImageManagement>();
+    private static final Map<String, ImageManagement> imageManagementsMap = new HashMap<>();
 
     private ImageManagementAccess() {
 
