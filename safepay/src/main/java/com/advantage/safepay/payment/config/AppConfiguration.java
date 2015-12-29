@@ -1,6 +1,6 @@
 package com.advantage.safepay.payment.config;
 
-import com.advantage.safepay.payment.Constants;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan(
-        basePackageClasses = {Constants.class},
+        //basePackageClasses = {Constants.class},
+        basePackages = "com.advantage.safepay",
         excludeFilters = {
                 @Filter(
                         type = FilterType.ANNOTATION,

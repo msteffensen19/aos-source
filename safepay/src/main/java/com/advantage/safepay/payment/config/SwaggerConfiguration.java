@@ -1,6 +1,6 @@
 package com.advantage.safepay.payment.config;
 
-import com.advantage.safepay.payment.Constants;
+import com.advantage.root.string_resources.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
