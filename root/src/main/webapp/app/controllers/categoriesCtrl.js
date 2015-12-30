@@ -27,9 +27,6 @@ define(['./module'], function (controllers) {
 
                 categoryService.getPopularProducts().then(function(popularProducts){
                     $scope.popularProducts = popularProducts;
-                    console.log("-----------------popularProducts-----------------")
-                    console.log($scope.popularProducts)
-                    console.log("-----------------popularProducts-----------------")
                 })
             }
 

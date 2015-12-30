@@ -21,15 +21,28 @@ define([
     './app/templates/module',
 
 ], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig) {
-    // Declare app level module which depends on views, and components
-    return angular.module('aos', ['aos.controllers', 'aos.services', 'aos.directives','aos.filters',
-        'aos.templates', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ipCookie',
-        'ngAnimate','aos.user.controllers', 'aos.user.services', 'aos.user.directives'])
 
-        .config(catalogConfig).config(userConfig)
+    return angular.module('aos', [
+        'aos.controllers',
+        'aos.services',
+        'aos.directives',
+        'aos.filters',
+        'aos.templates',
+        'pascalprecht.translate',
+        'ui.router',
+        'ui.bootstrap',
+        'ipCookie',
+        'ngAnimate',
+        'aos.user.controllers',
+        'aos.user.services',
+        'aos.user.directives'
+    ]).
 
-        .run(function ($rootScope, $state, ipCookie, productsCartService) {
+    config(catalogConfig).
 
+    config(userConfig).
+
+    run(function ($rootScope, $state, ipCookie, productsCartService) {
 
             var pcBlocked = ipCookie("pcBlocked");
             if(pcBlocked)
@@ -58,6 +71,10 @@ define([
                 $state.go('404');
             });
 
+            $rootScope.breadcrumb = [{
+                name: "Home Page",
+                path: "/",
+            }];
 
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
                 var requireLogin = toState.data.requireLogin;
@@ -75,8 +92,8 @@ define([
                 }
             });
         });
-});
 
+});
 
 var l = function(a){
     console.log(a)
