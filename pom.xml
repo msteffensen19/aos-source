@@ -16,7 +16,7 @@
         <module>shipex</module>
         <module>mastercredit</module>
         <module>safepay</module>
-		
+        <module>accountservice</module>
     </modules>
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
