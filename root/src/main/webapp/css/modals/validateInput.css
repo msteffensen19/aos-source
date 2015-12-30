@@ -13,25 +13,29 @@
     left: 0;
 }
 
-.validate-directive > .validateInvalid{
-    color: red;
+.validate-directive .validateInvalid{
+    color: #ff454f !important;
+}
+
+.validate-directive input.validateInvalid{
+    border-bottom: solid #ff454f 1px !important;
 }
 
 
 .validate-directive > .validate-info{
     display: none;
+    max-width: 400px;
 }
 
-
-.validate-directive {
-    width:49%;
+.validate-directive > .validate-info ul{
+    list-style: none;
 }
 
-
-#formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
-{
-    width: 90% !important;
+#formCover .must{
+    position: absolute;
+    top:12px;
+    left:-12px;
+    color: #ff454f !important;
 }
-
 
 

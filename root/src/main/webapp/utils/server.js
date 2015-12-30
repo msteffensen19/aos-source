@@ -97,16 +97,16 @@ var server = {
 
     catalog: {
 
+        getPopularProducts : function () {
+            return "app/jsonFiles/popularProducts.json";
+        },
+
         getCategories: function(){
             return catalogKey + "/api/v1/categories";
         },
 
         getCategoryById : function(id) {
             return catalogKey + "/api/v1/categories/" + id + "/products";
-        },
-
-        getPopularProducts : function () {
-            return "app/popularProducts.json";
         },
 
         getDeals : function () {

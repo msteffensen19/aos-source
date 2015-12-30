@@ -29,6 +29,7 @@ define(['./module'], function (controllers) {
             $scope.colorSelected = $scope.colorSelected || product.colors[0];
 
             $scope.addToCart = function(){
+                l($scope.cart)
                 if(pageState == 'edit')
                 {
 

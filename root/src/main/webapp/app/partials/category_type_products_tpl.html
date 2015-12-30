@@ -44,13 +44,13 @@
 
                 <div class="option" >
                     <div ng-repeat="color in productsColors" >
-                        <span class="productColor " id="productsColors{{color.code}}"
+                        <a title="{{color.name}}" class="productColor " id="productsColors{{color.code}}"
                               ng-click="includeProducts($event, color, 'COLOR'); toggleColorSelectedClass(color.code)"
                               ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
-                            <label>{{color.color}}</label>
-                        </span>
+                            <!--- <label></label> -->
+                        </a>
                     </div>
                 </div>
             </li>

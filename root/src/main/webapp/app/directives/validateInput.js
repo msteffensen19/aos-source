@@ -7,85 +7,151 @@
 define(['./module'], function (directives) {
     'use strict';
     directives
-        .directive('validateInput', ['$templateCache', function($templateCache){
+
+        .directive('secSubmitAttr', function(){
+            return{
+                restrict: 'A',
+                scope:{
+                    submit : '&secSubmitAttr'
+                },
+                require: '^secValidate',
+                link: function(s, e, a, ctrl){
+
+                    e.bind('click', function(){
+                        if(ctrl.getInvalidItems() == 0)
+                        {
+                            s.submit()
+                        }
+                    });
+                }
+            }
+        })
+        .directive('secValidate', ['$templateCache', function($templateCache){
             return{
                 restrict: 'E',
+                require: 'secValidate',
+                controller: ['$scope', function(s){
+
+                    s.invalidItems = [];
+                    this.getInvalidItems = function(){
+                        return s.invalidItems.length;
+                    }
+
+                    this.addInvalidField = function(invalidInput){
+                        if(searchIndexOfInput(invalidInput) == -1)
+                        {
+                            s.invalidItems.push(invalidInput);
+                        }
+                    }
+
+                    this.shiftInvalidField = function(invalidInput){
+
+                        var find = searchIndexOfInput(invalidInput);
+                        if(find != -1)
+                        {
+                            s.invalidItems.splice(find, 1);
+                        }
+                    }
+
+                    function searchIndexOfInput(invalidInput){
+
+                        for(var i = 0 ; i < s.invalidItems.length; i++)
+                        {
+                            if(s.invalidItems[i] == invalidInput)
+                            {
+                                return i;
+                            }
+                        }
+                        return -1;
+                    }
+
+                }],
+
+            }
+        }])
+        .directive('secInput', ['$templateCache', function($templateCache){
+            return {
+                restrict: 'E',
                 replace: true,
+                transclude: true,
+                require: ['secInput', '^secValidate'],
                 scope: {
                     modelAttr: '=',
                     idAttr: '@'
                 },
-                template: $templateCache.get('app/partials/validateInput.html'),
-                controller: ['$scope', function(s){
+                template: $templateCache.get('app/partials/secInput.html'),
+                controller: ['$scope', function (s) {
 
                     s.warnings = [];
+                    s.noRedStar = false;
                     s.id;
 
                     var labelStartPossition;
-                    s.inputFocus = function(id){
-                        var input = $('#validateInput' + id);
-                        labelStartPossition = input.prev().css('top');
-                        console.log(labelStartPossition);
+                    s.inputFocus = function (id) {
+                        var input = $('#secInput_' + id);
+                        console.log(id)
+                        console.log(input)
+                        labelStartPossition = labelStartPossition || input.prev().css('top');
                         input.prev().animate({'top': '-18px'}, 300, 'linear');
-                        input.siblings(".validate-info").fadeIn(500);
+                        input.siblings(".validate-info").show(200);
                     }
 
-                    s.inputBlur = function(id){
-                        var input = $('#validateInput' + id);
-                        if(input.val() == ''){
+                    s.inputBlur = function (id) {
+                        var input = $('#secInput_' + id);
+                        if (input.val().length == 0) {
                             input.prev().animate({'top': labelStartPossition}, 300, 'linear');
                         }
-
-                        checkValidInput(s.warnings, $('#validateInput' + id));
-                        if(s.textToShow.valid){
-                            input.siblings(".validate-info").fadeOut(500);
+                        checkValidInput(s.warnings, input);
+                        if (s.textToShow.valid) {
+                            ctrlFather.shiftInvalidField(id);
                         }
+                        else {
+                            ctrlFather.addInvalidField(id);
+                        }
+                        input.siblings(".validate-info").hide(200);
                     }
 
-                    function checkValidInput(warnings, input){
+                    function checkValidInput(warnings, input) {
+
                         s.textToShow = {
                             text: s.placeHolder,
-                            valid: true
+                            valid: true,
                         };
 
-                        angular.forEach(s.warnings, function(warn){
-                            if(s.textToShow.valid) {
+                        angular.forEach(s.warnings, function (warn) {
+                            if (s.textToShow.valid) {
                                 switch (warn.key) {
                                     case 'secRequired':
                                         if (input.val() == '') {
-                                            setTextToShow(warn.warning)
+                                            setTextToShow(warn)
                                             return false;
                                         }
-                                        break
+                                        break;
                                     case 'secMinLength':
                                         if (input.val().length < warn.min) {
-                                            setTextToShow(warn.warning)
+                                            setTextToShow(warn)
                                             return false;
                                         }
-                                        break
+                                        break;
                                     case 'secMaxLength':
                                         if (input.val().length > warn.max) {
-                                            setTextToShow(warn.warning)
+                                            setTextToShow(warn)
                                             return false;
                                         }
-                                        break
+                                        break;
                                     case 'secPattern':
-                                        if(!(new RegExp(warn.regex).test(input.val())))
-                                        {
-                                            setTextToShow(warn.warning)
+                                        if (!(new RegExp(warn.regex).test(input.val()))) {
+                                            setTextToShow(warn)
                                             return false;
                                         }
-                                        break
+                                        break;
                                     case 'secCompareTo':
-                                        var comparedInput = $('#validateInput' + warn.compareId);
-                                        console.log(comparedInput.val() == input.val())
-                                        console.log(comparedInput.val() + " " + input.val())
-                                        if(comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "" )
-                                        {
-                                            setTextToShow(warn.warning)
+                                        var comparedInput = $('#secInput_' + warn.compareId);
+                                        if (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "") {
+                                            setTextToShow(warn)
                                             return false;
                                         }
-                                        break
+                                        break;
                                     default:
                                         throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
                                 }
@@ -93,43 +159,102 @@ define(['./module'], function (directives) {
                         })
                     }
 
-                    function setTextToShow(warning){
+                    function setTextToShow(warn) {
+
                         s.textToShow = {
-                            text: warning,
+                            text: warn.warning,
                             valid: false
                         };
                     }
 
-                    s.validateLabelClicked = function(id){ $('#validateInput' + id).focus(); }
-
-                    this.addWarningInfo = function(warningInfo){
-                        s.warnings.push(warningInfo);
+                    s.validateLabelClicked = function (id) {
+                        $('#secInput_' + id).focus();
                     }
 
-                    this.setPlaceHolder = function(placeHolder){
+                    this.addWarningInfo = function (warningInfo) {
+                        s.warnings.push(warningInfo);
+                        ctrlFather.addInvalidField(s.id);
+                    }
+
+                    var ctrlFather;
+                    this.setCtrlFather = function (_ctrlFather) {
+                        ctrlFather = _ctrlFather;
+                    }
+
+                    this.setPlaceHolder = function (placeHolder) {
                         s.placeHolder = placeHolder;
                         s.textToShow = {
                             text: placeHolder,
-                            valid: true
+                            valid: true,
+                            key: ''
                         };
                     }
 
-                    this.setId = function(id){
+                    this.setId = function (id) {
                         s.id = id;
                     }
 
-                    this.setInputType = function(inputType){
+                    this.enableNoRedStar = function () {
+                        s.noRedStar = true;
+                    }
+
+                    this.setInputType = function (inputType) {
                         s.inputType = inputType;
                     }
 
                 }],
-                link: function(s, e, a, c){
-                    e.addClass('validate-directive');
-                    if(!a.idAttr){
-                        throw "id attribute  in directive <validateInput></validateInput> is must! "
+                link: {
+                    pre: function (s, e, a, ctrls) {
+
+                        console.log("")
+                        console.log("")
+                        console.log("")
+                        console.log("")
+                        console.log("ctrls")
+                        console.log(ctrls)
+                        console.log("ctrls")
+                        console.log("")
+                        console.log("")
+                        console.log("")
+                        console.log("")
+
+                        var me = ctrls[0];
+                        e.addClass('validate-directive');
+
+                        if (a.selectTag) {
+                            e.bind('click', function () {
+                                var checkbox = $($(this).find("input[type=checkbox]"))
+                                if (checkbox.length > 0) {
+                                    s.$apply(function () {
+                                        if (checkbox[0].checked) {
+                                            ctrls[1].shiftInvalidField(a.idAttr);
+                                            $(this).find(".validateInvalid").fadeOut()
+                                        }
+                                        else {
+                                            ctrls[1].addInvalidField(a.idAttr);
+                                            $(this).find(".validateInvalid").fadeIn();
+                                        }
+                                    });
+                                }
+                            })
+
+                            e.bind('change', function () {
+                                $($(this).find(".validate-label")).html('')
+                            })
+                        }
+
+                        if (!a.idAttr) {
+                            throw "id attribute  in directive <secInput></secInput> is must! "
+                        }
+
+                        if (a.noRedStar) {
+                            me.enableNoRedStar();
+                        }
+
+                        me.setCtrlFather(ctrls[1]);
+                        me.setInputType(a.inputTypeAttr || 'text')
+                        me.setId(a.idAttr)
                     }
-                    c.setInputType(a.inputTypeAttr || 'text')
-                    c.setId(a.idAttr)
                 }
 
             }
@@ -138,7 +263,7 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'A',
                 priority: 0,
-                require: 'validateInput',
+                require: 'secInput',
                 link: function(s, e, a, ctrl){
                     var warning = a.secRequired || 'This field is required'
                     ctrl.addWarningInfo({
@@ -151,17 +276,16 @@ define(['./module'], function (directives) {
         .directive('secMinLength', function(){
             return{
                 restrict: 'A',
-                require: 'validateInput',
+                require: 'secInput',
                 priority: 40,
                 link: function(s, e, a, ctrl){
-
                     var min = a.secMinLength - 0;
                     if(!a.idAttr){
-                        throw "if secMinLength is used in directive <validateInput></validateInput>, value is must! "
+                        throw "if secMinLength is used in directive <secInput></secInput>, value is must! "
                     }
                     if(!((min - 0) == min && (''+min).trim().length > 0) || min < 0){
                         throw "Invalid value in attribute secMinLength, the value in directive "+
-                        "<validateInput></validateInput> must be a positive number! "
+                        "<secInput></secInput> must be a positive number! "
                     }
                     var warning = 'Use '+ min +' characters or longer'
                     ctrl.addWarningInfo({
@@ -176,15 +300,15 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'A',
                 priority: 50,
-                require: 'validateInput',
+                require: 'secInput',
                 link: function(s, e, a, ctrl){
                     var max = a.secMaxLength - 0;
                     if(!a.idAttr){
-                        throw "if secMaxLength is used in directive <validateInput></validateInput>, value is must! "
+                        throw "if secMaxLength is used in directive <secInput></secInput>, value is must! "
                     }
                     if(!((max - 0) == max && (''+max).trim().length > 0) || max < 0){
                         throw "Invalid value in attribute secMaxLength, the value in directive "+
-                        "<validateInput></validateInput> must be a positive number! "
+                        "<secInput></secInput> must be a positive number! "
                     }
                     var warning = 'Use up to '+ max +' characters'
                     ctrl.addWarningInfo({
@@ -199,11 +323,11 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'A',
                 priority: 100,
-                require: 'validateInput',
+                require: 'secInput',
                 link: function(s, e, a, ctrl){
 
                     if(!a.patternErrorAttr){
-                        throw "if secPattern is used in directive <validateInput></validateInput>, pattern-error-attr attribute is must! "
+                        throw "if secPattern is used in directive <secInput></secInput>, pattern-error-attr attribute is must! "
                     }
                     ctrl.addWarningInfo({
                         key : 'secPattern',
@@ -216,7 +340,7 @@ define(['./module'], function (directives) {
         .directive('secEmail', function(){
             return{
                 restrict: 'A',
-                require: 'validateInput',
+                require: 'secInput',
                 link: function(s, e, a, ctrl){
                     ctrl.addWarningInfo({
                         key : 'secPattern',
@@ -230,23 +354,18 @@ define(['./module'], function (directives) {
         .directive('secCompareTo', function(){
             return{
                 restrict: 'A',
-                require: 'validateInput',
+                require: 'secInput',
                 link: function(s, e, a, ctrl){
                     var max = a.secMaxLength - 0;
                     if(!a.idAttr){
-                        throw "if secCompareTo is used in directive <validateInput></validateInput>, id-attr is must! "
+                        throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
                     }
                     if(!a.secCompareTo){
-                        throw "if sec-compare-to is used in directive <validateInput></validateInput>, must to be a comparable id! "
+                        throw "if sec-compare-to is used in directive <secInput></secInput>, must to be a comparable id! "
                     }
                     if(!a.compareToName){
-                        throw "if sec-compare-to is used in directive <validateInput></validateInput>, must to be compare-to-name attribute! "
+                        throw "if sec-compare-to is used in directive <secInput></secInput>, must to be compare-to-name attribute! "
                     }
-                    console.log("compareTo")
-                    console.log("compareTo")
-                    console.log("compareTo")
-                    console.log("compareTo")
-                    console.log(a)
                     var warning = 'Same as ' + a.compareToName;
                     ctrl.addWarningInfo({
                         key : 'secCompareTo',
@@ -256,24 +375,15 @@ define(['./module'], function (directives) {
                 }
             }
         })
-
-
-
-
-
-
         .directive('secPlaceholder', function(){
             return{
                 restrict: 'A',
-                require: 'validateInput',
+                require: 'secInput',
                 link: function(s, e, a, ctrl){
                     ctrl.setPlaceHolder(a.secPlaceholder)
                 }
             }
         })
-
-
-
     ;
 });
 

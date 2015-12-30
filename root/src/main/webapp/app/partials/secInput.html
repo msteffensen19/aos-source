@@ -1,18 +1,22 @@
 <div>
-    <a class="must" ng-show="warnings.length > 0">*</a>
+    <a class="must" ng-show="warnings.length > 0 && !noRedStar">*</a>
 
     <label class="validate-label"
-           ng-class="{ validateInvalid : !textToShow.valid }"
+           ng-class="{ validateInvalid : !textToShow.valid}"
            ng-click="validateLabelClicked(id)">
         {{textToShow.text}}
     </label>
-
     <input type="{{inputType}}" name="{{id}}" autocapitalize="off"
            autocomplete="off" autocorrect="off" class="inputtext"
+           ng-class="{ validateInvalid : !textToShow.valid }"
+           ng-hide="inputType == 'transclude'"
            ng-model="modelAttr"
            ng-focus="inputFocus(id)"
            ng-blur="inputBlur(id)"
-           id="validateInput{{id}}" />
+           id="secInput_{{id}}" />
+
+
+    <div ng-transclude ></div>
 
     <div class="validate-info" ng-show="warnings.length > 0">
         <ul>
@@ -21,6 +25,4 @@
             </li>
         </ul>
     </div>
-
-
 </div>

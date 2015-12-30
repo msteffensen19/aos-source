@@ -16,8 +16,10 @@
                 {{categoryData.promotedProduct.productName}} |
                 {{ 'STARTING_AT' | translate }} ${{categoryData.promotedProduct.staringPrice}}
             </h3>
-            <button class="roboto-medium" translate="BUY_NOW">
-            </button>
+            <a href="#/product/{{categoryData.promotedProduct.id}}">
+                <button class="roboto-medium" translate="BUY_NOW">
+                </button>
+            </a>
         </div>
         <div>
             <nav class="pages">
