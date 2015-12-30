@@ -405,10 +405,56 @@
     ]
   },
   {
+    "categoryId": 2,
+    "categoryName": "HEADPHONES",
+    "categoryImageId": 1240,
+    "promotedProduct": {
+      "id": 11,
+      "staringPrice": 490,
+      "promotionHeader": "Be heard",
+      "promotionSubHeader": "Never lose a call. The in-line microphone is subtly designed into the flat cord and includes simple controls for volume, mute, answer and cancel"
+    },
+    "products": [
+      {
+        "productName": "HP H2310 Black In-ear Headset",
+        "price": 13.99,
+        "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
+        "imageUrl": "2100",
+        "images": [],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "BLUE",
+            "code": "0000FF"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with a 3.5 mm port available."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.03 lb"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "categoryId": 3,
     "categoryName": "TABLETS",
     "promotedProduct": {
-      "id": 12,
+      "id": 13,
       "staringPrice": 1429,
       "promotionHeader": "Built for durability and mobility",
       "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge."
