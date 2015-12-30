@@ -29,14 +29,6 @@ public class Constants {
         public static final String USER_ID = "userId";
     }
 
-    public static class AttributeNames {
-        public static final String ATTRIBUTE_CUSTOMIZATION = "Customization";
-        public static final String ATTRIBUTE_OPERATING_SYSTEM = "Operating System";
-        public static final String ATTRIBUTE_PROCESSOR = "Processor";
-        public static final String ATTRIBUTE_MEMORY = "Memory";
-        public static final String ATTRIBUTE_DISPLAY = "Display";
-    }
-
     public static class AppInitializer {
         private static final String LOCATION = "C:/temp/"; // Temporary location where files will be stored
         private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.

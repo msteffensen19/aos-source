@@ -409,8 +409,8 @@
     "categoryName": "HEADPHONES",
     "categoryImageId": 1240,
     "promotedProduct": {
-      "id": 11,
-      "staringPrice": 490,
+      "id": 12,
+      "staringPrice": 200,
       "promotionHeader": "Be heard",
       "promotionSubHeader": "Never lose a call. The in-line microphone is subtly designed into the flat cord and includes simple controls for volume, mute, answer and cancel"
     },
@@ -447,6 +447,74 @@
             "attributeValue": "0.03 lb"
           }
         ]
+      },
+      {
+        "productName": "Beats Studio 2 Over-Ear Matte Black Headphones",
+        "price": 179.99,
+        "description": "The world’s most famous headphone has been completely redesigned and reimagined. The new Beats Studio® is lighter, sexier, stronger, and more comfortable, with precision sound, Adaptive Noise Canceling, a 20-hour rechargeable battery, and RemoteTalk™. It has all the energy and excitement you expect from Beats, plus a powerful, reengineered sound.",
+        "imageUrl": "2200",
+        "images": [
+          2201
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "khaki",
+            "code": "F0E68C"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible across all devices having 3.5 mm audio connector (Smart phone compatibility may vary)."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.57 lb"
+          }
+        ]
+      },
+      {
+        "productName": "HP H2310 Pink In-ear Headset",
+        "price": 13.99,
+        "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
+        "imageUrl": "2300",
+        "images": [],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "pink",
+            "code": "FFC0CB"
+          },
+          {
+            "inStock": 10,
+            "name": "white",
+            "code": "FFFFFF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with a 3.5 mm port available."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.03 lb"
+          }
+        ]
       }
     ]
   },
@@ -454,7 +522,7 @@
     "categoryId": 3,
     "categoryName": "TABLETS",
     "promotedProduct": {
-      "id": 13,
+      "id": 16,
       "staringPrice": 1429,
       "promotionHeader": "Built for durability and mobility",
       "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge."
@@ -601,11 +669,65 @@
           },
           {
             "attributeName": "DISPLAY",
-            "attributeValue": "7.9\" diagonal FHD multi-touch display with Corning ® Gorilla® Glass® (2048 x 1536)"
+            "attributeValue": "7.9\" diagonal FHD multi-touch display with Corning® Gorilla® Glass® (2048 x 1536)"
           },
           {
             "attributeName": "MEMORY",
             "attributeValue": "2 GB LPDDR3-1600 SDRAM"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryId": 4,
+    "categoryName": "SPEAKERS",
+    "promotedProduct": {
+      "id": 17,
+      "staringPrice": 99.99,
+      "promotionHeader": "Studio sensation.",
+      "promotionSubHeader": "Remove the bulk with the ultra-sleek HP Wireless Portable Speaker S9500. Simplify with Bluetooth® 2.1 connectivity via NFC one-touch pairing for wireless streaming with Android™ and Apple® enabled devices."
+    },
+    "products": [
+      {
+        "productName": "Bose Soundlink Bluetooth Speaker III",
+        "price": 269.99,
+        "description": "Meet the speaker that brings your music and friends together-with a style that's all your own. The SoundLink® Bluetooth speaker III is our best-performing mobile Bluetooth speaker. It plays louder and longer than its popular predecessor, with advanced Bose® technologies that reproduce the fullness, clarity and depth of your music. And a colorful assortment of optional covers let you personalize your speaker.",
+        "imageUrl": "4200",
+        "images": [],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "gray",
+            "code": "808080"
+          },
+          {
+            "inStock": 10,
+            "name": "Silver",
+            "code": "C0C0C0"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "3.03 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
           }
         ]
       }

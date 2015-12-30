@@ -11,7 +11,6 @@ import com.advantage.root.store.dto.AttributeItem;
 import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.store.dto.PromotedProductDto;
-import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -68,7 +67,7 @@ public class DataSourceInit4Json {
 
         /*Attributes INIT*/
 
-        String[] newAttributes = new String[]{"GRAPHICS", Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION, Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM, Constants.AttributeNames.ATTRIBUTE_PROCESSOR, Constants.AttributeNames.ATTRIBUTE_MEMORY, Constants.AttributeNames.ATTRIBUTE_DISPLAY, "CONNECTOR", "COMPATIBILITY", "WEIGHT"};
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology"};
 
         Map<String, Attribute> defAttributes = new HashMap<>();
 
