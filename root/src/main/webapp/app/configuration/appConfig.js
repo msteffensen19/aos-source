@@ -6,6 +6,7 @@ define([],function(){
 
     function config($translateProvider, $stateProvider) {
 
+
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
         $translateProvider.translations('en', english);
 
@@ -19,6 +20,9 @@ define([],function(){
                 navLinks: true,
             },
             resolve : {
+            },
+            ncyBreadcrumb: {
+                label: 'Categories'
             }
         })
         .state('welcome',{

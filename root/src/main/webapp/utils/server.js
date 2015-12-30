@@ -91,8 +91,6 @@ var serviceKey = "http://"+
     services_properties['service_service_url_suffix'];
 
 
-
-
 var server = {
 
     catalog: {
