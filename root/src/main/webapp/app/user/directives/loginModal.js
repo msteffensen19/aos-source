@@ -14,12 +14,13 @@ define(['./module'], function (directives) {
 
 
                     /* VARIABLES */
-                    //$scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
-                    $scope.user = {  email: '',loginPassword: '', loginUser: '', }
+                    $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+                    //$scope.user = {  email: '',loginPassword: '', loginUser: '', }
                     $scope.rememberMe = false;
                     $scope.message = "";
                     $scope.config = null;
                     /*================================ END VARIABLES ======================================*/
+
 
 
                     /* Get configuration */
@@ -30,15 +31,13 @@ define(['./module'], function (directives) {
 
 
 
-                    /* Sign in */
+                    /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
-                        console.log(user)
-                        console.log(JSON.stringify(user))
                         userService.login(user).then(function (response) {
 
-                                if(response.userId != -1) {
-
+                                if(response.userId != -1)
+                                {
                                     if(response.userId === undefined)
                                     {
                                         if(response.data !== undefined)
@@ -75,7 +74,7 @@ define(['./module'], function (directives) {
 
                                     productsCartService.joinCartProducts().then(function(cart){
                                         $scope.cart = cart;
-                                    });;
+                                    });
 
                                     wellcome();
                                 }
@@ -89,12 +88,10 @@ define(['./module'], function (directives) {
 
 
 
-
-                    /* increment logins */
+                    /* increment wrong user login  */
                     var incrementLogins = function (){
                         var test = $cookie("loginsCounter");
                         var loginsCounter = test === undefined ? -1 : test;
-
                         return function(){
                             if(loginsCounter == -1)
                             {
@@ -106,11 +103,22 @@ define(['./module'], function (directives) {
                             }
                             var count = ++loginsCounter;
                             $cookie("loginsCounter", count, { expires: 365 });
-                            //console.log(count);
                             return count;
                         }
                     }();
                     /*=============================== end increment logins ===============================*/
+
+
+
+
+                    /* create to user new account in application */
+                    $scope.createNewAccount = function(user) {
+                        wellcome();
+                        $location.path('register');
+                    }
+                    /*================ end create to user new account in application  ========================*/
+
+
 
 
                     $scope.forgotPassword = function() {
@@ -120,17 +128,11 @@ define(['./module'], function (directives) {
 
 
 
-                    $scope.createNewAccount = function(user) {
-                        wellcome();
-                        $location.path('register');
-                    }
-
-
-
                     $scope.singWithFacebook = function(user) {
                         console.log("singWithFacebook");
                         $location.path('404');
                     }
+
                 }
             };
         }

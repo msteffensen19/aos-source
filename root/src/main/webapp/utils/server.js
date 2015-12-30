@@ -135,6 +135,16 @@ var server = {
     order: {
 
 
+        removeProductToUser: function (userId, productId, color, quantity){
+            console.log(orderKey + "/api/v1/carts/" + userId +
+                "/product/" + productId +
+                "/color/" + color)
+
+            return orderKey + "/api/v1/carts/" + userId +
+                "/product/" + productId +
+                "/color/" + color;
+        },
+
         addProductToUser: function (userId, productId, color, quantity){
             return orderKey + "/api/v1/carts/" + userId +
                 "/product/" + productId +
@@ -143,7 +153,6 @@ var server = {
         },
 
         loadCartProducts : function (userId){
-            console.log(orderKey + "/api/v1/carts/" + userId)
             return orderKey + "/api/v1/carts/" + userId;
         }
 
