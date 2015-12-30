@@ -20,7 +20,26 @@ define([],function(){
                 breadcrumbName: "Home Page",
             },
             resolve : {
-            },
+                resolveParams: function(categoryService, dealService, $q) {
+                    var defer = $q.defer();
+                    categoryService.getCategories().then(function (categories) {
+                        dealService.getDealOfTheDay().then(function(deal) {
+                            categoryService.getPopularProducts().then(function(popularProducts){
+                                var paramsToReturn = {
+                                    categories: categories,
+                                    specialOffer: deal,
+                                    popularProducts: popularProducts,
+                                }
+                                defer.resolve(paramsToReturn)
+                            })
+                        });
+                    });
+                    return defer.promise;
+                }
+            }
+
+            //resolve : {
+            //},
         })
         .state('welcome',{
             url: '/welcome',
@@ -80,17 +99,21 @@ define([],function(){
                 breadcrumbName:  "Product"
             },
             resolve : {
-                selectedColor: function($stateParams){
-                    return $stateParams.color;
-                },
-                quantity: function($stateParams){
-                    return $stateParams.quantity;
-                },
-                pageState: function($stateParams){
-                    return $stateParams.pageState;
-                },
-                product: function (productService, $stateParams) {
-                    return productService.getProductById($stateParams.id);
+                resolveParams: function(productService, categoryService, $stateParams, $q) {
+                    var defer = $q.defer();
+                    productService.getProductById($stateParams.id).then(function (product) {
+                        categoryService.getCategoryById(product.categoryId).then(function (category) {
+                            var paramsToReturn = {
+                                selectedColor: $stateParams.color,
+                                quantity: $stateParams.quantity,
+                                pageState: $stateParams.pageState,
+                                categoryName: category.categoryName,
+                                product: product,
+                            }
+                            defer.resolve(paramsToReturn)
+                        });
+                    });
+                    return defer.promise;
                 }
             }
         })

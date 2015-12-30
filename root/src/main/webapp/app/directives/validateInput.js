@@ -8,18 +8,6 @@ define(['./module'], function (directives) {
     'use strict';
     directives
 
-        .directive('aSecSrc', function(){
-            return{
-                restrict: 'A',
-                link: function(s, e, a, ctrl){
-                    l('aSecSRC')
-                    l(e)
-                    l(a.imageUrl)
-                    e.attr('src', server.catalog.getKey() + '/fetchImage?image_id=' + a.imageUrl)
-                    l('aSecSRC')
-                }
-            }
-        })
         .directive('secSubmitAttr', function(){
             return{
                 restrict: 'A',
@@ -76,9 +64,7 @@ define(['./module'], function (directives) {
                         }
                         return -1;
                     }
-
                 }],
-
             }
         }])
         .directive('secInput', ['$templateCache', function($templateCache){

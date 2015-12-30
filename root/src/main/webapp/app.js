@@ -66,8 +66,6 @@ define([
                 }
             }
 
-            productsCartService.loadCartProducts();
-
             $rootScope.$on('$stateChangeError', function(event) {
                 $state.go('404');
             });

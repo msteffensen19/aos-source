@@ -74,7 +74,6 @@ define(['./module'], function (services) {
                             url: server.catalog.getDeals(),
                         });
                         return( request.then(
-
                         function(res){
                             console.log("data")
                             console.log(res)
@@ -166,7 +165,7 @@ define(['./module'], function (services) {
                     }
                 }
                 else {
-                    loadGuestCartProducts();
+                    cart = loadGuestCartProducts();
                     responce.resolve(cart);
                 }
                 return responce.promise;

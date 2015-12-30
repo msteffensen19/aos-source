@@ -4,40 +4,37 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'productService', 'product', 'selectedColor', 'quantity', 'pageState',
-        'selectedColor', 'quantity', 'pageState', 'categoryService',
-        function ($scope, productService, product, selectedColor, quantity, pageState, categoryService) {
+    controllers.controller('productCtrl', ['$scope', 'resolveParams',
 
-            l("product")
+        function ($scope, resolveParams) {
 
-            l(product)
-            categoryService.getCategoryById(product.categoryId).then(function(res){
-                $scope.categoryName = res.categoryName;
-            });
+            console.log(resolveParams)
 
-            l("")
-            l("")
+            var selectedColor = resolveParams.color;
+            var pageState = resolveParams.pageState;
+            $scope.quantity = resolveParams.quantity || 1;
+            $scope.categoryName = resolveParams.categoryName;
+            $scope.product = resolveParams.product;
 
-            for(var i = 0; i < product.colors.length; i++){
-                if(product.colors[i].code == selectedColor)
+
+            for(var i = 0; i < $scope.product.colors.length; i++){
+                if($scope.product.colors[i].code == selectedColor)
                 {
-                    $scope.colorSelected = product.colors[i];
+                    $scope.colorSelected = $scope.product.colors[i];
                     break;
                 }
             }
+            $scope.colorSelected = $scope.colorSelected || $scope.product.colors[0];
 
             $scope.quantityOptions = [1,2,3,4,5,6,7,8,9];
-            $scope.quantity = quantity || 1;
-            if(quantity && quantity > 9)
+            if($scope.quantity && $scope.quantity > 9)
             {
-                for(var i = 10; i <= quantity; i++)
+                for(var i = 10; i <= $scope.quantity; i++)
                 {
                     $scope.quantityOptions.push(i)
                 }
             }
 
-            $scope.product = product;
-            $scope.colorSelected = $scope.colorSelected || product.colors[0];
 
             $scope.addToCart = function(){
                 if(pageState == 'edit')
@@ -46,7 +43,7 @@ define(['./module'], function (controllers) {
                 }
                 else
                 {
-                    var productToAdd = angular.copy(product);
+                    var productToAdd = angular.copy($scope.product);
                     productToAdd.colors = [$scope.colorSelected];
                     $scope.$parent.addProduct(productToAdd, $scope.quantity);
                 }

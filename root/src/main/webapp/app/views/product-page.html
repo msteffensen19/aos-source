@@ -28,12 +28,12 @@
         <!-- image section -->
             <div id="product-image">
                 <figure>
-                    <img alt="" id="imgToBuy" ng-src="fetchImage?image_id={{::product.imageUrl}}">
+                    <img alt="" id="imgToBuy" a-sec-src="{{::product.imageUrl}}"">
                 </figure>
                 <div id="cover" ng-if="product.images.length > 1">
                     <div id="length">
                         <div class="imageAlias" ng-repeat="img in product.images">
-                            <img alt="" ng-src="fetchImage?image_id={{::img}}">
+                            <img alt="" a-sec-src="{{::img}}">
                         </div>
                     </div>
                 </div>

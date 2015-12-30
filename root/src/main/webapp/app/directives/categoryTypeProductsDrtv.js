@@ -138,7 +138,7 @@ define(['./module'], function (directives) {
                         angular.forEach(product.colors, function(color) {
                             var find = false;
                             angular.forEach(productsColors, function(productColor) {
-                                if(productColors.code == color.code)
+                                if(productColor.code == color.code)
                                 {
                                     find= true;
                                 }

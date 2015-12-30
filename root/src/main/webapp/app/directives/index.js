@@ -4,6 +4,8 @@
 'use strict';
 
 define([
+        './a-sec-src',
+        './a-sec-back-img',
         './validateInput',
         './toolTipSearch',
         './toolTipCart',
