@@ -50,7 +50,8 @@
                 <tbody>
                 <tr ng-repeat="product in cart.productsInCart track by $index">
                     <td>
-                        <img class="imageUrl" ng-src="fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
+                        <!--  ng-src="fetchImage?image_id={{product.imageUrl}}" -->
+                        <img class="imageUrl" a-sec-src="product.imageUrl"  alt="imgProduct" />
                     </td>
                     <td>
                         <label class="roboto-regular productName">{{product.productName | uppercase}}</label>

@@ -94,7 +94,7 @@ define(['./module'], function (controllers) {
             /* Cart section  */
 
             productsCartService.loadCartProducts().then(function(cart){
-                $scope.cart = cart && cart.data ? cart.data : cart;
+                $scope.cart = cart.data ? cart.data : cart.productsInCart  ? cart.productsInCart  : cart;
             });
 
             $scope.removeProduct = function (index) {

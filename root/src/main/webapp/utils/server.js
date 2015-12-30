@@ -95,6 +95,9 @@ var server = {
 
     catalog: {
 
+        getKey : function(){
+        return catalogKey;
+        },
         getPopularProducts : function () {
             return "app/jsonFiles/popularProducts.json";
         },

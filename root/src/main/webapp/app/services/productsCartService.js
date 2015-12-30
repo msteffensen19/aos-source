@@ -64,26 +64,32 @@ define(['./module'], function (services) {
                 var validUser = false;
                 if(user && user.response) {
                     if (user.response.userId != -1) {
-                        return $http({
+                        var responce = $http({
                             method: "get",
                             async: false,
                             url: server.order.loadCartProducts(user.response.userId)
-                        }).
-                        success(function(res){
+                        })
+                        var request = $http({
+                            method: "get",
+                            url: server.catalog.getDeals(),
+                        });
+                        return( request.then(
+
+                        function(res){
                             console.log("data")
                             console.log(res)
                             cart = res;
                             responce.resolve(cart);
-                        }).
-                        error(function(err){
+                        },
+                        function(err){
                             alert('err')
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
-                        });
+                        }));
 
                         return responce.promise;
                     }
                 }
-                loadGuestCartProducts();
+                cart = loadGuestCartProducts();
                 responce.resolve(cart);
                 return responce.promise;
             }
