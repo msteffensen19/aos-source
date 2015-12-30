@@ -1,0 +1,41 @@
+
+.validate-directive {
+    margin: 10px 0;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.validate-directive > .validate-label{
+    position: absolute;
+    display: block;
+    top: 10px;
+    left: 0;
+}
+
+.validate-directive .validateInvalid{
+    color: #ff454f !important;
+}
+
+.validate-directive input.validateInvalid{
+    border-bottom: solid #ff454f 1px !important;
+}
+
+
+.validate-directive > .validate-info{
+    display: none;
+    max-width: 400px;
+}
+
+.validate-directive > .validate-info ul{
+    list-style: none;
+}
+
+#formCover .must{
+    position: absolute;
+    top:12px;
+    left:-12px;
+    color: #ff454f !important;
+}
+
+

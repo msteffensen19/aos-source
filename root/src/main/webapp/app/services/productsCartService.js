@@ -21,7 +21,6 @@ define(['./module'], function (services) {
                 loadCartProducts : loadCartProducts,
                 joinCartProducts : joinCartProducts,
                 updateRemovedProducts : updateRemovedProducts,
-                getCart: getCart,
                 removeProduct: removeProduct,
                 checkout: checkout,
             });
@@ -42,13 +41,7 @@ define(['./module'], function (services) {
             function removeProduct(index){
                 var responce = $q.defer();
                 cart.productsInCart.splice(index, 1);
-                updateCart();
-                responce.resolve(cart);
-                return responce.promise;
-            }
-
-            function getCart(){
-                var responce = $q.defer();
+                updateCart(cart);
                 responce.resolve(cart);
                 return responce.promise;
             }
@@ -75,46 +68,56 @@ define(['./module'], function (services) {
                             method: "get",
                             async: false,
                             url: server.order.loadCartProducts(user.response.userId)
-                        }).then(function(res){
+                        }).
+                        success(function(res){
                             console.log("data")
                             console.log(res)
-                            cart = res.data;
+                            cart = res;
                             responce.resolve(cart);
-                            return responce.promise;
+                        }).
+                        error(function(err){
+                            alert('err')
+                            responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
-                        validUser = true;
+
+                        return responce.promise;
                     }
                 }
-                if(!validUser)
-                {
-                    loadGuestCartProducts();
-                    console.log("");
-                    console.log("");
-                    console.log("");
-                    console.log("cart");
-                    console.log(cart);
-                    responce.resolve(cart);
-                    return responce.promise;
-                }
+                loadGuestCartProducts();
+                responce.resolve(cart);
+                return responce.promise;
             }
 
             function loadGuestCartProducts(){
 
-                cart = $cookie("userCart");
-                if(!cart){
-                    cart = getTempCart();
-                    updateCart();
+                var guestCart = $cookie("userCart");
+                if(!guestCart){
+                    guestCart = getTempCart();
+                    updateCart(guestCart);
                 }
+                return guestCart;
             }
 
-            function joinCartProducts(userCart){
-                return;
+            function joinCartProducts() {
+
+                if (!cart) {
+                    loadCartProducts().then(function (_cart) {
+                            cart = _cart.data;
+                        return joinCarts();
+                    })
+                    return null;
+                }
+                return joinCarts();
+            }
+
+            function joinCarts(){
+
                 var guestCart = loadGuestCartProducts();
                 var tempCart = [];
-                angular.forEach(userCart.productsInCart, function(userProduct){
+                angular.forEach(cart.productsInCart, function(userProduct){
                     var find = false;
                     angular.forEach(guestCart.productsInCart, function(guestProduct) {
-                        if(userProduct.id == guestProduct.id && userProduct.color == guestProduct.color)
+                        if(userProduct.productId == guestProduct.productId && userProduct.color == guestProduct.color)
                         {
                             find = true;
                         }
@@ -127,40 +130,10 @@ define(['./module'], function (services) {
                     tempCart.push(guestProduct);
                 });
 
-                userCart.productsInCart = tempCart;
-                cart = userCart;
-                updateUserCart(userCart.productsInCart);
+                cart.productsInCart = tempCart;
+                updateUserCart(cart.productsInCart);
                 $cookie.remove("userCart");
-            }
-
-            function loadCartProducts(){
-
-                var responce = $q.defer();
-                var user = $rootScope.userCookie;
-                if(user && user.response) {
-                    if (user.response.userId != -1) {
-                        $http({
-                            method: "get",
-                            url: server.order.loadCartProducts(user.response.userId)
-
-                        }).then(function(cartRes){
-                                alert('cartRes')
-                                console.log('cartRes')
-                                console.log(cartRes)
-                                cart = cartRes;
-                                responce.resolve(cart);
-                            },
-                            function(err){
-                                alert('err')
-                                console.log('error in load cart (productCartService - loadCartProducts)');
-                            });
-                    }
-                }
-                else {
-                    loadGuestCartProducts();
-                    responce.resolve(cart);
-                }
-                return responce.promise;
+                return cart;
             }
 
             function updateUserCart(){
@@ -178,15 +151,15 @@ define(['./module'], function (services) {
                 return false;
             }
 
-            function updateCart(){
-                $cookie("userCart", cart , { expires: 365*5 });
+            function updateCart(guestCart){
+                $cookie("userCart", guestCart, { expires: 365*5 });
             }
 
             function addProduct(product, quantity) {
 
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
-                if(user && user.response) {
+                if (user && user.response) {
                     if (user.response.userId != -1) {
                         var request = $http({
                             method: "post",
@@ -195,9 +168,10 @@ define(['./module'], function (services) {
                                 product.productId, product.colors[0].code, quantity),
                         });
                         request.then(function (newCart) {
+                            console.log("newCart")
                             console.log(newCart)
                             cart = newCart.data;
-                            response.resolve(newCart);
+                            response.resolve(cart);
                             return response.promise;
                         })
 
@@ -207,7 +181,7 @@ define(['./module'], function (services) {
                     var find = null;
                     var productIndex = 0;
                     angular.forEach(cart.productsInCart, function (productInCart, index) {
-                        if (product.productId == productInCart.id) {
+                        if (product.productId == productInCart.productId) {
                             angular.forEach(product.colors, function (color) {
                                 if (productInCart.color.code == color.code) {
                                     productIndex = index;
@@ -231,7 +205,7 @@ define(['./module'], function (services) {
                     else {
                         cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
                     }
-                    updateCart();
+                    updateCart(cart);
                     response.resolve(cart);
                     return response.promise;
                 }

@@ -15,7 +15,8 @@
 
 <nav class="pages">
     <a translate="HOME" href="/#" ></a>
-    <a class="select" translate="Laptops"></a>
+    <a href="#/category/1" > LAPTOPS </a>
+    <a class="select">{{::product.productName | uppercase}}</a>
 </nav>
 
 <section>
@@ -51,9 +52,9 @@
                       data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
-                      data-ng-class='{ colorSelected : colorSelected.color == color.color } '
+                      data-ng-class='{ colorSelected : colorSelected.name == color.name } '
                       data-ng-click="setColor(color)" >
-                            <label>{{color.color}}</label>
+                            <label>{{color.name}}</label>
                 </span>
             </div>
             <br />

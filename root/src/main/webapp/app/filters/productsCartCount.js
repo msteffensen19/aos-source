@@ -8,9 +8,12 @@ define(['./module'], function (controllers) {
     controllers.filter('productsCartCount', function(){
         return function(cart) {
             var count = 0;
-            angular.forEach(cart.productsInCart, function(product){
-                count += product.quantity;
-            })
+            if(cart)
+            {
+                angular.forEach(cart.productsInCart, function(product){
+                    count += product.quantity;
+                })
+            }
             return count;
         };
     });

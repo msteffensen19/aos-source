@@ -137,7 +137,7 @@ define(['./module'], function (directives) {
                         angular.forEach(product.colors, function(color) {
                             var find = false;
                             angular.forEach(productsColors, function(productColors) {
-                                if(productColors.color == color.color)
+                                if(productColors.code == color.code)
                                 {
                                     find= true;
                                 }
@@ -147,6 +147,8 @@ define(['./module'], function (directives) {
                             }
                         });
                     });
+                    l(productsColors)
+                    l(products)
                     return productsColors;
                 }
 

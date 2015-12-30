@@ -33,7 +33,7 @@ define(['./module'], function (controllers) {
             function applyRemoteData(category) {
 
                 $scope.categoryData = category;
-
+                l(category)
                 $scope.categoryAttributes = category.attributes;
 
                 $scope.products = category.products;

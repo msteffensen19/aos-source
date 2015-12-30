@@ -9,7 +9,7 @@ define([
     'jquery',
     'bootstrap',
     'jPushMenu',
-    './app/catalog/config/catalogConfig',
+    './app/configuration/appConfig',
     './app/user/userConfig',
     './app/controllers/index',
     './app/user/controllers/index',
@@ -76,3 +76,12 @@ define([
             });
         });
 });
+
+
+var l = function(a){
+    console.log(a)
+}
+
+var t = function(a){
+    alert(a)
+}

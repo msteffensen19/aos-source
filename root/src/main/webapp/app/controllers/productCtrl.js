@@ -29,16 +29,17 @@ define(['./module'], function (controllers) {
             $scope.colorSelected = $scope.colorSelected || product.colors[0];
 
             $scope.addToCart = function(){
+                l($scope.cart)
                 if(pageState == 'edit')
                 {
 
                 }
                 else
                 {
-                    var productToAdd = angular.copy(product);
-                    productToAdd.colors = [$scope.colorSelected];
+                var productToAdd = angular.copy(product);
+                productToAdd.colors = [$scope.colorSelected];
                     $scope.$parent.addProduct(productToAdd, $scope.quantity);
-                }
+            }
             }
 
             $scope.setColor = function(color){

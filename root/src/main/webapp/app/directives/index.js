@@ -4,10 +4,12 @@
 'use strict';
 
 define([
-    './toolTipSearch',
-    './toolTipCart',
-    './popularItemsDirective',
-    './socialMediaDrtv',
-    './categoryTypeProductsDrtv',
-    './scrollToTop'],
+        './validateInput',
+        './toolTipSearch',
+        './toolTipCart',
+        './popularItemsDirective',
+        './socialMediaDrtv',
+        './categoryTypeProductsDrtv',
+        './scrollToTop'],
+
 function() {});

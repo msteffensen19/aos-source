@@ -74,10 +74,9 @@ define(['./module'], function (directives) {
                                         $cookie.remove("userCookie" + $scope.user.email);
                                     }
 
-                                    productsCartService.loadCartProducts().then(function(response){
-
-                                        productsCartService.joinCartProducts(response);
-                                    });
+                                    productsCartService.joinCartProducts().then(function(cart){
+                                        $scope.cart = cart;
+                                    });;
 
                                     wellcome();
                                 }

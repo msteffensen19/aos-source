@@ -27,12 +27,13 @@ white-space: nowrap;
 #infoDemo > div:before {
     content: "";
     position: absolute;
-    top:25px;
+    top:30px;
     left: 28px;
-    width: 1px;
-    height: 70px;
+    width: 2px;
+    height: 68px;
     background-color:#454545;
     z-index: 50;
+    color: #454545;
 }
 
 #infoDemo > div h4 {
@@ -42,19 +43,20 @@ white-space: nowrap;
     font-size: 20px;
     font-weight: 500;
     text-indent: 45px;
+    padding: 6px;
 }
 
 #infoDemo > div p {
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 300;
     text-indent: 15px;
-    padding: 3px;
-    margin: 2px;
+    margin: 4px 9px;
+    color: #828282;
 }
 
 #formCover > div {
     max-width:  942px;
-    margin: 0 0 47px 0;
+    margin: 0 0 56px 0;
 }
 
 
@@ -130,15 +132,24 @@ display: block;
 }
 
 #formCover .option {
-    margin: 20px 0;
+    margin: 3px 0;
     display: block;
+}
+
+#formCover .option.marginTop {
+    margin-top: 30px;
 }
 
 #formCover .option span{
     width: 100%;
+    font-size: 14px;
+    color: #828282;
 }
-
-#form input[type=submit]{
+.removeSpaces{
+    width: 100%;
+    margin:0;
+}
+#form input[type=button]{
     border:  solid 1px #2a2a2a;
     color:#2a2a2a;
     background-color: white;
@@ -150,7 +161,7 @@ display: block;
     transition: all .3s ease;
 }
 
-#form input[type=submit]:hover{
+#form input[type=button]:hover{
     color:white;
     background-color: #2a2a2a;
 }
@@ -164,17 +175,6 @@ display: block;
     font-size: 12px;
     color:#2a2a2a;
     cursor: pointer;
-}
-
-#formCover .must{
-    position: absolute;
-    top:12px;
-    left:-12px;
-    color: #ff454f !important;
-}
-
-#form .invalid{
-    color: #ff454f !important;
 }
 
 #form .valid{
@@ -191,16 +191,22 @@ display: block;
     border-bottom: solid #ff454f 1px;
 }
 
-#form .opacityButtonDisable{
-    opacity: 0.32;
+#form .buttonDisable, #form .buttonDisable:hover{
+    color: #b2b2b2 !important;
+    border: solid 2px #d1d1d1 !important;
     cursor: default;
+    background-color: white !important;
 }
 
-#form .opacityButtonDisable:hover{
-    background-color: white !important;
-    color: #2a2a2a !important;
-    border:  solid #2a2a2a 1px !important;
+#formCover .validate-directive {
+    width:49%;
 }
+
+#formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
+{
+    width: 90% !important;
+}
+
 
 @media screen and (max-width: 1200px)
 {

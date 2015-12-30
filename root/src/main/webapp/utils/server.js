@@ -64,8 +64,6 @@ arrayApi.forEach(function(a) {
     services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
 });
 
-console.log(services_properties)
-
 
 //var catalogKey = "http://localhost:8080/catalog";
 var catalogKey = "http://" +
@@ -99,16 +97,16 @@ var server = {
 
     catalog: {
 
+        getPopularProducts : function () {
+            return "app/jsonFiles/popularProducts.json";
+        },
+
         getCategories: function(){
             return catalogKey + "/api/v1/categories";
         },
 
         getCategoryById : function(id) {
             return catalogKey + "/api/v1/categories/" + id + "/products";
-        },
-
-        getPopularProducts : function () {
-            return "app/popularProducts.json";
         },
 
         getDeals : function () {
@@ -135,6 +133,17 @@ var server = {
     },
     order: {
 
+        loadCartProducts : function (userId){
+            return orderKey + "/api/v1/carts/" + userId;
+        },
+
+        addProductToUser: function (userId, productId, color, quantity){
+            return orderKey + "/api/v1/carts/" + userId +
+                "/product/" + productId +
+                "/color/" + color +
+                "?quantity=" + quantity;
+        }
+
 
 
     },
@@ -157,8 +166,6 @@ var server = {
     service: {
 
         getConfiguration : function (){
-            console.log("serviceKey/api/v1/clientConfiguration")
-            console.log(serviceKey + "/api/v1/clientConfiguration")
             return serviceKey + "/api/v1/clientConfiguration";
         },
 
