@@ -11,7 +11,6 @@
     },
     "products": [
       {
-        "productId": 1,
         "productName": "HP Pavilion 15t Touch Laptop",
         "price": 519.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
@@ -58,7 +57,6 @@
         ]
       },
       {
-        "productId": 2,
         "productName": "HP Pavilion 15z Laptop",
         "price": 549.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
@@ -95,7 +93,6 @@
         ]
       },
       {
-        "productId": 3,
         "productName": "HP ENVY - 15t Laptop",
         "price": 549.99,
         "description": "Designed for style and comfort",
@@ -132,7 +129,6 @@
         ]
       },
       {
-        "productId": 4,
         "productName": "HP Spectre x360 - 13-4101dx",
         "price": 1169.99,
         "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
@@ -169,7 +165,6 @@
         ]
       },
       {
-        "productId": 5,
         "productName": "HP Stream - 11-d020nr Laptop",
         "price": 179.99,
         "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
@@ -221,7 +216,6 @@
         ]
       },
       {
-        "productId": 6,
         "productName": "HP ENVY x360 - 15t Laptop",
         "price": 699.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
@@ -263,7 +257,6 @@
         ]
       },
       {
-        "productId": 7,
         "productName": "HP ENVY - 17t Touch Laptop",
         "price": 949.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
@@ -300,7 +293,6 @@
         ]
       },
       {
-        "productId": 8,
         "productName": "HP ENVY - 17t Touch Laptop v2",
         "price": 419.99,
         "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
@@ -337,7 +329,6 @@
         ]
       },
       {
-        "productId": 9,
         "productName": "HP Chromebook 14 G1(ENERGY STAR)",
         "price": 299.99,
         "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
@@ -374,7 +365,6 @@
         ]
       },
       {
-        "productId": 10,
         "productName": "HP Chromebook 14 G1(ES)",
         "price": 1261.99,
         "description": "Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
@@ -425,7 +415,6 @@
     },
     "products": [
       {
-        "productId": 11,
         "productName": "HP ElitePad 1000 G2 Tablet",
         "price": 1009,
         "description": "More than a tablet—a total business solution. The elegant and sleek HP ElitePad 1000 G2 has the performance and flexibility to transform the way you work. Redefine productivity and stay light with the confidence of the leading manageability, security, and support you expect from HP.",
@@ -476,7 +465,6 @@
         ]
       },
       {
-        "productId": 12,
         "productName": "HP Elite x2 1011 G1 Tablet",
         "price": 1279,
         "description": "Ultrabook™[2] Power\nPower up for ultimate power with Windows 8.1,[1] 5th Gen Intel® Core™ M processors,[4] with optional vPro™[5] and long battery life provided by dual tablet and keyboard base batteries.",
@@ -526,7 +514,6 @@
         ]
       },
       {
-        "productId": 13,
         "productName": "HP Pro Tablet 608 G1",
         "price": 479,
         "description": "Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize nearly any business process. Choose from an expansive choice of accessories[2] for a customized experience.",
@@ -550,7 +537,7 @@
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "FFFFFF"
+            "code": 0
           }
         ],
         "attributes": [

@@ -119,9 +119,6 @@ public class DataSourceInit4Json {
 
             /*PRODUCT*/
             for (ProductDto p : dto.getProducts()) {
-                if (p.getProductId() > 9) {
-                    int iii = 111;
-                }
                 Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
                 product.setManagedImageId(p.getImageUrl());
                 session.persist(product);
