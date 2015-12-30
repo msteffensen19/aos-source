@@ -651,7 +651,7 @@
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": 0
+            "code": "000000"
           }
         ],
         "attributes": [
