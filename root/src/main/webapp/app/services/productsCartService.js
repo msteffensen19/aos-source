@@ -142,6 +142,35 @@ define(['./module'], function (services) {
                 return cart;
             }
 
+            function loadCartProducts(){
+
+                var responce = $q.defer();
+                var user = $rootScope.userCookie;
+                if(user && user.response) {
+                    if (user.response.userId != -1) {
+                        $http({
+                            method: "get",
+                            url: server.order.loadCartProducts(user.response.userId)
+
+                        }).then(function(cartRes){
+                                alert('cartRes')
+                                console.log('cartRes')
+                                console.log(cartRes)
+                                cart = cartRes;
+                                responce.resolve(cart);
+                            },
+                            function(err){
+                                alert('err')
+                                console.log('error in load cart (productCartService - loadCartProducts)');
+                            });
+                    }
+                }
+                else {
+                    loadGuestCartProducts();
+                    responce.resolve(cart);
+                }
+                return responce.promise;
+            }
             function updateUserCart(){
                 var user = $rootScope.userCookie;
                 if(user && user.response) {
@@ -181,6 +210,7 @@ define(['./module'], function (services) {
                             return response.promise;
                         })
 
+                        return response.promise;
                     }
                 }
                 else {

@@ -37,6 +37,7 @@ white-space: nowrap;
 }
 
 #infoDemo > div h4 {
+    padding: 5px;
     background-image: url(../../../css/images/Bell.png);
     background-repeat:no-repeat;
     background-position: 12% 50%;

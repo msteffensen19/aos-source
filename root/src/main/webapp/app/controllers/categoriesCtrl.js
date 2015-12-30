@@ -19,6 +19,9 @@ define(['./module'], function (controllers) {
 
                 categoryService.getCategories().then(function( categories ) {
                     $scope.categories = categories;
+                    console.log("");
+                    console.log("categories");
+                    console.log(categories);
                 });
 
                 dealService.getDealOfTheDay().then(function(deal) {

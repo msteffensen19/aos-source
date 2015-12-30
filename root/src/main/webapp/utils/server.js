@@ -134,18 +134,18 @@ var server = {
     },
     order: {
 
-        loadCartProducts : function (userId){
-            return orderKey + "/api/v1/carts/" + userId;
-        },
 
         addProductToUser: function (userId, productId, color, quantity){
             return orderKey + "/api/v1/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color +
                 "?quantity=" + quantity;
+        },
+
+        loadCartProducts : function (userId){
+            console.log(orderKey + "/api/v1/carts/" + userId)
+            return orderKey + "/api/v1/carts/" + userId;
         }
-
-
 
     },
     account: {

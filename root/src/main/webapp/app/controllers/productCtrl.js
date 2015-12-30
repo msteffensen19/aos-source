@@ -4,7 +4,7 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'productService', 'product',
+    controllers.controller('productCtrl', ['$scope', 'productService', 'product', 'selectedColor', 'quantity', 'pageState',
         'selectedColor', 'quantity', 'pageState', 'categoryService',
         function ($scope, productService, product, selectedColor, quantity, pageState, categoryService) {
 
@@ -40,17 +40,16 @@ define(['./module'], function (controllers) {
             $scope.colorSelected = $scope.colorSelected || product.colors[0];
 
             $scope.addToCart = function(){
-                l($scope.cart)
                 if(pageState == 'edit')
                 {
 
                 }
                 else
                 {
-                var productToAdd = angular.copy(product);
-                productToAdd.colors = [$scope.colorSelected];
+                    var productToAdd = angular.copy(product);
+                    productToAdd.colors = [$scope.colorSelected];
                     $scope.$parent.addProduct(productToAdd, $scope.quantity);
-            }
+                }
             }
 
             $scope.setColor = function(color){
