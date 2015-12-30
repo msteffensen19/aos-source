@@ -8,12 +8,21 @@ define(['./module'], function (directives) {
     'use strict';
     directives
 
-        .directive('aSecSRC', function(){
+        .directive('secSubmitAttr', function(){
             return{
                 restrict: 'A',
-                require: 'img',
+                scope:{
+                    submit : '&secSubmitAttr'
+                },
+                require: '^secValidate',
                 link: function(s, e, a, ctrl){
-                    l(e)
+
+                    e.bind('click', function(){
+                        if(ctrl.getInvalidItems() == 0)
+                        {
+                            s.submit()
+                        }
+                    });
                 }
             }
         })
