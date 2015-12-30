@@ -64,7 +64,8 @@
                     <label> {{'SHOP_NOW' | translate}} </label>
                     <img alt="" src="../../css/images/cart_18x18.png"  />
                 </div>
-                <img alt="" class="imgProduct" ng-src="fetchImage?image_id={{product.imageUrl}}">
+                <!-- ng-src="fetchImage?image_id={{product.imageUrl}}" -->
+                <img alt="" class="imgProduct" a-sec-src image-url="{{product.imageUrl}}">
                 <p><a>{{product.productName}}</a></p>
                 <p><a class="productPrice">{{product.price | currency:"$"}}</a></p>
             </li>

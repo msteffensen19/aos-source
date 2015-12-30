@@ -8,12 +8,33 @@ define(['./module'], function (directives) {
     'use strict';
     directives
 
-        .directive('aSecSRC', function(){
+        .directive('aSecSrc', function(){
             return{
                 restrict: 'A',
-                require: 'img',
                 link: function(s, e, a, ctrl){
+                    l('aSecSRC')
                     l(e)
+                    l(a.imageUrl)
+                    e.attr('src', server.catalog.getKey() + '/fetchImage?image_id=' + a.imageUrl)
+                    l('aSecSRC')
+                }
+            }
+        })
+        .directive('secSubmitAttr', function(){
+            return{
+                restrict: 'A',
+                scope:{
+                    submit : '&secSubmitAttr'
+                },
+                require: '^secValidate',
+                link: function(s, e, a, ctrl){
+
+                    e.bind('click', function(){
+                        if(ctrl.getInvalidItems() == 0)
+                        {
+                            s.submit()
+                        }
+                    });
                 }
             }
         })
