@@ -525,6 +525,57 @@
             "attributeValue": "8 GB 1600 MHz LPDDR3 SDRAM (onboard)"
           }
         ]
+      },
+      {
+        "productId": 13,
+        "productName": "HP Pro Tablet 608 G1",
+        "price": 479,
+        "description": "Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize nearly any business process. Choose from an expansive choice of accessories[2] for a customized experience.",
+        "imageUrl": "3300",
+        "images": [
+          3301,
+          3302,
+          3303
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "BlueViolet ",
+            "code": "8A2BE2"
+          },
+          {
+            "inStock": 10,
+            "name": "BLUE",
+            "code": "0000FF"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": 0
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "OPERATING SYSTEM",
+            "attributeValue": "Windows 8.1 Pro 64"
+          },
+          {
+            "attributeName": "PROCESSOR",
+            "attributeValue": "Intel® Atom™ x5-Z8500 with Intel HD Graphics (1.44 GHz, up to 2.24 GHz using Intel Burst Technology, 2 MB cache, 4 cores)"
+          },
+          {
+            "attributeName": "GRAPHICS",
+            "attributeValue": "Intel® HD Graphics"
+          },
+          {
+            "attributeName": "DISPLAY",
+            "attributeValue": "7.9\" diagonal FHD multi-touch display with Corning ® Gorilla® Glass® (2048 x 1536)"
+          },
+          {
+            "attributeName": "MEMORY",
+            "attributeValue": "2 GB LPDDR3-1600 SDRAM"
+          }
+        ]
       }
     ]
   }
