@@ -5,8 +5,6 @@ import com.advantage.root.string_resources.Constants;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -49,6 +47,7 @@ public class ValidationHelper {
     private static final String SCANDINAVIAN_DATE_PATTERN = "((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"; //YYYY-MM-DD
     //private static final String SAFE_PAY_ACCOUNT_NUMBER = "843200971";
     private static final String SAFE_PAY_ACCOUNT_NUMBER_PATTERN = "([0-9]{9})";
+    private static final String CURRENCY_PATTERN = "[A-Z]{3}";
 
     private static Pattern pattern;
 
@@ -57,9 +56,6 @@ public class ValidationHelper {
 
     /**
      * Checks that {@code userName} is a valid user-name and in compliance with AOS policy.
-     *
-     * @param userName {@link String} to verify as a valid user-name for login.
-     * @return <b>true</b> when {@code userName} is valid, otherwise <b>false</b>.
      */
     public static boolean isValidLogin(final String userName) {
         return isValidByRegExpPattern(LOGIN_USER_NAME_PATTERN, userName);
@@ -67,9 +63,6 @@ public class ValidationHelper {
 
     /**
      * Checks that {@code password} is a valid password and in compliance AOS policy.
-     *
-     * @param password {@link String} to verify as a password for login.
-     * @return <b>true</b> when {@code password} is valid, otherwise <b>false</b>.
      */
     public static boolean isValidPassword(final String password) {
         return isValidByRegExpPattern(LOGIN_PASSWORD_PATTERN, password);
@@ -81,9 +74,6 @@ public class ValidationHelper {
 
     /**
      * Check that {@code e-mail} is a valid e-mail address.
-     *
-     * @param email {@link String} to verify as a valid e-mail address.
-     * @return <b>true</b> when {@code e-mail} is valid, otherwise <b>false</b>.
      */
     public static boolean isValidEmail(final String email) {
         return isValidByRegExpPattern(EMAIL_PATTERN, email);
@@ -91,9 +81,6 @@ public class ValidationHelper {
 
     /**
      * Check that {@code time24h} is a valid 24-hours time format.
-     *
-     * @param time24h {@link String} to verify as a having a valid 24-hours time format.
-     * @return <b>true</b> when {@code time24h} is a valid time format, otherwise <b>false</b>.
      */
     public static boolean isValidTime24h(final String time24h) {
         return isValidByRegExpPattern(TIME_24HOURS_PATTERN, time24h);
@@ -109,10 +96,6 @@ public class ValidationHelper {
     }
     /**
      * Check that {@code stringDate} is a valid date format, either EUROPEAN, AMERICAN or SCANDINAVIAN.
-     * <br/>
-     *
-     * @param stringDate {@link String} verify as having a valid date format.
-     * @return <b>true</b> when {@code stringDate} is a valid date format, otherwise <b>false</b>.
      */
     public static boolean isValidDate(final String stringDate) {
         SimpleDateFormat dateFormat;
@@ -142,60 +125,37 @@ public class ValidationHelper {
 
     /**
      * Validates <b>MasterCredit</b> card number.
-     *
-     * @param cardNumber <b>MasterCredit</b> card number to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
     public static boolean isValidMasterCreditCardNumber(final String cardNumber) {
         pattern = Pattern.compile(MASTER_CREDIT_CARD_NUMBER_PATTERN);
 
-        //  Validate MasterCredit CVV number
         final boolean isValid = pattern.matcher(cardNumber).matches();
-
         System.out.println("MasterCredit card number=" + cardNumber + " is valid? " + isValid);
-
         return isValid;
     }
 
     /**
      * Validates <b>MasterCredit</b> CVV number.
-     *
-     * @param cvvNumber <b>MasterCredit</b> CVV number to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
     public static boolean isValidMasterCreditCVVNumber(final String cvvNumber) {
         pattern = Pattern.compile(MASTER_CREDIT_CVV_NUMBER_PATTERN);
-
-        //  Validate MasterCredit CVV number
         final boolean isValid = pattern.matcher(cvvNumber).matches();
-
         System.out.println("MasterCredit CVV number=" + cvvNumber + " is valid? " + isValid);
-
         return isValid;
     }
 
     /**
      * Validates <b>MasterCredit</b> card holder full name.
-     *
-     * @param fullName <b>MasterCredit</b> card holder full name to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
     public static boolean isValidFullName(final String fullName) {
         pattern = Pattern.compile(FULL_NAME_PATTERN);
-
-        //  Validate Full Name
         final boolean isValid = pattern.matcher(fullName).matches();
-
         System.out.println("Full name=\"" + fullName + "\" is valid? " + isValid);
-
         return isValid;
     }
 
     /**
      * Validates <b>MasterCredit</b> account number.
-     *
-     * @param accountNumber <b>MasterCredit</b> account number to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
     public static boolean isValidMasterCreditAccountNumber(final String accountNumber) {
         //  Validate MasterCredit account number
@@ -210,9 +170,6 @@ public class ValidationHelper {
 
     /**
      * Validates <b>MasterCredit</b> account number.
-     *
-     * @param accountNumber <b>SafePay</b> account number to validate.
-     * @return {@code boolean} <b>true</b> when valid, <b>false</b> otherwise.
      */
     public static boolean isValidSafePayAccountNumber(final String accountNumber) {
         pattern = Pattern.compile(SAFE_PAY_ACCOUNT_NUMBER_PATTERN);
@@ -225,22 +182,9 @@ public class ValidationHelper {
 
     /**
      * Validate currency code. For now only <i>USD</i> is a valid currency code.
-     *
-     * @param currency Currency code to validate
-     * @return <b>true</b> when valid currency code, <b>false</b> otherwise.
      */
     public static boolean isValidCurrency(final String currency) {
-        List<String> currencies = new ArrayList<>();
-
-        currencies.add("USD");
-
-        for (String test : currencies) {
-            if (test.equalsIgnoreCase(test)) {
-                return true;
-            }
-        }
-
-        return false;
+        return isValidByRegExpPattern(CURRENCY_PATTERN,currency);
     }
 
     /**
