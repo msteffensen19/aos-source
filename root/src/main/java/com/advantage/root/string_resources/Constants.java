@@ -5,15 +5,24 @@ public class Constants {
 
     public static final String URI_API = "/api";
 
-    public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
-    public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
     public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
     public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
+
+    /* CATALOG Service related constants - BEGIN    */
+    public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
+    public static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
+    /* CATALOG Service related constants - END      */
+
+    /* ACCOUNT URI and transactions types - BEGIN   */
+    public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
+    public static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
+    /* ACCOUNT URI and transactions types - END     */
 
     /* ShipEx URI and transactions types - BEGIN    */
     public static final String URI_SERVER_SHIP_EX = "http://localhost:8080/ShipEx";
     public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
+    public static final String SHIP_EX_RESPONSE_STATUS_OK = "SUCCESS";
     /* ShipEx URI and transactions names - END      */
 
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
