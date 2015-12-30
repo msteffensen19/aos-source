@@ -21,6 +21,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
@@ -103,7 +104,7 @@ public class DataSourceInit4Json {
                     ProductAttributes attributes = new ProductAttributes();
                     attributes.setProduct(product);
 
-                    attributes.setAttribute(defAttributes.get(a.getAttributeName()));
+                    attributes.setAttribute(defAttributes.get(a.getAttributeName().toUpperCase()));
                     attributes.setAttributeValue(a.getAttributeValue());
 
                     session.save(attributes);
@@ -121,8 +122,9 @@ public class DataSourceInit4Json {
             }
 
             PromotedProductDto p = dto.getPromotedProduct();
-            Product parent = productMap.get(p.getId());
-
+            Long prodId = p.getId();
+            Product parent = productMap.get(prodId);
+            Assert.notNull(parent, "PromotedProduct null, promoted product id=" + prodId + ", category number=" + dto.getCategoryId());
             Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
                     p.getPromotionImageId(), 0, "", "", parent);
 

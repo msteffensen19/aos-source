@@ -684,7 +684,7 @@
     "categoryName": "SPEAKERS",
     "promotedProduct": {
       "id": 17,
-      "staringPrice": 99.99,
+      "staringPrice": 500,
       "promotionHeader": "Studio sensation.",
       "promotionSubHeader": "Remove the bulk with the ultra-sleek HP Wireless Portable Speaker S9500. Simplify with Bluetooth® 2.1 connectivity via NFC one-touch pairing for wireless streaming with Android™ and Apple® enabled devices."
     },
@@ -724,6 +724,50 @@
           {
             "attributeName": "WEIGHT",
             "attributeValue": "3.03 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          }
+        ]
+      },
+      {
+        "productName": "HP S9500 Bluetooth Wireless Speaker",
+        "price": 69.99,
+        "description": "Impress … everyone! Futuristic design with perforated steel formed into subtle angles. Requiring only minimal space, this speaker is the ideal complement to any setting.",
+        "imageUrl": "4100",
+        "images": [
+          4101
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "gray",
+            "code": "808080"
+          },
+          {
+            "inStock": 10,
+            "name": "LightGray",
+            "code": "D3D3D3"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.95 lb"
           },
           {
             "attributeName": "Wireless technology",
