@@ -41,12 +41,6 @@ define(['./module'], function (services) {
                         $http({
                             method: "delete",
                             url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code)
-                        }).success(function (res) {
-                            console.log("data")
-                            console.log(res)
-                        }).error(function (err) {
-                            alert('err')
-                            responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
                 }
