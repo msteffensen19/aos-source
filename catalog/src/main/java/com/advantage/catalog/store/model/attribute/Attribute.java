@@ -41,7 +41,8 @@ public class Attribute {
     }
 
     public Attribute(String name) {
-        this.name = name;
+
+        setName(name);
     }
 
     public Long getId() {

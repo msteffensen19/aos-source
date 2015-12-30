@@ -67,41 +67,18 @@ public class DataSourceInit4Json {
         session.persist(category6);
 
         /*Attributes INIT*/
+
+        String[] newAttributes = new String[]{"GRAPHICS", Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION, Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM, Constants.AttributeNames.ATTRIBUTE_PROCESSOR, Constants.AttributeNames.ATTRIBUTE_MEMORY, Constants.AttributeNames.ATTRIBUTE_DISPLAY, "CONNECTOR", "COMPATIBILITY", "WEIGHT"};
+
         Map<String, Attribute> defAttributes = new HashMap<>();
-        Attribute attribute1 = new Attribute();
-        Attribute attribute2 = new Attribute();
-        Attribute attribute3 = new Attribute();
-        Attribute attribute4 = new Attribute();
-        Attribute attribute5 = new Attribute();
-        Attribute attribute6 = new Attribute();
-        Attribute attribute7 = new Attribute();
 
-        attribute1.setName("GRAPHICS");
-        attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
-        attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
-        attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
-        attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-        // attribute6.setName(Constants_catalog.AttributeNames.ATTRIBUTE_COLOR);
-        attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
-
-        session.persist(attribute1);
-        session.persist(attribute2);
-        session.persist(attribute3);
-        session.persist(attribute4);
-        session.persist(attribute5);
-        //session.persist(attribute6);
-        session.persist(attribute7);
-
+        for (String attrib : newAttributes) {
+            Attribute attribute = new Attribute();
+            attribute.setName(attrib);
+            session.persist(attribute);
+            defAttributes.put(attrib.toUpperCase(), attribute);
+        }
         transaction.commit();
-
-        defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
-        defAttributes.put(attribute2.getName().toUpperCase(), attribute2);
-        defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
-        defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
-        defAttributes.put(attribute5.getName().toUpperCase(), attribute5);
-        // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
-        defAttributes.put(attribute7.getName().toUpperCase(), attribute7);
-
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
             session.save(entry.getValue());
         }
@@ -127,7 +104,7 @@ public class DataSourceInit4Json {
                     ProductAttributes attributes = new ProductAttributes();
                     attributes.setProduct(product);
 
-                    attributes.setAttribute(defAttributes.get(a.getAttributeName().toUpperCase()));
+                    attributes.setAttribute(defAttributes.get(a.getAttributeName()));
                     attributes.setAttributeValue(a.getAttributeValue());
 
                     session.save(attributes);
