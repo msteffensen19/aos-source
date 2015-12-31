@@ -126,7 +126,7 @@ public class DataSourceInit4Json {
             PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
             Long prodId = promotedProductDto.getId();
             Product product = productMap.get(prodId);
-            Assert.notNull(product, "PromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
+            Assert.notNull(product, "\nPromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
             Deal deal = new Deal(10, product.getDescription(), promotedProductDto.getPromotionHeader(), promotedProductDto.getPromotionSubHeader(), promotedProductDto.getStaringPrice(),
                     promotedProductDto.getPromotionImageId(), 0, "", "", product);
 
