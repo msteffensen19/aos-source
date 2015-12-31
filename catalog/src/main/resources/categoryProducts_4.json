@@ -416,16 +416,18 @@
     },
     "products": [
       {
-        "productName": "HP H2310 Black In-ear Headset",
+        "productName": "HP H2310 In-ear Headset",
         "price": 13.99,
         "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
         "imageUrl": "2100",
-        "images": [],
+        "images": [
+          2300
+        ],
         "colors": [
           {
             "inStock": 10,
-            "name": "BLUE",
-            "code": "0000FF"
+            "name": "Pink",
+            "code": "FFC0CB"
           },
           {
             "inStock": 10,
@@ -482,39 +484,6 @@
             "attributeValue": "0.57 lb"
           }
         ]
-      },
-      {
-        "productName": "HP H2310 Pink In-ear Headset",
-        "price": 13.99,
-        "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
-        "imageUrl": "2300",
-        "images": [],
-        "colors": [
-          {
-            "inStock": 10,
-            "name": "pink",
-            "code": "FFC0CB"
-          },
-          {
-            "inStock": 10,
-            "name": "white",
-            "code": "FFFFFF"
-          }
-        ],
-        "attributes": [
-          {
-            "attributeName": "CONNECTOR",
-            "attributeValue": "Jack 3.5 mm"
-          },
-          {
-            "attributeName": "COMPATIBILITY",
-            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with a 3.5 mm port available."
-          },
-          {
-            "attributeName": "WEIGHT",
-            "attributeValue": "0.03 lb"
-          }
-        ]
       }
     ]
   },
@@ -522,7 +491,7 @@
     "categoryId": 3,
     "categoryName": "TABLETS",
     "promotedProduct": {
-      "id": 16,
+      "id": 15,
       "staringPrice": 1429,
       "promotionHeader": "Built for durability and mobility",
       "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge."
