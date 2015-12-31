@@ -5,6 +5,7 @@ public class Constants {
 
     public static final String URI_API = "/api";
 
+    //
     public static final String PROPERTIES_INTERNAL = "classpath:/services.properties";
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 
