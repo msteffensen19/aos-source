@@ -37,9 +37,6 @@ define([],function(){
                     return defer.promise;
                 }
             }
-
-            //resolve : {
-            //},
         })
         .state('welcome',{
             url: '/welcome',
@@ -116,8 +113,8 @@ define([],function(){
                     return defer.promise;
                 }
             }
-        })
-        .state('404',{
+        }).
+        state('404',{
             url: '/404',
             templateUrl: 'app/views/404.html',
             data: {

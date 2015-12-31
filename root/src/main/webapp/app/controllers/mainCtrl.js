@@ -12,6 +12,8 @@ define(['./module'], function (controllers) {
 
             $scope.cart;
 
+            l('$state')
+            l($state)
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
