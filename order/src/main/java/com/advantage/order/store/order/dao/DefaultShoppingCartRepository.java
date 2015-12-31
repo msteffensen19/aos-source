@@ -11,7 +11,7 @@ import com.advantage.order.store.order.util.WSDLHelper;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.root.string_resources.Url_resources;
 //import com.advantage.root.util.ValidationHelper;
 import com.advantage.root.util.StringHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -376,9 +376,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
             }
         }
-
         return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
-
     }
 
     /**
@@ -413,7 +411,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDtoDetails(Long productId) {
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_CATALOG +
+        String stringURL = Url_resources.getUrlPrefixCatalog() +
                 Constants.CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
         //String stringURL = ServiceConfiguration.getUriServerCatalog() +
         //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
@@ -828,7 +826,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_ACCOUNT +
+        String stringURL = Url_resources.getUrlPrefixAccount() +
                            Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         //String stringURL = ServiceConfiguration.getUriServerAccount() +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
