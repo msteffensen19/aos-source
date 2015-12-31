@@ -889,11 +889,18 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return {@link String} containing {@code response} data.
      * @throws Exception
      */
+    @Deprecated
     public static String httpPost(String urlStr,
                                   String[] paramName,
                                   String[] paramVal) throws Exception {
 
         URL url = new URL(urlStr);
+        return httpPost(url, paramName, paramVal);
+    }
+
+    public static String httpPost(URL url,
+                                  String[] paramName,
+                                  String[] paramVal) throws Exception {
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
@@ -963,8 +970,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return
      * @throws IOException
      */
+    @Deprecated
     public static String httpGet(String urlStr) throws IOException {
         URL url = new URL(urlStr);
+        return httpGet(url);
+    }
+
+    public static String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         int responseCode = conn.getResponseCode();
