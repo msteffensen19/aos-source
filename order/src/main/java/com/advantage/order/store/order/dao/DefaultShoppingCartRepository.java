@@ -11,6 +11,7 @@ import com.advantage.order.store.order.util.WSDLHelper;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
+import com.advantage.root.string_resources.Constants;
 import com.advantage.root.string_resources.Url_resources;
 //import com.advantage.root.util.ValidationHelper;
 import com.advantage.root.util.StringHelper;
@@ -1051,7 +1052,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     public String getShipExWsdlFile() {
 
         String content = null;
-        String urlStr = Constants.URI_SERVER_SHIP_EX + "/shipex.wsdl";
+        String urlStr = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
 
         URL url = null;
         URLConnection urlConnection = null;
@@ -1083,9 +1084,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     public void listWSDLOperations() {
 
-        String stringUrl = Constants.URI_SERVER_SHIP_EX + "/shipex.wsdl";
+        String stringUrl = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
 
-        List<Operation> operations = WSDLHelper.getListWSDLOperations(Constants.URI_SERVER_SHIP_EX, "/shipex.wsdl");
+        List<Operation> operations = WSDLHelper.getListWSDLOperations(Url_resources.getUrlPrefixShipEx(), "/shipex.wsdl");
 
         WSDLParser parser = new WSDLParser();
 
