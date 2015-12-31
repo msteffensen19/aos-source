@@ -73,7 +73,8 @@ public class OrderController {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         }
         else {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
         }
     }
 
@@ -106,15 +107,44 @@ public class OrderController {
                                                                       @PathVariable("userid") Long userId,
                                                                       HttpServletRequest request) {
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (userId != null) {
             shoppingCartResponseStatus = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
-        } else {
+
+            if (shoppingCartResponseStatus.isSuccess()) {
+                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+
+                if (userCartResponseDto == null) {
+                    //  Unlikely scenario - update of user cart successful and get user cart failed
+                    httpStatus = HttpStatus.NOT_FOUND;
+                    shoppingCartResponseStatus = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+                }
+                else {
+                    httpStatus = HttpStatus.OK;
+                }
+            }
+            else {
+                //  Replace user cart failed
+                //  NOT_IMPLEMENTED (501) = The server either does not recognise the
+                //                          request method, or it lacks the ability
+                //                          to fulfill the request.
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
+
+                shoppingCartResponseStatus.setSuccess(false);
+                shoppingCartResponseStatus.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
+                shoppingCartResponseStatus.setId(-1);
+            }
+        }
+        else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+
             shoppingCartResponseStatus.setSuccess(false);
             shoppingCartResponseStatus.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
             shoppingCartResponseStatus.setId(-1);
         }
 
-        return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+        return new ResponseEntity<>(shoppingCartResponseStatus, httpStatus);
     }
 
     /*  =========================================================================================================   */
@@ -208,7 +238,7 @@ public class OrderController {
 
     public ResponseEntity<String> getWsdlStringTest1() {
 
-        String stringURI = Constants.URI_SERVER_SHIP_EX + "/shipex?WSDL";
+        String stringURI = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
 
         System.out.println("Starting SOAPRequest...");
         try {

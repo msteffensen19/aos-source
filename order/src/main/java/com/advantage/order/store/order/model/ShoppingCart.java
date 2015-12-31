@@ -41,6 +41,7 @@ public class ShoppingCart {
     public static final String MESSAGE_SHOPPING_CART_IS_EMPTY = "User\'s shopping cart is empty.";
     public static final String MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY = "Shopping cart and all products updated successfully.";
     public static final String MESSAGE_USER_SHOPPING_CART_WAS_CLEARED = "User shopping cart was emptied.";
+    public static final String MESSAGE_REPLACE_USER_CART_FAILED = "Replace of user cart failed";
 
     public static final String QUERY_GET_CARTS_BY_USER_ID = "shoppingCart.getCartsByUserId";
     public static final String QUERY_GET_CART_BY_PK_COLUMNS = "shoppingCart.getCartsByPkColumns";
