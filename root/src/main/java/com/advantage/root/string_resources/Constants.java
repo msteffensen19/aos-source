@@ -9,23 +9,28 @@ public class Constants {
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 
     //TODO-EVG remove
+    @Deprecated
     public static final String URI_SERVER_ORDER = "http://localhost:8080/order" + URI_API + "/v1";
+    @Deprecated
     public static final String URI_SERVER_SERVICE = "http://localhost:8080/service" + URI_API + "/v1";
 
     //TODO-EVG remove
     /* CATALOG Service related constants - BEGIN    */
+    @Deprecated
     public static final String URI_SERVER_CATALOG = "http://localhost:8080/catalog" + URI_API + "/v1";
     public static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
     /* CATALOG Service related constants - END      */
 
     //TODO-EVG remove
     /* ACCOUNT URI and transactions types - BEGIN   */
+    @Deprecated
     public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
     public static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
     /* ACCOUNT URI and transactions types - END     */
 
     //TODO-EVG remove
     /* ShipEx URI and transactions types - BEGIN    */
+    @Deprecated
     public static final String URI_SERVER_SHIP_EX = "http://localhost:8080/ShipEx";
     public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
