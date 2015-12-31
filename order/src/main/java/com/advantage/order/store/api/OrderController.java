@@ -1,12 +1,13 @@
 package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
-import com.advantage.order.store.order.services.ShoppingCartService;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
+import com.advantage.order.store.order.services.ShoppingCartService;
 import com.advantage.root.string_resources.Constants;
+import com.advantage.root.string_resources.Url_resources;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ import javax.xml.namespace.QName;
 import javax.xml.soap.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -193,11 +193,12 @@ public class OrderController {
         }
     }
 
+    //TODO-BENY Mark it as for dev-only!!!
     @RequestMapping(value = "/carts/ShipEx/wsdl", method = RequestMethod.GET)
     @ApiOperation(value = "Get ShipEx Shipping Cost WSDL")
     public ResponseEntity<String> getShipExShippingCostWSDL() {
 
-        String stringURI = Constants.URI_SERVER_SHIP_EX + "/shipex?wsdl";
+        String stringURI = Url_resources.getUrlPrefixShipEx() + "/shipex?wsdl";
 
         System.out.println("Starting SOAPRequest...");
         try {
