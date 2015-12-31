@@ -7,6 +7,5 @@ define([],function(){
 
     }
     config.$inject=['$translateProvider', '$httpProvider', '$stateProvider'];
-
     return config;
 });

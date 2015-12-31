@@ -9,18 +9,6 @@ define(['./module'], function (directives) {
         return {
             template: $templateCache.get('app/partials/toolTipCart.html'),
             link: function(scope) {
-
-                scope.checkout = function () {
-
-                    cartService.checkout().then(function (userLogin) {
-                        if (!userLogin) {
-                            scope.login();
-                        }
-                        else {
-                            console.log("move user to checkout page...");
-                        }
-                    });
-                }
             }
         };
     }]);

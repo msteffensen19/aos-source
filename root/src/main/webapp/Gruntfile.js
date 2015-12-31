@@ -43,6 +43,13 @@ module.exports = function(grunt) {
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/app/user/css',
                         ext: '.min.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'app/order/css',
+                        src: ['*.css', '!*.min.css'],
+                        dest: 'target/app/order/css',
+                        ext: '.min.css'
                     }]
             }
         },
@@ -50,21 +57,29 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // includes files within path
-                    {expand: true, src: ['css/fonts/*', 'css/images/*', '!css/*.css'], dest: 'target', filter: 'isFile'},
                     {
-                        expand: true,
-                        src: ['app/views/*', 'app/partials/*', 'app/templates/*', 'app/user/views/*'],
+                        expand: true, src: ['css/fonts/*', 'css/images/*', '!css/*.css'],
                         dest: 'target',
                         filter: 'isFile'
                     },
-                    {expand: true, src: ['main.html', 'app/categoryProducts_4.json', 'app/popularProducts.json'], dest: 'target', filter: 'isFile'},
+                    {
+                        expand: true,
+                        src: ['app/views/*', 'app/partials/*', 'app/templates/*', 'app/user/views/*', 'app/order/views/*'],
+                        dest: 'target',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true, src: ['main.html', 'app/tempFiles/categoryProducts_4.json', 'app/tempFiles/popularProducts.json'],
+                        dest: 'target',
+                        filter: 'isFile'
+                    },
 
                 ]
             }
         },
         ngtemplates:  {
             app:        {
-                src:      ['app/partials/**.html', 'app/user/partials/**.html'],
+                src:      ['app/partials/**.html', 'app/user/partials/**.html', 'app/order/partials/**.html'],
                 dest:     'app/templates/module.js',
                 options: {
                     bootstrap:  function(module, script) {

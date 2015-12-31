@@ -99,7 +99,7 @@ var server = {
         return catalogKey;
         },
         getPopularProducts : function () {
-            return "app/jsonFiles/popularProducts.json";
+            return "app/tempFiles/popularProducts.json";
         },
 
         getCategories: function(){
