@@ -9,38 +9,54 @@ define([
     'jquery',
     'bootstrap',
     'jPushMenu',
+
     './app/configuration/appConfig',
     './app/user/userConfig',
+    './app/order/orderConfig',
+
     './app/controllers/index',
     './app/user/controllers/index',
+    './app/order/controllers/index',
+
     './app/user/services/index',
     './app/services/index',
+
     './app/directives/index',
+
     './app/filters/index',
+
     './app/user/directives/index',
+
     './app/templates/module',
 
-], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig) {
+], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig) {
 
     return angular.module('aos', [
-        'aos.controllers',
-        'aos.services',
-        'aos.directives',
-        'aos.filters',
-        'aos.templates',
         'pascalprecht.translate',
         'ui.router',
         'ui.bootstrap',
         'ipCookie',
         'ngAnimate',
+
+        'aos.controllers',
+        'aos.services',
+        'aos.directives',
+        'aos.filters',
+        'aos.templates',
+
         'aos.user.controllers',
         'aos.user.services',
-        'aos.user.directives'
+        'aos.user.directives',
+
+        'aos.order.controllers'
+
     ]).
 
     config(catalogConfig).
 
     config(userConfig).
+
+    config(orderConfig).
 
     run(function ($rootScope, $state, ipCookie, productsCartService) {
 
@@ -80,6 +96,7 @@ define([
                 var showWelcome = toState.data.showWelcome;
                 var underConstruction = toState.data.underConstruction;
 
+                /*
                 showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
                 underConstruction != 'undefined' && underConstruction ?
                     $(document.body).addClass('under-construction') :
@@ -89,6 +106,7 @@ define([
                     event.preventDefault();
                     // get me a login modal!
                 }
+                */
             });
         });
 

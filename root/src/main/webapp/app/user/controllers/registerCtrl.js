@@ -74,7 +74,7 @@ define(['./module'], function (controllers) {
                 $('#' + id).siblings(".validationInfo").delay(200).fadeOut();
 
             }
-*/
+            */
 
         }]);
 

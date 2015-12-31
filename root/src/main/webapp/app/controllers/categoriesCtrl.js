@@ -7,7 +7,6 @@ define(['./module'], function (controllers) {
         'dealService', '$location', 'resolveParams',
         function ($scope, categoryService, dealService, $location, resolveParams) {
 
-            l(resolveParams)
             $scope.categories = resolveParams.categories;
             $scope.specialOffer= resolveParams.specialOffer;
             $scope.popularProducts = resolveParams.popularProducts;
