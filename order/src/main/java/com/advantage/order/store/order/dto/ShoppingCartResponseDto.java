@@ -29,7 +29,7 @@ public class ShoppingCartResponseDto {
         /**
          * Private inner class for color attribute of product in user cart.
          */
-        private class ProductColor {
+        public class ProductColor {
 
             /*  private class ProductColor - properties  */
             private String code;
@@ -79,6 +79,8 @@ public class ShoppingCartResponseDto {
         private boolean exists;
 
         /*  private class CartProduct - Construtors  */
+        public CartProduct(Long productId) { this.productId = productId; }
+
         public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl) {
             this.productId = productId;
             this.productName = productName;
@@ -86,6 +88,15 @@ public class ShoppingCartResponseDto {
             this.quantity = quantity;
             this.imageUrl = imageUrl;
             this.exists = true;
+        }
+
+        public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl, boolean exists) {
+            this.productId = productId;
+            this.productName = productName;
+            this.price = price;
+            this.quantity = quantity;
+            this.imageUrl = imageUrl;
+            this.exists = exists;
         }
 
         public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl, ProductColor color) {
@@ -167,6 +178,14 @@ public class ShoppingCartResponseDto {
             this.color = color;
         }
 
+        public void setColor(String code, String name, int inStock) {
+            this.color = new ProductColor(code, name, inStock);
+        }
+
+        public void createProductColor(String code, String name, int inStock) {
+            this.setColor(new ProductColor(code, name, inStock));
+        }
+
         public boolean isExists() {
             return this.exists;
         }
@@ -181,9 +200,7 @@ public class ShoppingCartResponseDto {
     List<CartProduct> productsInCart = new ArrayList<>();
 
     /* public class ShoppingCartResponseDto - Constructors  */
-    public ShoppingCartResponseDto() {
-
-    }
+    public ShoppingCartResponseDto() {  }
 
     public ShoppingCartResponseDto(long userId) {
         this.userId = userId;
@@ -201,6 +218,11 @@ public class ShoppingCartResponseDto {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public CartProduct createCartProduct(Long productId, String productName, double price, int quantity, String imageUrl, boolean exists) {
+        return new CartProduct(productId, productName, price, quantity, imageUrl, exists);
+
     }
 
     public List<CartProduct> getProductsInCart() {

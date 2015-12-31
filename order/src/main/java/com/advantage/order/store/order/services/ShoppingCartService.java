@@ -90,6 +90,11 @@ public class ShoppingCartService {
         return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
     }
 
+    public String getShipExWsdlFile() {
+        return shoppingCartRepository.getShipExWsdlFile();
+    }
+
+
 //    /**
 //     * Call {@link ShoppingCartRepository} to do the order purchase process.
 //     * @param userId

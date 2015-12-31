@@ -17,9 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -193,11 +196,18 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/carts/ShipEx/wsdl", method = RequestMethod.GET)
+    @RequestMapping(value = "/carts/ShipEx", method = RequestMethod.GET)
     @ApiOperation(value = "Get ShipEx Shipping Cost WSDL")
-    public ResponseEntity<String> getShipExShippingCostWSDL() {
+    public ResponseEntity<String> getShipExWsdlTest(HttpServletRequest request, HttpServletResponse response) {
+        String responseShipEx = shoppingCartService.getShipExWsdlFile();
+        return new ResponseEntity<>(responseShipEx, HttpStatus.OK);
+    }
 
-        String stringURI = Constants.URI_SERVER_SHIP_EX + "/shipex?wsdl";
+    /*  =========================================================================================================   */
+
+    public ResponseEntity<String> getWsdlStringTest1() {
+
+        String stringURI = Constants.URI_SERVER_SHIP_EX + "/shipex?WSDL";
 
         System.out.println("Starting SOAPRequest...");
         try {

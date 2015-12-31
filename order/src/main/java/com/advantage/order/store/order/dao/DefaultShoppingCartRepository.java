@@ -7,26 +7,33 @@ import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
+import com.advantage.order.store.order.util.WSDLHelper;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.string_resources.Constants;
+//import com.advantage.root.util.ValidationHelper;
+import com.advantage.root.util.StringHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.predic8.schema.ComplexType;
+import com.predic8.schema.Element;
+import com.predic8.schema.Schema;
+import com.predic8.schema.Attribute;
+import com.predic8.wsdl.*;
+import com.predic8.wstool.creator.RequestTemplateCreator;
+import com.predic8.wstool.creator.SOARequestCreator;
+import groovy.xml.MarkupBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-//import org.json.JSONObject;
 
 /**
  * Order services - default repository for {@code ShoppingCart}.
@@ -37,12 +44,6 @@ import java.util.Map;
 @Qualifier("shoppingCartRepository")
 @Repository
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository {
-
-    //  FINALs for REST API calls - BEGIN
-    //  TODO Will be replaces with configuration variables (T.B.D.)
-    private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
-    private static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
-    //  FINALs for REST API calls - END
 
     private static String NOT_FOUND = "NOT FOUND";
 
@@ -77,16 +78,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         this.failureMessage = failureMessage;
     }
 
-    public ProductDto setNotFoundProductDto(Long productId) {
-        ProductDto dto = new ProductDto();
-
-        dto.setProductId(productId);
-        dto.setProductName(NOT_FOUND);
-        dto.setImageUrl(NOT_FOUND);
-        dto.setDescription("");
-        dto.setPrice(-999999.99);       //  Price that makes no sense
-
-        return dto;
+    public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
+        return new ShoppingCartResponseDto().createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
     }
 
     /**
@@ -414,19 +407,16 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
-     *
-     * @param productId Idetity of the product to get details.
-     * @return {@link ProductDto} containing the JSON with requsted product details.
+     * Get {@code Product} details from <b>CATALOG service</b> into {@link ProductDto}.
+     * @param productId to get details for.
+     * @return {@code Product} details in {@link ProductDto}.
      */
-    public ProductDto getProductDetails(Long productId, String hexColor) {
+    public ProductDto getProductDtoDetails(Long productId) {
         /*  Build REQUEST URI */
         String stringURL = Constants.URI_SERVER_CATALOG +
-                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+                Constants.CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
         //String stringURL = ServiceConfiguration.getUriServerCatalog() +
         //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
-//        String stringURL = ServiceConfiguration.getUriServerCatalog() +
-//                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
 
         // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
         System.out.println("stringURL=\"" + stringURL + "\"");
@@ -439,32 +429,66 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
             if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
                 //  Product not found (409)
-                dto = setNotFoundProductDto(productId);
-            }
-            else {
+                dto = new ProductDto(productId, -1L, NOT_FOUND, -999999.99, NOT_FOUND, NOT_FOUND, null, null, null);
+            } else {
                 dto = getProductDtofromJsonObjectString(stringResponse);
-
-                if (isColorExistsInColorsList(hexColor, dto.getColors())) {
-                    System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + dto.getProductId());
-                    System.out.println("   product name = " + dto.getProductName());
-                    System.out.println("   price per item = " + dto.getPrice());
-                    System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                    System.out.println("   ColorAttrubute.Code (hex) = \'" + hexColor + "\'");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getName() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
-                } else {
-                    //  Product with requested color NOT FOUND in Product table in CATALOG schema
-                    dto = setNotFoundProductDto(productId);
-                }
             }
-
         } catch (IOException e) {
             System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
             e.printStackTrace();
         }
 
         return dto;
+    }
+
+    /**
+     * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
+     *
+     * @param productId Idetity of the product to get details.
+     * @return {@link ProductDto} containing the JSON with requsted product details.
+     */
+    public ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor) {
+
+        ProductDto dto = this.getProductDtoDetails(productId);
+
+        ShoppingCartResponseDto.CartProduct cartProduct = null;
+
+        if (! dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+
+            ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
+
+            if (colorAttrib != null) {
+                cartProduct = new ShoppingCartResponseDto()
+                                    .createCartProduct(dto.getProductId(),
+                                                        dto.getProductName(),
+                                                        dto.getPrice(),
+                                                        0,
+                                                        dto.getImageUrl(),
+                                                        true);
+
+                cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
+                        colorAttrib.getName().toUpperCase(),
+                        colorAttrib.getInStock());
+
+                System.out.println("Received Product information: ");
+                System.out.println("   product id = " + dto.getProductId());
+                System.out.println("   product name = " + dto.getProductName());
+                System.out.println("   price per item = " + dto.getPrice());
+                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                System.out.println("   ColorAttrubute.Code (hex) = \'" + colorAttrib.getCode().toUpperCase() + "\'");
+                System.out.println("   ColorAttrubute.Color (name) = \"" + colorAttrib.getName().toUpperCase() + "\"");
+                System.out.println("   ColorAttrubute.inStock = " + colorAttrib.getInStock());
+            } else {
+                //  Product with specific color NOT FOUND in Product table in CATALOG schema
+                cartProduct = setNotFoundCartProduct(productId);
+            }
+        }
+        else {
+            //  Product with this productId not found in Product table in CATALOG schema (409)
+            cartProduct = setNotFoundCartProduct(productId);
+        }
+
+        return cartProduct;
     }
 
     /**
@@ -491,31 +515,32 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 //for (ShoppingCart cart : shoppingCarts) {
                 for (ShoppingCart cart : shoppingCarts) {
 
-                    ProductDto dto = getProductDetails(cart.getProductId(),
-                                                            ShoppingCart.convertIntColorToHex(cart.getColor()));
+                    //ProductDto dto = getCartProductDetails(cart.getProductId(),
+                    //                                        ShoppingCart.convertIntColorToHex(cart.getColor()));
+                    ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
+                                                                        ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
 
-                    if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
-                        userCart.addCartProduct(dto.getProductId(),
-                                dto.getProductName(),   //  "NOT FOUND"
-                                dto.getPrice(),         //  -999999.99
-                                cart.getQuantity(),
-                                dto.getImageUrl(),      //  "NOT FOUND"
+                    if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                        userCart.addCartProduct(cartProduct.getProductId(),
+                                cartProduct.getProductName(),   //  "NOT FOUND"
+                                cartProduct.getPrice(),         //  -999999.99
+                                cartProduct.getQuantity(),      //  0
+                                cartProduct.getImageUrl(),      //  "NOT FOUND"
                                 "000000",
                                 "BLACK",
                                 0,
                                 false); //  isExists = false
-
                     }
                     else {
                         /*  Add a product to user shopping cart response class  */
-                        userCart.addCartProduct(dto.getProductId(),
-                                dto.getProductName(),
-                                dto.getPrice(),
+                        userCart.addCartProduct(cartProduct.getProductId(),
+                                cartProduct.getProductName(),
+                                cartProduct.getPrice(),
                                 cart.getQuantity(),
-                                dto.getImageUrl(),
-                                dto.getColors().get(0).getCode(),
-                                dto.getColors().get(0).getName(),
-                                dto.getColors().get(0).getInStock());
+                                cartProduct.getImageUrl(),
+                                cartProduct.getColor().getCode(),
+                                cartProduct.getColor().getName(),
+                                cartProduct.getColor().getInStock());
                     }
                 }
             }
@@ -634,23 +659,23 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         " color=" + shoppingCart.getColor() +
                         " quantity=" + shoppingCart.getQuantity());
 
-                ProductDto dto = getProductDetails(shoppingCart.getProductId(),
+                ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(shoppingCart.getProductId(),
                                                         ShoppingCart.convertIntColorToHex(color));
-                if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
-                    String name = dto.getProductName();
-                    double pricePerItem = dto.getPrice();
-                    String managedImageId = dto.getImageUrl();
+                if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                    String name = cartProduct.getProductName();
+                    double pricePerItem = cartProduct.getPrice();
+                    String managedImageId = cartProduct.getImageUrl();
 
                     System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + dto.getProductId());
+                    System.out.println("   product id = " + cartProduct.getProductId());
                     System.out.println("   product name = " + name);
                     System.out.println("   price per item = " + pricePerItem);
                     System.out.println("   managedImageId = \"" + managedImageId + "\"");
-                    System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
-            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getName() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+                    System.out.println("   ColorAttrubute.HexColor = \"" + cartProduct.getColor().getCode() + "\"");
+                    System.out.println("   ColorAttrubute.Color = \"" + cartProduct.getColor().getName() + "\"");
+                    System.out.println("   ColorAttrubute.inStock = " + cartProduct.getColor().getInStock());
                 } else {
-                    dto = setNotFoundProductDto(productId);
+                    cartProduct = setNotFoundCartProduct(productId);
                 }
 
             } else {
@@ -686,7 +711,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
      * stock. If the quantity of any cart product <b>is greater than</b> the quantity in stock then the product will be added to
      * the list of products in the cart with the <ul>quantity in stock</ul>.
-     * @see #getProductDetails(Long, String)
+     * @see #getCartProductDetails(Long, String)
      */
     @Override
     public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
@@ -704,32 +729,34 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
 
-            ProductDto dto = getProductDetails(cartProduct.getProductId(), cartProduct.getHexColor());
+            ShoppingCartResponseDto.CartProduct cartProductDto = getCartProductDetails(cartProduct.getProductId(), cartProduct.getHexColor());
 
-            if (cartProduct.getQuantity() > dto.getColors().get(0).getInStock()) {
+            if (cartProduct.getQuantity() > cartProductDto.getColor().getInStock()) {
 
                 ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId,
                         cartProduct.getProductId(),
-                        ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()));
+                        ShoppingCart.convertHexColorToInt(cartProductDto.getColor().getCode()));
+
                 ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
                 if (shoppingCart != null) {
                     //  Update quantity of cart product to product's quantity in stock
-                    shoppingCart.setQuantity(dto.getColors().get(0).getInStock());
+                    shoppingCart.setColor(ShoppingCart.convertHexColorToInt(cartProductDto.getColor().getCode()));
+                    shoppingCart.setQuantity(cartProductDto.getColor().getInStock());
                     entityManager.persist(shoppingCart);
                 } else {
-                    //  Unlikely, since we already got the product details and compare its quantity in stock to the same product in cart.
-                    System.out.println("Product \"" + dto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
+                    //  Unlikely to occur, since we already got the product details and compare its quantity in stock to the same product in cart.
+                    System.out.println("Product \"" + cartProductDto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
                 }
 
-                responseDto.addCartProduct(cartProduct.getProductId(),
-                        dto.getProductName(),
-                        dto.getPrice(),
-                        dto.getColors().get(0).getInStock(),
-                        dto.getImageUrl(),
-                        dto.getColors().get(0).getCode(),
-                        dto.getColors().get(0).getName(),
-                        dto.getColors().get(0).getInStock());
+                responseDto.addCartProduct(cartProductDto.getProductId(),
+                                            cartProductDto.getProductName(),
+                                            cartProductDto.getPrice(),
+                                            cartProductDto.getColor().getInStock(),
+                                            cartProductDto.getImageUrl(),
+                                            cartProductDto.getColor().getCode(),
+                                            cartProductDto.getColor().getName(),
+                                            cartProductDto.getColor().getInStock());
 
             }
 
@@ -802,10 +829,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         /*  Build REQUEST URI */
         String stringURL = Constants.URI_SERVER_ACCOUNT +
-                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
-//        String stringURL = ServiceConfiguration.getUriServerAccount() +
-//                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
-        //String stringURL = ServiceConfiguration.getUriServerAccount() +
+                           Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         //String stringURL = ServiceConfiguration.getUriServerAccount() +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
@@ -835,7 +859,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     public boolean isProductExists(Long productId, String hexColor) {
         boolean result = false;
 
-        ProductDto productDetails = getProductDetails(productId, hexColor);
+        ProductDto productDetails = getProductDtoDetails(productId);
         if (! productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
             if (productDetails != null) {
                 List<ColorAttributeDto> colors = productDetails.getColors();
@@ -1021,31 +1045,199 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return dto;
     }
 
-    private static String getColorName(String hexColor) {
-        switch(hexColor.toUpperCase()) {
-            case "0":
-            case "000000":
-                return "BLACK";
-            case "FF":
-            case "0000FF":
-                return "BLUE";
-            case "FF00":
-            case "00FF00":
-                return "GREEN";
-            case "C0C0C0":
-                return "SILVER";
-            case "FF0000":
-                return "RED";
-            case "FF0E68C":
-                return "KHAKI";
-            case "FFC0CB":
-                return "PINK";
-            case "FFFF00":
-                return "YELLOW";
-            case "FFFFFF":
-                return "WHITE";
+    /**
+     * Test accessing {@code ShipEx} application using SOAP
+     * @return {@link String}
+     */
+    @Override
+    public String getShipExWsdlFile() {
+
+        String content = null;
+        String urlStr = Constants.URI_SERVER_SHIP_EX + "/shipex.wsdl";
+
+        URL url = null;
+        URLConnection urlConnection = null;
+
+        try {
+            url = new URL(urlStr);
+            urlConnection = url.openConnection();
+            if(urlConnection.getContent() != null) {
+                System.out.println("\'" + urlStr + "\' is GOOD URL");
+
+                String contentType = urlConnection.getContentType();
+
+                content = StringHelper.getStringFromInputStream(urlConnection.getInputStream());
+
+                System.out.println("Content: \n" + content.toString());
+
+                listWSDLOperations();
+            } else {
+                System.out.println("BAD URL");
+            }
+        } catch (MalformedURLException ex) {
+            System.out.println("bad URL");
+        } catch (IOException ex) {
+            System.out.println("Failed opening connection. Perhaps WS is not up?");
         }
-        return "";
+
+        return content;
     }
 
+    public void listWSDLOperations() {
+
+        String stringUrl = Constants.URI_SERVER_SHIP_EX + "/shipex.wsdl";
+
+        List<Operation> operations = WSDLHelper.getListWSDLOperations(Constants.URI_SERVER_SHIP_EX, "/shipex.wsdl");
+
+        WSDLParser parser = new WSDLParser();
+
+        Definitions wsdl = parser.parse(stringUrl);
+
+        List<Schema> schemas = wsdl.getSchemas();
+        if ((schemas != null) && (schemas.size() > 0 )) {
+            for (Schema schema : schemas) {
+                String schemaName = schema.getName();
+                List<Attribute> attributes = schema.getAttributes();
+                String requestTemplate = schema.getRequestTemplate();
+                List<Element> elements = schema.getAllElements();
+                if ((elements != null) && (elements.size() > 0)) {
+                    Element e = elements.get(0);
+                    String name = e.getName();
+                    String asString = e.getAsString();
+                    String prefix = e.getPrefix();
+                    int i  = 0;
+                }
+                List<ComplexType> types = schema.getComplexTypes();
+
+                boolean isTrue = true;
+            }
+        }
+
+        //String portTypeName = null;
+        //for (PortType pt : wsdl.getPortTypes()) {
+        //    System.out.println(pt.getName());
+        //    portTypeName = pt.getName();
+        //    for (Operation operation : pt.getOperations()) {
+        //        operations.add(operation);
+        //    }
+        //}
+
+        //System.out.println("-=# Operations List - Begin #=-");
+        //for (Operation op : operations) {
+        //    System.out.println("* " + op.getName());
+        //}
+        //System.out.println("-=# Operations List - End   #=-");
+
+        StringWriter writer = new StringWriter();
+        SOARequestCreator creator = new SOARequestCreator(wsdl, new RequestTemplateCreator(), new MarkupBuilder(writer));
+
+        ////creator.createRequest(PortType name, Operation name, Binding name);
+        //creator.createRequest(portTypeName, "ShippingCost", "ArticleServicePTBinding");
+        //System.out.println(writer);
+
+        for (Service service : wsdl.getServices()) {
+            for (Port port : service.getPorts()) {
+                Binding binding = port.getBinding();
+                PortType portType = binding.getPortType();
+                for (Operation op : portType.getOperations()) {
+                    creator.createRequest(port.getName(), op.getName(), binding.getName());
+                    System.out.println(writer);
+                    writer.getBuffer().setLength(0);
+                }
+            }
+        }
+
+    }
+
+    public void createTemplates(String url) {
+
+        WSDLParser parser = new WSDLParser();
+        Definitions wsdl = parser.parse(url);
+
+        StringWriter writer = new StringWriter();
+        SOARequestCreator creator = new SOARequestCreator(wsdl, new RequestTemplateCreator(), new MarkupBuilder(writer));
+
+        //creator.createRequest(PortType name, Operation name, Binding name);
+        creator.createRequest("ArticleServicePT", "create", "ArticleServicePTBinding");
+        System.out.println(writer);
+
+        for (Service service : wsdl.getServices()) {
+            for (Port port : service.getPorts()) {
+                Binding binding = port.getBinding();
+                PortType portType = binding.getPortType();
+                for (Operation op : portType.getOperations()) {
+                    creator.createRequest(port.getName(), op.getName(), binding.getName());
+                    System.out.println(writer);
+                    writer.getBuffer().setLength(0);
+                }
+            }
+        }
+    }
+
+    @Override
+    public String getShipExShippingCost() {
+
+        /*  ******* Init    ******* */
+        //costRequest = new ShippingCostRequest();
+        //orderRequest = new PlaceShippingOrderRequest();
+        //address = new SEAddress();
+        //endpoint = new ShipExEndpoint(service);
+        //
+        //address.setAddressLine1("address");
+        //address.setCity("city");
+        //address.setCountry("ua");
+        //address.setPostalCode("123123");
+        //address.setState("state");
+        //
+        //costRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_SHIPPING_COST);
+        //costRequest.setSEAddress(address);
+        //costRequest.setSENumberOfProducts(5);
+        //costRequest.setSECustomerPhone("+1231234567");
+        //costRequest.setSECustomerName("name");
+        //
+        //orderRequest.setSEAddress(address);
+        //orderRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
+        //orderRequest.setOrderNumber("1234567890");
+        //orderRequest.setSECustomerPhone("+1231234567");
+        //orderRequest.setSECustomerName("name");
+        //
+        //ShippingCostResponse response = endpoint.getShippingCost(costRequest);
+
+        boolean isValid = false;
+
+        /* Check response received values   */
+        //boolean isValid = response.getCode().equalsIgnoreCase(Constants.SHIP_EX_RESPONSE_STATUS_OK);
+        //
+        //if (isValid) {
+        //    isValid = (! response.getAmount().isEmpty());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = ((response.getAmount() < 0) || (10000000000.00 < response.getAmount()));
+        //}
+        //
+        //if (isValid) {
+        //    isValid = (!response.getCurrency().isEmpty());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = ValidationHelper.isValidCurrency(response.getCurrency());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = (!response.getSETransactionType().isEmpty());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = response.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType());
+        //}
+        //
+        String result = null;
+
+        if (isValid) {
+            result = "response is successful";
+        }
+
+        return result;
+    }
 }
