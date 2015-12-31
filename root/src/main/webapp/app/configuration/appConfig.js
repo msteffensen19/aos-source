@@ -17,16 +17,18 @@ define([],function(){
                 requireLogin: false,  // this property will apply to all children of 'app'
                 beforeLoader: false,
                 navLinks: true,
+                breadcrumbName: "Home Page",
             },
             resolve : {
-            }
+            },
         })
         .state('welcome',{
             url: '/welcome',
             templateUrl: 'app/views/welcome.html',
             data: {
                 requireLogin: false,
-                showWelcome : true// this property will apply to all children of 'app'
+                showWelcome : true, // this property will apply to all children of 'app'
+                breadcrumbName: "Welcome",
             }
         })
         .state('register',{
@@ -34,7 +36,8 @@ define([],function(){
             templateUrl: 'app/user/views/register-page.html',
             controller: 'registerCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName: "Register",
             },
             resolve : {
                 
@@ -45,7 +48,8 @@ define([],function(){
             templateUrl: 'app/views/shoppingCart.html',
             controller: 'shoppingCartCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName: "ShoppingCart",
             },
             resolve : {
                 category: function (productsCartService, $stateParams) {
@@ -58,12 +62,13 @@ define([],function(){
             templateUrl: 'app/views/category-page.html',
             controller: 'categoryCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName: "Category"
             },
             resolve : {
                 category: function (categoryService, $stateParams) {
                     return categoryService.getCategoryById($stateParams.id);
-                }
+                },
             }
         })
         .state('product',{
@@ -71,7 +76,8 @@ define([],function(){
             templateUrl: 'app/views/product-page.html',
             controller: 'productCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName:  "Product"
             },
             resolve : {
                 selectedColor: function($stateParams){
@@ -92,7 +98,8 @@ define([],function(){
             url: '/404',
             templateUrl: 'app/views/404.html',
             data: {
-                underConstruction: true // this property will apply to all children of 'app'
+                underConstruction: true,  // this property will apply to all children of 'app'
+                breadcrumbName: "Home Page",
             }
         });
 

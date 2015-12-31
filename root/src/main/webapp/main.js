@@ -4,17 +4,25 @@
 require.config({
     "waitSeconds" : 600,
     paths: {
-        'angular': 'vendor/angular/angular.min',
-        'angular-cookie': 'vendor/angular-cookie/angular-cookie.min',
-        'angular-translate': 'vendor/angular-translate/angular-translate.min',
-        'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
-        'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+
         'jquery' : 'vendor/jquery/dist/jquery.min',
         'jquery-bez' : 'vendor/jquery-bez/jquery.bez.min',
         'jquery.animate-colors' : 'vendor/jquery-color-animation/jquery.animate-colors-min',
+
+
+        'angular': 'vendor/angular/angular.min',
+        'angular-cookie': 'vendor/angular-cookie/angular-cookie.min',
+        'angular-translate': 'vendor/angular-translate/angular-translate.min',
         "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
         'angularAnimate' : 'vendor/angular-animate/angular-animate.min',
         'angularAutocomplete' : 'vendor/ngAutocomplete/src/ngAutocomplete',
+        'ncy-angular-breadcrumb' : 'vendor/angular-breadcrumb/release/angular-breadcrumb.min',
+
+
+        'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
+        'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+
+
         'jPushMenu' : 'utils/jPushMenu',
         'mainScript' : 'utils/main',
         'accordion' : 'utils/accordion',
@@ -23,11 +31,15 @@ require.config({
         'wrongDirection' : 'utils/wrongDirection',
         'UserCookie' : 'utils/Models/UserCookie',
         'slider' : 'utils/slider',
+
+
         'englishLanguage' : 'languages/english',
+
 
     },
     shim: {
         'angular' : {'exports' : 'angular'},
+
         'app': {
             deps: ['angular']
         },
@@ -35,6 +47,9 @@ require.config({
             deps: ['angular']
         },
         'angular-translate': {
+            deps: ['angular']
+        },
+        'ncy-angular-breadcrumb' : {
             deps: ['angular']
         },
         'nouislider' : {
@@ -81,7 +96,7 @@ require.config({
 window.name = "NG_DEFER_BOOTSTRAP!";
 require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
          'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
-        'nouislider', 'accordion', 'wrongDirection', 'UserCookie',
+        'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
         'angularAnimate','ui-bootstrap'], function(angular, app)
     {

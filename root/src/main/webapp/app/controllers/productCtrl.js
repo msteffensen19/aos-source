@@ -4,8 +4,19 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'productService', 'product', 'selectedColor', 'quantity', 'pageState',
-        function ($scope, productService, product, selectedColor, quantity, pageState) {
+    controllers.controller('productCtrl', ['$scope', 'productService', 'product',
+        'selectedColor', 'quantity', 'pageState', 'categoryService',
+        function ($scope, productService, product, selectedColor, quantity, pageState, categoryService) {
+
+            l("product")
+
+            l(product)
+            categoryService.getCategoryById(product.categoryId).then(function(res){
+                $scope.categoryName = res.categoryName;
+            });
+
+            l("")
+            l("")
 
             for(var i = 0; i < product.colors.length; i++){
                 if(product.colors[i].code == selectedColor)

@@ -147,8 +147,6 @@ define(['./module'], function (directives) {
                             }
                         });
                     });
-                    l(productsColors)
-                    l(products)
                     return productsColors;
                 }
 
