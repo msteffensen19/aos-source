@@ -10,7 +10,7 @@ import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.root.string_resources.Url_resources;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -25,7 +25,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 //import org.json.JSONObject;
 
 /**
@@ -383,9 +382,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
             }
         }
-
         return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
-
     }
 
     /**
@@ -421,7 +418,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ProductDto getProductDetails(Long productId, String hexColor) {
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_CATALOG +
+        String stringURL = Url_resources.getUrlPrefixCatalog() +
                 CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
         //String stringURL = ServiceConfiguration.getUriServerCatalog() +
         //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
@@ -801,7 +798,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean isExists = false;
 
         /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_ACCOUNT +
+        String stringURL = Url_resources.getUrlPrefixAccount() +
                 ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
