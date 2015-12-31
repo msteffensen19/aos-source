@@ -116,7 +116,7 @@ public class DataSourceInit4Json {
                     productDto.getImages().add(product.getManagedImageId());
                 }
 
-                //TODO-EVG move to the productService
+                //TODO-EVG move to the productService ?
                 product.setColors(productService.getColorAttributes(productDto.getColors(), product));
                 product.setImages(productService.getImageAttribute(productDto.getImages(), product));
 
