@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Helpful {@link String} methods.
@@ -93,5 +94,20 @@ public class StringHelper {
         }
 
         return content.toString();
+    }
+
+    /**
+     * Find if a {@link List} of {@link String}s contains a specific {@link String}.
+     * @param stringToFind
+     * @param arrayToSearch
+     * @return
+     */
+    public static boolean isContains(String stringToFind, List<String> arrayToSearch) {
+        for (String test : arrayToSearch) {
+            if (test.equals(stringToFind)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

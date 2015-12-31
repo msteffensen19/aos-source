@@ -241,8 +241,10 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
-        if ((email == null) || (email.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+        if (AppUserConfiguration.EMAIL_ADDRESS_IN_LOGIN.equalsIgnoreCase("Yes")) {
+            if ((email == null) || (email.length() == 0)) {
+                return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+            }
         }
 
         //  Try to get user details by login user-name
@@ -280,7 +282,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         }
 
         //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
-        if (AppUserConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
+        if (AppUserConfiguration.EMAIL_ADDRESS_IN_LOGIN.equalsIgnoreCase("Yes")) {
             if ((!email.isEmpty()) && (email.trim().length() > 0)) {
                 if ((!appUser.getEmail().isEmpty()) && (appUser.getEmail().trim().length() > 0)) {
                     if (appUser.getEmail().compareToIgnoreCase(email) != 0) {

@@ -11,7 +11,6 @@
     },
     "products": [
       {
-        "productId": 1,
         "productName": "HP Pavilion 15t Touch Laptop",
         "price": 519.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
@@ -58,7 +57,6 @@
         ]
       },
       {
-        "productId": 2,
         "productName": "HP Pavilion 15z Laptop",
         "price": 549.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
@@ -95,7 +93,6 @@
         ]
       },
       {
-        "productId": 3,
         "productName": "HP ENVY - 15t Laptop",
         "price": 549.99,
         "description": "Designed for style and comfort",
@@ -132,7 +129,6 @@
         ]
       },
       {
-        "productId": 4,
         "productName": "HP Spectre x360 - 13-4101dx",
         "price": 1169.99,
         "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
@@ -169,7 +165,6 @@
         ]
       },
       {
-        "productId": 5,
         "productName": "HP Stream - 11-d020nr Laptop",
         "price": 179.99,
         "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
@@ -221,7 +216,6 @@
         ]
       },
       {
-        "productId": 6,
         "productName": "HP ENVY x360 - 15t Laptop",
         "price": 699.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
@@ -263,7 +257,6 @@
         ]
       },
       {
-        "productId": 7,
         "productName": "HP ENVY - 17t Touch Laptop",
         "price": 949.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
@@ -300,7 +293,6 @@
         ]
       },
       {
-        "productId": 8,
         "productName": "HP ENVY - 17t Touch Laptop v2",
         "price": 419.99,
         "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
@@ -337,7 +329,6 @@
         ]
       },
       {
-        "productId": 9,
         "productName": "HP Chromebook 14 G1(ENERGY STAR)",
         "price": 299.99,
         "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
@@ -374,7 +365,6 @@
         ]
       },
       {
-        "productId": 10,
         "productName": "HP Chromebook 14 G1(ES)",
         "price": 1261.99,
         "description": "Introducing the next generation HP EliteBook Folio 9480m Ultrabook™[2]. Timeless, ultra slim profile in an all metal design with optional 4G Broadband wWAN, and 4th Generation Intel® Core™ Processing Technology.",
@@ -415,17 +405,130 @@
     ]
   },
   {
+    "categoryId": 2,
+    "categoryName": "HEADPHONES",
+    "categoryImageId": 1240,
+    "promotedProduct": {
+      "id": 12,
+      "staringPrice": 200,
+      "promotionHeader": "Be heard",
+      "promotionSubHeader": "Never lose a call. The in-line microphone is subtly designed into the flat cord and includes simple controls for volume, mute, answer and cancel"
+    },
+    "products": [
+      {
+        "productName": "HP H2310 Black In-ear Headset",
+        "price": 13.99,
+        "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
+        "imageUrl": "2100",
+        "images": [],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "BLUE",
+            "code": "0000FF"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with a 3.5 mm port available."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.03 lb"
+          }
+        ]
+      },
+      {
+        "productName": "Beats Studio 2 Over-Ear Matte Black Headphones",
+        "price": 179.99,
+        "description": "The world’s most famous headphone has been completely redesigned and reimagined. The new Beats Studio® is lighter, sexier, stronger, and more comfortable, with precision sound, Adaptive Noise Canceling, a 20-hour rechargeable battery, and RemoteTalk™. It has all the energy and excitement you expect from Beats, plus a powerful, reengineered sound.",
+        "imageUrl": "2200",
+        "images": [
+          2201
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "khaki",
+            "code": "F0E68C"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible across all devices having 3.5 mm audio connector (Smart phone compatibility may vary)."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.57 lb"
+          }
+        ]
+      },
+      {
+        "productName": "HP H2310 Pink In-ear Headset",
+        "price": 13.99,
+        "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
+        "imageUrl": "2300",
+        "images": [],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "pink",
+            "code": "FFC0CB"
+          },
+          {
+            "inStock": 10,
+            "name": "white",
+            "code": "FFFFFF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with a 3.5 mm port available."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.03 lb"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "categoryId": 3,
     "categoryName": "TABLETS",
     "promotedProduct": {
-      "id": 12,
+      "id": 16,
       "staringPrice": 1429,
       "promotionHeader": "Built for durability and mobility",
       "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge."
     },
     "products": [
       {
-        "productId": 11,
         "productName": "HP ElitePad 1000 G2 Tablet",
         "price": 1009,
         "description": "More than a tablet—a total business solution. The elegant and sleek HP ElitePad 1000 G2 has the performance and flexibility to transform the way you work. Redefine productivity and stay light with the confidence of the leading manageability, security, and support you expect from HP.",
@@ -476,7 +579,6 @@
         ]
       },
       {
-        "productId": 12,
         "productName": "HP Elite x2 1011 G1 Tablet",
         "price": 1279,
         "description": "Ultrabook™[2] Power\nPower up for ultimate power with Windows 8.1,[1] 5th Gen Intel® Core™ M processors,[4] with optional vPro™[5] and long battery life provided by dual tablet and keyboard base batteries.",
@@ -526,7 +628,6 @@
         ]
       },
       {
-        "productId": 13,
         "productName": "HP Pro Tablet 608 G1",
         "price": 479,
         "description": "Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize nearly any business process. Choose from an expansive choice of accessories[2] for a customized experience.",
@@ -550,7 +651,7 @@
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "FFFFFF"
+            "code": "000000"
           }
         ],
         "attributes": [
@@ -568,11 +669,109 @@
           },
           {
             "attributeName": "DISPLAY",
-            "attributeValue": "7.9\" diagonal FHD multi-touch display with Corning ® Gorilla® Glass® (2048 x 1536)"
+            "attributeValue": "7.9\" diagonal FHD multi-touch display with Corning® Gorilla® Glass® (2048 x 1536)"
           },
           {
             "attributeName": "MEMORY",
             "attributeValue": "2 GB LPDDR3-1600 SDRAM"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryId": 4,
+    "categoryName": "SPEAKERS",
+    "promotedProduct": {
+      "id": 17,
+      "staringPrice": 500,
+      "promotionHeader": "Studio sensation.",
+      "promotionSubHeader": "Remove the bulk with the ultra-sleek HP Wireless Portable Speaker S9500. Simplify with Bluetooth® 2.1 connectivity via NFC one-touch pairing for wireless streaming with Android™ and Apple® enabled devices."
+    },
+    "products": [
+      {
+        "productName": "Bose Soundlink Bluetooth Speaker III",
+        "price": 269.99,
+        "description": "Meet the speaker that brings your music and friends together-with a style that's all your own. The SoundLink® Bluetooth speaker III is our best-performing mobile Bluetooth speaker. It plays louder and longer than its popular predecessor, with advanced Bose® technologies that reproduce the fullness, clarity and depth of your music. And a colorful assortment of optional covers let you personalize your speaker.",
+        "imageUrl": "4200",
+        "images": [],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "gray",
+            "code": "808080"
+          },
+          {
+            "inStock": 10,
+            "name": "Silver",
+            "code": "C0C0C0"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "3.03 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          }
+        ]
+      },
+      {
+        "productName": "HP S9500 Bluetooth Wireless Speaker",
+        "price": 69.99,
+        "description": "Impress … everyone! Futuristic design with perforated steel formed into subtle angles. Requiring only minimal space, this speaker is the ideal complement to any setting.",
+        "imageUrl": "4100",
+        "images": [
+          4101
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "gray",
+            "code": "808080"
+          },
+          {
+            "inStock": 10,
+            "name": "LightGray",
+            "code": "D3D3D3"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.95 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
           }
         ]
       }

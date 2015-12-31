@@ -11,7 +11,6 @@ import com.advantage.root.store.dto.AttributeItem;
 import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.store.dto.PromotedProductDto;
-import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -22,6 +21,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
@@ -67,41 +67,18 @@ public class DataSourceInit4Json {
         session.persist(category6);
 
         /*Attributes INIT*/
+
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology"};
+
         Map<String, Attribute> defAttributes = new HashMap<>();
-        Attribute attribute1 = new Attribute();
-        Attribute attribute2 = new Attribute();
-        Attribute attribute3 = new Attribute();
-        Attribute attribute4 = new Attribute();
-        Attribute attribute5 = new Attribute();
-        Attribute attribute6 = new Attribute();
-        Attribute attribute7 = new Attribute();
 
-        attribute1.setName("GRAPHICS");
-        attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
-        attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
-        attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
-        attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-        // attribute6.setName(Constants_catalog.AttributeNames.ATTRIBUTE_COLOR);
-        attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
-
-        session.persist(attribute1);
-        session.persist(attribute2);
-        session.persist(attribute3);
-        session.persist(attribute4);
-        session.persist(attribute5);
-        //session.persist(attribute6);
-        session.persist(attribute7);
-
+        for (String attrib : newAttributes) {
+            Attribute attribute = new Attribute();
+            attribute.setName(attrib);
+            session.persist(attribute);
+            defAttributes.put(attrib.toUpperCase(), attribute);
+        }
         transaction.commit();
-
-        defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
-        defAttributes.put(attribute2.getName().toUpperCase(), attribute2);
-        defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
-        defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
-        defAttributes.put(attribute5.getName().toUpperCase(), attribute5);
-        // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
-        defAttributes.put(attribute7.getName().toUpperCase(), attribute7);
-
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
             session.save(entry.getValue());
         }
@@ -119,9 +96,6 @@ public class DataSourceInit4Json {
 
             /*PRODUCT*/
             for (ProductDto p : dto.getProducts()) {
-                if (p.getProductId() > 9) {
-                    int iii = 111;
-                }
                 Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
                 product.setManagedImageId(p.getImageUrl());
                 session.persist(product);
@@ -148,8 +122,9 @@ public class DataSourceInit4Json {
             }
 
             PromotedProductDto p = dto.getPromotedProduct();
-            Product parent = productMap.get(p.getId());
-
+            Long prodId = p.getId();
+            Product parent = productMap.get(prodId);
+            Assert.notNull(parent, "PromotedProduct null, promoted product id=" + prodId + ", category number=" + dto.getCategoryId());
             Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
                     p.getPromotionImageId(), 0, "", "", parent);
 
