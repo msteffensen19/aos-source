@@ -1,15 +1,15 @@
 package com.advantage.account.dto;
 
-public class AppUserConfigurationResponseStatus {
+public class AccountConfigurationResponseStatus {
     private int numberOfFailedLoginAttemptsBeforeBlocking;
     private long loginBlockingIntervalInMilliSeconds;
     private boolean emailAddressInLogin;
     private int productInStockDefaultValue;
 
-    public AppUserConfigurationResponseStatus() {
+    public AccountConfigurationResponseStatus() {
     }
 
-    public AppUserConfigurationResponseStatus(int numberOfFailedLoginAttemptsBeforeBlocking,
+    public AccountConfigurationResponseStatus(int numberOfFailedLoginAttemptsBeforeBlocking,
                                               long loginBlockingIntervalInMilliSeconds,
                                               boolean emailAddressInLogin,
                                               int productInStockDefaultValue) {

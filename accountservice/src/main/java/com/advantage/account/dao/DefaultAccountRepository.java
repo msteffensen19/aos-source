@@ -1,8 +1,8 @@
 package com.advantage.account.dao;
 
-import com.advantage.account.config.AppUserConfiguration;
-import com.advantage.account.dto.AppUserResponseStatus;
-import com.advantage.account.model.AppUser;
+import com.advantage.account.config.AccountConfiguration;
+import com.advantage.account.dto.AccountResponseStatus;
+import com.advantage.account.model.Account;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
 import com.advantage.account.util.ValidationHelper;
@@ -16,12 +16,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Component
-@Qualifier("appUserRepository")
+/*@Component*/
+@Qualifier("accountRepository")
 @Repository
-public class DefaultAppUserRepository extends AbstractRepository implements AppUserRepository {
+public class DefaultAccountRepository extends AbstractRepository implements AccountRepository {
 
-    private AppUserResponseStatus appUserResponseStatus;
+    private AccountResponseStatus accountResponseStatus;
     private String failureMessage;
 
     /*  Default application user configuration values - Begin   */
@@ -40,7 +40,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     /**
-     * Create a new {@link AppUser} in the database.
+     * Create a new {@link Account} in the database.
      * 1. Verify all parameters are not <code>null</code> or empty. <br/>
      * 2. Verify {@code loginName} comply with AOS policy. <br/>
      * 3. Verify {@code password} comply with AOS policy. <br/>
@@ -65,7 +65,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * @param zipcode              new-user's zip-code of postal address.
      * @param email                New user's e-mail address.
      * @param allowOffersPromotion
-     * @return {@link AppUserResponseStatus} when successful:
+     * @return {@link AccountResponseStatus} when successful:
      * <br/>
      * <b>{@code success}</b> = true, <b>{@code reason}</b> = &quat;New user created successfully&quat; <b>{@code userId}</b> = user-id of newly created user.
      * <br/>
@@ -73,8 +73,8 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * <br/>
      */
     @Override
-    //public AppUserResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
-    public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
+    //public AccountResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
@@ -100,120 +100,95 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             if (ValidationHelper.isValidPassword(password)) {
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
                     if (getAppUserByLogin(loginName) == null) {
-                        AppUser appUser = new AppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
-                        entityManager.persist(appUser);
+                        Account account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+                        entityManager.persist(account);
 
                         //  New user created successfully.
                         this.failureMessage = "New user created successfully.";
-                        appUserResponseStatus = new AppUserResponseStatus(true, AppUser.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, appUser.getId());
+                        accountResponseStatus = new AccountResponseStatus(true, Account.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, account.getId());
 
-                        return appUser;
+                        return account;
                     } else {
                         //  User with this login already exists
                         this.failureMessage = "User with this login already exists.";
-                        appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+                        accountResponseStatus = new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
                         return null;
 
                     }
                 } else {
-                    //  appUserResponseStatus is already set with values.
+                    //  accountResponseStatus is already set with values.
                     return null;
                 }
             } else {
                 //  Invalid password
                 this.failureMessage = "Invalid password.";
-                appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+                accountResponseStatus = new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
                 return null;
             }
         } else {
             //  Invalid login user-name.
             this.failureMessage = "Invalid login user-name.";
-            appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            accountResponseStatus = new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
             return null;
         }
 
     }
 
-    public AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
-        AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
+        Account account = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
-        return new AppUserResponseStatus(appUserResponseStatus.isSuccess(),
-                appUserResponseStatus.getReason(),
-                appUserResponseStatus.getUserId());
+        return new AccountResponseStatus(accountResponseStatus.isSuccess(),
+                accountResponseStatus.getReason(),
+                accountResponseStatus.getUserId());
     }
 
     @Override
-    public int deleteAppUser(AppUser appUser) {
-        System.out.println("int deleteAppUser(AppUser appUser) - Strat");
+    public int deleteAppUser(Account account) {
+        System.out.println("int deleteAppUser(Account account) - Strat");
 
-        ArgumentValidationHelper.validateArgumentIsNotNull(appUser, "application user");
+        ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
-        Long userId = appUser.getId();
+        Long userId = account.getId();
 
-        System.out.println("int deleteAppUser(AppUser appUser) - Building HQL");
-        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(AppUser.class,
-                AppUser.FIELD_ID,
+        System.out.println("int deleteAppUser(Account account) - Building HQL");
+        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Account.class,
+                Account.FIELD_ID,
                 userId);
         Query query = entityManager.createQuery(hql);
 
         return query.executeUpdate();
     }
 
-//    @Override
-//    public int deleteAppUsersByEmails(Collection<String> emails) {
-//    	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(emails,
-//    			                                                                "application users emails");
-//    	final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(AppUser.class,
-//    			                                                   AppUser.FIELD_EMAIL,
-//    			                                                   AppUser.PARAM_EMAIL);
-//        final Query query = entityManager.createQuery(hql);
-//        query.setParameter(AppUser.PARAM_EMAIL, emails);
-//        return query.executeUpdate();
-//    }
-
-//    @Override
-//    public int deleteAppUsersByLogins(Collection<String> logins) {
-//    	ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(logins,
-//    			                                                                "application users logins");
-//    	final String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(AppUser.class,
-//    			                                                   AppUser.FIELD_USER_LOGIN,
-//    			                                                   AppUser.PARAM_USER_LOGIN);
-//        final Query query = entityManager.createQuery(hql);
-//        query.setParameter(AppUser.PARAM_USER_LOGIN, logins);
-//
-//        return query.executeUpdate();
-//    }
-
     @Override
-    public List<AppUser> getAppUsersByCountry(Integer countryId) {
-        List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_USERS_BY_COUNTRY, AppUser.class)
-                .setParameter(AppUser.PARAM_COUNTRY, countryId)
-                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
+    public List<Account> getAppUsersByCountry(Integer countryId) {
+        List<Account> accounts = entityManager.createNamedQuery(Account.QUERY_GET_USERS_BY_COUNTRY, Account.class)
+                .setParameter(Account.PARAM_COUNTRY, countryId)
+                .setMaxResults(Account.MAX_NUM_OF_APP_USER)
                 .getResultList();
 
-        return appUsers.isEmpty() ? null : appUsers;
+        return accounts.isEmpty() ? null : accounts;
     }
 
     @Override
-    public AppUser getAppUserByLogin(String userLogin) {
+    public Account getAppUserByLogin(String userLogin) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(userLogin, "user login name");
 
-        final Query query = entityManager.createNamedQuery(AppUser.QUERY_GET_BY_USER_LOGIN);
+        final Query query = entityManager.createNamedQuery(Account.QUERY_GET_BY_USER_LOGIN);
 
-        query.setParameter(AppUser.PARAM_USER_LOGIN, userLogin);
+        query.setParameter(Account.PARAM_USER_LOGIN, userLogin);
 
         @SuppressWarnings("unchecked")
 
-        List<AppUser> appUsers = query.getResultList();
+        List<Account> accounts = query.getResultList();
 
-        final AppUser user;
+        final Account user;
 
-        if (appUsers.isEmpty()) {
+        if (accounts.isEmpty()) {
 
             user = null;
         } else {
 
-            user = appUsers.get(0);
+            user = accounts.get(0);
         }
 
         return user;
@@ -221,7 +196,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     @Override
-    public AppUserResponseStatus doLogin(String loginUser, String loginPassword, String email) {
+    public AccountResponseStatus doLogin(String loginUser, String loginPassword, String email) {
 
 //        //  Get Application User Configuration values from "AppUserConfiguration.properties" file
 //        AppUserConfiguration appUserConfiguration = new AppUserConfiguration();
@@ -229,87 +204,87 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
         //  Check arguments: Not NULL and Not BLANK
         if ((loginUser == null) || (loginUser.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            return new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
         if ((loginPassword == null) || (loginPassword.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            return new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
         if ((email == null) || (email.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+            return new AccountResponseStatus(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
         }
 
         //  Try to get user details by login user-name
-        AppUser appUser = getAppUserByLogin(loginUser);
+        Account account = getAppUserByLogin(loginUser);
 
-        if (appUser == null) {
+        if (account == null) {
             //  Invalid user login.
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            return new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
         final long currentTimestamp = new Date().getTime();
-        if (appUser.getInternalUserBlockedFromLoginUntil() > 0) {
+        if (account.getInternalUserBlockedFromLoginUntil() > 0) {
 
-            if (appUser.getInternalUserBlockedFromLoginUntil() < currentTimestamp) {
+            if (account.getInternalUserBlockedFromLoginUntil() < currentTimestamp) {
                 //  User is no longer blocked from attempting to login - Reset INTERNAL fields
-                appUser.setInternalUnsuccessfulLoginAttempts(0);
-                appUser.setInternalUserBlockedFromLoginUntil(0);
+                account.setInternalUnsuccessfulLoginAttempts(0);
+                account.setInternalUserBlockedFromLoginUntil(0);
             }
 
-            if (appUser.getInternalUserBlockedFromLoginUntil() >= currentTimestamp) {
+            if (account.getInternalUserBlockedFromLoginUntil() >= currentTimestamp) {
                 //  User is still blocked from login attempt
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_IS_BLOCKED_FROM_LOGIN, -1);
+                return new AccountResponseStatus(false, Account.MESSAGE_USER_IS_BLOCKED_FROM_LOGIN, -1);
             }
         }
 
         if ((!loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
-            if (appUser.getPassword().compareTo(loginPassword) != 0) {
-                appUser = addUnsuccessfulLoginAttempt(appUser);
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
+            if (account.getPassword().compareTo(loginPassword) != 0) {
+                account = addUnsuccessfulLoginAttempt(account);
+                return new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
             }
         } else {
             //  password is empty
-            appUser = addUnsuccessfulLoginAttempt(appUser);
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
+            account = addUnsuccessfulLoginAttempt(account);
+            return new AccountResponseStatus(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
         }
 
         //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
-        if (AppUserConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
+        if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
             if ((!email.isEmpty()) && (email.trim().length() > 0)) {
-                if ((!appUser.getEmail().isEmpty()) && (appUser.getEmail().trim().length() > 0)) {
-                    if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
+                if ((!account.getEmail().isEmpty()) && (account.getEmail().trim().length() > 0)) {
+                    if (account.getEmail().compareToIgnoreCase(email) != 0) {
                         //  email does not match the email set in user details
-                        appUser = addUnsuccessfulLoginAttempt(appUser);
-                        return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
+                        account = addUnsuccessfulLoginAttempt(account);
+                        return new AccountResponseStatus(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, account.getId());
                     }
                 } else {
                     //
-                    appUser = addUnsuccessfulLoginAttempt(appUser);
-                    return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
+                    account = addUnsuccessfulLoginAttempt(account);
+                    return new AccountResponseStatus(false, Account.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, account.getId());
                 }
 
             } else {
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, appUser.getId());
+                return new AccountResponseStatus(false, Account.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, account.getId());
             }
         }
 
         //  Reset user-blocking
-        appUser.setInternalUnsuccessfulLoginAttempts(0);
-        appUser.setInternalUserBlockedFromLoginUntil(0);
+        account.setInternalUnsuccessfulLoginAttempts(0);
+        account.setInternalUserBlockedFromLoginUntil(0);
 
         //  Update changes
-        updateAppUser(appUser);
+        updateAppUser(account);
 
         //  Return: Successful login attempt
-        return new AppUserResponseStatus(true, "Login Successful", appUser.getId(), getTokenKey());
+        return new AccountResponseStatus(true, "Login Successful", account.getId(), getTokenKey());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
         //  Check phone number validation if not null
         if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {
             if (!ValidationHelper.isValidPhoneNumber(phoneNumber)) {
-                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid phone number.", -1);
+                accountResponseStatus = new AccountResponseStatus(false, "Invalid phone number.", -1);
 
                 return false;
             }
@@ -318,7 +293,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Check e-mail address validation if not null
         if (email != null) {
             if (!ValidationHelper.isValidEmail(email)) {
-                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid e-mail address.", -1);
+                accountResponseStatus = new AccountResponseStatus(false, "Invalid e-mail address.", -1);
 
                 return false;
             }
@@ -328,40 +303,40 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     @Override
-    public AppUser addUnsuccessfulLoginAttempt(AppUser appUser) {
+    public Account addUnsuccessfulLoginAttempt(Account account) {
         //  Another unsuccessful (failed) login attempt
-        appUser.setInternalUnsuccessfulLoginAttempts(appUser.getInternalUnsuccessfulLoginAttempts() + 1);
+        account.setInternalUnsuccessfulLoginAttempts(account.getInternalUnsuccessfulLoginAttempts() + 1);
 
         //  Check the number of unsuccessful login attempts, block user if reached the limit
-        //if (appUser.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
-        if (appUser.getInternalUnsuccessfulLoginAttempts() == AppUserConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
+        //if (account.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
+        if (account.getInternalUnsuccessfulLoginAttempts() == AccountConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
 
-            //  Update AppUser class with timestamp when user can attempt login again according to configuration interval
-            appUser.setInternalUserBlockedFromLoginUntil(AppUser.addMillisecondsIntervalToTimestamp(AppUserConfiguration.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS));
+            //  Update Account class with timestamp when user can attempt login again according to configuration interval
+            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp(AccountConfiguration.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS));
         }
 
         //  Update data changes made for application user into application users table
-        appUser = updateAppUser(appUser);
+        account = updateAppUser(account);
 
-        return appUser;
+        return account;
     }
 
     @Override
     public String getBlockedUntilTimestamp(long milliSeconds) {
-        //return AppUser.addMillisecondsIntervalToTimestamp(milliSeconds);
-        return AppUser.convertMillisecondsDateToString(AppUser.addMillisecondsIntervalToTimestamp(milliSeconds));
+        //return Account.addMillisecondsIntervalToTimestamp(milliSeconds);
+        return Account.convertMillisecondsDateToString(Account.addMillisecondsIntervalToTimestamp(milliSeconds));
     }
 
     /**
      * Update table with data-changes made to application user detail.
      *
-     * @param appUser Application User to update changes.
+     * @param account Application User to update changes.
      * @return Updated Application User class.
      */
     @Override
-    public AppUser updateAppUser(AppUser appUser) {
-        entityManager.persist(appUser);
-        return appUser;
+    public Account updateAppUser(Account account) {
+        entityManager.persist(account);
+        return account;
     }
 
     /**
@@ -374,31 +349,31 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     @Override
-    public int delete(AppUser... entities) {
+    public int delete(Account... entities) {
         return 0;
     }
 
     @Override
-    public List<AppUser> getAll() {
-        List<AppUser> appUsers = entityManager.createNamedQuery(AppUser.QUERY_GET_ALL, AppUser.class)
-                .setMaxResults(AppUser.MAX_NUM_OF_APP_USER)
+    public List<Account> getAll() {
+        List<Account> accounts = entityManager.createNamedQuery(Account.QUERY_GET_ALL, Account.class)
+                .setMaxResults(Account.MAX_NUM_OF_APP_USER)
                 .getResultList();
 
-        return appUsers.isEmpty() ? null : appUsers;
+        return accounts.isEmpty() ? null : accounts;
     }
 
     @Override
-    public AppUser get(Long entityId) {
+    public Account get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
         System.out.println("DefaultAppUserRepository.get(Long) -> entityId = " + entityId);
 
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(AppUser.class, AppUser.FIELD_ID, entityId);
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
 
         Query query = entityManager.createQuery(hql);
 
-        AppUser appUser = null;
+        Account account = null;
         try {
-            appUser = (AppUser) query.getSingleResult();
+            account = (Account) query.getSingleResult();
         } catch (NoResultException ex) {
             //  return null ==> No registered user found for userId.
             //ex.printStackTrace();
@@ -407,6 +382,6 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
             ex.printStackTrace();
         }
 
-        return appUser;
+        return account;
     }
 }

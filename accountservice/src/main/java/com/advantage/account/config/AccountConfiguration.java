@@ -1,6 +1,6 @@
 package com.advantage.account.config;
 
-import com.advantage.account.dto.AppUserConfigurationResponseStatus;
+import com.advantage.account.dto.AccountConfigurationResponseStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -13,7 +13,7 @@ import java.util.List;
  * Application User configuration class
  */
 @Configuration
-public class AppUserConfiguration {
+public class AccountConfiguration {
     private final String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
     private final String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
     private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
@@ -111,8 +111,8 @@ public class AppUserConfiguration {
         return parameters;
     }
 
-    public AppUserConfigurationResponseStatus getAllConfigurationParameters() {
-        return new AppUserConfigurationResponseStatus(this.getNumberOfLoginAttemptsBeforeBlocking(),
+    public AccountConfigurationResponseStatus getAllConfigurationParameters() {
+        return new AccountConfigurationResponseStatus(this.getNumberOfLoginAttemptsBeforeBlocking(),
                 this.getLoginBlockingIntervalInMilliseconds(),
                 (this.getEmailAddressInLogin().toUpperCase() == "YES"),
                 this.getProductInStockDefaultValue());

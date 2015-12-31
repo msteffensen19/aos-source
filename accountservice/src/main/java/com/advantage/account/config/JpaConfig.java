@@ -19,7 +19,6 @@ public class JpaConfig {
     @Inject
     DataSource dataSource;
 
-
     @Value("${db.driver}")
     private String DB_DRIVER;
 

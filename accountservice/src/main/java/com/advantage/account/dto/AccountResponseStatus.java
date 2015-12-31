@@ -1,6 +1,6 @@
 package com.advantage.account.dto;
 
-public class AppUserResponseStatus {
+public class AccountResponseStatus {
     boolean success;
     long userId;        //  -1 = Invalid user login name
     String reason;
@@ -12,7 +12,7 @@ public class AppUserResponseStatus {
      * @param reason
      * @param userId
      */
-    public AppUserResponseStatus(boolean success, String reason, long userId) {
+    public AccountResponseStatus(boolean success, String reason, long userId) {
         this.setUserId(userId);
         this.setReason(reason);
         this.setSuccess(success);
@@ -24,7 +24,7 @@ public class AppUserResponseStatus {
      * @param userId
      * @param token
      */
-    public AppUserResponseStatus(boolean success, String reason, long userId, String token) {
+    public AccountResponseStatus(boolean success, String reason, long userId, String token) {
         this.setUserId(userId);
         this.setReason(reason);
         this.setSuccess(success);

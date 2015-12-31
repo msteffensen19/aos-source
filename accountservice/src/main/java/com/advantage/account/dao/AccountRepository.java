@@ -1,42 +1,42 @@
 package com.advantage.account.dao;
 
-import com.advantage.account.dto.AppUserResponseStatus;
-import com.advantage.account.model.AppUser;
+import com.advantage.account.dto.AccountResponseStatus;
+import com.advantage.account.model.Account;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface AppUserRepository extends DefaultCRUDOperations<AppUser> {
+public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
-    AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
+    Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
                           String password, Integer country, String phoneNumber, String stateProvince,
                           String cityName, String address, String zipcode, String email,
                           char agreeToReceiveOffersAndPromotions);
 
     //  For User-Management API
     @Transactional
-    AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName,
+    AccountResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName,
                                  String password, Integer country, String phoneNumber, String stateProvince,
                                  String cityName, String address, String zipcode, String email,
                                  char agreeToReceiveOffersAndPromotions);
 
-    AppUser addUnsuccessfulLoginAttempt(AppUser appUser);
+    Account addUnsuccessfulLoginAttempt(Account account);
 
     String getBlockedUntilTimestamp(long milliSeconds);
 
-    AppUser updateAppUser(AppUser appUser);
+    Account updateAppUser(Account account);
 
     String getFailureMessage();
 
-    int deleteAppUser(AppUser appUser);
+    int deleteAppUser(Account account);
 //    int deleteAppUsersByEmails(Collection<String> emails);
 //    int deleteAppUsersByLogins(Collection<String> logins);
 
 
-    AppUser getAppUserByLogin(String login);
+    Account getAppUserByLogin(String login);
 
-    AppUserResponseStatus doLogin(String login, String password, String email);
+    AccountResponseStatus doLogin(String login, String password, String email);
 
-    List<AppUser> getAppUsersByCountry(Integer countryId);
+    List<Account> getAppUsersByCountry(Integer countryId);
 
 }

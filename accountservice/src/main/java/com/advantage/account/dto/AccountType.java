@@ -3,26 +3,26 @@ package com.advantage.account.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum AppUserType {
+public enum AccountType {
 
     ADMIN(10),
     USER(20),
     GUEST(30);
 
-    private Integer appUserTypecode;
+    private Integer accountTypeCode;
 
-    AppUserType(Integer appUserTypecode) {
-        this.appUserTypecode = appUserTypecode;
+    AccountType(Integer accountTypeCode) {
+        this.accountTypeCode = accountTypeCode;
     }
 
-    public Integer getAppUserTypeCode() {
-        return appUserTypecode;
+    public Integer getAccountTypeCode() {
+        return accountTypeCode;
     }
 
     public static List<String> getAllNames() {
         List<String> values = new ArrayList<>();
 
-        for (AppUserType a : AppUserType.values()) {
+        for (AccountType a : AccountType.values()) {
             values.add(a.name());
         }
         return values;
@@ -30,7 +30,7 @@ public enum AppUserType {
 
     public static boolean contains(String test) {
 
-        for (AppUserType a : AppUserType.values()) {
+        for (AccountType a : AccountType.values()) {
             if (a.name().equals(test)) {
                 return true;
             }

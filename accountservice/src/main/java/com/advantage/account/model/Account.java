@@ -2,7 +2,7 @@ package com.advantage.account.model;
 
 import com.advantage.account.Constants;
 
-import com.advantage.account.dto.AppUserType;
+import com.advantage.account.dto.AccountType;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.UserPassword;
 
@@ -10,30 +10,27 @@ import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * @author Binyamin Regev on 15/11/2015.
- */
 @Entity
-//@Table(name = "AppUser")
+//@Table(name = "Account")
 @NamedQueries({
         @NamedQuery(
-                name = AppUser.QUERY_GET_ALL,
-                query = "select u from AppUser u"
+                name = Account.QUERY_GET_ALL,
+                query = "select a from Account a"
         )
         , @NamedQuery(
-        name = AppUser.QUERY_GET_BY_USER_LOGIN,
-        query = "select u from AppUser u where " + AppUser.FIELD_USER_LOGIN + " = :" + AppUser.PARAM_USER_LOGIN
+        name = Account.QUERY_GET_BY_USER_LOGIN,
+        query = "select a from Account a where " + Account.FIELD_USER_LOGIN + " = :" + Account.PARAM_USER_LOGIN
 )
         , @NamedQuery(
-        name = AppUser.QUERY_GET_USERS_BY_COUNTRY,
-        query = "select u from AppUser u where " + AppUser.FIELD_COUNTRY + " = :" + AppUser.PARAM_COUNTRY
+        name = Account.QUERY_GET_USERS_BY_COUNTRY,
+        query = "select a from Account a where " + Account.FIELD_COUNTRY + " = :" + Account.PARAM_COUNTRY
 )
 //        ,@NamedQuery(
-//        name = AppUser.QUERY_GET_CURRENT_TIMESTAMP,
+//        name = Account.QUERY_GET_CURRENT_TIMESTAMP,
 //        query = "select to_char(current_timestamp, 'YYYY-MM-DD HH24:MI:SS')"
 //        )
 })
-public class AppUser {
+public class Account {
 
     public static final int MAX_NUM_OF_APP_USER = 50;
 
@@ -82,7 +79,7 @@ public class AppUser {
     private String password;
 
     @Column(name = "USER_TYPE")
-    private Integer appUserType;        //  by enum AppUserType
+    private Integer appUserType;        //  by enum AccountType
 
     @Column(name = FIELD_COUNTRY)
     private Integer country;                //  by Country
@@ -115,11 +112,11 @@ public class AppUser {
     @Column
     private long internalLastSuccesssulLogin;   //  Managed Internally
 
-    public AppUser() {
+    public Account() {
 
     }
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+    public Account(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
@@ -157,8 +154,8 @@ public class AppUser {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
-        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
+    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+        this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
     public long getId() {
@@ -322,7 +319,7 @@ public class AppUser {
 
     @Override
     public boolean equals(Object obj) {
-        AppUser compareTo = (AppUser) obj;
+        Account compareTo = (Account) obj;
 
         return (
                 (this.getAppUserType() == compareTo.getAppUserType()) &&
@@ -403,7 +400,7 @@ public class AppUser {
     }
 
 //    public static void main(String[] args) {
-//        //new AppUser().addMillisecondsIntervalToTimestamp(30000000);
+//        //new Account().addMillisecondsIntervalToTimestamp(30000000);
 //        Date date = new Date(new Date().getTime());
 //
 //        System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));

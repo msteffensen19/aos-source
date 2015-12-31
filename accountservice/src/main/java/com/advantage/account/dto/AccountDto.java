@@ -1,9 +1,9 @@
 package com.advantage.account.dto;
 
-import com.advantage.account.model.AppUser;
+import com.advantage.account.model.Account;
 import com.advantage.account.util.ArgumentValidationHelper;
 
-public class AppUserDto {
+public class AccountDto {
 
     private String loginUser;
     private String loginPassword;
@@ -33,11 +33,11 @@ public class AppUserDto {
         this.email = email;
     }
 
-    public void applyAppUser(final AppUser appUser) {
-        ArgumentValidationHelper.validateArgumentIsNotNull(appUser, "application user");
+    public void applyAppUser(final Account account) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
-        this.setLoginUser(appUser.getLoginName());
-        this.setLoginPassword(appUser.getPassword());
-        this.setEmail(appUser.getEmail());
+        this.setLoginUser(account.getLoginName());
+        this.setLoginPassword(account.getPassword());
+        this.setEmail(account.getEmail());
     }
 }
