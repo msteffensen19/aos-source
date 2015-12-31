@@ -77,12 +77,10 @@ text-decoration: none;
     display: inline-block;
     padding: 8px;
     color: gray;
-    background-color: #454545;
     font-size: 16px;
 }
 
 .pages a:after{
-
     content: "/";
     position: relative;
     width: 100%;
@@ -93,7 +91,6 @@ text-decoration: none;
 }
 
 .pages a:last-child:after{
-
     content: "";
 }
 

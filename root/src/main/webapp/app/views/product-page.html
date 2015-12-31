@@ -1,6 +1,5 @@
 <!--
 
-
 <section id="png">
     <img src="../../css/images/product.png" />
 </section>
@@ -11,11 +10,15 @@
     }
 </style>
 
+<nav class="pages">
+    <h1><a ng-repeat="link in breadcrumb" href="{{link.path}}">{{link.name}}{{link.path}}</a></h1>
+</nav>
+
 -->
 
 <nav class="pages">
     <a translate="HOME" href="/#" ></a>
-    <a href="#/category/1" > LAPTOPS </a>
+    <a href="#/category/{{product.categoryId}}" > {{categoryName}} </a>
     <a class="select">{{::product.productName | uppercase}}</a>
 </nav>
 

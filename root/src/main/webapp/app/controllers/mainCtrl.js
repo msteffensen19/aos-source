@@ -6,9 +6,9 @@ define(['./module'], function (controllers) {
 
     'use strict';
     controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll',
-                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter',
+                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
         function ($scope, productService, smoothScroll,
-                        $location, $cookie, $rootScope, productsCartService, $filter) {
+                        $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
 
@@ -94,7 +94,7 @@ define(['./module'], function (controllers) {
             /* Cart section  */
 
             productsCartService.loadCartProducts().then(function(cart){
-                $scope.cart = cart && cart.productsInCart ? cart : cart.data;
+                $scope.cart = cart && cart.data ? cart.data : cart;
             });
 
             $scope.removeProduct = function (index) {
@@ -213,13 +213,44 @@ define(['./module'], function (controllers) {
             };
 
 
+            $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
 
-            $rootScope.$on('$locationChangeSuccess', function (event) {
-                $scope.welcome = $location.path().indexOf('/welcome') <= -1 &&  $location.path().indexOf('/404') <= -1;
+                $scope.welcome = $location.path().indexOf('/welcome') <= -1 &&
+                    $location.path().indexOf('/404') <= -1;
                 $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
                 Helper.UpdatePageFixed();
 
             });
+
+            /*
+             $rootScope.$on("$stateChangeStart",
+             function (event, current, previous, rejection, rejection2) {
+
+             }
+             );
+
+             $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {
+             onBreadcrumbHandler();
+             });
+             */
+
+            function onBreadcrumbHandler(){
+                var existsRoot = $rootScope.breadcrumb;
+                var newBreadcrumb = [];
+                for(var index = 0; index < existsRoot.length; index++){
+                    var existState = existsRoot[index];
+                    newBreadcrumb.push({
+                        name: $state.current.data.breadcrumbName,
+                        path: $location.$$path
+                    });
+                    if(existState.name == $state.current.data.breadcrumbName)
+                    {
+                        break;
+                    }
+                }
+                $rootScope.breadcrumb = newBreadcrumb;
+            }
+
 
 
             Main.addAnimPlaceholderEventListener();
