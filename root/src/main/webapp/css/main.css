@@ -203,7 +203,7 @@ div.logo img{
 
 
 .nav-li-Links{
-    display: none;
+    display: inline-block;
 }
 
 /* end scrolling page to top  */
