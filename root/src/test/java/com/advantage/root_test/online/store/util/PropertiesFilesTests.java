@@ -91,6 +91,21 @@ public class PropertiesFilesTests {
         validatePropertiesArePorts(properties);
     }
 
+    @Test
+    public void testGlobalProperties() throws Exception {
+        String[] properties = {
+                "hibernate.format_sql",
+                "hibernate.show_sql",
+                "hibernate.hbm2ddl.auto",
+                "hibernate.dialect",
+                "hibernate.db.driver_classname",
+
+                "db.url.prefix",
+                "db.url.query"
+        };
+        validatePropertiesName(properties, Constants.FILE_PROPERTIES_GLOBAL);
+    }
+
     private void validatePropertiesName(String[] properties, String fileProperties) throws Exception {
         for (String propertyName : properties) {
             String propertyValue = environment.getProperty(propertyName);
