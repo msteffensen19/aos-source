@@ -16,7 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-@PropertySources(value = {@PropertySource(Constants.PROPERTIES_EXTERNAL)})
+@PropertySources(value = {@PropertySource(Constants.FILE_PROPERTIES_EXTERNAL)})
 public class Url_resources {
 
     @Autowired
