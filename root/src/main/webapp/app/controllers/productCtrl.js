@@ -10,9 +10,9 @@ define(['./module'], function (controllers) {
 
             console.log(resolveParams)
 
-            var selectedColor = resolveParams.color;
+            var selectedColor = resolveParams.selectedColor;
             var pageState = resolveParams.pageState;
-            $scope.quantity = resolveParams.quantity || 1;
+            $scope.quantity = 1, //resolveParams.quantity || 1;
             $scope.categoryName = resolveParams.categoryName;
             $scope.product = resolveParams.product;
 
