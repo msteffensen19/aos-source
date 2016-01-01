@@ -16,32 +16,16 @@ public class PropertiesFilesTests {
     private Environment environment;
 
     @Test
-    public void testExternalFile() throws Exception {
-        System.out.println("#########TEST ROOT##########");
+    public void testExternalFilePropertyName() throws Exception {
         String[] properties = {
-                "account.hibernate.db.url.host",
-                "account.hibernate.db.url.port",
-                "account.hibernate.db.name",
-                "account.hibernate.db.login",
-                "account.hibernate.db.password",
                 "account.service.url.host",
                 "account.service.url.port",
                 "account.service.url.suffix",
 
-                "catalog.hibernate.db.url.host",
-                "catalog.hibernate.db.url.port",
-                "catalog.hibernate.db.name",
-                "catalog.hibernate.db.login",
-                "catalog.hibernate.db.password",
                 "catalog.service.url.host",
                 "catalog.service.url.port",
                 "catalog.service.url.suffix",
 
-                "order.hibernate.db.url.host",
-                "order.hibernate.db.url.port",
-                "order.hibernate.db.name",
-                "order.hibernate.db.login",
-                "order.hibernate.db.password",
                 "order.service.url.host",
                 "order.service.url.port",
                 "order.service.url.suffix",
@@ -63,7 +47,29 @@ public class PropertiesFilesTests {
                 "safepay.service.url.suffix"};
 
         validatePropertiesName(properties, Constants.FILE_PROPERTIES_EXTERNAL);
+    }
 
+    @Test
+    public void testInternalFilePropertyName() throws Exception {
+        String[] properties = {
+                "account.hibernate.db.url.host",
+                "account.hibernate.db.url.port",
+                "account.hibernate.db.name",
+                "account.hibernate.db.login",
+                "account.hibernate.db.password",
+
+                "catalog.hibernate.db.url.host",
+                "catalog.hibernate.db.url.port",
+                "catalog.hibernate.db.name",
+                "catalog.hibernate.db.login",
+                "catalog.hibernate.db.password",
+
+                "order.hibernate.db.url.host",
+                "order.hibernate.db.url.port",
+                "order.hibernate.db.name",
+                "order.hibernate.db.login",
+                "order.hibernate.db.password"};
+        validatePropertiesName(properties, Constants.FILE_PROPERTIES_INTERNAL);
     }
 
     private void validatePropertiesName(String[] properties, String fileProperties) throws Exception {
