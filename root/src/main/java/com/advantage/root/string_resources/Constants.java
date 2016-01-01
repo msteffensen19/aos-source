@@ -8,6 +8,7 @@ public class Constants {
     //
     public static final String FILE_PROPERTIES_INTERNAL = "classpath:/services.properties";
     public static final String FILE_PROPERTIES_EXTERNAL = "classpath:/services.properties";
+    public static final String FILE_PROPERTIES_GLOBAL = "classpath:/global.properties";
     @Deprecated
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 
