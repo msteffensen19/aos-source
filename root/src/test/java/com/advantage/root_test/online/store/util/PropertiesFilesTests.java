@@ -73,9 +73,13 @@ public class PropertiesFilesTests {
     }
 
     private void validatePropertiesName(String[] properties, String fileProperties) throws Exception {
-        for (String property : properties) {
-            if (!environment.containsProperty(property))
-                throw new Exception("Property file " + fileProperties + " doesn't contains property \"" + property + "\"");
+        for (String propertyName : properties) {
+            String propertyValue = environment.getProperty(propertyName);
+            if (!environment.containsProperty(propertyName))
+                throw new Exception("Property file " + fileProperties + " doesn't contains property \"" + propertyName + "\"");
+            if (propertyValue.isEmpty()) {
+                throw new Exception("In property file " + fileProperties + "the property \"" + propertyName + "\" has empty value");
+            }
         }
     }
 
