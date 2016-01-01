@@ -4,6 +4,7 @@ package com.advantage.root.string_resources;
  * Created by Evgeney Fiskin on 31-12-2015.
  */
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -19,7 +20,7 @@ import java.net.URL;
 public class Url_resources {
 
     @Autowired
-    private Environment environment;
+    private static Environment environment;
 
     //TODO-EVG change to properties
     @Deprecated
@@ -52,6 +53,50 @@ public class Url_resources {
         return Constants.URI_SERVER_SHIP_EX;
     }
 
+    public static URL getUrlCatalog() {
+        return getUrlPrefix("catalog");
+    }
+
+    public static URL getUrlAccount() {
+        return getUrlPrefix("account");
+    }
+
+    public static URL getUrlOrder() {
+        return getUrlPrefix("order");
+    }
+
+    public static URL getUrlService() {
+        return getUrlPrefix("service");
+    }
+
+    public static URL getUrlMasterCredit() {
+        return getUrlPrefix("mastercredit");
+    }
+
+    public static URL getUrlSafePay() {
+        return getUrlPrefix("safepay");
+    }
+
+    public static URL getUrlShipEx() {
+        return getUrlPrefix("shipex");
+    }
+
+    private static URL getUrlPrefix(String serviceName) {
+        URL url = null;
+        try {
+            String scheme = Constants.URI_SCHEME;
+            String host = environment.getProperty(serviceName + ".service.url.host");
+            int port = Integer.parseInt(environment.getProperty(serviceName + ".service.url.port"));
+            String suffix = '/' + environment.getProperty(serviceName + ".service.url.suffix") + Constants.URI_API + "/v1/";
+            url = new URL(scheme, host, port, suffix);
+        } catch (Throwable e) {
+            System.err.println("Config file wrong");
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    @Ignore
     @Test
     public void ttt() throws URISyntaxException, MalformedURLException {
         String scheme = "http";
@@ -63,8 +108,6 @@ public class Url_resources {
         String fragment = null;
 
         URI uri = new URI(scheme, userInfo, host, port, service_path, query, fragment);
-        //String host = environment.getProperty("account.service.url.host");
-        //String suffix = environment.getProperty("account.service.url.suffix");
 
 
         URL url = new URL("http", host, port, service_path);
