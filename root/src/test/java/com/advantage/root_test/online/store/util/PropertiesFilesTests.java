@@ -44,8 +44,8 @@ public class PropertiesFilesTests {
 
                 "safepay.service.url.host",
                 "safepay.service.url.port",
-                "safepay.service.url.suffix"};
-
+                "safepay.service.url.suffix"
+        };
         validatePropertiesName(properties, Constants.FILE_PROPERTIES_EXTERNAL);
     }
 
@@ -68,8 +68,27 @@ public class PropertiesFilesTests {
                 "order.hibernate.db.url.port",
                 "order.hibernate.db.name",
                 "order.hibernate.db.login",
-                "order.hibernate.db.password"};
+                "order.hibernate.db.password"
+        };
         validatePropertiesName(properties, Constants.FILE_PROPERTIES_INTERNAL);
+    }
+
+    @Test
+    public void testPropertiesPorts() throws Exception {
+        String[] properties = {
+                "account.hibernate.db.url.port",
+                "catalog.hibernate.db.url.port",
+                "order.hibernate.db.url.port",
+                "account.service.url.port",
+                "catalog.service.url.port",
+                "order.service.url.port",
+                "service.service.url.port",
+                "mastercredit.service.url.port",
+                "shipex.service.url.port",
+                "safepay.service.url.port"
+        };
+        validatePropertiesAreNaturalNumber(properties);
+        validatePropertiesArePorts(properties);
     }
 
     private void validatePropertiesName(String[] properties, String fileProperties) throws Exception {
@@ -83,4 +102,24 @@ public class PropertiesFilesTests {
         }
     }
 
+    private void validatePropertiesAreNaturalNumber(String[] properties) throws Exception {
+        for (String propertyName : properties) {
+            String propertyValue = environment.getProperty(propertyName);
+            try {
+                long tmp = Long.parseLong(propertyValue);
+            } catch (NumberFormatException e) {
+                throw new Exception("The property \"" + propertyName + "\" have value \"" + propertyValue + "\" and isn't natural number");
+            }
+        }
+    }
+
+    private void validatePropertiesArePorts(String[] properties) throws Exception {
+        for (String propertyName : properties) {
+            String propertyValue = environment.getProperty(propertyName);
+            int tmp = Integer.parseInt(propertyValue);
+            if (tmp < 1 || tmp > 65535) {
+                throw new Exception("The property \"" + propertyName + "\" have value \"" + propertyValue + "\" and isn't correct port number");
+            }
+        }
+    }
 }
