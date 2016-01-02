@@ -1,12 +1,12 @@
 package com.advantage.account.store.api;
 
-import com.advantage.account.store.user.dto.AppUserDto;
 import com.advantage.account.store.user.dto.AppUserResponseStatus;
 import com.advantage.account.store.user.dto.CountryResponseStatus;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.services.AppUserService;
 import com.advantage.account.store.user.services.CountryService;
+import com.advantage.root.store.user.dto.AppUserDto;
 import com.advantage.root.string_resources.Constants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +80,36 @@ public class AccountController {
             //response.getHeader().
             appUserResponseStatus.setSessionId(session.getId());
 
+
+            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @RequestMapping(value = "/loginJWT", method = RequestMethod.POST)
+    @ApiOperation(value = "Login JWT")
+    public ResponseEntity<AppUserResponseStatus> doLoginJWT(@RequestBody AppUserDto appUserDto,
+                                                            HttpServletRequest request, HttpServletResponse response) {
+
+        response.setHeader("sessionId", request.getSession().getId());
+
+        AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUserDto.getLoginUser(),
+                appUserDto.getLoginPassword(),
+                appUserDto.getEmail());
+
+        if (appUserResponseStatus.isSuccess()) {
+            HttpSession session = request.getSession();
+
+            //session.setAttribute(Constants.UserSession.TOKEN, appUserResponseStatus.getToken());
+            session.setAttribute(Constants.UserSession.TOKEN, appUserResponseStatus.getToken());
+            session.setAttribute(Constants.UserSession.USER_ID, appUserResponseStatus.getUserId());
+            session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
+
+            //  Set SessionID to Response Entity
+            //response.getHeader().
+            appUserResponseStatus.setSessionId(session.getId());
 
             return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
         } else {

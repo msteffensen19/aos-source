@@ -5,9 +5,11 @@ import com.advantage.account.store.dao.AbstractRepository;
 import com.advantage.account.store.user.config.AppUserConfiguration;
 import com.advantage.account.store.user.dto.AppUserResponseStatus;
 import com.advantage.account.store.user.model.AppUser;
-import com.advantage.root.util.ValidationHelper;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
+import com.advantage.root.common.Token;
+import com.advantage.root.store.user.dto.AppUserType;
+import com.advantage.root.util.ValidationHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -308,8 +310,12 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Update changes
         updateAppUser(appUser);
 
+        Token token = new Token(appUser.getId(), AppUserType.USER, email);
+        String base64Token = token.generateToken();
+
+
         //  Return: Successful login attempt
-        return new AppUserResponseStatus(true, "Login Successful", appUser.getId(), getTokenKey());
+        return new AppUserResponseStatus(true, "Login Successful", appUser.getId(), base64Token);
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -376,11 +382,13 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      *
      * @return Random {@link UUID} string.
      */
+    @Deprecated
     private String getTokenKey() {
         return UUID.randomUUID().toString();
     }
 
     @Override
+    //TODO-BENY WTF???
     public int delete(AppUser... entities) {
         return 0;
     }

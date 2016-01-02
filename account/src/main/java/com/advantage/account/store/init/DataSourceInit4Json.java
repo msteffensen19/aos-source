@@ -29,9 +29,6 @@ public class DataSourceInit4Json {
     private EntityManagerFactory entityManagerFactory;
 
     public void init() throws Exception {
-
-
-
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
         Session session = sessionFactory.openSession();
