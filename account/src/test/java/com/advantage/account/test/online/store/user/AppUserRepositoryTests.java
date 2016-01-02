@@ -101,7 +101,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
 
         System.out.println("Create 1st AppUser ...");
-        //AppUserResponseStatus appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        //AppUserResponseDto appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
         AppUser appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
                 lastName,
                 firstName,
@@ -225,7 +225,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
 
         System.out.println("Create 1st AppUser ...");
-        //AppUserResponseStatus appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        //AppUserResponseDto appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
         AppUser appUser;
         appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
                 "king",         /*  last name       */
