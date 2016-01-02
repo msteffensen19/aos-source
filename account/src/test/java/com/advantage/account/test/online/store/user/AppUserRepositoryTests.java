@@ -4,7 +4,7 @@ import com.advantage.account.test.online.store.dao.GenericRepositoryTests;
 import com.advantage.account.store.user.dao.AppUserRepository;
 import com.advantage.account.store.user.dao.CountryRepository;
 import com.advantage.account.store.user.model.AppUser;
-import com.advantage.account.store.user.dto.AppUserType;
+import com.advantage.root.store.user.dto.AppUserType;
 //import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.test.cfg.AdvantageTestContextConfiguration;
