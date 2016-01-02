@@ -6,7 +6,7 @@ import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.services.AppUserService;
 import com.advantage.account.store.user.services.CountryService;
-import com.advantage.root.store.user.dto.AppUserDto;
+import com.advantage.root.store.dto.AppUserDto;
 import com.advantage.root.string_resources.Constants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

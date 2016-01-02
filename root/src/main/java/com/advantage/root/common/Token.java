@@ -1,6 +1,5 @@
 package com.advantage.root.common;
 
-import com.advantage.root.store.user.dto.AppUserDto;
 import com.advantage.root.store.user.dto.AppUserType;
 import io.jsonwebtoken.*;
 
@@ -44,11 +43,6 @@ public class Token {
         } catch (InvalidClaimException ice) {
             // the 'myfield' field was missing or did not have a 'myRequiredValue' value
         }
-    }
-
-    @Deprecated
-    public Token(AppUserDto userDto) {
-
     }
 
     public Token(long appUserId, AppUserType appUserType) {
