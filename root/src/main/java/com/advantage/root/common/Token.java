@@ -14,10 +14,10 @@ public class Token {
     private Claims tokenBody;
     private JwtBuilder builder;
     private JwtParser parser;
-    private static Key key;
-    private static CompressionCodec compressionCodec;
-    private static SignatureAlgorithm signatureAlgorithm;
-    private static String issuer;
+    private Key key;
+    private CompressionCodec compressionCodec;
+    private SignatureAlgorithm signatureAlgorithm;
+    private String issuer;
 
     private Token() {
         key = SecurityTools.decodeBase64Key(SecurityTools.BASE64_CRYPTO_KEY);
@@ -46,13 +46,25 @@ public class Token {
         }
     }
 
+    @Deprecated
     public Token(AppUserDto userDto) {
+
+    }
+
+    public Token(long appUserId, AppUserType appUserType) {
+        this(appUserId, appUserType, null);
+    }
+
+    public Token(long appUserId, AppUserType appUserType, String email) {
         this();
         builder = Jwts.builder();
+        tokenBody = Jwts.claims();
         tokenBody.setIssuer(issuer);
-        tokenBody.put("userId", userDto.getLoginUser());
-        tokenBody.put("role", AppUserType.USER);
-        tokenBody.put("email", userDto.getEmail());
+        tokenBody.put("userId", appUserId);
+        tokenBody.put("role", appUserType);
+        if (email != null && !email.isEmpty()) {
+            tokenBody.put("email", email);
+        }
         builder.setClaims(tokenBody);
     }
 
