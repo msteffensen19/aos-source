@@ -23,7 +23,7 @@ public interface ShoppingCartRepository {
     ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity);
 
     /*  Add a single product to user's ShoppingCart */
-    ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity);
+    ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity, long lastUpdate);
 
     /* Update   */
     /*  Update a single product in user's ShoppingCart  */
