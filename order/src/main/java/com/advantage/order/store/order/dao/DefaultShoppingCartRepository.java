@@ -1,34 +1,21 @@
 package com.advantage.order.store.order.dao;
 
-//import com.advantage.order.store.config.ServiceConfiguration;
-
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
-import com.advantage.order.store.order.util.WSDLHelper;
-import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.string_resources.Constants;
 import com.advantage.root.string_resources.Url_resources;
-//import com.advantage.root.util.ValidationHelper;
-import com.advantage.root.util.StringHelper;
+import com.advantage.root.util.ArgumentValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
-import com.predic8.schema.ComplexType;
-import com.predic8.schema.Element;
-import com.predic8.schema.Schema;
-import com.predic8.schema.Attribute;
-import com.predic8.wsdl.*;
-import com.predic8.wstool.creator.RequestTemplateCreator;
-import com.predic8.wstool.creator.SOARequestCreator;
-import groovy.xml.MarkupBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -38,11 +25,9 @@ import java.net.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-//import org.json.JSONObject;
 
 /**
  * Order services - default repository for {@code ShoppingCart}.
- *
  * @author Binyamin Regev on 03/12/2015.
  */
 @Component
@@ -65,36 +50,15 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private ShoppingCartResponseStatus shoppingCartResponse;
     private String failureMessage;
 
-    /**
-     * Gets current state and values of private property {@code shoppingCartResponse}
-     * of class {@link ShoppingCartResponseStatus}.
-     *
-     * @return state and value of private property object {@code shoppingCartResponse}.
-     */
-    public ShoppingCartResponseStatus getShoppingCartResponse() {
-        return this.shoppingCartResponse;
-    }
+    public ShoppingCartResponseStatus getShoppingCartResponse() { return this.shoppingCartResponse; }
 
-    /**
-     * Returns the current value of {@code failureMessage} private property.
-     *
-     * @return value of property {@code failureMessage}.
-     */
-    public String getFailureMessage() {
-        return this.failureMessage;
-    }
+    public String getFailureMessage() { return this.failureMessage; }
 
-    /**
-     * Set value (message) to property {@code failureMessage}.
-     *
-     * @param failureMessage Text to be set to private property.
-     */
-    public void setFailureMessage(String failureMessage) {
-        this.failureMessage = failureMessage;
-    }
+    public void setFailureMessage(String failureMessage) { this.failureMessage = failureMessage; }
 
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
-        return new ShoppingCartResponseDto().createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
+        return new ShoppingCartResponseDto()
+                        .createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
     }
 
     /**
@@ -114,12 +78,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
+        ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(lastUpdate, "last update timestamp");
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
-        //  Verify userId belongs to a registered user by calling "Account Service"
-        //  REST API GET REQUEST using URI
+        //  Use API to verify userId belongs to a registered user by calling "Account Service"
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
@@ -225,7 +189,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             } else {
                 //  Product with color NOT FOUND in user cart - Set RESPONSE object to FAILURE
                 this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART;
-                shoppingCartResponse = new ShoppingCartResponseStatus(false,
+                shoppingCartResponse = new ShoppingCartResponseStatus(
+                        false,
                         ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
                         -1);
             }
@@ -233,64 +198,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         } else {
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
-            shoppingCartResponse = new ShoppingCartResponseStatus(false,
+            shoppingCartResponse = new ShoppingCartResponseStatus(
+                    false,
                     ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
                     productId);
         }
 
         return shoppingCart;
-    }
-
-    /**
-     * Create {@link ShoppingCart} for {@code userId} with all the products in {@code cartProducts}. <br/>
-     * If there is already a {@link ShoppingCart} exists for the {@code userId}
-     * then the method will <b>MERGE</b> the {@code cartProducts} into the existing
-     * {@link ShoppingCart}. If there is an identical product in {@code cartProducts}
-     * and existing {@link ShoppingCart} then the quantity from {@code cartProducts}
-     * will be set to the product in the existing {@link ShoppingCart}.
-     *
-     * @param userId       Id of {@code AppUser} to whom the {@link ShoppingCart} will be created.
-     * @param cartProducts {@link Collection} of unique products in the {@link ShoppingCart}.
-     * @return {@link ShoppingCartResponseStatus} class, properties values: <b>success</b> = {@code true} when successful or {@code false} if failed. <b>reason</b>=success or failure message text. <b>productId</b>=-1 because there are multiple products in the list.
-     */
-    public ShoppingCartResponseStatus createShoppingCart(long userId, Collection<ShoppingCart> cartProducts) {
-
-        if ((cartProducts == null) || (cartProducts.size() == 0)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_NO_PRODUCTS_TO_UPDATE_IN_SHOPPING_CART, -1);
-        }
-
-        System.out.println("createShoppingCart.userId=" + userId);
-
-        //  Verify userId belongs to a registered user by calling "Account Service"
-        //  REST API GET REQUEST using URI
-        if (!isRegisteredUserExists(userId)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-        }
-
-        List<ShoppingCart> existingCart = this.getShoppingCartsByUserId(userId);
-        if (existingCart == null) {
-            //  Existing CartProduct IS EMPTY - Add all items.
-            for (ShoppingCart cart : cartProducts) {
-                if (isProductExists(cart.getProductId(), ShoppingCart.convertIntColorToHex(cart.getColor()))) {
-                    //  Product with color was found in CATALOG schema - add to user cart
-                    entityManager.persist(cart);
-                }
-            }
-        } else {
-            //  MERGE Existing CartProduct NOT EMPTY- Update existing products, add new items.
-            for (ShoppingCart cart : cartProducts) {
-                int i = existingCart.indexOf(cart);
-                if (i != -1) {
-                    //  Product found in existing cart
-                    existingCart.get(i).setQuantity(cart.getQuantity());
-                    entityManager.persist(existingCart.get(i));
-                } else {
-                    //  New product in cart
-                    entityManager.persist(cart);
-                }
-            }
-        }
-        return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
     }
 
     /**
@@ -594,23 +508,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return shoppingCartResponse;
     }
 
-    public boolean isProductExistsInShoppingCart(long userId, Long productId, int color) {
-
-        //  Verify userId belongs to a registered user by calling "Account Service"
-        //  REST API GET REQUEST using URI
-        if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-            return false;
-        }
-
-        ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId, productId, color);
-
-        ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
-
-        return (shoppingCart != null);
-
-    }
-
     @Override
     public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts) {
 
@@ -693,24 +590,20 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     double pricePerItem = cartProduct.getPrice();
                     String managedImageId = cartProduct.getImageUrl();
 
-                    System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + cartProduct.getProductId());
-                    System.out.println("   product name = " + name);
-                    System.out.println("   price per item = " + pricePerItem);
-                    System.out.println("   managedImageId = \"" + managedImageId + "\"");
-                    System.out.println("   ColorAttrubute.HexColor = \"" + cartProduct.getColor().getCode() + "\"");
-                    System.out.println("   ColorAttrubute.Color = \"" + cartProduct.getColor().getName() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + cartProduct.getColor().getInStock());
+                    System.out.println("Received Product information: product id=" + cartProduct.getProductId() +
+                                        ", product name=" + name +
+                                        ", price per item=" + pricePerItem +
+                                        ", managedImageId=\'" + managedImageId + "\'" +
+                                        ", Color.code=\'" + cartProduct.getColor().getCode() + "\'" +
+                                        ", Color.name=\'" + cartProduct.getColor().getName() + "\'" +
+                                        ", Color.inStock=" + cartProduct.getColor().getInStock());
                 } else {
                     cartProduct = setNotFoundCartProduct(productId);
                 }
 
             } else {
                 //  shoppingCart is null
-                System.out.println("userId=" + shoppingCart.getUserId() +
-                        " productId=" + shoppingCart.getProductId() +
-                        " color=" + shoppingCart.getColor() +
-                        " quantity=" + shoppingCart.getQuantity() + " - product not found");
+                System.out.println("userId=" + shoppingCart.getUserId() + " productId=" + shoppingCart.getProductId() + " color=" + shoppingCart.getColor() + " quantity=" + shoppingCart.getQuantity() + " - product not found");
 
                 shoppingCartResponse = new ShoppingCartResponseStatus(false,
                         ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
@@ -732,7 +625,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * Verify the quantity of each product in user cart exists in stock. If quantity
      * in user cart is greater than the quantity in stock than add the product with
      * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
-     *
      * @param userId               Unique identity of the user.
      * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in shopping cart to verify their quantities.
      * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
@@ -795,29 +687,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
 //    /**
-//     * Get shipping cost from {@code ShipEx} service using {@code SOAP} request (<i>WSDL</i>).
-//     * @return {@code SOAP} shipping cost response.
-//     */
-//    @Override
-//    public ShipExShippingCostResponse getShippingCostFromShipEx() {
-//        try {
-//            String stringUrl = ServiceConfiguration.getUriServerShipExWsdlRequest();
-//
-////            URL url = new URL("https://www.aaa.com/myws/MyService?WSDL");
-//            URL url = new URL(stringUrl);
-//            URLConnection uc = url.openConnection();
-//            Map<String, List<String>> fields = uc.getHeaderFields();
-//
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-//    /**
 //     * Do the purchase of products in user cart: <br/>
 //     * * Get shipping cost by calling {@code SOAP} request to <b>ShipEx</b>. <br/>
 //     * *
@@ -861,8 +730,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             e.printStackTrace();
         }
         Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
-//        String stringURL = ServiceConfiguration.getUriServerAccount() +
-//                Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         System.out.println("stringURL=\"" + userByIdUrl.toString() + "\"");
 
@@ -880,13 +747,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return isExists;
     }
 
-    /**
-     * Check if a {@code productId} with {@code hexColor} exists in <i>product</i> table in <b>catalog</b> schema.
-     *
-     * @param productId Unique product identification to find.
-     * @param hexColor  Product Color hexadecimal value to find.
-     * @return <b>true</b> when exists and <b>false</b> if does not exists.
-     */
     public boolean isProductExists(Long productId, String hexColor) {
         boolean result = false;
 
@@ -896,7 +756,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 List<ColorAttributeDto> colors = productDetails.getColors();
                 for (ColorAttributeDto color : colors) {
                     //  Better to compare integers than Strings - no problem with leading zeros
-                    /*if (color.getCode().equalsIgnoreCase(hexColor)) {*/
                     if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
                         result = true;
                     }
@@ -906,13 +765,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return result;
     }
 
-    /**
-     * Checks if color RGB hexadecimal value exists in {@link List} of {@code ColorAttribute}s.
-     *
-     * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
-     * @param colors   colors {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
-     * @return {@code ColorAttribute} if the {@code hexColor} was found, {@code null} otherwise.
-     */
     public ColorAttributeDto getProductColorAttribute(String hexColor, List<ColorAttributeDto> colors) {
         ColorAttributeDto returnColor = null;
 
@@ -927,101 +779,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         }
 
         return returnColor;
-    }
-
-    /**
-     * Checks if color RGB hexadecimal value exists in {@link List} of {@code ColorAttribute}s.
-     *
-     * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
-     * @param colors   {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
-     * @return <b>true</b> when exists and <b>false</b> if does not exists.
-     */
-    public boolean isColorExistsInColorsList(String hexColor, List<ColorAttributeDto> colors) {
-        return getProductColorAttribute(hexColor, colors) != null;
-    }
-
-    /**
-     * Call REST API POST request - T.B.D.
-     *
-     * @param urlStr
-     * @param paramName {@link String} array containing parameters names.
-     * @param paramVal  {@link String} array containing parameters values.
-     * @return {@link String} containing {@code response} data.
-     * @throws Exception
-     */
-    @Deprecated
-    public static String httpPost(String urlStr,
-                                  String[] paramName,
-                                  String[] paramVal) throws Exception {
-
-        URL url = new URL(urlStr);
-        return httpPost(url, paramName, paramVal);
-    }
-
-    public static String httpPost(URL url,
-                                  String[] paramName,
-                                  String[] paramVal) throws Exception {
-
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-        conn.setUseCaches(false);
-        conn.setAllowUserInteraction(false);
-        //conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        //conn.setRequestProperty("Content-Type", "application/json");    //  Send
-        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); //  Send
-        conn.setRequestProperty("Accept", "application/json");          //  Receive
-        conn.setRequestMethod("POST");
-
-//        //  Prepare the JSON
-//        JSONObject body = new JSONObject();
-//        //body.put("keyName", "keyValue");
-//        //OR
-//        //body.put("keyName", JsonValue);
-//        body.put("username","value");
-//        body.put("password", "value");
-//        body.put("tenantName", "value");
-//        body.put("passwordCredentials", "value");
-
-
-        // Create the form content
-        OutputStream out = conn.getOutputStream();
-        Writer writer = new OutputStreamWriter(out, "UTF-8");
-
-//        out.write(body.toString().getBytes("UTF-8"));   //  Write JSON
-
-        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-//        wr.write(body.toString());
-        for (int i = 0; i < paramName.length; i++) {
-            writer.write(paramName[i]);
-            writer.write("=");
-            writer.write(URLEncoder.encode(paramVal[i], "UTF-8"));
-            writer.write("&");
-        }
-        writer.close();
-        out.close();
-
-
-        //  Get response code, and response data as string
-        //TODO-BENY change int to HttpStatus
-        if (conn.getResponseCode() != HttpStatus.SC_OK) {
-            throw new IOException(conn.getResponseMessage());
-        }
-
-        // Buffer the result into a string
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-
-        rd.close();
-
-        conn.disconnect();
-        return sb.toString();
     }
 
     public static String httpGet(URL url) throws IOException {
@@ -1068,207 +825,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
 
-        //List<ColorAttributeDto> colors = dto.getColors();
-        //for (ColorAttributeDto color : colors) {
-        //    color.setColor(getColorName(color.getCode()));
-        //}
-
         return dto;
     }
 
-    /**
-     * Test accessing {@code ShipEx} application using SOAP
-     *
-     * @return {@link String}
-     */
-    @Override
-    public String getShipExWsdlFile() {
-
-        String content = null;
-        URL url;
-        URLConnection urlConnection = null;
-
-        try {
-            url = new URL(Url_resources.getUrlShipEx(), "/shipex.wsdl");
-            urlConnection = url.openConnection();
-            if (urlConnection.getContent() != null) {
-                System.out.println("\'" + url.toString() + "\' is GOOD URL");
-
-                String contentType = urlConnection.getContentType();
-
-                content = StringHelper.getStringFromInputStream(urlConnection.getInputStream());
-
-                System.out.println("Content: \n" + content.toString());
-
-                listWSDLOperations();
-            } else {
-                System.out.println("BAD URL");
-            }
-        } catch (MalformedURLException ex) {
-            System.out.println("bad URL");
-        } catch (IOException ex) {
-            System.out.println("Failed opening connection. Perhaps WS is not up?");
-        }
-
-        return content;
-    }
-
-    public void listWSDLOperations() {
-
-        String stringUrl = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
-
-        List<Operation> operations = WSDLHelper.getListWSDLOperations(Url_resources.getUrlPrefixShipEx(), "/shipex.wsdl");
-
-        WSDLParser parser = new WSDLParser();
-
-        Definitions wsdl = parser.parse(stringUrl);
-
-        List<Schema> schemas = wsdl.getSchemas();
-        if ((schemas != null) && (schemas.size() > 0)) {
-            for (Schema schema : schemas) {
-                String schemaName = schema.getName();
-                List<Attribute> attributes = schema.getAttributes();
-                String requestTemplate = schema.getRequestTemplate();
-                List<Element> elements = schema.getAllElements();
-                if ((elements != null) && (elements.size() > 0)) {
-                    Element e = elements.get(0);
-                    String name = e.getName();
-                    String asString = e.getAsString();
-                    String prefix = e.getPrefix();
-                    int i = 0;
-                }
-                List<ComplexType> types = schema.getComplexTypes();
-
-                boolean isTrue = true;
-            }
-        }
-
-        //String portTypeName = null;
-        //for (PortType pt : wsdl.getPortTypes()) {
-        //    System.out.println(pt.getName());
-        //    portTypeName = pt.getName();
-        //    for (Operation operation : pt.getOperations()) {
-        //        operations.add(operation);
-        //    }
-        //}
-
-        //System.out.println("-=# Operations List - Begin #=-");
-        //for (Operation op : operations) {
-        //    System.out.println("* " + op.getName());
-        //}
-        //System.out.println("-=# Operations List - End   #=-");
-
-        StringWriter writer = new StringWriter();
-        SOARequestCreator creator = new SOARequestCreator(wsdl, new RequestTemplateCreator(), new MarkupBuilder(writer));
-
-        ////creator.createRequest(PortType name, Operation name, Binding name);
-        //creator.createRequest(portTypeName, "ShippingCost", "ArticleServicePTBinding");
-        //System.out.println(writer);
-
-        for (Service service : wsdl.getServices()) {
-            for (Port port : service.getPorts()) {
-                Binding binding = port.getBinding();
-                PortType portType = binding.getPortType();
-                for (Operation op : portType.getOperations()) {
-                    creator.createRequest(port.getName(), op.getName(), binding.getName());
-                    System.out.println(writer);
-                    writer.getBuffer().setLength(0);
-                }
-            }
-        }
-
-    }
-
-    @Deprecated
-    public void createTemplates(String url) {
-
-        WSDLParser parser = new WSDLParser();
-        Definitions wsdl = parser.parse(url);
-
-        StringWriter writer = new StringWriter();
-        SOARequestCreator creator = new SOARequestCreator(wsdl, new RequestTemplateCreator(), new MarkupBuilder(writer));
-
-        //creator.createRequest(PortType name, Operation name, Binding name);
-        creator.createRequest("ArticleServicePT", "create", "ArticleServicePTBinding");
-        System.out.println(writer);
-
-        for (Service service : wsdl.getServices()) {
-            for (Port port : service.getPorts()) {
-                Binding binding = port.getBinding();
-                PortType portType = binding.getPortType();
-                for (Operation op : portType.getOperations()) {
-                    creator.createRequest(port.getName(), op.getName(), binding.getName());
-                    System.out.println(writer);
-                    writer.getBuffer().setLength(0);
-                }
-            }
-        }
-    }
-
-    @Override
-    public String getShipExShippingCost() {
-
-        /*  ******* Init    ******* */
-        //costRequest = new ShippingCostRequest();
-        //orderRequest = new PlaceShippingOrderRequest();
-        //address = new SEAddress();
-        //endpoint = new ShipExEndpoint(service);
-        //
-        //address.setAddressLine1("address");
-        //address.setCity("city");
-        //address.setCountry("ua");
-        //address.setPostalCode("123123");
-        //address.setState("state");
-        //
-        //costRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_SHIPPING_COST);
-        //costRequest.setSEAddress(address);
-        //costRequest.setSENumberOfProducts(5);
-        //costRequest.setSECustomerPhone("+1231234567");
-        //costRequest.setSECustomerName("name");
-        //
-        //orderRequest.setSEAddress(address);
-        //orderRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
-        //orderRequest.setOrderNumber("1234567890");
-        //orderRequest.setSECustomerPhone("+1231234567");
-        //orderRequest.setSECustomerName("name");
-        //
-        //ShippingCostResponse response = endpoint.getShippingCost(costRequest);
-
-        boolean isValid = false;
-
-        /* Check response received values   */
-        //boolean isValid = response.getCode().equalsIgnoreCase(Constants.SHIP_EX_RESPONSE_STATUS_OK);
-        //
-        //if (isValid) {
-        //    isValid = (! response.getAmount().isEmpty());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = ((response.getAmount() < 0) || (10000000000.00 < response.getAmount()));
-        //}
-        //
-        //if (isValid) {
-        //    isValid = (!response.getCurrency().isEmpty());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = ValidationHelper.isValidCurrency(response.getCurrency());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = (!response.getSETransactionType().isEmpty());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = response.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType());
-        //}
-        //
-        String result = null;
-
-        if (isValid) {
-            result = "response is successful";
-        }
-
-        return result;
-    }
 }
