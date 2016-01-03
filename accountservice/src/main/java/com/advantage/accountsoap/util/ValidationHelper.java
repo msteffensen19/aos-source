@@ -1,6 +1,6 @@
 package com.advantage.accountsoap.util;
 
-import com.advantage.accountsoap.Constants;
+import com.advantage.common.Constants;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;

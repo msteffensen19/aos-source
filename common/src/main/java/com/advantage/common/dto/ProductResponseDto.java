@@ -1,12 +1,12 @@
 package com.advantage.common.dto;
 
-public class ProductResponseStatus {
+public class ProductResponseDto {
     boolean success;
     long id;        //  -1 = Invalid
     String reason;
     String imageId;
 
-    public ProductResponseStatus(boolean success, long id, String reason) {
+    public ProductResponseDto(boolean success, long id, String reason) {
         this.success = success;
         this.id = id;
         this.reason = reason;

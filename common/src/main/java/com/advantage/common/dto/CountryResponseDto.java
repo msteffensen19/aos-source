@@ -3,7 +3,7 @@ package com.advantage.common.dto;
 /**
  * @author Binyamin Regev on 29/11/2015.
  */
-public class CountryResponseStatus {
+public class CountryResponseDto {
     boolean success;
     Integer countryId;        //  -1 = Invalid country name
     String reason;
@@ -15,7 +15,7 @@ public class CountryResponseStatus {
      * @param reason
      * @param countryId
      */
-    public CountryResponseStatus(boolean success, String reason, Integer countryId) {
+    public CountryResponseDto(boolean success, String reason, Integer countryId) {
         this.setSuccess(success);
         this.setCountryId(countryId);
         this.setReason(reason);
