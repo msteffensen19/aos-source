@@ -34,10 +34,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -183,7 +180,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     *
      * @param userId
      * @param productId
      * @param color
@@ -252,6 +248,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * {@link ShoppingCart}. If there is an identical product in {@code cartProducts}
      * and existing {@link ShoppingCart} then the quantity from {@code cartProducts}
      * will be set to the product in the existing {@link ShoppingCart}.
+     *
      * @param userId       Id of {@code AppUser} to whom the {@link ShoppingCart} will be created.
      * @param cartProducts {@link Collection} of unique products in the {@link ShoppingCart}.
      * @return {@link ShoppingCartResponseStatus} class, properties values: <b>success</b> = {@code true} when successful or {@code false} if failed. <b>reason</b>=success or failure message text. <b>productId</b>=-1 because there are multiple products in the list.
@@ -299,6 +296,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     /**
      * Calls method {@link #addProductToShoppingCart(long, Long, int, int, long)} to add a single product to a specific user
      * shopping cart. <br/>
+     *
      * @param userId    identifies specific {@code AppUser}.
      * @param productId identifies specific {@code Product}
      * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
@@ -433,6 +431,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      * Get {@code Product} details from <b>CATALOG service</b> into {@link ProductDto}.
+     *
      * @param productId to get details for.
      * @return {@code Product} details in {@link ProductDto}.
      */
@@ -480,18 +479,18 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ShoppingCartResponseDto.CartProduct cartProduct = null;
 
-        if (! dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+        if (!dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
 
             ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
 
             if (colorAttrib != null) {
                 cartProduct = new ShoppingCartResponseDto()
-                                    .createCartProduct(dto.getProductId(),
-                                                        dto.getProductName(),
-                                                        dto.getPrice(),
-                                                        0,
-                                                        dto.getImageUrl(),
-                                                        true);
+                        .createCartProduct(dto.getProductId(),
+                                dto.getProductName(),
+                                dto.getPrice(),
+                                0,
+                                dto.getImageUrl(),
+                                true);
 
                 cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
                         colorAttrib.getName().toUpperCase(),
@@ -509,8 +508,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 //  Product with specific color NOT FOUND in Product table in CATALOG schema
                 cartProduct = setNotFoundCartProduct(productId);
             }
-        }
-        else {
+        } else {
             //  Product with this productId not found in Product table in CATALOG schema (409)
             cartProduct = setNotFoundCartProduct(productId);
         }
@@ -545,7 +543,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     //ProductDto dto = getCartProductDetails(cart.getProductId(),
                     //                                        ShoppingCart.convertIntColorToHex(cart.getColor()));
                     ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
-                                                                        ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
+                            ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
 
                     if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
                         userCart.addCartProduct(cartProduct.getProductId(),
@@ -639,9 +637,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         lastUpdate);
 
                 if (shoppingCart != null) {
-                    lastUpdate --;
-                }
-                else {
+                    lastUpdate--;
+                } else {
                     //  Override SUCCESS data and set failure information
                     shoppingCartResponse = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
 
@@ -780,13 +777,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 }
 
                 responseDto.addCartProduct(cartProductDto.getProductId(),
-                                            cartProductDto.getProductName(),
-                                            cartProductDto.getPrice(),
-                                            cartProductDto.getColor().getInStock(),
-                                            cartProductDto.getImageUrl(),
-                                            cartProductDto.getColor().getCode(),
-                                            cartProductDto.getColor().getName(),
-                                            cartProductDto.getColor().getInStock());
+                        cartProductDto.getProductName(),
+                        cartProductDto.getPrice(),
+                        cartProductDto.getColor().getInStock(),
+                        cartProductDto.getImageUrl(),
+                        cartProductDto.getColor().getCode(),
+                        cartProductDto.getColor().getName(),
+                        cartProductDto.getColor().getInStock());
             }
         }
 
@@ -863,7 +860,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-                Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+        Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
 //                Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
@@ -1095,22 +1092,21 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      * Test accessing {@code ShipEx} application using SOAP
+     *
      * @return {@link String}
      */
     @Override
     public String getShipExWsdlFile() {
 
         String content = null;
-        String urlStr = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
-
-        URL url = null;
+        URL url;
         URLConnection urlConnection = null;
 
         try {
-            url = new URL(urlStr);
+            url = new URL(Url_resources.getUrlShipEx(), "/shipex.wsdl");
             urlConnection = url.openConnection();
-            if(urlConnection.getContent() != null) {
-                System.out.println("\'" + urlStr + "\' is GOOD URL");
+            if (urlConnection.getContent() != null) {
+                System.out.println("\'" + url.toString() + "\' is GOOD URL");
 
                 String contentType = urlConnection.getContentType();
 
@@ -1142,7 +1138,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         Definitions wsdl = parser.parse(stringUrl);
 
         List<Schema> schemas = wsdl.getSchemas();
-        if ((schemas != null) && (schemas.size() > 0 )) {
+        if ((schemas != null) && (schemas.size() > 0)) {
             for (Schema schema : schemas) {
                 String schemaName = schema.getName();
                 List<Attribute> attributes = schema.getAttributes();
@@ -1153,7 +1149,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     String name = e.getName();
                     String asString = e.getAsString();
                     String prefix = e.getPrefix();
-                    int i  = 0;
+                    int i = 0;
                 }
                 List<ComplexType> types = schema.getComplexTypes();
 
@@ -1197,6 +1193,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     }
 
+    @Deprecated
     public void createTemplates(String url) {
 
         WSDLParser parser = new WSDLParser();
