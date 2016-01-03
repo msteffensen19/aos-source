@@ -1004,7 +1004,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Get response code, and response data as string
         //TODO-BENY change int to HttpStatus
-        if (conn.getResponseCode() != 200) {
+        if (conn.getResponseCode() != HttpStatus.SC_OK) {
             throw new IOException(conn.getResponseMessage());
         }
 
@@ -1024,26 +1024,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return sb.toString();
     }
 
-    /**
-     * Call REST API GET request
-     *
-     * @param urlStr
-     * @return
-     * @throws IOException
-     */
-    @Deprecated
-    public static String httpGet(String urlStr) throws IOException {
-        URL url = new URL(urlStr);
-        return httpGet(url);
-    }
-
     public static String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         int responseCode = conn.getResponseCode();
 
         String returnValue;
-
         switch (responseCode) {
             case HttpStatus.SC_OK: {
                 // Buffer the result into a string
