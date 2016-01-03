@@ -1,12 +1,13 @@
 package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
-import com.advantage.order.store.order.services.ShoppingCartService;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
+import com.advantage.order.store.order.services.ShoppingCartService;
 import com.advantage.root.string_resources.Constants;
+import com.advantage.root.string_resources.Url_resources;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +73,8 @@ public class OrderController {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         }
         else {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
         }
     }
 
@@ -102,15 +107,44 @@ public class OrderController {
                                                                       @PathVariable("userid") Long userId,
                                                                       HttpServletRequest request) {
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (userId != null) {
             shoppingCartResponseStatus = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
-        } else {
+
+            if (shoppingCartResponseStatus.isSuccess()) {
+                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+
+                if (userCartResponseDto == null) {
+                    //  Unlikely scenario - update of user cart successful and get user cart failed
+                    httpStatus = HttpStatus.NOT_FOUND;
+                    shoppingCartResponseStatus = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+                }
+                else {
+                    httpStatus = HttpStatus.OK;
+                }
+            }
+            else {
+                //  Replace user cart failed
+                //  NOT_IMPLEMENTED (501) = The server either does not recognise the
+                //                          request method, or it lacks the ability
+                //                          to fulfill the request.
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
+
+                shoppingCartResponseStatus.setSuccess(false);
+                shoppingCartResponseStatus.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
+                shoppingCartResponseStatus.setId(-1);
+            }
+        }
+        else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+
             shoppingCartResponseStatus.setSuccess(false);
             shoppingCartResponseStatus.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
             shoppingCartResponseStatus.setId(-1);
         }
 
-        return new ResponseEntity<>(shoppingCartResponseStatus, HttpStatus.OK);
+        return new ResponseEntity<>(shoppingCartResponseStatus, httpStatus);
     }
 
     /*  =========================================================================================================   */
@@ -193,11 +227,18 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/carts/ShipEx/wsdl", method = RequestMethod.GET)
+//TODO-BENY Mark it as for dev-only!!! @RequestMapping(value = "/carts/ShipEx", method = RequestMethod.GET)
     @ApiOperation(value = "Get ShipEx Shipping Cost WSDL")
-    public ResponseEntity<String> getShipExShippingCostWSDL() {
+    public ResponseEntity<String> getShipExWsdlTest(HttpServletRequest request, HttpServletResponse response) {
+        String responseShipEx = shoppingCartService.getShipExWsdlFile();
+        return new ResponseEntity<>(responseShipEx, HttpStatus.OK);
+    }
 
-        String stringURI = Constants.URI_SERVER_SHIP_EX + "/shipex?wsdl";
+    /*  =========================================================================================================   */
+
+    public ResponseEntity<String> getWsdlStringTest1() {
+
+        String stringURI = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
 
         System.out.println("Starting SOAPRequest...");
         try {

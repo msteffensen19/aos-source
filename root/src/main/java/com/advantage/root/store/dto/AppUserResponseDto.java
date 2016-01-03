@@ -1,9 +1,9 @@
-package com.advantage.order.store.user.dto;
+package com.advantage.root.store.dto;
 
 /**
  * @author Binyamin Regev on 19/11/2015.
  */
-public class AppUserResponseStatus {
+public class AppUserResponseDto {
     boolean success;
     long userId;        //  -1 = Invalid user login name
     String reason;
@@ -15,7 +15,7 @@ public class AppUserResponseStatus {
      * @param reason
      * @param userId
      */
-    public AppUserResponseStatus(boolean success, String reason, long userId) {
+    public AppUserResponseDto(boolean success, String reason, long userId) {
         this.setUserId(userId);
         this.setReason(reason);
         this.setSuccess(success);
@@ -27,7 +27,7 @@ public class AppUserResponseStatus {
      * @param userId
      * @param token
      */
-    public AppUserResponseStatus(boolean success, String reason, long userId, String token) {
+    public AppUserResponseDto(boolean success, String reason, long userId, String token) {
         this.setUserId(userId);
         this.setReason(reason);
         this.setSuccess(success);

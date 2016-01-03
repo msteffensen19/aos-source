@@ -1,6 +1,6 @@
 package com.advantage.account.store.init;
 
-import com.advantage.account.store.user.dto.AppUserType;
+import com.advantage.root.store.dto.AppUserType;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
@@ -29,7 +29,6 @@ public class DataSourceInit4Json {
     private EntityManagerFactory entityManagerFactory;
 
     public void init() throws Exception {
-
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
         Session session = sessionFactory.openSession();
@@ -103,6 +102,7 @@ public class DataSourceInit4Json {
         session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Sheeba", "queen.sheeba", "SheebaQ1", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
         session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Queen", "Bat Sheva", "queen.bat-sheva", "BatShevaQ2", 10, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));
 
+        session.persist(new AppUser(AppUserType.USER.getAppUserTypeCode(), "Fiskin", "Evgeney", "fizpok", "ASas12", 10, "052-4898919", "Jerusalem Region", "Jerusalem", "address", "9876543", "evgeney.fiskin@hpe.com", YesNoReply.YES.getReplyTypeChar()));
         transaction.commit();
     }
 

@@ -17,8 +17,9 @@
     "angular-cookie": "~4.0.9",
     "jquery-bez": "1.0.11",
     "jquery-color-animation": "~1.6.0",
-    "ngAutocomplete": "~1.0.0"
-   },
+    "ngAutocomplete": "~1.0.0",
+    "angular-breadcrumb": "~0.4.1"
+  },
   "resolutions": {
     "angular": "~1.4.7"
   }

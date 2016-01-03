@@ -6,12 +6,14 @@ define(['./module'], function (controllers) {
 
     'use strict';
     controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll',
-                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter',
+                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
         function ($scope, productService, smoothScroll,
-                        $location, $cookie, $rootScope, productsCartService, $filter) {
+                        $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
 
+            l('$state')
+            l($state)
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
@@ -20,8 +22,10 @@ define(['./module'], function (controllers) {
                 $('body, html').animate({scrollTop: 0}, 10);
             }
 
-                /* Autocomplete*/
 
+
+
+            /* Autocomplete*/
             $scope.checkEnterKey = function(event)
             {
                 console.log(event)
@@ -34,8 +38,10 @@ define(['./module'], function (controllers) {
             var lastRequest = '';
             $scope.runAutocomplete = function(){
                 lastRequest = $scope.autoCompleteValue;
-                if(lastRequest == '') { $scope.autoCompleteResult = {}; return; }
-
+                if(lastRequest == '') {
+                    $scope.autoCompleteResult = {};
+                    return;
+                }
                 productService.getProductsBySearch(lastRequest, 10).then(function(result){
                     $scope.autoCompleteResult = result;
                 });
@@ -43,25 +49,25 @@ define(['./module'], function (controllers) {
 
 
             $scope.openSearchProducts = function(){
-                $('#openSearch').fadeOut(400)
-                $("nav ul li a.navLinks").fadeOut(600);
+                $("nav ul li a.navLinks").stop().animate({ opacity : 0 }, 400);
                 setTimeout(function(_this){
                     $("#searchSection").fadeIn(1000);
                     $("#autoComplete").focus();
                     $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
                     $("#searchSection > div > div > span > img").delay(500).fadeIn(500); // img close
+                    $('#openSearch').stop().animate({ opacity : 0 }, 300)
                 }, 400);
             }
 
             $scope.closeSearchSection = function(){
-                $('#openSearch').fadeIn(200)
+                $('#openSearch').stop().animate({ opacity : 1 }, 300)
                 $("#searchSection > div > div > span > img").fadeOut(200); // img close
                 setTimeout(function(){
                     $("#searchSection").fadeOut(500);
                     $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
                     if($location.$$path == '/')
                     {
-                        $("nav ul li a.navLinks").fadeIn(600);
+                        $("nav ul li a.navLinks").stop().animate({ opacity : 1 }, 400);
                     }
                     $scope.autoCompleteValue = lastRequest = '';
                     $scope.autoCompleteResult = {};
@@ -82,8 +88,9 @@ define(['./module'], function (controllers) {
             $scope.searchByCategoryId = function(id){
                 console.log(id);
             }
-
             /* END Autocomplete*/
+
+
 
 
 
@@ -94,7 +101,7 @@ define(['./module'], function (controllers) {
             /* Cart section  */
 
             productsCartService.loadCartProducts().then(function(cart){
-                $scope.cart = cart && cart.productsInCart ? cart : cart.data;
+                $scope.cart = cart;
             });
 
             $scope.removeProduct = function (index) {
@@ -213,13 +220,44 @@ define(['./module'], function (controllers) {
             };
 
 
+            $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
 
-            $rootScope.$on('$locationChangeSuccess', function (event) {
-                $scope.welcome = $location.path().indexOf('/welcome') <= -1 &&  $location.path().indexOf('/404') <= -1;
+                $scope.welcome = $location.path().indexOf('/welcome') <= -1 &&
+                    $location.path().indexOf('/404') <= -1;
                 $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
                 Helper.UpdatePageFixed();
 
             });
+
+            /*
+             $rootScope.$on("$stateChangeStart",
+             function (event, current, previous, rejection, rejection2) {
+
+             }
+             );
+
+             $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {
+             onBreadcrumbHandler();
+             });
+             */
+
+            function onBreadcrumbHandler(){
+                var existsRoot = $rootScope.breadcrumb;
+                var newBreadcrumb = [];
+                for(var index = 0; index < existsRoot.length; index++){
+                    var existState = existsRoot[index];
+                    newBreadcrumb.push({
+                        name: $state.current.data.breadcrumbName,
+                        path: $location.$$path
+                    });
+                    if(existState.name == $state.current.data.breadcrumbName)
+                    {
+                        break;
+                    }
+                }
+                $rootScope.breadcrumb = newBreadcrumb;
+            }
+
 
 
             Main.addAnimPlaceholderEventListener();

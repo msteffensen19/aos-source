@@ -1,6 +1,5 @@
 <!--
 
-
 <section id="png">
     <img src="../../css/images/product.png" />
 </section>
@@ -11,11 +10,15 @@
     }
 </style>
 
+<nav class="pages">
+    <h1><a ng-repeat="link in breadcrumb" href="{{link.path}}">{{link.name}}{{link.path}}</a></h1>
+</nav>
+
 -->
 
 <nav class="pages">
     <a translate="HOME" href="/#" ></a>
-    <a href="#/category/1" > LAPTOPS </a>
+    <a href="#/category/{{product.categoryId}}" > {{categoryName}} </a>
     <a class="select">{{::product.productName | uppercase}}</a>
 </nav>
 
@@ -25,12 +28,12 @@
         <!-- image section -->
             <div id="product-image">
                 <figure>
-                    <img alt="" id="imgToBuy" ng-src="fetchImage?image_id={{::product.imageUrl}}">
+                    <img alt="" id="imgToBuy" a-sec-src="{{::product.imageUrl}}"">
                 </figure>
                 <div id="cover" ng-if="product.images.length > 1">
                     <div id="length">
                         <div class="imageAlias" ng-repeat="img in product.images">
-                            <img alt="" ng-src="fetchImage?image_id={{::img}}">
+                            <img alt="" a-sec-src="{{::img}}">
                         </div>
                     </div>
                 </div>
@@ -48,13 +51,12 @@
         <div id="productProperties">
             <div class="colors" ng-if="product.colors.length > 0">
                 <h2 translate="Color" class="Colors roboto-light" class="roboto-light" ></h2>
-                <span data-ng-repeat="color in product.colors" class="productColor"
+                <span title="{{color.name}}" data-ng-repeat="color in product.colors" class="productColor"
                       data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
                       data-ng-class='{ colorSelected : colorSelected.name == color.name } '
                       data-ng-click="setColor(color)" >
-                            <label>{{color.name}}</label>
                 </span>
             </div>
             <br />

@@ -64,9 +64,7 @@ define(['./module'], function (directives) {
                         }
                         return -1;
                     }
-
                 }],
-
             }
         }])
         .directive('secInput', ['$templateCache', function($templateCache){

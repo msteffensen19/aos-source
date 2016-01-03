@@ -11,7 +11,6 @@ import com.advantage.root.store.dto.AttributeItem;
 import com.advantage.root.store.dto.CategoryDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.store.dto.PromotedProductDto;
-import com.advantage.root.string_resources.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -22,6 +21,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
@@ -67,41 +67,18 @@ public class DataSourceInit4Json {
         session.persist(category6);
 
         /*Attributes INIT*/
+
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology"};
+
         Map<String, Attribute> defAttributes = new HashMap<>();
-        Attribute attribute1 = new Attribute();
-        Attribute attribute2 = new Attribute();
-        Attribute attribute3 = new Attribute();
-        Attribute attribute4 = new Attribute();
-        Attribute attribute5 = new Attribute();
-        Attribute attribute6 = new Attribute();
-        Attribute attribute7 = new Attribute();
 
-        attribute1.setName("GRAPHICS");
-        attribute2.setName(Constants.AttributeNames.ATTRIBUTE_CUSTOMIZATION);
-        attribute3.setName(Constants.AttributeNames.ATTRIBUTE_OPERATING_SYSTEM);
-        attribute4.setName(Constants.AttributeNames.ATTRIBUTE_PROCESSOR);
-        attribute5.setName(Constants.AttributeNames.ATTRIBUTE_MEMORY);
-        // attribute6.setName(Constants_catalog.AttributeNames.ATTRIBUTE_COLOR);
-        attribute7.setName(Constants.AttributeNames.ATTRIBUTE_DISPLAY);
-
-        session.persist(attribute1);
-        session.persist(attribute2);
-        session.persist(attribute3);
-        session.persist(attribute4);
-        session.persist(attribute5);
-        //session.persist(attribute6);
-        session.persist(attribute7);
-
+        for (String attrib : newAttributes) {
+            Attribute attribute = new Attribute();
+            attribute.setName(attrib);
+            session.persist(attribute);
+            defAttributes.put(attrib.toUpperCase(), attribute);
+        }
         transaction.commit();
-
-        defAttributes.put(attribute1.getName().toUpperCase(), attribute1);
-        defAttributes.put(attribute2.getName().toUpperCase(), attribute2);
-        defAttributes.put(attribute3.getName().toUpperCase(), attribute3);
-        defAttributes.put(attribute4.getName().toUpperCase(), attribute4);
-        defAttributes.put(attribute5.getName().toUpperCase(), attribute5);
-        // defAttributes.put(attribute6.getName().toUpperCase(), attribute6);
-        defAttributes.put(attribute7.getName().toUpperCase(), attribute7);
-
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
             session.save(entry.getValue());
         }
@@ -110,45 +87,48 @@ public class DataSourceInit4Json {
         File json = filePath.getFile();
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CategoryDto[] dtos = objectMapper.readValue(json, CategoryDto[].class);
+        //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        //Changed by Evgeney
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
         transaction = session.beginTransaction();
         Map<Long, Product> productMap = new HashMap<>();
-        for (CategoryDto dto : dtos) {
-            Category category = categoryRepository.get(dto.getCategoryId());
+        for (CategoryDto categoryDto : categoryDtos) {
+            Category category = categoryRepository.get(categoryDto.getCategoryId());
 
             /*PRODUCT*/
-            for (ProductDto p : dto.getProducts()) {
-                Product product = new Product(p.getProductName(), p.getDescription(), p.getPrice(), category);
-                product.setManagedImageId(p.getImageUrl());
+            for (ProductDto productDto : categoryDto.getProducts()) {
+                Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category);
+                product.setManagedImageId(productDto.getImageUrl());
                 session.persist(product);
                 //load attributes
-                for (AttributeItem a : p.getAttributes()) {
+                for (AttributeItem attributeItem : productDto.getAttributes()) {
                     ProductAttributes attributes = new ProductAttributes();
                     attributes.setProduct(product);
 
-                    attributes.setAttribute(defAttributes.get(a.getAttributeName().toUpperCase()));
-                    attributes.setAttributeValue(a.getAttributeValue());
+                    attributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
+                    attributes.setAttributeValue(attributeItem.getAttributeValue());
 
                     session.save(attributes);
                 }
 
-                if (p.getImages().size() == 0) {
-                    p.getImages().add(product.getManagedImageId());
+                if (productDto.getImages().size() == 0) {
+                    productDto.getImages().add(product.getManagedImageId());
                 }
 
-                //TODO move to the productService
-                product.setColors(productService.getColorAttributes(p.getColors(), product));
-                product.setImages(productService.getImageAttribute(p.getImages(), product));
+                //TODO-EVG move to the productService ?
+                product.setColors(productService.getColorAttributes(productDto.getColors(), product));
+                product.setImages(productService.getImageAttribute(productDto.getImages(), product));
 
                 productMap.put(product.getId(), product);
             }
 
-            PromotedProductDto p = dto.getPromotedProduct();
-            Product parent = productMap.get(p.getId());
-
-            Deal deal = new Deal(10, parent.getDescription(), p.getPromotionHeader(), p.getPromotionSubHeader(), p.getStaringPrice(),
-                    p.getPromotionImageId(), 0, "", "", parent);
+            PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
+            Long prodId = promotedProductDto.getId();
+            Product product = productMap.get(prodId);
+            Assert.notNull(product, "\nPromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
+            Deal deal = new Deal(10, product.getDescription(), promotedProductDto.getPromotionHeader(), promotedProductDto.getPromotionSubHeader(), promotedProductDto.getStaringPrice(),
+                    promotedProductDto.getPromotionImageId(), 0, "", "", product);
 
             session.persist(deal);
 

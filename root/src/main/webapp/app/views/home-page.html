@@ -3,20 +3,19 @@
 <section>
 
     <!--  five pictures  -->
-
     <article id="our_products">
         <div class="container ">
 
             <div class="rowSection">
                 <div ng-click="goToCategory(categories[3].categoryId)" class="SpeaakersImg"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[3].managedImageId+')'} : {}" >
+                     a-sec-back-img="{{categories[3].managedImageId}}" >
                     <div>
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate  }} </label>
                     </div>
                 </div>
                 <div ng-click="goToCategory(categories[2].categoryId)"
-                      ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[2].managedImageId+')'} : {}">
+                     a-sec-back-img="{{categories[2].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[2].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
@@ -28,21 +27,21 @@
 
             <div class="rowSection">
                 <div ng-click="goToCategory(categories[0].categoryId)" class="laptopImg"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[0].managedImageId+')'} : {}">
+                     a-sec-back-img="{{categories[0].managedImageId}}" >
                     <div>
-                        <span class="shop_now">{{::categories[0].categoryName}}</span>
+                        <span class="shop_now" > {{::categories[0].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
                 </div>
                 <div ng-click="goToCategory(categories[4].categoryId)" class="micesImg"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[4].managedImageId+')'} : {}" >
+                     a-sec-back-img="{{categories[4].managedImageId}}" >
                     <div>
                         <span class="shop_now">{{::categories[4].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
                 </div>
                 <div ng-click="goToCategory(categories[1].categoryId)" class="twoRows"
-                     ng-style="categories.length > 0 ? {'background-image':'url(fetchImage?image_id='+categories[1].managedImageId+')'} : {}">
+                     a-sec-back-img="{{categories[1].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[1].categoryName}}</span>
                         <label class="shop_nowSub">{{ 'Shop_Now' | translate }} </label>
@@ -52,8 +51,6 @@
         </div>
     </article>
     <!-- end five pictures -->
-
-
 
 
 

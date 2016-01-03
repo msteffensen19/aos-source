@@ -17,8 +17,25 @@ define([],function(){
                 requireLogin: false,  // this property will apply to all children of 'app'
                 beforeLoader: false,
                 navLinks: true,
+                breadcrumbName: "Home Page",
             },
             resolve : {
+                resolveParams: function(categoryService, dealService, $q) {
+                    var defer = $q.defer();
+                    categoryService.getCategories().then(function (categories) {
+                        dealService.getDealOfTheDay().then(function(deal) {
+                            categoryService.getPopularProducts().then(function(popularProducts){
+                                var paramsToReturn = {
+                                    categories: categories,
+                                    specialOffer: deal,
+                                    popularProducts: popularProducts,
+                                }
+                                defer.resolve(paramsToReturn)
+                            })
+                        });
+                    });
+                    return defer.promise;
+                }
             }
         })
         .state('welcome',{
@@ -26,7 +43,8 @@ define([],function(){
             templateUrl: 'app/views/welcome.html',
             data: {
                 requireLogin: false,
-                showWelcome : true// this property will apply to all children of 'app'
+                showWelcome : true, // this property will apply to all children of 'app'
+                breadcrumbName: "Welcome",
             }
         })
         .state('register',{
@@ -34,7 +52,8 @@ define([],function(){
             templateUrl: 'app/user/views/register-page.html',
             controller: 'registerCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName: "Register",
             },
             resolve : {
                 
@@ -45,7 +64,8 @@ define([],function(){
             templateUrl: 'app/views/shoppingCart.html',
             controller: 'shoppingCartCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName: "ShoppingCart",
             },
             resolve : {
                 category: function (productsCartService, $stateParams) {
@@ -58,12 +78,13 @@ define([],function(){
             templateUrl: 'app/views/category-page.html',
             controller: 'categoryCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName: "Category"
             },
             resolve : {
                 category: function (categoryService, $stateParams) {
                     return categoryService.getCategoryById($stateParams.id);
-                }
+                },
             }
         })
         .state('product',{
@@ -71,28 +92,34 @@ define([],function(){
             templateUrl: 'app/views/product-page.html',
             controller: 'productCtrl',
             data: {
-                requireLogin: false // this property will apply to all children of 'app'
+                requireLogin: false,  // this property will apply to all children of 'app'
+                breadcrumbName:  "Product"
             },
             resolve : {
-                selectedColor: function($stateParams){
-                    return $stateParams.color;
-                },
-                quantity: function($stateParams){
-                    return $stateParams.quantity;
-                },
-                pageState: function($stateParams){
-                    return $stateParams.pageState;
-                },
-                product: function (productService, $stateParams) {
-                    return productService.getProductById($stateParams.id);
+                resolveParams: function(productService, categoryService, $stateParams, $q) {
+                    var defer = $q.defer();
+                    productService.getProductById($stateParams.id).then(function (product) {
+                        categoryService.getCategoryById(product.categoryId).then(function (category) {
+                            var paramsToReturn = {
+                                selectedColor: $stateParams.color,
+                                quantity: $stateParams.quantity,
+                                pageState: $stateParams.pageState,
+                                categoryName: category.categoryName,
+                                product: product,
+                            }
+                            defer.resolve(paramsToReturn)
+                        });
+                    });
+                    return defer.promise;
                 }
             }
-        })
-        .state('404',{
+        }).
+        state('404',{
             url: '/404',
             templateUrl: 'app/views/404.html',
             data: {
-                underConstruction: true // this property will apply to all children of 'app'
+                underConstruction: true,  // this property will apply to all children of 'app'
+                breadcrumbName: "Home Page",
             }
         });
 

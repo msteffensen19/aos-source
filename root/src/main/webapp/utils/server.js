@@ -91,14 +91,15 @@ var serviceKey = "http://"+
     services_properties['service_service_url_suffix'];
 
 
-
-
 var server = {
 
     catalog: {
 
+        getKey : function(){
+        return catalogKey;
+        },
         getPopularProducts : function () {
-            return "app/jsonFiles/popularProducts.json";
+            return "app/tempFiles/popularProducts.json";
         },
 
         getCategories: function(){
@@ -133,8 +134,15 @@ var server = {
     },
     order: {
 
-        loadCartProducts : function (userId){
-            return orderKey + "/api/v1/carts/" + userId;
+
+        removeProductToUser: function (userId, productId, color, quantity){
+            console.log(orderKey + "/api/v1/carts/" + userId +
+                "/product/" + productId +
+                "/color/" + color)
+
+            return orderKey + "/api/v1/carts/" + userId +
+                "/product/" + productId +
+                "/color/" + color;
         },
 
         addProductToUser: function (userId, productId, color, quantity){
@@ -142,9 +150,11 @@ var server = {
                 "/product/" + productId +
                 "/color/" + color +
                 "?quantity=" + quantity;
+        },
+
+        loadCartProducts : function (userId){
+            return orderKey + "/api/v1/carts/" + userId;
         }
-
-
 
     },
     account: {

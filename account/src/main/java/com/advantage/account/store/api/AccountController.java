@@ -1,12 +1,12 @@
 package com.advantage.account.store.api;
 
-import com.advantage.account.store.user.dto.AppUserDto;
-import com.advantage.account.store.user.dto.AppUserResponseStatus;
 import com.advantage.account.store.user.dto.CountryResponseStatus;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.services.AppUserService;
 import com.advantage.account.store.user.services.CountryService;
+import com.advantage.root.store.dto.AppUserDto;
+import com.advantage.root.store.dto.AppUserResponseDto;
 import com.advantage.root.string_resources.Constants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,40 +59,73 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login_OLD", method = RequestMethod.POST)
     @ApiOperation(value = "Login user")
-    public ResponseEntity<AppUserResponseStatus> doLogin(@RequestBody AppUserDto appUser,
-                                                         HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<AppUserResponseDto> doLogin(@RequestBody AppUserDto appUser,
+                                                      HttpServletRequest request, HttpServletResponse response) {
 
         response.setHeader("sessionId", request.getSession().getId());
 
-        final AppUserResponseStatus appUserResponseStatus = appUserService.doLogin(appUser.getLoginUser(),
+        final AppUserResponseDto appUserResponseDto = appUserService.doLogin(appUser.getLoginUser(),
                 appUser.getLoginPassword(),
                 appUser.getEmail());
 
-        if (appUserResponseStatus.isSuccess()) {
+        if (appUserResponseDto.isSuccess()) {
             HttpSession session = request.getSession();
-            session.setAttribute(Constants.UserSession.TOKEN, appUserResponseStatus.getToken());
-            session.setAttribute(Constants.UserSession.USER_ID, appUserResponseStatus.getUserId());
-            session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
+            session.setAttribute(Constants.UserSession.TOKEN, appUserResponseDto.getToken());
+            session.setAttribute(Constants.UserSession.USER_ID, appUserResponseDto.getUserId());
+            session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseDto.isSuccess());
 
             //  Set SessionID to Response Entity
             //response.getHeader().
-            appUserResponseStatus.setSessionId(session.getId());
+            appUserResponseDto.setSessionId(session.getId());
 
 
-            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
+            return new ResponseEntity<>(appUserResponseDto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(appUserResponseDto, HttpStatus.NOT_FOUND);
         }
 
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ApiOperation(value = "Login JWT")
+    public ResponseEntity<AppUserResponseDto> doLoginJWT(@RequestBody AppUserDto appUserDto,
+                                                         HttpServletRequest request, HttpServletResponse response) {
+        HttpStatus httpStatus;
+
+        response.setHeader("sessionId", request.getSession().getId());
+
+        AppUserResponseDto appUserResponseDto = appUserService.doLogin(appUserDto.getLoginUser(),
+                appUserDto.getLoginPassword(),
+                appUserDto.getEmail());
+
+        if (appUserResponseDto.isSuccess()) {
+            HttpSession session = request.getSession();
+
+            //session.setAttribute(Constants.UserSession.TOKEN, appUserResponseDto.getToken());
+            session.setAttribute(Constants.UserSession.USER_ID, appUserResponseDto.getUserId());
+            session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseDto.isSuccess());
+
+            //  Set SessionID to Response Entity
+            //response.getHeader().
+            appUserResponseDto.setSessionId(session.getId());
+
+//            Cookie cookie = new Cookie("token", appUserResponseDto.getToken());
+//            response.addCookie(cookie);
+
+            httpStatus = HttpStatus.OK;
+        } else {
+            httpStatus = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(appUserResponseDto, httpStatus);
+    }
+
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ApiOperation(value = "Register new application user")
-    public ResponseEntity<AppUserResponseStatus> createUser(@RequestBody AppUser appUser, HttpServletRequest request) {
+    public ResponseEntity<AppUserResponseDto> createUser(@RequestBody AppUser appUser, HttpServletRequest request) {
 
-        final AppUserResponseStatus appUserResponseStatus = appUserService.create(
+        final AppUserResponseDto appUserResponseDto = appUserService.create(
                 appUser.getAppUserType(),
                 appUser.getLastName(),
                 appUser.getFirstName(),
@@ -107,10 +140,10 @@ public class AccountController {
                 appUser.getEmail(),
                 appUser.getAllowOffersPromotion());
 
-        if (appUserResponseStatus.isSuccess())
-            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.OK);
+        if (appUserResponseDto.isSuccess())
+            return new ResponseEntity<>(appUserResponseDto, HttpStatus.OK);
         else
-            return new ResponseEntity<>(appUserResponseStatus, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(appUserResponseDto, HttpStatus.CONFLICT);
 
     }
 

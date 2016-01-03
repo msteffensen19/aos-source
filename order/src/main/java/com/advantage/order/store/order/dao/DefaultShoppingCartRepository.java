@@ -1,31 +1,43 @@
 package com.advantage.order.store.order.dao;
 
 //import com.advantage.order.store.config.ServiceConfiguration;
+
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
+import com.advantage.order.store.order.util.WSDLHelper;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.root.store.dto.ColorAttributeDto;
 import com.advantage.root.store.dto.ProductDto;
 import com.advantage.root.string_resources.Constants;
+import com.advantage.root.string_resources.Url_resources;
+//import com.advantage.root.util.ValidationHelper;
+import com.advantage.root.util.StringHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpStatus;
+import com.predic8.schema.ComplexType;
+import com.predic8.schema.Element;
+import com.predic8.schema.Schema;
+import com.predic8.schema.Attribute;
+import com.predic8.wsdl.*;
+import com.predic8.wstool.creator.RequestTemplateCreator;
+import com.predic8.wstool.creator.SOARequestCreator;
+import groovy.xml.MarkupBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 //import org.json.JSONObject;
 
 /**
@@ -39,9 +51,13 @@ import java.util.Map;
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository {
 
     //  FINALs for REST API calls - BEGIN
-    //  TODO Will be replaces with configuration variables (T.B.D.)
+    @Deprecated
     private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
+    @Deprecated
     private static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
+
+    private static final String CATALOG_PRODUCT = "/products/";
+    private static final String ACCOUNT_USERS = "/users/";
     //  FINALs for REST API calls - END
 
     private static String NOT_FOUND = "NOT FOUND";
@@ -77,16 +93,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         this.failureMessage = failureMessage;
     }
 
-    public ProductDto setNotFoundProductDto(Long productId) {
-        ProductDto dto = new ProductDto();
-
-        dto.setProductId(productId);
-        dto.setProductName(NOT_FOUND);
-        dto.setImageUrl(NOT_FOUND);
-        dto.setDescription("");
-        dto.setPrice(-999999.99);       //  Price that makes no sense
-
-        return dto;
+    public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
+        return new ShoppingCartResponseDto().createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
     }
 
     /**
@@ -102,7 +110,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return {@link ShoppingCartResponseStatus} class of the product. If an error occured method will return {@code null} and
      */
     @Override
-    public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity) {
+    public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity, long lastUpdate) {
 
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
@@ -112,7 +120,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
@@ -129,6 +137,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
                 //  Existing product in user shopping cart (the same productId + color)
                 shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
+                if (lastUpdate != 0) {
+                    shoppingCart.setLastUpdate(lastUpdate);
+                } else {
+                    shoppingCart.setLastUpdate(new Date().getTime());
+                }
+
                 entityManager.persist(shoppingCart);
 
                 this.failureMessage = "";
@@ -138,24 +152,28 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
             } else {
                 //  New ShoppingCart
-                shoppingCart = new ShoppingCart(userId, productId, color, quantity);
+                shoppingCart = new ShoppingCart(userId, new Date().getTime(), productId, color, quantity);
+                if (lastUpdate != 0) {
+                    shoppingCart.setLastUpdate(lastUpdate);
+                } else {
+                    shoppingCart.setLastUpdate(new Date().getTime());
+                }
                 entityManager.persist(shoppingCart);
 
                 //  New product in shopping cart created successfully.
                 this.failureMessage = "";
 
                 shoppingCartResponse = new ShoppingCartResponseStatus(true,
-                                                                ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
-                                                                shoppingCart.getProductId());
+                        ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
+                        shoppingCart.getProductId());
             }
-        }
-        else {
+        } else {
             //  New product in shopping cart created successfully.
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
             shoppingCartResponse = new ShoppingCartResponseStatus(false,
-                                                                ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
-                                                                productId);
+                    ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                    productId);
         }
 
         return shoppingCart;
@@ -167,6 +185,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param color
      * @param quantity
      * @return
+     * @see java.util.Date
      */
     @Override
     public ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity) {
@@ -180,7 +199,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
@@ -195,28 +214,28 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             if (shoppingCart != null) {
                 //  Product with color was found in user cart
                 shoppingCart.setQuantity(quantity);     //  Set argument quantity as product quantity in user cart
+                shoppingCart.setLastUpdate(new Date().getTime());
+
                 entityManager.persist(shoppingCart);    //  Update changes
 
                 //  Set RESPONSE object
                 shoppingCartResponse.setSuccess(true);
                 shoppingCartResponse.setReason(ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY);
                 shoppingCartResponse.setId(productId);
-            }
-            else {
+            } else {
                 //  Product with color NOT FOUND in user cart - Set RESPONSE object to FAILURE
                 this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART;
                 shoppingCartResponse = new ShoppingCartResponseStatus(false,
-                                                                ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
-                                                                -1);
+                        ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                        -1);
             }
 
-        }
-        else {
+        } else {
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
             shoppingCartResponse = new ShoppingCartResponseStatus(false,
-                                                                ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
-                                                                productId);
+                    ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                    productId);
         }
 
         return shoppingCart;
@@ -244,7 +263,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
@@ -275,7 +294,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Calls method {@link #addProductToShoppingCart(long, Long, int, int)} to add a single product to a specific user
+     * Calls method {@link #addProductToShoppingCart(long, Long, int, int, long)} to add a single product to a specific user
      * shopping cart. <br/>
      *
      * @param userId    identifies specific {@code AppUser}.
@@ -286,7 +305,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * for the {@code REQUEST}.
      */
     public ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity) {
-        addProductToShoppingCart(userId, productId, color, quantity);
+        addProductToShoppingCart(userId, productId, color, quantity, 0);
         return shoppingCartResponse;
     }
 
@@ -311,7 +330,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
@@ -333,8 +352,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
                 shoppingCartResponse.setId(productId);
             }
-        }
-        else {
+        } else {
             //  New product in shopping cart created successfully.
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
@@ -365,7 +383,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
@@ -383,9 +401,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
             }
         }
-
         return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
-
     }
 
     /**
@@ -400,7 +416,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
@@ -414,57 +430,90 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
+     * Get {@code Product} details from <b>CATALOG service</b> into {@link ProductDto}.
+     *
+     * @param productId to get details for.
+     * @return {@code Product} details in {@link ProductDto}.
+     */
+    public ProductDto getProductDtoDetails(Long productId) {
+        URL productsPrefixUrl;
+        URL productByIdUrl = null;
+        try {
+            productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), CATALOG_PRODUCT);
+            productByIdUrl = new URL(productsPrefixUrl, String.valueOf(productId));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("stringURL=\"" + productByIdUrl.toString() + "\"");
+
+        ProductDto dto = null;
+
+        try {
+            String stringResponse = httpGet(productByIdUrl);
+            System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+            if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
+                //  Product not found (409)
+                dto = new ProductDto(productId, -1L, NOT_FOUND, -999999.99, NOT_FOUND, NOT_FOUND, null, null, null);
+            } else {
+                dto = getProductDtofromJsonObjectString(stringResponse);
+            }
+        } catch (IOException e) {
+            System.out.println("Calling httpGet(\"" + productByIdUrl.toString() + "\") throws IOException: ");
+            e.printStackTrace();
+        }
+
+        return dto;
+    }
+
+    /**
      * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
      *
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
-    public ProductDto getProductDetails(Long productId, String hexColor) {
-        /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_CATALOG +
-                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
-        //String stringURL = ServiceConfiguration.getUriServerCatalog() +
-        //        CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
-//        String stringURL = ServiceConfiguration.getUriServerCatalog() +
-//                CATALOG_GET_PRODUCT_BY_ID_URI.replace("{product_id}", String.valueOf(productId));
+    public ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor) {
 
-        // stringURL = "http:/localhost:8080/catalog/api/v1/products/String.valueOf(productId)"
-        System.out.println("stringURL=\"" + stringURL + "\"");
+        ProductDto dto = this.getProductDtoDetails(productId);
 
-        ProductDto dto = null;
+        ShoppingCartResponseDto.CartProduct cartProduct = null;
 
-        try {
-            String stringResponse = httpGet(stringURL);
-            System.out.println("stringResponse = \"" + stringResponse + "\"");
+        if (!dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
 
-            if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
-                //  Product not found (409)
-                dto = setNotFoundProductDto(productId);
+            ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
+
+            if (colorAttrib != null) {
+                cartProduct = new ShoppingCartResponseDto()
+                        .createCartProduct(dto.getProductId(),
+                                dto.getProductName(),
+                                dto.getPrice(),
+                                0,
+                                dto.getImageUrl(),
+                                true);
+
+                cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
+                        colorAttrib.getName().toUpperCase(),
+                        colorAttrib.getInStock());
+
+                System.out.println("Received Product information: ");
+                System.out.println("   product id = " + dto.getProductId());
+                System.out.println("   product name = " + dto.getProductName());
+                System.out.println("   price per item = " + dto.getPrice());
+                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                System.out.println("   ColorAttrubute.Code (hex) = \'" + colorAttrib.getCode().toUpperCase() + "\'");
+                System.out.println("   ColorAttrubute.Color (name) = \"" + colorAttrib.getName().toUpperCase() + "\"");
+                System.out.println("   ColorAttrubute.inStock = " + colorAttrib.getInStock());
+            } else {
+                //  Product with specific color NOT FOUND in Product table in CATALOG schema
+                cartProduct = setNotFoundCartProduct(productId);
             }
-            else {
-                dto = getProductDtofromJsonObjectString(stringResponse);
-
-                if (isColorExistsInColorsList(hexColor, dto.getColors())) {
-                    System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + dto.getProductId());
-                    System.out.println("   product name = " + dto.getProductName());
-                    System.out.println("   price per item = " + dto.getPrice());
-                    System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                    System.out.println("   ColorAttrubute.Code (hex) = \'" + hexColor + "\'");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + dto.getColors().get(0).getName() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
-                } else {
-                    //  Product with requested color NOT FOUND in Product table in CATALOG schema
-                    dto = setNotFoundProductDto(productId);
-                }
-            }
-
-        } catch (IOException e) {
-            System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
-            e.printStackTrace();
+        } else {
+            //  Product with this productId not found in Product table in CATALOG schema (409)
+            cartProduct = setNotFoundCartProduct(productId);
         }
 
-        return dto;
+        return cartProduct;
     }
 
     /**
@@ -477,7 +526,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null; //  userId is not a registered user
         }
@@ -485,37 +534,37 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
 
         if (shoppingCarts != null) {
-            if ((shoppingCarts.size() > 0) || (! shoppingCarts.isEmpty())) {
+            if ((shoppingCarts.size() > 0) || (!shoppingCarts.isEmpty())) {
 
                 /* Scan user shopping cart and add all product to userCart response object  */
                 //for (ShoppingCart cart : shoppingCarts) {
                 for (ShoppingCart cart : shoppingCarts) {
 
-                    ProductDto dto = getProductDetails(cart.getProductId(),
-                                                            ShoppingCart.convertIntColorToHex(cart.getColor()));
+                    //ProductDto dto = getCartProductDetails(cart.getProductId(),
+                    //                                        ShoppingCart.convertIntColorToHex(cart.getColor()));
+                    ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
+                            ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
 
-                    if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
-                        userCart.addCartProduct(dto.getProductId(),
-                                dto.getProductName(),   //  "NOT FOUND"
-                                dto.getPrice(),         //  -999999.99
-                                cart.getQuantity(),
-                                dto.getImageUrl(),      //  "NOT FOUND"
+                    if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                        userCart.addCartProduct(cartProduct.getProductId(),
+                                cartProduct.getProductName(),   //  "NOT FOUND"
+                                cartProduct.getPrice(),         //  -999999.99
+                                cartProduct.getQuantity(),      //  0
+                                cartProduct.getImageUrl(),      //  "NOT FOUND"
                                 "000000",
                                 "BLACK",
                                 0,
                                 false); //  isExists = false
-
-                    }
-                    else {
+                    } else {
                         /*  Add a product to user shopping cart response class  */
-                        userCart.addCartProduct(dto.getProductId(),
-                                dto.getProductName(),
-                                dto.getPrice(),
+                        userCart.addCartProduct(cartProduct.getProductId(),
+                                cartProduct.getProductName(),
+                                cartProduct.getPrice(),
                                 cart.getQuantity(),
-                                dto.getImageUrl(),
-                                dto.getColors().get(0).getCode(),
-                                dto.getColors().get(0).getName(),
-                                dto.getColors().get(0).getInStock());
+                                cartProduct.getImageUrl(),
+                                cartProduct.getColor().getCode(),
+                                cartProduct.getColor().getName(),
+                                cartProduct.getColor().getInStock());
                     }
                 }
             }
@@ -549,7 +598,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return false;
         }
@@ -569,7 +618,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
@@ -577,22 +626,25 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         if (shoppingCartResponse.isSuccess()) {
             //  Clear user cart was successful - add new cart to user
-        }
+            shoppingCartResponse = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
 
-        shoppingCartResponse = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
+            long lastUpdate = cartProducts.size();
+            for (ShoppingCartDto cartProduct : cartProducts) {
+                ShoppingCart shoppingCart = addProductToShoppingCart(userId,
+                        cartProduct.getProductId(),
+                        ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
+                        cartProduct.getQuantity(),
+                        lastUpdate);
 
-        for (ShoppingCartDto cartProduct : cartProducts) {
-            ShoppingCart shoppingCart = addProductToShoppingCart(userId,
-                    cartProduct.getProductId(),
-                    ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
-                    cartProduct.getQuantity());
+                if (shoppingCart != null) {
+                    lastUpdate--;
+                } else {
+                    //  Override SUCCESS data and set failure information
+                    shoppingCartResponse = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
 
-            if (shoppingCart == null) {
-                //  Override SUCCESS data and set failure information
-                shoppingCartResponse = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
-
-                //  Do we want to break out of the loop after 1 product failed to insert, or continue?
-                //break;  //  Exit the loop
+                    //  Do we want to break out of the loop after 1 product failed to insert, or continue?
+                    //break;  //  Exit the loop
+                }
             }
         }
 
@@ -617,7 +669,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
@@ -634,23 +686,23 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         " color=" + shoppingCart.getColor() +
                         " quantity=" + shoppingCart.getQuantity());
 
-                ProductDto dto = getProductDetails(shoppingCart.getProductId(),
-                                                        ShoppingCart.convertIntColorToHex(color));
-                if (dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
-                    String name = dto.getProductName();
-                    double pricePerItem = dto.getPrice();
-                    String managedImageId = dto.getImageUrl();
+                ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(shoppingCart.getProductId(),
+                        ShoppingCart.convertIntColorToHex(color));
+                if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                    String name = cartProduct.getProductName();
+                    double pricePerItem = cartProduct.getPrice();
+                    String managedImageId = cartProduct.getImageUrl();
 
                     System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + dto.getProductId());
+                    System.out.println("   product id = " + cartProduct.getProductId());
                     System.out.println("   product name = " + name);
                     System.out.println("   price per item = " + pricePerItem);
                     System.out.println("   managedImageId = \"" + managedImageId + "\"");
-                    System.out.println("   ColorAttrubute.HexColor = \"" + dto.getColors().get(0).getCode() + "\"");
-            System.out.println("   ColorAttrubute.Color = \"" + dto.getColors().get(0).getName() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + dto.getColors().get(0).getInStock());
+                    System.out.println("   ColorAttrubute.HexColor = \"" + cartProduct.getColor().getCode() + "\"");
+                    System.out.println("   ColorAttrubute.Color = \"" + cartProduct.getColor().getName() + "\"");
+                    System.out.println("   ColorAttrubute.inStock = " + cartProduct.getColor().getInStock());
                 } else {
-                    dto = setNotFoundProductDto(productId);
+                    cartProduct = setNotFoundCartProduct(productId);
                 }
 
             } else {
@@ -664,14 +716,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                         ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
                         -1);
             }
-        }
-        else {
+        } else {
             //  New product in shopping cart created successfully.
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
             shoppingCartResponse = new ShoppingCartResponseStatus(false,
-                                                                ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
-                                                                productId);
+                    ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
+                    productId);
         }
 
         return shoppingCart;
@@ -681,12 +732,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * Verify the quantity of each product in user cart exists in stock. If quantity
      * in user cart is greater than the quantity in stock than add the product with
      * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
-     * @param userId Unique identity of the user.
+     *
+     * @param userId               Unique identity of the user.
      * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in shopping cart to verify their quantities.
      * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
      * stock. If the quantity of any cart product <b>is greater than</b> the quantity in stock then the product will be added to
      * the list of products in the cart with the <ul>quantity in stock</ul>.
-     * @see #getProductDetails(Long, String)
+     * @see #getCartProductDetails(Long, String)
      */
     @Override
     public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
@@ -695,7 +747,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
-        if (! isRegisteredUserExists(userId)) {
+        if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
@@ -704,42 +756,41 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
 
-            ProductDto dto = getProductDetails(cartProduct.getProductId(), cartProduct.getHexColor());
+            ShoppingCartResponseDto.CartProduct cartProductDto = getCartProductDetails(cartProduct.getProductId(), cartProduct.getHexColor());
 
-            if (cartProduct.getQuantity() > dto.getColors().get(0).getInStock()) {
+            if (cartProduct.getQuantity() > cartProductDto.getColor().getInStock()) {
 
                 ShoppingCartPK shoppingCartPk = new ShoppingCartPK(userId,
                         cartProduct.getProductId(),
-                        ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()));
+                        ShoppingCart.convertHexColorToInt(cartProductDto.getColor().getCode()));
+
                 ShoppingCart shoppingCart = entityManager.find(ShoppingCart.class, shoppingCartPk);
 
                 if (shoppingCart != null) {
                     //  Update quantity of cart product to product's quantity in stock
-                    shoppingCart.setQuantity(dto.getColors().get(0).getInStock());
+                    shoppingCart.setColor(ShoppingCart.convertHexColorToInt(cartProductDto.getColor().getCode()));
+                    shoppingCart.setQuantity(cartProductDto.getColor().getInStock());
                     entityManager.persist(shoppingCart);
                 } else {
-                    //  Unlikely, since we already got the product details and compare its quantity in stock to the same product in cart.
-                    System.out.println("Product \"" + dto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
+                    //  Unlikely to occur, since we already got the product details and compare its quantity in stock to the same product in cart.
+                    System.out.println("Product \"" + cartProductDto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
                 }
 
-                responseDto.addCartProduct(cartProduct.getProductId(),
-                        dto.getProductName(),
-                        dto.getPrice(),
-                        dto.getColors().get(0).getInStock(),
-                        dto.getImageUrl(),
-                        dto.getColors().get(0).getCode(),
-                        dto.getColors().get(0).getName(),
-                        dto.getColors().get(0).getInStock());
-
+                responseDto.addCartProduct(cartProductDto.getProductId(),
+                        cartProductDto.getProductName(),
+                        cartProductDto.getPrice(),
+                        cartProductDto.getColor().getInStock(),
+                        cartProductDto.getImageUrl(),
+                        cartProductDto.getColor().getCode(),
+                        cartProductDto.getColor().getName(),
+                        cartProductDto.getColor().getInStock());
             }
-
         }
 
         //  If there are no protducts to update in user cart the return null
         if (responseDto.getProductsInCart().size() == 0) {
             responseDto = null;
         }
-
         return responseDto;
     }
 
@@ -794,32 +845,35 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     /**
      * Calling <b>Account Service</b> via REST API GET request - to
      * check isExists an {@code AppUser} with given {@code userId}.
+     *
      * @param userId {@code long} unique user identification to check.
      * @return {@code boolean}. <b>true</b> if userId belongs to a registered user, <b>false</b> otherwise.
      */
     public boolean isRegisteredUserExists(long userId) {
         boolean isExists = false;
 
-        /*  Build REQUEST URI */
-        String stringURL = Constants.URI_SERVER_ACCOUNT +
-                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+        URL userPrefixUrl;
+        URL userByIdUrl = null;
+        try {
+            userPrefixUrl = new URL(Url_resources.getUrlAccount(), ACCOUNT_USERS);
+            userByIdUrl = new URL(userPrefixUrl, String.valueOf(userId));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 //        String stringURL = ServiceConfiguration.getUriServerAccount() +
-//                ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
-        //String stringURL = ServiceConfiguration.getUriServerAccount() +
-        //String stringURL = ServiceConfiguration.getUriServerAccount() +
-        //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+//                Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
-        // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
-        System.out.println("stringURL=\"" + stringURL + "\"");
+        System.out.println("stringURL=\"" + userByIdUrl.toString() + "\"");
 
         try {
-            String stringResponse = httpGet(stringURL);
+            String stringResponse = httpGet(userByIdUrl);
             System.out.println("Is exists a registered user with " + userId + " as unique id ?" + stringResponse);
 
             isExists = stringResponse.equalsIgnoreCase("true");
 
         } catch (IOException e) {
-            System.out.println("Calling httpGet(\"" + stringURL + "\") throws IOException: ");
+            System.out.println("Calling httpGet(\"" + userByIdUrl.toString() + "\") throws IOException: ");
             e.printStackTrace();
         }
 
@@ -828,15 +882,16 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      * Check if a {@code productId} with {@code hexColor} exists in <i>product</i> table in <b>catalog</b> schema.
+     *
      * @param productId Unique product identification to find.
-     * @param hexColor Product Color hexadecimal value to find.
+     * @param hexColor  Product Color hexadecimal value to find.
      * @return <b>true</b> when exists and <b>false</b> if does not exists.
      */
     public boolean isProductExists(Long productId, String hexColor) {
         boolean result = false;
 
-        ProductDto productDetails = getProductDetails(productId, hexColor);
-        if (! productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+        ProductDto productDetails = getProductDtoDetails(productId);
+        if (!productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
             if (productDetails != null) {
                 List<ColorAttributeDto> colors = productDetails.getColors();
                 for (ColorAttributeDto color : colors) {
@@ -848,14 +903,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 }
             }
         }
-
         return result;
     }
 
     /**
      * Checks if color RGB hexadecimal value exists in {@link List} of {@code ColorAttribute}s.
+     *
      * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
-     * @param colors colors {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
+     * @param colors   colors {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
      * @return {@code ColorAttribute} if the {@code hexColor} was found, {@code null} otherwise.
      */
     public ColorAttributeDto getProductColorAttribute(String hexColor, List<ColorAttributeDto> colors) {
@@ -876,27 +931,36 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      * Checks if color RGB hexadecimal value exists in {@link List} of {@code ColorAttribute}s.
+     *
      * @param hexColor Color RGB hexadecimal value to find in {@code colors}.
-     * @param colors {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
+     * @param colors   {@link List} of {@code ColorAttribute}s in which to find {@code hexColor}.
      * @return <b>true</b> when exists and <b>false</b> if does not exists.
      */
     public boolean isColorExistsInColorsList(String hexColor, List<ColorAttributeDto> colors) {
-        return (getProductColorAttribute(hexColor, colors) != null ? true : false);
+        return getProductColorAttribute(hexColor, colors) != null;
     }
 
     /**
      * Call REST API POST request - T.B.D.
+     *
      * @param urlStr
      * @param paramName {@link String} array containing parameters names.
-     * @param paramVal {@link String} array containing parameters values.
+     * @param paramVal  {@link String} array containing parameters values.
      * @return {@link String} containing {@code response} data.
      * @throws Exception
      */
+    @Deprecated
     public static String httpPost(String urlStr,
                                   String[] paramName,
                                   String[] paramVal) throws Exception {
 
         URL url = new URL(urlStr);
+        return httpPost(url, paramName, paramVal);
+    }
+
+    public static String httpPost(URL url,
+                                  String[] paramName,
+                                  String[] paramVal) throws Exception {
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
@@ -939,6 +1003,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
 
         //  Get response code, and response data as string
+        //TODO-BENY change int to HttpStatus
         if (conn.getResponseCode() != 200) {
             throw new IOException(conn.getResponseMessage());
         }
@@ -966,39 +1031,42 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return
      * @throws IOException
      */
+    @Deprecated
     public static String httpGet(String urlStr) throws IOException {
         URL url = new URL(urlStr);
+        return httpGet(url);
+    }
+
+    public static String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         int responseCode = conn.getResponseCode();
 
         String returnValue;
 
-        if (responseCode == 200) {
-            // Buffer the result into a string
-            InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(inputStream);
-            StringBuilder sb = new StringBuilder();
-            String line;
+        switch (responseCode) {
+            case HttpStatus.SC_OK: {
+                // Buffer the result into a string
+                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(inputStream);
+                StringBuilder sb = new StringBuilder();
+                String line;
 
-            while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line);
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+                returnValue = sb.toString();
             }
+            case HttpStatus.SC_CONFLICT:
+                //  Product not found
+                returnValue = "Not found";
+                break;
 
-            bufferedReader.close();
-            returnValue = sb.toString();
-
-        } else {
-            switch (responseCode) {
-                case 409:
-                    //  Product not found
-                    returnValue = "Not found";
-                    break;
-
-                default:
-                    System.out.println("httpGet -> responseCode=" + responseCode);
-                    throw new IOException(conn.getResponseMessage());
-            }
+            default:
+                System.out.println("httpGet -> responseCode=" + responseCode);
+                throw new IOException(conn.getResponseMessage());
         }
 
         conn.disconnect();
@@ -1009,6 +1077,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        //TODO-BENY  Why false???
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
@@ -1021,31 +1090,199 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return dto;
     }
 
-    private static String getColorName(String hexColor) {
-        switch(hexColor.toUpperCase()) {
-            case "0":
-            case "000000":
-                return "BLACK";
-            case "FF":
-            case "0000FF":
-                return "BLUE";
-            case "FF00":
-            case "00FF00":
-                return "GREEN";
-            case "C0C0C0":
-                return "SILVER";
-            case "FF0000":
-                return "RED";
-            case "FF0E68C":
-                return "KHAKI";
-            case "FFC0CB":
-                return "PINK";
-            case "FFFF00":
-                return "YELLOW";
-            case "FFFFFF":
-                return "WHITE";
+    /**
+     * Test accessing {@code ShipEx} application using SOAP
+     *
+     * @return {@link String}
+     */
+    @Override
+    public String getShipExWsdlFile() {
+
+        String content = null;
+        URL url;
+        URLConnection urlConnection = null;
+
+        try {
+            url = new URL(Url_resources.getUrlShipEx(), "/shipex.wsdl");
+            urlConnection = url.openConnection();
+            if (urlConnection.getContent() != null) {
+                System.out.println("\'" + url.toString() + "\' is GOOD URL");
+
+                String contentType = urlConnection.getContentType();
+
+                content = StringHelper.getStringFromInputStream(urlConnection.getInputStream());
+
+                System.out.println("Content: \n" + content.toString());
+
+                listWSDLOperations();
+            } else {
+                System.out.println("BAD URL");
+            }
+        } catch (MalformedURLException ex) {
+            System.out.println("bad URL");
+        } catch (IOException ex) {
+            System.out.println("Failed opening connection. Perhaps WS is not up?");
         }
-        return "";
+
+        return content;
     }
 
+    public void listWSDLOperations() {
+
+        String stringUrl = Url_resources.getUrlPrefixShipEx() + "/shipex.wsdl";
+
+        List<Operation> operations = WSDLHelper.getListWSDLOperations(Url_resources.getUrlPrefixShipEx(), "/shipex.wsdl");
+
+        WSDLParser parser = new WSDLParser();
+
+        Definitions wsdl = parser.parse(stringUrl);
+
+        List<Schema> schemas = wsdl.getSchemas();
+        if ((schemas != null) && (schemas.size() > 0)) {
+            for (Schema schema : schemas) {
+                String schemaName = schema.getName();
+                List<Attribute> attributes = schema.getAttributes();
+                String requestTemplate = schema.getRequestTemplate();
+                List<Element> elements = schema.getAllElements();
+                if ((elements != null) && (elements.size() > 0)) {
+                    Element e = elements.get(0);
+                    String name = e.getName();
+                    String asString = e.getAsString();
+                    String prefix = e.getPrefix();
+                    int i = 0;
+                }
+                List<ComplexType> types = schema.getComplexTypes();
+
+                boolean isTrue = true;
+            }
+        }
+
+        //String portTypeName = null;
+        //for (PortType pt : wsdl.getPortTypes()) {
+        //    System.out.println(pt.getName());
+        //    portTypeName = pt.getName();
+        //    for (Operation operation : pt.getOperations()) {
+        //        operations.add(operation);
+        //    }
+        //}
+
+        //System.out.println("-=# Operations List - Begin #=-");
+        //for (Operation op : operations) {
+        //    System.out.println("* " + op.getName());
+        //}
+        //System.out.println("-=# Operations List - End   #=-");
+
+        StringWriter writer = new StringWriter();
+        SOARequestCreator creator = new SOARequestCreator(wsdl, new RequestTemplateCreator(), new MarkupBuilder(writer));
+
+        ////creator.createRequest(PortType name, Operation name, Binding name);
+        //creator.createRequest(portTypeName, "ShippingCost", "ArticleServicePTBinding");
+        //System.out.println(writer);
+
+        for (Service service : wsdl.getServices()) {
+            for (Port port : service.getPorts()) {
+                Binding binding = port.getBinding();
+                PortType portType = binding.getPortType();
+                for (Operation op : portType.getOperations()) {
+                    creator.createRequest(port.getName(), op.getName(), binding.getName());
+                    System.out.println(writer);
+                    writer.getBuffer().setLength(0);
+                }
+            }
+        }
+
+    }
+
+    @Deprecated
+    public void createTemplates(String url) {
+
+        WSDLParser parser = new WSDLParser();
+        Definitions wsdl = parser.parse(url);
+
+        StringWriter writer = new StringWriter();
+        SOARequestCreator creator = new SOARequestCreator(wsdl, new RequestTemplateCreator(), new MarkupBuilder(writer));
+
+        //creator.createRequest(PortType name, Operation name, Binding name);
+        creator.createRequest("ArticleServicePT", "create", "ArticleServicePTBinding");
+        System.out.println(writer);
+
+        for (Service service : wsdl.getServices()) {
+            for (Port port : service.getPorts()) {
+                Binding binding = port.getBinding();
+                PortType portType = binding.getPortType();
+                for (Operation op : portType.getOperations()) {
+                    creator.createRequest(port.getName(), op.getName(), binding.getName());
+                    System.out.println(writer);
+                    writer.getBuffer().setLength(0);
+                }
+            }
+        }
+    }
+
+    @Override
+    public String getShipExShippingCost() {
+
+        /*  ******* Init    ******* */
+        //costRequest = new ShippingCostRequest();
+        //orderRequest = new PlaceShippingOrderRequest();
+        //address = new SEAddress();
+        //endpoint = new ShipExEndpoint(service);
+        //
+        //address.setAddressLine1("address");
+        //address.setCity("city");
+        //address.setCountry("ua");
+        //address.setPostalCode("123123");
+        //address.setState("state");
+        //
+        //costRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_SHIPPING_COST);
+        //costRequest.setSEAddress(address);
+        //costRequest.setSENumberOfProducts(5);
+        //costRequest.setSECustomerPhone("+1231234567");
+        //costRequest.setSECustomerName("name");
+        //
+        //orderRequest.setSEAddress(address);
+        //orderRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
+        //orderRequest.setOrderNumber("1234567890");
+        //orderRequest.setSECustomerPhone("+1231234567");
+        //orderRequest.setSECustomerName("name");
+        //
+        //ShippingCostResponse response = endpoint.getShippingCost(costRequest);
+
+        boolean isValid = false;
+
+        /* Check response received values   */
+        //boolean isValid = response.getCode().equalsIgnoreCase(Constants.SHIP_EX_RESPONSE_STATUS_OK);
+        //
+        //if (isValid) {
+        //    isValid = (! response.getAmount().isEmpty());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = ((response.getAmount() < 0) || (10000000000.00 < response.getAmount()));
+        //}
+        //
+        //if (isValid) {
+        //    isValid = (!response.getCurrency().isEmpty());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = ValidationHelper.isValidCurrency(response.getCurrency());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = (!response.getSETransactionType().isEmpty());
+        //}
+        //
+        //if (isValid) {
+        //    isValid = response.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType());
+        //}
+        //
+        String result = null;
+
+        if (isValid) {
+            result = "response is successful";
+        }
+
+        return result;
+    }
 }

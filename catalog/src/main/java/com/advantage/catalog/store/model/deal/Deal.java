@@ -42,7 +42,7 @@ public class Deal {
     private Long id;
     @Column(name = "DEAL_TYPE")
     private Integer dealType;
-    @Column(length = 2048)
+    @Column(length = 4096)
     private String description;
     @Column(length = 2048)
     private String promotionHeader;

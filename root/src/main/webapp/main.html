@@ -26,15 +26,12 @@
 
 
 </head>
-
-
-
 <body data-ng-controller="mainCtrl">
 
 
+
+
 <login-modal></login-modal>
-
-
 <!-- mobile slider -->
 
 <aside id="mobile-section">
@@ -87,7 +84,7 @@
             <li>
                 <a class="img">
                     <span ng-show="userCookie.response" class="hi-user containMiniTitle" >
-                        {{ "hi" | translate}} {{userCookie.name}}!
+                        {{userCookie.name}}
                         <div class="mini-title">
                             <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
                             <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
@@ -102,13 +99,13 @@
                 </a>
                 <tool-tip-search></tool-tip-search>
             </li>
-            <li>
+            <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
             </li>
-            <li>
+            <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
             </li>
-            <li>
+            <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
             </li>
         </ul>
@@ -122,6 +119,7 @@
 </header>
 
 <!-- end navegation " ng-show="cartCount != 0 -->
+
 
 
 

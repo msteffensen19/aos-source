@@ -127,8 +127,9 @@ define(['./module'], function (directives) {
                             maxVal = product.price;
                         }
                     });
-                    scope.minPriceToFilter = minVal;
-                    scope.maxPriceToFilter = maxVal;
+
+                    scope.minPriceToFilter = Math.round(minVal) - 1 ;
+                    scope.maxPriceToFilter = Math.round(maxVal);
                 }
 
                 function getColorsInProducts(products){
@@ -136,8 +137,8 @@ define(['./module'], function (directives) {
                     angular.forEach(products, function(product){
                         angular.forEach(product.colors, function(color) {
                             var find = false;
-                            angular.forEach(productsColors, function(productColors) {
-                                if(productColors.code == color.code)
+                            angular.forEach(productsColors, function(productColor) {
+                                if(productColor.code == color.code)
                                 {
                                     find= true;
                                 }
@@ -147,8 +148,6 @@ define(['./module'], function (directives) {
                             }
                         });
                     });
-                    l(productsColors)
-                    l(products)
                     return productsColors;
                 }
 
@@ -156,28 +155,19 @@ define(['./module'], function (directives) {
                     slider = document.getElementById('slider');
                     var step = scope.maxPriceToFilter - scope.minPriceToFilter;
                     noUiSlider.create(slider, {
-                        start: [scope.minPriceToFilter, scope.maxPriceToFilter], // Handle start position
-                        connect: true, // Display a colored bar between the handles
-                        range: { // Slider can select '0' to '100'
+                        start: [scope.minPriceToFilter, scope.maxPriceToFilter],
+                        connect: true,
+                        range: {
                             'min': scope.minPriceToFilter,
                             'max': scope.maxPriceToFilter,
                         },
-                        step: step < 100 ? 1 : (step / 100), // Slider moves in increments of '10'
-                        margin: 20, // Handles must be more than '20' apart
-
-
-                        //direction: 'rtl', // Put '0' at the bottom of the slider
-                        //orientation: 'vertical', // Orient the slider vertically
-                        //behaviour: 'tap-drag', // Move handle on tap, bar is draggable
-                        //pips: { // Show a scale with the slider
-                        //    mode: 'steps', //    density: 2000
-                        //}
+                        step: step < 100 ? 1 : Math.round(step / 100) - 1,
+                        margin: 100,
 
                     });
                     slider.noUiSlider.start = scope.minPriceToFilter;
                     slider.noUiSlider.end = scope.maxPriceToFilter;
 
-                    // When the slider value changes, update the input and span
                     slider.noUiSlider.on('update', function( values, handle ) {
                         scope.$applyAsync(function(){
                             if (handle == '0') {
@@ -188,11 +178,6 @@ define(['./module'], function (directives) {
                             scope.includeProducts(null, '', 'PRICE');
                         });
                     });
-
-                    // if I have an input - When the input changes, set the slider value
-                    //valueInput.addEventListener('change', function(){
-                    //  slider.noUiSlider.set([null, this.value]);
-                    //});
                 }
 
 
@@ -243,3 +228,50 @@ define(['./module'], function (directives) {
                 };
         });
 });
+
+
+
+//
+//
+//function configSlider(){
+//    slider = document.getElementById('slider');
+//    var step = scope.maxPriceToFilter - scope.minPriceToFilter;
+//    noUiSlider.create(slider, {
+//        start: [scope.minPriceToFilter, scope.maxPriceToFilter], // Handle start position
+//        connect: true, // Display a colored bar between the handles
+//        range: { // Slider can select '0' to '100'
+//            'min': scope.minPriceToFilter,
+//            'max': scope.maxPriceToFilter,
+//        },
+//        step: step < 100 ? 1 : (step / 100), // Slider moves in increments of '10'
+//        margin: 20, // Handles must be more than '20' apart
+//
+//
+//        //direction: 'rtl', // Put '0' at the bottom of the slider
+//        //orientation: 'vertical', // Orient the slider vertically
+//        //behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+//        //pips: { // Show a scale with the slider
+//        //    mode: 'steps', //    density: 2000
+//        //}
+//
+//    });
+//    slider.noUiSlider.start = scope.minPriceToFilter;
+//    slider.noUiSlider.end = scope.maxPriceToFilter;
+//
+//    // When the slider value changes, update the input and span
+//    slider.noUiSlider.on('update', function( values, handle ) {
+//        scope.$applyAsync(function(){
+//            if (handle == '0') {
+//                scope.minPriceToFilter = values[handle];
+//            } else {
+//                scope.maxPriceToFilter = values[handle];
+//            }
+//            scope.includeProducts(null, '', 'PRICE');
+//        });
+//    });
+//
+//    // if I have an input - When the input changes, set the slider value
+//    //valueInput.addEventListener('change', function(){
+//    //  slider.noUiSlider.set([null, this.value]);
+//    //});
+//}
