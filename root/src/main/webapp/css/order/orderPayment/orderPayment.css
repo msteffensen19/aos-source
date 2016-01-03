@@ -8,6 +8,7 @@
 
 .sticky.fixedImportant + #orderPayment{
     margin-top:100px;
+    padding-top:65px
 }
 
 #orderPayment  > div{
@@ -27,7 +28,7 @@
 }
 
 #orderPayment  h5.bigPadding {
-    padding: 65px 30px;
+    padding-bottom: 65px;
     font-size: 24px;
 }
 
@@ -57,11 +58,12 @@
 #orderPayment .noUserSection .cover div{
     border-left: solid 2px #454545;
     padding: 0 0 0 27px;
-    height: 188px;
+    height: 206px;
 }
 
 #orderPayment .noUserSection .cover a{
     margin: 18px 20px;
+    margin-top: 39px;
 }
 
 #orderPayment .noUserSection .a-button{
@@ -70,6 +72,7 @@
     width: 138px;
     border-width: 2px;
     text-align: center;
+    margin-top: 16px;
 }
 
 #orderPayment #newClient > a.a-button{
@@ -85,7 +88,6 @@
 
 #orderPayment > #userCart {
     width: 24%;
-    margin: 65px 0 0 0 ;
     padding: 20px 25px ;
     background-color: rgb(249, 249, 249);
 }
@@ -132,9 +134,9 @@
     display: block;
 }
 
-#orderPayment .shipping {
-    font-size: 12px;
-    margin-top: 23px;
+#orderPayment label:first-child {
+    font-size: 16px;
+    margin-top: 20px;
 }
 
 #orderPayment .total {
@@ -154,12 +156,20 @@
     display: inline-block;
 }
 
-#orderPayment .shipping span, #orderPayment .total span{
-    position: absolute;
+#orderPayment .penetrationInCart > label {
+    display: block;
+    padding: 3px;
 }
 
-#orderPayment .shipping span {
+#orderPayment .penetrationInCart .noShipping {
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
 
+#orderPayment .penetrationInCart > label span{
+    position: absolute;
+    right: 8px;
 }
 
 #orderPayment .totalTitle {
@@ -168,15 +178,9 @@
     top: 4px;
 }
 
-
-#orderPayment .total {
-    top: -10px;
-}
-
 #orderPayment #toolTipCart tbody .price {
     height: 100%;
     padding: 50% 0;
-;
 }
 
 
@@ -196,6 +200,11 @@
 #orderPayment #toolTipCart tbody tr:first-child {
     border-top: solid 1px #d0d0d0;
 }
+
+#orderPayment #toolTipCart tbody {
+    max-height: inherit;
+}
+
 
 /*END CART SECCION MODIFY*/
 

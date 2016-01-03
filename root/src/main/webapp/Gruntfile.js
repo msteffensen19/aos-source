@@ -69,7 +69,8 @@ module.exports = function(grunt) {
                         filter: 'isFile'
                     },
                     {
-                        expand: true, src: ['main.html', 'app/tempFiles/categoryProducts_4.json', 'app/tempFiles/popularProducts.json'],
+                        expand: true,
+                        src: ['main.html', 'app/tempFiles/categoryProducts_4.json', 'app/tempFiles/popularProducts.json'],
                         dest: 'target',
                         filter: 'isFile'
                     },
@@ -79,7 +80,10 @@ module.exports = function(grunt) {
         },
         ngtemplates:  {
             app:        {
-                src:      ['app/partials/**.html', 'app/user/partials/**.html', 'app/order/partials/**.html'],
+                src:      ['app/partials/**.html',
+                    'app/user/partials/**.html',
+                    'app/order/partials/**.html',
+                ],
                 dest:     'app/templates/module.js',
                 options: {
                     bootstrap:  function(module, script) {

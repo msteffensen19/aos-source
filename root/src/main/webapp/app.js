@@ -14,18 +14,22 @@ define([
     './app/user/userConfig',
     './app/order/orderConfig',
 
+
     './app/controllers/index',
     './app/user/controllers/index',
     './app/order/controllers/index',
 
+
     './app/user/services/index',
     './app/services/index',
 
-    './app/directives/index',
 
     './app/filters/index',
 
+
+    './app/directives/index',
     './app/user/directives/index',
+    './app/order/directives/index',
 
     './app/templates/module',
 
@@ -48,7 +52,8 @@ define([
         'aos.user.services',
         'aos.user.directives',
 
-        'aos.order.controllers'
+        'aos.order.controllers',
+        'aos.order.directives',
 
     ]).
 
