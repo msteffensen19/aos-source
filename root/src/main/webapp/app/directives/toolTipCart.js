@@ -4,11 +4,14 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('toolTipCart', ['$templateCache', 'productsCartService',
-        function ($templateCache, cartService) {
+    directives.directive('toolTipCart', ['$templateCache', 'productsCartService', '$location',
+        function ($templateCache, cartService, location) {
         return {
             template: $templateCache.get('app/partials/toolTipCart.html'),
-            link: function(scope) {
+            link: function(s) {
+                s.checkout = function(){
+                    location.path('/orderPayment');
+                }
             }
         };
     }]);

@@ -8,7 +8,8 @@ var english = {
     DEAL_OF_THE_DAY : 'Deal of the Day',
     CONTACT_US : 'Contact Us',
     AOS : 'AOS',
-    LOGIN: 'Login',
+    Login: 'Login',
+    LOGIN: 'LOGIN',
     LOGOUT: 'This is a paragraph.',
     SPACIAL_OFFER : 'SPECIAL OFFER',
     SPECIAL_OFFER_ITEMS : 'SPECIAL OFFER ITEMS',
@@ -65,7 +66,9 @@ var english = {
     'State__Province__Region' : 'State / Province / Region',
     'offers_promotion' :  'Receive exclusive offers and promotions from Advantage',
     'REGISTER' : 'REGISTER',
+    'REGISTRATION' : 'REGISTRATION',
     'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT?',
+    'Already_have_an_account' : 'Already have an account?',
     'Clear' : 'Clear',
 
 
@@ -97,8 +100,22 @@ var english = {
     'REMOVE': 'REMOVE',
 
     'IDENTIFICATION' : 'IDENTIFICATION',
-
-
+    'ORDER_PAYMENT' : 'ORDER PAYMENT',
+    'Forgot_your_password' : 'Forgot your password?',
+    'New_client' : 'New client?',
+    'Create_your_account_easily' : 'Create your account and be able to track your orders easily.',
+    'ORDER_SUMMARY' : 'ORDER SUMMARY',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
 };
 
 

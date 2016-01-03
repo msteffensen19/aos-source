@@ -57,11 +57,6 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     top:65px;
 }
 
-/*.Breadcrumb {
-//    top:65px;
-//}
-*/
-
 nav.pages {
     direction: ltr;
     background-color: #454545;
@@ -320,6 +315,22 @@ button {
 button:hover {
     color: white;
     background-color:#2a2a2a;
+}
+
+.a-button {
+    border: solid 1px #2a2a2a;
+    color: #2a2a2a;
+    padding: 8px 13px;
+    font-size: 12px;
+    display: inline-block;
+    background-color: transparent;
+    text-decoration: none;
+    transition: all .3s ease ;
+}
+
+.a-button:hover {
+    color: white;
+    background-color: #2a2a2a;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
