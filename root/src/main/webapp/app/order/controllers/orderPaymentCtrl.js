@@ -13,6 +13,8 @@ define(['./module'], function (controllers) {
                 password : ''
             }
 
+            s.shippingCost = 0
+
             s.login= function(){
                 alert()
             }
