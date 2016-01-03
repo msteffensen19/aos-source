@@ -1,8 +1,8 @@
-<!-- -->
+<!--
 <section id="png">
-    <img src="../../../cdss/images/mariaDesigns/order/1Identification.png" />
+    <img src="../../../dcss/images/mariaDesigns/order/1Identification.png" />
 </section>
-
+-->
 
 <nav class="pages fixedImportant">
     <a translate="HOME" href="#/" ></a>
@@ -16,12 +16,11 @@
 
         <div id="orderPayment">
 
-            <div>
+            <div ng-hide="userLogin">
                 <user-not-login></user-not-login>
             </div>
-
-            <div>
-                <no-user-login></no-user-login>
+            <div ng-show="userLogin">
+                <user-are-login></user-are-login>
             </div>
 
             <div id="userCart">
@@ -33,8 +32,17 @@
                 </div>
                 <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
                 <div class="penetrationInCart">
-                    <label class="shipping" ng-class=" { noShipping : shippingCost == 0 } " >{{ 'SHIPPING' | translate }}  <span > {{ shippingCost | currency: '$'}}</span></label>
-                    <label class="roboto-bold" > {{ 'TOTAL' | translate }} <span> {{(cart | productsCartSum) + shippingCost | currency:'$'}}</span> </label>
+                    <label class="shippingText roboto-regular" ng-class=" { noShipping : shippingCost == 0 } " >
+                        {{ 'SHIPPING' | translate }}
+                        <span class="shippingValue roboto-light">
+                            {{ shippingCost | currency: '$'}}
+                        </span>
+                    </label>
+                    <label class="roboto-bold totalText" > {{ 'TOTAL' | translate }}
+                        <span class="roboto-medium totalValue">
+                            {{(cart | productsCartSum) + shippingCost | currency:'$'}}
+                        </span>
+                    </label>
                 </div>
             </div>
 
@@ -186,9 +194,7 @@
                     <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
 
                 </sec-validate>
-                -->
 
-            <!--</div>-->
 
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -199,6 +205,7 @@
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <br />
+            >-->
 
         </div>
     </article>

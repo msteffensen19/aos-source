@@ -13,10 +13,10 @@ define(['./module'], function (controllers) {
                 password : ''
             }
 
-            s.shippingCost = 0
+            s.shippingCost = resolveParams.shippingCost;
 
-            s.login= function(){
-                alert()
+            s.login = function(){
+                //alert()
             }
 
             $("nav .navLinks").css("display" , "none");

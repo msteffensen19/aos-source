@@ -13,6 +13,8 @@
 @import "user/login.css";
 @import "user/register.css";
 @import "order/orderPayment/orderPayment.css";
+@import "order/orderPayment/userNotLogin.css";
+@import "order/orderPayment/userAreLogin.css";
 
 #png{
     position: absolute;
