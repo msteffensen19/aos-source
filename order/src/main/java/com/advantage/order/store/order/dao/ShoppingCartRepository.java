@@ -48,10 +48,6 @@ public interface ShoppingCartRepository {
 
     ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts);
 
-    String getShipExWsdlFile();
-
-    String getShipExShippingCost();
-
     //ShipExShippingCostResponse getShippingCostFromShipEx();
 
     //ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest);
