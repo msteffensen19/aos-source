@@ -46,7 +46,7 @@ public class Constants {
     public static final String ENV_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
     private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
-    public static final java.lang.String URI_SCHEME = "http";
+    public static final String URI_SCHEME = "http";
 
     public static class UserSession {
         public static final String TOKEN = "token";

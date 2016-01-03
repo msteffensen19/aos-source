@@ -1,6 +1,7 @@
 package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
+import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
@@ -227,11 +228,11 @@ public class OrderController {
         }
     }
 
-//TODO-BENY Mark it as for dev-only!!! @RequestMapping(value = "/carts/ShipEx", method = RequestMethod.GET)
+    @RequestMapping(value = "/carts/ShipEx/dev_only", method = RequestMethod.GET)
     @ApiOperation(value = "Get ShipEx Shipping Cost WSDL")
-    public ResponseEntity<String> getShipExWsdlTest(HttpServletRequest request, HttpServletResponse response) {
-        String responseShipEx = shoppingCartService.getShipExWsdlFile();
-        return new ResponseEntity<>(responseShipEx, HttpStatus.OK);
+    public ResponseEntity<ShipExResponse> getShippingCostFromShipEx(HttpServletRequest request, HttpServletResponse response) {
+        ShipExResponse shipExResponse = shoppingCartService.getShippingCostFromShipEx();
+        return new ResponseEntity<>(shipExResponse, HttpStatus.OK);
     }
 
     /*  =========================================================================================================   */
