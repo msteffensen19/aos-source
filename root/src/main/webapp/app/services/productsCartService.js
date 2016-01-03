@@ -40,7 +40,11 @@ define(['./module'], function (services) {
                     if (user.response.userId != -1) {
                         $http({
                             method: "delete",
-                            url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code)
+                            url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
+                            headers: {
+                                "content-type": "application/json",
+                                "Authorization": user.response.token,
+                            }
                         });
                     }
                 }
@@ -60,6 +64,10 @@ define(['./module'], function (services) {
                         $http({
                             method: "get",
                             async: false,
+                            headers: {
+                                "content-type": "application/json",
+                                "Authorization": user.response.token,
+                            },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
                             console.log("data")
@@ -68,6 +76,8 @@ define(['./module'], function (services) {
                             responce.resolve(cart);
                         }).error(function (err) {
                             alert('err')
+                            l(err)
+
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
@@ -127,6 +137,11 @@ define(['./module'], function (services) {
                         $http({
                             method: "get",
                             //data : JSON.stringify(cart);
+                            //headers: {
+                              //  "content-type": "application/json",
+                            //"Authorization": user.response.token,
+                            //},
+
                             url: "app/cartProducts.json"
                         });
                         return true;
@@ -147,6 +162,10 @@ define(['./module'], function (services) {
                     if (user.response.userId != -1) {
                         var request = $http({
                             method: "post",
+                            headers: {
+                                "content-type": "application/json",
+                                "Authorization": user.response.token,
+                            },
                             async: false,
                             url: server.order.addProductToUser(user.response.userId,
                                 product.productId, product.colors[0].code, quantity),
