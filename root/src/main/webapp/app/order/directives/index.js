@@ -3,4 +3,7 @@
  */
 'use strict';
 
-define(['./UserNotLogin'], function() { });
+define([
+    './UserNotLogin',
+    './UserAreLogin'
+], function() { });

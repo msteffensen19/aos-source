@@ -21,7 +21,8 @@ define([],function(){
                     var defer = $q.defer();
                    // cartService.checkout().then(function (userLogin) {
                         var paramsToResolve = {
-                            userLogin: true //userLogin
+                            userLogin: true,
+                            shippingCost : 10 //userLogin
                         }
                         defer.resolve(paramsToResolve);
                     //});
