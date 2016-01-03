@@ -6,7 +6,9 @@ public class Constants {
     public static final String URI_API = "/api";
 
     //
-    public static final String PROPERTIES_INTERNAL = "classpath:/services.properties";
+    public static final String FILE_PROPERTIES_INTERNAL = "classpath:/services.properties";
+    public static final String FILE_PROPERTIES_EXTERNAL = "classpath:/services.properties";
+    @Deprecated
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 
     //TODO-EVG remove
@@ -44,6 +46,7 @@ public class Constants {
     public static final String ENV_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
     private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
+    public static final java.lang.String URI_SCHEME = "http";
 
     public static class UserSession {
         public static final String TOKEN = "token";
@@ -52,15 +55,11 @@ public class Constants {
     }
 
     public static class AppInitializer {
-        private static final String LOCATION = "C:/temp/"; // Temporary location where files will be stored
+        // USE System.Temp private static final String LOCATION = "C:/temp/"; // Temporary location where files will be stored
         private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.
         // Beyond that size spring will throw exception.
         private static final long MAX_REQUEST_SIZE = 20971520; // 20MB : Total request size containing Multi part.
         private static final int FILE_SIZE_THRESHOLD = 0; // Size threshold after which files will be written to disk
     }
 
-    public static class Payments {
-        public static final String URI_SERVER_MASTER_CREDIT = "https://www.AdvantageOnlineBanking.com"; //  "/MasterCredit" + URI_API + "/v1";
-        public static final String URI_SERVER_SAFE_PAY = "https://www.AdvantageOnlineBanking.com";      //  "/SafePay" + URI_API + "/v1";
-    }
 }
