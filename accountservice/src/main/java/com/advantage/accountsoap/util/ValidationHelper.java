@@ -63,9 +63,7 @@ public class ValidationHelper {
      */
     public static boolean isValidPassword(final String password) {
         pattern = Pattern.compile(LOGIN_PASSWORD_PATTERN);
-
         final boolean isValid = pattern.matcher(password).matches();
-        System.out.println(password + " : " + isValid);
 
         return isValid;
 

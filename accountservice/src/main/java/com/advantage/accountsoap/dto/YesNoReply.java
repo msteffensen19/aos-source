@@ -5,18 +5,18 @@ import java.util.List;
 
 public enum YesNoReply {
 
-    YES('Y'),
-    NO('N');
+    YES("Y"),
+    NO("N");
 
-    private char replyTypeChar;
+    private String replyTypeChar;
 
     private String replyTypeString;
 
-    YesNoReply(char replyTypeChar) {
+    YesNoReply(String replyTypeChar) {
         this.replyTypeChar = replyTypeChar;
     }
 
-    public char getReplyTypeChar() {
+    public String getReplyTypeChar() {
         return replyTypeChar;
     }
 

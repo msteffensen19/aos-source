@@ -103,8 +103,8 @@ public class Account {
     @Column(name = FIELD_EMAIL)
     private String email;
 
-    @Column(name = "AGREE_TO_RECEIVE_OFFERS")
-    private char allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
+    @Column(name = "AGREE_TO_RECEIVE_OFFERS", length = 1)
+    private String allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
 
     @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -119,7 +119,7 @@ public class Account {
 
     }
 
-    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
@@ -157,7 +157,7 @@ public class Account {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
         this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
@@ -267,11 +267,11 @@ public class Account {
         this.email = email;
     }
 
-    public char getAllowOffersPromotion() {
+    public String getAllowOffersPromotion() {
         return this.allowOffersPromotion;
     }
 
-    public void setAllowOffersPromotion(char allowOffersPromotion) {
+    public void setAllowOffersPromotion(String allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
     }
 

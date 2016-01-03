@@ -47,7 +47,7 @@ public class AccountCreateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected Integer accountType;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected char allowOffersPromotion;
+    protected String allowOffersPromotion;
 
     public String getLastName() {
         return lastName;
@@ -145,11 +145,11 @@ public class AccountCreateRequest {
         this.accountType = accountType;
     }
 
-    public char getAllowOffersPromotion() {
+    public String getAllowOffersPromotion() {
         return allowOffersPromotion;
     }
 
-    public void setAllowOffersPromotion(char allowOffersPromotion) {
+    public void setAllowOffersPromotion(String allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
     }
 }

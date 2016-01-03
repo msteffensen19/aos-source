@@ -11,14 +11,14 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
     Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
                           String password, Integer country, String phoneNumber, String stateProvince,
                           String cityName, String address, String zipcode, String email,
-                          char agreeToReceiveOffersAndPromotions);
+                          String agreeToReceiveOffersAndPromotions);
 
     //  For User-Management API
     @Transactional
     AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
                                  String password, Integer country, String phoneNumber, String stateProvince,
                                  String cityName, String address, String zipcode, String email,
-                                 char agreeToReceiveOffersAndPromotions);
+                                 String agreeToReceiveOffersAndPromotions);
 
     Account addUnsuccessfulLoginAttempt(Account account);
 
