@@ -878,8 +878,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return <b>true</b> when exists and <b>false</b> if does not exists.
      */
     public boolean isColorExistsInColorsList(String hexColor, List<ColorAttributeDto> colors) {
-        //TODO-BENY WTF?
-        //return (getProductColorAttribute(hexColor, colors) != null ? true : false);
         return getProductColorAttribute(hexColor, colors) != null;
     }
 
@@ -1031,34 +1029,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //}
 
         return dto;
-    }
-
-    //TODO-BENY WTF???
-    private static String getColorName(String hexColor) {
-        switch (hexColor.toUpperCase()) {
-            case "0":
-            case "000000":
-                return "BLACK";
-            case "FF":
-            case "0000FF":
-                return "BLUE";
-            case "FF00":
-            case "00FF00":
-                return "GREEN";
-            case "C0C0C0":
-                return "SILVER";
-            case "FF0000":
-                return "RED";
-            case "FF0E68C":
-                return "KHAKI";
-            case "FFC0CB":
-                return "PINK";
-            case "FFFF00":
-                return "YELLOW";
-            case "FFFFFF":
-                return "WHITE";
-        }
-        return "";
     }
 
 }
