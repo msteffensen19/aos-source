@@ -173,7 +173,11 @@
     top: -10px;
 }
 
-
+#orderPayment #toolTipCart tbody .price {
+    height: 100%;
+    padding: 50% 0;
+;
+}
 
 
 
