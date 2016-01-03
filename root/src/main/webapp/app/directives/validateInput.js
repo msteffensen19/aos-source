@@ -18,6 +18,12 @@ define(['./module'], function (directives) {
                 link: function(s, e, a, ctrl){
 
                     e.bind('click', function(){
+                        console.log("ctrl.getInvalidItems()")
+                        console.log(ctrl.getInvalidItems())
+                        console.log("")
+                        console.log("")
+                        console.log("")
+                        console.log("")
                         if(ctrl.getInvalidItems() == 0)
                         {
                             s.submit()

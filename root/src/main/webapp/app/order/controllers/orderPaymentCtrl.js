@@ -14,10 +14,7 @@ define(['./module'], function (controllers) {
             }
 
             s.shippingCost = resolveParams.shippingCost;
-
-            s.login = function(){
-                //alert()
-            }
+            s.userLogin = resolveParams.userLogin;
 
             $("nav .navLinks").css("display" , "none");
         }]);
