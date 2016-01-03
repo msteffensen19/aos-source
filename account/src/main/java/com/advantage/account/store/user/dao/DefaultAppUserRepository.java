@@ -387,7 +387,6 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     @Override
-    //TODO-BENY WTF???
     public int delete(AppUser... entities) {
         return 0;
     }
