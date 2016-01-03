@@ -32,6 +32,10 @@ define(['./module'], function (directives) {
                 require: 'secValidate',
                 controller: ['$scope', function(s){
 
+                    this.addId = function(id){
+                        this.id = id;
+                    }
+
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
                         return s.invalidItems.length;
@@ -65,6 +69,14 @@ define(['./module'], function (directives) {
                         return -1;
                     }
                 }],
+                link: function(s, e, a, ctrl){
+                    e.addClass('sec-validate');
+                    if(a.idAttr)
+                    {
+                        e.attr('id', a.idAttr);
+                        ctrl.addId(a.idAttr);
+                    }
+                }
             }
         }])
         .directive('secInput', ['$templateCache', function($templateCache){
@@ -83,12 +95,11 @@ define(['./module'], function (directives) {
                     s.warnings = [];
                     s.noRedStar = false;
                     s.id;
-
                     var labelStartPossition;
+                    var ctrlFather;
+
                     s.inputFocus = function (id) {
                         var input = $('#secInput_' + id);
-                        console.log(id)
-                        console.log(input)
                         labelStartPossition = labelStartPossition || input.prev().css('top');
                         input.prev().animate({'top': '-18px'}, 300, 'linear');
                         input.siblings(".validate-info").show(200);
@@ -107,6 +118,47 @@ define(['./module'], function (directives) {
                             ctrlFather.addInvalidField(id);
                         }
                         input.siblings(".validate-info").hide(200);
+                    }
+
+                    s.validateLabelClicked = function (id) {
+                        $('#secInput_' + id).focus();
+                    }
+
+                    this.setCtrlFather = function (_ctrlFather) {
+                        ctrlFather = _ctrlFather;
+                    }
+
+                    this.addWarningInfo = function (warningInfo) {
+                        s.warnings.push(warningInfo);
+                        ctrlFather.addInvalidField(s.id);
+                    }
+
+                    this.setPlaceHolder = function (placeHolder) {
+                        s.placeHolder = placeHolder;
+                        s.textToShow = {
+                            text: placeHolder,
+                            valid: true,
+                            key: ''
+                        };
+                    }
+
+                    this.setId = function (id) {
+                        s.id = id;
+                    }
+
+                    this.enableNoRedStar = function () {
+                        s.noRedStar = true;
+                    }
+
+                    this.setInputType = function (inputType) {
+                        s.inputType = inputType;
+                    }
+
+                    function setTextToShow(warn) {
+                        s.textToShow = {
+                            text: warn.warning,
+                            valid: false
+                        };
                     }
 
                     function checkValidInput(warnings, input) {
@@ -157,64 +209,9 @@ define(['./module'], function (directives) {
                         })
                     }
 
-                    function setTextToShow(warn) {
-
-                        s.textToShow = {
-                            text: warn.warning,
-                            valid: false
-                        };
-                    }
-
-                    s.validateLabelClicked = function (id) {
-                        $('#secInput_' + id).focus();
-                    }
-
-                    this.addWarningInfo = function (warningInfo) {
-                        s.warnings.push(warningInfo);
-                        ctrlFather.addInvalidField(s.id);
-                    }
-
-                    var ctrlFather;
-                    this.setCtrlFather = function (_ctrlFather) {
-                        ctrlFather = _ctrlFather;
-                    }
-
-                    this.setPlaceHolder = function (placeHolder) {
-                        s.placeHolder = placeHolder;
-                        s.textToShow = {
-                            text: placeHolder,
-                            valid: true,
-                            key: ''
-                        };
-                    }
-
-                    this.setId = function (id) {
-                        s.id = id;
-                    }
-
-                    this.enableNoRedStar = function () {
-                        s.noRedStar = true;
-                    }
-
-                    this.setInputType = function (inputType) {
-                        s.inputType = inputType;
-                    }
-
                 }],
                 link: {
                     pre: function (s, e, a, ctrls) {
-
-                        console.log("")
-                        console.log("")
-                        console.log("")
-                        console.log("")
-                        console.log("ctrls")
-                        console.log(ctrls)
-                        console.log("ctrls")
-                        console.log("")
-                        console.log("")
-                        console.log("")
-                        console.log("")
 
                         var me = ctrls[0];
                         e.addClass('validate-directive');

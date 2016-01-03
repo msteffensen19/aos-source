@@ -3,6 +3,7 @@
     position: relative;
     display: inline-block;
     vertical-align: top;
+    width: 100%;
 }
 
 .validate-directive > .validate-label{
@@ -12,29 +13,27 @@
     left: 0;
 }
 
-.validate-directive .validateInvalid{
+.validate-directive label.validateInvalid{
     color: #ff454f !important;
+}
+
+.validate-directive input{
+    width: 100%;
 }
 
 .validate-directive input.validateInvalid{
     border-bottom: solid #ff454f 1px !important;
 }
 
-
 .validate-directive > .validate-info{
     display: none;
 }
-
 
 .validate-directive > .validate-info ul {
     list-style: none;
 }
 
-.validate-directive > .validate-info ul{
-    list-style: none;
-}
-
-#formCover .must{
+.validate-directive .must{
     position: absolute;
     top:12px;
     left:-12px;

@@ -24,7 +24,7 @@
 #toolTipCart tbody{
     position: relative;
     display: block;
-    max-height: 211px;
+    max-height: 232px;
     overflow-y: auto;
     margin: 0;
 }
@@ -67,8 +67,12 @@
 }
 
 #toolTipCart tbody h3{
-    font-size: 12px;
+    font-size: 14px;
     padding-bottom: 7px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height:  1.9em;
 }
 
 #toolTipCart tbody label{
@@ -76,6 +80,7 @@
     color: #828282;
     display: block;
     position: relative;
+    line-height:16px
 }
 
 #toolTipCart tbody span.productColor{
