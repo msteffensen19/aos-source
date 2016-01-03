@@ -1,41 +1,42 @@
-package com.advantage.account.store.user.model;
+package com.advantage.accountsoap.model;
 
-import com.advantage.root.store.dto.AccountType;
-import com.advantage.account.util.UserPassword;
-import com.advantage.account.util.ArgumentValidationHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.accountsoap.Constants;
+
+import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.common.AccountType;
+import com.advantage.accountsoap.util.ArgumentValidationHelper;
+import com.advantage.accountsoap.util.UserPassword;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * @author Binyamin Regev on 15/11/2015.
- */
 @Entity
-//@Table(name = "AppUser")
 @NamedQueries({
         @NamedQuery(
-                name = AppUser.QUERY_GET_ALL,
-                query = "select u from AppUser u"
+                name = Account.QUERY_GET_ALL,
+                query = "select a from Account a"
         )
         , @NamedQuery(
-        name = AppUser.QUERY_GET_BY_USER_LOGIN,
-        query = "select u from AppUser u where " + AppUser.FIELD_USER_LOGIN + " = :" + AppUser.PARAM_USER_LOGIN
+        name = Account.QUERY_GET_BY_USER_LOGIN,
+        query = "select a from Account a where " + Account.FIELD_USER_LOGIN + " = :" + Account.PARAM_USER_LOGIN
 )
         , @NamedQuery(
-        name = AppUser.QUERY_GET_USERS_BY_COUNTRY,
-        query = "select u from AppUser u where " + AppUser.FIELD_COUNTRY + " = :" + AppUser.PARAM_COUNTRY
+        name = Account.QUERY_GET_USERS_BY_COUNTRY,
+        query = "select a from Account a where " + Account.FIELD_COUNTRY + " = :" + Account.PARAM_COUNTRY
 )
-//        ,@NamedQuery(
-//        name = AppUser.QUERY_GET_CURRENT_TIMESTAMP,
-//        query = "select to_char(current_timestamp, 'YYYY-MM-DD HH24:MI:SS')"
-//        )
 })
-public class AppUser {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "account", namespace = WebServiceConfig.NAMESPACE_URI,
+        propOrder = {
+
+})
+public class Account {
 
     public static final int MAX_NUM_OF_APP_USER = 50;
-
 
     public static final String MESSAGE_NEW_USER_CREATED_SUCCESSFULLY = "New user created successfully.";
     public static final String MESSAGE_USER_LOGIN_FAILED = "Invalid user-name and password";
@@ -81,7 +82,7 @@ public class AppUser {
     private String password;
 
     @Column(name = "USER_TYPE")
-    private Integer appUserType;        //  by enum AccountType
+    private Integer accountType;        //  by enum AccountType
 
     @Column(name = FIELD_COUNTRY)
     private Integer country;                //  by Country
@@ -102,8 +103,8 @@ public class AppUser {
     @Column(name = FIELD_EMAIL)
     private String email;
 
-    @Column(name = "AGREE_TO_RECEIVE_OFFERS")
-    private char allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
+    @Column(name = "AGREE_TO_RECEIVE_OFFERS", length = 1)
+    private String allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
 
     @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -114,15 +115,15 @@ public class AppUser {
     @Column
     private long internalLastSuccesssulLogin;   //  Managed Internally
 
-    public AppUser() {
+    public Account() {
 
     }
 
-    public AppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
 
         //  Validate Numeric Arguments
-        ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
+        ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
+        ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
 
         //  Validate String Arguments
@@ -138,7 +139,7 @@ public class AppUser {
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(zipcode, "zipcode");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(offersPromotion), "agree to receive offers and promotions");
 
-        this.setAppUserType(appUserType);
+        this.setAccountType(accountType);
         this.setLastName(lastName);
         this.setFirstName(firstName);
         this.setLoginName(loginName);
@@ -156,7 +157,7 @@ public class AppUser {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public AppUser(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
         this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
@@ -202,12 +203,12 @@ public class AppUser {
         this.password = userPassword.encryptText(password);
     }
 
-    public Integer getAppUserType() {
-        return appUserType;
+    public Integer getAccountType() {
+        return accountType;
     }
 
-    public void setAppUserType(Integer appUserType) {
-        this.appUserType = appUserType;
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
     }
 
     public Integer getCountry() {
@@ -266,11 +267,11 @@ public class AppUser {
         this.email = email;
     }
 
-    public char getAllowOffersPromotion() {
+    public String getAllowOffersPromotion() {
         return this.allowOffersPromotion;
     }
 
-    public void setAllowOffersPromotion(char allowOffersPromotion) {
+    public void setAllowOffersPromotion(String allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
     }
 
@@ -321,10 +322,10 @@ public class AppUser {
 
     @Override
     public boolean equals(Object obj) {
-        AppUser compareTo = (AppUser) obj;
+        Account compareTo = (Account) obj;
 
         return (
-                (this.getAppUserType() == compareTo.getAppUserType()) &&
+                (this.getAccountType() == compareTo.getAccountType()) &&
                         (this.getFirstName() == compareTo.getFirstName()) &&
                         (this.getLastName() == compareTo.getLastName()) &&
                         (this.getLoginName() == compareTo.getLoginName()) &&
@@ -342,7 +343,7 @@ public class AppUser {
     public String toString() {
         return "User Information: " +
                 "id=" + this.getId() + Constants.SPACE +
-                "type=" + this.getAppUserType() + Constants.SPACE +
+                "type=" + this.getAccountType() + Constants.SPACE +
                 "full name=\"" + this.getFirstName() + Constants.SPACE + this.getLastName() + "\" " +
                 "login=\"" + this.getLoginName() + "\" " +
                 "email=\"" + this.getEmail() + "\" " +
@@ -402,7 +403,7 @@ public class AppUser {
     }
 
 //    public static void main(String[] args) {
-//        //new AppUser().addMillisecondsIntervalToTimestamp(30000000);
+//        //new Account().addMillisecondsIntervalToTimestamp(30000000);
 //        Date date = new Date(new Date().getTime());
 //
 //        System.out.println("date with milliseconds interval=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));

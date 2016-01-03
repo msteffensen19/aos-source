@@ -1,3 +1,4 @@
+/*
 package com.advantage.root.store.servlet;
 
 import java.io.File;
@@ -70,4 +71,4 @@ public class FetchImageHttpServlet extends HttpServlet {
                 getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
 
     }
-}
+}*/

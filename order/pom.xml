@@ -181,5 +181,10 @@
             <artifactId>soa-model-core</artifactId>
             <version>1.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,6 @@
-package com.advantage.root.common;
+package com.advantage.common;
 
-import com.advantage.root.store.dto.AppUserType;
+
 import io.jsonwebtoken.*;
 
 import java.security.Key;
@@ -27,11 +27,11 @@ public class Token {
         issuer = SecurityTools.getIssuer();
     }
 
-    public Token(long appUserId, AppUserType appUserType) {
-        this(appUserId, appUserType, null);
+    public Token(long appUserId, AccountType accountType) {
+        this(appUserId, accountType, null, null);
     }
 
-    public Token(long appUserId, AppUserType appUserType, String email) {
+    public Token(long appUserId, AccountType accountType, String email, String loginName) {
         this();
         builder = Jwts.builder();
         tokenHeader = Jwts.header();
@@ -40,7 +40,10 @@ public class Token {
         tokenClaims.setIssuer(issuer);
         tokenClaims.setIssuedAt(new Date());
         tokenClaims.put("userId", appUserId);
-        tokenClaims.put("role", appUserType);
+        if (loginName != null && !loginName.isEmpty()) {
+            tokenClaims.put("loginName", loginName);
+        }
+        tokenClaims.put("role", accountType);
         if (email != null && !email.isEmpty()) {
             tokenClaims.put("email", email);
         }
@@ -68,8 +71,8 @@ public class Token {
         }
     }
 
-    public AppUserType getAppUserType() {
-        AppUserType result = (AppUserType) tokenClaims.get("role");
+    public AccountType getAppUserType() {
+        AccountType result = (AccountType) tokenClaims.get("role");
         return result;
     }
 
@@ -79,6 +82,10 @@ public class Token {
 
     public String getEmail() {
         return (String) tokenClaims.get("email");
+    }
+
+    public String getLoginName() {
+        return (String) tokenClaims.get("loginName");
     }
 
     public String generateToken() {
