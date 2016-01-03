@@ -2,92 +2,65 @@
            xmlns:sx="http://www.w3.org/2001/XMLSchema"
            targetNamespace="com.advantage.online.store.accountservice" elementFormDefault="qualified">
 
-    <xs:complexType name="product">
+    <xs:complexType name="accountStatusResponse">
         <xs:sequence>
-            <xs:element name="productName" type="xs:string" minOccurs="0"/>
-            <xs:element name="productQuantity" type="xs:int"/>
+            <xs:element name="reason" type="xs:string" minOccurs="0"/>
+            <xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="token" type="xs:string" minOccurs="0"/>
+            <xs:element name="userId" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="SEProducts">
+    <xs:complexType name="account">
         <xs:sequence>
-            <xs:element name="product" type="tns:product" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="email" type="xs:string" minOccurs="0"/>
+            <xs:element name="loginPassword" type="xs:string" minOccurs="0"/>
+            <xs:element name="loginUser" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="SEAddress">
+    <xs:complexType name="accountConfigurationResponseStatus">
         <xs:sequence>
-            <sx:element name="City" type="xs:string"/>
-            <sx:element name="Country" type="xs:string"/>
-            <sx:element name="State" type="xs:string"/>
-            <sx:element name="PostalCode" type="xs:string"/>
-            <xs:element name="AddressLine1" type="xs:string"/>
-            <xs:element name="AddressLine2" type="xs:string"/>
+            <xs:element name="emailAddressInLogin" type="xs:boolean"/>
+            <xs:element name="loginBlockingIntervalInMilliSeconds" type="xs:long"/>
+            <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int"/>
+            <xs:element name="productInStockDefaultValue" type="xs:int"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="ShippingCostRequest">
+    <xs:element name="AccountsResponse">
         <xs:complexType>
             <xs:sequence>
-                <sx:element name="SETransactionType" type="xs:string"/>
-                <sx:element name="SEAddress" type="tns:SEAddress"/>
-                <xs:element name="SENumberOfProducts" type="xs:int"/>
-                <xs:element name="SECustomerName" type="xs:string"/>
-                <xs:element name="SECustomerPhone" type="xs:string"/>
+                <xs:element name="account" type="tns:account" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="ShippingCostResponse">
+    <xs:element name="AccountsRequest"/>
+
+    <xs:complexType name="AccountCreateDto">
+        <xs:sequence>
+            <xs:element name="accountType" type="xs:int"/>
+            <xs:element name="address" type="xs:string"/>
+            <xs:element name="allowOffersPromotion" type="xs:unsignedShort"/>
+            <xs:element name="cityName" type="xs:string"/>
+            <xs:element name="country" type="xs:int"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="loginName" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="phoneNumber" type="xs:string"/>
+            <xs:element name="stateProvince" type="xs:string"/>
+            <xs:element name="zipcode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="AccountCreateRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="SETransactionType" type="xs:string"/>
-                <xs:element name="Code" type="xs:string"/>
-                <xs:element name="Reason" type="xs:string"/>
-                <xs:element name="Amount" type="xs:string"/>
-                <xs:element name="Currency" type="xs:string"/>
-                <xs:element name="TransactionDate" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="PlaceShippingOrderRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <sx:element name="SETransactionType" type="xs:string"/>
-                <sx:element name="SEAddress" type="tns:SEAddress"/>
-                <xs:element name="SEProducts" type="tns:SEProducts" form="qualified"/>
-                <xs:element name="OrderNumber" type="xs:string"/>
-                <xs:element name="SECustomerName" type="xs:string"/>
-                <xs:element name="SECustomerPhone" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="PlaceShippingOrderResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <sx:element name="SETransactionType" type="xs:string"/>
-                <xs:element name="Code" type="xs:string"/>
-                <xs:element name="Reason" type="xs:string"/>
-                <xs:element name="TransactionReference" type="xs:string"/>
-                <xs:element name="TransactionDate" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="TrackNumberRequest">
-        <xs:complexType>
-            <xs:sequence>
-
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="TrackNumberResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="track" type="xs:long"/>
+                <xs:element name="account" type="tns:AccountCreateDto"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
