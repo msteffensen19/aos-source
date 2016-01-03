@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.dao;
 
-import com.advantage.accountsoap.Constants;
-import com.advantage.accountsoap.dto.CountryResponse;
+import com.advantage.common.Constants;
+import com.advantage.common.dto.CountryResponseDto;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
@@ -20,7 +20,7 @@ import java.util.List;
 @Repository
 public class DefaultCountryRepository extends AbstractRepository implements CountryRepository {
 
-    private CountryResponse countryResponse;
+    private CountryResponseDto countryResponseDto;
 
     @Override
     public Country createCountry(String name, int phonePrefix) {
@@ -30,7 +30,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         final Country country = new Country(name, phonePrefix);
         entityManager.persist(country);
 
-        countryResponse = new CountryResponse(true, "New user created successfully.", country.getId());
+        countryResponseDto = new CountryResponseDto(true, "New user created successfully.", country.getId());
 
         return country;
     }
@@ -51,27 +51,27 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     }
 
     @Override
-    public CountryResponse create(String name, int phonePrefix) {
+    public CountryResponseDto create(String name, int phonePrefix) {
         Country country = createCountry(name, phonePrefix);
 
         if (country == null) {
             //  Country was not created
-            return countryResponse;
+            return countryResponseDto;
         }
 
-        return countryResponse;
+        return countryResponseDto;
     }
 
     @Override
-    public CountryResponse create(String name, String isoName, int phonePrefix) {
+    public CountryResponseDto create(String name, String isoName, int phonePrefix) {
         Country country = createCountry(name, isoName, phonePrefix);
 
         if (country == null) {
             //  Country was not created
-            return countryResponse;
+            return countryResponseDto;
         }
 
-        return countryResponse;
+        return countryResponseDto;
     }
 
     /**

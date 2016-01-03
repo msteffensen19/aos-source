@@ -56,20 +56,20 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
-    public ResponseEntity<ProductResponseStatus> createProduct(@RequestBody ProductDto product,
+    public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto product,
                                                                HttpServletRequest request) {
         if (product == null) {
-            return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
 
-        ProductResponseStatus responseStatus = productService.createProduct(product);
+        ProductResponseDto responseStatus = productService.createProduct(product);
 
         return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
                 new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/products/images", method = RequestMethod.POST)
-    public ResponseEntity<ProductResponseStatus> createProductWithImage(@RequestParam("product") String product,
+    public ResponseEntity<ProductResponseDto> createProductWithImage(@RequestParam("product") String product,
                                                                         @RequestParam("file") MultipartFile file,
                                                                         HttpServletRequest request) {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
@@ -80,24 +80,24 @@ public class CatalogController {
             dto = objectMapper.readValue(product, ProductDto.class);
         } catch (IOException e) {
             e.printStackTrace();
-            new ResponseEntity<>(new ProductResponseStatus(false, -1, "json not valid"), HttpStatus.BAD_REQUEST);
+            new ResponseEntity<>(new ProductResponseDto(false, -1, "json not valid"), HttpStatus.BAD_REQUEST);
         }
 
         if (dto == null) {
-            return new ResponseEntity<>(new ProductResponseStatus(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
         if (file.isEmpty()) {
-            return new ResponseEntity<>(new ProductResponseStatus(false, -1, "File was empty"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, "File was empty"), HttpStatus.NO_CONTENT);
         }
 
-        ImageUrlResponseStatus imageResponseStatus = productService.fileUpload(file);
+        ImageUrlResponseDto imageResponseStatus = productService.fileUpload(file);
 
         if (!imageResponseStatus.isSuccess()) {
-            return new ResponseEntity<>(new ProductResponseStatus(false, -1, imageResponseStatus.getReason()),
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, imageResponseStatus.getReason()),
                     HttpStatus.BAD_REQUEST);
         }
         dto.setImageUrl(imageResponseStatus.getId());
-        ProductResponseStatus responseStatus = productService.createProduct(dto);
+        ProductResponseDto responseStatus = productService.createProduct(dto);
         responseStatus.setImageId(imageResponseStatus.getId());
 
         return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
@@ -105,10 +105,10 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
-    public ResponseEntity<ProductResponseStatus> updateProduct(@RequestBody ProductDto product,
+    public ResponseEntity<ProductResponseDto> updateProduct(@RequestBody ProductDto product,
                                                                @PathVariable("product_id") Long id,
                                                                HttpServletRequest request) {
-        ProductResponseStatus responseStatus = productService.updateProduct(product, id);
+        ProductResponseDto responseStatus = productService.updateProduct(product, id);
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
@@ -164,14 +164,14 @@ public class CatalogController {
 
     //endregion
     @RequestMapping(value = "/images", method = RequestMethod.POST)
-    public ResponseEntity<ImageUrlResponseStatus> imageUpload(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<ImageUrlResponseDto> imageUpload(@RequestParam("file") MultipartFile file,
                                                               HttpServletRequest request) {
         if (!file.isEmpty()) {
-            ImageUrlResponseStatus responseStatus = productService.fileUpload(file);
+            ImageUrlResponseDto responseStatus = productService.fileUpload(file);
             return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
                     new ResponseEntity<>(responseStatus, HttpStatus.EXPECTATION_FAILED);
         } else {
-            return new ResponseEntity<>(new ImageUrlResponseStatus("", false,
+            return new ResponseEntity<>(new ImageUrlResponseDto("", false,
                     "Failed to upload, file was empty."), HttpStatus.EXPECTATION_FAILED);
         }
     }

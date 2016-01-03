@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.CountryRepository;
-import com.advantage.accountsoap.dto.CountryResponse;
+import com.advantage.common.dto.CountryResponseDto;
 import com.advantage.accountsoap.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,12 +18,12 @@ public class CountryService {
     public CountryRepository countryRepository;
 
     @Transactional
-    public CountryResponse create(final String name, final int phonePrefix) {
+    public CountryResponseDto create(final String name, final int phonePrefix) {
         return countryRepository.create(name, phonePrefix);
     }
 
     @Transactional
-    public CountryResponse create(final String name, final String isoName, final int phonePrefix) {
+    public CountryResponseDto create(final String name, final String isoName, final int phonePrefix) {
         return countryRepository.create(name, isoName, phonePrefix);
     }
 

@@ -70,3 +70,4 @@ fabric.properties
 /*.gt
 /*.ggt
 /remove from git.bat
+/accountservice/src/main/java/accountservice/store/online/advantage/com

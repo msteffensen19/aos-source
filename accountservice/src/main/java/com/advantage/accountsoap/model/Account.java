@@ -1,6 +1,6 @@
 package com.advantage.accountsoap.model;
 
-import com.advantage.accountsoap.Constants;
+import com.advantage.common.Constants;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.common.dto.AccountType;

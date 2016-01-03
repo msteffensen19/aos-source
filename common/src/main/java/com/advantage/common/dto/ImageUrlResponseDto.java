@@ -1,11 +1,11 @@
 package com.advantage.common.dto;
 
-public class ImageUrlResponseStatus {
+public class ImageUrlResponseDto {
     String id;
     boolean success;
     String reason;
 
-    public ImageUrlResponseStatus(String id, boolean success, String reason) {
+    public ImageUrlResponseDto(String id, boolean success, String reason) {
         this.id = id;
         this.success = success;
         this.reason = reason;
