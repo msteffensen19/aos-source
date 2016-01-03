@@ -1,6 +1,6 @@
 
 #orderPayment {
-    max-width: 1157px;
+    max-width: 1180px;
     margin: 0 auto;
     padding: 0;
     font-size: 0;
@@ -23,15 +23,18 @@
 }
 
 #orderPayment  > div:nth-child(1){
-    width: 65%;
+    width: 70%;
 }
 
 #orderPayment  h5.bigPadding {
     padding: 65px 30px;
+    font-size: 24px;
 }
+
 #orderPayment  > div > h5 {
     color: #2a2a2a;
-    font-size: 24px;
+    font-size: 18px;
+    padding-bottom: 16px;
 }
 
 #orderPayment label.roboto-medium{
@@ -47,9 +50,18 @@
 }
 
 #orderPayment .noUserSection .cover{
+    max-width: 240px;
+    margin: 0 auto;
+}
+
+#orderPayment .noUserSection .cover div{
     border-left: solid 2px #454545;
-    padding: 0 27px;
+    padding: 0 0 0 27px;
     height: 188px;
+}
+
+#orderPayment .noUserSection .cover a{
+    margin: 18px 20px;
 }
 
 #orderPayment .noUserSection .a-button{
@@ -67,14 +79,14 @@
 }
 
 #orderPayment #newClient p {
-line-height: 25px;
+    line-height: 25px;
     padding: 10px 0;
 }
 
 #orderPayment > #userCart {
-    width: 30%;
+    width: 24%;
     margin: 65px 0 0 0 ;
-    padding: 13px 20px ;
+    padding: 20px 25px ;
     background-color: rgb(249, 249, 249);
 }
 
@@ -101,8 +113,64 @@ line-height: 25px;
     cursor: pointer;
 }
 
+
+#orderPayment .itemsCount{
+    color: #2a2a2a;
+    font-size: 12px;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+}
+
+
 #orderPayment .closeDiv {
     display: none;
+}
+
+#orderPayment .shipping, #orderPayment .total {
+    color: #2a2a2a;
+    display: block;
+}
+
+#orderPayment .shipping {
+    font-size: 12px;
+    margin-top: 23px;
+}
+
+#orderPayment .total {
+    font-size: 15px;
+    margin: 6px 0;
+}
+
+#userCart .penetrationInCart{
+    padding: 0 0 0 80px;
+    position: relative;
+}
+
+#userCart .penetrationInCart > span{
+    font-size: 11px !important;
+    color: #828282;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+#orderPayment .shipping span, #orderPayment .total span{
+    position: absolute;
+}
+
+#orderPayment .shipping span {
+
+}
+
+#orderPayment .totalTitle {
+    position: absolute;
+    right: 11px;
+    top: 4px;
+}
+
+
+#orderPayment .total {
+    top: -10px;
 }
 
 
@@ -120,6 +188,11 @@ line-height: 25px;
 #orderPayment .closeDiv {
     display: none;
 }
+
+#orderPayment #toolTipCart tbody tr:first-child {
+    border-top: solid 1px #d0d0d0;
+}
+
 /*END CART SECCION MODIFY*/
 
 
