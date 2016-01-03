@@ -63,19 +63,19 @@ public class AccountserviceEndpoint {
     @ResponsePayload
     public AccountStatusResponse createAccount(@RequestPayload AccountCreateRequest account) {
         return accountService.create(
-                account.getAccount().getAccountType(),
-                account.getAccount().getLastName(),
-                account.getAccount().getFirstName(),
-                account.getAccount().getLoginName(),
-                account.getAccount().getPassword(),
-                account.getAccount().getCountry(),
-                account.getAccount().getPhoneNumber(),
-                account.getAccount().getStateProvince(),
-                account.getAccount().getCityName(),
-                account.getAccount().getAddress(),
-                account.getAccount().getZipcode(),
-                account.getAccount().getEmail(),
-                account.getAccount().getAllowOffersPromotion());
+                account.getAccountType(),
+                account.getLastName(),
+                account.getFirstName(),
+                account.getLoginName(),
+                account.getPassword(),
+                account.getCountry(),
+                account.getPhoneNumber(),
+                account.getStateProvince(),
+                account.getCityName(),
+                account.getAddress(),
+                account.getZipcode(),
+                account.getEmail(),
+                account.getAllowOffersPromotion());
     }
 
     /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "")

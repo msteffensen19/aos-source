@@ -12,13 +12,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="account">
-        <xs:sequence>
-            <xs:element name="email" type="xs:string" minOccurs="0"/>
-            <xs:element name="loginPassword" type="xs:string" minOccurs="0"/>
-            <xs:element name="loginUser" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:complexType name="account"/>
 
     <xs:complexType name="accountConfigurationResponseStatus">
         <xs:sequence>
@@ -39,30 +33,32 @@
 
     <xs:element name="AccountsRequest"/>
 
-    <xs:complexType name="AccountCreateDto">
-        <xs:sequence>
-            <xs:element name="accountType" type="xs:int"/>
-            <xs:element name="address" type="xs:string"/>
-            <xs:element name="allowOffersPromotion" type="xs:unsignedShort"/>
-            <xs:element name="cityName" type="xs:string"/>
-            <xs:element name="country" type="xs:int"/>
-            <xs:element name="email" type="xs:string"/>
-            <xs:element name="firstName" type="xs:string"/>
-            <xs:element name="lastName" type="xs:string"/>
-            <xs:element name="loginName" type="xs:string"/>
-            <xs:element name="password" type="xs:string"/>
-            <xs:element name="phoneNumber" type="xs:string"/>
-            <xs:element name="stateProvince" type="xs:string"/>
-            <xs:element name="zipcode" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:element name="AccountCreateRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="account" type="tns:AccountCreateDto"/>
+                <xs:element name="accountType" type="xs:int"/>
+                <xs:element name="address" type="xs:string"/>
+                <xs:element name="allowOffersPromotion" type="xs:unsignedShort"/>
+                <xs:element name="cityName" type="xs:string"/>
+                <xs:element name="country" type="xs:int"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="loginName" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="phoneNumber" type="xs:string"/>
+                <xs:element name="stateProvince" type="xs:string"/>
+                <xs:element name="zipcode" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <!--    <xs:element name="AccountCreateRequest">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="account" type="tns:AccountCreateDto"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>-->
 
 </xs:schema>
