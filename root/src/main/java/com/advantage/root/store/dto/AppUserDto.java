@@ -1,4 +1,4 @@
-package com.advantage.root.store.user.dto;
+package com.advantage.root.store.dto;
 
 /**
  * @author Binyamin Regev on 19/11/2015.

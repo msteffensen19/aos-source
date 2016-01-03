@@ -1,4 +1,4 @@
-package com.advantage.root.store.user.dto;
+package com.advantage.root.store.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public enum AppUserType {
     public static boolean contains(String test) {
 
         for (AppUserType a : AppUserType.values()) {
-            if (a.name().equals(test)) {
+            if (a.name().equalsIgnoreCase(test)) {
                 return true;
             }
         }

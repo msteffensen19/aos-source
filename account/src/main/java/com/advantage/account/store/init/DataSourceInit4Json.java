@@ -1,6 +1,6 @@
 package com.advantage.account.store.init;
 
-import com.advantage.account.store.user.dto.AppUserType;
+import com.advantage.root.store.dto.AppUserType;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
@@ -29,7 +29,6 @@ public class DataSourceInit4Json {
     private EntityManagerFactory entityManagerFactory;
 
     public void init() throws Exception {
-
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
         Session session = sessionFactory.openSession();

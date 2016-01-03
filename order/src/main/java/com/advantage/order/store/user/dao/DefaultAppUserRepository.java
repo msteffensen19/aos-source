@@ -3,11 +3,11 @@ package com.advantage.order.store.user.dao;
 
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.user.config.AppUserConfiguration;
+import com.advantage.root.store.dto.AppUserResponseDto;
 import com.advantage.root.util.ValidationHelper;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.order.util.JPAQueryHelper;
 import com.advantage.order.store.user.model.AppUser;
-import com.advantage.order.store.user.dto.AppUserResponseStatus;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -25,7 +25,7 @@ import java.util.UUID;
 @Repository
 public class DefaultAppUserRepository extends AbstractRepository implements AppUserRepository {
 
-    private AppUserResponseStatus appUserResponseStatus;
+    private AppUserResponseDto appUserResponseDto;
     private String failureMessage;
 
     /*  Default application user configuration values - Begin   */
@@ -69,7 +69,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * @param zipcode              new-user's zip-code of postal address.
      * @param email                New user's e-mail address.
      * @param allowOffersPromotion
-     * @return {@link AppUserResponseStatus} when successful:
+     * @return {@link AppUserResponseDto} when successful:
      * <br/>
      * <b>{@code success}</b> = true, <b>{@code reason}</b> = &quat;New user created successfully&quat; <b>{@code userId}</b> = user-id of newly created user.
      * <br/>
@@ -77,7 +77,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
      * <br/>
      */
     @Override
-    //public AppUserResponseStatus createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
+    //public AppUserResponseDto createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char agreeToReceiveOffersAndPromotions) {
     public AppUser createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
 
         //  Validate Numeric Arguments
@@ -109,41 +109,41 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
                         //  New user created successfully.
                         this.failureMessage = "New user created successfully.";
-                        appUserResponseStatus = new AppUserResponseStatus(true, AppUser.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, appUser.getId());
+                        appUserResponseDto = new AppUserResponseDto(true, AppUser.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, appUser.getId());
 
                         return appUser;
                     } else {
                         //  User with this login already exists
                         this.failureMessage = "User with this login already exists.";
-                        appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+                        appUserResponseDto = new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
                         return null;
 
                     }
                 } else {
-                    //  appUserResponseStatus is already set with values.
+                    //  appUserResponseDto is already set with values.
                     return null;
                 }
             } else {
                 //  Invalid password
                 this.failureMessage = "Invalid password.";
-                appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+                appUserResponseDto = new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
                 return null;
             }
         } else {
             //  Invalid login user-name.
             this.failureMessage = "Invalid login user-name.";
-            appUserResponseStatus = new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            appUserResponseDto = new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
             return null;
         }
 
     }
 
-    public AppUserResponseStatus create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
+    public AppUserResponseDto create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char allowOffersPromotion) {
         AppUser appUser = createAppUser(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
-        return new AppUserResponseStatus(appUserResponseStatus.isSuccess(),
-                appUserResponseStatus.getReason(),
-                appUserResponseStatus.getUserId());
+        return new AppUserResponseDto(appUserResponseDto.isSuccess(),
+                appUserResponseDto.getReason(),
+                appUserResponseDto.getUserId());
     }
 
     @Override
@@ -225,7 +225,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
     }
 
     @Override
-    public AppUserResponseStatus doLogin(String loginUser, String loginPassword, String email) {
+    public AppUserResponseDto doLogin(String loginUser, String loginPassword, String email) {
 
 //        //  Get Application User Configuration values from "AppUserConfiguration.properties" file
 //        AppUserConfiguration appUserConfiguration = new AppUserConfiguration();
@@ -233,15 +233,15 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
         //  Check arguments: Not NULL and Not BLANK
         if ((loginUser == null) || (loginUser.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            return new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
         if ((loginPassword == null) || (loginPassword.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            return new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
         if ((email == null) || (email.length() == 0)) {
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+            return new AppUserResponseDto(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
         }
 
         //  Try to get user details by login user-name
@@ -249,7 +249,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
         if (appUser == null) {
             //  Invalid user login.
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
+            return new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
         final long currentTimestamp = new Date().getTime();
@@ -263,19 +263,19 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
 
             if (appUser.getInternalUserBlockedFromLoginUntil() >= currentTimestamp) {
                 //  User is still blocked from login attempt
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_IS_BLOCKED_FROM_LOGIN, -1);
+                return new AppUserResponseDto(false, AppUser.MESSAGE_USER_IS_BLOCKED_FROM_LOGIN, -1);
             }
         }
 
         if ((!loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
             if (appUser.getPassword().compareTo(loginPassword) != 0) {
                 appUser = addUnsuccessfulLoginAttempt(appUser);
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
+                return new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
             }
         } else {
             //  password is empty
             appUser = addUnsuccessfulLoginAttempt(appUser);
-            return new AppUserResponseStatus(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
+            return new AppUserResponseDto(false, AppUser.MESSAGE_USER_LOGIN_FAILED, appUser.getId());
         }
 
         //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
@@ -285,16 +285,16 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
                     if (appUser.getEmail().compareToIgnoreCase(email) != 0) {
                         //  email does not match the email set in user details
                         appUser = addUnsuccessfulLoginAttempt(appUser);
-                        return new AppUserResponseStatus(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
+                        return new AppUserResponseDto(false, AppUser.MESSAGE_INVALID_EMAIL_ADDRESS, appUser.getId());
                     }
                 } else {
                     //
                     appUser = addUnsuccessfulLoginAttempt(appUser);
-                    return new AppUserResponseStatus(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
+                    return new AppUserResponseDto(false, AppUser.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, appUser.getId());
                 }
 
             } else {
-                return new AppUserResponseStatus(false, AppUser.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, appUser.getId());
+                return new AppUserResponseDto(false, AppUser.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, appUser.getId());
             }
         }
 
@@ -306,14 +306,14 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         updateAppUser(appUser);
 
         //  Return: Successful login attempt
-        return new AppUserResponseStatus(true, "Login Successful", appUser.getId(), getTokenKey());
+        return new AppUserResponseDto(true, "Login Successful", appUser.getId(), getTokenKey());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
         //  Check phone number validation if not null
         if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {
             if (!ValidationHelper.isValidPhoneNumber(phoneNumber)) {
-                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid phone number.", -1);
+                appUserResponseDto = new AppUserResponseDto(false, "Invalid phone number.", -1);
 
                 return false;
             }
@@ -322,7 +322,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Check e-mail address validation if not null
         if (email != null) {
             if (!ValidationHelper.isValidEmail(email)) {
-                appUserResponseStatus = new AppUserResponseStatus(false, "Invalid e-mail address.", -1);
+                appUserResponseDto = new AppUserResponseDto(false, "Invalid e-mail address.", -1);
 
                 return false;
             }

@@ -1,6 +1,6 @@
 package com.advantage.account.store.user.model;
 
-import com.advantage.account.store.user.dto.AppUserType;
+import com.advantage.root.store.dto.AppUserType;
 import com.advantage.account.util.UserPassword;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.root.string_resources.Constants;
