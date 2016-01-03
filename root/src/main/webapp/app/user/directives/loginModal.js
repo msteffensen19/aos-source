@@ -36,6 +36,7 @@ define(['./module'], function (directives) {
 
                         userService.login(user).then(function (response) {
 
+                            console.log(response);
                                 if(response.userId != -1)
                                 {
                                     if(response.userId === undefined)
