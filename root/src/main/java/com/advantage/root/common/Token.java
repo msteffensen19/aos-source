@@ -4,13 +4,14 @@ import com.advantage.root.store.user.dto.AppUserType;
 import io.jsonwebtoken.*;
 
 import java.security.Key;
+import java.util.Date;
 
 /**
  * Created by Evgeney Fiskin on 02-01-2016.
  */
 public class Token {
     private Header tokenHeader;
-    private Claims tokenBody;
+    private Claims tokenClaims;
     private JwtBuilder builder;
     private JwtParser parser;
     private Key key;
@@ -19,10 +20,30 @@ public class Token {
     private String issuer;
 
     private Token() {
-        key = SecurityTools.decodeBase64Key(SecurityTools.BASE64_CRYPTO_KEY);
-        compressionCodec = SecurityTools.compressionCodec;
-        signatureAlgorithm = SecurityTools.signatureAlgorithm;
-        issuer = SecurityTools.ISSUER;
+        key = SecurityTools.getKey();
+        compressionCodec = SecurityTools.getCompressionCodec();
+        signatureAlgorithm = SecurityTools.getSignatureAlgorithm();
+        issuer = SecurityTools.getIssuer();
+    }
+
+    public Token(long appUserId, AppUserType appUserType) {
+        this(appUserId, appUserType, null);
+    }
+
+    public Token(long appUserId, AppUserType appUserType, String email) {
+        this();
+        builder = Jwts.builder();
+        tokenHeader = Jwts.header();
+        tokenHeader.setType(Header.JWT_TYPE);
+        tokenClaims = Jwts.claims();
+        tokenClaims.setIssuer(issuer);
+        tokenClaims.setIssuedAt(new Date());
+        tokenClaims.put("userId", appUserId);
+        tokenClaims.put("role", appUserType);
+        if (email != null && !email.isEmpty()) {
+            tokenClaims.put("email", email);
+        }
+        builder.setClaims(tokenClaims);
     }
 
     public Token(String base64Token) {
@@ -32,7 +53,7 @@ public class Token {
             parser.setSigningKey(key);
             parser.requireIssuer(issuer);
             Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
-            tokenBody = claimsJws.getBody();
+            tokenClaims = claimsJws.getBody();
 
         } catch (SignatureException e) {
 
@@ -45,34 +66,17 @@ public class Token {
         }
     }
 
-    public Token(long appUserId, AppUserType appUserType) {
-        this(appUserId, appUserType, null);
-    }
-
-    public Token(long appUserId, AppUserType appUserType, String email) {
-        this();
-        builder = Jwts.builder();
-        tokenBody = Jwts.claims();
-        tokenBody.setIssuer(issuer);
-        tokenBody.put("userId", appUserId);
-        tokenBody.put("role", appUserType);
-        if (email != null && !email.isEmpty()) {
-            tokenBody.put("email", email);
-        }
-        builder.setClaims(tokenBody);
-    }
-
     public AppUserType getAppUserType() {
-        AppUserType result = (AppUserType) tokenBody.get("role");
+        AppUserType result = (AppUserType) tokenClaims.get("role");
         return result;
     }
 
     public long getUserId() {
-        return (Long) tokenBody.get("userId");
+        return (Long) tokenClaims.get("userId");
     }
 
     public String getEmail() {
-        return (String) tokenBody.get("email");
+        return (String) tokenClaims.get("email");
     }
 
     public String generateToken() {
