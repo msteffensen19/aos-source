@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.advantage.root.util.ValidationHelper.isAuthorized;
+import static com.advantage.common.util.ValidationHelper.isAuthorized;
 
 @Aspect
 public class ApiSecurityMethodInvokeAspect {

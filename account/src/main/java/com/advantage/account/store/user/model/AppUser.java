@@ -1,9 +1,9 @@
 package com.advantage.account.store.user.model;
 
-import com.advantage.root.store.dto.AccountType;
+import com.advantage.common.dto.AccountType;
 import com.advantage.account.util.UserPassword;
 import com.advantage.account.util.ArgumentValidationHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;

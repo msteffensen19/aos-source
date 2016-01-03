@@ -1,6 +1,6 @@
 package com.advantage.catalog.store.api;
 
-import com.advantage.root.store.dto.*;
+import com.advantage.common.dto.*;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.services.DealService;
 import com.advantage.catalog.store.model.deal.Deal;
@@ -9,7 +9,7 @@ import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
 import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog.util.ArgumentValidationHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;

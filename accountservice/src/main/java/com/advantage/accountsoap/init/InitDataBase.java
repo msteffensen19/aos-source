@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.init;
 
 import com.advantage.accountsoap.Constants;
-import com.advantage.common.AccountType;
+import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.dto.YesNoReply;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;

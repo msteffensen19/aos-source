@@ -1,11 +1,11 @@
 package com.advantage.account.store.init;
 
-import com.advantage.root.store.dto.AccountType;
+import com.advantage.common.dto.AccountType;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.util.fs.FileSystemHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;

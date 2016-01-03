@@ -9,6 +9,7 @@
     <name>main_project</name>
     <modules>
         <module>shared_resources</module>
+        <module>common</module>
         <module>root</module>
         <module>catalog</module>
         <module>order</module>

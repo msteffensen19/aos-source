@@ -2,7 +2,7 @@ package com.advantage.accountsoap.dao;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.dto.AccountStatusResponse;
-import com.advantage.common.AccountType;
+import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
