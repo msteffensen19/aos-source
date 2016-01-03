@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -112,8 +111,8 @@ public class AccountController {
             //response.getHeader().
             appUserResponseDto.setSessionId(session.getId());
 
-            Cookie cookie = new Cookie("token", appUserResponseDto.getToken());
-            response.addCookie(cookie);
+//            Cookie cookie = new Cookie("token", appUserResponseDto.getToken());
+//            response.addCookie(cookie);
 
             httpStatus = HttpStatus.OK;
         } else {

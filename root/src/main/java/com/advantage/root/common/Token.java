@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Evgeney Fiskin on 02-01-2016.
@@ -43,6 +44,7 @@ public class Token {
         if (email != null && !email.isEmpty()) {
             tokenClaims.put("email", email);
         }
+        builder.setHeader((Map<String, Object>) tokenHeader);
         builder.setClaims(tokenClaims);
     }
 
