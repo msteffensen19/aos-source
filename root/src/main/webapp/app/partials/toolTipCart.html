@@ -6,7 +6,7 @@
                     <img class="imageUrl" a-sec-src="{{product.imageUrl}}" alt="imgProduct" />
                 </td>
                 <td>
-                    <h3>{{product.productName | uppercase}}</h3>
+                    <h3>{{ product.productName  | uppercase | secCatWord:30 }}</h3>
                     <label>{{'QTY' | translate}} {{product.quantity}}</label>
                     <label>{{'Color' | translate }}
                         <span>{{product.color.name}}</span>

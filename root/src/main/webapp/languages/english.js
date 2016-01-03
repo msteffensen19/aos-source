@@ -3,17 +3,20 @@
  */
 
 var english = {
-    OUR_PRODUCTS : 'OUR PRODUCTS',
-    HOT_PRODUCTS : 'Hot Products',
-    DEAL_OF_THE_DAY : 'Deal of the Day',
-    CONTACT_US : 'Contact Us',
-    AOS : 'AOS',
-    LOGIN: 'Login',
-    LOGOUT: 'This is a paragraph.',
-    SPACIAL_OFFER : 'SPECIAL OFFER',
-    SPECIAL_OFFER_ITEMS : 'SPECIAL OFFER ITEMS',
-    POPULAR_ITEMS : 'POPULAR ITEMS',
-    FOLLOW_US : 'FOLLOW US',
+    'PRODUCT' : 'PRODUCT',
+    'OUR_PRODUCTS' : 'OUR PRODUCTS',
+    'HOT_PRODUCTS' : 'Hot Products',
+    'DEAL_OF_THE_DAY' : 'Deal of the Day',
+    'CONTACT_US' : 'Contact Us',
+    'AOS' : 'AOS',
+    'Login': 'Login',
+    'LOGIN': 'LOGIN',
+    'LOGOUT': 'This is a paragraph.',
+    'SPACIAL_OFFER' : 'SPECIAL OFFER',
+    'ITEMS' : 'ITEMS',
+    'SPECIAL_OFFER_ITEMS' : 'SPECIAL OFFER ITEMS',
+    'POPULAR_ITEMS' : 'POPULAR ITEMS',
+    'FOLLOW_US' : 'FOLLOW US',
     'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
     'FILTER_BY' : 'FILTER BY: ',
     'SHOP_NOW' : 'SHOP NOW',
@@ -65,7 +68,9 @@ var english = {
     'State__Province__Region' : 'State / Province / Region',
     'offers_promotion' :  'Receive exclusive offers and promotions from Advantage',
     'REGISTER' : 'REGISTER',
+    'REGISTRATION' : 'REGISTRATION',
     'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT?',
+    'Already_have_an_account' : 'Already have an account?',
     'Clear' : 'Clear',
 
 
@@ -97,8 +102,22 @@ var english = {
     'REMOVE': 'REMOVE',
 
     'IDENTIFICATION' : 'IDENTIFICATION',
-
-
+    'ORDER_PAYMENT' : 'ORDER PAYMENT',
+    'Forgot_your_password' : 'Forgot your password?',
+    'New_client' : 'New client?',
+    'Create_your_account_easily' : 'Create your account and be able to track your orders easily.',
+    'ORDER_SUMMARY' : 'ORDER SUMMARY',
+    'SHIPPING' : 'SHIPPING',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
+    'a' : 'a',
 };
 
 

@@ -1,27 +1,51 @@
-<!--
+<!-- -->
 <section id="png">
-    <img src="../../../csss/images/mariaDesigns/register/Register.png" />
+    <img src="../../../cdss/images/mariaDesigns/order/1Identification.png" />
 </section>
--->
 
-<nav class="pages">
+
+<nav class="pages fixedImportant">
     <a translate="HOME" href="#/" ></a>
-    <a class="select" translate="CREATE_ACCOUNT">  </a>
+    <a translate="SHOPPING_CART" href="#/shoppingCart" ></a>
+    <a class="select" translate="ORDER_PAYMENT"></a>
 </nav>
 
 <section>
-    <article id="orderPayment">
+    <article>
+        <h3 class="roboto-regular sticky fixed fixedImportant" translate="ORDER_PAYMENT"></h3>
 
-        <div id="Identification">
+        <div id="orderPayment">
 
-            <h3 class="roboto-regular" translate="IDENTIFICATION"></h3>
+            <div>
+                <user-not-login></user-not-login>
+            </div>
+
+            <div>
+                <no-user-login></no-user-login>
+            </div>
+
+            <div id="userCart">
+                <h5 translate="ORDER_SUMMARY"></h5>
+                <span class="itemsCount roboto-medium"> {{ cart | productsCartCount }} {{ 'ITEMS' | translate }}</span>
+                <div class="penetrationInCart">
+                    <span class="roboto-regular" > {{ 'PRODUCT' | translate }} </span>
+                    <span class="totalTitle roboto-regular"> {{ 'TOTAL' | translate }} </span>
+                </div>
+                <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
+                <div class="penetrationInCart">
+                    <label class="shipping" ng-class=" { noShipping : shippingCost == 0 } " >{{ 'SHIPPING' | translate }}  <span > {{ shippingCost | currency: '$'}}</span></label>
+                    <label class="roboto-bold" > {{ 'TOTAL' | translate }} <span> {{(cart | productsCartSum) + shippingCost | currency:'$'}}</span> </label>
+                </div>
+            </div>
 
 
-            <div id="form">
+            <!--<div id="form">-->
 
 
 
-            <!--     <sec-validate>
+
+        <!--
+        <sec-validate>
                     <div id="formCover">
 
                         <div>
@@ -164,7 +188,18 @@
                 </sec-validate>
                 -->
 
-            </div>
+            <!--</div>-->
+
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br />
+
         </div>
     </article>
 </section>

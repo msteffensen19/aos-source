@@ -1,0 +1,224 @@
+
+#orderPayment {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 0;
+}
+
+.sticky.fixedImportant + #orderPayment{
+    margin-top:100px;
+    padding-top:65px
+}
+
+#orderPayment  > div{
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: top;
+    position: relative;
+}
+
+#orderPayment  > div > div{
+    vertical-align: top;
+    padding: 0 30px
+}
+
+#orderPayment  > div:nth-child(1){
+    width: 70%;
+}
+
+#orderPayment  h5.bigPadding {
+    padding-bottom: 65px;
+    font-size: 24px;
+}
+
+#orderPayment  > div > h5 {
+    color: #2a2a2a;
+    font-size: 18px;
+    padding-bottom: 16px;
+}
+
+#orderPayment label.roboto-medium{
+    font-size: 16px;
+    color:#2a2a2a;
+    padding: 15px 0;
+    display: inline-block;
+}
+
+#orderPayment .noUserSection{
+    width: 40%;
+    display: inline-block;
+}
+
+#orderPayment .noUserSection .cover{
+    max-width: 240px;
+    margin: 0 auto;
+}
+
+#orderPayment .noUserSection .cover div{
+    border-left: solid 2px #454545;
+    padding: 0 0 0 27px;
+    height: 206px;
+}
+
+#orderPayment .noUserSection .cover a{
+    margin: 18px 20px;
+    margin-top: 39px;
+}
+
+#orderPayment .noUserSection .a-button{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 138px;
+    border-width: 2px;
+    text-align: center;
+    margin-top: 16px;
+}
+
+#orderPayment #newClient > a.a-button{
+    position: absolute;
+    bottom: 0;
+    margin: 0 27px;
+}
+
+#orderPayment #newClient p {
+    line-height: 25px;
+    padding: 10px 0;
+}
+
+#orderPayment > #userCart {
+    width: 24%;
+    padding: 20px 25px ;
+    background-color: rgb(249, 249, 249);
+}
+
+#orderPayment > #userCart #toolTipCart {
+    display: block;
+    background-color: rgb(249, 249, 249);
+    z-index: 20;
+    position: static;
+}
+
+#orderPayment > #userCart #toolTipCart *{
+    background-color: transparent;
+}
+
+#orderPayment > #userCart #toolTipCart table{
+    border: solid 0px #d0d0d0;
+}
+
+#orderPayment #Forgot_your_password{
+    color: #828282;
+    padding-bottom: 20px;
+    padding-top: 5px ;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+#orderPayment .itemsCount{
+    color: #2a2a2a;
+    font-size: 12px;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+}
+
+
+#orderPayment .closeDiv {
+    display: none;
+}
+
+#orderPayment .shipping, #orderPayment .total {
+    color: #2a2a2a;
+    display: block;
+}
+
+#orderPayment label:first-child {
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#orderPayment .total {
+    font-size: 15px;
+    margin: 6px 0;
+}
+
+#userCart .penetrationInCart{
+    padding: 0 0 0 80px;
+    position: relative;
+}
+
+#userCart .penetrationInCart > span{
+    font-size: 11px !important;
+    color: #828282;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+#orderPayment .penetrationInCart > label {
+    display: block;
+    padding: 3px;
+}
+
+#orderPayment .penetrationInCart .noShipping {
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
+#orderPayment .penetrationInCart > label span{
+    position: absolute;
+    right: 8px;
+}
+
+#orderPayment .totalTitle {
+    position: absolute;
+    right: 11px;
+    top: 4px;
+}
+
+#orderPayment #toolTipCart tbody .price {
+    height: 100%;
+    padding: 50% 0;
+}
+
+
+
+
+
+
+/*CART CART SECCION MODIFY*/
+#orderPayment tfoot {
+    display: none;
+}
+
+#orderPayment .closeDiv {
+    display: none;
+}
+
+#orderPayment #toolTipCart tbody tr:first-child {
+    border-top: solid 1px #d0d0d0;
+}
+
+#orderPayment #toolTipCart tbody {
+    max-height: inherit;
+}
+
+
+/*END CART SECCION MODIFY*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
