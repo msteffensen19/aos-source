@@ -34,7 +34,9 @@ import org.springframework.stereotype.Repository;
 import java.io.*;
 import java.net.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+//import org.json.JSONObject;
 
 /**
  * Order services - default repository for {@code ShoppingCart}.
@@ -45,6 +47,11 @@ import java.util.List;
 @Qualifier("shoppingCartRepository")
 @Repository
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository {
+
+    //  FINALs for REST API calls - BEGIN
+    //private static final String CATALOG_GET_PRODUCT_BY_ID_URI = "/products/{product_id}";
+    //private static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
+    //  FINALs for REST API calls - END
 
     private static String NOT_FOUND = "NOT FOUND";
 
@@ -96,7 +103,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return {@link ShoppingCartResponseStatus} class of the product. If an error occured method will return {@code null} and
      */
     @Override
-    public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity) {
+    public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity, long lastUpdate) {
 
         //  Validate Arguments
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
@@ -123,6 +130,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
                 //  Existing product in user shopping cart (the same productId + color)
                 shoppingCart.setQuantity(shoppingCart.getQuantity() + quantity);
+                if (lastUpdate != 0) {
+                    shoppingCart.setLastUpdate(lastUpdate);
+                } else {
+                    shoppingCart.setLastUpdate(new Date().getTime());
+                }
+
                 entityManager.persist(shoppingCart);
 
                 this.failureMessage = "";
@@ -132,7 +145,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
             } else {
                 //  New ShoppingCart
-                shoppingCart = new ShoppingCart(userId, productId, color, quantity);
+                shoppingCart = new ShoppingCart(userId, new Date().getTime(), productId, color, quantity);
+                if (lastUpdate != 0) {
+                    shoppingCart.setLastUpdate(lastUpdate);
+                } else {
+                    shoppingCart.setLastUpdate(new Date().getTime());
+                }
                 entityManager.persist(shoppingCart);
 
                 //  New product in shopping cart created successfully.
@@ -156,11 +174,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
+     *
      * @param userId
      * @param productId
      * @param color
      * @param quantity
      * @return
+     * @see java.util.Date
      */
     @Override
     public ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity) {
@@ -189,6 +209,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             if (shoppingCart != null) {
                 //  Product with color was found in user cart
                 shoppingCart.setQuantity(quantity);     //  Set argument quantity as product quantity in user cart
+                shoppingCart.setLastUpdate(new Date().getTime());
+
                 entityManager.persist(shoppingCart);    //  Update changes
 
                 //  Set RESPONSE object
@@ -223,7 +245,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * {@link ShoppingCart}. If there is an identical product in {@code cartProducts}
      * and existing {@link ShoppingCart} then the quantity from {@code cartProducts}
      * will be set to the product in the existing {@link ShoppingCart}.
-     *
      * @param userId       Id of {@code AppUser} to whom the {@link ShoppingCart} will be created.
      * @param cartProducts {@link Collection} of unique products in the {@link ShoppingCart}.
      * @return {@link ShoppingCartResponseStatus} class, properties values: <b>success</b> = {@code true} when successful or {@code false} if failed. <b>reason</b>=success or failure message text. <b>productId</b>=-1 because there are multiple products in the list.
@@ -269,9 +290,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     /**
-     * Calls method {@link #addProductToShoppingCart(long, Long, int, int)} to add a single product to a specific user
+     * Calls method {@link #addProductToShoppingCart(long, Long, int, int, long)} to add a single product to a specific user
      * shopping cart. <br/>
-     *
      * @param userId    identifies specific {@code AppUser}.
      * @param productId identifies specific {@code Product}
      * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
@@ -280,7 +300,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * for the {@code REQUEST}.
      */
     public ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity) {
-        addProductToShoppingCart(userId, productId, color, quantity);
+        addProductToShoppingCart(userId, productId, color, quantity, 0);
         return shoppingCartResponse;
     }
 
@@ -601,22 +621,26 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         if (shoppingCartResponse.isSuccess()) {
             //  Clear user cart was successful - add new cart to user
-        }
+            shoppingCartResponse = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
 
-        shoppingCartResponse = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
+            long lastUpdate = cartProducts.size();
+            for (ShoppingCartDto cartProduct : cartProducts) {
+                ShoppingCart shoppingCart = addProductToShoppingCart(userId,
+                        cartProduct.getProductId(),
+                        ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
+                        cartProduct.getQuantity(),
+                        lastUpdate);
 
-        for (ShoppingCartDto cartProduct : cartProducts) {
-            ShoppingCart shoppingCart = addProductToShoppingCart(userId,
-                    cartProduct.getProductId(),
-                    ShoppingCart.convertHexColorToInt(cartProduct.getHexColor()),
-                    cartProduct.getQuantity());
+                if (shoppingCart != null) {
+                    lastUpdate --;
+                }
+                else {
+                    //  Override SUCCESS data and set failure information
+                    shoppingCartResponse = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
 
-            if (shoppingCart == null) {
-                //  Override SUCCESS data and set failure information
-                shoppingCartResponse = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
-
-                //  Do we want to break out of the loop after 1 product failed to insert, or continue?
-                //break;  //  Exit the loop
+                    //  Do we want to break out of the loop after 1 product failed to insert, or continue?
+                    //break;  //  Exit the loop
+                }
             }
         }
 
@@ -831,6 +855,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                            Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
         //String stringURL = ServiceConfiguration.getUriServerAccount() +
         //        ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+                Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+//        String stringURL = ServiceConfiguration.getUriServerAccount() +
+//                Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         // stringURL = "http:/localhost:8080/account/api/v1/accounts/String.valueOf(userId)"
         System.out.println("stringURL=\"" + stringURL + "\"");

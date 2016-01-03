@@ -1,6 +1,8 @@
 package com.advantage.order.store.order.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * The model class for {@code shopping_cart} table entity. Rows can be deleted
@@ -16,7 +18,9 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(
                 name = ShoppingCart.QUERY_GET_CARTS_BY_USER_ID,
-                query = "select s from ShoppingCart s where " + ShoppingCart.FIELD_USER_ID + " = :" + ShoppingCart.PARAM_USER_ID
+                query = "select s from ShoppingCart s" +
+                        " where " + ShoppingCart.FIELD_USER_ID + " = :" + ShoppingCart.PARAM_USER_ID +
+                        " order by s.lastUpdate DESC"
         )
         , @NamedQuery(
         name = ShoppingCart.QUERY_GET_CART_BY_PK_COLUMNS,
@@ -24,7 +28,7 @@ import javax.persistence.*;
                 "where " + ShoppingCart.FIELD_USER_ID + " = :" + ShoppingCart.PARAM_USER_ID +
                 " AND " + ShoppingCart.FIELD_PRODUCT_ID + " = :" + ShoppingCart.PARAM_PRODUCT_ID +
                 " AND " + ShoppingCart.FIELD_COLOR_ID + " = :" + ShoppingCart.PARAM_COLOR_ID
-)
+        )
 })
 public class ShoppingCart {
 
@@ -58,6 +62,9 @@ public class ShoppingCart {
     @Column(name = FIELD_USER_ID)
     private long userId;
 
+    @Column(name = "last_update_timestamp")
+    private long lastUpdate;    //  new Date.getTime()
+
     @Id
     @Column(name = FIELD_PRODUCT_ID)
     private Long productId;
@@ -74,6 +81,15 @@ public class ShoppingCart {
 
     public ShoppingCart(long userId, Long productId, int color, int quantity) {
         this.userId = userId;
+        this.setLastUpdate(new Date().getTime());
+        this.productId = productId;
+        this.color = color;
+        this.quantity = quantity;
+    }
+
+    public ShoppingCart(long userId, long lastUpdate, Long productId, int color, int quantity) {
+        this.userId = userId;
+        this.lastUpdate = lastUpdate;
         this.productId = productId;
         this.color = color;
         this.quantity = quantity;
@@ -86,6 +102,10 @@ public class ShoppingCart {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+
+    public long getLastUpdate() { return lastUpdate; }
+
+    public void setLastUpdate(long lastUpdate) { this.lastUpdate = lastUpdate; }
 
     public Long getProductId() {
         return productId;
@@ -133,8 +153,12 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
+        //System.currentTimeMillis()
+        //System.out.println("Milliseconds to Date: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(this.getLastUpdate()));
+
         return "ShoppingCart{" +
                 " userId='" + this.getUserId() + '\'' +
+                ", lastUpdate=" + this.getLastUpdate() +
                 ", productId=" + this.getProductId() +
                 ", color='" + this.getColor() + '\'' +
                 ", quantity=" + this.getQuantity() + " }";
