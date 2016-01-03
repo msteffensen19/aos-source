@@ -1,6 +1,6 @@
 <!-- -->
 <section id="png">
-    <img src="../../../css/images/mariaDesigns/order/1Identification.png" />
+    <img src="../../../cdss/images/mariaDesigns/order/1Identification.png" />
 </section>
 
 
@@ -65,21 +65,31 @@
                 <div id="newClient" class="noUserSection">
 
                     <div class="cover">
+                        <div>
                         <label class="roboto-medium" translate="New_client" ></label>
                         <p>{{'Create_your_account_easily' | translate}}</p>
+
+                        </div>
+                        <a href="#/register" class="a-button roboto-medium"
+                           data-ng-class="{ buttonDisable : invalidItems.length > 0 }">
+                            {{'REGISTRATION' | translate}}</a>
                     </div>
-
-                    <a href="#/register" class="a-button roboto-medium"
-                       data-ng-class="{ buttonDisable : invalidItems.length > 0 }">
-                        {{'REGISTRATION' | translate}}</a>
-
                 </div>
 
             </div>
 
             <div id="userCart">
                 <h5 translate="ORDER_SUMMARY"></h5>
+                <span class="itemsCount roboto-medium"> {{ cart | productsCartCount }} {{ 'ITEMS' | translate }}</span>
+                <div class="penetrationInCart">
+                    <span class="roboto-regular" > {{ 'PRODUCT' | translate }} </span>
+                    <span class="totalTitle roboto-regular"> {{ 'TOTAL' | translate }} </span>
+                </div>
                 <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
+                <div class="penetrationInCart">
+                    <label class="shipping">{{ 'SHIPPING' | translate }}  <span > {{ shippingCost }}</span></label>
+                    <label class="roboto-bold"> {{ cart | productsCartCount }} {{ 'ITEMS' | translate }} <span> {{ shippingCost }}</span> </label>
+                </div>
             </div>
 
 
