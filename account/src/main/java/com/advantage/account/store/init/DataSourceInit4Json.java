@@ -1,6 +1,6 @@
 package com.advantage.account.store.init;
 
-import com.advantage.root.store.user.dto.AppUserType;
+import com.advantage.root.store.dto.AppUserType;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;

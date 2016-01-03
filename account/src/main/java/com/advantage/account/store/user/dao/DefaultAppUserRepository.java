@@ -8,7 +8,7 @@ import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
 import com.advantage.root.common.Token;
 import com.advantage.root.store.dto.AppUserResponseDto;
-import com.advantage.root.store.user.dto.AppUserType;
+import com.advantage.root.store.dto.AppUserType;
 import com.advantage.root.util.ValidationHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

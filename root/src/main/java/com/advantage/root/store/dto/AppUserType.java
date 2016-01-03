@@ -1,4 +1,4 @@
-package com.advantage.root.store.user.dto;
+package com.advantage.root.store.dto;
 
 import java.util.ArrayList;
 import java.util.List;

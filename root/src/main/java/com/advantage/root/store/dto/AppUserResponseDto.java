@@ -1,7 +1,5 @@
 package com.advantage.root.store.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * @author Binyamin Regev on 19/11/2015.
  */
@@ -81,7 +79,6 @@ public class AppUserResponseDto {
     /**
      * @return
      */
-    @JsonIgnore
     public String getToken() {
         return token;
     }

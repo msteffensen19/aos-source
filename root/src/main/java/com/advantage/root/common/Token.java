@@ -1,6 +1,6 @@
 package com.advantage.root.common;
 
-import com.advantage.root.store.user.dto.AppUserType;
+import com.advantage.root.store.dto.AppUserType;
 import io.jsonwebtoken.*;
 
 import java.security.Key;
