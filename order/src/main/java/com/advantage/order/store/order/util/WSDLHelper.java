@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.util;
 
+import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.root.util.StringHelper;
 import com.predic8.schema.Attribute;
 import com.predic8.schema.ComplexType;
@@ -243,7 +244,7 @@ public class WSDLHelper {
         }
     }
 
-    public String getShipExShippingCost() {
+    public ShipExResponse getShippingCostFromShipEx() {
 
         /*  ******* Init    ******* */
         //costRequest = new ShippingCostRequest();
@@ -306,6 +307,7 @@ public class WSDLHelper {
             result = "response is successful";
         }
 
-        return result;
+        //return result;
+        return new ShipExResponse();
     }
 }

@@ -1,6 +1,7 @@
 package com.advantage.order.store.order.dao;
 
 import com.advantage.order.store.dao.AbstractRepository;
+import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
@@ -41,8 +42,8 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     @Deprecated
     private static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
 
-    private static final String CATALOG_PRODUCT = "/products/";
-    private static final String ACCOUNT_USERS = "/users/";
+    private static final String CATALOG_PRODUCT = "products/";
+    private static final String ACCOUNT_USERS = "users/";
     //  FINALs for REST API calls - END
 
     private static String NOT_FOUND = "NOT FOUND";
@@ -686,6 +687,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return responseDto;
     }
 
+    @Override
+    public ShipExResponse getShippingCostFromShipEx() {
+        return new ShipExResponse();
+    }
+
 //    /**
 //     * Do the purchase of products in user cart: <br/>
 //     * * Get shipping cost by calling {@code SOAP} request to <b>ShipEx</b>. <br/>
@@ -729,7 +735,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+       // Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         System.out.println("stringURL=\"" + userByIdUrl.toString() + "\"");
 
