@@ -6,7 +6,7 @@ import com.advantage.order.store.user.model.Country;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.order.util.JPAQueryHelper;
 import com.advantage.order.util.fs.FileSystemHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

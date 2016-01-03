@@ -5,7 +5,7 @@ import com.advantage.safepay.payment.dto.SafePayDto;
 import com.advantage.safepay.payment.dto.SafePayResponse;
 import com.advantage.safepay.payment.dto.TransactionTypeEnum;
 import com.advantage.safepay.util.ArgumentValidationHelper;
-import com.advantage.root.util.ValidationHelper;
+import com.advantage.common.util.ValidationHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

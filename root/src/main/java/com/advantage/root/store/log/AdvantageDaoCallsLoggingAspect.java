@@ -1,6 +1,6 @@
 package com.advantage.root.store.log;
 
-import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.common.util.ArgumentValidationHelper;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;

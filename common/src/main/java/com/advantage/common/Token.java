@@ -1,6 +1,7 @@
 package com.advantage.common;
 
 
+import com.advantage.common.dto.AccountType;
 import io.jsonwebtoken.*;
 
 import java.security.Key;

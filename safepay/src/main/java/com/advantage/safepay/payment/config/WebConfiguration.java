@@ -1,6 +1,6 @@
 package com.advantage.safepay.payment.config;
 
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.*;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
