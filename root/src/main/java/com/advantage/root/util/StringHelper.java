@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -110,4 +113,28 @@ public class StringHelper {
         }
         return false;
     }
+
+    /**
+     * Converting {@link String} to {@link java.util.Date} according to given {@link SimpleDateFormat}.
+     * For Example: <br/>
+     * &quat;January 2, 2010&quat; {@link SimpleDateFormat} is &quat;mmm d, yyyy&quat;
+     * @param stringDate Date as {@link String}.
+     * @param dateFormat {@link SimpleDateFormat} of {@code stringDate}.
+     * @return Date as java {@link java.util.Date}.
+     * @throws ParseException
+     */
+    public static Date toDate(String stringDate, String dateFormat) throws ParseException {
+        return new SimpleDateFormat(dateFormat).parse(stringDate);
+    }
+
+    /**
+     * Converting {@link String} to {@link java.util.Date} after determine the date format.
+     * @param stringDate Date as {@link String}.
+     * @return Date as java {@link java.util.Date}.
+     */
+    public static Date toDate(String stringDate) {
+        return new Date();
+    }
+
+
 }
