@@ -2,10 +2,12 @@ package com.advantage.accountsoap.dao;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.dto.AccountStatusResponse;
+import com.advantage.common.AccountType;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
 import com.advantage.accountsoap.util.ValidationHelper;
+import com.advantage.common.Token;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -276,7 +278,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         updateAppUser(account);
 
         //  Return: Successful login attempt
-        return new AccountStatusResponse(true, "Login Successful", account.getId(), getTokenKey());
+        return new AccountStatusResponse(true, "Login Successful", account.getId(),
+                getTokenKey(account.getId(), AccountType.valueOfCode(account.getAccountType()), account.getEmail(),
+                        account.getLoginName()).generateToken());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -343,8 +347,10 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      *
      * @return Random {@link UUID} string.
      */
-    private String getTokenKey() {
-        return UUID.randomUUID().toString();
+    private Token getTokenKey(long accountId, AccountType accountType, String email, String loginName) {
+        Token token = new Token(accountId, accountType, email, loginName);
+
+        return token;
     }
 
     @Override

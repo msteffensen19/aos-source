@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,17 @@ public enum AccountType {
         }
 
         return false;
+    }
+
+    public static AccountType valueOfCode(int code) {
+        for (AccountType accountType : values()) {
+            if(accountType.getAccountTypeCode().equals(code)) {
+                return accountType;
+            }
+
+            return null;
+        }
+        return null;
     }
 
 }

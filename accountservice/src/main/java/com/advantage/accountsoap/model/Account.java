@@ -3,7 +3,7 @@ package com.advantage.accountsoap.model;
 import com.advantage.accountsoap.Constants;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.dto.AccountType;
+import com.advantage.common.AccountType;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.UserPassword;
 

@@ -77,8 +77,4 @@ public class AccountserviceEndpoint {
                 account.getEmail(),
                 account.getAllowOffersPromotion());
     }
-
-    /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "")
-    @ResponsePayload
-    public CountryResponse createCountry(@RequestPayload )*/
 }

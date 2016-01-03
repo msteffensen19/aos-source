@@ -2,12 +2,12 @@
            xmlns:sx="http://www.w3.org/2001/XMLSchema"
            targetNamespace="com.advantage.online.store.accountservice" elementFormDefault="qualified">
 
-    <xs:complexType name="accountStatusResponse">
+    <xs:complexType name="AccountStatusResponse">
         <xs:sequence>
-            <xs:element name="reason" type="xs:string" minOccurs="0"/>
-            <xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="sessionId" type="xs:string" />
             <xs:element name="success" type="xs:boolean"/>
-            <xs:element name="token" type="xs:string" minOccurs="0"/>
+            <xs:element name="token" type="xs:string"/>
             <xs:element name="userId" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
@@ -53,12 +53,14 @@
         </xs:complexType>
     </xs:element>
 
-    <!--    <xs:element name="AccountCreateRequest">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="account" type="tns:AccountCreateDto"/>
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>-->
+    <xs:element name="AccountLoginRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="loginUser" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="loginPassword" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>

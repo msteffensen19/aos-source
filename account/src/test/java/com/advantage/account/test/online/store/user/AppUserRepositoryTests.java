@@ -4,7 +4,7 @@ import com.advantage.account.test.online.store.dao.GenericRepositoryTests;
 import com.advantage.account.store.user.dao.AppUserRepository;
 import com.advantage.account.store.user.dao.CountryRepository;
 import com.advantage.account.store.user.model.AppUser;
-import com.advantage.root.store.dto.AppUserType;
+import com.advantage.root.store.dto.AccountType;
 //import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.dto.YesNoReply;
 import com.advantage.account.test.cfg.AdvantageTestContextConfiguration;
@@ -41,10 +41,10 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
     public void testConstructorAppUser() throws IOException {
         System.out.println("Testing public void testConstructorAppUser()");
 
-        System.out.println((AppUserType.USER.getAppUserTypeCode() == null ? "AppUserType.USER.getAppUserTypeCode()=NULL" : "AppUserType.USER.getAppUserTypeCode()=" + AppUserType.USER.getAppUserTypeCode()));
-        Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
+        System.out.println((AccountType.USER.getAppUserTypeCode() == null ? "AccountType.USER.getAppUserTypeCode()=NULL" : "AccountType.USER.getAppUserTypeCode()=" + AccountType.USER.getAppUserTypeCode()));
+        Assert.assertNotNull(AccountType.USER.getAppUserTypeCode());
 
-        final AppUser appUser = new AppUser(AppUserType.USER.getAppUserTypeCode(),
+        final AppUser appUser = new AppUser(AccountType.USER.getAppUserTypeCode(),
                 "LName",                            /*  String lastName                         */
                 "FName",                            /*  String firstName                        */
                 "Login",                            /*  String loginName                        */
@@ -97,12 +97,12 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
 //        System.out.println("Create Country BAHAMAS...");
 //        final Country country3 = countryRepository.createCountry("Bahamas", "bs", 1242);
 
-        System.out.println((AppUserType.USER.getAppUserTypeCode() == null ? "AppUserType.USER.getAppUserTypeCode()=NULL" : "AppUserType.USER.getAppUserTypeCode()=" + AppUserType.USER.getAppUserTypeCode()));
-        Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
+        System.out.println((AccountType.USER.getAppUserTypeCode() == null ? "AccountType.USER.getAppUserTypeCode()=NULL" : "AccountType.USER.getAppUserTypeCode()=" + AccountType.USER.getAppUserTypeCode()));
+        Assert.assertNotNull(AccountType.USER.getAppUserTypeCode());
 
         System.out.println("Create 1st AppUser ...");
-        //AppUserResponseDto appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
-        AppUser appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        //AppUserResponseDto appUserResponseStatus = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
+        AppUser appUser = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
                 lastName,
                 firstName,
                 loginName,
@@ -137,7 +137,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
 
 //        System.out.println("Create COUNTRY1 AppUsers ...");
 //        for (int i = 0; i < COUNTRY1_APP_USERS_COUNT; i++) {
-//            appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+//            appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
 //                                            lastName,
 //                                            firstName,
 //                                            loginName,
@@ -155,7 +155,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
 //
 //        System.out.println("Create COUNTRY2 AppUsers ...");
 //        for (int i = 20; i < (COUNTRY2_APP_USERS_COUNT + 20); i++) {
-//            appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+//            appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
 //                                            lastName,
 //                                            firstName,
 //                                            loginName,
@@ -221,13 +221,13 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
 
-        System.out.println((AppUserType.USER.getAppUserTypeCode() == null ? "AppUserType.USER.getAppUserTypeCode()=NULL" : "AppUserType.USER.getAppUserTypeCode()=" + AppUserType.USER.getAppUserTypeCode()));
-        Assert.assertNotNull(AppUserType.USER.getAppUserTypeCode());
+        System.out.println((AccountType.USER.getAppUserTypeCode() == null ? "AccountType.USER.getAppUserTypeCode()=NULL" : "AccountType.USER.getAppUserTypeCode()=" + AccountType.USER.getAppUserTypeCode()));
+        Assert.assertNotNull(AccountType.USER.getAppUserTypeCode());
 
         System.out.println("Create 1st AppUser ...");
-        //AppUserResponseDto appUserResponseStatus = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        //AppUserResponseDto appUserResponseStatus = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
         AppUser appUser;
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        appUser = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
                 "king",         /*  last name       */
                 "david",        /*  first name      */
                 "king.david",   /*  login-name      */
@@ -240,7 +240,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  zipcode         */
                 "ks@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        appUser = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
                 "king",         /*  last name       */
                 "solomon",      /*  first name      */
                 "king.solomon", /*  login-name      */
@@ -253,7 +253,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  zipcode         */
                 "ks@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        appUser = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
                 "hanavi",       /*  last name       */
                 "Yermiyahu",    /*  first name      */
                 "hanavi.jeremaya", /*  login-name      */
@@ -266,7 +266,7 @@ public class AppUserRepositoryTests extends GenericRepositoryTests {
                 "",             /*  zipcode         */
                 "hy@gov.il",    /*  email           */
                 YesNoReply.YES.getReplyTypeChar());  //agreeToReceiveOffersAndPromotions);
-        appUser = appUserRepository.createAppUser(AppUserType.USER.getAppUserTypeCode(),
+        appUser = appUserRepository.createAppUser(AccountType.USER.getAppUserTypeCode(),
                 "hanavi",       /*  last name       */
                 "Eliayu",       /*  first name      */
                 "hanavi.eliyahu", /*  login-name      */

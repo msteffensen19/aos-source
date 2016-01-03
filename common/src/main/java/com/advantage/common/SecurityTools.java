@@ -1,4 +1,4 @@
-package com.advantage.root.common;
+package com.advantage.common;
 
 import io.jsonwebtoken.CompressionCodec;
 import io.jsonwebtoken.SignatureAlgorithm;
