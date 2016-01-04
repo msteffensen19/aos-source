@@ -305,9 +305,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Get user's shopping carts
         List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
 
-        //  For each {@link ShoppingCart} get its ID and use method
         if ((shoppingCarts == null) || (shoppingCarts.size() == 0)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+            //  If shopping cart is empty means successful - exit method
+            return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
         }
 
         for (ShoppingCart cart : shoppingCarts) {
@@ -338,7 +338,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         List<ShoppingCart> shoppingCarts = entityManager.createNamedQuery(ShoppingCart.QUERY_GET_CARTS_BY_USER_ID, ShoppingCart.class)
                 .setParameter(ShoppingCart.PARAM_USER_ID, userId)
-                .setMaxResults(ShoppingCart.MAX_NUM_OF_SHOPPING_CART_PRODUCTS)
                 .getResultList();
 
         return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
@@ -807,6 +806,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
                 bufferedReader.close();
                 returnValue = sb.toString();
+                break;
             }
             case HttpStatus.SC_CONFLICT:
                 //  Product not found
