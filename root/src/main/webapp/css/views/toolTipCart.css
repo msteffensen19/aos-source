@@ -24,7 +24,8 @@
 #toolTipCart tbody{
     position: relative;
     display: block;
-    max-height: 232px;
+    /*max-height: 232px;*/
+    max-height: 205px;
     overflow-y: auto;
     margin: 0;
 }

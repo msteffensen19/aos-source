@@ -9,9 +9,7 @@ define(['./module'], function (services) {
 
             var responce = $q.defer();
             var cart = null;
-            function getTempCart(){
-                return { "userId": -1, "productsInCart": [], }
-            }
+            function getTempCart(){ return { "userId": -1, "productsInCart": [], } }
 
             return({
                 addProduct : addProduct,
@@ -70,14 +68,10 @@ define(['./module'], function (services) {
                             },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
-                            console.log("data")
-                            console.log(res)
                             cart = res;
                             responce.resolve(cart);
                         }).error(function (err) {
                             alert('err')
-                            l(err)
-
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
@@ -103,7 +97,7 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 loadCartProducts().then(function (_cart) {
-                    cart = _cart.data;
+                    cart = _cart;
                     var guestCart = loadGuestCartProducts();
                     var tempCart = [];
                     angular.forEach(cart.productsInCart, function(userProduct){
@@ -123,31 +117,49 @@ define(['./module'], function (services) {
                     });
 
                     cart.productsInCart = tempCart;
-                    updateUserCart(cart);
+                    cart = updateUserCart(cart);
                     $cookie.remove("userCart");
-                    defer.promise(cart);
+                    defer.resolve(cart);
                 })
                 return defer.promise;
             }
 
             function updateUserCart(){
+
+                var defer = $q.defer();
                 var user = $rootScope.userCookie;
                 if(user && user.response) {
                     if (user.response.userId != -1) {
-                        $http({
-                            method: "get",
-                            //data : JSON.stringify(cart);
-                            //headers: {
-                              //  "content-type": "application/json",
-                            //"Authorization": user.response.token,
-                            //},
 
-                            url: "app/cartProducts.json"
-                        });
-                        return true;
+                        var cartToReplace = [];
+                        angular.forEach(cart.productsInCart, function(product){
+                            cartToReplace.push({
+                                "hexColor": product.color.code,
+                                "productId": product.productId,
+                                "quantity": product.quantity,
+                            });
+                        })
+                        if(cartToReplace.length > 0)
+                        {
+                            $http({
+                                method: "put",
+                                async: false,
+                                data : JSON.stringify(cartToReplace),
+                                headers: {
+                                  "content-type": "application/json",
+                                  "Authorization": user.response.token,
+                                },
+                                url: server.order.updateUserCart(user.response.userId)
+                            }).success(function(_cart){
+                                defer.resolve(_cart);
+                            }).error(function(_err){
+                                console.log("updateUserCart() rejected!  ====== " + _err)
+                                defer.reject("updateUserCart() rejected! ");
+                            });
+                        }
                     }
                 }
-                return false;
+                return defer.promise;
             }
 
             function updateCart(guestCart){
@@ -175,7 +187,6 @@ define(['./module'], function (services) {
                             response.resolve(cart);
                             return response.promise;
                         })
-
                         return response.promise;
                     }
                 }
