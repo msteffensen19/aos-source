@@ -127,14 +127,4 @@ public class StringHelper {
         return new SimpleDateFormat(dateFormat).parse(stringDate);
     }
 
-    /**
-     * Converting {@link String} to {@link java.util.Date} after determine the date format.
-     * @param stringDate Date as {@link String}.
-     * @return Date as java {@link java.util.Date}.
-     */
-    public static Date toDate(String stringDate) {
-        return new Date();
-    }
-
-
 }
