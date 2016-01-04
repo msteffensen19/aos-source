@@ -77,4 +77,23 @@ public class AccountserviceEndpoint {
                 account.getEmail(),
                 account.getAllowOffersPromotion());
     }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
+    @ResponsePayload
+    public AccountStatusResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
+        return accountService.updateAccount(
+                account.getAccountType(),
+                account.getLastName(),
+                account.getFirstName(),
+                account.getLoginName(),
+                account.getPassword(),
+                account.getCountry(),
+                account.getPhoneNumber(),
+                account.getStateProvince(),
+                account.getCityName(),
+                account.getAddress(),
+                account.getZipcode(),
+                account.getEmail(),
+                account.getAllowOffersPromotion());
+    }
 }
