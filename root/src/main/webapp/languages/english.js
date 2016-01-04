@@ -108,6 +108,8 @@ var english = {
     'Create_your_account_easily' : 'Create your account and be able to track your orders easily.',
     'ORDER_SUMMARY' : 'ORDER SUMMARY',
     'SHIPPING' : 'SHIPPING',
+    'SHIPPING_DETAILS' : 'SHIPPING DETAILS',
+    'PAYMENT_METHOD' : 'PAYMENT METHOD',
     'a' : 'a',
     'a' : 'a',
     'a' : 'a',
