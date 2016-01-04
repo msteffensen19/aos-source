@@ -10,7 +10,7 @@ import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.dto.ProductDto;
 import com.advantage.common.Url_resources;
-import com.advantage.root.store.util.ArgumentValidationHelper;
+import com.advantage.root.util.ArgumentValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;

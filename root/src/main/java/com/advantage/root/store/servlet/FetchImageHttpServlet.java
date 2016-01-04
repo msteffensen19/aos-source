@@ -1,23 +1,20 @@
-/*
 package com.advantage.root.store.servlet;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import com.advantage.root.store.image.ImageManagement;
+import com.advantage.root.store.image.ImageManagementAccess;
+import com.advantage.root.store.image.ManagedImage;
+import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.root.util.IOHelper;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.advantage.root.store.image.ImageManagement;
-import com.advantage.root.store.image.ImageManagementAccess;
-import com.advantage.root.store.image.ManagedImage;
-import com.advantage.common.ArgumentValidationHelper;
-import com.advantage.root.store.util.IOHelper;
-import org.apache.commons.lang3.StringUtils;
-
-import org.springframework.core.io.ClassPathResource;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @SuppressWarnings("serial")
 public class FetchImageHttpServlet extends HttpServlet {
@@ -71,4 +68,4 @@ public class FetchImageHttpServlet extends HttpServlet {
                 getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
 
     }
-}*/
+}

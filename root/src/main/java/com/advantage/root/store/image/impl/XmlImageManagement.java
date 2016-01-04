@@ -2,10 +2,10 @@ package com.advantage.root.store.image.impl;
 
 import com.advantage.root.store.image.ImageManagement;
 import com.advantage.root.store.image.ManagedImage;
-import com.advantage.root.store.util.ArgumentValidationHelper;
-import com.advantage.root.store.util.fs.FileSystemHelper;
-import com.advantage.root.store.util.xml.XmlHelper;
-import com.advantage.root.store.util.xml.XmlItem;
+import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.root.util.fs.FileSystemHelper;
+import com.advantage.root.util.xml.XmlHelper;
+import com.advantage.root.util.xml.XmlItem;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
