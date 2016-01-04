@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.dao;
 
+import com.advantage.accountsoap.dto.CountryStatusResponse;
 import com.advantage.common.dto.CountryResponseDto;
 import com.advantage.accountsoap.model.Country;
 
@@ -16,9 +17,9 @@ public interface CountryRepository {
     Country createCountry(String name, String isoName, int phonePrefix);
 
     //  For Country-Management API
-    CountryResponseDto create(String name, int phonePrefix);
+    CountryStatusResponse create(String name, int phonePrefix);
 
-    CountryResponseDto create(String name, String isoName, int phonePrefix);
+    CountryStatusResponse create(String name, String isoName, int phonePrefix);
 
     int fillCountryTable(final String csvFilePath);
 

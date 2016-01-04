@@ -25,7 +25,7 @@ import javax.persistence.*;
 )
         , @NamedQuery(
         name = Country.QUERY_GET_COUNTRIES_BY_PARTIAL_NAME,
-        query = "select c from Country c where NAME like :" +
+        query = "select c from Country c where UPPER (NAME) like :" +
                 Country.PARAM_COUNTRY_NAME + " order by NAME"
 )
 })
