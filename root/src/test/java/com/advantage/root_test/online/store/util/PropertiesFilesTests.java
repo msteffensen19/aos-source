@@ -1,6 +1,6 @@
 package com.advantage.root_test.online.store.util;
 
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import com.advantage.root_test.cfg.AdvantageTestContextConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
