@@ -17,10 +17,10 @@
             </div>
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
-                <label class="roboto-regular">Altalef</label>
-                <label class="roboto-regular">HPE Software (building M3)</label>
-                <label class="roboto-regular">Yahud</label>
-                <label class="roboto-regular">Israel</label>
+                <label>Altalef</label>
+                <label>HPE Software (building M3)</label>
+                <label>Yahud</label>
+                <label>Israel</label>
             </div>
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
@@ -31,28 +31,27 @@
             <a href="#/EditShippingDetails">{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
+        <div>
+            <button class="a-button nextBtn"> {{ 'NEXT' | translate }} </button>
+        </div>
     </div>
     <!-- END USER DETAILS SECTION-->
 
 
+    <!-- PAYMENT METHOD SECTION-->
+    <div id="paymentMethod" ng-hide="opCtrl.firstTag">
+        <div>
+            <div>
 
-    <div id="userDetails2" ng-hide="opCtrl.firstTag">
-        <div>
-            <img src="css/images/User.jpg" alt="img"/>
-            <label>David Smith</label>
+            </div>
+            <div>
+
+            </div>
         </div>
         <div>
-            <img src="css/images/User.jpg" alt="img"/>
-            <label class="roboto-regular">Altalef</label>
-            <label class="roboto-regular">HPE Software (building M3)</label>
-            <label class="roboto-regular">Yahud</label>
-            <label class="roboto-regular">Israel</label>
-        </div>
-        <div>
-            <img src="css/images/User.jpg" alt="img"/>
-            <label>972-54-8164355</label>
         </div>
     </div>
+    <!-- END PAYMENT METHOD SECTION-->
 
 
 

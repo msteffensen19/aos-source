@@ -23,11 +23,15 @@
 }
 
 
-#userSection > div > a{
+#userSection * {
+
     font-family: 'Roboto';
     font-weight: 400;
 }
 
+#userSection > div{
+    position: relative;
+}
 #userSection > div > a{
     color: #54b3ad;
     font-size: 13px;
@@ -35,12 +39,18 @@
 }
 
 
-
 #userSection > div > label{
     float: right;
     font-size: 11px;
     color:#2a2a2a;
     text-decoration: none;
+    position: relative;
+    top: -6px;
+}
+
+#userSection > div > label > img{
+    position: relative;
+    top:4px;
 }
 
 
@@ -79,5 +89,14 @@
     padding: 2px;
     font-size: 14px;
     color: #2a2a2a;
+}
+
+#userSection .nextBtn{
+    width: 138px;
+    position: absolute;
+    right: 0;
+    padding: 8px;
+    margin-top: 75px;
+    font-size: 12px;
 }
 
