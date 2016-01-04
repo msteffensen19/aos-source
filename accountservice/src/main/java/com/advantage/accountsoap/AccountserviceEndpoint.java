@@ -3,8 +3,12 @@ package com.advantage.accountsoap;
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.*;
 import com.advantage.accountsoap.model.Account;
+import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
+import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -16,6 +20,9 @@ import java.util.List;
 public class AccountserviceEndpoint {
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private CountryService countryService;
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountsRequest")
     @ResponsePayload
@@ -95,5 +102,15 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
+    @ResponsePayload
+    public GetCountriesResponse getCountries() {
+        List<Country> countries = countryService.getAllCountries();
+        GetCountriesResponse response = new GetCountriesResponse();
+        response.setCountry(countries);
+
+        return response;
     }
 }
