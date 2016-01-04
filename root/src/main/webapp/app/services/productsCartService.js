@@ -214,6 +214,7 @@ define(['./module'], function (services) {
                     else {
                         cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
                     }
+
                     updateCart(cart);
                     response.resolve(cart);
                     return response.promise;
