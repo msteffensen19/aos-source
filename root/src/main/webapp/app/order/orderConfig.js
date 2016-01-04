@@ -12,6 +12,7 @@ define([],function(){
             url: '/orderPayment',
             templateUrl: 'app/order/views/orderPayment-page.html',
             controller: 'orderPaymentCtrl',
+            controllerAs: 'opCtrl',
             data: {
                 requireLogin: true,  // this property will apply to all children of 'app'
                 breadcrumbName: "orderPayment",
@@ -21,7 +22,8 @@ define([],function(){
                     var defer = $q.defer();
                    // cartService.checkout().then(function (userLogin) {
                         var paramsToResolve = {
-                            userLogin: true //userLogin
+                            userLogin: true,
+                            shippingCost : 10 //userLogin
                         }
                         defer.resolve(paramsToResolve);
                     //});

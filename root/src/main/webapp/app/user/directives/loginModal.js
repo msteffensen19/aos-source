@@ -14,8 +14,6 @@ define(['./module'], function (directives) {
 
 
                     /* VARIABLES */
-                    $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
-                    //$scope.user = {  email: '',loginPassword: '', loginUser: '', }
                     $scope.rememberMe = false;
                     $scope.message = "";
                     $scope.config = null;
@@ -33,6 +31,12 @@ define(['./module'], function (directives) {
 
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
+
+                        console.log(user)
+                        console.log(rememberMe)
+                        l("http://localhost:8080/main.html#/orderPayment")
+                        l("what about rememberme checkbox??)")
+                        l("EMAIL ??? (no username?)")
 
                         userService.login(user).then(function (response) {
 

@@ -135,11 +135,11 @@ var server = {
     order: {
 
 
-        removeProductToUser: function (userId, productId, color, quantity){
-            console.log(orderKey + "/api/v1/carts/" + userId +
-                "/product/" + productId +
-                "/color/" + color)
+        updateUserCart: function (userId){
+            return orderKey + "/api/v1/carts/" + userId;
+        },
 
+        removeProductToUser: function (userId, productId, color, quantity){
             return orderKey + "/api/v1/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color;

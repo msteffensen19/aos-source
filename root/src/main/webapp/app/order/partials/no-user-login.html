@@ -2,15 +2,14 @@
 <h5 class="roboto-regular bigPadding" translate="IDENTIFICATION"></h5>
 <div class="noUserSection">
     <label class="roboto-medium" translate="Already_have_an_account" ></label>
-    <sec-validate id-attr="loginValidate">
-
+    <sec-validate>
 
         <sec-input
                 sec-required
                 sec-email
                 sec-placeholder="E-mail"
                 input-type-attr="email"
-                model-attr="loginModal.email"
+                model-attr="user.email"
                 no-red-star="true"
                 id-attr="loginModal_email">
         </sec-input>
@@ -22,14 +21,16 @@
                 sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                 pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
                 input-type-attr="password"
-                model-attr="loginModal.password"
+                model-attr="user.password"
                 no-red-star="true"
                 id-attr="loginModal_password">
         </sec-input>
 
-        <label translate="Forgot_your_password" class="roboto-regular" id="Forgot_your_password"></label>
+        <label translate="Forgot_your_password"
+               class="roboto-regular"
+               id="Forgot_your_password"></label>
 
-        <br /><input sec-submit-attr="login()"
+        <br /><input sec-submit-attr="signIn(user, false)"
                      class="a-button roboto-medium"
                      data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                      type="button"
