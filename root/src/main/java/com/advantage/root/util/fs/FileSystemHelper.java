@@ -1,11 +1,11 @@
-package com.advantage.common.util.fs;
+package com.advantage.root.util.fs;
 
 import java.io.*;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.advantage.common.util.ArgumentValidationHelper;
+import com.advantage.root.util.ArgumentValidationHelper;
 
 /**
  * A helper class for file system issues.

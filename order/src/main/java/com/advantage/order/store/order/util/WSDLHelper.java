@@ -1,7 +1,7 @@
 package com.advantage.order.store.order.util;
 
 import com.advantage.order.store.order.dto.ShipExResponse;
-import com.advantage.common.util.StringHelper;
+import com.advantage.root.util.StringHelper;
 import com.predic8.schema.Attribute;
 import com.predic8.schema.ComplexType;
 import com.predic8.schema.Element;

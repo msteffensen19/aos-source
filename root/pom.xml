@@ -290,8 +290,7 @@
                         <!--suppress MavenModelInspection -->
                         <echo>EVG!!! hibernate.db.driver_classname=${hibernate.db.driver_classname}</echo>
                         <!--suppress MavenModelInspection -->
-                        <echo>db
-                            url=${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}:postgres
+                        <echo>db url=${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}:postgres
                         </echo>
                     </echos>
                 </configuration>

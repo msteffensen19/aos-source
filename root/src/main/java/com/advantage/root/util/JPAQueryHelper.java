@@ -1,4 +1,4 @@
-package com.advantage.common.util;
+package com.advantage.root.util;
 
 /**
  * A helper class for JPA queries.

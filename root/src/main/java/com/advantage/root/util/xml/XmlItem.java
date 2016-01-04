@@ -1,14 +1,13 @@
-package com.advantage.common.util.xml;
+package com.advantage.root.util.xml;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.advantage.root.util.ArgumentValidationHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import com.advantage.common.util.ArgumentValidationHelper;
 
 /**
  * A helper class for the interaction with a XML element.

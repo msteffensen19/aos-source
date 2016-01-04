@@ -1,4 +1,4 @@
-package com.advantage.common.util;
+package com.advantage.root.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
