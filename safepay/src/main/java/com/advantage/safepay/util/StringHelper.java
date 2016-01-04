@@ -1,6 +1,6 @@
 package com.advantage.safepay.util;
 
-import com.advantage.common.util.ValidationHelper;
+import com.advantage.root.store.util.ValidationHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

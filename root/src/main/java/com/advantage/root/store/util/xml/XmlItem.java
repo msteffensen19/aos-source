@@ -1,4 +1,4 @@
-package com.advantage.common.util.xml;
+package com.advantage.root.store.util.xml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.advantage.common.util.ArgumentValidationHelper;
+import com.advantage.root.store.util.ArgumentValidationHelper;
 
 /**
  * A helper class for the interaction with a XML element.

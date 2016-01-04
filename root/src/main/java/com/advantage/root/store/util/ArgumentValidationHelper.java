@@ -1,4 +1,4 @@
-package com.advantage.common.util;
+package com.advantage.root.store.util;
 
 import org.apache.commons.lang3.StringUtils;
 

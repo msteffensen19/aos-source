@@ -1,9 +1,9 @@
-package com.advantage.common.util.fs;
+package com.advantage.root.store.util.fs;
 
 import java.io.File;
 import java.io.FilenameFilter;
 
-import com.advantage.common.util.ArgumentValidationHelper;
+import com.advantage.root.store.util.ArgumentValidationHelper;
 
 /**
  * A file name filter implementation, for filtering files by extensions - useful for filtering

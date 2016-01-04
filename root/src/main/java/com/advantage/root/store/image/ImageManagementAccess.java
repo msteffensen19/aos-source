@@ -1,6 +1,6 @@
 package com.advantage.root.store.image;
 
-import com.advantage.common.util.ArgumentValidationHelper;
+import com.advantage.root.store.util.ArgumentValidationHelper;
 
 import java.util.HashMap;
 import java.util.Map;
