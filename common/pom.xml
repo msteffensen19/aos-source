@@ -124,6 +124,11 @@
     </build>
     <!-- Spring BOM -->
     <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
+        </dependency>
         <!--shared resources-->
         <dependency>
             <groupId>com.advantage.online.store</groupId>
