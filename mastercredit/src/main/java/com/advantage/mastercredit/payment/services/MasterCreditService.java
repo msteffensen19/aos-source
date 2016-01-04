@@ -6,7 +6,7 @@ import com.advantage.mastercredit.payment.dto.ResponseEnum;
 import com.advantage.mastercredit.payment.dto.TransactionTypeEnum;
 import com.advantage.mastercredit.util.StringHelper;
 import com.advantage.mastercredit.util.ArgumentValidationHelper;
-import com.advantage.root.store.util.ValidationHelper;
+import com.advantage.root.util.ValidationHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

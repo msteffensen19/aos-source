@@ -3,7 +3,7 @@ package com.advantage.order.store.user.dao;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.user.config.AppUserConfiguration;
 import com.advantage.common.dto.AppUserResponseDto;
-import com.advantage.root.store.util.ValidationHelper;
+import com.advantage.root.util.ValidationHelper;
 import com.advantage.order.util.ArgumentValidationHelper;
 import com.advantage.order.util.JPAQueryHelper;
 import com.advantage.order.store.user.model.AppUser;

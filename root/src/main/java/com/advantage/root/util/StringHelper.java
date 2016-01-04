@@ -1,4 +1,4 @@
-package com.advantage.root.store.util;
+package com.advantage.root.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
