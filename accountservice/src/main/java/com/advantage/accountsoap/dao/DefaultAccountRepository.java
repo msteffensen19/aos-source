@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-/*@Component*/
 @Qualifier("accountRepository")
 @Repository
 public class DefaultAccountRepository extends AbstractRepository implements AccountRepository {
@@ -133,6 +132,57 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return null;
         }
 
+    }
+
+    @Override
+    public AccountStatusResponse updateAccount(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
+        ArgumentValidationHelper.validateArgumentIsNotNull(country, "country id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
+        //  Validate String Arguments - Mandatory columns
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
+
+        Account account = getAppUserByLogin(loginName);
+
+        if (account == null ){
+            return new AccountStatusResponse(false,
+                    "Invalid login user-name",
+                    -1);
+        }
+
+        if (!ValidationHelper.isValidPassword(password)) {
+            return new AccountStatusResponse(false,
+                    "Invalid password",
+                    account.getId());
+        }
+
+        if (!validatePhoneNumberAndEmail(phoneNumber, email)) {
+            return new AccountStatusResponse(false,
+                    "Invalid phone number or email",
+                    account.getId());
+        }
+
+        account.setAccountType(accountType);
+        account.setLastName(lastName);
+        account.setFirstName(firstName);
+        account.setLastName(password);
+        account.setCountry(country);
+        account.setPhoneNumber(phoneNumber);
+        account.setStateProvince(stateProvince);
+        account.setCityName(cityName);
+        account.setAddress(address);
+        account.setZipcode(zipcode);
+        account.setEmail(email);
+        account.setAllowOffersPromotion(agreeToReceiveOffersAndPromotions);
+
+        updateAppUser(account);
+
+        return new AccountStatusResponse(true,
+                "Account updated successfully",
+                account.getId());
     }
 
     public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {

@@ -54,4 +54,8 @@ public class AccountService {
         return result;
     }
 
+    @Transactional
+    public AccountStatusResponse updateAccount(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
+        return accountRepository.updateAccount(accountType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    }
 }
