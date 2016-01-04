@@ -22,8 +22,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
                 Url_resources.class,
-                AdvantageAspects.class,
-                ImageManagementConfiguration.class
+                AdvantageAspects.class
         };
     }
 
