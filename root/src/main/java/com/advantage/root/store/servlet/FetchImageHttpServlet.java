@@ -1,3 +1,4 @@
+/*
 package com.advantage.root.store.servlet;
 
 import java.io.File;
@@ -12,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.advantage.root.store.image.ImageManagement;
 import com.advantage.root.store.image.ImageManagementAccess;
 import com.advantage.root.store.image.ManagedImage;
-import com.advantage.root.util.ArgumentValidationHelper;
-import com.advantage.root.util.IOHelper;
+import com.advantage.common.ArgumentValidationHelper;
+import com.advantage.common.util.IOHelper;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.core.io.ClassPathResource;
@@ -70,4 +71,4 @@ public class FetchImageHttpServlet extends HttpServlet {
                 getInitParameter(FetchImageHttpServlet.INIT_PARAM_REPOSITORY_DIRECTORY_PATH);
 
     }
-}
+}*/

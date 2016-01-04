@@ -1,6 +1,6 @@
 package com.advantage.root.store.config;
 
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

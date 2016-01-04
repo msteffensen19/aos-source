@@ -1,6 +1,6 @@
 package com.advantage.mastercredit.payment.config;
 
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;

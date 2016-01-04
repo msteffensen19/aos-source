@@ -1,7 +1,7 @@
 package com.advantage.order.store.user.services;
 
 import com.advantage.order.store.user.dao.AppUserRepository;
-import com.advantage.root.store.dto.AppUserResponseDto;
+import com.advantage.common.dto.AppUserResponseDto;
 import com.advantage.order.store.user.model.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

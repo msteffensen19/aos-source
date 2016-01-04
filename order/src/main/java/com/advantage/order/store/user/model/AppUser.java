@@ -1,9 +1,9 @@
 package com.advantage.order.store.user.model;
 
-import com.advantage.root.store.dto.AppUserType;
+import com.advantage.common.dto.AccountType;
 import com.advantage.order.store.user.util.UserPassword;
 import com.advantage.order.util.ArgumentValidationHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -119,8 +119,8 @@ public class AppUser {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
-        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
+    public AppUser(AccountType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+        this(appUserType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
     public long getId() {

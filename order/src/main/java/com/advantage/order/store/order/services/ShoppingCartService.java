@@ -2,6 +2,7 @@ package com.advantage.order.store.order.services;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 import com.advantage.order.store.order.dao.ShoppingCartRepository;
+import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
@@ -90,8 +91,8 @@ public class ShoppingCartService {
         return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
     }
 
-    public String getShipExWsdlFile() {
-        return shoppingCartRepository.getShipExWsdlFile();
+    public ShipExResponse getShippingCostFromShipEx() {
+        return shoppingCartRepository.getShippingCostFromShipEx();
     }
 
 

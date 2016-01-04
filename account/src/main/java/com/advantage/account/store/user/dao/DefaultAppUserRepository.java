@@ -6,10 +6,10 @@ import com.advantage.account.store.user.config.AppUserConfiguration;
 import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
-import com.advantage.root.common.Token;
-import com.advantage.root.store.dto.AppUserResponseDto;
-import com.advantage.root.store.dto.AppUserType;
-import com.advantage.root.util.ValidationHelper;
+import com.advantage.common.Token;
+import com.advantage.common.dto.AccountType;
+import com.advantage.common.dto.AppUserResponseDto;
+import com.advantage.common.util.ValidationHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -310,7 +310,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Update changes
         updateAppUser(appUser);
 
-        Token token = new Token(appUser.getId(), AppUserType.USER, email);
+        Token token = new Token(appUser.getId(), AccountType.USER, email, appUser.getLoginName());
         String base64Token = token.generateToken();
 
         //  Return: Successful login attempt

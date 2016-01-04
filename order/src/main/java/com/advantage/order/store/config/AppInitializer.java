@@ -5,6 +5,7 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
 import com.advantage.order.store.user.config.AppUserConfiguration;
+import com.advantage.common.Url_resources;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -22,6 +23,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
                 ServiceConfiguration.class,
+                Url_resources.class,
                 AdvantageAspects.class,
                 ImageManagementConfiguration.class
         };

@@ -1,6 +1,6 @@
 package com.advantage.catalog.store.services;
 
-import com.advantage.root.store.dto.AttributeDto;
+import com.advantage.common.dto.AttributeDto;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.model.product.Product;

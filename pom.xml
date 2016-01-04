@@ -9,6 +9,7 @@
     <name>main_project</name>
     <modules>
         <module>shared_resources</module>
+        <module>common</module>
         <module>root</module>
         <module>catalog</module>
         <module>order</module>
@@ -16,7 +17,7 @@
         <module>shipex</module>
         <module>mastercredit</module>
         <module>safepay</module>
-		
+        <module>accountservice</module>
     </modules>
     <properties>
         <aspectj.version>1.8.4</aspectj.version>

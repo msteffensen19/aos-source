@@ -1,9 +1,9 @@
 package com.advantage.account.store.user.model;
 
-import com.advantage.root.store.dto.AppUserType;
+import com.advantage.common.dto.AccountType;
 import com.advantage.account.util.UserPassword;
 import com.advantage.account.util.ArgumentValidationHelper;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -81,7 +81,7 @@ public class AppUser {
     private String password;
 
     @Column(name = "USER_TYPE")
-    private Integer appUserType;        //  by enum AppUserType
+    private Integer appUserType;        //  by enum AccountType
 
     @Column(name = FIELD_COUNTRY)
     private Integer country;                //  by Country
@@ -156,8 +156,8 @@ public class AppUser {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public AppUser(AppUserType appUserType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
-        this(appUserType.getAppUserTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
+    public AppUser(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, char offersPromotion) {
+        this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
     public long getId() {

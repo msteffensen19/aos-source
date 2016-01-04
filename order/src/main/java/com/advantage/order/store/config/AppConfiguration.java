@@ -1,6 +1,6 @@
 package com.advantage.order.store.config;
 
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.web.bind.annotation.ControllerAdvice;

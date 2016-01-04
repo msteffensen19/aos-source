@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import com.advantage.root.store.image.ImageManagement;
-import com.advantage.root.util.IOHelper;
-import com.advantage.root.util.fs.FileSystemHelper;
-import com.advantage.root.util.xml.XmlItem;
+import com.advantage.common.util.IOHelper;
+import com.advantage.common.util.fs.FileSystemHelper;
+import com.advantage.common.util.xml.XmlItem;
 import com.advantage.root.store.image.ManagedImage;
 import org.w3c.dom.Element;
 
-import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.common.util.ArgumentValidationHelper;
 
 class XmlManagedImage implements ManagedImage {
 

@@ -2,7 +2,7 @@ package com.advantage.root.store.config;
 
 import com.advantage.root.store.image.ImageManagement;
 import com.advantage.root.store.image.ImageManagementAccess;
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

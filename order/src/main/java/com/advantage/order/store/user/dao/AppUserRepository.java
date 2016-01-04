@@ -1,7 +1,7 @@
 package com.advantage.order.store.user.dao;
 
 import com.advantage.order.store.dao.DefaultCRUDOperations;
-import com.advantage.root.store.dto.AppUserResponseDto;
+import com.advantage.common.dto.AppUserResponseDto;
 import com.advantage.order.store.user.model.AppUser;
 import org.springframework.transaction.annotation.Transactional;
 

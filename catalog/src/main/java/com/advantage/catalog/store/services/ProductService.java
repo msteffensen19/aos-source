@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.product.ProductRepository;
-import com.advantage.root.store.dto.*;
+import com.advantage.common.dto.*;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.ImageAttribute;
@@ -62,15 +62,15 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponseStatus createProduct(ProductDto dto) {
+    public ProductResponseDto createProduct(ProductDto dto) {
         Category category = categoryService.getCategory(dto.getCategoryId());
 
-        if (category == null) return new ProductResponseStatus(false, -1, "Could not find category");
+        if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
         Product product = productRepository.create(dto.getProductName(), dto.getDescription(), dto.getPrice(),
                 dto.getImageUrl(), category);
 
-        if (product == null) return new ProductResponseStatus(false, -1, "Product wasn't created");
+        if (product == null) return new ProductResponseDto(false, -1, "Product wasn't created");
 
         for (AttributeItem item : dto.getAttributes()) {
             ProductAttributes productAttributes = new ProductAttributes();
@@ -93,17 +93,17 @@ public class ProductService {
         product.setColors(getColorAttributes(dto.getColors(), product));
         product.setImages(getImageAttribute(dto.getImages(), product));
 
-        return new ProductResponseStatus(true, product.getId(), "Product was created successful");
+        return new ProductResponseDto(true, product.getId(), "Product was created successful");
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ProductResponseStatus updateProduct(ProductDto dto, Long id) {
+    public ProductResponseDto updateProduct(ProductDto dto, Long id) {
         Product product = productRepository.get(id);
 
-        if (product == null) return new ProductResponseStatus(false, -1, "Product wasn't found");
+        if (product == null) return new ProductResponseDto(false, -1, "Product wasn't found");
 
         Category category = categoryService.getCategory(dto.getCategoryId());
-        if (category == null) return new ProductResponseStatus(false, -1, "Could not find category");
+        if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
         product.setProductName(dto.getProductName());
         product.setDescription(dto.getDescription());
@@ -149,11 +149,11 @@ public class ProductService {
             product.getProductAttributes().add(productAttributes);
         }
 
-        return new ProductResponseStatus(true, product.getId(), "Product was updated successful");
+        return new ProductResponseDto(true, product.getId(), "Product was updated successful");
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ImageUrlResponseStatus fileUpload(MultipartFile file) {
+    public ImageUrlResponseDto fileUpload(MultipartFile file) {
         String imageManagementRepository =
                 environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
         try {
@@ -165,9 +165,9 @@ public class ProductService {
             ManagedImage managedImage = imageManagement.addManagedImage(bytes, originalFileName, true);
             imageManagement.persist();
 
-            return new ImageUrlResponseStatus(managedImage.getId(), true, "Image successfully uploaded");
+            return new ImageUrlResponseDto(managedImage.getId(), true, "Image successfully uploaded");
         } catch (Exception e) {
-            return new ImageUrlResponseStatus("", false, "Failed to upload " + e.getMessage());
+            return new ImageUrlResponseDto("", false, "Failed to upload " + e.getMessage());
         }
     }
 
