@@ -13,11 +13,9 @@ define(['./module'], function (controllers) {
                 password : ''
             }
 
-            s.shippingCost = 0
-
-            s.login= function(){
-                alert()
-            }
+            s.shippingCost = resolveParams.shippingCost;
+            s.userLogin = resolveParams.userLogin;
+            this.firstTag = true;
 
             $("nav .navLinks").css("display" , "none");
         }]);

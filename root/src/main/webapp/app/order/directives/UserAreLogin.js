@@ -7,10 +7,10 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userNotLogin', ['$templateCache', function($templateCache){
+    directives.directive('userAreLogin', ['$templateCache', function($templateCache){
         return {
             replace: true,
-            template: $templateCache.get('app/order/partials/user-not-login.html'),
+            template: $templateCache.get('app/order/partials/user-are-login.html'),
         }
     }]);
 });
