@@ -14,12 +14,12 @@
     <article>
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="ORDER_PAYMENT"></h3>
 
-        <div id="orderPayment">
+        <div id="orderPayment" ng-switch="userLogin">
 
-            <div ng-hide="userLogin">
+            <div ng-switch-when="false">
                 <user-not-login></user-not-login>
             </div>
-            <div ng-show="userLogin">
+            <div ng-switch-when="true">
                 <user-are-login></user-are-login>
             </div>
 

@@ -1,0 +1,58 @@
+
+#detailslink {
+width: 100%;
+    text-align: center;
+    font-size: 0;
+}
+
+#detailslink > label {
+    font-size: 16px;
+    padding: 15px;
+    display: inline-block;
+    width: 45%;
+    border-top: #d0d0d0 1px solid;
+    color: #828282;
+    cursor: pointer;
+}
+
+#detailslink > label.selected {
+    border-top: #54b3ad 3px solid;
+    color: #2a2a2a;
+}
+
+
+#userDetails{
+    font-size: 0;
+    margin: 58px 0;
+    border:solid #454545 1px;
+}
+
+#userDetails > div{
+    box-sizing: border-box;
+    font-size: 15px;
+    display: inline-block;
+    vertical-align: top;
+    width: 33.33%;
+    min-height: 122px;
+    padding: 30px 15px;
+    position: relative;
+}
+
+#userDetails > div:nth-child(2){
+    border-left:solid #454545 1px;
+    border-right:solid #454545 1px;
+}
+
+#userDetails > div img {
+    position: absolute;
+    right: 0;
+    top:0;
+    padding: 15px;
+}
+
+#userDetails > div label {
+    display: block;
+    padding: 2px;
+    font-size: 14px;
+    color: #2a2a2a;
+}

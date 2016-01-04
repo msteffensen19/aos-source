@@ -2,10 +2,47 @@
 
 <div>
 
+<div id="detailslink">
+    <label class="roboto-regular" ng-class="{selected : opCtrl.firstTag}"  ng-click="opCtrl.firstTag = true">1. {{ 'SHIPPING_DETAILS' | translate }}</label>
+    <label class="roboto-regular" ng-class="{selected : !opCtrl.firstTag}" ng-click="opCtrl.firstTag = false" >2. {{ 'PAYMENT_METHOD' | translate }}</label>
+</div>
 
 
+    <div id="userDetails" ng-show="opCtrl.firstTag">
+        <div>
+            <img src="css/images/User.jpg" alt="img"/>
+            <label>David Smith</label>
+        </div>
+        <div>
+            <img src="css/images/User.jpg" alt="img"/>
+            <label class="roboto-regular">Altalef</label>
+            <label class="roboto-regular">HPE Software (building M3)</label>
+            <label class="roboto-regular">Yahud</label>
+            <label class="roboto-regular">Israel</label>
+        </div>
+        <div>
+            <img src="css/images/User.jpg" alt="img"/>
+            <label>972-54-8164355</label>
+        </div>
+    </div>
 
-
+    <div id="userDetails2" ng-hide="opCtrl.firstTag">
+        <div>
+            <img src="css/images/User.jpg" alt="img"/>
+            <label>David Smith</label>
+        </div>
+        <div>
+            <img src="css/images/User.jpg" alt="img"/>
+            <label class="roboto-regular">Altalef</label>
+            <label class="roboto-regular">HPE Software (building M3)</label>
+            <label class="roboto-regular">Yahud</label>
+            <label class="roboto-regular">Israel</label>
+        </div>
+        <div>
+            <img src="css/images/User.jpg" alt="img"/>
+            <label>972-54-8164355</label>
+        </div>
+    </div>
 
 
 

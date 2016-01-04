@@ -15,6 +15,7 @@ define(['./module'], function (controllers) {
 
             s.shippingCost = resolveParams.shippingCost;
             s.userLogin = resolveParams.userLogin;
+            this.firstTag = true;
 
             $("nav .navLinks").css("display" , "none");
         }]);
