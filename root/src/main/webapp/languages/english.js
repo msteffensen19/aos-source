@@ -112,7 +112,7 @@ var english = {
     'PAYMENT_METHOD' : 'PAYMENT METHOD',
     'SHIPPING_BY' : 'SHIPPING BY',
     'Edit_shipping_Details' : 'Edit shipping Details',
-    'a' : 'a',
+    'NEXT' : 'NEXT',
     'a' : 'a',
     'a' : 'a',
     'a' : 'a',
