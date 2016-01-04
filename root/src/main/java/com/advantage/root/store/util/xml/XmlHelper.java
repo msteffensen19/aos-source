@@ -1,4 +1,4 @@
-package com.advantage.common.util.xml;
+package com.advantage.root.store.util.xml;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,8 +20,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.advantage.common.util.ArgumentValidationHelper;
-import com.advantage.common.util.IOHelper;
+import com.advantage.root.store.util.ArgumentValidationHelper;
+import com.advantage.root.store.util.IOHelper;
 
 /**
  * A helper class for XML.

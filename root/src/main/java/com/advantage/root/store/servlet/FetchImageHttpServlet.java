@@ -14,7 +14,7 @@ import com.advantage.root.store.image.ImageManagement;
 import com.advantage.root.store.image.ImageManagementAccess;
 import com.advantage.root.store.image.ManagedImage;
 import com.advantage.common.ArgumentValidationHelper;
-import com.advantage.common.util.IOHelper;
+import com.advantage.root.store.util.IOHelper;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.core.io.ClassPathResource;
