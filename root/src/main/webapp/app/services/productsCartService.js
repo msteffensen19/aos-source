@@ -124,8 +124,6 @@ define(['./module'], function (services) {
             }
 
 
-            //cart.productsInCart = tempCart;
-
             function updateUserCart(){
 
                 var user = $rootScope.userCookie;
