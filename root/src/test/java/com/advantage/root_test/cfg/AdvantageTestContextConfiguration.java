@@ -1,6 +1,6 @@
 package com.advantage.root_test.cfg;
 
-import com.advantage.root.string_resources.Constants;
+import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
