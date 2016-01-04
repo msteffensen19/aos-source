@@ -1,11 +1,11 @@
 package com.advantage.accountsoap.dao;
 
-import com.advantage.common.Constants;
-import com.advantage.common.dto.CountryResponseDto;
+import com.advantage.accountsoap.dto.CountryStatusResponse;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
+import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,7 @@ import java.util.List;
 @Repository
 public class DefaultCountryRepository extends AbstractRepository implements CountryRepository {
 
-    private CountryResponseDto countryResponseDto;
+    private CountryStatusResponse countryStatusResponse;
 
     @Override
     public Country createCountry(String name, int phonePrefix) {
@@ -30,7 +30,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         final Country country = new Country(name, phonePrefix);
         entityManager.persist(country);
 
-        countryResponseDto = new CountryResponseDto(true, "New user created successfully.", country.getId());
+        countryStatusResponse = new CountryStatusResponse(true, "New user created successfully.", country.getId());
 
         return country;
     }
@@ -51,27 +51,27 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     }
 
     @Override
-    public CountryResponseDto create(String name, int phonePrefix) {
+    public CountryStatusResponse create(String name, int phonePrefix) {
         Country country = createCountry(name, phonePrefix);
 
         if (country == null) {
             //  Country was not created
-            return countryResponseDto;
+            return countryStatusResponse;
         }
 
-        return countryResponseDto;
+        return new CountryStatusResponse(true, "Country created successfully", country.getId());
     }
 
     @Override
-    public CountryResponseDto create(String name, String isoName, int phonePrefix) {
+    public CountryStatusResponse create(String name, String isoName, int phonePrefix) {
         Country country = createCountry(name, isoName, phonePrefix);
 
         if (country == null) {
             //  Country was not created
-            return countryResponseDto;
+            return countryStatusResponse;
         }
 
-        return countryResponseDto;
+        return countryStatusResponse;
     }
 
     /**

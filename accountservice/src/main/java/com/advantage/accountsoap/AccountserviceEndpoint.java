@@ -34,10 +34,12 @@ public class AccountserviceEndpoint {
         return accountsResponse;
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "accountId")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
-    public boolean getAccount(@RequestPayload int accountId) {
-        return accountService.isExists(accountId);
+    public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountId) {
+        GetAccountByIdResponse response = new GetAccountByIdResponse();
+        response.setResult(accountService.isExists(accountId.getId()));
+        return response;
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
@@ -85,7 +87,7 @@ public class AccountserviceEndpoint {
                 account.getAllowOffersPromotion());
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
+    /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
     public AccountStatusResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
         return accountService.updateAccount(
@@ -102,7 +104,7 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
-    }
+    }*/
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
@@ -112,5 +114,35 @@ public class AccountserviceEndpoint {
         response.setCountry(countries);
 
         return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountryCreateRequest")
+    @ResponsePayload
+    public CountryStatusResponse createCountry(@RequestPayload CountryCreateRequest country) {
+        return countryService.create(country.getName(),
+                country.getIsoName(),
+                country.getPhonePrefix());
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountrySearchRequest")
+    @ResponsePayload
+    public GetCountriesResponse searchInCountries(@RequestPayload CountrySearchRequest request) {
+        GetCountriesResponse response = new GetCountriesResponse();
+        List<Country> countries;
+
+        if(request == null) throw new IllegalArgumentException("Not valid parameters");
+        if (!request.getStartOfName().isEmpty() && request.getInternationalPhonePrefix() != 0) {
+            throw new IllegalArgumentException("Not valid parameters");
+        } else if (request.getInternationalPhonePrefix() > 0) {
+            countries = countryService.getCountriesByPhonePrefix(request.getInternationalPhonePrefix());
+        } else {
+            countries = countryService.getCountriesByPartialName(request.getStartOfName().toUpperCase());
+        }
+        if (countries == null || countries.isEmpty()) {
+            return null;
+        } else {
+            response.setCountry(countries);
+            return response;
+        }
     }
 }
