@@ -9,8 +9,11 @@ import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.dto.ProductDto;
+import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.order.store.order.util.WSDLHelper;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -28,6 +31,7 @@ import java.util.List;
 
 /**
  * Order services - default repository for {@code ShoppingCart}.
+ *
  * @author Binyamin Regev on 03/12/2015.
  */
 @Component
@@ -50,15 +54,21 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private ShoppingCartResponseStatus shoppingCartResponse;
     private String failureMessage;
 
-    public ShoppingCartResponseStatus getShoppingCartResponse() { return this.shoppingCartResponse; }
+    public ShoppingCartResponseStatus getShoppingCartResponse() {
+        return this.shoppingCartResponse;
+    }
 
-    public String getFailureMessage() { return this.failureMessage; }
+    public String getFailureMessage() {
+        return this.failureMessage;
+    }
 
-    public void setFailureMessage(String failureMessage) { this.failureMessage = failureMessage; }
+    public void setFailureMessage(String failureMessage) {
+        this.failureMessage = failureMessage;
+    }
 
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
         return new ShoppingCartResponseDto()
-                        .createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
+                .createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
     }
 
     /**
@@ -306,7 +316,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  For each {@link ShoppingCart} get its ID and use method
         if ((shoppingCarts == null) || (shoppingCarts.size() == 0)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+            return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
         }
 
         for (ShoppingCart cart : shoppingCarts) {
@@ -591,12 +601,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     String managedImageId = cartProduct.getImageUrl();
 
                     System.out.println("Received Product information: product id=" + cartProduct.getProductId() +
-                                        ", product name=" + name +
-                                        ", price per item=" + pricePerItem +
-                                        ", managedImageId=\'" + managedImageId + "\'" +
-                                        ", Color.code=\'" + cartProduct.getColor().getCode() + "\'" +
-                                        ", Color.name=\'" + cartProduct.getColor().getName() + "\'" +
-                                        ", Color.inStock=" + cartProduct.getColor().getInStock());
+                            ", product name=" + name +
+                            ", price per item=" + pricePerItem +
+                            ", managedImageId=\'" + managedImageId + "\'" +
+                            ", Color.code=\'" + cartProduct.getColor().getCode() + "\'" +
+                            ", Color.name=\'" + cartProduct.getColor().getName() + "\'" +
+                            ", Color.inStock=" + cartProduct.getColor().getInStock());
                 } else {
                     cartProduct = setNotFoundCartProduct(productId);
                 }
@@ -625,6 +635,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * Verify the quantity of each product in user cart exists in stock. If quantity
      * in user cart is greater than the quantity in stock than add the product with
      * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
+     *
      * @param userId               Unique identity of the user.
      * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in shopping cart to verify their quantities.
      * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
@@ -688,6 +699,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     @Override
     public ShipExResponse getShippingCostFromShipEx() {
+        String wsdlFile = WSDLHelper.getWsdlFile(Url_resources.getUrlShipEx() + "/shipex.wsdl");
+        System.out.println("WSDL File=\'" + wsdlFile + "\'");
+
         return new ShipExResponse();
     }
 
@@ -734,7 +748,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-       // Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
+        // Constants.ACCOUNT_GET_APP_USER_BY_ID_URI.replace("{user_id}", String.valueOf(userId));
 
         System.out.println("stringURL=\"" + userByIdUrl.toString() + "\"");
 
@@ -806,6 +820,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
                 bufferedReader.close();
                 returnValue = sb.toString();
+                break;
             }
             case HttpStatus.SC_CONFLICT:
                 //  Product not found
