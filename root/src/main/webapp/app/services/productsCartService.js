@@ -33,22 +33,20 @@ define(['./module'], function (services) {
                 var responce = $q.defer();
                 var user = $rootScope.userCookie;
                 var prod = cart.productsInCart[index];
-                console.log(prod)
-                if (user && user.response) {
-                    if (user.response.userId != -1) {
-                        $http({
-                            method: "delete",
-                            url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
-                            headers: {
-                                "content-type": "application/json",
-                                "Authorization": user.response.token,
-                            }
-                        });
-                    }
-                }
                 cart.productsInCart.splice(index, 1);
-                updateCart(cart);
-
+                if (user && user.response && user.response.userId != -1) {
+                    $http({
+                        method: "delete",
+                        url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
+                        headers: {
+                            "content-type": "application/json",
+                            "Authorization": user.response.token,
+                        }
+                    });
+                }
+                else{
+                    updateCart(cart);
+                }
                 responce.resolve(cart);
                 return responce.promise;
             }
@@ -99,11 +97,12 @@ define(['./module'], function (services) {
                 loadCartProducts().then(function (_cart) {
                     cart = _cart;
                     var guestCart = loadGuestCartProducts();
+
                     var tempCart = [];
                     angular.forEach(cart.productsInCart, function(userProduct){
                         var find = false;
                         angular.forEach(guestCart.productsInCart, function(guestProduct) {
-                            if(userProduct.productId == guestProduct.productId && userProduct.color == guestProduct.color)
+                            if(userProduct.productId == guestProduct.productId && userProduct.color.code == guestProduct.color.code)
                             {
                                 find = true;
                             }
@@ -117,16 +116,18 @@ define(['./module'], function (services) {
                     });
 
                     cart.productsInCart = tempCart;
-                    cart = updateUserCart(cart);
+                    updateUserCart(cart);
                     $cookie.remove("userCart");
                     defer.resolve(cart);
                 })
                 return defer.promise;
             }
 
+
+            //cart.productsInCart = tempCart;
+
             function updateUserCart(){
 
-                var defer = $q.defer();
                 var user = $rootScope.userCookie;
                 if(user && user.response) {
                     if (user.response.userId != -1) {
@@ -143,23 +144,20 @@ define(['./module'], function (services) {
                         {
                             $http({
                                 method: "put",
-                                async: false,
                                 data : JSON.stringify(cartToReplace),
                                 headers: {
                                   "content-type": "application/json",
                                   "Authorization": user.response.token,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
-                            }).success(function(_cart){
-                                defer.resolve(_cart);
+                            }).success(function(res){
+                                console.log(res);
                             }).error(function(_err){
                                 console.log("updateUserCart() rejected!  ====== " + _err)
-                                defer.reject("updateUserCart() rejected! ");
                             });
                         }
                     }
                 }
-                return defer.promise;
             }
 
             function updateCart(guestCart){
