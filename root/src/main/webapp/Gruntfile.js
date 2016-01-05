@@ -70,7 +70,7 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        src: ['main.html', 'app/tempFiles/categoryProducts_4.json', 'app/tempFiles/popularProducts.json'],
+                        src: ['index.html', 'app/tempFiles/categoryProducts_4.json', 'app/tempFiles/popularProducts.json'],
                         dest: 'target',
                         filter: 'isFile'
                     },
