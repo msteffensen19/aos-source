@@ -71,7 +71,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
             return countryStatusResponse;
         }
 
-        return countryStatusResponse;
+        return new CountryStatusResponse(true, "Country created successfully", country.getId());
     }
 
     /**

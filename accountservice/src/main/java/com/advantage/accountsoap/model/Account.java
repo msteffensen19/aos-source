@@ -18,22 +18,26 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(
                 name = Account.QUERY_GET_ALL,
-                query = "select a from Account a"
-        )
-        , @NamedQuery(
+                query = "SELECT a FROM Account a"
+        ),
+        @NamedQuery(
         name = Account.QUERY_GET_BY_USER_LOGIN,
-        query = "select a from Account a where " + Account.FIELD_USER_LOGIN + " = :" + Account.PARAM_USER_LOGIN
-)
-        , @NamedQuery(
+        query = "SELECT a FROM Account a WHERE " + Account.FIELD_USER_LOGIN + " = :" + Account.PARAM_USER_LOGIN
+        ),
+        @NamedQuery(
         name = Account.QUERY_GET_USERS_BY_COUNTRY,
-        query = "select a from Account a where " + Account.FIELD_COUNTRY + " = :" + Account.PARAM_COUNTRY
-)
+        query = "SELECT a FROM Account a WHERE " + Account.FIELD_COUNTRY + " = :" + Account.PARAM_COUNTRY
+        ),
+        @NamedQuery(
+        name = Account.QUERT_GET_ACCOUNT_BY_ID,
+        query = "SELECT a FROM Account a WHERE " + Account.FIELD_ID + " = :" + Account.PARAM_ID
+        )
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "account", namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
 
-})
+        })
 public class Account {
 
     public static final int MAX_NUM_OF_APP_USER = 50;
@@ -55,12 +59,14 @@ public class Account {
 
     public static final String FIELD_EMAIL = "EMAIL";
     public static final String PARAM_EMAIL = "PARAM_USER_EMAIL";
+    public static final String PARAM_ID = "PARAM_USER_ID";
 
     public static final String FIELD_USER_LOGIN = "LOGIN_NAME";
     public static final String PARAM_USER_LOGIN = "PARAM_USER_LOGIN";
 
     public static final String FIELD_COUNTRY = "COUNTRY";
     public static final String PARAM_COUNTRY = "PARAM_USER_COUNTRY";
+    public static final String QUERT_GET_ACCOUNT_BY_ID = "account.getById";
 
 //    public static final String QUERY_GET_TIMESTAMP_WITH_INTERVAL = "appUser.getTimestampWithInterval";
 //    public static final String PARAM_USER_LOGIN_BLOCKING = "PARAM_USER_LOGIN_BLOCKING";
