@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="com.advantage.online.store.accountservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="com.advantage.online.store.accountservice" targetNamespace="com.advantage.online.store.accountservice">
+  <wsdl:types>
+    <xs:schema xmlns:sx="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="com.advantage.online.store.accountservice">
+
+    <xs:complexType name="AccountStatusResponse">
+        <xs:sequence>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="userId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CountryStatusResponse">
+        <xs:sequence>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="countryId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="account"/>
+    <xs:complexType name="country"/>
+
+    <xs:complexType name="accountConfigurationResponseStatus">
+        <xs:sequence>
+            <xs:element name="emailAddressInLogin" type="xs:boolean"/>
+            <xs:element name="loginBlockingIntervalInMilliSeconds" type="xs:long"/>
+            <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int"/>
+            <xs:element name="productInStockDefaultValue" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="AccountsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="account" type="tns:account"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCountriesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="country" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAccountByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountsRequest"/>
+    <xs:element name="GetCountriesRequest"/>
+
+    <xs:element name="GetAccountByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountId" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountCreateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountType" type="xs:int"/>
+                <xs:element name="address" type="xs:string"/>
+                <xs:element name="allowOffersPromotion" type="xs:string"/>
+                <xs:element name="cityName" type="xs:string"/>
+                <xs:element name="country" type="xs:int"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="loginName" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="phoneNumber" type="xs:string"/>
+                <xs:element name="stateProvince" type="xs:string"/>
+                <xs:element name="zipcode" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountType" type="xs:int"/>
+                <xs:element name="address" type="xs:string"/>
+                <xs:element name="allowOffersPromotion" type="xs:string"/>
+                <xs:element name="cityName" type="xs:string"/>
+                <xs:element name="country" type="xs:int"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="phoneNumber" type="xs:string"/>
+                <xs:element name="stateProvince" type="xs:string"/>
+                <xs:element name="zipcode" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CountryCreateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="isoName" type="xs:string"/>
+                <xs:element name="phonePrefix" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CountrySearchRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="internationalPhonePrefix" type="xs:int"/>
+                <xs:element name="startOfName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountLoginRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="loginUser" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="loginPassword" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCountriesResponse">
+    <wsdl:part element="tns:GetCountriesResponse" name="GetCountriesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAccountByIdRequest">
+    <wsdl:part element="tns:GetAccountByIdRequest" name="GetAccountByIdRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CountryCreateRequest">
+    <wsdl:part element="tns:CountryCreateRequest" name="CountryCreateRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AccountsResponse">
+    <wsdl:part element="tns:AccountsResponse" name="AccountsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAccountByIdResponse">
+    <wsdl:part element="tns:GetAccountByIdResponse" name="GetAccountByIdResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AccountCreateRequest">
+    <wsdl:part element="tns:AccountCreateRequest" name="AccountCreateRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetCountriesRequest">
+    <wsdl:part element="tns:GetCountriesRequest" name="GetCountriesRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AccountsRequest">
+    <wsdl:part element="tns:AccountsRequest" name="AccountsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AccountUpdateRequest">
+    <wsdl:part element="tns:AccountUpdateRequest" name="AccountUpdateRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CountrySearchRequest">
+    <wsdl:part element="tns:CountrySearchRequest" name="CountrySearchRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AccountLoginRequest">
+    <wsdl:part element="tns:AccountLoginRequest" name="AccountLoginRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AccountServicePort">
+    <wsdl:operation name="GetCountries">
+      <wsdl:input message="tns:GetCountriesRequest" name="GetCountriesRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetCountriesResponse" name="GetCountriesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountById">
+      <wsdl:input message="tns:GetAccountByIdRequest" name="GetAccountByIdRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetAccountByIdResponse" name="GetAccountByIdResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountryCreate">
+      <wsdl:input message="tns:CountryCreateRequest" name="CountryCreateRequest">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Accounts">
+      <wsdl:input message="tns:AccountsRequest" name="AccountsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:AccountsResponse" name="AccountsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AccountCreate">
+      <wsdl:input message="tns:AccountCreateRequest" name="AccountCreateRequest">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="AccountUpdate">
+      <wsdl:input message="tns:AccountUpdateRequest" name="AccountUpdateRequest">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CountrySearch">
+      <wsdl:input message="tns:CountrySearchRequest" name="CountrySearchRequest">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="AccountLogin">
+      <wsdl:input message="tns:AccountLoginRequest" name="AccountLoginRequest">
+    </wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountServicePortSoap11" type="tns:AccountServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCountries">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetCountriesRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetCountriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountById">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetAccountByIdRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetAccountByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CountryCreate">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="CountryCreateRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Accounts">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="AccountsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AccountsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AccountCreate">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="AccountCreateRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="AccountUpdate">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="AccountUpdateRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CountrySearch">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="CountrySearchRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="AccountLogin">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="AccountLoginRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccountServicePortService">
+    <wsdl:port binding="tns:AccountServicePortSoap11" name="AccountServicePortSoap11">
+      <soap:address location="http://localhost:8080/accountservice/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
