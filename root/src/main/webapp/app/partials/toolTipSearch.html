@@ -33,7 +33,7 @@
                 <a class="product" href="#/product/{{product.productId}}"
                    data-ng-click="closeSearchSection()"
                    data-ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult">
-                    <img a-sec-src="{{product.imageUrl}}" />
+                    <img ng-src="/fetchImage?image_id={{product.imageUrl}}" />
                     <p class="roboto-regular">{{product.productName | uppercase}}</p>
                     <span>{{product.price | currency:'$'}}</span>
                 </a>

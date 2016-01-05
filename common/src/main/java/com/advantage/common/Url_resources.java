@@ -57,7 +57,7 @@ public class Url_resources {
             String scheme = Constants.URI_SCHEME;
             String host = environment.getProperty(serviceName.toLowerCase() + ".service.url.host");
             int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".service.url.port"));
-            String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".service.url.suffix") + Constants.URI_API + "/v1/";
+            String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".service.url.suffix") + "/";
 
             url = new URL(scheme, host, port, suffix);
 
@@ -134,7 +134,7 @@ public class Url_resources {
             String scheme = Constants.URI_SCHEME;
             String host = environment.getProperty(serviceName + ".service.url.host");
             int port = Integer.parseInt(environment.getProperty(serviceName + ".service.url.port"));
-            String suffix = '/' + environment.getProperty(serviceName + ".service.url.suffix") + Constants.URI_API + "/v1/";
+            String suffix = '/' + environment.getProperty(serviceName + ".service.url.suffix") + "/";
             url = new URL(scheme, host, port, suffix);
         } catch (Throwable e) {
             System.err.println("Config file wrong");

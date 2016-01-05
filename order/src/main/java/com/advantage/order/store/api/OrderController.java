@@ -1,14 +1,15 @@
 package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
+
+import com.advantage.common.Constants;
+import com.advantage.common.Url_resources;
 import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.ShoppingCartService;
-import com.advantage.common.Constants;
-import com.advantage.common.Url_resources;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -211,7 +208,7 @@ public class OrderController {
      * when all products quantities less or equal to their quantities in stock.
      */
     @RequestMapping(value = "/carts/{userid}/quantity", method = RequestMethod.PUT)
-    @ApiOperation(value = "Verify products quantities in user cart")
+    @ApiOperation(value = "Verify and update products quantities in user cart")
     public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                                       @PathVariable("userid") long userId) {
 

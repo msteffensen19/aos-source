@@ -103,72 +103,71 @@ var server = {
         },
 
         getCategories: function(){
-            return catalogKey + "/api/v1/categories";
+            return catalogKey + "/categories";
         },
 
         getCategoryById : function(id) {
-            return catalogKey + "/api/v1/categories/" + id + "/products";
+            return catalogKey + "/categories/" + id + "/products";
         },
 
         getDeals : function () {
-            return catalogKey + "/api/v1/deals";
+            return catalogKey + "/deals";
         },
 
         getDealOfTheDay : function () {
-            return catalogKey + "/api/v1/deals/search?dealOfTheDay=true";
+            return catalogKey + "/deals/search?dealOfTheDay=true";
         },
 
         getProducts : function () {
-            return catalogKey + "/api/v1/products.json";
+            return catalogKey + "/products.json";
         },
 
         getProductById : function (id) {
-            return catalogKey + '/api/v1/products/' + id;
+            return catalogKey + '/products/' + id;
         },
 
         getProductsBySearch : function (word, quantity) {
-            return catalogKey + "/api/v1/products/search?name=" + word +
+            return catalogKey + "/products/search?name=" + word +
                 "&quantityPerEachCategory=" + quantity;
         }
 
     },
     order: {
 
-
         updateUserCart: function (userId){
-            return orderKey + "/api/v1/carts/" + userId;
+            return orderKey + "/carts/" + userId;
         },
 
         removeProductToUser: function (userId, productId, color, quantity){
-            return orderKey + "/api/v1/carts/" + userId +
+            return orderKey + "/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color;
         },
 
         addProductToUser: function (userId, productId, color, quantity){
-            return orderKey + "/api/v1/carts/" + userId +
+            return orderKey + "/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color +
                 "?quantity=" + quantity;
         },
 
         loadCartProducts : function (userId){
-            return orderKey + "/api/v1/carts/" + userId;
+            return orderKey + "/carts/" + userId;
         }
 
     },
     account: {
 
         getAllCountries : function (){
-            return accountKey + "/api/v1/countries";
+            return accountKey + "/countries";
         },
 
-        register : function(model){
-            return accountKey + "/api/v1/users";
+        register : function(){
+            return accountKey + "/users";
         },
 
-        login : function(user){
-            return accountKey + "/api/v1/login";
+        login : function(){
+            return accountKey + "/login";
         },
 
 
@@ -176,7 +175,7 @@ var server = {
     service: {
 
         getConfiguration : function (){
-            return serviceKey + "/api/v1/clientConfiguration";
+            return serviceKey + "/clientConfiguration";
         },
 
     }
