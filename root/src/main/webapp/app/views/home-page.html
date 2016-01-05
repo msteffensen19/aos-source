@@ -99,7 +99,7 @@
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button>{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="goToCategory(categories[img.categoryId].categoryId)" >{{ 'EXPLORE_NOW' | translate}}</button>
                     </div>
                 </div>
                 <div class="imgSection" >
@@ -109,7 +109,7 @@
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button class="white">{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="goToCategory(categories[0].categoryId)"  class="white">{{ 'EXPLORE_NOW' | translate}}</button>
                     </div>
                 </div>
             </div>
