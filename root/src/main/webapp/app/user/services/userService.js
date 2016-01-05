@@ -29,6 +29,8 @@ define(['./module'], function (services) {
 
             function getConfiguration(){
 
+
+
                 var request = $http({
                  "method": "get",
                  "url": server.service.getConfiguration(),
@@ -41,73 +43,65 @@ define(['./module'], function (services) {
             }
 
 
-            function processSuccess(data, status, req) { alert('success');
-                if (status == "success")
-                    $("#response").text($(req.responseXML).find("Result").text());
-
-                alert(req.responseXML);
-            }
-
-            function processError(data, status, req) {
-                alert('err'+data.state);
-                //alert(req.responseText + " " + status);
-            }
-
             function login (user){
 
-                var _url = 'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl'
+                var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'
 
-                $soap.post(_url,"GetAccountById").then(function(response){
+                $soap.post(_url,"CelsiusToFahrenheit", {Celsius : 80}).then(function(response){
                     console.log(" ")
-                    console.log(" ")
-                    console.log(" ")
-                    console.log(" ")
-                    console.log(" ")
-                    console.log(" ")
-                    console.log(" ")
-                    console.log("angular")
+                    console.log("angular soap")
                     console.log(response);
                 });;
 
-
-                $.soap({
-                    url: _url + "/GetAccountById",
-                    method: 'post',
-                    data: {},
-                    headers: {
-                        'Content-Type': 'text/xml; charset=UTF-8'
-                    },
-                    success: function (soapResponse) {
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log("jquery ")
-                        console.log(soapResponse)
-                        // do stuff with soapResponse
-                    },
-                    error: function (err){
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log(" ")
-                        console.log("jquery err")
-                        console.log(err)
-                        alert("err")
-                    }
-                });
+                var d = $q.defer();
+                //var _url = 'http://www.advantageonlineshopping.com/accountservice'
+                //_url = 'http://www.advantageonlineshopping.com/accountservice'
+                //
+                //$soap.post(_url,"GetAllAccounts").then(function(response){
+                //    console.log(" ")
+                //    console.log("angular soap")
+                //    console.log(response);
+                //});;
 
 
+                //$.soap({
+                //    url: _url + "/GetAllAccounts",
+                //    method: 'post',
+                //    headers: {
+                //        'Content-Type': 'text/xml; charset=UTF-8'
+                //    },
+                //    success: function (soapResponse) {
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log("jquery ")
+                //        console.log(soapResponse)
+                //        // do stuff with soapResponse
+                //        d.resolve(true)
+                //    },
+                //    error: function (err){
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log(" ")
+                //        console.log("jquery err")
+                //        console.log(err)
+                //        alert("err")
+                //    }
+                //});
+                //
+                //
 
 
 
-
+                return d.promise
 
 
 
