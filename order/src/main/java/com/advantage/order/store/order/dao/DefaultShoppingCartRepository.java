@@ -1,18 +1,17 @@
 package com.advantage.order.store.order.dao;
 
 import com.advantage.order.store.dao.AbstractRepository;
+import com.advantage.order.store.order.dev_only.WSDLHelper;
 import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
+import com.advantage.order.store.order.dto.ShoppingCartResponse;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponseStatus;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.dto.ProductDto;
-import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.root.util.ArgumentValidationHelper;
-import com.advantage.order.store.order.util.WSDLHelper;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -51,10 +50,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     private static String NOT_FOUND = "NOT FOUND";
 
-    private ShoppingCartResponseStatus shoppingCartResponse;
+    private ShoppingCartResponse shoppingCartResponse;
     private String failureMessage;
 
-    public ShoppingCartResponseStatus getShoppingCartResponse() {
+    public ShoppingCartResponse getShoppingCartResponse() {
         return this.shoppingCartResponse;
     }
 
@@ -81,7 +80,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param productId identifies specific {@code Product}
      * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
      * @param quantity  number of product units added to the shopping cart.
-     * @return {@link ShoppingCartResponseStatus} class of the product. If an error occured method will return {@code null} and
+     * @return {@link ShoppingCartResponse} class of the product. If an error occured method will return {@code null} and
      */
     @Override
     public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity, long lastUpdate) {
@@ -95,7 +94,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         //  Use API to verify userId belongs to a registered user by calling "Account Service"
         if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
 
@@ -120,7 +119,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 entityManager.persist(shoppingCart);
 
                 this.failureMessage = "";
-                shoppingCartResponse = new ShoppingCartResponseStatus(true,
+                shoppingCartResponse = new ShoppingCartResponse(true,
                         ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
                         shoppingCart.getProductId());
 
@@ -137,7 +136,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 //  New product in shopping cart created successfully.
                 this.failureMessage = "";
 
-                shoppingCartResponse = new ShoppingCartResponseStatus(true,
+                shoppingCartResponse = new ShoppingCartResponse(true,
                         ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
                         shoppingCart.getProductId());
             }
@@ -145,7 +144,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             //  New product in shopping cart created successfully.
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
-            shoppingCartResponse = new ShoppingCartResponseStatus(false,
+            shoppingCartResponse = new ShoppingCartResponse(false,
                     ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
                     productId);
         }
@@ -174,7 +173,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
 
@@ -199,7 +198,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             } else {
                 //  Product with color NOT FOUND in user cart - Set RESPONSE object to FAILURE
                 this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART;
-                shoppingCartResponse = new ShoppingCartResponseStatus(
+                shoppingCartResponse = new ShoppingCartResponse(
                         false,
                         ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
                         -1);
@@ -208,7 +207,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         } else {
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
-            shoppingCartResponse = new ShoppingCartResponseStatus(
+            shoppingCartResponse = new ShoppingCartResponse(
                     false,
                     ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
                     productId);
@@ -225,10 +224,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param productId identifies specific {@code Product}
      * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
      * @param quantity  number of product units added to the shopping cart.
-     * @return {@link ShoppingCartResponseStatus} {@code shoppingCartResponse} property containing the {@code RESPONSE}
+     * @return {@link ShoppingCartResponse} {@code shoppingCartResponse} property containing the {@code RESPONSE}
      * for the {@code REQUEST}.
      */
-    public ShoppingCartResponseStatus add(long userId, Long productId, int color, int quantity) {
+    public ShoppingCartResponse add(long userId, Long productId, int color, int quantity) {
         addProductToShoppingCart(userId, productId, color, quantity, 0);
         return shoppingCartResponse;
     }
@@ -241,21 +240,21 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param productId identifies specific {@code Product}
      * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
      * @param quantity  number of product units added to the shopping cart.
-     * @return {@link ShoppingCartResponseStatus} {@code shoppingCartResponse} property containing the {@code RESPONSE}
+     * @return {@link ShoppingCartResponse} {@code shoppingCartResponse} property containing the {@code RESPONSE}
      * for the {@code REQUEST}.
      */
-    public ShoppingCartResponseStatus update(long userId, Long productId, int color, int quantity) {
+    public ShoppingCartResponse update(long userId, Long productId, int color, int quantity) {
         updateShoppingCart(userId, productId, color, quantity);
         return shoppingCartResponse;
     }
 
     @Override
-    public ShoppingCartResponseStatus removeProductFromUserCart(long userId, Long productId, int color) {
+    public ShoppingCartResponse removeProductFromUserCart(long userId, Long productId, int color) {
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
         ShoppingCart shoppingCart = null;
@@ -280,7 +279,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             //  New product in shopping cart created successfully.
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
-            shoppingCartResponse = new ShoppingCartResponseStatus(false,
+            shoppingCartResponse = new ShoppingCartResponse(false,
                     ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
                     productId);
         }
@@ -299,7 +298,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @return
      */
     @Override
-    public ShoppingCartResponseStatus clearUserCart(long userId) {
+    public ShoppingCartResponse clearUserCart(long userId) {
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
 
@@ -308,7 +307,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
         //  Get user's shopping carts
@@ -316,16 +315,16 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         if ((shoppingCarts == null) || (shoppingCarts.size() == 0)) {
             //  If shopping cart is empty means successful - exit method
-            return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+            return new ShoppingCartResponse(true, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
         }
 
         for (ShoppingCart cart : shoppingCarts) {
             this.removeProductFromUserCart(userId, cart.getProductId(), cart.getColor());
             if (!shoppingCartResponse.isSuccess()) {
-                return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
+                return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
             }
         }
-        return new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
+        return new ShoppingCartResponse(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
     }
 
     /**
@@ -341,7 +340,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
 
@@ -450,7 +449,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null; //  userId is not a registered user
         }
 
@@ -518,21 +517,21 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     @Override
-    public ShoppingCartResponseStatus replace(long userId, Collection<ShoppingCartDto> cartProducts) {
+    public ShoppingCartResponse replace(long userId, Collection<ShoppingCartDto> cartProducts) {
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
 
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            return new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
 
         shoppingCartResponse = clearUserCart(userId);
 
         if (shoppingCartResponse.isSuccess()) {
             //  Clear user cart was successful - add new cart to user
-            shoppingCartResponse = new ShoppingCartResponseStatus(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
+            shoppingCartResponse = new ShoppingCartResponse(true, ShoppingCart.MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY, -1);
 
             long lastUpdate = cartProducts.size();
             for (ShoppingCartDto cartProduct : cartProducts) {
@@ -546,7 +545,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     lastUpdate--;
                 } else {
                     //  Override SUCCESS data and set failure information
-                    shoppingCartResponse = new ShoppingCartResponseStatus(false, "Failed to add product to user cart.", cartProduct.getProductId());
+                    shoppingCartResponse = new ShoppingCartResponse(false, "Failed to add product to user cart.", cartProduct.getProductId());
 
                     //  Do we want to break out of the loop after 1 product failed to insert, or continue?
                     //break;  //  Exit the loop
@@ -576,7 +575,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
 
@@ -614,7 +613,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                 //  shoppingCart is null
                 System.out.println("userId=" + shoppingCart.getUserId() + " productId=" + shoppingCart.getProductId() + " color=" + shoppingCart.getColor() + " quantity=" + shoppingCart.getQuantity() + " - product not found");
 
-                shoppingCartResponse = new ShoppingCartResponseStatus(false,
+                shoppingCartResponse = new ShoppingCartResponse(false,
                         ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
                         -1);
             }
@@ -622,7 +621,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             //  New product in shopping cart created successfully.
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG;
 
-            shoppingCartResponse = new ShoppingCartResponseStatus(false,
+            shoppingCartResponse = new ShoppingCartResponse(false,
                     ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
                     productId);
         }
@@ -650,7 +649,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
 
@@ -713,14 +712,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 //     * @return
 //     */
 //    @Override
-//    public ShoppingCartResponseStatus doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
+//    public ShoppingCartResponse doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
 //
 //        System.out.println("DefaultShoppingCartRepository -> doPurchase(): userId=" + userId);
 //
 //        //  Verify userId belongs to a registered user by calling "Account Service"
 //        //  REST API GET REQUEST using URI
 //        if (! isRegisteredUserExists(userId)) {
-//            shoppingCartResponse = new ShoppingCartResponseStatus(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
+//            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
 //            return null;
 //        }
 //

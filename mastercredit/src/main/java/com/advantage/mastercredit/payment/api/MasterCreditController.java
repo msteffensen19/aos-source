@@ -2,7 +2,7 @@ package com.advantage.mastercredit.payment.api;
 
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
-import com.advantage.mastercredit.payment.dto.ResponseEnum;
+import com.advantage.common.enums.ResponseEnum;
 import com.advantage.mastercredit.payment.services.MasterCreditService;
 import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;

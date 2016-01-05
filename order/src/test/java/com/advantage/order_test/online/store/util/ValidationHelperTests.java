@@ -115,8 +115,6 @@ public class ValidationHelperTests extends GenericRepositoryTests {
     @Test
     public void testIsValidDate() {
 
-        //ValidationHelper validationHelper = new ValidationHelper();
-
         //  European Date Format
         Assert.assertEquals(true, ValidationHelper.isValidDate("29.02.2012"));
         Assert.assertEquals(false, ValidationHelper.isValidDate("29.02.2013"));

@@ -4,13 +4,11 @@ import ShippingExpress.ShipExEndpoint;
 import ShippingExpress.WsModel.PlaceShippingOrderRequest;
 import ShippingExpress.WsModel.ShippingCostRequest;
 import ShippingExpress.WsModel.ShippingCostResponse;
+import com.advantage.common.enums.ResponseEnum;
 
 import java.util.regex.Pattern;
 
 public class ArgumentValidationHelper {
-
-    public static final String STATUS_OK = "SUCCESS";
-    public static final String STATUS_ERROR = "ERROR";
     public static final String STATUS_ERROR_COUNTRY_CODE = "ERROR. Country code is empty or not valid";
     public static final String STATUS_ERROR_CITY_VALUE = "ERROR. City value is empty or not valid";
     public static final String STATUS_ERROR_STATE_VALUE = "ERROR. State value is empty or not valid";
@@ -60,8 +58,7 @@ public class ArgumentValidationHelper {
             return ERROR_PHONE_NUMBER;
         }
 
-
-        return STATUS_OK;
+        return ResponseEnum.OK.getStringCode();
     }
 
     private static boolean customerNameValidation(String customerName) {
@@ -83,7 +80,7 @@ public class ArgumentValidationHelper {
     public static String shippingCostResponseValidation(ShippingCostResponse response) {
         if(!doubleTryParse(response.getAmount())) return STATUS_ERROR_AMOUNT_VALUE;
 
-        return STATUS_OK;
+        return ResponseEnum.OK.getStringCode();
     }
 
     public static String placeShippingOrderRequestValidation(PlaceShippingOrderRequest request) {
@@ -118,7 +115,7 @@ public class ArgumentValidationHelper {
             return ERROR_PHONE_NUMBER;
         }
 
-        return STATUS_OK;
+        return ResponseEnum.OK.getStringCode();
     }
 
     private static boolean countryOrderValidation(String country) {

@@ -2,8 +2,8 @@ package com.advantage.mastercredit.payment.services;
 
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
-import com.advantage.mastercredit.payment.dto.ResponseEnum;
-import com.advantage.mastercredit.payment.dto.TransactionTypeEnum;
+import com.advantage.common.enums.ResponseEnum;
+import com.advantage.common.enums.TransactionTypeEnum;
 import com.advantage.mastercredit.util.StringHelper;
 import com.advantage.mastercredit.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;
