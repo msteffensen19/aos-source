@@ -1,8 +1,5 @@
 package com.advantage.account.test.cfg;
 
-import com.advantage.account.store.config.ImageManagementConfiguration;
-import com.advantage.account.store.image.ImageManagement;
-import com.advantage.account.store.image.ImageManagementAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -68,10 +65,4 @@ public class AdvantageTestContextConfiguration {
         return entityManagerFactoryBean;
     }
 
-    @Bean(name = "imageManagement")
-    public ImageManagement getImageManagement() {
-
-        final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
-        return ImageManagementAccess.getImageManagement(imageManagementRepository);
-    }
 }

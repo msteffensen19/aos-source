@@ -1,16 +1,7 @@
 package com.advantage.order_test.cfg;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -19,9 +10,9 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.advantage.order.store.config.ImageManagementConfiguration;
-import com.advantage.order.store.image.ImageManagement;
-import com.advantage.order.store.image.ImageManagementAccess;
+import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @ComponentScan({"com.advantage.order.store.services",
@@ -74,10 +65,4 @@ public class AdvantageTestContextConfiguration {
         return entityManagerFactoryBean;
     }
 
-    @Bean(name = "imageManagement")
-    public ImageManagement getImageManagement() {
-
-        final String imageManagementRepository = environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
-        return ImageManagementAccess.getImageManagement(imageManagementRepository);
-    }
 }
