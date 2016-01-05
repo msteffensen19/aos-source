@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AccountsResponse",
+@XmlType(name = "",
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
                 "account"
         })
-@XmlRootElement(name = "AccountsResponse", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AccountsResponse {
+@XmlRootElement(name = "Accounts", namespace = WebServiceConfig.NAMESPACE_URI)
+public class GetAllAccountsResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected List<Account> account;
+    protected List<AccountDto> account;
 
-    public List<Account> getAccount() {
+    public List<AccountDto> getAccount() {
         if (account == null) {
             return new ArrayList<>();
         }
@@ -26,7 +26,7 @@ public class AccountsResponse {
         return this.account;
     }
 
-    public void setAccount(List<Account> account) {
+    public void setAccount(List<AccountDto> account) {
         this.account = account;
     }
 }
