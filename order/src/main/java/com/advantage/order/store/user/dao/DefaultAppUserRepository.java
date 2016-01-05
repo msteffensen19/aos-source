@@ -1,7 +1,7 @@
 package com.advantage.order.store.user.dao;
 
 import com.advantage.order.store.dao.AbstractRepository;
-import com.advantage.order.store.user.config.AppUserConfiguration;
+import com.advantage.order.store.config.AppUserConfiguration;
 import com.advantage.common.dto.AppUserResponseDto;
 import com.advantage.root.util.ValidationHelper;
 import com.advantage.order.util.ArgumentValidationHelper;

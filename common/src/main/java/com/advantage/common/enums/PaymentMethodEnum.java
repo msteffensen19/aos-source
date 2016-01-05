@@ -1,19 +1,19 @@
-package com.advantage.mastercredit.payment.dto;
+package com.advantage.common.enums;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Binyamin Regev on 21/12/2015.
+ * Unified Payment Method names "MasterCredit" and "SafePay"
+ * @author Binyamin Regev on 28/12/2015.
  */
-public enum ResponseEnum {
-    APPROVED("Approved"),
-    ERROR("Error"),
-    REJECTED("Rejected");
+public enum PaymentMethodEnum {
+    MASTER_CREDIT("MasterCredit"),
+    SHIP_EX("ShipEx");
 
     private String stringCode;
 
-    ResponseEnum(String stringCode) {
+    PaymentMethodEnum(String stringCode) {
         this.stringCode = stringCode;
     }
 
@@ -29,7 +29,7 @@ public enum ResponseEnum {
     public static List<String> getAllNames() {
         List<String> values = new ArrayList<>();
 
-        for (ResponseEnum a : ResponseEnum.values()) {
+        for (PaymentMethodEnum a : PaymentMethodEnum.values()) {
             values.add(a.name());
         }
         return values;
@@ -44,7 +44,7 @@ public enum ResponseEnum {
      */
     public static boolean contains(String test) {
 
-        for (ResponseEnum a : ResponseEnum.values()) {
+        for (PaymentMethodEnum a : PaymentMethodEnum.values()) {
             if (a.name().equals(test)) {
                 return true;
             }

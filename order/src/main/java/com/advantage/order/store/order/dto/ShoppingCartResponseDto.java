@@ -1,6 +1,5 @@
 package com.advantage.order.store.order.dto;
 
-import com.advantage.order.store.model.product.Product;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Return {@code userId} and user {@link ShoppingCart} with {@link Product} details. <br/>
+ * Return {@code userId} and user {@link ShoppingCart} with {@code Product} details. <br/>
  * Contains inner classes {@link CartProduct} and {@link CartProduct.ProductColor}. <br/>
  * To add a product to user cart use: <br/>
  * {@link #addCartProduct(Long, String, double, int, String, String, String, int)} <br/>

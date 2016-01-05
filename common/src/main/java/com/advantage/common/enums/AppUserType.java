@@ -1,4 +1,4 @@
-package com.advantage.order.store.user.dto;
+package com.advantage.common.enums;
 
 import java.util.ArrayList;
 import java.util.List;

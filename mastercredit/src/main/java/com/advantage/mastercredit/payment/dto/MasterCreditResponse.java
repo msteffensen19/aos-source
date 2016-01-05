@@ -1,5 +1,7 @@
 package com.advantage.mastercredit.payment.dto;
 
+import com.advantage.common.enums.ResponseEnum;
+import com.advantage.common.enums.TransactionTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**

@@ -4,6 +4,8 @@ import ShippingExpress.WsModel.*;
 import ShippingExpress.config.WebServiceConfig;
 import ShippingExpress.model.ShippingExpressService;
 import ShippingExpress.util.ArgumentValidationHelper;
+import com.advantage.common.Constants;
+import com.advantage.common.enums.ResponseEnum;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -29,9 +31,9 @@ public class ShipExEndpoint {
         ShippingCostResponse response = new ShippingCostResponse();
         String validation = ArgumentValidationHelper.shippingCostRequestValidation(request);
         logShippingCostRequest(request);
-        response.setSETransactionType(TRANSACTION_TYPE_SHIPPING_COST);
-        if (!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
-            response.setCode(ArgumentValidationHelper.STATUS_ERROR);
+        response.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
+        if (!validation.equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
+            response.setCode(ResponseEnum.ERROR.getStringCode());
             response.setReason(validation);
             logShippingCostResponse(response);
             return response;
@@ -41,7 +43,7 @@ public class ShipExEndpoint {
                 request.getSENumberOfProducts()));
         response.setCurrency(shippingService.getCurrency());
         response.setTransactionDate(shippingService.getFormatTimeNow());
-        response.setCode(ArgumentValidationHelper.STATUS_OK);
+        response.setCode(ResponseEnum.OK.getStringCode());
         logShippingCostResponse(response);
 
         return response;
@@ -62,16 +64,16 @@ public class ShipExEndpoint {
         PlaceShippingOrderResponse response = new PlaceShippingOrderResponse();
         String validation = ArgumentValidationHelper.placeShippingOrderRequestValidation(request);
         logPlaceOrderRequest(request);
-        response.setSETransactionType(TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
-        if (!validation.equalsIgnoreCase(ArgumentValidationHelper.STATUS_OK)) {
-            response.setCode(ArgumentValidationHelper.STATUS_ERROR);
+        response.setSETransactionType(Constants.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
+        if (!validation.equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
+            response.setCode(ResponseEnum.ERROR.getStringCode());
             response.setReason(validation);
             logPlaceOrderResponse(response);
             return response;
         }
         response.setTransactionDate(shippingService.getFormatTimeNow());
         response.setTransactionReference(Long.toString(shippingService.getTrackNumber()));
-        response.setCode(ArgumentValidationHelper.STATUS_OK);
+        response.setCode(ResponseEnum.OK.getStringCode());
         logPlaceOrderResponse(response);
 
         return response;
