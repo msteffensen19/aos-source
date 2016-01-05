@@ -127,57 +127,35 @@ public class ValidationHelper {
      * Validates <b>MasterCredit</b> card number.
      */
     public static boolean isValidMasterCreditCardNumber(final String cardNumber) {
-        pattern = Pattern.compile(MASTER_CREDIT_CARD_NUMBER_PATTERN);
-
-        final boolean isValid = pattern.matcher(cardNumber).matches();
-        System.out.println("MasterCredit card number=" + cardNumber + " is valid? " + isValid);
-        return isValid;
+        return isValidByRegExpPattern(MASTER_CREDIT_CARD_NUMBER_PATTERN, cardNumber);
     }
 
     /**
      * Validates <b>MasterCredit</b> CVV number.
      */
     public static boolean isValidMasterCreditCVVNumber(final String cvvNumber) {
-        pattern = Pattern.compile(MASTER_CREDIT_CVV_NUMBER_PATTERN);
-        final boolean isValid = pattern.matcher(cvvNumber).matches();
-        System.out.println("MasterCredit CVV number=" + cvvNumber + " is valid? " + isValid);
-        return isValid;
+        return isValidByRegExpPattern(MASTER_CREDIT_CVV_NUMBER_PATTERN, cvvNumber);
     }
 
     /**
      * Validates <b>MasterCredit</b> card holder full name.
      */
     public static boolean isValidFullName(final String fullName) {
-        pattern = Pattern.compile(FULL_NAME_PATTERN);
-        final boolean isValid = pattern.matcher(fullName).matches();
-        System.out.println("Full name=\"" + fullName + "\" is valid? " + isValid);
-        return isValid;
+        return isValidByRegExpPattern(FULL_NAME_PATTERN, fullName);
     }
 
     /**
      * Validates <b>MasterCredit</b> account number.
      */
     public static boolean isValidMasterCreditAccountNumber(final String accountNumber) {
-        //  Validate MasterCredit account number
-        pattern = Pattern.compile(MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN);
-
-        final boolean isValid = pattern.matcher(accountNumber).matches();
-
-        System.out.println("MasterCredit account number=" + accountNumber + " is valid? " + isValid);
-
-        return isValid;
+        return isValidByRegExpPattern(MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN, accountNumber);
     }
 
     /**
      * Validates <b>MasterCredit</b> account number.
      */
     public static boolean isValidSafePayAccountNumber(final String accountNumber) {
-        pattern = Pattern.compile(SAFE_PAY_ACCOUNT_NUMBER_PATTERN);
-
-        final boolean isValid = pattern.matcher(accountNumber).matches();
-        System.out.println("SafePay account number=" + accountNumber + " is valid? " + isValid);
-
-        return isValid;
+        return isValidByRegExpPattern(SAFE_PAY_ACCOUNT_NUMBER_PATTERN, accountNumber);
     }
 
     /**
@@ -185,6 +163,10 @@ public class ValidationHelper {
      */
     public static boolean isValidCurrency(final String currency) {
         return isValidByRegExpPattern(CURRENCY_PATTERN,currency);
+    }
+
+    public static boolean isValidColorHexNumber(final String hexColor) {
+        return isValidByRegExpPattern(COLOR_HEX_PATTERN, hexColor);
     }
 
     /**
@@ -254,5 +236,14 @@ public class ValidationHelper {
         ValidationHelper.isValidMasterCreditCVVNumber("404");   //  "0" (zero)
         ValidationHelper.isValidMasterCreditCVVNumber("4O4");   //  "O" (UPPER case) is not numeric
         ValidationHelper.isValidMasterCreditCVVNumber("777");
+
+        ValidationHelper.isValidColorHexNumber("FFFF00");   //  true (Yellow)
+        ValidationHelper.isValidColorHexNumber("0000FF");   //  true (Blue)
+        ValidationHelper.isValidColorHexNumber("FF");       //  true (Blue)
+        ValidationHelper.isValidColorHexNumber("C0C0C0");   //  true (Silver)
+        ValidationHelper.isValidColorHexNumber("888888");   //  true
+        ValidationHelper.isValidColorHexNumber("FFFFFH");   //  false ("H" is not in Hex
+        ValidationHelper.isValidColorHexNumber("FFFFFFH");  //  false ("H" is not in Hex and string is longer than 6 characters)
+        ValidationHelper.isValidColorHexNumber("C0C0C0C");  //  false (string is longer than 6 characters)
     }
 }

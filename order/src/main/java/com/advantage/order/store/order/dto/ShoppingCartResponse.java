@@ -3,7 +3,7 @@ package com.advantage.order.store.order.dto;
 /**
  * @author Binyamin Regev on 03/12/2015.
  */
-public class ShoppingCartResponseStatus {
+public class ShoppingCartResponse {
 
     private boolean success;
     private String reason;
@@ -14,7 +14,7 @@ public class ShoppingCartResponseStatus {
      * @param reason
      * @param id
      */
-    public ShoppingCartResponseStatus(boolean success, String reason, long id) {
+    public ShoppingCartResponse(boolean success, String reason, long id) {
         this.setSuccess(success);
         this.setReason(reason);
         this.setId(id);

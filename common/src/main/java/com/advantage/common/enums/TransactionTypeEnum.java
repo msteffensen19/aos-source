@@ -1,19 +1,20 @@
-package com.advantage.order.store.order.dto;
+package com.advantage.common.enums;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Unified Payment Method names "MasterCredit" and "SafePay"
- * @author Binyamin Regev on 28/12/2015.
+ * To keep transaction type <b>only</b> within valid values
+ *
+ * @author Binyamin Regev on 20/12/2015.
  */
-public enum PaymentMethodEnum {
-    MASTER_CREDIT("MasterCredit"),
-    SHIP_EX("ShipEx");
+public enum TransactionTypeEnum {
+    //  When calling "setTransactionType" use "toUpperCase()" as well
+    PAYMENT("Payment"), REFUND("Refund");
 
     private String stringCode;
 
-    PaymentMethodEnum(String stringCode) {
+    TransactionTypeEnum(String stringCode) {
         this.stringCode = stringCode;
     }
 
@@ -21,15 +22,10 @@ public enum PaymentMethodEnum {
         return this.stringCode;
     }
 
-    /**
-     * Return {@link List} of {@link String} with all {@code enum} values.
-     *
-     * @return {@link List} of {@link String} with all {@code enum} values.
-     */
     public static List<String> getAllNames() {
         List<String> values = new ArrayList<>();
 
-        for (PaymentMethodEnum a : PaymentMethodEnum.values()) {
+        for (TransactionTypeEnum a : TransactionTypeEnum.values()) {
             values.add(a.name());
         }
         return values;
@@ -44,7 +40,7 @@ public enum PaymentMethodEnum {
      */
     public static boolean contains(String test) {
 
-        for (PaymentMethodEnum a : PaymentMethodEnum.values()) {
+        for (TransactionTypeEnum a : TransactionTypeEnum.values()) {
             if (a.name().equals(test)) {
                 return true;
             }
