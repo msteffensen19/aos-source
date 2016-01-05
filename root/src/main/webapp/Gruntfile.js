@@ -103,11 +103,11 @@ module.exports = function(grunt) {
         },
         clean: ["target", "app/templates"],
         usemin : {
-            html : [ 'target/main.html' ]
+            html: ['target/index.html']
         },
         'regex-replace': {
             dist: {
-                src: ['target/main.html'],
+                src: ['target/index.html'],
                 dest:     'target',
                 actions: [
                     {
