@@ -34,7 +34,7 @@ define(['./module'], function (directives) {
 
                         console.log(user)
                         console.log(rememberMe)
-                        l("http://localhost:8080/main.html#/orderPayment")
+                        l("http://localhost:8080/#/orderPayment")
                         l("what about rememberme checkbox??)")
                         l("EMAIL ??? (no username?)")
 
