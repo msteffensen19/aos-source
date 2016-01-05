@@ -11,24 +11,24 @@ import java.util.regex.Pattern;
  * @author Binyamin Regev on 19/11/2015.
  */
 public class ValidationHelper {
-    public static final String COLOR_HEX_PATTERN = "^#([A-Fa-f0-9]{1,6})$";
+    private static final String COLOR_HEX_PATTERN = "^#([A-Fa-f0-9]{1,6})$";
 
-    public static final String FULL_NAME_PATTERN = "^[\\p{L} .'-]+$";
+    private static final String FULL_NAME_PATTERN = "^[\\p{L} .'-]+$";
 
-    public static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
+    private static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
 
-    public static final String MASTER_CREDIT_CARD_NUMBER_PATTERN = "([0-9]{16})";
-    public static final String MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN = "([0-9]{12})";
+    private static final String MASTER_CREDIT_CARD_NUMBER_PATTERN = "([0-9]{16})";
+    private static final String MASTER_CREDIT_ACCOUNT_NUMBER_PATTERN = "([0-9]{12})";
 
     //private static final String PHONE_PATTERN = "^\\+([0-9]{1,3})?[-.\\s]\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
     //private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3})|00[1-9]{3})[-.\\s]?)?\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
-    public static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3}))?[-.\\s]?)\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+    private static final String PHONE_PATTERN = "((\\+([1-9]{1}[0-9]{0,3}))?[-.\\s]?)\\(?([0-9]{1,3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
 
-    public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
             "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     //  Contain 3-15 characters of: Digits 0-9, UPPER case (A-Z), lower case (a-z), underscore (_), dot (.) and hyphen (-)
-    public static final String LOGIN_USER_NAME_PATTERN = "^[A-Za-z0-9_.-]{3,15}$";
+    private static final String LOGIN_USER_NAME_PATTERN = "^[A-Za-z0-9_.-]{3,15}$";
 
     /**
      * <ul><code>Password</code> must be compliant with <b>AOS policy</b></ul>:
