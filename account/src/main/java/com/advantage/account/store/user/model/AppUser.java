@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Binyamin Regev on 15/11/2015.
  */
 @Entity
-//@Table(name = "AppUser")
+@Table(name = "account")
 @NamedQueries({
         @NamedQuery(
                 name = AppUser.QUERY_GET_ALL,
