@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
+import com.advantage.accountsoap.dto.AccountDto;
 import com.advantage.accountsoap.dto.AccountStatusResponse;
 import com.advantage.accountsoap.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,6 +48,34 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
+    public List<AccountDto> getAllAppUsersDto() {
+        return fillAccountsDto(accountRepository.getAll());
+    }
+
+    private List<AccountDto> fillAccountsDto(List<Account> accounts) {
+        List<AccountDto> dtos = new ArrayList<>();
+        for (Account account : accounts) {
+            dtos.add(new AccountDto(account.getId(),
+                    account.getLastName(),
+                    account.getFirstName(),
+                    account.getLoginName(),
+                    account.getAccountType(),
+                    account.getCountry(),
+                    account.getStateProvince(),
+                    account.getCityName(),
+                    account.getAddress(),
+                    account.getZipcode(),
+                    account.getPhoneNumber(),
+                    account.getEmail(),
+                    account.getAllowOffersPromotion(),account.getInternalUnsuccessfulLoginAttempts(),
+                    account.getInternalUserBlockedFromLoginUntil(),
+                    account.getInternalLastSuccesssulLogin()));
+        }
+
+        return dtos;
+    }
+
+    @Transactional(readOnly = true)
     public boolean isExists(long userId) {
         boolean result = false;
 
@@ -57,5 +87,10 @@ public class AccountService {
     @Transactional
     public AccountStatusResponse updateAccount(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
         return accountRepository.updateAccount(accountType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    }
+
+    @Transactional
+    public Account getById(long id) {
+        return accountRepository.get(id);
     }
 }

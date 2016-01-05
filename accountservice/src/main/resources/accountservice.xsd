@@ -32,7 +32,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="AccountsResponse">
+    <xs:element name="GetAllAccountsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="account" type="tns:account" minOccurs="0" maxOccurs="unbounded"/>
@@ -48,15 +48,28 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetAccountByIdResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="result" type="xs:boolean" />
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="AccountDto">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="loginName" type="xs:string"/>
+            <xs:element name="accountType" type="xs:int"/>
+            <xs:element name="country" type="xs:string"/>
+            <xs:element name="stateProvince" type="xs:string"/>
+            <xs:element name="cityName" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+            <xs:element name="zipcode" type="xs:string"/>
+            <xs:element name="phoneNumber" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="allowOffersPromotion" type="xs:string"/>
+            <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int"/>
+            <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long"/>
+            <xs:element name="internalLastSuccesssulLogin" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xs:element name="AccountsRequest"/>
+    <xs:element name="GetAllAccountsRequest"/>
     <xs:element name="GetCountriesRequest"/>
 
     <xs:element name="GetAccountByIdRequest">

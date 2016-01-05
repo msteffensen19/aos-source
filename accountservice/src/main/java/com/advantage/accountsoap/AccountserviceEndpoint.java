@@ -7,8 +7,6 @@ import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -24,21 +22,37 @@ public class AccountserviceEndpoint {
     @Autowired
     private CountryService countryService;
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountsRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
-    public AccountsResponse getAllAccounts() {
-        List<Account> appUsers = accountService.getAllAppUsers();
-        AccountsResponse accountsResponse = new AccountsResponse();
-        accountsResponse.setAccount(appUsers);
+    public GetAllAccountsResponse getAllAccounts() {
+        List<AccountDto> appUsers = accountService.getAllAppUsersDto();
+        GetAllAccountsResponse getAllAccountsResponse = new GetAllAccountsResponse();
+        getAllAccountsResponse.setAccount(appUsers);
 
-        return accountsResponse;
+        return getAllAccountsResponse;
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
-    public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountId) {
-        GetAccountByIdResponse response = new GetAccountByIdResponse();
-        response.setResult(accountService.isExists(accountId.getId()));
+    public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId) {
+        Account account = accountService.getById(accountId.getId());
+        if(account == null) return null;
+        AccountDto response = new AccountDto(account.getId(),
+                account.getLastName(),
+                account.getFirstName(),
+                account.getLoginName(),
+                account.getAccountType(),
+                account.getCountry(),
+                account.getStateProvince(),
+                account.getCityName(),
+                account.getAddress(),
+                account.getZipcode(),
+                account.getPhoneNumber(),
+                account.getEmail(),
+                account.getAllowOffersPromotion(),account.getInternalUnsuccessfulLoginAttempts(),
+                account.getInternalUserBlockedFromLoginUntil(),
+                account.getInternalLastSuccesssulLogin());
+
         return response;
     }
 

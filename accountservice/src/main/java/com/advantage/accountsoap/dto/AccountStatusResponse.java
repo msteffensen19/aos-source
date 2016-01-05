@@ -6,7 +6,7 @@ import com.advantage.common.Token;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AccountStatusResponse",
+@XmlType(name = "",
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
                 "success",
