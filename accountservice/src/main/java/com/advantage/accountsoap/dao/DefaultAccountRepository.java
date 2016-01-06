@@ -2,6 +2,7 @@ package com.advantage.accountsoap.dao;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.dto.AccountStatusResponse;
+import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
@@ -400,7 +401,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * @return Random {@link UUID} string.
      */
     private Token getTokenKey(long accountId, AccountType accountType, String email, String loginName) {
-        Token token = new Token(accountId, accountType, email, loginName);
+        Token token = new TokenJWT(accountId, loginName, accountType, email);
 
         return token;
     }
