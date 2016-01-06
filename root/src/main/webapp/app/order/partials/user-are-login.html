@@ -9,15 +9,16 @@
 
 
     <!-- USER DETAILS SECTION-->
-    <div id="userSection" ng-show="opCtrl.firstTag">
-        <div id="userDetails" ng-show="opCtrl.firstTag">
+    <div id="userSection" ng-show="firstTag">
+
+        <div id="userDetails">
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
                 <label>David Smith</label>
             </div>
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
-                <label>Altalef</label>
+                <label>Altalef 5</label>
                 <label>HPE Software (building M3)</label>
                 <label>Yahud</label>
                 <label>Israel</label>
@@ -39,19 +40,29 @@
 
 
     <!-- PAYMENT METHOD SECTION-->
-    <div id="paymentMethod" ng-hide="opCtrl.firstTag">
+    <div id="paymentMethod" ng-hide="firstTag">
         <div>
-            <div>
-
-            </div>
-            <div>
-
+            <label class="Choose_payment roboto-medium"> {{ 'Choose_payment_method_below' | translate }}</label>
+            <div class="paymentMethods">
+                <div class="imgRadioButton" data-ng-click="imgRadioButton = 1" data-ng-class="{ selected : imgRadioButton == 1 }">
+                    <img src="../../../css/images/SafePay.png" alt="Safepay" />
+                </div>
+                <div class="imgRadioButton">
+                    <img src="../../../css/images/Master_credit.png" alt="Master credit" />
+                </div>
             </div>
         </div>
         <div>
         </div>
     </div>
+
     <!-- END PAYMENT METHOD SECTION-->
+
+
+
+
+
+
 
 
 

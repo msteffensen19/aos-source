@@ -44,19 +44,19 @@ define(['./module'], function (services) {
 
 
             function login (user){
-                //
-                //$soap.post(
-                //    'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
-                //    'GetAccountById',
-                //    { accountId: 12 }
-                //).then(function(response){
-                //    console.log("angular soap SUCCESS")
-                //    console.log(response);
-                //},
-                //function(response){
-                //    console.log("angular soap FAILD")
-                //    console.log(response);
-                //});;
+
+                $soap.post(
+                    'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
+                    'GetAccountById',
+                    { accountId: 12 }
+                ).then(function(response){
+                    console.log("angular soap SUCCESS")
+                    console.log(response);
+                },
+                function(response){
+                    console.log("angular soap FAILD")
+                    console.log(response);
+                });;
 
 
                 //var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'

@@ -11,6 +11,11 @@ define(['./module'], function (directives) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
+            link: function(s, e, a, ctrl){
+                s.firstTag = false;
+                s.imgRadioButton = 1;
+
+            },
         }
     }]);
 });

@@ -22,6 +22,7 @@
     color: #2a2a2a;
 }
 
+/* SHIPPING DETAILS SECCION   */
 
 #userSection * {
 
@@ -99,4 +100,46 @@
     margin-top: 75px;
     font-size: 12px;
 }
+
+/* END SHIPPING DETAILS SECCION   */
+
+
+
+/* USER DETAILS SECCION   */
+
+.Choose_payment {
+    font-size: 16px;
+    color: #2a2a2a;
+}
+
+.paymentMethods{
+    border: solid 1px #454545;
+}
+
+.paymentMethods .imgRadioButton{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.paymentMethods .imgRadioButton > img{
+    display: block;
+    padding: 15px;
+    padding-left: 50px;
+}
+
+.paymentMethods .imgRadioButton:before {
+    content: "";
+    position: absolute;
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    border: solid 1px #828282;
+    top:23px;
+    left:21px;
+
+}
+
+/* END USER DETAILS SECCION   */
+
 
