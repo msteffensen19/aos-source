@@ -46,17 +46,15 @@ define(['./module'], function (services) {
             function login (user){
 
                 $soap.post(
-                    'http://www.advantageonlineshopping.com/accountservice',
+                    'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
                     'GetAccountById',
                     { accountId: 12 }
                 ).then(function(response){
-                    console.log("SUCCESS")
-                    console.log("angular soap")
+                    console.log("angular soap SUCCESS")
                     console.log(response);
                 },
                 function(response){
-                    console.log("FAILD")
-                    console.log("angular soap")
+                    console.log("angular soap FAILD")
                     console.log(response);
                 });;
 
