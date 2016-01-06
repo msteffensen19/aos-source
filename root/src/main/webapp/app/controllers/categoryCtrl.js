@@ -20,6 +20,7 @@ define(['./module'], function (controllers) {
                 name: ""
             };
 
+
             applyRemoteData(category);
 
             function loadRemoteData() {
@@ -33,6 +34,8 @@ define(['./module'], function (controllers) {
             function applyRemoteData(category) {
 
                 $scope.categoryData = category;
+
+                console.log(category)
 
                 $scope.categoryAttributes = category.attributes;
 

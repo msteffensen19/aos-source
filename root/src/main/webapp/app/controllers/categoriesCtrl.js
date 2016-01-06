@@ -21,7 +21,7 @@ define(['./module'], function (controllers) {
 
             $scope.images = [
                 { imageName : 'Banner1.jpg', imageId : 0, message : "ALL YOU WANT FROM A TABLET", categoryId : 2 },
-                { imageName : 'Banner2.jpg', imageId : 1, message : "EXPLORE OUR LASTEST <br />INNOVATIVE PRODUCTS", categoryId : 5 },
+                { imageName : 'Banner2.jpg', imageId : 1, message : "EXPLORE OUR LASTEST <br />INNOVATIVE PRODUCTS", categoryId : 3 },
                 { imageName : 'Banner3.jpg', imageId : 2, message : "START EXPLORING HP NOTEBOOKS", categoryId : 0 }
             ];
 
