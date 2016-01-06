@@ -48,7 +48,4 @@ public interface ShoppingCartRepository {
 
     ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts);
 
-    ShipExResponse getShippingCostFromShipEx();
-
-    //ShoppingCartResponse doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest);
 }
