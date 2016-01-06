@@ -11,10 +11,6 @@ define(['./module'], function (controllers) {
             $scope.specialOffer= resolveParams.specialOffer;
             $scope.popularProducts = resolveParams.popularProducts;
 
-            $scope.form = {
-                name: ""
-            };
-
             $scope.goToCategory = function(id) {
                 $location.path('/category/' + id);
             };
@@ -26,6 +22,7 @@ define(['./module'], function (controllers) {
             ];
 
             Slider.AddSliderListener();
+
             $("nav .navLinks").css("display" , "block");
 
             Helper.forAllPage();

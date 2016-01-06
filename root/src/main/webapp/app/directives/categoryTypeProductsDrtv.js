@@ -103,6 +103,8 @@ define(['./module'], function (directives) {
                 scope.$watch('category', function(catData) {
 
                     if(catData){
+                        console.log(catData.products)
+
                         scope.category = catData;
                         scope.products = catData.products;
                         scope.categoryAttributes = catData.attributes;

@@ -35,8 +35,6 @@ define(['./module'], function (controllers) {
 
                 $scope.categoryData = category;
 
-                console.log(category)
-
                 $scope.categoryAttributes = category.attributes;
 
                 $scope.products = category.products;
