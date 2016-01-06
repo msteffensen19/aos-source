@@ -1,6 +1,5 @@
 package com.advantage.order.store.order.dev_only;
 
-import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.root.util.StringHelper;
 import com.predic8.schema.Attribute;
 import com.predic8.schema.ComplexType;
@@ -272,72 +271,5 @@ public class WSDLHelper {
                 }
             }
         }
-    }
-
-    public ShipExResponse getShippingCostFromShipEx() {
-
-            /*  ******* Init    ******* */
-        //costRequest = new ShippingCostRequest();
-        //orderRequest = new PlaceShippingOrderRequest();
-        //address = new SEAddress();
-        //endpoint = new ShipExEndpoint(service);
-        //
-        //address.setAddressLine1("address");
-        //address.setCity("city");
-        //address.setCountry("ua");
-        //address.setPostalCode("123123");
-        //address.setState("state");
-        //
-        //costRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_SHIPPING_COST);
-        //costRequest.setSEAddress(address);
-        //costRequest.setSENumberOfProducts(5);
-        //costRequest.setSECustomerPhone("+1231234567");
-        //costRequest.setSECustomerName("name");
-        //
-        //orderRequest.setSEAddress(address);
-        //orderRequest.setSETransactionType(ShipExEndpoint.TRANSACTION_TYPE_PLACE_SHIPPING_ORDER);
-        //orderRequest.setOrderNumber("1234567890");
-        //orderRequest.setSECustomerPhone("+1231234567");
-        //orderRequest.setSECustomerName("name");
-        //
-        //ShippingCostResponse response = endpoint.getShippingCost(costRequest);
-
-        boolean isValid = false;
-
-            /* Check response received values   */
-        //boolean isValid = response.getCode().equalsIgnoreCase(Constants.SHIP_EX_RESPONSE_STATUS_OK);
-        //
-        //if (isValid) {
-        //    isValid = (! response.getAmount().isEmpty());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = ((response.getAmount() < 0) || (10000000000.00 < response.getAmount()));
-        //}
-        //
-        //if (isValid) {
-        //    isValid = (!response.getCurrency().isEmpty());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = ValidationHelper.isValidCurrency(response.getCurrency());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = (!response.getSETransactionType().isEmpty());
-        //}
-        //
-        //if (isValid) {
-        //    isValid = response.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType());
-        //}
-        //
-        String result = null;
-
-        if (isValid) {
-            result = "response is successful";
-        }
-
-        //return result;
-        return new ShipExResponse();
     }
 }

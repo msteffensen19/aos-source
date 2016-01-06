@@ -27,9 +27,6 @@ public class ShipExWSDL_fordev {
 //        String stringWsdlFile = WSDLHelper.getWsdlFile(url);
 //        System.out.println("WSDL File=\'" + stringWsdlFile + "\'");
 
-        QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
-        QName portName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortSoap11");
-
         //  *************************************************
         SEAddress address = new SEAddress();
         ShippingCostRequest costRequest = new ShippingCostRequest();
@@ -48,6 +45,7 @@ public class ShipExWSDL_fordev {
 
         URL urlWsdlLocation = new URL("http://localhost:8080/ShipEx/shipex.wsdl");
 
+        //QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
         //ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation, serviceName);
         ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation);
 

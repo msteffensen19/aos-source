@@ -1,0 +1,253 @@
+package com.advantage.order.store.order.dev_only;
+
+//import com.advantage.order.store.order.dto.OrderPurchaseRequest;
+
+import ShipExServiceClient.ShippingCostResponse;
+import com.advantage.common.Constants;
+import com.advantage.common.Url_resources;
+import com.advantage.order.store.order.dto.ShoppingCartDto;
+import com.advantage.order.store.order.dto.ShoppingCartResponse;
+import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
+import com.advantage.order.store.order.model.ShoppingCart;
+import com.advantage.order.store.order.services.ShoppingCartService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
+import javax.xml.soap.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author Binyamin Regev on 09/12/2015.
+ */
+@RestController
+@RequestMapping(value = Constants.URI_API + "/v1")
+public class OrderController_fordev {
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
+
+    private ShoppingCartResponse shoppingCartResponse;
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/carts/{userid}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get user shopping cart")
+    public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userid") Long userId,
+                                                               HttpServletRequest request, HttpServletResponse response) {
+
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+        }
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/carts/{userid}/product/{productid}/color/{color}", method = RequestMethod.POST)
+    @ApiOperation(value = "Add product to shopping cart")
+    /*public ResponseEntity<ShoppingCartResponse> addProductToCart(@PathVariable("userid") Long userId,*/
+    public ResponseEntity<ShoppingCartResponseDto> addProductToCart(@PathVariable("userid") Long userId,
+                                                                       @PathVariable("productid") Long productId,
+                                                                       @PathVariable("color") String hexColor,
+                                                                       @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
+                                                                       HttpServletRequest request) {
+
+        shoppingCartResponse = shoppingCartService.add(userId, productId, hexColor, quantity);
+
+        /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
+        }
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/carts/{userid}/product/{productid}/color/{color}", method = RequestMethod.PUT)
+    @ApiOperation(value = "Update quantity of product in shopping cart")
+    /*public ResponseEntity<ShoppingCartResponse> updateProductQuantityInCart(@PathVariable("userid") long userId,*/
+    public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userid") Long userId,
+                                                                                  @PathVariable("productid") Long productId,
+                                                                                  @PathVariable("color") String hexColor,
+                                                                                  @RequestParam("quantity") int quantity,
+                                                                                  HttpServletRequest request) {
+
+        shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
+
+        /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+        }
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/carts/{userid}", method = RequestMethod.PUT)
+    @ApiOperation(value = "Replace user shopping cart")
+    public ResponseEntity<ShoppingCartResponse> replaceUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
+                                                                @PathVariable("userid") Long userId,
+                                                                HttpServletRequest request) {
+
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        if (userId != null) {
+            shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
+
+            if (shoppingCartResponse.isSuccess()) {
+                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+
+                if (userCartResponseDto == null) {
+                    //  Unlikely scenario - update of user cart successful and get user cart failed
+                    httpStatus = HttpStatus.NOT_FOUND;
+                    shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+                }
+                else {
+                    httpStatus = HttpStatus.OK;
+                }
+            }
+            else {
+                //  Replace user cart failed
+                //  NOT_IMPLEMENTED (501) = The server either does not recognise the
+                //                          request method, or it lacks the ability
+                //                          to fulfill the request.
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
+
+                shoppingCartResponse.setSuccess(false);
+                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
+                shoppingCartResponse.setId(-1);
+            }
+        }
+        else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
+        }
+
+        return new ResponseEntity<>(shoppingCartResponse, httpStatus);
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/carts/{userid}/product/{productid}/color/{color}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Remove a product from user shopping cart")
+    /*public ResponseEntity<ShoppingCartResponse> removeProductFromUserCart(@PathVariable("userid") long userId,*/
+    public ResponseEntity<ShoppingCartResponseDto> removeProductFromUserCart(@PathVariable("userid") long userId,
+                                                                             @PathVariable("productid") Long productId,
+                                                                             @PathVariable("color") String hexColor,
+                                                                             HttpServletRequest request) {
+
+        shoppingCartResponse = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
+
+        /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+        }
+    }
+
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/carts/{userid}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Clear user shopping cart")
+    /*public ResponseEntity<ShoppingCartResponse> clearUserCart(@PathVariable("userid") Long userId,*/
+    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userid") Long userId,
+                                                                 HttpServletRequest request) {
+
+        if (userId != null) {
+            shoppingCartResponse = shoppingCartService.clearUserCart(Long.valueOf(userId));
+        } else {
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
+        }
+
+        /*
+        if (shoppingCartResponse.isSuccess()) {
+            return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(shoppingCartResponse, HttpStatus.CONFLICT);
+        }
+        */
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+        }
+    }
+
+    /*  =========================================================================================================   */
+
+    /**
+     * <b>REST API</b> {@code PUT} request to verify quantities of all products in user cart.
+     *
+     * @param shoopingCartProducts {@link List} of {@link ShoppingCartDto} products in user cart to verify quantities.
+     * @param userId               Unique user identity.
+     * @return {@link ShoppingCartResponseDto} products that had higher quantity in cart than in stock. {@code null}
+     * when all products quantities less or equal to their quantities in stock.
+     */
+    @RequestMapping(value = "/carts/{userid}/quantity", method = RequestMethod.PUT)
+    @ApiOperation(value = "Verify and update products quantities in user cart")
+    public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
+                                                                                      @PathVariable("userid") long userId) {
+
+        System.out.println("OrderController -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
+        ShoppingCartResponseDto responseDto = shoppingCartService.verifyProductsQuantitiesInUserCart(userId, shoopingCartProducts);
+        /*return new ResponseEntity<>(responseDto, HttpStatus.OK);*/
+
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        }
+        else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+        }
+    }
+
+//    @RequestMapping(value = "/carts/ShipEx/", method = RequestMethod.GET)
+//    @ApiOperation(value = "Get order shipping cost")
+//    public ResponseEntity<ShippingCostResponse> getShippingCostFromShipEx(HttpServletRequest request, HttpServletResponse response) {
+//        HttpStatus httpStatus = HttpStatus.OK;
+//        ShippingCostResponse costResponse = this.getShippingCostFromShipEx();
+//
+//        return new ResponseEntity<>(costResponse, HttpStatus.OK);
+//    }
+
+    /*  =========================================================================================================   */
+
+    /*  =========================================================================================================   */
+
+//    @RequestMapping(value = "/carts/{user_id}/purchase", method = RequestMethod.POST)
+//    @ApiOperation(value = "Do purchase of products in cart")
+//    public ResponseEntity<ShoppingCartResponse> doPurchase(@RequestBody OrderPurchaseRequest orderPurchaseRequest,
+//                                                                @PathVariable("user_id") long userId) {
+//
+//        System.out.println("OrderController -> doPurchase(): userId=" + userId);
+//
+//        ShoppingCartResponse purchaseResponse = shoppingCartService.doPurchase(userId, orderPurchaseRequest);
+//
+//        return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
+//    }
+
+}
