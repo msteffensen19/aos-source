@@ -10,17 +10,19 @@ import java.security.Key;
 public abstract class Token {
     protected Key key;
     protected String issuer;
+    protected String signatureAlgorithmName;
 
     protected Token() {
         key = SecurityTools.getKey();
         issuer = SecurityTools.getIssuer();
+        signatureAlgorithmName = SecurityTools.getSignatureAlgorithmName();
     }
 
     public abstract AccountType getAppUserType();
 
     public abstract long getUserId();
 
-    public abstract String getEmail();
+    //public abstract String getEmail();
 
     public abstract String getLoginName();
 

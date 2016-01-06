@@ -15,20 +15,16 @@ public class TokenJWT extends Token {
     private Header tokenHeader;
     private JwtBuilder builder;
     private JwtParser parser;
-    private CompressionCodec compressionCodec;
+    //private CompressionCodec compressionCodec;
     private SignatureAlgorithm signatureAlgorithm;
 
     private TokenJWT() {
         super();
-        compressionCodec = SecurityTools.getCompressionCodec();
-        convertSignatureAlgorithm(SecurityTools.getSignatureAlgorithmName());
+        //compressionCodec = SecurityTools.getCompressionCodec();
+        convertSignatureAlgorithm();
     }
 
     public TokenJWT(long appUserId, String loginName, AccountType accountType) {
-        this(appUserId, loginName, accountType, null);
-    }
-
-    public TokenJWT(long appUserId, String loginName, AccountType accountType, String email) {
         this();
         builder = Jwts.builder();
         tokenHeader = Jwts.header();
@@ -41,9 +37,9 @@ public class TokenJWT extends Token {
             tokenClaims.put("loginName", loginName);
         }
         tokenClaims.put("role", accountType);
-        if (email != null && !email.isEmpty()) {
-            tokenClaims.put("email", email);
-        }
+//        if (email != null && !email.isEmpty()) {
+//            tokenClaims.put("email", email);
+//        }
         builder.setHeader((Map<String, Object>) tokenHeader);
         builder.setClaims(tokenClaims);
     }
@@ -79,10 +75,10 @@ public class TokenJWT extends Token {
         return (Long) tokenClaims.get("userId");
     }
 
-    @Override
-    public String getEmail() {
-        return (String) tokenClaims.get("email");
-    }
+//    @Override
+//    public String getEmail() {
+//        return (String) tokenClaims.get("email");
+//    }
 
     @Override
     public String getLoginName() {
@@ -92,14 +88,14 @@ public class TokenJWT extends Token {
     @Override
     public String generateToken() {
         builder.signWith(signatureAlgorithm, key);
-        if (compressionCodec != null) {
-            builder.compressWith(compressionCodec);
-        }
+//        if (compressionCodec != null) {
+//            builder.compressWith(compressionCodec);
+//        }
         String result = builder.compact();
         return result;
     }
 
-    private void convertSignatureAlgorithm(String signatureAlgorithmName) {
+    private void convertSignatureAlgorithm() {
         for (SignatureAlgorithm sa : SignatureAlgorithm.values()) {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
             if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
@@ -107,6 +103,7 @@ public class TokenJWT extends Token {
                     throw new RuntimeException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
                 } else {
                     signatureAlgorithm = sa;
+                    break;
                 }
             }
         }
