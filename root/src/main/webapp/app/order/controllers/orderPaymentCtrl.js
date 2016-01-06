@@ -8,6 +8,8 @@ define(['./module'], function (controllers) {
     controllers.controller('orderPaymentCtrl', ['$scope', 'resolveParams',
         function (s, resolveParams) {
 
+            s.checkCart();
+
             s.loginModal = {
                 email : '',
                 password : ''

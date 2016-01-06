@@ -67,7 +67,7 @@
     <nav>
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" href="#/shoppingCart" >
+                <a class="img" data-ng-click="redirect('/shoppingCart')" >
                     <img id="mainCart" src="css/images/Cart.jpg"/>
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>

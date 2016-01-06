@@ -103,6 +103,7 @@ define(['./module'], function (directives) {
                 scope.$watch('category', function(catData) {
 
                     if(catData){
+
                         scope.category = catData;
                         scope.products = catData.products;
                         scope.categoryAttributes = catData.attributes;
@@ -111,6 +112,7 @@ define(['./module'], function (directives) {
                         configSlider();
                         scope.manipulateProductsByCustomization();
                         scope.productsColors = getColorsInProducts(scope.products);
+
                     }
                 })
 

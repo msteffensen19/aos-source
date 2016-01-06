@@ -163,7 +163,6 @@ define(['./module'], function (services) {
             }
 
             function addProduct(product, quantity) {
-
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
                 if (user && user.response) {

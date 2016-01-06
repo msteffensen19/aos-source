@@ -7,14 +7,14 @@
         <div class="container ">
 
             <div class="rowSection">
-                <div ng-click="goToCategory(categories[3].categoryId)" class="SpeaakersImg"
+                <div ng-click="redirect('/category/' + categories[3].categoryId)" class="SpeaakersImg"
                      a-sec-back-img="{{categories[3].managedImageId}}" >
                     <div>
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate  }} </label>
                     </div>
                 </div>
-                <div ng-click="goToCategory(categories[2].categoryId)"
+                <div ng-click="redirect('/category/' + categories[2].categoryId)"
                      a-sec-back-img="{{categories[2].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[2].categoryName}}</span>
@@ -26,21 +26,21 @@
             </div>
 
             <div class="rowSection">
-                <div ng-click="goToCategory(categories[0].categoryId)" class="laptopImg"
+                <div ng-click="redirect('/category/' + categories[0].categoryId)" class="laptopImg"
                      a-sec-back-img="{{categories[0].managedImageId}}" >
                     <div>
                         <span class="shop_now" > {{::categories[0].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
                 </div>
-                <div ng-click="goToCategory(categories[4].categoryId)" class="micesImg"
+                <div ng-click="redirect('/category/' + categories[4].categoryId)" class="micesImg"
                      a-sec-back-img="{{categories[4].managedImageId}}" >
                     <div>
                         <span class="shop_now">{{::categories[4].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
                 </div>
-                <div ng-click="goToCategory(categories[1].categoryId)" class="twoRows"
+                <div ng-click="redirect('/category/' + categories[1].categoryId)" class="twoRows"
                      a-sec-back-img="{{categories[1].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[1].categoryName}}</span>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button>{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="goToCategory(categories[img.categoryId].categoryId)" >{{ 'EXPLORE_NOW' | translate}}</button>
                     </div>
                 </div>
                 <div class="imgSection" >
@@ -109,7 +109,7 @@
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button class="white">{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="goToCategory(categories[0].categoryId)"  class="white">{{ 'EXPLORE_NOW' | translate}}</button>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@
                     <img data-ng-src="{{product.imageUrl}}" alt="Special-offer" >
                 </figure>
                 <p class="center productName roboto-medium">{{product.productName | uppercase}}</p>
-                <label class="shop_nowSub viewDetail " translate="View_details"></label>
+                <a href="#/product/{{product.id}}"><label class="shop_nowSub viewDetail " translate="View_details"></label></a>
             </div>
         </div>
     </article>

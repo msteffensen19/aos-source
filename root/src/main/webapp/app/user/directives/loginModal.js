@@ -32,15 +32,8 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
-                        console.log(user)
-                        console.log(rememberMe)
-                        l("http://localhost:8080/#/orderPayment")
-                        l("what about rememberme checkbox??)")
-                        l("EMAIL ??? (no username?)")
-
                         userService.login(user).then(function (response) {
 
-                            console.log(response);
                                 if(response.userId != -1)
                                 {
                                     if(response.userId === undefined)
@@ -50,6 +43,7 @@ define(['./module'], function (directives) {
                                             $timeout(function(){
                                                 $scope.message = "";
                                             }, 2000)
+
                                             $scope.message = response.data.reason;
 
                                             var count = incrementLogins();
