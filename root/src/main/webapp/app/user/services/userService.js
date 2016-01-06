@@ -46,7 +46,7 @@ define(['./module'], function (services) {
             function login (user){
 
                 $soap.post(
-                    'http://localhost:8080/accountservice',
+                    'http://www.advantageonlineshopping.com/accountservice',
                     'GetAccountById',
                     { accountId: 12 }
                 ).then(function(response){
