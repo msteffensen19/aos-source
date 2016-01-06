@@ -1,8 +1,6 @@
 package com.advantage.order.store.order.dao;
 
 import com.advantage.order.store.dao.AbstractRepository;
-import com.advantage.order.store.order.dev_only.WSDLHelper;
-import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponse;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -92,12 +90,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
+        /*
         //  Use API to verify userId belongs to a registered user by calling "Account Service"
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
-
+         */
         ShoppingCart shoppingCart = null;
 
         if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
@@ -170,12 +169,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
+        */
 
         ShoppingCart shoppingCart = null;
 
@@ -251,11 +252,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     @Override
     public ShoppingCartResponse removeProductFromUserCart(long userId, Long productId, int color) {
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
+         */
 
         ShoppingCart shoppingCart = null;
 
@@ -304,11 +307,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("deleteShoppingCartsByUserId.userId=" + userId);
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
+         */
 
         //  Get user's shopping carts
         List<ShoppingCart> shoppingCarts = getShoppingCartsByUserId(userId);
@@ -337,12 +342,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     @Override
     public List<ShoppingCart> getShoppingCartsByUserId(long userId) {
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
+         */
 
         List<ShoppingCart> shoppingCarts = entityManager.createNamedQuery(ShoppingCart.QUERY_GET_CARTS_BY_USER_ID, ShoppingCart.class)
                 .setParameter(ShoppingCart.PARAM_USER_ID, userId)
@@ -446,13 +453,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     public ShoppingCartResponseDto getCartProductsDetails(long userId, List<ShoppingCart> shoppingCarts) {
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null; //  userId is not a registered user
         }
-
+         */
         ShoppingCartResponseDto userCart = new ShoppingCartResponseDto(userId);
 
         if (shoppingCarts != null) {
@@ -521,11 +529,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
         }
+         */
 
         shoppingCartResponse = clearUserCart(userId);
 
@@ -571,14 +581,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      */
     @Override
     public ShoppingCart getShoppingCartByPrimaryKey(long userId, Long productId, int color) {
-
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
-
+         */
         ShoppingCart shoppingCart = null;
 
         if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
@@ -646,13 +656,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         System.out.println("DefaultShoppingCartRepository -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
 
+        /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
         if (!isRegisteredUserExists(userId)) {
             shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
             return null;
         }
-
+         */
         ShoppingCartResponseDto responseDto = new ShoppingCartResponseDto(userId);
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
@@ -693,14 +704,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             responseDto = null;
         }
         return responseDto;
-    }
-
-    @Override
-    public ShipExResponse getShippingCostFromShipEx() {
-        String wsdlFile = WSDLHelper.getWsdlFile(Url_resources.getUrlShipEx() + "/shipex.wsdl");
-        System.out.println("WSDL File=\'" + wsdlFile + "\'");
-
-        return new ShipExResponse();
     }
 
 //    /**
