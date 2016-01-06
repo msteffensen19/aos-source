@@ -23,7 +23,8 @@
     width: 330px;
     padding: 20px 25px ;
     background-color: rgb(249, 249, 249);
-    float: right;
+    position: relative;
+    right: -50px;
 }
 
 
