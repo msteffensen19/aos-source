@@ -44,19 +44,19 @@ define(['./module'], function (services) {
 
 
             function login (user){
-                //
-                //$soap.post(
-                //    'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
-                //    'GetAccountById',
-                //    { accountId: 12 }
-                //).then(function(response){
-                //    console.log("angular soap SUCCESS")
-                //    console.log(response);
-                //},
-                //function(response){
-                //    console.log("angular soap FAILD")
-                //    console.log(response);
-                //});;
+
+                $soap.post(
+                    'http://localhost:8080/accountservice',
+                    'GetAccountById',
+                    { accountId: 12 }
+                ).then(function(response){
+                    console.log("angular soap SUCCESS")
+                    console.log(response);
+                },
+                function(response){
+                    console.log("angular soap FAILD")
+                    console.log(response);
+                });;
 
 
                 //var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'
@@ -233,16 +233,18 @@ define(['./module'], function (services) {
                 //    responseService.handleError
                 //));
 
-                var request = $http({
-                    "Content-Type": "application/json;charset=UTF-8",
-                    "method": "post",
-                    "url": server.account.login(),
-                    "data": JSON.stringify(user) ,
-                });
-                return( request.then(
-                    responseService.handleSuccess,
-                    responseService.handleError
-                ));
+
+
+                //var request = $http({
+                //    "Content-Type": "application/json;charset=UTF-8",
+                //    "method": "post",
+                //    "url": server.account.login(),
+                //    "data": JSON.stringify(user) ,
+                //});
+                //return( request.then(
+                //    responseService.handleSuccess,
+                //    responseService.handleError
+                //));
             }
 
 
