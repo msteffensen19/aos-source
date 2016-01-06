@@ -17,13 +17,13 @@ public class CORSConfig3 extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println(request.getHeader(ORIGIN));
         System.out.println(request.getMethod());
-        if (request.getHeader(ORIGIN).equals("null")) {
+       /* if (request.getHeader(ORIGIN).equals("null")) {
             String origin = request.getHeader(ORIGIN);
-            response.setHeader("Access-Control-Allow-Origin", "*");//* or origin as u prefer
+            response.setHeader("Access-Control-Allow-Origin", "*");/*//* or origin as u prefer
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setHeader("Access-Control-Allow-Headers",
                     request.getHeader("Access-Control-Request-Headers"));
-        }
+        }*/
         if (request.getMethod().equals("OPTIONS")) {
             try {
                 response.getWriter().print("OK");
