@@ -103,6 +103,7 @@ public class TokenJWT extends Token {
                     throw new RuntimeException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
                 } else {
                     signatureAlgorithm = sa;
+                    break;
                 }
             }
         }
