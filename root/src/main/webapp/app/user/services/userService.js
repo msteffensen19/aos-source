@@ -45,17 +45,23 @@ define(['./module'], function (services) {
 
             function login (user){
 
-                var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'
-
                 $soap.post(
-                    'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
-                    'login',
-                    user
+                    'http://www.advantageonlineshopping.com/accountservice',
+                    'GetAccountById',
+                    { accountId: 12 }
                 ).then(function(response){
-                    console.log(" ")
+                    console.log("SUCCESS")
+                    console.log("angular soap")
+                    console.log(response);
+                },
+                function(response){
+                    console.log("FAILD")
                     console.log("angular soap")
                     console.log(response);
                 });;
+
+
+                //var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'
 
 
                 //$soap.post(_url,"CelsiusToFahrenheit", {Celsius : 80}).then(function(response){
