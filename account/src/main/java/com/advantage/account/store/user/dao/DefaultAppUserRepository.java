@@ -310,7 +310,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Update changes
         updateAppUser(appUser);
 
-        Token token = new TokenJWT(appUser.getId(), appUser.getLoginName(), AccountType.USER, email);
+        Token token = new TokenJWT(appUser.getId(), appUser.getLoginName(), AccountType.USER);
         String base64Token = token.generateToken();
 
         //  Return: Successful login attempt

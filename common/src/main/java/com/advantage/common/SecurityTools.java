@@ -31,7 +31,6 @@ public class SecurityTools {
 
     private static Key decodeBase64Key(String base64Key) {
         byte[] decodedKey = Base64.getDecoder().decode(base64Key);
-        //Key result = new SecretKeySpec(decodedKey, "Hmac512");
         Key result = new SecretKeySpec(decodedKey, signatureAlgorithmName);
         return result;
     }

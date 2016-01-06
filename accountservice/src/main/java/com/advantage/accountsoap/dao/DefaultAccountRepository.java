@@ -332,8 +332,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         //  Return: Successful login attempt
         return new AccountStatusResponse(true, "Login Successful", account.getId(),
-                getTokenKey(account.getId(), AccountType.valueOfCode(account.getAccountType()), account.getEmail(),
-                        account.getLoginName()).generateToken());
+                getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType())
+                ).generateToken());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -400,8 +400,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      *
      * @return Random {@link UUID} string.
      */
-    private Token getTokenKey(long accountId, AccountType accountType, String email, String loginName) {
-        Token token = new TokenJWT(accountId, loginName, accountType, email);
+    private Token getToken(long accountId, String loginName, AccountType accountType) {
+        Token token = new TokenJWT(accountId, loginName, accountType);
 
         return token;
     }
