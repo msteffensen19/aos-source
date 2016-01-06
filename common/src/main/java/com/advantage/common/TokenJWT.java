@@ -100,15 +100,6 @@ public class TokenJWT extends Token {
     }
 
     private void convertSignatureAlgorithm(String signatureAlgorithmName) {
-//        try {
-//            SignatureAlgorithm sa1 = SignatureAlgorithm.forName(SecurityTools.getSignatureAlgorithmName());
-//        } catch (Throwable t) {
-//        }
-        //try {
-//            SignatureAlgorithm sa2 = SignatureAlgorithm.valueOf(SecurityTools.getSignatureAlgorithmName());
-//
-//        } catch (Throwable t) {
-//        }
         for (SignatureAlgorithm sa : SignatureAlgorithm.values()) {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
             if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
