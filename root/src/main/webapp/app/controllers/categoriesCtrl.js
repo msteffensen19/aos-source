@@ -11,10 +11,6 @@ define(['./module'], function (controllers) {
             $scope.specialOffer= resolveParams.specialOffer;
             $scope.popularProducts = resolveParams.popularProducts;
 
-            $scope.goToCategory = function(id) {
-                $location.path('/category/' + id);
-            };
-
             $scope.images = [
                 { imageName : 'Banner1.jpg', imageId : 0, message : "ALL YOU WANT FROM A TABLET", categoryId : 2 },
                 { imageName : 'Banner2.jpg', imageId : 1, message : "EXPLORE OUR LASTEST <br />INNOVATIVE PRODUCTS", categoryId : 3 },

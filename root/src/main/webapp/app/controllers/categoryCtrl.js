@@ -10,40 +10,22 @@ define(['./module'], function (controllers) {
     controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',
         function ($scope, $stateParams, categoryService, category) {
 
-
             $scope.catId = $stateParams.id;
+
             $scope.category = category;
 
-            $scope.deal = "";
-            // I contain the ngModel values for form interaction.
-            $scope.form = {
-                name: ""
-            };
+            $scope.noProducts = category.products == undefined || category.products.length == 0;
 
+            $scope.categoryData = category;
 
-            applyRemoteData(category);
+            $scope.categoryAttributes = category.attributes;
 
-            function loadRemoteData() {
+            $scope.products = category.products;
 
-                categoryService.getCategoryById($scope.catId)
-                    .then(function( category ) {
-                        applyRemoteData( category );
-                    });
-            }
+            $scope.categoryName = category.categoryName;
 
-            function applyRemoteData(category) {
+            $("nav .navLinks").css("display" , "none");
 
-                $scope.categoryData = category;
-
-                $scope.categoryAttributes = category.attributes;
-
-                $scope.products = category.products;
-
-                $scope.categoryName = category.categoryName;
-
-                $("nav .navLinks").css("display" , "none");
-
-            }
 
             Helper.forAllPage();
 

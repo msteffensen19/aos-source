@@ -26,6 +26,7 @@ define(['./module'], function (controllers) {
             }
             $scope.colorSelected = $scope.colorSelected || $scope.product.colors[0];
 
+
             $scope.quantityOptions = [1,2,3,4,5,6,7,8,9];
             if($scope.quantity && $scope.quantity > 9)
             {
@@ -48,6 +49,11 @@ define(['./module'], function (controllers) {
                     $scope.$parent.addProduct(productToAdd, $scope.quantity);
                 }
             }
+
+            $scope.changeImage = function(img){
+                $scope.product.imageUrl = img;
+            }
+
 
             $scope.setColor = function(color){
                 $scope.colorSelected = color;

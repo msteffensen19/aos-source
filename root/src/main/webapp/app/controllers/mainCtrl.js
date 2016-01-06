@@ -105,9 +105,9 @@ define(['./module'], function (controllers) {
             $scope.removeProduct = function (index) {
                 productsCartService.removeProduct(index).then(function (cart) {
                     $scope.cart = cart;
+                    $scope.checkCart();
                 });
             }
-
 
             var lastIdAdded = '';
             $scope.addProduct = function(product, quantity) {
@@ -115,8 +115,7 @@ define(['./module'], function (controllers) {
                 $('#toolTipCart').slideDown(function(){
                     productsCartService.addProduct(product, quantity).then(function(cart){
                         $scope.cart = cart;
-                        if (lastIdAdded == ('#product' + product.productId))
-                        {
+                        if (lastIdAdded == ('#product' + product.productId)){
                             setToolTipCartSlideUp()
                         }
                         else {
@@ -159,8 +158,8 @@ define(['./module'], function (controllers) {
 
             /* User section */
 
-            $scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
-            //$scope.user = {  email: '',loginPassword: '', loginUser: '', }
+            //$scope.user = {  email: 'a@b.com',loginPassword: 'Avraham1', loginUser: 'avinu.avraham', }
+            $scope.user = {  email: '',loginPassword: '', loginUser: '', }
 
             $scope.accountSection = function(){
                 console.log("user account section! --- Method not done yet!");
@@ -210,9 +209,14 @@ define(['./module'], function (controllers) {
 
 
 
+            /* Application helper section */
 
-
-
+            $scope.redirect = function(path) {
+                if($scope.cart.productsInCart.length == 0 && path == '/shoppingCart'){
+                    return;
+                }
+                $location.path(path);
+            };
 
             $scope.gotoElement = function (id) {
                 $("body").animate({
@@ -220,22 +224,46 @@ define(['./module'], function (controllers) {
                 }, 1000)
             };
 
+            $scope.checkCart = function(){
+                if($scope.cart.productsInCart.length == 0)
+                {
+                    switch($location.$$path) {
+                        case '/shoppingCart':
+                        case '/orderPayment':
+                            window.history.back();
+                            break;
+                    }
+                }
+            }
+
+            /* END Application helper section */
+
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
 
-                $scope.welcome = $location.path().indexOf('/welcome') <= -1 &&
-                    $location.path().indexOf('/404') <= -1;
+                $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
                 $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
                 Helper.UpdatePageFixed();
 
             });
 
-            /*
-             $rootScope.$on("$stateChangeStart",
-             function (event, current, previous, rejection, rejection2) {
 
-             }
-             );
+
+            /*
+
+              $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
+
+                 console.log('==========================start======================================================')
+                 console.log('$location')
+                 console.log($location)
+                 console.log('$state')
+                 console.log($state)
+                 console.log('cart')
+                 console.log($scope.cart)
+
+
+             });
+
 
              $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {
              onBreadcrumbHandler();
