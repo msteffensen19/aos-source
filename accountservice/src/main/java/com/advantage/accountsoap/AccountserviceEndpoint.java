@@ -159,4 +159,10 @@ public class AccountserviceEndpoint {
             return response;
         }
     }
+
+   /* @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
+    @ResponsePayload
+    public AddressesResponse getAccountShippingAddress(@RequestPayload GetAccountByIdRequest accountId) {
+        return null;
+    }*/
 }

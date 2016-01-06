@@ -6,6 +6,7 @@ import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.UserPassword;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,6 +14,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -120,6 +123,10 @@ public class Account {
 
     @Column
     private long internalLastSuccesssulLogin;   //  Managed Internally
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<AccountAddress> addresses = new HashSet<>();
 
     public Account() {
 
@@ -308,6 +315,14 @@ public class Account {
     public void setInternalLastSuccesssulLogin(long internalLastSuccesssulLogin) {
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
     }
+
+  /*  public Set<AccountAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<AccountAddress> addresses) {
+        this.addresses = addresses;
+    }*/
 
     /**
      * Add milliseconds value interval to current {@link Date} and return the new {@link Date}
