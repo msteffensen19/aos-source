@@ -34,54 +34,52 @@ define(['./module'], function (directives) {
 
                         userService.login(user).then(function (response) {
 
-                                console.log(response);
+                                if(response.userId != -1)
+                                {
+                                    if(response.userId === undefined)
+                                    {
+                                        if(response.data !== undefined)
+                                        {
+                                            $timeout(function(){
+                                                $scope.message = "";
+                                            }, 2000)
 
+                                            $scope.message = response.data.reason;
 
-                                //if(response.userId != -1)
-                                //{
-                                //    if(response.userId === undefined)
-                                //    {
-                                //        if(response.data !== undefined)
-                                //        {
-                                //            $timeout(function(){
-                                //                $scope.message = "";
-                                //            }, 2000)
-                                //            $scope.message = response.data.reason;
-                                //
-                                //            var count = incrementLogins();
-                                //            if(count >= 3) {
-                                //                console.log(count);
-                                //                $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
-                                //                //question: Ask maria what to show!
-                                //                return;
-                                //            }
-                                //        }
-                                //        return;
-                                //    }
-                                //
-                                //    $cookie.remove("loginsCounter");
-                                //    userCookie.fillParams($scope.user.loginUser, $scope.user.email, response);
-                                //    $rootScope.userCookie = userCookie;
-                                //
-                                //    if(rememberMe){
-                                //
-                                //         $cookie(userCookie.getKey(userCookie), userCookie, { expirationUnit: 'minutes', expires: 60 });
-                                //        $cookie('lastlogin', userCookie.getKey(userCookie));
-                                //        console.log($cookie(userCookie.getKey(userCookie)));
-                                //    }
-                                //    else{
-                                //        $cookie.remove("userCookie" + $scope.user.email);
-                                //    }
-                                //
-                                //    productsCartService.joinCartProducts().then(function(cart){
-                                //        $scope.cart = cart;
-                                //    });
-                                //
-                                //    wellcome();
-                                //}
-                                //else {
-                                //    wrongFields();
-                                //}
+                                            var count = incrementLogins();
+                                            if(count >= 3) {
+                                                console.log(count);
+                                                $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
+                                                //question: Ask maria what to show!
+                                                return;
+                                            }
+                                        }
+                                        return;
+                                    }
+
+                                    $cookie.remove("loginsCounter");
+                                    userCookie.fillParams($scope.user.loginUser, $scope.user.email, response);
+                                    $rootScope.userCookie = userCookie;
+
+                                    if(rememberMe){
+
+                                         $cookie(userCookie.getKey(userCookie), userCookie, { expirationUnit: 'minutes', expires: 60 });
+                                        $cookie('lastlogin', userCookie.getKey(userCookie));
+                                        console.log($cookie(userCookie.getKey(userCookie)));
+                                    }
+                                    else{
+                                        $cookie.remove("userCookie" + $scope.user.email);
+                                    }
+
+                                    productsCartService.joinCartProducts().then(function(cart){
+                                        $scope.cart = cart;
+                                    });
+
+                                    wellcome();
+                                }
+                                else {
+                                    wrongFields();
+                                }
                             });
                     }
                     /*=============================== end Sign in ===============================*/
