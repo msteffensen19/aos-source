@@ -1,7 +1,6 @@
 package com.advantage.order.store.order.dao;
 
 import com.advantage.order.store.dao.AbstractRepository;
-import com.advantage.order.store.order.dev_only.WSDLHelper;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponse;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -692,14 +691,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             responseDto = null;
         }
         return responseDto;
-    }
-
-    @Override
-    public ShipExResponse getShippingCostFromShipEx() {
-        String wsdlFile = WSDLHelper.getWsdlFile(Url_resources.getUrlShipEx() + "/shipex.wsdl");
-        System.out.println("WSDL File=\'" + wsdlFile + "\'");
-
-        return new ShipExResponse();
     }
 
 //    /**
