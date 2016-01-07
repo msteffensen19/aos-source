@@ -15,20 +15,16 @@ public class TokenJWT extends Token {
     private Header tokenHeader;
     private JwtBuilder builder;
     private JwtParser parser;
-    private CompressionCodec compressionCodec;
+    //private CompressionCodec compressionCodec;
     private SignatureAlgorithm signatureAlgorithm;
 
     private TokenJWT() {
         super();
-        compressionCodec = SecurityTools.getCompressionCodec();
-        convertSignatureAlgorithm(SecurityTools.getSignatureAlgorithmName());
+        //compressionCodec = SecurityTools.getCompressionCodec();
+        convertSignatureAlgorithm();
     }
 
     public TokenJWT(long appUserId, String loginName, AccountType accountType) {
-        this(appUserId, loginName, accountType, null);
-    }
-
-    public TokenJWT(long appUserId, String loginName, AccountType accountType, String email) {
         this();
         builder = Jwts.builder();
         tokenHeader = Jwts.header();
@@ -36,14 +32,14 @@ public class TokenJWT extends Token {
         tokenClaims = Jwts.claims();
         tokenClaims.setIssuer(issuer);
         //tokenClaims.setIssuedAt(new Date());
-        tokenClaims.put("userId", appUserId);
+        tokenClaims.put(USER_ID_FIELD_NAME, appUserId);
         if (loginName != null && !loginName.isEmpty()) {
-            tokenClaims.put("loginName", loginName);
+            tokenClaims.put(LOGIN_NAME_FIELD_NAME, loginName);
         }
-        tokenClaims.put("role", accountType);
-        if (email != null && !email.isEmpty()) {
-            tokenClaims.put("email", email);
-        }
+        tokenClaims.put(ROLE_FIELD_NAME, accountType);
+//        if (email != null && !email.isEmpty()) {
+//            tokenClaims.put("email", email);
+//        }
         builder.setHeader((Map<String, Object>) tokenHeader);
         builder.setClaims(tokenClaims);
     }
@@ -70,36 +66,36 @@ public class TokenJWT extends Token {
 
     @Override
     public AccountType getAppUserType() {
-        AccountType result = (AccountType) tokenClaims.get("role");
+        AccountType result = (AccountType) tokenClaims.get(ROLE_FIELD_NAME);
         return result;
     }
 
     @Override
     public long getUserId() {
-        return (Long) tokenClaims.get("userId");
+        return (Long) tokenClaims.get(USER_ID_FIELD_NAME);
     }
 
-    @Override
-    public String getEmail() {
-        return (String) tokenClaims.get("email");
-    }
+//    @Override
+//    public String getEmail() {
+//        return (String) tokenClaims.get("email");
+//    }
 
     @Override
     public String getLoginName() {
-        return (String) tokenClaims.get("loginName");
+        return (String) tokenClaims.get(LOGIN_NAME_FIELD_NAME);
     }
 
     @Override
     public String generateToken() {
         builder.signWith(signatureAlgorithm, key);
-        if (compressionCodec != null) {
-            builder.compressWith(compressionCodec);
-        }
+//        if (compressionCodec != null) {
+//            builder.compressWith(compressionCodec);
+//        }
         String result = builder.compact();
         return result;
     }
 
-    private void convertSignatureAlgorithm(String signatureAlgorithmName) {
+    private void convertSignatureAlgorithm() {
         for (SignatureAlgorithm sa : SignatureAlgorithm.values()) {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
             if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
@@ -107,6 +103,7 @@ public class TokenJWT extends Token {
                     throw new RuntimeException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
                 } else {
                     signatureAlgorithm = sa;
+                    return;
                 }
             }
         }
