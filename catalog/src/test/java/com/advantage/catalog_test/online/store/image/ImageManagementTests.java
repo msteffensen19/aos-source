@@ -11,7 +11,6 @@ import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -73,18 +72,18 @@ public class ImageManagementTests {
      * repository file <b>"imageManagement.xml"</b> exists in directory
      * <b>"C:\\Temp\\advantage"</b>
      */
-    @Ignore
-    //TODO-EVG replace C:\temp to temp var
     @Test
     public void testIsFileExists() throws IOException {
 
-        ImageManagement im = ImageManagementAccess.getImageManagement("C:\\Temp\\advantage");
+        String tempdir = System.getProperty("java.io.tmpdir");
+
+        ImageManagement im = ImageManagementAccess.getImageManagement(tempdir + File.separator + "advantage");
 
         im.persist();
 
-        int isFileExists = FileSystemHelper.isFileExist("C:\\Temp\\advantage\\imageManagement.xml") ? 1 : 0;
+        boolean isFileExists = FileSystemHelper.isFileExist(tempdir + File.separator + "advantage" + File.separator + "imageManagement.xml");
 
-        Assert.assertEquals(isFileExists, 1);
+        Assert.assertTrue(isFileExists);
     }
 
     /**
@@ -100,7 +99,6 @@ public class ImageManagementTests {
      * @see ImageManagementAccess
      * @see ManagedImage
      */
-    @Ignore
     //TODO-EVG unignore after testIsFileExists will work in Linux
     @Test(expected = NullPointerException.class)
     public void testImageExistsById() throws IOException {
