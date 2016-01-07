@@ -42,25 +42,13 @@ define(['./module'], function (services) {
                 $soap.post(params.path, params.method, user).
                 then(function (response) {
                     defer.resolve(response);
-
-                    console.log("angular LOGIN START")
-                    $soap.post(
-                        //'http://www.advantageonlineshopping.com/accountservice',
-                        'http://localhost:8080/accountservice',
-                        'GetAccountByIdRequest',
-                        {accountId: 12}
-                    ).then(function (response) {
-                            console.log("angular soap SUCCESS")
-                            console.log(response);
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            console.log(response);
-                            defer.reject("Request failed! ");
-                        });
-                    return defer.promise;
+                },
+                function (response) {
+                    console.log(response);
+                    defer.reject("Request failed! ");
                 });
             }
+
         }]);
 });
 
