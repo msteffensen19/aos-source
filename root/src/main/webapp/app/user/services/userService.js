@@ -45,195 +45,36 @@ define(['./module'], function (services) {
 
             function login (user){
 
+
+                var defer = $q.defer();
+
                 $soap.post(
                     'http://localhost:8080/accountservice',
-                    'GetAccountByIdRequest',
-                    { accountId: 12 }
-                ).then(function(response){
-                    console.log("angular soap SUCCESS")
+                    'AccountLoginRequest',
+                    user
+                ).
+                then(function(response){
+                    defer.resolve(response);
                     console.log(response);
                 },
                 function(response){
-                    console.log("angular soap FAILD")
                     console.log(response);
-                });;
-
-
-                //var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'
-
-
-                //$soap.post(_url,"CelsiusToFahrenheit", {Celsius : 80}).then(function(response){
-                //    console.log(" ")
-                //    console.log("angular soap")
-                //    console.log(response);
-                //});;
-
-               // var d = $q.defer();
-                //var _url = 'http://www.advantageonlineshopping.com/accountservice'
-                //_url = 'http://www.advantageonlineshopping.com/accountservice'
-                //
-                //$soap.post(_url,"GetAllAccounts").then(function(response){
-                //    console.log(" ")
-                //    console.log("angular soap")
-                //    console.log(response);
-                //});;
-
-
-                //$.soap({
-                //    url: _url + "/GetAllAccounts",
-                //    method: 'post',
-                //    headers: {
-                //        'Content-Type': 'text/xml; charset=UTF-8'
-                //    },
-                //    success: function (soapResponse) {
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log("jquery ")
-                //        console.log(soapResponse)
-                //        // do stuff with soapResponse
-                //        d.resolve(true)
-                //    },
-                //    error: function (err){
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log(" ")
-                //        console.log("jquery err")
-                //        console.log(err)
-                //        alert("err")
-                //    }
-                //});
-                //
-                //
-
-
-
-                //return d.promise
-//
-//===================================================================================================
-
-
-
-                //$.soap({
-                //    url: 'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
-                //    method: 'login',
-                //    data: user,
-                //    success: function (soapResponse) {
-                //
-                //        console.log(soapResponse)
-                //        alert()
-                //        // do stuff with soapResponse
-                //        // if you want to have the response as JSON use soapResponse.toJSON();
-                //        // or soapResponse.toString() to get XML string
-                //        // or soapResponse.toXML() to get XML DOM
-                //    },
-                //    error: function (SOAPResponse) {
-                //        // show error
-                //        console.log(SOAPResponse)
-                //    }
-                //});
-
-
-                //$("#btnCallWebService").click(function (event) {
-                //    var wsUrl = "http://localhost:8080/accountservice/accountservice.wsdl";
-                //    var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <getQuote xmlns:impl="http://abc.com/services/soap/server1.php">  <symbol>' + $("#txtName").val() + '</symbol>   </getQuote> </soap:Body></soap:Envelope>';
-                //    alert(soapRequest)
-                //    $.ajax({
-                //        type: "POST",
-                //        url: wsUrl,
-                //        contentType: "text/xml",
-                //        dataType: "xml",
-                //        data: soapRequest,
-                //        success: processSuccess,
-                //        error: processError
-                //    });
-                //
-                //});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                //return $soap.post(
-                //    "http://localhost:8080/accountservice/accountservice.wsdl",
-                //    "login",
-                //    user
-                //);
-
-                //return $soap.post(
-                //    "http://localhost:8080/accountservice/accountservice.wsdl?login",
-                //    "login",
-                //    user
-                //);
-
+                    defer.reject("Request failed! ");
+                });
 
                 //$soap.post(
-                //    "http://localhost:8080/accountservice/accountservice.wsdl/login",
-                //    "login",
-                //    JSON.stringify(user)
+                //    'http://localhost:8080/accountservice',
+                //    'GetAccountByIdRequest',
+                //    { accountId: 12 }
                 //).then(function(response){
-                //    console.log(response)
-                //    alert("responce")
-                //    alert(responce)
-                //});
-
+                //        defer.resolve(response);
+                //    },
+                //    function(response){
+                //        console.log(response);
+                //        defer.reject("Request failed! ");
+                //    });
                 //
-                //var v = $soap.post(
-                //    "http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl",
-                //    "GetAccountById",
-                //    { accountId : 12 }
-                //).then(function(response){
-                //    console.log("responce")
-                //    console.log(response)
-                //    alert(response)
-                //    console.log("responce")
-                //}).then(function(response){
-                //    console.log("err")
-                //    console.log(response)
-                //    alert(response)
-                //    console.log("err")
-                //});
-
-
-                //var request = $http({
-                //    "Content-Type": "application/json;charset=UTF-8",
-                //    "method": "post",
-                //    "url": "http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl",
-                //
-                //    //server.account.login(user),
-                //    "data": JSON.stringify(user) ,
-                //});
-                //return( request.then(
-                //    responseService.handleSuccess,
-                //    responseService.handleError
-                //));
-
-
-                //var request = $http.post("http://localhost:8080/accountservice/");
-                //return( request.then(
-                //    responseService.handleSuccess,
-                //    responseService.handleError
-                //));
-
-
+                return defer.promise;
 
                 //var request = $http({
                 //    "Content-Type": "application/json;charset=UTF-8",
@@ -379,3 +220,182 @@ define(['./module'], function (services) {
         }
     ]);
 });
+
+
+
+
+
+//var _url = 'http://www.w3schools.com/webservices/tempconvert.asmx'
+
+
+//$soap.post(_url,"CelsiusToFahrenheit", {Celsius : 80}).then(function(response){
+//    console.log(" ")
+//    console.log("angular soap")
+//    console.log(response);
+//});;
+
+// var d = $q.defer();
+//var _url = 'http://www.advantageonlineshopping.com/accountservice'
+//_url = 'http://www.advantageonlineshopping.com/accountservice'
+//
+//$soap.post(_url,"GetAllAccounts").then(function(response){
+//    console.log(" ")
+//    console.log("angular soap")
+//    console.log(response);
+//});;
+
+
+//$.soap({
+//    url: _url + "/GetAllAccounts",
+//    method: 'post',
+//    headers: {
+//        'Content-Type': 'text/xml; charset=UTF-8'
+//    },
+//    success: function (soapResponse) {
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log("jquery ")
+//        console.log(soapResponse)
+//        // do stuff with soapResponse
+//        d.resolve(true)
+//    },
+//    error: function (err){
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log(" ")
+//        console.log("jquery err")
+//        console.log(err)
+//        alert("err")
+//    }
+//});
+//
+//
+
+
+
+//return d.promise
+//
+//===================================================================================================
+
+
+
+//$.soap({
+//    url: 'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
+//    method: 'login',
+//    data: user,
+//    success: function (soapResponse) {
+//
+//        console.log(soapResponse)
+//        alert()
+//        // do stuff with soapResponse
+//        // if you want to have the response as JSON use soapResponse.toJSON();
+//        // or soapResponse.toString() to get XML string
+//        // or soapResponse.toXML() to get XML DOM
+//    },
+//    error: function (SOAPResponse) {
+//        // show error
+//        console.log(SOAPResponse)
+//    }
+//});
+
+
+//$("#btnCallWebService").click(function (event) {
+//    var wsUrl = "http://localhost:8080/accountservice/accountservice.wsdl";
+//    var soapRequest ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">   <soap:Body> <getQuote xmlns:impl="http://abc.com/services/soap/server1.php">  <symbol>' + $("#txtName").val() + '</symbol>   </getQuote> </soap:Body></soap:Envelope>';
+//    alert(soapRequest)
+//    $.ajax({
+//        type: "POST",
+//        url: wsUrl,
+//        contentType: "text/xml",
+//        dataType: "xml",
+//        data: soapRequest,
+//        success: processSuccess,
+//        error: processError
+//    });
+//
+//});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//return $soap.post(
+//    "http://localhost:8080/accountservice/accountservice.wsdl",
+//    "login",
+//    user
+//);
+
+//return $soap.post(
+//    "http://localhost:8080/accountservice/accountservice.wsdl?login",
+//    "login",
+//    user
+//);
+
+
+//$soap.post(
+//    "http://localhost:8080/accountservice/accountservice.wsdl/login",
+//    "login",
+//    JSON.stringify(user)
+//).then(function(response){
+//    console.log(response)
+//    alert("responce")
+//    alert(responce)
+//});
+
+//
+//var v = $soap.post(
+//    "http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl",
+//    "GetAccountById",
+//    { accountId : 12 }
+//).then(function(response){
+//    console.log("responce")
+//    console.log(response)
+//    alert(response)
+//    console.log("responce")
+//}).then(function(response){
+//    console.log("err")
+//    console.log(response)
+//    alert(response)
+//    console.log("err")
+//});
+
+
+//var request = $http({
+//    "Content-Type": "application/json;charset=UTF-8",
+//    "method": "post",
+//    "url": "http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl",
+//
+//    //server.account.login(user),
+//    "data": JSON.stringify(user) ,
+//});
+//return( request.then(
+//    responseService.handleSuccess,
+//    responseService.handleError
+//));
+
+
+//var request = $http.post("http://localhost:8080/accountservice/");
+//return( request.then(
+//    responseService.handleSuccess,
+//    responseService.handleError
+//));
+
