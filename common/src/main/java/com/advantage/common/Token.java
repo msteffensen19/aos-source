@@ -8,6 +8,9 @@ import java.security.Key;
  * Created by Evgeney Fiskin on 06-01-2016.
  */
 public abstract class Token {
+    protected static final String ROLE_FIELD_NAME = "role";
+    protected static final String USER_ID_FIELD_NAME = "userId";
+    protected static final String LOGIN_NAME_FIELD_NAME = "loginName";
     protected Key key;
     protected String issuer;
     protected String signatureAlgorithmName;
