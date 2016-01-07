@@ -47,8 +47,8 @@ define(['./module'], function (services) {
 
                 console.log("angular LOGIN START")
                 $soap.post(
-                    'http://www.advantageonlineshopping.com/accountservice',
-                    //'http://localhost:8080/accountservice',
+                    //'http://www.advantageonlineshopping.com/accountservice',
+                    'http://localhost:8080/accountservice',
                     'GetAccountById',
                     { accountId: 12 }
                 ).then(function(response){
