@@ -47,6 +47,8 @@ define(['./module'], function (services) {
                     console.log(response);
                     defer.reject("Request failed! ");
                 });
+
+                return defer.promise;
             }
 
         }]);
