@@ -1,7 +1,6 @@
 package com.advantage.common;
 
 import io.jsonwebtoken.CompressionCodec;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
@@ -12,13 +11,17 @@ import java.util.Base64;
  * Created by Evgeney Fiskin on 02-01-2016.
  */
 public class SecurityTools {
-    private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
     private static final String ISSUER = "www.adwantageonlineshopping.com";
     private static final String BASE64_CRYPTO_KEY = "0KHQvtGA0L7QuiDRgtGL0YHRj9GHINC+0LHQtdC30YzRj9C9INCyINC20L7Qv9GDINGB0YPQvdGD0LvQuCDQsdCw0L3QsNC9IMKpINChLiDQm9GD0LrRjNGP0L3QtdC90LrQvi4=";
-    private static final String signatureAlgorithmName = signatureAlgorithm.getJcaName();
+
+    private static final String signatureAlgorithmName = "HmacSHA512";
     private static final CompressionCodec compressionCodec = null;
     //public static final CompressionCodec compressionCodec = new GzipCompressionCodec();
     private static final Key key = decodeBase64Key(BASE64_CRYPTO_KEY);
+
+    public static String getSignatureAlgorithmName() {
+        return signatureAlgorithmName;
+    }
 
     private static String encodeBase64Key(Key key) {
         byte[] keyEncoded = key.getEncoded();
@@ -28,7 +31,6 @@ public class SecurityTools {
 
     private static Key decodeBase64Key(String base64Key) {
         byte[] decodedKey = Base64.getDecoder().decode(base64Key);
-        //Key result = new SecretKeySpec(decodedKey, "Hmac512");
         Key result = new SecretKeySpec(decodedKey, signatureAlgorithmName);
         return result;
     }
@@ -44,10 +46,6 @@ public class SecurityTools {
 
     public static CompressionCodec getCompressionCodec() {
         return compressionCodec;
-    }
-
-    public static SignatureAlgorithm getSignatureAlgorithm() {
-        return signatureAlgorithm;
     }
 
     public static String getIssuer() {

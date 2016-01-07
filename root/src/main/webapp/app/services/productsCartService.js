@@ -40,7 +40,7 @@ define(['./module'], function (services) {
                         url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
                         headers: {
                             "content-type": "application/json",
-                            "Authorization": user.response.token,
+                            "Authorization": "Bearer " + user.response.token,
                         }
                     });
                 }
@@ -62,7 +62,7 @@ define(['./module'], function (services) {
                             async: false,
                             headers: {
                                 "content-type": "application/json",
-                                "Authorization": user.response.token,
+                                "Authorization": "Bearer " + user.response.token,
                             },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
@@ -145,7 +145,7 @@ define(['./module'], function (services) {
                                 data : JSON.stringify(cartToReplace),
                                 headers: {
                                   "content-type": "application/json",
-                                  "Authorization": user.response.token,
+                                  "Authorization": "Bearer " + user.response.token,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
                             }).success(function(res){
@@ -163,7 +163,6 @@ define(['./module'], function (services) {
             }
 
             function addProduct(product, quantity) {
-
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
                 if (user && user.response) {
@@ -172,7 +171,7 @@ define(['./module'], function (services) {
                             method: "post",
                             headers: {
                                 "content-type": "application/json",
-                                "Authorization": user.response.token,
+                                "Authorization": "Bearer " + user.response.token,
                             },
                             async: false,
                             url: server.order.addProductToUser(user.response.userId,

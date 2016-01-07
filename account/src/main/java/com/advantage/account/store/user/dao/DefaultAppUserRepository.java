@@ -6,6 +6,7 @@ import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.util.ArgumentValidationHelper;
 import com.advantage.account.util.JPAQueryHelper;
 import com.advantage.common.Token;
+import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
 import com.advantage.common.dto.AppUserResponseDto;
 import com.advantage.root.util.ValidationHelper;
@@ -309,7 +310,7 @@ public class DefaultAppUserRepository extends AbstractRepository implements AppU
         //  Update changes
         updateAppUser(appUser);
 
-        Token token = new Token(appUser.getId(), AccountType.USER, email, appUser.getLoginName());
+        Token token = new TokenJWT(appUser.getId(), appUser.getLoginName(), AccountType.USER);
         String base64Token = token.generateToken();
 
         //  Return: Successful login attempt

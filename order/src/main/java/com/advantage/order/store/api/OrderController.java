@@ -1,10 +1,12 @@
 package com.advantage.order.store.api;
 
-//import com.advantage.order.store.order.dev_only.OrderPurchaseRequest;
+//import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 
+import ShipExServiceClient.SEAddress;
+import ShipExServiceClient.ShippingCostRequest;
+import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
-import com.advantage.order.store.order.dto.ShipExResponse;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponse;
 import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
@@ -26,6 +28,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @see HttpStatus#BAD_REQUEST (400) = The request cannot be fulfilled due to bad syntax.
+ *      General error when fulfilling the request would cause an invalid state. <br/>
+ *      e.g. Domain validation errors, missing data, etc.
+ * @see HttpStatus#NOT_IMPLEMENTED (501) = The server either does not recognise the
+ *      request method, or it lacks the ability to fulfill the request.
  * @author Binyamin Regev on 09/12/2015.
  */
 @RestController
@@ -124,9 +131,6 @@ public class OrderController {
             }
             else {
                 //  Replace user cart failed
-                //  NOT_IMPLEMENTED (501) = The server either does not recognise the
-                //                          request method, or it lacks the ability
-                //                          to fulfill the request.
                 httpStatus = HttpStatus.NOT_IMPLEMENTED;
 
                 shoppingCartResponse.setSuccess(false);
@@ -181,13 +185,6 @@ public class OrderController {
             shoppingCartResponse.setId(-1);
         }
 
-        /*
-        if (shoppingCartResponse.isSuccess()) {
-            return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(shoppingCartResponse, HttpStatus.CONFLICT);
-        }
-        */
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
@@ -225,89 +222,56 @@ public class OrderController {
         }
     }
 
-//    @RequestMapping(value = "/carts/ShipEx/dev_only", method = RequestMethod.GET)
-//    @ApiOperation(value = "Get ShipEx Shipping Cost WSDL")
-//    public ResponseEntity<ShipExResponse> getShippingCostFromShipEx(HttpServletRequest request, HttpServletResponse response) {
-//        ShipExResponse shipExResponse = shoppingCartService.getShippingCostFromShipEx();
-//        return new ResponseEntity<>(shipExResponse, HttpStatus.OK);
-//    }
+    /**
+     * At fisrt develop it as {@code POST} request, because it needs a <i>body</i>. <br/>
+     * In the future, it will be changed to {@code GET} request, after sending a
+     * request for <b><i>Account Service</i></b> to get parameters values.
+     * @param request
+     * @param response
+     * @return {@link ShippingCostResponse}
+     */
+    @RequestMapping(value = "/shippingcost/", method = RequestMethod.POST)
+    @ApiOperation(value = "Order shipping cost")
+    public ResponseEntity<ShippingCostResponse> getShippingCostFromShipEx(@RequestBody ShippingCostRequest costRequest,
+                                                                          HttpServletRequest request,
+                                                                          HttpServletResponse response) {
 
-    /*  =========================================================================================================   */
+        HttpStatus httpStatus = HttpStatus.OK;
 
-    public ResponseEntity<String> getWsdlStringTest1() {
+        /*
+        SEAddress address = new SEAddress();
+        address.setAddressLine1("address");
+        address.setCity("Jerusalem");
+        address.setCountry("IL");
+        address.setPostalCode("123123");
+        address.setState("Israel");
 
-        String stringURI = Url_resources.getUrlShipEx() + "/shipex.wsdl";
+        ShippingCostRequest costRequest = new ShippingCostRequest();
+        costRequest.setSEAddress(address);
+        costRequest.setSECustomerName("Customer Full Name");
+        costRequest.setSECustomerPhone("+972 77 7654321");
+        costRequest.setSENumberOfProducts(1);
+        costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
+        */
+        ShippingCostResponse costResponse = shoppingCartService.getShippingCostFromShipEx(costRequest);
 
-        System.out.println("Starting SOAPRequest...");
-        try {
-            URL url = new URL(stringURI);
-            URLConnection uc = url.openConnection();
-            System.out.println("url connection=\'" + uc.toString());
-            Map<String, List<String>> fields = uc.getHeaderFields();
-
-            System.out.println("SOAPConnectionFactory sfc = SOAPConnectionFactory.newInstance();");
-            SOAPConnectionFactory sfc = SOAPConnectionFactory.newInstance();
-            System.out.println("SOAPConnectionFactory sfc = " + sfc + "\n");
-
-            System.out.println("SOAPConnection connection = sfc.createConnection();");
-            SOAPConnection connection = sfc.createConnection();
-            System.out.println("SOAPConnection connection = " + connection + "\n");
-
-            System.out.println("MessageFactory mf = MessageFactory.newInstance();");
-            MessageFactory mf = MessageFactory.newInstance();
-
-            System.out.println("SOAPMessage sm = mf.createMessage();");
-            SOAPMessage sm = mf.createMessage();
-            System.out.println("SOAPMessage sm = " + sm + "\n");
-
-            System.out.println("SOAPHeader sh = sm.getSOAPHeader();");
-            SOAPHeader sh = sm.getSOAPHeader();
-            System.out.println("SOAPHeader sh = " + sh + "\n");
-
-            System.out.println("SOAPBody sb = sm.getSOAPBody();");
-            SOAPBody sb = sm.getSOAPBody();
-            System.out.println("SOAPBody sb = " + sb + "\n");
-
-            System.out.println("sh.detachNode();");
-            sh.detachNode();
-
-            System.out.println("QName bodyName = new QName(" + stringURI + ", \"ShippingCostRequest\", \"d\");");
-            QName bodyName = new QName(stringURI, "ShippingCostRequest", "d");
-            System.out.println("QName bodyName = " + bodyName + "\n");
-
-            System.out.println("SOAPBodyElement bodyElement = sb.addBodyElement(bodyName);");
-            SOAPBodyElement bodyElement = sb.addBodyElement(bodyName);
-            System.out.println("SOAPBodyElement bodyElement = " + bodyElement + "\n");
-
-            System.out.println("QName qn = new QName(\"aName\");");
-            QName qn = new QName("aName");
-            System.out.println("QName qn = " + qn + "\n");
-
-            System.out.println("SOAPElement quotation = bodyElement.addChildElement(qn);");
-            SOAPElement quotation = bodyElement.addChildElement(qn);
-
-            System.out.println("quotation.addTextNode(\"TextMode\");");
-            quotation.addTextNode("TextMode");
-
-            System.out.println("\n Soap Request:\n");
-
-            sm.writeTo(System.out);
-
-            System.out.println("URL endpoint = new URL(\"http://yourServer.com\");");
-            URL endpoint = new URL("http://yourServer.com");
-
-            System.out.println("SOAPMessage response = connection.call(sm, endpoint);");
-            SOAPMessage response = connection.call(sm, endpoint);
-
-            System.out.println("System.out.println(response.getContentDescription());");
-            System.out.println(response.getContentDescription());
-
-        } catch (Exception ex) {
-            System.out.println("ex.printStackTrace();");
-            ex.printStackTrace();
+        switch (costResponse.getReason()) {
+            case ShoppingCartService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
+                httpStatus = HttpStatus.BAD_REQUEST;
+                break;
+            /* Response failure */
+            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
+            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
+            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
+            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
+            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
+            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
+            default:
+                httpStatus = HttpStatus.OK;
         }
 
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>(costResponse, httpStatus);
     }
 
     /*  =========================================================================================================   */

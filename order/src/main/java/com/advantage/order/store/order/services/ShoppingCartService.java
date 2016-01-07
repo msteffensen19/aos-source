@@ -1,24 +1,21 @@
 package com.advantage.order.store.order.services;
 
-//import com.advantage.order.store.order.dev_only.OrderPurchaseRequest;
+//import com.advantage.order.store.order.dto.OrderPurchaseRequest;
+import AccountServiceClient.AccountServicePort;
+import AccountServiceClient.AccountServicePortService;
+import AccountServiceClient.GetAccountByIdRequest;
 import AccountServiceClient.GetAccountByIdResponse;
 import ShipExServiceClient.*;
-import com.advantage.common.Constants;
+import com.advantage.common.Url_resources;
 import com.advantage.common.enums.ResponseEnum;
-import com.advantage.common.enums.TransactionTypeEnum;
 import com.advantage.order.store.order.dao.ShoppingCartRepository;
-import com.advantage.order.store.order.dto.ShipExResponse;
-import com.advantage.order.store.order.dto.ShoppingCartDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponse;
-import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
+import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
-import com.advantage.root.util.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -27,6 +24,13 @@ import java.util.List;
  */
 @Service
 public class ShoppingCartService {
+    public static final String ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY = "Get shipping cost request is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY = "Get shipping cost response failure, currency is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT = "Get shipping cost response failure, shipping cost amount invalid empty ";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH = "Get shipping cost response failure, transaction type mismatch";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY = "Get shipping cost response failure, transaction date is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY = "Get shipping cost response failure, transaction reference is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH = "Get shipping cost response failure, invalid transaction reference length";
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -99,72 +103,148 @@ public class ShoppingCartService {
         return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
     }
 
-//    public GetAccountByIdResponse getAccountById() {
-//        return new GetAccountByIdResponse();
-//    }
+    /**
+     * Call {@link ShoppingCartRepository} to do the order purchase process.
+     * @param userId
+     * @param orderPurchaseRequest
+     * @return
+     */
+    @Transactional
+    public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
+        OrderPurchaseResponse purchaseResponse = new OrderPurchaseResponse();
+        return purchaseResponse;
+    }
 
-    public ShippingCostResponse getShippingCostFromShipEx() throws MalformedURLException {
-        //  "GetAccountById"
-        //  Shipping Express --> "ShippingCost"
-        /*
-        shoppingCartRepository.getShippingCostFromShipEx();
-         */
-        SEAddress address = new SEAddress();
-        ShippingCostRequest costRequest = new ShippingCostRequest();
+    public GetAccountByIdResponse getAccountById(GetAccountByIdRequest accountRequest) {
+        GetAccountByIdResponse accountResponse = new GetAccountByIdResponse();
 
-        address.setAddressLine1("address");
-        address.setCity("Jerusalem");
-        address.setCountry("IL");
-        address.setPostalCode("123123");
-        address.setState("Israel");
+        accountResponse.setResult(accountRequest != null);
+        if (accountResponse.isResult()) {
+            URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
 
-        costRequest.setSEAddress(address);
-        costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
-        costRequest.setSECustomerName("Customer Full Name");
-        costRequest.setSECustomerPhone("+972 77 7654321");
-        costRequest.setSENumberOfProducts(1);
+            AccountServicePortService accountPortService = new AccountServicePortService(urlWsdlLocation);
 
-        URL urlWsdlLocation = new URL("http://localhost:8080/ShipEx/shipex.wsdl");
-        //ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation, serviceName);
-        ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation);
+            AccountServicePort accountServicePort = accountPortService.getAccountServicePortSoap11();
 
-        ShipExPort shipExPort = shipExPortService.getShipExPortSoap11();
-        ShippingCostResponse costResponse = shipExPort.shippingCost(costRequest);
-
-        if (costResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
-            //  Failure - Response code IS NOT "OK"
-            System.out.println("Failure - Response code IS NOT \'OK\'");
+            accountResponse = accountServicePort.getAccountById(accountRequest);
+        }
+        else {
+            System.out.println("Get account by id request is empty");
         }
 
-        if (costResponse.getAmount().isEmpty()) {
-            //  Failure - invalid amount (empty)
-            System.out.println("Failure - invalid amount (empty)");
+        return accountResponse;
+    }
+
+    public ShippingCostResponse getShippingCostFromShipEx(ShippingCostRequest costRequest) {
+
+        ShippingCostResponse costResponse = null;
+
+        if (costRequest == null) {
+            return generateShippingCostResponseError(costRequest.getSETransactionType(), ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY);
         }
 
-        if (costResponse.getCurrency().isEmpty()) {
-            //  Failure - invalid currency (empty)
-            System.out.println("Failure - invalid currency (empty)");
-        }
+        if (costResponse == null) {
+            URL urlWsdlLocation = Url_resources.getUrlSoapShipEx();
 
-        if (costResponse.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType())) {
-            //  Failure - Transaction type mismatch
-            System.out.println("Failure - Transaction type mismatch");
+            //QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
+            //ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation, serviceName);
+            ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation);
+
+            ShipExPort shipExPort = shipExPortService.getShipExPortSoap11();
+
+            costResponse = shipExPort.shippingCost(costRequest);
+
+            if (! costResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
+                System.out.println("Shipping Express: getShippingCost() --> Response returned \'" + costResponse.getCode() + "\', Reason: \'" + costResponse.getReason() + "\'");
+                costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> Response returned \'" + costResponse.getCode() + "\', Reason: \'" + costResponse.getReason() + "\'");
+            }
+            else if (costResponse.getAmount().isEmpty()) {
+                System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT);
+                costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT);
+            }
+            else if (costResponse.getCurrency().isEmpty()) {
+                System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
+                costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
+            }
+            else if (costResponse.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType())) {
+                System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+                costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+            }
+
         }
 
         return costResponse;
     }
 
+    public PlaceShippingOrderResponse placeShippingOrder(PlaceShippingOrderRequest orderRequest) {
 
-//    /**
-//     * Call {@link ShoppingCartRepository} to do the order purchase process.
-//     * @param userId
-//     * @param orderPurchaseRequest
-//     * @return
-//     */
-//    @Transactional
-//    public ShoppingCartResponse doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
-//        return shoppingCartRepository.doPurchase(userId, orderPurchaseRequest);
-//    }
+        PlaceShippingOrderResponse orderResponse = null;
+
+        if (orderRequest == null) {
+            orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping order request is empty");
+        }
+
+        if (orderResponse == null) {
+            URL urlWsdlLocation = Url_resources.getUrlSoapShipEx();
+
+            //QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
+            //ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation, serviceName);
+            ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation);
+
+            ShipExPort shipExPort = shipExPortService.getShipExPortSoap11();
+
+            orderResponse = shipExPort.placeShippingOrder(orderRequest);
+
+            if (! orderResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
+                System.out.println("Shipping Express: placeShippingOrder() --> Response returned \'" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
+                orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> Response returned '" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
+            }
+            else if (orderResponse.getTransactionDate().isEmpty()) {
+                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
+                orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
+            }
+            else if (orderResponse.getTransactionReference().isEmpty()) {
+                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
+                orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
+            }
+            else if (orderResponse.getTransactionReference().length() == 10) {
+                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
+                orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
+            }
+            else if (orderResponse.getSETransactionType().equalsIgnoreCase(orderRequest.getSETransactionType())) {
+                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+                orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+            }
+
+        }
+
+        return orderResponse;
+    }
+
+    public ShippingCostResponse generateShippingCostResponseError(String transactionType, String errorText) {
+
+        ShippingCostResponse costResponse = new ShippingCostResponse();
+
+        costResponse.setSETransactionType(transactionType);
+        costResponse.setReason(errorText);
+        costResponse.setAmount("0");
+        costResponse.setCode(ResponseEnum.ERROR.getStringCode());
+
+        return costResponse;
+    }
+
+    public PlaceShippingOrderResponse generatePlaceShippingOrderResponseError(String transactionType, String errorText) {
+
+        PlaceShippingOrderResponse orderResponse = new PlaceShippingOrderResponse();
+
+        orderResponse.setSETransactionType(transactionType);
+        orderResponse.setCode(ResponseEnum.ERROR.getStringCode());
+        orderResponse.setReason(errorText);
+        orderResponse.setTransactionDate("");
+        orderResponse.setTransactionReference("");
+
+        return orderResponse;
+    }
 
 }
 

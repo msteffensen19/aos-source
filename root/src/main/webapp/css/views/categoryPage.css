@@ -11,10 +11,10 @@
     margin-top:135px;
 }
 
-
 .categoryData{
     color:white;
-    background-position: 57% 138%;
+    /*background-position: 57% 138%;*/
+    background-position: right ;
     background-size: cover;
     background-repeat: no-repeat;
     padding: 6% 5% 4.55% 5%;

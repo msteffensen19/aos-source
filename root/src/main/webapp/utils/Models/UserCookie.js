@@ -10,7 +10,8 @@ userCookie.fillParams = function(name, email, response){
       this.response = response;
 //    this.sessionId = sessionId;
 //    this.id = id;
-//    this.token = token;
+//    this.token = "Bearer " + token;
+//
 }
 
 userCookie.getKey = function(lastUser){

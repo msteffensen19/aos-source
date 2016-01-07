@@ -1,7 +1,7 @@
 package com.advantage.common;
 
 /**
- * Created by Evgeney Fiskin on 31-12-2015.
+ * @author Evgeney Fiskin on 31-12-2015.
  */
 
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,9 @@ public class Url_resources {
     private static URL urlPrefixOrder;
     private static URL urlPrefixSafePay;
     private static URL urlPrefixService;
-    private static URL urlPrefixShipEx;
+
+    private static URL urlPrefixSoapAccount;
+    private static URL urlPrefixSoapShipEx;
 
     @Inject
     private Environment environment;
@@ -36,16 +38,18 @@ public class Url_resources {
         urlPrefixOrder = generateUrlPrefix("Order");
         urlPrefixSafePay = generateUrlPrefix("SafePay");
         urlPrefixService = generateUrlPrefix("Service");
-        urlPrefixShipEx = generateUrlPrefix("ShipEx");
+
+        urlPrefixSoapAccount = generateUrlSoapPrefix("Account");
+        urlPrefixSoapShipEx = generateUrlSoapPrefix("ShipEx");
 
         System.out.println("Url_resources: ");
-        System.out.println("   Account=\'" + this.getUrlAccount() + "\'");
-        System.out.println("   Catalog=\'" + this.getUrlCatalog() + "\'");
-        System.out.println("   MasterCredit=\'" + this.getUrlMasterCredit() + "\'");
-        System.out.println("   Order=\'" + this.getUrlOrder() + "\'");
-        System.out.println("   SafePay=\'" + this.getUrlSafePay() + "\'");
-        System.out.println("   Service=\'" + this.getUrlService() + "\'");
-        System.out.println("   ShipEx=\'" + this.getUrlShipEx() + "\'");
+        System.out.println("   Catalog=\'" + getUrlCatalog() + "\'");
+        System.out.println("   MasterCredit=\'" + getUrlMasterCredit() + "\'");
+        System.out.println("   Order=\'" + getUrlOrder() + "\'");
+        System.out.println("   SafePay=\'" + getUrlSafePay() + "\'");
+        System.out.println("   Service=\'" + getUrlService() + "\'");
+        System.out.println("   Account (SOAP)=\'" + getUrlSoapAccount() + "\'");
+        System.out.println("   ShipEx (SOAP)=\'" + getUrlSoapShipEx() + "\'");
 
         return 1;
     }
@@ -67,6 +71,28 @@ public class Url_resources {
         }
 
         return url;
+
+    }
+
+    public URL generateUrlSoapPrefix(String serviceName) {
+
+        URL urlWithWsdl = null;
+
+        try {
+            String scheme = Constants.URI_SCHEME;
+            String host = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.host");
+            int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.port"));
+            String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.suffix");
+            String wsdl = '/' + environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.wsdl");
+
+            urlWithWsdl = new URL(new URL(scheme, host, port, suffix), wsdl);
+
+        } catch (Throwable e) {
+            System.err.println("Config file wrong");
+            e.printStackTrace();
+        }
+
+        return urlWithWsdl;
 
     }
 
@@ -105,6 +131,8 @@ public class Url_resources {
         return urlPrefixAccount;
     }
 
+    public static URL getUrlSoapAccount() { return urlPrefixSoapAccount; }
+
     public static URL getUrlCatalog() {
         return urlPrefixCatalog;
     }
@@ -123,9 +151,7 @@ public class Url_resources {
         return urlPrefixService;
     }
 
-    public static URL getUrlShipEx() {
-        return urlPrefixShipEx;
-    }
+    public static URL getUrlSoapShipEx() { return urlPrefixSoapShipEx; }
 
     @Deprecated
     private URL getUrlPrefix(String serviceName) {

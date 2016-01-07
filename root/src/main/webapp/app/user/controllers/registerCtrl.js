@@ -22,7 +22,6 @@ define(['./module'], function (controllers) {
             })
 
             s.model = {
-
                 username: '', email: '', password: '', confirm_password: '',
                 firstName: '', lastName: '', phoneNumber: '', country: {}, address: '',
                 city: '', postalCode: '', state: '', offers_promotion: true,

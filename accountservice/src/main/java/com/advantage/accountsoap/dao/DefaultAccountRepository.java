@@ -2,6 +2,7 @@ package com.advantage.accountsoap.dao;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.dto.AccountStatusResponse;
+import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
@@ -331,8 +332,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         //  Return: Successful login attempt
         return new AccountStatusResponse(true, "Login Successful", account.getId(),
-                getTokenKey(account.getId(), AccountType.valueOfCode(account.getAccountType()), account.getEmail(),
-                        account.getLoginName()).generateToken());
+                getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType())
+                ).generateToken());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -399,8 +400,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      *
      * @return Random {@link UUID} string.
      */
-    private Token getTokenKey(long accountId, AccountType accountType, String email, String loginName) {
-        Token token = new Token(accountId, accountType, email, loginName);
+    private Token getToken(long accountId, String loginName, AccountType accountType) {
+        Token token = new TokenJWT(accountId, loginName, accountType);
 
         return token;
     }

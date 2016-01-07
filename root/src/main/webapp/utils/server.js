@@ -33,7 +33,6 @@ fileText.forEach(function(a){
     switch (a.charCodeAt(0))
     {
         case 10: case 13:
-            var re = new RegExp('.', 'g');
             var validParam = true;
             for(var i = 0; i < invalidChars.length; i++)
             {

@@ -18,9 +18,10 @@ public class PropertiesFilesTests {
     @Test
     public void testExternalFilePropertyName() throws Exception {
         String[] properties = {
-                "account.service.url.host",
-                "account.service.url.port",
-                "account.service.url.suffix",
+                "account.soapservice.url.host",
+                "account.soapservice.url.port",
+                "account.soapservice.url.suffix",
+                "account.soapservice.url.wsdl",
 
                 "catalog.service.url.host",
                 "catalog.service.url.port",
@@ -38,9 +39,10 @@ public class PropertiesFilesTests {
                 "mastercredit.service.url.port",
                 "mastercredit.service.url.suffix",
 
-                "shipex.service.url.host",
-                "shipex.service.url.port",
-                "shipex.service.url.suffix",
+                "shipex.soapservice.url.host",
+                "shipex.soapservice.url.port",
+                "shipex.soapservice.url.suffix",
+                "shipex.soapservice.url.wsdl",
 
                 "safepay.service.url.host",
                 "safepay.service.url.port",
@@ -79,12 +81,12 @@ public class PropertiesFilesTests {
                 "account.hibernate.db.url.port",
                 "catalog.hibernate.db.url.port",
                 "order.hibernate.db.url.port",
-                "account.service.url.port",
+                "account.soapservice.url.port",
                 "catalog.service.url.port",
                 "order.service.url.port",
                 "service.service.url.port",
                 "mastercredit.service.url.port",
-                "shipex.service.url.port",
+                "shipex.soapservice.url.port",
                 "safepay.service.url.port"
         };
         validatePropertiesAreNaturalNumber(properties);
