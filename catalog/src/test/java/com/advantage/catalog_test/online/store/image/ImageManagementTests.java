@@ -3,23 +3,25 @@ package com.advantage.catalog_test.online.store.image;
 //import java.util.HashMap;
 //import java.util.Map;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
-
-import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
-import org.apache.commons.io.FileUtils;
-import org.junit.*;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
+import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
+import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 
 /**
  * @author Binyamin Regev
@@ -71,6 +73,8 @@ public class ImageManagementTests {
      * repository file <b>"imageManagement.xml"</b> exists in directory
      * <b>"C:\\Temp\\advantage"</b>
      */
+    @Ignore
+    //TODO-EVG replace C:\temp to temp var
     @Test
     public void testIsFileExists() throws IOException {
 
@@ -96,6 +100,8 @@ public class ImageManagementTests {
      * @see ImageManagementAccess
      * @see ManagedImage
      */
+    @Ignore
+    //TODO-EVG unignore after testIsFileExists will work in Linux
     @Test(expected = NullPointerException.class)
     public void testImageExistsById() throws IOException {
 
