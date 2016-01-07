@@ -47,7 +47,7 @@ define(['./module'], function (services) {
 
                 $soap.post(
                     'http://localhost:8080/accountservice',
-                    'GetAccountById',
+                    'GetAccountByIdRequest',
                     { accountId: 12 }
                 ).then(function(response){
                     console.log("angular soap SUCCESS")
