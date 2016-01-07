@@ -10,41 +10,58 @@ define(['./module'], function (services) {
             // Return the public API.
             return ({
                 login: login,
-                getConfiguration : getConfiguration,
+                getConfiguration: getConfiguration,
             });
 
-            function getConfiguration(){
+            function getConfiguration() {
 
                 var request = $http({
-                 "method": "get",
-                 "url": server.service.getConfiguration(),
-                 });
-                 return( request.then(
-                 responseService.handleSuccess,
-                 responseService.handleError
-                 ));
+                    "method": "get",
+                    "url": server.service.getConfiguration(),
+                });
+                return ( request.then(
+                    responseService.handleSuccess,
+                    responseService.handleError
+                ));
 
             }
 
 
-            function login (user){
+            //response.setHeader("Access-Control-Allow-Origin", "*");
+            //response.setHeader("Access-Control-Request-Method", "POST, GET, OPTIONS, DELETE");
+            //response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            //response.setHeader("Access-Control-Max-Age", "3600");
+            //response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, soapaction");
+
+
+            function login(user) {
 
                 var defer = $q.defer();
                 var params = server.account.login();
 
                 $soap.post(params.path, params.method, user).
-                then(function(response){
+                then(function (response) {
                     defer.resolve(response);
-                },
-                function(response){
-                    console.log(response);
-                    defer.reject("Request failed! ");
-                });
-                return defer.promise;
-            }
 
-        }
-    ]);
+                    console.log("angular LOGIN START")
+                    $soap.post(
+                        //'http://www.advantageonlineshopping.com/accountservice',
+                        'http://localhost:8080/accountservice',
+                        'GetAccountByIdRequest',
+                        {accountId: 12}
+                    ).then(function (response) {
+                            console.log("angular soap SUCCESS")
+                            console.log(response);
+                            defer.resolve(response);
+                        },
+                        function (response) {
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                });
+            }
+        }]);
 });
 
 
