@@ -9,7 +9,7 @@ import java.util.List;
  */
 public enum PaymentMethodEnum {
     MASTER_CREDIT("MasterCredit"),
-    SHIP_EX("ShipEx");
+    SAFE_PAY("SafePay");
 
     private String stringCode;
 

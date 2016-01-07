@@ -9,56 +9,27 @@ public class ShoppingCartResponse {
     private String reason;
     private long id;
 
-    /**
-     * @param success
-     * @param reason
-     * @param id
-     */
     public ShoppingCartResponse(boolean success, String reason, long id) {
         this.setSuccess(success);
         this.setReason(reason);
         this.setId(id);
     }
 
-    /**
-     * @return
-     */
     public boolean isSuccess() {
         return success;
     }
 
-    /**
-     * @param success
-     */
     public void setSuccess(boolean success) {
         this.success = success;
     }
 
-    /**
-     * @return
-     */
     public String getReason() {
         return reason;
     }
 
-    /**
-     * @param reason
-     */
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
+    public void setReason(String reason) { this.reason = reason; }
 
-    /**
-     * @return
-     */
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    /**
-     * @param id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id;}
 }

@@ -103,18 +103,6 @@ public class ShoppingCartService {
         return shoppingCartRepository.verifyProductsQuantitiesInUserCart(userId, shoppingCartProducts);
     }
 
-    /**
-     * Call {@link ShoppingCartRepository} to do the order purchase process.
-     * @param userId
-     * @param orderPurchaseRequest
-     * @return
-     */
-    @Transactional
-    public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest orderPurchaseRequest) {
-        OrderPurchaseResponse purchaseResponse = new OrderPurchaseResponse();
-        return purchaseResponse;
-    }
-
     public GetAccountByIdResponse getAccountById(GetAccountByIdRequest accountRequest) {
         GetAccountByIdResponse accountResponse = new GetAccountByIdResponse();
 
