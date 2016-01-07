@@ -3,7 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('registerService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
+    services.service('registerService', ['$soap', '$http', '$q', 'resHandleService',
+        function ($soap, $http, $q, responseService) {
         // Return public API.
         return({
             register: register,
@@ -11,7 +12,7 @@ define(['./module'], function (services) {
         });
 
 
-        function getAllCountries(model) {
+        function getAllCountries() {
             return responseService.getAllCountries();
         }
 
@@ -43,12 +44,25 @@ define(['./module'], function (services) {
                 "zipcode": model.postalCode,
             }
 
-            var request = $http({
-                method: "post",
-                url: server.account.register(model),
-                data: JSON.stringify(expectToReceive),
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+            var defer = $q.defer();
+            var params = server.account.register();
+
+            $soap.post(params.path, params.method, expectToReceive).
+            then(function(response){
+                    defer.resolve(response);
+                },
+                function(response){
+                    console.log(response);
+                    defer.reject("Request failed! ");
+                });
+            return defer.promise;
+
+            //var request = $http({
+            //    method: "post",
+            //    url: server.account.register(model),
+            //    data: expectToReceive,
+            //});
+            //return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
     }]);

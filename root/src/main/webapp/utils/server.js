@@ -89,6 +89,7 @@ var serviceKey = "http://"+
     services_properties['service_service_url_port'] + "/" +
     services_properties['service_service_url_suffix'];
 
+var wsdlPath = 'http://localhost:8080/accountservice';
 
 var server = {
 
@@ -162,13 +163,18 @@ var server = {
         },
 
         register : function(){
-            return accountKey + "/users";
+            return {
+                path: wsdlPath,
+                method: 'AccountCreateRequest'
+            }
         },
 
         login : function(){
-            return accountKey + "/login";
+            return {
+                path: wsdlPath,
+                method: 'AccountLoginRequest'
+            }
         },
-
 
     },
     service: {

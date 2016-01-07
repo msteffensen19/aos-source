@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+#form{
+    width: 100%;
+}
+
 #infoDemo, #form{
     display: table-cell;
     vertical-align: top;
@@ -38,7 +42,7 @@ white-space: nowrap;
 
 #infoDemo > div h4 {
     padding: 5px;
-    background-image: url(../../../css/images/Bell.png);
+    background-image: url(/css/images/Bell.png);
     background-repeat:no-repeat;
     background-position: 12% 50%;
     font-size: 20px;
@@ -92,44 +96,6 @@ display: block;
     right: 0px;
     top: 12px;
 }
-
-#formCover {
-
-}
-/*
-
-#formCover .validationInfo{
-    display: none;
-    padding: 20px;
-    padding-left: 40px;
-    background-color: white;
-    border:solid 1px #2d2d2d;
-    position: absolute;
-    right: -13px;
-    top: 38px;
-    z-index: 20;
-}
-
-#formCover .validationInfo:before{
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    border-bottom: 10px solid #2d2d2d;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-}
-
-#formCover .validationInfo:after{
-    content: '';
-    position: absolute;
-    top: -8px;
-    right: 10px;
-    border-bottom: 10px solid white;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-}
-*/
 
 #formCover .validationInfo ul li span{
     color: #ff454f;
@@ -214,11 +180,9 @@ display: block;
 
 @media screen and (max-width: 1200px)
 {
-
     #formCover > div span {
         width: 40%;
     }
-
 }
 
 @media screen and (max-width: 940px)

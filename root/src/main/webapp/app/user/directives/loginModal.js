@@ -32,58 +32,54 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
-                        userService.login(user).then(function (response) {
+                        userService.login(user).then(function (res) {
 
-                            console.log(response);
-                            alert(response);
+                            var response = { userId : res.userid, reason: res.reason, success : res.success, token: res.token }
 
-                                if(response.userId != -1)
-                                {
-                                    if(response.userId === undefined)
-                                    {
-                                        if(response.data !== undefined)
-                                        {
-                                            $timeout(function(){
-                                                $scope.message = "";
-                                            }, 2000)
+                            if (response.userId != -1) {
 
-                                            $scope.message = response.data.reason;
+                                if (response.userId === undefined) {
 
-                                            var count = incrementLogins();
-                                            if(count >= 3) {
-                                                console.log(count);
-                                                $cookie("pcBlocked", new Date(new Date()).getTime() + (10*60000));
-                                                //question: Ask maria what to show!
-                                                return;
-                                            }
-                                        }
+                                    $timeout(function () { $scope.message = ""; }, 2000);
+                                    $scope.message = response.reason;
+
+                                    var count = incrementLogins();
+                                    if (count >= 3) {
+                                        console.log(count);
+                                        $cookie("pcBlocked", new Date(new Date()).getTime() + (10 * 60000));
+                                        //question: Ask maria what to show!
                                         return;
                                     }
+                                    return;
+                                }
 
-                                    $cookie.remove("loginsCounter");
-                                    userCookie.fillParams($scope.user.loginUser, $scope.user.email, response);
-                                    $rootScope.userCookie = userCookie;
+                                $cookie.remove("loginsCounter");
+                                userCookie.fillParams($scope.user.loginUser, $scope.user.email, response);
+                                $rootScope.userCookie = userCookie;
 
-                                    if(rememberMe){
+                                if (rememberMe) {
 
-                                         $cookie(userCookie.getKey(userCookie), userCookie, { expirationUnit: 'minutes', expires: 60 });
-                                        $cookie('lastlogin', userCookie.getKey(userCookie));
-                                        console.log($cookie(userCookie.getKey(userCookie)));
-                                    }
-                                    else{
-                                        $cookie.remove("userCookie" + $scope.user.email);
-                                    }
-
-                                    productsCartService.joinCartProducts().then(function(cart){
-                                        $scope.cart = cart;
+                                    $cookie(userCookie.getKey(userCookie), userCookie, {
+                                        expirationUnit: 'minutes',
+                                        expires: 60
                                     });
-
-                                    wellcome();
+                                    $cookie('lastlogin', userCookie.getKey(userCookie));
+                                    console.log($cookie(userCookie.getKey(userCookie)));
                                 }
                                 else {
-                                    wrongFields();
+                                    $cookie.remove("userCookie" + $scope.user.email);
                                 }
-                            });
+
+                                productsCartService.joinCartProducts().then(function (cart) {
+                                    $scope.cart = cart;
+                                });
+
+                                wellcome();
+                            }
+                            else {
+                                wrongFields();
+                            }
+                        });
                     }
                     /*=============================== end Sign in ===============================*/
 
