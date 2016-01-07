@@ -96,9 +96,6 @@ public class OrderHeader {
     @Column(name = "safe_pay_username")
     private String username;            //  SafePay ONLY. SafePay.username
 
-    @Column(name = "safe_pay_password")
-    private String password;            //  SafePay ONLY. SafePay.password (encrypted with HASH)
-
     @Column(name = "customer_phone")
     private String customerPhone;       //  International phone number
 
@@ -272,14 +269,6 @@ public class OrderHeader {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getCustomerPhone() {

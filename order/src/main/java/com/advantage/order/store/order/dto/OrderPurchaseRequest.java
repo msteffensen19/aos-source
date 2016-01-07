@@ -38,8 +38,8 @@ public class OrderPurchaseRequest {
      * @param quantity
      * @return
      */
-    public boolean addProductToPurchase(Long productId, String productName, double pricePerItem, int quantity) {
-        boolean result = purchasedProducts.add(new PurchasedProductInformation(productId, productName, pricePerItem, quantity));
+    public boolean addProductToPurchase(Long productId, String productName, String hexColor, double pricePerItem, int quantity) {
+        boolean result = purchasedProducts.add(new PurchasedProductInformation(productId, productName, hexColor, pricePerItem, quantity));
         return result;
     }
 
@@ -50,8 +50,8 @@ public class OrderPurchaseRequest {
      * @param quantity
      * @return
      */
-    public boolean addProductToPurchase(Long productId, double pricePerItem, int quantity) {
-        boolean result = purchasedProducts.add(new PurchasedProductInformation(productId, "", pricePerItem, quantity));
+    public boolean addProductToPurchase(Long productId, double pricePerItem, String hexColor, int quantity) {
+        boolean result = purchasedProducts.add(new PurchasedProductInformation(productId, "", hexColor, pricePerItem, quantity));
         return result;
     }
 
