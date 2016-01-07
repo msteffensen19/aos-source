@@ -99,6 +99,7 @@ var english = {
     'TOP_RESULTS_FOR' : 'TOP RESULTS FOR',
     'View_All' : 'View All',
     'EDIT' : 'EDIT',
+    'Edit' : 'Edit',
     'REMOVE': 'REMOVE',
 
     'IDENTIFICATION' : 'IDENTIFICATION',
@@ -114,8 +115,8 @@ var english = {
     'Edit_shipping_Details' : 'Edit shipping Details',
     'NEXT' : 'NEXT',
     'Choose_payment_method_below' : 'Choose payment method below ',
-    'a' : 'a',
-    'a' : 'a',
+    'Back_to_shipping_details' : 'Back to shipping details',
+    'PAY_NOW' : 'PAY NOW',
     'a' : 'a',
     'a' : 'a',
     'a' : 'a',

@@ -18,7 +18,6 @@ define(['./module'], function (controllers) {
             s.shippingCost = resolveParams.shippingCost;
             s.userLogin = resolveParams.userLogin;
 
-
             $("nav .navLinks").css("display" , "none");
         }]);
 });

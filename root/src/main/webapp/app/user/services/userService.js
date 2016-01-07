@@ -46,8 +46,8 @@ define(['./module'], function (services) {
             function login (user){
 
                 $soap.post(
-                    'http://www.advantageonlineshopping.com/accountservice/accountservice.wsdl',
-                    'GetAccountById',
+                    'http://www.advantageonlineshopping.com/accountservice',
+                    'GetAccountByIdRequest',
                     { accountId: 12 }
                 ).then(function(response){
                     console.log("angular soap SUCCESS")
