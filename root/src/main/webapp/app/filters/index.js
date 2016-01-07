@@ -5,6 +5,8 @@
 
 define([
     './trustHTML',
+    './secCatWord',
+    './last4DigitsCard',
     './productsCartCount',
     './productsCartSum',
     './productQuantity',

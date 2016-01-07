@@ -33,6 +33,18 @@ define(['./module'], function (services) {
             //response.setHeader("Access-Control-Max-Age", "3600");
             //response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, soapaction");
 
+                $soap.post(
+                    'http://www.advantageonlineshopping.com/accountservice',
+                    'GetAccountByIdRequest',
+                    { accountId: 12 }
+                ).then(function(response){
+                    console.log("angular soap SUCCESS")
+                    console.log(response);
+                },
+                function(response){
+                    console.log("angular soap FAILD")
+                    console.log(response);
+                });;
 
             function login(user) {
 
