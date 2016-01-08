@@ -1,0 +1,265 @@
+{
+  "@self" : "/csa/api/topology-model/topology/c7c9bddb-bd98-4511-a1f3-eba9621904aa",
+  "@type" : "urn:x-hp:2013:software:cloud:topology_model:topology",
+  "groupId" : "com.hp.csa",
+  "artifactId" : "90bbbef65144501f0151d23cb235311c",
+  "version" : "1.0.0",
+  "displayName" : "Advantage Online Shopping Design",
+  "description" : "",
+  "resources" : [ {
+    "id" : "a6b821eb-02d8-5225-6aae-815d214f0d89",
+    "name" : "Advantage OnlineShopping - GenProtocol",
+    "component" : {
+      "@self" : "/csa/api/topology-model/component-type/a9229d24-80d6-4f74-835b-afa2f383d2fd",
+      "groupId" : "com.hp.csa.type.HPOO",
+      "artifactId" : "LibraryIntegrationsHewlettPackardCloudServiceAutomationComponentsHPOOAdvantageOnlineShopping100",
+      "version" : "1.0.0"
+    },
+    "properties" : [ {
+      "propertyKey" : "hostusername",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "configurationurl",
+      "propertyValue" : {
+        "value" : "http://myd-vm16900.hpswlabs.adapps.hp.com:8080/job/Software/ws/deployabs.vbs",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "rexecprotocol",
+      "propertyValue" : {
+        "value" : "GlobalShell",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "_modifiable_properties",
+      "propertyValue" : {
+        "value" : "artifacturl",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "localfilepath",
+      "propertyValue" : {
+        "value" : "ROOT.war",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "configfilename",
+      "propertyValue" : {
+        "value" : "deployabs.vbs",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "apphostname",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "artifactusername",
+      "propertyValue" : {
+        "value" : "demoapp",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "artifactpassword",
+      "propertyValue" : {
+        "value" : "ENC(snGEWaiRcmHC4ba60pxYxg==)",
+        "type" : "string_encrypted"
+      }
+    }, {
+      "propertyKey" : "_enable_modify_during_lifecycle_properties",
+      "propertyValue" : {
+        "value" : "",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "port",
+      "propertyValue" : {
+        "value" : "22",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "response",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "artifacturl",
+      "propertyValue" : {
+        "value" : "http://myd-vm16900.hpswlabs.adapps.hp.com:8080/job/Demo.App.Build/ws/root/target/ROOT.war",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "privatekeyPath",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "remotefilepath",
+      "propertyValue" : {
+        "value" : "/c/users/hpadmin/",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "servicecommand",
+      "propertyValue" : {
+        "value" : "cscript  c:\\\\Users\\\\hpadmin\\\\deployabs.vbs",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "hostpassword",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    } ],
+    "outgoingRelations" : [ {
+      "relationType" : "association",
+      "id" : "8699b810-9be7-59e5-694a-9287fcf9f14d",
+      "properties" : [ {
+        "propertyKey" : "_enable_modify_during_lifecycle_properties",
+        "propertyValue" : {
+          "value" : null,
+          "type" : "string"
+        }
+      }, {
+        "propertyKey" : "_modifiable_properties",
+        "propertyValue" : {
+          "value" : null,
+          "type" : "string"
+        }
+      }, {
+        "propertyKey" : "_relation_type",
+        "propertyValue" : {
+          "value" : {
+            "first" : "Association",
+            "second" : "ASSOCIATION"
+          },
+          "type" : "pair"
+        }
+      } ],
+      "relationDescriptorName" : "deployOn_LibraryIntegrationsHewlettPackardCloudServiceAutomationComponentsHPOOAdvantageOnlineShopping100__VERSION__1^0^0",
+      "resourceReference" : {
+        "name" : "Existing Server"
+      }
+    } ],
+    "annotations" : {
+      "uniqueName" : "AdvantageOnlineS0001",
+      "displayName" : "Advantage OnlineShopping - GenProtocol",
+      "x" : "459",
+      "y" : "157",
+      "description" : null
+    },
+    "capabilityChars" : [ ],
+    "requirements" : [ ]
+  }, {
+    "id" : "0ffcd7b2-5ee1-8605-0e40-c45f5ebd993c",
+    "name" : "Existing Server",
+    "component" : {
+      "@self" : "/csa/api/topology-model/component-type/9fe842bb-515f-41e9-be9b-71f5f872a412",
+      "groupId" : "com.hp.csa.type",
+      "artifactId" : "Existing_Server_b9ce5335_9ba9_46b6_9591_ca18b73cabb6_e4595de7583849f29037184578e03cb8",
+      "version" : "1"
+    },
+    "properties" : [ {
+      "propertyKey" : "PASSWORD",
+      "propertyValue" : {
+        "value" : "ENC(mKFXGkfHl+mubVGx9ggIArKBQ9S10EPb)",
+        "type" : "string_encrypted"
+      }
+    }, {
+      "propertyKey" : "_enable_modify_during_lifecycle_properties",
+      "propertyValue" : {
+        "value" : "",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "response",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "_modifiable_properties",
+      "propertyValue" : {
+        "value" : "",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "HOST-FQDN",
+      "propertyValue" : {
+        "value" : "131.124.77.237",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "IPADDRESS",
+      "propertyValue" : {
+        "value" : "131.124.77.237",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "USERNAME",
+      "propertyValue" : {
+        "value" : "hpadmin",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "INSTANCE-ID",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "SSHPORT",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "PRIVATEKEY",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "TIMEOUT",
+      "propertyValue" : {
+        "value" : "90000",
+        "type" : "string"
+      }
+    }, {
+      "propertyKey" : "Result",
+      "propertyValue" : {
+        "value" : null,
+        "type" : "string"
+      }
+    } ],
+    "outgoingRelations" : [ ],
+    "annotations" : {
+      "uniqueName" : "ExistingServer0001",
+      "displayName" : "Existing Server",
+      "x" : "443",
+      "y" : "402",
+      "description" : "Existing Server Component"
+    },
+    "capabilityChars" : [ ],
+    "requirements" : [ ]
+  } ],
+  "revision" : 15,
+  "properties" : [ ],
+  "iconUrl" : "/csa/images/library/Service_Design.png",
+  "tagIds" : [ ],
+  "state" : "UNLOCKED",
+  "hidden" : false,
+  "partial" : false,
+  "profiles" : [ ],
+  "annotations" : {
+    "serviceBlueprintId" : "90bbbef65144501f0151d23cba18312f",
+    "providerType" : "independent"
+  }
+}
