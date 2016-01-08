@@ -46,22 +46,26 @@ public class TokenJWT extends Token {
 
     public TokenJWT(String base64Token) {
         this();
-        try {
-            parser = Jwts.parser();
-            parser.setSigningKey(key);
-            parser.requireIssuer(issuer);
-            Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
-            tokenClaims = claimsJws.getBody();
+//        try {
+        parser = Jwts.parser();
+        assert parser.isSigned(base64Token);
+        parser.setSigningKey(key);
+        parser.requireIssuer(issuer);
+        Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
+        tokenClaims = claimsJws.getBody();
 
-        } catch (SignatureException e) {
+        assert claimsJws.getHeader().getType().equals(Header.JWT_TYPE);
+        assert claimsJws.getHeader().getAlgorithm().equals(signatureAlgorithm.name());
 
-        } catch (MissingClaimException mce) {
-            // the parsed JWT did not have the sub field
-        } catch (IncorrectClaimException ice) {
-            // the parsed JWT had a sub field, but its value was not equal to 'jsmith'
-        } catch (InvalidClaimException ice) {
-            // the 'myfield' field was missing or did not have a 'myRequiredValue' value
-        }
+//        }  catch (SignatureException e) {
+//
+//        } catch (MissingClaimException mce) {
+//            // the parsed JWT did not have the sub field
+//        } catch (IncorrectClaimException ice) {
+//            // the parsed JWT had a sub field, but its value was not equal to 'jsmith'
+//        } catch (InvalidClaimException ice) {
+//            // the 'myfield' field was missing or did not have a 'myRequiredValue' value
+//        }
     }
 
     @Override

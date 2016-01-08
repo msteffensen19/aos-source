@@ -15,7 +15,7 @@ public class TokenTests {
     private static final String LOGIN_NAME = "loginName";
     private static final AccountType ROLE = AccountType.ADMIN;
     private static final String completeToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMjM0LCJsb2dpbk5hbWUiOiJsb2dpbk5hbWUiLCJyb2xlIjoiQURNSU4ifQ.Rf6SwLLQejSneHGg53KgMFNeMDbTykO2NJqkh8-tggp8PzWDmFdAyaULORp8iUHprcMXPV8n1rqtWwC9l30WdQ";
-
+    private static final String fakeToken256 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMjM0LCJsb2dpbk5hbWUiOiJsb2dpbk5hbWUiLCJyb2xlIjoiQURNSU4ifQ.3t9bi1UUP95YLdaYZHmGcdpWi8gGRykh2c0lrp6e9so";
 //    @Autowired
 //    private Environment environment;
 
@@ -33,4 +33,11 @@ public class TokenTests {
         Assert.assertEquals(ROLE, token.getAccountType());
     }
 
+    @Test(expected = AssertionError.class)
+    public void testNegative256ParserToken() throws Exception {
+        Token token = new TokenJWT(fakeToken256);
+        Assert.assertEquals(USER_ID, token.getUserId());
+        Assert.assertEquals(LOGIN_NAME, token.getLoginName());
+        Assert.assertEquals(ROLE, token.getAccountType());
+    }
 }
