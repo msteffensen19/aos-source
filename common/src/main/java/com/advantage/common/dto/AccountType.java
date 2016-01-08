@@ -20,22 +20,19 @@ public enum AccountType {
     }
 
     public static List<String> getAllNames() {
-        List<String> values = new ArrayList<>();
-
+        List<String> values = new ArrayList<>(AccountType.values().length);
         for (AccountType a : AccountType.values()) {
             values.add(a.name());
         }
         return values;
     }
 
-    public static boolean contains(String test) {
-
-        for (AccountType a : AccountType.values()) {
-            if (a.name().equals(test)) {
+    public static boolean contains(String accountType) {
+        for (AccountType at : AccountType.values()) {
+            if (at.name().equals(accountType)) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -44,8 +41,7 @@ public enum AccountType {
             if(accountType.getAccountTypeCode().equals(code)) {
                 return accountType;
             }
-
-            return null;
+            //return null;
         }
         return null;
     }

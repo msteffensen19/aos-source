@@ -65,14 +65,17 @@ public class TokenJWT extends Token {
     }
 
     @Override
-    public AccountType getAppUserType() {
-        AccountType result = (AccountType) tokenClaims.get(ROLE_FIELD_NAME);
+    public AccountType getAccountType() {
+        String role = (String) tokenClaims.get(ROLE_FIELD_NAME);
+        AccountType result = AccountType.valueOf(role);
         return result;
     }
 
     @Override
     public long getUserId() {
-        return (Long) tokenClaims.get(USER_ID_FIELD_NAME);
+        Number userId = (Number) tokenClaims.get(USER_ID_FIELD_NAME);
+        long result = userId.longValue();
+        return result;
     }
 
 //    @Override
