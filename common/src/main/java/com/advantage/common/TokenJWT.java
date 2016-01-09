@@ -2,8 +2,8 @@ package com.advantage.common;
 
 
 import com.advantage.common.dto.AccountType;
-import com.advantage.common.exceptions.token.TokenUnsignedException;
 import com.advantage.common.exceptions.token.SignatureAlgorithmException;
+import com.advantage.common.exceptions.token.TokenUnsignedException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import io.jsonwebtoken.*;
 
@@ -21,13 +21,13 @@ public class TokenJWT extends Token {
     //private CompressionCodec compressionCodec;
     private SignatureAlgorithm signatureAlgorithm;
 
-    private TokenJWT() throws SignatureAlgorithmException {
+    private TokenJWT() {
         super();
         //compressionCodec = SecurityTools.getCompressionCodec();
         convertSignatureAlgorithm();
     }
 
-    public TokenJWT(long appUserId, String loginName, AccountType accountType) throws SignatureAlgorithmException {
+    public TokenJWT(long appUserId, String loginName, AccountType accountType) {
         this();
         builder = Jwts.builder();
         tokenHeader = Jwts.header();
@@ -117,19 +117,19 @@ public class TokenJWT extends Token {
         return result;
     }
 
-    private void convertSignatureAlgorithm() throws SignatureAlgorithmException {
+    private void convertSignatureAlgorithm() {
         for (SignatureAlgorithm sa : SignatureAlgorithm.values()) {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
             if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
                 if (!sa.isJdkStandard()) {
-                    throw new SignatureAlgorithmException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
+                    throw new SignatureException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
                 } else {
                     signatureAlgorithm = sa;
                     return;
                 }
             }
         }
-        throw new SignatureAlgorithmException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
+        throw new SignatureException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
     }
 
 }
