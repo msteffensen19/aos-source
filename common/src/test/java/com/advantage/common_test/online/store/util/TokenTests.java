@@ -3,6 +3,7 @@ package com.advantage.common_test.online.store.util;
 import com.advantage.common.Token;
 import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
+import com.advantage.common.exceptions.token.SignatureAlgorithmException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,6 +24,7 @@ public class TokenTests {
     public void testBuildToken() throws Exception {
         Token token = new TokenJWT(USER_ID, LOGIN_NAME, ROLE);
         Assert.assertEquals(completeToken, token.generateToken());
+        System.out.println("Test testBuildToken complete successful");
     }
 
     @Test
@@ -31,13 +33,11 @@ public class TokenTests {
         Assert.assertEquals(USER_ID, token.getUserId());
         Assert.assertEquals(LOGIN_NAME, token.getLoginName());
         Assert.assertEquals(ROLE, token.getAccountType());
+        System.out.println("Test testParserToken complete successful");
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = SignatureAlgorithmException.class)
     public void testNegative256ParserToken() throws Exception {
         Token token = new TokenJWT(fakeToken256);
-        Assert.assertEquals(USER_ID, token.getUserId());
-        Assert.assertEquals(LOGIN_NAME, token.getLoginName());
-        Assert.assertEquals(ROLE, token.getAccountType());
     }
 }

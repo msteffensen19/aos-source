@@ -2,6 +2,9 @@ package com.advantage.common;
 
 
 import com.advantage.common.dto.AccountType;
+import com.advantage.common.exceptions.token.TokenUnsignedException;
+import com.advantage.common.exceptions.token.SignatureAlgorithmException;
+import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import io.jsonwebtoken.*;
 
 import java.util.Map;
@@ -18,13 +21,13 @@ public class TokenJWT extends Token {
     //private CompressionCodec compressionCodec;
     private SignatureAlgorithm signatureAlgorithm;
 
-    private TokenJWT() {
+    private TokenJWT() throws SignatureAlgorithmException {
         super();
         //compressionCodec = SecurityTools.getCompressionCodec();
         convertSignatureAlgorithm();
     }
 
-    public TokenJWT(long appUserId, String loginName, AccountType accountType) {
+    public TokenJWT(long appUserId, String loginName, AccountType accountType) throws SignatureAlgorithmException {
         this();
         builder = Jwts.builder();
         tokenHeader = Jwts.header();
@@ -44,18 +47,25 @@ public class TokenJWT extends Token {
         builder.setClaims(tokenClaims);
     }
 
-    public TokenJWT(String base64Token) {
+    public TokenJWT(String base64Token) throws TokenUnsignedException, SignatureAlgorithmException, WrongTokenTypeException {
         this();
 //        try {
         parser = Jwts.parser();
-        assert parser.isSigned(base64Token);
+        if (!parser.isSigned(base64Token)) {
+            throw new TokenUnsignedException();
+        }
         parser.setSigningKey(key);
         parser.requireIssuer(issuer);
         Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
         tokenClaims = claimsJws.getBody();
+        JwsHeader jwsHeader = claimsJws.getHeader();
 
-        assert claimsJws.getHeader().getType().equals(Header.JWT_TYPE);
-        assert claimsJws.getHeader().getAlgorithm().equals(signatureAlgorithm.name());
+        if (!jwsHeader.getType().equals(Header.JWT_TYPE)) {
+            throw new WrongTokenTypeException("Wrong token type");
+        }
+        if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
+            throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but nust be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmName));
+        }
 
 //        }  catch (SignatureException e) {
 //
@@ -77,8 +87,13 @@ public class TokenJWT extends Token {
 
     @Override
     public long getUserId() {
-        Number userId = (Number) tokenClaims.get(USER_ID_FIELD_NAME);
-        long result = userId.longValue();
+        long result = 0;
+        try {
+            Number userId = (Number) tokenClaims.get(USER_ID_FIELD_NAME);
+            result = userId.longValue();
+        } catch (ClassCastException | NumberFormatException e) {
+
+        }
         return result;
     }
 
@@ -102,19 +117,19 @@ public class TokenJWT extends Token {
         return result;
     }
 
-    private void convertSignatureAlgorithm() {
+    private void convertSignatureAlgorithm() throws SignatureAlgorithmException {
         for (SignatureAlgorithm sa : SignatureAlgorithm.values()) {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
             if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
                 if (!sa.isJdkStandard()) {
-                    throw new RuntimeException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
+                    throw new SignatureAlgorithmException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
                 } else {
                     signatureAlgorithm = sa;
                     return;
                 }
             }
         }
-        throw new RuntimeException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
+        throw new SignatureAlgorithmException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
     }
 
 }
