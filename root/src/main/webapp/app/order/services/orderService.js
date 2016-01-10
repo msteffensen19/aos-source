@@ -38,7 +38,6 @@ define(['./module'], function (services) {
 
                 return defer.promise;
             }
-
         }]);
 });
 
