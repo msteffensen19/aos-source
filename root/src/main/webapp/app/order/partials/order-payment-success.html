@@ -34,7 +34,9 @@
                 <label>
                     MasterCredit
                     <a class="floater">
-                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >{{ _4numbers | showLast4DigitsCard:$last:$index }}</span>
+                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >
+                            {{ _4numbers | showLast4DigitsCard:$last:$index }}
+                        </span>
                     </a>
                 </label>
             </div>

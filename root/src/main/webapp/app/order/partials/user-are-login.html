@@ -133,8 +133,12 @@
                 <div class="masterCreditSeccion">
                     <div class="roboto-regular" >
                         <span class="MasterCredit">MasterCredit</span>
-                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >{{ _4numbers | showLast4DigitsCard:$last:$index}}</span>
-                        <label class="edit" data-ng-click="paymentMethod_edit(card)" > {{'Edit' | translate}} </label>
+                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >
+                            {{ _4numbers | showLast4DigitsCard:$last:$index}}
+                        </span>
+                        <label class="edit" data-ng-click="paymentMethod_edit(card)" >
+                            {{'Edit' | translate}}
+                        </label>
                     </div>
                 </div>
 
