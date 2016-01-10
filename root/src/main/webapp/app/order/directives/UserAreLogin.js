@@ -51,8 +51,6 @@ define(['./module'], function (directives) {
                     s.noCards = true;
                 }
 
-                s.CardNumber = ["6789", "0785", "0785", "0785"];
-
                 s.orderNumber;
                 s.trackingNumber;
 

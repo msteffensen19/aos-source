@@ -14,6 +14,8 @@ define(['./module'], function (controllers) {
             s.userLogin = resolveParams.userLogin;
             s.itemsPaid = s.cart.productsInCart.length;
 
+            s.CardNumber = ["6789", "0785", "0785", "0785"];
+
             s.payNow_masterCredit = function(){
                 s.paymentEnd = true;
             }

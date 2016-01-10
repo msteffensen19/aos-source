@@ -38,7 +38,7 @@
     border-right: solid 15px white;
 }
 
-span.separator {
+#orderPaymentSuccess span.separator {
     padding: 0 10px;
     display: inline-block;
 
@@ -71,10 +71,20 @@ span.separator {
     vertical-align: top;
 }
 
+
+#orderPaymentSuccess > div > div.seccion:last-child {
+    border-right: none 0px red;
+}
+
+#orderPaymentSuccess .seccion > span  {
+    font-size: 16px;
+    font-weight: 500;
+}
+
 #orderPaymentSuccess div.innerSeccion,
 #orderPaymentSuccess .seccion > span  {
     padding: 20px 0;
-    margin: 0 29px;
+    margin: 0 40px;
 }
 
 #orderPaymentSuccess div.innerSeccion {
@@ -83,15 +93,29 @@ span.separator {
 
 
 #orderPaymentSuccess div.innerSeccion:last-child {
-    border-bottom: none 1px red;
+    border-bottom: none 0px red;
 }
 
-#orderPaymentSuccess div.innerSeccion img {
+#orderPaymentSuccess div.innerSeccion img,
+#orderPaymentSuccess div.innerSeccion .floater  {
     float: right;
+    display: inline-block;
+}
+
+#orderPaymentSuccess div.innerSeccion .floater span {
+    padding: 0 2px;
     display: inline-block;
 }
 
 #orderPaymentSuccess div.innerSeccion label {
     display: block;
     padding: 2px;
+    font-size: 14px;
+    color: #2a2a2a;
 }
+
+#orderPaymentSuccess div.innerSeccion label.total {
+    font-size: 16px;
+    font-weight: 500;
+}
+
