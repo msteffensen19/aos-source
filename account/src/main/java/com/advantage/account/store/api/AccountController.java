@@ -5,6 +5,8 @@ import com.advantage.account.store.user.model.AppUser;
 import com.advantage.account.store.user.model.Country;
 import com.advantage.account.store.user.services.AppUserService;
 import com.advantage.account.store.user.services.CountryService;
+import com.advantage.common.SecurityTools;
+import com.advantage.common.dto.AccountType;
 import com.advantage.common.dto.AppUserDto;
 import com.advantage.common.dto.AppUserResponseDto;
 import com.advantage.common.Constants;
@@ -37,6 +39,8 @@ public class AccountController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     @ApiOperation(value = "Get all registered users")
     public ResponseEntity<List<AppUser>> getAllAppUsers(HttpServletRequest request, HttpServletResponse response) {
+
+        SecurityTools.isAutorized(request.getHeader("Authorization"), AccountType.ADMIN);
         List<AppUser> appUsers = appUserService.getAllAppUsers();
 
         return new ResponseEntity<>(appUsers, HttpStatus.OK);

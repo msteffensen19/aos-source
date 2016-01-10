@@ -1,6 +1,8 @@
 package com.advantage.common;
 
+import com.advantage.common.dto.AccountType;
 import io.jsonwebtoken.CompressionCodec;
+import org.springframework.http.HttpStatus;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
@@ -50,5 +52,14 @@ public class SecurityTools {
 
     public static String getIssuer() {
         return ISSUER;
+    }
+
+    public static HttpStatus isAutorized(String authorizationHeader, AccountType... expectedAccountTypes) {
+        if (authorizationHeader == null || authorizationHeader.trim().isEmpty()) {
+            return HttpStatus.UNAUTHORIZED;
+        }
+
+
+        return null;
     }
 }
