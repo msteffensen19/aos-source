@@ -10,9 +10,9 @@ define(['./module'], function (controllers) {
 
             s.checkCart();
 
-            console.log("order payment page not done yet!");
+            //console.log("order payment page not done yet!");
 
-            window.history.back();
+            //window.history.back();
 
             s.loginModal = {
                 email : '',

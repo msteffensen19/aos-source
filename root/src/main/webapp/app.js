@@ -21,6 +21,7 @@ define([
 
 
     './app/user/services/index',
+    './app/order/services/index',
     './app/services/index',
 
 
@@ -54,8 +55,8 @@ define([
         'aos.user.directives',
 
         'aos.order.controllers',
+        'aos.order.services',
         'aos.order.directives',
-
     ]).
 
     config(catalogConfig).
