@@ -14,6 +14,7 @@ define(['./module'], function (controllers) {
 
             window.history.back();
 
+
             s.loginModal = {
                 email : '',
                 password : ''
