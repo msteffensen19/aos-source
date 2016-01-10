@@ -1,6 +1,9 @@
 package com.advantage.common;
 
 import com.advantage.common.dto.AccountType;
+import com.advantage.common.exceptions.token.SignatureAlgorithmException;
+import com.advantage.common.exceptions.token.TokenUnsignedException;
+import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import io.jsonwebtoken.CompressionCodec;
 import org.springframework.http.HttpStatus;
 
@@ -57,9 +60,30 @@ public class SecurityTools {
     public static HttpStatus isAutorized(String authorizationHeader, AccountType... expectedAccountTypes) {
         if (authorizationHeader == null || authorizationHeader.trim().isEmpty()) {
             return HttpStatus.UNAUTHORIZED;
+        } else {
+            // remove schema from token
+            String authorizationSchema = "Bearer";
+            if (authorizationHeader.indexOf(authorizationSchema) == -1) {
+                return HttpStatus.UNAUTHORIZED;
+            } else {
+                String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
+                try {
+                    Token token = new TokenJWT(stringToken);
+                    AccountType actualAccountType = token.getAccountType();
+                    for (AccountType at : expectedAccountTypes) {
+                        if (at.equals(actualAccountType)) {
+                            return null;
+                        }
+                    }
+                    return HttpStatus.FORBIDDEN;
+                } catch (TokenUnsignedException e) {
+                    return HttpStatus.FORBIDDEN;
+                } catch (SignatureAlgorithmException e) {
+                    return HttpStatus.FORBIDDEN;
+                } catch (WrongTokenTypeException e) {
+                    return HttpStatus.FORBIDDEN;
+                }
+            }
         }
-
-
-        return null;
     }
 }
