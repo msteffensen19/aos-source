@@ -13,8 +13,8 @@ define(['./module'], function (controllers) {
             s.shippingCost = resolveParams.shippingCost;
             s.userLogin = resolveParams.userLogin;
             s.itemsPaid = s.cart.productsInCart.length;
+
             s.payNow_masterCredit = function(){
-                console.log(s)
                 s.paymentEnd = true;
             }
 
