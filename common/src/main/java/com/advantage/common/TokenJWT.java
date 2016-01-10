@@ -37,7 +37,7 @@ public class TokenJWT extends Token {
         //tokenClaims.setIssuedAt(new Date());
         tokenClaims.put(USER_ID_FIELD_NAME, appUserId);
         if (loginName != null && !loginName.isEmpty()) {
-            tokenClaims.put(LOGIN_NAME_FIELD_NAME, loginName);
+            tokenClaims.setSubject(loginName);
         }
         tokenClaims.put(ROLE_FIELD_NAME, accountType);
 //        if (email != null && !email.isEmpty()) {
@@ -64,7 +64,7 @@ public class TokenJWT extends Token {
             throw new WrongTokenTypeException("Wrong token type");
         }
         if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
-            throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but nust be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmName));
+            throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but nust be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName));
         }
 
 //        }  catch (SignatureException e) {
@@ -104,7 +104,7 @@ public class TokenJWT extends Token {
 
     @Override
     public String getLoginName() {
-        return (String) tokenClaims.get(LOGIN_NAME_FIELD_NAME);
+        return (String) tokenClaims.getSubject();
     }
 
     @Override
@@ -117,19 +117,24 @@ public class TokenJWT extends Token {
         return result;
     }
 
+    @Override
+    public Map<String, Object> getClaims() {
+        return tokenClaims;
+    }
+
     private void convertSignatureAlgorithm() {
         for (SignatureAlgorithm sa : SignatureAlgorithm.values()) {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
-            if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
+            if (saname.equalsIgnoreCase(signatureAlgorithmJdkName)) {
                 if (!sa.isJdkStandard()) {
-                    throw new SignatureException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
+                    throw new SignatureException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmJdkName);
                 } else {
                     signatureAlgorithm = sa;
                     return;
                 }
             }
         }
-        throw new SignatureException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
+        throw new SignatureException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmJdkName);
     }
 
 }
