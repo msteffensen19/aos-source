@@ -7,7 +7,6 @@ define(['./module'], function (controllers) {
     controllers.filter('last4DigitsCard', function(){
         return function(last) {
 
-            alert(last);
 
             return "****";
         };
