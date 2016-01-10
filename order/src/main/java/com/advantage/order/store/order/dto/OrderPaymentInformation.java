@@ -26,7 +26,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *  SafePay.username, 							# SafePay ONLY
  *  SafePay.password, 							# SafePay ONLY
  */
-public class PaymentInformation {
+public class OrderPaymentInformation {
+    @JsonProperty("Transaction.PaymentMethod")
+    private String paymentMethod;       //  by PaymentMethodEnum
+
     @JsonProperty("Transaction.Type")
     private String transactionType;     //  by TransactioTypeEnum
 
@@ -63,7 +66,7 @@ public class PaymentInformation {
     @JsonProperty("Transaction.SafePay.Password")
     private String password;
 
-    public PaymentInformation() { }
+    public OrderPaymentInformation() { }
 
     /**
      * Constructor for <b><i>SafePay</i></b> Payment or Refund
@@ -78,7 +81,8 @@ public class PaymentInformation {
      * @param customerName
      * @param cvvNumber
      */
-    public PaymentInformation(String transactionType, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String cardNumber, String expirationDate, String customerName, String cvvNumber) {
+    public OrderPaymentInformation(String paymentMethod, String transactionType, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String cardNumber, String expirationDate, String customerName, String cvvNumber) {
+        this.paymentMethod = paymentMethod;
         this.transactionType = transactionType;
         this.customerPhone = customerPhone;
         this.transactionDate = transactionDate;
@@ -106,7 +110,8 @@ public class PaymentInformation {
      * @param username
      * @param password
      */
-    public PaymentInformation(String transactionType, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String username, String password) {
+    public OrderPaymentInformation(String paymentMethod, String transactionType, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String username, String password) {
+        this.paymentMethod = paymentMethod;
         this.transactionType = transactionType;
         this.customerPhone = customerPhone;
         this.transactionDate = transactionDate;
@@ -121,6 +126,14 @@ public class PaymentInformation {
         this.expirationDate = null;
         this.customerName = null;
         this.cvvNumber = null;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public String getTransactionType() {
@@ -224,7 +237,7 @@ public class PaymentInformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PaymentInformation that = (PaymentInformation) o;
+        OrderPaymentInformation that = (OrderPaymentInformation) o;
 
         if (Double.compare(that.getAmount(), getAmount()) != 0) return false;
         if (!getTransactionType().equals(that.getTransactionType())) return false;

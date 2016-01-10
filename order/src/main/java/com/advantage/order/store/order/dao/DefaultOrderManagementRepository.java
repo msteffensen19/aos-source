@@ -10,12 +10,18 @@ import com.advantage.order.store.order.model.OrderLines;
 import com.advantage.order.store.order.model.UserOrder;
 import com.advantage.root.util.ArgumentValidationHelper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author Binyamin Regev on 07/01/2016.
  */
+@Component
+@Qualifier("orderManagementRepository")
+@Repository
 public class DefaultOrderManagementRepository extends AbstractRepository implements OrderManagementRepository {
 
     private static final String MESSAGE_SHIPPING_TRACKING_NUMBER_UPDATED_SUCCESSFULLY = "Purchase order, shipping tracking number was updated successfully";
@@ -102,7 +108,6 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         orderHeader.setCustomerName(userOrder.getCustomerName());
         orderHeader.setCvvNumber(userOrder.getCvvNumber());
         orderHeader.setUsername(userOrder.getUsername());
-
 
         entityManager.getTransaction().begin();
         entityManager.persist(orderHeader);

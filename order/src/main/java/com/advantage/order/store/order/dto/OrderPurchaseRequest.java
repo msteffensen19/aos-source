@@ -7,52 +7,59 @@ import java.util.List;
  */
 public class OrderPurchaseRequest {
 
-    private String paymentMethod;       //  MasterCredit / SafePay
+    private OrderShippingInformation orderShippingInformation;
 
-    private ShippingInformation shippingInformation;
+    private OrderPaymentInformation orderPaymentInformation;
 
-    private PaymentInformation paymentInformation;
-
-    private List<PurchasedProductInformation> purchasedProducts;
+    //private List<OrderPurchasedProductInformation> purchasedProducts;
+    private List<ShoppingCartDto> purchasedProducts;
 
     public OrderPurchaseRequest() { }
 
-    public OrderPurchaseRequest(String paymentMethod, ShippingInformation shippingInformation, PaymentInformation paymentInformation) {
-        this.paymentMethod = paymentMethod;
-        this.shippingInformation = shippingInformation;
-        this.paymentInformation = paymentInformation;
+    public OrderPurchaseRequest(String paymentMethod, OrderShippingInformation orderShippingInformation, OrderPaymentInformation orderPaymentInformation) {
+        this.orderShippingInformation = orderShippingInformation;
+        this.orderPaymentInformation = orderPaymentInformation;
     }
 
-    public OrderPurchaseRequest(String paymentMethod, ShippingInformation shippingInformation, PaymentInformation paymentInformation, List<PurchasedProductInformation> purchasedProducts) {
-        this.paymentMethod = paymentMethod;
-        this.shippingInformation = shippingInformation;
-        this.paymentInformation = paymentInformation;
+    public OrderPurchaseRequest(String paymentMethod, OrderShippingInformation orderShippingInformation, OrderPaymentInformation orderPaymentInformation, List<ShoppingCartDto> purchasedProducts) {
+        this.orderShippingInformation = orderShippingInformation;
+        this.orderPaymentInformation = orderPaymentInformation;
+        this.purchasedProducts = purchasedProducts;
+    }
+
+    public OrderShippingInformation getOrderShippingInformation() {
+        return orderShippingInformation;
+    }
+
+    public void setOrderShippingInformation(OrderShippingInformation orderShippingInformation) {
+        this.orderShippingInformation = orderShippingInformation;
+    }
+
+    public OrderPaymentInformation getOrderPaymentInformation() {
+        return orderPaymentInformation;
+    }
+
+    public void setOrderPaymentInformation(OrderPaymentInformation orderPaymentInformation) {
+        this.orderPaymentInformation = orderPaymentInformation;
+    }
+
+    public List<ShoppingCartDto> getPurchasedProducts() {
+        return purchasedProducts;
+    }
+
+    public void setPurchasedProducts(List<ShoppingCartDto> purchasedProducts) {
         this.purchasedProducts = purchasedProducts;
     }
 
     /**
-     * Add {@link PurchasedProductInformation} with {@code productId}, {@code product name} and {@code quantity}.
+     * Add {@link ShoppingCartDto} with {@code productId}, {@code hexColor} and {@code quantity}.
      * @param productId
-     * @param productName
-     * @param pricePerItem
+     * @param hexColor
      * @param quantity
      * @return
      */
-    public boolean addProductToPurchase(Long productId, String productName, String hexColor, double pricePerItem, int quantity) {
-        boolean result = purchasedProducts.add(new PurchasedProductInformation(productId, productName, hexColor, pricePerItem, quantity));
+    public boolean addProductToPurchase(Long productId, String hexColor, int quantity) {
+        boolean result = purchasedProducts.add(new ShoppingCartDto(productId, hexColor, quantity));
         return result;
     }
-
-    /**
-     * Add {@link PurchasedProductInformation} with {@code productId} and {@code quantity}.
-     * @param productId
-     * @param pricePerItem
-     * @param quantity
-     * @return
-     */
-    public boolean addProductToPurchase(Long productId, double pricePerItem, String hexColor, int quantity) {
-        boolean result = purchasedProducts.add(new PurchasedProductInformation(productId, "", hexColor, pricePerItem, quantity));
-        return result;
-    }
-
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author Binyamin Regev on 07/01/2016.
  */
-public class ShippingInformation {
+public class OrderShippingInformation {
 
     @JsonProperty("Shipping.Cost")
     private double shippingCost;
@@ -28,9 +28,9 @@ public class ShippingInformation {
     @JsonProperty("Shipping.Address.CountryCode")
     private String countryCode;     //  2 characters, by ISO3166
 
-    public ShippingInformation() { }
+    public OrderShippingInformation() { }
 
-    public ShippingInformation(String address, String city, String postalCode, String state, String countryCode) {
+    public OrderShippingInformation(String address, String city, String postalCode, String state, String countryCode) {
         this.address = address;
         this.city = city;
         this.postalCode = postalCode;
@@ -91,7 +91,7 @@ public class ShippingInformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ShippingInformation that = (ShippingInformation) o;
+        OrderShippingInformation that = (OrderShippingInformation) o;
 
         if (Double.compare(that.getShippingCost(), getShippingCost()) != 0) return false;
         if (!getAddress().equals(that.getAddress())) return false;
