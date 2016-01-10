@@ -43,26 +43,26 @@ define(['./module'], function (services) {
                 "stateProvince": model.state,
                 "zipcode": model.postalCode,
             }
+            //
+            //var defer = $q.defer();
+            //var params = server.account.register();
+            //
+            //$soap.post(params.path, params.method, expectToReceive).
+            //then(function(response){
+            //        defer.resolve(response);
+            //    },
+            //    function(response){
+            //        console.log(response);
+            //        defer.reject("Request failed! ");
+            //    });
+            //return defer.promise;
 
-            var defer = $q.defer();
-            var params = server.account.register();
-
-            $soap.post(params.path, params.method, expectToReceive).
-            then(function(response){
-                    defer.resolve(response);
-                },
-                function(response){
-                    console.log(response);
-                    defer.reject("Request failed! ");
-                });
-            return defer.promise;
-
-            //var request = $http({
-            //    method: "post",
-            //    url: server.account.register(model),
-            //    data: expectToReceive,
-            //});
-            //return( request.then( responseService.handleSuccess, responseService.handleError ) );
+            var request = $http({
+                method: "post",
+                url: server.account.register(),
+                data: expectToReceive,
+            });
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
     }]);
