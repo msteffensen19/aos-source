@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class Token {
     protected static final String ROLE_FIELD_NAME = "role";
     protected static final String USER_ID_FIELD_NAME = "userId";
-    protected static final String LOGIN_NAME_FIELD_NAME = "loginName";
+
     protected Key key;
     protected String issuer;
     protected String signatureAlgorithmJdkName;

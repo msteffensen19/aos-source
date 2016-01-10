@@ -37,7 +37,7 @@ public class TokenJWT extends Token {
         //tokenClaims.setIssuedAt(new Date());
         tokenClaims.put(USER_ID_FIELD_NAME, appUserId);
         if (loginName != null && !loginName.isEmpty()) {
-            tokenClaims.put(LOGIN_NAME_FIELD_NAME, loginName);
+            tokenClaims.setSubject(loginName);
         }
         tokenClaims.put(ROLE_FIELD_NAME, accountType);
 //        if (email != null && !email.isEmpty()) {
@@ -104,7 +104,7 @@ public class TokenJWT extends Token {
 
     @Override
     public String getLoginName() {
-        return (String) tokenClaims.get(LOGIN_NAME_FIELD_NAME);
+        return (String) tokenClaims.getSubject();
     }
 
     @Override
