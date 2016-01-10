@@ -173,11 +173,6 @@ var server = {
             }
         },
 
-        //register : function(){
-        //    return accountKey + "/users";
-        //},
-        //
-
         login : function(){
             return {
                 path: wsdlPath,
@@ -185,6 +180,12 @@ var server = {
             }
         },
 
+        getAccountById: function(){
+            return {
+                path: wsdlPath,
+                method: 'GetAccountByIdRequest'
+            }
+        },
     },
     service: {
 
