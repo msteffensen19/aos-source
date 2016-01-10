@@ -9,22 +9,23 @@ define(['./module'], function (controllers) {
         function (s, resolveParams) {
 
             s.checkCart();
-
-            console.log("order payment page not done yet!");
-
-            window.history.back();
-
-            s.loginModal = {
-                email : '',
-                password : ''
-            }
-
+            s.paymentEnd = true;
+       
+       
             s.shippingCost = resolveParams.shippingCost;
             s.userLogin = resolveParams.userLogin;
+            s.itemsPaid = s.cart.productsInCart.length;
+
+            s.CardNumber = ["6789", "0785", "0785", "0785"];
+
+            s.payNow_masterCredit = function(){
+                s.paymentEnd = true;
+            }
 
             $("nav .navLinks").css("display" , "none");
         }]);
 });
+
 
 
 

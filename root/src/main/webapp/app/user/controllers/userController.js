@@ -13,6 +13,5 @@ define(['./module'], function (controllers) {
             }
 
 
-
         }]);
 });
