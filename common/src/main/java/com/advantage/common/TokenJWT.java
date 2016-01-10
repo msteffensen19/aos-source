@@ -2,6 +2,9 @@ package com.advantage.common;
 
 
 import com.advantage.common.dto.AccountType;
+import com.advantage.common.exceptions.token.SignatureAlgorithmException;
+import com.advantage.common.exceptions.token.TokenUnsignedException;
+import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import io.jsonwebtoken.*;
 
 import java.util.Map;
@@ -44,35 +47,54 @@ public class TokenJWT extends Token {
         builder.setClaims(tokenClaims);
     }
 
-    public TokenJWT(String base64Token) {
+    public TokenJWT(String base64Token) throws TokenUnsignedException, SignatureAlgorithmException, WrongTokenTypeException {
         this();
-        try {
-            parser = Jwts.parser();
-            parser.setSigningKey(key);
-            parser.requireIssuer(issuer);
-            Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
-            tokenClaims = claimsJws.getBody();
-
-        } catch (SignatureException e) {
-
-        } catch (MissingClaimException mce) {
-            // the parsed JWT did not have the sub field
-        } catch (IncorrectClaimException ice) {
-            // the parsed JWT had a sub field, but its value was not equal to 'jsmith'
-        } catch (InvalidClaimException ice) {
-            // the 'myfield' field was missing or did not have a 'myRequiredValue' value
+//        try {
+        parser = Jwts.parser();
+        if (!parser.isSigned(base64Token)) {
+            throw new TokenUnsignedException();
         }
+        parser.setSigningKey(key);
+        parser.requireIssuer(issuer);
+        Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
+        tokenClaims = claimsJws.getBody();
+        JwsHeader jwsHeader = claimsJws.getHeader();
+
+        if (!jwsHeader.getType().equals(Header.JWT_TYPE)) {
+            throw new WrongTokenTypeException("Wrong token type");
+        }
+        if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
+            throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but nust be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmName));
+        }
+
+//        }  catch (SignatureException e) {
+//
+//        } catch (MissingClaimException mce) {
+//            // the parsed JWT did not have the sub field
+//        } catch (IncorrectClaimException ice) {
+//            // the parsed JWT had a sub field, but its value was not equal to 'jsmith'
+//        } catch (InvalidClaimException ice) {
+//            // the 'myfield' field was missing or did not have a 'myRequiredValue' value
+//        }
     }
 
     @Override
-    public AccountType getAppUserType() {
-        AccountType result = (AccountType) tokenClaims.get(ROLE_FIELD_NAME);
+    public AccountType getAccountType() {
+        String role = (String) tokenClaims.get(ROLE_FIELD_NAME);
+        AccountType result = AccountType.valueOf(role);
         return result;
     }
 
     @Override
     public long getUserId() {
-        return (Long) tokenClaims.get(USER_ID_FIELD_NAME);
+        long result = 0;
+        try {
+            Number userId = (Number) tokenClaims.get(USER_ID_FIELD_NAME);
+            result = userId.longValue();
+        } catch (ClassCastException | NumberFormatException e) {
+
+        }
+        return result;
     }
 
 //    @Override
@@ -100,14 +122,14 @@ public class TokenJWT extends Token {
             String saname = (sa.getJcaName() == null) ? "" : sa.getJcaName();
             if (saname.equalsIgnoreCase(signatureAlgorithmName)) {
                 if (!sa.isJdkStandard()) {
-                    throw new RuntimeException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
+                    throw new SignatureException("io.jsonwebtoken: Unsupported signature algorithm:" + signatureAlgorithmName);
                 } else {
                     signatureAlgorithm = sa;
                     return;
                 }
             }
         }
-        throw new RuntimeException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
+        throw new SignatureException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmName);
     }
 
 }

@@ -21,7 +21,7 @@ public abstract class Token {
         signatureAlgorithmName = SecurityTools.getSignatureAlgorithmName();
     }
 
-    public abstract AccountType getAppUserType();
+    public abstract AccountType getAccountType();
 
     public abstract long getUserId();
 
