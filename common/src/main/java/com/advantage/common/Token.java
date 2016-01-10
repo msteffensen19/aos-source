@@ -3,6 +3,7 @@ package com.advantage.common;
 import com.advantage.common.dto.AccountType;
 
 import java.security.Key;
+import java.util.Map;
 
 /**
  * Created by Evgeney Fiskin on 06-01-2016.
@@ -13,12 +14,12 @@ public abstract class Token {
     protected static final String LOGIN_NAME_FIELD_NAME = "loginName";
     protected Key key;
     protected String issuer;
-    protected String signatureAlgorithmName;
+    protected String signatureAlgorithmJdkName;
 
     protected Token() {
         key = SecurityTools.getKey();
         issuer = SecurityTools.getIssuer();
-        signatureAlgorithmName = SecurityTools.getSignatureAlgorithmName();
+        signatureAlgorithmJdkName = SecurityTools.getSignatureAlgorithmName();
     }
 
     public abstract AccountType getAccountType();
@@ -31,6 +32,7 @@ public abstract class Token {
 
     public abstract String generateToken();
 
+    public abstract Map<String, Object> getClaims();
     //    public boolean validateExpirationTime();
 
 }
