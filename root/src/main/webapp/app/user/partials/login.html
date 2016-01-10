@@ -28,10 +28,10 @@
             </span>
 
 
-            <!--ng-class="{bottomLine : config.emailAddressInLogin}"
-            ng-if="config.emailAddressInLogin"
+            <!--
             -->
-            <span class="animPlaceholderUp" >
+            <span class="animPlaceholderUp" ng-class="{bottomLine : config.emailAddressInLogin}"
+                  ng-if="config.emailAddressInLogin">
                 <input type="text" autocomplete="off"
                        ng-model="user.email" >
                 <label>{{'Email' | translate }}</label>
