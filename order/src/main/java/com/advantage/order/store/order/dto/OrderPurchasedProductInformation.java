@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author Binyamin Regev on 07/01/2016.
  */
-public class PurchasedProductInformation {
+public class OrderPurchasedProductInformation {
 
     @JsonProperty("PurchasedProduct.Id")
     private Long productId;
@@ -13,8 +13,11 @@ public class PurchasedProductInformation {
     @JsonProperty("PurchasedProduct.Name")
     private String productName;
 
-    @JsonProperty("PurchasedProduct.Color")
+    @JsonProperty("PurchasedProduct.Color.Code")
     private String hexColor;
+
+    @JsonProperty("PurchasedProduct.Color.Name")
+    private String colorName;
 
     @JsonProperty("PurchasedProduct.PricePerItem")
     private double pricePerItem;
@@ -22,12 +25,13 @@ public class PurchasedProductInformation {
     @JsonProperty("PurchasedProduct.Quantity")
     private int quantity;
 
-    public PurchasedProductInformation() { }
+    public OrderPurchasedProductInformation() { }
 
-    public PurchasedProductInformation(Long productId, String productName, String hexColor, double pricePerItem, int quantity) {
+    public OrderPurchasedProductInformation(Long productId, String productName, String hexColor, String colorName, double pricePerItem, int quantity) {
         this.productId = productId;
         this.productName = productName;
         this.hexColor = hexColor;
+        this.colorName = colorName;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
     }
@@ -44,6 +48,14 @@ public class PurchasedProductInformation {
 
     public void setHexColor(String hexColor) { this.hexColor = hexColor; }
 
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
     public double getPricePerItem() { return pricePerItem; }
 
     public void setPricePerItem(double pricePerItem) { this.pricePerItem = pricePerItem; }
@@ -57,7 +69,7 @@ public class PurchasedProductInformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PurchasedProductInformation that = (PurchasedProductInformation) o;
+        OrderPurchasedProductInformation that = (OrderPurchasedProductInformation) o;
 
         if (Double.compare(that.getPricePerItem(), getPricePerItem()) != 0) return false;
         if (getQuantity() != that.getQuantity()) return false;

@@ -255,19 +255,19 @@ public class OrderController {
         costRequest.setSENumberOfProducts(1);
         costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
         */
-        ShippingCostResponse costResponse = shoppingCartService.getShippingCostFromShipEx(costRequest);
+        ShippingCostResponse costResponse = orderManagementService.getShippingCostFromShipEx(costRequest);
 
         switch (costResponse.getReason()) {
-            case ShoppingCartService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
                 httpStatus = HttpStatus.BAD_REQUEST;
                 break;
             /* Response failure */
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
                 httpStatus = HttpStatus.NOT_IMPLEMENTED;
             default:
                 httpStatus = HttpStatus.OK;

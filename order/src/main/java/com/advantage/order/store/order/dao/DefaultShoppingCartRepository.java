@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.dao;
 
+import com.advantage.common.Constants;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponse;
@@ -64,7 +65,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
         return new ShoppingCartResponseDto()
-                .createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
+                .createCartProduct(productId, Constants.NOT_FOUND, -999999.99, 0, Constants.NOT_FOUND, false);
     }
 
     /**
@@ -332,9 +333,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             String stringResponse = httpGet(productByIdUrl);
             System.out.println("stringResponse = \"" + stringResponse + "\"");
 
-            if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
+            if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
-                dto = new ProductDto(productId, -1L, NOT_FOUND, -999999.99, NOT_FOUND, NOT_FOUND, null, null, null);
+                dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
             } else {
                 dto = getProductDtofromJsonObjectString(stringResponse);
             }
@@ -351,13 +352,14 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
+    @Override
     public ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor) {
 
         ProductDto dto = this.getProductDtoDetails(productId);
 
         ShoppingCartResponseDto.CartProduct cartProduct = null;
 
-        if (!dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+        if (!dto.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
 
             ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
 
@@ -418,7 +420,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
                             ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
 
-                    if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                    if (cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                         userCart.addCartProduct(cartProduct.getProductId(),
                                 cartProduct.getProductName(),   //  "NOT FOUND"
                                 cartProduct.getPrice(),         //  -999999.99
@@ -546,7 +548,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
                 ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(shoppingCart.getProductId(),
                         ShoppingCart.convertIntColorToHex(color));
-                if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                if (cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                     String name = cartProduct.getProductName();
                     double pricePerItem = cartProduct.getPrice();
                     String managedImageId = cartProduct.getImageUrl();
@@ -709,7 +711,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         boolean result = false;
 
         ProductDto productDetails = getProductDtoDetails(productId);
-        if (!productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+        if (!productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
             if (productDetails != null) {
                 List<ColorAttributeDto> colors = productDetails.getColors();
                 for (ColorAttributeDto color : colors) {
