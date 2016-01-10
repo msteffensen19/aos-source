@@ -9,14 +9,14 @@ define(['./module'], function (controllers) {
         function (s, resolveParams) {
 
             s.checkCart();
-
-            s.loginModal = {
-                email : '',
-                password : ''
-            }
-
+            s.paymentEnd = false;
             s.shippingCost = resolveParams.shippingCost;
             s.userLogin = resolveParams.userLogin;
+
+            s.payNow_masterCredit = function(){
+                console.log(s)
+                s.paymentEnd = true;
+            }
 
             $("nav .navLinks").css("display" , "none");
         }]);
