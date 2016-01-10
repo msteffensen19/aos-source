@@ -2,11 +2,11 @@ package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 
-import ShipExServiceClient.SEAddress;
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
-import com.advantage.common.Url_resources;
+import com.advantage.common.SecurityTools;
+import com.advantage.common.dto.AccountType;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
@@ -19,20 +19,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.namespace.QName;
-import javax.xml.soap.*;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
-import java.util.Map;
 
 /**
- * @see HttpStatus#BAD_REQUEST (400) = The request cannot be fulfilled due to bad syntax.
- *      General error when fulfilling the request would cause an invalid state. <br/>
- *      e.g. Domain validation errors, missing data, etc.
- * @see HttpStatus#NOT_IMPLEMENTED (501) = The server either does not recognise the
- *      request method, or it lacks the ability to fulfill the request.
  * @author Binyamin Regev on 09/12/2015.
+ * @see HttpStatus#BAD_REQUEST (400) = The request cannot be fulfilled due to bad syntax.
+ * General error when fulfilling the request would cause an invalid state. <br/>
+ * e.g. Domain validation errors, missing data, etc.
+ * @see HttpStatus#NOT_IMPLEMENTED (501) = The server either does not recognise the
+ * request method, or it lacks the ability to fulfill the request.
  */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
@@ -51,14 +46,17 @@ public class OrderController {
     @ApiOperation(value = "Get user shopping cart")
     public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userid") Long userId,
                                                                HttpServletRequest request, HttpServletResponse response) {
+        HttpStatus authorizationStatus = SecurityTools.isAutorized(request.getHeader("Authorization"), userId, AccountType.USER);
+        if (authorizationStatus != null) {
+            return new ResponseEntity<>(authorizationStatus);
+        } else {
+            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-
-        if (userCartResponseDto == null) {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        }
-        else {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            if (userCartResponseDto == null) {
+                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+            } else {
+                return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            }
         }
     }
 
@@ -67,10 +65,10 @@ public class OrderController {
     @ApiOperation(value = "Add product to shopping cart")
     /*public ResponseEntity<ShoppingCartResponse> addProductToCart(@PathVariable("userid") Long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> addProductToCart(@PathVariable("userid") Long userId,
-                                                                       @PathVariable("productid") Long productId,
-                                                                       @PathVariable("color") String hexColor,
-                                                                       @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
-                                                                       HttpServletRequest request) {
+                                                                    @PathVariable("productid") Long productId,
+                                                                    @PathVariable("color") String hexColor,
+                                                                    @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
+                                                                    HttpServletRequest request) {
 
         shoppingCartResponse = shoppingCartService.add(userId, productId, hexColor, quantity);
 
@@ -78,8 +76,7 @@ public class OrderController {
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        }
-        else {
+        } else {
             //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
         }
@@ -90,10 +87,10 @@ public class OrderController {
     @ApiOperation(value = "Update quantity of product in shopping cart")
     /*public ResponseEntity<ShoppingCartResponse> updateProductQuantityInCart(@PathVariable("userid") long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userid") Long userId,
-                                                                                  @PathVariable("productid") Long productId,
-                                                                                  @PathVariable("color") String hexColor,
-                                                                                  @RequestParam("quantity") int quantity,
-                                                                                  HttpServletRequest request) {
+                                                                               @PathVariable("productid") Long productId,
+                                                                               @PathVariable("color") String hexColor,
+                                                                               @RequestParam("quantity") int quantity,
+                                                                               HttpServletRequest request) {
 
         shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
 
@@ -101,8 +98,7 @@ public class OrderController {
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        }
-        else {
+        } else {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
@@ -126,12 +122,10 @@ public class OrderController {
                     //  Unlikely scenario - update of user cart successful and get user cart failed
                     httpStatus = HttpStatus.NOT_FOUND;
                     shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
-                }
-                else {
+                } else {
                     httpStatus = HttpStatus.OK;
                 }
-            }
-            else {
+            } else {
                 //  Replace user cart failed
                 httpStatus = HttpStatus.NOT_IMPLEMENTED;
 
@@ -139,8 +133,7 @@ public class OrderController {
                 shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
                 shoppingCartResponse.setId(-1);
             }
-        }
-        else {
+        } else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
 
             shoppingCartResponse.setSuccess(false);
@@ -166,8 +159,7 @@ public class OrderController {
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        }
-        else {
+        } else {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
@@ -190,8 +182,7 @@ public class OrderController {
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        }
-        else {
+        } else {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
@@ -218,8 +209,7 @@ public class OrderController {
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        }
-        else {
+        } else {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
@@ -228,6 +218,7 @@ public class OrderController {
      * At fisrt develop it as {@code POST} request, because it needs a <i>body</i>. <br/>
      * In the future, it will be changed to {@code GET} request, after sending a
      * request for <b><i>Account Service</i></b> to get parameters values.
+     *
      * @param request
      * @param response
      * @return {@link ShippingCostResponse}
