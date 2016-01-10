@@ -46,7 +46,7 @@ public class OrderHeader {
     @Column(name = FIELD_ORDER_TIMESTAMP)
     private long orderTimestamp;
 
-    /*  ShippingInformation - Begin */
+    /*  OrderShippingInformation - Begin */
     @Column(name = "number_of_products")
     private int numberOfProducts;       //  Numeric. 1-5 digits
 
@@ -72,7 +72,7 @@ public class OrderHeader {
     @Column(name = "Shipping_country")
     private String shippingCountry;     //  2 characters
     /*  ShippingAddress - End   */
-    /*  ShippingInformation - End */
+    /*  OrderShippingInformation - End */
 
     @Column(name = "payment_method")
     private String paymentMethod;       //  from PaymentMethodEnum: "MasterCredit" / "SafePay"
