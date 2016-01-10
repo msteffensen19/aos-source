@@ -3,8 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('registerService', ['$soap', '$http', '$q', 'resHandleService',
-        function ($soap, $http, $q, responseService) {
+    services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService',
+        function (mini_soap, $http, $q, responseService) {
         // Return public API.
         return({
             register: register,
@@ -27,7 +27,7 @@ define(['./module'], function (services) {
             var expectToReceive = {
                 "address": model.address ,
                 "allowOffersPromotion":  model.offers_promotion ? 'Y' : 'N',
-                "appUserType": 10,
+                "accountType": 10,
                 "cityName": model.city,
                 "country": model.country.id || 0 ,
                 "email": model.email,
@@ -43,26 +43,26 @@ define(['./module'], function (services) {
                 "stateProvince": model.state,
                 "zipcode": model.postalCode,
             }
-            //
-            //var defer = $q.defer();
-            //var params = server.account.register();
-            //
-            //$soap.post(params.path, params.method, expectToReceive).
-            //then(function(response){
-            //        defer.resolve(response);
-            //    },
-            //    function(response){
-            //        console.log(response);
-            //        defer.reject("Request failed! ");
-            //    });
-            //return defer.promise;
 
-            var request = $http({
-                method: "post",
-                url: server.account.register(),
-                data: expectToReceive,
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+            var defer = $q.defer();
+            var params = server.account.register();
+
+            mini_soap.post(params.path, params.method, expectToReceive).
+            then(function(response){
+                    defer.resolve(response);
+                },
+                function(response){
+                    console.log(response);
+                    defer.reject("Request failed! ");
+                });
+            return defer.promise;
+
+            //var request = $http({
+            //    method: "post",
+            //    url: server.account.register(),
+            //    data: expectToReceive,
+            //});
+            //return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
     }]);

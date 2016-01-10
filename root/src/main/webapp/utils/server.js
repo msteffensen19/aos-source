@@ -166,17 +166,17 @@ var server = {
             return accountKey + "/countries";
         },
 
-        //register : function(){
-        //    return {
-        //        path: wsdlPath,
-        //        method: 'AccountCreateRequest'
-        //    }
-        //},
-
         register : function(){
-            return accountKey + "/users";
+            return {
+                path: wsdlPath,
+                method: 'AccountCreateRequest'
+            }
         },
 
+        //register : function(){
+        //    return accountKey + "/users";
+        //},
+        //
 
         login : function(){
             return {

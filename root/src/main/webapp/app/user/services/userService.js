@@ -3,9 +3,9 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.factory('userService',['$rootScope', '$q', '$http', "resHandleService", "$soap",
+    services.factory('userService',['$rootScope', '$q', '$http', "resHandleService", "mini_soap",
 
-        function ($rootScope, $q, $http, responseService, $soap) {
+        function ($rootScope, $q, $http, responseService, mini_soap) {
 
             // Return the public API.
             return ({
@@ -38,9 +38,10 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.account.login();
-
-                $soap.post(params.path, params.method, user).
+                    console.log(params)
+                mini_soap.post(params.path, params.method, user).
                 then(function (response) {
+                    console.log(response)
                     defer.resolve(response);
                 },
                 function (response) {

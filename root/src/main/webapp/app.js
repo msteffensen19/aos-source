@@ -41,7 +41,7 @@ define([
         'ui.bootstrap',
         'ipCookie',
         'ngAnimate',
-        'angularSoap',
+
 
         'aos.controllers',
         'aos.services',
