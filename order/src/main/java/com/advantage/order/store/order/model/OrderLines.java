@@ -12,19 +12,19 @@ import javax.persistence.*;
         @NamedQuery(
                 name = OrderLines.QUERY_GET_ALL_ORDERS_LINES_BY_USER_ID,
                 query = "select o from OrderLines o" +
-                        " where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID +
-                        " order by o.orderNumber ASC, o.productId ASC, o.productColor ASC"
+                        " where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID
+                        //+ " order by o.order_number ASC, o.product_id ASC, o.product_color ASC"
         )
         , @NamedQuery(
         name = OrderLines.QUERY_GET_ORDER_LINES_BY_ORDER_PK,
-        query = "select s from OrderLines s " +
+        query = "select o from OrderLines o " +
                 "where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID +
-                " and " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER +
-                " order by o.orderNumber ASC, o.productId ASC, o.productColor ASC"
+                " and " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER
+                //+ " order by o.order_number ASC, o.product_id ASC, o.product_color ASC"
         )
         , @NamedQuery(
         name = OrderLines.QUERY_GET_ORDERS_LINES_BY_PRODUCT_PK,
-        query = "select s from OrderLines s " +
+        query = "select o from OrderLines o " +
                 "where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID +
                 " and " + OrderLines.FIELD_PRODUCT_ID + " = :" + OrderLines.PARAM_PRODUCT_ID +
                 " and " + OrderLines.FIELD_PRODUCT_COLOR + " = :" + OrderLines.PARAM_PRODUCT_COLOR
@@ -42,7 +42,7 @@ public class OrderLines {
     public static final String FIELD_USER_ID = "user_id";
     public static final String FIELD_ORDER_NUMBER = "order_number";
     public static final String FIELD_PRODUCT_ID = "product_id";
-    public static final String FIELD_PRODUCT_COLOR = "product_color";
+    public static final String FIELD_PRODUCT_COLOR = "product_color_code";
 
     public static final String PARAM_USER_ID = "PARAM_USER_ID";
     public static final String PARAM_ORDER_NUMBER = "PARAM_ORDER_NUMBER";
@@ -68,6 +68,9 @@ public class OrderLines {
     @Id
     @Column(name = FIELD_PRODUCT_COLOR)
     private int productColor;           //  RGB decimal value
+
+    @Column(name = "product_color_name")
+    private int productColorName;           //  RGB decimal value
 
     @Column(name = "price_per_item")
     private double pricePerItem;        //  From Product table in CATALOG schema
@@ -132,6 +135,18 @@ public class OrderLines {
 
     public void setProductColor(int productColor) {
         this.productColor = productColor;
+    }
+
+    public void setProductColor(String hexColor) {
+        this.productColor = ShoppingCart.convertHexColorToInt(hexColor);
+    }
+
+    public int getProductColorName() {
+        return productColorName;
+    }
+
+    public void setProductColorName(int productColorName) {
+        this.productColorName = productColorName;
     }
 
     public double getPricePerItem() {

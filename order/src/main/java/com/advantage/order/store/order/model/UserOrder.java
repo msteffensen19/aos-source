@@ -39,7 +39,7 @@ public class UserOrder {
     private long orderNumber;
     private long orderTimestamp;
 
-    /*  ShippingInformation - Begin */
+    /*  OrderShippingInformation - Begin */
     private int numberOfProducts;       //  Numeric. 1-5 digits
     private double shippingCost;        //  "##.##"
 
@@ -50,7 +50,7 @@ public class UserOrder {
     private String shippingState;       //  0-10 characters
     private String shippingCountry;     //  2 characters
     /*  ShippingAddress - End   */
-    /*  ShippingInformation - End */
+    /*  OrderShippingInformation - End */
 
     private String paymentMethod;       //  from PaymentMethodEnum: "MasterCredit" / "SafePay"
 

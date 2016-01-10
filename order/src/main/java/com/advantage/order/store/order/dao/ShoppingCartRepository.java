@@ -48,4 +48,5 @@ public interface ShoppingCartRepository {
 
     ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts);
 
+    ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor);
 }
