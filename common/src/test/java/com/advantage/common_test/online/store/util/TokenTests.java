@@ -15,8 +15,8 @@ public class TokenTests {
     private static final long USER_ID = 1234;
     private static final String LOGIN_NAME = "loginName";
     private static final AccountType ROLE = AccountType.ADMIN;
-    private static final String completeToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMjM0LCJsb2dpbk5hbWUiOiJsb2dpbk5hbWUiLCJyb2xlIjoiQURNSU4ifQ.Rf6SwLLQejSneHGg53KgMFNeMDbTykO2NJqkh8-tggp8PzWDmFdAyaULORp8iUHprcMXPV8n1rqtWwC9l30WdQ";
-    private static final String fakeToken256 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMjM0LCJsb2dpbk5hbWUiOiJsb2dpbk5hbWUiLCJyb2xlIjoiQURNSU4ifQ.3t9bi1UUP95YLdaYZHmGcdpWi8gGRykh2c0lrp6e9so";
+    private static final String completeToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMjM0LCJzdWIiOiJsb2dpbk5hbWUiLCJyb2xlIjoiQURNSU4ifQ.kAlzIh4rYbawWJ5e0wQ41Esgk8po8zqtA_fujB7-wpUaHzlkQ3gOTH2HSOe6ZL_DcS_sXIHU4BwnfdJJXuBllw";
+    private static final String fakeToken256 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMjM0LCJzdWIiOiJsb2dpbk5hbWUiLCJyb2xlIjoiQURNSU4ifQ.L2gyM84JrZZOrXESX-5Ig4--2dT9TPWm61pwGRffS8A";
 //    @Autowired
 //    private Environment environment;
 
