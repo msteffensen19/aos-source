@@ -1,13 +1,46 @@
 <div>
 
-    <h2> <span class="roboto-regular"> {{ 'Thank_you_for_buying_with_Advantage' | translate }} </span> </h2>
+    <h2> <span class="roboto-regular"> {{ 'Thank_you_for_buying_with_Advantage' | translate }}  </span> </h2>
 
-    <p> {{ 'Yor_tracking_number_is' | translate }} {{ trackingNumber }} | {{ 'Your_order_number_is' | translate }} {{orderNumber}} </p>
+    <p class="roboto-regular"> {{ 'Yor_tracking_number_is' | translate }} {{ trackingNumber }} <span class="separator">|</span> {{ 'Your_order_number_is' | translate }} {{orderNumber}} </p>
+
 
     <div>
-
+        <div class="seccion">
+            <span> {{ 'Shipping_to' | translate }}</span>
+            <div>
+                <div class="innerSeccion">
+                    <img src="/css/images/User.jpg">
+                    <label>David Smith</label>
+                </div>
+                <div class="innerSeccion">
+                    <img src="/css/images/User.jpg">
+                    <label>David Smith</label>
+                    <label>HPE Software (buildding M3)</label>
+                    <label>Yehud</label>
+                    <label>Israel</label>
+                </div>
+                <div class="innerSeccion">
+                    <img src="/css/images/User.jpg">
+                    <label>972-54-8164355</label>
+                </div>
+            </div>
+        </div>
+        <div class="seccion">
+            <span> {{ 'Payment_Method' | translate }}</span>
+            <div class="innerSeccion">
+                <img src="/css/images/User.jpg">
+                <label>972-54-8164355</label>
+            </div>
+        </div>
+        <div class="seccion">
+            <span> {{ 'Order_Summary' | translate }} {{ ItemsPaid }}{{ 'ITEMS' | translate}} </span>
+            <div class="innerSeccion">
+                <img src="/css/images/User.jpg">
+                <label>972-54-8164355</label>
+            </div>
+        </div>
     </div>
-
 
 
 

@@ -8,6 +8,7 @@
 </div>
 
     <!-- USER DETAILS SECTION-->
+
     <div id="userSection" ng-show="firstTag">
 
         <div id="userDetails">
@@ -35,6 +36,7 @@
             <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
         </div>
     </div>
+
     <!-- END USER DETAILS SECTION-->
 
 
@@ -53,6 +55,8 @@
                     <img src="../../../css/images/Master_credit.png" alt="Master credit" />
                 </div>
             </div>
+
+            <!---------------------------- SAFEPAY SECCION ---------------------------->
 
             <div ng-show="imgRadioButton == 1 && !editMode">
 
@@ -117,16 +121,21 @@
 
             </div>
 
+            <!-------------------------- END SAFEPAY SECCION -------------------------->
+
+
+
+            <!-------------------------- MASTERCREDIT SECCION --------------------------->
+
             <div ng-show="imgRadioButton == 2 && !noCards">
 
-                <div class="masterCreditSeccion" data-ng-repeat="card in CardNumber track by $index">
+                <div class="masterCreditSeccion">
                     <div class="roboto-regular" >
                         <span class="MasterCredit">MasterCredit</span>
-                        <span data-ng-repeat="_4numbers in card track by $index" >{{ _4numbers | showLast4DigitsCard:$last:$index}}</span>
+                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >{{ _4numbers | showLast4DigitsCard:$last:$index}}</span>
                         <label class="edit" data-ng-click="paymentMethod_edit(card)" > {{'Edit' | translate}} </label>
                     </div>
                 </div>
-
 
                 <div class="blueLink">
                     <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
@@ -136,6 +145,13 @@
                     </label>
                 </div>
             </div>
+
+            <!-------------------------- END MASTERCREDIT SECCION --------------------->
+
+
+
+
+            <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
             <div ng-show="noCards">
 
@@ -203,8 +219,11 @@
 
             </div>
 
+            <!---------------------------- END MANUAL PAYMENT SECCION ---------------------------->
+
         </div>
     </div>
+
     <!-- END EDIT PAYMENT METHOD SECTION-->
 
 

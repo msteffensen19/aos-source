@@ -2,21 +2,9 @@
 #orderPaymentSuccess {
 
     display: block;
-    max-width: 1180px;
     margin:100px auto;
     padding-top:30px;
     text-align: center;
-}
-
-#orderPaymentSuccess > div{
-
-    display: block;
-    max-width: 1180px;
-    margin:100px auto;
-    padding: 0;
-    padding-top:30px;
-    border:solid #2a2a2a 1px;
-
 }
 
 #orderPaymentSuccess > h2{
@@ -48,4 +36,43 @@
     display: inline-block;
     border-left: solid 15px white;
     border-right: solid 15px white;
+}
+
+span.separator {
+    padding: 0 10px;
+    display: inline-block;
+
+}
+
+#orderPaymentSuccess > p {
+    font-size: 14px;
+    color: #2a2a2a;
+    padding: 28px 0;
+}
+
+
+#orderPaymentSuccess > div{
+
+    display: block;
+    max-width: 1000px;
+    margin:0px auto;
+    border:solid #2a2a2a 1px;
+    padding: 30px;
+    font-size: 0;
+}
+
+#orderPaymentSuccess > div > div.seccion {
+
+    text-align: left;
+    font-size: 14px;
+    width: 270px;
+    display: inline-block;
+    border-right: solid #454545 2px;
+    height: 230px;
+    vertical-align: top;
+}
+
+#orderPaymentSuccess div.innerSeccion {
+
+
 }

@@ -9,10 +9,10 @@ define(['./module'], function (controllers) {
         function (s, resolveParams) {
 
             s.checkCart();
-            s.paymentEnd = false;
+            s.paymentEnd = true;
             s.shippingCost = resolveParams.shippingCost;
             s.userLogin = resolveParams.userLogin;
-
+            s.itemsPaid = s.cart.productsInCart.length;
             s.payNow_masterCredit = function(){
                 console.log(s)
                 s.paymentEnd = true;
