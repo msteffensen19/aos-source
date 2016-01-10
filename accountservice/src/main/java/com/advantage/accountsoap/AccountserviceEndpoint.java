@@ -5,9 +5,9 @@ import com.advantage.accountsoap.dto.*;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
+import com.advantage.accountsoap.services.AddressService;
 import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -22,6 +22,9 @@ public class AccountserviceEndpoint {
 
     @Autowired
     private CountryService countryService;
+
+    @Autowired
+    private AddressService addressService;
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
@@ -162,9 +165,19 @@ public class AccountserviceEndpoint {
         }
     }
 
-   /* @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
     @ResponsePayload
-    public AddressesResponse getAccountShippingAddress(@RequestPayload GetAccountByIdRequest accountId) {
-        return null;
-    }*/
+    public AddressesResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
+        AddressesResponse response = new AddressesResponse();
+        List<AddressDto> addresses = addressService.getByAccountId(accountId.getId());
+        response.setShippingAddress(addresses);
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddAddressesRequest")
+    @ResponsePayload
+    public AddressStatusResponse addAddress(@RequestPayload AddAddressesRequest address) {
+        return addressService.add(address.getAccountId(), address.getAddresses());
+    }
 }

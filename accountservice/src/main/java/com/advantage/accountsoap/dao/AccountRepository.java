@@ -2,6 +2,7 @@ package com.advantage.accountsoap.dao;
 
 import com.advantage.accountsoap.dto.AccountStatusResponse;
 import com.advantage.accountsoap.model.Account;
+import com.advantage.common.dao.DefaultCRUDOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

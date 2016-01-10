@@ -16,6 +16,13 @@ public class AddressesResponse {
     @XmlElement(name = "ShippingAddress",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private List<AddressDto> shippingAddress;
 
+    public AddressesResponse() {
+    }
+
+    public AddressesResponse(List<AddressDto> shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
     public List<AddressDto> getShippingAddress() {
         return shippingAddress;
     }

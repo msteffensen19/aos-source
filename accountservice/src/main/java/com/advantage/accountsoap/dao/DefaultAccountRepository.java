@@ -196,13 +196,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     @Override
     public int deleteAppUser(Account account) {
-        System.out.println("int deleteAppUser(Account accountsoap) - Strat");
-
         ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
         Long userId = account.getId();
-
-        System.out.println("int deleteAppUser(Account accountsoap) - Building HQL");
         String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Account.class,
                 Account.FIELD_ID,
                 userId);
@@ -401,9 +397,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * @return Random {@link UUID} string.
      */
     private Token getToken(long accountId, String loginName, AccountType accountType) {
-        Token token = new TokenJWT(accountId, loginName, accountType);
-
-        return token;
+        return new TokenJWT(accountId, loginName, accountType);
     }
 
     @Override
@@ -423,23 +417,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public Account get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
-        System.out.println("DefaultAppUserRepository.get(Long) -> entityId = " + entityId);
 
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
-
-        Query query = entityManager.createQuery(hql);
-
-        Account account = null;
-        try {
-            account = (Account) query.getSingleResult();
-        } catch (NoResultException ex) {
-            //  return null ==> No registered user found for userId.
-            //ex.printStackTrace();
-        } catch (Exception ex) {
-            //  another exception was thrown
-            ex.printStackTrace();
-        }
-
-        return account;
+        return entityManager.find(Account.class, entityId);
     }
 }

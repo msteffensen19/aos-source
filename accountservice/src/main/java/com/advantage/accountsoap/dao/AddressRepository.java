@@ -1,7 +1,19 @@
 package com.advantage.accountsoap.dao;
 
-import com.advantage.accountsoap.model.Account;
+import com.advantage.accountsoap.model.ShippingAddress;
+import com.advantage.common.dao.DefaultCRUDOperations;
 
-public interface AddressRepository extends DefaultCRUDOperations<Account> {
-    public long addAddress(long userId, String line1, String line2);
+import java.util.List;
+
+public interface AddressRepository extends DefaultCRUDOperations<ShippingAddress> {
+    long addAddress(long userId, String addressLine1,
+                    String addressLine2,
+                    String city,
+                    String country,
+                    String state,
+                    String postalCode);
+
+    List<ShippingAddress> getByAccountId(Long accountId);
+
+
 }

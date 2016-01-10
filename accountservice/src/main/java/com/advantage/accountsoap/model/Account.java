@@ -6,7 +6,6 @@ import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.UserPassword;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -125,8 +124,7 @@ public class Account {
     private long internalLastSuccesssulLogin;   //  Managed Internally
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<AccountAddress> addresses = new HashSet<>();
+    private Set<ShippingAddress> addresses = new HashSet<>();
 
     public Account() {
 
@@ -316,13 +314,13 @@ public class Account {
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
     }
 
-  /*  public Set<AccountAddress> getAddresses() {
+    public Set<ShippingAddress> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(Set<AccountAddress> addresses) {
+    public void setAddresses(Set<ShippingAddress> addresses) {
         this.addresses = addresses;
-    }*/
+    }
 
     /**
      * Add milliseconds value interval to current {@link Date} and return the new {@link Date}

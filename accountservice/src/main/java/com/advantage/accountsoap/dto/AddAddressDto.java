@@ -1,28 +1,22 @@
 package com.advantage.accountsoap.dto;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.model.Account;
 
-import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "",
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
-                "id",
                 "addressLine1",
                 "addressLine2",
                 "city",
                 "country",
                 "state",
-                "postalCode",
-                "accountId"
+                "postalCode"
         })
 @XmlRootElement(name = "Address", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AddressDto {
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = false, nillable = true)
-    private long id;
+public class AddAddressDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String addressLine1;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -35,30 +29,19 @@ public class AddressDto {
     private String state;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String postalCode;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private long accountId;
 
-    public AddressDto() {
+    public AddAddressDto() {
     }
 
-    public AddressDto(long id, String addressLine1, String addressLine2, String city, String country, String state,
+    public AddAddressDto(long id, String addressLine1, String addressLine2, String city, String country, String state,
                       String postalCode, long accountId) {
-        this.id = id;
+
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
         this.country = country;
         this.state = state;
         this.postalCode = postalCode;
-        this.accountId = accountId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getAddressLine1() {
@@ -109,11 +92,4 @@ public class AddressDto {
         this.postalCode = postalCode;
     }
 
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
-    }
 }
