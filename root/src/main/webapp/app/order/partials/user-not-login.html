@@ -35,8 +35,10 @@
                      data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                      type="button"
                      value="{{'LOGIN' | translate}}" />
+        <br />
 
-        <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
+        <label ng-class="{ invalid : wrongFields.success == 'false' }" >{{ wrongFields.reason }}</label>
+
 
     </sec-validate>
 </div>

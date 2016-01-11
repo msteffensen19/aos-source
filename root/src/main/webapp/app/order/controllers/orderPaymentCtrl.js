@@ -16,9 +16,11 @@ define(['./module'], function (controllers) {
 
             s.user = resolveParams.user
             s.shippingCost = resolveParams.shippingCost;
-            s.itemsPaid = s.cart.productsInCart.length;
+            s.itemsPaid = s.cart ? s.cart.productsInCart.length : 0;
 
             s.CardNumber = ["6789", "0785", "0785", "0785"];
+            var d = new Date();
+            s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
             s.payNow_masterCredit = function(){
                 s.paymentEnd = true;
@@ -38,10 +40,8 @@ define(['./module'], function (controllers) {
 
             $("nav .navLinks").css("display" , "none");
 
+            Helper.forAllPage();
 
-            // cant login with email
-            // dont have shipping request to extract
-            // sending cost
         }]);
 });
 

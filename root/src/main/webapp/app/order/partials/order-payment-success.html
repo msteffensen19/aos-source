@@ -13,18 +13,17 @@
             <div>
                 <div class="innerSeccion">
                     <img src="/css/images/User.jpg">
-                    <label>David Smith</label>
+                    <label>{{user.firstName}} {{user.lastName}}</label>
                 </div>
                 <div class="innerSeccion">
                     <img src="/css/images/User.jpg">
-                    <label>David Smith</label>
-                    <label>HPE Software (buildding M3)</label>
-                    <label>Yehud</label>
-                    <label>Israel</label>
+                    <label>{{ user.address }}</label>
+                    <label>{{ user.cityName }}</label>
+                    <label>{{ user.stateProvince }}</label>
                 </div>
                 <div class="innerSeccion">
                     <img src="/css/images/User.jpg">
-                    <label>972-54-8164355</label>
+                    <label>{{ user.phoneNumber }}</label>
                 </div>
             </div>
         </div>
@@ -43,7 +42,7 @@
             <div class="innerSeccion">
                 <label>
                     {{ 'Date_Ordered' | translate}}
-                    <a class="floater">23/12/9999</a>
+                    <a class="floater">{{Date_Ordered}}</a>
                 </label>
             </div>
         </div>
@@ -52,19 +51,19 @@
             <div class="innerSeccion">
                 <label>
                     {{ 'Subtotal' | translate}}
-                    <a class="floater">{{ 15 | currency }}</a>
+                    <a class="floater"> {{cart | productsCartSum | currency:'$'}}</a>
                 </label>
             </div>
             <div class="innerSeccion">
                 <label>
                     {{ 'shipping' | translate}}
-                    <a class="floater">{{ 10 | currency }}</a>
+                    <a class="floater"> {{shippingCost | currency:'$'}}</a>
                 </label>
             </div>
             <div class="innerSeccion">
                 <label class="total">
                     {{ 'TOTAL' | translate}}
-                    <a class="floater"> {{ 25 | currency }}</a>
+                    <a class="floater">  {{(cart | productsCartSum) + shippingCost | currency:'$'}} </a>
                 </label>
             </div>
         </div>
