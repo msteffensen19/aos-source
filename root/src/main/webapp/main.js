@@ -15,9 +15,6 @@ require.config({
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
         "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
         'angularAnimate' : 'vendor/angular-animate/angular-animate.min',
-        'jquery-soap' : 'vendor/jquery.soap/jquery.soap',
-        'angular-soap' : 'vendor/angular-soap/angular.soap',
-        'angular-client' : 'vendor/angular-soap/soapclient',
         'angularAutocomplete' : 'vendor/ngAutocomplete/src/ngAutocomplete',
         'ncy-angular-breadcrumb' : 'vendor/angular-breadcrumb/release/angular-breadcrumb.min',
 
@@ -35,7 +32,6 @@ require.config({
         'UserCookie' : 'utils/Models/UserCookie',
         'slider' : 'utils/slider',
 
-
         'englishLanguage' : 'languages/english',
 
 
@@ -48,12 +44,6 @@ require.config({
             deps: ['angular']
         },
         'angular-cookie': {
-            deps: ['angular']
-        },
-        'angular-client': {
-            deps: ['angular']
-        },
-        'angular-soap': {
             deps: ['angular']
         },
         'angular-translate': {
@@ -74,9 +64,6 @@ require.config({
         'ui-bootstrap': ['angular'],
         'angularAnimate': ['angular'],
         'jquery-bez' : {
-            deps: ['jquery']
-        },
-        'jquery-soap' : {
             deps: ['jquery']
         },
         'jquery.animate-colors' : {
@@ -111,8 +98,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
          'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
         'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
-        'angularAnimate','ui-bootstrap', 'angular-soap', 'angular-client',
-        'jquery-soap'
+        'angularAnimate','ui-bootstrap'
     ], function(angular, app)
     {
         angular.element().ready(function() {

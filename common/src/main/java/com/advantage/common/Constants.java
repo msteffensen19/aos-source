@@ -3,6 +3,8 @@ package com.advantage.common;
 public class Constants {
     public static final char SPACE = ' ';
 
+    public static final String NOT_FOUND = "NOT FOUND";
+
     public static final String URI_API = "/api";
 
     //

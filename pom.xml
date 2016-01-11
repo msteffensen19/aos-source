@@ -32,7 +32,6 @@
         <spring-session.version>1.0.0.RELEASE</spring-session.version>
         <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
         <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
-        <spring-security.version>4.0.1.RELEASE</spring-security.version>
         <hibernate.version>4.3.9.Final</hibernate.version>
         <jackson.version>2.4.5</jackson.version>
         <modelmapper.version>0.7.3</modelmapper.version>

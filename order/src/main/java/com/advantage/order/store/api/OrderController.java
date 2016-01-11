@@ -7,10 +7,9 @@ import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
-import com.advantage.order.store.order.dto.ShoppingCartDto;
-import com.advantage.order.store.order.dto.ShoppingCartResponse;
-import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
+import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
+import com.advantage.order.store.order.services.OrderManagementService;
 import com.advantage.order.store.order.services.ShoppingCartService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,9 @@ public class OrderController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
+
+    @Autowired
+    private OrderManagementService orderManagementService;
 
     private ShoppingCartResponse shoppingCartResponse;
 
@@ -253,19 +255,19 @@ public class OrderController {
         costRequest.setSENumberOfProducts(1);
         costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
         */
-        ShippingCostResponse costResponse = shoppingCartService.getShippingCostFromShipEx(costRequest);
+        ShippingCostResponse costResponse = orderManagementService.getShippingCostFromShipEx(costRequest);
 
         switch (costResponse.getReason()) {
-            case ShoppingCartService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
                 httpStatus = HttpStatus.BAD_REQUEST;
                 break;
             /* Response failure */
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
-            case ShoppingCartService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
+            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
                 httpStatus = HttpStatus.NOT_IMPLEMENTED;
             default:
                 httpStatus = HttpStatus.OK;
@@ -276,16 +278,22 @@ public class OrderController {
 
     /*  =========================================================================================================   */
 
-//    @RequestMapping(value = "/carts/{user_id}/purchase", method = RequestMethod.POST)
-//    @ApiOperation(value = "Do purchase of products in cart")
-//    public ResponseEntity<ShoppingCartResponse> doPurchase(@RequestBody OrderPurchaseRequest orderPurchaseRequest,
-//                                                                @PathVariable("user_id") long userId) {
-//
-//        System.out.println("OrderController -> doPurchase(): userId=" + userId);
-//
-//        ShoppingCartResponse purchaseResponse = shoppingCartService.doPurchase(userId, orderPurchaseRequest);
-//
-//        return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
+    @ApiOperation(value = "Purchase new order")
+    public ResponseEntity<OrderPurchaseResponse> doPurchase(@RequestBody OrderPurchaseRequest purchaseRequest,
+                                                            @PathVariable("user_id") long userId) {
+
+        System.out.println("OrderController -> doPurchase(): userId=" + userId);
+
+        OrderPurchaseResponse purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
+
+        if (purchaseResponse.isSuccess()) {
+            return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
+        } else {
+            // TODO-Benny return error code suitable to the error
+            return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
+        }
+
+    }
 
 }

@@ -1,7 +1,8 @@
-/**
- * Created by kubany on 10/13/2015.
+ /**
+ * Created by correnti on 10/01/2016.
+ */
 
 define(['angular'], function (angular) {
     'use strict';
-    return angular.module('aos.user.services', []);
-}) */;
+    return angular.module('aos.order.services', []);
+});

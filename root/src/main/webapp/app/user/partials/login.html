@@ -16,25 +16,23 @@
 
 
             <span class="animPlaceholderUp">
-                <input type="text" ng-model="user.loginUser" />
-                <label>{{'Name' | translate }}</label>
+                <input type="text" ng-model="user.loginUser" placeholder="{{'Name' | translate }}" />
             </span>
 
 
             <span class="animPlaceholderUp">
-                <input ng-model="user.loginPassword" type="Password"
+                <input ng-model="user.loginPassword" type="Password" placeholder="{{'Password' | translate }}"
                        ng-class="{bottomLine : config.emailAddressInLogin}" autocomplete="off" >
-                <label>{{'Password' | translate }}</label>
             </span>
 
 
-            <!--ng-class="{bottomLine : config.emailAddressInLogin}"
+            <!--
+            ng-class="{bottomLine : config.emailAddressInLogin}"
             ng-if="config.emailAddressInLogin"
             -->
             <span class="animPlaceholderUp" >
                 <input type="text" autocomplete="off"
-                       ng-model="user.email" >
-                <label>{{'Email' | translate }}</label>
+                       ng-model="user.email" placeholder="{{'Email' | translate }}" >
             </span>
 
             <div class="left option " style="top: 20px">

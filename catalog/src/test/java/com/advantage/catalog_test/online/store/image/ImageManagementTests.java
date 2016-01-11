@@ -3,23 +3,24 @@ package com.advantage.catalog_test.online.store.image;
 //import java.util.HashMap;
 //import java.util.Map;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
-
-import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
-import org.apache.commons.io.FileUtils;
-import org.junit.*;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
+import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
+import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 
 /**
  * @author Binyamin Regev
@@ -74,13 +75,15 @@ public class ImageManagementTests {
     @Test
     public void testIsFileExists() throws IOException {
 
-        ImageManagement im = ImageManagementAccess.getImageManagement("C:\\Temp\\advantage");
+        String tempdir = System.getProperty("java.io.tmpdir");
+
+        ImageManagement im = ImageManagementAccess.getImageManagement(tempdir + File.separator + "advantage");
 
         im.persist();
 
-        int isFileExists = FileSystemHelper.isFileExist("C:\\Temp\\advantage\\imageManagement.xml") ? 1 : 0;
+        boolean isFileExists = FileSystemHelper.isFileExist(tempdir + File.separator + "advantage" + File.separator + "imageManagement.xml");
 
-        Assert.assertEquals(isFileExists, 1);
+        Assert.assertTrue(isFileExists);
     }
 
     /**
@@ -96,6 +99,7 @@ public class ImageManagementTests {
      * @see ImageManagementAccess
      * @see ManagedImage
      */
+    //TODO-EVG unignore after testIsFileExists will work in Linux
     @Test(expected = NullPointerException.class)
     public void testImageExistsById() throws IOException {
 

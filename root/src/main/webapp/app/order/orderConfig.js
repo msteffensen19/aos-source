@@ -2,7 +2,6 @@
  * Created by correnti on 31/12/2015.
  */
 
-
 define([],function(){
 
     function config($stateProvider) {
@@ -18,15 +17,17 @@ define([],function(){
                 breadcrumbName: "orderPayment",
             },
             resolve : {
-                resolveParams: function ($q) {
+                resolveParams: function ($q, orderService) {
                     var defer = $q.defer();
-                   // cartService.checkout().then(function (userLogin) {
-                        var paramsToResolve = {
-                            userLogin: false,
-                            shippingCost : 10 //userLogin
-                        }
-                        defer.resolve(paramsToResolve);
-                    //});
+
+                    orderService.getAccountById()
+                        .then(function (user) {
+                            var paramsToResolve = {
+                                shippingCost : 10, //userLogin
+                                user : user
+                            }
+                            defer.resolve(paramsToResolve);
+                    });
                     return defer.promise;
                 }
             }
@@ -34,39 +35,7 @@ define([],function(){
 
     }
 
-    config.$inject=['$stateProvider'];
-
-    return config;
+    return ['$stateProvider', config];
 
 });
 
-
-
-
-
-
-
-
-
-
-//$routeProvider.
-//    when('/AddNewOrder', {
-//        templateUrl: 'templates/add_order.html',
-//        controller: 'AddOrderController'
-//    }).
-//    when('/category/:id', {
-//        controller: 'categoryCtrl',
-//        templateUrl: './app/views/category-page.html',
-//    }).
-//    when('/', {
-//        controller: 'categoriesCtrl',
-//        templateUrl: 'app/views/home-page.html',
-//    }).
-//    when('/welcome', {
-//        templateUrl: 'app/views/welcome.html',
-//    }).
-//    otherwise({
-//        redirectTo: '/',
-//        controller: 'categoriesCtrl',
-//        templateUrl: './app/views/home-page.html',
-//    });

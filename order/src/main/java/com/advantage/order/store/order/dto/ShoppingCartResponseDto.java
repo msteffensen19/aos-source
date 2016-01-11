@@ -26,23 +26,23 @@ public class ShoppingCartResponseDto {
     public class CartProduct {
 
         /**
-         * Private inner class for color attribute of product in user cart.
+         * Public inner class for color attribute of product in user cart.
          */
         public class ProductColor {
 
-            /*  private class ProductColor - properties  */
+            /*  inner class ProductColor - properties  */
             private String code;
             private String name;
             private int inStock;
 
-            /*  private class ProductColor - Constructors    */
+            /*  inner class ProductColor - Constructors    */
             public ProductColor(String code, String name, int inStock) {
                 this.code = code;
                 this.name = name;
                 this.inStock = inStock;
             }
 
-            /*  private class ProductColor - Getters and Setters */
+            /*  inner class ProductColor - Getters and Setters */
             public String getCode() {
                 return code;
             }
@@ -68,7 +68,7 @@ public class ShoppingCartResponseDto {
             }
         }
 
-        /*  private class CartProduct - properties  */
+        /*  inner class CartProduct - properties  */
         private Long productId;
         private String productName;
         private double price;
@@ -77,7 +77,7 @@ public class ShoppingCartResponseDto {
         private ProductColor color;     //  Inner class of ShoppingCartResponseDto
         private boolean exists;
 
-        /*  private class CartProduct - Construtors  */
+        /*  inner class CartProduct - Construtors  */
         public CartProduct(Long productId) { this.productId = productId; }
 
         public CartProduct(Long productId, String productName, double price, int quantity, String imageUrl) {
@@ -128,7 +128,7 @@ public class ShoppingCartResponseDto {
             this.exists = exists;
         }
 
-        /*  private class CartProduct - Getters and Setters  */
+        /*  inner class CartProduct - Getters and Setters  */
         public Long getProductId() {
             return this.productId;
         }

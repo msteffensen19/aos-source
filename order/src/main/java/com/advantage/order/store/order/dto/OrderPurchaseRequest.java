@@ -1,104 +1,67 @@
 package com.advantage.order.store.order.dto;
 
-import com.advantage.order.store.order.dto.ShoppingCartResponseDto;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Binyamin Regev on 24/12/2015.
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class OrderPurchaseRequest {
 
-    public class CartProductForPurchase {
-        private Long productId;
-        private String productName;
-        private int quantity;
+    private OrderShippingInformation orderShippingInformation;
 
-        public CartProductForPurchase() { }
+    private OrderPaymentInformation orderPaymentInformation;
 
-        public CartProductForPurchase(Long productId, String productName, int quantity) {
-            this.productId = productId;
-            this.productName = productName;
-            this.quantity = quantity;
-        }
-
-        public Long getProductId() { return productId; }
-
-        public void setProductId(Long productId) { this.productId = productId; }
-
-        public String getProductName() { return productName; }
-
-        public void setProductName(String productName) { this.productName = productName; }
-
-        public int getQuantity() { return quantity; }
-
-        public void setQuantity(int quantity) { this.quantity = quantity; }
-    }
-
-    private List<CartProductForPurchase> productsToPurchase;
-    private String paymentMethod;       //  MasterCredit / SafePay
-    private String safePayUserName;     //  has a value only if paymentMethod = "SafePay"
-    private String safePaypassword;     //  has a value only if paymentMethod = "SafePay"
-
-    private String ShipExAddressCity;
-    private String ShipExAddressCountryCode;    //  By ISO3166
-    //private String ShipExAddressCountryName;
-    private String ShipExAddressState;          //  0-10 characters
-    private String ShipExAddressPostalCode;     //  0-10 digis
-    private String ShipExAddressLine1;          //  0-50 characters
-    private String ShipExAddressLine2;          //  0-50 characters
+    private List<ShoppingCartDto> purchasedProducts;
 
     public OrderPurchaseRequest() { }
 
-    public OrderPurchaseRequest(String paymentMethod, String safePayUserName, String safePaypassword, String shipExAddressCity, String shipExAddressCountryCode, String shipExAddressState, String shipExAddressPostalCode, String shipExAddressLine1, String shipExAddressLine2) {
-        this.productsToPurchase = new ArrayList<CartProductForPurchase>();
-
-        this.paymentMethod = paymentMethod;
-        this.safePayUserName = safePayUserName;
-        this.safePaypassword = safePaypassword;
-        ShipExAddressCity = shipExAddressCity;
-        ShipExAddressCountryCode = shipExAddressCountryCode;
-        ShipExAddressState = shipExAddressState;
-        ShipExAddressPostalCode = shipExAddressPostalCode;
-        ShipExAddressLine1 = shipExAddressLine1;
-        ShipExAddressLine2 = shipExAddressLine2;
+    public OrderPurchaseRequest(String paymentMethod, OrderShippingInformation orderShippingInformation, OrderPaymentInformation orderPaymentInformation) {
+        this.orderShippingInformation = orderShippingInformation;
+        this.orderPaymentInformation = orderPaymentInformation;
     }
 
-    public OrderPurchaseRequest(List<CartProductForPurchase> productsToPurchase, String paymentMethod, String safePayUserName, String safePaypassword, String shipExAddressCity, String shipExAddressCountryCode, String shipExAddressState, String shipExAddressPostalCode, String shipExAddressLine1, String shipExAddressLine2) {
-        this.productsToPurchase = productsToPurchase;
-        this.paymentMethod = paymentMethod;
-        this.safePayUserName = safePayUserName;
-        this.safePaypassword = safePaypassword;
-        ShipExAddressCity = shipExAddressCity;
-        ShipExAddressCountryCode = shipExAddressCountryCode;
-        ShipExAddressState = shipExAddressState;
-        ShipExAddressPostalCode = shipExAddressPostalCode;
-        ShipExAddressLine1 = shipExAddressLine1;
-        ShipExAddressLine2 = shipExAddressLine2;
+    public OrderPurchaseRequest(String paymentMethod, OrderShippingInformation orderShippingInformation, OrderPaymentInformation orderPaymentInformation, List<ShoppingCartDto> purchasedProducts) {
+        this.orderShippingInformation = orderShippingInformation;
+        this.orderPaymentInformation = orderPaymentInformation;
+        this.purchasedProducts = purchasedProducts;
     }
 
-    /**
-     * Add {@link #productsToPurchase} with {@code productId}, {@code product name} and {@code quantity}.
-     * @param productId
-     * @param productName
-     * @param quantity
-     * @return
-     */
-    public boolean addProductToPurchase(Long productId, String productName, int quantity) {
-        boolean result = productsToPurchase.add(new CartProductForPurchase(productId, productName, quantity));
-        return result;
+    public OrderShippingInformation getOrderShippingInformation() {
+        return orderShippingInformation;
+    }
+
+    public void setOrderShippingInformation(OrderShippingInformation orderShippingInformation) {
+        this.orderShippingInformation = orderShippingInformation;
+    }
+
+    public OrderPaymentInformation getOrderPaymentInformation() {
+        return orderPaymentInformation;
+    }
+
+    public void setOrderPaymentInformation(OrderPaymentInformation orderPaymentInformation) {
+        this.orderPaymentInformation = orderPaymentInformation;
+    }
+
+    public List<ShoppingCartDto> getPurchasedProducts() {
+        return purchasedProducts;
+    }
+
+    public void setPurchasedProducts(List<ShoppingCartDto> purchasedProducts) {
+        this.purchasedProducts = purchasedProducts;
     }
 
     /**
-     * Add {@link #productsToPurchase} with {@code productId} and {@code quantity}.
+     * Add {@link ShoppingCartDto} with {@code productId}, {@code hexColor} and {@code quantity}.
      * @param productId
+     * @param hexColor
      * @param quantity
      * @return
      */
-    public boolean addProductToPurchase(Long productId, int quantity) {
-        boolean result = productsToPurchase.add(new CartProductForPurchase(productId, "", quantity));
+    public boolean addProductToPurchase(Long productId, String hexColor, int quantity) {
+        boolean result = purchasedProducts.add(new ShoppingCartDto(productId, hexColor, quantity));
         return result;
     }
-
 }

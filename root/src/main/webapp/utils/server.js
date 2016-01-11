@@ -89,6 +89,11 @@ var serviceKey = "http://"+
     services_properties['service_service_url_port'] + "/" +
     services_properties['service_service_url_suffix'];
 
+//var wsdlPath = 'http://localhost:8080/accountservice';
+var wsdlPath = "http://"+
+    services_properties['account_soapservice_url_host'] + ":" +
+    services_properties['account_soapservice_url_port'] + "/" +
+    services_properties['account_soapservice_url_suffix'];
 
 var server = {
 
@@ -162,14 +167,25 @@ var server = {
         },
 
         register : function(){
-            return accountKey + "/users";
+            return {
+                path: wsdlPath,
+                method: 'AccountCreateRequest'
+            }
         },
 
         login : function(){
-            return accountKey + "/login";
+            return {
+                path: wsdlPath,
+                method: 'AccountLoginRequest'
+            }
         },
 
-
+        getAccountById: function(){
+            return {
+                path: wsdlPath,
+                method: 'GetAccountByIdRequest'
+            }
+        },
     },
     service: {
 

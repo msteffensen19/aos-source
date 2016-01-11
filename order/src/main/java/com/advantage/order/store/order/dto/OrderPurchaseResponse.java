@@ -5,27 +5,31 @@ package com.advantage.order.store.order.dto;
  */
 public class OrderPurchaseResponse {
     private boolean success;
+    private String code;
     private String reason;
-    private int code;
+    private long orderNumber;
 
     public OrderPurchaseResponse() {  }
 
     public OrderPurchaseResponse(boolean success) {
         this.success = success;
+        this.code = "";
         this.reason = "";
-        this.code = -1;
+        this.orderNumber = 0;
     }
 
-    public OrderPurchaseResponse(boolean success, String reason) {
+    public OrderPurchaseResponse(boolean success, String code, String reason) {
         this.success = success;
-        this.reason = reason;
-        this.code = -1;
-    }
-
-    public OrderPurchaseResponse(boolean success, String reason, int code) {
-        this.success = success;
-        this.reason = reason;
         this.code = code;
+        this.reason = reason;
+        this.orderNumber = 0;
+    }
+
+    public OrderPurchaseResponse(boolean success, String code, String reason, long orderNumber) {
+        this.success = success;
+        this.code = code;
+        this.reason = reason;
+        this.orderNumber = orderNumber;
     }
 
     public boolean isSuccess() {
@@ -36,6 +40,14 @@ public class OrderPurchaseResponse {
         this.success = success;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getReason() {
         return reason;
     }
@@ -44,11 +56,11 @@ public class OrderPurchaseResponse {
         this.reason = reason;
     }
 
-    public int getCode() {
-        return code;
+    public long getOrderNumber() {
+        return orderNumber;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setOrderNumber(long orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }

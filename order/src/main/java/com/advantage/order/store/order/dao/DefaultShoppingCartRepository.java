@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.dao;
 
+import com.advantage.common.Constants;
 import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.order.dto.ShoppingCartDto;
 import com.advantage.order.store.order.dto.ShoppingCartResponse;
@@ -27,8 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Order services - default repository for {@code ShoppingCart}.
- *
+ * Order services - Data Manager
  * @author Binyamin Regev on 03/12/2015.
  */
 @Component
@@ -65,7 +65,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
         return new ShoppingCartResponseDto()
-                .createCartProduct(productId, NOT_FOUND, -999999.99, 0, NOT_FOUND, false);
+                .createCartProduct(productId, Constants.NOT_FOUND, -999999.99, 0, Constants.NOT_FOUND, false);
     }
 
     /**
@@ -73,12 +73,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * If <b>an identical product</b> (same product-id and same color) does not exists in the
      * user shopping cart then the method will create a new product in the shopping cart. <br/>
      * otherwise, the method will update the existing identical product found in the user shopping cart. <br />
-     *
-     * @param userId    identifies specific {@code AppUser}.
-     * @param productId identifies specific {@code Product}
-     * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
-     * @param quantity  number of product units added to the shopping cart.
-     * @return {@link ShoppingCartResponse} class of the product. If an error occured method will return {@code null} and
      */
     @Override
     public ShoppingCart addProductToShoppingCart(long userId, Long productId, int color, int quantity, long lastUpdate) {
@@ -151,14 +145,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return shoppingCart;
     }
 
-    /**
-     * @param userId
-     * @param productId
-     * @param color
-     * @param quantity
-     * @return
-     * @see java.util.Date
-     */
     @Override
     public ShoppingCart updateShoppingCart(long userId, Long productId, int color, int quantity) {
 
@@ -217,33 +203,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return shoppingCart;
     }
 
-    /**
-     * Calls method {@link #addProductToShoppingCart(long, Long, int, int, long)} to add a single product to a specific user
-     * shopping cart. <br/>
-     *
-     * @param userId    identifies specific {@code AppUser}.
-     * @param productId identifies specific {@code Product}
-     * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
-     * @param quantity  number of product units added to the shopping cart.
-     * @return {@link ShoppingCartResponse} {@code shoppingCartResponse} property containing the {@code RESPONSE}
-     * for the {@code REQUEST}.
-     */
+    /** Calls method {@link #addProductToShoppingCart(long, Long, int, int, long)} to add a single product to a specific user shopping cart.    */
     public ShoppingCartResponse add(long userId, Long productId, int color, int quantity) {
         addProductToShoppingCart(userId, productId, color, quantity, 0);
         return shoppingCartResponse;
     }
 
-    /**
-     * Calls method {@link #updateShoppingCart(long, Long, int, int)} to update a single product in the user
-     * shopping cart. <br/>
-     *
-     * @param userId    identifies specific {@code AppUser}.
-     * @param productId identifies specific {@code Product}
-     * @param color     identifies specific {@code color} of {@code ColorAttributeDto}.
-     * @param quantity  number of product units added to the shopping cart.
-     * @return {@link ShoppingCartResponse} {@code shoppingCartResponse} property containing the {@code RESPONSE}
-     * for the {@code REQUEST}.
-     */
+    /** Calls method {@link #updateShoppingCart(long, Long, int, int)} to update a single product in the user shopping cart. */
     public ShoppingCartResponse update(long userId, Long productId, int color, int quantity) {
         updateShoppingCart(userId, productId, color, quantity);
         return shoppingCartResponse;
@@ -296,9 +262,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
      * Step #1: Use method {@link #getShoppingCartsByUserId} to get user's shopping carts. <br/>
      * Step #2: For each {@link ShoppingCart} get its ID and use method
      * {@link #removeProductFromUserCart} to delete it. <br/>
-     *
-     * @param userId
-     * @return
      */
     @Override
     public ShoppingCartResponse clearUserCart(long userId) {
@@ -332,13 +295,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return new ShoppingCartResponse(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
     }
 
-    /**
-     * Get all {@link ShoppingCart} lines of specific <i>application user</i>
-     * by {@code userId}.
-     *
-     * @param userId
-     * @return list of products in the {@code ShoppingCart} of a specific user.
-     */
+    /** Get all {@link ShoppingCart} lines of specific <i>registered user</i> by {@code userId}.    */
     @Override
     public List<ShoppingCart> getShoppingCartsByUserId(long userId) {
 
@@ -358,12 +315,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return ((shoppingCarts == null) || (shoppingCarts.isEmpty())) ? null : shoppingCarts;
     }
 
-    /**
-     * Get {@code Product} details from <b>CATALOG service</b> into {@link ProductDto}.
-     *
-     * @param productId to get details for.
-     * @return {@code Product} details in {@link ProductDto}.
-     */
     public ProductDto getProductDtoDetails(Long productId) {
         URL productsPrefixUrl;
         URL productByIdUrl = null;
@@ -382,9 +333,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             String stringResponse = httpGet(productByIdUrl);
             System.out.println("stringResponse = \"" + stringResponse + "\"");
 
-            if (stringResponse.equalsIgnoreCase(NOT_FOUND)) {
+            if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
-                dto = new ProductDto(productId, -1L, NOT_FOUND, -999999.99, NOT_FOUND, NOT_FOUND, null, null, null);
+                dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
             } else {
                 dto = getProductDtofromJsonObjectString(stringResponse);
             }
@@ -398,17 +349,17 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
     /**
      * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
-     *
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
+    @Override
     public ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor) {
 
         ProductDto dto = this.getProductDtoDetails(productId);
 
         ShoppingCartResponseDto.CartProduct cartProduct = null;
 
-        if (!dto.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+        if (!dto.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
 
             ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
 
@@ -445,12 +396,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return cartProduct;
     }
 
-    /**
-     * Get details for each {@link ShoppingCart} {@code Product}
-     *
-     * @param shoppingCarts
-     * @return
-     */
     public ShoppingCartResponseDto getCartProductsDetails(long userId, List<ShoppingCart> shoppingCarts) {
 
         /*
@@ -475,7 +420,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
                     ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
                             ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
 
-                    if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                    if (cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                         userCart.addCartProduct(cartProduct.getProductId(),
                                 cartProduct.getProductName(),   //  "NOT FOUND"
                                 cartProduct.getPrice(),         //  -999999.99
@@ -603,7 +548,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
                 ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(shoppingCart.getProductId(),
                         ShoppingCart.convertIntColorToHex(color));
-                if (cartProduct.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+                if (cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                     String name = cartProduct.getProductName();
                     double pricePerItem = cartProduct.getPrice();
                     String managedImageId = cartProduct.getImageUrl();
@@ -731,13 +676,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 //        return null;
 //    }
 
-    /**
-     * Calling <b>Account Service</b> via REST API GET request - to
-     * check isExists an {@code AppUser} with given {@code userId}.
-     *
-     * @param userId {@code long} unique user identification to check.
-     * @return {@code boolean}. <b>true</b> if userId belongs to a registered user, <b>false</b> otherwise.
-     */
+    /*
     public boolean isRegisteredUserExists(long userId) {
         boolean isExists = false;
 
@@ -766,12 +705,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         return isExists;
     }
+    */
 
     public boolean isProductExists(Long productId, String hexColor) {
         boolean result = false;
 
         ProductDto productDetails = getProductDtoDetails(productId);
-        if (!productDetails.getProductName().equalsIgnoreCase(NOT_FOUND)) {
+        if (!productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
             if (productDetails != null) {
                 List<ColorAttributeDto> colors = productDetails.getColors();
                 for (ColorAttributeDto color : colors) {
@@ -841,7 +781,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        //TODO-BENY  Why false???
+
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
