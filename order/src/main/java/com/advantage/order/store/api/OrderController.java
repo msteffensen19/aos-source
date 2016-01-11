@@ -7,6 +7,7 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.SecurityTools;
 import com.advantage.common.dto.AccountType;
+import com.advantage.order.store.log.AppUserAuthorize;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
@@ -44,6 +45,7 @@ public class OrderController {
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
+    @AppUserAuthorize
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader,
                                                                HttpServletRequest request, HttpServletResponse response) {
@@ -65,6 +67,7 @@ public class OrderController {
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.POST)
     @ApiOperation(value = "Add product to shopping cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @AppUserAuthorize
     /*public ResponseEntity<ShoppingCartResponse> addProductToCart(@PathVariable("userId") Long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> addProductToCart(@PathVariable("userId") Long userId,
                                                                     @PathVariable("productId") Long productId,
