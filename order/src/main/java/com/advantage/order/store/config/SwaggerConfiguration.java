@@ -1,5 +1,6 @@
 package com.advantage.order.store.config;
 
+import com.advantage.common.SecurityTools;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -30,7 +31,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         ApiInfo apiInfo = new ApiInfo(
                 "Advantage - order.WAR REST API",
-                "Description.",
+                SecurityTools.SWAGGER_NOTE,
                 null,
                 null,
                 null,
