@@ -40,10 +40,8 @@ define(['./module'], function (controllers) {
 
             $("nav .navLinks").css("display" , "none");
 
+            Helper.forAllPage();
 
-            // cant login with email
-            // dont have shipping request to extract
-            // sending cost
         }]);
 });
 

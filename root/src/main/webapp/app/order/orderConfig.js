@@ -22,6 +22,7 @@ define([],function(){
 
                     orderService.getAccountById()
                         .then(function (user) {
+
                             var paramsToResolve = {
                                 shippingCost : 10, //userLogin
                                 user : user

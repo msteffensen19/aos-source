@@ -157,8 +157,11 @@ var server = {
 
         loadCartProducts : function (userId){
             return orderKey + "/carts/" + userId;
-        }
+        },
 
+        getShippingCost: function(){
+            return orderKey + "/order/api/v1/shippingcost" ;
+        },
     },
     account: {
 
@@ -186,6 +189,7 @@ var server = {
                 method: 'GetAccountByIdRequest'
             }
         },
+
     },
     service: {
 

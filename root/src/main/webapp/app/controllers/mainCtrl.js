@@ -262,7 +262,6 @@ define(['./module'], function (controllers) {
                  console.log('cart')
                  console.log($scope.cart)
 
-
              });
 
 
