@@ -44,6 +44,7 @@ public class OrderManagementService {
     public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH = "Get shipping cost response failure, invalid transaction reference length";
 
     private static AtomicLong orderNumber;
+    private double totalAmount = 0.0;
 
     @Autowired
     @Qualifier("orderManagementRepository")
@@ -159,7 +160,7 @@ public class OrderManagementService {
                     Integer.valueOf(paymentInfo.getCvvNumber()),
                     paymentInfo.getTransactionDate(),
                     Long.valueOf(paymentInfo.getAccountNumber()),
-                    paymentInfo.getAmount(),
+                    totalAmount,
                     paymentInfo.getCurrency());
 
             MasterCreditResponse masterCreditResponse = payWithMasterCredit(masterCreditRequest);
@@ -183,7 +184,7 @@ public class OrderManagementService {
                     paymentInfo.getCustomerPhone(),
                     paymentInfo.getTransactionDate(),
                     Long.valueOf(paymentInfo.getAccountNumber()),
-                    paymentInfo.getAmount(),
+                    totalAmount,
                     paymentInfo.getCurrency());
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
@@ -204,7 +205,7 @@ public class OrderManagementService {
             long orderTimestamp = new Date().getTime();
 
             //  Step #4: INSERT: Save order header and lines (NO TRACKING NUMBER YET!!!)
-            orderManagementRepository.addUserOrder(userId, orderNumber, orderTimestamp,
+            orderManagementRepository.addUserOrder(userId, orderNumber, orderTimestamp, totalAmount,
                     shippingInfo,
                     paymentInfo,
                     purchasedProducts);

@@ -31,12 +31,13 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
      * @param userId
      * @param orderNumber
      * @param orderTimestamp
+     * @param totalAmount
      * @param orderShippingInformation
      * @param orderPaymentInformation
      * @param purchasedProducts
      */
     @Override
-    public void addUserOrder(long userId, long orderNumber, long orderTimestamp,
+    public void addUserOrder(long userId, long orderNumber, long orderTimestamp, double totalAmount,
                              OrderShippingInformation orderShippingInformation,
                              OrderPaymentInformation orderPaymentInformation,
                              List<OrderPurchasedProductInformation> purchasedProducts) {
@@ -62,7 +63,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getTransactionDate(), "transaction date");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getAccountNumber(), "account number");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCurrency(), "currency");
-        ArgumentValidationHelper.validateDoubleArgumentIsPositive(orderPaymentInformation.getAmount(), "payment amount");
+        ArgumentValidationHelper.validateDoubleArgumentIsPositive(totalAmount, "payment amount");
 
         if (orderPaymentInformation.getPaymentMethod().equalsIgnoreCase(PaymentMethodEnum.MASTER_CREDIT.getStringCode())) {
             ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCardNumber(), "MasterCredit Card Number");
@@ -93,7 +94,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         orderHeader.setTransactionDate(orderPaymentInformation.getTransactionDate());
         orderHeader.setAccountNumber(orderPaymentInformation.getAccountNumber());
         orderHeader.setCurrency(orderPaymentInformation.getCurrency());
-        orderHeader.setAmount(orderPaymentInformation.getAmount());
+        orderHeader.setAmount(totalAmount);
 
         orderHeader.setCardNumber(orderPaymentInformation.getCardNumber());
         orderHeader.setExpirationDate(orderPaymentInformation.getExpirationDate());
