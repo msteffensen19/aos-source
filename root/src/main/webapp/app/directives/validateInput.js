@@ -36,6 +36,7 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'E',
                 require: 'secValidate',
+                scope: {},
                 controller: ['$scope', function(s){
 
                     this.addId = function(id){
@@ -106,6 +107,12 @@ define(['./module'], function (directives) {
 
                     s.inputFocus = function (id) {
                         var input = $('#secInput_' + id);
+
+                        s.textToShow = {
+                            text: s.placeHolder,
+                            valid: true,
+                        };
+
                         labelStartPossition = labelStartPossition || input.prev().css('top');
                         input.prev().animate({'top': '-18px'}, 300, 'linear');
                         input.siblings(".validate-info").show(200);
@@ -169,11 +176,6 @@ define(['./module'], function (directives) {
 
                     function checkValidInput(warnings, input) {
 
-                        s.textToShow = {
-                            text: s.placeHolder,
-                            valid: true,
-                        };
-
                         angular.forEach(s.warnings, function (warn) {
                             if (s.textToShow.valid) {
                                 switch (warn.key) {
@@ -214,7 +216,6 @@ define(['./module'], function (directives) {
                             }
                         })
                     }
-
                 }],
                 link: {
                     pre: function (s, e, a, ctrls) {
@@ -223,6 +224,7 @@ define(['./module'], function (directives) {
                         e.addClass('validate-directive');
 
                         if (a.selectTag) {
+
                             e.bind('click', function () {
                                 var checkbox = $($(this).find("input[type=checkbox]"))
                                 if (checkbox.length > 0) {
@@ -240,6 +242,7 @@ define(['./module'], function (directives) {
                             })
 
                             e.bind('change', function () {
+                                ctrls[1].shiftInvalidField(a.idAttr);
                                 $($(this).find(".validate-label")).html('')
                             })
                         }
@@ -266,10 +269,11 @@ define(['./module'], function (directives) {
                 priority: 0,
                 require: 'secInput',
                 link: function(s, e, a, ctrl){
-                    var warning = a.secRequired || 'This field is required'
+                   var warning = a.secRequired || 'This field is required'
                     ctrl.addWarningInfo({
                         key : 'secRequired',
                         warning : warning,
+                        info: '',
                     })
                 }
             }
@@ -292,6 +296,7 @@ define(['./module'], function (directives) {
                     ctrl.addWarningInfo({
                         key : 'secMinLength',
                         warning : warning,
+                        info: warning,
                         min : min,
                     })
                 }
@@ -315,6 +320,7 @@ define(['./module'], function (directives) {
                     ctrl.addWarningInfo({
                         key : 'secMaxLength',
                         warning : warning,
+                        info: warning,
                         max : max,
                     })
                 }
@@ -333,6 +339,7 @@ define(['./module'], function (directives) {
                     ctrl.addWarningInfo({
                         key : 'secPattern',
                         warning : a.patternErrorAttr,
+                        info: a.patternErrorAttr,
                         regex : a.secPattern,
                     })
                 }
@@ -346,6 +353,7 @@ define(['./module'], function (directives) {
                     ctrl.addWarningInfo({
                         key : 'secPattern',
                         warning : "Your email address isn’t formatted correctly",
+                        info: "Your email address isn’t formatted correctly",
                         regex : a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                         //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                     })
@@ -371,6 +379,7 @@ define(['./module'], function (directives) {
                     ctrl.addWarningInfo({
                         key : 'secCompareTo',
                         warning : warning,
+                        info : warning,
                         compareId : a.secCompareTo,
                     })
                 }

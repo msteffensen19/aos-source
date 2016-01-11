@@ -5,25 +5,46 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('orderPaymentCtrl', ['$scope', 'resolveParams',
-        function (s, resolveParams) {
+    controllers.controller('orderPaymentCtrl', ['$scope', 'resolveParams', 'orderService',
+        function (s, resolveParams, orderService) {
 
             s.checkCart();
+            s.paymentEnd = false;
 
-            console.log("order payment page not done yet!");
+            console.log(resolveParams.user)
+            console.log(s)
 
-            window.history.back();
+            s.user = resolveParams.user
+            s.shippingCost = resolveParams.shippingCost;
+            s.itemsPaid = s.cart ? s.cart.productsInCart.length : 0;
 
-            s.loginModal = {
-                email : '',
-                password : ''
+            s.CardNumber = ["6789", "0785", "0785", "0785"];
+            var d = new Date();
+            s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
+
+            s.payNow_masterCredit = function(){
+                s.paymentEnd = true;
             }
 
-            s.shippingCost = resolveParams.shippingCost;
-            s.userLogin = resolveParams.userLogin;
+
+            s.$watch("userCookie.response", function(n, o){
+                if(n + "" != "undefined"){
+                    orderService.getAccountById().
+                    then(function (user) {
+                        s.shippingCost = 10;
+                        l(user)
+                        s.user = user
+                    });
+                }
+            })
 
             $("nav .navLinks").css("display" , "none");
+
+            Helper.forAllPage();
+
         }]);
 });
+
+
 
 

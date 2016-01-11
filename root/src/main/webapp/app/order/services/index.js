@@ -1,8 +1,7 @@
 /**
- * Created by kubany on 10/13/2015.
+ * Created by correnti on 10/01/2016.
+ */
 
-'use strict';
-
-define(['./userService',
-        './registerService',
-        ], function() {}); */
+define([
+    './orderService',
+    ], function() {});

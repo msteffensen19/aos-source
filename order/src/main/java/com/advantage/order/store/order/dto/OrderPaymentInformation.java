@@ -1,6 +1,7 @@
 package com.advantage.order.store.order.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author Binyamin Regev on 07/01/2016.
@@ -26,12 +27,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *  SafePay.username, 							# SafePay ONLY
  *  SafePay.password, 							# SafePay ONLY
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class OrderPaymentInformation {
     @JsonProperty("Transaction.PaymentMethod")
     private String paymentMethod;       //  by PaymentMethodEnum
 
     @JsonProperty("Transaction.Type")
     private String transactionType;     //  by TransactioTypeEnum
+
+    @JsonProperty("Transaction.ReferenceNumber")
+    private long referenceNumber;
 
     @JsonProperty("Transaction.CustomerPhone")
     private String customerPhone;
@@ -81,9 +86,10 @@ public class OrderPaymentInformation {
      * @param customerName
      * @param cvvNumber
      */
-    public OrderPaymentInformation(String paymentMethod, String transactionType, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String cardNumber, String expirationDate, String customerName, String cvvNumber) {
+    public OrderPaymentInformation(String paymentMethod, String transactionType, long referenceNumber, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String cardNumber, String expirationDate, String customerName, String cvvNumber) {
         this.paymentMethod = paymentMethod;
         this.transactionType = transactionType;
+        this.referenceNumber = referenceNumber;
         this.customerPhone = customerPhone;
         this.transactionDate = transactionDate;
         this.accountNumber = accountNumber;
@@ -110,9 +116,10 @@ public class OrderPaymentInformation {
      * @param username
      * @param password
      */
-    public OrderPaymentInformation(String paymentMethod, String transactionType, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String username, String password) {
+    public OrderPaymentInformation(String paymentMethod, String transactionType, long referenceNumber, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String username, String password) {
         this.paymentMethod = paymentMethod;
         this.transactionType = transactionType;
+        this.referenceNumber = referenceNumber;
         this.customerPhone = customerPhone;
         this.transactionDate = transactionDate;
         this.accountNumber = accountNumber;
@@ -142,6 +149,14 @@ public class OrderPaymentInformation {
 
     public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
+    }
+
+    public long getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(long referenceNumber) {
+        this.referenceNumber = referenceNumber;
     }
 
     public String getCustomerPhone() {
@@ -239,23 +254,20 @@ public class OrderPaymentInformation {
 
         OrderPaymentInformation that = (OrderPaymentInformation) o;
 
+        if (getReferenceNumber() != that.getReferenceNumber()) return false;
         if (Double.compare(that.getAmount(), getAmount()) != 0) return false;
+        if (!getPaymentMethod().equals(that.getPaymentMethod())) return false;
         if (!getTransactionType().equals(that.getTransactionType())) return false;
         if (!getCustomerPhone().equals(that.getCustomerPhone())) return false;
         if (!getTransactionDate().equals(that.getTransactionDate())) return false;
         if (!getAccountNumber().equals(that.getAccountNumber())) return false;
         if (!getCurrency().equals(that.getCurrency())) return false;
-        if (getCardNumber() != null ? !getCardNumber().equals(that.getCardNumber()) : that.getCardNumber() != null)
-            return false;
-        if (getExpirationDate() != null ? !getExpirationDate().equals(that.getExpirationDate()) : that.getExpirationDate() != null)
-            return false;
-        if (getCustomerName() != null ? !getCustomerName().equals(that.getCustomerName()) : that.getCustomerName() != null)
-            return false;
-        if (getCvvNumber() != null ? !getCvvNumber().equals(that.getCvvNumber()) : that.getCvvNumber() != null)
-            return false;
-        if (getUsername() != null ? !getUsername().equals(that.getUsername()) : that.getUsername() != null)
-            return false;
-        return !(getPassword() != null ? !getPassword().equals(that.getPassword()) : that.getPassword() != null);
+        if (!getCardNumber().equals(that.getCardNumber())) return false;
+        if (!getExpirationDate().equals(that.getExpirationDate())) return false;
+        if (!getCustomerName().equals(that.getCustomerName())) return false;
+        if (!getCvvNumber().equals(that.getCvvNumber())) return false;
+        if (!getUsername().equals(that.getUsername())) return false;
+        return getPassword().equals(that.getPassword());
 
     }
 
@@ -263,19 +275,21 @@ public class OrderPaymentInformation {
     public int hashCode() {
         int result;
         long temp;
-        result = getTransactionType().hashCode();
+        result = getPaymentMethod().hashCode();
+        result = 31 * result + getTransactionType().hashCode();
+        result = 31 * result + (int) (getReferenceNumber() ^ (getReferenceNumber() >>> 32));
         result = 31 * result + getCustomerPhone().hashCode();
         result = 31 * result + getTransactionDate().hashCode();
         result = 31 * result + getAccountNumber().hashCode();
         temp = Double.doubleToLongBits(getAmount());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + getCurrency().hashCode();
-        result = 31 * result + (getCardNumber() != null ? getCardNumber().hashCode() : 0);
-        result = 31 * result + (getExpirationDate() != null ? getExpirationDate().hashCode() : 0);
-        result = 31 * result + (getCustomerName() != null ? getCustomerName().hashCode() : 0);
-        result = 31 * result + (getCvvNumber() != null ? getCvvNumber().hashCode() : 0);
-        result = 31 * result + (getUsername() != null ? getUsername().hashCode() : 0);
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + getCardNumber().hashCode();
+        result = 31 * result + getExpirationDate().hashCode();
+        result = 31 * result + getCustomerName().hashCode();
+        result = 31 * result + getCvvNumber().hashCode();
+        result = 31 * result + getUsername().hashCode();
+        result = 31 * result + getPassword().hashCode();
         return result;
     }
 }

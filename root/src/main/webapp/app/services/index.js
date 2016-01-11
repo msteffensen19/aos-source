@@ -4,7 +4,7 @@
 'use strict';
 
 define([
-
+    './mini_soap',
     './productsCartService',
     './productService',
     './categoryService',

@@ -17,12 +17,42 @@ define(['./module'], function (services) {
                 joinCartProducts : joinCartProducts,
                 removeProduct: removeProduct,
                 checkout: checkout,
-            });
+                getCart : getCart
+        });
 
             /* returned functions */
 
+            function getCart() {
+
+                var responce = $q.defer();
+                var user = $rootScope.userCookie;
+                if (user && user.response) {
+                    if (user.response.userId != -1) {
+                        $http({
+                            method: "get",
+                            async: false,
+                            headers: {
+                                "content-type": "application/json",
+                                "Authorization": "Bearer " + user.response.token,
+                            },
+                            url: server.order.loadCartProducts(user.response.userId)
+                        }).success(function (res) {
+                            cart = res;
+                            responce.resolve(cart);
+                        }).error(function (err) {
+                            alert('err')
+                            responce.reject('error in load cart (productCartService - loadCartProducts)');
+                        });
+                    }
+                }
+                else {
+                    responce.resolve(null);
+                }
+                return responce.promise;
+            }
+
             function checkout() {
-                 // check if user is login
+                // check if user is login
 
                 var responce = $q.defer();
                 responce.resolve(false);

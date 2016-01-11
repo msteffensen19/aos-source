@@ -28,15 +28,17 @@
 
         <label translate="Forgot_your_password"
                class="roboto-regular"
-               id="Forgot_your_password"></label>
+               id="Forgot_your_password" ></label>
 
         <br /><input sec-submit-attr="signIn(user, false)"
                      class="a-button roboto-medium"
                      data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                      type="button"
                      value="{{'LOGIN' | translate}}" />
+        <br />
 
-        <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
+        <label ng-class="{ invalid : wrongFields.success == 'false' }" >{{ wrongFields.reason }}</label>
+
 
     </sec-validate>
 </div>
