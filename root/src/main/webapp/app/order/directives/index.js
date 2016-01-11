@@ -5,5 +5,6 @@
 
 define([
     './UserNotLogin',
-    './UserAreLogin'
+    './UserAreLogin',
+    './orderPaymentSuccess'
 ], function() { });

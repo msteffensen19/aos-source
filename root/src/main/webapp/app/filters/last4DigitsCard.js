@@ -4,13 +4,10 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.filter('last4DigitsCard', function(){
-        return function(last) {
-
-
-            return "****";
+    controllers.filter('showLast4DigitsCard', function(){
+        return function(num, last) {
+            return last ? num : "****" ;
         };
-    })
-    ;
+    });
 });
 

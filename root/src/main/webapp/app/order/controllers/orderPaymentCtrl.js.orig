@@ -16,7 +16,13 @@ define(['./module'], function (controllers) {
             s.userLogin = resolveParams.userLogin;
             s.itemsPaid = s.cart.productsInCart.length;
 
+<<<<<<< HEAD
             s.CardNumber = ["6789", "0785", "0785", "0785"];
+=======
+            //console.log("order payment page not done yet!");
+
+            //window.history.back();
+>>>>>>> order3
 
             s.payNow_masterCredit = function(){
                 s.paymentEnd = true;

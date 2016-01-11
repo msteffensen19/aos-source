@@ -15,7 +15,7 @@
 
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="ORDER_PAYMENT"></h3>
 
-        <div id="orderPayment" ng-switch="userLogin">
+        <div id="orderPayment" ng-switch="userLogin" ng-hide="paymentEnd">
 
             <div ng-switch-when="false">
                 <user-not-login></user-not-login>
@@ -23,7 +23,6 @@
             <div ng-switch-when="true">
                 <user-are-login></user-are-login>
             </div>
-
             <div id="userCart">
                 <h5 translate="ORDER_SUMMARY"></h5>
                 <span class="itemsCount roboto-medium"> {{ cart | productsCartCount }} {{ 'ITEMS' | translate }}</span>
@@ -47,171 +46,14 @@
                 </div>
             </div>
 
-
-
-            <!--<div id="form">-->
-
-
-
-
-        <!--
-        <sec-validate>
-                    <div id="formCover">
-
-                        <div>
-
-                            <h3 translate="ACCOUNT_DETAILS"></h3>
-
-                            <sec-input
-                                    sec-required
-                                    sec-placeholder="User name"
-                                    sec-min-length="5"
-                                    sec-max-length="15"
-                                    sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
-                                    pattern-error-attr="Use letters, number and the following symbols only: .-_"
-                                    model-attr="model.username"
-                                    id-attr="username" >
-                            </sec-input>
-
-
-                            <sec-input
-                                    sec-required
-                                    sec-email
-                                    sec-placeholder="Email"
-                                    input-type-attr="email"
-                                    model-attr="model.email"
-                                    id-attr="email">
-                            </sec-input>
-
-
-                            <sec-input
-                                    sec-required
-                                    sec-placeholder="Password"
-                                    sec-min-length="4"
-                                    sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                                    sec-compare-to="confirm_password"
-                                    compare-to-name="Confirm password"
-                                    pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
-                                    input-type-attr="password"
-                                    model-attr="model.password"
-                                    id-attr="password">
-                            </sec-input>
-
-
-                            <sec-input
-                                    sec-required
-                                    sec-placeholder="Confirm password"
-                                    sec-min-length="5"
-                                    sec-max-length="15"
-                                    sec-compare-to="password"
-                                    compare-to-name="password"
-                                    input-type-attr="password"
-                                    model-attr="model.confirm_password"
-                                    id-attr="confirm_password">
-                            </sec-input>
-                        </div>
-
-                        <div>
-                            <h3 translate="PERSONAL_DETAILS"></h3>
-                            <sec-input
-                                    sec-placeholder="{{'First_Name' | translate }}"
-                                    model-attr="model.firstName"
-                                    id-attr="firstName">
-                            </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'Last_Name' | translate }}"
-                                    model-attr="model.lastName"
-                                    id-attr="lastName">
-                            </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'Phone_Number' | translate }}"
-                                    model-attr="model.phoneNumber"
-                                    id-attr="phoneNumber">
-                            </sec-input>
-
-
-                        </div>
-
-                        <div>
-                            <h3 translate="ADDRESS"></h3>
-                            <sec-input sec-placeholder="{{'Country' | translate }}"
-                                       id-attr="Country"
-                                       input-type-attr="transclude"
-                                       select-tag="true" >
-                                <select class="inputtext"
-                                        ng-model="model.country"
-                                        ng-options="country.name for country in countries track by country.id" >
-                                </select>
-                            </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'City' | translate }}"
-                                    model-attr="model.city"
-                                    id-attr="city" >
-                            </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'Address' | translate }}"
-                                    model-attr="model.address"
-                                    id-attr="address" >
-                            </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'State__Province__Region' | translate }}"
-                                    model-attr="model.state"
-                                    id-attr="state" >
-                            </sec-input>
-                            <sec-input sec-placeholder="{{'Postal_Code' | translate }}"
-                                       model-attr="model.postalCode"
-                                       id-attr="postalCode" >
-                            </sec-input>
-                            <div class="option marginTop" >
-                                <input ng-model="model.offers_promotion" type="checkbox" autocomplete="off" />
-                                <span class="roboto-light">{{'offers_promotion' | translate }}</span>
-                            </div>
-                            <sec-input
-                                    sec-required
-                                    id-attr="agree_Agreement"
-                                    no-red-star="true"
-                                    input-type-attr="transclude"
-                                    select-tag="true"
-                                    class="removeSpaces" >
-                                <div class="option" >
-                                    <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox"  />
-                                    <span class="roboto-light">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
-                                    <label class="validateInvalid" style="display: none" >
-                                        {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
-                                    </label>
-                                </div>
-                            </sec-input>
-                        </div>
-                    </div>
-
-                    <input sec-submit-attr="register()"
-                           class="roboto-medium"
-                           data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
-                           type="button"
-                           value="{{'REGISTER' | translate}}" />
-
-                    <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" >
-                        <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()" ></a>
-                    </label>
-                    <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
-
-                </sec-validate>
-
-
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br />
-            >-->
-
-            <input type="checkbox" ng-model="userLogin" style="position: fixed; bottom: 8px; left:12px; transform: scale(3);" />
-
         </div>
+        <div ng-show="paymentEnd" >
+            <order-payment-success id="orderPaymentSuccess">
+            </order-payment-success>
+        </div>
+
+        <input type="checkbox" ng-model="userLogin" style="position: fixed; bottom: 8px; left:12px; transform: scale(3);" />
+        <input type="checkbox" ng-model="paymentEnd" style="position: fixed; bottom: 42px; left:12px; transform: scale(3);" />
     </article>
 </section>
 

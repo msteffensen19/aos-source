@@ -5,6 +5,7 @@
     width: 100%;
     text-align: center;
     font-size: 0;
+    margin-bottom: 60px;
 }
 
 #detailslink > label {
@@ -14,7 +15,6 @@
     width: 45%;
     border-top: #d0d0d0 1px solid;
     color: #828282;
-    cursor: pointer;
 }
 
 #detailslink > label.selected {
@@ -54,11 +54,26 @@
     top:4px;
 }
 
+.blueLink a{
+    font-size: 16px;
+    padding: 10px 0;
+    display: inline-block;
+    color: #54b3ad;
+    cursor: pointer;
+}
+
+.blueLink .float-button {
+    float:right;
+    position: relative;
+    top:10px;
+    width: 158px;
+    font-size: 12px;
+}
 
 
 #userDetails{
     font-size: 0;
-    margin: 58px 0 16px 0px;
+    margin-bottom: 16px;
     border:solid #454545 1px;
 }
 
@@ -116,6 +131,32 @@
     border: solid 1px #454545;
 }
 
+#paymentMethod .notice{
+    padding-top: 25px;
+}
+
+#paymentMethod .notice h4{
+
+    background-image: url(/css/images/Bell.png);
+    background-repeat:no-repeat;
+    background-position: left center;
+    font-size: 16px;
+    font-weight: 500;
+    text-indent: 28px;
+}
+
+#paymentMethod .notice p{
+    padding-top: 10px;
+    color: #828282;
+    font-size: 15px;
+}
+
+
+#paymentMethod .sec-validate .inputtext{
+    width: 50%;
+}
+
+
 .paymentMethods .imgRadioButton{
     display: inline-block;
     position: relative;
@@ -137,8 +178,68 @@
     border: solid 1px #828282;
     top:23px;
     left:21px;
+}
+
+#paymentMethod .sec-validate{
+    padding-top: 20px;
+    display: block;
+}
+
+.paymentMethods .selected.imgRadioButton:before {
+    box-shadow: 0 0 0 6px white inset, 0 0 0 15px #54b3ad inset;
 
 }
+
+#paymentMethod .option {
+    margin: 9px 0;
+}
+
+#paymentMethod .masterCreditSeccion {
+    display: block;
+    border-bottom: solid 1px #454545;
+    padding: 9px 0;
+    margin: 20px 0;
+    width: 50%;
+}
+
+.masterCreditSeccion > div > span{
+    white-space: nowrap;
+    padding: 0 3px;
+}
+
+.masterCreditSeccion > div > label.edit{
+    color: #54b3ad;
+    float: right
+}
+
+#paymentMethod .smollInput .validate-directive{
+    width: 48%;
+    display: inline-block;
+}
+
+#paymentMethod .sec-validate.smollInput .inputtext{
+    width: 80%;
+}
+
+#paymentMethod .payment_date {
+    width: 48%;
+    display: inline-block;
+    margin: 22px 0;
+}
+
+#paymentMethod .payment_date > label{
+    font-size: 14px;
+    color: #2a2a2a;
+    display: block;
+}
+
+#paymentMethod .payment_date .validate-directive{
+    width: 44%;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+
 
 /* END USER DETAILS SECCION   */
 

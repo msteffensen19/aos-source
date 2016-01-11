@@ -3,12 +3,12 @@
 <div>
 
 <div id="detailslink">
-    <label class="roboto-regular" ng-class="{ selected : firstTag }"  ng-click="firstTag = true">1. {{ 'SHIPPING_DETAILS' | translate }}</label>
-    <label class="roboto-regular" ng-class="{ selected : !firstTag }" ng-click="firstTag = false" >2. {{ 'PAYMENT_METHOD' | translate }}</label>
+    <label class="roboto-regular" ng-class="{ selected : firstTag }" >1. {{ 'SHIPPING_DETAILS' | translate }}</label>
+    <label class="roboto-regular" ng-class="{ selected : !firstTag }" >2. {{ 'PAYMENT_METHOD' | translate }}</label>
 </div>
 
-
     <!-- USER DETAILS SECTION-->
+
     <div id="userSection" ng-show="firstTag">
 
         <div id="userDetails">
@@ -29,22 +29,26 @@
             </div>
         </div>
         <div class="blueLink">
-            <a  ng-click="firstTag = false">{{ 'Edit_shipping_Details' | translate }}</a>
+            <a>{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
-            <button class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
+            <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
         </div>
     </div>
+
     <!-- END USER DETAILS SECTION-->
 
 
-    <!-- PAYMENT METHOD SECTION-->
+    <!-- EDIT EDIT PAYMENT SECTION -->
+
     <div id="paymentMethod" ng-hide="firstTag">
         <div>
-            <label class="Choose_payment roboto-medium"> {{ 'Choose_payment_method_below' | translate }}</label>
+            <label class="Choose_payment roboto-medium">
+                {{ 'Choose_payment_method_below' | translate }}
+            </label>
             <div class="paymentMethods">
-                <div class="imgRadioButton" data-ng-click="imgRadioButton = 1" data-ng-class="{ selected : imgRadioButton == 1 }">
+                <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1)" data-ng-class="{ selected : imgRadioButton == 1 }">
                     <img src="../../../css/images/SafePay.png" alt="Safepay" />
                 </div>
                 <div class="imgRadioButton" data-ng-click="imgRadioButton = 2" data-ng-class="{ selected : imgRadioButton == 2 }">
@@ -52,17 +56,24 @@
                 </div>
             </div>
 
-            <div ng-show="imgRadioButton == 1">
+            <!---------------------------- SAFEPAY SECCION ---------------------------->
 
-                <sec-validate >
+            <div ng-show="imgRadioButton == 1 && !editMode">
+
+                <div class="notice">
+                    <h4 translate="Notice"  ></h4>
+                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{ 'Please_enter_a_fake_data' | translate }}</p>
+                </div>
+
+                <sec-validate>
 
                     <sec-input
                             sec-required
-                            sec-placeholder="User name"
+                            sec-placeholder="SafePay User name"
                             sec-min-length="5"
                             sec-max-length="15"
                             sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
-                            pattern-error-attr="Use letters, number and the following symbols only: .-_"
+                            pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                             model-attr="savePay.username"
                             id-attr="savePay_UserName"
                             no-red-star="true" >
@@ -70,10 +81,10 @@
 
                     <sec-input
                             sec-required
-                            sec-placeholder="Password"
+                            sec-placeholder="SafePay Password"
                             sec-min-length="4"
                             sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                            pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
+                            pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                             input-type-attr="password"
                             model-attr="savePay.password"
                             no-red-star="true"
@@ -98,8 +109,8 @@
                     <div class="blueLink">
                         <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
-                            <input sec-submit-attr="register()"
-                                   class="roboto-medium nextBtn a-button"
+                            <input sec-submit-attr="payNow_SafePay()"
+                                   class="roboto-medium float-button a-button"
                                    data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
@@ -109,32 +120,120 @@
                 </sec-validate>
 
             </div>
-            <div ng-show="imgRadioButton == 2">
+
+            <!-------------------------- END SAFEPAY SECCION -------------------------->
+
+
+
+
+            <!-------------------------- MASTERCREDIT SECCION --------------------------->
+
+            <div ng-show="imgRadioButton == 2 && !noCards">
 
                 <div class="masterCreditSeccion">
-                    <div class="roboto-regular">
+                    <div class="roboto-regular" >
                         <span class="MasterCredit">MasterCredit</span>
-                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >{{_4numbers | last4DigitsCard:$last}}</span>
-                        <label class="edit" > {{'Edit' | translate}} </label>
+                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >
+                            {{ _4numbers | showLast4DigitsCard:$last:$index}}
+                        </span>
+                        <label class="edit" data-ng-click="paymentMethod_edit(card)" >
+                            {{'Edit' | translate}}
+                        </label>
                     </div>
                 </div>
 
                 <div class="blueLink">
                     <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                     <label>
-                        <input class="roboto-medium nextBtn a-button"
-                               type="button"
-                               value="{{'PAY_NOW' | translate}}" />
+                        <input class="roboto-medium float-button a-button" data-ng-click="payNow_masterCredit()"
+                               type="button" value="{{'PAY_NOW' | translate}}" />
                     </label>
                 </div>
             </div>
 
+            <!-------------------------- END MASTERCREDIT SECCION --------------------->
+
+
+
+
+            <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
+
+            <div ng-show="noCards">
+
+                <sec-validate class="smollInput" >
+
+                    <sec-input sec-required
+                               sec-placeholder="{{ 'Card_number' | translate }}"
+                               sec-min-length="16"
+                               sec-max-length="16"
+                               sec-pattern="^[0-9]{16,16}$"
+                               pattern-error-attr="{{ 'Invalid_Card_number' | translate }}"
+                               model-attr="card.number"
+                               id-attr="Card_Number"  >
+                    </sec-input>
+
+                    <sec-input sec-required class="creditCard"
+                               sec-placeholder="{{ 'CCV_Number' | translate }}"
+                               model-attr="card.ccv"
+                               id-attr="Card_ccv" >
+                    </sec-input>
+
+                    <div class="payment_date">
+
+                    <label class="roboto-regular" >{{'Expiration_Date' | translate}}</label>
+
+                    <sec-input sec-required
+                            input-type-attr="transclude" id-attr="Card_date"
+                               sec-placeholder="{{ 'MM' | translate }}" select-tag="true">
+                        <a class="must">*</a>
+                        <select class="inputtext"
+                                ng-model="card.expirationDate.month"
+                                ng-options="num for num in ['01','02','03','04','05','06','07','08','09', '10', '11', '12']" >
+                        </select>
+                    </sec-input>
+
+                    <sec-input sec-required input-type-attr="transclude" id-attr="Card_year"
+                               sec-placeholder="{{ 'YY' | translate }}" select-tag="true">
+                        <a class="must">*</a>
+                        <select class="inputtext"
+                                ng-model="card.expirationDate.year"
+                                ng-options="year for year in years" >
+                        </select>
+                    </sec-input>
+
+                    </div>
+
+                    <sec-input sec-required
+                               sec-placeholder="{{ 'Cartholder_Name' | translate }}"
+                               model-attr="card.name"
+                               id-attr="Card_name"  >
+                    </sec-input>
+
+                    <div class="blueLink">
+                        <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                        <label>
+                            <input sec-submit-attr="payNow_masterCredit()"
+                                   class="roboto-medium float-button a-button"
+                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+                                   type="button"
+                                   value="{{'PAY_NOW' | translate}}" />
+                        </label>
+                    </div>
+
+                </sec-validate>
+
+            </div>
+
+            <!---------------------------- END MANUAL PAYMENT SECCION ---------------------------->
 
         </div>
-        <div>
-        </div>
     </div>
-    <!-- END PAYMENT METHOD SECTION-->
+
+    <!-- END EDIT PAYMENT METHOD SECTION-->
+
+
+
+
 
 
 
