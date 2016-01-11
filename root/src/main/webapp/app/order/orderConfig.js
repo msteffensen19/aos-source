@@ -22,14 +22,12 @@ define([],function(){
 
                     orderService.getAccountById()
                         .then(function (user) {
-                            alert()
                             var paramsToResolve = {
-                                userLogin: true,
-                                shippingCost : 10 //userLogin
+                                shippingCost : 10, //userLogin
+                                user : user
                             }
                             defer.resolve(paramsToResolve);
                     });
-
                     return defer.promise;
                 }
             }

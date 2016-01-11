@@ -86,14 +86,14 @@ define(['./module'], function (services) {
                         obj += ","
                     }
                     var tagName = $(this).prop("tagName");
-                    if(/[a-z]/.test(tagName))
-                    {
+                    //if(/[a-z]/.test(tagName))
+                    //{
+                    //    obj += '"' + tagName.toLowerCase().substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
+                    //}
+                    //else
+                    //{
                         obj += '"' + tagName.substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
-                    }
-                    else
-                    {
-                        obj += '"' + tagName.toLowerCase().substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
-                    }
+                    //}
                 });
                 callback(JSON.parse("{" + obj + "}"));
             }

@@ -13,9 +13,10 @@ define(['./module'], function (directives) {
             template: $templateCache.get('app/order/partials/user-are-login.html'),
             link: function(s, e, a, ctrl){
 
-                s.firstTag = false;
+                s.firstTag = true;
                 s.imgRadioButton = 1;
-                s.noCards = false;
+                s.noCards = false; //check if have cards
+
                 s.savePay = {
                     username : '',
                     password : ''

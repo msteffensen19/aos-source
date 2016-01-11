@@ -36,6 +36,7 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'E',
                 require: 'secValidate',
+                scope: {},
                 controller: ['$scope', function(s){
 
                     this.addId = function(id){
@@ -239,6 +240,7 @@ define(['./module'], function (directives) {
                             })
 
                             e.bind('change', function () {
+                                ctrls[1].shiftInvalidField(a.idAttr);
                                 $($(this).find(".validate-label")).html('')
                             })
                         }

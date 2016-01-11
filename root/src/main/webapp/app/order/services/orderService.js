@@ -12,11 +12,10 @@ define(['./module'], function (services) {
                 getAccountById: getAccountById,
             });
 
-            function getAccountById(userId) {
+            function getAccountById() {
 
                 var defer = $q.defer();
                 var params = server.account.getAccountById();
-                console.log(params)
                 var user = $rootScope.userCookie;
                 if (user && user.response && user.response.userId != -1) {
 
@@ -24,8 +23,25 @@ define(['./module'], function (services) {
                         accountId: user.response.userId
                     })
                         .then(function (response) {
-                            console.log(response)
-                            defer.resolve(response);
+                            var user = {
+                                "id": response.ID,
+                                "lastName": response.LASTNAME,
+                                "firstName": response.FIRSTNAME,
+                                "loginName": response.LOGINNAME,
+                                "country": response.COUNTRY,
+                                "stateProvince": response.STATEPROVINCE,
+                                "cityName": response.CITYNAME,
+                                "address": response.ADDRESS,
+                                "zipcode": response.ZIPCODE,
+                                "phoneNumber": response.PHONENUMBER,
+                                "email": response.EMAIL,
+                                //"accountType": response.ACCOUNTTYPE,
+                                //"allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
+                                //"internelUnsuccessfulLoginAttemts": response.INTERNALUNSUCCESSFULLOGINATTEMPTS,
+                                //"internalUserBlockedFromLoginUtil": response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
+                                //"internalLastSuccessSulLogin": response.INTERNALLASTSUCCESSSULLOGIN
+                            }
+                            defer.resolve(user);
                         },
                         function (response) {
                             console.log(response);
@@ -33,7 +49,7 @@ define(['./module'], function (services) {
                         });
                 }
                 else{
-                    updateCart(cart);
+                    defer.resolve(null);
                 }
 
                 return defer.promise;

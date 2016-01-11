@@ -34,7 +34,7 @@ define(['./module'], function (directives) {
 
                         userService.login(user).then(function (res) {
 
-                            var response = { userId : res.userid, reason: res.reason, success : res.success, token: res.token }
+                            var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
 
                             if (response.userId != -1) {
 
@@ -79,6 +79,8 @@ define(['./module'], function (directives) {
                             else {
                                 wrongFields();
                             }
+
+                            return user;
                         });
                     }
                     /*=============================== end Sign in ===============================*/

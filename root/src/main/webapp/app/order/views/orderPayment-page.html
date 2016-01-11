@@ -15,7 +15,7 @@
 
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="ORDER_PAYMENT"></h3>
 
-        <div id="orderPayment" ng-switch="userLogin" ng-hide="paymentEnd">
+        <div id="orderPayment" ng-switch="userCookie.response != undefined" ng-hide="paymentEnd">
 
             <div ng-switch-when="false">
                 <user-not-login></user-not-login>
@@ -52,8 +52,8 @@
             </order-payment-success>
         </div>
 
-        <input type="checkbox" ng-model="userLogin" style="position: fixed; bottom: 8px; left:12px; transform: scale(3);" />
-        <input type="checkbox" ng-model="paymentEnd" style="position: fixed; bottom: 42px; left:12px; transform: scale(3);" />
+        <!--<input type="checkbox" ng-model="userLogin" style="position: fixed; bottom: 8px; left:12px; transform: scale(3);" />-->
+        <!--<input type="checkbox" ng-model="paymentEnd" style="position: fixed; bottom: 42px; left:12px; transform: scale(3);" />-->
     </article>
 </section>
 
