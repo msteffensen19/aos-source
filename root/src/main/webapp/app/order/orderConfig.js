@@ -18,15 +18,24 @@ define([],function(){
                 breadcrumbName: "orderPayment",
             },
             resolve : {
-                resolveParams: function ($q) {
+                resolveParams: function ($q, orderService) {
                     var defer = $q.defer();
                    // cartService.checkout().then(function (userLogin) {
-                        var paramsToResolve = {
-                            userLogin: true,
-                            shippingCost : 10 //userLogin
-                        }
-                        defer.resolve(paramsToResolve);
-                    //});
+
+                    orderService.getAccountById().
+                    then(function (user) {
+
+                        orderService.getShippingCost(user).
+                        then(function (shippingCost) {
+
+                            var paramsToResolve = {
+                                shippingCost : shippingCost,
+                                user : user
+                            }
+                            defer.resolve(paramsToResolve);
+
+                        });
+                    });
                     return defer.promise;
                 }
             }
