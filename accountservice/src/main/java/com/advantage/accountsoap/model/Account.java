@@ -92,6 +92,9 @@ public class Account {
     @Column(name = "USER_TYPE")
     private Integer accountType;        //  by enum AccountType
 
+    @Column
+    private Integer PaymentMethod;        //  by enum  PaymentMethodEnum
+
     @Column(name = FIELD_COUNTRY)
     private Integer country;                //  by Country
 
@@ -220,6 +223,14 @@ public class Account {
 
     public void setAccountType(Integer accountType) {
         this.accountType = accountType;
+    }
+
+    public Integer getPaymentMethod() {
+        return PaymentMethod;
+    }
+
+    public void setPaymentMethod(Integer paymentMethod) {
+        PaymentMethod = paymentMethod;
     }
 
     public Integer getCountry() {

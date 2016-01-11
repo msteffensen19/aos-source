@@ -75,4 +75,11 @@ public class DefaultAddressRepository extends AbstractRepository implements Addr
 
         return addresses.isEmpty() ? null : addresses;
     }
+
+    @Override
+    public ShippingAddress update(ShippingAddress address) {
+        entityManager.persist(address);
+
+        return address;
+    }
 }

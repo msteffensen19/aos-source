@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.*;
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
                 "success",
-                "userId",
                 "reason",
         })
 @XmlRootElement(name = "AddressStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
@@ -17,16 +16,13 @@ public class AddressStatusResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     boolean success;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    long userId;        //  -1 = Invalid user login name
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     String reason;
 
     public AddressStatusResponse() {
     }
 
-    public AddressStatusResponse(boolean success, long userId, String reason) {
+    public AddressStatusResponse(boolean success, String reason) {
         this.success = success;
-        this.userId = userId;
         this.reason = reason;
     }
 
@@ -36,14 +32,6 @@ public class AddressStatusResponse {
 
     public void setSuccess(boolean success) {
         this.success = success;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getReason() {

@@ -55,6 +55,7 @@
             <xs:element name="firstName" type="xs:string"/>
             <xs:element name="loginName" type="xs:string"/>
             <xs:element name="accountType" type="xs:int"/>
+            <xs:element name="paymentMethod" type="xs:int"/>
             <xs:element name="country" type="xs:string"/>
             <xs:element name="stateProvince" type="xs:string"/>
             <xs:element name="cityName" type="xs:string"/>
@@ -82,6 +83,18 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="UpdateAddressDto">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" form="qualified" nillable="true"/>
+            <xs:element name="addressLine1" type="xs:string" form="qualified"/>
+            <xs:element name="addressLine2" type="xs:string" form="qualified"/>
+            <xs:element name="city" type="xs:string" form="qualified"/>
+            <xs:element name="country" type="xs:string" form="qualified"/>
+            <xs:element name="state" type="xs:string" form="qualified"/>
+            <xs:element name="postalCode" type="xs:string" form="qualified"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="AddAddressDto">
         <xs:sequence>
             <xs:element name="addressLine1" type="xs:string" form="qualified"/>
@@ -93,13 +106,12 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="AddressesResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="address" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+
+    <xs:complexType name="AddressesResponse">
+        <xs:sequence>
+            <xs:element name="address" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:element name="GetAllAccountsRequest"/>
     <xs:element name="GetCountriesRequest"/>
@@ -143,6 +155,7 @@
     <xs:element name="AccountUpdateRequest">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="accountId" type="xs:long"/>
                 <xs:element name="accountType" type="xs:int"/>
                 <xs:element name="address" type="xs:string"/>
                 <xs:element name="allowOffersPromotion" type="xs:string"/>
@@ -151,10 +164,18 @@
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="firstName" type="xs:string"/>
                 <xs:element name="lastName" type="xs:string"/>
-                <xs:element name="password" type="xs:string"/>
                 <xs:element name="phoneNumber" type="xs:string"/>
                 <xs:element name="stateProvince" type="xs:string"/>
                 <xs:element name="zipcode" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PaymentMethodUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="paymentMethod" type="xs:int"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -193,6 +214,23 @@
             <xs:sequence>
                 <xs:element name="address" type="tns:AddAddressDto" form="qualified" maxOccurs="unbounded"/>
                 <xs:element name="accountId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddressUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="address" type="tns:UpdateAddressDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ChangePasswordRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="newPassword" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

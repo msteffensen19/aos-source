@@ -136,17 +136,18 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public AccountStatusResponse updateAccount(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
+    public AccountStatusResponse updateAccount(long accountId,Integer accountType, String lastName, String firstName,Integer country,
+                                               String phoneNumber, String stateProvince, String cityName, String address,
+                                               String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(country, "country id");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
         //  Validate String Arguments - Mandatory columns
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
 
-        Account account = getAppUserByLogin(loginName);
+        Account account = get(accountId);
 
         if (account == null ){
             return new AccountStatusResponse(false,
@@ -154,11 +155,11 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     -1);
         }
 
-        if (!ValidationHelper.isValidPassword(password)) {
+        /*if (!ValidationHelper.isValidPassword(password)) {
             return new AccountStatusResponse(false,
                     "Invalid password",
                     account.getId());
-        }
+        }*/
 
         if (!validatePhoneNumberAndEmail(phoneNumber, email)) {
             return new AccountStatusResponse(false,
@@ -169,7 +170,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         account.setAccountType(accountType);
         account.setLastName(lastName);
         account.setFirstName(firstName);
-        account.setLastName(password);
         account.setCountry(country);
         account.setPhoneNumber(phoneNumber);
         account.setStateProvince(stateProvince);
@@ -419,5 +419,29 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
 
         return entityManager.find(Account.class, entityId);
+    }
+
+    @Override
+    public AccountStatusResponse updatePaymentMethod(long accountId, int paymentMethod) {
+        Account account = get(accountId);
+        if(account == null) return  new AccountStatusResponse(false, "Account not fount", -1);
+
+        account.setPaymentMethod(paymentMethod);
+        return new AccountStatusResponse(false, "Successfully", accountId);
+    }
+
+    @Override
+    public AccountStatusResponse changePassword(long accountId, String newPassword) {
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(newPassword, "user password");
+        if (!ValidationHelper.isValidPassword(newPassword)) {
+            return new AccountStatusResponse(false, "Invalid password", -1);
+        }
+        Account account = get(accountId);
+        if(account == null) return  new AccountStatusResponse(false, "Account not fount", -1);
+
+        account.setPassword(newPassword);
+        entityManager.persist(account);
+
+        return new AccountStatusResponse(true, "Successfully", accountId);
     }
 }

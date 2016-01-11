@@ -27,7 +27,7 @@ public class AddressService {
     @Transactional
     public AddressStatusResponse add(long accountId, Collection<AddAddressDto> addresses) {
         if(accountRepository.get(accountId) == null) {
-            return new AddressStatusResponse(false, -1, "Account not found");
+            return new AddressStatusResponse(false, "Account not found");
         }
 
         for (AddAddressDto address : addresses) {
@@ -40,7 +40,7 @@ public class AddressService {
                     address.getPostalCode());
         }
 
-        return new AddressStatusResponse(true, accountId, "Successful");
+        return new AddressStatusResponse(true, "Successful");
     }
 
     @Transactional
@@ -59,6 +59,22 @@ public class AddressService {
     @Transactional
     public List<AddressDto> getByAccountId(long accountId) {
         return fillDtos(addressRepository.getByAccountId(accountId));
+    }
+
+    @Transactional
+    public AddressStatusResponse update(AddressDto address) {
+        ShippingAddress shippingAddress = addressRepository.get(address.getId());
+        if(shippingAddress == null) return  new AddressStatusResponse(false, "Address not found");
+
+        shippingAddress.setAddressLine1(address.getAddressLine1());
+        shippingAddress.setAddressLine2(address.getAddressLine2());
+        shippingAddress.setCity(address.getCity());
+        shippingAddress.setCountry(address.getCountry());
+        shippingAddress.setPostalCode(address.getPostalCode());
+        shippingAddress.setState(address.getState());
+        addressRepository.update(shippingAddress);
+
+        return new AddressStatusResponse(true, "Successfully");
     }
 
     private List<AddressDto> fillDtos(Collection<ShippingAddress> addresses) {

@@ -41,12 +41,13 @@ public class AccountserviceEndpoint {
     @ResponsePayload
     public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId) {
         Account account = accountService.getById(accountId.getId());
-        if(account == null) return null;
+        if (account == null) return null;
         AccountDto response = new AccountDto(account.getId(),
                 account.getLastName(),
                 account.getFirstName(),
                 account.getLoginName(),
                 account.getAccountType(),
+                account.getPaymentMethod(),
                 account.getCountry(),
                 account.getStateProvince(),
                 account.getCityName(),
@@ -54,7 +55,7 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getPhoneNumber(),
                 account.getEmail(),
-                account.getAllowOffersPromotion(),account.getInternalUnsuccessfulLoginAttempts(),
+                account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
@@ -106,15 +107,14 @@ public class AccountserviceEndpoint {
                 account.getAllowOffersPromotion());
     }
 
-    /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
     public AccountStatusResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
         return accountService.updateAccount(
+                account.getAccountId(),
                 account.getAccountType(),
                 account.getLastName(),
                 account.getFirstName(),
-                account.getLoginName(),
-                account.getPassword(),
                 account.getCountry(),
                 account.getPhoneNumber(),
                 account.getStateProvince(),
@@ -123,7 +123,13 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
-    }*/
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
+    @ResponsePayload
+    public AccountStatusResponse updatePaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
+        return accountService.updatePaymentMethod(request.getAccountId(), request.getPaymentMethod());
+    }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
@@ -149,7 +155,7 @@ public class AccountserviceEndpoint {
         GetCountriesResponse response = new GetCountriesResponse();
         List<Country> countries;
 
-        if(request == null) throw new IllegalArgumentException("Not valid parameters");
+        if (request == null) throw new IllegalArgumentException("Not valid parameters");
         if (!request.getStartOfName().isEmpty() && request.getInternationalPhonePrefix() != 0) {
             throw new IllegalArgumentException("Not valid parameters");
         } else if (request.getInternationalPhonePrefix() > 0) {
@@ -180,4 +186,18 @@ public class AccountserviceEndpoint {
     public AddressStatusResponse addAddress(@RequestPayload AddAddressesRequest address) {
         return addressService.add(address.getAccountId(), address.getAddresses());
     }
+
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddressUpdateRequest")
+    @ResponsePayload
+    public AddressStatusResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
+        return addressService.update(address.getAddress());
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
+    @ResponsePayload
+    public AccountStatusResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+        return accountService.changePassword(request.getAccountId(), request.getNewPassword());
+    }
+
 }

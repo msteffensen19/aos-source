@@ -27,10 +27,9 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     Account updateAppUser(Account account);
 
-    AccountStatusResponse updateAccount(Integer appUserType, String lastName, String firstName, String loginName,
-                                        String password, Integer country, String phoneNumber, String stateProvince,
-                                        String cityName, String address, String zipcode, String email,
-                                        String agreeToReceiveOffersAndPromotions);
+    AccountStatusResponse updateAccount(long acccountId, Integer appUserType, String lastName, String firstName,Integer country,
+                                        String phoneNumber, String stateProvince, String cityName, String address,
+                                        String zipcode, String email, String agreeToReceiveOffersAndPromotions);
 
     String getFailureMessage();
 
@@ -44,5 +43,9 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
     AccountStatusResponse doLogin(String login, String password, String email);
 
     List<Account> getAppUsersByCountry(Integer countryId);
+
+    AccountStatusResponse updatePaymentMethod(long accountId, int paymentMethod);
+
+    AccountStatusResponse changePassword(long accountId, String newPassword);
 
 }
