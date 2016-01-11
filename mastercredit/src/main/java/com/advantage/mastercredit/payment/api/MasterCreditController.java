@@ -34,6 +34,7 @@ public class MasterCreditController {
                                                           HttpServletRequest request,
                                                           HttpServletResponse response) {
 
+        System.out.println("MasterCreditController.doPayment");
         MasterCreditResponse masterCreditResponse = masterCreditService.doPayment(masterCreditDto);
         //response.setHeader("sessionId", request.getSession().getId());
         //
@@ -49,8 +50,11 @@ public class MasterCreditController {
         //}
 
         if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
-            return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);
+            System.out.println("MasterCreditController.doPayment - HttpStatus.OK");
+            //return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);
+            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CREATED);
         } else {
+            System.out.println("MasterCreditController.doPayment - HttpStatus.CONFLICT");
             return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);
         }
 

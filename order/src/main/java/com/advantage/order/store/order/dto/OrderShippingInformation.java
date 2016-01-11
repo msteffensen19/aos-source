@@ -1,42 +1,45 @@
 package com.advantage.order.store.order.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author Binyamin Regev on 07/01/2016.
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class OrderShippingInformation {
 
     @JsonProperty("Shipping.Cost")
-    private double shippingCost;
+    private double shippingCost;                //  ##.##
 
     @JsonProperty("Shipping.TrackingNumber")
-    private long trackingNumber;    //  10 digits
+    private long trackingNumber;                //  10 digits
+
+    @JsonProperty("Shipping.NumberOfProducts")
+    private int numberOfProducts;               //  Numeric. 1-5 digits
+
+    @JsonProperty("Shipping.Address.CustomerName")
+    private String customerName;
+
+    @JsonProperty("Shipping.Address.CustomerPhone")
+    private String customerPhone;
 
     @JsonProperty("Shipping.Address.Address")
-    private String address;         //  0-100 characters
+    private String address;                     //  0-100 characters
 
     @JsonProperty("Shipping.Address.City")
-    private String city;            //  City name
+    private String city;                        //  City name
 
     @JsonProperty("Shipping.Address.PostalCode")
-    private String postalCode;      //  0-10 digis
+    private String postalCode;                  //  0-10 digis
 
     @JsonProperty("Shipping.Address.State")
-    private String state;           //  0-10 characters
+    private String state;                       //  0-10 characters
 
     @JsonProperty("Shipping.Address.CountryCode")
-    private String countryCode;     //  2 characters, by ISO3166
+    private String countryCode;                 //  2 characters, by ISO3166
 
     public OrderShippingInformation() { }
-
-    public OrderShippingInformation(String address, String city, String postalCode, String state, String countryCode) {
-        this.address = address;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.state = state;
-        this.countryCode = countryCode;
-    }
 
     public double getShippingCost() {
         return shippingCost;
@@ -44,6 +47,38 @@ public class OrderShippingInformation {
 
     public void setShippingCost(double shippingCost) {
         this.shippingCost = shippingCost;
+    }
+
+    public long getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(long trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
+    public int getNumberOfProducts() {
+        return numberOfProducts;
+    }
+
+    public void setNumberOfProducts(int numberOfProducts) {
+        this.numberOfProducts = numberOfProducts;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 
     public String getAddress() {
@@ -94,10 +129,14 @@ public class OrderShippingInformation {
         OrderShippingInformation that = (OrderShippingInformation) o;
 
         if (Double.compare(that.getShippingCost(), getShippingCost()) != 0) return false;
+        if (trackingNumber != that.trackingNumber) return false;
+        if (getNumberOfProducts() != that.getNumberOfProducts()) return false;
+        if (!getCustomerName().equals(that.getCustomerName())) return false;
+        if (!getCustomerPhone().equals(that.getCustomerPhone())) return false;
         if (!getAddress().equals(that.getAddress())) return false;
         if (!getCity().equals(that.getCity())) return false;
         if (!getPostalCode().equals(that.getPostalCode())) return false;
-        if (getState() != null ? !getState().equals(that.getState()) : that.getState() != null) return false;
+        if (!getState().equals(that.getState())) return false;
         return getCountryCode().equals(that.getCountryCode());
 
     }
@@ -108,10 +147,14 @@ public class OrderShippingInformation {
         long temp;
         temp = Double.doubleToLongBits(getShippingCost());
         result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (trackingNumber ^ (trackingNumber >>> 32));
+        result = 31 * result + getNumberOfProducts();
+        result = 31 * result + getCustomerName().hashCode();
+        result = 31 * result + getCustomerPhone().hashCode();
         result = 31 * result + getAddress().hashCode();
         result = 31 * result + getCity().hashCode();
         result = 31 * result + getPostalCode().hashCode();
-        result = 31 * result + (getState() != null ? getState().hashCode() : 0);
+        result = 31 * result + getState().hashCode();
         result = 31 * result + getCountryCode().hashCode();
         return result;
     }
