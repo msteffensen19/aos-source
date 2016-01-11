@@ -133,7 +133,7 @@ var english = {
     'Thank_you_for_buying_with_Advantage' : 'Thank you for buying with Advantage',
     'Yor_tracking_number_is' : 'Yor tracking number is',
     'Your_order_number_is' : 'Your order number is',
-    'Shipping_to' : 'Shippingto',
+    'Shipping_to' : 'Shipping to',
     'Payment_Method' : 'Payment Method',
     'Order_Summary' : 'Order Summary',
     'Date_Ordered' : 'Date Ordered',
