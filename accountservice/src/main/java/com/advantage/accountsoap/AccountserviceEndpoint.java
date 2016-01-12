@@ -7,7 +7,6 @@ import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -68,7 +67,7 @@ public class AccountserviceEndpoint {
                 account.getEmail());
 
         if (response.isSuccess()) {
-            //todo set session
+            //TODO-ALEX set session
             /*HttpSession session = request.getSession();
             session.setAttribute(Constants.UserSession.TOKEN, response.getToken());
             session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());

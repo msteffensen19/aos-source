@@ -63,8 +63,8 @@ public class DataSourceInit4Json {
         final Category category5 = new Category("MICE", "1238");
         session.persist(category5);
 
-        final Category category6 = new Category("BAGS & CASES", "1239");
-        session.persist(category6);
+//        final Category category6 = new Category("BAGS & CASES", "1239");
+//        session.persist(category6);
 
         /*Attributes INIT*/
 
