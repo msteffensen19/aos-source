@@ -1,15 +1,28 @@
 /**
  * Created by kubany on 10/18/2015.
  */
-/**
- * Created by kubany on 10/13/2015.
- */
 
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',
         function ($scope, $stateParams, categoryService, category) {
 
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log(category)
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
+            console.log("category")
             $scope.catId = $stateParams.id;
 
             $scope.category = category;
@@ -25,7 +38,6 @@ define(['./module'], function (controllers) {
             $scope.categoryName = category.categoryName;
 
             $("nav .navLinks").css("display" , "none");
-
 
             Helper.forAllPage();
 

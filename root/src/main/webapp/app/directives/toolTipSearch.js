@@ -4,8 +4,8 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('toolTipSearch', ['$templateCache', 'productService',
-        function ($templateCache, productService) {
+    directives.directive('toolTipSearch', ['$templateCache', 'productService', '$location',
+        function ($templateCache, productService, $location) {
         return {
             restrict: 'E',
             replace: true,

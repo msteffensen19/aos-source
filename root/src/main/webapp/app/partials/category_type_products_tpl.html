@@ -5,6 +5,8 @@
         <label class="roboto-regular clear" ng-click="clearSelection()" translate="Clear" ng-show="showClear"></label>
         <ul>
 
+
+
             <!--- Price filter Section-->
             <li>
                 <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
@@ -19,6 +21,9 @@
                 </div>
             </li>
             <!--- END Price filter Section -->
+
+
+
 
             <!--- attributes filter Section -->
             <li ng-repeat="attrib in categoryAttributes">
@@ -39,8 +44,12 @@
             <!--- END attributes filter Section -->
 
 
+
+
+
+
             <!--- color filter Section -->
-            <li>
+            <li ng-if="productsColors.length > 0">
                 <h4 class="accordion roboto-regular arrowDown" id="accordionColor"
                     ng-click="toggleColapse('accordionColor')" >
                     {{'COLOR' | translate }}
@@ -58,6 +67,9 @@
                 </div>
             </li>
             <!--- END color filter Section -->
+
+
+
 
         </ul>
     </div>

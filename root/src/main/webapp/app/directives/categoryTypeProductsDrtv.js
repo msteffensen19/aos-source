@@ -1,13 +1,11 @@
 /**
  * Created by kubany on 10/29/2015.
  */
-/**
- * Created by kubany on 10/14/2015.
- */
+
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('categoryTypeProductsDrtv', ['$filter', '$animate', '$templateCache',
-        '$location', 'productsCartService', function ($filter, $animate, $templateCache, $location, cartService) {
+        '$location', function ($filter, $animate, $templateCache, $location) {
         return {
             restrict: 'EA',
             replace: 'true',
@@ -91,12 +89,15 @@ define(['./module'], function (directives) {
                     scope.gamingCustom = [];
                     scope.simplicityCustom = [];
                     angular.forEach(scope.products, function (value, key) {
-                        if($filter('filter')(value.attributes, {attributeValue: 'Business'}, false).length > 0)
-                            scope.businessCustom.push(value);
-                        if($filter('filter')(value.attributes, {attributeValue: 'Gaming'}, false).length > 0)
-                            scope.gamingCustom.push(value);
-                        if($filter('filter')(value.attributes, {attributeValue: 'Simplicity'}, false).length > 0)
-                            scope.simplicityCustom.push(value);
+                        if(value.attributes)
+                        {
+                            if($filter('filter')(value.attributes, {attributeValue: 'Business'}, false).length > 0)
+                                scope.businessCustom.push(value);
+                            if($filter('filter')(value.attributes, {attributeValue: 'Gaming'}, false).length > 0)
+                                scope.gamingCustom.push(value);
+                            if($filter('filter')(value.attributes, {attributeValue: 'Simplicity'}, false).length > 0)
+                                scope.simplicityCustom.push(value);
+                        }
                     });
                 };
 
@@ -201,9 +202,13 @@ define(['./module'], function (directives) {
                             {
                                 for(var i = 0; i < productsInclude[key].length; i++)
                                 {
-                                    var searchMatches = $.inArray(
+                                    var searchMatches = 0;
+                                    if(product.attributes)
+                                    {
+                                        searchMatches = $.inArray(
                                         JSON.stringify($filter('filter')(product.attributes, {attributeValue: productsInclude[key][i]},false)[0]),
                                         $.map(product.attributes, JSON.stringify));
+                                    }
                                     if(searchMatches > -1)
                                     {
                                         found++;
@@ -233,8 +238,12 @@ define(['./module'], function (directives) {
 
 
 
-//
-//
+
+
+
+
+
+
 //function configSlider(){
 //    slider = document.getElementById('slider');
 //    var step = scope.maxPriceToFilter - scope.minPriceToFilter;

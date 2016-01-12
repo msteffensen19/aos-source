@@ -131,8 +131,12 @@ var server = {
         },
 
         getProductsBySearch : function (word, quantity) {
-            return catalogKey + "/products/search?name=" + word +
-                "&quantityPerEachCategory=" + quantity;
+            var path = catalogKey + "/products/search?name=" + word;
+            if(quantity > 0)
+            {
+                path += "&quantityPerEachCategory=" + quantity;
+            }
+            return path;
         }
 
     },

@@ -4,7 +4,6 @@
         <div>
             <img src="css/images/Sesrch.jpg"  />
             <span class="animPlaceholderUp">
-                <!--  -->
                 <input id="autoComplete" type="text" class="roboto-regular"
                        placeholder="{{'Search' | translate }} Advantage.com"
                        data-ng-keypress="checkEnterKey($event)"
@@ -26,7 +25,7 @@
             </div>
             <div>
                 <h3 class="roboto-medium" >{{ 'TOP_RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
-                <label  class="roboto-medium viewAll" translate="View_All"></label>
+                <label  class="roboto-medium viewAll" ><a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"></a></label>
                 <a class="product" href="#/product/{{product.productId}}"
                    data-ng-click="closeSearchSection()"
                    data-ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult:categoryFilter">
