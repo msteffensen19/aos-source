@@ -69,8 +69,9 @@ public class OrderController {
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @AppUserAuthorize
     /*public ResponseEntity<ShoppingCartResponse> addProductToCart(@PathVariable("userId") Long userId,*/
-    public ResponseEntity<ShoppingCartResponseDto> addProductToCart(@PathVariable("userId") Long userId,
+    public ResponseEntity<ShoppingCartResponseDto> addProductToCart(
                                                                     @PathVariable("productId") Long productId,
+                                                                    @PathVariable("userId") Long userId,
                                                                     @PathVariable("color") String hexColor,
                                                                     @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
                                                                     @RequestHeader("Authorization") String authHeader,
@@ -173,8 +174,9 @@ public class OrderController {
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "Remove a product from user shopping cart")
+    @ApiOperation(value = "AOP Remove a product from user shopping cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @AppUserAuthorize
     /*public ResponseEntity<ShoppingCartResponse> removeProductFromUserCart(@PathVariable("userId") long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> removeProductFromUserCart(@PathVariable("userId") long userId,
                                                                              @PathVariable("productId") Long productId,
@@ -200,17 +202,20 @@ public class OrderController {
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "Clear user shopping cart")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    /*public ResponseEntity<ShoppingCartResponse> clearUserCart(@PathVariable("userId") Long userId,*/
-    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId,
-                                                                 @RequestHeader("Authorization") String authHeader,
-                                                                 HttpServletRequest request) {
+    @ApiOperation(value = "AOP Clear user shopping cart")
+    @AppUserAuthorize
 
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
+    //@ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    /*public ResponseEntity<ShoppingCartResponse> clearUserCart(@PathVariable("userId") Long userId,*/
+    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId
+                                                                 //,@RequestHeader(value = "Authorization", required = false,defaultValue = "EVG Bearer ") String authHeader,
+                                                                 //                                                                HttpServletRequest request
+    ) {
+
+//        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
+//        if (authorizationStatus != null) {
+//            return new ResponseEntity<>(authorizationStatus);
+//        } else {
 
             if (userId != null) {
                 shoppingCartResponse = shoppingCartService.clearUserCart(Long.valueOf(userId));
@@ -226,7 +231,7 @@ public class OrderController {
             } else {
                 return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
             }
-        }
+        // }
     }
 
     /*  =========================================================================================================   */

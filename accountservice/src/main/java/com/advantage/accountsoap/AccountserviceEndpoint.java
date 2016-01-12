@@ -7,7 +7,6 @@ import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
