@@ -87,63 +87,28 @@ define([],function(){
                 category: function (categoryService, productService, $stateParams, $q, $filter) {
 
                     var defer  = $q.defer();
-
                     categoryService.getCategoryById($stateParams.id).
                     then(function(category){
-                        console.log("category")
-                        console.log(category)
-                        console.log("category")
 
                         if($stateParams.viewAll) {
-
                             productService.getProductsBySearch($stateParams.viewAll, -1).then(function (result) {
 
-                                //    /*
-                                //    * image for categories view all
-                                //    * promotedProduction for view all (the offer in the banner)
-                                //    * ask to keren about the size of search preview
-                                //    * */
-
-                                var attributes = [];
-                                //attributeName: "CUSTOMIZATION",
-                                //attributeValues: Array[4],
-                                //var products = [];
-
                                 var products = $filter("filterFullArrayforAutoComplate")([], result, $stateParams.id, -1)
-                                console.log(" ")
-                                console.log("products")
-                                console.log(products)
-                                console.log(" ")
-                                console.log(" ")
-
                                 var categories = {
                                     categoryId: 1,
                                     categoryName: "search about '" + $stateParams.viewAll + "'",
-                                    categoryImageId: "1235",
+                                    categoryImageId: category ? category.categoryImageId : "",
                                     promotedProduct: category ? category.promotedProduct : null,
-                                    attributes: attributes,
+                                    attributes: [],
                                     products: products,
                                 }
-
-                                console.log(" ")
-                                console.log("categories")
-                                console.log(categories)
-                                console.log(" ")
-                                console.log(" ")
-
                                 defer.resolve(categories);
-
                             });
                         }
                         else{
                             defer.resolve(category);
                         }
-                    }, function(){
-                        alert("second err")
                     });
-
-
-                    //alert($stateParams.id == '')
                     return defer.promise;
                 },
             }
