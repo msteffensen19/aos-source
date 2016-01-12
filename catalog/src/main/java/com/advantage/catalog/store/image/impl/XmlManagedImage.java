@@ -1,25 +1,17 @@
 package com.advantage.catalog.store.image.impl;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Iterator;
-
-import com.advantage.catalog.util.xml.XmlItem;
-import org.w3c.dom.Element;
-
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ManagedImage;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.IOHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
+import com.advantage.catalog.util.xml.XmlItem;
+import org.w3c.dom.Element;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
+import java.io.File;
+import java.io.IOException;
 
-class XmlManagedImage implements ManagedImage {
+public class XmlManagedImage implements ManagedImage {
 
     static final String TAG_MANAGED_IMAGE = "ManagedImage";
 
@@ -31,6 +23,7 @@ class XmlManagedImage implements ManagedImage {
 
     private final XmlImageManagement xmlImageManagement;
     private final XmlItem managedImageXmlItem;
+    public static boolean doResize = true;
 
     XmlManagedImage(final XmlImageManagement xmlImageManagement, final XmlItem xmlItem) {
         ArgumentValidationHelper.validateArgumentIsNotNull(xmlImageManagement, "xml image management");
@@ -80,8 +73,10 @@ class XmlManagedImage implements ManagedImage {
         final String compressedManagedFileName = idValue + "_m." + type;
         final String compressedManagedFilePath = xmlImageManagement.figureManagedImageFilePath(compressedManagedFileName);
         managedImageXmlItem.addChildXmlItem(XmlManagedImage.CHILD_TAG_MANAGED_MOBILE_FILE_NAME, compressedManagedFileName);
-        //IOHelper.compressImageFile(managedFilePath, compressedManagedFilePath);
-        IOHelper.resizeImage(managedFilePath, compressedManagedFilePath);
+        if(doResize) {
+            IOHelper.resizeImage(managedFilePath, compressedManagedFilePath);
+        }
+
 
         this.xmlImageManagement = xmlImageManagement;
     }

@@ -6,6 +6,7 @@ package com.advantage.catalog_test.online.store.image;
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
+import com.advantage.catalog.store.image.impl.XmlManagedImage;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
@@ -102,8 +103,7 @@ public class ImageManagementTests {
     //TODO-EVG unignore after testIsFileExists will work in Linux
     @Test(expected = NullPointerException.class)
     public void testImageExistsById() throws IOException {
-
-
+        XmlManagedImage.doResize = false;
         File createdFile = folder.newFile("myfile.jpg");
         byte[] b = new byte[20];
         new Random().nextBytes(b);
