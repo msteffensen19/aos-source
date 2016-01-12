@@ -205,23 +205,26 @@ define(['./module'], function (directives) {
                                     var searchMatches = 0;
                                     if(product.attributes)
                                     {
-                                        searchMatches = $.inArray(
-                                        JSON.stringify($filter('filter')(product.attributes, {attributeValue: productsInclude[key][i]},false)[0]),
-                                        $.map(product.attributes, JSON.stringify));
+                                        var filterAttr = $filter('filter')( product.attributes,{ attributeValue: productsInclude[key][i] },false);
+                                        var json = JSON.stringify( filterAttr[0]);
+                                        var map = $.map(product.attributes, JSON.stringify);
+                                        searchMatches = $.inArray(json, map);
                                     }
                                     if(searchMatches > -1)
                                     {
                                         found++;
                                     }
-                                    angular.forEach(product.colors, function(color){
-                                        if(color.code == productsInclude[key][i].code)
+                                    for(var colorIndex = 0; colorIndex < product.colors.length; colorIndex++ )
+                                    {
+                                        if(product.colors[colorIndex].code == productsInclude[key][i].code)
                                         {
                                             found++;
+                                            break;
                                         }
-                                    });
+                                    }
                                 }
                             }
-                            if(found == Object.keys(productsInclude).length && product.price >= minPrice && product.price <= maxPrice)
+                            if(found == Object.keys(productsInclude[key]).length && product.price >= minPrice && product.price <= maxPrice)
                             {
                                 productsToReturn.push(product);
                             }

@@ -7,22 +7,6 @@ define(['./module'], function (controllers) {
     controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',
         function ($scope, $stateParams, categoryService, category) {
 
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log(category)
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
-            console.log("category")
             $scope.catId = $stateParams.id;
 
             $scope.category = category;

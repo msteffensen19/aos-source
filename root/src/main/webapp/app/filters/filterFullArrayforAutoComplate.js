@@ -7,7 +7,6 @@ define(['./module'], function (controllers) {
     controllers.filter('filterFullArrayforAutoComplate', function(){
         return function(_a, autoCompleteResult, categoryFilter, limit) {
 
-
             if(autoCompleteResult[0] == undefined){
                 return _a;
             }

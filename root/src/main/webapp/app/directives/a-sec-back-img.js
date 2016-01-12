@@ -13,7 +13,7 @@ define(['./module'], function (directives) {
                 restrict: 'A',
                 link: function(s, e, a, ctrl){
                     //  server.catalog.getKey() +
-                    e.css('background-image', "url('fetchImage?image_id=" + a.aSecBackImg + "')")
+                    e.css('background-image', "url('catalog/fetchImage?image_id=" + a.aSecBackImg + "')")
                 }
             }
         });
