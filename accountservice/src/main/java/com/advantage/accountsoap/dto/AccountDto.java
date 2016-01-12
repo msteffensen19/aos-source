@@ -14,7 +14,9 @@ import javax.xml.bind.annotation.*;
                 "loginName",
                 "accountType",
                 "paymentMethod",
-                "country",
+                "countryId",
+                "countryName",
+                "countryIsoName",
                 "stateProvince",
                 "cityName",
                 "address",
@@ -41,7 +43,11 @@ public class AccountDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private Integer paymentMethod;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private Integer country;
+    private Long countryId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String countryName;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String countryIsoName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String stateProvince;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -72,7 +78,9 @@ public class AccountDto {
                       String loginName,
                       Integer accountType,
                       Integer paymentMethod,
-                      Integer country,
+                      Long countryId,
+                      String countryName,
+                      String countryIsoName,
                       String stateProvince,
                       String cityName,
                       String address,
@@ -89,7 +97,9 @@ public class AccountDto {
         this.loginName = loginName;
         this.accountType = accountType;
         this.paymentMethod = paymentMethod;
-        this.country = country;
+        this.countryId = countryId;
+        this.countryName = countryName;
+        this.countryIsoName = countryIsoName;
         this.stateProvince = stateProvince;
         this.cityName = cityName;
         this.address = address;
@@ -150,12 +160,28 @@ public class AccountDto {
         this.paymentMethod = paymentMethod;
     }
 
-    public Integer getCountry() {
-        return country;
+    public Long getCountryId() {
+        return countryId;
     }
 
-    public void setCountry(Integer country) {
-        this.country = country;
+    public void setCountryId(Long countryId) {
+        this.countryId = countryId;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getCountryIsoName() {
+        return countryIsoName;
+    }
+
+    public void setCountryIsoName(String countryIsoName) {
+        this.countryIsoName = countryIsoName;
     }
 
     public String getStateProvince() {

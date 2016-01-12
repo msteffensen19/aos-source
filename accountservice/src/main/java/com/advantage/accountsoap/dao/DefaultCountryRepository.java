@@ -120,10 +120,10 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
      * @return {@code int} 1 when successful.
      */
     @Override
-    public int deleteCountriesByIds(Collection<Integer> countryIds) {
+    public int deleteCountriesByIds(Collection<Long> countryIds) {
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(countryIds, "countries IDs");
 
-        for (Integer countryId : countryIds) {
+        for (Long countryId : countryIds) {
             final String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Country.class,
                     Country.FIELD_ID,
                     countryId);
@@ -149,11 +149,11 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
                 "countries names");
 
         final int namesCount = names.size();
-        final Collection<Integer> countryIds = new ArrayList<Integer>(namesCount);
+        final Collection<Long> countryIds = new ArrayList<>(namesCount);
 
         for (final String name : names) {
 
-            final Integer countryId = this.getCountryIdByName(name);
+            final long countryId = this.getCountryIdByName(name);
             countryIds.add(countryId);
         }
 
@@ -168,7 +168,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
      * @return {@link Integer} value of {@code countryId}.
      */
     @Override
-    public Integer getCountryIdByName(String countryName) {
+    public long getCountryIdByName(String countryName) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(countryName, "country name");
 
         final Query query = entityManager.createNamedQuery(Country.QUERY_GET_BY_COUNTRY_NAME);
@@ -179,7 +179,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
 
         List<Country> countries = query.getResultList();
 
-        final Integer countryId;
+        final long countryId;
 
         if (countries.isEmpty()) {
 
@@ -243,5 +243,20 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
                 .getResultList();
 
         return countries.isEmpty() ? null : countries;
+    }
+
+    @Override
+    public int delete(Country[] entities) {
+        return 0;
+    }
+
+    @Override
+    public List getAll() {
+        return null;
+    }
+
+    @Override
+    public Country get(Long entityId) {
+        return entityManager.find(Country.class, entityId);
     }
 }

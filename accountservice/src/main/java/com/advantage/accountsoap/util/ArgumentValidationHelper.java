@@ -244,7 +244,7 @@ public abstract class ArgumentValidationHelper {
      *                                  Created by Binyamin Regev on 03/12/2015 - not to change method {@code validateNumberArgumentIsPositive}
      *                                  which is already in use.
      */
-    public static void validateNumberArgumentIsPositiveOrZero(final int argument,
+    public static void validateNumberArgumentIsPositiveOrZero(final long argument,
                                                               final String argumentInformativeName) {
 
         ArgumentValidationHelper.validateArgumentInformativeNameArgument(argumentInformativeName);
