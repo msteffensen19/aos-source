@@ -20,6 +20,21 @@
     padding: 6% 5% 4.55% 5%;
 }
 
+.noPromotedProduct{
+    position: fixed;
+    background-color: white;
+    z-index: 10;
+    width: 100%;
+}
+
+.noPromotedProductDiv{
+    margin-top: 100px;
+}
+
+.categoryDataPadding{
+    padding: 6% 5% 4.55% 5%;
+}
+
 
 .categoryData h1{
     font-size: 40px;
