@@ -7,18 +7,19 @@ import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Endpoint
 public class AccountserviceEndpoint {
     @Autowired
     private AccountService accountService;
+
 
     @Autowired
     private CountryService countryService;
@@ -36,7 +37,9 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
-    public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId) {
+    //TODO-EVG maybe work. Debug it.
+    public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId, HttpServletRequest request) {
+
         Account account = accountService.getById(accountId.getId());
         if(account == null) return null;
         AccountDto response = new AccountDto(account.getId(),

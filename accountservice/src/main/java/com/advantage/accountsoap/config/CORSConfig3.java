@@ -25,6 +25,9 @@ public class CORSConfig3 extends OncePerRequestFilter {
                     request.getHeader("Access-Control-Request-Headers"));
         }*/
 
+        //TODO-EVG maybe work. Debug it.
+        response.setHeader("TMP_EVG_Authorization", request.getHeader("Authorization"));
+
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Request-Method", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
