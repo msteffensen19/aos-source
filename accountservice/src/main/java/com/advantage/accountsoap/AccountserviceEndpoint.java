@@ -72,7 +72,7 @@ public class AccountserviceEndpoint {
                 account.getEmail());
 
         if (response.isSuccess()) {
-            //todo set session
+            //TODO-ALEX set session
             /*HttpSession session = request.getSession();
             session.setAttribute(Constants.UserSession.TOKEN, response.getToken());
             session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());

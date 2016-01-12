@@ -225,7 +225,8 @@ define(['./module'], function (controllers) {
             };
 
             $scope.checkCart = function(){
-                if($scope.cart.productsInCart.length == 0)
+
+                if($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0)
                 {
                     switch($location.$$path) {
                         case '/shoppingCart':
@@ -260,7 +261,6 @@ define(['./module'], function (controllers) {
                  console.log($state)
                  console.log('cart')
                  console.log($scope.cart)
-
 
              });
 

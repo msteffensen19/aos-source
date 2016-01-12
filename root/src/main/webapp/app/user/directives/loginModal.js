@@ -77,6 +77,8 @@ define(['./module'], function (directives) {
                                 wellcome();
                             }
                             else {
+                                $scope.wrongFields = response;
+                                $timeout(function () { $scope.wrongFields = null; }, 4000);
                                 wrongFields();
                             }
 
