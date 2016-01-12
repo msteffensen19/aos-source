@@ -72,6 +72,7 @@ define(['./module'], function (services) {
                         "setransactionType": "SHIPPINGCOST"
                     };
                     console.log(JSON.stringify(paramsToPass))
+                    console.log(paramsToPass)
                     $http({
                         method: "post",
                         url: server.order.getShippingCost(),
