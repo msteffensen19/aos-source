@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dao;
+package com.advantage.common.dao;
 
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -90,6 +92,9 @@ public class Account {
     @Column(name = "USER_TYPE")
     private Integer accountType;        //  by enum AccountType
 
+    @Column
+    private Integer PaymentMethod;        //  by enum  PaymentMethodEnum
+
     @Column(name = FIELD_COUNTRY)
     private Integer country;                //  by Country
 
@@ -120,6 +125,9 @@ public class Account {
 
     @Column
     private long internalLastSuccesssulLogin;   //  Managed Internally
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<ShippingAddress> addresses = new HashSet<>();
 
     public Account() {
 
@@ -217,6 +225,14 @@ public class Account {
         this.accountType = accountType;
     }
 
+    public Integer getPaymentMethod() {
+        return PaymentMethod;
+    }
+
+    public void setPaymentMethod(Integer paymentMethod) {
+        PaymentMethod = paymentMethod;
+    }
+
     public Integer getCountry() {
         return country;
     }
@@ -307,6 +323,14 @@ public class Account {
 
     public void setInternalLastSuccesssulLogin(long internalLastSuccesssulLogin) {
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
+    }
+
+    public Set<ShippingAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<ShippingAddress> addresses) {
+        this.addresses = addresses;
     }
 
     /**
