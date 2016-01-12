@@ -103,8 +103,8 @@ define(['./module'], function (controllers) {
 
             /* User section */
 
-            $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
-            //$scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
+            //$scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
+            $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
 
             $scope.accountSection = function(){
                 console.log("user account section! --- Method not done yet!");

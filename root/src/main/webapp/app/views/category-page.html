@@ -21,7 +21,9 @@
                 <a class="select "> {{categoryName}} </a>
             </nav>
         </div>
-        <h3 class="categoryTitle roboto-regular sticky" data-ng-class="{ noPromotedProduct : categoryData.promotedProduct == null }" >{{categoryName}}</h3>
+        <h3 class="categoryTitle roboto-regular sticky"
+            data-ng-show="categoryData.promotedProduct == null"
+            data-ng-class="{ noPromotedProduct : categoryData.promotedProduct == null }" >{{categoryName}}</h3>
         <div class="noPromotedProductDiv">
             <div ng-switch-when="true">
                 <label style="display: block; text-align: center; color:black; font-size: 100px">
@@ -31,7 +33,6 @@
             <div ng-switch-when="false">
                 <div class="category-type-products" category-type-products-drtv  category="categoryData"></div>
             </div>
-
             <social-media-drtv></social-media-drtv>
         </div>
 
