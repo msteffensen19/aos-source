@@ -17,7 +17,7 @@ public class CountryStatusResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     boolean success;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    Integer countryId;        //  -1 = Invalid country name
+    Long countryId;        //  -1 = Invalid country name
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     String reason;
 
@@ -31,7 +31,7 @@ public class CountryStatusResponse {
      * @param reason
      * @param countryId
      */
-    public CountryStatusResponse(boolean success, String reason, Integer countryId) {
+    public CountryStatusResponse(boolean success, String reason, Long countryId) {
         this.setSuccess(success);
         this.setCountryId(countryId);
         this.setReason(reason);
@@ -60,7 +60,7 @@ public class CountryStatusResponse {
      *
      * @return
      */
-    public Integer getCountryId() {
+    public Long getCountryId() {
         return countryId;
     }
 
@@ -69,7 +69,7 @@ public class CountryStatusResponse {
      *
      * @param countryId
      */
-    public void setCountryId(Integer countryId) {
+    public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
 

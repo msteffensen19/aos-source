@@ -12,7 +12,11 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import org.springframework.ws.transport.context.TransportContext;
+import org.springframework.ws.transport.context.TransportContextHolder;
+import org.springframework.ws.transport.http.HttpServletConnection;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Endpoint
@@ -48,7 +52,9 @@ public class AccountserviceEndpoint {
                 account.getLoginName(),
                 account.getAccountType(),
                 account.getPaymentMethod(),
-                account.getCountry(),
+                account.getCountry().getId(),
+                account.getCountry().getName(),
+                account.getCountry().getIsoName(),
                 account.getStateProvince(),
                 account.getCityName(),
                 account.getAddress(),
@@ -200,4 +206,13 @@ public class AccountserviceEndpoint {
         return accountService.changePassword(request.getAccountId(), request.getNewPassword());
     }
 
+    /*protected HttpServletRequest getHttpServletRequest() {
+        TransportContext ctx = TransportContextHolder.getTransportContext();
+        return ( null != ctx ) ? ((HttpServletConnection) ctx.getConnection()).getHttpServletRequest() : null;
+    }
+
+    protected String getHttpHeaderValue( final String headerName ) {
+        HttpServletRequest httpServletRequest = getHttpServletRequest();
+        return ( null != httpServletRequest ) ? httpServletRequest.getHeader( headerName ) : null;
+    }*/
 }

@@ -20,8 +20,8 @@ public class AccountService {
     public AccountRepository accountRepository;
 
     @Transactional
-    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Integer country, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final String allowOffersPromotion) {
-        return accountRepository.create(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final String allowOffersPromotion) {
+        return accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
     @Transactional(readOnly = true)
@@ -53,14 +53,16 @@ public class AccountService {
                     account.getLoginName(),
                     account.getAccountType(),
                     account.getPaymentMethod(),
-                    account.getCountry(),
+                    account.getCountry().getId(),
+                    account.getCountry().getName(),
+                    account.getCountry().getIsoName(),
                     account.getStateProvince(),
                     account.getCityName(),
                     account.getAddress(),
                     account.getZipcode(),
                     account.getPhoneNumber(),
                     account.getEmail(),
-                    account.getAllowOffersPromotion(),account.getInternalUnsuccessfulLoginAttempts(),
+                    account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                     account.getInternalUserBlockedFromLoginUntil(),
                     account.getInternalLastSuccesssulLogin()));
         }
@@ -78,8 +80,8 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
-        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
+        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
     @Transactional
