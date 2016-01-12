@@ -2,8 +2,6 @@
  * Created by correnti on 27/12/2015.
  */
 
-
-
 define(['./module'], function (directives) {
     'use strict';
     directives
