@@ -1,6 +1,6 @@
 
-<div id="searchSection" ng-click="closeSearchSection()">
-    <div id="input" ng-click="$event.stopPropagation()">
+<div id="searchSection" data-ng-click="closeSearchSection()">
+    <div id="input" data-ng-click="$event.stopPropagation()">
         <div>
             <img src="css/images/Sesrch.jpg"  />
             <span class="animPlaceholderUp">
@@ -11,20 +11,16 @@
                        data-ng-model="autoCompleteValue"
                        data-ng-keyup="runAutocomplete()"
                        data-ng-blur="closeSearchSection()" >
-
-
-
                 <img src="css/images/Close.png" data-ng-click="closeSearchSection()"  />
             </span>
         </div>
     </div>
-    <div id="output" ng-show="autoCompleteResult.length > 0">
-        <div class="searchPopUp" ng-click="$event.stopPropagation()">
+    <div id="output" data-ng-show="autoCompleteResult.length > 0" data-ng-mouseleave="searchByCategoryId(null)" >
+        <div class="searchPopUp" data-ng-click="$event.stopPropagation()" >
             <div class="categories">
                 <h3 class="roboto-medium" translate="CATEGORIES"></h3>
-                <label class="roboto-light" ng-repeat="result in autoCompleteResult"
-                       ng-mouseover="searchByCategoryId(result.categoryId)"
-                       ng-mouseout="searchByCategoryId(null)">
+                <label class="roboto-light" data-ng-repeat="result in autoCompleteResult"
+                       data-ng-mouseenter="searchByCategoryId(result.categoryId)" >
                     {{result.categoryName | lowercase}}
                 </label>
             </div>
@@ -34,7 +30,7 @@
                 <a class="product" href="#/product/{{product.productId}}"
                    data-ng-click="closeSearchSection()"
                    data-ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult:categoryFilter">
-                    <img ng-src="/fetchImage?image_id={{product.imageUrl}}" />
+                    <img data-ng-src="/fetchImage?image_id={{product.imageUrl}}" />
                     <p class="roboto-regular">{{product.productName | uppercase}}</p>
                     <span>{{product.price | currency:'$'}}</span>
                 </a>
