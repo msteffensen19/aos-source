@@ -58,7 +58,7 @@ public class Url_resources {
         URL url = null;
 
         try {
-            String scheme = Constants.URI_SCHEME;
+            String scheme = Constants.URI_SCHEMA;
             String host = environment.getProperty(serviceName.toLowerCase() + ".service.url.host");
             int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".service.url.port"));
             String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".service.url.suffix") + "/";
@@ -79,13 +79,13 @@ public class Url_resources {
         URL urlWithWsdl = null;
 
         try {
-            String scheme = Constants.URI_SCHEME;
+            String schema = Constants.URI_SCHEMA;
             String host = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.host");
             int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.port"));
-            String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.suffix");
-            String wsdl = '/' + environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.wsdl");
-
-            urlWithWsdl = new URL(new URL(scheme, host, port, suffix), wsdl);
+            String suffix = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.suffix");
+            String wsdl = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.wsdl");
+            if (! wsdl.contains("/")) { suffix += '/'; }
+            urlWithWsdl = new URL(new URL(schema, host, port, suffix), suffix + wsdl);
 
         } catch (Throwable e) {
             System.err.println("Config file wrong");
@@ -157,7 +157,7 @@ public class Url_resources {
     private URL getUrlPrefix(String serviceName) {
         URL url = null;
         try {
-            String scheme = Constants.URI_SCHEME;
+            String scheme = Constants.URI_SCHEMA;
             String host = environment.getProperty(serviceName + ".service.url.host");
             int port = Integer.parseInt(environment.getProperty(serviceName + ".service.url.port"));
             String suffix = '/' + environment.getProperty(serviceName + ".service.url.suffix") + "/";

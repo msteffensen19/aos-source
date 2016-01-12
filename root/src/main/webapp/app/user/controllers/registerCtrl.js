@@ -39,7 +39,7 @@ define(['./module'], function (controllers) {
                         s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
                     $timeout(function (success) {
                         s.registerAnswer = {message: '', class: 'invalid'}
-                        if (success) {
+                        if (success == 'true') {
                             window.history.back();
                         }
                     }, 4000, response.SUCCESS)
@@ -48,7 +48,7 @@ define(['./module'], function (controllers) {
 
             $(document).on("keydown", function (event) {
                 if (event.keyCode == 13) {
-                    alert()
+                    console.log("keyCode 13 pressed")
                     s.register();
                     return false;
                 }

@@ -47,9 +47,6 @@ public class OrderPaymentInformation {
     @JsonProperty("Transaction.AccountNumber")
     private String accountNumber;
 
-    @JsonProperty("Transaction.Amount")
-    private double amount;
-
     @JsonProperty("Transaction.Currency")
     private String currency;
 
@@ -79,21 +76,19 @@ public class OrderPaymentInformation {
      * @param customerPhone
      * @param transactionDate
      * @param accountNumber
-     * @param amount
      * @param currency
      * @param cardNumber
      * @param expirationDate
      * @param customerName
      * @param cvvNumber
      */
-    public OrderPaymentInformation(String paymentMethod, String transactionType, long referenceNumber, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String cardNumber, String expirationDate, String customerName, String cvvNumber) {
+    public OrderPaymentInformation(String paymentMethod, String transactionType, long referenceNumber, String customerPhone, String transactionDate, String accountNumber, String currency, String cardNumber, String expirationDate, String customerName, String cvvNumber) {
         this.paymentMethod = paymentMethod;
         this.transactionType = transactionType;
         this.referenceNumber = referenceNumber;
         this.customerPhone = customerPhone;
         this.transactionDate = transactionDate;
         this.accountNumber = accountNumber;
-        this.amount = amount;
         this.currency = currency;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
@@ -111,19 +106,17 @@ public class OrderPaymentInformation {
      * @param customerPhone
      * @param transactionDate
      * @param accountNumber
-     * @param amount
      * @param currency
      * @param username
      * @param password
      */
-    public OrderPaymentInformation(String paymentMethod, String transactionType, long referenceNumber, String customerPhone, String transactionDate, String accountNumber, double amount, String currency, String username, String password) {
+    public OrderPaymentInformation(String paymentMethod, String transactionType, long referenceNumber, String customerPhone, String transactionDate, String accountNumber, String currency, String username, String password) {
         this.paymentMethod = paymentMethod;
         this.transactionType = transactionType;
         this.referenceNumber = referenceNumber;
         this.customerPhone = customerPhone;
         this.transactionDate = transactionDate;
         this.accountNumber = accountNumber;
-        this.amount = amount;
         this.currency = currency;
         this.username = username;
         this.password = password;
@@ -181,14 +174,6 @@ public class OrderPaymentInformation {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public String getCurrency() {
@@ -255,7 +240,6 @@ public class OrderPaymentInformation {
         OrderPaymentInformation that = (OrderPaymentInformation) o;
 
         if (getReferenceNumber() != that.getReferenceNumber()) return false;
-        if (Double.compare(that.getAmount(), getAmount()) != 0) return false;
         if (!getPaymentMethod().equals(that.getPaymentMethod())) return false;
         if (!getTransactionType().equals(that.getTransactionType())) return false;
         if (!getCustomerPhone().equals(that.getCustomerPhone())) return false;
@@ -273,16 +257,12 @@ public class OrderPaymentInformation {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = getPaymentMethod().hashCode();
+        int result = getPaymentMethod().hashCode();
         result = 31 * result + getTransactionType().hashCode();
         result = 31 * result + (int) (getReferenceNumber() ^ (getReferenceNumber() >>> 32));
         result = 31 * result + getCustomerPhone().hashCode();
         result = 31 * result + getTransactionDate().hashCode();
         result = 31 * result + getAccountNumber().hashCode();
-        temp = Double.doubleToLongBits(getAmount());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + getCurrency().hashCode();
         result = 31 * result + getCardNumber().hashCode();
         result = 31 * result + getExpirationDate().hashCode();

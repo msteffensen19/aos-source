@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface OrderManagementRepository {
 
-    void addUserOrder(long userId, long orderNumber, long orderTimestamp,
+    void addUserOrder(long userId, long orderNumber, long orderTimestamp, double totalAmount,
                       OrderShippingInformation orderShippingInformation,
                       OrderPaymentInformation orderPaymentInformation,
                       List<OrderPurchasedProductInformation> purchasedProducts);
