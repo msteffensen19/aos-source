@@ -12,7 +12,11 @@ public interface ManagedImage {
 
     String getManagedFileName();
 
+    String getManagedMobileFileName();
+
     String getOriginalFileName();
 
     byte[] getContent() throws IOException;
+
+    byte[] getMobileContent() throws IOException;
 }
