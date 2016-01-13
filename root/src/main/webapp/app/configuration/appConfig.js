@@ -7,6 +7,7 @@ define([],function(){
     function config($translateProvider, $stateProvider, $urlRouterProvider) {
 
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
+
         $translateProvider.translations('en', english);
 
         $urlRouterProvider.otherwise("/#");
