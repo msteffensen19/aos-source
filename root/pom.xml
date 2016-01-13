@@ -129,46 +129,46 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--run sql-->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>sql-maven-plugin</artifactId>
-                        <version>1.5</version>
-                        <dependencies>
-                            <!-- specify the dependent jdbc driver here -->
-                            <dependency>
-                                <groupId>org.postgresql</groupId>
-                                <artifactId>postgresql</artifactId>
-                                <version>${postgres.driver.version}</version>
-                            </dependency>
-                        </dependencies>
-                        <executions>
-                            <execution>
-                                <id>create-db</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <configuration>
-                                    <!--suppress MavenModelInspection -->
-                                    <driver>${hibernate.db.driver_classname}</driver>
-                                    <!--suppress MavenModelInspection -->
-                                    <url>
-                                        ${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}/postgres
-                                    </url>
-                                    <!--suppress MavenModelInspection -->
-                                    <username>${account.hibernate.db.login}</username>
-                                    <!--suppress MavenModelInspection -->
-                                    <password>${account.hibernate.db.password}</password>
-                                    <autocommit>true</autocommit>
-                                    <sqlCommand>create database "${account.hibernate.db.name}"</sqlCommand>
-                                    <!-- ignore error when database already exists -->
-                                    <onError>continue</onError>
-                                </configuration>
-                            </execution>
+                    <!--&lt;!&ndash;run sql&ndash;&gt;-->
+                    <!--<plugin>-->
+                    <!--<groupId>org.codehaus.mojo</groupId>-->
+                    <!--<artifactId>sql-maven-plugin</artifactId>-->
+                    <!--<version>1.5</version>-->
+                    <!--<dependencies>-->
+                    <!--&lt;!&ndash; specify the dependent jdbc driver here &ndash;&gt;-->
+                    <!--<dependency>-->
+                    <!--<groupId>org.postgresql</groupId>-->
+                    <!--<artifactId>postgresql</artifactId>-->
+                    <!--<version>${postgres.driver.version}</version>-->
+                    <!--</dependency>-->
+                    <!--</dependencies>-->
+                    <!--<executions>-->
+                    <!--<execution>-->
+                    <!--<id>create-db</id>-->
+                    <!--<phase>process-resources</phase>-->
+                    <!--<goals>-->
+                    <!--<goal>execute</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                    <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                    <!--<driver>${hibernate.db.driver_classname}</driver>-->
+                    <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                    <!--<url>-->
+                    <!--${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}/postgres-->
+                    <!--</url>-->
+                    <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                    <!--<username>${account.hibernate.db.login}</username>-->
+                    <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                    <!--<password>${account.hibernate.db.password}</password>-->
+                    <!--<autocommit>true</autocommit>-->
+                    <!--<sqlCommand>create database "${account.hibernate.db.name}"</sqlCommand>-->
+                    <!--&lt;!&ndash; ignore error when database already exists &ndash;&gt;-->
+                    <!--<onError>continue</onError>-->
+                    <!--</configuration>-->
+                    <!--</execution>-->
 
-                        </executions>
-                    </plugin>
+                    <!--</executions>-->
+                    <!--</plugin>-->
 
                 </plugins>
             </build>
@@ -238,6 +238,10 @@
                                 <resource>
                                     <directory>${project.build.directory}/generated-resources</directory>
                                     <filtering>true</filtering>
+                                    <includes>
+                                        <include>services.properties</include>
+                                        <include>global.properties</include>
+                                    </includes>
                                 </resource>
                             </resources>
                         </configuration>
