@@ -281,7 +281,7 @@ public class OrderController {
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "Purchase new order")
     public ResponseEntity<OrderPurchaseResponse> doPurchase(@RequestBody OrderPurchaseRequest purchaseRequest,
-                                                            @PathVariable("user_id") long userId) {
+                                                            @PathVariable("userId") long userId) {
 
         System.out.println("OrderController -> doPurchase(): userId=" + userId);
 

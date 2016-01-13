@@ -1,6 +1,6 @@
 package com.advantage.order.store.config;
 
-import com.advantage.order.store.user.dto.AppUserConfigurationResponseStatus;
+import com.advantage.common.dto.AppUserConfigurationResponseStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;

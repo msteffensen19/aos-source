@@ -88,7 +88,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     public int fillCountryTable(final String csvFilePath) {
 
         //Country country;
-        String cvsSplitBy = ",";    // use comma as separator
+        String csvSplitBy = ",";    // use comma as separator
 
         List<String> countries = FileSystemHelper.readFileCsv("/Users/regevb/Downloads/countries_20150630.csv");
         //List<String> countries = Country.readFileCsv("/Users/regevb/Downloads/countries_20150630.csv");
@@ -98,7 +98,7 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
         }
 
         for (String str : countries) {
-            String[] substrings = str.split(cvsSplitBy);
+            String[] substrings = str.split(csvSplitBy);
 
             System.out.println("Country: " + substrings[1] +
                     Constants.SPACE + substrings[2] +
