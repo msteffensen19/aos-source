@@ -10,8 +10,77 @@ define(['./module'], function (services) {
 
             return ({
                 getAccountById: getAccountById,
-                getShippingCost: getShippingCost
-            });
+                getShippingCost: getShippingCost,
+                SafePay: SafePay,
+                masterCredit: masterCredit,
+                manualPayment : manualPayment
+        });
+
+
+            function SafePay(user, accountNumber, card, shipping, cart) {
+                var defer = $q.defer();
+
+
+                var purchasedProducts = [];
+                angular.forEach(cart.productsInCart, function(product){
+                    purchasedProducts.push({
+                            "hexColor": product.color.code,
+                            "productId": product.productId,
+                            "quantity": product.quantity
+                        });
+                })
+
+                var paramsToPass = {
+                    "orderPaymentInformation": {
+                        "Transaction.AccountNumber": accountNumber,
+                        "Transaction.Currency": shipping.currency,
+                        "Transaction.CustomerPhone": user.phoneNumber,
+                        "Transaction.MasterCredit.CVVNumber": card.cvv,
+                        "Transaction.MasterCredit.CardNumber": card.number,
+                        "Transaction.MasterCredit.CustomerName": card.name,
+                        "Transaction.MasterCredit.ExpirationDate": card.expirationDate,
+                        "Transaction.PaymentMethod": "string",
+                        "Transaction.ReferenceNumber": 0,
+                        "Transaction.SafePay.Password": "string",
+                        "Transaction.SafePay.UserName": user.loginName,
+                        "Transaction.TransactionDate": shipping.transactionDate,
+                        "Transaction.Type": "string"
+                    },
+                    "orderShippingInformation": {
+                        "Shipping.Address.Address": user.address,
+                        "Shipping.Address.City": user.cityName,
+                        "Shipping.Address.CountryCode": user.countryId,
+                        "Shipping.Address.CustomerName": user.firstName + " " + user.lastName,
+                        "Shipping.Address.CustomerPhone": user.phoneNumber,
+                        "Shipping.Address.PostalCode": user.zipcode,
+                        "Shipping.Address.State": user.stateProvince,
+                        "Shipping.Cost":  $filter('productsCartCount')(cart),
+                        "Shipping.NumberOfProducts": $filter('productsCartSum')(cart),
+                        "Shipping.TrackingNumber": 0
+                    },
+                    "purchasedProducts": purchasedProducts,
+                }
+                $http({
+                    method: "post",
+                    url: server.order.SafePay(),
+                    data: paramsToPass
+                }).
+                then(function (shippingCost){
+                    defer.resolve(shippingCost.data.amount)
+                }, function (err){
+                    console.log(err); defer.reject("probl.")
+                })
+                return defer.promise;
+            }
+
+            function masterCredit(){
+
+            }
+
+            function manualPayment(){
+
+            }
+
 
             function getAccountById() {
 
@@ -24,11 +93,13 @@ define(['./module'], function (services) {
                             accountId: user.response.userId
                         })
                         .then(function (response) {
+                            console.log(response)
                                 var user = {
                                     "id": response.ID,
                                     "lastName": response.LASTNAME,
                                     "firstName": response.FIRSTNAME,
                                     "loginName": response.LOGINNAME,
+                                    "countryId": response.COUNTRYID,
                                     "country": response.COUNTRYISONAME,
                                     "stateProvince": response.STATEPROVINCE,
                                     "cityName": response.CITYNAME,
@@ -71,17 +142,15 @@ define(['./module'], function (services) {
                         "senumberOfProducts": $filter('productsCartCount')(cart),
                         "setransactionType": "SHIPPINGCOST"
                     };
-                    console.log(JSON.stringify(paramsToPass))
-                    console.log(paramsToPass)
                     $http({
                         method: "post",
                         url: server.order.getShippingCost(),
                         data: paramsToPass
-                    }).then(function (shippingCost){
-                        defer.resolve(shippingCost)
+                    }).
+                    then(function (shippingCost){
+                        defer.resolve(shippingCost.data)
                     }, function (err){
-                        console.log(err)
-                        defer.reject("probl.")
+                        console.log(err); defer.reject("probl.")
                     })
                 })
 

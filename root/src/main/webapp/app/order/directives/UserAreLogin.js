@@ -7,7 +7,7 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userAreLogin', ['$templateCache', function($templateCache){
+    directives.directive('userAreLogin', ['$templateCache', 'orderService', function($templateCache, orderService){
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
@@ -48,16 +48,12 @@ define(['./module'], function (directives) {
                 }
 
                 s.paymentMethod_edit_method;
-                s.paymentMethod_edit = function(cart) {
+                s.paymentMethod_edit = function() {
                     s.noCards = true;
                 }
 
                 s.orderNumber;
                 s.trackingNumber;
-
-                s.payNow_SafePay = function(){
-                    s.paymentEnd = true;
-                }
 
             },
         }
