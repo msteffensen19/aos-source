@@ -4,12 +4,13 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('orderService',['$rootScope', '$q', 'mini_soap',
+    services.service('orderService',['$rootScope', '$q', 'mini_soap', '$http', '$filter', 'productsCartService',
 
-        function ($rootScope, $q, mini_soap) {
+        function ($rootScope, $q, mini_soap, $http, $filter, productsCartService) {
 
             return ({
                 getAccountById: getAccountById,
+                getShippingCost: getShippingCost
             });
 
             function getAccountById() {
@@ -49,6 +50,43 @@ define(['./module'], function (services) {
 
                 return defer.promise;
             }
+
+            function getShippingCost(user) {
+
+                var defer = $q.defer();
+
+                productsCartService.getCart().then(function(cart){
+
+                    var paramsToPass = {
+                        "seaddress": {
+                            "addressLine1": user.address,
+                            "addressLine2": "",
+                            "city": user.cityName,
+                            "country": user.country,
+                            "postalCode": user.zipcode,
+                            "state": user.stateProvince
+                        },
+                        "secustomerName": user.firstName + " " + user.lastName ,
+                        "secustomerPhone": user.phoneNumber,
+                        "senumberOfProducts": $filter('productsCartCount')(cart),
+                        "setransactionType": "SHIPPINGCOST"
+                    };
+                    console.log(JSON.stringify(paramsToPass))
+                    $http({
+                        method: "post",
+                        url: server.order.getShippingCost(),
+                        data: paramsToPass
+                    }).then(function (shippingCost){
+                        defer.resolve(shippingCost)
+                    }, function (err){
+                        console.log(err)
+                        defer.reject("probl.")
+                    })
+                })
+
+                return defer.promise;
+            }
+
 
             //function getShippingCost() {
             //

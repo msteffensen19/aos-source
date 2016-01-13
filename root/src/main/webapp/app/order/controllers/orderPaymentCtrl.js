@@ -9,16 +9,17 @@ define(['./module'], function (controllers) {
         function (s, resolveParams, orderService) {
 
             s.checkCart();
+
             s.paymentEnd = false;
 
-            console.log(resolveParams.user)
-            console.log(s)
+            console.log(resolveParams)
 
             s.user = resolveParams.user
             s.shippingCost = resolveParams.shippingCost;
             s.itemsPaid = s.cart ? s.cart.productsInCart.length : 0;
 
             s.CardNumber = ["6789", "0785", "0785", "0785"];
+
             var d = new Date();
             s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
@@ -26,14 +27,22 @@ define(['./module'], function (controllers) {
                 s.paymentEnd = true;
             }
 
-
             s.$watch("userCookie.response", function(n, o){
                 if(n + "" != "undefined"){
                     orderService.getAccountById().
                     then(function (user) {
-                        s.shippingCost = 10;
-                        l(user)
-                        s.user = user
+                        if(user)
+                        {
+                            orderService.getShippingCost(user).
+                            then(function (shippingCost) {
+                                s.shippingCost = shippingCost;
+                                s.loginUser = user
+                            });
+                        }
+                        else {
+                            s.shippingCost = null;
+                            s.loginUser = null;
+                        }
                     });
                 }
             })

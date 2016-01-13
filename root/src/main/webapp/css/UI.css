@@ -337,6 +337,10 @@ button:hover {
     background-color: #2a2a2a;
 }
 
+a{
+    text-decoration: none;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
     display: none !important;
 }
