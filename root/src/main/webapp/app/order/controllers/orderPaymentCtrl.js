@@ -27,28 +27,6 @@ define(['./module'], function (controllers) {
             var d = new Date();
             s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
-            s.payNow_SafePay = function(){
-               orderService.payNow_SafePay(
-                    s.user,
-                    accountNumber,
-                    s.shippingCost,
-                    s.cart,
-                    itemsCount
-
-                ).then(function(res){
-                    if(res)
-                    {
-                        s.paymentEnd = true;
-                        return;
-                    }
-                    s.paymentEnd = false;
-                });
-            }
-
-            s.payNow_masterCredit = function(){
-                s.paymentEnd = true;
-            }
-
             s.$watch("userCookie.response", function(n){
                 if(n + "" != "undefined"){
                     orderService.getAccountById().

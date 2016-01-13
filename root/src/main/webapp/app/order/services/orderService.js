@@ -17,7 +17,7 @@ define(['./module'], function (services) {
         });
 
 
-            function SafePay(user, accountNumber, card, shipping, cart) {
+            function SafePay(user, card, shipping, cart) {
                 var defer = $q.defer();
 
 

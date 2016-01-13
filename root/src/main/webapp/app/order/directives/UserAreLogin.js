@@ -30,12 +30,34 @@ define(['./module'], function (directives) {
 
                 s.card = {
                     number : '',
-                    ccv : '',
+                    cvv : '',
                     expirationDate : {
                         month : '',
                         year : ''
                     },
                     name: '',
+                }
+
+                s.payNow_SafePay = function(){
+
+                    var accountNumber = 100000;
+                    orderService.payNow_SafePay(
+                        s.user,
+                        s.card,
+                        s.shippingCost,
+                        s.cart
+                    ).then(function(res){
+                        if(res)
+                        {
+                            s.paymentEnd = true;
+                            return;
+                        }
+                        s.paymentEnd = false;
+                    });
+                }
+
+                s.payNow_masterCredit = function(){
+                    s.paymentEnd = true;
                 }
 
                 s.shippingDetails_next = function(){
