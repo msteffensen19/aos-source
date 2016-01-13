@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.*;
                 "firstName",
                 "loginName",
                 "accountType",
-                "paymentMethod",
                 "countryId",
                 "countryName",
                 "countryIsoName",
@@ -40,8 +39,6 @@ public class AccountDto {
     private String loginName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private Integer accountType;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private Integer paymentMethod;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private Long countryId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -77,7 +74,6 @@ public class AccountDto {
                       String firstName,
                       String loginName,
                       Integer accountType,
-                      Integer paymentMethod,
                       Long countryId,
                       String countryName,
                       String countryIsoName,
@@ -96,7 +92,6 @@ public class AccountDto {
         this.firstName = firstName;
         this.loginName = loginName;
         this.accountType = accountType;
-        this.paymentMethod = paymentMethod;
         this.countryId = countryId;
         this.countryName = countryName;
         this.countryIsoName = countryIsoName;
@@ -150,14 +145,6 @@ public class AccountDto {
 
     public void setAccountType(Integer accountType) {
         this.accountType = accountType;
-    }
-
-    public Integer getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(Integer paymentMethod) {
-        this.paymentMethod = paymentMethod;
     }
 
     public Long getCountryId() {

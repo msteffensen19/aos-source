@@ -1,6 +1,6 @@
 package com.advantage.accountsoap.config;
 
-import com.advantage.accountsoap.dto.AccountConfigurationResponseStatus;
+import com.advantage.accountsoap.dto.account.AccountConfigurationResponseStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;

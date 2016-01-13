@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
-import com.advantage.accountsoap.dto.AccountConfigurationResponseStatus;
+import com.advantage.accountsoap.dto.account.AccountConfigurationResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

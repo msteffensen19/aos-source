@@ -1,5 +1,7 @@
-package com.advantage.accountsoap.dao;
+package com.advantage.accountsoap.dao.impl;
 
+import com.advantage.accountsoap.dao.AbstractRepository;
+import com.advantage.accountsoap.dao.AddressRepository;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.accountsoap.services.AccountService;

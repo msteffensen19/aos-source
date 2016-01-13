@@ -1,7 +1,6 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.model.Account;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;

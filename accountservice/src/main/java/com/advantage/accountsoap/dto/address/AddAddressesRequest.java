@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.address;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 

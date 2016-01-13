@@ -2,9 +2,9 @@ package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.AddressRepository;
-import com.advantage.accountsoap.dto.AddAddressDto;
-import com.advantage.accountsoap.dto.AddressDto;
-import com.advantage.accountsoap.dto.AddressStatusResponse;
+import com.advantage.accountsoap.dto.address.AddAddressDto;
+import com.advantage.accountsoap.dto.address.AddressDto;
+import com.advantage.accountsoap.dto.address.AddressStatusResponse;
 import com.advantage.accountsoap.model.ShippingAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

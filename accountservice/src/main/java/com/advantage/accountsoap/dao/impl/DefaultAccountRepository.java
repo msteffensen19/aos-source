@@ -1,8 +1,13 @@
-package com.advantage.accountsoap.dao;
+package com.advantage.accountsoap.dao.impl;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
-import com.advantage.accountsoap.dto.AccountStatusResponse;
+import com.advantage.accountsoap.dao.AbstractRepository;
+import com.advantage.accountsoap.dao.AccountRepository;
+import com.advantage.accountsoap.dao.CountryRepository;
+import com.advantage.accountsoap.dto.account.AccountStatusResponse;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Country;
+import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.model.Account;
@@ -14,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -62,7 +67,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * @param firstName            User's first name.
      * @param loginName            User login name, compliance with AOS policy.
      * @param password             User's password, compliance with AOS policy.
-     * @param countryId              country-id of user's country of residence.
+     * @param countryId            country-id of user's country of residence.
      * @param phoneNumber          Phone number including international country-code and area code.
      * @param stateProvince        State/province/region of residence.
      * @param cityName             City-name of residence.
@@ -140,7 +145,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public AccountStatusResponse updateAccount(long accountId,Integer accountType, String lastName, String firstName,
+    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
                                                Long countryId, String phoneNumber, String stateProvince, String cityName, String address,
                                                String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
@@ -153,17 +158,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         Account account = get(accountId);
 
-        if (account == null ){
-            return new AccountStatusResponse(false,
-                    "Invalid login user-name",
-                    -1);
+        if (account == null) {
+            return new AccountStatusResponse(false, "Invalid login user-name", -1);
         }
-
-        /*if (!ValidationHelper.isValidPassword(password)) {
-            return new AccountStatusResponse(false,
-                    "Invalid password",
-                    account.getId());
-        }*/
 
         if (!validatePhoneNumberAndEmail(phoneNumber, email)) {
             return new AccountStatusResponse(false,
@@ -192,6 +189,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                 account.getId());
     }
 
+    @Override
     public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
         Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
@@ -232,7 +230,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         query.setParameter(Account.PARAM_USER_LOGIN, userLogin);
 
         @SuppressWarnings("unchecked")
-
         List<Account> accounts = query.getResultList();
 
         final Account user;
@@ -250,14 +247,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
 
-
     @Override
     public AccountStatusResponse doLogin(String loginUser, String loginPassword, String email) {
-
-//        //  Get Application User Configuration values from "AppUserConfiguration.properties" file
-//        AppUserConfiguration appUserConfiguration = new AppUserConfiguration();
-//        appUserConfiguration.getAppUserConfiguration();
-
         //  Check arguments: Not NULL and Not BLANK
         if ((loginUser == null) || (loginUser.length() == 0)) {
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
@@ -428,25 +419,38 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public AccountStatusResponse updatePaymentMethod(long accountId, int paymentMethod) {
-        Account account = get(accountId);
-        if(account == null) return  new AccountStatusResponse(false, "Account not fount", -1);
-
-        account.setPaymentMethod(paymentMethod);
-        return new AccountStatusResponse(false, "Successfully", accountId);
-    }
-
-    @Override
     public AccountStatusResponse changePassword(long accountId, String newPassword) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(newPassword, "user password");
         if (!ValidationHelper.isValidPassword(newPassword)) {
             return new AccountStatusResponse(false, "Invalid password", -1);
         }
         Account account = get(accountId);
-        if(account == null) return  new AccountStatusResponse(false, "Account not fount", -1);
+        if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
 
         account.setPassword(newPassword);
         entityManager.persist(account);
+
+        return new AccountStatusResponse(true, "Successfully", accountId);
+    }
+
+    @Override
+    public Collection<PaymentPreferences> getPaymentPreferences(long accountId) {
+        Account account = get(accountId);
+        if (account == null) return null;
+
+        return account.getPaymentPreferences();
+    }
+
+    @Override
+    public AccountStatusResponse addMasterCreditPaymentMethod(PaymentPreferencesDto preferences, long accountId) {
+        Account account = get(accountId);
+        if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
+
+        PaymentPreferences payment = new PaymentPreferences(preferences.getCardNumber(),
+                preferences.getExpirationDate(),
+                preferences.getCvvNumber(),
+                preferences.getCustomerName());
+
 
         return new AccountStatusResponse(true, "Successfully", accountId);
     }

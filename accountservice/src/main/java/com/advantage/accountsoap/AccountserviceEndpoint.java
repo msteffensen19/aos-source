@@ -1,7 +1,13 @@
 package com.advantage.accountsoap;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.dto.*;
+import com.advantage.accountsoap.dto.account.*;
+import com.advantage.accountsoap.dto.country.CountryCreateRequest;
+import com.advantage.accountsoap.dto.country.CountrySearchRequest;
+import com.advantage.accountsoap.dto.country.CountryStatusResponse;
+import com.advantage.accountsoap.dto.country.GetCountriesResponse;
+import com.advantage.accountsoap.dto.address.*;
+import com.advantage.accountsoap.dto.payment.PaymentMethodUpdateRequest;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
@@ -12,11 +18,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import org.springframework.ws.transport.context.TransportContext;
-import org.springframework.ws.transport.context.TransportContextHolder;
-import org.springframework.ws.transport.http.HttpServletConnection;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Endpoint
@@ -51,7 +53,6 @@ public class AccountserviceEndpoint {
                 account.getFirstName(),
                 account.getLoginName(),
                 account.getAccountType(),
-                account.getPaymentMethod(),
                 account.getCountry().getId(),
                 account.getCountry().getName(),
                 account.getCountry().getIsoName(),
@@ -131,11 +132,11 @@ public class AccountserviceEndpoint {
                 account.getAllowOffersPromotion());
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
+   /* @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
     @ResponsePayload
     public AccountStatusResponse updatePaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
         return accountService.updatePaymentMethod(request.getAccountId(), request.getPaymentMethod());
-    }
+    }*/
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload

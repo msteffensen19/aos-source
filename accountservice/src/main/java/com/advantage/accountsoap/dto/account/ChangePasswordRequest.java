@@ -1,4 +1,5 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.account;
+
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -7,14 +8,14 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "accountId",
-        "paymentMethod"
+        "newPassword"
 })
-@XmlRootElement(name = "PaymentMethodUpdateRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class PaymentMethodUpdateRequest {
+@XmlRootElement(name = "ChangePasswordRequest", namespace = WebServiceConfig.NAMESPACE_URI)
+public class ChangePasswordRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected long accountId;
+    private long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Integer paymentMethod;
+    private String newPassword;
 
     public long getAccountId() {
         return accountId;
@@ -24,11 +25,11 @@ public class PaymentMethodUpdateRequest {
         this.accountId = accountId;
     }
 
-    public Integer getPaymentMethod() {
-        return paymentMethod;
+    public String getNewPassword() {
+        return newPassword;
     }
 
-    public void setPaymentMethod(Integer paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.payment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,8 @@
-package com.advantage.accountsoap.dao;
+package com.advantage.accountsoap.dao.impl;
 
-import com.advantage.accountsoap.dto.CountryStatusResponse;
+import com.advantage.accountsoap.dao.AbstractRepository;
+import com.advantage.accountsoap.dao.CountryRepository;
+import com.advantage.accountsoap.dto.country.CountryStatusResponse;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;

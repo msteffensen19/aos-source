@@ -1,9 +1,7 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.address;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.model.Account;
 
-import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
