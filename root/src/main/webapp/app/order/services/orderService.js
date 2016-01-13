@@ -29,7 +29,7 @@ define(['./module'], function (services) {
                                     "lastName": response.LASTNAME,
                                     "firstName": response.FIRSTNAME,
                                     "loginName": response.LOGINNAME,
-                                    "country": response.COUNTRY,
+                                    "country": response.COUNTRYISONAME,
                                     "stateProvince": response.STATEPROVINCE,
                                     "cityName": response.CITYNAME,
                                     "address": response.ADDRESS,

@@ -34,7 +34,6 @@ define(['./module'], function (controllers) {
                         $('#scrollToTop').stop().fadeIn(300);
                         return;
                     }
-                    console.log($(window).scrollTop())
                     $('#scrollToTop').stop().fadeOut(300);
                 }
             });
