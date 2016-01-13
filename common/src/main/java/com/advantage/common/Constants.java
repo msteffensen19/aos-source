@@ -28,20 +28,15 @@ public class Constants {
     /* CATALOG Service related constants - END      */
 
     //TODO-EVG remove
-    /* ACCOUNT URI and transactions types - BEGIN   */
     @Deprecated
     public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
     public static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
-    /* ACCOUNT URI and transactions types - END     */
 
     //TODO-EVG remove
-    /* ShipEx URI and transactions types - BEGIN    */
     @Deprecated
     public static final String URI_SERVER_SHIP_EX = "http://localhost:8080/ShipEx";
     public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
-    public static final String SHIP_EX_RESPONSE_STATUS_OK = "SUCCESS";
-    /* ShipEx URI and transactions names - END      */
 
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
