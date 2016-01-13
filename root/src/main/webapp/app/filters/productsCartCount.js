@@ -11,7 +11,7 @@ define(['./module'], function (controllers) {
             if(cart)
             {
                 angular.forEach(cart.productsInCart, function(product){
-                    count += product.quantity;
+                    count += parseInt(product.quantity);
                 })
             }
             return count;

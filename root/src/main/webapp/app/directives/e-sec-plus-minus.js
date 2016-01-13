@@ -16,17 +16,34 @@ define(['./module'], function (directives) {
                 },
                 controller: ['$scope', function(s){
 
+                    var maxValue = 999;
+                    var minValue = 1;
                     var num = 1
                     var readyToCheck = true;
                     s.num = s.numAttr;
 
+                    s.incrementValue = function(){
+                        s.$apply(function(){
+                            var newVal = s.numAttr + 1
+                            num = s.num = s.numAttr = newVal;
+                        });
+                        return s.numAttr >= maxValue;
+                    }
+
+                    s.decrementValue = function(){
+                        s.$apply(function(){
+                            var newVal = s.numAttr - 1
+                            num = s.num = s.numAttr = newVal;
+                        });
+                        return s.numAttr <= minValue;
+                    }
+
                     this.saveNumber  = function($event){
+
                         if(!checkNumber($event))
-                        {
-                            return false;
-                        }
-                        if(readyToCheck)
-                        {
+                        { return false; }
+
+                        if(readyToCheck) {
                             readyToCheck = false;
                             num = s.num;
                         }
@@ -47,7 +64,7 @@ define(['./module'], function (directives) {
                             s.num = parseInt(num);
                             return false;
                         }
-                        if(s.numAttr > 999 || s.numAttr < 0 ){
+                        if(s.numAttr > maxValue || s.numAttr < minValue ){
                             s.num = parseInt(num);
                             return false;
                         }
@@ -79,11 +96,50 @@ define(['./module'], function (directives) {
                     });
 
                     e.on('keyup', function () {
-                        ctrl.updateNumber();
+                        s.$apply(function(){
+                            ctrl.updateNumber();
+                        })
                     });
-
                 }
             }
-        });
+        })
+        .directive('incrementValueAttr', function(){
+            return{
+                restrict: 'A',
+                require: '^eSecPlusMinus',
+                link: function(s, e, a, ctrl){
+
+                    e.on('click', function () {
+                        if(a.incrementValueAttr == "+"){
+
+                            if(e.hasClass("disableBtn")){ return; }
+
+                            if(s.incrementValue()){
+                                e.addClass("disableBtn")
+                                return;
+                            }
+
+                            $(e).siblings('.minus').removeClass("disableBtn")
+                            e.removeClass("disableBtn")
+
+                        }
+                        if(a.incrementValueAttr == "-"){
+
+                            if(e.hasClass("disableBtn")){ return; }
+
+                            if(s.decrementValue()){
+                                e.addClass("disableBtn")
+                                return;
+                            }
+
+                            $(e).siblings('.plus').removeClass("disableBtn")
+                            e.removeClass("disableBtn")
+                        }
+                    });
+                }
+            }
+        })
+
+    ;
 });
 
