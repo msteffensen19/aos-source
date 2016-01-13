@@ -136,17 +136,18 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public AccountStatusResponse updateAccount(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
+    public AccountStatusResponse updateAccount(long accountId,Integer accountType, String lastName, String firstName,Integer country,
+                                               String phoneNumber, String stateProvince, String cityName, String address,
+                                               String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(country, "country id");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
         //  Validate String Arguments - Mandatory columns
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
 
-        Account account = getAppUserByLogin(loginName);
+        Account account = get(accountId);
 
         if (account == null ){
             return new AccountStatusResponse(false,
@@ -154,11 +155,11 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     -1);
         }
 
-        if (!ValidationHelper.isValidPassword(password)) {
+        /*if (!ValidationHelper.isValidPassword(password)) {
             return new AccountStatusResponse(false,
                     "Invalid password",
                     account.getId());
-        }
+        }*/
 
         if (!validatePhoneNumberAndEmail(phoneNumber, email)) {
             return new AccountStatusResponse(false,
@@ -169,7 +170,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         account.setAccountType(accountType);
         account.setLastName(lastName);
         account.setFirstName(firstName);
-        account.setLastName(password);
         account.setCountry(country);
         account.setPhoneNumber(phoneNumber);
         account.setStateProvince(stateProvince);
@@ -196,13 +196,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     @Override
     public int deleteAppUser(Account account) {
-        System.out.println("int deleteAppUser(Account accountsoap) - Strat");
-
         ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
         Long userId = account.getId();
-
-        System.out.println("int deleteAppUser(Account accountsoap) - Building HQL");
         String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Account.class,
                 Account.FIELD_ID,
                 userId);
@@ -401,9 +397,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * @return Random {@link UUID} string.
      */
     private Token getToken(long accountId, String loginName, AccountType accountType) {
-        Token token = new TokenJWT(accountId, loginName, accountType);
-
-        return token;
+        return new TokenJWT(accountId, loginName, accountType);
     }
 
     @Override
@@ -423,23 +417,31 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public Account get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
-        System.out.println("DefaultAppUserRepository.get(Long) -> entityId = " + entityId);
 
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
+        return entityManager.find(Account.class, entityId);
+    }
 
-        Query query = entityManager.createQuery(hql);
+    @Override
+    public AccountStatusResponse updatePaymentMethod(long accountId, int paymentMethod) {
+        Account account = get(accountId);
+        if(account == null) return  new AccountStatusResponse(false, "Account not fount", -1);
 
-        Account account = null;
-        try {
-            account = (Account) query.getSingleResult();
-        } catch (NoResultException ex) {
-            //  return null ==> No registered user found for userId.
-            //ex.printStackTrace();
-        } catch (Exception ex) {
-            //  another exception was thrown
-            ex.printStackTrace();
+        account.setPaymentMethod(paymentMethod);
+        return new AccountStatusResponse(false, "Successfully", accountId);
+    }
+
+    @Override
+    public AccountStatusResponse changePassword(long accountId, String newPassword) {
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(newPassword, "user password");
+        if (!ValidationHelper.isValidPassword(newPassword)) {
+            return new AccountStatusResponse(false, "Invalid password", -1);
         }
+        Account account = get(accountId);
+        if(account == null) return  new AccountStatusResponse(false, "Account not fount", -1);
 
-        return account;
+        account.setPassword(newPassword);
+        entityManager.persist(account);
+
+        return new AccountStatusResponse(true, "Successfully", accountId);
     }
 }

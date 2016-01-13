@@ -95,21 +95,23 @@
             <div class="slider-length transition">
                 <div ng-repeat="img in images" class="imgSection" >
                     <div class="imgContainer">
-                        <img data-ng-src="../../css/images/{{img.imageName}}" ng-click="goToCategory(img.imageId)"  />
+                        <img data-ng-src="../../css/images/{{img.imageName}}" ng-click="redirect('/category/' + categories[img.categoryId].categoryId)"  />
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button ng-click="goToCategory(categories[img.categoryId].categoryId)" >{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" >
+                            {{ 'EXPLORE_NOW' | translate}}
+                        </button>
                     </div>
                 </div>
                 <div class="imgSection" >
                     <div class="imgContainer">
                         <img data-ng-src="../../css/images/{{images[0].imageName}}"
-                             ng-click="goToCategory(images[0].imageId)" />
+                             ng-click="redirect('/category/' + categories[0].categoryId)" />
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button ng-click="goToCategory(categories[0].categoryId)"  class="white">{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="redirect('/category/' + categories[0].categoryId)"  class="white">{{ 'EXPLORE_NOW' | translate}}</button>
                     </div>
                 </div>
             </div>
@@ -119,8 +121,6 @@
         </div>
     </article>
     <!-- end slider -->
-
-
 
 
 

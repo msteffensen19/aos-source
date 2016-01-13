@@ -4,7 +4,6 @@ import com.advantage.accountsoap.dto.YesNoReply;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
-import com.advantage.common.Constants;
 import com.advantage.common.dto.AccountType;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -34,7 +33,7 @@ public class InitDataBase {
 
         //  Get countries list in CSV (Comma Separated Values) file
         ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
-        File coutriesCSV = filePathCSV.getFile();
+        File countriesCSV = filePathCSV.getFile();
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -42,23 +41,12 @@ public class InitDataBase {
         transaction = session.beginTransaction();
 
         /* Countries */
-        List<String> countries = FileSystemHelper.readFileCsv(coutriesCSV.getAbsolutePath());
+        List<String> countries = FileSystemHelper.readFileCsv(countriesCSV.getAbsolutePath());
 
-        if (countries != null) {
-            for (String str : countries) {
-                String[] substrings = str.split(",");
-
-                System.out.println("Country: " + substrings[1] +
-                        Constants.SPACE + substrings[2] +
-                        Constants.SPACE + substrings[3]);
-
-                Country country = new Country(substrings[1], substrings[2], Integer.valueOf(substrings[3]));
-                session.persist(country);
-            }
-
-            System.out.println("Total of " + countries.size() + " countries loaded");
-        } else {
-            System.out.println("Countries CSV file might be empty.");
+        for (String str : countries) {
+            String[] substrings = str.split(",");
+            Country country = new Country(substrings[1], substrings[2], Integer.valueOf(substrings[3]));
+            session.persist(country);
         }
 
         session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "Avraham", "avinu.avraham", "Avraham1", 12, "077-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "a@b.com", YesNoReply.YES.getReplyTypeChar()));

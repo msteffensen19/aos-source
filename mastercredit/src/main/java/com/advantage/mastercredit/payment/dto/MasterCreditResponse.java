@@ -3,6 +3,7 @@ package com.advantage.mastercredit.payment.dto;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.enums.TransactionTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * {@code response} for <b>REST API</b> request. <br/>
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * {@link #transactionDate} {@link String} date in format <i>"DDMMYYY"</i>. <br/>
  * @author Binyamin Regev on 20/12/2015.
  */
+@JsonPropertyOrder({"MCTransactionType", "MCResponse.Code", "MCResponse.Reason", "MCRefNumber", "TransactionDate"})
 public class MasterCreditResponse {
 
     @JsonProperty("MCTransactionType")

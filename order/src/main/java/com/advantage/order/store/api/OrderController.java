@@ -340,10 +340,13 @@ public class OrderController {
 
             System.out.println("OrderController -> doPurchase(): userId=" + userId);
 
-            OrderPurchaseResponse purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
-
+        if (purchaseResponse.isSuccess()) {
             return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
+        } else {
+            // TODO-Benny return error code suitable to the error
+            return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
         }
+}
     }
 
 }

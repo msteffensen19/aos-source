@@ -24,9 +24,6 @@ public class SafePayDto {
     @JsonProperty("SPPassword")
     private String password;       //
 
-//    @JsonProperty("MCCustomerName")
-//    private String customerName;      //  2-30 characters ([A-Za-z]{2,30})
-
     @JsonProperty("SPCustomerPhone")
     private String customerPhone;       //  0-20 digits and special characters
 
@@ -39,7 +36,7 @@ public class SafePayDto {
     @JsonProperty("SPRecevingAmount.Value")
     private double value;           //  Cart total cost: XXXXXXXXXX.XX (12,2 = 12 digits 2 of them decimal)
 
-    @JsonProperty("SPRecevingCard.Currency")
+    @JsonProperty("SPRecevingAmount.Currency")
     private String currency;        //  3 characters. Default "USD"
 
     public SafePayDto() {

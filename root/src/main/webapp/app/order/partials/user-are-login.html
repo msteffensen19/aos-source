@@ -14,18 +14,17 @@
         <div id="userDetails">
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
-                <label>David Smith</label>
+                <label>{{user.firstName}} {{user.lastName}}</label>
             </div>
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
-                <label>Altalef 5</label>
-                <label>HPE Software (building M3)</label>
-                <label>Yahud</label>
-                <label>Israel</label>
+                <label>{{ user.address }}</label>
+                <label>{{ user.cityName }}</label>
+                <label>{{ user.stateProvince }}</label>
             </div>
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
-                <label>972-54-8164355</label>
+                <label>{{ user.phoneNumber }}</label>
             </div>
         </div>
         <div class="blueLink">

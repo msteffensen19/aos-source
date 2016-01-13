@@ -20,21 +20,31 @@ define([],function(){
                 resolveParams: function ($q, orderService) {
                     var defer = $q.defer();
 
-                    orderService.getAccountById()
-                        .then(function (user) {
-                            alert()
-                            var paramsToResolve = {
-                                userLogin: true,
-                                shippingCost : 10 //userLogin
-                            }
-                            defer.resolve(paramsToResolve);
-                    });
+                    orderService.getAccountById().
+                    then(function (user) {
+                        if(user)
+                        {
+                            orderService.getShippingCost(user).
+                            then(function (shippingCost) {
 
+                                var paramsToResolve = {
+                                    shippingCost : shippingCost,
+                                    user : user
+                                }
+                                defer.resolve(paramsToResolve);
+                            });
+                        }
+                        else {
+                            defer.resolve({
+                                shippingCost : null,
+                                user : null
+                            });
+                        }
+                    });
                     return defer.promise;
                 }
             }
         });
-
     }
 
     return ['$stateProvider', config];

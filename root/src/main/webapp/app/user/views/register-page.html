@@ -13,8 +13,8 @@
         <div id="registerCover">
             <h3 class="roboto-regular" translate="CREATE_ACCOUNT"></h3>
             <div id="infoDemo">
-                <div>
-                    <h4 translate="NOTICE"  ></h4>
+                <div class="notice">
+                    <h4 translate="NOTICE" ></h4>
                     <p class="roboto-light" translate="This_is_a_demo"></p>
                     <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
                 </div>
@@ -30,8 +30,8 @@
                             <h3 translate="ACCOUNT_DETAILS"></h3>
 
                             <sec-input
-                                    sec-required
-                                    sec-placeholder="User name"
+                                    sec-required="{{'User_name' | translate}} {{'field is required' | translate}}"
+                                    sec-placeholder="{{'User_name' | translate}}"
                                     sec-min-length="5"
                                     sec-max-length="15"
                                     sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
@@ -41,10 +41,11 @@
                             </sec-input>
 
 
+
                             <sec-input
-                                    sec-required
+                                    sec-required="{{'Email' | translate}} {{'field is required' | translate}}"
                                     sec-email
-                                    sec-placeholder="Email"
+                                    sec-placeholder="{{'Email' | translate}}"
                                     input-type-attr="email"
                                     model-attr="model.email"
                                     id-attr="email">
@@ -52,13 +53,13 @@
 
 
                             <sec-input
-                                    sec-required
-                                    sec-placeholder="Password"
+                                    sec-required="{{'Password' | translate}} {{'field is required' | translate}}"
+                                    sec-placeholder="{{'Password' | translate}}"
                                     sec-min-length="4"
                                     sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                                     sec-compare-to="confirm_password"
                                     compare-to-name="Confirm password"
-                                    pattern-error-attr="{{ Use_up_to_12_characters_Include_at_least_one_letter_and_one_number | translate }}"
+                                    pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                                     input-type-attr="password"
                                     model-attr="model.password"
                                     id-attr="password">
@@ -66,7 +67,7 @@
 
 
                             <sec-input
-                                    sec-required
+                                    sec-required="{{'Confirm_password' | translate}} {{'field is required' | translate}}"
                                     sec-placeholder="Confirm password"
                                     sec-min-length="5"
                                     sec-max-length="15"
@@ -161,9 +162,7 @@
                     </label>
                     <label class="{{registerAnswer.class}} center" >{{registerAnswer.message}}</label>
 
-
                  </sec-validate>
-
             </div>
         </div>
     </article>

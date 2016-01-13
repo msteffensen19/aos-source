@@ -94,32 +94,35 @@ public class ShipexApplicationTests {
         request.setSENumberOfProducts(123456);
         Assert.assertEquals(true, response.getCode().contains(ResponseEnum.ERROR.getStringCode()));
 
-        //validate phone number
-        //phone !contains "+"
-        request = getDefaultCostRequest();
-        request.setSECustomerPhone("1234567");
-        response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getCode().contains(ResponseEnum.ERROR.getStringCode()));
-
-        //pnone=5
-        request.setSECustomerPhone("+1234");
-        response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getCode().contains(ResponseEnum.OK.getStringCode()));
-
-        //phone>20
-        request.setSECustomerPhone("+23567890123456789201");
-        response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getCode().contains(ResponseEnum.ERROR.getStringCode()));
-
-        //phone<=20
-        request.setSECustomerPhone("+2356789012345678920");
-        response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getCode().contains(ResponseEnum.OK.getStringCode()));
-
-        //phone is empty
-        request.setSECustomerPhone("");
-        response = endpoint.getShippingCost(request);
-        Assert.assertEquals(true, response.getCode().contains(ResponseEnum.OK.getStringCode()));
+        ////=================================================
+        ////No Validation on Phone-number, always TRUE
+        ////=================================================
+        ////validate phone number
+        ////phone !contains "+"
+        //request = getDefaultCostRequest();
+        //request.setSECustomerPhone("1234567");
+        //response = endpoint.getShippingCost(request);
+        //Assert.assertEquals(true, response.getCode().contains(ResponseEnum.ERROR.getStringCode()));
+        //
+        ////phone=5
+        //request.setSECustomerPhone("+1234");
+        //response = endpoint.getShippingCost(request);
+        //Assert.assertEquals(true, response.getCode().contains(ResponseEnum.OK.getStringCode()));
+        //
+        ////phone > 20
+        //request.setSECustomerPhone("+23567890123456789201");
+        //response = endpoint.getShippingCost(request);
+        //Assert.assertEquals(true, response.getCode().contains(ResponseEnum.ERROR.getStringCode()));
+        //
+        ////phone<=20
+        //request.setSECustomerPhone("+2356789012345678920");
+        //response = endpoint.getShippingCost(request);
+        //Assert.assertEquals(true, response.getCode().contains(ResponseEnum.OK.getStringCode()));
+        //
+        ////phone is empty
+        //request.setSECustomerPhone("");
+        //response = endpoint.getShippingCost(request);
+        //Assert.assertEquals(true, response.getCode().contains(ResponseEnum.OK.getStringCode()));
 
         //validate country alias
         request = getDefaultCostRequest();

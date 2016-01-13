@@ -1,17 +1,19 @@
 package com.advantage.order.store.order.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.List;
 
 /**
  * @author Binyamin Regev on 24/12/2015.
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class OrderPurchaseRequest {
 
     private OrderShippingInformation orderShippingInformation;
 
     private OrderPaymentInformation orderPaymentInformation;
 
-    //private List<OrderPurchasedProductInformation> purchasedProducts;
     private List<ShoppingCartDto> purchasedProducts;
 
     public OrderPurchaseRequest() { }

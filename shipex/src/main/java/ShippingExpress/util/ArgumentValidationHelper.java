@@ -23,7 +23,7 @@ public class ArgumentValidationHelper {
     public static final int STATE_PATTERN = 10;
     public static final int CITY_PATTERN = 25;
     public static final int COUNTRY_COST_PATTERN = 2;
-    private static final String PHONE_PATTERN = "(^\\+(?:[0-9]){4,19})$";
+    private static final String PHONE_PATTERN = "(^([0-9]){0,20})$";
     public static final String ERROR_PHONE_NUMBER = "ERROR. Invalid phone number format";
 
     public static String shippingCostRequestValidation(ShippingCostRequest request) {
@@ -65,8 +65,14 @@ public class ArgumentValidationHelper {
         return customerName != null && customerName.length() <= 30 && customerName.length() > 0;
     }
 
+    /**
+     * Phone is 0-20 digits. Validation is not mandatory.
+     * To validate use {@code ValidationHelper}.
+     * @return {@code true}
+     */
     private static boolean phoneNumberValidation(String phone) {
-        return Pattern.compile(PHONE_PATTERN).matcher(phone).matches() || phone.isEmpty();
+        //return Pattern.compile(PHONE_PATTERN).matcher(phone).matches() || phone.isEmpty();
+        return true;
     }
 
     private static boolean postalCodeValidation(String postalCode) {

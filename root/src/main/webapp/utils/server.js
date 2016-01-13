@@ -131,8 +131,12 @@ var server = {
         },
 
         getProductsBySearch : function (word, quantity) {
-            return catalogKey + "/products/search?name=" + word +
-                "&quantityPerEachCategory=" + quantity;
+            var path = catalogKey + "/products/search?name=" + word;
+            if(quantity > 0)
+            {
+                path += "&quantityPerEachCategory=" + quantity;
+            }
+            return path;
         }
 
     },
@@ -157,8 +161,11 @@ var server = {
 
         loadCartProducts : function (userId){
             return orderKey + "/carts/" + userId;
-        }
+        },
 
+        getShippingCost: function(){
+            return orderKey + "/order/api/v1/shippingcost" ;
+        },
     },
     account: {
 
@@ -186,6 +193,7 @@ var server = {
                 method: 'GetAccountByIdRequest'
             }
         },
+
     },
     service: {
 

@@ -5,37 +5,30 @@ package com.advantage.order.store.order.dto;
  */
 public class OrderPurchaseResponse {
     private boolean success;
+    private String code;
     private String reason;
-    private long userId;
     private long orderNumber;
 
     public OrderPurchaseResponse() {  }
 
     public OrderPurchaseResponse(boolean success) {
         this.success = success;
+        this.code = "";
         this.reason = "";
-        this.userId = -1;
         this.orderNumber = 0;
     }
 
-    public OrderPurchaseResponse(boolean success, String reason) {
+    public OrderPurchaseResponse(boolean success, String code, String reason) {
         this.success = success;
+        this.code = code;
         this.reason = reason;
-        this.userId = -1;
         this.orderNumber = 0;
     }
 
-    public OrderPurchaseResponse(boolean success, String reason, long userId) {
+    public OrderPurchaseResponse(boolean success, String code, String reason, long orderNumber) {
         this.success = success;
+        this.code = code;
         this.reason = reason;
-        this.userId = userId;
-        this.orderNumber = 0;
-    }
-
-    public OrderPurchaseResponse(boolean success, String reason, long userId, long orderNumber) {
-        this.success = success;
-        this.reason = reason;
-        this.userId = userId;
         this.orderNumber = orderNumber;
     }
 
@@ -47,20 +40,20 @@ public class OrderPurchaseResponse {
         this.success = success;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getReason() {
         return reason;
     }
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public long getOrderNumber() {

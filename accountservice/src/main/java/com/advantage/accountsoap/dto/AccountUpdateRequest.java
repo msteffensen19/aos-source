@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "accountId",
         "lastName",
         "firstName",
-        "loginName",
         "country",
         "stateProvince",
         "cityName",
@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.*;
         "zipcode",
         "phoneNumber",
         "email",
-        "password",
         "accountType",
         "allowOffersPromotion"
 })
@@ -27,7 +26,7 @@ public class AccountUpdateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String firstName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected String loginName;
+    protected long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected Integer country;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -42,8 +41,6 @@ public class AccountUpdateRequest {
     protected String phoneNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String email;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected String password;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected Integer accountType;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -65,12 +62,12 @@ public class AccountUpdateRequest {
         this.firstName = firstName;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public long getAccountId() {
+        return accountId;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
     }
 
     public Integer getCountry() {
@@ -127,14 +124,6 @@ public class AccountUpdateRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Integer getAccountType() {

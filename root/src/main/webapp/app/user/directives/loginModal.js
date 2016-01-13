@@ -32,9 +32,11 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
+                        console.log("user")
+                        console.log(user)
                         userService.login(user).then(function (res) {
 
-                            var response = { userId : res.userid, reason: res.reason, success : res.success, token: res.token }
+                            var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
 
                             if (response.userId != -1) {
 
@@ -54,7 +56,7 @@ define(['./module'], function (directives) {
                                 }
 
                                 $cookie.remove("loginsCounter");
-                                userCookie.fillParams($scope.user.loginUser, $scope.user.email, response);
+                                userCookie.fillParams($scope.loginUser.loginUser, $scope.loginUser.email, response);
                                 $rootScope.userCookie = userCookie;
 
                                 if (rememberMe) {
@@ -67,7 +69,7 @@ define(['./module'], function (directives) {
                                     console.log($cookie(userCookie.getKey(userCookie)));
                                 }
                                 else {
-                                    $cookie.remove("userCookie" + $scope.user.email);
+                                    $cookie.remove("userCookie" + $scope.loginUser.email);
                                 }
 
                                 productsCartService.joinCartProducts().then(function (cart) {
@@ -77,8 +79,12 @@ define(['./module'], function (directives) {
                                 wellcome();
                             }
                             else {
+                                $scope.wrongFields = response;
+                                $timeout(function () { $scope.wrongFields = null; }, 4000);
                                 wrongFields();
                             }
+
+                            return user;
                         });
                     }
                     /*=============================== end Sign in ===============================*/

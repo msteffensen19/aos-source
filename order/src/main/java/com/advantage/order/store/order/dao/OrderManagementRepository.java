@@ -1,21 +1,20 @@
 package com.advantage.order.store.order.dao;
 
-import com.advantage.order.store.order.model.UserOrder;
+import com.advantage.order.store.order.dto.OrderPaymentInformation;
+import com.advantage.order.store.order.dto.OrderPurchasedProductInformation;
+import com.advantage.order.store.order.dto.OrderShippingInformation;
+
+import java.util.List;
 
 /**
  * @author Binyamin Regev on 06/01/2016.
  */
 public interface OrderManagementRepository {
 
-    /**
-     * Get user order header and lines
-     * @param userId
-     * @param orderNumber
-     * @return {@link UserOrder}
-     */
-    UserOrder getUserOrder(long userId, long orderNumber);
-
-    void addUserOrder(UserOrder userOrder);
+    void addUserOrder(long userId, long orderNumber, long orderTimestamp, double totalAmount,
+                      OrderShippingInformation orderShippingInformation,
+                      OrderPaymentInformation orderPaymentInformation,
+                      List<OrderPurchasedProductInformation> purchasedProducts);
 
     void updateUserOrderTrackingNumber(long userId, long orderNumber, long shippingTrackingNumber);
 

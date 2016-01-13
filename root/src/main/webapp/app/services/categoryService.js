@@ -27,11 +27,22 @@ define(['./module'], function (services) {
         }
 
         function getCategoryById(id) {
-            var request = $http({
-                method: "get",
-                url: server.catalog.getCategoryById(id)
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+            var defer = $q.defer();
+            if(id == ''){
+                defer.resolve(null)
+            }
+            else{
+                $http({
+                    method: "get",
+                    url: server.catalog.getCategoryById(id)
+                }).success(function(res){
+                    defer.resolve(res)
+                }).error(function(err){
+                    defer.reject(null)
+                });
+            }
+
+            return defer.promise;
         };
 
         function getPopularProducts() {
