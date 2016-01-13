@@ -18,8 +18,7 @@
     padding: 6% 5% 4.55% 5%;
 }
 
-.categoryDataFixedNav.fixedImportant
-{
+.categoryDataFixedNav.fixedImportant{
     top: 65px;
 }
 
@@ -38,13 +37,11 @@
     padding: 6% 5% 4.55% 5%;
 }
 
-
 .categoryData h1{
     font-size: 40px;
     position: relative;
     padding: 6px 0;
 }
-
 
 .categoryData h2{
     font-size: 24px;
