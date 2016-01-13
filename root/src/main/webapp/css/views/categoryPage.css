@@ -1,7 +1,5 @@
 
 
-
-
 .sticky{
     top:100px;
     background-color: white;
@@ -20,6 +18,11 @@
     padding: 6% 5% 4.55% 5%;
 }
 
+.categoryDataFixedNav.fixedImportant
+{
+    top: 65px;
+}
+
 .noPromotedProduct{
     position: fixed;
     background-color: white;
@@ -28,7 +31,7 @@
 }
 
 .noPromotedProductDiv{
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 .categoryDataPadding{
