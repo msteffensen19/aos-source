@@ -8,9 +8,13 @@ public class Constants {
     public static final String URI_API = "/api";
 
     //
-    public static final String FILE_PROPERTIES_INTERNAL = "classpath:/services.properties";
+    public static final String FILE_PROPERTIES_INTERNAL = "classpath:/internal_config_for_env.properties";
     public static final String FILE_PROPERTIES_EXTERNAL = "classpath:/services.properties";
     public static final String FILE_PROPERTIES_GLOBAL = "classpath:/global.properties";
+    public static final String FILE_PROPERTIES_DEMO_APP = "classpath:/DemoApp.properties";
+    public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
+
+
     @Deprecated
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 
@@ -45,6 +49,7 @@ public class Constants {
     private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
     public static final String URI_SCHEMA = "http";
+
 
     public static class UserSession {
         public static final String TOKEN = "token";
