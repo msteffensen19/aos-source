@@ -101,6 +101,9 @@ public class OrderManagementService {
             System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
         }
+        else {
+            costResponse.setReason(ResponseEnum.OK.getStringCode());
+        }
 
         return costResponse;
     }
