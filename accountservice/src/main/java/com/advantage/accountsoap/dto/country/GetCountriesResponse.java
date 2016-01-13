@@ -3,10 +3,7 @@ package com.advantage.accountsoap.dto.country;
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.model.Country;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetCountriesResponse",
@@ -16,13 +13,14 @@ import java.util.List;
         })
 @XmlRootElement(name = "GetCountriesResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetCountriesResponse {
-    private List<Country> country;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    public List<CountryDto> country;
 
-    public List<Country> getCountry() {
+    public List<CountryDto> getCountry() {
         return country;
     }
 
-    public void setCountry(List<Country> country) {
+    public void setCountry(List<CountryDto> country) {
         this.country = country;
     }
 }

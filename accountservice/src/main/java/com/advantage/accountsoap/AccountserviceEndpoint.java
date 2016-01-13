@@ -2,10 +2,7 @@ package com.advantage.accountsoap;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.account.*;
-import com.advantage.accountsoap.dto.country.CountryCreateRequest;
-import com.advantage.accountsoap.dto.country.CountrySearchRequest;
-import com.advantage.accountsoap.dto.country.CountryStatusResponse;
-import com.advantage.accountsoap.dto.country.GetCountriesResponse;
+import com.advantage.accountsoap.dto.country.*;
 import com.advantage.accountsoap.dto.address.*;
 import com.advantage.accountsoap.dto.payment.PaymentMethodUpdateRequest;
 import com.advantage.accountsoap.model.Account;
@@ -141,9 +138,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
     public GetCountriesResponse getCountries() {
-        List<Country> countries = countryService.getAllCountries();
         GetCountriesResponse response = new GetCountriesResponse();
-        response.setCountry(countries);
+        response.setCountry(countryService.getAllCountries());
 
         return response;
     }
@@ -160,7 +156,7 @@ public class AccountserviceEndpoint {
     @ResponsePayload
     public GetCountriesResponse searchInCountries(@RequestPayload CountrySearchRequest request) {
         GetCountriesResponse response = new GetCountriesResponse();
-        List<Country> countries;
+        List<CountryDto> countries;
 
         if (request == null) throw new IllegalArgumentException("Not valid parameters");
         if (!request.getStartOfName().isEmpty() && request.getInternationalPhonePrefix() != 0) {

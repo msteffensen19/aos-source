@@ -1,13 +1,17 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.CountryRepository;
+import com.advantage.accountsoap.dto.country.CountryDto;
 import com.advantage.accountsoap.dto.country.CountryStatusResponse;
+import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -28,18 +32,29 @@ public class CountryService {
     }
 
     @Transactional(readOnly = true)
-    public List<Country> getAllCountries() {
-        return countryRepository.getAllCountries();
+    public List<CountryDto> getAllCountries() {
+        List<Country> countries = countryRepository.getAllCountries();
+
+        return fillDto(countries);
     }
 
     @Transactional(readOnly = true)
-    public List<Country> getCountriesByPartialName(final String countryName) {
-        return countryRepository.getCountriesByPartialName(countryName);
+    public List<CountryDto> getCountriesByPartialName(final String countryName) {
+        return fillDto(countryRepository.getCountriesByPartialName(countryName));
     }
 
     @Transactional(readOnly = true)
-    public List<Country> getCountriesByPhonePrefix(final int phonePrefix) {
-        return countryRepository.getCountriesByPhonePrefix(phonePrefix);
+    public List<CountryDto> getCountriesByPhonePrefix(final int phonePrefix) {
+        return fillDto(countryRepository.getCountriesByPhonePrefix(phonePrefix));
     }
 
+    private List<CountryDto> fillDto(Collection<Country> countries) {
+        if(countries == null) return null;
+        List<CountryDto> dtos = new ArrayList<>();
+        for (Country country : countries) {
+            dtos.add(new CountryDto(country.getId(), country.getName(), country.getIsoName(), country.getPhonePrefix()));
+        }
+
+        return dtos;
+    }
 }
