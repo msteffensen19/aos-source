@@ -19,14 +19,6 @@ public class AccountService {
     @Qualifier("accountRepository")
     public AccountRepository accountRepository;
 
-    /*@Qualifier("accountRepository")
-    private AccountRepository accountRepository;
-
-    @Autowired
-    public AccountService(DefaultAccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }*/
-
     @Transactional
     public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Integer country, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final String allowOffersPromotion) {
         return accountRepository.create(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
@@ -60,6 +52,7 @@ public class AccountService {
                     account.getFirstName(),
                     account.getLoginName(),
                     account.getAccountType(),
+                    account.getPaymentMethod(),
                     account.getCountry(),
                     account.getStateProvince(),
                     account.getCityName(),
@@ -85,12 +78,22 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountStatusResponse updateAccount(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
-        return accountRepository.updateAccount(accountType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
+        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
     @Transactional
     public Account getById(long id) {
         return accountRepository.get(id);
+    }
+
+    @Transactional
+    public AccountStatusResponse updatePaymentMethod(long accountId, int paymentMethod) {
+        return  accountRepository.updatePaymentMethod(accountId, paymentMethod);
+    }
+
+    @Transactional
+    public AccountStatusResponse changePassword(long accountId, String newPassword) {
+        return accountRepository.changePassword(accountId, newPassword);
     }
 }

@@ -50,6 +50,7 @@ public class FetchImageHttpServlet extends HttpServlet {
 
         ArgumentValidationHelper.validateArgumentIsNotNull(req, "HTTP servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(res, "HTTP servlet response");
+        boolean isMobile = (req.getParameter("m") != null);
         final String imageId = req.getParameter(FetchImageHttpServlet.REQUEST_PARAM_IMAGE_ID);
         final ManagedImage managedImage = imageManagement.getManagedImage(imageId);
         final StringBuilder contentType = new StringBuilder("image/");
@@ -58,7 +59,7 @@ public class FetchImageHttpServlet extends HttpServlet {
         final String contentTypeString = contentType.toString();
         res.setContentType(contentTypeString);
         final OutputStream out = res.getOutputStream();
-        final byte[] imageContent = managedImage.getContent();
+        final byte[] imageContent = isMobile ? managedImage.getMobileContent() : managedImage.getContent();
         IOHelper.outputInput(imageContent, out);
     }
 

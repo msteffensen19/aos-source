@@ -23,70 +23,15 @@ define(['./module'], function (controllers) {
 
 
 
+
+
+
             /* Autocomplete*/
-            $scope.checkEnterKey = function(event)
-            {
-                console.log(event)
-                console.log(event.which)
-                if(event.which === 13) {
 
-                }
-            }
-
-            var lastRequest = '';
-            $scope.runAutocomplete = function(){
-                lastRequest = $scope.autoCompleteValue;
-                if(lastRequest == '') {
-                    $scope.autoCompleteResult = {};
-                    return;
-                }
-                productService.getProductsBySearch(lastRequest, 10).then(function(result){
-                    $scope.autoCompleteResult = result;
-                });
-            }
-
-
-            $scope.openSearchProducts = function(){
-                $("nav ul li a.navLinks").stop().animate({ opacity : 0 }, 400);
-                setTimeout(function(_this){
-                    $("#searchSection").fadeIn(1000);
-                    $("#autoComplete").focus();
-                    $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
-                    $("#searchSection > div > div > span > img").delay(500).fadeIn(500); // img close
-                    $('#openSearch').stop().animate({ opacity : 0 }, 300)
-                }, 400);
-            }
-
-            $scope.closeSearchSection = function(){
-                $('#openSearch').stop().animate({ opacity : 1 }, 300)
-                $("#searchSection > div > div > span > img").fadeOut(200); // img close
-                setTimeout(function(){
-                    $("#searchSection").fadeOut(500);
-                    $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
-                    if($location.$$path == '/')
-                    {
-                        $("nav ul li a.navLinks").stop().animate({ opacity : 1 }, 400);
-                    }
-                    $scope.autoCompleteValue = lastRequest = '';
-                    $scope.autoCompleteResult = {};
-                    $("#autoComplete").focusout();
-                }, 200)
-            }
-
-            $('#product_search_img').click(function (e) {
-                $('#product_search').css("display", "inline-block");
-                $('#product_search').animate({ "width": $('#product_search').width() > 0 ? 0 : "150px" },
-                    500, function(){
-                        if($('#product_search').width() == 0 ){
-                            $(this).css("display", "none");
-                        }
-                    } );
-            });
-
-            $scope.searchByCategoryId = function(id){
-                console.log(id);
-            }
             /* END Autocomplete*/
+
+
+
 
 
 
@@ -158,8 +103,8 @@ define(['./module'], function (controllers) {
 
             /* User section */
 
-            //$scope.user = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
-            $scope.user = {  email: '',loginPassword: '', loginUser: '', }
+            //$scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
+            $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
 
             $scope.accountSection = function(){
                 console.log("user account section! --- Method not done yet!");
@@ -209,6 +154,13 @@ define(['./module'], function (controllers) {
 
 
 
+
+
+
+
+
+
+
             /* Application helper section */
 
             $scope.redirect = function(path) {
@@ -240,6 +192,21 @@ define(['./module'], function (controllers) {
             /* END Application helper section */
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
 
                 $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
@@ -263,8 +230,6 @@ define(['./module'], function (controllers) {
                  console.log($scope.cart)
 
              });
-
-
              $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {
              onBreadcrumbHandler();
              });

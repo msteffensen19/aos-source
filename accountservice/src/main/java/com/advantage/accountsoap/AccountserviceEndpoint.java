@@ -5,6 +5,7 @@ import com.advantage.accountsoap.dto.*;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
+import com.advantage.accountsoap.services.AddressService;
 import com.advantage.accountsoap.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -22,6 +23,9 @@ public class AccountserviceEndpoint {
     @Autowired
     private CountryService countryService;
 
+    @Autowired
+    private AddressService addressService;
+
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
     public GetAllAccountsResponse getAllAccounts() {
@@ -37,12 +41,13 @@ public class AccountserviceEndpoint {
     @ResponsePayload
     public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId) {
         Account account = accountService.getById(accountId.getId());
-        if(account == null) return null;
+        if (account == null) return null;
         AccountDto response = new AccountDto(account.getId(),
                 account.getLastName(),
                 account.getFirstName(),
                 account.getLoginName(),
                 account.getAccountType(),
+                account.getPaymentMethod(),
                 account.getCountry(),
                 account.getStateProvince(),
                 account.getCityName(),
@@ -50,7 +55,7 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getPhoneNumber(),
                 account.getEmail(),
-                account.getAllowOffersPromotion(),account.getInternalUnsuccessfulLoginAttempts(),
+                account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
@@ -102,15 +107,14 @@ public class AccountserviceEndpoint {
                 account.getAllowOffersPromotion());
     }
 
-    /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
     public AccountStatusResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
         return accountService.updateAccount(
+                account.getAccountId(),
                 account.getAccountType(),
                 account.getLastName(),
                 account.getFirstName(),
-                account.getLoginName(),
-                account.getPassword(),
                 account.getCountry(),
                 account.getPhoneNumber(),
                 account.getStateProvince(),
@@ -119,7 +123,13 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
-    }*/
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
+    @ResponsePayload
+    public AccountStatusResponse updatePaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
+        return accountService.updatePaymentMethod(request.getAccountId(), request.getPaymentMethod());
+    }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
@@ -145,7 +155,7 @@ public class AccountserviceEndpoint {
         GetCountriesResponse response = new GetCountriesResponse();
         List<Country> countries;
 
-        if(request == null) throw new IllegalArgumentException("Not valid parameters");
+        if (request == null) throw new IllegalArgumentException("Not valid parameters");
         if (!request.getStartOfName().isEmpty() && request.getInternationalPhonePrefix() != 0) {
             throw new IllegalArgumentException("Not valid parameters");
         } else if (request.getInternationalPhonePrefix() > 0) {
@@ -160,4 +170,34 @@ public class AccountserviceEndpoint {
             return response;
         }
     }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
+    @ResponsePayload
+    public AddressesResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
+        AddressesResponse response = new AddressesResponse();
+        List<AddressDto> addresses = addressService.getByAccountId(accountId.getId());
+        response.setShippingAddress(addresses);
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddAddressesRequest")
+    @ResponsePayload
+    public AddressStatusResponse addAddress(@RequestPayload AddAddressesRequest address) {
+        return addressService.add(address.getAccountId(), address.getAddresses());
+    }
+
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddressUpdateRequest")
+    @ResponsePayload
+    public AddressStatusResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
+        return addressService.update(address.getAddress());
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
+    @ResponsePayload
+    public AccountStatusResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+        return accountService.changePassword(request.getAccountId(), request.getNewPassword());
+    }
+
 }

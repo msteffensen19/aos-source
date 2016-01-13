@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.*;
                 "firstName",
                 "loginName",
                 "accountType",
+                "paymentMethod",
                 "country",
                 "stateProvince",
                 "cityName",
@@ -37,6 +38,8 @@ public class AccountDto {
     private String loginName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private Integer accountType;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private Integer paymentMethod;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private Integer country;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -68,6 +71,7 @@ public class AccountDto {
                       String firstName,
                       String loginName,
                       Integer accountType,
+                      Integer paymentMethod,
                       Integer country,
                       String stateProvince,
                       String cityName,
@@ -84,6 +88,7 @@ public class AccountDto {
         this.firstName = firstName;
         this.loginName = loginName;
         this.accountType = accountType;
+        this.paymentMethod = paymentMethod;
         this.country = country;
         this.stateProvince = stateProvince;
         this.cityName = cityName;
@@ -94,6 +99,142 @@ public class AccountDto {
         this.allowOffersPromotion = allowOffersPromotion;
         this.internalUnsuccessfulLoginAttempts = internalUnsuccessfulLoginAttempts;
         this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
+        this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public Integer getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
+    }
+
+    public Integer getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(Integer paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Integer getCountry() {
+        return country;
+    }
+
+    public void setCountry(Integer country) {
+        this.country = country;
+    }
+
+    public String getStateProvince() {
+        return stateProvince;
+    }
+
+    public void setStateProvince(String stateProvince) {
+        this.stateProvince = stateProvince;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAllowOffersPromotion() {
+        return allowOffersPromotion;
+    }
+
+    public void setAllowOffersPromotion(String allowOffersPromotion) {
+        this.allowOffersPromotion = allowOffersPromotion;
+    }
+
+    public int getInternalUnsuccessfulLoginAttempts() {
+        return internalUnsuccessfulLoginAttempts;
+    }
+
+    public void setInternalUnsuccessfulLoginAttempts(int internalUnsuccessfulLoginAttempts) {
+        this.internalUnsuccessfulLoginAttempts = internalUnsuccessfulLoginAttempts;
+    }
+
+    public long getInternalUserBlockedFromLoginUntil() {
+        return internalUserBlockedFromLoginUntil;
+    }
+
+    public void setInternalUserBlockedFromLoginUntil(long internalUserBlockedFromLoginUntil) {
+        this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
+    }
+
+    public long getInternalLastSuccesssulLogin() {
+        return internalLastSuccesssulLogin;
+    }
+
+    public void setInternalLastSuccesssulLogin(long internalLastSuccesssulLogin) {
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
     }
 }

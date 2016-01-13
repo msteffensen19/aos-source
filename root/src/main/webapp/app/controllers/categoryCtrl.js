@@ -1,9 +1,6 @@
 /**
  * Created by kubany on 10/18/2015.
  */
-/**
- * Created by kubany on 10/13/2015.
- */
 
 define(['./module'], function (controllers) {
     'use strict';
@@ -25,7 +22,6 @@ define(['./module'], function (controllers) {
             $scope.categoryName = category.categoryName;
 
             $("nav .navLinks").css("display" , "none");
-
 
             Helper.forAllPage();
 

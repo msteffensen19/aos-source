@@ -37,12 +37,12 @@ define(['./module'], function (controllers) {
                 registerService.register(s.model).then(function (response) {
                     s.registerAnswer.message = response.REASON,
                         s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
-                    $timeout(function (success) {
+                    $timeout(function () {
                         s.registerAnswer = {message: '', class: 'invalid'}
-                        if (success == 'true') {
+                        if (response.SUCCESS == 'true') {
                             window.history.back();
                         }
-                    }, 4000, response.SUCCESS)
+                    }, 4000)
                 });
             }
 

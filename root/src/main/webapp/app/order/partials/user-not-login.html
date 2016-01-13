@@ -4,37 +4,49 @@
     <label class="roboto-medium" translate="Already_have_an_account" ></label>
     <sec-validate>
 
+
         <sec-input
-                sec-required
-                sec-email
-                sec-placeholder="E-mail"
-                input-type-attr="email"
-                model-attr="user.email"
-                no-red-star="true"
-                id-attr="loginModal_email">
+                sec-required="{{'User_name' | translate}} {{'field is required' | translate}}"
+                sec-placeholder="{{'User_name' | translate}}"
+                sec-min-length="5"
+                sec-max-length="15"
+                sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
+                pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
+                model-attr="loginUser.loginUser"
+                id-attr="username" >
         </sec-input>
 
         <sec-input
-                sec-required
-                sec-placeholder="Password"
+                sec-required="{{'Password' | translate}} {{'field is required' | translate}}"
+                sec-placeholder="{{'Password' | translate}}"
                 sec-min-length="4"
                 sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                 pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
                 input-type-attr="password"
-                model-attr="user.password"
-                no-red-star="true"
+                model-attr="loginUser.loginPassword"
                 id-attr="loginModal_password">
+        </sec-input>
+
+        <sec-input
+                sec-required="{{'Email' | translate}} {{'field is required' | translate}}"
+                sec-email
+                sec-placeholder="{{'Email' | translate}}"
+                input-type-attr="email"
+                model-attr="loginUser.email"
+                id-attr="loginModal_email">
         </sec-input>
 
         <label translate="Forgot_your_password"
                class="roboto-regular"
-               id="Forgot_your_password" ></label>
+               id="Forgot_your_password">
+        </label>
 
-        <br /><input sec-submit-attr="signIn(user, false)"
-                     class="a-button roboto-medium"
-                     data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
-                     type="button"
-                     value="{{'LOGIN' | translate}}" />
+        <br />
+        <input sec-submit-attr="signIn(loginUser, false)"
+               class="a-button roboto-medium"
+               data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+               type="button"
+               value="{{'LOGIN' | translate}}" />
         <br />
 
         <label ng-class="{ invalid : wrongFields.success == 'false' }" >{{ wrongFields.reason }}</label>

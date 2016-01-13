@@ -178,6 +178,7 @@
     right:35px;
     font-size: 13px;
     color: #54d3ad;
+    cursor: pointer;
 }
 
 #searchSection .searchPopUp > div .product span {

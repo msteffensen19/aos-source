@@ -3,7 +3,7 @@
 <web-app>
 
     <servlet>
-        <servlet-class>FetchImageHttpServlet</servlet-class>
+        <servlet-class>com.advantage.catalog.store.servlet.FetchImageHttpServlet</servlet-class>
         <servlet-name>FetchImageHttpServlet</servlet-name>
         <!--<multipart-config> &lt;!&ndash;MultipartFile config&ndash;&gt;
             <location>/image_repository</location>

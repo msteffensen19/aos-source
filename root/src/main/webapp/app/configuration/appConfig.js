@@ -76,7 +76,7 @@ define([],function(){
             }
         })
         .state('category',{
-            url: '/category/:id',
+            url: '/category/:id?viewAll',
             templateUrl: 'app/views/category-page.html',
             controller: 'categoryCtrl',
             data: {
@@ -84,8 +84,32 @@ define([],function(){
                 breadcrumbName: "Category"
             },
             resolve : {
-                category: function (categoryService, $stateParams) {
-                    return categoryService.getCategoryById($stateParams.id);
+                category: function (categoryService, productService, $stateParams, $q, $filter) {
+
+                    var defer  = $q.defer();
+                    categoryService.getCategoryById($stateParams.id).
+                    then(function(category){
+
+                        if($stateParams.viewAll) {
+                            productService.getProductsBySearch($stateParams.viewAll, -1).then(function (result) {
+
+                                var products = $filter("filterFullArrayforAutoComplate")([], result, $stateParams.id, -1)
+                                var categories = {
+                                    categoryId: 1,
+                                    categoryName: "Search: '" + $stateParams.viewAll + "'",
+                                    categoryImageId: category ? category.categoryImageId : "",
+                                    promotedProduct: category ? category.promotedProduct : null,
+                                    attributes: [],
+                                    products: products,
+                                }
+                                defer.resolve(categories);
+                            });
+                        }
+                        else{
+                            defer.resolve(category);
+                        }
+                    });
+                    return defer.promise;
                 },
             }
         })
