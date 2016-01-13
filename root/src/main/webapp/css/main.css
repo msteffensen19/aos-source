@@ -9,6 +9,7 @@
 @import "views/toolTipSearch.css";
 @import "views/shoppingCart.css";
 @import "modals/popUp.css";
+@import "modals/e-sec-plus-minus.css";
 @import "modals/validateInput.css";
 @import "user/login.css";
 @import "user/register.css";
@@ -191,7 +192,7 @@ div.logo img{
     right: 0;
     opacity: .8;
     transition: all 1s ease;
-    display: inline-block;
+    display: none;
     z-index: 9999;
     border-radius: 100%;
 }

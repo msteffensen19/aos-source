@@ -4,6 +4,7 @@
 'use strict';
 
 define([
+        './e-sec-plus-minus',
         './a-sec-src',
         './a-sec-back-img',
         './validateInput',

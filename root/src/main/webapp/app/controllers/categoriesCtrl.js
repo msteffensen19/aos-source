@@ -23,5 +23,21 @@ define(['./module'], function (controllers) {
 
             Helper.forAllPage();
 
+
+            $('#scrollToTop').click(function () {
+                $('body, html').animate({ scrollTop: 0 }, 1000);
+            });
+
+            $(window).on({
+                scroll: function () {
+                    if ($(window).scrollTop() > 800) {
+                        $('#scrollToTop').stop().fadeIn(300);
+                        return;
+                    }
+                    console.log($(window).scrollTop())
+                    $('#scrollToTop').stop().fadeOut(300);
+                }
+            });
+
         }]);
 });

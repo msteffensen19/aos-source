@@ -14,9 +14,9 @@
 }
 
 .fixedImportant{
-    position: fixed;
+    position: fixed !important;
     width: 100%;
-
+    z-index: 900;
 }
 
 #shoppingCart table *{

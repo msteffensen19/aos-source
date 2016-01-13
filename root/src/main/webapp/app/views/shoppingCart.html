@@ -9,7 +9,7 @@
     <section>
         <article class="sp">
 
-        <nav class="pages fixedImportant ">
+        <nav class="pages fixedImportant " style="top:65px">
             <a translate="HOME" href="#/" ></a>
             <a class="select "> {{ 'SHOPPING_CART' | translate }}</a>
         </nav>
@@ -65,7 +65,8 @@
                         <label class="roboto-light mobileViewer">
                             {{'QUANTITY' | translate}}:
                         </label>
-                        <select ng-model="product.quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9] | productQuantity:product.quantity" ></select>
+                        <e-sec-plus-minus num-attr="product.quantity"></e-sec-plus-minus>
+                        <!--<select ng-model="product.quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9] | productQuantity:product.quantity" ></select>-->
                     </td>
                     <td class="smollCell">
                         <label class="roboto-light mobileViewer">
