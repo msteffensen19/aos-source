@@ -16,12 +16,6 @@ define([],function(){
             url: '/',
             templateUrl: 'app/views/home-page.html',
             controller: 'categoriesCtrl',
-            data: {
-                requireLogin: false,  // this property will apply to all children of 'app'
-                beforeLoader: false,
-                navLinks: true,
-                breadcrumbName: "Home Page",
-            },
             resolve : {
                 resolveParams: function(categoryService, dealService, $q) {
                     var defer = $q.defer();
@@ -41,23 +35,10 @@ define([],function(){
                 }
             }
         })
-        .state('welcome',{
-            url: '/welcome',
-            templateUrl: 'app/views/welcome.html',
-            data: {
-                requireLogin: false,
-                showWelcome : true, // this property will apply to all children of 'app'
-                breadcrumbName: "Welcome",
-            }
-        })
         .state('register',{
             url: '/register',
             templateUrl: 'app/user/views/register-page.html',
             controller: 'registerCtrl',
-            data: {
-                requireLogin: false,  // this property will apply to all children of 'app'
-                breadcrumbName: "Register",
-            },
             resolve : {
                 
             }
@@ -66,10 +47,6 @@ define([],function(){
             url: '/shoppingCart',
             templateUrl: 'app/views/shoppingCart.html',
             controller: 'shoppingCartCtrl',
-            data: {
-                requireLogin: false,  // this property will apply to all children of 'app'
-                breadcrumbName: "ShoppingCart",
-            },
             resolve : {
                 category: function (productsCartService, $stateParams) {
                     return productsCartService.loadCartProducts();
@@ -80,10 +57,6 @@ define([],function(){
             url: '/category/:id?viewAll',
             templateUrl: 'app/views/category-page.html',
             controller: 'categoryCtrl',
-            data: {
-                requireLogin: false,  // this property will apply to all children of 'app'
-                breadcrumbName: "Category"
-            },
             resolve : {
                 category: function (categoryService, productService, $stateParams, $q, $filter) {
 
@@ -97,7 +70,7 @@ define([],function(){
                                 var products = $filter("filterFullArrayforAutoComplate")([], result, $stateParams.id, -1)
                                 var categories = {
                                     categoryId: 1,
-                                    categoryName: "Search: '" + $stateParams.viewAll + "'",
+                                    categoryName: "Search Result: '" + $stateParams.viewAll + "'",
                                     categoryImageId: category ? category.categoryImageId : "",
                                     promotedProduct: category ? category.promotedProduct : null,
                                     attributes: [],
@@ -118,10 +91,6 @@ define([],function(){
             url: '/product/:id?color&quantity&pageState',
             templateUrl: 'app/views/product-page.html',
             controller: 'productCtrl',
-            data: {
-                requireLogin: false,  // this property will apply to all children of 'app'
-                breadcrumbName:  "Product"
-            },
             resolve : {
                 resolveParams: function(productService, categoryService, $stateParams, $q) {
                     var defer = $q.defer();
@@ -144,10 +113,10 @@ define([],function(){
         state('404',{
             url: '/404',
             templateUrl: 'app/views/404.html',
-            data: {
-                underConstruction: true,  // this property will apply to all children of 'app'
-                breadcrumbName: "Home Page",
-            }
+            //data: { data used to check fields in runners states ($stateChangeStart, $stateChangeError, ....)
+            //    underConstruction: true,  // this property will apply to all children of 'app'
+            //    breadcrumbName: "Home Page",
+            //}
         });
 
         $translateProvider.preferredLanguage('en');

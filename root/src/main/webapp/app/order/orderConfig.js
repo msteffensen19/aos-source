@@ -13,7 +13,7 @@ define([],function(){
             controller: 'orderPaymentCtrl',
             controllerAs: 'opCtrl',
             data: {
-                requireLogin: true,  // this property will apply to all children of 'app'
+                //requireLogin: true,  // this property will apply to all children of 'app'
                 breadcrumbName: "orderPayment",
             },
             resolve : {

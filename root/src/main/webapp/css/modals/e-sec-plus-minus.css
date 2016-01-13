@@ -21,6 +21,18 @@
     display: inline-block;
     width: 24px;
     position: relative;
+    cursor: pointer;
+}
+
+.e-sec-plus-minus div:not(.disableBtn):hover{
+    background-color: #f3f3f3;
+}
+
+
+.e-sec-plus-minus div.disableBtn.minus:before,
+.e-sec-plus-minus div.disableBtn.plus:before,
+.e-sec-plus-minus div.disableBtn.plus:after {
+    background-color: #a5a5a5;
 }
 
 .e-sec-plus-minus div.minus:before,
