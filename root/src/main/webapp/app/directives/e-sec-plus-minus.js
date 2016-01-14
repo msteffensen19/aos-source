@@ -22,6 +22,11 @@ define(['./module'], function (directives) {
                     var num = 1
                     var readyToCheck = true;
 
+
+                    this.setNewNum = function(_num){
+                        num = _num;
+                    }
+
                     this.getMaxValue = function(){
                         return maxValue;
                     }
@@ -136,13 +141,13 @@ define(['./module'], function (directives) {
                                 return true;
                         }
 
-                        if((s.numAttr + "").length == (ctrl.getMaxValue() + "").length){
-                            event.preventDefault();
-                            return false;
-                        }
-
                         if(event.keyCode >= 48 && event.keyCode <= 57 ||
                             event.keyCode >= 96 && event.keyCode <= 105){
+                            if((s.numAttr + "").length == (ctrl.getMaxValue() + "").length){
+                                s.numAttr =  ctrl.getMinValue() - 1;
+                                var key = event.keyCode;
+                                ctrl.setNewNum(String.fromCharCode((96 <= key && key <= 105) ? key-48 : key))
+                            }
                             if(!ctrl.saveNumber()) {
                                 event.preventDefault();
                                 return false;
