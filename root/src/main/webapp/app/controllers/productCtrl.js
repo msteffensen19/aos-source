@@ -12,7 +12,7 @@ define(['./module'], function (controllers) {
 
             var selectedColor = resolveParams.selectedColor;
             var pageState = resolveParams.pageState;
-            $scope.quantity = 1, //resolveParams.quantity || 1;
+            $scope.quantity = resolveParams.quantity || 1;
             $scope.categoryName = resolveParams.categoryName;
             $scope.product = resolveParams.product;
 
@@ -27,25 +27,16 @@ define(['./module'], function (controllers) {
             $scope.colorSelected = $scope.colorSelected || $scope.product.colors[0];
 
 
-            $scope.quantityOptions = [1,2,3,4,5,6,7,8,9];
-            if($scope.quantity && $scope.quantity > 9)
-            {
-                for(var i = 10; i <= $scope.quantity; i++)
-                {
-                    $scope.quantityOptions.push(i)
-                }
-            }
-
-
             $scope.addToCart = function(){
+                var productToAdd = angular.copy($scope.product);
+                productToAdd.colors = [$scope.colorSelected];
                 if(pageState == 'edit')
                 {
-
+                    productToAdd.quantity = $scope.quantity
+                    $scope.$parent.updateProduct(productToAdd);
                 }
                 else
                 {
-                    var productToAdd = angular.copy($scope.product);
-                    productToAdd.colors = [$scope.colorSelected];
                     $scope.$parent.addProduct(productToAdd, $scope.quantity);
                 }
             }

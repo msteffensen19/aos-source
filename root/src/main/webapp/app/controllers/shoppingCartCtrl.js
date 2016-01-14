@@ -8,7 +8,6 @@ define(['./module'], function(controllers){
         function(s, cartService){
 
             s.checkCart();
-
             Helper.forAllPage();
             $("nav .navLinks").css("display" , "none");
 

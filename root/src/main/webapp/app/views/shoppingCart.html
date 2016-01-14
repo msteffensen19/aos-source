@@ -65,8 +65,7 @@
                         <label class="roboto-light mobileViewer">
                             {{'QUANTITY' | translate}}:
                         </label>
-                        <e-sec-plus-minus num-attr="product.quantity"></e-sec-plus-minus>
-                        <!--<select ng-model="product.quantity" ng-options="item for item in [1,2,3,4,5,6,7,8,9] | productQuantity:product.quantity" ></select>-->
+                        <e-sec-plus-minus num-attr="product.quantity" update-product-attr="updateProduct(product)" ></e-sec-plus-minus>
                     </td>
                     <td class="smollCell">
                         <label class="roboto-light mobileViewer">
