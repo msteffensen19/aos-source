@@ -20,7 +20,6 @@ define(['./module'], function (directives) {
                     var minValue = 1;
                     var num = 1
                     var readyToCheck = true;
-                    s.num = s.numAttr;
 
                     this.getMaxValue = function(){
                         return maxValue;
@@ -33,7 +32,7 @@ define(['./module'], function (directives) {
                     s.incrementValue = function(){
                         s.$apply(function(){
                             var newVal = s.numAttr + 1
-                            num = s.num = s.numAttr = newVal;
+                            num = s.numAttr = newVal;
                         });
                         return s.numAttr >= maxValue;
                     }
@@ -41,7 +40,7 @@ define(['./module'], function (directives) {
                     s.decrementValue = function(){
                         s.$apply(function(){
                             var newVal = s.numAttr - 1
-                            num = s.num = s.numAttr = newVal;
+                            num = s.numAttr = newVal;
                         });
                         return s.numAttr <= minValue;
                     }
@@ -53,7 +52,7 @@ define(['./module'], function (directives) {
 
                         if(readyToCheck) {
                             readyToCheck = false;
-                            num = s.num;
+                            num = s.numAttr;
                         }
                         return true;
                     }
@@ -64,13 +63,13 @@ define(['./module'], function (directives) {
                     }
 
                     function checkNumber(){
-                        var isNumber = (s.num - 0) == s.num && (''+s.num).trim().length > 0;
+                        var isNumber = (s.numAttr - 0) == s.numAttr && (''+s.numAttr).trim().length > 0;
                         if(!isNumber){
-                            s.num = parseInt(num);
+                            s.numAttr = parseInt(num);
                             return false;
                         }
-                        if(s.num > maxValue || s.num < minValue ){
-                            s.num = parseInt(num);
+                        if(s.numAttr > maxValue || s.numAttr < minValue ){
+                            s.numAttr = parseInt(num);
                             return false;
                         }
                         return true;
@@ -88,8 +87,8 @@ define(['./module'], function (directives) {
                         $(e).find('.plus').addClass('disableBtn')
                     }
                     s.checkDisables = function(){
-                        if (s.num <= minValue) {
-                            s.num = minValue;
+                        if (s.numAttr <= minValue) {
+                            s.numAttr = minValue;
                             $(e).find('.minus').addClass('disableBtn')
                             $(e).find('.plus').removeClass('disableBtn')
                         }
@@ -97,8 +96,8 @@ define(['./module'], function (directives) {
                             $(e).find('.minus').removeClass('disableBtn')
                         }
 
-                        if (s.num >= maxValue) {
-                            s.num = maxValue;
+                        if (s.numAttr >= maxValue) {
+                            s.numAttr = maxValue;
                             $(e).find('.plus').addClass('disableBtn')
                             $(e).find('.minus').removeClass('disableBtn')
                         }
@@ -120,7 +119,10 @@ define(['./module'], function (directives) {
                     e.on('keydown', function (event) {
 
                         console.log(event.keyCode)
+                        console.log(s.numAttr)
+
                         switch (event.keyCode){
+                            case 8: // back space
                             case 37: // left
                             case 39: // rigth
                             case 38: // down
@@ -128,6 +130,11 @@ define(['./module'], function (directives) {
                             case 123: // f12
                             case 13: // enter
                                 return true;
+                        }
+
+                        if((s.numAttr + "").length == (ctrl.getMaxValue() + "").length){
+                            event.preventDefault();
+                            return false;
                         }
 
                         if(event.keyCode >= 48 && event.keyCode <= 57 ||
