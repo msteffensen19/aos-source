@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="blueLink">
-            <a>{{ 'Edit_shipping_Details' | translate }}</a>
+            <a data-ng-click="getData()">{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
@@ -57,7 +57,7 @@
 
             <!---------------------------- SAFEPAY SECCION ---------------------------->
 
-            <div ng-show="imgRadioButton == 1 && !editMode">
+            <div ng-show="imgRadioButton == 1">
 
                 <div class="notice">
                     <h4 translate="Notice"  ></h4>
@@ -142,7 +142,7 @@
                 </div>
 
                 <div class="blueLink">
-                    <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                    <a ng-click="firstTag = true" >{{ 'Back_to_shipping_details' | translate }}</a>
                     <label>
                         <input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"
                                type="button" value="{{'PAY_NOW' | translate}}" />
@@ -157,7 +157,7 @@
 
             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
-            <div ng-show="noCards">
+            <div ng-show="imgRadioButton == 2 && noCards">
 
                 <sec-validate class="smollInput" >
 

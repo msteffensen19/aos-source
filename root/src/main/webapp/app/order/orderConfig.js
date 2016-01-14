@@ -27,12 +27,12 @@ define([],function(){
                             orderService.getShippingCost(user).
                             then(function (shippingCost) {
 
-                                var paramsToResolve = {
+                                defer.resolve({
                                     shippingCost : shippingCost,
                                     user : user,
-                                    noCards: true
-                                }
-                                defer.resolve(paramsToResolve);
+                                    noCards: true,
+                                    CardNumber: [],
+                                });
                             });
                         }
                         else {

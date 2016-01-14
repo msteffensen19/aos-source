@@ -12,37 +12,39 @@ define(['./module'], function (controllers) {
 
             s.paymentEnd = false;
             s.$on('updatePaymentEnd', function (event, args) {
-                s.paymentEnd = args;
-                l(args)
                 s.paymentEnd = args.paymentEnd;
                 s.orderNumber = args.orderNumber;
                 s.trackingNumber = args.trackingNumber;
             });
             s.noCards = resolveParams.noCards; //check if have cards
 
-            s.loadMore_1 = function(){
-                s.CardNumber = ["6543", "2109", "8765", "4321"];
-
+            s.getData = function(){
                 s.card = {
                     number : '6543210987654321',
                     cvv : '567',
-                    expirationDate : {
-                        month : '04',
-                        year : '2016'
-                    },
+                    expirationDate : { month : '04', year : '2016' },
                     name: 'James T. Kirk',
                 }
+                s.CardNumber = ["6543", "2109", "8765", "4321"];
+                s.savePay = {
+                    username : 'abcdefghi', // 1-20 chars
+                    password : 'Aa123456' // 1-20 chars
+                }
             }
-            s.CardNumber = ["6543", "2109", "8765", "4321"];
 
+            s.CardNumber = resolveParams.CardNumber;
             s.card = {
-                number : '6543210987654321',
-                cvv : '567',
+                number : '',
+                cvv : '',
                 expirationDate : {
-                    month : '04',
-                    year : '2016'
+                    month : '',
+                    year : ''
                 },
-                name: 'James T. Kirk',
+                name: '',
+            }
+            s.savePay = {
+                username : '',
+                password : ''
             }
 
             s.user = resolveParams.user

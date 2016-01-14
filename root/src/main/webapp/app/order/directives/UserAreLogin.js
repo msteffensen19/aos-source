@@ -16,11 +16,6 @@ define(['./module'], function (directives) {
                 s.firstTag = true;
                 s.imgRadioButton = 1;
 
-                s.savePay = {
-                    username : 'abcdefghi', // 1-20 chars
-                    password : 'Aa123456' // 1-20 chars
-                }
-
                 s.years = [];
                 var now = new Date();
                 for(var i = 0; i < 10; i++){
@@ -68,18 +63,13 @@ define(['./module'], function (directives) {
                 }
 
                 s.imgRadioButtonClicked = function(num){
-                    s.noCards = false;
-                    s.imgRadioButton = num;
+                     s.imgRadioButton = num;
                 }
 
                 s.paymentMethod_edit_method;
                 s.paymentMethod_edit = function() {
                     s.noCards = true;
                 }
-
-                s.orderNumber;
-                s.trackingNumber;
-
             },
         }
     }]);
