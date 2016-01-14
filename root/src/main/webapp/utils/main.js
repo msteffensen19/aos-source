@@ -33,6 +33,14 @@ Helper.closeToolTipCart = function (){
     }
 }
 
+Helper.getRandom = function(length){
+    var ranVal = '';
+    for(var i = 0; i < length; i++){
+        ranVal += (Math.floor(Math.random() * 9) + 1)
+    }
+    return ranVal
+}
+
 Helper.checkPagePossitions = function(){
 
     if ($('.pages').length > 0) {

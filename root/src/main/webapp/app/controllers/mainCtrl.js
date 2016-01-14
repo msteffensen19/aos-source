@@ -26,20 +26,6 @@ define(['./module'], function (controllers) {
 
 
 
-            /* Autocomplete*/
-
-            /* END Autocomplete*/
-
-
-
-
-
-
-
-
-
-
-
 
             /* Cart section  */
 
@@ -117,6 +103,8 @@ define(['./module'], function (controllers) {
 
             $scope.setUser = function(){
                 $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
+                $scope.loadMore_1()
+
             }
 
             $scope.accountSection = function(){

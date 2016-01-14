@@ -29,7 +29,8 @@ define([],function(){
 
                                 var paramsToResolve = {
                                     shippingCost : shippingCost,
-                                    user : user
+                                    user : user,
+                                    noCards: true
                                 }
                                 defer.resolve(paramsToResolve);
                             });

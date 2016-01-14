@@ -53,8 +53,8 @@ define(['./module'], function (services) {
                         "Shipping_Address_CustomerPhone": user.phoneNumber,
                         "Shipping_Address_PostalCode": user.zipcode,
                         "Shipping_Address_State": user.stateProvince,
-                        "Shipping_Cost":  $filter('productsCartCount')(cart),
-                        "Shipping_NumberOfProducts": $filter('productsCartSum')(cart),
+                        "Shipping_Cost":  $filter('productsCartSum')(cart),
+                        "Shipping_NumberOfProducts": $filter('productsCartCount')(cart),
                         "Shipping_TrackingNumber": 0
                     },
                     "purchasedProducts": purchasedProducts,
@@ -73,8 +73,11 @@ define(['./module'], function (services) {
                     //    "Authorization": "Bearer " + user.response.token,
                     //},
                 }).
-                then(function (shippingCost){
-                    defer.resolve(shippingCost.data.amount)
+                then(function (res){
+                    // {reason, orderNumber, code, success}
+                    console.log(JSON.stringify(res.data))
+                    console.log(res.data)
+                    defer.resolve(res.data)
                 }, function (err){
                     console.log(err); defer.reject("probl.")
                 })

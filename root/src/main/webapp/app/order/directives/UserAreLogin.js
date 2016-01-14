@@ -7,15 +7,14 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userAreLogin', ['$templateCache', 'orderService', function($templateCache, orderService){
+    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService', function(rs, $templateCache, orderService){
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
-            link: function(s, e, a, ctrl){
+            link: function(s){
 
                 s.firstTag = true;
                 s.imgRadioButton = 1;
-                s.noCards = false; //check if have cards
 
                 s.savePay = {
                     username : 'abcdefghi', // 1-20 chars
@@ -28,42 +27,40 @@ define(['./module'], function (directives) {
                     s.years.push((now.getFullYear() + i) + "");
                 }
 
-                s.card = {
-                    number : '6543210987654321',
-                    cvv : '666',
-                    expirationDate : {
-                        month : '04',
-                        year : '2016'
-                    },
-                    name: 'James T. Kirk',
+                s.payNow_SafePay = function(){
+                    var TransPaymentMethod = "SafePay";
+                    var accountNumber = 843200971;
+                    safePay(TransPaymentMethod, accountNumber);
                 }
 
-                s.payNow_SafePay = function(){
+                function safePay(TransPaymentMethod, accountNumber){
+                    orderService.SafePay( s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
+                        .then(function(res){
+                            if(res.success){
 
-                    var accountNumber = 843200971;
-                    var TransPaymentMethod = "SafePay"
-
-                    orderService.SafePay(
-                        s.user,
-                        s.savePay,
-                        s.card,
-                        s.shipping,
-                        s.cart,
-                        accountNumber,
-                        TransPaymentMethod
-                    ).then(function(res){
-                        if(res)
-                        {
-                            s.paymentEnd = true;
-                            return;
-                        }
-                        s.paymentEnd = false;
-                    });
+                                rs.$broadcast('updatePaymentEnd', {
+                                    paymentEnd: true,
+                                    orderNumber : res.orderNumber,
+                                    trackingNumber : Helper.getRandom(10)
+                                });
+                                return;
+                            }
+                            s.paymentEnd = false;
+                        });
                 }
 
                 s.payNow_masterCredit = function(){
+                    var TransPaymentMethod = "MasterCredit";
                     var accountNumber = 112987298763;
-                    s.paymentEnd = true;
+                    safePay(TransPaymentMethod, accountNumber);
+                }
+
+                s.payNow_manual = function(){
+                    s.card.number = '';
+                    angular.forEach(s.CardNumber, function(fourDigits){
+                        s.card.number += fourDigits + "";
+                    })
+                    s.payNow_masterCredit()
                 }
 
                 s.shippingDetails_next = function(){
