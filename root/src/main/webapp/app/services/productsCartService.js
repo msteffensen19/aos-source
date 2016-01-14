@@ -227,8 +227,10 @@ define(['./module'], function (services) {
                     angular.forEach(cart.productsInCart, function (productInCart, index) {
                         if (product.productId == productInCart.productId) {
                             if(product.colors == undefined){
-                                thisIsUpdateMode = true;
-                                productInCart.quantity = product.quantity;
+                                if (productInCart.color.code == product.color.code) {
+                                    thisIsUpdateMode = true;
+                                    productInCart.quantity = product.quantity;
+                                }
                             }
                             else{
                                 angular.forEach(product.colors, function (color) {

@@ -19,12 +19,12 @@ define(['./module'], function (directives) {
 
                     var maxValue = 999;
                     var minValue = 1;
-                    var num = 1
+                    var num = 1;
                     var readyToCheck = true;
-
+                    s.numAttr = parseInt(s.numAttr);
 
                     this.setNewNum = function(_num){
-                        num = _num;
+                        num = parseInt(_num);
                     }
 
                     this.getMaxValue = function(){
@@ -38,17 +38,18 @@ define(['./module'], function (directives) {
                     s.incrementValue = function(){
                         s.$apply(function(){
                             var newVal = s.numAttr + 1
-                            num = s.numAttr = newVal;
+                            num = s.numAttr = parseInt(newVal);
                         });
-                        s.updateProductAttr(product)
+
+                        s.updateProductAttr()
                         return s.numAttr >= maxValue;
                     }
 
                     s.decrementValue = function(){
                         s.$apply(function(){
                             var newVal = s.numAttr - 1
-                            num = s.numAttr = newVal;
-                            s.updateProductAttr(product)
+                            num = s.numAttr = parseInt(newVal);
+                            s.updateProductAttr()
                         });
                         return s.numAttr <= minValue;
                     }
@@ -67,7 +68,7 @@ define(['./module'], function (directives) {
 
                     this.updateNumber = function(){
                         readyToCheck = true;
-                        s.updateProductAttr(product)
+                        s.updateProductAttr()
                         s.checkDisables()
                     }
 
@@ -88,7 +89,7 @@ define(['./module'], function (directives) {
                     var minValue = ctrl.getMinValue();
                     var maxValue = ctrl.getMaxValue();
                     if (s.numAttr <= minValue) {
-                        s.numAttr = minValue;
+                        s.numAttr = parseInt(minValue);
                         $(e).find('.minus').addClass('disableBtn')
                     }
                     if (s.numAttr >= maxValue) {
@@ -97,7 +98,7 @@ define(['./module'], function (directives) {
                     }
                     s.checkDisables = function(){
                         if (s.numAttr <= minValue) {
-                            s.numAttr = minValue;
+                            s.numAttr = parseInt(minValue);
                             $(e).find('.minus').addClass('disableBtn')
                             $(e).find('.plus').removeClass('disableBtn')
                         }
@@ -106,7 +107,7 @@ define(['./module'], function (directives) {
                         }
 
                         if (s.numAttr >= maxValue) {
-                            s.numAttr = maxValue;
+                            s.numAttr = parseInt(maxValue);
                             $(e).find('.plus').addClass('disableBtn')
                             $(e).find('.minus').removeClass('disableBtn')
                         }
@@ -121,14 +122,11 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'A',
                 require: '^eSecPlusMinus',
+                scope: {
+                },
                 link: function(s, e, a, ctrl){
 
-                    console.log(ctrl)
-
                     e.on('keydown', function (event) {
-
-                        console.log(event.keyCode)
-                        console.log(s.numAttr)
 
                         switch (event.keyCode){
                             case 8: // back space
@@ -176,26 +174,26 @@ define(['./module'], function (directives) {
 
                         if(a.incrementValueAttr == "+"){
 
-                            if(e.hasClass("disableBtn")){ return; }
-
+                            if(e.hasClass("disableBtn")){
+                                return;
+                            }
                             if(s.incrementValue()){
                                 e.addClass("disableBtn")
                                 return;
                             }
-
                             $(e).siblings('.minus').removeClass("disableBtn")
                             e.removeClass("disableBtn")
 
                         }
                         if(a.incrementValueAttr == "-"){
 
-                            if(e.hasClass("disableBtn")){ return; }
-
+                            if(e.hasClass("disableBtn")){
+                                return;
+                            }
                             if(s.decrementValue()){
                                 e.addClass("disableBtn")
                                 return;
                             }
-
                             $(e).siblings('.plus').removeClass("disableBtn")
                             e.removeClass("disableBtn")
                         }
@@ -203,7 +201,6 @@ define(['./module'], function (directives) {
                 }
             }
         })
-
     ;
 });
 
