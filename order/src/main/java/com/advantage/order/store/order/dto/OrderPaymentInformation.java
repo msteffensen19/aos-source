@@ -29,43 +29,56 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class OrderPaymentInformation {
-    @JsonProperty("Transaction.PaymentMethod")
+    //@JsonProperty("Transaction.PaymentMethod")
+    @JsonProperty("Transaction_PaymentMethod")
     private String paymentMethod;       //  by PaymentMethodEnum
 
-    @JsonProperty("Transaction.Type")
+    //@JsonProperty("Transaction.Type")
+    @JsonProperty("Transaction_Type")
     private String transactionType;     //  by TransactioTypeEnum
 
-    @JsonProperty("Transaction.ReferenceNumber")
+    //@JsonProperty("Transaction.ReferenceNumber")
+    @JsonProperty("Transaction_ReferenceNumber")
     private long referenceNumber;
 
-    @JsonProperty("Transaction.CustomerPhone")
+    //@JsonProperty("Transaction.CustomerPhone")
+    @JsonProperty("Transaction_CustomerPhone")
     private String customerPhone;
 
-    @JsonProperty("Transaction.TransactionDate")
+    //@JsonProperty("Transaction.TransactionDate")
+    @JsonProperty("Transaction_TransactionDate")
     private String transactionDate;
 
-    @JsonProperty("Transaction.AccountNumber")
+    //@JsonProperty("Transaction.AccountNumber")
+    @JsonProperty("Transaction_AccountNumber")
     private String accountNumber;
 
-    @JsonProperty("Transaction.Currency")
+    //@JsonProperty("Transaction.Currency")
+    @JsonProperty("Transaction_Currency")
     private String currency;
 
-    @JsonProperty("Transaction.MasterCredit.CardNumber")
+    //@JsonProperty("Transaction.MasterCredit.CardNumber")
+    @JsonProperty("Transaction_MasterCredit_CardNumber")
     private String cardNumber;
 
-    @JsonProperty("Transaction.MasterCredit.ExpirationDate")
+    //@JsonProperty("Transaction.MasterCredit.ExpirationDate")
+    @JsonProperty("Transaction_MasterCredit_ExpirationDate")
     private String expirationDate;
 
-    @JsonProperty("Transaction.MasterCredit.CustomerName")
+    //@JsonProperty("Transaction.MasterCredit.CustomerName")
+    @JsonProperty("Transaction_MasterCredit_CustomerName")
     private String customerName;
 
-    @JsonProperty("Transaction.MasterCredit.CVVNumber")
+    //@JsonProperty("Transaction.MasterCredit.CVVNumber")
+    @JsonProperty("Transaction_MasterCredit_CVVNumber")
     private String cvvNumber;
 
-    @JsonProperty("Transaction.SafePay.UserName")
+    //@JsonProperty("Transaction.SafePay.UserName")
+    @JsonProperty("Transaction_SafePay_UserName")
     private String username;
 
-    @JsonProperty("Transaction.SafePay.Password")
+    //@JsonProperty("Transaction.SafePay.Password")
+    @JsonProperty("Transaction_SafePay_Password")
     private String password;
 
     public OrderPaymentInformation() { }
