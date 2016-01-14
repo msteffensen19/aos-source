@@ -95,8 +95,8 @@ public class Account {
     @Column
     private Integer PaymentMethod;        //  by enum  PaymentMethodEnum
 
-    @Column(name = FIELD_COUNTRY)
-    private Integer country;                //  by Country
+    /*@Column(name = FIELD_COUNTRY)
+    private Integer country;  */              //  by Country
 
     @Column(name = "STATE_PROVINCE")
     private String stateProvince;
@@ -129,16 +129,20 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ShippingAddress> addresses = new HashSet<>();
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = Country.FIELD_ID)
+    private Country country;
+
     public Account() {
 
     }
 
-    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
+    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(country, "country id");
+        //ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(countryId, "country id");
 
         //  Validate String Arguments
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
@@ -171,7 +175,7 @@ public class Account {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Integer country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
+    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
         this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
@@ -233,13 +237,13 @@ public class Account {
         PaymentMethod = paymentMethod;
     }
 
-    public Integer getCountry() {
+   /* public Integer getCountry() {
         return country;
     }
 
     public void setCountry(Integer country) {
         this.country = country;
-    }
+    }*/
 
     public String getStateProvince() {
         return stateProvince;
@@ -331,6 +335,14 @@ public class Account {
 
     public void setAddresses(Set<ShippingAddress> addresses) {
         this.addresses = addresses;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     /**

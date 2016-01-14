@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.*;
         "accountId",
         "lastName",
         "firstName",
-        "country",
+        "countryId",
         "stateProvince",
         "cityName",
         "address",
@@ -28,7 +28,7 @@ public class AccountUpdateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Integer country;
+    protected Long countryId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String stateProvince;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -70,12 +70,12 @@ public class AccountUpdateRequest {
         this.accountId = accountId;
     }
 
-    public Integer getCountry() {
-        return country;
+    public Long getCountry() {
+        return countryId;
     }
 
-    public void setCountry(Integer country) {
-        this.country = country;
+    public void setCountry(Long country) {
+        this.countryId = country;
     }
 
     public String getStateProvince() {

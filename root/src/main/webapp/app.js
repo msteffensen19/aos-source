@@ -99,9 +99,9 @@ define([
             }];
 
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-                var requireLogin = toState.data.requireLogin;
-                var showWelcome = toState.data.showWelcome;
-                var underConstruction = toState.data.underConstruction;
+                //var requireLogin = toState.data.requireLogin;
+                //var showWelcome = toState.data.showWelcome;
+                //var underConstruction = toState.data.underConstruction;
 
                 /*
                 showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');

@@ -7,7 +7,7 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userAreLogin', ['$templateCache', function($templateCache){
+    directives.directive('userAreLogin', ['$templateCache', 'orderService', function($templateCache, orderService){
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
@@ -30,12 +30,34 @@ define(['./module'], function (directives) {
 
                 s.card = {
                     number : '',
-                    ccv : '',
+                    cvv : '',
                     expirationDate : {
                         month : '',
                         year : ''
                     },
                     name: '',
+                }
+
+                s.payNow_SafePay = function(){
+
+                    var accountNumber = 100000;
+                    orderService.payNow_SafePay(
+                        s.user,
+                        s.card,
+                        s.shippingCost,
+                        s.cart
+                    ).then(function(res){
+                        if(res)
+                        {
+                            s.paymentEnd = true;
+                            return;
+                        }
+                        s.paymentEnd = false;
+                    });
+                }
+
+                s.payNow_masterCredit = function(){
+                    s.paymentEnd = true;
                 }
 
                 s.shippingDetails_next = function(){
@@ -48,16 +70,12 @@ define(['./module'], function (directives) {
                 }
 
                 s.paymentMethod_edit_method;
-                s.paymentMethod_edit = function(cart) {
+                s.paymentMethod_edit = function() {
                     s.noCards = true;
                 }
 
                 s.orderNumber;
                 s.trackingNumber;
-
-                s.payNow_SafePay = function(){
-                    s.paymentEnd = true;
-                }
 
             },
         }

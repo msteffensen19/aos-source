@@ -10,14 +10,14 @@ import java.util.List;
 public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
-                          String password, Integer country, String phoneNumber, String stateProvince,
+                          String password, Long country, String phoneNumber, String stateProvince,
                           String cityName, String address, String zipcode, String email,
                           String agreeToReceiveOffersAndPromotions);
 
     //  For User-Management API
     @Transactional
     AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
-                                 String password, Integer country, String phoneNumber, String stateProvince,
+                                 String password, Long country, String phoneNumber, String stateProvince,
                                  String cityName, String address, String zipcode, String email,
                                  String agreeToReceiveOffersAndPromotions);
 
@@ -27,7 +27,7 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     Account updateAppUser(Account account);
 
-    AccountStatusResponse updateAccount(long acccountId, Integer appUserType, String lastName, String firstName,Integer country,
+    AccountStatusResponse updateAccount(long acccountId, Integer appUserType, String lastName, String firstName,Long country,
                                         String phoneNumber, String stateProvince, String cityName, String address,
                                         String zipcode, String email, String agreeToReceiveOffersAndPromotions);
 

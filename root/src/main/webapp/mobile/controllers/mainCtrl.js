@@ -1,14 +1,11 @@
 /**
  * Created by kubany on 10/13/2015.
  */
-define(['./module'], function (controllers) {
 
-
-    'use strict';
-    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll',
-                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
-        function ($scope, productService, smoothScroll,
-                        $location, $cookie, $rootScope, productsCartService, $filter, $state) {
+'use strict';
+define(['./module'], function mainMobCtrl ($scope, productService, smoothScroll,
+                        $location, $cookie, $rootScope, productsCartService,
+                                           $filter, $state) {
 
             $scope.cart;
 
@@ -19,22 +16,6 @@ define(['./module'], function (controllers) {
             $scope.go_up = function(){
                 $('body, html').animate({scrollTop: 0}, 10);
             }
-
-
-
-
-
-
-
-            /* Autocomplete*/
-
-            /* END Autocomplete*/
-
-
-
-
-
-
 
 
 
@@ -73,17 +54,7 @@ define(['./module'], function (controllers) {
                         }
                     });
                 });
-            }
-
-            $scope.updateProduct = function(product) {
-                console.log(product)
-                console.log($scope.cart)
-                productsCartService.updateProduct(product).then(function(cart){
-                    $scope.cart = cart;
-                    console.log($scope.cart)
-                });
-            }
-
+            };
 
             function setToolTipCartSlideUp() {
                 clearInterval(Helper.____closeTooTipCart);
@@ -246,7 +217,7 @@ define(['./module'], function (controllers) {
              $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {
              onBreadcrumbHandler();
              });
-             */
+
 
             function onBreadcrumbHandler(){
                 var existsRoot = $rootScope.breadcrumb;
@@ -264,20 +235,18 @@ define(['./module'], function (controllers) {
                 }
                 $rootScope.breadcrumb = newBreadcrumb;
             }
+    */
 
 
+        Main.addAnimPlaceholderEventListener();
+        $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+        var mobile_section_moved = $("#mobile-section").width();
 
-            Main.addAnimPlaceholderEventListener();
-            $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-            var mobile_section_moved = $("#mobile-section").width();
-
-            $scope.openMobileSection = function(){
-                $("body").animate({
-                    left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
-                }, 200);
-            }
-
-        }]);
+    $scope.openMobileSection = function(){
+        $("body").animate({
+            left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
+        }, 200);
+    }
 });
 
 

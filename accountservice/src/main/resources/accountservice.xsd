@@ -56,7 +56,9 @@
             <xs:element name="loginName" type="xs:string"/>
             <xs:element name="accountType" type="xs:int"/>
             <xs:element name="paymentMethod" type="xs:int"/>
-            <xs:element name="country" type="xs:string"/>
+            <xs:element name="countryId" type="xs:long"/>
+            <xs:element name="countryName" type="xs:string"/>
+            <xs:element name="countryIsoName" type="xs:string"/>
             <xs:element name="stateProvince" type="xs:string"/>
             <xs:element name="cityName" type="xs:string"/>
             <xs:element name="address" type="xs:string"/>
@@ -139,7 +141,7 @@
                 <xs:element name="address" type="xs:string"/>
                 <xs:element name="allowOffersPromotion" type="xs:string"/>
                 <xs:element name="cityName" type="xs:string"/>
-                <xs:element name="country" type="xs:int"/>
+                <xs:element name="countryId" type="xs:long"/>
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="firstName" type="xs:string"/>
                 <xs:element name="lastName" type="xs:string"/>
@@ -160,7 +162,7 @@
                 <xs:element name="address" type="xs:string"/>
                 <xs:element name="allowOffersPromotion" type="xs:string"/>
                 <xs:element name="cityName" type="xs:string"/>
-                <xs:element name="country" type="xs:int"/>
+                <xs:element name="countryId" type="xs:long"/>
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="firstName" type="xs:string"/>
                 <xs:element name="lastName" type="xs:string"/>

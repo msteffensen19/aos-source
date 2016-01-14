@@ -100,18 +100,6 @@ $(document).on({
 
         $(window).on({
         resize: _resize,
-        scroll: function () {
-
-            if ($(window).scrollTop() > 300) {
-                $('#scrollToTop').fadeIn(300);
-            }
-            else {
-                $('#scrollToTop').fadeOut(300);
-            }
-
-            Helper.checkPagePossitions();
-            Helper.closeToolTipCart();
-        }
         });
 
 

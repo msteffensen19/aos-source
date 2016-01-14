@@ -146,10 +146,14 @@ var server = {
             return orderKey + "/carts/" + userId;
         },
 
-        removeProductToUser: function (userId, productId, color, quantity){
+        removeProductToUser: function (userId, productId, color){
             return orderKey + "/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color;
+        },
+
+        updateProductToUser: function (userId, productId, color, quantity){
+            return addProductToUser(userId, productId, color, quantity);
         },
 
         addProductToUser: function (userId, productId, color, quantity){

@@ -42,7 +42,7 @@
                     </label>
                     <label class="roboto-bold totalText" > {{ 'TOTAL' | translate }}
                         <span class="roboto-medium totalValue">
-                            {{(cart | productsCartSum) + shippingCost | currency:'$'}}
+                            {{ cart | productsCartSum:shippingCost | currency:'$' }}
                         </span>
                     </label>
                 </div>
