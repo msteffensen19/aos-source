@@ -69,6 +69,7 @@ define([],function(){
 
                                 var products = $filter("filterFullArrayforAutoComplate")([], result, $stateParams.id, -1)
                                 var categories = {
+                                    viewAll: true,
                                     categoryId: 1,
                                     categoryName: "Search Result: '" + $stateParams.viewAll + "'",
                                     categoryImageId: category ? category.categoryImageId : "",
