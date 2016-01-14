@@ -13,6 +13,7 @@ define(['./module'], function (directives) {
                 template: $templateCache.get('app/partials/e-sec-plus-minus.html'),
                 scope: {
                     numAttr: '=',
+                    updateProductAttr: '&',
                 },
                 controller: ['$scope', function(s){
 
@@ -34,6 +35,7 @@ define(['./module'], function (directives) {
                             var newVal = s.numAttr + 1
                             num = s.numAttr = newVal;
                         });
+                        s.updateProductAttr(product)
                         return s.numAttr >= maxValue;
                     }
 
@@ -41,6 +43,7 @@ define(['./module'], function (directives) {
                         s.$apply(function(){
                             var newVal = s.numAttr - 1
                             num = s.numAttr = newVal;
+                            s.updateProductAttr(product)
                         });
                         return s.numAttr <= minValue;
                     }
@@ -59,6 +62,7 @@ define(['./module'], function (directives) {
 
                     this.updateNumber = function(){
                         readyToCheck = true;
+                        s.updateProductAttr(product)
                         s.checkDisables()
                     }
 

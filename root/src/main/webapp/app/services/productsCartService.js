@@ -13,6 +13,7 @@ define(['./module'], function (services) {
 
             return({
                 addProduct : addProduct,
+                updateProduct : updateProduct,
                 loadCartProducts : loadCartProducts,
                 joinCartProducts : joinCartProducts,
                 removeProduct: removeProduct,
@@ -192,6 +193,10 @@ define(['./module'], function (services) {
                 $cookie("userCart", guestCart, { expires: 365*5 });
             }
 
+            function updateProduct(product) {
+               return addProduct(product, product.quantity)
+            }
+
             function addProduct(product, quantity) {
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
@@ -217,33 +222,48 @@ define(['./module'], function (services) {
                 }
                 else {
                     var find = null;
+                    var thisIsUpdateMode = false;
                     var productIndex = 0;
                     angular.forEach(cart.productsInCart, function (productInCart, index) {
                         if (product.productId == productInCart.productId) {
-                            angular.forEach(product.colors, function (color) {
-                                if (productInCart.color.code == color.code) {
-                                    productIndex = index;
-                                    productInCart.quantity += quantity;
-                                    find = product;
-                                }
-                            });
+                            if(product.colors == undefined){
+                                thisIsUpdateMode = true;
+                                productInCart.quantity += product.quantity;
+                            }
+                            else{
+                                angular.forEach(product.colors, function (color) {
+                                    if (productInCart.color.code == color.code) {
+                                        productIndex = index;
+                                        productInCart.quantity += quantity;
+                                        find = product;
+                                    }
+                                });
+                            }
                         }
                     });
 
-                    if (!find) {
-                        cart.productsInCart.unshift({
-                            "productId": product.productId,
-                            "imageUrl": product.imageUrl,
-                            "productName": product.productName,
-                            "color": product.colors.length > 0 ? product.colors[0] : 'FFF',
-                            "quantity": quantity,
-                            "price": product.price
-                        });
+                    if(!thisIsUpdateMode) {
+                        if (!find) {
+                            var color;
+                            if (product.colors == undefined) {
+                                color = product.color;
+                            }
+                            else {
+                                color = product.colors.length > 0 ? product.colors[0] : 'FFFFFF';
+                            }
+                            cart.productsInCart.unshift({
+                                "productId": product.productId,
+                                "imageUrl": product.imageUrl,
+                                "productName": product.productName,
+                                "color": color,
+                                "quantity": quantity,
+                                "price": product.price
+                            });
+                        }
+                        else {
+                            cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
+                        }
                     }
-                    else {
-                        cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
-                    }
-
                     updateCart(cart);
                     response.resolve(cart);
                     return response.promise;

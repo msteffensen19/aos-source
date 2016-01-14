@@ -73,7 +73,17 @@ define(['./module'], function (controllers) {
                         }
                     });
                 });
-            };
+            }
+
+            $scope.updateProduct = function(product) {
+                console.log(product)
+                console.log($scope.cart)
+                productsCartService.updateProduct(product).then(function(cart){
+                    $scope.cart = cart;
+                    console.log($scope.cart)
+                });
+            }
+
 
             function setToolTipCartSlideUp() {
                 clearInterval(Helper.____closeTooTipCart);
