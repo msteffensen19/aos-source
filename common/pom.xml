@@ -17,22 +17,7 @@
             <id>production</id>
             <build>
                 <plugins>
-                    <!--prod plugins vvv-->
-                    <!--<plugin>-->
-                    <!--<groupId>org.apache.maven.plugins</groupId>-->
-                    <!--<artifactId>maven-war-plugin</artifactId>-->
-                    <!--<version>2.2</version>-->
-                    <!--<configuration>-->
-                    <!--<warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>-->
-                    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-                    <!--<webResources>-->
-                    <!--<resource>-->
-                    <!--<directory>${basedir}/target</directory>-->
-                    <!--</resource>-->
-                    <!--</webResources>-->
-                    <!--</configuration>-->
-                    <!--</plugin>-->
-                    <!--prod plugins ^^^-->
+
                 </plugins>
             </build>
         </profile>
