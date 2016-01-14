@@ -22,6 +22,14 @@ define(['./module'], function (directives) {
                     var readyToCheck = true;
                     s.num = s.numAttr;
 
+                    this.getMaxValue = function(){
+                        return maxValue;
+                    }
+
+                    this.getMinValue = function(){
+                        return minValue;
+                    }
+
                     s.incrementValue = function(){
                         s.$apply(function(){
                             var newVal = s.numAttr + 1
@@ -52,26 +60,53 @@ define(['./module'], function (directives) {
 
                     this.updateNumber = function(){
                         readyToCheck = true;
-                        if(checkNumber()){
-                            s.numAttr = s.num;
-                        }
+                        s.checkDisables()
                     }
 
-                    function checkNumber(event){
+                    function checkNumber(){
                         var isNumber = (s.num - 0) == s.num && (''+s.num).trim().length > 0;
-                        console.log(event)
                         if(!isNumber){
                             s.num = parseInt(num);
                             return false;
                         }
-                        if(s.numAttr > maxValue || s.numAttr < minValue ){
+                        if(s.num > maxValue || s.num < minValue ){
                             s.num = parseInt(num);
                             return false;
                         }
                         return true;
                     }
-
                 }],
+                link: function(s, e, a, ctrl) {
+                    var minValue = ctrl.getMinValue();
+                    var maxValue = ctrl.getMaxValue();
+                    if (s.numAttr <= minValue) {
+                        s.numAttr = minValue;
+                        $(e).find('.minus').addClass('disableBtn')
+                    }
+                    if (s.numAttr >= maxValue) {
+                        s.numAttr = maxValue;
+                        $(e).find('.plus').addClass('disableBtn')
+                    }
+                    s.checkDisables = function(){
+                        if (s.num <= minValue) {
+                            s.num = minValue;
+                            $(e).find('.minus').addClass('disableBtn')
+                            $(e).find('.plus').removeClass('disableBtn')
+                        }
+                        else {
+                            $(e).find('.minus').removeClass('disableBtn')
+                        }
+
+                        if (s.num >= maxValue) {
+                            s.num = maxValue;
+                            $(e).find('.plus').addClass('disableBtn')
+                            $(e).find('.minus').removeClass('disableBtn')
+                        }
+                        else{
+                            $(e).find('.plus').removeClass('disableBtn')
+                        }
+                    }
+                }
             }
         }])
         .directive('numbersOnly', function(){
@@ -83,6 +118,18 @@ define(['./module'], function (directives) {
                     console.log(ctrl)
 
                     e.on('keydown', function (event) {
+
+                        console.log(event.keyCode)
+                        switch (event.keyCode){
+                            case 37: // left
+                            case 39: // rigth
+                            case 38: // down
+                            case 40: // up
+                            case 123: // f12
+                            case 13: // enter
+                                return true;
+                        }
+
                         if(event.keyCode >= 48 && event.keyCode <= 57 ||
                             event.keyCode >= 96 && event.keyCode <= 105){
                             if(!ctrl.saveNumber()) {
@@ -110,6 +157,7 @@ define(['./module'], function (directives) {
                 link: function(s, e, a, ctrl){
 
                     e.on('click', function () {
+
                         if(a.incrementValueAttr == "+"){
 
                             if(e.hasClass("disableBtn")){ return; }

@@ -21,13 +21,13 @@
     display: inline-block;
     width: 24px;
     position: relative;
-    cursor: pointer;
+    cursor: default;
 }
 
 .e-sec-plus-minus div:not(.disableBtn):hover{
     background-color: #f3f3f3;
+    cursor: pointer;
 }
-
 
 .e-sec-plus-minus div.disableBtn.minus:before,
 .e-sec-plus-minus div.disableBtn.plus:before,
