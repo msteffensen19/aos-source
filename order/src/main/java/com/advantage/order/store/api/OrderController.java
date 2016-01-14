@@ -232,7 +232,7 @@ public class OrderController {
      * @param response
      * @return {@link ShippingCostResponse}
      */
-    @RequestMapping(value = "/shippingcost/", method = RequestMethod.POST)
+    @RequestMapping(value = "/shippingcost", method = RequestMethod.POST)
     @ApiOperation(value = "Order shipping cost")
     public ResponseEntity<ShippingCostResponse> getShippingCostFromShipEx(@RequestBody ShippingCostRequest costRequest,
                                                                           HttpServletRequest request,
