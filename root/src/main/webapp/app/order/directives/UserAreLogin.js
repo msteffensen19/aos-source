@@ -18,34 +18,39 @@ define(['./module'], function (directives) {
                 s.noCards = false; //check if have cards
 
                 s.savePay = {
-                    username : '',
-                    password : ''
+                    username : 'abcdefghi', // 1-20 chars
+                    password : 'Aa123456' // 1-20 chars
                 }
 
                 s.years = [];
                 var now = new Date();
                 for(var i = 0; i < 10; i++){
-                    s.years.push(now.getFullYear() + i);
+                    s.years.push((now.getFullYear() + i) + "");
                 }
 
                 s.card = {
-                    number : '',
-                    cvv : '',
+                    number : '6543210987654321',
+                    cvv : '666',
                     expirationDate : {
-                        month : '',
-                        year : ''
+                        month : '04',
+                        year : '2016'
                     },
-                    name: '',
+                    name: 'James T. Kirk',
                 }
 
                 s.payNow_SafePay = function(){
 
-                    var accountNumber = 100000;
-                    orderService.payNow_SafePay(
+                    var accountNumber = 843200971;
+                    var TransPaymentMethod = "SafePay"
+
+                    orderService.SafePay(
                         s.user,
+                        s.savePay,
                         s.card,
                         s.shippingCost,
-                        s.cart
+                        s.cart,
+                        accountNumber,
+                        TransPaymentMethod
                     ).then(function(res){
                         if(res)
                         {
@@ -57,6 +62,7 @@ define(['./module'], function (directives) {
                 }
 
                 s.payNow_masterCredit = function(){
+                    var accountNumber = 112987298763;
                     s.paymentEnd = true;
                 }
 

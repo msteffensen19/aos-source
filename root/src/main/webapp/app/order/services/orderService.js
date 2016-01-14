@@ -17,9 +17,8 @@ define(['./module'], function (services) {
         });
 
 
-            function SafePay(user, card, shipping, cart) {
+            function SafePay(user, savePay, card, shipping, cart, accountNumber, TransPaymentMethod) {
                 var defer = $q.defer();
-
 
                 var purchasedProducts = [];
                 angular.forEach(cart.productsInCart, function(product){
@@ -32,38 +31,47 @@ define(['./module'], function (services) {
 
                 var paramsToPass = {
                     "orderPaymentInformation": {
-                        "Transaction.AccountNumber": accountNumber,
-                        "Transaction.Currency": shipping.currency,
-                        "Transaction.CustomerPhone": user.phoneNumber,
-                        "Transaction.MasterCredit.CVVNumber": card.cvv,
-                        "Transaction.MasterCredit.CardNumber": card.number,
-                        "Transaction.MasterCredit.CustomerName": card.name,
-                        "Transaction.MasterCredit.ExpirationDate": card.expirationDate,
-                        "Transaction.PaymentMethod": "string",
-                        "Transaction.ReferenceNumber": 0,
-                        "Transaction.SafePay.Password": "string",
-                        "Transaction.SafePay.UserName": user.loginName,
-                        "Transaction.TransactionDate": shipping.transactionDate,
-                        "Transaction.Type": "string"
+                        "Transaction_AccountNumber": accountNumber,
+                        "Transaction_Currency": shipping.currency,
+                        "Transaction_CustomerPhone": user.phoneNumber,
+                        "Transaction_MasterCredit_CVVNumber": card.cvv,
+                        "Transaction_MasterCredit_CardNumber": card.number,
+                        "Transaction_MasterCredit_CustomerName": card.name,
+                        "Transaction_MasterCredit_ExpirationDate": card.expirationDate.month + "" + card.expirationDate.year,
+                        "Transaction_PaymentMethod": TransPaymentMethod,
+                        "Transaction_ReferenceNumber": 0,
+                        "Transaction_SafePay_Password": savePay.password,
+                        "Transaction_SafePay_UserName": savePay.username,
+                        "Transaction_TransactionDate": shipping.transactionDate,
+                        "Transaction_Type": "PAYMENT"
                     },
                     "orderShippingInformation": {
-                        "Shipping.Address.Address": user.address,
-                        "Shipping.Address.City": user.cityName,
-                        "Shipping.Address.CountryCode": user.countryId,
-                        "Shipping.Address.CustomerName": user.firstName + " " + user.lastName,
-                        "Shipping.Address.CustomerPhone": user.phoneNumber,
-                        "Shipping.Address.PostalCode": user.zipcode,
-                        "Shipping.Address.State": user.stateProvince,
-                        "Shipping.Cost":  $filter('productsCartCount')(cart),
-                        "Shipping.NumberOfProducts": $filter('productsCartSum')(cart),
-                        "Shipping.TrackingNumber": 0
+                        "Shipping_Address_Address": user.address,
+                        "Shipping_Address_City": user.cityName,
+                        "Shipping_Address_CountryCode": user.countryId,
+                        "Shipping_Address_CustomerName": user.firstName + " " + user.lastName,
+                        "Shipping_Address_CustomerPhone": user.phoneNumber,
+                        "Shipping_Address_PostalCode": user.zipcode,
+                        "Shipping_Address_State": user.stateProvince,
+                        "Shipping_Cost":  $filter('productsCartCount')(cart),
+                        "Shipping_NumberOfProducts": $filter('productsCartSum')(cart),
+                        "Shipping_TrackingNumber": 0
                     },
                     "purchasedProducts": purchasedProducts,
                 }
+
+                console.log(paramsToPass);
+                console.log(JSON.stringify(paramsToPass));
+                console.log(user);
+
                 $http({
                     method: "post",
-                    url: server.order.SafePay(),
-                    data: paramsToPass
+                    url: server.order.safePay(user.id),
+                    data: paramsToPass,
+                    //headers: {
+                    //    "content-type": "application/json",
+                    //    "Authorization": "Bearer " + user.response.token,
+                    //},
                 }).
                 then(function (shippingCost){
                     defer.resolve(shippingCost.data.amount)

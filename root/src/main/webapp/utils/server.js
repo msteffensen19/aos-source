@@ -168,8 +168,13 @@ var server = {
         },
 
         getShippingCost: function(){
-            return orderKey + "/shippingcost" ;
+            return orderKey + "/shippingcost/" ;
         },
+
+        safePay: function(userId){
+            return orderKey + "/users/" + userId ;
+        },
+
     },
     account: {
 
