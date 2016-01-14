@@ -172,7 +172,7 @@ var server = {
         },
 
         safePay: function(userId){
-            return orderKey + "/users/" + userId ;
+            return orderKey + "/orders/users/" + userId ;
         },
 
     },

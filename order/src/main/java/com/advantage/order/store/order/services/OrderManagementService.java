@@ -436,12 +436,12 @@ public class OrderManagementService {
             String input = "{" +
                     "\"SPCustomerPhone\": \"" + safePayRequest.getCustomerPhone() + "\"," +
                     "\"SPPassword\": \"" + safePayRequest.getPassword() + "\"," +
-                    "\"SPRecevingAmount.Currency\": \"" + safePayRequest.getCurrency() + "\"," +
-                    "\"SPRecevingAmount.Value\": " + safePayRequest.getValue() + "," +
-                    "\"SPRecevingCard.AccountNumber\": " + safePayRequest.getAccountNumber() + "," +
+                    "\"SPReceivingAmount.Currency\": \"" + safePayRequest.getCurrency() + "\"," +
+                    "\"SPReceivingAmount.Value\": " + safePayRequest.getValue() + "," +
+                    "\"SPReceivingCard.AccountNumber\": " + safePayRequest.getAccountNumber() + "," +
                     "\"SPTransactionDate\": \"" + safePayRequest.getTransactionDate() + "\"," +
-                    "\"SPTransactionType\": \"" + safePayRequest.getTransactionType() + "\"" +
-                    "\"SPUserName\":\"" + safePayRequest.getUserName() + "\"," +
+                    "\"SPTransactionType\": \"" + safePayRequest.getTransactionType() + "\"," +
+                    "\"SPUserName\":\"" + safePayRequest.getUserName() + "\"" +
                     "}";
 
             OutputStream os = conn.getOutputStream();
@@ -456,12 +456,15 @@ public class OrderManagementService {
                     (conn.getInputStream())));
 
             String output;
+            StringBuilder sb = new StringBuilder();
+
             System.out.println("Output from Server .... \n");
             while ((output = br.readLine()) != null) {
+                sb.append(output);
                 System.out.println(output);
             }
 
-            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(output);
+            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
 
             safePayResponse.setReferenceNumber(Long.valueOf(String.valueOf(jsonMap.get("SPRefNumber"))));
             safePayResponse.setResponseCode((String) jsonMap.get("SPResponse.Code"));

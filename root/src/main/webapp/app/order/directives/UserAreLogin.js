@@ -47,7 +47,7 @@ define(['./module'], function (directives) {
                         s.user,
                         s.savePay,
                         s.card,
-                        s.shippingCost,
+                        s.shipping,
                         s.cart,
                         accountNumber,
                         TransPaymentMethod
