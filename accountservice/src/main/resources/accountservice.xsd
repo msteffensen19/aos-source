@@ -40,14 +40,6 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetAccountByIdResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="account" type="tns:AccountDto" />
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
     <xs:complexType name="AccountDto">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>
@@ -115,7 +107,11 @@
     </xs:complexType>
 
     <xs:element name="GetAllAccountsRequest"/>
-    <xs:element name="GetCountriesRequest"/>
+    <xs:element name="GetCountriesRequest">
+            <xs:complexType>
+                <xs:sequence/>
+            </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="CountryDto">
         <xs:sequence>
@@ -146,6 +142,14 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="accountId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAccountByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AccountResponse" type="tns:AccountDto" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -219,7 +223,7 @@
     <xs:element name="AccountLoginResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="AccountStatusResponse" type="tns:AccountStatusResponse"/>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

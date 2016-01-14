@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "AccountLoginRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountLoginRequest {
-
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginUser;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)

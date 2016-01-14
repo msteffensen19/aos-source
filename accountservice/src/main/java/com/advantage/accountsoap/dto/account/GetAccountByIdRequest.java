@@ -10,14 +10,14 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "GetAccountByIdRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetAccountByIdRequest {
-    @XmlElement(name = "accountId", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private int accountId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private long accountId;
 
-    public int getId() {
+    public long getId() {
         return accountId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.accountId = id;
     }
 }

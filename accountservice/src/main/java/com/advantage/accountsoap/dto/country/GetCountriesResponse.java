@@ -13,7 +13,7 @@ import java.util.List;
         })
 @XmlRootElement(name = "GetCountriesResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetCountriesResponse {
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(name = "Country", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     public List<CountryDto> country;
 
     public List<CountryDto> getCountry() {

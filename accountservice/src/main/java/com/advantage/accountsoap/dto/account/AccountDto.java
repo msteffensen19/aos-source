@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.*;
                 "internalUserBlockedFromLoginUntil",
                 "internalLastSuccesssulLogin"
         })
-@XmlRootElement(name = "Account", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "AccountDto", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long id;

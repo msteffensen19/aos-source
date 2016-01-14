@@ -42,10 +42,10 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
-    public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId) {
+    public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountId) {
         Account account = accountService.getById(accountId.getId());
         if (account == null) return null;
-        AccountDto response = new AccountDto(account.getId(),
+        AccountDto dto = new AccountDto(account.getId(),
                 account.getLastName(),
                 account.getFirstName(),
                 account.getLoginName(),
@@ -63,12 +63,12 @@ public class AccountserviceEndpoint {
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
-        return response;
+        return new GetAccountByIdResponse(dto);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
     @ResponsePayload
-    public AccountStatusResponse doLogin(@RequestPayload AccountLoginRequest account) {
+    public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
         //todo set header
 
         AccountStatusResponse response = accountService.doLogin(account.getLoginUser(),
@@ -86,9 +86,9 @@ public class AccountserviceEndpoint {
             //response.getHeader().
             response.setSessionId(session.getId());*/
 
-            return response;
+            return new AccountLoginResponse(response);
         } else {
-            return response;
+            return new AccountLoginResponse(response);
         }
     }
 
