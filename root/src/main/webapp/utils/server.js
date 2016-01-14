@@ -168,7 +168,7 @@ var server = {
         },
 
         getShippingCost: function(){
-            return orderKey + "/shippingcost/" ;
+            return orderKey + "/shippingcost" ;
         },
     },
     account: {
