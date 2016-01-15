@@ -8,22 +8,22 @@
     </label>
     <input type="{{inputType}}" name="{{id}}" autocapitalize="off"
            autocomplete="off" autocorrect="off" class="inputtext"
-           ng-class="{ validateInvalid : !textToShow.valid }"
-           ng-hide="inputType == 'transclude'"
-           ng-model="modelAttr"
-           ng-focus="inputFocus(id)"
-           ng-blur="inputBlur(id)"
+           data-ng-class="{ validateInvalid : !textToShow.valid }"
+           data-ng-hide="inputType == 'transclude'"
+           data-ng-model="modelAttr"
+           data-ng-focus="inputFocus(id)"
+           data-ng-blur="inputBlur(id)"
            id="secInput_{{id}}" />
 
-
-    <div ng-transclude ></div>
+    <div ng-transclude data-ng-show="inputType == 'transclude'"></div>
 
     <div class="validate-info" ng-show="warnings.length > 0">
         <ul>
-            <li ng-repeat="info in warnings">
+            <li data-ng-repeat="info in warnings" data-ng-show="info.info != ''">
                 <a>{{ ::info.info }}</a>
             </li>
         </ul>
 
     </div>
 </div>
+

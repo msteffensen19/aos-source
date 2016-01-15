@@ -21,9 +21,6 @@ define(['./module'], function (directives) {
                         console.log("ctrl.getInvalidItems()")
                         console.log(ctrl.getInvalidItems())
                         console.log("")
-                        console.log("")
-                        console.log("")
-                        console.log("")
                         if(ctrl.getInvalidItems() == 0)
                         {
                             s.submit()
@@ -104,6 +101,10 @@ define(['./module'], function (directives) {
                     s.id;
                     var labelStartPossition;
                     var ctrlFather;
+
+                    s.inputKeyup = function (event) {
+                        console.log(event);
+                    }
 
                     s.inputFocus = function (id) {
                         var input = $('#secInput_' + id);
