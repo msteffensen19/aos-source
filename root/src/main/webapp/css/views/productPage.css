@@ -3,6 +3,10 @@
     margin: 0 auto;
 }
 
+.productImage.fixedImportant + section{
+    padding-top: 30px;
+}
+
 #product-image {
     width: 56%;
     float: left;
