@@ -67,7 +67,6 @@ define(['./module'], function (directives) {
                      s.imgRadioButton = num;
                 }
 
-                s.paymentMethod_edit_method;
                 s.paymentMethod_edit = function() {
                     s.noCards = true;
                 }
