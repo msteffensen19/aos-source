@@ -22,7 +22,13 @@ define(['./module'], function (directives) {
                     s.years.push((now.getFullYear() + i) + "");
                 }
 
+                var safePayBussy = false;
                 function safePay(TransPaymentMethod, accountNumber){
+
+                    if(safePayBussy){
+                        return;
+                    }
+                    safePayBussy = true;
                     orderService.SafePay( s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
                         .then(function(res){
                             if(res.success){
@@ -33,6 +39,7 @@ define(['./module'], function (directives) {
                                     trackingNumber : Helper.getRandom(10)
                                 });
                                 Helper.scrollPageUp();
+                                safePayBussy = false;
                                 return;
                             }
                             s.paymentEnd = false;
