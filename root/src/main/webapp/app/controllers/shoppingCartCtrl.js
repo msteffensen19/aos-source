@@ -11,5 +11,8 @@ define(['./module'], function(controllers){
             Helper.forAllPage();
             $("nav .navLinks").css("display" , "none");
 
+            s.saveCart = function(){
+                cartService.saveCart(s.cart);
+            }
     }]);
 });
