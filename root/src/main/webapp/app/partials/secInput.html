@@ -13,17 +13,18 @@
            data-ng-model="modelAttr"
            data-ng-focus="inputFocus(id)"
            data-ng-blur="inputBlur(id)"
-           id="secInput_{{id}}" />
+           data-ng-keyup="inputKeyup(id)"
+           id="secInput_{{id}}"
+    />
 
     <div ng-transclude data-ng-show="inputType == 'transclude'"></div>
 
     <div class="validate-info" ng-show="warnings.length > 0">
         <ul>
-            <li data-ng-repeat="info in warnings" data-ng-show="info.info != ''">
-                <a>{{ ::info.info }}</a>
+            <li data-ng-repeat="info in warnings" data-ng-show="info.info != '' && info.show" >
+                <a>{{ info.info }}</a>
             </li>
         </ul>
-
     </div>
 </div>
 

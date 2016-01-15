@@ -57,8 +57,6 @@
                                     sec-placeholder="{{'Password' | translate}}"
                                     sec-min-length="4"
                                     sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                                    sec-compare-to="confirm_password"
-                                    compare-to-name="Confirm password"
                                     pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                                     input-type-attr="password"
                                     model-attr="model.password"
@@ -69,8 +67,6 @@
                             <sec-input
                                     sec-required="{{'Confirm_password' | translate}} {{'field is required' | translate}}"
                                     sec-placeholder="Confirm password"
-                                    sec-min-length="5"
-                                    sec-max-length="15"
                                     sec-compare-to="password"
                                     compare-to-name="password"
                                     input-type-attr="password"

@@ -102,18 +102,18 @@ define(['./module'], function (directives) {
                     var labelStartPossition;
                     var ctrlFather;
 
-                    s.inputKeyup = function (event) {
-                        console.log(event);
+                    s.inputKeyup = function (id) {
+                        var input = $('#secInput_' + id);
+                        checkValidInput(s.warnings, input, 'keyup');
                     }
 
                     s.inputFocus = function (id) {
                         var input = $('#secInput_' + id);
-
                         s.textToShow = {
                             text: s.placeHolder,
                             valid: true,
                         };
-
+                        checkValidInput(s.warnings, input, 'keyup');
                         labelStartPossition = labelStartPossition || input.prev().css('top');
                         input.prev().animate({'top': '-18px'}, 300, 'linear');
                         input.siblings(".validate-info").show(200);
@@ -124,7 +124,7 @@ define(['./module'], function (directives) {
                         if (input.val().length == 0) {
                             input.prev().animate({'top': labelStartPossition}, 300, 'linear');
                         }
-                        checkValidInput(s.warnings, input);
+                        checkValidInput(s.warnings, input, 'blur');
                         if (s.textToShow.valid) {
                             ctrlFather.shiftInvalidField(id);
                         }
@@ -169,44 +169,62 @@ define(['./module'], function (directives) {
                     }
 
                     function setTextToShow(warn) {
+                        warn.show = true;
                         s.textToShow = {
                             text: warn.warning,
                             valid: false
                         };
                     }
 
-                    function checkValidInput(warnings, input) {
+                    function checkValidInput(warnings, input, event) {
 
                         angular.forEach(s.warnings, function (warn) {
                             if (s.textToShow.valid) {
                                 switch (warn.key) {
                                     case 'secRequired':
-                                        if (input.val() == '') {
+                                        if(event == 'keyup'){
+                                            if (!(input.val() == '')) {
+                                                warn.show = false;
+                                            }
+                                        }
+                                        else if (input.val() == '') {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secMinLength':
-                                        if (input.val().length < warn.min) {
+                                        if(event == 'keyup'){
+                                            warn.show = input.val().length < warn.min;
+                                        }
+                                        else if (input.val().length < warn.min) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secMaxLength':
-                                        if (input.val().length > warn.max) {
+                                        if(event == 'keyup'){
+                                            warn.show = input.val().length > warn.max;
+                                        }
+                                        else if (input.val().length > warn.max) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secPattern':
-                                        if (!(new RegExp(warn.regex).test(input.val()))) {
+                                        if(event == 'keyup'){
+                                            warn.show = !(new RegExp(warn.regex).test(input.val()));
+                                        }
+                                        else if (!(new RegExp(warn.regex).test(input.val()))) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secCompareTo':
                                         var comparedInput = $('#secInput_' + warn.compareId);
-                                        if (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "") {
+                                        if(event == 'keyup'){
+                                            warn.show = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                        }
+                                        else if (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "") {
                                             setTextToShow(warn)
                                             return false;
                                         }
@@ -275,6 +293,7 @@ define(['./module'], function (directives) {
                         key : 'secRequired',
                         warning : warning,
                         info: '',
+                        show: false
                     })
                 }
             }
@@ -299,6 +318,7 @@ define(['./module'], function (directives) {
                         warning : warning,
                         info: warning,
                         min : min,
+                        show: true
                     })
                 }
             }
@@ -322,6 +342,7 @@ define(['./module'], function (directives) {
                         key : 'secMaxLength',
                         warning : warning,
                         info: warning,
+                        show: true,
                         max : max,
                     })
                 }
@@ -341,6 +362,7 @@ define(['./module'], function (directives) {
                         key : 'secPattern',
                         warning : a.patternErrorAttr,
                         info: a.patternErrorAttr,
+                        show: true,
                         regex : a.secPattern,
                     })
                 }
@@ -355,6 +377,7 @@ define(['./module'], function (directives) {
                         key : 'secPattern',
                         warning : "Your email address isn’t formatted correctly",
                         info: "Your email address isn’t formatted correctly",
+                        show: true,
                         regex : a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                         //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                     })
@@ -381,6 +404,7 @@ define(['./module'], function (directives) {
                         key : 'secCompareTo',
                         warning : warning,
                         info : warning,
+                        show: true,
                         compareId : a.secCompareTo,
                     })
                 }
