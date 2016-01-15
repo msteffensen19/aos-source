@@ -182,49 +182,64 @@ define(['./module'], function (directives) {
                             if (s.textToShow.valid) {
                                 switch (warn.key) {
                                     case 'secRequired':
+                                        var invalid = (input.val() == '');
                                         if(event == 'keyup'){
-                                            if (!(input.val() == '')) {
-                                                warn.show = false;
-                                            }
+                                            warn.show = invalid;
                                         }
-                                        else if (input.val() == '') {
+                                        else if (invalid) {
+                                            setTextToShow(warn)
+                                            return false;
+                                        }
+                                        break;
+                                    case 'secOnlyNumbers':
+                                        var invalid = !((input.val() - 0) == input.val() &&
+                                            input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
+                                        l(invalid)
+                                        if(event == 'keyup'){
+                                            warn.show = invalid;
+                                        }
+                                        else if (invalid) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secMinLength':
+                                        var invalid = input.val().length < warn.min;
                                         if(event == 'keyup'){
-                                            warn.show = input.val().length < warn.min;
+                                            warn.show = invalid;
                                         }
-                                        else if (input.val().length < warn.min) {
+                                        else if (invalid) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secMaxLength':
+                                        var invalid = input.val().length > warn.max;
                                         if(event == 'keyup'){
-                                            warn.show = input.val().length > warn.max;
+                                            warn.show = invalid;
                                         }
-                                        else if (input.val().length > warn.max) {
+                                        else if (invalid) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secPattern':
+                                        var invalid = !(new RegExp(warn.regex).test(input.val()));
                                         if(event == 'keyup'){
-                                            warn.show = !(new RegExp(warn.regex).test(input.val()));
+                                            warn.show = invalid;
                                         }
-                                        else if (!(new RegExp(warn.regex).test(input.val()))) {
+                                        else if (invalid) {
                                             setTextToShow(warn)
                                             return false;
                                         }
                                         break;
                                     case 'secCompareTo':
                                         var comparedInput = $('#secInput_' + warn.compareId);
+                                        var invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
                                         if(event == 'keyup'){
-                                            warn.show = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                            warn.show = invalid;
                                         }
-                                        else if (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "") {
+                                        else if (invalid) {
                                             setTextToShow(warn)
                                             return false;
                                         }
@@ -288,11 +303,26 @@ define(['./module'], function (directives) {
                 priority: 0,
                 require: 'secInput',
                 link: function(s, e, a, ctrl){
-                   var warning = a.secRequired || 'This field is required'
+                    var warning = a.secRequired || 'This field is required'
                     ctrl.addWarningInfo({
                         key : 'secRequired',
                         warning : warning,
                         info: '',
+                        show: false
+                    })
+                }
+            }
+        })
+        .directive('secOnlyNumbers', function(){
+            return{
+                restrict: 'A',
+                require: 'secInput',
+                link: function(s, e, a, ctrl){
+                    var warning = a.secOnlyNumbers || 'Only Digits allowed'
+                    ctrl.addWarningInfo({
+                        key : 'secOnlyNumbers',
+                        warning : warning,
+                        info: warning,
                         show: false
                     })
                 }
@@ -318,7 +348,7 @@ define(['./module'], function (directives) {
                         warning : warning,
                         info: warning,
                         min : min,
-                        show: true
+                        show: false
                     })
                 }
             }
@@ -342,7 +372,7 @@ define(['./module'], function (directives) {
                         key : 'secMaxLength',
                         warning : warning,
                         info: warning,
-                        show: true,
+                        show: false,
                         max : max,
                     })
                 }
@@ -362,7 +392,7 @@ define(['./module'], function (directives) {
                         key : 'secPattern',
                         warning : a.patternErrorAttr,
                         info: a.patternErrorAttr,
-                        show: true,
+                        show: false,
                         regex : a.secPattern,
                     })
                 }
@@ -377,10 +407,10 @@ define(['./module'], function (directives) {
                         key : 'secPattern',
                         warning : "Your email address isn’t formatted correctly",
                         info: "Your email address isn’t formatted correctly",
-                        show: true,
+                        show: false,
                         regex : a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
-                        //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                     })
+                    //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                 }
             }
         })

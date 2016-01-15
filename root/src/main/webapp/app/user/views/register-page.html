@@ -109,6 +109,8 @@
                             <sec-input
                                     sec-placeholder="{{'City' | translate }}"
                                     model-attr="model.city"
+                                    sec-max-length="25"
+                                    no-red-star="true"
                                     id-attr="city" >
                             </sec-input>
                             <sec-input
@@ -119,10 +121,15 @@
                             <sec-input
                                     sec-placeholder="{{'State__Province__Region' | translate }}"
                                     model-attr="model.state"
+                                    sec-max-length="10"
+                                    no-red-star="true"
                                     id-attr="state" >
                             </sec-input>
                             <sec-input sec-placeholder="{{'Postal_Code' | translate }}"
-                                            model-attr="model.postalCode"
+                                       sec-max-length="10"
+                                       sec-only-numbers
+                                       no-red-star="true"
+                                       model-attr="model.postalCode"
                                             id-attr="postalCode" >
                             </sec-input>
                             <div class="option marginTop" >
