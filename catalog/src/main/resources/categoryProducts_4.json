@@ -771,5 +771,232 @@
         ]
       }
     ]
+  },
+  {
+    "categoryId": 5,
+    "categoryName": "MICE",
+    "promotedProduct": {
+      "id": "22",
+      "staringPrice": "29.99",
+      "promotionHeader": "The feel and navigation of this sleek mouse remains familiar and purposeful with three standard buttons and scroll wheel gently blended into the low profile.",
+      "promotionSubHeader": "Advanced 2.4 GHz wireless connectivity gives you the power to roam up to 30ft (10m). Simply insert the tiny dongle receiver, turn mouse on, done."
+    },
+    "products": [
+      {
+        "productName": "Kensington Orbit 72352 Trackball",
+        "price": 59.99,
+        "description": "The Kensington Orbit Wireless Mobile Trackball offers a precise, compact and versatile experience with a centered-ball design. With no wires to tie you down, the 2.4 GHz wireless with storable nano receiver works wherever you do -- at your home or office. And the unique touch scrolling lets you glide effortlessly through web pages and documents.",
+        "imageUrl": "5100",
+        "images": [
+          5100
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Graphite",
+            "code": "383428"
+          },
+          {
+            "inStock": 10,
+            "name": "Rubi Red",
+            "code": "9B111E"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N\\A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Trackball"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Kensington"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z3600 Wireless Mouse",
+        "price": 15.99,
+        "description": "The tiny HP Wireless Mouse Z3600 provides stylish comfort and control for your mobile computing needs. With optical tracking, 3 button controls, and the freedom to connect up to 30ft (10m) away, this compact mouse provides oversized performance.",
+        "imageUrl": "5200",
+        "images": [
+          5200,
+          5201,
+          5202,
+          5203,
+          5204,
+          5205,
+          5206
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Pink",
+            "code": "FFC0CB"
+          },
+          {
+            "inStock": 10,
+            "name": "Blue",
+            "code": "0000FF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N\\A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z3200 Wireless Mouse",
+        "price": 9.99,
+        "description": "The HP Wireless Mouse Z3200 provides powerful Blue LED optical tracking. Its ambidextrous shape and familiar button controls are easy to use. Compact contoured control.",
+        "imageUrl": "5300",
+        "images": [
+          5300,
+          5301,
+          5302,
+          5303,
+          5304,
+          5305,
+          5306
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Pink",
+            "code": "FFC0CB"
+          },
+          {
+            "inStock": 10,
+            "name": "Zebra",
+            "code": "998E64"
+          },
+          {
+            "inStock": 10,
+            "name": "Cheetah",
+            "code": "D4C9A4"
+          },
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "1600 dpi optical sensor"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP USB 3 Button Optical Mouse",
+        "price": 9.99,
+        "description": "Smooth and Accurate - The HP USB 3-Button Optical Mouse is the affordable desktop optical mouse solution that combines functionality with style",
+        "imageUrl": "5400",
+        "images": [
+          5400
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Cable"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "1000 dpi optical sensor"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z4000 Purple Wireless Mouse",
+        "price": 9.99,
+        "description": "The sleek and low-profiled design make the Z4000 the must-have companion to every thin notebook or tablet. Style and comfort within a dynamic ultra-mobile wireless mouse.",
+        "imageUrl": "5500",
+        "images": [
+          5500,
+          5501,
+          5502,
+          5503
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Purple",
+            "code": "800080"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N/A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      }
+    ]
   }
 ]

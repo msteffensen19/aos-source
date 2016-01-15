@@ -68,7 +68,7 @@ public class DataSourceInit4Json {
 
         /*Attributes INIT*/
 
-        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology"};
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer"};
 
         Map<String, Attribute> defAttributes = new HashMap<>();
 
