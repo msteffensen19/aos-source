@@ -10,9 +10,14 @@ var Helper = Helper || {};
 Helper.____closeTooTipCart;
 
 Helper.forAllPage = function(){
-    $("body").scrollTop(0);
+    Helper.scrollPageUp()
     Helper.UpdatePageFixed();
 }
+
+Helper.scrollPageUp = function(){
+    $("body").scrollTop(0);
+}
+
 
 Helper.UpdatePageFixed = function(){
     $('.pages').removeClass('fixed');

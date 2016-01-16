@@ -5,12 +5,18 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll',
+    controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll',
                     '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
-        function ($scope, productService, smoothScroll,
+        function ($scope, $q, productService, smoothScroll,
                         $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
+
+            $scope.$watch("cart", function(n){
+                console.log($scope.cart)
+            })
+            console.log($scope)
+
 
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
@@ -40,42 +46,33 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            var lastIdAdded = '';
-            $scope.addProduct = function(product, quantity) {
+           $scope.addProduct = function(product, quantity) {
+               clearInterval(Helper.____closeTooTipCart);
+               productsCartService.addProduct(product, quantity).then(function (cart) {
+                   $scope.cart = cart;
+                   animateToolTipCart();
+               });
+           }
+
+            $scope.updateProduct = function(product, color, quantity, oldColor) {
+                productsCartService.updateProduct(product, color, quantity, oldColor)
+                    .then(function(cart){
+                    $scope.cart = cart;
+                    animateToolTipCart();
+                });
+            }
+
+            function animateToolTipCart(){
                 clearInterval(Helper.____closeTooTipCart);
-                $('#toolTipCart').slideDown(function(){
-                    productsCartService.addProduct(product, quantity).then(function(cart){
-                        $scope.cart = cart;
-                        if (lastIdAdded == ('#product' + product.productId)){
-                            setToolTipCartSlideUp()
-                        }
-                        else {
-                            lastIdAdded = '#product' + product.productId;
-                            $('#toolTipCart tbody').stop().animate({
-                                scrollTop: 0 + 'px',
-                            }, 500, function () {
-                                setToolTipCartSlideUp()
-                            });
-                        }
+                    $('#toolTipCart').slideDown(function () {
+                        $('#toolTipCart tbody').stop().animate({
+                            scrollTop: 0 + 'px',
+                        }, 500, function () {
+                        Helper.____closeTooTipCart = setTimeout(function(){
+                            $('#toolTipCart').stop().slideUp();
+                        }, 8000)
                     });
                 });
-            }
-
-            $scope.updateProduct = function(product) {
-                console.log(product)
-                console.log($scope.cart)
-                productsCartService.updateProduct(product).then(function(cart){
-                    $scope.cart = cart;
-                    console.log($scope.cart)
-                });
-            }
-
-
-            function setToolTipCartSlideUp() {
-                clearInterval(Helper.____closeTooTipCart);
-                Helper.____closeTooTipCart = setTimeout(function(){
-                    $('#toolTipCart').stop().slideUp();
-                }, 8000)
             }
 
             $scope.enterCart = function(){
@@ -103,8 +100,6 @@ define(['./module'], function (controllers) {
 
             $scope.setUser = function(){
                 $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
-                $scope.loadMore_1()
-
             }
 
             $scope.accountSection = function(){
@@ -115,6 +110,7 @@ define(['./module'], function (controllers) {
             $scope.signOut = function(){
                 $cookie.remove('lastlogin');
                 $rootScope.userCookie = undefined;
+                $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
                 productsCartService.loadCartProducts().then(function(cart){
                     $scope.cart = cart;
                 });

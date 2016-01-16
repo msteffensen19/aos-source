@@ -22,13 +22,13 @@ define(['./module'], function (directives) {
                     s.years.push((now.getFullYear() + i) + "");
                 }
 
-                s.payNow_SafePay = function(){
-                    var TransPaymentMethod = "SafePay";
-                    var accountNumber = 843200971;
-                    safePay(TransPaymentMethod, accountNumber);
-                }
-
+                var safePayBussy = false;
                 function safePay(TransPaymentMethod, accountNumber){
+
+                    if(safePayBussy){
+                        return;
+                    }
+                    safePayBussy = true;
                     orderService.SafePay( s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
                         .then(function(res){
                             if(res.success){
@@ -38,10 +38,18 @@ define(['./module'], function (directives) {
                                     orderNumber : res.orderNumber,
                                     trackingNumber : Helper.getRandom(10)
                                 });
+                                Helper.scrollPageUp();
+                                safePayBussy = false;
                                 return;
                             }
                             s.paymentEnd = false;
                         });
+                }
+
+                s.payNow_SafePay = function(){
+                    var TransPaymentMethod = "SafePay";
+                    var accountNumber = 843200971;
+                    safePay(TransPaymentMethod, accountNumber);
                 }
 
                 s.payNow_masterCredit = function(){
@@ -66,7 +74,6 @@ define(['./module'], function (directives) {
                      s.imgRadioButton = num;
                 }
 
-                s.paymentMethod_edit_method;
                 s.paymentMethod_edit = function() {
                     s.noCards = true;
                 }

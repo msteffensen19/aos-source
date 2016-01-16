@@ -4,50 +4,49 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$interval',
 
-        function ($scope, resolveParams) {
+        function (s, resolveParams, $interval) {
 
             console.log(resolveParams)
 
-            var selectedColor = resolveParams.selectedColor;
             var pageState = resolveParams.pageState;
-            $scope.quantity = resolveParams.quantity || 1;
-            $scope.categoryName = resolveParams.categoryName;
-            $scope.product = resolveParams.product;
+            var resolveParams_selectedColor = resolveParams.selectedColor;
+            l(resolveParams_selectedColor)
+            s.message = null;
+            s.quantity = resolveParams.quantity || 1;
+            s.categoryName = resolveParams.categoryName;
+            s.product = resolveParams.product;
 
-
-            for(var i = 0; i < $scope.product.colors.length; i++){
-                if($scope.product.colors[i].code == selectedColor)
+            for(var i = 0; i < s.product.colors.length; i++){
+                if(s.product.colors[i].code == resolveParams.selectedColor)
                 {
-                    $scope.colorSelected = $scope.product.colors[i];
+                    s.colorSelected = s.product.colors[i];
                     break;
                 }
             }
-            $scope.colorSelected = $scope.colorSelected || $scope.product.colors[0];
+            s.colorSelected = s.colorSelected || s.product.colors[0];
 
+            s.addToCart = function(){
 
-            $scope.addToCart = function(){
-                var productToAdd = angular.copy($scope.product);
-                productToAdd.colors = [$scope.colorSelected];
-                if(pageState == 'edit')
-                {
-                    productToAdd.quantity = $scope.quantity
-                    $scope.$parent.updateProduct(productToAdd);
+                var productToAdd = angular.copy(s.product);
+                productToAdd.colors = [s.colorSelected];
+                if(pageState == 'edit'){
+                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity,resolveParams_selectedColor);
+                    resolveParams_selectedColor = s.colorSelected.code;
                 }
-                else
-                {
-                    $scope.$parent.addProduct(productToAdd, $scope.quantity);
+                else {
+                    s.$parent.addProduct(productToAdd, s.quantity);
                 }
             }
 
-            $scope.changeImage = function(img){
-                $scope.product.imageUrl = img;
+            s.changeImage = function(img){
+                s.product.imageUrl = img;
             }
 
 
-            $scope.setColor = function(color){
-                $scope.colorSelected = color;
+            s.setColor = function(color){
+                s.colorSelected = color;
             }
 
             $("nav .navLinks").css("display", "none");

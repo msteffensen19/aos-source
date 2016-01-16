@@ -153,7 +153,7 @@ var server = {
         },
 
         updateProductToUser: function (userId, productId, color, quantity){
-            return addProductToUser(userId, productId, color, quantity);
+            return server.order.addProductToUser(userId, productId, color, quantity);
         },
 
         addProductToUser: function (userId, productId, color, quantity){
