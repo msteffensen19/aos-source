@@ -27,7 +27,7 @@ define(['./module'], function (services) {
             var expectToReceive = {
                 "address": model.address ,
                 "allowOffersPromotion":  model.offers_promotion ? 'Y' : 'N',
-                "accountType": 20,
+                "appUserType": 20,
                 "cityName": model.city,
                 "country": model.country.id || 0 ,
                 "email": model.email,
