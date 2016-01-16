@@ -353,8 +353,7 @@ define(['./module'], function (directives) {
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
                     },
-                    post: function(s, e, a, ctrl){
-
+                    post: function(s){
                         $timeout(function(){
                             s.inputBlur(s.id, true);
                         }, 500)
