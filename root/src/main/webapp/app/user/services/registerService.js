@@ -43,6 +43,8 @@ define(['./module'], function (services) {
                 "stateProvince": model.state,
                 "zipcode": model.postalCode,
             }
+            console.log(expectToReceive)
+            console.log(JSON.stringify(expectToReceive))
 
             var defer = $q.defer();
             var params = server.account.register();

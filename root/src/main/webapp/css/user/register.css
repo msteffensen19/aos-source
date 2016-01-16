@@ -155,8 +155,8 @@ display: block;
 #form .invalidInput{
     border-bottom: solid #ff454f 1px;
 }
-
-#form .buttonDisable, #form .buttonDisable:hover{
+/*.buttonDisable*/
+#form .sec-validate-invalid , #form .sec-validate-invalid:hover{
     color: #b2b2b2 !important;
     border: solid 2px #d1d1d1 !important;
     cursor: default;

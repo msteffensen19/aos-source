@@ -26,24 +26,22 @@
                     <div id="formCover">
 
                         <div>
-
                             <h3 translate="ACCOUNT_DETAILS"></h3>
 
                             <sec-input
-                                    sec-required="{{'User_name' | translate}} {{'field is required' | translate}}"
+                                    sec-required="{{'User_name' | translate}} {{'field_is_required' | translate}}"
                                     sec-placeholder="{{'User_name' | translate}}"
                                     sec-min-length="5"
                                     sec-max-length="15"
-                                    sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
+                                    sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
                                     pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                                     model-attr="model.username"
                                     id-attr="username" >
                             </sec-input>
 
 
-
                             <sec-input
-                                    sec-required="{{'Email' | translate}} {{'field is required' | translate}}"
+                                    sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
                                     sec-email
                                     sec-placeholder="{{'Email' | translate}}"
                                     input-type-attr="email"
@@ -53,7 +51,7 @@
 
 
                             <sec-input
-                                    sec-required="{{'Password' | translate}} {{'field is required' | translate}}"
+                                    sec-required="{{'Password' | translate}} {{'field_is_required' | translate}}"
                                     sec-placeholder="{{'Password' | translate}}"
                                     sec-min-length="4"
                                     sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
@@ -65,7 +63,7 @@
 
 
                             <sec-input
-                                    sec-required="{{'Confirm_password' | translate}} {{'field is required' | translate}}"
+                                    sec-required="{{'Confirm_password' | translate}} {{'field_is_required' | translate}}"
                                     sec-placeholder="Confirm password"
                                     sec-compare-to="password"
                                     compare-to-name="password"
@@ -92,10 +90,9 @@
                                     model-attr="model.phoneNumber"
                                     id-attr="phoneNumber">
                             </sec-input>
+                        </div>
 
-                    </div>
-
-                    <div>
+                        <div>
                             <h3 translate="ADDRESS"></h3>
                             <sec-input sec-placeholder="{{'Country' | translate }}"
                                             id-attr="Country"
@@ -145,7 +142,9 @@
                                     class="removeSpaces" >
                                 <div class="option" >
                                     <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox"  />
-                                    <span class="roboto-light">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
+                                    <span class="roboto-light">
+                                        {{'I_agree_to_the_Advantage_com_Agreement' | translate }}
+                                    </span>
                                     <label class="validateInvalid" style="display: none" >
                                         {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
                                     </label>
@@ -155,8 +154,7 @@
                     </div>
 
                     <input sec-submit-attr="register()"
-                           class="roboto-medium"
-                           data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+                           class="roboto-medium sec-validate-invalid" a-sec-validate-invalid
                            type="button"
                            value="{{'REGISTER' | translate}}" />
 

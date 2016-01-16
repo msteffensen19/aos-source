@@ -44,7 +44,7 @@
         <br />
         <input sec-submit-attr="signIn(loginUser, false)"
                class="a-button roboto-medium"
-               data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+               a-sec-validate-invalid
                type="button"
                value="{{'LOGIN' | translate}}" />
         <br />

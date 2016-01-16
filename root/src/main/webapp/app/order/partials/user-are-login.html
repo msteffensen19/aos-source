@@ -108,9 +108,8 @@
                     <div class="blueLink">
                         <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
-                            <input sec-submit-attr="payNow_SafePay()"
+                            <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
                                    class="roboto-medium float-button a-button"
-                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
                         </label>
@@ -213,7 +212,7 @@
                         <label>
                             <input sec-submit-attr="payNow_masterCredit()"
                                    class="roboto-medium float-button a-button"
-                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+                                   a-sec-validate-invalid
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
                         </label>

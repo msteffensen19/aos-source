@@ -18,10 +18,10 @@ define(['./module'], function (directives) {
                 link: function(s, e, a, ctrl){
 
                     e.bind('click', function(){
-                        console.log("ctrl.getInvalidItems()")
-                        console.log(ctrl.getInvalidItems())
-                        console.log("")
-                        if(ctrl.getInvalidItems() == 0)
+                        //console.log("ctrl.getInvalidItems()")
+                        //console.log(ctrl.getInvalidItems())
+                        //console.log("")
+                        if(!ctrl.getInvalidItems() && !e.hasClass("sec-validate-invalid"))
                         {
                             s.submit()
                         }
@@ -34,7 +34,7 @@ define(['./module'], function (directives) {
                 restrict: 'E',
                 require: 'secValidate',
                 scope: {},
-                controller: ['$scope', function(s){
+                controller: ['$scope', '$rootScope', function(s, $rootScope){
 
                     this.addId = function(id){
                         this.id = id;
@@ -42,6 +42,13 @@ define(['./module'], function (directives) {
 
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
+                        l("s.invalidItems_length")
+                        l(s.invalidItems)
+                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : s.invalidItems.length });
+                        return s.invalidItems.length  > 0;
+                    }
+
+                    this.getInvalidItemsCount = function(){
                         return s.invalidItems.length;
                     }
 
@@ -83,7 +90,27 @@ define(['./module'], function (directives) {
                 }
             }
         }])
-        .directive('secInput', ['$templateCache', function($templateCache){
+
+        .directive('aSecValidateInvalid', function($rootScope){
+            return{
+                restrict: 'A',
+                link: function(s, e, a, ctrl){
+                    $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
+                        if (args.invalidItems != undefined) {
+
+                            l(args.invalidItems)
+                            if(args.invalidItems > 0){
+                                e.addClass("sec-validate-invalid")
+                            }
+                            else{
+                                e.removeClass("sec-validate-invalid")
+                            }
+                        }
+                    });
+                }
+            }
+        })
+        .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
             return {
                 restrict: 'E',
                 replace: true,
@@ -96,15 +123,26 @@ define(['./module'], function (directives) {
                 template: $templateCache.get('app/partials/secInput.html'),
                 controller: ['$scope', function (s) {
 
+                    var labelStartPossition;
+                    var ctrlFather;
                     s.warnings = [];
                     s.noRedStar = false;
                     s.id;
-                    var labelStartPossition;
-                    var ctrlFather;
+                    s.textToShow = {
+                        text: "",
+                        valid: true
+                    };
 
                     s.inputKeyup = function (id) {
                         var input = $('#secInput_' + id);
-                        checkValidInput(s.warnings, input, 'keyup');
+                        var invalid = checkValidInput(s.warnings, input, 'keyup');
+                        if (invalid) {
+                            ctrlFather.addInvalidField(id);
+                        }
+                        else {
+                            ctrlFather.shiftInvalidField(id);
+                        }
+                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrlFather.getInvalidItemsCount()});
                     }
 
                     s.inputFocus = function (id) {
@@ -119,18 +157,20 @@ define(['./module'], function (directives) {
                         input.siblings(".validate-info").show(200);
                     }
 
-                    s.inputBlur = function (id) {
+                    s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
+
                         var input = $('#secInput_' + id);
                         if (input.val().length == 0) {
                             input.prev().animate({'top': labelStartPossition}, 300, 'linear');
                         }
-                        checkValidInput(s.warnings, input, 'blur');
-                        if (s.textToShow.valid) {
-                            ctrlFather.shiftInvalidField(id);
-                        }
-                        else {
+                        var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
+                        if (invalid) {
                             ctrlFather.addInvalidField(id);
                         }
+                        else {
+                            ctrlFather.shiftInvalidField(id);
+                        }
+                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrlFather.getInvalidItemsCount()});
                         input.siblings(".validate-info").hide(200);
                     }
 
@@ -168,87 +208,101 @@ define(['./module'], function (directives) {
                         s.inputType = inputType;
                     }
 
-                    function setTextToShow(warn) {
+                    function setTextToShow(warn, justTestThisField_do_not_active_her_Field) {
                         warn.show = true;
+                        if(justTestThisField_do_not_active_her_Field){
+                            return;
+                        }
                         s.textToShow = {
                             text: warn.warning,
                             valid: false
                         };
                     }
 
-                    function checkValidInput(warnings, input, event) {
+                    function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
 
-                        angular.forEach(s.warnings, function (warn) {
+                        var invalid = false;
+                        for (var i in s.warnings) {
+                            var warn = s.warnings[i];
+
                             if (s.textToShow.valid) {
                                 switch (warn.key) {
                                     case 'secRequired':
-                                        var invalid = (input.val() == '');
+                                        invalid = invalid ? invalid : (input.val() == '');
+                                        var _invalid = (input.val() == '');
                                         if(event == 'keyup'){
-                                            warn.show = invalid;
+                                            warn.show = _invalid;
+                                            if(!invalid) {ctrlFather.getInvalidItems()}
                                         }
                                         else if (invalid) {
-                                            setTextToShow(warn)
-                                            return false;
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secOnlyNumbers':
-                                        var invalid = !((input.val() - 0) == input.val() &&
+                                        var invalid = invalid ? invalid : !((input.val() - 0) == input.val() &&
                                             input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
-                                        l(invalid)
+                                        var _invalid = !((input.val() - 0) == input.val() &&
+                                        input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
                                         if(event == 'keyup'){
-                                            warn.show = invalid;
+                                            warn.show = _invalid;
+                                            if(!invalid) {ctrlFather.getInvalidItems()}
                                         }
                                         else if (invalid) {
-                                            setTextToShow(warn)
-                                            return false;
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secMinLength':
-                                        var invalid = input.val().length < warn.min;
+                                        invalid = invalid ? invalid : input.val().length < warn.min;
+                                        var _invalid = input.val().length < warn.min;
                                         if(event == 'keyup'){
-                                            warn.show = invalid;
+                                            warn.show = _invalid;
+                                            if(!invalid) {ctrlFather.getInvalidItems()}
                                         }
                                         else if (invalid) {
-                                            setTextToShow(warn)
-                                            return false;
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secMaxLength':
-                                        var invalid = input.val().length > warn.max;
+                                        invalid = invalid ? invalid : input.val().length > warn.max;
+                                        var _invalid = input.val().length > warn.max;
                                         if(event == 'keyup'){
-                                            warn.show = invalid;
+                                            warn.show = _invalid;
+                                            if(!invalid) {ctrlFather.getInvalidItems()}
                                         }
                                         else if (invalid) {
-                                            setTextToShow(warn)
-                                            return false;
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secPattern':
-                                        var invalid = !(new RegExp(warn.regex).test(input.val()));
+                                        invalid = invalid ? invalid : !(new RegExp(warn.regex).test(input.val()));
+                                        var _invalid = !(new RegExp(warn.regex).test(input.val()));
                                         if(event == 'keyup'){
-                                            warn.show = invalid;
+                                            warn.show = _invalid;
+                                            if(!invalid) {ctrlFather.getInvalidItems()}
                                         }
                                         else if (invalid) {
-                                            setTextToShow(warn)
-                                            return false;
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secCompareTo':
                                         var comparedInput = $('#secInput_' + warn.compareId);
-                                        var invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                        invalid = invalid ? invalid : (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                        var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
                                         if(event == 'keyup'){
-                                            warn.show = invalid;
+                                            warn.show = _invalid;
+                                            if(!invalid) {ctrlFather.getInvalidItems()}
                                         }
                                         else if (invalid) {
-                                            setTextToShow(warn)
-                                            return false;
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     default:
                                         throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
                                 }
                             }
-                        })
+                        }
+                        l(invalid)
+                        return invalid;
                     }
                 }],
                 link: {
@@ -257,6 +311,13 @@ define(['./module'], function (directives) {
                         var me = ctrls[0];
                         e.addClass('validate-directive');
 
+                        if (!a.idAttr) {
+                            throw "id attribute  in directive <secInput></secInput> is must! "
+                        }
+
+                        if (a.noRedStar) {
+                            me.enableNoRedStar();
+                        }
                         if (a.selectTag) {
 
                             e.bind('click', function () {
@@ -271,30 +332,34 @@ define(['./module'], function (directives) {
                                             ctrls[1].addInvalidField(a.idAttr);
                                             $(this).find(".validateInvalid").fadeIn();
                                         }
+                                        ctrls[1].getInvalidItems();
+                                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrls[1].getInvalidItemsCount()});
                                     });
                                 }
                             })
 
                             e.bind('change', function () {
-                                ctrls[1].shiftInvalidField(a.idAttr);
-                                $($(this).find(".validate-label")).html('')
+                                var select = $($(this).find("select"))
+                                var _this = this;
+                                if (select.length > 0) {
+                                    s.$apply(function () {
+                                        ctrls[1].shiftInvalidField(a.idAttr);
+                                        $($(_this).find(".validate-label")).html('')
+                                    });
+                                }
                             })
                         }
-
-                        if (!a.idAttr) {
-                            throw "id attribute  in directive <secInput></secInput> is must! "
-                        }
-
-                        if (a.noRedStar) {
-                            me.enableNoRedStar();
-                        }
-
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
+                    },
+                    post: function(s, e, a, ctrl){
+
+                        $timeout(function(){
+                            s.inputBlur(s.id, true);
+                        }, 500)
                     }
                 }
-
             }
         }])
         .directive('secRequired', function(){
