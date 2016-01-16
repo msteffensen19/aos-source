@@ -15,6 +15,12 @@ public class Constants {
     public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
 
 
+    public final static String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
+    public final static String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
+    public final static String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
+    public final static String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
+
+
     @Deprecated
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 

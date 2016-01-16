@@ -1,6 +1,5 @@
 package com.advantage.safepay.payment.config;
 
-import com.advantage.common.Constants;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,9 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
         }
 )
 @PropertySources(value = {
-        @PropertySource("classpath:/app.properties"),
-        @PropertySource("classpath:/database.properties"),
-        @PropertySource("classpath:/DemoApp.properties")})
+        @PropertySource("classpath:/app.properties")})
 public class AppConfiguration {
 
 }
