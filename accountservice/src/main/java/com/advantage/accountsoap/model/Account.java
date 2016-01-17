@@ -92,9 +92,6 @@ public class Account {
     @Column(name = "USER_TYPE")
     private Integer accountType;        //  by enum AccountType
 
-    @Column
-    private Integer PaymentMethod;        //  by enum  PaymentMethodEnum
-
     /*@Column(name = FIELD_COUNTRY)
     private Integer country;  */              //  by Country
 
@@ -128,6 +125,11 @@ public class Account {
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ShippingAddress> addresses = new HashSet<>();
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<PaymentPreferences> paymentPreferences = new HashSet<>();
+
+    private long defaultPaymentMethodId;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = Country.FIELD_ID)
@@ -229,22 +231,6 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public Integer getPaymentMethod() {
-        return PaymentMethod;
-    }
-
-    public void setPaymentMethod(Integer paymentMethod) {
-        PaymentMethod = paymentMethod;
-    }
-
-   /* public Integer getCountry() {
-        return country;
-    }
-
-    public void setCountry(Integer country) {
-        this.country = country;
-    }*/
-
     public String getStateProvince() {
         return stateProvince;
     }
@@ -335,6 +321,22 @@ public class Account {
 
     public void setAddresses(Set<ShippingAddress> addresses) {
         this.addresses = addresses;
+    }
+
+    public Set<PaymentPreferences> getPaymentPreferences() {
+        return paymentPreferences;
+    }
+
+    public void setPaymentPreferences(Set<PaymentPreferences> paymentPreferences) {
+        this.paymentPreferences = paymentPreferences;
+    }
+
+    public long getDefaultPaymentMethodId() {
+        return defaultPaymentMethodId;
+    }
+
+    public void setDefaultPaymentMethodId(long defaultPaymentMethodId) {
+        this.defaultPaymentMethodId = defaultPaymentMethodId;
     }
 
     public Country getCountry() {
