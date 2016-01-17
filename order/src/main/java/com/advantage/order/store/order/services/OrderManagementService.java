@@ -173,14 +173,17 @@ public class OrderManagementService {
             MasterCreditResponse masterCreditResponse = payWithMasterCredit(masterCreditRequest);
 
             // Check "masterCreditResponse"
-            if (masterCreditResponse.getResponseCode().equalsIgnoreCase("Approved")) {
+            if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(masterCreditResponse.getReferenceNumber());
+                purchaseResponse.setPaymentConfirmationNumber(masterCreditResponse.getReferenceNumber());
             } else {
                 paymentSuccessful = false;
                 purchaseResponse.setSuccess(paymentSuccessful);
                 purchaseResponse.setCode(masterCreditResponse.getResponseCode());
                 purchaseResponse.setReason(masterCreditResponse.getResponseReason());
                 purchaseResponse.setOrderNumber(orderNumber);
+                purchaseResponse.setPaymentConfirmationNumber(masterCreditResponse.getReferenceNumber());
+                purchaseResponse.setTrackingNumber(0L);
             }
         }
         else if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.SAFE_PAY.getStringCode())) {
@@ -196,14 +199,18 @@ public class OrderManagementService {
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
 
-            if (safePayResponse.getResponseCode().equalsIgnoreCase("Approved")) {
+
+            if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(safePayResponse.getReferenceNumber());
+                purchaseResponse.setPaymentConfirmationNumber(safePayResponse.getReferenceNumber());
             } else {
                 paymentSuccessful = false;
                 purchaseResponse.setSuccess(paymentSuccessful);
                 purchaseResponse.setCode(safePayResponse.getResponseCode());
                 purchaseResponse.setReason(safePayResponse.getResponseReason());
                 purchaseResponse.setOrderNumber(orderNumber);
+                purchaseResponse.setPaymentConfirmationNumber(safePayResponse.getReferenceNumber());
+                purchaseResponse.setTrackingNumber(0L);
             }
         }
 
@@ -272,12 +279,14 @@ public class OrderManagementService {
                 purchaseResponse.setCode(ResponseEnum.OK.getStringCode());
                 purchaseResponse.setReason(MESSAGE_ORDER_COMPLETED_SUCCESSFULLY);
                 purchaseResponse.setOrderNumber(orderNumber);
+                purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
 
             } else {
                 purchaseResponse.setSuccess(false);
                 purchaseResponse.setCode(orderResponse.getCode());
                 purchaseResponse.setReason(orderResponse.getReason());
                 purchaseResponse.setOrderNumber(orderNumber);
+                purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
             }
         }
 

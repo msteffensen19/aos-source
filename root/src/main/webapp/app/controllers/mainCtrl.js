@@ -195,13 +195,11 @@ define(['./module'], function (controllers) {
 
 
 
-
-
-
-
-
-
-
+            $rootScope.$on('clearCartEvent', function (event, args) {
+                productsCartService.clearCart().then(function (cart) {
+                    $scope.cart = cart;
+                });
+            });
 
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {

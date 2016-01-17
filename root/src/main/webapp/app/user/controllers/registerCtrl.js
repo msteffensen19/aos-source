@@ -8,8 +8,8 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout',
-        function (s, registerService, $location, $timeout) {
+    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout', '$filter',
+        function (s, registerService, $location, $timeout, $filter) {
 
             s.countries = {};
             s.registerAnswer = {
@@ -32,11 +32,9 @@ define(['./module'], function (controllers) {
 
                 // check this point - validate-from/to
 
-                //check validateModel(model)
-
                 registerService.register(s.model).then(function (response) {
-                    s.registerAnswer.message = response.REASON,
-                        s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
+                    s.registerAnswer.message = response.REASON || $filter('translate')('register_faild'),
+                    s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
                     $timeout(function () {
                         s.registerAnswer = {message: '', class: 'invalid'}
                         if (response.SUCCESS == 'true') {
