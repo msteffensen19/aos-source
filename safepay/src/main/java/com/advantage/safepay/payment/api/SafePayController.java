@@ -49,7 +49,7 @@ public class SafePayController {
         //}
 
         if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
-            return new ResponseEntity<>(safePayResponse, HttpStatus.OK);
+            return new ResponseEntity<>(safePayResponse, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(safePayResponse, HttpStatus.CONFLICT);
         }

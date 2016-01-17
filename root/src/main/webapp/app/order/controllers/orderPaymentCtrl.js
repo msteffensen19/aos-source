@@ -11,23 +11,51 @@ define(['./module'], function (controllers) {
             s.checkCart();
 
             s.paymentEnd = false;
+            s.$on('updatePaymentEnd', function (event, args) {
+                s.paymentEnd = args.paymentEnd;
+                s.orderNumber = args.orderNumber;
+                s.trackingNumber = args.trackingNumber;
+            });
+            s.noCards = resolveParams.noCards; //check if have cards
 
-            console.log(resolveParams)
+            s.getData = function(){
+                s.card = {
+                    number : '6543210987654321',
+                    cvv : '567',
+                    expirationDate : { month : '04', year : '2016' },
+                    name: 'James T. Kirk',
+                }
+                s.CardNumber = ["6543", "2109", "8765", "4321"];
+                s.savePay = {
+                    username : 'abcdefghi', // 1-20 chars
+                    password : 'Aa123456' // 1-20 chars
+                }
+            }
+
+            s.CardNumber = resolveParams.CardNumber;
+            s.card = {
+                number : '',
+                cvv : '',
+                expirationDate : {
+                    month : '',
+                    year : ''
+                },
+                name: '',
+            }
+            s.savePay = {
+                username : '',
+                password : ''
+            }
 
             s.user = resolveParams.user
-            s.shippingCost = resolveParams.shippingCost;
+            s.shipping = resolveParams.shippingCost;
+            s.shippingCost = resolveParams.shippingCost ? resolveParams.shippingCost.amount : null;
             s.itemsPaid = s.cart ? s.cart.productsInCart.length : 0;
-
-            s.CardNumber = ["6789", "0785", "0785", "0785"];
 
             var d = new Date();
             s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
-            s.payNow_masterCredit = function(){
-                s.paymentEnd = true;
-            }
-
-            s.$watch("userCookie.response", function(n, o){
+            s.$watch("userCookie.response", function(n){
                 if(n + "" != "undefined"){
                     orderService.getAccountById().
                     then(function (user) {
@@ -35,8 +63,9 @@ define(['./module'], function (controllers) {
                         {
                             orderService.getShippingCost(user).
                             then(function (shippingCost) {
-                                s.shippingCost = shippingCost;
-                                s.loginUser = user
+                                s.shipping = shippingCost;
+                                s.shippingCost = shippingCost ? shippingCost.amount : null;
+                                s.user = user
                             });
                         }
                         else {

@@ -22,10 +22,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -36,12 +33,12 @@ public class OrderManagementService {
 
     public static final String MESSAGE_ORDER_COMPLETED_SUCCESSFULLY = "order completed successfully";
     public static final String ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY = "Get shipping cost request is empty";
-    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY = "Get shipping cost response failure, currency is empty";
-    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT = "Get shipping cost response failure, shipping cost amount invalid empty ";
-    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH = "Get shipping cost response failure, transaction type mismatch";
-    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY = "Get shipping cost response failure, transaction date is empty";
-    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY = "Get shipping cost response failure, transaction reference is empty";
-    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH = "Get shipping cost response failure, invalid transaction reference length";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY = "Get ShipEx response failure, currency is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT = "Get ShipEx response failure, shipping cost amount invalid empty ";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH = "Get ShipEx response failure, transaction type mismatch";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY = "Get ShipEx response failure, transaction date is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY = "Get ShipEx response failure, transaction reference is empty";
+    public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH = "Get ShipEx response failure, invalid transaction reference length";
 
     private static AtomicLong orderNumber;
     private double totalAmount = 0.0;
@@ -100,9 +97,12 @@ public class OrderManagementService {
             System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
         }
-        else if (costResponse.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType())) {
+        else if (! costResponse.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType())) {
             System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+        }
+        else {
+            costResponse.setReason(ResponseEnum.OK.getStringCode());
         }
 
         return costResponse;
@@ -144,6 +144,13 @@ public class OrderManagementService {
 
         //  Step #1: Get products info
         List<OrderPurchasedProductInformation> purchasedProducts = getPurchasedProductsInformation(userId, purchaseRequest.getPurchasedProducts());
+        //  Sort purchased products
+        Collections.sort(purchasedProducts,
+                new Comparator<OrderPurchasedProductInformation>() {
+                    public int compare(OrderPurchasedProductInformation product1, OrderPurchasedProductInformation product2) {
+                        return (int)(product1.getProductId() - product2.getProductId());
+                    }
+                });
 
         //  Step #2: Generate order number
         orderNumber = generateOrderNumberNextValue();
@@ -219,18 +226,30 @@ public class OrderManagementService {
                 seAddress.setAddressLine1(shippingInfo.getAddress());
                 seAddress.setAddressLine2("");
             }
+
             seAddress.setCity(shippingInfo.getCity());
             seAddress.setPostalCode(shippingInfo.getPostalCode());
             seAddress.setState(shippingInfo.getState());
             seAddress.setCountry(shippingInfo.getCountryCode());
 
-            //  Assemble product name and quantity for purchased products
+            //  Assemble shipping products list: product name and quantity summary by product-id
             SEProducts products = new SEProducts();
+            long productId = 0;
+            Product product = null;
             for (OrderPurchasedProductInformation purchasedProduct : purchasedProducts) {
-                Product product = new Product();
-                product.setProductName(purchasedProduct.getProductName());
-                product.setProductQuantity(purchasedProduct.getQuantity());
-                products.getProduct().add(product);
+                if (productId != purchasedProduct.getProductId()) {
+                    product = new Product();
+                    product.setProductName(purchasedProduct.getProductName());
+                    product.setProductQuantity(purchasedProduct.getQuantity());
+                    products.getProduct().add(product);
+
+                    productId = purchasedProduct.getProductId();
+
+                }
+                else {
+                    int index = products.getProduct().size() - 1;
+                    products.getProduct().get(index).setProductQuantity(products.getProduct().get(index).getProductQuantity() + purchasedProduct.getQuantity());
+                }
             }
 
             PlaceShippingOrderRequest orderRequest = new PlaceShippingOrderRequest();
@@ -286,6 +305,9 @@ public class OrderManagementService {
                         product.getColor().getName(),
                         product.getPrice(),
                         cartProduct.getQuantity()));
+
+                totalAmount += product.getPrice() * cartProduct.getQuantity();
+
             } else {
                 //  Product from cart was not found in CATALOG
                 purchasedProducts.add(new OrderPurchasedProductInformation(cartProduct.getProductId(),
@@ -364,12 +386,15 @@ public class OrderManagementService {
                     (conn.getInputStream())));
 
             String output;
-            System.out.println("Output from Server .... \n");
+            StringBuilder sb = new StringBuilder();
+
+            System.out.println("Output from Server...");
             while ((output = br.readLine()) != null) {
+                sb.append(output);
                 System.out.println(output);
             }
 
-            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(output);
+            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
 
             masterCreditResponse.setResponseCode((String) jsonMap.get("MCResponse.Code"));
             masterCreditResponse.setResponseReason((String) jsonMap.get("MCResponse.Reason"));
@@ -411,12 +436,12 @@ public class OrderManagementService {
             String input = "{" +
                     "\"SPCustomerPhone\": \"" + safePayRequest.getCustomerPhone() + "\"," +
                     "\"SPPassword\": \"" + safePayRequest.getPassword() + "\"," +
-                    "\"SPRecevingAmount.Currency\": \"" + safePayRequest.getCurrency() + "\"," +
-                    "\"SPRecevingAmount.Value\": " + safePayRequest.getValue() + "," +
-                    "\"SPRecevingCard.AccountNumber\": " + safePayRequest.getAccountNumber() + "," +
+                    "\"SPReceivingAmount.Currency\": \"" + safePayRequest.getCurrency() + "\"," +
+                    "\"SPReceivingAmount.Value\": " + safePayRequest.getValue() + "," +
+                    "\"SPReceivingCard.AccountNumber\": " + safePayRequest.getAccountNumber() + "," +
                     "\"SPTransactionDate\": \"" + safePayRequest.getTransactionDate() + "\"," +
-                    "\"SPTransactionType\": \"" + safePayRequest.getTransactionType() + "\"" +
-                    "\"SPUserName\":\"" + safePayRequest.getUserName() + "\"," +
+                    "\"SPTransactionType\": \"" + safePayRequest.getTransactionType() + "\"," +
+                    "\"SPUserName\":\"" + safePayRequest.getUserName() + "\"" +
                     "}";
 
             OutputStream os = conn.getOutputStream();
@@ -431,12 +456,15 @@ public class OrderManagementService {
                     (conn.getInputStream())));
 
             String output;
+            StringBuilder sb = new StringBuilder();
+
             System.out.println("Output from Server .... \n");
             while ((output = br.readLine()) != null) {
+                sb.append(output);
                 System.out.println(output);
             }
 
-            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(output);
+            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
 
             safePayResponse.setReferenceNumber(Long.valueOf(String.valueOf(jsonMap.get("SPRefNumber"))));
             safePayResponse.setResponseCode((String) jsonMap.get("SPResponse.Code"));
@@ -453,14 +481,6 @@ public class OrderManagementService {
         }
 
         return safePayResponse;
-    }
-
-    /**
-     * Add user order header and line in ORDER schema.
-     * @param orderPurchaseRequest
-     */
-    public void addUserOrder(OrderPurchaseRequest orderPurchaseRequest){
-
     }
 
     /**
@@ -499,11 +519,11 @@ public class OrderManagementService {
                 System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
             }
-            else if (orderResponse.getTransactionReference().length() == 10) {
+            else if (orderResponse.getTransactionReference().length() != 10) {
                 System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
             }
-            else if (orderResponse.getSETransactionType().equalsIgnoreCase(orderRequest.getSETransactionType())) {
+            else if (! orderResponse.getSETransactionType().equalsIgnoreCase(orderRequest.getSETransactionType())) {
                 System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
             }

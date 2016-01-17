@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="blueLink">
-            <a>{{ 'Edit_shipping_Details' | translate }}</a>
+            <a data-ng-click="getData()">{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
@@ -57,7 +57,7 @@
 
             <!---------------------------- SAFEPAY SECCION ---------------------------->
 
-            <div ng-show="imgRadioButton == 1 && !editMode">
+            <div ng-show="imgRadioButton == 1">
 
                 <div class="notice">
                     <h4 translate="Notice"  ></h4>
@@ -108,9 +108,8 @@
                     <div class="blueLink">
                         <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
-                            <input sec-submit-attr="payNow_SafePay()"
+                            <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
                                    class="roboto-medium float-button a-button"
-                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
                         </label>
@@ -142,9 +141,9 @@
                 </div>
 
                 <div class="blueLink">
-                    <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                    <a ng-click="firstTag = true" >{{ 'Back_to_shipping_details' | translate }}</a>
                     <label>
-                        <input class="roboto-medium float-button a-button" data-ng-click="payNow_masterCredit()"
+                        <input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"
                                type="button" value="{{'PAY_NOW' | translate}}" />
                     </label>
                 </div>
@@ -157,7 +156,7 @@
 
             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
-            <div ng-show="noCards">
+            <div ng-show="imgRadioButton == 2 && noCards">
 
                 <sec-validate class="smollInput" >
 
@@ -173,8 +172,8 @@
 
                     <sec-input sec-required class="creditCard"
                                sec-placeholder="{{ 'CCV_Number' | translate }}"
-                               model-attr="card.ccv"
-                               id-attr="Card_ccv" >
+                               model-attr="card.cvv"
+                               id-attr="Card_cvv" >
                     </sec-input>
 
                     <div class="payment_date">
@@ -213,7 +212,7 @@
                         <label>
                             <input sec-submit-attr="payNow_masterCredit()"
                                    class="roboto-medium float-button a-button"
-                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+                                   a-sec-validate-invalid
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
                         </label>

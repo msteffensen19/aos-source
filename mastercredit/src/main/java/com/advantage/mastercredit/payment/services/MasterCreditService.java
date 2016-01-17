@@ -160,6 +160,9 @@ public class MasterCreditService {
             responseStatus.setReferenceNumber(0);
             isValid = false;
         }
+        else {
+            System.out.println(masterCreditDto.getValue() + " : true");
+        }
 
         if (!ValidationHelper.isValidCurrency(masterCreditDto.getCurrency())) {
             responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
@@ -179,6 +182,7 @@ public class MasterCreditService {
                 responseStatus.setResponseReason("Payment rejected");
                 responseStatus.setReferenceNumber(0);
             } else {
+                System.out.println("Payment Approved");
                 responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());
                 responseStatus.setResponseReason(ResponseEnum.APPROVED.getStringCode());
                 responseStatus.setReferenceNumber(this.referenceNumberNextValue());

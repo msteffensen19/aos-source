@@ -33,6 +33,12 @@
     list-style: none;
 }
 
+.validate-directive > .validate-info ul a{
+    color: #828282;
+    font-size: 12px;
+    padding: 4px 0;
+}
+
 .validate-directive .must{
     position: absolute;
     top:12px;

@@ -6,6 +6,7 @@ import com.advantage.order.store.dao.AbstractRepository;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.*;
 import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.root.util.StringHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -57,7 +58,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCountryCode(), "shipping address");
 
         this.validatePaymentMethod(orderPaymentInformation.getPaymentMethod(), "payment method");
-        this.validateTransactionType(orderPaymentInformation.getTransactionType(), "transaction type");
+        this.validateTransactionType(StringHelper.toInitCap(orderPaymentInformation.getTransactionType()), "transaction type");
         ArgumentValidationHelper.validateLongArgumentIsPositive(orderPaymentInformation.getReferenceNumber(), "payment confirmation number");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCustomerPhone(), "customer phone");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getTransactionDate(), "transaction date");
@@ -102,10 +103,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         orderHeader.setCvvNumber(orderPaymentInformation.getCvvNumber());
         orderHeader.setUsername(orderPaymentInformation.getUsername());
 
-        entityManager.getTransaction().begin();
         entityManager.persist(orderHeader);
-
-        boolean successful = true;
 
         //  Validate OrderLines information
         //List<OrderPurchasedProductInformation> purchasedProducts
@@ -124,13 +122,6 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
                     purchasedProduct.getQuantity());
 
             entityManager.persist(orderLines);
-        }
-
-        if (successful) {
-            entityManager.getTransaction().commit();
-        }
-        else {
-            entityManager.getTransaction().rollback();
         }
 
     }

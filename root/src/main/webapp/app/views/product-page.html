@@ -16,7 +16,8 @@
 
 -->
 
-<nav class="pages">
+
+<nav class="pages fixedImportant productImage" >
     <a translate="HOME" href="/#" ></a>
     <a href="#/category/{{product.categoryId}}" > {{categoryName}} </a>
     <a class="select">{{::product.productName | uppercase}}</a>
@@ -61,7 +62,8 @@
             </div>
             <br />
             <label class="Quantity roboto-light" translate="Quantity:" ></label>
-            <select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>
+            <e-sec-plus-minus num-attr="quantity"  ></e-sec-plus-minus>
+            <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
             <br />
             <button class="roboto-medium" translate="ADD_TO_CART"  ng-click="addToCart()"> </button>
         </div>

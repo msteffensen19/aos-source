@@ -141,6 +141,9 @@
                         <configuration>
                             <files>
                                 <file>${project.build.directory}/generated-resources/services.properties</file>
+                                <file>
+                                    ${project.build.directory}/generated-resources/internal_config_for_env.properties
+                                </file>
                                 <file>${project.build.directory}/generated-resources/global.properties</file>
                             </files>
                         </configuration>

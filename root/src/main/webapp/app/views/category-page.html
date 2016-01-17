@@ -16,15 +16,15 @@
             </a>
         </div>
         <div>
-            <nav class="pages">
+            <nav class="pages categoryDataFixedNav"  data-ng-class="{ fixedImportant : viewAll }">
                 <a translate="HOME" href="#/" ></a>
                 <a class="select "> {{categoryName}} </a>
             </nav>
         </div>
+        <!--data-ng-show="categoryData.promotedProduct == null"-->
         <h3 class="categoryTitle roboto-regular sticky"
-            data-ng-show="categoryData.promotedProduct == null"
-            data-ng-class="{ noPromotedProduct : categoryData.promotedProduct == null }" >{{categoryName}}</h3>
-        <div class="noPromotedProductDiv">
+            data-ng-class="{ noPromotedProduct : viewAll }" >{{categoryName}}</h3>
+        <div ng-class="{ noPromotedProductDiv : viewAll }">
             <div ng-switch-when="true">
                 <label style="display: block; text-align: center; color:black; font-size: 100px">
                     No products!

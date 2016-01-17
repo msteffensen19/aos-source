@@ -13,7 +13,7 @@ define([],function(){
             controller: 'orderPaymentCtrl',
             controllerAs: 'opCtrl',
             data: {
-                requireLogin: true,  // this property will apply to all children of 'app'
+                //requireLogin: true,  // this property will apply to all children of 'app'
                 breadcrumbName: "orderPayment",
             },
             resolve : {
@@ -27,11 +27,12 @@ define([],function(){
                             orderService.getShippingCost(user).
                             then(function (shippingCost) {
 
-                                var paramsToResolve = {
+                                defer.resolve({
                                     shippingCost : shippingCost,
-                                    user : user
-                                }
-                                defer.resolve(paramsToResolve);
+                                    user : user,
+                                    noCards: true,
+                                    CardNumber: [],
+                                });
                             });
                         }
                         else {

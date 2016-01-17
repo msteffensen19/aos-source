@@ -17,6 +17,8 @@ public class ArgumentValidationHelper {
     public static final String STATUS_ERROR_AMOUNT_VALUE = "ERROR. Amount value is not valid";
     public static final String STATUS_ERROR_ORDER_NUMBER = "ERROR. OrderNumber value is not valid";
     public static final String ERROR_TRANSACTION_TYPE = "ERROR. Transaction type is not valid";
+    public static final String ERROR_PHONE_NUMBER = "ERROR. Invalid phone number format";
+    public static final String ERROR_CUSTOMER_NAME = "ERROR. Invalid customer name format";
     public static final int COUNTRY_ORDER_PATTERN = 10;
     public static final int ORDER_NUMBER_PATTERN = 10;
     public static final int ADDRESS_LINE_PATTERN = 50;
@@ -24,7 +26,6 @@ public class ArgumentValidationHelper {
     public static final int CITY_PATTERN = 25;
     public static final int COUNTRY_COST_PATTERN = 2;
     private static final String PHONE_PATTERN = "(^([0-9]){0,20})$";
-    public static final String ERROR_PHONE_NUMBER = "ERROR. Invalid phone number format";
 
     public static String shippingCostRequestValidation(ShippingCostRequest request) {
         if(!countryValidation(request.getSEAddress().getCountry())) {
@@ -55,7 +56,7 @@ public class ArgumentValidationHelper {
             return ERROR_PHONE_NUMBER;
         }
         if(!customerNameValidation(request.getSECustomerName())){
-            return ERROR_PHONE_NUMBER;
+            return ERROR_CUSTOMER_NAME;
         }
 
         return ResponseEnum.OK.getStringCode();

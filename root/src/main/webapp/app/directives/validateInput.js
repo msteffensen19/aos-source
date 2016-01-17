@@ -16,15 +16,8 @@ define(['./module'], function (directives) {
                 },
                 require: '^secValidate',
                 link: function(s, e, a, ctrl){
-
                     e.bind('click', function(){
-                        console.log("ctrl.getInvalidItems()")
-                        console.log(ctrl.getInvalidItems())
-                        console.log("")
-                        console.log("")
-                        console.log("")
-                        console.log("")
-                        if(ctrl.getInvalidItems() == 0)
+                        if(!ctrl.getInvalidItems() && !e.hasClass("sec-validate-invalid"))
                         {
                             s.submit()
                         }
@@ -37,7 +30,7 @@ define(['./module'], function (directives) {
                 restrict: 'E',
                 require: 'secValidate',
                 scope: {},
-                controller: ['$scope', function(s){
+                controller: ['$scope', '$rootScope', function(s, $rootScope){
 
                     this.addId = function(id){
                         this.id = id;
@@ -45,6 +38,13 @@ define(['./module'], function (directives) {
 
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
+                        l("s.invalidItems_length")
+                        l(s.invalidItems)
+                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : s.invalidItems.length });
+                        return s.invalidItems.length  > 0;
+                    }
+
+                    this.getInvalidItemsCount = function(){
                         return s.invalidItems.length;
                     }
 
@@ -86,7 +86,27 @@ define(['./module'], function (directives) {
                 }
             }
         }])
-        .directive('secInput', ['$templateCache', function($templateCache){
+
+        .directive('aSecValidateInvalid', function($rootScope){
+            return{
+                restrict: 'A',
+                link: function(s, e, a, ctrl){
+                    $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
+                        if (args.invalidItems != undefined) {
+
+                            l(args.invalidItems)
+                            if(args.invalidItems > 0){
+                                e.addClass("sec-validate-invalid")
+                            }
+                            else{
+                                e.removeClass("sec-validate-invalid")
+                            }
+                        }
+                    });
+                }
+            }
+        })
+        .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
             return {
                 restrict: 'E',
                 replace: true,
@@ -99,37 +119,54 @@ define(['./module'], function (directives) {
                 template: $templateCache.get('app/partials/secInput.html'),
                 controller: ['$scope', function (s) {
 
+                    var labelStartPossition;
+                    var ctrlFather;
                     s.warnings = [];
                     s.noRedStar = false;
                     s.id;
-                    var labelStartPossition;
-                    var ctrlFather;
+                    s.textToShow = {
+                        text: "",
+                        valid: true
+                    };
+
+                    s.inputKeyup = function (id) {
+                        var input = $('#secInput_' + id);
+                        var invalid = checkValidInput(s.warnings, input, 'keyup');
+                        if (invalid) {
+                            ctrlFather.addInvalidField(id);
+                        }
+                        else {
+                            ctrlFather.shiftInvalidField(id);
+                        }
+                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrlFather.getInvalidItemsCount()});
+                    }
 
                     s.inputFocus = function (id) {
                         var input = $('#secInput_' + id);
-
                         s.textToShow = {
                             text: s.placeHolder,
                             valid: true,
                         };
-
+                        checkValidInput(s.warnings, input, 'keyup');
                         labelStartPossition = labelStartPossition || input.prev().css('top');
                         input.prev().animate({'top': '-18px'}, 300, 'linear');
                         input.siblings(".validate-info").show(200);
                     }
 
-                    s.inputBlur = function (id) {
+                    s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
+
                         var input = $('#secInput_' + id);
                         if (input.val().length == 0) {
                             input.prev().animate({'top': labelStartPossition}, 300, 'linear');
                         }
-                        checkValidInput(s.warnings, input);
-                        if (s.textToShow.valid) {
-                            ctrlFather.shiftInvalidField(id);
-                        }
-                        else {
+                        var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
+                        if (invalid) {
                             ctrlFather.addInvalidField(id);
                         }
+                        else {
+                            ctrlFather.shiftInvalidField(id);
+                        }
+                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrlFather.getInvalidItemsCount()});
                         input.siblings(".validate-info").hide(200);
                     }
 
@@ -167,54 +204,99 @@ define(['./module'], function (directives) {
                         s.inputType = inputType;
                     }
 
-                    function setTextToShow(warn) {
+                    function setTextToShow(warn, justTestThisField_do_not_active_her_Field) {
+                        warn.show = true;
+                        if(justTestThisField_do_not_active_her_Field){
+                            return;
+                        }
                         s.textToShow = {
                             text: warn.warning,
                             valid: false
                         };
                     }
 
-                    function checkValidInput(warnings, input) {
+                    function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
 
-                        angular.forEach(s.warnings, function (warn) {
+                        var invalidToReturn = false;
+                        for (var i in s.warnings) {
+                            var warn = s.warnings[i];
+
                             if (s.textToShow.valid) {
                                 switch (warn.key) {
                                     case 'secRequired':
-                                        if (input.val() == '') {
-                                            setTextToShow(warn)
-                                            return false;
+                                        var _invalid = (input.val() == '');
+                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                        if(event == 'keyup'){
+                                            warn.show = _invalid;
+                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
+                                        }
+                                        else if (invalidToReturn) {
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                        }
+                                        break;
+                                    case 'secOnlyNumbers':
+                                        var _invalid = !((input.val() - 0) == input.val() &&
+                                        input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
+                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                        if(event == 'keyup'){
+                                            warn.show = _invalid;
+                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
+                                        }
+                                        else if (invalidToReturn) {
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secMinLength':
-                                        if (input.val().length < warn.min) {
-                                            setTextToShow(warn)
-                                            return false;
+                                        var _invalid = input.val().length < warn.min;
+                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                        if(event == 'keyup'){
+                                            warn.show = _invalid;
+                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
+                                        }
+                                        else if (invalidToReturn) {
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secMaxLength':
-                                        if (input.val().length > warn.max) {
-                                            setTextToShow(warn)
-                                            return false;
+                                        var _invalid = input.val().length > warn.max;
+                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                        if(event == 'keyup'){
+                                            warn.show = _invalid;
+                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
+                                        }
+                                        else if (invalidToReturn) {
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secPattern':
-                                        if (!(new RegExp(warn.regex).test(input.val()))) {
-                                            setTextToShow(warn)
-                                            return false;
+                                        var _invalid = !(new RegExp(warn.regex).test(input.val()));
+                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                        if(event == 'keyup'){
+                                            warn.show = _invalid;
+                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
+                                        }
+                                        else if (invalidToReturn) {
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     case 'secCompareTo':
                                         var comparedInput = $('#secInput_' + warn.compareId);
-                                        if (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "") {
-                                            setTextToShow(warn)
-                                            return false;
+                                        var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                        if(event == 'keyup'){
+                                            warn.show = _invalid;
+                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
+                                        }
+                                        else if (invalidToReturn) {
+                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
                                         }
                                         break;
                                     default:
                                         throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
                                 }
                             }
-                        })
+                        }
+                        return invalidToReturn;
                     }
                 }],
                 link: {
@@ -223,6 +305,13 @@ define(['./module'], function (directives) {
                         var me = ctrls[0];
                         e.addClass('validate-directive');
 
+                        if (!a.idAttr) {
+                            throw "id attribute  in directive <secInput></secInput> is must! "
+                        }
+
+                        if (a.noRedStar) {
+                            me.enableNoRedStar();
+                        }
                         if (a.selectTag) {
 
                             e.bind('click', function () {
@@ -237,30 +326,33 @@ define(['./module'], function (directives) {
                                             ctrls[1].addInvalidField(a.idAttr);
                                             $(this).find(".validateInvalid").fadeIn();
                                         }
+                                        ctrls[1].getInvalidItems();
+                                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrls[1].getInvalidItemsCount()});
                                     });
                                 }
                             })
 
                             e.bind('change', function () {
-                                ctrls[1].shiftInvalidField(a.idAttr);
-                                $($(this).find(".validate-label")).html('')
+                                var select = $($(this).find("select"))
+                                var _this = this;
+                                if (select.length > 0) {
+                                    s.$apply(function () {
+                                        ctrls[1].shiftInvalidField(a.idAttr);
+                                        $($(_this).find(".validate-label")).html('')
+                                    });
+                                }
                             })
                         }
-
-                        if (!a.idAttr) {
-                            throw "id attribute  in directive <secInput></secInput> is must! "
-                        }
-
-                        if (a.noRedStar) {
-                            me.enableNoRedStar();
-                        }
-
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
+                    },
+                    post: function(s){
+                        $timeout(function(){
+                            s.inputBlur(s.id, true);
+                        }, 500)
                     }
                 }
-
             }
         }])
         .directive('secRequired', function(){
@@ -269,11 +361,27 @@ define(['./module'], function (directives) {
                 priority: 0,
                 require: 'secInput',
                 link: function(s, e, a, ctrl){
-                   var warning = a.secRequired || 'This field is required'
+                    var warning = a.secRequired || 'This field is required'
                     ctrl.addWarningInfo({
                         key : 'secRequired',
                         warning : warning,
                         info: '',
+                        show: false
+                    })
+                }
+            }
+        })
+        .directive('secOnlyNumbers', function(){
+            return{
+                restrict: 'A',
+                require: 'secInput',
+                link: function(s, e, a, ctrl){
+                    var warning = a.secOnlyNumbers || 'Only Digits allowed'
+                    ctrl.addWarningInfo({
+                        key : 'secOnlyNumbers',
+                        warning : warning,
+                        info: warning,
+                        show: false
                     })
                 }
             }
@@ -298,6 +406,7 @@ define(['./module'], function (directives) {
                         warning : warning,
                         info: warning,
                         min : min,
+                        show: false
                     })
                 }
             }
@@ -321,6 +430,7 @@ define(['./module'], function (directives) {
                         key : 'secMaxLength',
                         warning : warning,
                         info: warning,
+                        show: false,
                         max : max,
                     })
                 }
@@ -340,6 +450,7 @@ define(['./module'], function (directives) {
                         key : 'secPattern',
                         warning : a.patternErrorAttr,
                         info: a.patternErrorAttr,
+                        show: false,
                         regex : a.secPattern,
                     })
                 }
@@ -354,9 +465,10 @@ define(['./module'], function (directives) {
                         key : 'secPattern',
                         warning : "Your email address isn’t formatted correctly",
                         info: "Your email address isn’t formatted correctly",
+                        show: false,
                         regex : a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
-                        //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                     })
+                    //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                 }
             }
         })
@@ -380,6 +492,7 @@ define(['./module'], function (directives) {
                         key : 'secCompareTo',
                         warning : warning,
                         info : warning,
+                        show: true,
                         compareId : a.secCompareTo,
                     })
                 }

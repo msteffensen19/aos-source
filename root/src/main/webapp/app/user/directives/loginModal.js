@@ -32,8 +32,6 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
-                        console.log("user")
-                        console.log(user)
                         userService.login(user).then(function (res) {
 
                             var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
