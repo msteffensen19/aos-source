@@ -173,10 +173,9 @@ public class OrderManagementService {
             MasterCreditResponse masterCreditResponse = payWithMasterCredit(masterCreditRequest);
 
             // Check "masterCreditResponse"
-            if (masterCreditResponse.getResponseCode().equalsIgnoreCase("Approved")) {
+            if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(masterCreditResponse.getReferenceNumber());
                 purchaseResponse.setPaymentConfirmationNumber(masterCreditResponse.getReferenceNumber());
-
             } else {
                 paymentSuccessful = false;
                 purchaseResponse.setSuccess(paymentSuccessful);
@@ -200,8 +199,10 @@ public class OrderManagementService {
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
 
-            if (safePayResponse.getResponseCode().equalsIgnoreCase("Approved")) {
+
+            if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(safePayResponse.getReferenceNumber());
+                purchaseResponse.setPaymentConfirmationNumber(safePayResponse.getReferenceNumber());
             } else {
                 paymentSuccessful = false;
                 purchaseResponse.setSuccess(paymentSuccessful);

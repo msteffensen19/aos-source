@@ -97,6 +97,7 @@
     height: 0;
     font-size: 0;
     overflow: hidden;
+    opacity: 0;
 }
 
 #orderPayment .penetrationInCart > label span{

@@ -143,7 +143,7 @@ var english = {
     'Password' : 'Password',
     'Confirm_Password' : 'Confirm Password',
     'Confirm_password' : 'Confirm password',
-    'a' : 'a',
+    'register_faild' : 'register faild! please try again later',
     'a' : 'a',
     'a' : 'a',
     'a' : 'a',

@@ -156,6 +156,10 @@ define(['./module'], function (directives) {
                     s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
 
                         var input = $('#secInput_' + id);
+                        if(input.val() == undefined){
+                            return;
+                        }
+
                         if (input.val().length == 0) {
                             input.prev().animate({'top': labelStartPossition}, 300, 'linear');
                         }

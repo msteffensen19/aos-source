@@ -167,6 +167,10 @@ var server = {
             return orderKey + "/carts/" + userId;
         },
 
+        clearCart : function (userId){
+            return orderKey + "/carts/" + userId;
+        },
+
         getShippingCost: function(){
             return orderKey + "/shippingcost/" ;
         },

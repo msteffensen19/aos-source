@@ -75,7 +75,7 @@ define(['./module'], function (directives) {
                 }
 
                 s.paymentMethod_edit = function() {
-                    s.noCards = true;
+                    s.noCards = !s.noCards;
                 }
             },
         }
