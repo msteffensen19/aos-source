@@ -1,9 +1,11 @@
 package com.advantage.accountsoap;
 
+import accountservice.store.online.advantage.com.AddressesResponse;
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.dto.*;
+import com.advantage.accountsoap.dto.account.*;
+import com.advantage.accountsoap.dto.country.*;
+import com.advantage.accountsoap.dto.address.*;
 import com.advantage.accountsoap.model.Account;
-import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.services.AddressService;
 import com.advantage.accountsoap.services.CountryService;
@@ -12,11 +14,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import org.springframework.ws.transport.context.TransportContext;
-import org.springframework.ws.transport.context.TransportContextHolder;
-import org.springframework.ws.transport.http.HttpServletConnection;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Endpoint
@@ -43,15 +41,14 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
-    public AccountDto getAccount(@RequestPayload GetAccountByIdRequest accountId) {
+    public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountId) {
         Account account = accountService.getById(accountId.getId());
         if (account == null) return null;
-        AccountDto response = new AccountDto(account.getId(),
+        AccountDto dto = new AccountDto(account.getId(),
                 account.getLastName(),
                 account.getFirstName(),
                 account.getLoginName(),
                 account.getAccountType(),
-                account.getPaymentMethod(),
                 account.getCountry().getId(),
                 account.getCountry().getName(),
                 account.getCountry().getIsoName(),
@@ -65,12 +62,12 @@ public class AccountserviceEndpoint {
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
-        return response;
+        return new GetAccountByIdResponse(dto);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
     @ResponsePayload
-    public AccountStatusResponse doLogin(@RequestPayload AccountLoginRequest account) {
+    public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
         //todo set header
 
         AccountStatusResponse response = accountService.doLogin(account.getLoginUser(),
@@ -88,16 +85,16 @@ public class AccountserviceEndpoint {
             //response.getHeader().
             response.setSessionId(session.getId());*/
 
-            return response;
+            return new AccountLoginResponse(response);
         } else {
-            return response;
+            return new AccountLoginResponse(response);
         }
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountCreateRequest")
     @ResponsePayload
-    public AccountStatusResponse createAccount(@RequestPayload AccountCreateRequest account) {
-        return accountService.create(
+    public AccountCreateResponse createAccount(@RequestPayload AccountCreateRequest account) {
+        AccountStatusResponse response = accountService.create(
                 account.getAccountType(),
                 account.getLastName(),
                 account.getFirstName(),
@@ -111,12 +108,14 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
+
+        return new AccountCreateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
-    public AccountStatusResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
-        return accountService.updateAccount(
+    public AccountUpdateResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
+        AccountStatusResponse response = accountService.updateAccount(
                 account.getAccountId(),
                 account.getAccountType(),
                 account.getLastName(),
@@ -129,37 +128,39 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
+
+        return new AccountUpdateResponse(response);
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
+   /* @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
     @ResponsePayload
     public AccountStatusResponse updatePaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
         return accountService.updatePaymentMethod(request.getAccountId(), request.getPaymentMethod());
-    }
+    }*/
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
     public GetCountriesResponse getCountries() {
-        List<Country> countries = countryService.getAllCountries();
         GetCountriesResponse response = new GetCountriesResponse();
-        response.setCountry(countries);
+        response.setCountry(countryService.getAllCountries());
 
         return response;
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountryCreateRequest")
     @ResponsePayload
-    public CountryStatusResponse createCountry(@RequestPayload CountryCreateRequest country) {
-        return countryService.create(country.getName(),
+    public CountryCreateResponse createCountry(@RequestPayload CountryCreateRequest country) {
+        CountryStatusResponse response = countryService.create(country.getName(),
                 country.getIsoName(),
                 country.getPhonePrefix());
+
+        return new CountryCreateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountrySearchRequest")
     @ResponsePayload
-    public GetCountriesResponse searchInCountries(@RequestPayload CountrySearchRequest request) {
-        GetCountriesResponse response = new GetCountriesResponse();
-        List<Country> countries;
+    public CountrySearchResponse searchInCountries(@RequestPayload CountrySearchRequest request) {
+        List<CountryDto> countries;
 
         if (request == null) throw new IllegalArgumentException("Not valid parameters");
         if (!request.getStartOfName().isEmpty() && request.getInternationalPhonePrefix() != 0) {
@@ -172,15 +173,14 @@ public class AccountserviceEndpoint {
         if (countries == null || countries.isEmpty()) {
             return null;
         } else {
-            response.setCountry(countries);
-            return response;
+            return new CountrySearchResponse(countries);
         }
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
     @ResponsePayload
-    public AddressesResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
-        AddressesResponse response = new AddressesResponse();
+    public GetAddressesByAccountIdResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
+        GetAddressesByAccountIdResponse response = new GetAddressesByAccountIdResponse();
         List<AddressDto> addresses = addressService.getByAccountId(accountId.getId());
         response.setShippingAddress(addresses);
 
@@ -189,21 +189,26 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddAddressesRequest")
     @ResponsePayload
-    public AddressStatusResponse addAddress(@RequestPayload AddAddressesRequest address) {
-        return addressService.add(address.getAccountId(), address.getAddresses());
+    public AddAddressesResponse addAddress(@RequestPayload AddAddressesRequest address) {
+        AddressStatusResponse response = addressService.add(address.getAccountId(), address.getAddresses());
+
+        return new AddAddressesResponse(response);
     }
 
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddressUpdateRequest")
     @ResponsePayload
-    public AddressStatusResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
-        return addressService.update(address.getAddress());
+    public AddressUpdateResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
+        AddressStatusResponse response = addressService.update(address.getAddress());
+
+        return new AddressUpdateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
     @ResponsePayload
-    public AccountStatusResponse changePassword(@RequestPayload ChangePasswordRequest request) {
-        return accountService.changePassword(request.getAccountId(), request.getNewPassword());
+    public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+        AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getNewPassword());
+        return new ChangePasswordResponse(response);
     }
 
     /*protected HttpServletRequest getHttpServletRequest() {

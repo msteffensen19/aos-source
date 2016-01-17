@@ -1,8 +1,8 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
-import com.advantage.accountsoap.dto.AccountDto;
-import com.advantage.accountsoap.dto.AccountStatusResponse;
+import com.advantage.accountsoap.dto.account.AccountDto;
+import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,7 +52,6 @@ public class AccountService {
                     account.getFirstName(),
                     account.getLoginName(),
                     account.getAccountType(),
-                    account.getPaymentMethod(),
                     account.getCountry().getId(),
                     account.getCountry().getName(),
                     account.getCountry().getIsoName(),
@@ -87,11 +86,6 @@ public class AccountService {
     @Transactional
     public Account getById(long id) {
         return accountRepository.get(id);
-    }
-
-    @Transactional
-    public AccountStatusResponse updatePaymentMethod(long accountId, int paymentMethod) {
-        return  accountRepository.updatePaymentMethod(accountId, paymentMethod);
     }
 
     @Transactional
