@@ -31,8 +31,8 @@ define(['./module'], function (directives) {
                     safePayBussy = true;
                     orderService.SafePay( s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
                         .then(function(res){
-                            if(res.success){
 
+                            if(res.success){
                                 rs.$broadcast('updatePaymentEnd', {
                                     paymentEnd: true,
                                     orderNumber : res.orderNumber,
@@ -76,6 +76,7 @@ define(['./module'], function (directives) {
 
                 s.paymentMethod_edit = function() {
                     s.noCards = !s.noCards;
+                    s.getData();
                 }
             },
         }

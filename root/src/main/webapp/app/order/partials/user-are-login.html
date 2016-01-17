@@ -2,6 +2,7 @@
 
 <div>
 
+
 <div id="detailslink">
     <label class="roboto-regular" ng-class="{ selected : firstTag }" >1. {{ 'SHIPPING_DETAILS' | translate }}</label>
     <label class="roboto-regular" ng-class="{ selected : !firstTag }" >2. {{ 'PAYMENT_METHOD' | translate }}</label>
@@ -28,7 +29,7 @@
             </div>
         </div>
         <div class="blueLink">
-            <a data-ng-click="getData()">{{ 'Edit_shipping_Details' | translate }}</a>
+            <a data-ng-dblclick="paymentMethod_edit()">{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
@@ -52,7 +53,6 @@
                     <img src="../../../css/images/SafePay.png" alt="Safepay" />
                 </div>
                 <div class="imgRadioButton" data-ng-click="imgRadioButton = 2"
-                     data-ng-dblclick="paymentMethod_edit()"
                      data-ng-class="{ selected : imgRadioButton == 2 }">
                     <img src="../../../css/images/Master_credit.png" alt="Master credit" />
                 </div>
@@ -137,7 +137,7 @@
                         <span data-ng-repeat="_4numbers in CardNumber track by $index" >
                             {{ _4numbers | showLast4DigitsCard:$last:$index}}
                         </span>
-                        <label class="edit" data-ng-click="paymentMethod_edit(card)" >
+                        <label class="edit" >
                             {{'Edit' | translate}}
                         </label>
                     </div>

@@ -34,7 +34,7 @@
                 </div>
                 <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
                 <div class="penetrationInCart">
-                    <label class="shippingText roboto-regular" ng-class=" { noShipping : shippingCost == 0 } " >
+                    <label class="shippingText roboto-regular" ng-class=" { noShipping : shippingCost == null } " >
                         {{ 'SHIPPING' | translate }}
                         <span class="shippingValue roboto-light">
                             {{ shippingCost | currency: '$'}}

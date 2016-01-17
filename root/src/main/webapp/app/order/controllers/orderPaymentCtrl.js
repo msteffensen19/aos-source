@@ -5,8 +5,9 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('orderPaymentCtrl', ['$scope', '$rootScope','resolveParams', 'orderService', 'productsCartService',
-        function (s, rs, resolveParams, orderService, cartService) {
+    controllers.controller('orderPaymentCtrl', ['$scope', '$rootScope','resolveParams',
+        'orderService', 'productsCartService', '$filter',
+        function (s, rs, resolveParams, orderService, cartService, $filter) {
 
             s.checkCart();
 
@@ -15,6 +16,9 @@ define(['./module'], function (controllers) {
                 s.paymentEnd = args.paymentEnd;
                 s.orderNumber = args.orderNumber;
                 s.trackingNumber = args.trackingNumber;
+
+                s.subTotal = ($filter("productsCartSum")(s.cart));
+                s.total = ($filter("productsCartSum")(s.cart, s.shippingCost));
                 rs.$broadcast('clearCartEvent');
             });
             s.noCards = resolveParams.noCards; //check if have cards

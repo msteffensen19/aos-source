@@ -10,7 +10,7 @@
                 sec-placeholder="{{'User_name' | translate}}"
                 sec-min-length="5"
                 sec-max-length="15"
-                sec-pattern="^[A-Za-z0-9_.-]{3,15}$"
+                sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
                 pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                 model-attr="loginUser.loginUser"
                 id-attr="username" >
@@ -28,7 +28,7 @@
         </sec-input>
 
         <sec-input
-                sec-required="{{'Email' | translate}} {{'field is required' | translate}}"
+                sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
                 sec-email
                 sec-placeholder="{{'Email' | translate}}"
                 input-type-attr="email"

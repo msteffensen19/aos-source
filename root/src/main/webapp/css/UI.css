@@ -341,6 +341,13 @@ a{
     text-decoration: none;
 }
 
+.sec-validate-invalid , .sec-validate-invalid:hover{
+    color: #b2b2b2 !important;
+    border: solid 2px #d1d1d1 !important;
+    cursor: default;
+    background-color: white !important;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
     display: none !important;
 }
