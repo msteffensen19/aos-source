@@ -13,10 +13,6 @@
     vertical-align: top;
 }
 
-#form *{
-    color:#2a2a2a;
-}
-
 #infoDemo{
 white-space: nowrap;
 }
@@ -159,13 +155,7 @@ display: block;
 #form .invalidInput{
     border-bottom: solid #ff454f 1px;
 }
-
-#form .buttonDisable, #form .buttonDisable:hover{
-    color: #b2b2b2 !important;
-    border: solid 2px #d1d1d1 !important;
-    cursor: default;
-    background-color: white !important;
-}
+/*.buttonDisable*/
 
 #formCover .validate-directive {
     width:49%;

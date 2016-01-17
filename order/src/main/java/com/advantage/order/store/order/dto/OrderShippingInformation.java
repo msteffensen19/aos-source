@@ -9,34 +9,44 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class OrderShippingInformation {
 
-    @JsonProperty("Shipping.Cost")
+    //@JsonProperty("Shipping.Cost")
+    @JsonProperty("Shipping_Cost")
     private double shippingCost;                //  ##.##
 
-    @JsonProperty("Shipping.TrackingNumber")
+    //@JsonProperty("Shipping.TrackingNumber")
+    @JsonProperty("Shipping_TrackingNumber")
     private long trackingNumber;                //  10 digits
 
-    @JsonProperty("Shipping.NumberOfProducts")
+    //@JsonProperty("Shipping.NumberOfProducts")
+    @JsonProperty("Shipping_NumberOfProducts")
     private int numberOfProducts;               //  Numeric. 1-5 digits
 
-    @JsonProperty("Shipping.Address.CustomerName")
+    //@JsonProperty("Shipping.Address.CustomerName")
+    @JsonProperty("Shipping_Address_CustomerName")
     private String customerName;
 
-    @JsonProperty("Shipping.Address.CustomerPhone")
+    //@JsonProperty("Shipping.Address.CustomerPhone")
+    @JsonProperty("Shipping_Address_CustomerPhone")
     private String customerPhone;
 
-    @JsonProperty("Shipping.Address.Address")
+    //@JsonProperty("Shipping.Address.Address")
+    @JsonProperty("Shipping_Address_Address")
     private String address;                     //  0-100 characters
 
-    @JsonProperty("Shipping.Address.City")
+    //@JsonProperty("Shipping.Address.City")
+    @JsonProperty("Shipping_Address_City")
     private String city;                        //  City name
 
-    @JsonProperty("Shipping.Address.PostalCode")
+    //@JsonProperty("Shipping.Address.PostalCode")
+    @JsonProperty("Shipping_Address_PostalCode")
     private String postalCode;                  //  0-10 digis
 
-    @JsonProperty("Shipping.Address.State")
+    //@JsonProperty("Shipping.Address.State")
+    @JsonProperty("Shipping_Address_State")
     private String state;                       //  0-10 characters
 
-    @JsonProperty("Shipping.Address.CountryCode")
+    //@JsonProperty("Shipping.Address.CountryCode")
+    @JsonProperty("Shipping_Address_CountryCode")
     private String countryCode;                 //  2 characters, by ISO3166
 
     public OrderShippingInformation() { }

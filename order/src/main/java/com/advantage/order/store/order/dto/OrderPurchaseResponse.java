@@ -8,6 +8,8 @@ public class OrderPurchaseResponse {
     private String code;
     private String reason;
     private long orderNumber;
+    private long paymentConfirmationNumber;
+    private long trackingNumber;
 
     public OrderPurchaseResponse() {  }
 
@@ -15,14 +17,18 @@ public class OrderPurchaseResponse {
         this.success = success;
         this.code = "";
         this.reason = "";
-        this.orderNumber = 0;
+        this.orderNumber = 0L;
+        this.paymentConfirmationNumber = 0L;
+        this.trackingNumber = 0L;
     }
 
     public OrderPurchaseResponse(boolean success, String code, String reason) {
         this.success = success;
         this.code = code;
         this.reason = reason;
-        this.orderNumber = 0;
+        this.orderNumber = 0L;
+        this.paymentConfirmationNumber = 0L;
+        this.trackingNumber = 0L;
     }
 
     public OrderPurchaseResponse(boolean success, String code, String reason, long orderNumber) {
@@ -30,6 +36,8 @@ public class OrderPurchaseResponse {
         this.code = code;
         this.reason = reason;
         this.orderNumber = orderNumber;
+        this.paymentConfirmationNumber = 0L;
+        this.trackingNumber = 0L;
     }
 
     public boolean isSuccess() {
@@ -63,4 +71,21 @@ public class OrderPurchaseResponse {
     public void setOrderNumber(long orderNumber) {
         this.orderNumber = orderNumber;
     }
+
+    public long getPaymentConfirmationNumber() {
+        return paymentConfirmationNumber;
+    }
+
+    public void setPaymentConfirmationNumber(long paymentConfirmationNumber) {
+        this.paymentConfirmationNumber = paymentConfirmationNumber;
+    }
+
+    public long getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(long trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
 }

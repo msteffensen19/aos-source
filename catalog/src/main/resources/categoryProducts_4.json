@@ -675,56 +675,12 @@
     "categoryId": 4,
     "categoryName": "SPEAKERS",
     "promotedProduct": {
-      "id": 17,
-      "staringPrice": 500,
-      "promotionHeader": "Studio sensation.",
-      "promotionSubHeader": "Remove the bulk with the ultra-sleek HP Wireless Portable Speaker S9500. Simplify with Bluetooth® 2.1 connectivity via NFC one-touch pairing for wireless streaming with Android™ and Apple® enabled devices."
+      "id": 18,
+      "staringPrice": 200,
+      "promotionHeader": "Engineered for performance",
+      "promotionSubHeader": "Combining an unique triangular shape and passive radiator design with sound shaping DSP (digital signal processor) and Smart Amp technologies, consistently resonating an enhanced audio performance."
     },
     "products": [
-      {
-        "productName": "Bose Soundlink Bluetooth Speaker III",
-        "price": 269.99,
-        "description": "Meet the speaker that brings your music and friends together-with a style that's all your own. The SoundLink® Bluetooth speaker III is our best-performing mobile Bluetooth speaker. It plays louder and longer than its popular predecessor, with advanced Bose® technologies that reproduce the fullness, clarity and depth of your music. And a colorful assortment of optional covers let you personalize your speaker.",
-        "imageUrl": "4200",
-        "images": [
-          4200
-        ],
-        "colors": [
-          {
-            "inStock": 10,
-            "name": "gray",
-            "code": "808080"
-          },
-          {
-            "inStock": 10,
-            "name": "Silver",
-            "code": "C0C0C0"
-          },
-          {
-            "inStock": 10,
-            "name": "BLACK",
-            "code": "000000"
-          }
-        ],
-        "attributes": [
-          {
-            "attributeName": "CONNECTOR",
-            "attributeValue": "Wireless"
-          },
-          {
-            "attributeName": "COMPATIBILITY",
-            "attributeValue": "Any device that has bluetooth enabled"
-          },
-          {
-            "attributeName": "WEIGHT",
-            "attributeValue": "3.03 lb"
-          },
-          {
-            "attributeName": "Wireless technology",
-            "attributeValue": "Bluetooh®"
-          }
-        ]
-      },
       {
         "productName": "HP S9500 Bluetooth Wireless Speaker",
         "price": 69.99,
@@ -767,6 +723,397 @@
           {
             "attributeName": "Wireless technology",
             "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "Bose Soundlink Bluetooth Speaker III",
+        "price": 269.99,
+        "description": "Meet the speaker that brings your music and friends together-with a style that's all your own. The SoundLink® Bluetooth speaker III is our best-performing mobile Bluetooth speaker. It plays louder and longer than its popular predecessor, with advanced Bose® technologies that reproduce the fullness, clarity and depth of your music. And a colorful assortment of optional covers let you personalize your speaker.",
+        "imageUrl": "4200",
+        "images": [
+          4200
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "gray",
+            "code": "808080"
+          },
+          {
+            "inStock": 10,
+            "name": "Silver",
+            "code": "C0C0C0"
+          },
+          {
+            "inStock": 10,
+            "name": "BLACK",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "3.03 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Bose"
+          }
+        ]
+      },
+      {
+        "productName": "HP Roar Plus Wireless Speaker",
+        "price": 169.99,
+        "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
+        "imageUrl": "4300",
+        "images": [
+          4300,
+          4301,
+          4302,
+          4303,
+          4304,
+          4305,
+          4306,
+          4307,
+          4308
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "DeepSkyBlue",
+            "code": "00BFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Purple",
+            "code": "800080"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.26 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP Roar Wireless Speaker",
+        "price": 84.99,
+        "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
+        "imageUrl": "4400",
+        "images": [
+          4400,
+          4401,
+          4402,
+          4403,
+          4404,
+          4405,
+          4406,
+          4407,
+          4408
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "DeepSkyBlue",
+            "code": "00BFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "Yellow",
+            "code": "FFFF00"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.1 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryId": 5,
+    "categoryName": "MICE",
+    "promotedProduct": {
+      "id": "24",
+      "staringPrice": "29.99",
+      "promotionHeader": "The feel and navigation of this sleek mouse remains familiar and purposeful with three standard buttons and scroll wheel gently blended into the low profile.",
+      "promotionSubHeader": "Advanced 2.4 GHz wireless connectivity gives you the power to roam up to 30ft (10m). Simply insert the tiny dongle receiver, turn mouse on, done."
+    },
+    "products": [
+      {
+        "productName": "Kensington Orbit 72352 Trackball",
+        "price": 59.99,
+        "description": "The Kensington Orbit Wireless Mobile Trackball offers a precise, compact and versatile experience with a centered-ball design. With no wires to tie you down, the 2.4 GHz wireless with storable nano receiver works wherever you do -- at your home or office. And the unique touch scrolling lets you glide effortlessly through web pages and documents.",
+        "imageUrl": "5100",
+        "images": [
+          5100
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Graphite",
+            "code": "383428"
+          },
+          {
+            "inStock": 10,
+            "name": "Rubi Red",
+            "code": "9B111E"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N/A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Trackball"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Kensington"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z3600 Wireless Mouse",
+        "price": 15.99,
+        "description": "The tiny HP Wireless Mouse Z3600 provides stylish comfort and control for your mobile computing needs. With optical tracking, 3 button controls, and the freedom to connect up to 30ft (10m) away, this compact mouse provides oversized performance.",
+        "imageUrl": "5200",
+        "images": [
+          5200,
+          5201,
+          5202,
+          5203,
+          5204,
+          5205,
+          5206
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Pink",
+            "code": "FFC0CB"
+          },
+          {
+            "inStock": 10,
+            "name": "Blue",
+            "code": "0000FF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N/A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z3200 Wireless Mouse",
+        "price": 9.99,
+        "description": "The HP Wireless Mouse Z3200 provides powerful Blue LED optical tracking. Its ambidextrous shape and familiar button controls are easy to use. Compact contoured control.",
+        "imageUrl": "5300",
+        "images": [
+          5300,
+          5301,
+          5302,
+          5303,
+          5304,
+          5305,
+          5306
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Pink",
+            "code": "FFC0CB"
+          },
+          {
+            "inStock": 10,
+            "name": "Zebra",
+            "code": "998E64"
+          },
+          {
+            "inStock": 10,
+            "name": "Cheetah",
+            "code": "D4C9A4"
+          },
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "1600 dpi optical sensor"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP USB 3 Button Optical Mouse",
+        "price": 9.99,
+        "description": "Smooth and Accurate - The HP USB 3-Button Optical Mouse is the affordable desktop optical mouse solution that combines functionality with style",
+        "imageUrl": "5400",
+        "images": [
+          5400
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Cable"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "1000 dpi optical sensor"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z4000 Purple Wireless Mouse",
+        "price": 9.99,
+        "description": "The sleek and low-profiled design make the Z4000 the must-have companion to every thin notebook or tablet. Style and comfort within a dynamic ultra-mobile wireless mouse.",
+        "imageUrl": "5500",
+        "images": [
+          5500,
+          5501,
+          5502,
+          5503
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Purple",
+            "code": "800080"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N/A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
           }
         ]
       }

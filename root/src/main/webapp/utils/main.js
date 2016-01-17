@@ -10,9 +10,14 @@ var Helper = Helper || {};
 Helper.____closeTooTipCart;
 
 Helper.forAllPage = function(){
-    $("body").scrollTop(0);
+    Helper.scrollPageUp()
     Helper.UpdatePageFixed();
 }
+
+Helper.scrollPageUp = function(){
+    $("body").scrollTop(0);
+}
+
 
 Helper.UpdatePageFixed = function(){
     $('.pages').removeClass('fixed');
@@ -31,6 +36,14 @@ Helper.closeToolTipCart = function (){
             $('#toolTipCart tbody').animate({ scrollTop: 0, }, 500);
         });
     }
+}
+
+Helper.getRandom = function(length){
+    var ranVal = '';
+    for(var i = 0; i < length; i++){
+        ranVal += (Math.floor(Math.random() * 9) + 1)
+    }
+    return ranVal
 }
 
 Helper.checkPagePossitions = function(){
@@ -100,18 +113,6 @@ $(document).on({
 
         $(window).on({
         resize: _resize,
-        scroll: function () {
-
-            if ($(window).scrollTop() > 300) {
-                $('#scrollToTop').fadeIn(300);
-            }
-            else {
-                $('#scrollToTop').fadeOut(300);
-            }
-
-            Helper.checkPagePossitions();
-            Helper.closeToolTipCart();
-        }
         });
 
 

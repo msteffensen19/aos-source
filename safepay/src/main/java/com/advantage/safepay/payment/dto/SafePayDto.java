@@ -33,10 +33,10 @@ public class SafePayDto {
     @JsonProperty("SPReceivingCard.AccountNumber")
     private long accountNumber;       //  fixed 12 digits. String because can start with "0".
 
-    @JsonProperty("SPRecevingAmount.Value")
+    @JsonProperty("SPReceivingAmount.Value")
     private double value;           //  Cart total cost: XXXXXXXXXX.XX (12,2 = 12 digits 2 of them decimal)
 
-    @JsonProperty("SPRecevingAmount.Currency")
+    @JsonProperty("SPReceivingAmount.Currency")
     private String currency;        //  3 characters. Default "USD"
 
     public SafePayDto() {

@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.AccountConfigurationResponseStatus;
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -14,10 +15,6 @@ import java.util.List;
  */
 @Configuration
 public class AccountConfiguration {
-    private final String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
-    private final String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
-    private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
-    private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
 
     @Inject
     private Environment env;
@@ -37,10 +34,10 @@ public class AccountConfiguration {
 
     @Bean
     public int getAppUserConfiguration() {
-        this.setNumberOfLoginAttemptsBeforeBlocking(ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING);
-        this.setLoginBlockingIntervalInMilliseconds(ENV_USER_LOGIN_BLOCKING);
-        this.setEmailAddressInLogin(ENV_ADD_EMAIL_FIELD_TO_LOGIN);
-        this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
+        this.setNumberOfLoginAttemptsBeforeBlocking(Constants.ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING);
+        this.setLoginBlockingIntervalInMilliseconds(Constants.ENV_USER_LOGIN_BLOCKING);
+        this.setEmailAddressInLogin(Constants.ENV_ADD_EMAIL_FIELD_TO_LOGIN);
+        this.setProductInStockDefaultValue(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS=" + this.getLoginBlockingIntervalInMilliseconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());

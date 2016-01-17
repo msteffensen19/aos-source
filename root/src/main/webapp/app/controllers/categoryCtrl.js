@@ -9,6 +9,8 @@ define(['./module'], function (controllers) {
 
             $scope.catId = $stateParams.id;
 
+            $scope.viewAll = category.viewAll;
+
             $scope.category = category;
 
             $scope.noProducts = category.products == undefined || category.products.length == 0;
