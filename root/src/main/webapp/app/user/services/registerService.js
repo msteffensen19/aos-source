@@ -17,12 +17,6 @@ define(['./module'], function (services) {
         }
 
         function register(model) {
-            console.log("model")
-            console.log(model)
-            console.log(JSON.stringify(model))
-            console.log(model.country)
-            console.log(model.country.id)
-            console.log(model.country.id || 0 )
 
             var expectToReceive = {
                 "accountType": 20,
@@ -39,8 +33,6 @@ define(['./module'], function (services) {
                 "stateProvince": model.state,
                 "zipcode": model.postalCode,
             }
-            console.log(expectToReceive)
-            console.log(JSON.stringify(expectToReceive))
 
             var defer = $q.defer();
             var params = server.account.register();

@@ -251,7 +251,7 @@ define(['./module'], function (directives) {
                                         }
                                         break;
                                     case 'secMinLength':
-                                        var _invalid = input.val().length < warn.min;
+                                        var _invalid = input.val().length < warn.min && input.val() != '';
                                         invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
                                         if(event == 'keyup'){
                                             warn.show = _invalid;

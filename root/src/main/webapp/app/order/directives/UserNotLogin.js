@@ -11,13 +11,6 @@ define(['./module'], function (directives) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-not-login.html'),
-            link: function(s){
-
-                s.loginModal = {
-                    email : '',
-                    password : ''
-                }
-            }
         }
     }]);
 });

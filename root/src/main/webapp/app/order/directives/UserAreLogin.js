@@ -36,7 +36,7 @@ define(['./module'], function (directives) {
                                 rs.$broadcast('updatePaymentEnd', {
                                     paymentEnd: true,
                                     orderNumber : res.orderNumber,
-                                    trackingNumber : Helper.getRandom(10)
+                                    trackingNumber : res.paymentConfirmationNumber
                                 });
                                 Helper.scrollPageUp();
                                 safePayBussy = false;

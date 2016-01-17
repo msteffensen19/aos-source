@@ -73,10 +73,16 @@
                             <sec-input
                                     sec-placeholder="{{'First_Name' | translate }}"
                                     model-attr="model.firstName"
+                                    sec-min-length="2"
+                                    sec-max-length="30"
+                                    no-red-star="true"
                                     id-attr="firstName">
                             </sec-input>
                             <sec-input
                                     sec-placeholder="{{'Last_Name' | translate }}"
+                                    sec-min-length="2"
+                                    sec-max-length="30"
+                                    no-red-star="true"
                                     model-attr="model.lastName"
                                     id-attr="lastName">
                             </sec-input>
@@ -89,8 +95,8 @@
 
                         <div>
                             <h3 translate="ADDRESS"></h3>
-                            <sec-input sec-placeholder="{{'Country' | translate }}"
-                                            id-attr="Country"
+                            <!--sec-placeholder="{{'Country' | translate }}"-->
+                                <sec-input  id-attr="Country"
                                             input-type-attr="transclude"
                                             select-tag="true" >
                                 <select class="inputtext"
@@ -107,6 +113,8 @@
                             </sec-input>
                             <sec-input
                                     sec-placeholder="{{'Address' | translate }}"
+                                    sec-max-length="50"
+                                    no-red-star="true"
                                     model-attr="model.address"
                                     id-attr="address" >
                             </sec-input>
