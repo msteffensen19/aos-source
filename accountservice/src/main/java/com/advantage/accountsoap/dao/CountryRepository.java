@@ -1,8 +1,7 @@
 package com.advantage.accountsoap.dao;
 
-import com.advantage.accountsoap.dto.CountryStatusResponse;
+import com.advantage.accountsoap.dto.country.CountryStatusResponse;
 import com.advantage.common.dao.DefaultCRUDOperations;
-import com.advantage.common.dto.CountryResponseDto;
 import com.advantage.accountsoap.model.Country;
 
 import java.util.Collection;
