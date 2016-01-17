@@ -19,6 +19,7 @@ define(['./module'], function (controllers) {
 
             registerService.getAllCountries().then(function (response) {
                 s.countries = response;
+                s.model.country = response[0];
             })
 
             s.model = {
