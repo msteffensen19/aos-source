@@ -63,7 +63,7 @@
             <div class="innerSeccion">
                 <label class="total">
                     {{ 'TOTAL' | translate}}
-                    <a class="floater">  {{(cart | productsCartSum) + shippingCost | currency:'$'}} </a>
+                    <a class="floater">  {{ cart | productsCartSum:shippingCost | currency:'$' }} </a>
                 </label>
             </div>
         </div>

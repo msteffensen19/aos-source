@@ -36,6 +36,7 @@
         </div>
     </div>
 
+
     <!-- END USER DETAILS SECTION-->
 
 
@@ -50,7 +51,9 @@
                 <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1)" data-ng-class="{ selected : imgRadioButton == 1 }">
                     <img src="../../../css/images/SafePay.png" alt="Safepay" />
                 </div>
-                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2" data-ng-class="{ selected : imgRadioButton == 2 }">
+                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2"
+                     data-ng-dblclick="paymentMethod_edit()"
+                     data-ng-class="{ selected : imgRadioButton == 2 }">
                     <img src="../../../css/images/Master_credit.png" alt="Master credit" />
                 </div>
             </div>
@@ -208,7 +211,8 @@
                     </sec-input>
 
                     <div class="blueLink">
-                        <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                        <a ng-click="firstTag = true"
+                        >{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
                             <input sec-submit-attr="payNow_masterCredit()"
                                    class="roboto-medium float-button a-button"
@@ -228,15 +232,6 @@
     </div>
 
     <!-- END EDIT PAYMENT METHOD SECTION-->
-
-
-
-
-
-
-
-
-
 
 
 
