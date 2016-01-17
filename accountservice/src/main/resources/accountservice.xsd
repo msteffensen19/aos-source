@@ -23,6 +23,13 @@
     <xs:complexType name="account"/>
     <xs:complexType name="country"/>
 
+    <xs:complexType name="AddressStatusResponse">
+        <xs:sequence>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="success" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="accountConfigurationResponseStatus">
         <xs:sequence>
             <xs:element name="emailAddressInLogin" type="xs:boolean"/>
@@ -99,13 +106,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
-    <xs:complexType name="AddressesResponse">
-        <xs:sequence>
-            <xs:element name="address" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:element name="GetAllAccountsRequest"/>
     <xs:element name="GetCountriesRequest">
             <xs:complexType>
@@ -123,6 +123,14 @@
     </xs:complexType>
 
     <xs:element name="GetCountriesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Country" type="tns:CountryDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CountrySearchResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Country" type="tns:CountryDto"/>
@@ -154,6 +162,14 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="GetAddressesByAccountIdResponse">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="ShippingAddress" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
     <xs:element name="AccountCreateRequest">
         <xs:complexType>
             <xs:sequence>
@@ -177,7 +193,22 @@
     <xs:element name="AccountCreateResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="AccountStatusResponse" type="tns:AccountStatusResponse"/>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AccountUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ChangePasswordResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -228,6 +259,14 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="CountryCreateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:CountryStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="AccountLoginRequest">
         <xs:complexType>
             <xs:sequence>
@@ -243,6 +282,22 @@
             <xs:sequence>
                 <xs:element name="address" type="tns:AddAddressDto" form="qualified" maxOccurs="unbounded"/>
                 <xs:element name="accountId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddAddressesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AddressStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddressUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AddressStatusResponse"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

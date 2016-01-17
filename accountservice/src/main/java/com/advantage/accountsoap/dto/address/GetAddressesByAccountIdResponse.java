@@ -11,15 +11,15 @@ import java.util.List;
         propOrder = {
                 "shippingAddress"
         })
-@XmlRootElement(name = "ShippingAddresses", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AddressesResponse {
+@XmlRootElement(name = "GetAddressesByAccountIdResponse", namespace = WebServiceConfig.NAMESPACE_URI)
+public class GetAddressesByAccountIdResponse {
     @XmlElement(name = "ShippingAddress",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private List<AddressDto> shippingAddress;
 
-    public AddressesResponse() {
+    public GetAddressesByAccountIdResponse() {
     }
 
-    public AddressesResponse(List<AddressDto> shippingAddress) {
+    public GetAddressesByAccountIdResponse(List<AddressDto> shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 

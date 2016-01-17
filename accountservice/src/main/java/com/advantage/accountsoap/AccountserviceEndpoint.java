@@ -1,12 +1,11 @@
 package com.advantage.accountsoap;
 
+import accountservice.store.online.advantage.com.AddressesResponse;
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.account.*;
 import com.advantage.accountsoap.dto.country.*;
 import com.advantage.accountsoap.dto.address.*;
-import com.advantage.accountsoap.dto.payment.PaymentMethodUpdateRequest;
 import com.advantage.accountsoap.model.Account;
-import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.services.AddressService;
 import com.advantage.accountsoap.services.CountryService;
@@ -94,8 +93,8 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountCreateRequest")
     @ResponsePayload
-    public AccountStatusResponse createAccount(@RequestPayload AccountCreateRequest account) {
-        return accountService.create(
+    public AccountCreateResponse createAccount(@RequestPayload AccountCreateRequest account) {
+        AccountStatusResponse response = accountService.create(
                 account.getAccountType(),
                 account.getLastName(),
                 account.getFirstName(),
@@ -109,12 +108,14 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
+
+        return new AccountCreateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
-    public AccountStatusResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
-        return accountService.updateAccount(
+    public AccountUpdateResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
+        AccountStatusResponse response = accountService.updateAccount(
                 account.getAccountId(),
                 account.getAccountType(),
                 account.getLastName(),
@@ -127,6 +128,8 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getEmail(),
                 account.getAllowOffersPromotion());
+
+        return new AccountUpdateResponse(response);
     }
 
    /* @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
@@ -146,16 +149,17 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountryCreateRequest")
     @ResponsePayload
-    public CountryStatusResponse createCountry(@RequestPayload CountryCreateRequest country) {
-        return countryService.create(country.getName(),
+    public CountryCreateResponse createCountry(@RequestPayload CountryCreateRequest country) {
+        CountryStatusResponse response = countryService.create(country.getName(),
                 country.getIsoName(),
                 country.getPhonePrefix());
+
+        return new CountryCreateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountrySearchRequest")
     @ResponsePayload
-    public GetCountriesResponse searchInCountries(@RequestPayload CountrySearchRequest request) {
-        GetCountriesResponse response = new GetCountriesResponse();
+    public CountrySearchResponse searchInCountries(@RequestPayload CountrySearchRequest request) {
         List<CountryDto> countries;
 
         if (request == null) throw new IllegalArgumentException("Not valid parameters");
@@ -169,15 +173,14 @@ public class AccountserviceEndpoint {
         if (countries == null || countries.isEmpty()) {
             return null;
         } else {
-            response.setCountry(countries);
-            return response;
+            return new CountrySearchResponse(countries);
         }
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
     @ResponsePayload
-    public AddressesResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
-        AddressesResponse response = new AddressesResponse();
+    public GetAddressesByAccountIdResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
+        GetAddressesByAccountIdResponse response = new GetAddressesByAccountIdResponse();
         List<AddressDto> addresses = addressService.getByAccountId(accountId.getId());
         response.setShippingAddress(addresses);
 
@@ -186,21 +189,26 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddAddressesRequest")
     @ResponsePayload
-    public AddressStatusResponse addAddress(@RequestPayload AddAddressesRequest address) {
-        return addressService.add(address.getAccountId(), address.getAddresses());
+    public AddAddressesResponse addAddress(@RequestPayload AddAddressesRequest address) {
+        AddressStatusResponse response = addressService.add(address.getAccountId(), address.getAddresses());
+
+        return new AddAddressesResponse(response);
     }
 
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddressUpdateRequest")
     @ResponsePayload
-    public AddressStatusResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
-        return addressService.update(address.getAddress());
+    public AddressUpdateResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
+        AddressStatusResponse response = addressService.update(address.getAddress());
+
+        return new AddressUpdateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
     @ResponsePayload
-    public AccountStatusResponse changePassword(@RequestPayload ChangePasswordRequest request) {
-        return accountService.changePassword(request.getAccountId(), request.getNewPassword());
+    public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+        AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getNewPassword());
+        return new ChangePasswordResponse(response);
     }
 
     /*protected HttpServletRequest getHttpServletRequest() {
