@@ -13,6 +13,7 @@ import javax.persistence.*;
 })
 public class PaymentPreferences {
     public static final String QUERY_GET_ALL = "query.getAll";
+    public static final String FIELD_ID = "id";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -25,6 +26,9 @@ public class PaymentPreferences {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = Account.FIELD_ID)
     private Account account;
+
+    public PaymentPreferences() {
+    }
 
     public PaymentPreferences(String cardNumber, String expirationDate, String cvvNumber, String customerName) {
         this.paymentMethod = PaymentMethodEnum.MasterCredit.getPaymentTypeCode();

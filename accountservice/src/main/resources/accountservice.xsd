@@ -4,11 +4,11 @@
 
     <xs:complexType name="AccountStatusResponse">
         <xs:sequence>
-            <xs:element name="reason" type="xs:string"/>
-            <xs:element name="sessionId" type="xs:string"/>
             <xs:element name="success" type="xs:boolean"/>
-            <xs:element name="token" type="xs:string"/>
             <xs:element name="userId" type="xs:long"/>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="sessionId" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -17,6 +17,14 @@
             <xs:element name="reason" type="xs:string"/>
             <xs:element name="success" type="xs:boolean"/>
             <xs:element name="countryId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PaymentPreferencesStatusResponse">
+        <xs:sequence>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="id" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -277,6 +285,23 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="PaymentMethodUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="paymentMethod" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PaymentMethodUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="AddAddressesRequest">
         <xs:complexType>
             <xs:sequence>
@@ -319,4 +344,56 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="AddSafePayMethodRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="safePayUsername" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddSafePayMethodResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:PaymentPreferencesStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddMasterCreditMethodRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "cardNumber" type="xs:string" />
+                <xs:element name = "expirationDate" type="xs:string" />
+                <xs:element name = "cvvNumber" type="xs:string" />
+                <xs:element name = "customerName" type="xs:string" />
+                <xs:element name = "accountId" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddMasterCreditMethodResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:PaymentPreferencesStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeletePaymentPreferenceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "id" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeletePaymentPreferenceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:PaymentPreferencesStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

@@ -46,10 +46,7 @@ public interface DefaultCRUDOperations<T> {
      */
     @Transactional
     default T delete(Long id) {
-        T entity = get(id);
-        if (entity != null) delete(entity);
-
-        return entity;
+        throw new NotImplementedException();
     }
 
     /**

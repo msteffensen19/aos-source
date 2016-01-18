@@ -3,6 +3,7 @@ package com.advantage.accountsoap.services;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dto.account.AccountDto;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +18,10 @@ public class AccountService {
 
     @Autowired
     @Qualifier("accountRepository")
-    public AccountRepository accountRepository;
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private PaymentPreferencesService paymentPreferencesService;
 
     @Transactional
     public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final String allowOffersPromotion) {
@@ -82,6 +86,19 @@ public class AccountService {
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
         return accountRepository.updateAccount(accountId,accountType, lastName, firstName, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
+
+    @Transactional
+    public AccountStatusResponse updateDefaultPaymentMethod(long accountId, Integer paymentMethodId) {
+        Account account = getById(accountId);
+        if(account == null || paymentPreferencesService.isPyamentPreferencesExist(paymentMethodId)) {
+            return new AccountStatusResponse(false, "Data not valid", -1);
+        }
+
+        account.setDefaultPaymentMethodId(paymentMethodId);
+
+        return  new AccountStatusResponse(true, "", accountId);
+    }
+
 
     @Transactional
     public Account getById(long id) {
