@@ -90,7 +90,7 @@ public class AccountService {
     @Transactional
     public AccountStatusResponse updateDefaultPaymentMethod(long accountId, Integer paymentMethodId) {
         Account account = getById(accountId);
-        if(account == null || paymentPreferencesService.isPyamentPreferencesExist(paymentMethodId)) {
+        if(account == null || !paymentPreferencesService.isPyamentPreferencesExist(paymentMethodId)) {
             return new AccountStatusResponse(false, "Data not valid", -1);
         }
 
