@@ -15,12 +15,9 @@ define(['./module'], function (controllers) {
             $scope.$watch("cart", function(n){
                 console.log($scope.cart)
             })
-            console.log($scope)
-
 
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
-
 
             $scope.go_up = function(){
                 $('body, html').animate({scrollTop: 0}, 10);

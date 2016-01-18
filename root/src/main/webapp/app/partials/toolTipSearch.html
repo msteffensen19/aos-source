@@ -25,7 +25,8 @@
             </div>
             <div>
                 <h3 class="roboto-medium" >{{ 'TOP_RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
-                <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"  class="roboto-medium viewAll"></a>
+                <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"
+                   class="roboto-medium viewAll"></a>
                 <a class="product" href="#/product/{{product.productId}}"
                    data-ng-click="closeSearchSection()"
                    data-ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult:categoryFilter">

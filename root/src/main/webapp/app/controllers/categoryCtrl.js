@@ -5,23 +5,28 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoryCtrl', ['$scope', '$stateParams', 'categoryService', 'category',
-        function ($scope, $stateParams, categoryService, category) {
+        function (s, $stateParams, categoryService, paramsToReturn) {
 
-            $scope.catId = $stateParams.id;
+            s.catId = $stateParams.id;
 
-            $scope.viewAll = category.viewAll;
+            s.viewAll = paramsToReturn.viewAll;
 
-            $scope.category = category;
+            s.noProducts = paramsToReturn.products == undefined || paramsToReturn.products.length == 0;
 
-            $scope.noProducts = category.products == undefined || category.products.length == 0;
+            s.paramsToPass = paramsToReturn;
+            l(s.paramsToPass)
 
-            $scope.categoryData = category;
+            s.categoryData = paramsToReturn[0];
 
-            $scope.categoryAttributes = category.attributes;
+            s.categoriesFilter = paramsToReturn.categoriesFilter
 
-            $scope.products = category.products;
+            s.categoryAttributes = paramsToReturn.attributes;
 
-            $scope.categoryName = category.categoryName;
+            s.products = paramsToReturn.products;
+
+            s.noProducts = false;
+
+            s.categoryName = paramsToReturn.categoryName;
 
             $("nav .navLinks").css("display" , "none");
 

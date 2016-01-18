@@ -67,21 +67,22 @@ define([],function(){
                         if($stateParams.viewAll) {
                             productService.getProductsBySearch($stateParams.viewAll, -1).then(function (result) {
 
-                                var products = $filter("filterFullArrayforAutoComplate")([], result, $stateParams.id, -1)
-                                var categories = {
+                                var categoriesFilter = $filter("getCategoriesInArray")([], result, $stateParams.id)
+                                var paramsToReturn = {
+                                    searchResult : result,
                                     viewAll: true,
                                     categoryId: 1,
                                     categoryName: "Search Result: '" + $stateParams.viewAll + "'",
-                                    categoryImageId: category ? category.categoryImageId : "",
-                                    promotedProduct: category ? category.promotedProduct : null,
+                                    categoriesFilter: categoriesFilter,
                                     attributes: [],
-                                    products: products,
                                 }
-                                defer.resolve(categories);
+                                defer.resolve(paramsToReturn);
                             });
                         }
                         else{
-                            defer.resolve(category);
+                            defer.resolve({
+                                searchResult: [category]
+                            });
                         }
                     });
                     return defer.promise;

@@ -144,7 +144,7 @@ var english = {
     'Confirm_Password' : 'Confirm Password',
     'Confirm_password' : 'Confirm password',
     'register_faild' : 'register faild! please try again later',
-    'a' : 'a',
+    'CATEGORIES' : 'CATEGORIES',
     'a' : 'a',
     'a' : 'a',
     'a' : 'a',
