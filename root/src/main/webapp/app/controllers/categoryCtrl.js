@@ -9,24 +9,15 @@ define(['./module'], function (controllers) {
 
             s.catId = $stateParams.id;
 
+            s.paramsToPass = paramsToReturn;
+
             s.viewAll = paramsToReturn.viewAll;
 
-            s.noProducts = paramsToReturn.products == undefined || paramsToReturn.products.length == 0;
+            s.categoryData = paramsToReturn.searchResult[0];
 
-            s.paramsToPass = paramsToReturn;
-            l(s.paramsToPass)
+            s.noProducts = s.categoryData.products == undefined || s.categoryData.products.length == 0;
 
-            s.categoryData = paramsToReturn[0];
-
-            s.categoriesFilter = paramsToReturn.categoriesFilter
-
-            s.categoryAttributes = paramsToReturn.attributes;
-
-            s.products = paramsToReturn.products;
-
-            s.noProducts = false;
-
-            s.categoryName = paramsToReturn.categoryName;
+            s.categoryName = s.categoryData.categoryName;
 
             $("nav .navLinks").css("display" , "none");
 

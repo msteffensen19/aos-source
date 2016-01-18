@@ -18,14 +18,22 @@ define(['./module'], function (directives) {
                 var slider;
                 s.showClear = false;
                 s.productsInclude = [];
-                s.attributeChecked = [];
                 s.minPriceToFilter = 0;
                 s.maxPriceToFilter = 0;
-                s.category = s.paramsToPass;
                 s.categoriesFilter = s.paramsToPass.categoriesFilter;
-                s.viewAll = s.paramsToPass.viewAll;
                 s.searchResult = s.paramsToPass.searchResult;
                 s.$location = $location;
+
+                for(var index in s.categoriesFilter){
+                    var category = s.categoriesFilter[index];
+                    if(category.checked){
+                        if(s.productsInclude["CATEGORIES"] == undefined)
+                        {
+                            s.productsInclude["CATEGORIES"] = [];
+                        }
+                        s.productsInclude["CATEGORIES"].push(category.id);
+                    }
+                }
 
                 s.options = { start: [20, 70], range: {min: 0, max: 100} }
 
@@ -60,8 +68,8 @@ define(['./module'], function (directives) {
                         slider.noUiSlider.start != s.minPriceToFilter ||
                         slider.noUiSlider.end != s.maxPriceToFilter;
 
-                    s.productToShow = runFilter(s.minPriceToFilter, s.maxPriceToFilter);
-
+                    s.productToShow = $filter("productsFilterForCategoriesProduct")
+                    ([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
                 }
 
                 s.clearSelection = function(){
@@ -89,53 +97,11 @@ define(['./module'], function (directives) {
 
                 configSlider();
 
-                //runFilter([], categories, null, -1);
-                //, s.minPriceToFilter, s.maxPriceToFilter, s.productsInclude, s.categories );
-                s.productToShow = runFilter(s.minPriceToFilter, s.maxPriceToFilter)
+                s.productToShow = $filter("productsFilterForCategoriesProduct")([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
                 s.attributesToShow = getAttributesToShow(s.productToShow);
-                s.productsColors = getColorsInProducts(s.productToShow)
+                s.productsColors = getColorsInProducts(s.productToShow);
 
 
-
-                function runFilter(minPrice, maxPrice){
-                    //_categories, productsInclude) {
-
-                    var categories = angular.copy(s.searchResult);
-
-                    if (s.productsInclude && Object.keys(s.productsInclude).length != 0) {
-
-                        var productsToReturn = [];
-                        for (var key in categories) {
-
-                            var productsFilterized = [];
-                            for (var index in categories[key].products) {
-
-                                var prd = categories[key].products[index];
-                                if (prd.attributes) {
-                                    for (var prdAttrIndex in prd.attributes) {
-                                        var prdAttr = prd.attributes[prdAttrIndex];
-
-                                        var include = s.productsInclude[prdAttr.attributeName];
-                                        var finded = false;
-                                        if (include) {
-                                            for (var includeIndex in include) {
-                                                if (prdAttr.attributeValue == include[includeIndex]) {
-                                                    finded = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (finded) {
-                                                productsFilterized.push(prd);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            categories[key].products = productsFilterized;
-                        }
-                    }
-                    return $filter("filterFullArrayforAutoComplate")([], categories, null, -1);;
-                }
 
 
                 function getAttributesToShow(productToShow){
@@ -195,6 +161,9 @@ define(['./module'], function (directives) {
                     return productsColors;
                 }
 
+
+
+
                 function configSlider(){
 
                     var maxVal;
@@ -227,13 +196,11 @@ define(['./module'], function (directives) {
                             'min': s.minPriceToFilter,
                             'max': s.maxPriceToFilter,
                         },
-                        step: step < 100 ? 1 : Math.round(step / 100) - 1,
-                        margin: 100,
-
+                        step: 1, //step < 100 ? 100 : Math.round(step / 100) - 1,
+                        margin: step < 100 ? 5 : 100,  //Math.round(step / 100) - 1,
                     });
                     slider.noUiSlider.start = s.minPriceToFilter;
                     slider.noUiSlider.end = s.maxPriceToFilter;
-
                     slider.noUiSlider.on('update', function( values, handle ) {
                         s.$applyAsync(function(){
                             if (handle == '0') {
@@ -241,136 +208,21 @@ define(['./module'], function (directives) {
                             } else {
                                 s.maxPriceToFilter = values[handle];
                             }
-                            s.includeProducts(null, '', 'PRICE');
+                            s.showClear =
+                                Object.keys(s.productsInclude).length > 0 ||
+                                slider.noUiSlider.start != s.minPriceToFilter ||
+                                slider.noUiSlider.end != s.maxPriceToFilter;
                         });
                     });
                 }
+
+
+
+
+
 
             }
         };
     }])
 });
 
-
-
-//scope.$watch('category', function(catData) {
-//
-//    if(catData){
-//
-//
-//    }
-//})
-
-
-//s.manipulateProductsByCustomization = function() {
-//
-//    s.businessCustom = [];
-//    s.gamingCustom = [];
-//    s.simplicityCustom = [];
-//    angular.forEach(s.productToShow, function (value, key) {
-//        if(value.attributes)
-//        {
-//            if($filter('filter')(value.attributes, {attributeValue: 'Business'}, false).length > 0)
-//                s.businessCustom.push(value);
-//            if($filter('filter')(value.attributes, {attributeValue: 'Gaming'}, false).length > 0)
-//                s.gamingCustom.push(value);
-//            if($filter('filter')(value.attributes, {attributeValue: 'Simplicity'}, false).length > 0)
-//                s.simplicityCustom.push(value);
-//        }
-//    });
-//};
-
-//s.manipulateProductsByCustomization();
-
-//console.log("autoCompleteResult")
-//console.log(result)
-//console.log(products)
-//console.log(categoriesFilter)
-//console.log("autoCompleteResult")
-
-//s.category = paramsToPass.category;
-//s.categories = paramsToPass.categories;
-
-//productsFilter:minPriceToFilter:maxPriceToFilter:productsInclude
-
-//console.log(attributesName);
-//console.log(attributeVal);
-//console.log(s.productsInclude);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//function configSlider(){
-//    slider = document.getElementById('slider');
-//    var step = s.maxPriceToFilter - s.minPriceToFilter;
-//    noUiSlider.create(slider, {
-//        start: [s.minPriceToFilter, s.maxPriceToFilter], // Handle start position
-//        connect: true, // Display a colored bar between the handles
-//        range: { // Slider can select '0' to '100'
-//            'min': s.minPriceToFilter,
-//            'max': s.maxPriceToFilter,
-//        },
-//        step: step < 100 ? 1 : (step / 100), // Slider moves in increments of '10'
-//        margin: 20, // Handles must be more than '20' apart
-//
-//
-//        //direction: 'rtl', // Put '0' at the bottom of the slider
-//        //orientation: 'vertical', // Orient the slider vertically
-//        //behaviour: 'tap-drag', // Move handle on tap, bar is draggable
-//        //pips: { // Show a scale with the slider
-//        //    mode: 'steps', //    density: 2000
-//        //}
-//
-//    });
-//    slider.noUiSlider.start = s.minPriceToFilter;
-//    slider.noUiSlider.end = s.maxPriceToFilter;
-//
-//    // When the slider value changes, update the input and span
-//    slider.noUiSlider.on('update', function( values, handle ) {
-//        s.$applyAsync(function(){
-//            if (handle == '0') {
-//                s.minPriceToFilter = values[handle];
-//            } else {
-//                s.maxPriceToFilter = values[handle];
-//            }
-//            s.includeProducts(null, '', 'PRICE');
-//        });
-//    });
-//
-//    // if I have an input - When the input changes, set the slider value
-//    //valueInput.addEventListener('change', function(){
-//    //  slider.noUiSlider.set([null, this.value]);
-//    //});
-//}
