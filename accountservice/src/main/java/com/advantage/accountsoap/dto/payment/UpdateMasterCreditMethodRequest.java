@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "cardNumber",
+       "cardNumber",
         "expirationDate",
         "cvvNumber",
         "customerName",
-        "accountId"
+        "referenceId"
 })
-@XmlRootElement(name = "AddMasterCreditMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AddMasterCreditMethodRequest {
+@XmlRootElement(name = "UpdateMasterCreditMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
+public class UpdateMasterCreditMethodRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String cardNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -23,17 +23,17 @@ public class AddMasterCreditMethodRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String customerName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private long accountId;
+    private long referenceId;
 
-    public AddMasterCreditMethodRequest() {
+    public UpdateMasterCreditMethodRequest() {
     }
 
-    public AddMasterCreditMethodRequest(String cardNumber, String expirationDate, String cvvNumber, String customerName, long accountId) {
+    public UpdateMasterCreditMethodRequest(String cardNumber, String expirationDate, String cvvNumber, String customerName, long referenceId) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvvNumber = cvvNumber;
         this.customerName = customerName;
-        this.accountId = accountId;
+        this.referenceId = referenceId;
     }
 
     public String getCardNumber() {
@@ -68,11 +68,11 @@ public class AddMasterCreditMethodRequest {
         this.customerName = customerName;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public long getReferenceId() {
+        return referenceId;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setReferenceId(long referenceId) {
+        this.referenceId = referenceId;
     }
 }

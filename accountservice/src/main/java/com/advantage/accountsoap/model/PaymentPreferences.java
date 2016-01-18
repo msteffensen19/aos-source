@@ -23,7 +23,7 @@ public class PaymentPreferences {
     private String cvvNumber;
     private String customerName;
     private String safePayUsername;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne/*(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)*/
     @JoinColumn(name = Account.FIELD_ID)
     private Account account;
 

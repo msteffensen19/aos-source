@@ -71,7 +71,7 @@ public class PaymentPreferencesService {
 
     @Transactional
     public PaymentPreferencesStatusResponse deletePaymentPreference(long preferenceId) {
-        PaymentPreferences paymentPreferences = (PaymentPreferences)paymentPreferencesRepository.delete(preferenceId);
+        PaymentPreferences paymentPreferences = paymentPreferencesRepository.delete(preferenceId);
         if(paymentPreferences == null ) return  new PaymentPreferencesStatusResponse(false, "", -1);
 
         return  new PaymentPreferencesStatusResponse(true, "succssefully", paymentPreferences.getId());

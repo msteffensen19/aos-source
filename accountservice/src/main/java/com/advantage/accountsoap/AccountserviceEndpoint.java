@@ -245,13 +245,31 @@ public class AccountserviceEndpoint {
         return new AddMasterCreditMethodResponse(response);
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateMasterCreditMethodRequest")
+    @ResponsePayload
+    public UpdateMasterCreditMethodResponse updateMasterCreditMethod(@RequestPayload UpdateMasterCreditMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateMasterCreditMethod(request.getCardNumber(),
+                request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getReferenceId());
+
+        return new UpdateMasterCreditMethodResponse(response);
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
+    @ResponsePayload
+    public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getSafePayUsername(),
+                request.getReferenceId());
+
+        return new UpdateSafePayMethodResponse(response);
+    }
+
+    /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
     @ResponsePayload
     public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) {
         PaymentPreferencesStatusResponse response = paymentPreferencesService.deletePaymentPreference(request.getId());
 
         return new DeletePaymentPreferenceResponse(response);
-    }
+    }*/
 
 
     //endregion
