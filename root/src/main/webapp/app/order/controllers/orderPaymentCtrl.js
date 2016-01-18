@@ -11,33 +11,26 @@ define(['./module'], function (controllers) {
 
             s.checkCart();
 
+
+            ///// PAYMENT SUCCESS ////
             s.paymentEnd = false;
             s.$on('updatePaymentEnd', function (event, args) {
                 s.paymentEnd = args.paymentEnd;
                 s.orderNumber = args.orderNumber;
                 s.trackingNumber = args.trackingNumber;
-
+                s.cardNumber = ['0000', '0000', '0000', args.cardNumber.substring(args.cardNumber.length - 4)];
+                l(s.cardNumber)
                 s.subTotal = ($filter("productsCartSum")(s.cart));
                 s.total = ($filter("productsCartSum")(s.cart, s.shippingCost));
                 rs.$broadcast('clearCartEvent');
             });
+            ///// END PAYMENT SUCCESS ////
+
+
+
             s.noCards = resolveParams.noCards; //check if have cards
 
-            s.getData = function(){
-                s.card = {
-                    number : '6543210987654321',
-                    cvv : '567',
-                    expirationDate : { month : '04', year : '2016' },
-                    name: 'James T. Kirk',
-                }
-                s.CardNumber = ["6543", "2109", "8765", "4321"];
-                s.savePay = {
-                    username : 'abcdefghi', // 1-20 chars
-                    password : 'Aa123456' // 1-20 chars
-                }
-            }
-
-            s.CardNumber = resolveParams.CardNumber;
+            s.cardNumber = resolveParams.CardNumber;
             s.card = {
                 number : '',
                 cvv : '',

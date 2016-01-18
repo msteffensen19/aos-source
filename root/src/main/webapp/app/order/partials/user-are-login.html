@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="blueLink">
-            <a data-ng-dblclick="paymentMethod_edit()">{{ 'Edit_shipping_Details' | translate }}</a>
+            <a data-ng-click="paymentMethod_edit()">{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
@@ -50,11 +50,11 @@
             </label>
             <div class="paymentMethods">
                 <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1)" data-ng-class="{ selected : imgRadioButton == 1 }">
-                    <img src="../../../css/images/SafePay.png" alt="Safepay" />
+                    <img src="css/images/SafePay.png" alt="Safepay" />
                 </div>
                 <div class="imgRadioButton" data-ng-click="imgRadioButton = 2"
                      data-ng-class="{ selected : imgRadioButton == 2 }">
-                    <img src="../../../css/images/Master_credit.png" alt="Master credit" />
+                    <img src="css/images/Master_credit.png" alt="Master credit" />
                 </div>
             </div>
 
@@ -163,11 +163,9 @@
 
                 <sec-validate class="smollInput" >
 
-                    <sec-input sec-required
+                    <sec-input sec-required card-number-four-digits
                                sec-placeholder="{{ 'Card_number' | translate }}"
-                               sec-min-length="16"
-                               sec-max-length="16"
-                               sec-pattern="^[0-9]{16,16}$"
+                               sec-pattern="^[0-9]{12,12}$"
                                pattern-error-attr="{{ 'Invalid_Card_number' | translate }}"
                                model-attr="card.number"
                                id-attr="Card_Number"  >

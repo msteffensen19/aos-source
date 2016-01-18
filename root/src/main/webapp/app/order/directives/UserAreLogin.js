@@ -7,36 +7,39 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService', function(rs, $templateCache, orderService){
+    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService', function (rs, $templateCache, orderService) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
-            link: function(s){
+            link: function (s) {
 
                 s.firstTag = true;
                 s.imgRadioButton = 1;
 
                 s.years = [];
                 var now = new Date();
-                for(var i = 0; i < 10; i++){
+                for (var i = 0; i < 10; i++) {
                     s.years.push((now.getFullYear() + i) + "");
                 }
 
                 var safePayBussy = false;
-                function safePay(TransPaymentMethod, accountNumber){
 
-                    if(safePayBussy){
+                function safePay(TransPaymentMethod, accountNumber) {
+
+                    if (safePayBussy) {
                         return;
                     }
                     safePayBussy = true;
-                    orderService.SafePay( s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
-                        .then(function(res){
+                    orderService.SafePay(s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
+                        .then(function (res) {
 
-                            if(res.success){
+                            if (res.success) {
+                                l(s.card.number)
                                 rs.$broadcast('updatePaymentEnd', {
                                     paymentEnd: true,
-                                    orderNumber : res.orderNumber,
-                                    trackingNumber : res.paymentConfirmationNumber
+                                    orderNumber: res.orderNumber,
+                                    trackingNumber: res.paymentConfirmationNumber,
+                                    cardNumber : + s.card.number + ''
                                 });
                                 Helper.scrollPageUp();
                                 safePayBussy = false;
@@ -46,37 +49,37 @@ define(['./module'], function (directives) {
                         });
                 }
 
-                s.payNow_SafePay = function(){
+                s.payNow_SafePay = function () {
                     var TransPaymentMethod = "SafePay";
                     var accountNumber = 843200971;
                     safePay(TransPaymentMethod, accountNumber);
                 }
 
-                s.payNow_masterCredit = function(){
+                s.payNow_masterCredit = function () {
                     var TransPaymentMethod = "MasterCredit";
                     var accountNumber = 112987298763;
                     safePay(TransPaymentMethod, accountNumber);
                 }
 
-                s.payNow_manual = function(){
+                s.payNow_manual = function () {
                     s.card.number = '';
-                    angular.forEach(s.CardNumber, function(fourDigits){
+                    angular.forEach(s.CardNumber, function (fourDigits) {
                         s.card.number += fourDigits + "";
                     })
+                    alert(s.card.number)
                     s.payNow_masterCredit()
                 }
 
-                s.shippingDetails_next = function(){
+                s.shippingDetails_next = function () {
                     s.firstTag = false;
                 }
 
-                s.imgRadioButtonClicked = function(num){
-                     s.imgRadioButton = num;
+                s.imgRadioButtonClicked = function (num) {
+                    s.imgRadioButton = num;
                 }
 
-                s.paymentMethod_edit = function() {
-                    s.noCards = !s.noCards;
-                    s.getData();
+                s.paymentMethod_edit = function () {
+                    s.noCards = true;
                 }
             },
         }
