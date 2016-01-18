@@ -13,11 +13,12 @@ import javax.xml.bind.annotation.*;
                 "expirationDate",
                 "cvvNumber",
                 "safePayUsername",
+                "customerName"
         })
-@XmlRootElement(name = "PaymetnPreference", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "PaymentPreferencesDto", namespace = WebServiceConfig.NAMESPACE_URI)
 public class PaymentPreferencesDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String paymentMethod;
+    private int paymentMethod;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String cardNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -32,7 +33,7 @@ public class PaymentPreferencesDto {
     public PaymentPreferencesDto() {
     }
 
-    public PaymentPreferencesDto(String paymentMethod, String cardNumber, String expirationDate, String cvvNumber, String safePayUsername) {
+    public PaymentPreferencesDto(int paymentMethod, String cardNumber, String expirationDate, String cvvNumber, String safePayUsername) {
         this.paymentMethod = paymentMethod;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
@@ -40,11 +41,11 @@ public class PaymentPreferencesDto {
         this.safePayUsername = safePayUsername;
     }
 
-    public String getPaymentMethod() {
+    public int getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(int paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

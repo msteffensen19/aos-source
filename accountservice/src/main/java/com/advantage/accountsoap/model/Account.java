@@ -126,7 +126,7 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ShippingAddress> addresses = new HashSet<>();
 
-    @OneToMany(/*orphanRemoval = true,*/ mappedBy = "account", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(orphanRemoval = true, mappedBy = "account", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<PaymentPreferences> paymentPreferences = new HashSet<>();
 
     private long defaultPaymentMethodId;

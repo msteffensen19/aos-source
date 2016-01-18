@@ -402,6 +402,33 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:complexType name="PaymentPreferencesDto">
+        <xs:sequence>
+            <xs:element name= "paymentMethod" type="xs:int" />
+            <xs:element name= "cardNumber" type="xs:string" />
+            <xs:element name= "expirationDate" type="xs:string" />
+            <xs:element name= "cvvNumber" type="xs:string" />
+            <xs:element name= "safePayUsername" type="xs:string" />
+            <xs:element name= "customerName" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="GetAccountPaymentPreferencesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "accountId" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAccountPaymentPreferencesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "PaymentPreferences" type="tns:PaymentPreferencesDto" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!--<xs:element name="DeletePaymentPreferenceRequest">
         <xs:complexType>
             <xs:sequence>

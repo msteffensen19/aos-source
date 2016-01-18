@@ -3,15 +3,16 @@ package com.advantage.accountsoap.services;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dto.account.AccountDto;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.Account;
+import com.advantage.accountsoap.model.PaymentPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AccountService {
@@ -99,7 +100,6 @@ public class AccountService {
         return  new AccountStatusResponse(true, "", accountId);
     }
 
-
     @Transactional
     public Account getById(long id) {
         return accountRepository.get(id);
@@ -109,4 +109,24 @@ public class AccountService {
     public AccountStatusResponse changePassword(long accountId, String newPassword) {
         return accountRepository.changePassword(accountId, newPassword);
     }
+
+    @Transactional
+    public List<PaymentPreferencesDto> getPaymentPreferences(long accountId) {
+        Account account = accountRepository.get(accountId);
+        if(account == null) return null;
+
+        return fillPaymentPreferencesDto(account.getPaymentPreferences());
+    }
+
+    private List<PaymentPreferencesDto> fillPaymentPreferencesDto(Set<PaymentPreferences> paymentPreferences) {
+        List<PaymentPreferencesDto> dtos = new ArrayList<>();
+        for (PaymentPreferences item : paymentPreferences) {
+            dtos.add(new PaymentPreferencesDto(item.getPaymentMethod(),
+                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername()));
+        }
+
+        return dtos;
+    }
+
+
 }

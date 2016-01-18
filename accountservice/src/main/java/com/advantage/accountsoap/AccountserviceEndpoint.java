@@ -263,6 +263,15 @@ public class AccountserviceEndpoint {
         return new UpdateSafePayMethodResponse(response);
     }
 
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountPaymentPreferencesRequest")
+    @ResponsePayload
+    public GetAccountPaymentPreferencesResponse getAccountPaymentPreferences(@RequestPayload GetAccountPaymentPreferencesRequest request) {
+        GetAccountPaymentPreferencesResponse response = new GetAccountPaymentPreferencesResponse();
+        response.setPreferences(accountService.getPaymentPreferences(request.getId()));
+
+        return response;
+    }
+
     /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
     @ResponsePayload
     public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) {
