@@ -4,11 +4,11 @@
 
     <xs:complexType name="AccountStatusResponse">
         <xs:sequence>
-            <xs:element name="reason" type="xs:string"/>
-            <xs:element name="sessionId" type="xs:string"/>
             <xs:element name="success" type="xs:boolean"/>
-            <xs:element name="token" type="xs:string"/>
             <xs:element name="userId" type="xs:long"/>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="sessionId" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 

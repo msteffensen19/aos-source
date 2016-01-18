@@ -84,6 +84,7 @@ public class AccountserviceEndpoint {
             //  Set SessionID to Response Entity
             //response.getHeader().
             response.setSessionId(session.getId());*/
+            response.setSessionId("fake_id");
 
             return new AccountLoginResponse(response);
         } else {
