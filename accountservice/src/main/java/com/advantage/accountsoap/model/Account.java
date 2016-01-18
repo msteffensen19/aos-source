@@ -1,11 +1,11 @@
 package com.advantage.accountsoap.model;
 
+import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.Constants;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
-import com.advantage.accountsoap.util.UserPassword;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -139,7 +139,7 @@ public class Account {
 
     }
 
-    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
+    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) throws Exception {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
@@ -177,7 +177,7 @@ public class Account {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) {
+    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) throws Exception {
         this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
@@ -214,13 +214,12 @@ public class Account {
     }
 
     public String getPassword() {
-        UserPassword userPassword = new UserPassword();
-        return userPassword.decryptText(password);
+        return password;
     }
 
-    public void setPassword(String password) {
-        UserPassword userPassword = new UserPassword();
-        this.password = userPassword.encryptText(password);
+    public void setPassword(String password) throws Exception {
+        AccountPassword accountPassword = new AccountPassword(getLoginName(), password);
+        this.password = accountPassword.getEncryptedPassword();
     }
 
     public Integer getAccountType() {

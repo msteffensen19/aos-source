@@ -8,6 +8,7 @@ import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.PaymentPreferences;
+import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.model.Account;
@@ -110,7 +111,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
                     if (getAppUserByLogin(loginName) == null) {
                         Country country = countryRepository.get(countryId);
-                        Account account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+                        Account account = null;
+                        try {
+                            account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         entityManager.persist(account);
 
                         //  New user created successfully.
@@ -286,9 +292,14 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         }
 
         if ((!loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
-            if (account.getPassword().compareTo(loginPassword) != 0) {
-                account = addUnsuccessfulLoginAttempt(account);
-                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
+            AccountPassword accountPassword = new AccountPassword(loginUser, loginPassword);
+            try {
+                if (account.getPassword().compareTo(accountPassword.getEncryptedPassword()) != 0) {
+                    account = addUnsuccessfulLoginAttempt(account);
+                    return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             //  password is empty
@@ -427,7 +438,11 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         Account account = get(accountId);
         if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
 
-        account.setPassword(newPassword);
+        try {
+            account.setPassword(newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         entityManager.persist(account);
 
         return new AccountStatusResponse(true, "Successfully", accountId);
