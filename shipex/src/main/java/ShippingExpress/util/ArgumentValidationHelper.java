@@ -12,6 +12,7 @@ public class ArgumentValidationHelper {
     public static final String STATUS_ERROR_COUNTRY_CODE = "ERROR. Country code is empty or not valid";
     public static final String STATUS_ERROR_CITY_VALUE = "ERROR. City value is empty or not valid";
     public static final String STATUS_ERROR_STATE_VALUE = "ERROR. State value is empty or not valid";
+    public static final String STATUS_ERROR_POSTAL_VALUE = "ERROR. Postal value is empty or not valid";
     public static final String STATUS_ERROR_ADDRESS_LINE1 = "ERROR. Address Line1 is empty or not valid";
     public static final String STATUS_ERROR_ADDRESS_LINE_2 = "ERROR. Address Line 2 is too long";
     public static final String STATUS_ERROR_AMOUNT_VALUE = "ERROR. Amount value is not valid";
@@ -25,7 +26,6 @@ public class ArgumentValidationHelper {
     public static final int STATE_PATTERN = 10;
     public static final int CITY_PATTERN = 25;
     public static final int COUNTRY_COST_PATTERN = 2;
-    private static final String PHONE_PATTERN = "(^([0-9]){0,20})$";
 
     public static String shippingCostRequestValidation(ShippingCostRequest request) {
         if(!countryValidation(request.getSEAddress().getCountry())) {
@@ -38,7 +38,7 @@ public class ArgumentValidationHelper {
             return STATUS_ERROR_STATE_VALUE;
         }
         if (!postalCodeValidation(request.getSEAddress().getPostalCode())) {
-            return STATUS_ERROR_STATE_VALUE;
+            return STATUS_ERROR_POSTAL_VALUE;
         }
         if (!addressLineValidation(request.getSEAddress().getAddressLine1())) {
             return STATUS_ERROR_ADDRESS_LINE1;
@@ -63,7 +63,7 @@ public class ArgumentValidationHelper {
     }
 
     private static boolean customerNameValidation(String customerName) {
-        return customerName != null && customerName.length() <= 30 && customerName.length() > 0;
+        return customerName != null && customerName.length() <= 30 && customerName.length() >= 2;
     }
 
     /**
@@ -77,7 +77,7 @@ public class ArgumentValidationHelper {
     }
 
     private static boolean postalCodeValidation(String postalCode) {
-        return postalCode != null && postalCode.length() <= 10;
+        return postalCode == null || postalCode.length() <= 10;
     }
 
     private static boolean numberOfProductValidation(int value) {
@@ -104,7 +104,7 @@ public class ArgumentValidationHelper {
             return STATUS_ERROR_STATE_VALUE;
         }
         if (!postalCodeValidation(request.getSEAddress().getPostalCode())) {
-            return STATUS_ERROR_STATE_VALUE;
+            return STATUS_ERROR_POSTAL_VALUE;
         }
         if (!addressLineValidation(request.getSEAddress().getAddressLine1())) {
             return STATUS_ERROR_ADDRESS_LINE1;
@@ -119,7 +119,7 @@ public class ArgumentValidationHelper {
             return ERROR_TRANSACTION_TYPE;
         }
         if(!customerNameValidation(request.getSECustomerName())){
-            return ERROR_PHONE_NUMBER;
+            return ERROR_CUSTOMER_NAME;
         }
 
         return ResponseEnum.OK.getStringCode();
@@ -149,15 +149,15 @@ public class ArgumentValidationHelper {
     }
 
     private static boolean addressLineValidation(String addressLine) {
-        return addressLine != null && addressLine.length() <= ADDRESS_LINE_PATTERN;
+        return addressLine == null || addressLine.length() <= ADDRESS_LINE_PATTERN;
     }
 
     private static boolean stateValidation(String state) {
-        return state != null && state.length() <= STATE_PATTERN;
+        return state == null || state.length() <= STATE_PATTERN;
     }
 
     private static boolean cityValidation(String city) {
-        return city != null && city.length() <= CITY_PATTERN;
+        return city == null || city.length() <= CITY_PATTERN;
     }
 
     private static boolean countryValidation(String country) {
