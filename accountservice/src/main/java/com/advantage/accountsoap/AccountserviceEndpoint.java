@@ -64,6 +64,7 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getPhoneNumber(),
                 account.getEmail(),
+                account.getDefaultPaymentMethodId(),
                 account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());

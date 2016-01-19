@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.*;
                 "zipcode",
                 "phoneNumber",
                 "email",
+                "defaultPaymentMethodId",
                 "allowOffersPromotion",
                 "internalUnsuccessfulLoginAttempts",
                 "internalUserBlockedFromLoginUntil",
@@ -58,6 +59,8 @@ public class AccountDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String email;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private long defaultPaymentMethodId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean allowOffersPromotion;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -83,6 +86,7 @@ public class AccountDto {
                       String zipcode,
                       String phoneNumber,
                       String email,
+                      long defaultPaymentMethodId,
                       boolean allowOffersPromotion,
                       int internalUnsuccessfulLoginAttempts,
                       long internalUserBlockedFromLoginUntil,
@@ -101,6 +105,7 @@ public class AccountDto {
         this.zipcode = zipcode;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.defaultPaymentMethodId = defaultPaymentMethodId;
         this.allowOffersPromotion = allowOffersPromotion;
         this.internalUnsuccessfulLoginAttempts = internalUnsuccessfulLoginAttempts;
         this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
@@ -217,6 +222,14 @@ public class AccountDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getDefaultPaymentMethodId() {
+        return defaultPaymentMethodId;
+    }
+
+    public void setDefaultPaymentMethodId(long defaultPaymentMethodId) {
+        this.defaultPaymentMethodId = defaultPaymentMethodId;
     }
 
     public boolean isAllowOffersPromotion() {

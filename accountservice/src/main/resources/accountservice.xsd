@@ -47,14 +47,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="GetAllAccountsResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="account" type="tns:account" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
     <xs:complexType name="AccountDto">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>
@@ -71,12 +63,21 @@
             <xs:element name="zipcode" type="xs:string"/>
             <xs:element name="phoneNumber" type="xs:string"/>
             <xs:element name="email" type="xs:string"/>
+            <xs:element name="defaultPaymentMethodId" type="xs:long"/>
             <xs:element name="allowOffersPromotion" type="xs:boolean"/>
             <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int"/>
             <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long"/>
             <xs:element name="internalLastSuccesssulLogin" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:element name="GetAllAccountsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="account" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="AddressDto">
         <xs:sequence>
@@ -138,7 +139,7 @@
     <xs:element name="GetCountriesResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Country" type="tns:CountryDto"/>
+                <xs:element name="Country" type="tns:CountryDto" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

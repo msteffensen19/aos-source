@@ -12,9 +12,9 @@ import java.util.List;
         propOrder = {
                 "account"
         })
-@XmlRootElement(name = "Accounts", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "GetAllAccountsResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetAllAccountsResponse {
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(name = "account",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected List<AccountDto> account;
 
     public List<AccountDto> getAccount() {
