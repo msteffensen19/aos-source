@@ -78,7 +78,7 @@ public class PaymentPreferencesService {
     }
 
     @Transactional
-    public  boolean isPyamentPreferencesExist(long preferenceId) {
+    public boolean isPaymentPreferencesExist(long preferenceId) {
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.get(preferenceId);
 
         return (paymentPreferences != null);

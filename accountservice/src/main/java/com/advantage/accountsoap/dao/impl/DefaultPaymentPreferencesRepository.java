@@ -55,7 +55,6 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     @Override
     public PaymentPreferences get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "payment preferences id");
-        /*return entityManager.find(PaymentPreferences.class, entityId);*/
 
         String hql = JPAQueryHelper.getSelectByPkFieldQuery(PaymentPreferences.class, PaymentPreferences.FIELD_ID, entityId);
 

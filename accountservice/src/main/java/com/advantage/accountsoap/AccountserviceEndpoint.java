@@ -272,13 +272,13 @@ public class AccountserviceEndpoint {
         return response;
     }
 
-    /*@PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
     @ResponsePayload
     public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) {
-        PaymentPreferencesStatusResponse response = paymentPreferencesService.deletePaymentPreference(request.getId());
+        AccountStatusResponse response = accountService.removePaymentPreferences(request.getAccountId(), request.getId());
 
         return new DeletePaymentPreferenceResponse(response);
-    }*/
+    }
 
 
     //endregion

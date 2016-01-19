@@ -4,7 +4,6 @@ import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dto.account.AccountDto;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
-import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.util.*;
 
 @Service
 public class AccountService {
-
     @Autowired
     @Qualifier("accountRepository")
     private AccountRepository accountRepository;
@@ -91,7 +89,7 @@ public class AccountService {
     @Transactional
     public AccountStatusResponse updateDefaultPaymentMethod(long accountId, Integer paymentMethodId) {
         Account account = getById(accountId);
-        if(account == null || !paymentPreferencesService.isPyamentPreferencesExist(paymentMethodId)) {
+        if(account == null || !paymentPreferencesService.isPaymentPreferencesExist(paymentMethodId)) {
             return new AccountStatusResponse(false, "Data not valid", -1);
         }
 
@@ -118,11 +116,16 @@ public class AccountService {
         return fillPaymentPreferencesDto(account.getPaymentPreferences());
     }
 
+    @Transactional
+    public AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId) {
+        return accountRepository.removePaymentPreferences(accountId, preferenceId);
+    }
+
     private List<PaymentPreferencesDto> fillPaymentPreferencesDto(Set<PaymentPreferences> paymentPreferences) {
         List<PaymentPreferencesDto> dtos = new ArrayList<>();
         for (PaymentPreferences item : paymentPreferences) {
             dtos.add(new PaymentPreferencesDto(item.getPaymentMethod(),
-                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername()));
+                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername(), item.getId()));
         }
 
         return dtos;

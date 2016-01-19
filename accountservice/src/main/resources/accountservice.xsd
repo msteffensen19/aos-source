@@ -410,6 +410,7 @@
             <xs:element name= "cvvNumber" type="xs:string" />
             <xs:element name= "safePayUsername" type="xs:string" />
             <xs:element name= "customerName" type="xs:string" />
+            <xs:element name= "preferenceId" type="xs:long" />
         </xs:sequence>
     </xs:complexType>
 
@@ -429,10 +430,11 @@
         </xs:complexType>
     </xs:element>
 
-    <!--<xs:element name="DeletePaymentPreferenceRequest">
+    <xs:element name="DeletePaymentPreferenceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name = "id" type="xs:long" />
+                <xs:element name = "accountId" type="xs:long" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -440,8 +442,8 @@
     <xs:element name="DeletePaymentPreferenceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:PaymentPreferencesStatusResponse"/>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
             </xs:sequence>
         </xs:complexType>
-    </xs:element>-->
+    </xs:element>
 </xs:schema>

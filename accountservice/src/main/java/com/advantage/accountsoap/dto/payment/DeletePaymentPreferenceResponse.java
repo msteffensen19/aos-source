@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.dto.payment;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 
 import javax.xml.bind.annotation.*;
 
@@ -13,20 +14,20 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "DeletePaymentPreferenceResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class DeletePaymentPreferenceResponse {
     @XmlElement(name = "StatusMessage", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private PaymentPreferencesStatusResponse response;
+    private AccountStatusResponse response;
 
     public DeletePaymentPreferenceResponse() {
     }
 
-    public DeletePaymentPreferenceResponse(PaymentPreferencesStatusResponse response) {
+    public DeletePaymentPreferenceResponse(AccountStatusResponse response) {
         this.response = response;
     }
 
-    public PaymentPreferencesStatusResponse getResponse() {
+    public AccountStatusResponse getResponse() {
         return response;
     }
 
-    public void setResponse(PaymentPreferencesStatusResponse response) {
+    public void setResponse(AccountStatusResponse response) {
         this.response = response;
     }
 }
