@@ -23,7 +23,7 @@ public class AccountService {
     private PaymentPreferencesService paymentPreferencesService;
 
     @Transactional
-    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final String allowOffersPromotion) {
+    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion) {
         return accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
@@ -64,7 +64,7 @@ public class AccountService {
                     account.getZipcode(),
                     account.getPhoneNumber(),
                     account.getEmail(),
-                    account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                    account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                     account.getInternalUserBlockedFromLoginUntil(),
                     account.getInternalLastSuccesssulLogin()));
         }
@@ -82,8 +82,11 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
-        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
+                                               Long countryId, String phoneNumber, String stateProvince, String cityName,
+                                               String address, String zipcode, String email, boolean allowOffersPromotion) {
+        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, countryId, phoneNumber,
+                stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
     @Transactional
@@ -125,7 +128,8 @@ public class AccountService {
         List<PaymentPreferencesDto> dtos = new ArrayList<>();
         for (PaymentPreferences item : paymentPreferences) {
             dtos.add(new PaymentPreferencesDto(item.getPaymentMethod(),
-                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername(), item.getId()));
+                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername(),
+                    item.getId()));
         }
 
         return dtos;

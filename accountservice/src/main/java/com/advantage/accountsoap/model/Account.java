@@ -92,9 +92,6 @@ public class Account {
     @Column(name = "USER_TYPE")
     private Integer accountType;        //  by enum AccountType
 
-    /*@Column(name = FIELD_COUNTRY)
-    private Integer country;  */              //  by Country
-
     @Column(name = "STATE_PROVINCE")
     private String stateProvince;
 
@@ -112,7 +109,7 @@ public class Account {
     private String email;
 
     @Column(name = "AGREE_TO_RECEIVE_OFFERS", length = 1)
-    private String allowOffersPromotion;  //   'Y' = Yes ; 'N' = No
+    private boolean allowOffersPromotion;
 
     @Column
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
@@ -139,7 +136,7 @@ public class Account {
 
     }
 
-    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) throws Exception {
+    public Account(Integer accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean offersPromotion) throws Exception {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
@@ -177,7 +174,7 @@ public class Account {
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
     }
 
-    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String offersPromotion) throws Exception {
+    public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean offersPromotion) throws Exception {
         this(accountType.getAccountTypeCode(), lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, offersPromotion);
     }
 
@@ -278,11 +275,11 @@ public class Account {
         this.email = email;
     }
 
-    public String getAllowOffersPromotion() {
-        return this.allowOffersPromotion;
+    public boolean isAllowOffersPromotion() {
+        return allowOffersPromotion;
     }
 
-    public void setAllowOffersPromotion(String allowOffersPromotion) {
+    public void setAllowOffersPromotion(boolean allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
     }
 
@@ -399,7 +396,7 @@ public class Account {
                 "number of unsuccessful login attempts=" + this.getInternalUnsuccessfulLoginAttempts() + Constants.SPACE +
                 "user blocked from login until=\"" + this.getUserBlockedFromLoginUntilAsString() + "\" " +
                 "last successful login=\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.getInternalLastSuccesssulLogin()) + "\"" +
-                "agree to receive offers and promotions=" + this.getAllowOffersPromotion();
+                "agree to receive offers and promotions=" + this.isAllowOffersPromotion();
     }
 
     public static String convertMillisecondsDateToString(long milliSecondsDate) {

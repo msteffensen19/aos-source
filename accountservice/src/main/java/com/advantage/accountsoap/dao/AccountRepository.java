@@ -15,14 +15,14 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
     Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName,
                           String password, Long country, String phoneNumber, String stateProvince,
                           String cityName, String address, String zipcode, String email,
-                          String agreeToReceiveOffersAndPromotions);
+                          boolean agreeToReceiveOffersAndPromotions);
 
     //  For User-Management API
     @Transactional
     AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
                                  String password, Long country, String phoneNumber, String stateProvince,
                                  String cityName, String address, String zipcode, String email,
-                                 String agreeToReceiveOffersAndPromotions);
+                                 boolean agreeToReceiveOffersAndPromotions);
 
     Account addUnsuccessfulLoginAttempt(Account account);
 
@@ -32,7 +32,7 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     AccountStatusResponse updateAccount(long acccountId, Integer appUserType, String lastName, String firstName,Long country,
                                         String phoneNumber, String stateProvince, String cityName, String address,
-                                        String zipcode, String email, String agreeToReceiveOffersAndPromotions);
+                                        String zipcode, String email, boolean agreeToReceiveOffersAndPromotions);
 
     String getFailureMessage();
 

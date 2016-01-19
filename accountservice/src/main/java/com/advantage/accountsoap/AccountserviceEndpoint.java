@@ -64,7 +64,7 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getPhoneNumber(),
                 account.getEmail(),
-                account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
@@ -114,7 +114,7 @@ public class AccountserviceEndpoint {
                 account.getAddress(),
                 account.getZipcode(),
                 account.getEmail(),
-                account.getAllowOffersPromotion());
+                account.isAllowOffersPromotion());
 
         return new AccountCreateResponse(response);
     }
@@ -134,7 +134,7 @@ public class AccountserviceEndpoint {
                 account.getAddress(),
                 account.getZipcode(),
                 account.getEmail(),
-                account.getAllowOffersPromotion());
+                account.isAllowOffersPromotion());
 
         return new AccountUpdateResponse(response);
     }

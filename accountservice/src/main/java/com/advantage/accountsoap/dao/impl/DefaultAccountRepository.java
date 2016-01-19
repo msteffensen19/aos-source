@@ -81,7 +81,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * <br/>
      */
     @Override
-    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
+    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean allowOffersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
@@ -150,7 +150,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
                                                Long countryId, String phoneNumber, String stateProvince, String cityName, String address,
-                                               String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
+                                               String zipcode, String email, boolean agreeToReceiveOffersAndPromotions) {
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(countryId, "country id");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
@@ -193,8 +193,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
-        Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
+                                        String password, Long countryId, String phoneNumber, String stateProvince,
+                                        String cityName, String address, String zipcode, String email,
+                                        boolean allowOffersPromotion) {
+        Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber,
+                stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
         return new AccountStatusResponse(accountStatusResponse.isSuccess(),
                 accountStatusResponse.getReason(),

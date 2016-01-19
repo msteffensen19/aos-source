@@ -58,7 +58,7 @@ public class AccountDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String email;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String allowOffersPromotion;
+    private boolean allowOffersPromotion;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private int internalUnsuccessfulLoginAttempts;  //  Managed Internally
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -83,7 +83,7 @@ public class AccountDto {
                       String zipcode,
                       String phoneNumber,
                       String email,
-                      String allowOffersPromotion,
+                      boolean allowOffersPromotion,
                       int internalUnsuccessfulLoginAttempts,
                       long internalUserBlockedFromLoginUntil,
                       long internalLastSuccesssulLogin) {
@@ -219,11 +219,11 @@ public class AccountDto {
         this.email = email;
     }
 
-    public String getAllowOffersPromotion() {
+    public boolean isAllowOffersPromotion() {
         return allowOffersPromotion;
     }
 
-    public void setAllowOffersPromotion(String allowOffersPromotion) {
+    public void setAllowOffersPromotion(boolean allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
     }
 
