@@ -114,7 +114,12 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="GetAllAccountsRequest"/>
+    <xs:element name="GetAllAccountsRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="GetCountriesRequest">
             <xs:complexType>
                 <xs:sequence/>
