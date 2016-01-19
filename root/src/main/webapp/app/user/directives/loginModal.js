@@ -21,14 +21,6 @@ define(['./module'], function (directives) {
 
 
 
-                    /* Get configuration */
-                    userService.getConfiguration().then(function(response){
-                        $scope.config = response;
-                    });
-                    /*===========================  end Get configuration ============================*/
-
-
-
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
@@ -74,6 +66,9 @@ define(['./module'], function (directives) {
                                     $scope.cart = cart;
                                 });
 
+                                if($location.path() == '/register'){
+                                    $location.path('/')
+                                }
                                 wellcome();
                             }
                             else {

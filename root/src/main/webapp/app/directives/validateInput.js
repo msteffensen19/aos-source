@@ -120,6 +120,9 @@ define(['./module'], function (directives) {
                 controller: ['$scope', function (s) {
 
                     var labelStartPossition;
+                    var labelStartfont;
+                    var labelStartColor;
+
                     var ctrlFather;
                     s.warnings = [];
                     s.noRedStar = false;
@@ -148,8 +151,15 @@ define(['./module'], function (directives) {
                             valid: true,
                         };
                         checkValidInput(s.warnings, input, 'keyup');
-                        labelStartPossition = labelStartPossition || input.prev().css('top');
-                        input.prev().animate({'top': '-18px'}, 300, 'linear');
+                        var lab = input.prev();
+                        labelStartPossition = labelStartPossition || lab.css('top');
+                        labelStartfont = labelStartfont  || lab.css('font-size');
+                        labelStartColor = labelStartColor || lab.css('color');
+                        input.prev().animate({
+                            'top': '-9px',
+                            'font-size' : '12px',
+                            'color' : '#828282'
+                        }, 300, 'linear');
                         input.siblings(".validate-info").show(200);
                     }
 
@@ -161,7 +171,11 @@ define(['./module'], function (directives) {
                         }
 
                         if (input.val().length == 0) {
-                            input.prev().animate({'top': labelStartPossition}, 300, 'linear');
+                            input.prev().animate({
+                                'top': labelStartPossition,
+                                'font-size' : labelStartfont,
+                                'color' : labelStartColor
+                            }, 300, 'linear');
                         }
                         var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
                         if (invalid) {
@@ -342,7 +356,7 @@ define(['./module'], function (directives) {
                                 if (select.length > 0) {
                                     s.$apply(function () {
                                         ctrls[1].shiftInvalidField(a.idAttr);
-                                        $($(_this).find(".validate-label")).html('')
+                                        s.inputFocus(s.id);
                                     });
                                 }
                             })

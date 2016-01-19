@@ -56,7 +56,7 @@
                       data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
-                      data-ng-class='{ colorSelected : colorSelected.name == color.name } '
+                      data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 } '
                       data-ng-click="setColor(color)" >
                 </span>
             </div>

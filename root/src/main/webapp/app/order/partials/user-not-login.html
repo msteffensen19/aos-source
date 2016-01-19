@@ -28,6 +28,7 @@
         </sec-input>
 
         <sec-input
+                ng-if="config.emailAddressInLogin"
                 sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
                 sec-email
                 sec-placeholder="{{'Email' | translate}}"
@@ -56,7 +57,7 @@
 </div>
 <div id="newClient" class="noUserSection">
     <div class="cover">
-        <div>
+        <div data-ng-class="{ noEmail : config.emailAddressInLogin }">
             <label class="roboto-medium" translate="New_client" ></label>
             <p>{{'Create_your_account_easily' | translate}}</p>
         </div>
@@ -67,3 +68,5 @@
     </div>
 </div>
 </div>
+
+

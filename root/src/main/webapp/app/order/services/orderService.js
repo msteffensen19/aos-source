@@ -60,9 +60,9 @@ define(['./module'], function (services) {
                     "purchasedProducts": purchasedProducts,
                 }
 
-                console.log(paramsToPass);
-                console.log(JSON.stringify(paramsToPass));
-                console.log(user);
+                //console.log(paramsToPass);
+                //console.log(JSON.stringify(paramsToPass));
+                //console.log(user);
 
                 $http({
                     method: "post",

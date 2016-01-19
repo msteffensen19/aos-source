@@ -20,8 +20,6 @@ define(['./module'], function mainMobCtrl ($scope, productService, smoothScroll,
 
 
 
-
-
             /* Cart section  */
 
             productsCartService.loadCartProducts().then(function(cart){

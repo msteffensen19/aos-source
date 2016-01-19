@@ -30,6 +30,7 @@
 
 #product-image #cover{
     white-space: nowrap;
+    overflow: hidden;
 }
 
 #length {
@@ -86,13 +87,15 @@
 #description h2{
     font-size: 23px;
     color: #2a2a2a;
+    padding: 8px 0;
 }
 
 
 #description p{
-    margin: 20px 0;
+    margin: 13px 0;
     font-size: 14px;
     color: #828282;
+    line-height: 1.5;
 }
 
 #productProperties{
@@ -151,6 +154,8 @@
     font-size: 14px;
     color: #020202;
     margin: 0 5px;
+    position: relative;
+    top: -7px;
 }
 
 #productProperties select option{
@@ -164,7 +169,6 @@
     color: #2a2a2a;
     line-height: 48px;
     background-color: transparent;
-    border: solid 1px #454545;
     width: 320px;
     margin: 36px 0;
 }

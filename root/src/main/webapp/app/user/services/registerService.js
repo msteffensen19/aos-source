@@ -13,7 +13,23 @@ define(['./module'], function (services) {
 
 
         function getAllCountries() {
-            return responseService.getAllCountries();
+            //return responseService.getAllCountries();
+
+            var defer = $q.defer();
+            var params = server.account.getAllCountries();
+
+            mini_soap.post(params.path, params.method).
+            then(function(response){
+                    console.log("response")
+                    console.log(response)
+                    console.log("response")
+                    defer.resolve(response);
+                },
+                function(response){
+                    console.log(response);
+                    defer.reject("Request failed! ");
+                });
+            return defer.promise;
         }
 
         function register(model) {

@@ -14,8 +14,8 @@ define([
 './socialMediaDrtv',
 './categoryTypeProductsDrtv',
 './scrollToTop',
-'./Card_Number_4Digits'
-
+'./Card_Number_4Digits',
+'./icon-phone'
 ],
 
 function() {});

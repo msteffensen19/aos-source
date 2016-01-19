@@ -183,7 +183,10 @@ var server = {
     account: {
 
         getAllCountries : function (){
-            return accountKey + "/countries";
+            return {
+                path: wsdlPath,
+                method: 'GetCountriesRequest'
+            }
         },
 
         register : function(){

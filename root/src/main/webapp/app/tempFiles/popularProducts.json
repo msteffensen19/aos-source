@@ -25,8 +25,8 @@
     {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
     {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
   ]},
-  {"id": 3,
-    "productName": "HP EliteBook Folio",
+  {"id": 18,
+    "productName": "HP ROAR PLUS WIRELESS SPEAKER",
     "price": 550,
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     "imageUrl" : "css/images/Popular-item1.jpg",

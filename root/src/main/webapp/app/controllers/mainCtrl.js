@@ -5,9 +5,9 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll',
+    controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService',
                     '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
-        function ($scope, $q, productService, smoothScroll,
+        function ($scope, $q, productService, smoothScroll, userService,
                         $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
@@ -20,10 +20,20 @@ define(['./module'], function (controllers) {
             $scope.autoCompleteResult = {};
 
             $scope.go_up = function(){
-                $('body, html').animate({scrollTop: 0}, 10);
+                $('body, html').animate({scrollTop: 0}, 10, function(){
+                    $("nav .navLinks").css("display", "block");
+                });
             }
 
 
+
+
+            /* Get configuration */
+            userService.getConfiguration().then(function(response){
+                $scope.config = response;
+                console.log(response)
+            });
+            /*===========================  end Get configuration ============================*/
 
 
 
@@ -127,6 +137,7 @@ define(['./module'], function (controllers) {
                     $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
                     $("body").css({ "left": "0px", })
                 });
+
             }
 
             $(".PopUp, .closePopUpBtn").click(function (e) {

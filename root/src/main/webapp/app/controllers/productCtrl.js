@@ -12,7 +12,7 @@ define(['./module'], function (controllers) {
 
             var pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
-            l(resolveParams_selectedColor)
+            l(resolveParams)
             s.message = null;
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;

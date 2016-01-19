@@ -42,7 +42,9 @@
     border: solid 0px #d0d0d0;
 }
 
-
+#orderPayment > #userCart #toolTipCart tbody h3{
+    font-weight: 600;
+}
 
 #orderPayment .itemsCount{
     color: #2a2a2a;
@@ -93,18 +95,18 @@
     padding-bottom: 5px;
 }
 
-#orderPayment .penetrationInCart .noShipping {
-    height: 0;
-    font-size: 0;
-    overflow: hidden;
-    opacity: 0;
-}
-
 #orderPayment .penetrationInCart > label span{
     position: absolute;
     right: 8px;
 }
 
+#orderPayment .penetrationInCart .noShipping {
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding-top: 10px !important;
+}
 
 #orderPayment .penetrationInCart > label.shippingText{
     font-size: 12px;
@@ -115,7 +117,6 @@
 #orderPayment .penetrationInCart > label.totalText{
     font-size: 15px;
 }
-
 #orderPayment .penetrationInCart > label span.totalValue{
     font-size: 20px;
 }
@@ -158,7 +159,35 @@
 /*END CART SECCION MODIFY*/
 
 
+@media screen and (max-width: 1200px){
 
+    #orderPayment > #userCart {
+        right: 0px;
+    }
+
+    #detailslink > label {
+        width: 41% !important;
+    }
+
+
+    #orderPayment > div:nth-child(1)
+    {
+        width: 60%;
+    }
+
+}
+
+@media screen and (max-width: 950px){
+
+
+    #orderPayment > div:nth-child(1)
+    {
+        width: 53%;
+    }
+
+
+
+}
 
 
 

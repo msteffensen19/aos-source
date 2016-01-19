@@ -65,7 +65,7 @@ define([
 
     config(orderConfig).
 
-    run(function ($rootScope, $state, ipCookie, productsCartService) {
+    run(function ($rootScope, $state, ipCookie) {
 
             var pcBlocked = ipCookie("pcBlocked");
             if(pcBlocked)

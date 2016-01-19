@@ -1,10 +1,6 @@
 /**
  * Created by correnti on 29/11/2015.
  */
-/**
- * Created by correnti on 29/11/2015.
- */
-
 
 define(['./module'], function (controllers) {
     'use strict';
@@ -19,7 +15,6 @@ define(['./module'], function (controllers) {
 
             registerService.getAllCountries().then(function (response) {
                 s.countries = response;
-                s.model.country = response[0];
             })
 
             s.model = {
@@ -30,8 +25,6 @@ define(['./module'], function (controllers) {
 
 
             s.register = function () {
-
-                // check this point - validate-from/to
 
                 registerService.register(s.model).then(function (response) {
                     s.registerAnswer.message = response.REASON || $filter('translate')('register_faild'),

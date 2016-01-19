@@ -57,11 +57,16 @@
     border-left: solid 2px #454545;
     padding: 0 0 0 27px;
     height: 156px;
+    height: 213px;
+}
+
+#orderPayment .noUserSection .cover div.noEmail{
+    height: 156px;
 }
 
 #orderPayment .noUserSection .cover a{
     margin: 18px 28px;
-    margin-top: 54px;
+    margin-top: 33px;
 }
 
 #orderPayment .noUserSection .a-button{

@@ -12,9 +12,14 @@
 
     <div id="userSection" ng-show="firstTag">
 
+
+
+
+
         <div id="userDetails">
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
+                <!--<div icon-phone ></div>-->
                 <label>{{user.firstName}} {{user.lastName}}</label>
             </div>
             <div>
@@ -36,6 +41,8 @@
             <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
         </div>
     </div>
+
+
 
 
     <!-- END USER DETAILS SECTION-->
@@ -77,8 +84,7 @@
                             sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
                             pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                             model-attr="savePay.username"
-                            id-attr="savePay_UserName"
-                            no-red-star="true" >
+                            id-attr="savePay_UserName">
                     </sec-input>
 
                     <sec-input
@@ -89,7 +95,6 @@
                             pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                             input-type-attr="password"
                             model-attr="savePay.password"
-                            no-red-star="true"
                             id-attr="savePay_password">
                     </sec-input>
 
@@ -101,7 +106,7 @@
                             select-tag="true" >
                         <div class="option" >
                             <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox"  />
-                            <span class="roboto-light">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
+                            <span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
                             <label class="validateInvalid" style="display: none" >
                                 {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
                             </label>
@@ -121,6 +126,7 @@
                 </sec-validate>
 
             </div>
+
 
             <!-------------------------- END SAFEPAY SECCION -------------------------->
 
@@ -157,9 +163,16 @@
 
 
 
+
+
             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
             <div ng-show="imgRadioButton == 2 && noCards">
+
+                <div class="notice">
+                    <h4 translate="Notice"  ></h4>
+                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{ 'Please_enter_a_fake_data' | translate }}</p>
+                </div>
 
                 <sec-validate class="smollInput" >
 
