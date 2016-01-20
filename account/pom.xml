@@ -84,27 +84,7 @@
     </profiles>
     <build>
         <finalName>account</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xls</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.xls</exclude>
-                </excludes>
-                <filtering>true</filtering>
-            </resource>
-            <!--shared resources-->
-            <resource>
-                <directory>${project.build.directory}/generated-resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+
         <plugins>
             <!--shared resources-->
             <plugin>

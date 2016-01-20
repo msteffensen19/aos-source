@@ -22,47 +22,56 @@
         <profile>
             <id>development</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>sql-maven-plugin</artifactId>
+                            <version>1.5</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.postgresql</groupId>
+                                    <artifactId>postgresql</artifactId>
+                                    <!-- TODO-EVG replace with property after move maven variables into properties file-->
+                                    <version>9.3-1100-jdbc41</version>
+                                </dependency>
+                            </dependencies>
+                            <configuration>
+                                <!-- Merge of main pom and this cause the AccountSoapService pom isn't a child of main pom-->
+                                <!--suppress MavenModelInspection -->
+                                <url>
+                                    ${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}/postgres
+                                </url>
+                                <!--suppress MavenModelInspection -->
+                                <username>${account.hibernate.db.login}</username>
+                                <!--suppress MavenModelInspection -->
+                                <password>${account.hibernate.db.password}</password>
+                                <sqlCommand>create database "${account.hibernate.db.name}"</sqlCommand>
+                                <!--suppress MavenModelInspection -->
+                                <driver>${hibernate.db.driver_classname}</driver>
+                                <autocommit>true</autocommit>
+                                <!-- ignore error when database already exists -->
+                                <onError>continue</onError>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>create-db</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>execute</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <!--run sql-->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
-                        <version>1.5</version>
-                        <dependencies>
-                            <!-- specify the dependent jdbc driver here -->
-                            <dependency>
-                                <groupId>org.postgresql</groupId>
-                                <artifactId>postgresql</artifactId>
-                                <version>9.3-1100-jdbc41</version>
-                            </dependency>
-                        </dependencies>
-                        <executions>
-                            <execution>
-                                <id>create-db</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <configuration>
-                                    <!--suppress MavenModelInspection -->
-                                    <driver>${hibernate.db.driver_classname}</driver>
-                                    <!--suppress MavenModelInspection -->
-                                    <url>
-                                        ${db.url.prefix}://${order.hibernate.db.url.host}:${order.hibernate.db.url.port}/postgres
-                                    </url>
-                                    <!--suppress MavenModelInspection -->
-                                    <username>${order.hibernate.db.login}</username>
-                                    <!--suppress MavenModelInspection -->
-                                    <password>${order.hibernate.db.password}</password>
-                                    <autocommit>true</autocommit>
-                                    <sqlCommand>create database "${order.hibernate.db.name}"</sqlCommand>
-                                    <!-- ignore error when database already exists -->
-                                    <onError>continue</onError>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>
@@ -78,12 +87,11 @@
         <dependency>
             <groupId>com.advantage.online.store</groupId>
             <artifactId>shared_resources</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <classifier>resources</classifier>
             <type>zip</type>
             <scope>provided</scope>
         </dependency>
-
         <!--WAR-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -175,11 +183,17 @@
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
             <groupId>com.advantage.online.store</groupId>
             <artifactId>root</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <classifier>classes</classifier>
             <scope>compile</scope>
             <exclusions>
@@ -193,28 +207,62 @@
 
     <build>
         <finalName>accountservice</finalName>
-        <resources>
-            <!--shared resources-->
-            <resource>
-                <directory>${project.build.directory}/generated-resources</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xls</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.xls</exclude>
-                </excludes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+        <!--shared resources-->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                    <!-- Provide access to .properties files for use it by maven-->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <executions>
+                        <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <file>${project.build.directory}/generated-resources/services.properties</file>
+                                    <file>${project.build.directory}/generated-resources/global.properties</file>
+                                    <file>
+                                        ${project.build.directory}/generated-resources/internal_config_for_env.properties
+                                    </file>
+                                </files>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>unpack-shared-resources</id>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/generated-resources
+                                </outputDirectory>
+                                <includeArtifactIds>shared_resources</includeArtifactIds>
+                                <includeGroupIds>${project.groupId}</includeGroupIds>
+                                <excludeTransitive>true</excludeTransitive>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -241,45 +289,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-shared-resources</id>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
-                            <includeArtifactIds>shared_resources</includeArtifactIds>
-                            <includeGroupIds>${project.groupId}</includeGroupIds>
-                            <excludeTransitive>true</excludeTransitive>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <!--read properties from zip-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
-                <executions>
-                    <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>${project.build.directory}/generated-resources/services.properties</file>
-                                <file>
-                                    ${project.build.directory}/generated-resources/internal_config_for_env.properties
-                                </file>
-                                <file>${project.build.directory}/generated-resources/global.properties</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
