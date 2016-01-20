@@ -7,6 +7,39 @@
 
 
 
+
+
+
+
+
+
+            <!--- categories filter Section -->
+            <li ng-if="categoriesFilter != null">
+                <h4 class="accordion roboto-regular arrowUp"
+                    id="accordionCategories"
+                    ng-click="toggleColapse('accordionCategories')" >
+                    {{'CATEGORIES' | translate }}
+                </h4>
+                <label class="roboto-light"
+                       data-ng-mouseenter="searchByCategoryId(result.categoryId)" >
+                    {{result.categoryName | lowercase}}
+                </label>
+                <div class="option" style="display: block">
+                    <div ng-repeat="categ in categoriesFilter" >
+                        <div class="fill">
+                            <input type="checkbox"
+                                   ng-model="categ.checked"
+                                   ng-click="includeProducts(categ.id, 'CATEGORIES')">
+                            <span class="roboto-regular">{{categ.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--- END categories filter Section -->
+
+
+
+
             <!--- Price filter Section-->
             <li>
                 <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
@@ -75,32 +108,6 @@
 
 
 
-
-
-
-            <!--- categories filter Section -->
-            <li ng-if="categoriesFilter != null">
-                <h4 class="accordion roboto-regular arrowDown"
-                    id="accordionCategories"
-                    ng-click="toggleColapse('accordionCategories')" >
-                    {{'CATEGORIES' | translate }}
-                </h4>
-                <label class="roboto-light"
-                       data-ng-mouseenter="searchByCategoryId(result.categoryId)" >
-                    {{result.categoryName | lowercase}}
-                </label>
-                <div class="option" >
-                    <div ng-repeat="categ in categoriesFilter" >
-                        <div class="fill">
-                            <input type="checkbox"
-                                   ng-model="categ.checked"
-                                   ng-click="includeProducts(categ.id, 'CATEGORIES')">
-                            <span class="roboto-regular">{{categ.name}}</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <!--- END categories filter Section -->
 
 
 

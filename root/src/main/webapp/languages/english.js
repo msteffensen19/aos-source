@@ -99,6 +99,8 @@ var english = {
     'PRODUCT_NAME' : 'PRODUCT NAME',
     'Search' : 'Search',
     'CATEGORIES' : 'CATEGORIES',
+    'TOP' : 'TOP',
+    'RESULTS_FOR' : 'RESULTS FOR',
     'TOP_RESULTS_FOR' : 'TOP RESULTS FOR',
     'View_All' : 'View All',
     'EDIT' : 'EDIT',

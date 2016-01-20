@@ -89,7 +89,7 @@ define(['./module'], function (services) {
                     //if(/[a-z]/.test(tagName))
                     //{
                     //    obj += '"' + tagName.toLowerCase().substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
-                    //}
+                     //}
                     //else
                     //{
                         obj += '"' + tagName.substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
