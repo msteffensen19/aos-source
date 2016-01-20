@@ -13,6 +13,7 @@ define(['./module'], function (directives) {
             link: function (s){
 
                 s.categoryFilter = null;
+                s.categoryName = '';
                 s.checkEnterKey = function(event)
                 {
                     if(event.which === 13) {
@@ -72,9 +73,10 @@ define(['./module'], function (directives) {
                         } );
                 });
 
-                s.searchByCategoryId = function(id){
+                s.searchByCategoryId = function(id, categoryName){
                     console.log(id);
                     s.categoryFilter = id;
+                    s.categoryName = categoryName;
                 }
 
             }

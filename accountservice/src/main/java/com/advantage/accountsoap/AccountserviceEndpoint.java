@@ -1,14 +1,13 @@
 package com.advantage.accountsoap;
 
-import accountservice.store.online.advantage.com.AddressesResponse;
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.account.PaymentMethodUpdateResponse;
 import com.advantage.accountsoap.dto.account.*;
 import com.advantage.accountsoap.dto.country.*;
 import com.advantage.accountsoap.dto.address.*;
+import com.advantage.accountsoap.dto.payment.*;
 import com.advantage.accountsoap.model.Account;
-import com.advantage.accountsoap.services.AccountService;
-import com.advantage.accountsoap.services.AddressService;
-import com.advantage.accountsoap.services.CountryService;
+import com.advantage.accountsoap.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -28,6 +27,13 @@ public class AccountserviceEndpoint {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private PaymentPreferencesService paymentPreferencesService;
+
+    @Autowired
+    private AccountConfigurationService accountConfigurationService;
+
+    //region Account
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
     public GetAllAccountsResponse getAllAccounts() {
@@ -58,12 +64,41 @@ public class AccountserviceEndpoint {
                 account.getZipcode(),
                 account.getPhoneNumber(),
                 account.getEmail(),
-                account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                account.getDefaultPaymentMethodId(),
+                account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
         return new GetAccountByIdResponse(dto);
     }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdNewRequest")
+    @ResponsePayload
+    public GetAccountByIdNewResponse getAccount(@RequestPayload GetAccountByIdNewRequest accountId) {
+        Account account = accountService.getById(accountId.getId());
+        if (account == null) return null;
+        AccountDtoNew dto = new AccountDtoNew(account.getId(),
+                account.getLastName(),
+                account.getFirstName(),
+                account.getLoginName(),
+                account.getAccountType(),
+                account.getCountry().getId(),
+                account.getCountry().getName(),
+                account.getCountry().getIsoName(),
+                account.getStateProvince(),
+                account.getCityName(),
+                account.getAddress(),
+                account.getZipcode(),
+                account.getPhoneNumber(),
+                account.getEmail(),
+                account.getDefaultPaymentMethodId(),
+                account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                account.getInternalUserBlockedFromLoginUntil(),
+                account.getInternalLastSuccesssulLogin());
+
+        return new GetAccountByIdNewResponse(dto);
+    }
+
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
     @ResponsePayload
@@ -84,6 +119,7 @@ public class AccountserviceEndpoint {
             //  Set SessionID to Response Entity
             //response.getHeader().
             response.setSessionId(session.getId());*/
+            response.setSessionId("fake_id");
 
             return new AccountLoginResponse(response);
         } else {
@@ -107,7 +143,7 @@ public class AccountserviceEndpoint {
                 account.getAddress(),
                 account.getZipcode(),
                 account.getEmail(),
-                account.getAllowOffersPromotion());
+                account.isAllowOffersPromotion());
 
         return new AccountCreateResponse(response);
     }
@@ -127,17 +163,20 @@ public class AccountserviceEndpoint {
                 account.getAddress(),
                 account.getZipcode(),
                 account.getEmail(),
-                account.getAllowOffersPromotion());
+                account.isAllowOffersPromotion());
 
         return new AccountUpdateResponse(response);
     }
 
-   /* @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
     @ResponsePayload
-    public AccountStatusResponse updatePaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
-        return accountService.updatePaymentMethod(request.getAccountId(), request.getPaymentMethod());
-    }*/
+    public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+        AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getNewPassword());
+        return new ChangePasswordResponse(response);
+    }
+    //endregion
 
+    //region Countries
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
     public GetCountriesResponse getCountries() {
@@ -176,7 +215,9 @@ public class AccountserviceEndpoint {
             return new CountrySearchResponse(countries);
         }
     }
+    //endregion
 
+    //region Address
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
     @ResponsePayload
     public GetAddressesByAccountIdResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
@@ -203,13 +244,83 @@ public class AccountserviceEndpoint {
 
         return new AddressUpdateResponse(response);
     }
+    //endregion
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
+    //region Payment details
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
     @ResponsePayload
-    public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
-        AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getNewPassword());
-        return new ChangePasswordResponse(response);
+    public PaymentMethodUpdateResponse updateDefaultPaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
+        AccountStatusResponse response =
+                accountService.updateDefaultPaymentMethod(request.getAccountId(), request.getPaymentMethod());
+
+        return new PaymentMethodUpdateResponse(response);
     }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddSafePayMethodRequest")
+    @ResponsePayload
+    public AddSafePayMethodResponse addSafePayMethod(@RequestPayload AddSafePayMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.addSafePayMethod(request.getSafePayUsername(),
+                request.getAccountId());
+
+        return new AddSafePayMethodResponse(response);
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddMasterCreditMethodRequest")
+    @ResponsePayload
+    public AddMasterCreditMethodResponse addMasterCreditMethod(@RequestPayload AddMasterCreditMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.addMasterCreditMethod(request.getCardNumber(),
+                request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getAccountId());
+
+        return new AddMasterCreditMethodResponse(response);
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateMasterCreditMethodRequest")
+    @ResponsePayload
+    public UpdateMasterCreditMethodResponse updateMasterCreditMethod(@RequestPayload UpdateMasterCreditMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateMasterCreditMethod(request.getCardNumber(),
+                request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getReferenceId());
+
+        return new UpdateMasterCreditMethodResponse(response);
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
+    @ResponsePayload
+    public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getSafePayUsername(),
+                request.getReferenceId());
+
+        return new UpdateSafePayMethodResponse(response);
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountPaymentPreferencesRequest")
+    @ResponsePayload
+    public GetAccountPaymentPreferencesResponse getAccountPaymentPreferences(@RequestPayload GetAccountPaymentPreferencesRequest request) {
+        GetAccountPaymentPreferencesResponse response = new GetAccountPaymentPreferencesResponse();
+        response.setPreferences(accountService.getPaymentPreferences(request.getId()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
+    @ResponsePayload
+    public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) {
+        AccountStatusResponse response = accountService.removePaymentPreferences(request.getAccountId(), request.getId());
+
+        return new DeletePaymentPreferenceResponse(response);
+    }
+
+
+    //endregion
+
+
+    //region Configuration
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountConfigurationStatusRequest")
+    @ResponsePayload
+    public AccountConfigurationStatusResponse getConfigurationParameters() {
+        return accountConfigurationService.getAllConfigurationParameters();
+    }
+    //endregion
+
 
     /*protected HttpServletRequest getHttpServletRequest() {
         TransportContext ctx = TransportContextHolder.getTransportContext();

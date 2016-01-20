@@ -8,4 +8,9 @@ public interface PaymentPreferencesRepository extends DefaultCRUDOperations<Paym
     PaymentPreferences createMasterCredit(String cardNumber, String expirationDate, String cvvNumber, String customerName, long accountId);
 
     PaymentPreferences createSafePay(String safePayUsername, long accountId);
+
+    PaymentPreferences updateMasterCredit(String cardNumber, String expirationDate,
+                                          String cvvNumber, String customerName, long preferenceId);
+
+    PaymentPreferences updateSafePay(String safePayUsername, long preferenceId);
 }

@@ -8,6 +8,7 @@ import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.PaymentPreferences;
+import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.TokenJWT;
 import com.advantage.common.dto.AccountType;
 import com.advantage.accountsoap.model.Account;
@@ -20,10 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Qualifier("accountRepository")
 @Repository
@@ -83,7 +81,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * <br/>
      */
     @Override
-    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
+    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean allowOffersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
@@ -110,7 +108,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
                     if (getAppUserByLogin(loginName) == null) {
                         Country country = countryRepository.get(countryId);
-                        Account account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+                        Account account = null;
+                        try {
+                            account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         entityManager.persist(account);
 
                         //  New user created successfully.
@@ -147,7 +150,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
                                                Long countryId, String phoneNumber, String stateProvince, String cityName, String address,
-                                               String zipcode, String email, String agreeToReceiveOffersAndPromotions) {
+                                               String zipcode, String email, boolean agreeToReceiveOffersAndPromotions) {
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(countryId, "country id");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
@@ -190,8 +193,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
-        Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
+                                        String password, Long countryId, String phoneNumber, String stateProvince,
+                                        String cityName, String address, String zipcode, String email,
+                                        boolean allowOffersPromotion) {
+        Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber,
+                stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
         return new AccountStatusResponse(accountStatusResponse.isSuccess(),
                 accountStatusResponse.getReason(),
@@ -286,9 +293,14 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         }
 
         if ((!loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
-            if (account.getPassword().compareTo(loginPassword) != 0) {
-                account = addUnsuccessfulLoginAttempt(account);
-                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
+            AccountPassword accountPassword = new AccountPassword(loginUser, loginPassword);
+            try {
+                if (account.getPassword().compareTo(accountPassword.getEncryptedPassword()) != 0) {
+                    account = addUnsuccessfulLoginAttempt(account);
+                    return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             //  password is empty
@@ -414,8 +426,10 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public Account get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
+        Query query = entityManager.createQuery(hql);
 
-        return entityManager.find(Account.class, entityId);
+        return (Account) query.getSingleResult();
     }
 
     @Override
@@ -427,7 +441,11 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         Account account = get(accountId);
         if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
 
-        account.setPassword(newPassword);
+        try {
+            account.setPassword(newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         entityManager.persist(account);
 
         return new AccountStatusResponse(true, "Successfully", accountId);
@@ -451,6 +469,20 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                 preferences.getCvvNumber(),
                 preferences.getCustomerName());
 
+
+        return new AccountStatusResponse(true, "Successfully", accountId);
+    }
+
+    @Override
+    public AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId) {
+        Account account = get(accountId);
+        if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
+        PaymentPreferences p = account.getPaymentPreferences()
+                .stream()
+                .filter(x -> x.getId() == preferenceId)
+                .findFirst().get();
+        if(p == null)return new AccountStatusResponse(false, "Preference not fount", -1);
+        account.getPaymentPreferences().remove(p);
 
         return new AccountStatusResponse(true, "Successfully", accountId);
     }

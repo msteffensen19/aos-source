@@ -13,11 +13,13 @@ import javax.xml.bind.annotation.*;
                 "expirationDate",
                 "cvvNumber",
                 "safePayUsername",
+                "customerName",
+                "preferenceId"
         })
-@XmlRootElement(name = "PaymetnPreference", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "PaymentPreferencesDto", namespace = WebServiceConfig.NAMESPACE_URI)
 public class PaymentPreferencesDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String paymentMethod;
+    private int paymentMethod;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String cardNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -28,23 +30,27 @@ public class PaymentPreferencesDto {
     private String safePayUsername;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String customerName;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private long preferenceId;
 
     public PaymentPreferencesDto() {
     }
 
-    public PaymentPreferencesDto(String paymentMethod, String cardNumber, String expirationDate, String cvvNumber, String safePayUsername) {
+    public PaymentPreferencesDto(int paymentMethod, String cardNumber, String expirationDate, String cvvNumber,
+                                 String safePayUsername, long preferenceId) {
         this.paymentMethod = paymentMethod;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvvNumber = cvvNumber;
         this.safePayUsername = safePayUsername;
+        this.preferenceId = preferenceId;
     }
 
-    public String getPaymentMethod() {
+    public int getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(int paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
@@ -86,5 +92,13 @@ public class PaymentPreferencesDto {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public long getPreferenceId() {
+        return preferenceId;
+    }
+
+    public void setPreferenceId(long preferenceId) {
+        this.preferenceId = preferenceId;
     }
 }

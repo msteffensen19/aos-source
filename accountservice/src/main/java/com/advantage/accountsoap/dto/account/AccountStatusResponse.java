@@ -18,15 +18,15 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "AccountStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountStatusResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    boolean success;
+    private boolean success;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    long userId;        //  -1 = Invalid user login name
+    private long userId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    String reason;
+    private String reason;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    String token;
+    private String token;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    String sessionId;
+    private String sessionId;
 
     public AccountStatusResponse() {
     }

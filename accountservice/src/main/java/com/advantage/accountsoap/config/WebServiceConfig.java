@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.config;
 
+import com.advantage.common.Constants;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @EnableWs
 @Configuration
 @PropertySources(value = {
-        @PropertySource("classpath:/userservice-app.properties")})
+        @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP)})
 public class WebServiceConfig extends WsConfigurerAdapter {
     public static final String NAMESPACE_URI = "com.advantage.online.store.accountservice";
 
