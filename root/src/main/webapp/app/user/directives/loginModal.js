@@ -74,13 +74,13 @@ define(['./module'], function (directives) {
                             else {
                                 $scope.wrongFields = response;
                                 $timeout(function () { $scope.wrongFields = null; }, 4000);
-                                wrongFields();
                             }
 
                             return user;
                         });
                     }
                     /*=============================== end Sign in ===============================*/
+
 
 
 
@@ -147,14 +147,4 @@ function wellcome() {
         $("body").css("overflow", "scroll")
         $(".login").css("opacity", "1");
     });
-}
-
-
-function wrongFields(){
-
-    $("#response").css("display", "block");
-    setTimeout(function(){
-        $("#response").css("display", "none");
-    }, 2000);
-
 }

@@ -90,7 +90,7 @@ define(['./module'], function (services) {
                         firstTag = tagName;
                     }
                     else if(firstTag == tagName){
-                        var json = '{' + obj.replace(/\"/g, '\\"') + '}'
+                        var json = '{' + obj + '}'
                         wsdlToReturn.push(JSON.parse(json));
                         obj = "";
                     }
@@ -248,7 +248,7 @@ define(['./module'], function (services) {
             var deferred = $q.defer();
             var soapCallback = function (obj) {
                 if (obj) {
-                    deferred.resolve(obj);
+                    deferred.resolve(obj.length == 1 ? obj[0] : obj);
                 } else {
                     deferred.reject("An error has occurred.");
                 }

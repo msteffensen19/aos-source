@@ -14,7 +14,17 @@ define(['./module'], function (controllers) {
             }
 
             registerService.getAllCountries().then(function (response) {
-                s.countries = response;
+                var countries = [];
+                angular.forEach(response, function(country){
+                    countries.push({
+                        id: country.ID,
+                        isoName: country.ISONAME,
+                        name: country.NAME,
+                        phonePrefix: country.PHONEPREFIX,
+                    });
+                });
+                s.countries = countries;
+                l(s.countries)
             })
 
             s.model = {
@@ -47,6 +57,8 @@ define(['./module'], function (controllers) {
             });
 
             $("nav .navLinks").css("display", "none");
+
+            Helper.forAllPage();
 
         }]);
 
