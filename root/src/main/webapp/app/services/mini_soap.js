@@ -81,21 +81,29 @@ define(['./module'], function (services) {
 
                 var res = getResponseR($(xmlHttp.responseText));
                 var obj = "";
+                var wsdlToReturn = [];
+                var firstTag = undefined;
                 $.each(res, function () {
+                    var tagName = $(this).prop("tagName");
+                    if(!firstTag)
+                    {
+                        firstTag = tagName;
+                    }
+                    else if(firstTag == tagName){
+                        var json = '{' + obj.replace(/\"/g, '\\"') + '}'
+                        wsdlToReturn.push(JSON.parse(json));
+                        obj = "";
+                    }
                     if (obj != "") {
                         obj += ","
                     }
-                    var tagName = $(this).prop("tagName");
-                    //if(/[a-z]/.test(tagName))
-                    //{
-                    //    obj += '"' + tagName.toLowerCase().substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
-                    //}
-                    //else
-                    //{
-                        obj += '"' + tagName.substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
-                    //}
+                    obj += '"' + tagName.substring(tagName.indexOf(':') + 1) + '":"' + $(this).text() + '"';
                 });
-                callback(JSON.parse("{" + obj + "}"));
+                if(obj != '')
+                {
+                    wsdlToReturn.push(JSON.parse("{" + obj + "}"))
+                }
+                callback(wsdlToReturn);
             }
 
             SOAPClient._getXmlHttp = function () {
@@ -129,7 +137,7 @@ define(['./module'], function (services) {
                 return SOAPClient._sendSoapRequest(url, method, parameters, async, callback, wsdl);
             }
 
-            function getResponseR(response) {
+            function getResponseR(response, mainRoot) {
                 while (response.children().length != 0) {
                     response = response.children();
                 }
