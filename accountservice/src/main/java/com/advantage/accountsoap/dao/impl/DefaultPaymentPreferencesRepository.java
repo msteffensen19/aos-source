@@ -6,11 +6,13 @@ import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
+import com.advantage.accountsoap.util.JPAQueryHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Component
@@ -34,6 +36,14 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     }
 
     @Override
+    public PaymentPreferences delete(Long id) {
+        PaymentPreferences entity = get(id);
+        if (entity != null) delete(entity);
+
+        return entity;
+    }
+
+    @Override
     public List<PaymentPreferences> getAll() {
         List<PaymentPreferences> accounts = entityManager.createNamedQuery(PaymentPreferences.QUERY_GET_ALL,
                 PaymentPreferences.class)
@@ -45,7 +55,12 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     @Override
     public PaymentPreferences get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "payment preferences id");
-        return entityManager.find(PaymentPreferences.class, entityId);
+
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(PaymentPreferences.class, PaymentPreferences.FIELD_ID, entityId);
+
+        Query query = entityManager.createQuery(hql);
+        return (PaymentPreferences) query.getSingleResult();
+
     }
 
     @Override
@@ -72,6 +87,31 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
         Account account = accountService.getById(accountId);
         if (account == null) return null;
         paymentPreferences.setAccount(account);
+        entityManager.persist(paymentPreferences);
+
+        return paymentPreferences;
+    }
+
+    @Override
+    public PaymentPreferences updateMasterCredit(String cardNumber, String expirationDate,
+                                                 String cvvNumber, String customerName, long preferenceId) {
+        PaymentPreferences preferences = get(preferenceId);
+        if (preferences == null) return null;
+        preferences.setCardNumber(cardNumber);
+        preferences.setExpirationDate(expirationDate);
+        preferences.setCvvNumber(cvvNumber);
+        preferences.setCustomerName(customerName);
+
+        entityManager.persist(preferences);
+
+        return preferences;
+    }
+
+    @Override
+    public PaymentPreferences updateSafePay(String safePayUsername, long preferenceId) {
+        PaymentPreferences paymentPreferences = get(preferenceId);
+        if (paymentPreferences == null) return null;
+        paymentPreferences.setSafePayUsername(safePayUsername);
         entityManager.persist(paymentPreferences);
 
         return paymentPreferences;

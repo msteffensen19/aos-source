@@ -3,24 +3,27 @@ package com.advantage.accountsoap.services;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dto.account.AccountDto;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Account;
+import com.advantage.accountsoap.model.PaymentPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AccountService {
-
     @Autowired
     @Qualifier("accountRepository")
-    public AccountRepository accountRepository;
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private PaymentPreferencesService paymentPreferencesService;
 
     @Transactional
-    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final String allowOffersPromotion) {
+    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion) {
         return accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
     }
 
@@ -61,7 +64,8 @@ public class AccountService {
                     account.getZipcode(),
                     account.getPhoneNumber(),
                     account.getEmail(),
-                    account.getAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                    account.getDefaultPaymentMethodId(),
+                    account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                     account.getInternalUserBlockedFromLoginUntil(),
                     account.getInternalLastSuccesssulLogin()));
         }
@@ -79,8 +83,23 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, String allowOffersPromotion) {
-        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
+                                               Long countryId, String phoneNumber, String stateProvince, String cityName,
+                                               String address, String zipcode, String email, boolean allowOffersPromotion) {
+        return accountRepository.updateAccount(accountId,accountType, lastName, firstName, countryId, phoneNumber,
+                stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+    }
+
+    @Transactional
+    public AccountStatusResponse updateDefaultPaymentMethod(long accountId, Integer paymentMethodId) {
+        Account account = getById(accountId);
+        if(account == null || !paymentPreferencesService.isPaymentPreferencesExist(paymentMethodId)) {
+            return new AccountStatusResponse(false, "Data not valid", -1);
+        }
+
+        account.setDefaultPaymentMethodId(paymentMethodId);
+
+        return  new AccountStatusResponse(true, "", accountId);
     }
 
     @Transactional
@@ -91,5 +110,29 @@ public class AccountService {
     @Transactional
     public AccountStatusResponse changePassword(long accountId, String newPassword) {
         return accountRepository.changePassword(accountId, newPassword);
+    }
+
+    @Transactional
+    public List<PaymentPreferencesDto> getPaymentPreferences(long accountId) {
+        Account account = accountRepository.get(accountId);
+        if(account == null) return null;
+
+        return fillPaymentPreferencesDto(account.getPaymentPreferences());
+    }
+
+    @Transactional
+    public AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId) {
+        return accountRepository.removePaymentPreferences(accountId, preferenceId);
+    }
+
+    private List<PaymentPreferencesDto> fillPaymentPreferencesDto(Set<PaymentPreferences> paymentPreferences) {
+        List<PaymentPreferencesDto> dtos = new ArrayList<>();
+        for (PaymentPreferences item : paymentPreferences) {
+            dtos.add(new PaymentPreferencesDto(item.getPaymentMethod(),
+                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername(),
+                    item.getId()));
+        }
+
+        return dtos;
     }
 }

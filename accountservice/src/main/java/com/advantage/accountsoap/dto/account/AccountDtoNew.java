@@ -18,9 +18,9 @@ import javax.xml.bind.annotation.*;
                 "countryIsoName",
                 "stateProvince",
                 "cityName",
-                "address",
+                "homeAddress",
                 "zipcode",
-                "phoneNumber",
+                "mobilePhone",
                 "email",
                 "defaultPaymentMethodId",
                 "allowOffersPromotion",
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.*;
                 "internalLastSuccesssulLogin"
         })
 @XmlRootElement(name = "AccountDto", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AccountDto {
+public class AccountDtoNew {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long id;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -51,11 +51,11 @@ public class AccountDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String cityName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String address;
+    private String homeAddress;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String zipcode;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String phoneNumber;
+    private String mobilePhone;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String email;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -69,28 +69,28 @@ public class AccountDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long internalLastSuccesssulLogin;   //  Managed Internally
 
-    public AccountDto() {
+    public AccountDtoNew() {
     }
 
-    public AccountDto(long id,
-                      String lastName,
-                      String firstName,
-                      String loginName,
-                      Integer accountType,
-                      Long countryId,
-                      String countryName,
-                      String countryIsoName,
-                      String stateProvince,
-                      String cityName,
-                      String address,
-                      String zipcode,
-                      String phoneNumber,
-                      String email,
-                      long defaultPaymentMethodId,
-                      boolean allowOffersPromotion,
-                      int internalUnsuccessfulLoginAttempts,
-                      long internalUserBlockedFromLoginUntil,
-                      long internalLastSuccesssulLogin) {
+    public AccountDtoNew(long id,
+                         String lastName,
+                         String firstName,
+                         String loginName,
+                         Integer accountType,
+                         Long countryId,
+                         String countryName,
+                         String countryIsoName,
+                         String stateProvince,
+                         String cityName,
+                         String address,
+                         String zipcode,
+                         String phoneNumber,
+                         String email,
+                         long defaultPaymentMethodId,
+                         boolean allowOffersPromotion,
+                         int internalUnsuccessfulLoginAttempts,
+                         long internalUserBlockedFromLoginUntil,
+                         long internalLastSuccesssulLogin) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -101,9 +101,9 @@ public class AccountDto {
         this.countryIsoName = countryIsoName;
         this.stateProvince = stateProvince;
         this.cityName = cityName;
-        this.address = address;
+        this.homeAddress = address;
         this.zipcode = zipcode;
-        this.phoneNumber = phoneNumber;
+        this.mobilePhone = phoneNumber;
         this.email = email;
         this.defaultPaymentMethodId = defaultPaymentMethodId;
         this.allowOffersPromotion = allowOffersPromotion;
@@ -193,11 +193,11 @@ public class AccountDto {
     }
 
     public String getAddress() {
-        return address;
+        return homeAddress;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.homeAddress = address;
     }
 
     public String getZipcode() {
@@ -209,11 +209,11 @@ public class AccountDto {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return mobilePhone;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.mobilePhone = phoneNumber;
     }
 
     public String getEmail() {

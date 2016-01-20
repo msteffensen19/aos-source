@@ -1,22 +1,45 @@
 package com.advantage.accountsoap.dto.account;
 
-public class AccountConfigurationResponseStatus {
-    private int numberOfFailedLoginAttemptsBeforeBlocking;
-    private long loginBlockingIntervalInMilliSeconds;
-    private boolean emailAddressInLogin;
-    private int productInStockDefaultValue;
+import com.advantage.accountsoap.config.WebServiceConfig;
 
-    public AccountConfigurationResponseStatus() {
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "",
+        namespace = WebServiceConfig.NAMESPACE_URI,
+        propOrder = {
+                "numberOfFailedLoginAttemptsBeforeBlocking",
+                "loginBlockingIntervalInMilliSeconds",
+                "emailAddressInLogin",
+                "productInStockDefaultValue",
+                "userSecondWsdl"
+        })
+@XmlRootElement(name = "AccountConfigurationStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
+public class AccountConfigurationStatusResponse {
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private int numberOfFailedLoginAttemptsBeforeBlocking;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private long loginBlockingIntervalInMilliSeconds;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private boolean emailAddressInLogin;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private int productInStockDefaultValue;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private boolean userSecondWsdl;
+
+    public AccountConfigurationStatusResponse() {
     }
 
-    public AccountConfigurationResponseStatus(int numberOfFailedLoginAttemptsBeforeBlocking,
+    public AccountConfigurationStatusResponse(int numberOfFailedLoginAttemptsBeforeBlocking,
                                               long loginBlockingIntervalInMilliSeconds,
                                               boolean emailAddressInLogin,
-                                              int productInStockDefaultValue) {
+                                              int productInStockDefaultValue,
+                                              boolean userSecondWsdl) {
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
         this.emailAddressInLogin = emailAddressInLogin;
         this.productInStockDefaultValue = productInStockDefaultValue;
+        this.userSecondWsdl = userSecondWsdl;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -49,5 +72,13 @@ public class AccountConfigurationResponseStatus {
 
     public void setProductInStockDefaultValue(int productInStockDefaultValue) {
         this.productInStockDefaultValue = productInStockDefaultValue;
+    }
+
+    public boolean isUserSecondWsdl() {
+        return userSecondWsdl;
+    }
+
+    public void setUserSecondWsdl(boolean userSecondWsdl) {
+        this.userSecondWsdl = userSecondWsdl;
     }
 }

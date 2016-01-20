@@ -1,5 +1,6 @@
 package com.advantage.accountsoap;
 
+import com.advantage.common.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.PropertySources;
 @Configuration
 @ComponentScan
 @PropertySources({
-		@PropertySource("classpath:/userservice-app.properties"),
+		@PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
 		@PropertySource("classpath:/db.properties")})
 public class AccountserviceApplication {
 
