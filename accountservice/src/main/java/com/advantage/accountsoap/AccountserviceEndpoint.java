@@ -72,6 +72,34 @@ public class AccountserviceEndpoint {
         return new GetAccountByIdResponse(dto);
     }
 
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdNewRequest")
+    @ResponsePayload
+    public GetAccountByIdNewResponse getAccount(@RequestPayload GetAccountByIdNewRequest accountId) {
+        Account account = accountService.getById(accountId.getId());
+        if (account == null) return null;
+        AccountDtoNew dto = new AccountDtoNew(account.getId(),
+                account.getLastName(),
+                account.getFirstName(),
+                account.getLoginName(),
+                account.getAccountType(),
+                account.getCountry().getId(),
+                account.getCountry().getName(),
+                account.getCountry().getIsoName(),
+                account.getStateProvince(),
+                account.getCityName(),
+                account.getAddress(),
+                account.getZipcode(),
+                account.getPhoneNumber(),
+                account.getEmail(),
+                account.getDefaultPaymentMethodId(),
+                account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                account.getInternalUserBlockedFromLoginUntil(),
+                account.getInternalLastSuccesssulLogin());
+
+        return new GetAccountByIdNewResponse(dto);
+    }
+
+
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
     @ResponsePayload
     public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
