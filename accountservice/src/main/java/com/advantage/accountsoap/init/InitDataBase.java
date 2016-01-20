@@ -1,6 +1,5 @@
 package com.advantage.accountsoap.init;
 
-import com.advantage.accountsoap.dto.YesNoReply;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;

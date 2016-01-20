@@ -7,10 +7,7 @@ import com.advantage.accountsoap.dto.country.*;
 import com.advantage.accountsoap.dto.address.*;
 import com.advantage.accountsoap.dto.payment.*;
 import com.advantage.accountsoap.model.Account;
-import com.advantage.accountsoap.services.AccountService;
-import com.advantage.accountsoap.services.AddressService;
-import com.advantage.accountsoap.services.CountryService;
-import com.advantage.accountsoap.services.PaymentPreferencesService;
+import com.advantage.accountsoap.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -32,6 +29,9 @@ public class AccountserviceEndpoint {
 
     @Autowired
     private PaymentPreferencesService paymentPreferencesService;
+
+    @Autowired
+    private AccountConfigurationService accountConfigurationService;
 
     //region Account
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
@@ -313,6 +313,13 @@ public class AccountserviceEndpoint {
     //endregion
 
 
+    //region Configuration
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountConfigurationStatusRequest")
+    @ResponsePayload
+    public AccountConfigurationStatusResponse getConfigurationParameters() {
+        return accountConfigurationService.getAllConfigurationParameters();
+    }
+    //endregion
 
 
     /*protected HttpServletRequest getHttpServletRequest() {
