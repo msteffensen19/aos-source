@@ -15,7 +15,35 @@
         <div id="userDetails">
             <div>
                 <div icon-user ></div>
-                <!--<div icon-phone ></div>-->
+                <label>{{user.firstName}} {{user.lastName}}</label>
+            </div>
+            <div>
+                <div icon-home ></div>
+                <label>{{ user.address }}</label>
+                <label>{{ user.cityName }}</label>
+                <label>{{ user.stateProvince }}</label>
+            </div>
+            <div>
+                <div icon-phone ></div>
+                <label>{{ user.phoneNumber }}</label>
+            </div>
+        </div>
+        <div class="blueLink">
+            <a data-ng-click="editMode = true">{{ 'Edit_shipping_Details' | translate }}</a>
+            <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
+        </div>
+        <div>
+            <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
+        </div>
+
+
+    </div>
+
+    <div id="userEditSection" ng-show="firstTag && editMode">
+
+        <div id="userEditDetails">
+            <div>
+                <div icon-user ></div>
                 <label>{{user.firstName}} {{user.lastName}}</label>
             </div>
             <div>
@@ -34,14 +62,17 @@
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
-            <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
+            <button data-ng-click="editMode = false" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
         </div>
+
+
     </div>
 
-
-
-
     <!-- END USER DETAILS SECTION-->
+
+
+
+
 
 
     <!-- EDIT EDIT PAYMENT SECTION -->
@@ -60,6 +91,9 @@
                     <img src="css/images/Master_credit.png" alt="Master credit" />
                 </div>
             </div>
+
+
+
 
             <!---------------------------- SAFEPAY SECCION ---------------------------->
 
@@ -123,8 +157,10 @@
 
             </div>
 
-
             <!-------------------------- END SAFEPAY SECCION -------------------------->
+
+
+
 
 
 
