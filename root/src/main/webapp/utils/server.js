@@ -214,7 +214,10 @@ var server = {
     service: {
 
         getConfiguration : function (){
-            return serviceKey + "/clientConfiguration";
+            return {
+                path: wsdlPath,
+                method: 'AccountConfigurationStatusRequest'
+            }
         },
 
     }

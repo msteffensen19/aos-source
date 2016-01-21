@@ -4,7 +4,7 @@
 
 @import "icons/cart.css";
 @import "icons/home.css";
-@import "icons/MagnifyingGlass.css";
+@import "icons/magnifyingGlass.css";
 @import "icons/phone.css";
 @import "icons/user.css";
 
@@ -28,8 +28,7 @@
 @import "order/orderPayment/userAreLogin.css";
 @import "order/orderPayment/orderPaymentSuccess.css";
 
-
-#png{
+#png {
     position: absolute;
     z-index: 90000;
     top:0;

@@ -90,6 +90,18 @@
                 </a>
             </li>
             <li>
+                <a class="img">
+                    <span ng-show="userCookie.response" class="hi-user containMiniTitle" >
+                        {{userCookie.name}}
+                        <div class="mini-title">
+                            <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
+                            <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
+                        </div>
+                    </span>
+                    <div icon-user ></div>
+                </a>
+            </li>
+            <li>
                 <a class="img" id="openSearch">
                     <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
                 </a>

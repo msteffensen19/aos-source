@@ -1,0 +1,31 @@
+.iconUser{
+    position: relative;
+    width: 24px;
+    height: 24px;
+    background-color: lime;
+    display: block;
+}
+.iconUser:before, .iconUser:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 20;
+    display: block;
+    border: 2px solid #313131;
+}
+.iconUser:before{
+    top:1px;
+    width: 7px;
+    height: 9px;
+    border-radius: 50%;
+}
+.iconUser:after{
+    bottom: 0;
+    width: 17px;
+    height: 7px;
+    border-radius: 10px;
+    border-top: 2px none #313131;
+    /*box-shadow: 0 0 0 2px #313131 inset;*/
+}

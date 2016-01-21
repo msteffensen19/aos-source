@@ -14,14 +14,33 @@ define(['./module'], function (services) {
 
             function getConfiguration() {
 
-                var request = $http({
-                    "method": "get",
-                    "url": server.service.getConfiguration(),
-                });
-                return ( request.then(
-                    responseService.handleSuccess,
-                    responseService.handleError
-                ));
+                //var request = $http({
+                //    "method": "get",
+                //    "url": server.service.getConfiguration(),
+                //});
+                //return ( request.then(
+                //    responseService.handleSuccess,
+                //    responseService.handleError
+                //));
+
+                var defer = $q.defer();
+                var params = server.service.getConfiguration();
+                mini_soap.post(params.path, params.method).
+                then(function (res) {
+                        defer.resolve({
+                            numberOfFiledLoginAttemptsBeforeBlocking: res.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING,
+                            loginBlockingInterval: res.LOGINBLOCKINGINTERVALINMILLISECONDS,
+                            emailAddressInLogin : res.EMAILADDRESSINLOGIN,
+                            productInStockDefaultValue : res.PRODUCTINSTOCKDEFAULTVALUE,
+                            userSecondWsdl : res.USERSECONDWSDL,
+                        });
+                    },
+                    function (response) {
+                        console.log(response);
+                        defer.reject("Request failed! ");
+                    });
+
+                return defer.promise;
 
             }
 
@@ -29,7 +48,6 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.account.login();
-                console.log(params)
                 mini_soap.post(params.path, params.method, user).
                 then(function (response) {
                         console.log(response)

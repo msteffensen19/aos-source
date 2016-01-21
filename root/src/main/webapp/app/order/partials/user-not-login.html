@@ -52,12 +52,11 @@
 
         <label ng-class="{ invalid : wrongFields.success == 'false' }" >{{ wrongFields.reason }}</label>
 
-
     </sec-validate>
 </div>
 <div id="newClient" class="noUserSection">
     <div class="cover">
-        <div data-ng-class="{ noEmail : config.emailAddressInLogin }">
+        <div data-ng-class="{ noEmail : !config.emailAddressInLogin }">
             <label class="roboto-medium" translate="New_client" ></label>
             <p>{{'Create_your_account_easily' | translate}}</p>
         </div>
@@ -68,5 +67,9 @@
     </div>
 </div>
 </div>
+
+
+
+
 
 

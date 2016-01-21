@@ -30,6 +30,9 @@ define(['./module'], function (controllers) {
 
             /* Get configuration */
             userService.getConfiguration().then(function(response){
+                console.log("getConfiguration")
+                console.log(response)
+                console.log("getConfiguration")
                 $scope.config = response;
                 console.log(response)
             });
