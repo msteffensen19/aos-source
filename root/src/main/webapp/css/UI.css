@@ -19,6 +19,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 
 
+
+.iconCss{
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .a *{
     margin: 0;
     padding: 0;
@@ -233,17 +241,16 @@ h3.roboto-regular{
     vertical-align: top;
 }
 
-.option input[type=checkbox]:not(:checked) {
+.option input[type=checkbox] {
     width: 15px;
     height: 15px;
+    background-color: #54d3ad;
+}
+.option input[type=checkbox]:not(:checked) {
     background-image: url("");
-    border:solid 1px #54d3ad;
 }
 
 .option input[type=checkbox]:checked {
-    width: 20px;
-    height: 20px;
-    top: 2px;
     background-image: url("images/checkbox-checked.png");
 }
 

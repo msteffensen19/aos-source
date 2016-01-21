@@ -4,7 +4,6 @@
     width: 24px;
     height: 24px;
     display: inline-block;
-    transform: rotate(-3deg);
     top: 1px;
 }
 
@@ -35,7 +34,6 @@
     background-color: #313131;
     transform: rotate(45deg);
 }
-
 
 .iconMagnifyingGlass.selected:before {
     border: 2px solid #55f024;

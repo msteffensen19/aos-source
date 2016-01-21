@@ -104,21 +104,17 @@
     font-size: 16px;
 }
 
-#searchSection > div > div > span > img{
+#searchSection > div > div > span > .img{
     transform: scale(0.8);
     display: none;
-    float: right;
     position: absolute;
+    top: 13px;
+    right: 0px;
     cursor: pointer;
 }
 
-#searchSection > div > div > img{
-    padding: 8px;
-    height: 27px;
-    width: 27px;
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
+#searchSection > div > div > .iconCss{
+    margin: 8px;
 }
 
 #searchSection .searchPopUp > div h3{

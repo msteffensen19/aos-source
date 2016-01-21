@@ -66,12 +66,6 @@
 <header ng-show="welcome" data-ng-cloak>
     <nav>
         <ul class="roboto-light desktop-handler">
-            <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()" >
-                <a class="img" data-ng-click="redirect('/shoppingCart')" >
-                    <img id="mainCart" src="css/images/Cart.jpg"/>
-                    <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
-                </a>
-            </li>
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
                 <a class="img" data-ng-click="redirect('/shoppingCart')" >
                     <div icon-cart ></div>
@@ -82,11 +76,6 @@
                         <tool-tip-cart id="toolTipCart"></tool-tip-cart>
                     </li>
                 </ul>
-            </li>
-            <li>
-                <a class="img">
-                    <img data-ng-click="openSearchProducts()" src="css/images/User.jpg" />
-                </a>
             </li>
             <li>
                 <a class="img">
@@ -101,12 +90,7 @@
                 </a>
             </li>
             <li>
-                <a class="img" id="openSearch">
-                    <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
-                </a>
-            </li>
-            <li>
-                <a class="img">
+                <a class="img" data-ng-click="openSearchProducts()" >
                     <div icon-magnifying-glass ></div>
                 </a>
                 <tool-tip-search></tool-tip-search>

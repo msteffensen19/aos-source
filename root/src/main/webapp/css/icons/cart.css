@@ -27,7 +27,7 @@
 
 .iconCartTop:before{
     background-color: #313131;
-    height: 3px;
+    height: 2px;
     width: 100%;
     content: "";
     position: absolute;
@@ -53,10 +53,9 @@
     width: 2px;
     border-top: solid 2px #313131;
     border-right: solid 3px #313131;
-    left: 0;
-    top: -1px;
+    left: -1px;
+    top: 0;
     transform: skew(16deg);
-
 }
 
 .iconCartBottom{
