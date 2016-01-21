@@ -19,16 +19,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.2</version>
-                        <configuration>
-                            <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <webResources>
-                                <resource>
-                                    <directory>${basedir}/target</directory>
-                                </resource>
-                            </webResources>
-                        </configuration>
                     </plugin>
                     <!--prod plugins ^^^-->
                 </plugins>
@@ -37,22 +27,6 @@
     </profiles>
     <build>
         <finalName>SafePay</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xls</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.xls</exclude>
-                </excludes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>

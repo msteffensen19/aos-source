@@ -20,12 +20,6 @@
                 <resources.source.path>prod</resources.source.path>
             </properties>
         </profile>
-        <!--<profile>-->
-        <!--<id>KUKU</id>-->
-        <!--<properties>-->
-        <!--<resources.source.path>KUKU</resources.source.path>-->
-        <!--</properties>-->
-        <!--</profile>-->
         <profile>
             <id>development</id>
             <properties>

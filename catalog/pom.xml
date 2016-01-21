@@ -44,16 +44,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.2</version>
-                        <configuration>
-                            <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <webResources>
-                                <resource>
-                                    <directory>${basedir}/target</directory>
-                                </resource>
-                            </webResources>
-                        </configuration>
                     </plugin>
                     <!--prod plugins ^^^-->
                 </plugins>
@@ -62,45 +52,30 @@
         <profile>
             <id>development</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>sql-maven-plugin</artifactId>
+                            <configuration>
+                                <!--suppress MavenModelInspection -->
+                                <url>
+                                    ${db.url.prefix}://${catalog.hibernate.db.url.host}:${catalog.hibernate.db.url.port}/postgres
+                                </url>
+                                <!--suppress MavenModelInspection -->
+                                <username>${catalog.hibernate.db.login}</username>
+                                <!--suppress MavenModelInspection -->
+                                <password>${catalog.hibernate.db.password}</password>
+                                <sqlCommand>create database "${catalog.hibernate.db.name}"</sqlCommand>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <!--run sql-->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
-                        <version>1.5</version>
-                        <dependencies>
-                            <!-- specify the dependent jdbc driver here -->
-                            <dependency>
-                                <groupId>org.postgresql</groupId>
-                                <artifactId>postgresql</artifactId>
-                                <version>${postgres.driver.version}</version>
-                            </dependency>
-                        </dependencies>
-                        <executions>
-                            <execution>
-                                <id>create-db</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>execute</goal>
-                                </goals>
-                                <configuration>
-                                    <!--suppress MavenModelInspection -->
-                                    <driver>${hibernate.db.driver_classname}</driver>
-                                    <!--suppress MavenModelInspection -->
-                                    <url>
-                                        ${db.url.prefix}://${catalog.hibernate.db.url.host}:${catalog.hibernate.db.url.port}/postgres
-                                    </url>
-                                    <!--suppress MavenModelInspection -->
-                                    <username>${catalog.hibernate.db.login}</username>
-                                    <!--suppress MavenModelInspection -->
-                                    <password>${catalog.hibernate.db.password}</password>
-                                    <autocommit>true</autocommit>
-                                    <sqlCommand>create database "${catalog.hibernate.db.name}"</sqlCommand>
-                                    <!-- ignore error when database already exists -->
-                                    <onError>continue</onError>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -108,71 +83,16 @@
     </profiles>
     <build>
         <finalName>catalog</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xls</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.xls</exclude>
-                </excludes>
-                <filtering>true</filtering>
-            </resource>
-            <!--shared resources-->
-            <resource>
-                <directory>${project.build.directory}/generated-resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <!--shared resources-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-shared-resources</id>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
-                            <includeArtifactIds>shared_resources</includeArtifactIds>
-                            <includeGroupIds>${project.groupId}</includeGroupIds>
-                            <excludeTransitive>true</excludeTransitive>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <!--read properties from zip-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
-                <executions>
-                    <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>${project.build.directory}/generated-resources/services.properties</file>
-                                <file>
-                                    ${project.build.directory}/generated-resources/internal_config_for_env.properties
-                                </file>
-                                <file>${project.build.directory}/generated-resources/global.properties</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
