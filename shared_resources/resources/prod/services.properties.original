@@ -3,11 +3,11 @@ account.hibernate.db.url.port=5432
 account.hibernate.db.name=adv-account
 account.hibernate.db.login=postgres
 account.hibernate.db.password=admin
-account.service.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+account.service.url.host=www.advantageonlineshopping.com
 account.service.url.port=80
 account.service.url.suffix=account/api/v1
 
-account.soapservice.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+account.soapservice.url.host=www.advantageonlineshopping.com
 account.soapservice.url.port=80
 account.soapservice.url.suffix=accountservice
 account.soapservice.url.wsdl=/accountservice.wsdl
@@ -17,7 +17,7 @@ catalog.hibernate.db.url.port=5432
 catalog.hibernate.db.name=adv-catalog
 catalog.hibernate.db.login=postgres
 catalog.hibernate.db.password=admin
-catalog.service.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+catalog.service.url.host=www.advantageonlineshopping.com
 catalog.service.url.port=80
 catalog.service.url.suffix=catalog/api/v1
 
@@ -26,24 +26,24 @@ order.hibernate.db.url.port=5432
 order.hibernate.db.name=adv-order
 order.hibernate.db.login=postgres
 order.hibernate.db.password=admin
-order.service.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+order.service.url.host=www.advantageonlineshopping.com
 order.service.url.port=80
 order.service.url.suffix=order/api/v1
 
-service.service.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+service.service.url.host=www.advantageonlineshopping.com
 service.service.url.port=80
 service.service.url.suffix=account/service/api/v1
 
-mastercredit.service.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+mastercredit.service.url.host=www.advantageonlineshopping.com
 mastercredit.service.url.port=80
 mastercredit.service.url.suffix=MasterCredit/api/v1
 
-shipex.soapservice.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+shipex.soapservice.url.host=www.advantageonlineshopping.com
 shipex.soapservice.url.port=80
 shipex.soapservice.url.suffix=ShipEx
 shipex.soapservice.url.wsdl=/shipex.wsdl
 
-safepay.service.url.host=ec2-54-175-66-142.compute-1.amazonaws.com
+safepay.service.url.host=www.advantageonlineshopping.com
 safepay.service.url.port=80
 safepay.service.url.suffix=SafePay/api/v1
 #example order.hibernate.db.url=jdbc:postgresql://localhost:5432/adv-root?loglevel=0
