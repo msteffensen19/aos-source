@@ -86,19 +86,7 @@
                             <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
                         </div>
                     </span>
-                    <img data-ng-class="{ login : userCookie.response }" ng-click="login()" src="css/images/User.jpg" />
-                </a>
-            </li>
-            <li>
-                <a class="img">
-                    <span ng-show="userCookie.response" class="hi-user containMiniTitle" >
-                        {{userCookie.name}}
-                        <div class="mini-title">
-                            <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
-                            <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
-                        </div>
-                    </span>
-                    <div icon-user ></div>
+                    <div icon-user data-ng-class="{ selected : userCookie.response }" ng-click="login()" ></div>
                 </a>
             </li>
             <li>
@@ -106,6 +94,12 @@
                     <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
                 </a>
                 <tool-tip-search></tool-tip-search>
+            </li>
+            <li>
+                <a class="img">
+                    <div icon-magnifying-glass ></div>
+                    <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
+                </a>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>

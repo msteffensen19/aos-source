@@ -121,6 +121,7 @@ nav ul li {
     display: inline-block;
     vertical-align: top;
 }
+
 nav ul li > ul{
     font-size: 0;
 }
@@ -175,18 +176,13 @@ nav .img > img {
     height: 25px;
 }
 
-nav .img > img.login {
-    opacity: 0.5 !important;
-    z-index: 0 ;
-}
-
 nav .img > .hi-user{
     font-size: 15px;
-        position: relative;
+    position: relative;
     top: -9px;
     padding: 0;
     left:-7px;
-    margin: -13px;
+    margin: 0;
     font-weight: 900;
     z-index: 1;
 }

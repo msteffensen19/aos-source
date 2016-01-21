@@ -16,7 +16,8 @@ define([
 './scrollToTop',
 './Card_Number_4Digits',
 './icon-phone',
-'./icon-user'
+'./icon-user',
+'./icon-magnifying-glass',
 ],
 
 function() {});
