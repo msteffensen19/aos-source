@@ -24,7 +24,6 @@
 
 #product-image > figure > img{
     width: 100%;
-    background-color: #f9f9f9;
     margin-bottom: 20px;
 }
 
@@ -51,7 +50,6 @@
     text-align: center;
     width: calc(100% -  15px);
     box-sizing: border-box;
-    background-color: #f9f9f9;
 }
 
 #selectors{

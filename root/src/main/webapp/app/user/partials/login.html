@@ -25,9 +25,13 @@
                        ng-class="{bottomLine : config.emailAddressInLogin}" autocomplete="off" >
             </span>
 
+
+            <!--ng-class="{bottomLine : config.emailAddressInLogin}"-->
+            <!--ng-if="config.emailAddressInLogin"-->
+
+
             <span class="animPlaceholderUp"
-                  ng-class="{bottomLine : config.emailAddressInLogin}"
-                  ng-if="config.emailAddressInLogin" >
+                   >
                 <input type="text" autocomplete="off"
                        ng-model="loginUser.email" placeholder="{{'Email' | translate }}" >
             </span>

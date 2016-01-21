@@ -25,8 +25,21 @@
                     </label>
                 </a>
             </div>
+
+
+
+
+
+
+
+
+
+
+
             <div>
-                <h3 class="roboto-medium" >{{ 'TOP' | translate }} {{ categoryName }} {{ 'RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
+                <h3 class="roboto-medium" >{{ 'TOP' | translate }} {{ 'RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"
+                    <p style="font-size: 11px !important; font-weight: 300 !important;" > {{ categoryName }} </p>
+                </h3>
                 <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"
                    class="roboto-medium viewAll"></a>
                 <a class="product" href="#/product/{{product.productId}}"

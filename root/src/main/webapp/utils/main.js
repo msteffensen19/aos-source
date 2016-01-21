@@ -48,6 +48,7 @@ Helper.getRandom = function(length){
 
 Helper.checkPagePossitions = function(){
 
+    l(pagesPossition)
     if ($('.pages').length > 0) {
 
         if (pagesPossition < $('body').scrollTop() + $('header').height()) {
@@ -104,8 +105,6 @@ $(document).on({
 
     ready: function() {
 
-
-
         $(document).on("click", ".containMiniTitle", function () {
             $(this).find(".mini-title").fadeToggle(300);
         });
@@ -113,8 +112,12 @@ $(document).on({
 
         $(window).on({
         resize: _resize,
+        scroll: _scroll,
         });
 
+        function  _scroll(){
+            Helper.checkPagePossitions();
+        }
 
         _resize();
         function _resize() {
