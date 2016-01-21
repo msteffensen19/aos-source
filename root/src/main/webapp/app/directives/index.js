@@ -18,6 +18,7 @@ define([
 './icon-phone',
 './icon-user',
 './icon-magnifying-glass',
+'./icon-cart',
 ],
 
 function() {});
