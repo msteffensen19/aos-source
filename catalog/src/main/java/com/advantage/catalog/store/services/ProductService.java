@@ -13,6 +13,7 @@ import com.advantage.catalog.store.model.product.ImageAttribute;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.util.ArgumentValidationHelper;
+import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,6 +157,10 @@ public class ProductService {
         String imageManagementRepository =
                 environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
         try {
+            if(!FileSystemHelper.extractFileExtension(file.getOriginalFilename()).equalsIgnoreCase("jpg") ){
+                return new ImageUrlResponseDto("-1", false, "file type should be .JPG only");
+            }
+
             byte[] bytes = file.getBytes();
             String originalFileName = file.getOriginalFilename();
             ImageManagement imageManagement = ImageManagementAccess.getImageManagement(
