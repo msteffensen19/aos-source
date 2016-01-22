@@ -11,7 +11,6 @@ define(['./module'], function (controllers) {
 
             s.checkCart();
 
-
             ///// PAYMENT SUCCESS ////
             s.paymentEnd = false;
             s.$on('updatePaymentEnd', function (event, args) {

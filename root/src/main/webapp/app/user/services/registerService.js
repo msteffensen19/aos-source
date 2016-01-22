@@ -23,7 +23,16 @@ define(['./module'], function (services) {
                     console.log("response")
                     console.log(response)
                     console.log("response")
-                    defer.resolve(response);
+                    var countries = [];
+                    angular.forEach(response, function(country){
+                        countries.push({
+                            id: country.ID,
+                            isoName: country.ISONAME,
+                            name: country.NAME,
+                            phonePrefix: country.PHONEPREFIX,
+                        });
+                    });
+                    defer.resolve(countries);
                 },
                 function(response){
                     console.log(response);

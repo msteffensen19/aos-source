@@ -29,17 +29,24 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'E',
                 require: 'secValidate',
-                scope: {},
+                scope: {
+                    invokeWhenReady : '&'
+                },
                 controller: ['$scope', '$rootScope', function(s, $rootScope){
 
                     this.addId = function(id){
                         this.id = id;
                     }
 
+                    this.invokeOutFunctionWhenSecValidateReady = function(outFunction){
+
+                        var invalid = this.getInvalidItems();
+                        outFunction({ invalid : invalid});
+                    }
+
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
-                        l("s.invalidItems_length")
-                        l(s.invalidItems)
+                        console.log(s.invalidItems)
                         $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : s.invalidItems.length });
                         return s.invalidItems.length  > 0;
                     }
@@ -82,6 +89,10 @@ define(['./module'], function (directives) {
                     {
                         e.attr('id', a.idAttr);
                         ctrl.addId(a.idAttr);
+                    }
+                    if(s.invokeWhenReady)
+                    {
+                        ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
                     }
                 }
             }
@@ -366,6 +377,11 @@ define(['./module'], function (directives) {
                         me.setId(a.idAttr)
                     },
                     post: function(s){
+                        if(s.modelAttr != '' && s.modelAttr != undefined){
+                            $timeout(function(){
+                                s.inputFocus(s.id);
+                            }, 200)
+                        }
                         $timeout(function(){
                             s.inputBlur(s.id, true);
                         }, 500)

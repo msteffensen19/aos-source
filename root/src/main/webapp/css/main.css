@@ -83,13 +83,14 @@ div.mobile-btn-handler span{
 font-size: 0;
 }
 
-#mobile-section img{
+#mobile-section .img{
     padding: 30px;
     background-color: white;
     opacity: 0.6;
+    display: block;
 }
 
-#mobile-section img:hover{
+#mobile-section .img:hover{
     opacity: 1;
 
 }

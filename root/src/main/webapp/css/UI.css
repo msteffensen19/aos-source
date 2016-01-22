@@ -242,8 +242,8 @@ h3.roboto-regular{
 }
 
 .option input[type=checkbox] {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     background-color: #54d3ad;
 }
 .option input[type=checkbox]:not(:checked) {
@@ -251,7 +251,9 @@ h3.roboto-regular{
 }
 
 .option input[type=checkbox]:checked {
-    background-image: url("images/checkbox-checked.png");
+    background-image: url("images/Check.png");
+    background-position: 56% 44%;
+    background-size: 73% 55%;
 }
 
 .option span{
@@ -273,42 +275,47 @@ h3.roboto-regular{
 }
 .mini-title {
     position: absolute;
-    top:52px;
+    top:45px;
     left:0px;
     right:0px;
     z-index: 100;
-    border-radius: 4px;
-    background-color: #00b3ee;
-    box-shadow: 0 0 4px rgba(100, 100, 100, .5);
+    border-radius: 1px;
+    background-color: #ffffff;
+    box-shadow: 0 0 1px 2px rgba(100, 100, 100, 0.82);
     padding: 2px;
+    padding-top: 18px;
+    padding-bottom: 10px;
     text-align: center;
     display: none;
+    width: 150px;
+
 }
 
 .mini-title:before {
     content: "";
     position: absolute;
-    width: 0px;
-    height: 0px;
     z-index: 101;
     left: 0;
     right: 0;
     margin:0 auto;
-    top:-10px;
-    border-left: solid 10px transparent;
-    border-right: solid 10px transparent;
-    border-bottom: solid 10px #00b3ee;
+    top:-12px;
+    background-color: white;
+    box-shadow: 0 0 1px 2px rgba(100, 100, 100, 0.82);
+    width: 30px;
+    height: 20px;
 }
 
 .mini-title .option{
-    display: block;
-    color:white;
-    padding: 5px 0 ;
+    display: inline-block;
+    color: #313131;
+    padding: 5px;
     font-size: 14px;
+    text-decoration: none;
+    border-bottom: solid 1px white;
 }
 
 .mini-title .option:hover{
-    text-decoration: underline;
+    border-bottom: solid 1px #313131;
 }
 
 .display{

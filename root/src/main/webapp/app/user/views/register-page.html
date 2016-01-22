@@ -95,15 +95,15 @@
 
                         <div>
                             <h3 translate="ADDRESS"></h3>
-                                <sec-input  id-attr="Country"
-                                            sec-placeholder="{{'Country' | translate }}"
-                                            input-type-attr="transclude"
-                                            select-tag="true" >
-                                    <span class="must">*</span>
-                                <select class="inputtext"
-                                        ng-model="model.country"
-                                        ng-options="country.name for country in countries track by country.id" >
-                                </select>
+                            <sec-input  id-attr="Country"
+                                        sec-placeholder="{{'Country' | translate }}"
+                                        input-type-attr="transclude"
+                                        select-tag="true" >
+                                <span class="must">*</span>
+                            <select class="inputtext"
+                                    ng-model="model.country"
+                                    ng-options="country.name for country in countries track by country.id" >
+                            </select>
 
                             </sec-input>
                             <sec-input

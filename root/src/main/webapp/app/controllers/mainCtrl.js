@@ -11,11 +11,6 @@ define(['./module'], function (controllers) {
                         $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
-
-            $scope.$watch("cart", function(n){
-                console.log($scope.cart)
-            })
-
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
@@ -30,11 +25,7 @@ define(['./module'], function (controllers) {
 
             /* Get configuration */
             userService.getConfiguration().then(function(response){
-                console.log("getConfiguration")
-                console.log(response)
-                console.log("getConfiguration")
                 $scope.config = response;
-                console.log(response)
             });
             /*===========================  end Get configuration ============================*/
 
@@ -108,6 +99,7 @@ define(['./module'], function (controllers) {
 
             $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
 
+
             $scope.setUser = function(){
                 $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
             }
@@ -117,7 +109,9 @@ define(['./module'], function (controllers) {
                 $location.path('404');
             }
 
-            $scope.signOut = function(){
+            $scope.signOut = function(even){
+
+                even.stopPropagation();
                 $cookie.remove('lastlogin');
                 $rootScope.userCookie = undefined;
                 $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
@@ -126,7 +120,12 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            $scope.login = function (size) {
+            $scope.login = function (miniTitleId) {
+
+                if($rootScope.userCookie){
+                    $("#" + miniTitleId).fadeToggle(300);
+                    return;
+                }
 
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();

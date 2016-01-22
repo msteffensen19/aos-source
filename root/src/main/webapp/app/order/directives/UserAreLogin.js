@@ -7,81 +7,115 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService', function (rs, $templateCache, orderService) {
+    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService', 'registerService',
+        function (rs, $templateCache, orderService, registerService) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
-            link: function (s) {
-
-                s.firstTag = true;
-                s.imgRadioButton = 1;
-
-                s.years = [];
-                var now = new Date();
-                for (var i = 0; i < 10; i++) {
-                    s.years.push((now.getFullYear() + i) + "");
-                }
-
-                var safePayBussy = false;
-
-                function safePay(TransPaymentMethod, accountNumber) {
-
-                    if (safePayBussy) {
-                        return;
+            link:{
+                pre: function(s){
+                    s.userDetailsEditMode = false;
+                    s.invalidUser = false;
+                    s.validSecValidate = function(invalid){
+                        s.invalidUser = s.userDetailsEditMode = invalid;
                     }
-                    safePayBussy = true;
-                    orderService.SafePay(s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
-                        .then(function (res) {
+                },
+                post: function(s){
+                    l("s.user")
+                    l(s.user)
 
-                            if (res.success) {
-                                l(s.card.number)
-                                rs.$broadcast('updatePaymentEnd', {
-                                    paymentEnd: true,
-                                    orderNumber: res.orderNumber,
-                                    trackingNumber: res.paymentConfirmationNumber,
-                                    cardNumber : + s.card.number + ''
-                                });
-                                Helper.scrollPageUp();
-                                safePayBussy = false;
-                                return;
+                    s.firstTag = true;
+                    s.imgRadioButton = 1;
+
+                    s.countries = null;
+                    s.country;
+                    registerService.getAllCountries().then(function (countries) {
+                        l("countries")
+                        l(countries)
+                        for(var i  in countries){
+                            if(countries[i].id == s.user.countryId)
+                            {
+                                l("country =======")
+                                l(countries[i])
+                                s.country = countries[i];
+                                l(s.country)
+                                break;
                             }
-                            s.paymentEnd = false;
-                        });
-                }
+                        }
+                        s.countries = countries;
+                    });
 
-                s.payNow_SafePay = function () {
-                    var TransPaymentMethod = "SafePay";
-                    var accountNumber = 843200971;
-                    safePay(TransPaymentMethod, accountNumber);
-                }
 
-                s.payNow_masterCredit = function () {
-                    var TransPaymentMethod = "MasterCredit";
-                    var accountNumber = 112987298763;
-                    safePay(TransPaymentMethod, accountNumber);
-                }
 
-                s.payNow_manual = function () {
-                    s.card.number = '';
-                    angular.forEach(s.CardNumber, function (fourDigits) {
-                        s.card.number += fourDigits + "";
-                    })
-                    alert(s.card.number)
-                    s.payNow_masterCredit()
-                }
+                    s.setDefaultCard = true;
+                    s.years = [];
+                    var now = new Date();
+                    for (var i = 0; i < 10; i++) {
+                        s.years.push((now.getFullYear() + i) + "");
+                    }
 
-                s.shippingDetails_next = function () {
-                    s.firstTag = false;
-                }
 
-                s.imgRadioButtonClicked = function (num) {
-                    s.imgRadioButton = num;
-                }
+                    var safePayBussy = false;
 
-                s.paymentMethod_edit = function () {
-                    s.noCards = true;
+                    function safePay(TransPaymentMethod, accountNumber) {
+
+                        if (safePayBussy) {
+                            return;
+                        }
+                        safePayBussy = true;
+                        orderService.SafePay(s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
+                            .then(function (res) {
+
+                                if (res.success) {
+                                    l(s.card.number)
+                                    rs.$broadcast('updatePaymentEnd', {
+                                        paymentEnd: true,
+                                        orderNumber: res.orderNumber,
+                                        trackingNumber: res.paymentConfirmationNumber,
+                                        cardNumber : + s.card.number + ''
+                                    });
+                                    Helper.scrollPageUp();
+                                    safePayBussy = false;
+                                    return;
+                                }
+                                s.paymentEnd = false;
+                            });
+                    }
+
+                    s.payNow_SafePay = function () {
+                        var TransPaymentMethod = "SafePay";
+                        var accountNumber = 843200971;
+                        safePay(TransPaymentMethod, accountNumber);
+                    }
+
+                    s.payNow_masterCredit = function () {
+                        var TransPaymentMethod = "MasterCredit";
+                        var accountNumber = 112987298763;
+                        safePay(TransPaymentMethod, accountNumber);
+                    }
+
+                    s.payNow_manual = function () {
+                        s.card.number = '';
+                        angular.forEach(s.CardNumber, function (fourDigits) {
+                            s.card.number += fourDigits + "";
+                        })
+                        alert(s.card.number)
+                        s.payNow_masterCredit()
+                    }
+
+                    s.shippingDetails_next = function () {
+                        s.firstTag = false;
+                    }
+
+                    s.imgRadioButtonClicked = function (num) {
+                        s.imgRadioButton = num;
+                    }
+
+                    s.paymentMethod_edit = function () {
+                        s.noCards = true;
+                    }
                 }
-            },
+            }
         }
     }]);
 });

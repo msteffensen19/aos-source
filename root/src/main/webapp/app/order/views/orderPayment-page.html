@@ -23,7 +23,7 @@
             <div ng-switch-when="true">
                 <user-are-login></user-are-login>
             </div>
-            <div id="userCart">
+            <div id="userCart" data-ng-show="(cart | productsCartCount) > 0" >
                 <h5 translate="ORDER_SUMMARY"></h5>
                 <span class="itemsCount roboto-medium">
                     {{ cart | productsCartCount }} {{ 'ITEMS' | translate }}

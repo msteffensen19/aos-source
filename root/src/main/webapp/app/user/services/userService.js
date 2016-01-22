@@ -12,6 +12,8 @@ define(['./module'], function (services) {
                 getConfiguration: getConfiguration,
             });
 
+            this.userIsLogin;
+
             function getConfiguration() {
 
                 //var request = $http({
@@ -50,7 +52,7 @@ define(['./module'], function (services) {
                 var params = server.account.login();
                 mini_soap.post(params.path, params.method, user).
                 then(function (response) {
-                        console.log(response)
+                        console.log(response);
                         defer.resolve(response);
                     },
                     function (response) {
