@@ -1,4 +1,5 @@
 /shipex/src/main/java/store/advantage/shipex/service/*
+*/src/main/webapp/ver.txt
 .idea/*
 */src/main/webapp/node_modules/*
 */target/*
@@ -14,6 +15,10 @@
 /root/src/main/webapp/global.properties
 /root/src/main/webapp/services.properties
 /root/src/main/webapp/test.properties
+/remove from git.bat
+/accountservice/src/main/java/accountservice/store/online/advantage/com
+*_maven_generated_variables.txt
+
 ## Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 
@@ -69,5 +74,5 @@ fabric.properties
 /test1.gt.txt
 /*.gt
 /*.ggt
-/remove from git.bat
-/accountservice/src/main/java/accountservice/store/online/advantage/com
+
+
