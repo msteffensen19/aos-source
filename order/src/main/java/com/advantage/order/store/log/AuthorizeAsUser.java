@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface AppUserAuthorize {
+public @interface AuthorizeAsUser {
     String value() default "";
 }

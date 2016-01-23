@@ -1,23 +1,17 @@
 package com.advantage.order.store.log;
 
-import com.advantage.root.util.ValidationHelper;
+import com.advantage.common.SecurityTools;
+import com.advantage.common.dto.AccountType;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.ParameterNameDiscoverer;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.security.Principal;
-import java.util.Map;
 
 //import org.springframework.ws.transport.context.TransportContext;
 //import org.springframework.ws.transport.context.TransportContextHolder;
@@ -29,8 +23,37 @@ public class ApiSecurityMethodInvokeAspect {
     public ParameterNameDiscoverer discoverer;
 
 
-    @Around("execution(* *(..)) && @annotation(com.advantage.order.store.log.AppUserAuthorize) && args(userId,..)")
-    public ResponseEntity authorize(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
+    @Around("execution(* *(..)) && @annotation(com.advantage.order.store.log.AuthorizeAsUser) && args(userId,..)")
+    public ResponseEntity authorizeAsUser(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
+
+        //final String AUTHORIZATION_PREFIX = "Bearer ";
+
+        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        HttpStatus responseStatus = SecurityTools.isAutorized(authorizationHeader, userId, AccountType.USER);
+
+
+//
+//        if (authorizationHeader == null || authorizationHeader.isEmpty() || !authorizationHeader.startsWith(AUTHORIZATION_PREFIX)) {
+//            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+//        } else {
+//            String token2 = authorizationHeader.substring(AUTHORIZATION_PREFIX.length());
+//            try {
+//                Token token = new TokenJWT(token2);
+//                if (token.getUserId() != userId) {
+//
+//                    return new ResponseEntity(HttpStatus.FORBIDDEN);
+//                }
+//                if (!token.getAccountType().equals(AccountType.USER)) {
+//                    return new ResponseEntity(HttpStatus.FORBIDDEN);
+//                }
+//            } catch (Throwable e) {
+//                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+//            }
+//        }
+
+/*
+
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = null;
         Signature signature = joinPoint.getSignature();
@@ -48,8 +71,6 @@ public class ApiSecurityMethodInvokeAspect {
             }
         }
 
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String authorization = httpServletRequest.getHeader("Authorization");
         Principal userPrincipal = httpServletRequest.getUserPrincipal();
         Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
         //EXCEPTION Collection<Part> parts = httpServletRequest.getParts();
@@ -59,7 +80,7 @@ public class ApiSecurityMethodInvokeAspect {
         MethodSignature msignature = (MethodSignature) joinPoint.getSignature();
         Method method = msignature.getMethod();
         Parameter[] parameters = method.getParameters();
-        //discoverer=new AspectJAdviceParameterNameDiscoverer("@annotation(com.advantage.order.store.log.AppUserAuthorize)");
+        //discoverer=new AspectJAdviceParameterNameDiscoverer("@annotation(com.advantage.order.store.log.AuthorizeAsUser)");
         discoverer = new StandardReflectionParameterNameDiscoverer();
         String[] parameterNames = discoverer.getParameterNames(method);
 
@@ -78,8 +99,12 @@ public class ApiSecurityMethodInvokeAspect {
 
         assert request != null;
         if (!ValidationHelper.isAuthorized(request.getSession(), token)) return unAuthorized();
+*/
 
         joinPoint.proceed();
+        if (responseStatus != null) {
+            return new ResponseEntity(responseStatus);
+        }
         return null;
     }
 

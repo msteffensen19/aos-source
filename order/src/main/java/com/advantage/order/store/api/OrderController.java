@@ -7,7 +7,7 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.SecurityTools;
 import com.advantage.common.dto.AccountType;
-import com.advantage.order.store.log.AppUserAuthorize;
+import com.advantage.order.store.log.AuthorizeAsUser;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
@@ -44,15 +44,18 @@ public class OrderController {
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
-    @ApiOperation(value = "Get user shopping cart")
-    @AppUserAuthorize
+    @ApiOperation(value = "EVG DEVTEST AOP Get user shopping cart")
+    @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader,
-                                                               HttpServletRequest request, HttpServletResponse response) {
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
+    //TODO-EVG continue implement AOP
+    public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId,
+                                                               //  @RequestHeader("Authorization") String authHeader,
+                                                               HttpServletRequest request,
+                                                               HttpServletResponse response) {
+//        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
+//        if (authorizationStatus != null) {
+//            return new ResponseEntity<>(authorizationStatus);
+//        } else {
             ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
             if (userCartResponseDto == null) {
@@ -61,13 +64,14 @@ public class OrderController {
                 return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
             }
         }
-    }
+    //}
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.POST)
     @ApiOperation(value = "Add product to shopping cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    @AppUserAuthorize
+    @AuthorizeAsUser
+    //TODO-EVG Security continue implement AOP
     /*public ResponseEntity<ShoppingCartResponse> addProductToCart(@PathVariable("userId") Long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> addProductToCart(
                                                                     @PathVariable("productId") Long productId,
@@ -98,6 +102,7 @@ public class OrderController {
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update quantity of product in shopping cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    //TODO-EVG Security WO AOP - implement AOP
     /*public ResponseEntity<ShoppingCartResponse> updateProductQuantityInCart(@PathVariable("userId") long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userId") Long userId,
                                                                                @PathVariable("productId") Long productId,
@@ -127,6 +132,7 @@ public class OrderController {
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "Replace user shopping cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    //TODO-EVG Security WO AOP - implement AOP
     public ResponseEntity<ShoppingCartResponse> replaceUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                 @PathVariable("userId") Long userId,
                                                                 @RequestHeader("Authorization") String authHeader,
@@ -176,7 +182,8 @@ public class OrderController {
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.DELETE)
     @ApiOperation(value = "AOP Remove a product from user shopping cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    @AppUserAuthorize
+    @AuthorizeAsUser
+    //TODO-EVG Security continue implement AOP
     /*public ResponseEntity<ShoppingCartResponse> removeProductFromUserCart(@PathVariable("userId") long userId,*/
     public ResponseEntity<ShoppingCartResponseDto> removeProductFromUserCart(@PathVariable("userId") long userId,
                                                                              @PathVariable("productId") Long productId,
@@ -203,7 +210,7 @@ public class OrderController {
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "AOP Clear user shopping cart")
-    @AppUserAuthorize
+    @AuthorizeAsUser
 
     //@ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     /*public ResponseEntity<ShoppingCartResponse> clearUserCart(@PathVariable("userId") Long userId,*/
@@ -244,6 +251,7 @@ public class OrderController {
      * @return {@link ShoppingCartResponseDto} products that had higher quantity in cart than in stock. {@code null}
      * when all products quantities less or equal to their quantities in stock.
      */
+    //TODO-EVG Security WO AOP - implement AOP
     @RequestMapping(value = "/carts/{userId}/quantity", method = RequestMethod.PUT)
     @ApiOperation(value = "Verify and update products quantities in user cart")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
@@ -325,13 +333,15 @@ public class OrderController {
 
     /*  =========================================================================================================   */
 
+
+    //TODO-EVG Security WO AOP - implement AOP
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "Purchase new order")
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    public ResponseEntity<OrderPurchaseResponse> doPurchase(@RequestBody OrderPurchaseRequest purchaseRequest,
+    public ResponseEntity<OrderPurchaseResponse> doPurchase(@PathVariable("user_id") long userId,
+                                                            @RequestBody OrderPurchaseRequest purchaseRequest,
                                                             @RequestHeader("Authorization") String authHeader,
-                                                            HttpServletRequest request,
-                                                            @PathVariable("user_id") long userId) {
+                                                            HttpServletRequest request) {
 
         HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
         if (authorizationStatus != null) {
