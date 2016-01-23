@@ -1,15 +1,11 @@
 /**
  * Created by correnti on 29/11/2015.
  */
-/**
- * Created by correnti on 29/11/2015.
- */
-
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout',
-        function (s, registerService, $location, $timeout) {
+    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout', '$filter',
+        function (s, registerService, $location, $timeout, $filter) {
 
             s.countries = {};
             s.registerAnswer = {
@@ -18,7 +14,17 @@ define(['./module'], function (controllers) {
             }
 
             registerService.getAllCountries().then(function (response) {
-                s.countries = response;
+                var countries = [];
+                angular.forEach(response, function(country){
+                    countries.push({
+                        id: country.ID,
+                        isoName: country.ISONAME,
+                        name: country.NAME,
+                        phonePrefix: country.PHONEPREFIX,
+                    });
+                });
+                s.countries = countries;
+                l(s.countries)
             })
 
             s.model = {
@@ -30,13 +36,9 @@ define(['./module'], function (controllers) {
 
             s.register = function () {
 
-                // check this point - validate-from/to
-
-                //check validateModel(model)
-
                 registerService.register(s.model).then(function (response) {
-                    s.registerAnswer.message = response.REASON,
-                        s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
+                    s.registerAnswer.message = response.REASON || $filter('translate')('register_faild'),
+                    s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
                     $timeout(function () {
                         s.registerAnswer = {message: '', class: 'invalid'}
                         if (response.SUCCESS == 'true') {
@@ -55,6 +57,8 @@ define(['./module'], function (controllers) {
             });
 
             $("nav .navLinks").css("display", "none");
+
+            Helper.forAllPage();
 
         }]);
 

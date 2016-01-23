@@ -2,6 +2,7 @@
 
 <div>
 
+
 <div id="detailslink">
     <label class="roboto-regular" ng-class="{ selected : firstTag }" >1. {{ 'SHIPPING_DETAILS' | translate }}</label>
     <label class="roboto-regular" ng-class="{ selected : !firstTag }" >2. {{ 'PAYMENT_METHOD' | translate }}</label>
@@ -11,9 +12,14 @@
 
     <div id="userSection" ng-show="firstTag">
 
+
+
+
+
         <div id="userDetails">
             <div>
                 <img src="css/images/User.jpg" alt="img"/>
+                <!--<div icon-phone ></div>-->
                 <label>{{user.firstName}} {{user.lastName}}</label>
             </div>
             <div>
@@ -28,13 +34,16 @@
             </div>
         </div>
         <div class="blueLink">
-            <a>{{ 'Edit_shipping_Details' | translate }}</a>
+            <a data-ng-click="paymentMethod_edit()">{{ 'Edit_shipping_Details' | translate }}</a>
             <label>{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png" alt="ShipEx" /></label>
         </div>
         <div>
             <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' | translate }} </button>
         </div>
     </div>
+
+
+
 
     <!-- END USER DETAILS SECTION-->
 
@@ -48,16 +57,17 @@
             </label>
             <div class="paymentMethods">
                 <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1)" data-ng-class="{ selected : imgRadioButton == 1 }">
-                    <img src="../../../css/images/SafePay.png" alt="Safepay" />
+                    <img src="css/images/SafePay.png" alt="Safepay" />
                 </div>
-                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2" data-ng-class="{ selected : imgRadioButton == 2 }">
-                    <img src="../../../css/images/Master_credit.png" alt="Master credit" />
+                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2"
+                     data-ng-class="{ selected : imgRadioButton == 2 }">
+                    <img src="css/images/Master_credit.png" alt="Master credit" />
                 </div>
             </div>
 
             <!---------------------------- SAFEPAY SECCION ---------------------------->
 
-            <div ng-show="imgRadioButton == 1 && !editMode">
+            <div ng-show="imgRadioButton == 1">
 
                 <div class="notice">
                     <h4 translate="Notice"  ></h4>
@@ -74,8 +84,7 @@
                             sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
                             pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                             model-attr="savePay.username"
-                            id-attr="savePay_UserName"
-                            no-red-star="true" >
+                            id-attr="savePay_UserName">
                     </sec-input>
 
                     <sec-input
@@ -86,7 +95,6 @@
                             pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                             input-type-attr="password"
                             model-attr="savePay.password"
-                            no-red-star="true"
                             id-attr="savePay_password">
                     </sec-input>
 
@@ -98,7 +106,7 @@
                             select-tag="true" >
                         <div class="option" >
                             <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox"  />
-                            <span class="roboto-light">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
+                            <span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
                             <label class="validateInvalid" style="display: none" >
                                 {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
                             </label>
@@ -108,9 +116,8 @@
                     <div class="blueLink">
                         <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
-                            <input sec-submit-attr="payNow_SafePay()"
+                            <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
                                    class="roboto-medium float-button a-button"
-                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
                         </label>
@@ -119,6 +126,7 @@
                 </sec-validate>
 
             </div>
+
 
             <!-------------------------- END SAFEPAY SECCION -------------------------->
 
@@ -135,16 +143,16 @@
                         <span data-ng-repeat="_4numbers in CardNumber track by $index" >
                             {{ _4numbers | showLast4DigitsCard:$last:$index}}
                         </span>
-                        <label class="edit" data-ng-click="paymentMethod_edit(card)" >
+                        <label class="edit" >
                             {{'Edit' | translate}}
                         </label>
                     </div>
                 </div>
 
                 <div class="blueLink">
-                    <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                    <a ng-click="firstTag = true" >{{ 'Back_to_shipping_details' | translate }}</a>
                     <label>
-                        <input class="roboto-medium float-button a-button" data-ng-click="payNow_masterCredit()"
+                        <input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"
                                type="button" value="{{'PAY_NOW' | translate}}" />
                     </label>
                 </div>
@@ -155,17 +163,22 @@
 
 
 
+
+
             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
-            <div ng-show="noCards">
+            <div ng-show="imgRadioButton == 2 && noCards">
+
+                <div class="notice">
+                    <h4 translate="Notice"  ></h4>
+                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{ 'Please_enter_a_fake_data' | translate }}</p>
+                </div>
 
                 <sec-validate class="smollInput" >
 
-                    <sec-input sec-required
+                    <sec-input sec-required card-number-four-digits
                                sec-placeholder="{{ 'Card_number' | translate }}"
-                               sec-min-length="16"
-                               sec-max-length="16"
-                               sec-pattern="^[0-9]{16,16}$"
+                               sec-pattern="^[0-9]{12,12}$"
                                pattern-error-attr="{{ 'Invalid_Card_number' | translate }}"
                                model-attr="card.number"
                                id-attr="Card_Number"  >
@@ -173,8 +186,8 @@
 
                     <sec-input sec-required class="creditCard"
                                sec-placeholder="{{ 'CCV_Number' | translate }}"
-                               model-attr="card.ccv"
-                               id-attr="Card_ccv" >
+                               model-attr="card.cvv"
+                               id-attr="Card_cvv" >
                     </sec-input>
 
                     <div class="payment_date">
@@ -209,11 +222,12 @@
                     </sec-input>
 
                     <div class="blueLink">
-                        <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                        <a ng-click="firstTag = true"
+                        >{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
                             <input sec-submit-attr="payNow_masterCredit()"
                                    class="roboto-medium float-button a-button"
-                                   data-ng-class="{ buttonDisable : invalidItems.length > 0 }"
+                                   a-sec-validate-invalid
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}" />
                         </label>
@@ -229,15 +243,6 @@
     </div>
 
     <!-- END EDIT PAYMENT METHOD SECTION-->
-
-
-
-
-
-
-
-
-
 
 
 

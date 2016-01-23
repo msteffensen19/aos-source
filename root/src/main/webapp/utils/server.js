@@ -146,10 +146,14 @@ var server = {
             return orderKey + "/carts/" + userId;
         },
 
-        removeProductToUser: function (userId, productId, color, quantity){
+        removeProductToUser: function (userId, productId, color){
             return orderKey + "/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color;
+        },
+
+        updateProductToUser: function (userId, productId, color, quantity){
+            return server.order.addProductToUser(userId, productId, color, quantity);
         },
 
         addProductToUser: function (userId, productId, color, quantity){
@@ -163,14 +167,26 @@ var server = {
             return orderKey + "/carts/" + userId;
         },
 
-        getShippingCost: function(){
-            return orderKey + "/order/api/v1/shippingcost" ;
+        clearCart : function (userId){
+            return orderKey + "/carts/" + userId;
         },
+
+        getShippingCost: function(){
+            return orderKey + "/shippingcost/" ;
+        },
+
+        safePay: function(userId){
+            return orderKey + "/orders/users/" + userId ;
+        },
+
     },
     account: {
 
         getAllCountries : function (){
-            return accountKey + "/countries";
+            return {
+                path: wsdlPath,
+                method: 'GetCountriesRequest'
+            }
         },
 
         register : function(){

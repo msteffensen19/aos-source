@@ -21,19 +21,9 @@ define(['./module'], function (directives) {
 
 
 
-                    /* Get configuration */
-                    userService.getConfiguration().then(function(response){
-                        $scope.config = response;
-                    });
-                    /*===========================  end Get configuration ============================*/
-
-
-
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
-                        console.log("user")
-                        console.log(user)
                         userService.login(user).then(function (res) {
 
                             var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
@@ -76,18 +66,21 @@ define(['./module'], function (directives) {
                                     $scope.cart = cart;
                                 });
 
+                                if($location.path() == '/register'){
+                                    $location.path('/')
+                                }
                                 wellcome();
                             }
                             else {
                                 $scope.wrongFields = response;
                                 $timeout(function () { $scope.wrongFields = null; }, 4000);
-                                wrongFields();
                             }
 
                             return user;
                         });
                     }
                     /*=============================== end Sign in ===============================*/
+
 
 
 
@@ -154,14 +147,4 @@ function wellcome() {
         $("body").css("overflow", "scroll")
         $(".login").css("opacity", "1");
     });
-}
-
-
-function wrongFields(){
-
-    $("#response").css("display", "block");
-    setTimeout(function(){
-        $("#response").css("display", "none");
-    }, 2000);
-
 }

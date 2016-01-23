@@ -18,6 +18,64 @@
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
+    <profiles>
+        <profile>
+            <id>development</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>sql-maven-plugin</artifactId>
+                            <version>1.5</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.postgresql</groupId>
+                                    <artifactId>postgresql</artifactId>
+                                    <!-- TODO-EVG replace with property after move maven variables into properties file-->
+                                    <version>9.3-1100-jdbc41</version>
+                                </dependency>
+                            </dependencies>
+                            <configuration>
+                                <!-- Merge of main pom and this cause the AccountSoapService pom isn't a child of main pom-->
+                                <!--suppress MavenModelInspection -->
+                                <url>
+                                    ${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}/postgres
+                                </url>
+                                <!--suppress MavenModelInspection -->
+                                <username>${account.hibernate.db.login}</username>
+                                <!--suppress MavenModelInspection -->
+                                <password>${account.hibernate.db.password}</password>
+                                <sqlCommand>create database "${account.hibernate.db.name}"</sqlCommand>
+                                <!--suppress MavenModelInspection -->
+                                <driver>${hibernate.db.driver_classname}</driver>
+                                <autocommit>true</autocommit>
+                                <!-- ignore error when database already exists -->
+                                <onError>continue</onError>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>create-db</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>execute</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!--run sql-->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,13 +83,21 @@
     </properties>
 
     <dependencies>
+        <!--shared resources-->
+        <dependency>
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>shared_resources</artifactId>
+            <version>${project.version}</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
         <!--WAR-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -117,12 +183,126 @@
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>root</artifactId>
+            <version>${project.version}</version>
+            <classifier>classes</classifier>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
         </dependency>
     </dependencies>
 
     <build>
         <finalName>accountservice</finalName>
+        <!--shared resources-->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                    <!-- Provide access to .properties files for use it by maven-->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <executions>
+                        <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <file>${project.build.directory}/generated-resources/services.properties</file>
+                                    <file>${project.build.directory}/generated-resources/global.properties</file>
+                                    <file>
+                                        ${project.build.directory}/generated-resources/internal_config_for_env.properties
+                                    </file>
+                                </files>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>unpack-shared-resources</id>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/generated-resources
+                                </outputDirectory>
+                                <includeArtifactIds>shared_resources</includeArtifactIds>
+                                <includeGroupIds>${project.groupId}</includeGroupIds>
+                                <excludeTransitive>true</excludeTransitive>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                    <executions>
+                        <execution>
+                            <configuration>
+                                <encoding>${project.build.sourceEncoding}</encoding>
+                                <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/generated-resources</directory>
+                                        <filtering>true</filtering>
+                                        <!--<excludes>-->
+                                        <!--<exclude>/*.properties</exclude>-->
+                                        <!--</excludes>-->
+                                        <includes>
+                                            <include>ver.txt</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                            <id>copy-shared-resources-into-webapp</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -145,8 +325,16 @@
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
             </plugin>
+            <!--shared resources-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <!--read properties from zip-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>

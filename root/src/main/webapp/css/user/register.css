@@ -13,10 +13,6 @@
     vertical-align: top;
 }
 
-#form *{
-    color:#2a2a2a;
-}
-
 #infoDemo{
 white-space: nowrap;
 }
@@ -65,7 +61,9 @@ white-space: nowrap;
 
 
 #formCover > div h3 {
-    margin: 30px  0  15px  0 ;
+    margin: 30px  0  13px  0 ;
+    letter-spacing: 1px;
+    font-size: 16px;
 }
 
 
@@ -159,13 +157,7 @@ display: block;
 #form .invalidInput{
     border-bottom: solid #ff454f 1px;
 }
-
-#form .buttonDisable, #form .buttonDisable:hover{
-    color: #b2b2b2 !important;
-    border: solid 2px #d1d1d1 !important;
-    cursor: default;
-    background-color: white !important;
-}
+/*.buttonDisable*/
 
 #formCover .validate-directive {
     width:49%;

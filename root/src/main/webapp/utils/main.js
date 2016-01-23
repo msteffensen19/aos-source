@@ -10,9 +10,14 @@ var Helper = Helper || {};
 Helper.____closeTooTipCart;
 
 Helper.forAllPage = function(){
-    $("body").scrollTop(0);
+    Helper.scrollPageUp()
     Helper.UpdatePageFixed();
 }
+
+Helper.scrollPageUp = function(){
+    $("body").scrollTop(0);
+}
+
 
 Helper.UpdatePageFixed = function(){
     $('.pages').removeClass('fixed');
@@ -33,8 +38,17 @@ Helper.closeToolTipCart = function (){
     }
 }
 
+Helper.getRandom = function(length){
+    var ranVal = '';
+    for(var i = 0; i < length; i++){
+        ranVal += (Math.floor(Math.random() * 9) + 1)
+    }
+    return ranVal
+}
+
 Helper.checkPagePossitions = function(){
 
+    l(pagesPossition)
     if ($('.pages').length > 0) {
 
         if (pagesPossition < $('body').scrollTop() + $('header').height()) {
@@ -91,8 +105,6 @@ $(document).on({
 
     ready: function() {
 
-
-
         $(document).on("click", ".containMiniTitle", function () {
             $(this).find(".mini-title").fadeToggle(300);
         });
@@ -100,20 +112,12 @@ $(document).on({
 
         $(window).on({
         resize: _resize,
-        scroll: function () {
-
-            if ($(window).scrollTop() > 300) {
-                $('#scrollToTop').fadeIn(300);
-            }
-            else {
-                $('#scrollToTop').fadeOut(300);
-            }
-
-            Helper.checkPagePossitions();
-            Helper.closeToolTipCart();
-        }
+        scroll: _scroll,
         });
 
+        function  _scroll(){
+            Helper.checkPagePossitions();
+        }
 
         _resize();
         function _resize() {

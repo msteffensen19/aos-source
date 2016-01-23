@@ -115,11 +115,11 @@ public class ValidationHelper {
         try {
             dateFormat.parse(stringDate.trim());
         } catch (ParseException pe) {
-            System.out.println(stringDate + " : False");
+            System.out.println(stringDate + " : false");
             return false;
         }
 
-        System.out.println(stringDate + " : True");
+        System.out.println(stringDate + " : true");
         return true;
     }
 

@@ -8,9 +8,19 @@ public class Constants {
     public static final String URI_API = "/api";
 
     //
-    public static final String FILE_PROPERTIES_INTERNAL = "classpath:/services.properties";
+    public static final String FILE_PROPERTIES_INTERNAL = "classpath:/internal_config_for_env.properties";
     public static final String FILE_PROPERTIES_EXTERNAL = "classpath:/services.properties";
     public static final String FILE_PROPERTIES_GLOBAL = "classpath:/global.properties";
+    public static final String FILE_PROPERTIES_DEMO_APP = "classpath:/DemoApp.properties";
+    public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
+
+
+    public final static String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
+    public final static String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
+    public final static String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
+    public final static String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
+
+
     @Deprecated
     public static final String PROPERTIES_EXTERNAL = "classpath:/services.properties";
 
@@ -28,20 +38,15 @@ public class Constants {
     /* CATALOG Service related constants - END      */
 
     //TODO-EVG remove
-    /* ACCOUNT URI and transactions types - BEGIN   */
     @Deprecated
     public static final String URI_SERVER_ACCOUNT = "http://localhost:8080/account" + URI_API + "/v1";
     public static final String ACCOUNT_GET_APP_USER_BY_ID_URI = "/users/{user_id}";
-    /* ACCOUNT URI and transactions types - END     */
 
     //TODO-EVG remove
-    /* ShipEx URI and transactions types - BEGIN    */
     @Deprecated
     public static final String URI_SERVER_SHIP_EX = "http://localhost:8080/ShipEx";
     public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
-    public static final String SHIP_EX_RESPONSE_STATUS_OK = "SUCCESS";
-    /* ShipEx URI and transactions names - END      */
 
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
@@ -50,6 +55,8 @@ public class Constants {
     private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
     public static final String URI_SCHEMA = "http";
+    public static final String FILE_PROPERTIES_VER_TXT = "classpath:/ver.txt";
+
 
     public static class UserSession {
         public static final String TOKEN = "token";

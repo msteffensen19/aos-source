@@ -19,16 +19,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.2</version>
-                        <configuration>
-                            <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <webResources>
-                                <resource>
-                                    <directory>${basedir}/target</directory>
-                                </resource>
-                            </webResources>
-                        </configuration>
                     </plugin>
                     <!--prod plugins ^^^-->
                 </plugins>
@@ -37,22 +27,6 @@
     </profiles>
     <build>
         <finalName>MasterCredit</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xls</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.xls</exclude>
-                </excludes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -62,6 +36,14 @@
                         <include>**/*Tests.java</include>
                     </includes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -78,6 +60,14 @@
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>shared_resources</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

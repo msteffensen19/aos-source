@@ -33,7 +33,7 @@
                 <label>
                     MasterCredit
                     <a class="floater">
-                        <span data-ng-repeat="_4numbers in CardNumber track by $index" >
+                        <span data-ng-repeat="_4numbers in cardNumber track by $index" >
                             {{ _4numbers | showLast4DigitsCard:$last:$index }}
                         </span>
                     </a>
@@ -51,7 +51,7 @@
             <div class="innerSeccion">
                 <label>
                     {{ 'Subtotal' | translate}}
-                    <a class="floater"> {{cart | productsCartSum | currency:'$'}}</a>
+                    <a class="floater"> {{ subTotal | currency:$ }} </a>
                 </label>
             </div>
             <div class="innerSeccion">
@@ -63,10 +63,26 @@
             <div class="innerSeccion">
                 <label class="total">
                     {{ 'TOTAL' | translate}}
-                    <a class="floater">  {{(cart | productsCartSum) + shippingCost | currency:'$'}} </a>
+                    <a class="floater">  {{ total | currency:$ }} </a>
                 </label>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
     </div>
 </div>
+
+
+
+
+
+
+
 

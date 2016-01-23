@@ -1,7 +1,10 @@
 package com.advantage.common_test.cfg;
 
+import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 
 @Configuration
@@ -10,7 +13,7 @@ import org.springframework.core.env.Environment;
 //        "com.advantage.order.store.user.dao",
 //        "com.advantage.order.store.user.model",
 //        "com.advantage.order.store.init"})
-//@PropertySources(value = {@PropertySource("classpath:imageManagement.properties"), @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL), @PropertySource(Constants.FILE_PROPERTIES_INTERNAL), @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})
+@PropertySources(value = {/*@PropertySource("classpath:imageManagement.properties"),*/ @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL), @PropertySource(Constants.FILE_PROPERTIES_INTERNAL), @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})
 
 public class AdvantageTestContextConfiguration {
 

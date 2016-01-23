@@ -5,36 +5,35 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', 'productService', 'smoothScroll',
+    controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService',
                     '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
-        function ($scope, productService, smoothScroll,
+        function ($scope, $q, productService, smoothScroll, userService,
                         $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
 
+            $scope.$watch("cart", function(n){
+                console.log($scope.cart)
+            })
+
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
-
             $scope.go_up = function(){
-                $('body, html').animate({scrollTop: 0}, 10);
+                $('body, html').animate({scrollTop: 0}, 10, function(){
+                    $("nav .navLinks").css("display", "block");
+                });
             }
 
 
 
 
-
-
-
-            /* Autocomplete*/
-
-            /* END Autocomplete*/
-
-
-
-
-
-
+            /* Get configuration */
+            userService.getConfiguration().then(function(response){
+                $scope.config = response;
+                console.log(response)
+            });
+            /*===========================  end Get configuration ============================*/
 
 
 
@@ -54,32 +53,33 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            var lastIdAdded = '';
-            $scope.addProduct = function(product, quantity) {
+           $scope.addProduct = function(product, quantity) {
+               clearInterval(Helper.____closeTooTipCart);
+               productsCartService.addProduct(product, quantity).then(function (cart) {
+                   $scope.cart = cart;
+                   animateToolTipCart();
+               });
+           }
+
+            $scope.updateProduct = function(product, color, quantity, oldColor) {
+                productsCartService.updateProduct(product, color, quantity, oldColor)
+                    .then(function(cart){
+                    $scope.cart = cart;
+                    animateToolTipCart();
+                });
+            }
+
+            function animateToolTipCart(){
                 clearInterval(Helper.____closeTooTipCart);
-                $('#toolTipCart').slideDown(function(){
-                    productsCartService.addProduct(product, quantity).then(function(cart){
-                        $scope.cart = cart;
-                        if (lastIdAdded == ('#product' + product.productId)){
-                            setToolTipCartSlideUp()
-                        }
-                        else {
-                            lastIdAdded = '#product' + product.productId;
-                            $('#toolTipCart tbody').stop().animate({
-                                scrollTop: 0 + 'px',
-                            }, 500, function () {
-                                setToolTipCartSlideUp()
-                            });
-                        }
+                    $('#toolTipCart').slideDown(function () {
+                        $('#toolTipCart tbody').stop().animate({
+                            scrollTop: 0 + 'px',
+                        }, 500, function () {
+                        Helper.____closeTooTipCart = setTimeout(function(){
+                            $('#toolTipCart').stop().slideUp();
+                        }, 8000)
                     });
                 });
-            };
-
-            function setToolTipCartSlideUp() {
-                clearInterval(Helper.____closeTooTipCart);
-                Helper.____closeTooTipCart = setTimeout(function(){
-                    $('#toolTipCart').stop().slideUp();
-                }, 8000)
             }
 
             $scope.enterCart = function(){
@@ -103,8 +103,11 @@ define(['./module'], function (controllers) {
 
             /* User section */
 
-            //$scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
             $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
+
+            $scope.setUser = function(){
+                $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
+            }
 
             $scope.accountSection = function(){
                 console.log("user account section! --- Method not done yet!");
@@ -114,6 +117,7 @@ define(['./module'], function (controllers) {
             $scope.signOut = function(){
                 $cookie.remove('lastlogin');
                 $rootScope.userCookie = undefined;
+                $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
                 productsCartService.loadCartProducts().then(function(cart){
                     $scope.cart = cart;
                 });
@@ -133,6 +137,7 @@ define(['./module'], function (controllers) {
                     $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
                     $("body").css({ "left": "0px", })
                 });
+
             }
 
             $(".PopUp, .closePopUpBtn").click(function (e) {
@@ -198,13 +203,11 @@ define(['./module'], function (controllers) {
 
 
 
-
-
-
-
-
-
-
+            $rootScope.$on('clearCartEvent', function (event, args) {
+                productsCartService.clearCart().then(function (cart) {
+                    $scope.cart = cart;
+                });
+            });
 
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {

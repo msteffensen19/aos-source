@@ -17,27 +17,15 @@ $(document).on({
         // end Mobile section handler
 
 
-
-        $('#scrollToTop').click(function () {
-            $('body, html').animate({ scrollTop: 0 }, 1000);
-        });
-
+        function _resize() {
+            console.log($(window).scrollTop())
+            $("#mobile-section").height($(window).height() + "px");
+        }
+        _resize();
 
         $(window).on({
             resize: _resize,
-            scroll: function () {
-               if ($(window).scrollTop() > 300) {
-                    $('#scrollToTop').fadeIn(300);
-                    return;
-                }
-                $('#scrollToTop').fadeOut(300);
-            }
         });
-
-        _resize();
-        function _resize() {
-            $("#mobile-section").height($(window).height() + "px");
-        }
 
         $('#product_search_img').click(function (e) {
             $('#product_search').css("display", "inline-block");

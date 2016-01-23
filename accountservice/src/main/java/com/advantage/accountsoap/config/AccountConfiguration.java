@@ -1,6 +1,6 @@
 package com.advantage.accountsoap.config;
 
-import com.advantage.accountsoap.dto.AccountConfigurationResponseStatus;
+import com.advantage.accountsoap.dto.account.AccountConfigurationStatusResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Application User configuration class
@@ -18,6 +19,7 @@ public class AccountConfiguration {
     private final String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
     private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
     private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
+    private final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
 
     @Inject
     private Environment env;
@@ -28,6 +30,7 @@ public class AccountConfiguration {
     public static long LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS;         //loginBlockingIntervalInMilliSeconds
     public static String EMAIL_ADDRESS_IN_LOGIN;                        //emailAddressInLogin
     public static int PRODUCT_IN_STOCK_DEFAULT_VALUE;
+    public static String USER_SECOND_WSDL_VALUE;
 
 //      //  Class that is called must have a method "public void init() throws Exception"
 //    @Bean(initMethod = "init")
@@ -41,6 +44,7 @@ public class AccountConfiguration {
         this.setLoginBlockingIntervalInMilliseconds(ENV_USER_LOGIN_BLOCKING);
         this.setEmailAddressInLogin(ENV_ADD_EMAIL_FIELD_TO_LOGIN);
         this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
+        this.setUserSecondWsdlValue(ENV_USER_SECOND_WSDL_VALUE);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS=" + this.getLoginBlockingIntervalInMilliseconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
@@ -101,7 +105,7 @@ public class AccountConfiguration {
     }
 
     public List<String> getAllParameters() {
-        List<String> parameters = new ArrayList<String>();
+        List<String> parameters = new ArrayList<>();
 
         parameters.add("boolean,EMAIL_ADDRESS_IN_LOGIN," + (EMAIL_ADDRESS_IN_LOGIN.toUpperCase() == "YES" ? true : false));
         parameters.add("long,LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS," + LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS);
@@ -111,11 +115,20 @@ public class AccountConfiguration {
         return parameters;
     }
 
-    public AccountConfigurationResponseStatus getAllConfigurationParameters() {
-        return new AccountConfigurationResponseStatus(this.getNumberOfLoginAttemptsBeforeBlocking(),
+    public void setUserSecondWsdlValue(String userSecondWsdlValue) {
+        this.USER_SECOND_WSDL_VALUE = env.getProperty(ENV_USER_SECOND_WSDL_VALUE);
+    }
+
+    public String getUserSecondWsdlValue() {
+        return this.USER_SECOND_WSDL_VALUE;
+    }
+
+    public AccountConfigurationStatusResponse getAllConfigurationParameters() {
+        return new AccountConfigurationStatusResponse(this.getNumberOfLoginAttemptsBeforeBlocking(),
                 this.getLoginBlockingIntervalInMilliseconds(),
-                (this.getEmailAddressInLogin().toUpperCase() == "YES"),
-                this.getProductInStockDefaultValue());
+                this.getEmailAddressInLogin().equalsIgnoreCase("yes"),
+                this.getProductInStockDefaultValue(),
+                this.getUserSecondWsdlValue().equalsIgnoreCase("yes"));
 
     }
 }

@@ -10,6 +10,7 @@
         <fileSet>
             <includes>
                 <include>*.properties</include>
+                <include>ver.txt</include>
             </includes>
             <directory>${project.basedir}/resources</directory>
             <outputDirectory></outputDirectory>

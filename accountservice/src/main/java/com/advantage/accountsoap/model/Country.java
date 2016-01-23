@@ -3,6 +3,8 @@ package com.advantage.accountsoap.model;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "COUNTRY")
@@ -40,7 +42,7 @@ public class Country {
     public static final String QUERY_GET_COUNTRIES_BY_PHONE_PREFIX = "country.getCountriesByPhonePrefix";
 
 
-    public static final String FIELD_ID = "ID"; //  COUNTRY_ID
+    public static final String FIELD_ID = "COUNTRY_ID"; //  COUNTRY_ID
 
     public static final String FIELD_NAME = "NAME";
     public static final String PARAM_COUNTRY_NAME = "PARAM_COUNTRY_COUNTRY_NAME";
@@ -52,7 +54,7 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = FIELD_ID)
-    private Integer id;
+    private Long id;
 
     @Column(name = FIELD_NAME)
     private String name;
@@ -62,6 +64,9 @@ public class Country {
 
     @Column(name = "PHONE_PREFIX")
     private int phonePrefix;
+
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Account> accounts = new HashSet<>();
 
     public Country() {
     }
@@ -94,11 +99,11 @@ public class Country {
         this.setPhonePrefix(phonePrefix);
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

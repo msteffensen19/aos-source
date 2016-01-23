@@ -14,18 +14,34 @@
             </span>
         </div>
     </div>
-    <div id="output" data-ng-show="autoCompleteResult.length > 0" data-ng-mouseleave="searchByCategoryId(null)" >
+    <div id="output" data-ng-show="autoCompleteResult.length > 0" data-ng-mouseleave="searchByCategoryId(null, '')" >
         <div class="searchPopUp" data-ng-click="$event.stopPropagation()" >
             <div class="categories">
-                <h3 class="roboto-medium" translate="CATEGORIES"></h3>
-                <label class="roboto-light" data-ng-repeat="result in autoCompleteResult"
-                       data-ng-mouseenter="searchByCategoryId(result.categoryId)" >
-                    {{result.categoryName | lowercase}}
-                </label>
+                <h3 class="roboto-medium" translate="CATEGORIES" data-ng-mouseenter="searchByCategoryId(null, '')"></h3>
+                <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}">
+                    <label class="roboto-light" data-ng-repeat="result in autoCompleteResult"
+                           data-ng-mouseenter="searchByCategoryId(result.categoryId, result.categoryName)">
+                        {{result.categoryName | lowercase}}
+                    </label>
+                </a>
             </div>
+
+
+
+
+
+
+
+
+
+
+
             <div>
-                <h3 class="roboto-medium" >{{ 'TOP_RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"</h3>
-                <label  class="roboto-medium viewAll" ><a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"></a></label>
+                <h3 class="roboto-medium" >{{ 'TOP' | translate }} {{ 'RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"
+                    <p style="font-size: 11px !important; font-weight: 300 !important;" > {{ categoryName }} </p>
+                </h3>
+                <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"
+                   class="roboto-medium viewAll"></a>
                 <a class="product" href="#/product/{{product.productId}}"
                    data-ng-click="closeSearchSection()"
                    data-ng-repeat="product in [] | filterFullArrayforAutoComplate:autoCompleteResult:categoryFilter">
@@ -37,4 +53,5 @@
         </div>
     </div>
 </div>
+
 

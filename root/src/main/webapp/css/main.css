@@ -1,6 +1,13 @@
 @import "UI.css";
 @import "../utils/noUiSlider.8.2.1/nouislider.css";
 @import "animation.css";
+
+@import "icons/cart.css";
+@import "icons/home.css";
+@import "icons/MagnifyingGlass.css";
+@import "icons/phone.css";
+@import "icons/user.css";
+
 @import "views/home_page.css";
 @import "views/categoryPage.css";
 @import "views/category_type_products_tpl.css";
@@ -8,10 +15,14 @@
 @import "views/toolTipCart.css";
 @import "views/toolTipSearch.css";
 @import "views/shoppingCart.css";
+
 @import "modals/popUp.css";
+@import "modals/e-sec-plus-minus.css";
 @import "modals/validateInput.css";
+
 @import "user/login.css";
 @import "user/register.css";
+
 @import "order/orderPayment/orderPayment.css";
 @import "order/orderPayment/userNotLogin.css";
 @import "order/orderPayment/userAreLogin.css";
@@ -164,9 +175,21 @@ nav .img {
 nav .img > img {
     height: 25px;
 }
-nav .img > .hi-user{
-    font-size: 23px;
 
+nav .img > img.login {
+    opacity: 0.5 !important;
+    z-index: 0 ;
+}
+
+nav .img > .hi-user{
+    font-size: 15px;
+        position: relative;
+    top: -9px;
+    padding: 0;
+    left:-7px;
+    margin: -13px;
+    font-weight: 900;
+    z-index: 1;
 }
 
 
@@ -191,7 +214,7 @@ div.logo img{
     right: 0;
     opacity: .8;
     transition: all 1s ease;
-    display: inline-block;
+    display: none;
     z-index: 9999;
     border-radius: 100%;
 }

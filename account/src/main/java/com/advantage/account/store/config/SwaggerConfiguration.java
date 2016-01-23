@@ -1,7 +1,9 @@
 package com.advantage.account.store.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -16,6 +18,9 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
+    @Autowired
+    Environment env;
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -28,10 +33,11 @@ public class SwaggerConfiguration {
     }
 
     private ApiInfo apiInfo() {
+        String apiInfoDescription = String.format("Git Branch = %s<br/>Last commit revision = %s<br/>Last build time = %s", env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"));
         ApiInfo apiInfo = new ApiInfo(
-                "Advantage - Account.WAR REST API",
-                "Description.",
-                null,
+                "Advantage - " + env.getProperty("mvn.project.build.finalName") + ".war REST API",
+                apiInfoDescription,
+                env.getProperty("mvn.project.version"),
                 null,
                 null,
                 null,

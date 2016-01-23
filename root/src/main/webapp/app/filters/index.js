@@ -4,12 +4,15 @@
 'use strict';
 
 define([
+
     './trustHTML',
     './secCatWord',
     './last4DigitsCard',
     './productsCartCount',
     './productsCartSum',
     './productQuantity',
-    './filterFullArrayforAutoComplate'
+    './filterFullArrayforAutoComplate',
+    './getCategoriesInArray',
+    './productsFilterForCategoriesProduct'
 
 ], function() {});

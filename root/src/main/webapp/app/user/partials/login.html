@@ -26,11 +26,12 @@
             </span>
 
 
-            <!--
-            ng-class="{bottomLine : config.emailAddressInLogin}"
-            ng-if="config.emailAddressInLogin"
-            -->
-            <span class="animPlaceholderUp" >
+            <!--ng-class="{bottomLine : config.emailAddressInLogin}"-->
+            <!--ng-if="config.emailAddressInLogin"-->
+
+
+            <span class="animPlaceholderUp"
+                   >
                 <input type="text" autocomplete="off"
                        ng-model="loginUser.email" placeholder="{{'Email' | translate }}" >
             </span>
@@ -46,9 +47,11 @@
             <label class="create-new-account" translate="CREATE_NEW_ACCOUNT"
                    data-ng-click="createNewAccount()"></label>
 
-            <span id="response"> {{message}}</span>
+            <span> {{ wrongFields.reason }}</span>
 
         </div>
     </div>
 </div>
+
+
 

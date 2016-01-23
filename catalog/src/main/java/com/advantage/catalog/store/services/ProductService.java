@@ -1,34 +1,34 @@
 package com.advantage.catalog.store.services;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import com.advantage.catalog.store.config.ImageManagementConfiguration;
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.product.ProductRepository;
-import com.advantage.common.dto.*;
-import com.advantage.catalog.store.model.attribute.Attribute;
-import com.advantage.catalog.store.model.category.Category;
-import com.advantage.catalog.store.model.product.ImageAttribute;
-import com.advantage.catalog.store.config.ImageManagementConfiguration;
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
+import com.advantage.catalog.store.model.attribute.Attribute;
+import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.ColorAttribute;
+import com.advantage.catalog.store.model.product.ImageAttribute;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.catalog.util.ArgumentValidationHelper;
+import com.advantage.catalog.util.fs.FileSystemHelper;
+import com.advantage.common.Constants;
+import com.advantage.common.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.advantage.catalog.util.ArgumentValidationHelper;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class ProductService {
 
-    public static final String PRODUCT_DEFAULT_QUANTITY = "product.inStock.default.value";
     @Autowired
     public ProductRepository productRepository;
     @Autowired
@@ -157,6 +157,10 @@ public class ProductService {
         String imageManagementRepository =
                 environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
         try {
+            if(!FileSystemHelper.extractFileExtension(file.getOriginalFilename()).equalsIgnoreCase("jpg") ){
+                return new ImageUrlResponseDto("-1", false, "file type should be .JPG only");
+            }
+
             byte[] bytes = file.getBytes();
             String originalFileName = file.getOriginalFilename();
             ImageManagement imageManagement = ImageManagementAccess.getImageManagement(
@@ -209,7 +213,7 @@ public class ProductService {
         Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
         for (ColorAttributeDto s : colors) {
             if (!(s.getInStock() > 0))
-                s.setInStock(Integer.parseInt(environment.getProperty(PRODUCT_DEFAULT_QUANTITY)));
+                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
             Optional<ColorAttribute> attribute =
                     colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
             if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {

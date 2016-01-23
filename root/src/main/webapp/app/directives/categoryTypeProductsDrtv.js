@@ -11,59 +11,71 @@ define(['./module'], function (directives) {
             replace: 'true',
             template: $templateCache.get('app/partials/category_type_products_tpl.html'),
             scope: {
-                category: '='
+                paramsToPass: '=',
             },
-            link: function (scope, element, attrs) {
+            link: function (s, element, attrs) {
 
                 var slider;
-                scope.showClear = false;
-                scope.productsInclude = [];
-                scope.attributeChecked = [];
-                scope.productsColors = [];
-                scope.minPriceToFilter = 0;
-                scope.maxPriceToFilter = 0;
+                s.showClear = false;
+                s.productsInclude = [];
+                s.minPriceToFilter = 0;
+                s.maxPriceToFilter = 0;
+                s.categoriesFilter = s.paramsToPass.categoriesFilter;
+                s.searchResult = s.paramsToPass.searchResult;
+                s.$location = $location;
 
-                scope.options = {
-                    start: [20, 70],
-                    range: {min: 0, max: 100}
+                for(var index in s.categoriesFilter){
+                    var category = s.categoriesFilter[index];
+                    if(category.checked){
+                        if(s.productsInclude["CATEGORIES"] == undefined)
+                        {
+                            s.productsInclude["CATEGORIES"] = [];
+                        }
+                        s.productsInclude["CATEGORIES"].push(category.id);
+                    }
                 }
 
-                scope.gotoItem = function(id){
-                    $location.path('/product/' + id);
-                }
+                s.options = { start: [20, 70], range: {min: 0, max: 100} }
 
-                scope.toggleColorSelectedClass = function(code) {
+                s.toggleColorSelectedClass = function(code) {
                     $("#productsColors" + code).toggleClass('colorSelected');
                 }
 
-                scope.includeProducts = function($event, attributeVal, attributesName) {
+                s.includeProducts = function(attributeVal, attributesName) {
 
-                    var i = $.inArray(attributeVal, scope.productsInclude[attributesName]);
-                    if (i > -1) {
-                        scope.productsInclude[attributesName].splice(i, 1);
-                        if(scope.productsInclude[attributesName].length == 0)
-                            delete scope.productsInclude[attributesName];
-                    } else {
-                        if(scope.productsInclude[attributesName] != undefined)
-                            scope.productsInclude[attributesName].push(attributeVal);
-                        else
+                    if(!attributeVal) return;
+
+                    var location = $.inArray(attributeVal, s.productsInclude[attributesName]);
+                    if (location > -1)
+                    {
+                        s.productsInclude[attributesName].splice(location, 1);
+                        if(s.productsInclude[attributesName].length == 0)
                         {
-                            scope.productsInclude[attributesName] = [];
-                            scope.productsInclude[attributesName].push(attributeVal);
+                            delete s.productsInclude[attributesName];
                         }
                     }
+                    else
+                    {
+                        if(s.productsInclude[attributesName] == undefined)
+                        {
+                            s.productsInclude[attributesName] = [];
+                        }
+                        s.productsInclude[attributesName].push(attributeVal);
+                    }
 
+                    s.showClear =
+                        Object.keys(s.productsInclude).length > 0 ||
+                        slider.noUiSlider.start != s.minPriceToFilter ||
+                        slider.noUiSlider.end != s.maxPriceToFilter;
 
-                    scope.showClear =
-                        Object.keys(scope.productsInclude).length > 0 ||
-                        slider.noUiSlider.start != scope.minPriceToFilter ||
-                        slider.noUiSlider.end != scope.maxPriceToFilter;
+                    s.productToShow = $filter("productsFilterForCategoriesProduct")
+                    ([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
                 }
 
-                scope.clearSelection = function(){
+                s.clearSelection = function(){
 
-                    for (var key in scope.productsInclude) {
-                        delete scope.productsInclude[key];
+                    for (var key in s.productsInclude) {
+                        delete s.productsInclude[key];
                     }
 
                     $('.option input[type=checkbox]').each(function(){
@@ -74,66 +86,61 @@ define(['./module'], function (directives) {
 
                     slider.noUiSlider.set([slider.noUiSlider.start, slider.noUiSlider.end]);
 
-                    scope.showClear = false;
+                    s.showClear = false;
 
                 };
 
-                scope.toggleColapse = function(id){
+                s.toggleColapse = function(id){
                     $('#' + id).siblings('.option').slideToggle(300);
                     $('#' + id).toggleClass('arrowUp');
                 }
 
-                scope.manipulateProductsByCustomization = function() {
+                configSlider();
 
-                    scope.businessCustom = [];
-                    scope.gamingCustom = [];
-                    scope.simplicityCustom = [];
-                    angular.forEach(scope.products, function (value, key) {
-                        if(value.attributes)
+                s.productToShow = $filter("productsFilterForCategoriesProduct")([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
+                s.attributesToShow = getAttributesToShow(s.productToShow);
+                s.productsColors = getColorsInProducts(s.productToShow);
+
+
+
+
+                function getAttributesToShow(productToShow){
+
+                    var attributes = []
+                    for(var index in productToShow){
+
+                        var prod = productToShow[index];
+                        for(var categIndex in prod.attributes)
                         {
-                            if($filter('filter')(value.attributes, {attributeValue: 'Business'}, false).length > 0)
-                                scope.businessCustom.push(value);
-                            if($filter('filter')(value.attributes, {attributeValue: 'Gaming'}, false).length > 0)
-                                scope.gamingCustom.push(value);
-                            if($filter('filter')(value.attributes, {attributeValue: 'Simplicity'}, false).length > 0)
-                                scope.simplicityCustom.push(value);
+                            var categ = prod.attributes[categIndex];
+                            if(attributes[categ.attributeName] == undefined){
+                                attributes[categ.attributeName] = [];
+                            }
+                            attributes[categ.attributeName].push(categ.attributeValue)
                         }
-                    });
-                };
-
-                scope.$watch('category', function(catData) {
-
-                    if(catData){
-
-                        scope.category = catData;
-                        scope.products = catData.products;
-                        scope.categoryAttributes = catData.attributes;
-                        scope.productsColors = getColorsInProducts(scope.products);
-                        setMinAndMaxPriceToFilter(scope.products);
-                        configSlider();
-                        scope.manipulateProductsByCustomization();
-                        scope.productsColors = getColorsInProducts(scope.products);
-
                     }
-                })
-
-                function setMinAndMaxPriceToFilter(products){
-                    var maxVal;
-                    var minVal = 900000;
-                    angular.forEach(products, function(product){
-                        if(product.price < minVal){
-                            minVal = product.price;
-                            if(!maxVal)
-                            { maxVal = product.price }
+                    for(var index in attributes){
+                        attributes[index] = attributes[index].filter(
+                            function(val, index, arr){
+                                return arr.indexOf(val) == index;
+                            });
+                    }
+                    var attributesToShow = [];
+                    for(var name in attributes) {
+                        attributesToShow.push({
+                            name: name,
+                            values: [],
+                        });
+                        for (var index in attributes[name]) {
+                            attributesToShow[attributesToShow.length - 1].values.push(attributes[name][index]);
                         }
-                        else if(product.price > maxVal){
-                            maxVal = product.price;
-                        }
-                    });
-
-                    scope.minPriceToFilter = Math.round(minVal) - 1 ;
-                    scope.maxPriceToFilter = Math.round(maxVal);
+                    }
+                    return attributesToShow;
                 }
+
+
+
+
 
                 function getColorsInProducts(products){
                     var productsColors = [];
@@ -154,31 +161,57 @@ define(['./module'], function (directives) {
                     return productsColors;
                 }
 
+
+
+
                 function configSlider(){
-                    slider = document.getElementById('slider');
-                    var step = scope.maxPriceToFilter - scope.minPriceToFilter;
-                    noUiSlider.create(slider, {
-                        start: [scope.minPriceToFilter, scope.maxPriceToFilter],
-                        connect: true,
-                        range: {
-                            'min': scope.minPriceToFilter,
-                            'max': scope.maxPriceToFilter,
-                        },
-                        step: step < 100 ? 1 : Math.round(step / 100) - 1,
-                        margin: 100,
+
+                    var maxVal;
+                    var minVal = 900000;
+                    angular.forEach(s.searchResult, function(category){
+
+                        var products = category.products
+                        angular.forEach(products, function(product){
+                            if(product.price < minVal){
+                                minVal = product.price;
+                                if(!maxVal)
+                                { maxVal = product.price }
+                            }
+                            else if(product.price > maxVal){
+                                maxVal = product.price;
+                            }
+                        });
 
                     });
-                    slider.noUiSlider.start = scope.minPriceToFilter;
-                    slider.noUiSlider.end = scope.maxPriceToFilter;
 
+                    s.minPriceToFilter = Math.round(minVal) - 1 ;
+                    s.maxPriceToFilter = Math.round(maxVal || 999999);
+
+                    slider = document.getElementById('slider');
+                    var step = s.maxPriceToFilter - s.minPriceToFilter;
+                    noUiSlider.create(slider, {
+                        start: [s.minPriceToFilter, s.maxPriceToFilter],
+                        connect: true,
+                        range: {
+                            'min': s.minPriceToFilter,
+                            'max': s.maxPriceToFilter,
+                        },
+                        step: 1, //step < 100 ? 100 : Math.round(step / 100) - 1,
+                        margin: step < 100 ? 5 : 100,  //Math.round(step / 100) - 1,
+                    });
+                    slider.noUiSlider.start = s.minPriceToFilter;
+                    slider.noUiSlider.end = s.maxPriceToFilter;
                     slider.noUiSlider.on('update', function( values, handle ) {
-                        scope.$applyAsync(function(){
+                        s.$applyAsync(function(){
                             if (handle == '0') {
-                                scope.minPriceToFilter = values[handle];
+                                s.minPriceToFilter = values[handle];
                             } else {
-                                scope.maxPriceToFilter = values[handle];
+                                s.maxPriceToFilter = values[handle];
                             }
-                            scope.includeProducts(null, '', 'PRICE');
+                            s.showClear =
+                                Object.keys(s.productsInclude).length > 0 ||
+                                slider.noUiSlider.start != s.minPriceToFilter ||
+                                slider.noUiSlider.end != s.maxPriceToFilter;
                         });
                     });
                 }
@@ -186,106 +219,10 @@ define(['./module'], function (directives) {
 
 
 
+
+
             }
         };
     }])
-        .filter('productsFilter', function($filter){
-            return function(products, minPrice, maxPrice, productsInclude) {
-
-                    var productsToReturn = [];
-                    angular.forEach(products, function(product){
-
-                        if (Object.keys(productsInclude).length > 0)
-                        {
-                            var found = 0;
-                            for (var key in productsInclude)
-                            {
-                                for(var i = 0; i < productsInclude[key].length; i++)
-                                {
-                                    var searchMatches = 0;
-                                    if(product.attributes)
-                                    {
-                                        var filterAttr = $filter('filter')( product.attributes,{ attributeValue: productsInclude[key][i] },false);
-                                        var json = JSON.stringify( filterAttr[0]);
-                                        var map = $.map(product.attributes, JSON.stringify);
-                                        searchMatches = $.inArray(json, map);
-                                    }
-                                    if(searchMatches > -1)
-                                    {
-                                        found++;
-                                    }
-                                    for(var colorIndex = 0; colorIndex < product.colors.length; colorIndex++ )
-                                    {
-                                        if(product.colors[colorIndex].code == productsInclude[key][i].code)
-                                        {
-                                            found++;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if(found == Object.keys(productsInclude[key]).length && product.price >= minPrice && product.price <= maxPrice)
-                            {
-                                productsToReturn.push(product);
-                            }
-                        }
-                        else if(product.price >= minPrice && product.price <= maxPrice)
-                        {
-                            productsToReturn.push(product);
-                        }
-                    });
-                    return productsToReturn;
-                };
-        });
 });
 
-
-
-
-
-
-
-
-
-//function configSlider(){
-//    slider = document.getElementById('slider');
-//    var step = scope.maxPriceToFilter - scope.minPriceToFilter;
-//    noUiSlider.create(slider, {
-//        start: [scope.minPriceToFilter, scope.maxPriceToFilter], // Handle start position
-//        connect: true, // Display a colored bar between the handles
-//        range: { // Slider can select '0' to '100'
-//            'min': scope.minPriceToFilter,
-//            'max': scope.maxPriceToFilter,
-//        },
-//        step: step < 100 ? 1 : (step / 100), // Slider moves in increments of '10'
-//        margin: 20, // Handles must be more than '20' apart
-//
-//
-//        //direction: 'rtl', // Put '0' at the bottom of the slider
-//        //orientation: 'vertical', // Orient the slider vertically
-//        //behaviour: 'tap-drag', // Move handle on tap, bar is draggable
-//        //pips: { // Show a scale with the slider
-//        //    mode: 'steps', //    density: 2000
-//        //}
-//
-//    });
-//    slider.noUiSlider.start = scope.minPriceToFilter;
-//    slider.noUiSlider.end = scope.maxPriceToFilter;
-//
-//    // When the slider value changes, update the input and span
-//    slider.noUiSlider.on('update', function( values, handle ) {
-//        scope.$applyAsync(function(){
-//            if (handle == '0') {
-//                scope.minPriceToFilter = values[handle];
-//            } else {
-//                scope.maxPriceToFilter = values[handle];
-//            }
-//            scope.includeProducts(null, '', 'PRICE');
-//        });
-//    });
-//
-//    // if I have an input - When the input changes, set the slider value
-//    //valueInput.addEventListener('change', function(){
-//    //  slider.noUiSlider.set([null, this.value]);
-//    //});
-//}

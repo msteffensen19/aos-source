@@ -5,29 +5,55 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('orderPaymentCtrl', ['$scope', 'resolveParams', 'orderService',
-        function (s, resolveParams, orderService) {
+    controllers.controller('orderPaymentCtrl', ['$scope', '$rootScope','resolveParams',
+        'orderService', 'productsCartService', '$filter',
+        function (s, rs, resolveParams, orderService, cartService, $filter) {
 
             s.checkCart();
 
-            s.paymentEnd = false;
 
-            console.log(resolveParams)
+            ///// PAYMENT SUCCESS ////
+            s.paymentEnd = false;
+            s.$on('updatePaymentEnd', function (event, args) {
+                s.paymentEnd = args.paymentEnd;
+                s.orderNumber = args.orderNumber;
+                s.trackingNumber = args.trackingNumber;
+                s.cardNumber = ['0000', '0000', '0000', args.cardNumber.substring(args.cardNumber.length - 4)];
+                l(s.cardNumber)
+                s.subTotal = ($filter("productsCartSum")(s.cart));
+                s.total = ($filter("productsCartSum")(s.cart, s.shippingCost));
+                rs.$broadcast('clearCartEvent');
+            });
+            ///// END PAYMENT SUCCESS ////
+
+
+
+            s.noCards = resolveParams.noCards; //check if have cards
+
+            s.cardNumber = resolveParams.CardNumber;
+            s.card = {
+                number : '',
+                cvv : '',
+                expirationDate : {
+                    month : '',
+                    year : ''
+                },
+                name: '',
+            }
+            s.savePay = {
+                username : '',
+                password : ''
+            }
 
             s.user = resolveParams.user
-            s.shippingCost = resolveParams.shippingCost;
+            s.shipping = resolveParams.shippingCost;
+            s.shippingCost = resolveParams.shippingCost ? resolveParams.shippingCost.amount : null;
             s.itemsPaid = s.cart ? s.cart.productsInCart.length : 0;
-
-            s.CardNumber = ["6789", "0785", "0785", "0785"];
 
             var d = new Date();
             s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
-            s.payNow_masterCredit = function(){
-                s.paymentEnd = true;
-            }
-
-            s.$watch("userCookie.response", function(n, o){
+            s.$watch("userCookie.response", function(n){
                 if(n + "" != "undefined"){
                     orderService.getAccountById().
                     then(function (user) {
@@ -35,8 +61,9 @@ define(['./module'], function (controllers) {
                         {
                             orderService.getShippingCost(user).
                             then(function (shippingCost) {
-                                s.shippingCost = shippingCost;
-                                s.loginUser = user
+                                s.shipping = shippingCost;
+                                s.shippingCost = shippingCost ? shippingCost.amount : null;
+                                s.user = user
                             });
                         }
                         else {

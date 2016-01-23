@@ -1,5 +1,6 @@
 package com.advantage.account.store.config;
 
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,11 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
         }
 )
 @PropertySources(value = {
-        @PropertySource("classpath:/app.properties"),
+        @PropertySource(Constants.FILE_PROPERTIES_APP),
         //@PropertySource("classpath:/database.properties"),
-        @PropertySource("classpath:/global.properties"),
-        @PropertySource("classpath:/services.properties"),
-        @PropertySource("classpath:/DemoApp.properties")})
+        @PropertySource(Constants.FILE_PROPERTIES_GLOBAL),
+        @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
+        @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
+        @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP)})
 public class AppConfiguration {
 
 }

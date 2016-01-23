@@ -9,8 +9,9 @@
 .validate-directive > .validate-label{
     position: absolute;
     display: block;
-    top: 10px;
     left: 0;
+    top: 8px;
+    font-size: 14px;
 }
 
 .validate-directive label.validateInvalid{
@@ -33,10 +34,27 @@
     list-style: none;
 }
 
+.validate-directive > .validate-info ul a{
+    color: #828282;
+    font-size: 12px;
+    padding: 4px 0;
+    position: relative;
+}
+.validate-directive > .validate-info ul a:before{
+    content: "";
+    position: absolute;
+    left:-9px;
+    top:10px;
+    width: 5px;
+    height: 1px;
+    background-color: #828282;
+
+}
+
 .validate-directive .must{
     position: absolute;
-    top:12px;
-    left:-12px;
+    top:5px;
+    left:-10px;
     color: #ff454f !important;
 }
 

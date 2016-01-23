@@ -7,6 +7,39 @@
 
 
 
+
+
+
+
+
+
+            <!--- categories filter Section -->
+            <li ng-if="categoriesFilter != null">
+                <h4 class="accordion roboto-regular arrowUp"
+                    id="accordionCategories"
+                    ng-click="toggleColapse('accordionCategories')" >
+                    {{'CATEGORIES' | translate }}
+                </h4>
+                <label class="roboto-light"
+                       data-ng-mouseenter="searchByCategoryId(result.categoryId)" >
+                    {{result.categoryName | lowercase}}
+                </label>
+                <div class="option" style="display: block">
+                    <div ng-repeat="categ in categoriesFilter" >
+                        <div class="fill">
+                            <input type="checkbox"
+                                   ng-model="categ.checked"
+                                   ng-click="includeProducts(categ.id, 'CATEGORIES')">
+                            <span class="roboto-regular">{{categ.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--- END categories filter Section -->
+
+
+
+
             <!--- Price filter Section-->
             <li>
                 <h4 class="accordion roboto-regular arrowDown" id="accordionPrice"
@@ -26,22 +59,26 @@
 
 
             <!--- attributes filter Section -->
-            <li ng-repeat="attrib in categoryAttributes">
+            <li ng-repeat="attrib in attributesToShow">
                 <h4 class="accordion roboto-regular arrowDown" id="accordionAttrib{{$index}}"
                     ng-click="toggleColapse('accordionAttrib' + $index)" >
-                    {{attrib.attributeName}}
+                    {{attrib.name}}
                 </h4>
                 <div class="option" >
-                    <div ng-repeat="attrVal in attrib.attributeValues" >
+                    <div ng-repeat="attrVal in attrib.values" >
                         <div class="fill">
                             <input type="checkbox" ng-model="item.selected"
-                                   ng-click="includeProducts($event, attrVal, attrib.attributeName)">
+                                   ng-click="includeProducts(attrVal, attrib.name)">
                             <span class="roboto-regular">{{attrVal}}</span>
                         </div>
                     </div>
                 </div>
             </li>
             <!--- END attributes filter Section -->
+
+
+
+
 
 
 
@@ -57,8 +94,8 @@
                 <div class="option" >
                     <div ng-repeat="color in productsColors" >
                         <a title="{{color.name}}" class="productColor " id="productsColors{{color.code}}"
-                              ng-click="includeProducts($event, color, 'COLOR'); toggleColorSelectedClass(color.code)"
-                              ng-style=" color.code == 'FFFFFF' ?
+                           ng-click="includeProducts(color, 'COLOR'); toggleColorSelectedClass(color.code)"
+                           ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
                             <!--- <label></label> -->
@@ -71,12 +108,18 @@
 
 
 
+
+
+
+
+
+
         </ul>
     </div>
     <div class="cell categoryRight">
         <ul>
-            <li ng-repeat="product in products | productsFilter:minPriceToFilter:maxPriceToFilter:productsInclude"
-                ng-click="gotoItem(product.productId)" >
+            <li ng-repeat="product in [] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude"
+                ng-click="$location.path('/product/' + product.productId)" >
                 <div class="AddToCard">
                     <label> {{'SHOP_NOW' | translate}} </label>
                     <img alt="" src="../../css/images/cart_18x18.png"  />
@@ -84,6 +127,9 @@
                 <img alt="" class="imgProduct" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
                 <p><a>{{product.productName}}</a></p>
                 <p><a class="productPrice">{{product.price | currency:"$"}}</a></p>
+            </li>
+            <li data-ng-if="([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length == 0">
+                <a style="font-size: 50px; color: #C0C0A1; padding: 30px 0; display: inline-block; cursor: default">NO PRODUCTS TO SHOW</a>
             </li>
         </ul>
     </div>

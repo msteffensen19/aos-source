@@ -26,10 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
                 )
         }
 )
-@PropertySources(value = {
-        @PropertySource("classpath:/app.properties"),
-        @PropertySource("classpath:/database.properties"),
-        @PropertySource("classpath:/DemoApp.properties")})
+
+@PropertySources(value = {@PropertySource(Constants.FILE_PROPERTIES_VER_TXT)})
+
 public class AppConfiguration {
 
 }

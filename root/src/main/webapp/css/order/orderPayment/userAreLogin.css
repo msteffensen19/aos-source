@@ -47,16 +47,18 @@
     text-decoration: none;
     position: relative;
     top: -6px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 #userSection > div > label > img{
     position: relative;
     top:4px;
+    padding-left: 9px;
 }
 
 .blueLink a{
     font-size: 16px;
-    padding: 10px 0;
     display: inline-block;
     color: #54b3ad;
     cursor: pointer;
@@ -73,7 +75,7 @@
 
 #userDetails{
     font-size: 0;
-    margin-bottom: 16px;
+    margin-bottom: 11px;
     border:solid #454545 1px;
 }
 
@@ -98,6 +100,13 @@
     right: 0;
     top:0;
     padding: 15px;
+}
+
+#userDetails > div .iconCss {
+    position: absolute;
+    right: 0;
+    top:0;
+    margin: 15px;
 }
 
 #userDetails > div label {
@@ -129,6 +138,7 @@
 
 .paymentMethods{
     border: solid 1px #454545;
+    font-size: 0;
 }
 
 #paymentMethod .notice{
@@ -151,6 +161,13 @@
     font-size: 15px;
 }
 
+#paymentMethod .grayCheckbox{
+    color: #828282;
+}
+
+#paymentMethod .validate-directive{
+    margin: 14px 0;
+}
 
 #paymentMethod .sec-validate .inputtext{
     width: 50%;
@@ -172,8 +189,8 @@
 .paymentMethods .imgRadioButton:before {
     content: "";
     position: absolute;
-    height: 17px;
-    width: 17px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
     border: solid 1px #828282;
     top:23px;
@@ -186,7 +203,7 @@
 }
 
 .paymentMethods .selected.imgRadioButton:before {
-    box-shadow: 0 0 0 6px white inset, 0 0 0 15px #54b3ad inset;
+    box-shadow: 0 0 0 5px white inset, 0 0 0 15px #54b3ad inset;
 
 }
 
@@ -243,4 +260,20 @@
 
 /* END USER DETAILS SECCION   */
 
+.Card_Number_4Digits .inputtext{
+    position: relative;
+    text-indent: 32px;
+}
 
+.Card_Number_4Digits .validate-label{
+    z-index: 10;
+}
+
+.Card_Number_4Digits:before{
+    position: absolute;
+    top: 7px;
+    left: 0;
+    content: '4886';
+    z-index: 10;
+    opacity: 0.7;
+}

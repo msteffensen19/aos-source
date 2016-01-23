@@ -7,6 +7,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>main_project</name>
+    <scm>
+        <connection>scm:git:http://mydtbld0005.isr.hp.com:7990/scm/ad/adm-demo-app.git</connection>
+        <!--<developerConnection>scm:svn:https://127.0.0.1/dummy</developerConnection>-->
+        <!--<tag>HEAD</tag>-->
+        <url>http://mydtbld0005.isr.hp.com:7990/projects/AD/repos/adm-demo-app/browse</url>
+    </scm>
     <modules>
         <module>shared_resources</module>
         <module>common</module>
@@ -23,7 +29,7 @@
         <aspectj.version>1.8.4</aspectj.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.9</slf4j.version>
+        <slf4j.version>1.7.13</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <querydsl.version>3.6.0</querydsl.version>
         <spring-framework-version>4.1.6.RELEASE</spring-framework-version>
@@ -43,21 +49,33 @@
         <profile>
             <id>development</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <version>2.2</version>
+                            <configuration>
+                                <warSourceExcludes>node_modules/**</warSourceExcludes>
+                                <failOnMissingWebXml>false</failOnMissingWebXml>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>2.5.4</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <!--dev plugins vvv-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.2</version>
-                        <configuration>
-                            <warSourceExcludes>node_modules/**</warSourceExcludes>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <version>2.5.4</version>
                     </plugin>
                     <!--dev plugins ^^^-->
                 </plugins>
@@ -66,57 +84,271 @@
         <profile>
             <id>production</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.soebes.maven.plugins</groupId>
+                            <artifactId>echo-maven-plugin</artifactId>
+                            <version>0.2</version>
+                            <executions>
+                                <execution>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>echo</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <echos>
+                                    <echo>#########</echo>
+                                    <!--suppress MavenModelInspection -->
+                                    <echo>buildNumber=${buildNumber}</echo>
+                                    <!--suppress MavenModelInspection -->
+                                    <echo>Branch = ${scmBranch}</echo>
+                                    <echo>basedir=${basedir}</echo>
+                                    <echo>project.basedir=${project.basedir}</echo>
+                                    <!--It's a parent POM-->
+                                    <echo>project.parent.basedir=${project.parent.basedir}</echo>
+                                    <echo>project.build.directory=${project.build.directory}</echo>
+                                    <echo>***JAVA VER**</echo>
+                                    <echo>java.home=${java.home}</echo>
+                                    <echo>env.JAVA_HOME=${env.JAVA_HOME}</echo>
+                                    <echo>java.runtime.name=${java.runtime.name}</echo>
+                                    <echo>java.runtime.version=${java.runtime.version}</echo>
+                                    <echo>java.vm.version=${java.vm.version}</echo>
+                                </echos>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <version>2.2</version>
+                            <configuration>
+                                <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
+                                <failOnMissingWebXml>false</failOnMissingWebXml>
+                                <webResources>
+                                    <resource>
+                                        <directory>${basedir}/target</directory>
+                                    </resource>
+                                </webResources>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>com.soebes.maven.plugins</groupId>
                         <artifactId>echo-maven-plugin</artifactId>
-                        <version>0.2</version>
-                        <executions>
-                            <execution>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>echo</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <echos>
-                                <echo>basedir=${basedir}</echo>
-                                <echo>java.home=${java.home}</echo>
-                                <echo>env.JAVA_HOME=${env.JAVA_HOME}</echo>
-                                <echo>java.runtime.name=${java.runtime.name}</echo>
-                                <echo>java.runtime.version=${java.runtime.version}</echo>
-                                <!--<echo>java.vm.version=${java.vm.version}</echo>-->
-                                <echo>project.basedir=${project.basedir}</echo>
-                                <!--It's a parent POM-->
-                                <!--<echo>project.parent.basedir=${project.parent.basedir}</echo>-->
-                                <echo>project.build.directory=${project.build.directory}</echo>
-                            </echos>
-                        </configuration>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>
     </profiles>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <!--shared resources-->
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <!--<resource>-->
+            <!--<directory>${project.parent.directory}/shared_resources/ver.txt</directory>-->
+            <!--<filtering>true</filtering>-->
+            <!--</resource>-->
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<version>2.7</version>-->
+                <!--<configuration>-->
+                <!--&lt;!&ndash;<filters>&ndash;&gt;-->
+                <!--&lt;!&ndash;<filter>${project.build.directory}/generated-resources/internal_config_for_env.properties</filter>&ndash;&gt;-->
+                <!--&lt;!&ndash;</filters>&ndash;&gt;-->
+                <!--</configuration>-->
+                <!--</plugin>-->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sql-maven-plugin</artifactId>
+                    <version>1.5</version>
+                    <dependencies>
+                        <!-- specify the dependent jdbc driver here -->
+                        <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>${postgres.driver.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <!--suppress MavenModelInspection -->
+                        <driver>${hibernate.db.driver_classname}</driver>
+                        <autocommit>true</autocommit>
+                        <!-- ignore error when database already exists -->
+                        <onError>continue</onError>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>create-db</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>execute</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>unpack-shared-resources</id>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+                                <includeArtifactIds>shared_resources</includeArtifactIds>
+                                <includeGroupIds>${project.groupId}</includeGroupIds>
+                                <excludeTransitive>true</excludeTransitive>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!-- Provide access to .properties files for use it by maven-->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <executions>
+                        <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
+                        <execution>
+                            <id>read-properties-into-maven-process</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <!--<file>${project.build.directory}/generated-resources/services.properties</file>-->
+                                    <file>${project.build.directory}/generated-resources/global.properties</file>
+                                    <file>
+                                        ${project.build.directory}/generated-resources/internal_config_for_env.properties
+                                    </file>
+                                </files>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>write-all-maven-variables-into-file</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>write-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <outputFile>
+                                    ${project.basedir}/${project.artifactId}_maven_generated_variables.txt
+                                </outputFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.4</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                                <!--<goal>create-timestamp</goal>-->
+                                <!--<goal>create-metadata</goal> &lt;!&ndash;Illegal pattern character 't'&ndash;&gt;-->
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!--<buildNumberPropertyName>commit.revision</buildNumberPropertyName>-->
+                        <timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+                        <!--<timestampPropertyName>buildTime</timestampPropertyName>-->
+                        <doCheck>false</doCheck>
+                        <doUpdate>false</doUpdate>
+                        <revisionOnScmFailure>revisionOnScmFailure_EVG</revisionOnScmFailure>
+                        <scmDirectory>${project.parent.basedir}</scmDirectory>
+                        <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                        <!--<outputName>build.properties</outputName>-->
+                        <!--<outputDirectory>${project.build.directory}/generated/build-metadata</outputDirectory>-->
+                        <shortRevisionLength>8</shortRevisionLength>
+                        <addOutputDirectoryToResources>true</addOutputDirectoryToResources>
+                        <!--??????????????? maybe vvv false ????????????????-->
+                        <useLastCommittedRevision>true</useLastCommittedRevision>
+                        <!--<format>{0,number}.{1,number}.{2,number} commit {3}  ts {4,date,yyyy-MM-dd HH:mm:ss}</format>-->
+                        <!--<items>-->
+                        <!--<item>buildNumber0</item>-->
+                        <!--<item>buildNumber1</item>-->
+                        <!--<item>buildNumber2</item>-->
+                        <!--<item>scmVersion</item>-->
+                        <!--<item>timestamp</item>-->
+                        <!--</items>-->
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                    <executions>
+                        <execution>
+                            <configuration>
+                                <encoding>${project.build.sourceEncoding}</encoding>
+                                <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/generated-resources</directory>
+                                        <filtering>true</filtering>
+                                        <!--<excludes>-->
+                                        <!--<exclude>/*.properties</exclude>-->
+                                        <!--</excludes>-->
+                                        <includes>
+                                            <include>ver.txt</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                            <id>copy-shared-resources-into-webapp</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -13,29 +13,35 @@ define(['./module'], function (services) {
 
 
         function getAllCountries() {
-            return responseService.getAllCountries();
+            //return responseService.getAllCountries();
+
+            var defer = $q.defer();
+            var params = server.account.getAllCountries();
+
+            mini_soap.post(params.path, params.method).
+            then(function(response){
+                    console.log("response")
+                    console.log(response)
+                    console.log("response")
+                    defer.resolve(response);
+                },
+                function(response){
+                    console.log(response);
+                    defer.reject("Request failed! ");
+                });
+            return defer.promise;
         }
 
         function register(model) {
-            console.log("model")
-            console.log(model)
-            console.log(JSON.stringify(model))
-            console.log(model.country)
-            console.log(model.country.id)
-            console.log(model.country.id || 0 )
 
             var expectToReceive = {
+                "accountType": 20,
                 "address": model.address ,
                 "allowOffersPromotion":  model.offers_promotion ? 'Y' : 'N',
-                "accountType": 20,
                 "cityName": model.city,
-                "country": model.country.id || 0 ,
+                "countryId": model.country.id,
                 "email": model.email,
                 "firstName": model.firstName,
-                "id": 0,
-                "internalLastSuccesssulLogin": 0,
-                "internalUnsuccessfulLoginAttempts": 0,
-                "internalUserBlockedFromLoginUntil": 0,
                 "lastName": model.lastName,
                 "loginName": model.username,
                 "password": model.password,
@@ -56,13 +62,6 @@ define(['./module'], function (services) {
                     defer.reject("Request failed! ");
                 });
             return defer.promise;
-
-            //var request = $http({
-            //    method: "post",
-            //    url: server.account.register(),
-            //    data: expectToReceive,
-            //});
-            //return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
     }]);
