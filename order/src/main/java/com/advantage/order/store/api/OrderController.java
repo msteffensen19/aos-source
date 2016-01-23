@@ -5,14 +5,14 @@ package com.advantage.order.store.api;
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
-import com.advantage.common.SecurityTools;
-import com.advantage.common.dto.AccountType;
 import com.advantage.order.store.log.AuthorizeAsUser;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
 import com.advantage.order.store.order.services.ShoppingCartService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,201 +44,153 @@ public class OrderController {
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
-    @ApiOperation(value = "EVG DEVTEST AOP Get user shopping cart")
+    @ApiOperation(value = "Get user shopping cart")
     @AuthorizeAsUser
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    //TODO-EVG continue implement AOP
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId,
-                                                               //  @RequestHeader("Authorization") String authHeader,
                                                                HttpServletRequest request,
                                                                HttpServletResponse response) {
-//        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-//        if (authorizationStatus != null) {
-//            return new ResponseEntity<>(authorizationStatus);
-//        } else {
-            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-            if (userCartResponseDto == null) {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-            } else {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            }
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
-    //}
+    }
+
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.POST)
     @ApiOperation(value = "Add product to shopping cart")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @AuthorizeAsUser
-    //TODO-EVG Security continue implement AOP
-    /*public ResponseEntity<ShoppingCartResponse> addProductToCart(@PathVariable("userId") Long userId,*/
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     public ResponseEntity<ShoppingCartResponseDto> addProductToCart(
-                                                                    @PathVariable("productId") Long productId,
-                                                                    @PathVariable("userId") Long userId,
-                                                                    @PathVariable("color") String hexColor,
-                                                                    @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
-                                                                    @RequestHeader("Authorization") String authHeader,
-                                                                    HttpServletRequest request) {
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
+            @PathVariable("userId") Long userId,
+            @PathVariable("productId") Long productId,
+            @PathVariable("color") String hexColor,
+            @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
+            HttpServletRequest request) {
 
-            shoppingCartResponse = shoppingCartService.add(userId, productId, hexColor, quantity);
+        shoppingCartResponse = shoppingCartService.add(userId, productId, hexColor, quantity);
 
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
-            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-            if (userCartResponseDto == null) {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-            } else {
-                //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
-            }
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
         }
+
     }
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update quantity of product in shopping cart")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    //TODO-EVG Security WO AOP - implement AOP
-    /*public ResponseEntity<ShoppingCartResponse> updateProductQuantityInCart(@PathVariable("userId") long userId,*/
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userId") Long userId,
                                                                                @PathVariable("productId") Long productId,
                                                                                @PathVariable("color") String hexColor,
                                                                                @RequestParam("quantity") int quantity,
-                                                                               @RequestHeader("Authorization") String authHeader,
                                                                                HttpServletRequest request) {
 
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
-
-            shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
+        shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
 
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
-            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-            if (userCartResponseDto == null) {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-            } else {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            }
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "Replace user shopping cart")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    //TODO-EVG Security WO AOP - implement AOP
-    public ResponseEntity<ShoppingCartResponse> replaceUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
-                                                                @PathVariable("userId") Long userId,
-                                                                @RequestHeader("Authorization") String authHeader,
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    public ResponseEntity<ShoppingCartResponse> replaceUserCart(@PathVariable("userId") Long userId,
+                                                                @RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                 HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.OK;
 
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
+        if (userId != null) {
+            shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
 
-            HttpStatus httpStatus = HttpStatus.OK;
+            if (shoppingCartResponse.isSuccess()) {
+                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
 
-            if (userId != null) {
-                shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
-
-                if (shoppingCartResponse.isSuccess()) {
-                    ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-
-                    if (userCartResponseDto == null) {
-                        //  Unlikely scenario - update of user cart successful and get user cart failed
-                        httpStatus = HttpStatus.NOT_FOUND;
-                        shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
-                    } else {
-                        httpStatus = HttpStatus.OK;
-                    }
+                if (userCartResponseDto == null) {
+                    //  Unlikely scenario - update of user cart successful and get user cart failed
+                    httpStatus = HttpStatus.NOT_FOUND;
+                    shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
                 } else {
-                    //  Replace user cart failed
-                    httpStatus = HttpStatus.NOT_IMPLEMENTED;
-
-                    shoppingCartResponse.setSuccess(false);
-                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
-                    shoppingCartResponse.setId(-1);
+                    httpStatus = HttpStatus.OK;
                 }
             } else {
-                httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+                //  Replace user cart failed
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
 
                 shoppingCartResponse.setSuccess(false);
-                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
                 shoppingCartResponse.setId(-1);
             }
+        } else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
 
-            return new ResponseEntity<>(shoppingCartResponse, httpStatus);
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
         }
+
+        return new ResponseEntity<>(shoppingCartResponse, httpStatus);
     }
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "AOP Remove a product from user shopping cart")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiOperation(value = "Remove a product from user shopping cart")
     @AuthorizeAsUser
-    //TODO-EVG Security continue implement AOP
-    /*public ResponseEntity<ShoppingCartResponse> removeProductFromUserCart(@PathVariable("userId") long userId,*/
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     public ResponseEntity<ShoppingCartResponseDto> removeProductFromUserCart(@PathVariable("userId") long userId,
                                                                              @PathVariable("productId") Long productId,
                                                                              @PathVariable("color") String hexColor,
-                                                                             @RequestHeader("Authorization") String authHeader,
                                                                              HttpServletRequest request) {
 
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
-            shoppingCartResponse = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
+        shoppingCartResponse = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
 
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
-            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-            if (userCartResponseDto == null) {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-            } else {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            }
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "AOP Clear user shopping cart")
+    @ApiOperation(value = "Clear user shopping cart")
     @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId) {
 
-    //@ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    /*public ResponseEntity<ShoppingCartResponse> clearUserCart(@PathVariable("userId") Long userId,*/
-    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId
-                                                                 //,@RequestHeader(value = "Authorization", required = false,defaultValue = "EVG Bearer ") String authHeader,
-                                                                 //                                                                HttpServletRequest request
-    ) {
+        if (userId != null) {
+            shoppingCartResponse = shoppingCartService.clearUserCart(Long.valueOf(userId));
+        } else {
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
+        }
 
-//        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-//        if (authorizationStatus != null) {
-//            return new ResponseEntity<>(authorizationStatus);
-//        } else {
-
-            if (userId != null) {
-                shoppingCartResponse = shoppingCartService.clearUserCart(Long.valueOf(userId));
-            } else {
-                shoppingCartResponse.setSuccess(false);
-                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
-                shoppingCartResponse.setId(-1);
-            }
-
-            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-            if (userCartResponseDto == null) {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-            } else {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            }
-        // }
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+        }
     }
 
     /*  =========================================================================================================   */
@@ -251,29 +203,22 @@ public class OrderController {
      * @return {@link ShoppingCartResponseDto} products that had higher quantity in cart than in stock. {@code null}
      * when all products quantities less or equal to their quantities in stock.
      */
-    //TODO-EVG Security WO AOP - implement AOP
     @RequestMapping(value = "/carts/{userId}/quantity", method = RequestMethod.PUT)
     @ApiOperation(value = "Verify and update products quantities in user cart")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@RequestBody List<ShoppingCartDto> shoopingCartProducts,
-                                                                                      @RequestHeader("Authorization") String authHeader,
-                                                                                      HttpServletRequest request,
-                                                                                      @PathVariable("userId") long userId) {
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
-
-            System.out.println("OrderController -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
-            ShoppingCartResponseDto responseDto = shoppingCartService.verifyProductsQuantitiesInUserCart(userId, shoopingCartProducts);
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@PathVariable("userId") long userId,
+                                                                                      @RequestBody List<ShoppingCartDto> shoopingCartProducts,
+                                                                                      HttpServletRequest request) {
+        System.out.println("OrderController -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
+        ShoppingCartResponseDto responseDto = shoppingCartService.verifyProductsQuantitiesInUserCart(userId, shoopingCartProducts);
         /*return new ResponseEntity<>(responseDto, HttpStatus.OK);*/
 
-            ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
-            if (userCartResponseDto == null) {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-            } else {
-                return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            }
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        if (userCartResponseDto == null) {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
 
@@ -332,25 +277,17 @@ public class OrderController {
     }
 
     /*  =========================================================================================================   */
-
-
-    //TODO-EVG Security WO AOP - implement AOP
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "Purchase new order")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    public ResponseEntity<OrderPurchaseResponse> doPurchase(@PathVariable("user_id") long userId,
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    public ResponseEntity<OrderPurchaseResponse> doPurchase(@PathVariable("userId") long userId,
                                                             @RequestBody OrderPurchaseRequest purchaseRequest,
-                                                            @RequestHeader("Authorization") String authHeader,
                                                             HttpServletRequest request) {
 
-        HttpStatus authorizationStatus = SecurityTools.isAutorized(authHeader, userId, AccountType.USER);
-        if (authorizationStatus != null) {
-            return new ResponseEntity<>(authorizationStatus);
-        } else {
+        System.out.println("OrderController -> doPurchase(): userId=" + userId);
 
-            System.out.println("OrderController -> doPurchase(): userId=" + userId);
-
-            OrderPurchaseResponse purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
+        OrderPurchaseResponse purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
 
         if (purchaseResponse.isSuccess()) {
             return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
@@ -358,7 +295,5 @@ public class OrderController {
             // TODO-Benny return error code suitable to the error
             return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
         }
-}
     }
-
 }

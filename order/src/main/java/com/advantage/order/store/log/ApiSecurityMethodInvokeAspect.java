@@ -101,11 +101,14 @@ public class ApiSecurityMethodInvokeAspect {
         if (!ValidationHelper.isAuthorized(request.getSession(), token)) return unAuthorized();
 */
 
-        joinPoint.proceed();
+        ResponseEntity response;
+
         if (responseStatus != null) {
-            return new ResponseEntity(responseStatus);
+            response = new ResponseEntity(responseStatus);
+        } else {
+            response = (ResponseEntity) joinPoint.proceed();
         }
-        return null;
+        return response;
     }
 
     private static ResponseEntity unAuthorized() {
