@@ -73,6 +73,16 @@
     width: 90%;
 }
 
+#userDetailsEditMode .sec-validate .a-button{
+    margin-top: 18px;
+    padding: 10px 48px;
+}
+
+#userDetailsEditMode .sec-validate .a-button.no-border{
+    border: solid 2px transparent !important;
+    margin-right: 15px;
+}
+
 #userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext{
     width: 100%;
 }
@@ -124,7 +134,7 @@
     vertical-align: top;
     width: 33.33%;
     min-height: 122px;
-    padding: 30px 15px;
+    padding: 41px 15px;
     position: relative;
 }
 

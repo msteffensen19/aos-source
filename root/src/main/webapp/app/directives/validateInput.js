@@ -25,7 +25,7 @@ define(['./module'], function (directives) {
                 }
             }
         })
-        .directive('secValidate', ['$templateCache', function($templateCache){
+        .directive('secValidate', ['$templateCache', '$timeout', function($templateCache, $timeout){
             return{
                 restrict: 'E',
                 require: 'secValidate',
@@ -39,14 +39,12 @@ define(['./module'], function (directives) {
                     }
 
                     this.invokeOutFunctionWhenSecValidateReady = function(outFunction){
-
                         var invalid = this.getInvalidItems();
                         outFunction({ invalid : invalid});
                     }
 
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
-                        console.log(s.invalidItems)
                         $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : s.invalidItems.length });
                         return s.invalidItems.length  > 0;
                     }
@@ -92,7 +90,9 @@ define(['./module'], function (directives) {
                     }
                     if(s.invokeWhenReady)
                     {
-                        ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
+                        $timeout(function(){
+                            ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
+                        }, 1000);
                     }
                 }
             }
@@ -104,8 +104,6 @@ define(['./module'], function (directives) {
                 link: function(s, e, a, ctrl){
                     $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
                         if (args.invalidItems != undefined) {
-
-                            l(args.invalidItems)
                             if(args.invalidItems > 0){
                                 e.addClass("sec-validate-invalid")
                             }
@@ -378,13 +376,10 @@ define(['./module'], function (directives) {
                     },
                     post: function(s){
                         if(s.modelAttr != '' && s.modelAttr != undefined){
-                            $timeout(function(){
-                                s.inputFocus(s.id);
-                            }, 200)
+                            $timeout(function(){ s.inputFocus(s.id); }, 0)
                         }
-                        $timeout(function(){
-                            s.inputBlur(s.id, true);
-                        }, 500)
+                        $timeout(function(){ s.inputBlur(s.id, true); }, 100)
+                        $timeout(function(){ s.inputKeyup(s.id); }, 200)
                     }
                 }
             }

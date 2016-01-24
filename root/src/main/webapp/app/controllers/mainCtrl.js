@@ -118,6 +118,8 @@ define(['./module'], function (controllers) {
                 productsCartService.loadCartProducts().then(function(cart){
                     $scope.cart = cart;
                 });
+                $(".mini-title").css("display", "none");
+
             }
 
             $scope.login = function (miniTitleId) {

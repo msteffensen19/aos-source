@@ -38,8 +38,8 @@ var english = {
     'PRICE' : 'PRICE',
 
     'hi' : 'Hi',
-    'SIGN_OUT' : 'Sign out',
-    'PERSONAL_AREA' : 'Personal area',
+    'Sign_out' : 'Sign out',
+    'My_account' : 'My account',
     "PRODUCT_SPECIFICATIONS" : "PRODUCT SPECIFICATIONS",
     "View_details" : "View Details",
     'Shop_Now' : 'Shop Now',
@@ -121,6 +121,7 @@ var english = {
     'SHIPPING_BY' : 'SHIPPING BY',
     'Edit_shipping_Details' : 'Edit shipping Details',
     'NEXT' : 'NEXT',
+    'BACK' : 'BACK',
     'Choose_payment_method_below' : 'Choose payment method below ',
     'Back_to_shipping_details' : 'Back to shipping details',
     'PAY_NOW' : 'PAY NOW',

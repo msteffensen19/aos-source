@@ -15,20 +15,19 @@ define(['./module'], function (directives) {
             link:{
                 pre: function(s){
                     s.userDetailsEditMode = false;
-                    s.invalidUser = false;
+                    s.invalidUser = true;
                     s.validSecValidate = function(invalid){
                         s.invalidUser = s.userDetailsEditMode = invalid;
                     }
                 },
                 post: function(s){
-                    l("s.user")
+                    console.log("s.user")
                     l(s.user)
 
                     s.firstTag = true;
                     s.imgRadioButton = 1;
 
                     s.countries = null;
-                    s.country;
                     registerService.getAllCountries().then(function (countries) {
                         l("countries")
                         l(countries)
@@ -38,14 +37,18 @@ define(['./module'], function (directives) {
                                 l("country =======")
                                 l(countries[i])
                                 s.country = countries[i];
-                                l(s.country)
                                 break;
                             }
                         }
                         s.countries = countries;
                     });
 
-
+                    s.backToMainShippingDetails = function(){
+                        if(s.invalidUser){
+                            return;
+                        }
+                        s.userDetailsEditMode = false;
+                    }
 
                     s.setDefaultCard = true;
                     s.years = [];

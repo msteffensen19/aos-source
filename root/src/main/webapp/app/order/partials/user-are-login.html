@@ -20,9 +20,11 @@
                 </div>
                 <div>
                     <div icon-home></div>
-                    <label>{{ user.address }}</label>
-                    <label>{{ user.cityName }}</label>
-                    <label>{{ user.stateProvince }}</label>
+                    <label data-ng-show="user.address != ''">{{ user.address }}</label>
+                    <label data-ng-show="user.cityName != ''">{{ user.cityName }}</label>
+                    <label data-ng-show="country.name != ''">{{ country.name }}</label>
+                    <label data-ng-show="user.stateProvince != ''">{{ user.stateProvince }}</label>
+                    <label data-ng-show="user.postalCode != ''">{{ user.postalCode }}</label>
                 </div>
                 <div>
                     <div icon-phone></div>
@@ -66,6 +68,8 @@
                            id-attr="lastName">
                 </sec-input>
 
+
+
                 <sec-input sec-placeholder="{{'Phone_Number' | translate }}"
                            model-attr="user.phoneNumber"
                            id-attr="phoneNumber">
@@ -74,9 +78,9 @@
                 <h6 translate="Address"></h6>
 
                 <sec-input sec-placeholder="{{'Country' | translate }}"
-                           sec-required
+                           sec-required="{{'Country' | translate }} {{'field_is_required' | translate}}"
                            id-attr="Country"
-                           model-attr="user.countryId"
+                           model-attr="user.country"
                            input-type-attr="transclude"
                            select-tag="true">
                     <span class="must">*</span>
@@ -87,14 +91,14 @@
                 </sec-input>
 
                 <sec-input sec-placeholder="{{'City' | translate }}"
-                           sec-required
-                           model-attr="user.city"
-                           sec-max-length="25"
+                           sec-required="{{'City' | translate }} {{'field_is_required' | translate}}"
+                           model-attr="user.cityName"
+                             sec-max-length="25"
                            id-attr="city">
                 </sec-input>
 
                 <sec-input sec-placeholder="{{'Address' | translate }}"
-                           sec-required
+                           sec-required="{{'Address' | translate }} {{'field_is_required' | translate}}"
                            sec-max-length="50"
                            model-attr="user.address"
                            id-attr="address">
@@ -109,8 +113,8 @@
                 </sec-input>
 
                 <sec-input sec-placeholder="{{'State__Province__Region' | translate }}"
-                           sec-required
-                           model-attr="user.state"
+                           sec-required="{{'State__Province__Region' | translate }} {{'field_is_required' | translate}}"
+                           model-attr="user.stateProvince"
                            sec-max-length="10"
                            id-attr="state">
                 </sec-input>
@@ -119,6 +123,30 @@
                     <input ng-model="setDefaultCard" type="checkbox" autocomplete="off"/>
                     <span class="roboto-light">{{'offers_promotion' | translate }}</span>
                 </div>
+
+                <div class="blueLink">
+                    <label>
+                        <input sec-submit-attr="payNow_SafePay()"
+                               a-sec-validate-invalid
+                               class="roboto-medium float-button a-button "
+                               type="button"
+                               value="{{'NEXT' | translate}}"/>
+                    </label>
+                    <label>
+                        <input class="roboto-medium float-button a-button no-border"
+                               type="button" value="{{'BACK' | translate}}"
+                               data-ng-class="{ buttonDisable : invalidUser}"
+                               data-ng-click="backToMainShippingDetails"
+                        />
+                    </label>
+                </div>
+
+
+
+
+
+
+
 
             </sec-validate>
 
