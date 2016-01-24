@@ -8,10 +8,12 @@
     <packaging>pom</packaging>
     <name>main_project</name>
     <scm>
-        <connection>scm:git:http://mydtbld0005.isr.hp.com:7990/scm/ad/adm-demo-app.git</connection>
+        <!--<connection>scm:git:http://mydtbld0005.isr.hp.com:7990/scm/ad/adm-demo-app.git</connection>-->
+        <connection>scm:git:http://mydtbld0005.hpeswlab.net:7990/scm/ad/adm-demo-app.git</connection>
         <!--<developerConnection>scm:svn:https://127.0.0.1/dummy</developerConnection>-->
         <!--<tag>HEAD</tag>-->
-        <url>http://mydtbld0005.isr.hp.com:7990/projects/AD/repos/adm-demo-app/browse</url>
+        <!--<url>http://mydtbld0005.isr.hp.com:7990/projects/AD/repos/adm-demo-app/browse</url>-->
+        <url>http://mydtbld0005.hpeswlab.net:7990/projects/AD/repos/adm-demo-app/browse</url>
     </scm>
     <modules>
         <module>shared_resources</module>
