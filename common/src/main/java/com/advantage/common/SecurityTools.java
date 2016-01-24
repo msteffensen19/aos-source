@@ -1,9 +1,8 @@
 package com.advantage.common;
 
 import com.advantage.common.dto.AccountType;
-import com.advantage.common.exceptions.token.SignatureAlgorithmException;
-import com.advantage.common.exceptions.token.TokenUnsignedException;
-import com.advantage.common.exceptions.token.WrongTokenTypeException;
+import com.advantage.common.exceptions.authorization.AuthorizationException;
+import com.advantage.common.exceptions.token.VerificationTokenException;
 import io.jsonwebtoken.CompressionCodec;
 import org.springframework.http.HttpStatus;
 
@@ -58,94 +57,74 @@ public class SecurityTools {
         return ISSUER;
     }
 
-    public static HttpStatus isAutorized(String authorizationHeader, AccountType... expectedAccountTypes) {
+    public static boolean isAuthorized(String authorizationHeader, AccountType... expectedAccountTypes) throws AuthorizationException {
+
         if (authorizationHeader == null || authorizationHeader.trim().isEmpty()) {
-            return HttpStatus.UNAUTHORIZED;
+            throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
             // remove schema from token
             String authorizationSchema = "Bearer";
             if (authorizationHeader.indexOf(authorizationSchema) == -1) {
-                return HttpStatus.UNAUTHORIZED;
+                throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-                try {
-                    Token token = new TokenJWT(stringToken);
-                    AccountType actualAccountType = token.getAccountType();
-                    for (AccountType at : expectedAccountTypes) {
-                        if (at.equals(actualAccountType)) {
-                            return null;
-                        }
+
+                Token token = new TokenJWT(stringToken);
+                AccountType actualAccountType = token.getAccountType();
+                for (AccountType at : expectedAccountTypes) {
+                    if (at.equals(actualAccountType)) {
+                        return true;
                     }
-                    return HttpStatus.FORBIDDEN;
-                } catch (TokenUnsignedException e) {
-                    return HttpStatus.FORBIDDEN;
-                } catch (SignatureAlgorithmException e) {
-                    return HttpStatus.FORBIDDEN;
-                } catch (WrongTokenTypeException e) {
-                    return HttpStatus.FORBIDDEN;
                 }
+                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ")");
+
             }
         }
     }
 
-    public static HttpStatus isAutorized(String authorizationHeader, long expectedUserId, AccountType... expectedAccountTypes) {
+    public static boolean isAuthorized(String authorizationHeader, long expectedUserId, AccountType... expectedAccountTypes) throws AuthorizationException {
         if (authorizationHeader == null || authorizationHeader.trim().isEmpty()) {
-            return HttpStatus.UNAUTHORIZED;
+            throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
             // remove schema from token
             String authorizationSchema = "Bearer";
             if (authorizationHeader.indexOf(authorizationSchema) == -1) {
-                return HttpStatus.UNAUTHORIZED;
+                throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-                try {
-                    Token token = new TokenJWT(stringToken);
-                    AccountType actualAccountType = token.getAccountType();
-                    long actualUserId = token.getUserId();
-                    for (AccountType at : expectedAccountTypes) {
-                        if (at.equals(actualAccountType) && actualUserId == expectedUserId) {
-                            return null;
-                        }
+                Token token = new TokenJWT(stringToken);
+                AccountType actualAccountType = token.getAccountType();
+                long actualUserId = token.getUserId();
+                for (AccountType at : expectedAccountTypes) {
+                    if (at.equals(actualAccountType) && actualUserId == expectedUserId) {
+                        return true;
                     }
-                    return HttpStatus.FORBIDDEN;
-                } catch (TokenUnsignedException e) {
-                    return HttpStatus.FORBIDDEN;
-                } catch (SignatureAlgorithmException e) {
-                    return HttpStatus.FORBIDDEN;
-                } catch (WrongTokenTypeException e) {
-                    return HttpStatus.FORBIDDEN;
                 }
+                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ") or user Id (" + actualUserId + ")");
             }
         }
     }
 
-    public static HttpStatus isAutorized(String authorizationHeader, String expectedUserName, AccountType... expectedAccountTypes) {
+    public static boolean isAuthorized(String authorizationHeader, String expectedUserName, AccountType... expectedAccountTypes) throws AuthorizationException {
         if (authorizationHeader == null || authorizationHeader.trim().isEmpty()) {
-            return HttpStatus.UNAUTHORIZED;
+            throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
             // remove schema from token
             String authorizationSchema = "Bearer";
             if (authorizationHeader.indexOf(authorizationSchema) == -1) {
-                return HttpStatus.UNAUTHORIZED;
+                throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-                try {
-                    Token token = new TokenJWT(stringToken);
-                    AccountType actualAccountType = token.getAccountType();
-                    String actualUserName = token.getLoginName();
-                    for (AccountType expectedAccountType : expectedAccountTypes) {
-                        if (expectedAccountType.equals(actualAccountType) && actualUserName.equals(expectedUserName)) {
-                            return null;
-                        }
+
+                Token token = new TokenJWT(stringToken);
+                AccountType actualAccountType = token.getAccountType();
+                String actualUserName = token.getLoginName();
+                for (AccountType expectedAccountType : expectedAccountTypes) {
+                    if (expectedAccountType.equals(actualAccountType) && actualUserName.equals(expectedUserName)) {
+                        return true;
                     }
-                    return HttpStatus.FORBIDDEN;
-                } catch (TokenUnsignedException e) {
-                    return HttpStatus.FORBIDDEN;
-                } catch (SignatureAlgorithmException e) {
-                    return HttpStatus.FORBIDDEN;
-                } catch (WrongTokenTypeException e) {
-                    return HttpStatus.FORBIDDEN;
                 }
+                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ") or user name (" + actualUserName + ")");
             }
         }
     }

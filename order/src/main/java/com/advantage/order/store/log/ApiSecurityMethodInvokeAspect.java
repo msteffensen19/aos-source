@@ -2,6 +2,8 @@ package com.advantage.order.store.log;
 
 import com.advantage.common.SecurityTools;
 import com.advantage.common.dto.AccountType;
+import com.advantage.common.dto.ErrorResponseDto;
+import com.advantage.common.exceptions.authorization.AuthorizationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,13 +27,18 @@ public class ApiSecurityMethodInvokeAspect {
 
     @Around("execution(* *(..)) && @annotation(com.advantage.order.store.log.AuthorizeAsUser) && args(userId,..)")
     public ResponseEntity authorizeAsUser(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
-
-        //final String AUTHORIZATION_PREFIX = "Bearer ";
+        ResponseEntity response;
 
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        HttpStatus responseStatus = SecurityTools.isAutorized(authorizationHeader, userId, AccountType.USER);
-
+        try {
+            SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER);
+            response = (ResponseEntity) joinPoint.proceed();
+        } catch (AuthorizationException e) {
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(false, e.getMessage());
+            response = new ResponseEntity(errorResponseDto, e.getHttpStatus());
+        }
+        return response;
 
 //
 //        if (authorizationHeader == null || authorizationHeader.isEmpty() || !authorizationHeader.startsWith(AUTHORIZATION_PREFIX)) {
@@ -101,14 +108,7 @@ public class ApiSecurityMethodInvokeAspect {
         if (!ValidationHelper.isAuthorized(request.getSession(), token)) return unAuthorized();
 */
 
-        ResponseEntity response;
 
-        if (responseStatus != null) {
-            response = new ResponseEntity(responseStatus);
-        } else {
-            response = (ResponseEntity) joinPoint.proceed();
-        }
-        return response;
     }
 
     private static ResponseEntity unAuthorized() {

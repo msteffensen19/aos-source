@@ -2,9 +2,7 @@ package com.advantage.common;
 
 
 import com.advantage.common.dto.AccountType;
-import com.advantage.common.exceptions.token.SignatureAlgorithmException;
-import com.advantage.common.exceptions.token.TokenUnsignedException;
-import com.advantage.common.exceptions.token.WrongTokenTypeException;
+import com.advantage.common.exceptions.token.*;
 import io.jsonwebtoken.*;
 
 import java.util.Map;
@@ -47,35 +45,33 @@ public class TokenJWT extends Token {
         builder.setClaims(tokenClaims);
     }
 
-    public TokenJWT(String base64Token) throws TokenUnsignedException, SignatureAlgorithmException, WrongTokenTypeException {
+    public TokenJWT(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
         this();
-//        try {
-        parser = Jwts.parser();
-        if (!parser.isSigned(base64Token)) {
-            throw new TokenUnsignedException();
-        }
-        parser.setSigningKey(key);
-        parser.requireIssuer(issuer);
-        Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
-        tokenClaims = claimsJws.getBody();
-        JwsHeader jwsHeader = claimsJws.getHeader();
+        try {
+            parser = Jwts.parser();
+            if (!parser.isSigned(base64Token)) {
+                throw new TokenUnsignedException("Token is unsigned");
+            }
+            parser.setSigningKey(key);
+            parser.requireIssuer(issuer);
+            Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
+            tokenClaims = claimsJws.getBody();
+            JwsHeader jwsHeader = claimsJws.getHeader();
 
-        if (!jwsHeader.getType().equals(Header.JWT_TYPE)) {
-            throw new WrongTokenTypeException("Wrong token type");
-        }
-        if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
-            throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but nust be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName));
-        }
+            if (!jwsHeader.getType().equals(Header.JWT_TYPE)) {
+                throw new WrongTokenTypeException("Wrong token type");
+            }
+            if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
+                throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but must be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName));
+            }
 
-//        }  catch (SignatureException e) {
-//
-//        } catch (MissingClaimException mce) {
-//            // the parsed JWT did not have the sub field
-//        } catch (IncorrectClaimException ice) {
-//            // the parsed JWT had a sub field, but its value was not equal to 'jsmith'
-//        } catch (InvalidClaimException ice) {
-//            // the 'myfield' field was missing or did not have a 'myRequiredValue' value
-//        }
+        } catch (ClaimJwtException | RequiredTypeException e) {
+            throw new VerificationTokenException(e.getMessage());
+        } catch (SignatureException e) {
+            throw new SignatureAlgorithmException(e.getMessage());
+        } catch (MalformedJwtException | CompressionException | UnsupportedJwtException e) {
+            throw new ContentTokenException(e.getMessage());
+        }
     }
 
     @Override
@@ -86,13 +82,19 @@ public class TokenJWT extends Token {
     }
 
     @Override
-    public long getUserId() {
+    public long getUserId() throws ContentTokenException {
         long result = 0;
+        Object o = "null";
+        ;
         try {
-            Number userId = (Number) tokenClaims.get(USER_ID_FIELD_NAME);
+            o = tokenClaims.get(USER_ID_FIELD_NAME);
+            if (o == null) {
+                throw new ContentTokenException("The token must contains " + USER_ID_FIELD_NAME + " field");
+            }
+            Number userId = (Number) o;
             result = userId.longValue();
         } catch (ClassCastException | NumberFormatException e) {
-
+            throw new ContentTokenException("User id have wrong number: " + o.toString());
         }
         return result;
     }

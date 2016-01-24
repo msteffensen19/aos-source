@@ -1,6 +1,7 @@
 package com.advantage.common;
 
 import com.advantage.common.dto.AccountType;
+import com.advantage.common.exceptions.token.ContentTokenException;
 
 import java.security.Key;
 import java.util.Map;
@@ -24,7 +25,7 @@ public abstract class Token {
 
     public abstract AccountType getAccountType();
 
-    public abstract long getUserId();
+    public abstract long getUserId() throws ContentTokenException;
 
     //public abstract String getEmail();
 
