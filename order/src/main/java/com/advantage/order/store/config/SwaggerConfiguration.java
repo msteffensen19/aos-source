@@ -1,6 +1,6 @@
 package com.advantage.order.store.config;
 
-import com.advantage.common.SecurityTools;
+import com.advantage.common.security.SecurityTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

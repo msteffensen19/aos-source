@@ -1,4 +1,4 @@
-package com.advantage.common;
+package com.advantage.common.security;
 
 
 import com.advantage.common.dto.AccountType;

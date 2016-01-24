@@ -1,6 +1,5 @@
-package com.advantage.order.store.log;
+package com.advantage.common.security;
 
-import com.advantage.common.SecurityTools;
 import com.advantage.common.dto.AccountType;
 import com.advantage.common.dto.ErrorResponseDto;
 import com.advantage.common.exceptions.authorization.AuthorizationException;
