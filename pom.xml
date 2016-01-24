@@ -116,6 +116,7 @@
                                     <echo>java.runtime.name=${java.runtime.name}</echo>
                                     <echo>java.runtime.version=${java.runtime.version}</echo>
                                     <echo>java.vm.version=${java.vm.version}</echo>
+                                    <echo>env.COMPUTERNAME=${env.COMPUTERNAME}</echo>
                                 </echos>
                             </configuration>
                         </plugin>
