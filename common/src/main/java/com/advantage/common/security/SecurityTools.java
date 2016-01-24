@@ -95,12 +95,15 @@ public class SecurityTools {
                 Token token = new TokenJWT(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 long actualUserId = token.getUserId();
+                if (actualUserId != expectedUserId) {
+                    throw new VerificationTokenException("Wrong user Id (" + actualUserId + "), but the request is for user (" + expectedUserId + ")");
+                }
                 for (AccountType at : expectedAccountTypes) {
-                    if (at.equals(actualAccountType) && actualUserId == expectedUserId) {
+                    if (at.equals(actualAccountType)) {
                         return true;
                     }
                 }
-                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ") or user Id (" + actualUserId + ")");
+                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ")");
             }
         }
     }
@@ -119,12 +122,15 @@ public class SecurityTools {
                 Token token = new TokenJWT(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 String actualUserName = token.getLoginName();
+                if (!actualUserName.equals(expectedUserName)) {
+                    throw new VerificationTokenException("Wrong user name (" + actualUserName + "), but the request is for user (" + expectedUserName + ")");
+                }
                 for (AccountType expectedAccountType : expectedAccountTypes) {
                     if (expectedAccountType.equals(actualAccountType) && actualUserName.equals(expectedUserName)) {
                         return true;
                     }
                 }
-                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ") or user name (" + actualUserName + ")");
+                throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ")");
             }
         }
     }
