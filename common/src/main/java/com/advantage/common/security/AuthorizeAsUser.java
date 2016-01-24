@@ -1,4 +1,4 @@
-package com.advantage.order.store.log;
+package com.advantage.common.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

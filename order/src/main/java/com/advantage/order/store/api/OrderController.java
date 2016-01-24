@@ -5,7 +5,7 @@ package com.advantage.order.store.api;
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
-import com.advantage.order.store.log.AuthorizeAsUser;
+import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
