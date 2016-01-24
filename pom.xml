@@ -119,6 +119,7 @@
                                     <echo>java.runtime.version=${java.runtime.version}</echo>
                                     <echo>java.vm.version=${java.vm.version}</echo>
                                     <echo>env.COMPUTERNAME=${env.COMPUTERNAME}</echo>
+                                    <ech>Test for Jenkins: 25/Jan/2016 01:07</ech>
                                 </echos>
                             </configuration>
                         </plugin>
