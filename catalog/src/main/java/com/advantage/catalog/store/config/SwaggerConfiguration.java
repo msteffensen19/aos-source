@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.config;
 
 import com.advantage.common.Constants;
+import com.advantage.common.security.SecurityTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class SwaggerConfiguration {
                 env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"));
         ApiInfo apiInfo = new ApiInfo(
                 "Advantage - " + env.getProperty("mvn.project.build.finalName") + ".war REST API",
-                apiInfoDescription,
+                apiInfoDescription + "<hr/>" + SecurityTools.SWAGGER_NOTE,
                 env.getProperty("mvn.project.version"),
                 null,
                 null,

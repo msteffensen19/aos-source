@@ -1,19 +1,22 @@
 package com.advantage.catalog.store.api;
 
-import com.advantage.common.dto.*;
 import com.advantage.catalog.store.model.category.Category;
-import com.advantage.catalog.store.services.DealService;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
+import com.advantage.catalog.store.services.DealService;
 import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
+import com.advantage.common.dto.*;
+import com.advantage.common.security.AuthorizeAsAdmin;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -55,6 +59,8 @@ public class CatalogController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @AuthorizeAsAdmin
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto product,
                                                                HttpServletRequest request) {
@@ -68,6 +74,8 @@ public class CatalogController {
                 new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
     }
 
+    @AuthorizeAsAdmin
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @RequestMapping(value = "/products/images", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProductWithImage(@RequestParam("product") String product,
                                                                         @RequestParam("file") MultipartFile file,
@@ -104,6 +112,8 @@ public class CatalogController {
                 new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
     }
 
+    @AuthorizeAsAdmin
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
     public ResponseEntity<ProductResponseDto> updateProduct(@RequestBody ProductDto product,
                                                                @PathVariable("product_id") Long id,
@@ -163,6 +173,8 @@ public class CatalogController {
     }
 
     //endregion
+    @AuthorizeAsAdmin
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @RequestMapping(value = "/images", method = RequestMethod.POST)
     public ResponseEntity<ImageUrlResponseDto> imageUpload(@RequestParam("file") MultipartFile file,
                                                               HttpServletRequest request) {

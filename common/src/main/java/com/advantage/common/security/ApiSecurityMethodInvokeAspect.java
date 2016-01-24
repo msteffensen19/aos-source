@@ -23,8 +23,22 @@ public class ApiSecurityMethodInvokeAspect {
 
     public ParameterNameDiscoverer discoverer;
 
+    @Around("execution(* *(..)) && @annotation(com.advantage.common.security.AuthorizeAsAdmin)")
+    public ResponseEntity authorizeAsAdmin(ProceedingJoinPoint joinPoint) throws Throwable {
+        ResponseEntity response;
+        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        try {
+            SecurityTools.isAuthorized(authorizationHeader, AccountType.ADMIN);
+            response = (ResponseEntity) joinPoint.proceed();
+        } catch (AuthorizationException e) {
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(false, e.getMessage());
+            response = new ResponseEntity(errorResponseDto, e.getHttpStatus());
+        }
+        return response;
+    }
 
-    @Around("execution(* *(..)) && @annotation(com.advantage.order.store.log.AuthorizeAsUser) && args(userId,..)")
+    @Around("execution(* *(..)) && @annotation(com.advantage.common.security.AuthorizeAsUser) && args(userId,..)")
     public ResponseEntity authorizeAsUser(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
         ResponseEntity response;
 

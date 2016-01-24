@@ -38,7 +38,7 @@ public class SwaggerConfiguration {
                 env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"));
         ApiInfo apiInfo = new ApiInfo(
                 "Advantage - " + env.getProperty("mvn.project.build.finalName") + ".war REST API",
-                apiInfoDescription + "<br/><br/>" + SecurityTools.SWAGGER_NOTE,
+                apiInfoDescription + "<hr/>" + SecurityTools.SWAGGER_NOTE,
                 env.getProperty("mvn.project.version"),
                 null,
                 null,
