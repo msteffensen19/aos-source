@@ -1,4 +1,4 @@
-package com.advantage.common.dto;
+package com.advantage.common.enums;
 
 import java.util.ArrayList;
 import java.util.List;

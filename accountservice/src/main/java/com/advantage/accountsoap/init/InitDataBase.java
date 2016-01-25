@@ -3,7 +3,7 @@ package com.advantage.accountsoap.init;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
-import com.advantage.common.dto.AccountType;
+import com.advantage.common.enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
