@@ -51,7 +51,8 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId,
                                                                HttpServletRequest request,
                                                                HttpServletResponse response) {
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
 
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
@@ -73,10 +74,10 @@ public class OrderController {
             @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
             HttpServletRequest request) {
 
-        shoppingCartResponse = shoppingCartService.add(userId, productId, hexColor, quantity);
+        shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
 
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
@@ -91,26 +92,29 @@ public class OrderController {
     @ApiOperation(value = "Update quantity of product in shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
-    public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userId") Long userId,
-                                                                               @PathVariable("productId") Long productId,
-                                                                               @PathVariable("color") String hexColor,
-                                                                               @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
-                                                                               @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
-                                                                               HttpServletRequest request) {
+    public ResponseEntity<ShoppingCartResponseDto> updateProductInCart(@PathVariable("userId") Long userId,
+                                                                       @PathVariable("productId") Long productId,
+                                                                       @PathVariable("color") String hexColor,
+                                                                       @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
+                                                                       @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
+                                                                       HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.OK;
 
-        if ((ValidationHelper.isValidColorHexNumber(hexColorNew)) || (quantity > 0)) {
-            shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
+        if (((ValidationHelper.isValidColorHexNumber(hexColor)) &&
+                (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
+                (! hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0))
+        {
+            shoppingCartResponse = shoppingCartService.updateProductInCart(Long.valueOf(userId), productId, hexColor, hexColorNew, quantity);
         }
         else {
-            return new ResponseEntity<>(new ShoppingCartResponseDto(userId), HttpStatus.BAD_REQUEST);    //  404 = Resource not found
+            httpStatus = HttpStatus.BAD_REQUEST;
         }
 
-        /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            return new ResponseEntity<>(userCartResponseDto, httpStatus);
         }
     }
 
@@ -128,7 +132,7 @@ public class OrderController {
             shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
 
             if (shoppingCartResponse.isSuccess()) {
-                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
 
                 if (userCartResponseDto == null) {
                     //  Unlikely scenario - update of user cart successful and get user cart failed
@@ -169,7 +173,7 @@ public class OrderController {
         shoppingCartResponse = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
 
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
@@ -192,7 +196,7 @@ public class OrderController {
             shoppingCartResponse.setId(-1);
         }
 
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
@@ -221,7 +225,7 @@ public class OrderController {
         ShoppingCartResponseDto responseDto = shoppingCartService.verifyProductsQuantitiesInUserCart(userId, shoopingCartProducts);
         /*return new ResponseEntity<>(responseDto, HttpStatus.OK);*/
 
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
+        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {

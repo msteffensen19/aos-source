@@ -10,7 +10,7 @@ import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.security.TokenJWT;
-import com.advantage.common.dto.AccountType;
+import com.advantage.common.enums.AccountType;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
