@@ -13,8 +13,8 @@
                 sec-max-length="15"
                 sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
                 pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
-                model-attr="loginUser.loginUser"
-                id-attr="username" >
+                model-attr="orderPaymenLogin.loginUser"
+                id-attr="orderPaymenLogin_username" >
         </sec-input>
 
         <sec-input
@@ -24,8 +24,8 @@
                 sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                 pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
                 input-type-attr="password"
-                model-attr="loginUser.loginPassword"
-                id-attr="loginModal_password">
+                model-attr="orderPaymenLogin.loginPassword"
+                id-attr="orderPaymenLogin_password">
         </sec-input>
 
         <sec-input
@@ -34,8 +34,8 @@
                 sec-email
                 sec-placeholder="{{'Email' | translate}}"
                 input-type-attr="email"
-                model-attr="loginUser.email"
-                id-attr="loginModal_email">
+                model-attr="orderPaymenLogin.email"
+                id-attr="orderPaymenLogin_email">
         </sec-input>
 
         <label translate="Forgot_your_password"
@@ -44,7 +44,9 @@
         </label>
 
         <br />
-        <input sec-submit-attr="signIn(loginUser, false)"
+
+
+        <input sec-submit-attr="orderPaymenLogin_signIn()"
                class="a-button roboto-medium"
                a-sec-validate-invalid
                type="button"
@@ -68,6 +70,12 @@
     </div>
 </div>
 </div>
+
+
+
+
+
+
 
 
 

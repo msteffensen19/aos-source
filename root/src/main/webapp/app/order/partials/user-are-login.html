@@ -3,10 +3,9 @@
 
     <div id="detailslink">
         <label class="roboto-regular" ng-class="{ selected : firstTag }">1. {{ 'SHIPPING_DETAILS' | translate }}</label>
-        <label class="roboto-regular" ng-class="{ selected : !firstTag }"
-               data-ng-click="userDetailsEditMode = !userDetailsEditMode"
-        >2. {{ 'PAYMENT_METHOD' | translate }}</label>
+        <label class="roboto-regular" ng-class="{ selected : !firstTag }">2. {{ 'PAYMENT_METHOD' | translate }}</label>
     </div>
+
 
     <!-- USER DETAILS SECTION-->
 
@@ -24,7 +23,7 @@
                     <label data-ng-show="user.cityName != ''">{{ user.cityName }}</label>
                     <label data-ng-show="country.name != ''">{{ country.name }}</label>
                     <label data-ng-show="user.stateProvince != ''">{{ user.stateProvince }}</label>
-                    <label data-ng-show="user.postalCode != ''">{{ user.postalCode }}</label>
+                    <label data-ng-show="user.zipcode != ''">{{ user.zipcode }}</label>
                 </div>
                 <div>
                     <div icon-phone></div>
@@ -36,12 +35,14 @@
                 <label class="float-button">{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png"
                                                                                   alt="ShipEx"/></label>
             </div>
-            <div>
-                <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75"> {{ 'NEXT' |
-                    translate }}
+            <div class="mobileBtnHandler">
+                <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75">
+                    {{ 'NEXT' | translate }}
                 </button>
             </div>
         </div>
+
+
 
 
         <div data-ng-show="userDetailsEditMode" id="userDetailsEditMode">
@@ -79,21 +80,23 @@
 
                 <sec-input sec-placeholder="{{'Country' | translate }}"
                            sec-required="{{'Country' | translate }} {{'field_is_required' | translate}}"
-                           id-attr="Country"
+                           id-attr="country"
                            model-attr="user.country"
                            input-type-attr="transclude"
                            select-tag="true">
                     <span class="must">*</span>
-                    <select ng-model="country"
+                    <select ng-model="country" ng-change="countryChange(country)"
                             class="inputtext"
                             ng-options="country.name for country in countries track by country.id">
                     </select>
                 </sec-input>
 
+
+
                 <sec-input sec-placeholder="{{'City' | translate }}"
                            sec-required="{{'City' | translate }} {{'field_is_required' | translate}}"
                            model-attr="user.cityName"
-                             sec-max-length="25"
+                           sec-max-length="25"
                            id-attr="city">
                 </sec-input>
 
@@ -108,8 +111,8 @@
                            sec-max-length="10"
                            sec-only-numbers
                            no-red-star="true"
-                           model-attr="user.postalCode"
-                           id-attr="postalCode">
+                           model-attr="user.zipcode"
+                           id-attr="zipcode">
                 </sec-input>
 
                 <sec-input sec-placeholder="{{'State__Province__Region' | translate }}"
@@ -120,13 +123,13 @@
                 </sec-input>
 
                 <div class="option marginTop">
-                    <input ng-model="setDefaultCard" type="checkbox" autocomplete="off"/>
+                    <input ng-model="agree_Agreement" type="checkbox" />
                     <span class="roboto-light">{{'offers_promotion' | translate }}</span>
                 </div>
 
                 <div class="blueLink">
                     <label>
-                        <input sec-submit-attr="payNow_SafePay()"
+                        <input sec-submit-attr="accountUpdate()"
                                a-sec-validate-invalid
                                class="roboto-medium float-button a-button "
                                type="button"
@@ -136,10 +139,12 @@
                         <input class="roboto-medium float-button a-button no-border"
                                type="button" value="{{'BACK' | translate}}"
                                data-ng-class="{ buttonDisable : invalidUser}"
-                               data-ng-click="backToMainShippingDetails"
+                               data-ng-click="backToMainShippingDetails()"
                         />
                     </label>
                 </div>
+
+
 
 
 

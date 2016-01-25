@@ -165,6 +165,7 @@ define(['./module'], function mainMobCtrl ($scope, productService, smoothScroll,
                     switch($location.$$path) {
                         case '/shoppingCart':
                         case '/orderPayment':
+                        case '/userNotLogin':
                             window.history.back();
                             break;
                     }

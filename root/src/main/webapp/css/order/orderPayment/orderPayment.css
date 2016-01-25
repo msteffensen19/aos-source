@@ -177,7 +177,12 @@
 
 }
 
-@media screen and (max-width: 950px){
+@media screen and (max-width: 980px){
+
+    #orderPayment .blueLink{
+        padding: 30px 0;
+        display: block;
+    }
 
 
     #orderPayment > div:nth-child(1)
@@ -185,11 +190,33 @@
         width: 53%;
     }
 
-
-
+    #paymentMethod .sec-validate .inputtext{
+        width: 70% !important;
+    }
 }
 
+@media screen and (max-width: 850px) {
 
+    #userSection .nextBtn {
+        /*margin-top: 30px !important;*/
+    }
+
+    .mobileBtnHandler{
+        height: 150px;
+    }
+
+    #orderPayment > div:nth-child(1) {
+        width: 100%;
+        /*padding-bottom: 0px*/
+    }
+
+    #orderPayment > #userCart {
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+}
 
 
 

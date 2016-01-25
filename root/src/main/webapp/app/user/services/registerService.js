@@ -48,7 +48,7 @@ define(['./module'], function (services) {
                 "address": model.address ,
                 "allowOffersPromotion":  model.offers_promotion ? 'Y' : 'N',
                 "cityName": model.city,
-                "countryId": model.country.id,
+                "countryId": model.country.id || 4,
                 "email": model.email,
                 "firstName": model.firstName,
                 "lastName": model.lastName,

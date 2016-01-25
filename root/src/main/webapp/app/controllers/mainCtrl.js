@@ -224,17 +224,22 @@ define(['./module'], function (controllers) {
 
 
 
+
+
             /*
+             $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
 
-              $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
-
-                 console.log('==========================start======================================================')
-                 console.log('$location')
-                 console.log($location)
-                 console.log('$state')
-                 console.log($state)
-                 console.log('cart')
-                 console.log($scope.cart)
+             console.log('==========================start======================================================')
+             console.log('$location')
+             console.log($location)
+             console.log('$state')
+             console.log($state)
+             console.log('cart')
+             console.log($scope.cart)
+             //if (to.redirectTo) {
+             //    evt.preventDefault();
+             //    $state.go("userNotlogin", params)
+             //}
 
              });
              $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {

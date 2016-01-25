@@ -12,7 +12,7 @@ define([],function(){
 
         $urlRouterProvider.otherwise("/#");
 
-        $stateProvider.state('default',{
+        $stateProvider.state('default', {
             url: '/',
             templateUrl: 'app/views/home-page.html',
             controller: 'categoriesCtrl',

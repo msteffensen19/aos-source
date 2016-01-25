@@ -3,12 +3,11 @@
  */
 
 
-
-
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService', 'registerService',
-        function (rs, $templateCache, orderService, registerService) {
+    directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService',
+        'registerService', '$location',
+        function (rs, $templateCache, orderService, registerService, $location) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
@@ -29,13 +28,9 @@ define(['./module'], function (directives) {
 
                     s.countries = null;
                     registerService.getAllCountries().then(function (countries) {
-                        l("countries")
-                        l(countries)
                         for(var i  in countries){
                             if(countries[i].id == s.user.countryId)
                             {
-                                l("country =======")
-                                l(countries[i])
                                 s.country = countries[i];
                                 break;
                             }
@@ -43,11 +38,26 @@ define(['./module'], function (directives) {
                         s.countries = countries;
                     });
 
+                    s.countryChange = function(country){
+                        s.user.countryId = country.id;
+                        s.user.country = country.isoName;
+                    }
+
                     s.backToMainShippingDetails = function(){
+                        console.log("s.invalidUser = " + s.invalidUser)
                         if(s.invalidUser){
                             return;
                         }
                         s.userDetailsEditMode = false;
+                    }
+
+                    s.agree_Agreement = true;
+                    s.accountUpdate = function(){
+                        var agree_Agreement = s.agree_Agreement;
+                        orderService.accountUpdate(s.user, agree_Agreement).then(function(res){
+                            s.invalidUser = s.userDetailsEditMode = false;
+                            s.firstTag = false;
+                        });
                     }
 
                     s.setDefaultCard = true;
@@ -70,7 +80,6 @@ define(['./module'], function (directives) {
                             .then(function (res) {
 
                                 if (res.success) {
-                                    l(s.card.number)
                                     rs.$broadcast('updatePaymentEnd', {
                                         paymentEnd: true,
                                         orderNumber: res.orderNumber,

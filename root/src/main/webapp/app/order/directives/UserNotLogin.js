@@ -8,16 +8,6 @@ define(['./module'], function (directives) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-not-login.html'),
-            link: {
-                pre: function (s) {
-                    s.validSecValidate = function (invalid) {
-                        //alert("invove: " + invalid);
-                    }
-                },
-                post: function () {
-
-                }
-            }
         }
     }]);
 });

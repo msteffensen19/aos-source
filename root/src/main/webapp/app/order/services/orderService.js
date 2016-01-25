@@ -1,5 +1,12 @@
 /**
  * Created by correnti on 10/01/2016.
+
+ [‎25/‎01/‎2016 11:12] Regev, Binyamin:
+ accountType:
+ 10 = admin
+ 20 = user
+ 30 = guest
+
  */
 
 define(['./module'], function (services) {
@@ -12,8 +19,7 @@ define(['./module'], function (services) {
                 getAccountById: getAccountById,
                 getShippingCost: getShippingCost,
                 SafePay: SafePay,
-                masterCredit: masterCredit,
-                manualPayment : manualPayment
+                accountUpdate : accountUpdate
         });
 
 
@@ -23,10 +29,10 @@ define(['./module'], function (services) {
                 var purchasedProducts = [];
                 angular.forEach(cart.productsInCart, function(product){
                     purchasedProducts.push({
-                            "hexColor": product.color.code,
-                            "productId": product.productId,
-                            "quantity": product.quantity
-                        });
+                        "hexColor": product.color.code,
+                        "productId": product.productId,
+                        "quantity": product.quantity
+                    });
                 })
 
                 var paramsToPass = {
@@ -60,10 +66,6 @@ define(['./module'], function (services) {
                     "purchasedProducts": purchasedProducts,
                 }
 
-                //console.log(paramsToPass);
-                //console.log(JSON.stringify(paramsToPass));
-                //console.log(user);
-
                 $http({
                     method: "post",
                     url: server.order.safePay(user.id),
@@ -84,14 +86,61 @@ define(['./module'], function (services) {
                 return defer.promise;
             }
 
-            function masterCredit(){
+            function accountUpdate(user, allowOffersPromotion) {
 
+                var paramsToPass = {
+                    lastName: user.lastName,
+                    firstName: user.firstName,
+                    accountId: user.id,
+                    countryId : user.countryId,
+                    stateProvince: user.stateProvince,
+                    cityName: user.cityName,
+                    address: user.address,
+                    zipcode: user.zipcode,
+                    phoneNumber: user.phoneNumber,
+                    email: user.email,
+                    accountType: 20,
+                    allowOffersPromotion: allowOffersPromotion
+                }
+
+
+                var defer = $q.defer();
+                var params = server.order.accountUpdate();
+                mini_soap.post(params.path, params.method, paramsToPass).
+                then(function (res) {
+                        defer.resolve({
+                            success: res.SUCCESS,
+                            userId: res.USERID,
+                            reason: res.REASON,
+                        });
+                    },
+                    function (response) {
+                        console.log(response);
+                        defer.reject("Request failed! ");
+                    });
+
+                return defer.promise;
+
+                //
+                //$http({
+                //    method: "post",
+                //    url: ,
+                //    data: paramsToPass,
+                //    //headers: {
+                //    //    "content-type": "application/json",
+                //    //    "Authorization": "Bearer " + user.response.token,
+                //    //},
+                //}).
+                //then(function (res){
+                //    // {reason, orderNumber, code, success}
+                //    console.log(JSON.stringify(res.data))
+                //    console.log(res.data)
+                //    defer.resolve(res.data)
+                //}, function (err){
+                //    console.log(err); defer.reject("probl.")
+                //})
+                //return defer.promise;
             }
-
-            function manualPayment(){
-
-            }
-
 
             function getAccountById() {
 

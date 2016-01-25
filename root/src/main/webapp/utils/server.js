@@ -179,6 +179,13 @@ var server = {
             return orderKey + "/orders/users/" + userId ;
         },
 
+        accountUpdate: function(){
+            return {
+                path: wsdlPath,
+                method: 'AccountUpdateRequest'
+            }
+        },
+
     },
     account: {
 

@@ -24,6 +24,7 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
+
                         userService.login(user).then(function (res) {
 
                             var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
@@ -46,11 +47,10 @@ define(['./module'], function (directives) {
                                 }
 
                                 $cookie.remove("loginsCounter");
-                                userCookie.fillParams($scope.loginUser.loginUser, $scope.loginUser.email, response);
+                                userCookie.fillParams(user.loginUser, user.email, response);
                                 $rootScope.userCookie = userCookie;
 
                                 if (rememberMe) {
-
                                     $cookie(userCookie.getKey(userCookie), userCookie, {
                                         expirationUnit: 'minutes',
                                         expires: 60
@@ -59,7 +59,7 @@ define(['./module'], function (directives) {
                                     console.log($cookie(userCookie.getKey(userCookie)));
                                 }
                                 else {
-                                    $cookie.remove("userCookie" + $scope.loginUser.email);
+                                    $cookie.remove("userCookie" + user.email);
                                 }
 
                                 productsCartService.joinCartProducts().then(function (cart) {
