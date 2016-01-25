@@ -176,6 +176,7 @@ public class ValidationHelper {
      * @param token   {@link String} token key
      * @return <b>true</b> when {@code token} is a valid
      */
+    @Deprecated
     public static boolean isAuthorized(HttpSession session, String token) {
         return !(session.getAttribute(Constants.UserSession.IS_SUCCESS) == null ||
                 session.getAttribute(Constants.UserSession.TOKEN) == null ||

@@ -55,6 +55,7 @@ public class Constants {
     private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
     public static final String URI_SCHEMA = "http";
+    public static final String FILE_PROPERTIES_VER_TXT = "classpath:/ver.txt";
 
 
     public static class UserSession {

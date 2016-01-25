@@ -70,6 +70,7 @@ public class InitDataBase {
 
         session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Fiskin", "Evgeney", "fizpok", "ASas12", countryMap.get(10l), "052-4898919", "Jerusalem1", "Jerusalem", "address", "9876543", "evgeney.fiskin@hpe.com", true));
 
+        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10l), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
         transaction.commit();
     }
 }

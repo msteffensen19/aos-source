@@ -27,25 +27,6 @@
         <profile>
             <id>development</id>
             <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>sql-maven-plugin</artifactId>
-                            <configuration>
-                                <!--suppress MavenModelInspection -->
-                                <url>
-                                    ${db.url.prefix}://${order.hibernate.db.url.host}:${order.hibernate.db.url.port}/postgres
-                                </url>
-                                <!--suppress MavenModelInspection -->
-                                <username>${order.hibernate.db.login}</username>
-                                <!--suppress MavenModelInspection -->
-                                <password>${order.hibernate.db.password}</password>
-                                <sqlCommand>create database "${order.hibernate.db.name}"</sqlCommand>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
                 <plugins>
                     <!--run sql-->
                     <plugin>
@@ -58,6 +39,24 @@
     </profiles>
     <build>
         <finalName>order</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sql-maven-plugin</artifactId>
+                    <configuration>
+                        <!--suppress MavenModelInspection -->
+                        <url>${db.url.prefix}://${order.hibernate.db.url.host}:${order.hibernate.db.url.port}/postgres
+                        </url>
+                        <!--suppress MavenModelInspection -->
+                        <username>${order.hibernate.db.login}</username>
+                        <!--suppress MavenModelInspection -->
+                        <password>${order.hibernate.db.password}</password>
+                        <sqlCommand>create database "${order.hibernate.db.name}"</sqlCommand>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <!--shared resources-->
             <plugin>
@@ -77,6 +76,10 @@
                         <include>**/*Tests.java</include>
                     </includes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

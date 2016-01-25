@@ -261,9 +261,44 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                    <executions>
+                        <execution>
+                            <configuration>
+                                <encoding>${project.build.sourceEncoding}</encoding>
+                                <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/generated-resources</directory>
+                                        <filtering>true</filtering>
+                                        <!--<excludes>-->
+                                        <!--<exclude>/*.properties</exclude>-->
+                                        <!--</excludes>-->
+                                        <includes>
+                                            <include>ver.txt</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                            <id>copy-shared-resources-into-webapp</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

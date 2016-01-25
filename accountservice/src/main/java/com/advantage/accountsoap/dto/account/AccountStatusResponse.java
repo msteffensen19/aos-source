@@ -1,7 +1,6 @@
 package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.common.Token;
 
 import javax.xml.bind.annotation.*;
 

@@ -198,7 +198,6 @@
     </profiles>
     <build>
         <finalName>ROOT</finalName>
-
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -210,31 +209,35 @@
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
-                <!--TODO-EVG after use json properties for webapp remove this plugin-->
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.7</version>
                 <executions>
                     <execution>
-                        <id>copy-shared-resources-into-webapp</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
                         <configuration>
                             <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.build.directory}/generated-resources</directory>
                                     <filtering>true</filtering>
-                                    <includes>
-                                        <include>services.properties</include>
-                                        <include>global.properties</include>
+                                    <!--<excludes>-->
+                                    <!--<exclude>/*.*</exclude>-->
+                                    <!--</excludes>-->
+                                    <includes combine.self="override">
+                                        <include>/services.properties</include>
+                                        <!--<include>/global.properties</include>-->
+                                        <include>/ver.txt</include>
                                     </includes>
                                 </resource>
                             </resources>
                         </configuration>
+                        <id>copy-shared-resources-into-webapp</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
                     </execution>
                 </executions>
+
             </plugin>
             <!--read properties from zip-->
             <plugin>
@@ -261,15 +264,6 @@
                         <echo>project.basedir=${project.basedir}</echo>
                         <echo>project.parent.basedir=${project.parent.basedir}</echo>
                         <echo>project.build.directory=${project.build.directory}</echo>
-
-                        <!--suppress MavenModelInspection -->
-                        <echo>account.service.url.port is ${account.service.url.port}</echo>
-                        <!--suppress MavenModelInspection -->
-                        <echo>EVG!!! hibernate.db.driver_classname=${hibernate.db.driver_classname}</echo>
-                        <!--suppress MavenModelInspection -->
-                        <echo>db
-                            url=${db.url.prefix}://${account.hibernate.db.url.host}:${account.hibernate.db.url.port}:postgres
-                        </echo>
                     </echos>
                 </configuration>
             </plugin>

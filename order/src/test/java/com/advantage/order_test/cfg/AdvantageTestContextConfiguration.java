@@ -20,7 +20,6 @@ import java.util.Map;
         "com.advantage.order.store.user.dao",
         "com.advantage.order.store.user.model",
         "com.advantage.order.store.init"})
-@PropertySources(value = {@PropertySource("classpath:imageManagement.properties")})
 public class AdvantageTestContextConfiguration {
 
     @Autowired

@@ -1,7 +1,7 @@
 package com.advantage.order.store.config;
 
 import com.advantage.order.store.log.AdvantageDaoCallsLoggingAspect;
-import com.advantage.order.store.log.ApiSecurityMethodInvokeAspect;
+import com.advantage.common.security.ApiSecurityMethodInvokeAspect;
 import com.advantage.order.store.log.ApiCallsLoggingAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

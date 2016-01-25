@@ -1,5 +1,6 @@
 package com.advantage.mastercredit.payment.config;
 
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
                 )
         }
 )
+
+@PropertySources(value = {@PropertySource(Constants.FILE_PROPERTIES_VER_TXT)})
 
 public class AppConfiguration {
 

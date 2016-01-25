@@ -2,7 +2,7 @@ package com.advantage.catalog.store.config;
 
 import com.advantage.catalog.store.log.AdvantageDaoCallsLoggingAspect;
 import com.advantage.catalog.store.log.ApiCallsLoggingAspect;
-import com.advantage.catalog.store.log.ApiSecurityMethodInvokeAspect;
+import com.advantage.common.security.ApiSecurityMethodInvokeAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
