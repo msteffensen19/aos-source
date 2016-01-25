@@ -13,7 +13,7 @@ define(['./module'], function (controllers) {
             s.user = resolveParams.user
             if(resolveParams.user == null){
                 l($location)
-                $location.path('userNotLogin')
+                $location.path('login')
                 return;
             }
 

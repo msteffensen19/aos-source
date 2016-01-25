@@ -46,8 +46,8 @@ define([],function(){
                 }
             }
         }).
-        state('userNotLogin', {
-            url: '/userNotLogin',
+        state('login', {
+            url: '/login',
             templateUrl: 'app/order/views/user-not-login-page.html',
             controller: 'userNotLoginCtrl',
         });
