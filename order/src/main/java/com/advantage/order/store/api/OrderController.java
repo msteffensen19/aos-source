@@ -10,6 +10,7 @@ import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
 import com.advantage.order.store.order.services.ShoppingCartService;
+import com.advantage.root.util.ValidationHelper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -93,10 +94,16 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userId") Long userId,
                                                                                @PathVariable("productId") Long productId,
                                                                                @PathVariable("color") String hexColor,
-                                                                               @RequestParam("quantity") int quantity,
+                                                                               @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
+                                                                               @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
                                                                                HttpServletRequest request) {
 
-        shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
+        if ((ValidationHelper.isValidColorHexNumber(hexColorNew)) || (quantity > 0)) {
+            shoppingCartResponse = shoppingCartService.updateProductQuantityInCart(Long.valueOf(userId), productId, hexColor, quantity);
+        }
+        else {
+            return new ResponseEntity<>(new ShoppingCartResponseDto(userId), HttpStatus.BAD_REQUEST);    //  404 = Resource not found
+        }
 
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getShoppingCartsByUserId(Long.valueOf(userId));
