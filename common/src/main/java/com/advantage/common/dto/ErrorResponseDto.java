@@ -1,8 +1,11 @@
 package com.advantage.common.dto;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * @author Evgeney Fiskin on 24-Jan-2016
  */
+@ApiModel
 public class ErrorResponseDto {
     boolean success;
     String reason;

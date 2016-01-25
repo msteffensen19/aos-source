@@ -10,9 +10,7 @@ import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import com.advantage.order.store.order.services.OrderManagementService;
 import com.advantage.order.store.order.services.ShoppingCartService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +45,9 @@ public class OrderController {
     @ApiOperation(value = "Get user shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId,
                                                                HttpServletRequest request,
                                                                HttpServletResponse response) {
@@ -65,6 +66,9 @@ public class OrderController {
     @ApiOperation(value = "Add product to shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponseDto> addProductToCart(
             @PathVariable("userId") Long userId,
             @PathVariable("productId") Long productId,
@@ -90,6 +94,9 @@ public class OrderController {
     @ApiOperation(value = "Update quantity of product in shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponseDto> updateProductQuantityInCart(@PathVariable("userId") Long userId,
                                                                                @PathVariable("productId") Long productId,
                                                                                @PathVariable("color") String hexColor,
@@ -112,6 +119,9 @@ public class OrderController {
     @ApiOperation(value = "Replace user shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponse> replaceUserCart(@PathVariable("userId") Long userId,
                                                                 @RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                 HttpServletRequest request) {
@@ -154,6 +164,9 @@ public class OrderController {
     @ApiOperation(value = "Remove a product from user shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponseDto> removeProductFromUserCart(@PathVariable("userId") long userId,
                                                                              @PathVariable("productId") Long productId,
                                                                              @PathVariable("color") String hexColor,
@@ -175,6 +188,9 @@ public class OrderController {
     @ApiOperation(value = "Clear user shopping cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId) {
 
         if (userId != null) {
@@ -207,6 +223,9 @@ public class OrderController {
     @ApiOperation(value = "Verify and update products quantities in user cart")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@PathVariable("userId") long userId,
                                                                                       @RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                                       HttpServletRequest request) {
@@ -281,6 +300,10 @@ public class OrderController {
     @ApiOperation(value = "Purchase new order")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 409, message = "Conflict", response = OrderPurchaseResponse.class)})
     public ResponseEntity<OrderPurchaseResponse> doPurchase(@PathVariable("userId") long userId,
                                                             @RequestBody OrderPurchaseRequest purchaseRequest,
                                                             HttpServletRequest request) {
