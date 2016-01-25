@@ -25,21 +25,26 @@ define(['./module'], function (directives) {
                 }
             }
         })
-        .directive('secValidate', ['$templateCache', function($templateCache){
+        .directive('secValidate', ['$templateCache', '$timeout', function($templateCache, $timeout){
             return{
                 restrict: 'E',
                 require: 'secValidate',
-                scope: {},
+                scope: {
+                    invokeWhenReady : '&'
+                },
                 controller: ['$scope', '$rootScope', function(s, $rootScope){
 
                     this.addId = function(id){
                         this.id = id;
                     }
 
+                    this.invokeOutFunctionWhenSecValidateReady = function(outFunction){
+                        var invalid = this.getInvalidItems();
+                        outFunction({ invalid : invalid});
+                    }
+
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
-                        l("s.invalidItems_length")
-                        l(s.invalidItems)
                         $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : s.invalidItems.length });
                         return s.invalidItems.length  > 0;
                     }
@@ -83,18 +88,26 @@ define(['./module'], function (directives) {
                         e.attr('id', a.idAttr);
                         ctrl.addId(a.idAttr);
                     }
+                    if(s.invokeWhenReady)
+                    {
+                        $timeout(function(){
+                            ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
+                        }, 1000);
+                    }
                 }
             }
         }])
 
-        .directive('aSecValidateInvalid', function($rootScope){
+        .directive('aSecValidateInvalid', function($rootScope, $timeout){
             return{
                 restrict: 'A',
+                require: '^secValidate',
                 link: function(s, e, a, ctrl){
+                    $timeout(function(){
+                        ctrl.getInvalidItems();
+                    }, 100)
                     $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
                         if (args.invalidItems != undefined) {
-
-                            l(args.invalidItems)
                             if(args.invalidItems > 0){
                                 e.addClass("sec-validate-invalid")
                             }
@@ -235,86 +248,107 @@ define(['./module'], function (directives) {
 
                     function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
 
-                        var invalidToReturn = false;
-                        for (var i in s.warnings) {
-                            var warn = s.warnings[i];
 
-                            if (s.textToShow.valid) {
-                                switch (warn.key) {
-                                    case 'secRequired':
-                                        var _invalid = (input.val() == '');
-                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                        if(event == 'keyup'){
-                                            warn.show = _invalid;
-                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
-                                        }
-                                        else if (invalidToReturn) {
-                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                        }
-                                        break;
-                                    case 'secOnlyNumbers':
-                                        var _invalid = !((input.val() - 0) == input.val() &&
-                                        input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
-                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                        if(event == 'keyup'){
-                                            warn.show = _invalid;
-                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
-                                        }
-                                        else if (invalidToReturn) {
-                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                        }
-                                        break;
-                                    case 'secMinLength':
-                                        var _invalid = input.val().length < warn.min && input.val() != '';
-                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                        if(event == 'keyup'){
-                                            warn.show = _invalid;
-                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
-                                        }
-                                        else if (invalidToReturn) {
-                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                        }
-                                        break;
-                                    case 'secMaxLength':
-                                        var _invalid = input.val().length > warn.max;
-                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                        if(event == 'keyup'){
-                                            warn.show = _invalid;
-                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
-                                        }
-                                        else if (invalidToReturn) {
-                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                        }
-                                        break;
-                                    case 'secPattern':
-                                        var _invalid = !(new RegExp(warn.regex).test(input.val()));
-                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                        if(event == 'keyup'){
-                                            warn.show = _invalid;
-                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
-                                        }
-                                        else if (invalidToReturn) {
-                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                        }
-                                        break;
-                                    case 'secCompareTo':
-                                        var comparedInput = $('#secInput_' + warn.compareId);
-                                        var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
-                                        invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                        if(event == 'keyup'){
-                                            warn.show = _invalid;
-                                            if(!invalidToReturn) {ctrlFather.getInvalidItems()}
-                                        }
-                                        else if (invalidToReturn) {
-                                            setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                        }
-                                        break;
-                                    default:
-                                        throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
+                        var invalidToReturn = false;
+
+                        try {
+
+                            for (var i in s.warnings) {
+                                var warn = s.warnings[i];
+
+                                if (s.textToShow.valid) {
+                                    switch (warn.key) {
+                                        case 'secRequired':
+                                            var _invalid = (input.val() == '');
+                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                            if (event == 'keyup') {
+                                                warn.show = _invalid;
+                                                if (!invalidToReturn) {
+                                                    ctrlFather.getInvalidItems()
+                                                }
+                                            }
+                                            else if (invalidToReturn) {
+                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                            }
+                                            break;
+                                        case 'secOnlyNumbers':
+                                            var _invalid = !((input.val() - 0) == input.val() &&
+                                            input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
+                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                            if (event == 'keyup') {
+                                                warn.show = _invalid;
+                                                if (!invalidToReturn) {
+                                                    ctrlFather.getInvalidItems()
+                                                }
+                                            }
+                                            else if (invalidToReturn) {
+                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                            }
+                                            break;
+                                        case 'secMinLength':
+                                            var _invalid = input.val().length < warn.min && input.val() != '';
+                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                            if (event == 'keyup') {
+                                                warn.show = _invalid;
+                                                if (!invalidToReturn) {
+                                                    ctrlFather.getInvalidItems()
+                                                }
+                                            }
+                                            else if (invalidToReturn) {
+                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                            }
+                                            break;
+                                        case 'secMaxLength':
+                                            var _invalid = input.val().length > warn.max;
+                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                            if (event == 'keyup') {
+                                                warn.show = _invalid;
+                                                if (!invalidToReturn) {
+                                                    ctrlFather.getInvalidItems()
+                                                }
+                                            }
+                                            else if (invalidToReturn) {
+                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                            }
+                                            break;
+                                        case 'secPattern':
+                                            var _invalid = !(new RegExp(warn.regex).test(input.val()));
+                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                            if (event == 'keyup') {
+                                                warn.show = _invalid;
+                                                if (!invalidToReturn) {
+                                                    ctrlFather.getInvalidItems()
+                                                }
+                                            }
+                                            else if (invalidToReturn) {
+                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                            }
+                                            break;
+                                        case 'secCompareTo':
+                                            var comparedInput = $('#secInput_' + warn.compareId);
+                                            var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                            if (event == 'keyup') {
+                                                warn.show = _invalid;
+                                                if (!invalidToReturn) {
+                                                    ctrlFather.getInvalidItems()
+                                                }
+                                            }
+                                            else if (invalidToReturn) {
+                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                            }
+                                            break;
+                                        default:
+                                            throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
+                                    }
                                 }
                             }
+                            return invalidToReturn;
                         }
-                        return invalidToReturn;
+                        catch (err) {
+                            console.log(err);
+                            return false;
+                        }
                     }
                 }],
                 link: {
@@ -366,9 +400,11 @@ define(['./module'], function (directives) {
                         me.setId(a.idAttr)
                     },
                     post: function(s){
-                        $timeout(function(){
-                            s.inputBlur(s.id, true);
-                        }, 500)
+                        if(s.modelAttr != '' && s.modelAttr != undefined){
+                            $timeout(function(){ s.inputFocus(s.id); }, 0)
+                        }
+                        $timeout(function(){ s.inputBlur(s.id, true); }, 100)
+                        $timeout(function(){ s.inputKeyup(s.id); }, 200)
                     }
                 }
             }

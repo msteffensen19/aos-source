@@ -6,13 +6,12 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('iconPhone', function(){
+    directives.directive('iconUser', function(){
         return{
             restrict: 'A',
-            replace: true,
-            template: "<div><div class='iconPhoneInset'></div></div>",
+            replace: false,
             link: function(s, e, a, ctrl){
-                e.addClass("iconCss iconPhone");
+                e.addClass("iconCss iconUser");
             }
         }
     });

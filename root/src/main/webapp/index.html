@@ -33,7 +33,11 @@
 <aside id="mobile-section">
     <ul>
         <li>
-            <a class="img"><img src="css/images/Cart.jpg" data-ng-click="openCart()" /><span>{{cartProducts.length}}</span></a>
+            <a class="img">
+                <!--<div icon-cart ></div>-->
+                <img src="css/images/not_in_use/Cart.jpg" data-ng-click="openCart()" />
+                <span>{{cartProducts.length}}</span>
+            </a>
         </li>
         <li>
             <a class="img center">
@@ -44,11 +48,11 @@
                         <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
                     </div>
                 </span>
-                <img ng-hide="userCookie.response" ng-click="login()" src="css/images/User.jpg" />
+                <img ng-hide="userCookie.response" ng-click="login()" src="css/images/not_in_use/User.jpg" />
             </a>
         </li>
         <li>
-            <a class="img"><img src="css/images/Sesrch.jpg" /></a>
+            <a class="img"><img src="css/images/not_in_use/Sesrch.jpg" /></a>
         </li>
     </ul>
 </aside>
@@ -68,7 +72,7 @@
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
                 <a class="img" data-ng-click="redirect('/shoppingCart')" >
-                    <img id="mainCart" src="css/images/Cart.jpg"/>
+                    <div icon-cart ></div>
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
                 <ul>
@@ -78,20 +82,20 @@
                 </ul>
             </li>
             <li>
-                <a class="img">
+                <a class="img" ng-click="login('loginMiniTitle')">
                     <span ng-show="userCookie.response" class="hi-user containMiniTitle" >
                         {{userCookie.name}}
-                        <div class="mini-title">
-                            <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
-                            <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
-                        </div>
                     </span>
-                    <img data-ng-class="{ login : userCookie.response }" ng-click="login()" src="css/images/User.jpg" />
+                    <div icon-user data-ng-class="{ selected : userCookie.response }" ></div>
                 </a>
+                <div class="mini-title" id="loginMiniTitle">
+                    <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
+                    <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
+                </div>
             </li>
             <li>
-                <a class="img" id="openSearch">
-                    <img data-ng-click="openSearchProducts()" src="css/images/Sesrch.jpg" />
+                <a class="img" data-ng-click="openSearchProducts()" >
+                    <div icon-magnifying-glass ></div>
                 </a>
                 <tool-tip-search></tool-tip-search>
             </li>

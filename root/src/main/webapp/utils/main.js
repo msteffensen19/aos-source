@@ -48,7 +48,6 @@ Helper.getRandom = function(length){
 
 Helper.checkPagePossitions = function(){
 
-    l(pagesPossition)
     if ($('.pages').length > 0) {
 
         if (pagesPossition < $('body').scrollTop() + $('header').height()) {
@@ -104,10 +103,6 @@ Main.addAnimPlaceholderEventListener = function(){
 $(document).on({
 
     ready: function() {
-
-        $(document).on("click", ".containMiniTitle", function () {
-            $(this).find(".mini-title").fadeToggle(300);
-        });
 
 
         $(window).on({

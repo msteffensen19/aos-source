@@ -4,18 +4,23 @@
 'use strict';
 
 define([
-'./e-sec-plus-minus',
-'./a-sec-src',
-'./a-sec-back-img',
-'./validateInput',
-'./toolTipSearch',
-'./toolTipCart',
-'./popularItemsDirective',
-'./socialMediaDrtv',
-'./categoryTypeProductsDrtv',
-'./scrollToTop',
-'./Card_Number_4Digits',
-'./icon-phone'
+    './e-sec-plus-minus',
+    './a-sec-src',
+    './a-sec-back-img',
+    './validateInput',
+    './toolTipSearch',
+    './toolTipCart',
+    './popularItemsDirective',
+    './socialMediaDrtv',
+    './categoryTypeProductsDrtv',
+    './scrollToTop',
+    './Card_Number_4Digits',
+    './icon-phone',
+    './icon-user',
+    './icon-magnifying-glass',
+    './icon-cart',
+    './icon-home',
+    './icon-x',
 ],
 
 function() {});

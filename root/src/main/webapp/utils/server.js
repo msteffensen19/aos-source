@@ -179,6 +179,13 @@ var server = {
             return orderKey + "/orders/users/" + userId ;
         },
 
+        accountUpdate: function(){
+            return {
+                path: wsdlPath,
+                method: 'AccountUpdateRequest'
+            }
+        },
+
     },
     account: {
 
@@ -214,7 +221,10 @@ var server = {
     service: {
 
         getConfiguration : function (){
-            return serviceKey + "/clientConfiguration";
+            return {
+                path: wsdlPath,
+                method: 'AccountConfigurationStatusRequest'
+            }
         },
 
     }

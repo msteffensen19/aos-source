@@ -11,11 +11,6 @@ define(['./module'], function (controllers) {
                         $location, $cookie, $rootScope, productsCartService, $filter, $state) {
 
             $scope.cart;
-
-            $scope.$watch("cart", function(n){
-                console.log($scope.cart)
-            })
-
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
@@ -31,7 +26,6 @@ define(['./module'], function (controllers) {
             /* Get configuration */
             userService.getConfiguration().then(function(response){
                 $scope.config = response;
-                console.log(response)
             });
             /*===========================  end Get configuration ============================*/
 
@@ -105,6 +99,7 @@ define(['./module'], function (controllers) {
 
             $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
 
+
             $scope.setUser = function(){
                 $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
             }
@@ -114,16 +109,25 @@ define(['./module'], function (controllers) {
                 $location.path('404');
             }
 
-            $scope.signOut = function(){
+            $scope.signOut = function(even){
+
+                even.stopPropagation();
                 $cookie.remove('lastlogin');
                 $rootScope.userCookie = undefined;
                 $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
                 productsCartService.loadCartProducts().then(function(cart){
                     $scope.cart = cart;
                 });
+                $(".mini-title").css("display", "none");
+
             }
 
-            $scope.login = function (size) {
+            $scope.login = function (miniTitleId) {
+
+                if($rootScope.userCookie){
+                    $("#" + miniTitleId).fadeToggle(300);
+                    return;
+                }
 
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();
@@ -220,17 +224,22 @@ define(['./module'], function (controllers) {
 
 
 
+
+
             /*
+             $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
 
-              $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
-
-                 console.log('==========================start======================================================')
-                 console.log('$location')
-                 console.log($location)
-                 console.log('$state')
-                 console.log($state)
-                 console.log('cart')
-                 console.log($scope.cart)
+             console.log('==========================start======================================================')
+             console.log('$location')
+             console.log($location)
+             console.log('$state')
+             console.log($state)
+             console.log('cart')
+             console.log($scope.cart)
+             //if (to.redirectTo) {
+             //    evt.preventDefault();
+             //    $state.go("userNotlogin", params)
+             //}
 
              });
              $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {

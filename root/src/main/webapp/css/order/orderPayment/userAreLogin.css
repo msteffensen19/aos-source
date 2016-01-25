@@ -1,5 +1,12 @@
 
 
+#userAreLoginPage .smollInput .validate-directive:nth-child(odd){
+    /*background-color: red;*/
+}
+
+#userAreLoginPage .sec-validate.smollInput .inputtext{
+    width: 90%;
+}
 
 #detailslink {
     width: 100%;
@@ -15,6 +22,7 @@
     width: 45%;
     border-top: #d0d0d0 1px solid;
     color: #828282;
+    white-space: nowrap;
 }
 
 #detailslink > label.selected {
@@ -33,6 +41,7 @@
 #userSection > div{
     position: relative;
 }
+
 #userSection > div > a{
     color: #54b3ad;
     font-size: 13px;
@@ -57,6 +66,41 @@
     padding-left: 9px;
 }
 
+#userDetailsEditMode .sec-validate{
+    display: block;
+}
+
+#userDetailsEditMode .sec-validate .inputtext{
+    width: 90%;
+}
+
+#userDetailsEditMode .sec-validate .a-button{
+    margin-top: 18px;
+    padding: 10px 48px;
+}
+
+#userDetailsEditMode .sec-validate .a-button.no-border{
+    border: solid 2px transparent !important;
+    margin-right: 15px;
+}
+
+#userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext{
+    width: 100%;
+}
+
+#userDetailsEditMode .sec-validate h6{
+    margin: 18px 0;
+    letter-spacing: 1px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#userDetailsEditMode .smollInput .validate-directive{
+    width: 49.5%;
+    margin: 14px 0;
+    display: inline-block;
+}
+
 .blueLink a{
     font-size: 16px;
     display: inline-block;
@@ -67,9 +111,14 @@
 .blueLink .float-button {
     float:right;
     position: relative;
-    top:10px;
-    width: 158px;
+    top:-6px;
+    right: 0;
     font-size: 12px;
+}
+
+.blueLink .float-button img{
+    position: relative;
+    top:5px;
 }
 
 
@@ -86,7 +135,7 @@
     vertical-align: top;
     width: 33.33%;
     min-height: 122px;
-    padding: 30px 15px;
+    padding: 41px 15px;
     position: relative;
 }
 
@@ -107,6 +156,11 @@
     right: 0;
     top:0;
     margin: 15px;
+}
+
+#userDetails > div .iconHome {
+    transform: scale(0.8);
+    margin-top: 22px;
 }
 
 #userDetails > div label {
@@ -161,8 +215,9 @@
     font-size: 15px;
 }
 
-#paymentMethod .grayCheckbox{
-    color: #828282;
+#paymentMethod .sec-validate{
+    padding-top: 20px;
+    display: block;
 }
 
 #paymentMethod .validate-directive{
@@ -173,6 +228,15 @@
     width: 50%;
 }
 
+#paymentMethod .smollInput .validate-directive{
+    width: 48%;
+    display: inline-block;
+}
+
+
+#paymentMethod .grayCheckbox{
+    color: #828282;
+}
 
 .paymentMethods .imgRadioButton{
     display: inline-block;
@@ -195,11 +259,6 @@
     border: solid 1px #828282;
     top:23px;
     left:21px;
-}
-
-#paymentMethod .sec-validate{
-    padding-top: 20px;
-    display: block;
 }
 
 .paymentMethods .selected.imgRadioButton:before {
@@ -227,15 +286,6 @@
 .masterCreditSeccion > div > label.edit{
     color: #54b3ad;
     float: right
-}
-
-#paymentMethod .smollInput .validate-directive{
-    width: 48%;
-    display: inline-block;
-}
-
-#paymentMethod .sec-validate.smollInput .inputtext{
-    width: 80%;
 }
 
 #paymentMethod .payment_date {

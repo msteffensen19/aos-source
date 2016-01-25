@@ -2,7 +2,8 @@
 <h5 class="roboto-regular bigPadding" translate="IDENTIFICATION"></h5>
 <div class="noUserSection">
     <label class="roboto-medium" translate="Already_have_an_account" ></label>
-    <sec-validate>
+
+    <sec-validate >
 
 
         <sec-input
@@ -12,8 +13,8 @@
                 sec-max-length="15"
                 sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
                 pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
-                model-attr="loginUser.loginUser"
-                id-attr="username" >
+                model-attr="orderPaymenLogin.loginUser"
+                id-attr="orderPaymenLogin_username" >
         </sec-input>
 
         <sec-input
@@ -23,8 +24,8 @@
                 sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                 pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
                 input-type-attr="password"
-                model-attr="loginUser.loginPassword"
-                id-attr="loginModal_password">
+                model-attr="orderPaymenLogin.loginPassword"
+                id-attr="orderPaymenLogin_password">
         </sec-input>
 
         <sec-input
@@ -33,8 +34,8 @@
                 sec-email
                 sec-placeholder="{{'Email' | translate}}"
                 input-type-attr="email"
-                model-attr="loginUser.email"
-                id-attr="loginModal_email">
+                model-attr="orderPaymenLogin.email"
+                id-attr="orderPaymenLogin_email">
         </sec-input>
 
         <label translate="Forgot_your_password"
@@ -43,7 +44,9 @@
         </label>
 
         <br />
-        <input sec-submit-attr="signIn(loginUser, false)"
+
+
+        <input sec-submit-attr="orderPaymenLogin_signIn()"
                class="a-button roboto-medium"
                a-sec-validate-invalid
                type="button"
@@ -52,12 +55,11 @@
 
         <label ng-class="{ invalid : wrongFields.success == 'false' }" >{{ wrongFields.reason }}</label>
 
-
     </sec-validate>
 </div>
 <div id="newClient" class="noUserSection">
     <div class="cover">
-        <div data-ng-class="{ noEmail : config.emailAddressInLogin }">
+        <div data-ng-class="{ noEmail : !config.emailAddressInLogin }">
             <label class="roboto-medium" translate="New_client" ></label>
             <p>{{'Create_your_account_easily' | translate}}</p>
         </div>
@@ -68,5 +70,15 @@
     </div>
 </div>
 </div>
+
+
+
+
+
+
+
+
+
+
 
 

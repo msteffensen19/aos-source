@@ -42,7 +42,7 @@ define(['./module'], function (directives) {
                         $("#searchSection").fadeIn(1000);
                         $("#autoComplete").focus();
                         $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
-                        $("#searchSection > div > div > span > img").delay(500).fadeIn(500); // img close
+                        $("#searchSection > div > div > span > .img").delay(500).fadeIn(500); // img close
                         $('#openSearch').stop().animate({ opacity : 0 }, 300)
                     }, 400);
                 }

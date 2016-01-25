@@ -13,19 +13,9 @@ define(['./module'], function (controllers) {
                 class: 'invalid'
             }
 
-            registerService.getAllCountries().then(function (response) {
-                var countries = [];
-                angular.forEach(response, function(country){
-                    countries.push({
-                        id: country.ID,
-                        isoName: country.ISONAME,
-                        name: country.NAME,
-                        phonePrefix: country.PHONEPREFIX,
-                    });
-                });
+            registerService.getAllCountries().then(function (countries) {
                 s.countries = countries;
-                l(s.countries)
-            })
+            });
 
             s.model = {
                 username: '', email: '', password: '', confirm_password: '',

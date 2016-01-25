@@ -2,7 +2,8 @@
 <div id="searchSection" data-ng-click="closeSearchSection()">
     <div id="input" data-ng-click="$event.stopPropagation()">
         <div>
-            <img src="css/images/Sesrch.jpg"  />
+            <div icon-magnifying-glass ></div>
+            <!--<img src="css/images/Sesrch.jpg"  />-->
             <span class="animPlaceholderUp">
                 <input id="autoComplete" type="text" class="roboto-regular"
                        placeholder="{{'Search' | translate }} Advantage.com"
@@ -10,10 +11,12 @@
                        data-ng-model="autoCompleteValue"
                        data-ng-keyup="runAutocomplete()"
                        data-ng-blur="closeSearchSection()" >
-                <img src="css/images/Close.png" data-ng-click="closeSearchSection()"  />
+                    <div class="img" icon-x data-ng-click="closeSearchSection()" ></div>
             </span>
         </div>
     </div>
+
+
     <div id="output" data-ng-show="autoCompleteResult.length > 0" data-ng-mouseleave="searchByCategoryId(null, '')" >
         <div class="searchPopUp" data-ng-click="$event.stopPropagation()" >
             <div class="categories">
@@ -25,17 +28,6 @@
                     </label>
                 </a>
             </div>
-
-
-
-
-
-
-
-
-
-
-
             <div>
                 <h3 class="roboto-medium" >{{ 'TOP' | translate }} {{ 'RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"
                     <p style="font-size: 11px !important; font-weight: 300 !important;" > {{ categoryName }} </p>

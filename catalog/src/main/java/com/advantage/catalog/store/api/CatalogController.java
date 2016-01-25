@@ -15,9 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +59,9 @@ public class CatalogController {
 
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto product,
                                                                HttpServletRequest request) {
@@ -76,6 +77,9 @@ public class CatalogController {
 
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/images", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProductWithImage(@RequestParam("product") String product,
                                                                         @RequestParam("file") MultipartFile file,
@@ -114,6 +118,9 @@ public class CatalogController {
 
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
     public ResponseEntity<ProductResponseDto> updateProduct(@RequestBody ProductDto product,
                                                                @PathVariable("product_id") Long id,
@@ -175,6 +182,9 @@ public class CatalogController {
     //endregion
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/images", method = RequestMethod.POST)
     public ResponseEntity<ImageUrlResponseDto> imageUpload(@RequestParam("file") MultipartFile file,
                                                               HttpServletRequest request) {

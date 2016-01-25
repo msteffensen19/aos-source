@@ -23,9 +23,8 @@
                         <div>
                             <h3 translate="ACCOUNT_DETAILS"></h3>
 
-                            <sec-input
+                            <sec-input sec-placeholder="{{'User_name' | translate}}"
                                     sec-required="{{'User_name' | translate}} {{'field_is_required' | translate}}"
-                                    sec-placeholder="{{'User_name' | translate}}"
                                     sec-min-length="5"
                                     sec-max-length="15"
                                     sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
@@ -35,19 +34,17 @@
                             </sec-input>
 
 
-                            <sec-input
+                            <sec-input sec-placeholder="{{'Email' | translate}}"
                                     sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
                                     sec-email
-                                    sec-placeholder="{{'Email' | translate}}"
                                     input-type-attr="email"
                                     model-attr="model.email"
                                     id-attr="email">
                             </sec-input>
 
 
-                            <sec-input
+                            <sec-input sec-placeholder="{{'Password' | translate}}"
                                     sec-required="{{'Password' | translate}} {{'field_is_required' | translate}}"
-                                    sec-placeholder="{{'Password' | translate}}"
                                     sec-min-length="4"
                                     sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                                     pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
@@ -57,9 +54,8 @@
                             </sec-input>
 
 
-                            <sec-input
+                            <sec-input sec-placeholder="{{'Confirm_password' | translate}}"
                                     sec-required="{{'Confirm_password' | translate}} {{'field_is_required' | translate}}"
-                                    sec-placeholder="Confirm password"
                                     sec-compare-to="password"
                                     compare-to-name="password"
                                     input-type-attr="password"
@@ -70,24 +66,21 @@
 
                         <div>
                             <h3 translate="PERSONAL_DETAILS"></h3>
-                            <sec-input
-                                    sec-placeholder="{{'First_Name' | translate }}"
+                            <sec-input sec-placeholder="{{'First_Name' | translate }}"
                                     model-attr="model.firstName"
                                     sec-min-length="2"
                                     sec-max-length="30"
                                     no-red-star="true"
                                     id-attr="firstName">
                             </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'Last_Name' | translate }}"
+                            <sec-input sec-placeholder="{{'Last_Name' | translate }}"
                                     sec-min-length="2"
                                     sec-max-length="30"
                                     no-red-star="true"
                                     model-attr="model.lastName"
                                     id-attr="lastName">
                             </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'Phone_Number' | translate }}"
+                            <sec-input sec-placeholder="{{'Phone_Number' | translate }}"
                                     model-attr="model.phoneNumber"
                                     id-attr="phoneNumber">
                             </sec-input>
@@ -95,33 +88,28 @@
 
                         <div>
                             <h3 translate="ADDRESS"></h3>
-                                <sec-input  id-attr="Country"
-                                            sec-placeholder="{{'Country' | translate }}"
-                                            input-type-attr="transclude"
-                                            select-tag="true" >
-                                    <span class="must">*</span>
-                                <select class="inputtext"
-                                        ng-model="model.country"
-                                        ng-options="country.name for country in countries track by country.id" >
-                                </select>
-
+                            <sec-input sec-placeholder="{{'Country' | translate }}"
+                                       id-attr="Country"
+                                       input-type-attr="transclude"
+                                       select-tag="true" >
+                            <select class="inputtext"
+                                    ng-model="model.country"
+                                    ng-options="country.name for country in countries track by country.id" >
+                            </select>
                             </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'City' | translate }}"
+                            <sec-input sec-placeholder="{{'City' | translate }}"
                                     model-attr="model.city"
                                     sec-max-length="25"
                                     no-red-star="true"
                                     id-attr="city" >
                             </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'Address' | translate }}"
+                            <sec-input sec-placeholder="{{'Address' | translate }}"
                                     sec-max-length="50"
                                     no-red-star="true"
                                     model-attr="model.address"
                                     id-attr="address" >
                             </sec-input>
-                            <sec-input
-                                    sec-placeholder="{{'State__Province__Region' | translate }}"
+                            <sec-input sec-placeholder="{{'State__Province__Region' | translate }}"
                                     model-attr="model.state"
                                     sec-max-length="10"
                                     no-red-star="true"
@@ -150,7 +138,7 @@
                                     <span class="roboto-light">
                                         {{'I_agree_to_the_Advantage_com_Agreement' | translate }}
                                     </span>
-                                    <label class="validateInvalid" style="display: none" >
+                                    <label class="validateInvalid" data-ng-show="agree_Agreement == false" style="top: -9px; font-size: 12px; color: rgb(130, 130, 130);" >
                                         {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
                                     </label>
                                 </div>

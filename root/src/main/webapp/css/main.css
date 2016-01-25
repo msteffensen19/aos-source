@@ -4,9 +4,10 @@
 
 @import "icons/cart.css";
 @import "icons/home.css";
-@import "icons/MagnifyingGlass.css";
+@import "icons/magnifyingGlass.css";
 @import "icons/phone.css";
 @import "icons/user.css";
+@import "icons/X.css";
 
 @import "views/home_page.css";
 @import "views/categoryPage.css";
@@ -28,8 +29,7 @@
 @import "order/orderPayment/userAreLogin.css";
 @import "order/orderPayment/orderPaymentSuccess.css";
 
-
-#png{
+#png {
     position: absolute;
     z-index: 90000;
     top:0;
@@ -83,13 +83,14 @@ div.mobile-btn-handler span{
 font-size: 0;
 }
 
-#mobile-section img{
+#mobile-section .img{
     padding: 30px;
     background-color: white;
     opacity: 0.6;
+    display: block;
 }
 
-#mobile-section img:hover{
+#mobile-section .img:hover{
     opacity: 1;
 
 }
@@ -121,7 +122,9 @@ nav ul {
 nav ul li {
     display: inline-block;
     vertical-align: top;
+    position: relative;
 }
+
 nav ul li > ul{
     font-size: 0;
 }
@@ -176,18 +179,13 @@ nav .img > img {
     height: 25px;
 }
 
-nav .img > img.login {
-    opacity: 0.5 !important;
-    z-index: 0 ;
-}
-
 nav .img > .hi-user{
     font-size: 15px;
-        position: relative;
+    position: relative;
     top: -9px;
     padding: 0;
     left:-7px;
-    margin: -13px;
+    margin-left: 7px;
     font-weight: 900;
     z-index: 1;
 }

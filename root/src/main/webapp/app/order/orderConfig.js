@@ -45,6 +45,11 @@ define([],function(){
                     return defer.promise;
                 }
             }
+        }).
+        state('login', {
+            url: '/login',
+            templateUrl: 'app/order/views/user-not-login-page.html',
+            controller: 'userNotLoginCtrl',
         });
     }
 

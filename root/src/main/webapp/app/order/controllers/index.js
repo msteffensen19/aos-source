@@ -3,4 +3,4 @@
  */
 'use strict';
 
-define(['./orderPaymentCtrl'], function() {});
+define(['./orderPaymentCtrl', './userNotLoginCtrl'], function() {});
