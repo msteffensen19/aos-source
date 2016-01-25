@@ -2,7 +2,7 @@ package com.advantage.common_test.online.store.util;
 
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
-import com.advantage.common.dto.AccountType;
+import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.SignatureAlgorithmException;
 import org.junit.Assert;
 import org.junit.Test;

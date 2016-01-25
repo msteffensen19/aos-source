@@ -1,6 +1,6 @@
 package com.advantage.common.security;
 
-import com.advantage.common.dto.AccountType;
+import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.authorization.AuthorizationException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
 import io.jsonwebtoken.CompressionCodec;

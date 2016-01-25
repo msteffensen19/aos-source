@@ -51,6 +51,8 @@ public class OrderManagementService {
     @Qualifier("shoppingCartRepository")
     public ShoppingCartRepository shoppingCartRepository;
 
+    private ShoppingCartService shoppingCartService = new ShoppingCartService();
+
     public OrderManagementService() {
 
         long result = new Date().getTime();
@@ -302,9 +304,13 @@ public class OrderManagementService {
         List<OrderPurchasedProductInformation> purchasedProducts = new ArrayList<>();
 
         for (ShoppingCartDto cartProduct : cartProducts) {
-            ShoppingCartResponseDto.CartProduct product =
-                    shoppingCartRepository.getCartProductDetails(cartProduct.getProductId(),
-                                                                cartProduct.getHexColor().toUpperCase());
+
+            //ShoppingCartResponseDto.CartProduct product =
+            //        shoppingCartRepository.getCartProductDetails(cartProduct.getProductId(),
+            //                                                    cartProduct.getHexColor().toUpperCase());
+            ShoppingCartResponseDto.CartProduct product = shoppingCartService.getCartProductDetails(cartProduct.getProductId(),
+                                                                                                    cartProduct.getHexColor()
+                                                                                                                .toUpperCase());
 
             if (! product.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                 /*  Add a product to user shopping cart response class  */
