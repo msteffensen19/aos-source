@@ -35,12 +35,24 @@
     transform: rotate(45deg);
 }
 
+.iconMagnifyingGlass.selected:after{
+    background-color: #55f024;
+
+}
 .iconMagnifyingGlass.selected:before {
     border: 2px solid #55f024;
 }
 
-.iconMagnifyingGlass.selected:after{
-    background-color: #55f024;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 
