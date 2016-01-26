@@ -62,13 +62,13 @@
                         <phase>package</phase>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>ROOT</finalName>
+                            <finalName>wars</finalName>
                             <descriptors>
                                 <descriptor>
                                     ${project.basedir}/all-wars-to-zip.xml
                                 </descriptor>
                             </descriptors>
-                            <outputDirectory>../</outputDirectory>
+                            <outputDirectory>../root/target</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
