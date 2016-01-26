@@ -4,15 +4,13 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$interval',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams',
 
-        function (s, resolveParams, $interval) {
-
-            console.log(resolveParams)
+        function (s, resolveParams) {
 
             var pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
-            l(resolveParams)
+
             s.message = null;
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;

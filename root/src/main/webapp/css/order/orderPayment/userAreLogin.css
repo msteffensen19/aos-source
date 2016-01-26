@@ -79,9 +79,10 @@
     padding: 10px 48px;
 }
 
-#userDetailsEditMode .sec-validate .a-button.no-border{
-    border: solid 2px transparent !important;
-    margin-right: 15px;
+#userDetailsEditMode .sec-validate .a-link {
+    margin: 0 48px;
+    margin-top: 18px;
+    padding: 10px 0 4px 0;
 }
 
 #userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext{
@@ -115,6 +116,7 @@
     right: 0;
     font-size: 12px;
 }
+
 
 .blueLink .float-button img{
     position: relative;
@@ -268,6 +270,10 @@
 
 #paymentMethod .option {
     margin: 9px 0;
+}
+
+#userSection .option.marginTop {
+    margin-top: 25px;
 }
 
 #paymentMethod .masterCreditSeccion {

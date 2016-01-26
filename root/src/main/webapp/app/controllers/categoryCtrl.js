@@ -17,7 +17,7 @@ define(['./module'], function (controllers) {
 
             s.noProducts = s.categoryData.products == undefined || s.categoryData.products.length == 0;
 
-            s.categoryName = s.categoryData.categoryName;
+            s.categoryName = paramsToReturn.categoryName;
 
             $("nav .navLinks").css("display" , "none");
 

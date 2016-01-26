@@ -81,7 +81,8 @@ define([],function(){
                         }
                         else{
                             defer.resolve({
-                                searchResult: [category]
+                                searchResult: [category],
+                                categoryName: category.categoryName
                             });
                         }
                     });

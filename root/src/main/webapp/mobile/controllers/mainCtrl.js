@@ -7,197 +7,196 @@ define(['./module'], function mainMobCtrl ($scope, productService, smoothScroll,
                         $location, $cookie, $rootScope, productsCartService,
                                            $filter, $state) {
 
-            $scope.cart;
-
-            $scope.autoCompleteValue = '';
-            $scope.autoCompleteResult = {};
-
-
-            $scope.go_up = function(){
-                $('body, html').animate({scrollTop: 0}, 10);
-            }
-
-
-
-
-            /* Cart section  */
-
-            productsCartService.loadCartProducts().then(function(cart){
-                $scope.cart = cart;
-            });
-
-            $scope.removeProduct = function (index) {
-                productsCartService.removeProduct(index).then(function (cart) {
-                    $scope.cart = cart;
-                    $scope.checkCart();
-                });
-            }
-
-            var lastIdAdded = '';
-            $scope.addProduct = function(product, quantity) {
-                clearInterval(Helper.____closeTooTipCart);
-                $('#toolTipCart').slideDown(function(){
-                    productsCartService.addProduct(product, quantity).then(function(cart){
-                        $scope.cart = cart;
-                        if (lastIdAdded == ('#product' + product.productId)){
-                            setToolTipCartSlideUp()
-                        }
-                        else {
-                            lastIdAdded = '#product' + product.productId;
-                            $('#toolTipCart tbody').stop().animate({
-                                scrollTop: 0 + 'px',
-                            }, 500, function () {
-                                setToolTipCartSlideUp()
-                            });
-                        }
-                    });
-                });
-            };
-
-            function setToolTipCartSlideUp() {
-                clearInterval(Helper.____closeTooTipCart);
-                Helper.____closeTooTipCart = setTimeout(function(){
-                    $('#toolTipCart').stop().slideUp();
-                }, 8000)
-            }
-
-            $scope.enterCart = function(){
-                clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
-                $('#toolTipCart').stop().slideDown();
-            }
-
-            $scope.leaveCart = function(){
-                Helper.closeToolTipCart();
-            }
-
-            /* END Cart section */
-
-
-
-
-
-
-
-
-
-            /* User section */
-
-            $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
-
-            $scope.setUser = function(){
-                $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
-            }
-
-            $scope.accountSection = function(){
-                console.log("user account section! --- Method not done yet!");
-                $location.path('404');
-            }
-
-            $scope.signOut = function(){
-                $cookie.remove('lastlogin');
-                $rootScope.userCookie = undefined;
-                productsCartService.loadCartProducts().then(function(cart){
-                    $scope.cart = cart;
-                });
-            }
-
-            $scope.login = function (size) {
-
-                $('#toolTipCart').css('display', 'none');
-                var windowsWidth = $(window).width();
-                var top = "5%";
-                if(windowsWidth < 480) {
-                    top = "0";
-                }
-                else if(windowsWidth < 700) { top = "18%"; }
-
-                $(".PopUp").fadeIn(100, function () {
-                    $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
-                    $("body").css({ "left": "0px", })
-                });
-            }
-
-            $(".PopUp, .closePopUpBtn").click(function (e) {
-
-                $(".PopUp > div:nth-child(1)").animate({
-                    "top": "-150%"
-                }, 600, function () {
-                    $(".PopUp").fadeOut(100, function(){
-                        $("body").css("overflow-y", "scroll");
-                    });
-                });
-            });
-
-            $(".PopUp > div").click(function (e) {
-                e.stopPropagation();
-            });
-
-            /* END User section */
-
-
-
-
-
-
-
-
-
-
-            /* Application helper section */
-
-            $scope.redirect = function(path) {
-                if($scope.cart.productsInCart.length == 0 && path == '/shoppingCart'){
-                    return;
-                }
-                $location.path(path);
-            };
-
-            $scope.gotoElement = function (id) {
-                $("body").animate({
-                    scrollTop: ($("#" + id).offset().top - 60) + "px",
-                }, 1000)
-            };
-
-            $scope.checkCart = function(){
-
-                if($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0)
-                {
-                    switch($location.$$path) {
-                        case '/shoppingCart':
-                        case '/orderPayment':
-                        case '/userNotLogin':
-                            window.history.back();
-                            break;
-                    }
-                }
-            }
-
-            /* END Application helper section */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
-
-                $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
-                $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
-                Helper.UpdatePageFixed();
-
-            });
-
+            //$scope.cart;
+            //
+            //$scope.autoCompleteValue = '';
+            //$scope.autoCompleteResult = {};
+            //
+            //$scope.go_up = function(){
+            //    $('body, html').animate({scrollTop: 0}, 10);
+            //}
+            //
+            //
+            //
+            //
+            ///* Cart section  */
+            //
+            //productsCartService.loadCartProducts().then(function(cart){
+            //    $scope.cart = cart;
+            //});
+            //
+            //$scope.removeProduct = function (index) {
+            //    productsCartService.removeProduct(index).then(function (cart) {
+            //        $scope.cart = cart;
+            //        $scope.checkCart();
+            //    });
+            //}
+            //
+            //var lastIdAdded = '';
+            //$scope.addProduct = function(product, quantity) {
+            //    clearInterval(Helper.____closeTooTipCart);
+            //    $('#toolTipCart').slideDown(function(){
+            //        productsCartService.addProduct(product, quantity).then(function(cart){
+            //            $scope.cart = cart;
+            //            if (lastIdAdded == ('#product' + product.productId)){
+            //                setToolTipCartSlideUp()
+            //            }
+            //            else {
+            //                lastIdAdded = '#product' + product.productId;
+            //                $('#toolTipCart tbody').stop().animate({
+            //                    scrollTop: 0 + 'px',
+            //                }, 500, function () {
+            //                    setToolTipCartSlideUp()
+            //                });
+            //            }
+            //        });
+            //    });
+            //};
+            //
+            //function setToolTipCartSlideUp() {
+            //    clearInterval(Helper.____closeTooTipCart);
+            //    Helper.____closeTooTipCart = setTimeout(function(){
+            //        $('#toolTipCart').stop().slideUp();
+            //    }, 8000)
+            //}
+            //
+            //$scope.enterCart = function(){
+            //    clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
+            //    $('#toolTipCart').stop().slideDown();
+            //}
+            //
+            //$scope.leaveCart = function(){
+            //    Helper.closeToolTipCart();
+            //}
+            //
+            ///* END Cart section */
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            ///* User section */
+            //
+            //$scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
+            //
+            //$scope.setUser = function(){
+            //    $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
+            //}
+            //
+            //$scope.accountSection = function(){
+            //    console.log("user account section! --- Method not done yet!");
+            //    $location.path('404');
+            //}
+            //
+            //$scope.signOut = function(){
+            //    $cookie.remove('lastlogin');
+            //    $rootScope.userCookie = undefined;
+            //    productsCartService.loadCartProducts().then(function(cart){
+            //        $scope.cart = cart;
+            //    });
+            //}
+            //
+            //$scope.login = function (size) {
+            //
+            //    $('#toolTipCart').css('display', 'none');
+            //    var windowsWidth = $(window).width();
+            //    var top = "5%";
+            //    if(windowsWidth < 480) {
+            //        top = "0";
+            //    }
+            //    else if(windowsWidth < 700) { top = "18%"; }
+            //
+            //    $(".PopUp").fadeIn(100, function () {
+            //        $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
+            //        $("body").css({ "left": "0px", })
+            //    });
+            //}
+            //
+            //$(".PopUp, .closePopUpBtn").click(function (e) {
+            //
+            //    $(".PopUp > div:nth-child(1)").animate({
+            //        "top": "-150%"
+            //    }, 600, function () {
+            //        $(".PopUp").fadeOut(100, function(){
+            //            $("body").css("overflow-y", "scroll");
+            //        });
+            //    });
+            //});
+            //
+            //$(".PopUp > div").click(function (e) {
+            //    e.stopPropagation();
+            //});
+            //
+            ///* END User section */
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            ///* Application helper section */
+            //
+            //$scope.redirect = function(path) {
+            //    if($scope.cart.productsInCart.length == 0 && path == '/shoppingCart'){
+            //        return;
+            //    }
+            //    $location.path(path);
+            //};
+            //
+            //$scope.gotoElement = function (id) {
+            //    $("body").animate({
+            //        scrollTop: ($("#" + id).offset().top - 60) + "px",
+            //    }, 1000)
+            //};
+            //
+            //$scope.checkCart = function(){
+            //
+            //    if($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0)
+            //    {
+            //        switch($location.$$path) {
+            //            case '/shoppingCart':
+            //            case '/orderPayment':
+            //            case '/login':
+            //                window.history.back();
+            //                break;
+            //        }
+            //    }
+            //}
+            //
+            ///* END Application helper section */
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //$rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
+            //
+            //    $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
+            //    $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
+            //    Helper.UpdatePageFixed();
+            //
+            //});
+            //
 
 
             /*

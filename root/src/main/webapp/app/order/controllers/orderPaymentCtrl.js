@@ -12,7 +12,6 @@ define(['./module'], function (controllers) {
 
             s.user = resolveParams.user
             if(resolveParams.user == null){
-                l($location)
                 $location.path('login')
                 return;
             }
@@ -26,7 +25,6 @@ define(['./module'], function (controllers) {
                 s.orderNumber = args.orderNumber;
                 s.trackingNumber = args.trackingNumber;
                 s.cardNumber = ['0000', '0000', '0000', args.cardNumber.substring(args.cardNumber.length - 4)];
-                l(s.cardNumber)
                 s.subTotal = ($filter("productsCartSum")(s.cart));
                 s.total = ($filter("productsCartSum")(s.cart, s.shippingCost));
                 rs.$broadcast('clearCartEvent');

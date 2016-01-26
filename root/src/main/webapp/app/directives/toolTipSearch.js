@@ -31,36 +31,45 @@ define(['./module'], function (directives) {
                     }
                     productService.getProductsBySearch(lastRequest, 10).then(function(result){
                         s.autoCompleteResult = result;
-                        console.log(event)
                     });
                 }
 
 
                 s.openSearchProducts = function(){
-                    $("nav ul li a.navLinks").stop().animate({ opacity : 0 }, 400);
-                    setTimeout(function(_this){
-                        $("#searchSection").fadeIn(1000);
+                    $("nav ul li a.navLinks").stop().animate({ opacity : 0 }, 400, function(){
+                        $(this).hide();
+                    });
+                    setTimeout(function(){
+                        $('#openSearch').hide();
+                        $("#searchSection").css('display', 'block');//.fadeIn(200);
                         $("#autoComplete").focus();
-                        $("#searchSection > div:first-child > div").addClass("searchSectionEnabled");
-                        $("#searchSection > div > div > span > .img").delay(500).fadeIn(500); // img close
-                        $('#openSearch').stop().animate({ opacity : 0 }, 300)
+                        $("div#search").animate({
+                            left: 0,
+                            opacity: 1
+                        }, 700);
+                        //$("#searchSection div#search").addClass("searchSectionEnabled");
+                        $("#searchSection > div > div > span > .img").delay(700).fadeIn(500); // img close
                     }, 400);
                 }
 
                 s.closeSearchSection = function(){
-                    $('#openSearch').stop().animate({ opacity : 1 }, 300)
-                    $("#searchSection > div > div > span > img").fadeOut(200); // img close
-                    setTimeout(function(){
-                        $("#searchSection").fadeOut(500);
-                        $("#searchSection > div:first-child > div").removeClass("searchSectionEnabled");
-                        if($location.$$path == '/')
-                        {
-                            $("nav ul li a.navLinks").stop().animate({ opacity : 1 }, 400);
-                        }
+                    $("#searchSection").fadeOut(200);
+                    $("div#search").animate({
+                        left: '920px',
+                        opacity: 0
+                    }, 700, function(){
+                        //$("#searchSection div#search").addClass("searchSectionEnabled");
+                        $('#openSearch').show();
+                        $("#searchSection > div > div > span > .img").delay(500).fadeOut(500);
+                        setTimeout(function(){
+                            $("nav ul li a.navLinks").stop().animate({ opacity : 1 }, 400, function(){
+                                $(this).show();
+                            });
+                        }, 400);
                         s.autoCompleteValue = lastRequest = '';
                         s.autoCompleteResult = {};
-                        $("#autoComplete").focusout();
-                    }, 200)
+                    });
+
                 }
 
                 $('#product_search_img').click(function (e) {

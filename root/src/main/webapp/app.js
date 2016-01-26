@@ -37,6 +37,7 @@ define([
 ], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig) {
 
     return angular.module('aos', [
+
         'pascalprecht.translate',
         'ui.router',
         'ui.bootstrap',
@@ -57,6 +58,9 @@ define([
         'aos.order.controllers',
         'aos.order.services',
         'aos.order.directives',
+
+
+
     ]).
 
     config(catalogConfig).

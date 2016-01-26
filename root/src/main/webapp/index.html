@@ -82,22 +82,24 @@
                 </ul>
             </li>
             <li>
-                <a class="img" ng-click="login('loginMiniTitle')">
+                <a class="img" ng-click="login('loginMiniTitle')"
+                   data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
+                   data-ng-mouseleave="miniTitleOut('loginMiniTitle')">
                     <span ng-show="userCookie.response" class="hi-user containMiniTitle" >
                         {{userCookie.name}}
                     </span>
                     <div icon-user data-ng-class="{ selected : userCookie.response }" ></div>
                 </a>
-                <div class="mini-title" id="loginMiniTitle">
+                <div class="mini-title" id="loginMiniTitle" >
                     <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
                     <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
                 </div>
             </li>
             <li>
-                <a class="img" data-ng-click="openSearchProducts()" >
+                <a class="img" id="openSearch" data-ng-click="openSearchProducts()" >
                     <div icon-magnifying-glass ></div>
+                    <tool-tip-search></tool-tip-search>
                 </a>
-                <tool-tip-search></tool-tip-search>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>

@@ -24,12 +24,12 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
-
                         userService.login(user).then(function (res) {
 
                             var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
 
-                            if (response.userId != -1) {
+
+                            if (response.userId != -1 && response.success == 'true') {
 
                                 if (response.userId === undefined) {
 
@@ -69,13 +69,13 @@ define(['./module'], function (directives) {
                                 if($location.path() == '/register'){
                                     $location.path('/')
                                 }
+
                                 wellcome();
                             }
                             else {
                                 $scope.wrongFields = response;
                                 $timeout(function () { $scope.wrongFields = null; }, 4000);
                             }
-
                             return user;
                         });
                     }

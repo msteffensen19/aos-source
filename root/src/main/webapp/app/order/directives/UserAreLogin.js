@@ -20,8 +20,6 @@ define(['./module'], function (directives) {
                     }
                 },
                 post: function(s){
-                    console.log("s.user")
-                    l(s.user)
 
                     s.firstTag = true;
                     s.imgRadioButton = 1;
@@ -44,7 +42,6 @@ define(['./module'], function (directives) {
                     }
 
                     s.backToMainShippingDetails = function(){
-                        console.log("s.invalidUser = " + s.invalidUser)
                         if(s.invalidUser){
                             return;
                         }

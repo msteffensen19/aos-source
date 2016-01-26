@@ -65,7 +65,7 @@ define(['./module'], function (controllers) {
 
             function animateToolTipCart(){
                 clearInterval(Helper.____closeTooTipCart);
-                    $('#toolTipCart').slideDown(function () {
+                    $('#toolTipCart').delay(500).slideDown(function () {
                         $('#toolTipCart tbody').stop().animate({
                             scrollTop: 0 + 'px',
                         }, 500, function () {
@@ -120,6 +120,20 @@ define(['./module'], function (controllers) {
                 });
                 $(".mini-title").css("display", "none");
 
+            }
+
+            $scope.miniTitleIn = function (miniTitleId) {
+                if($rootScope.userCookie){
+                    $("#" + miniTitleId).stop().delay(500).stop().fadeIn(300);
+                    return;
+                }
+            }
+
+            $scope.miniTitleOut = function (miniTitleId) {
+                if($rootScope.userCookie){
+                    $("#" + miniTitleId).stop().delay(500).stop().fadeOut(300);
+                    return;
+                }
             }
 
             $scope.login = function (miniTitleId) {
@@ -192,7 +206,9 @@ define(['./module'], function (controllers) {
                     switch($location.$$path) {
                         case '/shoppingCart':
                         case '/orderPayment':
-                            window.history.back();
+                            break;
+                        case '/login':
+                            $state.go("default");
                             break;
                     }
                 }
