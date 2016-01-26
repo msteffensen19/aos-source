@@ -20,7 +20,7 @@
     margin: 0 auto;
     overflow: hidden;
     z-index: 1000;
-    /*display: none;*/
+    display: none;
     text-align: left;
 }
 
@@ -50,19 +50,18 @@
 #searchSection div#search{
     /*transform: translateX(920px);*/
     position: relative;
-    /*left:920px;*/
-    left:0px;
+    left:920px;
 
-    /*opacity: 0;*/
+    opacity: 0;
     background-color: white;
     /*transition: all 1.5s ease;*/
 }
 
-/*#searchSection div#search.searchSectionEnabled{*/
-    /*!*transform: translateX(0px);*!*/
-    /*opacity: 1;*/
-    /*left:0px;*/
-/*}*/
+#searchSection div#search.searchSectionEnabled{
+    /*transform: translateX(0px);*/
+    opacity: 1;
+    left:0px;
+}
 
 
 #searchSection .searchPopUp {
