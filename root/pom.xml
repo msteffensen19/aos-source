@@ -64,7 +64,7 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-war-plugin</artifactId>
-                            <version>2.2</version>
+                            <version>2.6</version>
                             <configuration>
                                 <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
                                 <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -119,20 +119,6 @@
                                     </goals>
                                 </execution>
                             </executions>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-war-plugin</artifactId>
-                            <version>2.2</version>
-                            <configuration>
-                                <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
-                                <failOnMissingWebXml>false</failOnMissingWebXml>
-                                <webResources>
-                                    <resource>
-                                        <directory>${basedir}/src/main/webapp/target</directory>
-                                    </resource>
-                                </webResources>
-                            </configuration>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -279,7 +265,7 @@
             <plugin><!-- Build WAR with classes - for sharing with other WARs-->
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
-                <configuration>
+                <configuration combine.self="append">
                     <attachClasses>true</attachClasses>
                 </configuration>
             </plugin>
