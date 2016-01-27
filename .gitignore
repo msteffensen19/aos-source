@@ -1,3 +1,4 @@
+/ROOT.zip
 /shipex/src/main/java/store/advantage/shipex/service/*
 */src/main/webapp/ver.txt
 .idea/*
@@ -74,5 +75,4 @@ fabric.properties
 /test1.gt.txt
 /*.gt
 /*.ggt
-
 
