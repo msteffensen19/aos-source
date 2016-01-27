@@ -2,19 +2,20 @@
 <div id="searchSection" data-ng-click="closeSearchSection()">
     <div id="input" data-ng-click="$event.stopPropagation()">
         <div id="search">
-            <div icon-magnifying-glass ></div>
-            <!--<img src="css/images/Sesrch.jpg"  />-->
-            <span class="animPlaceholderUp">
+            <div icon-magnifying-glass data-ng-click="openSearchProducts()"></div>
+            <div class="autoCompleteCover">
                 <input id="autoComplete" type="text" class="roboto-regular"
                        placeholder="{{'Search' | translate }} Advantage.com"
                        data-ng-keypress="checkEnterKey($event)"
                        data-ng-model="autoCompleteValue"
                        data-ng-keyup="runAutocomplete()"
                        data-ng-blur="closeSearchSection()" >
-                    <div class="img" icon-x data-ng-click="closeSearchSection()" ></div>
-            </span>
+                <div icon-x data-ng-click="closeSearchSection()" ></div>
+            </div>
         </div>
     </div>
+
+
 
 
     <div id="output" data-ng-show="autoCompleteResult.length > 0" data-ng-mouseleave="searchByCategoryId(null, '')" >
