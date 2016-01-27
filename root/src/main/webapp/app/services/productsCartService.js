@@ -239,10 +239,10 @@ define(['./module'], function (services) {
                         if (user.response.userId != -1) {
                             var request = $http({
                                 method: "put",
-                                //headers: {
-                                //    "content-type": "application/json",
-                                //    "Authorization": "Bearer " + user.response.token,
-                                //},
+                                headers: {
+                                    "content-type": "application/json",
+                                    "Authorization": "Bearer " + user.response.token,
+                                },
                                 async: false,
                                 url: server.order.updateProductToUser(user.response.userId,
                                     product.productId, product.colors[0].code, quantity),

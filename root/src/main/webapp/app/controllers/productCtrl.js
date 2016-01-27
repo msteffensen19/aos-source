@@ -42,7 +42,6 @@ define(['./module'], function (controllers) {
                 s.product.imageUrl = img;
             }
 
-
             s.setColor = function(color){
                 s.colorSelected = color;
             }

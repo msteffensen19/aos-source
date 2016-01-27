@@ -234,6 +234,9 @@ define(['./module'], function (controllers) {
 
                 $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
                 $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
+
+                $("#searchSection #output").css("opacity", $location.path().indexOf('/category') == -1 ? 1 : 0);
+
                 Helper.UpdatePageFixed();
 
             });

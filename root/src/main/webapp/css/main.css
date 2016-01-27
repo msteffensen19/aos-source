@@ -246,14 +246,20 @@ div.logo img{
         display: none;
     }
 
-    #searchSection{
-        width:  45%
-    }
+    /*#searchSection{*/
+        /*width:  45%*/
+    /*}*/
 }
 
 
-@media screen and (max-width: 700px)
-{
+@media screen and (max-width: 760px) {
+    #searchSection{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px){
+
     #searchSection > .searchPopUp > div,
     #searchSection > .searchPopUp > div:nth-child(1)
     {
@@ -265,6 +271,7 @@ div.logo img{
     {
         height: auto;
     }
+
 }
 
 

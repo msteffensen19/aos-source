@@ -70,18 +70,18 @@ define(['./module'], function (services) {
                     method: "post",
                     url: server.order.safePay(user.id),
                     data: paramsToPass,
-                    //headers: {
-                    //    "content-type": "application/json",
-                    //    "Authorization": "Bearer " + user.response.token,
-                    //},
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": "Bearer " + user.response.token,
+                    },
                 }).
                 then(function (res){
                     // {reason, orderNumber, code, success}
-                    console.log(JSON.stringify(res.data))
-                    console.log(res.data)
+                    //console.log(JSON.stringify(res.data))
+                    //console.log(res.data)
                     defer.resolve(res.data)
                 }, function (err){
-                    console.log(err); defer.reject("probl.")
+                    //console.log(err); defer.reject("probl.")
                 })
                 return defer.promise;
             }
@@ -103,7 +103,6 @@ define(['./module'], function (services) {
                     allowOffersPromotion: allowOffersPromotion
                 }
 
-
                 var defer = $q.defer();
                 var params = server.order.accountUpdate();
                 mini_soap.post(params.path, params.method, paramsToPass).
@@ -120,26 +119,6 @@ define(['./module'], function (services) {
                     });
 
                 return defer.promise;
-
-                //
-                //$http({
-                //    method: "post",
-                //    url: ,
-                //    data: paramsToPass,
-                //    //headers: {
-                //    //    "content-type": "application/json",
-                //    //    "Authorization": "Bearer " + user.response.token,
-                //    //},
-                //}).
-                //then(function (res){
-                //    // {reason, orderNumber, code, success}
-                //    console.log(JSON.stringify(res.data))
-                //    console.log(res.data)
-                //    defer.resolve(res.data)
-                //}, function (err){
-                //    console.log(err); defer.reject("probl.")
-                //})
-                //return defer.promise;
             }
 
             function getAccountById() {
