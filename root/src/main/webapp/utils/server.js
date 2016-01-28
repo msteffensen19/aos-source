@@ -152,15 +152,14 @@ var server = {
                 "/color/" + color;
         },
 
-        updateProductToUser: function (userId, productId, color, quantity){
-            return server.order.addProductToUser(userId, productId, color, quantity);
+        updateProductToUser: function (userId, productId, color, quantity, oldColor){
+            var path = server.order.addProductToUser(userId, productId, oldColor, quantity);
+            return color != oldColor ? path += "&new_color=" + color : path;
         },
 
         addProductToUser: function (userId, productId, color, quantity){
-            return orderKey + "/carts/" + userId +
-                "/product/" + productId +
-                "/color/" + color +
-                "?quantity=" + quantity;
+            return orderKey + "/carts/" + userId + "/product/" + productId +
+                "/color/" + color + "?quantity=" + quantity;
         },
 
         loadCartProducts : function (userId){

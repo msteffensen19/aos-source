@@ -91,8 +91,6 @@ define(['./module'], function (services) {
             }
 
             function checkout() {
-                // check if user is login
-
                 var responce = $q.defer();
                 responce.resolve(false);
                 return responce.promise;
@@ -237,6 +235,7 @@ define(['./module'], function (services) {
                 if(product.colors){
                     if (user && user.response) {
                         if (user.response.userId != -1) {
+
                             var request = $http({
                                 method: "put",
                                 headers: {
@@ -245,7 +244,7 @@ define(['./module'], function (services) {
                                 },
                                 async: false,
                                 url: server.order.updateProductToUser(user.response.userId,
-                                    product.productId, product.colors[0].code, quantity),
+                                    product.productId, product.colors[0].code, quantity, oldColor),
                             });
                             request.then(function (newCart) {
                                 cart = newCart.data;
