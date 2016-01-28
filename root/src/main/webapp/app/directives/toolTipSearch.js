@@ -4,8 +4,8 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('toolTipSearch', ['$templateCache', 'productService', '$location',
-        function ($templateCache, productService, $location) {
+    directives.directive('toolTipSearch', ['$templateCache', 'productService', '$location', '$state',
+        function ($templateCache, productService, $location, $state) {
         return {
             restrict: 'E',
             replace: true,
@@ -15,6 +15,7 @@ define(['./module'], function (directives) {
                 s.categoryFilter = null;
                 s.categoryName = '';
                 s.allowClosing = true;
+                s.autoCompleteValue = '';
                 s.checkEnterKey = function(event)
                 {
                     if(event.which === 13) {
@@ -32,62 +33,68 @@ define(['./module'], function (directives) {
                     }
                     productService.getProductsBySearch(lastRequest, 10).then(function(result){
                         s.autoCompleteResult = result;
+                        checkCategoryPagePresent();
                     });
                 }
 
+                function checkCategoryPagePresent(){
+                    if($location.path().indexOf('/category') != -1){
+                        $state.go('category',{
+                            id: (s.categoryFilter == null ? '' : s.categoryFilter),
+                            viewAll: s.autoCompleteValue
+                        });
+                    }
+                }
 
                 s.openSearchProducts = function(){
 
                     var navsLinks = $("nav ul li a.navLinks");
                     navsLinks.each(function(index){
                         setTimeout(function(_this){
-                            $(_this).stop().animate({ opacity : 0 }, 100);
-                        }, 100 * index, this);
+                            $(_this).stop().animate({ opacity : 0.1 }, 500);
+                        }, 200 * index, this);
                     });
 
-                    setTimeout(function(navsLinks){ navsLinks.hide();
-                    }, 200 * navsLinks.length, navsLinks);
-
-                    setTimeout(function(){
-                        var width = $(document).width() > 1200 ? 780 :
-                            $(document).width() > 1000 ? 630 : 400;
-                        $('#searchSection .autoCompleteCover').stop().animate({
-                            width : width + "px",
-                            margin : '0 6px'
-                        }, 500).animate({
-                            opacity: 1
-                        }, 200, function(){
-                            $('#autoComplete').focus();
-                        });
-                        $('#searchSection .autoCompleteCover .iconCss.iconX').fadeIn(300);
-                    }, 400);
-
+                    setTimeout(function(navsLinks){
+                            navsLinks.hide();
+                            $('#searchSection .autoCompleteCover').stop().animate({
+                                width : getAutocompleateWidth() + "px",
+                                margin : '0 6px'
+                            }, 500).animate({
+                                opacity: 1
+                            }, 200, function(){
+                                $('#autoComplete').focus();
+                            });
+                            $('#searchSection .autoCompleteCover .iconCss.iconX').fadeIn(300);
+                    }, (200 * navsLinks.length), navsLinks);
                 }
 
-                s.closeSearchSection = function(force){
+                s.closeSearchSection = function(force) {
 
-                    if(!s.allowClosing && !force){
+                    if (!s.allowClosing && !force) {
                         return;
                     }
-
                     $('#searchSection .autoCompleteCover .iconCss.iconX').fadeOut(300);
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $('#searchSection .autoCompleteCover')
                             .animate({
-                            width : 0 + "px",
-                            opacity: 0.5,
-                            margin : '0 0'
-                        }, 500);
-                    }, 400, function(){
-                        var navsLinks = $("nav ul li a.navLinks");
-                        navsLinks.show();
-                        navsLinks.each(function(index){
-                            setTimeout(function(_this){
-                                $(_this).stop().animate({ opacity : 1 }, 100);
-                            }, 100 * index, this);
-                        });
-                    });
+                                width: 0 + "px",
+                                opacity: 0.5,
+                                margin: '0 0'
+                            }, 500, function () {
+                                if($location.path() == '/')
+                                {
+                                    var navsLinks = $("nav ul li a.navLinks");
+                                    navsLinks.show();
+                                    navsLinks.each(function (index) {
+                                        setTimeout(function (_this) {
+                                            $(_this).stop().animate({opacity: 1}, 100);
+                                        }, 100 * index, this);
+                                    });
+                                }
+                            });
+                    }, 400);
 
                     s.autoCompleteValue = lastRequest = '';
                     s.autoCompleteResult = {};
@@ -96,22 +103,21 @@ define(['./module'], function (directives) {
                 s.allowClosingLeave = function(){
                     $('#autoComplete').focus();
                     s.allowClosing = true;
-
                 }
 
                 $(document).ready(function(){
-
                     $(window).resize(function(){
-
-                        l($("#searchSection").width());
                         if($("#searchSection").width() > 150){
-                            var width = $(document).width() > 1200 ? 780 :
-                                    $(document).width() > 1000 ? 630 : 400;
-                            $('#searchSection .autoCompleteCover').width(width);
+                            $('#searchSection .autoCompleteCover').width(getAutocompleateWidth());
                         }
-                    })
+                    });
+                });
 
-                })
+                function getAutocompleateWidth(){
+                    return ($(document).width() > 1200 ? 780 :
+                            $(document).width() > 1000 ? 530 : 300) -
+                        ($(".hi-user").width() * 1.5);
+                }
 
                 $('#product_search_img').click(function (e) {
                     $('#product_search').css("display", "inline-block");

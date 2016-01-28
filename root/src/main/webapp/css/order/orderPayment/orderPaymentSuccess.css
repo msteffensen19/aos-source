@@ -71,6 +71,11 @@
     vertical-align: top;
 }
 
+#orderPaymentSuccess > div > div.seccion .iconCss{
+    float: right;
+    vertical-align: top;
+}
+
 
 #orderPaymentSuccess > div > div.seccion:last-child {
     border-right: none 0px red;

@@ -31,8 +31,8 @@
             <span> {{ 'Payment_Method' | translate }}</span>
             <div class="innerSeccion">
                 <label>
-                    MasterCredit
-                    <a class="floater">
+                    {{TransPaymentMethod}}
+                    <a class="floater" data-ng-show="TransPaymentMethod == 'MasterCredit'">
                         <span data-ng-repeat="_4numbers in cardNumber track by $index" >
                             {{ _4numbers | showLast4DigitsCard:$last:$index }}
                         </span>

@@ -22,6 +22,7 @@ define(['./module'], function (directives) {
                 s.maxPriceToFilter = 0;
                 s.categoriesFilter = s.paramsToPass.categoriesFilter;
                 s.searchResult = s.paramsToPass.searchResult;
+                s.viewAll = s.paramsToPass.viewAll;
                 s.$location = $location;
 
                 for(var index in s.categoriesFilter){

@@ -27,6 +27,7 @@ define(['./module'], function (controllers) {
                 s.cardNumber = ['0000', '0000', '0000', args.cardNumber.substring(args.cardNumber.length - 4)];
                 s.subTotal = ($filter("productsCartSum")(s.cart));
                 s.total = ($filter("productsCartSum")(s.cart, s.shippingCost));
+                s.TransPaymentMethod = args.TransPaymentMethod;
                 rs.$broadcast('clearCartEvent');
             });
             ///// END PAYMENT SUCCESS ////

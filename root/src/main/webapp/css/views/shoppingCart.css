@@ -59,7 +59,10 @@
 #shoppingCart .smollCell{
     width: 100px;
     text-align: center;
+}
 
+#shoppingCart .smollCell.quantity{
+    padding: 0 25px;
 }
 
 #shoppingCart .smollCell span a{
@@ -326,6 +329,8 @@
         border-radius: 4px;
         transition: all .3s ease;
         font-size: 16px;
+        display: block;
+        margin: 0 auto;
     }
 
     #shoppingCart .smollCell > span a.remove:hover{

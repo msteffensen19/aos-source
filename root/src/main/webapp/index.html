@@ -72,7 +72,7 @@
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
                 <a class="img" data-ng-click="redirect('/shoppingCart')" >
-                    <div icon-cart ></div>
+                    <div icon-cart></div>
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
                 <ul>
@@ -89,17 +89,16 @@
                         {{userCookie.name}}
                     </span>
                     <div icon-user data-ng-class="{ selected : userCookie.response }" ></div>
-                </a>
                 <div class="mini-title" id="loginMiniTitle" >
                     <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
                     <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
                 </div>
+                </a>
             </li>
             <li>
-                <a class="img" style="opacity: 0">
-                    <div icon-magnifying-glass ></div>
+                <a class="img">
+                    <tool-tip-search></tool-tip-search>
                 </a>
-                <tool-tip-search></tool-tip-search>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>

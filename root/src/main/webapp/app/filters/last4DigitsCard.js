@@ -6,7 +6,7 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.filter('showLast4DigitsCard', function(){
         return function(num, last) {
-            return last ? num : "****" ;
+            return last ? num + "" : "****" ;
         };
     });
 });

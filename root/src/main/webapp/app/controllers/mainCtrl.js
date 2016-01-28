@@ -44,6 +44,7 @@ define(['./module'], function (controllers) {
                 productsCartService.removeProduct(index).then(function (cart) {
                     $scope.cart = cart;
                     $scope.checkCart();
+                    fixToolTipCartHeight();
                 });
             }
 
@@ -52,6 +53,7 @@ define(['./module'], function (controllers) {
                productsCartService.addProduct(product, quantity).then(function (cart) {
                    $scope.cart = cart;
                    animateToolTipCart();
+                   fixToolTipCartHeight();
                });
            }
 
@@ -79,10 +81,29 @@ define(['./module'], function (controllers) {
             $scope.enterCart = function(){
                 clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
                 $('#toolTipCart').stop().slideDown();
+                fixToolTipCartHeight();
             }
 
             $scope.leaveCart = function(){
                 Helper.closeToolTipCart();
+            }
+
+            function fixToolTipCartHeight(){
+                var winHeight = $(window).height() - 200;
+                var prodsHeight = ($scope.cart.productsInCart.length * 104);
+                var heightToAsign = (Math.round(winHeight / 104) * 104);
+                if(winHeight < prodsHeight){
+                    $("#toolTipCart tbody").css({
+                        "height" : heightToAsign + "px",
+                        "overflow-y" : "auto"
+                    });
+                }
+                else{
+                    $("#toolTipCart tbody").css({
+                        "height" : prodsHeight + "px",
+                        "overflow-y" : "hidden"
+                    });
+                }
             }
 
             /* END Cart section */
@@ -125,14 +146,12 @@ define(['./module'], function (controllers) {
             $scope.miniTitleIn = function (miniTitleId) {
                 if($rootScope.userCookie){
                     $("#" + miniTitleId).stop().delay(500).stop().fadeIn(300);
-                    return;
                 }
             }
 
             $scope.miniTitleOut = function (miniTitleId) {
                 if($rootScope.userCookie){
                     $("#" + miniTitleId).stop().delay(500).stop().fadeOut(300);
-                    return;
                 }
             }
 
@@ -142,7 +161,6 @@ define(['./module'], function (controllers) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
-
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();
                 var top = "5%";
@@ -205,9 +223,10 @@ define(['./module'], function (controllers) {
                 {
                     switch($location.$$path) {
                         case '/shoppingCart':
-                        case '/orderPayment':
+                            window.history.back();
                             break;
                         case '/login':
+                        case '/orderPayment':
                             $state.go("default");
                             break;
                     }

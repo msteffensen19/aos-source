@@ -65,14 +65,13 @@ define(['./module'], function (services) {
                     },
                     "purchasedProducts": purchasedProducts,
                 }
-
                 $http({
                     method: "post",
                     url: server.order.safePay(user.id),
                     data: paramsToPass,
                     headers: {
                         "content-type": "application/json",
-                        "Authorization": "Bearer " + user.response.token,
+                        "Authorization": "Bearer " + $rootScope.userCookie.response.token,
                     },
                 }).
                 then(function (res){

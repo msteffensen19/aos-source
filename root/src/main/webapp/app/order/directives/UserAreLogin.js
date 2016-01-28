@@ -81,7 +81,8 @@ define(['./module'], function (directives) {
                                         paymentEnd: true,
                                         orderNumber: res.orderNumber,
                                         trackingNumber: res.paymentConfirmationNumber,
-                                        cardNumber : + s.card.number + ''
+                                        cardNumber : + s.card.number + '',
+                                        TransPaymentMethod : TransPaymentMethod
                                     });
                                     Helper.scrollPageUp();
                                     safePayBussy = false;

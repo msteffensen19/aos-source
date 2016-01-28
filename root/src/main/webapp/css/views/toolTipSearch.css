@@ -2,8 +2,7 @@
 
 #searchSection {
     direction: ltr;
-    position: fixed;
-    right: 112px;
+    position: relative;
     top:1px;
     z-index: 1000;
     text-align: left;
@@ -21,18 +20,18 @@
     position: relative;
     display: inline-block;
     vertical-align: top;
-    padding: 13px 0 ;
     opacity: 0.5;
     margin: 0;
+    top: -10px;
 }
 
 #searchSection .autoCompleteCover .iconCss{
     position: absolute;
     right: 0;
-    top:0;
+    top: 9px;
     bottom: 0;
     vertical-align: middle;
-    margin: 23px 0;
+    margin: 4px 0;
     display: none;
     cursor: pointer;
 
@@ -42,8 +41,8 @@
     width: 100%;
     font-size: 16px;
     color: #2a2a2a;
-    height: 36px;
     padding-left: 11px;
+    padding: 4px 0;
 }
 
 #searchSection .autoCompleteCover ::-webkit-input-placeholder{
@@ -59,7 +58,6 @@
 }
 
 #searchSection .iconMagnifyingGlass{
-    margin: 19px 0;
     cursor: pointer;
 }
 
@@ -68,7 +66,7 @@
     background-color: rgba(246, 246, 246, 0.95);
     width: 100%;
     box-sizing: border-box;
-    top: 64px;
+    top: 45px;
 }
 
 #searchSection .searchPopUp > div.categories{
@@ -170,14 +168,26 @@
 
 
 @media screen and (max-width: 1200px){
+
     #searchSection .searchPopUp > div .product{
         height: 180px;
     }
 }
 
+
 @media screen and (max-width: 1020px){
+
     #searchSection .searchPopUp > div .product{
         width: 50%;
         padding: 24px 0;
+    }
+
+    #searchSection .searchPopUp .viewAll  {
+        position: absolute;
+        top:23px;
+        right:35px;
+        font-size: 13px;
+        color: #54d3ad;
+        cursor: pointer;
     }
 }

@@ -13,7 +13,10 @@ define(['./module'], function (controllers) {
 
             s.viewAll = paramsToReturn.viewAll;
 
-            s.categoryData = paramsToReturn.searchResult[0];
+            l("s.viewAll")
+            l(s.viewAll)
+            s.categoryData = paramsToReturn.searchResult.length > 0 ? paramsToReturn.searchResult[0] : [];
+            l(s.categoryData)
 
             s.noProducts = s.categoryData.products == undefined || s.categoryData.products.length == 0;
 
