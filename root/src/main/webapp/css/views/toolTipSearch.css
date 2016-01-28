@@ -183,11 +183,7 @@
     }
 
     #searchSection .searchPopUp .viewAll  {
-        position: absolute;
-        top:23px;
-        right:35px;
-        font-size: 13px;
-        color: #54d3ad;
-        cursor: pointer;
+        bottom: 20px;
+        top:inherit;
     }
 }
