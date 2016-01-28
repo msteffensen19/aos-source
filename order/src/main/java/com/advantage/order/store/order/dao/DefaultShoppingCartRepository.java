@@ -175,6 +175,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             shoppingCartResponse.setId(productId);
         }
 
+
         return shoppingCartResponse;
     }
 
