@@ -72,7 +72,8 @@
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
                 <a class="img" data-ng-click="redirect('/shoppingCart')" >
-                    <div icon-cart></div>
+                    <img src="css/images/Cart.jpg" alt="user">
+                    <!--<div icon-cart></div>-->
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
                 <ul>
@@ -88,7 +89,8 @@
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle" >
                         {{userCookie.name}}
                     </span>
-                    <div icon-user data-ng-class="{ selected : userCookie.response }" ></div>
+                    <img src="css/images/User.jpg" alt="user">
+                    <!--<div icon-user data-ng-class="{ selected : userCookie.response }" ></div>-->
                 <div class="mini-title" id="loginMiniTitle" >
                     <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
                     <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
@@ -109,6 +111,7 @@
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
             </li>
+
         </ul>
         <div class="logo">
             <a href="#/" ng-click="go_up()"> <img src="css/images/logo.png" /></a>

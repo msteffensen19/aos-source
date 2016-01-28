@@ -7,6 +7,8 @@
     </div>
 
 
+
+
     <!-- USER DETAILS SECTION-->
 
     <div id="userSection" ng-show="firstTag">
@@ -14,10 +16,12 @@
         <div data-ng-show="!userDetailsEditMode">
             <div id="userDetails">
                 <div>
-                    <div icon-user></div>
+                    <img src="css/images/User.jpg" alt="user">
+                    <!--<div icon-user></div>-->
                     <label>{{user.firstName}} {{user.lastName}}</label>
                 </div>
                 <div>
+                    <!--<img src="css/images/.jpg" alt="user">-->
                     <div icon-home></div>
                     <label data-ng-show="user.address != ''">{{ user.address }}</label>
                     <label data-ng-show="user.cityName != ''">{{ user.cityName }}</label>
@@ -32,8 +36,8 @@
             </div>
             <div class="blueLink">
                 <a data-ng-click="userDetailsEditMode = true">{{ 'Edit_shipping_Details' | translate }}</a>
-                <label class="float-button">{{ 'SHIPPING_BY' | translate }}: <img src="css/images/Shipex.png"
-                                                                                  alt="ShipEx"/></label>
+                <label class="float-button">{{ 'SHIPPING_BY' | translate }}:
+                    <img src="css/images/Shipex.png" alt="ShipEx"/></label>
             </div>
             <div class="mobileBtnHandler">
                 <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75">
