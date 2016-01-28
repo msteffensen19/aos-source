@@ -3,5 +3,5 @@
  */
 
 define([
-    './orderService',
+    './accountService',
     ], function() {});

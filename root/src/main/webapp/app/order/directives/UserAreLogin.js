@@ -48,7 +48,6 @@ define(['./module'], function (directives) {
                         s.userDetailsEditMode = false;
                     }
 
-                    s.agree_Agreement = true;
                     s.accountUpdate = function(){
                         var agree_Agreement = s.agree_Agreement;
                         orderService.accountUpdate(s.user, agree_Agreement).then(function(res){

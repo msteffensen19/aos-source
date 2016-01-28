@@ -4,7 +4,7 @@
 'use strict';
 
 define([
-    './UserNotLogin',
-    './UserAreLogin',
-    './orderPaymentSuccess'
+//    './UserNotLogin',
+//    './UserAreLogin',
+//    './orderPaymentSuccess'
 ], function() { });

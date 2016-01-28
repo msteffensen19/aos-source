@@ -13,16 +13,19 @@ define([
     './app/configuration/appConfig',
     './app/user/userConfig',
     './app/order/orderConfig',
+    './app/account/accountConfig',
 
 
     './app/controllers/index',
     './app/user/controllers/index',
     './app/order/controllers/index',
+    './app/account/controllers/index',
 
 
     './app/user/services/index',
     './app/order/services/index',
     './app/services/index',
+    './app/account/services/index',
 
 
     './app/filters/index',
@@ -31,10 +34,11 @@ define([
     './app/directives/index',
     './app/user/directives/index',
     './app/order/directives/index',
+    './app/account/directives/index',
 
     './app/templates/module',
 
-], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig) {
+], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig, accountConfig) {
 
     return angular.module('aos', [
 
@@ -60,6 +64,10 @@ define([
         'aos.order.directives',
 
 
+        'aos.account.controllers',
+        'aos.account.services',
+        //'aos.account.directives',
+
 
     ]).
 
@@ -68,6 +76,9 @@ define([
     config(userConfig).
 
     config(orderConfig).
+
+    config(accountConfig).
+
 
     run(function ($rootScope, $state, ipCookie) {
 

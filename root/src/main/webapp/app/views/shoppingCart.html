@@ -75,8 +75,11 @@
                             {{ (product.price * product.quantity) | currency:'$' }}
                         </p>
                         <span class="actions">
-                            <a class="remove" href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">{{ 'EDIT' | translate }}</a>
-                            <a class="separator">|<a> <a class="remove" data-ng-click="removeProduct($index)">{{ 'REMOVE' | translate }}</a>
+                            <a class="remove" href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">
+                                {{ 'EDIT' | translate }}
+                            </a>
+                            <a class="separator">|</a>
+                            <a class="remove" data-ng-click="removeProduct($index)">{{ 'REMOVE' | translate }}</a>
                         </span>
                     </td>
                 </tr>
@@ -86,10 +89,9 @@
                     <td colspan="3" class="icons">
                         <label>{{'PAYMENT_OPTIONS'  | translate}}: </label>
                         <ul>
-                            <li><span id="masterCard"></span></li>
-                            <li><span id="visa">VISA</span></li>
-                            <li><span id="discover"> DISCOVER </span></li>
-                            <li><span id="paypal"> Pay </span></li>
+                            <li>
+                                <img src="../../css/images/Shipex.png">
+                            </li>
                         </ul>
                     </td>
                     <td colspan="2">

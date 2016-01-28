@@ -3,4 +3,6 @@
  */
 'use strict';
 
-define(['./myAccountCtrl'], function() {});
+define([
+    './myAccountCtrl'
+], function() {});

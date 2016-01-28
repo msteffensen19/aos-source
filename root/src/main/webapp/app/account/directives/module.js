@@ -4,5 +4,5 @@
 
 define(['angular'], function (angular) {
     'use strict';
-    return angular.module('aos.order.directives', []);
+    return angular.module('aos.account.directives', []);
 });

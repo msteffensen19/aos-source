@@ -126,8 +126,7 @@ define(['./module'], function (controllers) {
             }
 
             $scope.accountSection = function(){
-                console.log("user account section! --- Method not done yet!");
-                $location.path('404');
+                $state.go('myAccount');
             }
 
             $scope.signOut = function(even){
@@ -230,6 +229,13 @@ define(['./module'], function (controllers) {
                             $state.go("default");
                             break;
                     }
+                }
+            }
+
+            $scope.checkLogin = function(){
+                var user = $rootScope.userCookie;
+                if(!(user && user.response && user.response.userId != -1 && user.response.token)){
+                    $state.go("default");
                 }
             }
 

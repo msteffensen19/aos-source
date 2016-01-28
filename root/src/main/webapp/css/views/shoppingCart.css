@@ -98,6 +98,11 @@
     display: inline-block;
 }
 
+#shoppingCart tfoot .icons img{
+    position: relative;
+    top:1px;
+}
+
 #shoppingCart tfoot .icons > label{
     font-size: 11px;
     margin: 20px 2px;

@@ -1,7 +1,7 @@
 /**
  * Created by kubany on 11/2/2015.
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     'use strict';
     require('load-grunt-tasks')(grunt);
     grunt.loadNpmTasks('grunt-angular-templates');
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                     out: "target/main.min.js",
                     optimize: 'none',
                     paths: {
-                        'aos.templates' : 'target/js/templates'
+                        'aos.templates': 'target/js/templates'
                     },
                     logLevel: 0
                 }
@@ -30,27 +30,27 @@ module.exports = function(grunt) {
                 roundingPrecision: -1
             },
             target: {
-                files: [{
-                    expand: true,
-                    cwd: 'css',
-                    src: ['*.css', '!*.min.css'],
-                    dest: 'target/css',
-                    ext: '.min.css'
-                },
+                files: [
                     {
+                        expand: true,
+                        cwd: 'css',
+                        src: ['*.css', '!*.min.css'],
+                        dest: 'target/css',
+                        ext: '.min.css'
+                    },{
                         expand: true,
                         cwd: 'app/user/css',
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/app/user/css',
                         ext: '.min.css'
-                    },
-                    {
+                    },{
                         expand: true,
                         cwd: 'app/order/css',
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/app/order/css',
                         ext: '.min.css'
-                    }]
+                    }
+                ]
             }
         },
         copy: {
@@ -64,7 +64,12 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        src: ['app/views/*', 'app/partials/*', 'app/templates/*', 'app/user/views/*', 'app/order/views/*'],
+                        src: [
+                            'app/views/*', 'app/partials/*', 'app/templates/*',
+                            'app/user/views/*', 'app/user/partials/*',
+                            'app/order/views/*', 'app/order/partials/*',
+                            'app/account/views/*', 'app/account/partials/*',
+                        ],
                         dest: 'target',
                         filter: 'isFile'
                     },
@@ -78,15 +83,16 @@ module.exports = function(grunt) {
                 ]
             }
         },
-        ngtemplates:  {
-            app:        {
-                src:      ['app/partials/**.html',
+        ngtemplates: {
+            app: {
+                src: ['app/partials/**.html',
                     'app/user/partials/**.html',
                     'app/order/partials/**.html',
+                    'app/account/partials/**.html',
                 ],
-                dest:     'app/templates/module.js',
+                dest: 'app/templates/module.js',
                 options: {
-                    bootstrap:  function(module, script) {
+                    bootstrap: function (module, script) {
                         return '\
                         define(["angular"], function (angular) {\
                             "use strict";\
@@ -102,13 +108,13 @@ module.exports = function(grunt) {
 
         },
         clean: ["target", "app/templates"],
-        usemin : {
+        usemin: {
             html: ['target/index.html']
         },
         'regex-replace': {
             dist: {
                 src: ['target/index.html'],
-                dest:     'target',
+                dest: 'target',
                 actions: [
                     {
                         name: 'requirejs-onefile',

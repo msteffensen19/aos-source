@@ -157,6 +157,9 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ShoppingCart shoppingCart = null;
 
+        //  Defaults
+        ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(false, "", 0);
+
         shoppingCart = this.find(userId, productId, color);
 
         if (shoppingCart != null) {
@@ -165,6 +168,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             shoppingCartResponse.setSuccess(true);
             shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY);
             shoppingCartResponse.setId(productId);
+
         } else {
             shoppingCartResponse.setSuccess(false);
             shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);

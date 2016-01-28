@@ -45,10 +45,12 @@ define(['./module'], function (controllers) {
                 },
                 name: '',
             }
+
             s.savePay = {
                 username : '',
                 password : ''
             }
+            s.agree_Agreement = true;
 
             s.shipping = resolveParams.shippingCost;
             s.shippingCost = resolveParams.shippingCost ? resolveParams.shippingCost.amount : null;

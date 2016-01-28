@@ -33,6 +33,7 @@
     position: absolute;
     z-index: 90000;
     top:0;
+    top:-14px;
     opacity: 0.39;
 }
 

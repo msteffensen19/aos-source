@@ -225,14 +225,15 @@
                             id-attr="agree_Agreement"
                             no-red-star="true"
                             input-type-attr="transclude"
+                            model-attr="agree_Agreement"
                             select-tag="true">
                         <div class="option">
-                            <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox"/>
+                            <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" />
                             <span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
                             <label class="validateInvalid" style="display: none">
                                 {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
                             </label>
-                        </div>
+                         </div>
                     </sec-input>
 
                     <div class="blueLink">
@@ -244,6 +245,9 @@
                                    value="{{'PAY_NOW' | translate}}"/>
                         </label>
                     </div>
+
+
+
 
                 </sec-validate>
 
