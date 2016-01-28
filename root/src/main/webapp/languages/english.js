@@ -149,7 +149,7 @@ var english = {
     'register_faild' : 'register faild! please try again later',
     'CATEGORIES' : 'CATEGORIES',
     'Receiver_Details' : 'Receiver Details',
-    'a' : 'a',
+    'MY_ACCOUNT' : 'MY ACCOUNT',
     'a' : 'a',
     'a' : 'a',
     'a' : 'a',

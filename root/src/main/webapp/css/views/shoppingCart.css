@@ -62,7 +62,7 @@
 }
 
 #shoppingCart .smollCell.quantity{
-    padding: 0 25px;
+    padding: 0 41px;
 }
 
 #shoppingCart .smollCell span a{
@@ -72,7 +72,7 @@
 
 
 #shoppingCart td button{
-    border: solid 1px #2a2a2a;
+    border: solid 2px #2a2a2a;
     background-color: transparent;
     padding: 14px 30px;
     float: right;

@@ -100,7 +100,7 @@ var server = {
     catalog: {
 
         getKey : function(){
-        return catalogKey;
+            return catalogKey;
         },
         getPopularProducts : function () {
             return "app/tempFiles/popularProducts.json";

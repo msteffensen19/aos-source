@@ -59,7 +59,7 @@
                         <label class="roboto-light mobileViewer">
                             {{'COLOR' | translate}}:
                         </label>
-                        <span ng-style="{'backgroundColor': '#' + product.color.code }" class="productColor"></span>
+                        <span ng-style="product.color.code != 'FFFFFF' ? {'backgroundColor': '#' + product.color.code, 'border': 'none 0px white'} : { 'backgroundColor': '#' + product.color.code }" class="productColor"></span>
                     </td>
                     <td class="smollCell quantityMobile" >
                         <label class="roboto-light mobileViewer">
