@@ -19,9 +19,14 @@ define(['./module'], function (services) {
                 getAccountById: getAccountById,
                 getShippingCost: getShippingCost,
                 SafePay: SafePay,
-                accountUpdate : accountUpdate
-        });
+                accountUpdate : accountUpdate,
+                userIsLogin : userIsLogin
+            });
 
+            function userIsLogin(){
+                var user = $rootScope.userCookie;
+                return user && user.response && user.response.userId != -1;
+            }
 
             function SafePay(user, savePay, card, shipping, cart, accountNumber, TransPaymentMethod) {
                 var defer = $q.defer();
@@ -123,10 +128,10 @@ define(['./module'], function (services) {
             function getAccountById() {
 
                 var defer = $q.defer();
-                var params = server.account.getAccountById();
                 var user = $rootScope.userCookie;
                 if (user && user.response && user.response.userId != -1) {
 
+                    var params = server.account.getAccountById();
                     mini_soap.post(params.path, params.method, {
                             accountId: user.response.userId
                         })
