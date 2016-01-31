@@ -182,4 +182,24 @@ public class Product {
     public void setProductAttributes(Set<ProductAttributes> attributes) {
         this.productAttributes = attributes;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
