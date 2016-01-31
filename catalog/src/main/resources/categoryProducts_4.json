@@ -1065,21 +1065,31 @@
         ]
       },
       {
-        "productName": "HP Z4000 Purple Wireless Mouse",
+        "productName": "HP Z4000 Wireless Mouse",
         "price": 9.99,
         "description": "The sleek and low-profiled design make the Z4000 the must-have companion to every thin notebook or tablet. Style and comfort within a dynamic ultra-mobile wireless mouse.",
-        "imageUrl": "5500",
+        "imageUrl": "5505",
         "images": [
-          5500,
+          5506,
           5501,
-          5502,
-          5503
+          5504,
+          5505
         ],
         "colors": [
           {
             "inStock": 10,
             "name": "Purple",
             "code": "800080"
+          },
+          {
+            "inStock": 10,
+            "name": "Red",
+            "code": "FF0000"
+          },
+          {
+            "inStock": 10,
+            "name": "Blue",
+            "code": "0000FF"
           }
         ],
         "attributes": [
