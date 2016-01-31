@@ -25,7 +25,6 @@ define([],function(){
                     })
 
 
-
                     defer.promise;
                     return "HOLA MUNDO";
                 }
