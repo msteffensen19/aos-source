@@ -1,0 +1,148 @@
+
+#myAccountContainer{
+    padding-top: 135px;
+    margin: 0 50px;
+}
+
+.fixed + #myAccountContainer{
+    padding-top: 95px;
+    margin: 0 50px;
+}
+
+#myAccountContainer .cube{
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 0;
+}
+
+#myAccountContainer .cube > h3{
+    padding-top: 33px;
+    padding-bottom: 14px;
+    color: #020202;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+#myAccountContainer .cube > div > div{
+    position: relative;
+    width: 33.33%;
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 15px;
+    vertical-align: top;
+    padding: 17px 17px;
+}
+
+#myAccountContainer .cube .borderBox,
+#myAccountContainer .cube .categoriesBox,
+#myAccountContainer .cube .paymentBox{
+    border: solid 1px #454545;
+    /*min-height: 120px;*/
+    min-height: 50px;
+}
+
+#myAccountContainer .cube > div > div.middle{
+    border-left: solid 1px #454545;
+    border-right: solid 1px #454545;
+}
+
+#myAccountContainer .cube .floatRigth{
+    float: right;
+}
+
+
+#myAccountContainer .cube .iconHome{
+    transform: scale(0.8);
+    top: 5px;
+}
+
+#myAccountContainer .cube > div label{
+    display: block;
+    font-weight: 300;
+    padding: 1px 0;
+    color: #020202;
+}
+
+#myAccountContainer .cube div .floatRigth + label{
+    padding-top: 11px;
+}
+
+#myAccountContainer .cube .blueLink a{
+    font-weight: 400;
+    padding: 0 2px;
+}
+
+
+#myAccountContainer .cube .paymentBox{
+    font-size: 15px;
+}
+
+#myAccountContainer .cube .paymentBox img{
+    padding: 8px 10px;
+}
+
+#myAccountContainer .cube .paymentBox .mastercart{
+    padding: 15px 7px;
+    padding-right: 12px;
+    font-size: 16px;
+}
+
+#myAccountContainer .cube .paymentBox label{
+    padding: 18px 2px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#myAccountContainer .cube .paymentBox span{
+    padding: 18px 2px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 13px;
+}
+
+#myAccountContainer .cube .option span{
+    font-weight: 300;
+    font-size: 14px;
+    padding-bottom: 0;
+}
+
+#myAccountContainer .cube .categoriesBox p{
+    font-size: 16px;
+    padding: 14px 17px;
+    display: inline-block;
+}
+
+#myAccountContainer .cube .categoriesBox .categoriesCheckboxes{
+    width: calc(100% - 112px);
+    padding: 12px 17px;
+}
+
+#myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
+    display: inline-block;
+    padding: 0 13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,7 +5,11 @@
     background-color: white;
 }
 
-.sticky.fixed + .category-type-products{
+.categoryDataFixedNav.fixed {
+    top:65px;
+}
+
+.sticky.fixed + div .category-type-products{
     margin-top:135px;
 }
 

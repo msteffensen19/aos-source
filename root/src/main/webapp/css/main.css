@@ -29,6 +29,9 @@
 @import "order/orderPayment/userAreLogin.css";
 @import "order/orderPayment/orderPaymentSuccess.css";
 
+
+@import "account/myAccount.css";
+
 #png {
     position: absolute;
     z-index: 90000;

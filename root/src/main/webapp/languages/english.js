@@ -99,6 +99,7 @@ var english = {
     'PRODUCT_NAME' : 'PRODUCT NAME',
     'Search' : 'Search',
     'CATEGORIES' : 'CATEGORIES',
+    'Categories': 'Categories',
     'TOP' : 'TOP',
     'RESULTS_FOR' : 'RESULTS FOR',
     'TOP_RESULTS_FOR' : 'TOP RESULTS FOR',
@@ -137,7 +138,7 @@ var english = {
     'Your_order_number_is' : 'Your order number is',
     'Shipping_to' : 'Shipping to',
     'Payment_Method' : 'Payment Method',
-    'Order_Summary' : 'Order Summary',
+
     'Date_Ordered' : 'Date Ordered',
     'Subtotal' : 'Subtotal',
     'field_is_required' : 'field is required',
@@ -150,9 +151,11 @@ var english = {
     'CATEGORIES' : 'CATEGORIES',
     'Receiver_Details' : 'Receiver Details',
     'MY_ACCOUNT' : 'MY ACCOUNT',
-    'a' : 'a',
-    'a' : 'a',
-    'a' : 'a',
+    'Account_Details' : 'Account Details',
+    'Shipping_Details' : 'Shipping Details',
+    'Preferred_payment_method' : 'Preferred payment method',
+    'Notify_me_about_Promotions' : 'Notify me about Promotions',
+    'MasterCredit' : 'MasterCredit',
 };
 
 

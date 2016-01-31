@@ -1,5 +1,5 @@
 <section id="png">
-    <img src="../../../css/images/mariaDesigns/MyAccount/My_account.png" />
+    <img src="../../../ccss/images/mariaDesigns/MyAccount/My_account.png" />
 </section>
 
 <nav class="pages fixed fixedImportant">
@@ -13,13 +13,133 @@
 
         <div id="myAccountContainer">
 
-        </div>
 
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <!--ACCOUNT DETAILS SECCION-->
+            <div class="cube">
+                <h3 class="blueLink">
+                    {{ "Account_Details" | translate }}
+                    <a class="floatRigth">
+                        {{ "Edit" | translate }}
+                    </a>
+                </h3>
+                <div class="borderBox">
+                    <div>
+                        <div class="floatRigth">
+                            <img src="css/images/not_in_use/User.jpg">
+                        </div>
+                        <label>
+                            David Smith
+                        </label>
+                    </div>
+                    <div class="middle">
+                        <div class="floatRigth">
+                            <div icon-home></div>
+                        </div>
+                        <label> Altalef 5 </label>
+                        <label> HPE Software (building M3) </label>
+                        <label> Yehud </label>
+                        <label> Israel </label>
+                    </div>
+                    <div>
+                        <div class="floatRigth">
+                            <div icon-phone></div>
+                        </div>
+                        <label> 972-54-8164355 </label>
+                    </div>
+                </div>
+            </div>
+            <!--ACCOUNT DETAILS SECCION-->
+
+
+
+
+            <!--SHIPPING DETAILS SECCION-->
+            <div class="cube">
+                <h3 class="blueLink">
+                    {{ "Shipping_Details" | translate }}
+                    <a class="floatRigth">
+                        {{ "Edit" | translate }}
+                    </a>
+                </h3>
+                <div class="borderBox">
+                    <div>
+                        <div class="floatRigth">
+                            <img src="css/images/not_in_use/User.jpg">
+                        </div>
+                        <label>
+                            David Smith
+                        </label>
+                    </div>
+                    <div class="middle">
+                        <div class="floatRigth">
+                            <div icon-home></div>
+                        </div>
+                        <label> Altalef 5 </label>
+                        <label> HPE Software (building M3) </label>
+                        <label> Yehud </label>
+                        <label> Israel </label>
+                    </div>
+                    <div>
+                        <div class="floatRigth">
+                            <div icon-phone ></div>
+                        </div>
+                        <label> 972-54-8164355 </label>
+                    </div>
+                </div>
+            </div>
+            <!--SHIPPING DETAILS SECCION-->
+
+
+
+
+            <!--PREFERRED PAYMENT METHOD DETAILS SECCION-->
+            <div class="cube">
+                <h3 class="blueLink">
+                    {{ "Preferred_payment_method" | translate }}
+                    <a class="floatRigth">
+                        {{ "Edit" | translate }}
+                    </a>
+                </h3>
+                <div class="paymentBox">
+                    <img src="css/images/Master_credit.png">
+                    <label class="mastercart">{{'MasterCredit' | translate}}</label>
+                    <span>****</span>
+                    <span>****</span>
+                    <span>****</span>
+                    <span>0785</span>
+                </div>
+            </div>
+            <!--END PREFERRED PAYMENT METHOD DETAILS SECCION-->
+
+
+
+
+
+
+            <!--NOTIFY ME ABOUT PROMOTIONS SECCION-->
+            <div class="cube">
+                <h3 class="blueLink">
+                    <div class="option">
+                        <input type="checkbox" data-ng-model="Notify_me_about_Promotions">
+                        <span> {{ "Notify_me_about_Promotions" | translate }} </span>
+                        <a class="floatRigth">
+                            {{ "Edit" | translate }}
+                        </a>
+                    </div>
+                </h3>
+                <div class="categoriesBox">
+                    <p>{{'Categories'| translate}}</p>
+                    <div class="categoriesCheckboxes">
+                        <div class="option" data-ng-repeat="cat in categoriesPromotions track by $index">
+                            <input type="checkbox" data-ng-model="cat.categoryValue">
+                            <span> {{ cat.categoryName }} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END NOTIFY ME ABOUT PROMOTIONS SECCION-->
+
+        </div>
 
     </article>
 </section>

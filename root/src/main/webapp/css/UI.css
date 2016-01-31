@@ -75,7 +75,6 @@ input[type=button].roboto-medium {
     position: fixed !important;
     width: 100%;
     z-index: 90;
-    top:65px;
 }
 
 nav.pages {

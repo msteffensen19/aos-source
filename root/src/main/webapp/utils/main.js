@@ -10,7 +10,7 @@ var Helper = Helper || {};
 Helper.____closeTooTipCart;
 
 Helper.forAllPage = function(){
-    Helper.scrollPageUp()
+    Helper.scrollPageUp();
     Helper.UpdatePageFixed();
 }
 
