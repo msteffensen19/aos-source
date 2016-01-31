@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(
                 name = CategoryAttributeFilter.QUERY_GET_ALL,
-                query = "select p from CategoryAttributeFilter p"
+                query = "select c from CategoryAttributeFilter c"
         )
 })
 public class CategoryAttributeFilter {
