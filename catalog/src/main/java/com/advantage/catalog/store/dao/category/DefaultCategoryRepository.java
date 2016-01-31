@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
@@ -27,6 +28,23 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
         entityManager.persist(category);
 
         return category;
+    }
+
+    @Override
+    public void addCategoryAttributeFilter(CategoryAttributeFilter categoryAttributeFilterObj) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(categoryAttributeFilterObj,"CategoryAttributeFilter object");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(categoryAttributeFilterObj.getCategoryId(),"category id");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(categoryAttributeFilterObj.getAttributeId(),"attribute id");
+//TODO moti
+    }
+
+    @Override
+    public List<CategoryAttributeFilter> get() {
+        List<CategoryAttributeFilter> caf = entityManager.createNamedQuery(CategoryAttributeFilter.QUERY_GET_ALL, CategoryAttributeFilter.class)
+                .setMaxResults(MAX_NUM_OF_CATEGORIES)//tocheck
+                .getResultList();
+
+        return caf.isEmpty() ? null : caf;
     }
 
     @Override
