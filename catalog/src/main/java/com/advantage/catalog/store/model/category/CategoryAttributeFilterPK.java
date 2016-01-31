@@ -1,27 +1,26 @@
 package com.advantage.catalog.store.model.category;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 
 /**
  * Created by ostrovsm on 31/01/2016.
  */
-public class CategoryAttributeFilter implements Serializable {
+public class CategoryAttributeFilterPK implements Serializable {
 
     private Long categoryId;
     private Long attributeId;
     private boolean inFilter;
 
-    public CategoryAttributeFilter(){}
+    public CategoryAttributeFilterPK(){}
 
-    public CategoryAttributeFilter(long categoryId, long attributeId){
+    public CategoryAttributeFilterPK(long categoryId, long attributeId){
         this.categoryId=categoryId;
         this.attributeId=attributeId;
         this.inFilter=true; //default value is show in filter
     }
 
-    public CategoryAttributeFilter(long categoryId, long attributeId,boolean inFilter ){
+    public CategoryAttributeFilterPK(long categoryId, long attributeId, boolean inFilter ){
         this.categoryId=categoryId;
         this.attributeId=attributeId;
         this.inFilter=inFilter;
@@ -44,7 +43,7 @@ public class CategoryAttributeFilter implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CategoryAttributeFilter that = (CategoryAttributeFilter) o;
+        CategoryAttributeFilterPK that = (CategoryAttributeFilterPK) o;
 
         if (!categoryId.equals(that.categoryId)) return false;
         return attributeId.equals(that.attributeId);
