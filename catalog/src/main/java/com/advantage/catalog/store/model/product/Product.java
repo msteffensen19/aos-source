@@ -53,8 +53,6 @@ public class Product {
     @Column(length = 2048)
     private String description;
 
-
-
     @Column(name = "managed_image_id")
     private String managedImageId;
 
