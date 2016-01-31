@@ -6,6 +6,8 @@
 var fileText;
 (function readTextFile(file)
 {
+    console.log('Extracting file: ' + file)
+
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
     rawFile.onreadystatechange = function ()
@@ -16,6 +18,14 @@ var fileText;
             {
                 var allText = rawFile.responseText;
                 fileText = allText;
+                console.log('Extracted file: ' + file)
+                console.log("");
+                console.log(allText);
+                console.log("");
+                console.log("");
+                console.log("");
+                console.log("");
+                console.log("");
             }
         }
     }
@@ -69,6 +79,7 @@ var catalogKey = "http://" +
     services_properties['catalog_service_url_host'] + ":" +
     services_properties['catalog_service_url_port'] + "/" +
     services_properties['catalog_service_url_suffix'];
+console.log("catalogKey = " + catalogKey);
 
 
 //var orderKey = "http://localhost:8080/order";
@@ -76,24 +87,33 @@ var orderKey = "http://" +
     services_properties['order_service_url_host'] + ":" +
     services_properties['order_service_url_port'] + "/" +
     services_properties['order_service_url_suffix'];
+console.log("orderKey = " + orderKey);
+
 
 //var accountKey = "http://localhost:8080/account";
 var accountKey = "http://" +
     services_properties['account_service_url_host'] + ":" +
     services_properties['account_service_url_port'] + "/" +
     services_properties['account_service_url_suffix'];
+console.log("accountKey = " + accountKey);
+
 
 //var serviceKey = "http://localhost:8080/service";
 var serviceKey = "http://"+
     services_properties['service_service_url_host'] + ":" +
     services_properties['service_service_url_port'] + "/" +
     services_properties['service_service_url_suffix'];
+console.log("serviceKey = " + serviceKey);
+
 
 //var wsdlPath = 'http://localhost:8080/accountservice';
 var wsdlPath = "http://"+
     services_properties['account_soapservice_url_host'] + ":" +
     services_properties['account_soapservice_url_port'] + "/" +
     services_properties['account_soapservice_url_suffix'];
+console.log("wsdlPath = " + wsdlPath);
+
+
 
 var server = {
 
