@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.AttributeService;
@@ -177,6 +178,20 @@ public class CatalogController {
         CategoryDto categoryDto = categoryService.getCategoryDto(categoryId);
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/categories/attributes", method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryAttributeFilter>> getAllCategoriesAttributes(HttpServletRequest request) {
+
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        List<CategoryAttributeFilter> categoriesAttributes = categoryService.getAllCategoryAttributesFilter();
+
+        if ((categoriesAttributes == null) || (categoriesAttributes.isEmpty())) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(categoriesAttributes, httpStatus);
     }
 
     //endregion
