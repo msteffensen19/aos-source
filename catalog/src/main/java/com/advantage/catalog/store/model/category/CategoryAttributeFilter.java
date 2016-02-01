@@ -3,7 +3,7 @@ package com.advantage.catalog.store.model.category;
 import javax.persistence.*;
 
 /**
- * Created by ostrovsm on 31/01/2016.
+ * @author Moti Ostrovski on 31/01/2016.
  */
 
 @Entity
@@ -19,7 +19,7 @@ public class CategoryAttributeFilter {
 
     public static final String FIELD_CATEGORY_ID = "CATEGORY_ID";;
     public static final String FIELD_ATTRIBUTE_ID = "ATTRIBUTE_ID";
-    public static final String FIELD_INFILTER = "INFILTER";
+    public static final String FIELD_INFILTER = "SHOW_IN_FILTER";
     public static final String QUERY_GET_ALL = "categoryAttributeFilter.getAll";
 
 
@@ -32,23 +32,20 @@ public class CategoryAttributeFilter {
     private long attributeId;
 
     @Column(name = FIELD_INFILTER)
-    private boolean inFilter;
-
-
-
+    private boolean showInFilter;
 
     public CategoryAttributeFilter() {    }
 
     public CategoryAttributeFilter(long categoryId, long attributeId) {
         this.categoryId = categoryId;
         this.attributeId = attributeId;
-        this.inFilter=true;
+        this.showInFilter =true;
     }
 
-    public CategoryAttributeFilter(long categoryId, long attributeId, boolean inFilter) {
+    public CategoryAttributeFilter(long categoryId, long attributeId, boolean showInFilter) {
         this.categoryId = categoryId;
         this.attributeId = attributeId;
-        this.inFilter = inFilter;
+        this.showInFilter = showInFilter;
     }
 
     public long getCategoryId() {
@@ -67,12 +64,12 @@ public class CategoryAttributeFilter {
         this.attributeId = attributeId;
     }
 
-    public boolean isInFilter() {
-        return inFilter;
+    public boolean isShowInFilter() {
+        return showInFilter;
     }
 
-    public void setInFilter(boolean inFilter) {
-        this.inFilter = inFilter;
+    public void setShowInFilter(boolean showInFilter) {
+        this.showInFilter = showInFilter;
     }
 
     @Override

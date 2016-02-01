@@ -10,20 +10,12 @@ public class CategoryAttributeFilterPK implements Serializable {
 
     private Long categoryId;
     private Long attributeId;
-    private boolean inFilter;
 
     public CategoryAttributeFilterPK(){}
 
     public CategoryAttributeFilterPK(long categoryId, long attributeId){
         this.categoryId=categoryId;
         this.attributeId=attributeId;
-        this.inFilter=true; //default value is show in filter
-    }
-
-    public CategoryAttributeFilterPK(long categoryId, long attributeId, boolean inFilter ){
-        this.categoryId=categoryId;
-        this.attributeId=attributeId;
-        this.inFilter=inFilter;
     }
 
     public Long getCategoryId() { return categoryId;  }
@@ -33,10 +25,6 @@ public class CategoryAttributeFilterPK implements Serializable {
     public Long getAttributeId() { return attributeId; }
 
     public void setAttributeId(Long attributeId) { this.attributeId = attributeId; }
-
-    public boolean isInFilter() { return inFilter;}
-
-    public void setInFilter(boolean inFilter) {this.inFilter = inFilter; }
 
     @Override
     public boolean equals(Object o) {

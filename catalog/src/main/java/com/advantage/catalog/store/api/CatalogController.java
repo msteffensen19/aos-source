@@ -181,17 +181,17 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/categories/attributes", method = RequestMethod.GET)
-    public ResponseEntity<List<CategoryAttributeFilter>> getAllCategoriesAttributes(HttpServletRequest request) {
+    public ResponseEntity<CategoryAttributeFilterResponse> getAllCategoriesAttributes(HttpServletRequest request) {
 
         HttpStatus httpStatus = HttpStatus.OK;
 
-        List<CategoryAttributeFilter> categoriesAttributes = categoryService.getAllCategoryAttributesFilter();
+        CategoryAttributeFilterResponse response = categoryService.getAllCategoryAttributesFilter();
 
-        if ((categoriesAttributes == null) || (categoriesAttributes.isEmpty())) {
+        if ((response == null) || (response.getCategoriesAttributes() == null) || (response.getCategoriesAttributes().isEmpty())) {
             httpStatus = HttpStatus.BAD_REQUEST;
         }
 
-        return new ResponseEntity<>(categoriesAttributes, httpStatus);
+        return new ResponseEntity<>(response, httpStatus);
     }
 
     //endregion

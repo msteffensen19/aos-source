@@ -32,5 +32,8 @@ public class CategoryAttributeFilterResponse {
         this.categoriesAttributes = categoriesAttributes;
     }
 
+    public void createCategoryAttributeShowInFilter(CategoryAttributeShowInFilter categoryAttributeShowInFilter) {
+        categoriesAttributes.add(categoryAttributeShowInFilter);
+    }
 
 }

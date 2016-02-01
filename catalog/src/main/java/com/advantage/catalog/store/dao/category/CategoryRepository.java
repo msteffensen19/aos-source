@@ -24,4 +24,8 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
     void addCategoryAttributeFilter(CategoryAttributeFilter categoryAttributeFilterObj);
 
     List<CategoryAttributeFilter> getAllCategoryAttributeFilter();
+
+    void updateCategoryAttributeFilter(Long categoryId, Long attributeId, boolean showInFilter);
+
+    CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId);
 }
