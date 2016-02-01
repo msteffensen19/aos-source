@@ -86,7 +86,7 @@ public class ShoppingCartService {
 
                 int totalQuantity = shoppingCart.getQuantity() + quantity;
 
-                shoppingCartRepository.update(userId, productId, color, quantity);
+                shoppingCartRepository.update(userId, productId, color, totalQuantity);
 
                 shoppingCartResponse = new ShoppingCartResponse(true,
                         ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
