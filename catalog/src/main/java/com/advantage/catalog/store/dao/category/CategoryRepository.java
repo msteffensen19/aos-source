@@ -19,13 +19,9 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
 
     /**
      *
-     * @param categoryAttributeFilterObj
+     * @param categoryAttributeFilterObj object of category+Attribute+inFilter value(bool)
      */
     void addCategoryAttributeFilter(CategoryAttributeFilter categoryAttributeFilterObj);
 
-    /**
-     *
-     * @return
-     */
-    List<CategoryAttributeFilter> get();
+    List<CategoryAttributeFilter> getAllCategoryAttributeFilter();
 }

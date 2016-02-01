@@ -3,6 +3,7 @@ package com.advantage.catalog.store.services;
 import java.util.List;
 
 import com.advantage.catalog.store.dao.category.CategoryRepository;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.common.dto.CategoryDto;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.Product;
@@ -37,6 +38,12 @@ public class CategoryService {
     public Category getCategory(final Long categoryId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(categoryId, "category id");
         return categoryRepository.get(categoryId);
+    }
+
+    //by moti
+    @Transactional(readOnly = true)
+    public List<CategoryAttributeFilter> getAllCategoryAttributesFilter() {
+        return categoryRepository.getAllCategoryAttributeFilter();
     }
 
     public CategoryDto getCategoryDto(long categoryId) {

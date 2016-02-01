@@ -35,13 +35,12 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
         ArgumentValidationHelper.validateArgumentIsNotNull(categoryAttributeFilterObj,"CategoryAttributeFilter object");
         ArgumentValidationHelper.validateLongArgumentIsPositive(categoryAttributeFilterObj.getCategoryId(),"category id");
         ArgumentValidationHelper.validateLongArgumentIsPositive(categoryAttributeFilterObj.getAttributeId(),"attribute id");
-//TODO moti
+        entityManager.persist(categoryAttributeFilterObj);
     }
 
     @Override
-    public List<CategoryAttributeFilter> get() {
+    public List<CategoryAttributeFilter> getAllCategoryAttributeFilter() {
         List<CategoryAttributeFilter> caf = entityManager.createNamedQuery(CategoryAttributeFilter.QUERY_GET_ALL, CategoryAttributeFilter.class)
-                .setMaxResults(MAX_NUM_OF_CATEGORIES)//tocheck
                 .getResultList();
 
         return caf.isEmpty() ? null : caf;

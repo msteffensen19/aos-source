@@ -104,7 +104,7 @@ public abstract class FileSystemHelper {
      * the files, so that only files with an extension that matches one of the given
      * file extensions (if passed), will be returned.
      *
-     * @param directoryPath the path of the directory to get the files of.
+     * @param directoryPath the path of the directory to getAllCategoryAttributeFilter the files of.
      * @param extensions    an optional argument - if extensions are passed to the method, only
      *                      files with a matching extension will be returned.
      * @return the files of the directory in the given path.
@@ -132,7 +132,7 @@ public abstract class FileSystemHelper {
     }
 
     /**
-     * Get a file separator string. This method will try to get the file separator that is
+     * Get a file separator string. This method will try to getAllCategoryAttributeFilter the file separator that is
      * configured in the Java system properties. If there is no such a property, it will
      * return, by default, the string <b>&quot;/&quot;</b>.
      *

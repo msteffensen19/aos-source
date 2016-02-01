@@ -24,7 +24,7 @@ public abstract class IOHelper {
     /**
      * Get the content of the file in the given file path, as a byte array.
      *
-     * @param filePath the path of the file to get it's content as a byte array.
+     * @param filePath the path of the file to getAllCategoryAttributeFilter it's content as a byte array.
      * @return the content of the file in the given file path, as a byte array.
      * @throws IOException              if an I/O error occurs.
      * @throws IllegalArgumentException if the given file path argument references
@@ -42,7 +42,7 @@ public abstract class IOHelper {
     /**
      * Get the content of the given file, as a byte array.
      *
-     * @param file the file to get it's content as a byte array.
+     * @param file the file to getAllCategoryAttributeFilter it's content as a byte array.
      * @return the content of the given file, as a byte array.
      * @throws IOException              if an I/O error occurs.
      * @throws IllegalArgumentException if the given file argument references ,<b>null</b>.
@@ -167,7 +167,7 @@ public abstract class IOHelper {
         // create a BufferedImage as the result of decoding the supplied InputStream
         BufferedImage image = ImageIO.read(is);
 
-        // get all image writers for JPG format
+        // getAllCategoryAttributeFilter all image writers for JPG format
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(FileSystemHelper.extractFileExtension(filePath));
 
         if (!writers.hasNext())
@@ -180,7 +180,7 @@ public abstract class IOHelper {
         ImageWriteParam param = writer.getDefaultWriteParam();
 
         if (param.canWriteCompressed()) {
-            // NOTE: Any method named [set|get]Compression.* throws UnsupportedOperationException if false
+            // NOTE: Any method named [set|getAllCategoryAttributeFilter]Compression.* throws UnsupportedOperationException if false
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             param.setCompressionQuality(quality);
         }
