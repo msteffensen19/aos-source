@@ -121,7 +121,10 @@ public class ShoppingCartService {
 
         if (((! ValidationHelper.isValidColorHexNumber(hexColor)) ||
                 (! ValidationHelper.isValidColorHexNumber(hexColorNew)) ||
-                (hexColor.equalsIgnoreCase(hexColorNew))) && (quantity > 0)) {
+                (hexColor.equalsIgnoreCase(hexColorNew))) && (quantity < 0)) {
+            return new ShoppingCartResponse(false,
+                                            "Error: Bad request, Nothing to do",
+                                            productId);
         }
 
         ShoppingCartResponse shoppingCartResponse = null;
