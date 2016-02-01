@@ -137,6 +137,7 @@ define(['./module'], function (controllers) {
                 $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
                 productsCartService.loadCartProducts().then(function(cart){
                     $scope.cart = cart;
+                    $scope.checkCart();
                 });
                 $(".mini-title").css("display", "none");
 

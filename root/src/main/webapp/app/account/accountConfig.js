@@ -12,17 +12,72 @@ define([],function(){
             templateUrl: 'app/account/views/myAccount-page.html',
             controller: 'myAccountCtrl',
             controllerAs: 'maCtrl',
-            resolve : {
-                resolveParams: function ($q) {
-                    return "HOLA MUNDO";
+            resolve: {
+                resolveParams: function ($q, accountService) {
+                    var defer = $q.defer()
+                    accountService.getAccountDetails().then(
+                        function (accountDetails) {
+
+                            accountService.getShippingDetails(accountDetails).then(
+                                function (shippingDetails) {
+
+                                    accountService.getAccountPaymentPreferences().then(
+                                        function (paymentPreferences) {
+                                            defer.resolve({
+                                                accountDetails: accountDetails,
+                                                shippingDetails: shippingDetails,
+                                                paymentPreferences: paymentPreferences,
+                                            });
+                                        });
+                                });
+                        });
+                    return defer.promise;
                 }
             }
-        })
+        }).
+        state('accountDetails', {
+            url: '/accountDetails',
+            templateUrl: 'app/account/views/accountDetails-page.html',
+            controller: 'accountDetailsCtrl',
+            controllerAs: 'adCtrl',
+            resolve: {
+                resolveParams: function ($q, accountService) {
+                    var defer = $q.defer()
+                    accountService.getAccountDetails().then(
+                        function (accountDetails) {
+                            accountService.getShippingDetails(accountDetails).then(
+                                function (shippingDetails) {
+                                    accountService.getAccountPaymentPreferences().then(
+                                        function (paymentPreferences) {
+                                            defer.resolve({
+                                                accountDetails: accountDetails,
+                                                shippingDetails: shippingDetails,
+                                                paymentPreferences: paymentPreferences,
+                                            });
+                                        });
+                                });
+                        });
+                    return defer.promise;
+                }
+            }
+        });
     }
 
     return ['$stateProvider', config];
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
