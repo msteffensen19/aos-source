@@ -12,24 +12,55 @@ define([],function(){
             templateUrl: 'app/account/views/myAccount-page.html',
             controller: 'myAccountCtrl',
             controllerAs: 'maCtrl',
-            resolve : {
+            resolve: {
                 resolveParams: function ($q, accountService) {
                     var defer = $q.defer()
-                    accountService.getAccountDetails(function(accountDetails){
-                        defer.resolve(accountDetails)
-                    }).then(function(accountDetails){
-                        accountService.getShippingDetails(function(shippingDetails){
-                            defer.resolve(AccountDetails)
-                        })
-                        defer.resolve()
-                    })
+                    accountService.getAccountDetails().then(
+                        function (accountDetails) {
 
+                            accountService.getShippingDetails(accountDetails).then(
+                                function (shippingDetails) {
 
-                    defer.promise;
-                    return "HOLA MUNDO";
+                                    accountService.getAccountPaymentPreferences().then(
+                                        function (paymentPreferences) {
+                                            defer.resolve({
+                                                accountDetails: accountDetails,
+                                                shippingDetails: shippingDetails,
+                                                paymentPreferences: paymentPreferences,
+                                            });
+                                        });
+                                });
+                        });
+                    return defer.promise;
                 }
             }
-        })
+        }).
+        state('accountDetails', {
+            url: '/accountDetails',
+            templateUrl: 'app/account/views/accountDetails-page.html',
+            controller: 'accountDetailsCtrl',
+            controllerAs: 'adCtrl',
+            resolve: {
+                resolveParams: function ($q, accountService) {
+                    var defer = $q.defer()
+                    accountService.getAccountDetails().then(
+                        function (accountDetails) {
+                            accountService.getShippingDetails(accountDetails).then(
+                                function (shippingDetails) {
+                                    accountService.getAccountPaymentPreferences().then(
+                                        function (paymentPreferences) {
+                                            defer.resolve({
+                                                accountDetails: accountDetails,
+                                                shippingDetails: shippingDetails,
+                                                paymentPreferences: paymentPreferences,
+                                            });
+                                        });
+                                });
+                        });
+                    return defer.promise;
+                }
+            }
+        });
     }
 
     return ['$stateProvider', config];

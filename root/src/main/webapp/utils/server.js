@@ -236,6 +236,28 @@ var server = {
             }
         },
 
+        getAccountById_new: function(){
+            return {
+                path: wsdlPath,
+                method: 'GetAccountByIdNewRequest'
+            }
+        },
+
+        getAccountPaymentPreferences: function(){
+            return {
+                path: wsdlPath,
+                method: 'GetAccountPaymentPreferencesRequest'
+            }
+        },
+
+        getAddressesByAccountId: function(){
+            return {
+                path: wsdlPath,
+                method: 'GetAddressesByAccountIdRequest'
+            }
+        },
+
+
     },
     service: {
 

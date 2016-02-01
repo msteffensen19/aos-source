@@ -12,11 +12,8 @@ define(['./module'], function (controllers) {
             l("resolveParams")
             l(resolveParams)
 
-            var _i = 0;
-            $timeout(checkLogin, 2000);
-
+            checkLogin();
             function checkLogin(){
-                console.log(++_i);
                 s.checkLogin();
                 if($location.path().indexOf('/myAccount') != -1){
                     $timeout(checkLogin, 2000);
@@ -25,10 +22,10 @@ define(['./module'], function (controllers) {
 
             s.accountDetails = resolveParams.accountDetails;
             s.shippingDetails = resolveParams.shippingDetails;
-            s.masterCredit = resolveParams.masterCredit;
-            //s.categoriesPromotions = resolveParams.categoriesPromotions;
+            s.masterCredit = resolveParams.paymentPreferences ?
+                resolveParams.paymentPreferences.masterCredit.substring(resolveParams.paymentPreferences.masterCredit.length - 4) : null;
 
-
+            s.Notify_me_about_Promotions = true;
             s.categoriesPromotions = [
                 { categoryName : 'Tablets', categoryValue : true, },
                 { categoryName : 'Laptops', categoryValue : false, },
@@ -38,7 +35,6 @@ define(['./module'], function (controllers) {
             ];
 
             s.checkLogin();
-            s.Notify_me_about_Promotions = true;
 
             $("nav .navLinks").css("display" , "none");
 
