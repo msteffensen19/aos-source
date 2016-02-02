@@ -307,14 +307,6 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="AccountLoginResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
     <xs:element name="CountryCreateResponse">
         <xs:complexType>
             <xs:sequence>
@@ -329,6 +321,31 @@
                 <xs:element name="loginUser" type="xs:string"/>
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="loginPassword" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountLoginResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountLogoutRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="loginUser" type="xs:string"/>
+                <xs:element name="loginPassword" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AccountLogoutResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

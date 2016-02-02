@@ -24,8 +24,8 @@ public class AccountLogoutRequest {
     public AccountLogoutRequest() {
     }
 
-    public AccountLogoutRequest(final String loginName, final String loginPassword) {
-        this.setLoginUser(loginName);
+    public AccountLogoutRequest(final String loginUser, final String loginPassword) {
+        this.setLoginUser(loginUser);
         this.setLoginPassword(loginPassword);
     }
 
