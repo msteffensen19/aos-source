@@ -158,9 +158,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ShoppingCart shoppingCart = null;
 
-        //  Defaults
-        ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(false, "", 0);
-
         shoppingCart = this.find(userId, productId, color);
 
         if (shoppingCart != null) {
