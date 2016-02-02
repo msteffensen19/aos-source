@@ -92,37 +92,37 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         transactionManager.commit(transactionStatusForDeletion);
     }
 
-    @Test
-    public void testCategoriesFilled() throws IOException {
-        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-
-        //create categories
-        System.out.println("creating 5 categories...");
-        Category category = null;
-        category = categoryRepository.createCategory("LAPTOPS", "1235");
-        category = categoryRepository.createCategory("HEADPHONES", "1234");
-        category = categoryRepository.createCategory("TABLETS", "1236");
-        category = categoryRepository.createCategory("SPEAKERS", "1237");
-        category = categoryRepository.createCategory("MICE", "1238");
-
-        System.out.println("COMMITing 5 categories.");
-        transactionManager.commit(transactionStatusForCreation);
-
-        System.out.println("Going to retrieve categories from table...");
-        final List<Category> categories = categoryRepository.getAll();
-        System.out.println("Retrieved " + categories.size() + " categories from table");
-
-        Assert.assertEquals("Error! Expecting " + CATEGORY_NUMBER + " categories, but got " + categories.size(), CATEGORY_NUMBER, categories.size());
-
-        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
-
-        //delete categories
-        for(Category selected : categories) {
-            //categoryRepository.delete(selected.getCategoryId());
-            categoryRepository.delete(selected);
-        }
-
-        transactionManager.commit(transactionStatusForDeletion);
-    }
+//    @Test
+//    public void testCategoriesFilled() throws IOException {
+//        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+//        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+//
+//        //create categories
+//        System.out.println("creating 5 categories...");
+//        Category category = null;
+//        category = categoryRepository.createCategory("LAPTOPS", "1235");
+//        category = categoryRepository.createCategory("HEADPHONES", "1234");
+//        category = categoryRepository.createCategory("TABLETS", "1236");
+//        category = categoryRepository.createCategory("SPEAKERS", "1237");
+//        category = categoryRepository.createCategory("MICE", "1238");
+//
+//        System.out.println("COMMITing 5 categories.");
+//        transactionManager.commit(transactionStatusForCreation);
+//
+//        System.out.println("Going to retrieve categories from table...");
+//        final List<Category> categories = categoryRepository.getAll();
+//        System.out.println("Retrieved " + categories.size() + " categories from table");
+//
+//        Assert.assertEquals("Error! Expecting " + CATEGORY_NUMBER + " categories, but got " + categories.size(), CATEGORY_NUMBER, categories.size());
+//
+//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+//
+//        //delete categories
+//        for(Category selected : categories) {
+//            //categoryRepository.delete(selected.getCategoryId());
+//            categoryRepository.delete(selected);
+//        }
+//
+//        transactionManager.commit(transactionStatusForDeletion);
+//    }
 }

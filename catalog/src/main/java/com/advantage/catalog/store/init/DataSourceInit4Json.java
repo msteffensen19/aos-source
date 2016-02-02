@@ -103,7 +103,6 @@ public class DataSourceInit4Json {
             }
         }
 
-
         ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
         File json = filePath.getFile();
 
