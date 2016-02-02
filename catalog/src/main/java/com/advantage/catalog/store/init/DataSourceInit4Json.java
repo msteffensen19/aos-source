@@ -91,15 +91,17 @@ public class DataSourceInit4Json {
 
         //for categories-attributes show filter
         final List<Category> categories = categoryRepository.getAll();
+        //Assert.assertEqual(category_number, categories.size());
+
         final List<Attribute> attributesToShow = attributeRepository.getAll();
 
         for (Category category : categories) {
             for (Attribute attribute : attributesToShow ) {
-                CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
-                session.persist(categoryAttributeFilter);
+                //CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
+                //session.persist(categoryAttributeFilter);
+                session.persist(new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true));
             }
         }
-
 
 
         ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");

@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * Created by ostrovsm on 01/02/2016.
+ * @author Moti Ostrovski on 01/02/2016.
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class CategoryAttributeFilterResponse {
