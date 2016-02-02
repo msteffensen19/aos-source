@@ -137,7 +137,8 @@
     vertical-align: top;
     width: 33.33%;
     min-height: 122px;
-    padding: 41px 15px;
+    padding: 17px;
+    padding-top: 25px;
     position: relative;
 }
 

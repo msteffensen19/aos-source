@@ -108,7 +108,39 @@ define(['./module'], function (services) {
                             });
 
                     return defer.promise;
-                }
+                },
+
+                accountUpdate : function(accountDetails, allowOffersPromotion){
+
+                    var expectToReceive = {
+                            lastName:accountDetails.lastName,
+                            firstName:accountDetails.firstName,
+                            accountId:accountDetails.id,
+                            countryId:accountDetails.countryId,
+                            stateProvince:accountDetails.stateProvince,
+                            cityName:accountDetails.cityName,
+                            address:accountDetails.homeAddress,
+                            zipcode:accountDetails.zipcode,
+                            phoneNumber:accountDetails.mobilePhone,
+                            email: accountDetails.email,
+                            accountType: 20,
+                            allowOffersPromotion: allowOffersPromotion,
+                    }
+                    var defer = $q.defer();
+                    var params = server.account.accountUpdate();
+
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+
+
+                },
 
 
 

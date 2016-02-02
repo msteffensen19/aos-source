@@ -1,6 +1,3 @@
-<section id="png">
-    <img src="../../../ccss/images/mariaDesigns/MyAccount/My_account.png" />
-</section>
 
 <nav class="pages fixed fixedImportant">
     <a translate="HOME" href="#/" ></a>
@@ -56,9 +53,9 @@
             <div class="cube" data-ng-show="shippingDetails == null">
                 <h3 class="blueLink">
                     {{ "Shipping_Details" | translate }}
-                    <a class="floatRigth" >
-                        {{ "Edit" | translate }}
-                    </a>
+                    <!--<a class="floatRigth" >-->
+                        <!--{{ "Edit" | translate }}-->
+                    <!--</a>-->
                 </h3>
                 <div class="borderBox">
                     <div>
@@ -97,9 +94,9 @@
             <div class="cube" data-ng-hide="shippingDetails == null">
                 <h3 class="blueLink">
                     {{ "Shipping_Details" | translate }}
-                    <a class="floatRigth">
-                        {{ "Edit" | translate }}
-                    </a>
+                    <!--<a class="floatRigth">-->
+                        <!--{{ "Edit" | translate }}-->
+                    <!--</a>-->
                 </h3>
                 <div class="borderBox">
                     <div>
@@ -137,12 +134,12 @@
             <div class="cube">
                 <h3 class="blueLink">
                     {{ "Preferred_payment_method" | translate }}
-                    <a class="floatRigth">
+                    <a class="floatRigth" href="#/accountPaymentEdit">
                         {{ "Edit" | translate }}
                     </a>
                 </h3>
                 <div class="paymentBox" data-ng-show="masterCredit == null">
-                    <label class="mastercart">
+                    <label class="mastercart" style="width: 100%; text-align: center; box-sizing: border-box">
                         Master card no found
                     </label>
                 </div>

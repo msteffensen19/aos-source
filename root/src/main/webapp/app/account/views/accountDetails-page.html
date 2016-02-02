@@ -1,0 +1,132 @@
+
+<nav class="pages">
+    <a translate="HOME" href="#/" ></a>
+    <a translate="MY_ACCOUNT" href="#/myAccount" ></a>
+    <a class="select" translate="ACCOUNT_DETAILS">  </a>
+</nav>
+<section>
+    <article>
+        <div id="accountCover">
+            <h3  class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
+            <div class="maxWidth" >
+                <div id="infoDemo">
+                    <div class="notice">
+                        <h4 translate="NOTICE" ></h4>
+                        <p class="roboto-light" translate="This_is_a_demo"></p>
+                        <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
+                    </div>
+                </div>
+
+                <div id="form">
+
+                    <sec-validate>
+                        <div id="formCover">
+
+                            <div>
+                                <h3 translate="CONNECTION_DETAILS"></h3>
+                                <sec-input sec-placeholder="{{'Email' | translate}}"
+                                           sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
+                                           sec-email
+                                           no-red-star="true"
+                                           input-type-attr="email"
+                                           model-attr="accountDetails.email"
+                                           id-attr="email">
+                                </sec-input>
+                                <br/>
+                                <a class="link" translate="Change_Password"></a>
+                            </div>
+
+                            <div>
+                                <h3 translate="PERSONAL_DETAILS"></h3>
+                                <sec-input sec-placeholder="{{'First_Name' | translate }}"
+                                           model-attr="accountDetails.firstName"
+                                           sec-min-length="2"
+                                           sec-max-length="30"
+                                           no-red-star="true"
+                                           id-attr="firstName">
+                                </sec-input>
+                                <sec-input sec-placeholder="{{'Last_Name' | translate }}"
+                                           sec-min-length="2"
+                                           sec-max-length="30"
+                                           no-red-star="true"
+                                           model-attr="accountDetails.lastName"
+                                           id-attr="lastName">
+                                </sec-input>
+                                <sec-input sec-placeholder="{{'Phone_Number' | translate }}"
+                                           model-attr="accountDetails.mobilePhone"
+                                           id-attr="phoneNumber">
+                                </sec-input>
+                            </div>
+
+                            <div>
+                                <h3 translate="ADDRESS"></h3>
+
+                                <sec-input sec-placeholder="{{'Country' | translate }}"
+                                           id-attr="country"
+                                           model-attr="accountDetails.countryId"
+                                           input-type-attr="transclude"
+                                           select-tag="true">
+                                    <select ng-model="country" ng-change="countryChange(country)"
+                                            class="inputtext"
+                                            ng-options="country.name for country in countries track by country.id">
+                                    </select>
+                                </sec-input>
+
+
+                                <sec-input sec-placeholder="{{'City' | translate }}"
+                                           model-attr="accountDetails.cityName"
+                                           sec-max-length="25"
+                                           no-red-star="true"
+                                           id-attr="city" >
+                                </sec-input>
+                                <sec-input sec-placeholder="{{'Address' | translate }}"
+                                           sec-max-length="50"
+                                           no-red-star="true"
+                                           model-attr="accountDetails.homeAddress"
+                                           id-attr="address" >
+                                </sec-input>
+                                <sec-input sec-placeholder="{{'Postal_Code' | translate }}"
+                                           sec-max-length="10"
+                                           sec-only-numbers
+                                           no-red-star="true"
+                                           model-attr="accountDetails.zipcode"
+                                           id-attr="postalCode" >
+                                </sec-input>
+                                <sec-input sec-placeholder="{{'State__Province__Region' | translate }}"
+                                           model-attr="accountDetails.stateProvince"
+                                           sec-max-length="10"
+                                           no-red-star="true"
+                                           id-attr="state" >
+                                </sec-input>
+                            </div>
+
+                            <div>
+                                <input sec-submit-attr="saveAccountDetails()"
+                                       class="roboto-medium sec-validate-invalid accountDetailsBtn withMargin"
+                                       a-sec-validate-invalid
+                                       type="button"
+                                       value="{{'SAVE' | translate}}" />
+                            </div>
+                            <div>
+                                <label class="{{accountDetailsAnswer.class}} center" style="margin: 100px 0" > {{ accountDetailsAnswer.message }} </label>
+                            </div>
+                        </div>
+
+                    </sec-validate>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+
+<social-media-drtv></social-media-drtv>
+
+
+
+
+
+
+
+
+

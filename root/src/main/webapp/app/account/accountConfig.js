@@ -45,17 +45,27 @@ define([],function(){
                     var defer = $q.defer()
                     accountService.getAccountDetails().then(
                         function (accountDetails) {
-                            accountService.getShippingDetails(accountDetails).then(
-                                function (shippingDetails) {
-                                    accountService.getAccountPaymentPreferences().then(
-                                        function (paymentPreferences) {
-                                            defer.resolve({
-                                                accountDetails: accountDetails,
-                                                shippingDetails: shippingDetails,
-                                                paymentPreferences: paymentPreferences,
-                                            });
-                                        });
-                                });
+                            defer.resolve({
+                                accountDetails: accountDetails
+                            });
+                        });
+                    return defer.promise;
+                }
+            }
+        }).
+        state('accountPaymentEdit', {
+            url: '/accountPaymentEdit',
+            templateUrl: 'app/account/views/accountPaymentEdit-page.html',
+            controller: 'accountPaymentEditCtrl',
+            controllerAs: 'apeCtrl',
+            resolve: {
+                resolveParams: function ($q, accountService) {
+                    var defer = $q.defer()
+                    accountService.getAccountPaymentPreferences().then(
+                        function (paymentPreferences) {
+                            defer.resolve({
+                                paymentPreferences: paymentPreferences,
+                            });
                         });
                     return defer.promise;
                 }
