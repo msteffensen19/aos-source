@@ -166,7 +166,15 @@ public class ValidationHelper {
     }
 
     public static boolean isValidColorHexNumber(final String hexColor) {
-        return isValidByRegExpPattern(COLOR_HEX_PATTERN, hexColor);
+        boolean isValid = false;
+
+        if (hexColor.startsWith("#")) {
+            isValid = isValidByRegExpPattern(COLOR_HEX_PATTERN, hexColor);
+        } else {
+            isValid = isValidByRegExpPattern(COLOR_HEX_PATTERN, "#" + hexColor);
+        }
+
+        return isValid;
     }
 
     /**

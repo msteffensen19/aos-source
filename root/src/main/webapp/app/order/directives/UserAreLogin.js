@@ -108,7 +108,6 @@ define(['./module'], function (directives) {
                         angular.forEach(s.CardNumber, function (fourDigits) {
                             s.card.number += fourDigits + "";
                         })
-                        alert(s.card.number)
                         s.payNow_masterCredit()
                     }
 

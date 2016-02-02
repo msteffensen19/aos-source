@@ -1,0 +1,216 @@
+<nav class="pages">
+    <a translate="HOME" href="#/"></a>
+    <a translate="MY_ACCOUNT" href="#/myAccount"></a>
+    <a class="select" translate="ACCOUNT_DETAILS"> </a>
+</nav>
+<section>
+    <article>
+        <div id="accountCover">
+            <h3 class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
+
+            <div class="maxWidth">
+
+                <div id="infoDemo">
+                    <div class="notice">
+                        <h4 translate="NOTICE"></h4>
+
+                        <p class="roboto-light" translate="This_is_a_demo"></p>
+
+                        <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
+                    </div>
+                </div>
+
+                <div id="form">
+
+                    <!-- EDIT EDIT PAYMENT SECTION -->
+
+                    <div id="paymentMethod" ng-hide="firstTag">
+                        <div>
+                            <label class="Choose_payment roboto-medium">
+                                {{ 'Choose_payment_method_below' | translate }}
+                            </label>
+
+                            <div class="paymentMethods">
+                                <div class="imgRadioButton" data-ng-click="imgRadioButton = 1"
+                                     data-ng-class="{ selected : imgRadioButton == 1 }">
+                                    <img src="css/images/SafePay.png" alt="Safepay"/>
+                                </div>
+                                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2"
+                                     data-ng-class="{ selected : imgRadioButton == 2 }">
+                                    <img src="css/images/Master_credit.png" alt="Master credit"/>
+                                </div>
+                            </div>
+
+                            <!---------------------------- SAFEPAY SECCION ---------------------------->
+
+                            <div ng-show="imgRadioButton == 1">
+
+                                <div class="notice">
+                                    <h4 translate="Notice"></h4>
+
+                                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}.
+                                        {{ 'Please_enter_a_fake_data' | translate }}</p>
+                                </div>
+
+                                <sec-validate>
+
+                                    <sec-input
+                                            sec-placeholder="{{ 'SafePay_User_name' | translate }}"
+                                            sec-min-length="5"
+                                            sec-max-length="15"
+                                            sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
+                                            pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
+                                            model-attr="savePay.username"
+                                            id-attr="savePay_UserName">
+                                    </sec-input>
+
+                                    <sec-input
+                                            sec-placeholder="{{ 'SafePay_Password' | translate }}"
+                                            sec-min-length="4"
+                                            sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
+                                            pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
+                                            input-type-attr="password"
+                                            model-attr="savePay.password"
+                                            id-attr="savePay_password">
+                                    </sec-input>
+
+                                    <div class="blueLink">
+                                        <label>
+                                            <input sec-submit-attr="saveSafePay()" a-sec-validate-invalid
+                                                   class="roboto-medium sec-validate-invalid accountDetailsBtn"
+                                                   type="button"
+                                                   value="{{'SAVE' | translate}}"/>
+                                        </label>
+                                    </div>
+
+                                </sec-validate>
+
+                            </div>
+
+                            <!-------------------------- END SAFEPAY SECCION -------------------------->
+
+
+                            <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
+
+                            <div ng-show="imgRadioButton == 2 ">
+
+                                <div class="notice">
+                                    <h4 translate="Notice"></h4>
+
+                                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{
+                                        'Please_enter_a_fake_data' |
+                                        translate }}</p>
+                                </div>
+
+                                <sec-validate class="smollInput">
+
+                                    <sec-input sec-required card-number-four-digits
+                                               sec-placeholder="{{ 'Card_number' | translate }}"
+                                               sec-pattern="^[0-9]{12,12}$"
+                                               pattern-error-attr="{{ 'Invalid_Card_number' | translate }}"
+                                               model-attr="card.number"
+                                               id-attr="Card_Number">
+                                    </sec-input>
+
+                                    <sec-input sec-required class="creditCard"
+                                               sec-placeholder="{{ 'CCV_Number' | translate }}"
+                                               sec-pattern="^[0-9]{3,3}$"
+                                               pattern-error-attr="{{ 'Invalid_CCV_number' | translate }}"
+                                               model-attr="card.cvv"
+                                               id-attr="Card_cvv">
+                                    </sec-input>
+
+                                    <div class="payment_date">
+
+                                        <label class="roboto-regular">{{'Expiration_Date' | translate}}</label>
+
+                                        <sec-input sec-required
+                                                   input-type-attr="transclude" id-attr="Card_date"
+                                                   sec-placeholder="{{ 'MM' | translate }}" select-tag="true">
+                                            <a class="must">*</a>
+                                            <select class="inputtext"
+                                                    ng-model="card.expirationDate.month"
+                                                    ng-options="num for num in ['01','02','03','04','05','06','07','08','09', '10', '11', '12']">
+                                            </select>
+                                        </sec-input>
+
+                                        <sec-input sec-required input-type-attr="transclude" id-attr="Card_year"
+                                                   sec-placeholder="{{ 'YY' | translate }}" select-tag="true">
+                                            <a class="must">*</a>
+                                            <select class="inputtext"
+                                                    ng-model="card.expirationDate.year"
+                                                    ng-options="year for year in years">
+                                            </select>
+                                        </sec-input>
+
+                                    </div>
+
+                                    <sec-input sec-required
+                                               sec-placeholder="{{ 'Cartholder_Name' | translate }}"
+                                               model-attr="card.name"
+                                               id-attr="Card_name">
+                                    </sec-input>
+
+                                    <div class="blueLink">
+                                        <label>
+                                            <input sec-submit-attr="saveMasterCredit()"
+                                                   class="roboto-medium sec-validate-invalid accountDetailsBtn"
+                                                   a-sec-validate-invalid
+                                                   type="button"
+                                                   value="{{'SAVE' | translate}}"/>
+                                        </label>
+                                    </div>
+
+                                </sec-validate>
+
+                            </div>
+
+                            <!---------------------------- END MANUAL PAYMENT SECCION ---------------------------->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<social-media-drtv></social-media-drtv>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

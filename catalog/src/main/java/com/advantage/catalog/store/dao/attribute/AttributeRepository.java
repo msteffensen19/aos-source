@@ -2,6 +2,7 @@ package com.advantage.catalog.store.dao.attribute;
 
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
 import com.advantage.catalog.store.model.attribute.Attribute;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 
 public interface AttributeRepository extends DefaultCRUDOperations<Attribute> {
     /**

@@ -129,6 +129,9 @@ var english = {
     'Cartholder_Name' : 'Cartholder Name',
     'CCV_Number' : 'CCV Number',
     'Invalid_Card_number' : 'Invalid Card number',
+    'Invalid_CCV_number' : 'Invalid CCV number',
+    'SafePay_User_name': 'SafePay User name',
+    'SafePay_Password': 'SafePay Password',
     'Card_number' : 'Card number',
     'MM' : 'MM',
     'YY' : 'YY',
@@ -143,12 +146,9 @@ var english = {
     'Subtotal' : 'Subtotal',
     'field_is_required' : 'field is required',
     'User_name' : 'User name',
-    'Email' : 'Email',
-    'Password' : 'Password',
     'Confirm_Password' : 'Confirm Password',
     'Confirm_password' : 'Confirm password',
     'register_faild' : 'register faild! please try again later',
-    'CATEGORIES' : 'CATEGORIES',
     'Receiver_Details' : 'Receiver Details',
     'MY_ACCOUNT' : 'MY ACCOUNT',
     'Account_Details' : 'Account Details',
@@ -156,6 +156,10 @@ var english = {
     'Preferred_payment_method' : 'Preferred payment method',
     'Notify_me_about_Promotions' : 'Notify me about Promotions',
     'MasterCredit' : 'MasterCredit',
+    'CONNECTION_DETAILS' : 'CONNECTION DETAILS',
+    'Change_Password' : 'Change Password',
+    'SAVE': 'SAVE',
+
 };
 
 

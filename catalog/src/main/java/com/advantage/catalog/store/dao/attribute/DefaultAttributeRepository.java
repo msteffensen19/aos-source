@@ -33,14 +33,16 @@ public class DefaultAttributeRepository extends AbstractRepository implements At
         int categoriesCount = entities.length;
         Collection<Long> ids = new ArrayList<>(categoriesCount);
 
+
         for (Attribute attribute : entities) {
             Long id = attribute.getId();
             ids.add(id);
         }
 
-        String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Category.class, Attribute.FIELD_ID, Attribute.PARAM_ID);
+        String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Attribute.class, Attribute.FIELD_ID, Attribute.PARAM_ID);
         Query query = entityManager.createQuery(hql);
         query.setParameter(Attribute.PARAM_ID, ids);
+        int result = query.executeUpdate();
 
         return query.executeUpdate();
     }

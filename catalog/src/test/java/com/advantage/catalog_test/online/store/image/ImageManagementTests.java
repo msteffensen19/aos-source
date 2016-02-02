@@ -132,7 +132,7 @@ public class ImageManagementTests {
 
         actualOutput = im.getManagedImage(imageId).getManagedFileName();
 
-		/* Test Failed: we did not get NullPointerException in the previous line */
+		/* Test Failed: we did not getAllCategoryAttributeFilter NullPointerException in the previous line */
         Assert.fail("Expected Null, but got [" + actualOutput + "]");
     }
 /*

@@ -128,9 +128,10 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             entityManager.persist(shoppingCart);    //  Update changes
 
             //  Set RESPONSE object
-            shoppingCartResponse.setSuccess(true);
-            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY);
-            shoppingCartResponse.setId(productId);
+            shoppingCartResponse = new ShoppingCartResponse(
+                    true,
+                    ShoppingCart.MESSAGE_EXISTING_PRODUCT_UPDATED_SUCCESSFULLY,
+                    productId);
         } else {
             //  Product with color NOT FOUND in user cart - Set RESPONSE object to FAILURE
             this.failureMessage = ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART;
@@ -157,9 +158,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ShoppingCart shoppingCart = null;
 
-        //  Defaults
-        ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(false, "", 0);
-
         shoppingCart = this.find(userId, productId, color);
 
         if (shoppingCart != null) {
@@ -174,6 +172,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
             shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
             shoppingCartResponse.setId(productId);
         }
+
 
         return shoppingCartResponse;
     }

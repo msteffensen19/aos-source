@@ -86,7 +86,7 @@ public class ShoppingCartService {
 
                 int totalQuantity = shoppingCart.getQuantity() + quantity;
 
-                shoppingCartRepository.update(userId, productId, color, quantity);
+                shoppingCartRepository.update(userId, productId, color, totalQuantity);
 
                 shoppingCartResponse = new ShoppingCartResponse(true,
                         ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
@@ -121,7 +121,10 @@ public class ShoppingCartService {
 
         if (((! ValidationHelper.isValidColorHexNumber(hexColor)) ||
                 (! ValidationHelper.isValidColorHexNumber(hexColorNew)) ||
-                (hexColor.equalsIgnoreCase(hexColorNew))) && (quantity > 0)) {
+                (hexColor.equalsIgnoreCase(hexColorNew))) && (quantity < 0)) {
+            return new ShoppingCartResponse(false,
+                                            "Error: Bad request, Nothing to do",
+                                            productId);
         }
 
         ShoppingCartResponse shoppingCartResponse = null;

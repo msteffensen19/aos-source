@@ -13,16 +13,12 @@ define(['./module'], function (services) {
 
 
         function getAllCountries() {
-            //return responseService.getAllCountries();
 
             var defer = $q.defer();
             var params = server.account.getAllCountries();
 
             mini_soap.post(params.path, params.method).
             then(function(response){
-                    console.log("response")
-                    console.log(response)
-                    console.log("response")
                     var countries = [];
                     angular.forEach(response, function(country){
                         countries.push({

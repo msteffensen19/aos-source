@@ -2,6 +2,7 @@
     width: 100%;
     max-width: 1366px;
     margin: 0 auto;
+    padding-top: 80px;
 }
 
 #form{
@@ -119,7 +120,7 @@ display: block;
 }
 
 #form input[type=button]{
-    border:  solid 1px #2a2a2a;
+    border:  solid 2px #2a2a2a;
     color:#2a2a2a;
     background-color: white;
     width: 330px;

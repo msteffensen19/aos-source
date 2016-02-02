@@ -22,7 +22,7 @@
     <![endif]-->
 
 </head>
-<body data-ng-controller="mainCtrl">
+<body data-ng-controller="mainCtrl" data-ng-keypress="enterKeyHandler($event)">
 
 
 
@@ -41,7 +41,8 @@
         </li>
         <li>
             <a class="img center">
-                <span ng-hide="!userCookie.response" class="hi-user containMiniTitle block" >
+                <!--ng-hide="!userCookie.response" -->
+                <span class="hi-user containMiniTitle block" >
                    {{userCookie.name}}
                     <div class="mini-title">
                         <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>

@@ -23,6 +23,20 @@ define(['./module'], function (controllers) {
 
 
 
+
+
+            /* enterKeyHandler */
+            $scope.enterKey;
+            $scope.enterKeyHandler = function(event){
+                if(event.which == 13){
+                    l("u ytiuygi ygt iuyg")
+                }
+            }
+            /*===========================  end enterKeyHandler ============================*/
+
+
+
+
             /* Get configuration */
             userService.getConfiguration().then(function(response){
                 $scope.config = response;

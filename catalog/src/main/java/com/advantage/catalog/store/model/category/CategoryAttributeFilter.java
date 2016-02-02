@@ -1,43 +1,76 @@
 package com.advantage.catalog.store.model.category;
 
 import javax.persistence.*;
-import java.io.Serializable;
-
 
 /**
- * Created by ostrovsm on 31/01/2016.
+ * @author Moti Ostrovski on 31/01/2016.
  */
-public class CategoryAttributeFilter implements Serializable {
 
-    private Long categoryId;
-    private Long attributeId;
-    private boolean inFilter;
+@Entity
+@Table(name = "category_attribute_filter")
+@IdClass(CategoryAttributeFilterPK.class)
+@NamedQueries({
+        @NamedQuery(
+                name = CategoryAttributeFilter.QUERY_GET_ALL,
+                query = "select c from CategoryAttributeFilter c"
+        )
+})
+public class CategoryAttributeFilter {
 
-    public CategoryAttributeFilter(){}
+    public static final String FIELD_CATEGORY_ID = "CATEGORY_ID";;
+    public static final String FIELD_ATTRIBUTE_ID = "ATTRIBUTE_ID";
+    public static final String FIELD_INFILTER = "SHOW_IN_FILTER";
+    public static final String QUERY_GET_ALL = "categoryAttributeFilter.getAll";
 
-    public CategoryAttributeFilter(long categoryId, long attributeId){
-        this.categoryId=categoryId;
-        this.attributeId=attributeId;
-        this.inFilter=true; //default value is show in filter
+
+    @Id
+    @Column(name = FIELD_CATEGORY_ID)
+    private long categoryId;
+
+    @Id
+    @Column(name = FIELD_ATTRIBUTE_ID)
+    private long attributeId;
+
+    @Column(name = FIELD_INFILTER)
+    private boolean showInFilter;
+
+    public CategoryAttributeFilter() {    }
+
+    public CategoryAttributeFilter(long categoryId, long attributeId) {
+        this.categoryId = categoryId;
+        this.attributeId = attributeId;
+        this.showInFilter =true;
     }
 
-    public CategoryAttributeFilter(long categoryId, long attributeId,boolean inFilter ){
-        this.categoryId=categoryId;
-        this.attributeId=attributeId;
-        this.inFilter=inFilter;
+    public CategoryAttributeFilter(long categoryId, long attributeId, boolean showInFilter) {
+        this.categoryId = categoryId;
+        this.attributeId = attributeId;
+        this.showInFilter = showInFilter;
     }
 
-    public Long getCategoryId() { return categoryId;  }
+    public long getCategoryId() {
+        return categoryId;
+    }
 
-    public void setCategoryId(Long categoryId) {this.categoryId = categoryId; }
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
 
-    public Long getAttributeId() { return attributeId; }
+    public long getAttributeId() {
+        return attributeId;
+    }
 
-    public void setAttributeId(Long attributeId) { this.attributeId = attributeId; }
+    public void setAttributeId(long attributeId) {
+        this.attributeId = attributeId;
+    }
 
-    public boolean isInFilter() { return inFilter;}
+    public boolean isShowInFilter() {
+        return showInFilter;
+    }
 
-    public void setInFilter(boolean inFilter) {this.inFilter = inFilter; }
+    public void setShowInFilter(boolean showInFilter) {
+        this.showInFilter = showInFilter;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,22 +79,15 @@ public class CategoryAttributeFilter implements Serializable {
 
         CategoryAttributeFilter that = (CategoryAttributeFilter) o;
 
-        if (!categoryId.equals(that.categoryId)) return false;
-        return attributeId.equals(that.attributeId);
+        if (categoryId != that.categoryId) return false;
+        return attributeId == that.attributeId;
 
     }
 
     @Override
     public int hashCode() {
-        int result = categoryId.hashCode();
-        result = 31 * result + attributeId.hashCode();
+        int result = (int) (categoryId ^ (categoryId >>> 32));
+        result = 31 * result + (int) (attributeId ^ (attributeId >>> 32));
         return result;
     }
 }
-
-
-
-
-
-
-

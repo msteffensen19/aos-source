@@ -110,6 +110,7 @@ public class OrderManagementService {
         return costResponse;
     }
 
+
     private ShippingCostResponse generateShippingCostResponseError(String transactionType, String errorText) {
 
         ShippingCostResponse costResponse = new ShippingCostResponse();
