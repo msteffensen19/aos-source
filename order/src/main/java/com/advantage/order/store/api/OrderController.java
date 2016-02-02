@@ -103,8 +103,8 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> updateProductInCart(@PathVariable("userId") Long userId,
                                                                        @PathVariable("productId") Long productId,
                                                                        @PathVariable("color") String hexColor,
-                                                                       @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
 																	   @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
+                                                                       @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
                                                                        HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
 

@@ -8,7 +8,6 @@ import org.springframework.core.env.Environment;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Application User configuration class
@@ -20,6 +19,7 @@ public class AccountConfiguration {
     private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
     private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
     private final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
+    private final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
 
     @Inject
     private Environment env;
@@ -31,12 +31,13 @@ public class AccountConfiguration {
     public static String EMAIL_ADDRESS_IN_LOGIN;                        //emailAddressInLogin
     public static int PRODUCT_IN_STOCK_DEFAULT_VALUE;
     public static String USER_SECOND_WSDL_VALUE;
+    public static int USER_LOGIN_TIMEOUT;
 
-//      //  Class that is called must have a method "public void init() throws Exception"
-//    @Bean(initMethod = "init")
-//    public AppUserConfig initAppUserConfiguration() {
-//        return new AppUserConfig();
-//    }
+    //  //  Class that is called must have a method "public void init() throws Exception"
+    //@Bean(initMethod = "init")
+    //public AppUserConfig initAppUserConfiguration() {
+    //    return new AppUserConfig();
+    //}
 
     @Bean
     public int getAppUserConfiguration() {
@@ -45,10 +46,14 @@ public class AccountConfiguration {
         this.setEmailAddressInLogin(ENV_ADD_EMAIL_FIELD_TO_LOGIN);
         this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserSecondWsdlValue(ENV_USER_SECOND_WSDL_VALUE);
+        this.setUserLoginTimeout(ENV_USER_LOGIN_TIMEOUT);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS=" + this.getLoginBlockingIntervalInMilliseconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
-        System.out.println("Configuration: getEmailAddressInLogin=\"" + this.getEmailAddressInLogin() + "\"");
+        System.out.println("Configuration: EMAIL_ADDRESS_IN_LOGIN=\"" + this.getEmailAddressInLogin() + "\"");
+        System.out.println("Configuration: PRODUCT_IN_STOCK_DEFAULT_VALUE=\"" + this.getProductInStockDefaultValue() + "\"");
+        System.out.println("Configuration: USER_SECOND_WSDL_VALUE=\"" + this.getUserSecondWsdlValue() + "\"");
+        System.out.println("Configuration: USER_LOGIN_TIMEOUT=\"" + this.getUserLoginTimeout() + "\"");
 
         return 1;   //  Successful
     }
@@ -63,8 +68,9 @@ public class AccountConfiguration {
         return this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING;
     }
 
-    private void setNumberOfLoginAttemptsBeforeBlocking(final String environmentKey) {
-        this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING = (env.getProperty(environmentKey) != null ? Integer.valueOf(env.getProperty(environmentKey)) : 0);
+    private void setNumberOfLoginAttemptsBeforeBlocking(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
     /**
@@ -77,8 +83,9 @@ public class AccountConfiguration {
         return this.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS;
     }
 
-    private void setLoginBlockingIntervalInMilliseconds(final String environmentKey) {
-        this.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS = (env.getProperty(environmentKey) != null ? Integer.valueOf(env.getProperty(environmentKey)) : 0);
+    private void setLoginBlockingIntervalInMilliseconds(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        this.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
     /**
@@ -92,35 +99,51 @@ public class AccountConfiguration {
         return this.EMAIL_ADDRESS_IN_LOGIN;
     }
 
-    private void setEmailAddressInLogin(final String environmentKey) {
-        this.EMAIL_ADDRESS_IN_LOGIN = (env.getProperty(environmentKey) != null ? env.getProperty(environmentKey) : "");
+    private void setEmailAddressInLogin(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        this.EMAIL_ADDRESS_IN_LOGIN = (parameterValue.isEmpty() ? "" : parameterValue );
     }
 
     public int getProductInStockDefaultValue() {
         return this.PRODUCT_IN_STOCK_DEFAULT_VALUE;
     }
 
-    private void setProductInStockDefaultValue(final String environmentKey) {
-        this.PRODUCT_IN_STOCK_DEFAULT_VALUE = (env.getProperty(environmentKey) != null ? Integer.valueOf(env.getProperty(environmentKey)) : 0);
+    private void setProductInStockDefaultValue(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        this.PRODUCT_IN_STOCK_DEFAULT_VALUE = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
-    public List<String> getAllParameters() {
+    public void setUserSecondWsdlValue(String parameterKey) {
+        this.USER_SECOND_WSDL_VALUE = env.getProperty(parameterKey);
+    }
+
+    public String getUserSecondWsdlValue() {
+        return this.USER_SECOND_WSDL_VALUE;
+    }
+
+    /**
+     * User login timeout parameter value in minutes, default 60 minutes.
+     */
+    public void setUserLoginTimeout(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        this.USER_LOGIN_TIMEOUT = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
+    }
+
+    public int getUserLoginTimeout() {
+        return this.USER_LOGIN_TIMEOUT;
+    }
+
+    public List<String> getAllAccountParameters() {
         List<String> parameters = new ArrayList<>();
 
         parameters.add("boolean,EMAIL_ADDRESS_IN_LOGIN," + (EMAIL_ADDRESS_IN_LOGIN.toUpperCase() == "YES" ? true : false));
         parameters.add("long,LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS," + LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS);
         parameters.add("int,NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING," + NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING);
         parameters.add("int,PRODUCT_IN_STOCK_DEFAULT_VALUE," + PRODUCT_IN_STOCK_DEFAULT_VALUE);
+        parameters.add("string,USER_SECOND_WSDL_VALUE," + USER_SECOND_WSDL_VALUE);
+        parameters.add("int,USER_LOGIN_TIMEOUT," + USER_LOGIN_TIMEOUT);
 
         return parameters;
-    }
-
-    public void setUserSecondWsdlValue(String userSecondWsdlValue) {
-        this.USER_SECOND_WSDL_VALUE = env.getProperty(ENV_USER_SECOND_WSDL_VALUE);
-    }
-
-    public String getUserSecondWsdlValue() {
-        return this.USER_SECOND_WSDL_VALUE;
     }
 
     public AccountConfigurationStatusResponse getAllConfigurationParameters() {
@@ -128,7 +151,8 @@ public class AccountConfiguration {
                 this.getLoginBlockingIntervalInMilliseconds(),
                 this.getEmailAddressInLogin().equalsIgnoreCase("yes"),
                 this.getProductInStockDefaultValue(),
-                this.getUserSecondWsdlValue().equalsIgnoreCase("yes"));
+                this.getUserSecondWsdlValue().equalsIgnoreCase("yes"),
+                this.getUserLoginTimeout());
 
     }
 }

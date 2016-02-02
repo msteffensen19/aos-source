@@ -12,7 +12,8 @@ import javax.xml.bind.annotation.*;
                 "loginBlockingIntervalInMilliSeconds",
                 "emailAddressInLogin",
                 "productInStockDefaultValue",
-                "userSecondWsdl"
+                "userSecondWsdl",
+                "userLoginTimeout"
         })
 @XmlRootElement(name = "AccountConfigurationStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountConfigurationStatusResponse {
@@ -26,6 +27,8 @@ public class AccountConfigurationStatusResponse {
     private int productInStockDefaultValue;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean userSecondWsdl;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private int userLoginTimeout;
 
     public AccountConfigurationStatusResponse() {
     }
@@ -34,12 +37,14 @@ public class AccountConfigurationStatusResponse {
                                               long loginBlockingIntervalInMilliSeconds,
                                               boolean emailAddressInLogin,
                                               int productInStockDefaultValue,
-                                              boolean userSecondWsdl) {
+                                              boolean userSecondWsdl,
+                                              int userLoginTimeout) {
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
         this.emailAddressInLogin = emailAddressInLogin;
         this.productInStockDefaultValue = productInStockDefaultValue;
         this.userSecondWsdl = userSecondWsdl;
+        this.userLoginTimeout = userLoginTimeout;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -80,5 +85,13 @@ public class AccountConfigurationStatusResponse {
 
     public void setUserSecondWsdl(boolean userSecondWsdl) {
         this.userSecondWsdl = userSecondWsdl;
+    }
+
+    public int getUserLoginTimeout() {
+        return this.userLoginTimeout;
+    }
+
+    public void setUserLoginTimeout(int userLoginTimeout) {
+        this.userLoginTimeout = userLoginTimeout;
     }
 }
