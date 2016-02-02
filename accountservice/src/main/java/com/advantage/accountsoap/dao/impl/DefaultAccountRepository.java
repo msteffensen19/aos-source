@@ -341,6 +341,34 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                 ).generateToken());
     }
 
+    /**
+     * Currently there's nothing to do in BACK-END for Logout.
+     */
+    @Override
+    public AccountStatusResponse doLogout(String loginName, String loginPassword) {
+        //  Check arguments: Not NULL and Not BLANK
+        if (loginName.isEmpty()) {
+            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+        }
+
+        if (loginPassword.isEmpty()) {
+            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+        }
+
+        //  Try to get user details by login user-name
+        Account account = getAppUserByLogin(loginName);
+
+        if (account == null) {
+            //  Invalid user login.
+            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+        }
+
+        //  Return: Successful login attempt
+        return new AccountStatusResponse(true, "Login Successful", account.getId(),
+                getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType())
+                ).generateToken());
+    }
+
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
         //  Check phone number validation if not null
         if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {

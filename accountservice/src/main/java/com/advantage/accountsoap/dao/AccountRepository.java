@@ -45,6 +45,8 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     AccountStatusResponse doLogin(String login, String password, String email);
 
+    AccountStatusResponse doLogout(String login, String password);
+
     List<Account> getAppUsersByCountry(Integer countryId);
 
     AccountStatusResponse changePassword(long accountId, String newPassword);
