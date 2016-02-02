@@ -102,7 +102,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
         'angularAnimate','ui-bootstrap'
     ], function(angular, app)
     {
-        function ___load(){
+        function loadServerPropertiesBeforeRunTheApp(){
             if(server.fileReady()) {
                 angular.element().ready(function() {
                     angular.bootstrap(document, ['aos']);
@@ -113,9 +113,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
                 setTimeout(___load, 1000)
             }
         }
-        ___load();
-
-
+        loadServerPropertiesBeforeRunTheApp();
     }
 );
 

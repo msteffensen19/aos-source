@@ -2,9 +2,17 @@
  * Created by correnti on 13/12/2015.
  */
 
+var services_properties = []
+
+//var catalogKey = "http://localhost:8080/catalog";
+//var orderKey = "http://localhost:8080/order";
+//var accountKey = "http://localhost:8080/account";
+//var serviceKey = "http://localhost:8080/service";
+//var wsdlPath = 'http://localhost:8080/accountservice';
 
 
-var fileText;
+var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
+
 (function readTextFile(file)
 {
     console.log('Extracting file: ' + file)
@@ -17,119 +25,92 @@ var fileText;
         {
             if(rawFile.status === 200 || rawFile.status == 0)
             {
-                var allText = rawFile.responseText;
-                fileText = allText;
+                var fileText  = rawFile.responseText;
                 console.log('Extracted file: ' + file)
                 console.log("File: ");
-                console.log("");
-                console.log("");
-                console.log("");
-                console.log(allText);
-                console.log("");
-                console.log("");
-                console.log("");
+                console.log(fileText);
                 console.log("end of file");
                 console.log("");
-                console.log("");
+
+                fileText = fileText.split('');
+
+                var _param = '';
+                var _value = '';
+                var attr = true;
+                var arrayApi = [];
+                var invalidChars = '#';
+
+                fileText.forEach(function(a){
+                    switch (a.charCodeAt(0))
+                    {
+                        case 10: case 13:
+                        var validParam = true;
+                        for(var i = 0; i < invalidChars.length; i++)
+                        {
+                            if(_param.indexOf(invalidChars[i]) != -1)
+                            {
+                                validParam = false; break;
+                            }
+                        }
+                        if(validParam && _param != '' && _value != '' )
+                        {
+                            arrayApi.push("{\"" + _param.split(".").join("_") +  "\":\"" + _value + "\"}");
+                            _param = ''; _value = '';
+                        }
+                        attr = true;
+                        break;
+                        case 61:
+                            attr = false;
+                            break;
+                        default:
+                            if(attr) { _param += a; } else { _value += a; }
+                            break;
+                    }
+                });
+
+                arrayApi.forEach(function(a) {
+                    var jsonObj = JSON.parse(a);
+                    services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
+                });
+
+                catalogKey = "http://" + services_properties['catalog_service_url_host'] + ":" +
+                    services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'];
+
+                orderKey = "http://" + services_properties['order_service_url_host'] + ":" +
+                    services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'];
+
+                accountKey = "http://" + services_properties['account_service_url_host'] + ":" +
+                    services_properties['account_service_url_port'] + "/" + services_properties['account_service_url_suffix'];
+
+                serviceKey = "http://"+ services_properties['service_service_url_host'] + ":" +
+                    services_properties['service_service_url_port'] + "/" + services_properties['service_service_url_suffix'];
+
+                wsdlPath = "http://"+
+                    services_properties['account_soapservice_url_host'] + ":" +
+                    services_properties['account_soapservice_url_port'] + "/" +
+                    services_properties['account_soapservice_url_suffix'];
+
+
+                console.log("catalogKey = " + catalogKey);
+                console.log("orderKey = " + orderKey);
+                console.log("accountKey = " + accountKey);
+                console.log("serviceKey = " + serviceKey);
+                console.log("wsdlPath = " + wsdlPath);
+
             }
         }
     }
     rawFile.send(null)
 })('services.properties');
-fileText = fileText.split('');
 
-var _param = '';
-var _value = '';
-var attr = true;
-var arrayApi = [];
-var invalidChars = '#';
-
-fileText.forEach(function(a){
-    switch (a.charCodeAt(0))
-    {
-        case 10: case 13:
-        var validParam = true;
-        for(var i = 0; i < invalidChars.length; i++)
-        {
-            if(_param.indexOf(invalidChars[i]) != -1)
-            {
-                validParam = false; break;
-            }
-        }
-        if(validParam && _param != '' && _value != '' )
-        {
-            arrayApi.push("{\"" + _param.split(".").join("_") +  "\":\"" + _value + "\"}");
-            _param = ''; _value = '';
-        }
-        attr = true;
-        break;
-        case 61:
-            attr = false;
-            break;
-        default:
-            if(attr) { _param += a; } else { _value += a; }
-            break;
-    }
-});
-
-var services_properties = []
-arrayApi.forEach(function(a) {
-    var jsonObj = JSON.parse(a);
-    services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
-});
-
-
-//var catalogKey = "http://localhost:8080/catalog";
-var catalogKey = "http://" +
-    services_properties['catalog_service_url_host'] + ":" +
-    services_properties['catalog_service_url_port'] + "/" +
-    services_properties['catalog_service_url_suffix'];
-console.log("catalogKey = " + catalogKey);
-
-
-//var orderKey = "http://localhost:8080/order";
-var orderKey = "http://" +
-    services_properties['order_service_url_host'] + ":" +
-    services_properties['order_service_url_port'] + "/" +
-    services_properties['order_service_url_suffix'];
-console.log("orderKey = " + orderKey);
-
-
-//var accountKey = "http://localhost:8080/account";
-var accountKey = "http://" +
-    services_properties['account_service_url_host'] + ":" +
-    services_properties['account_service_url_port'] + "/" +
-    services_properties['account_service_url_suffix'];
-console.log("accountKey = " + accountKey);
-
-
-//var serviceKey = "http://localhost:8080/service";
-var serviceKey = "http://"+
-    services_properties['service_service_url_host'] + ":" +
-    services_properties['service_service_url_port'] + "/" +
-    services_properties['service_service_url_suffix'];
-console.log("serviceKey = " + serviceKey);
-
-
-//var wsdlPath = 'http://localhost:8080/accountservice';
-var wsdlPath = "http://"+
-    services_properties['account_soapservice_url_host'] + ":" +
-    services_properties['account_soapservice_url_port'] + "/" +
-    services_properties['account_soapservice_url_suffix'];
-console.log("wsdlPath = " + wsdlPath);
-
-
-console.log("");
-console.log("");
-console.log("");
-
-//var i = 0;
-//var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
 
 var server = {
 
     fileReady: function(){
         var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
+        console.log("");
+        console.log(check);
+        console.log("");
         return check.indexOf('undefined') == -1;
     },
 
