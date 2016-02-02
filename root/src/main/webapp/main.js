@@ -94,16 +94,31 @@ require.config({
 });
 
 window.name = "NG_DEFER_BOOTSTRAP!";
-require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
-         'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
-        'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
-        'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
-        'angularAnimate','ui-bootstrap'
-    ], function(angular, app)
-    {
-        angular.element().ready(function() {
-            angular.bootstrap(document, ['aos']);
-            angular.resumeBootstrap();
-        });
+
+var i = 0;
+function ___load(){
+
+    if(i == 5){
+        require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
+                'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
+                'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
+                'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
+                'angularAnimate','ui-bootstrap'
+            ], function(angular, app)
+            {
+                angular.element().ready(['resHandleService', function() {
+                    angular.bootstrap(document, ['aos']);
+                    angular.resumeBootstrap();
+                }]);
+            }
+        );
     }
-);
+    else{
+        console.log(i)
+        i++;
+        setTimeout(___load, 1000)
+    }
+}
+___load();
+
+
