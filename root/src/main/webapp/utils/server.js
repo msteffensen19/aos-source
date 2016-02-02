@@ -272,6 +272,19 @@ var server = {
             }
         },
 
+        updateMasterCreditMethod: function(){
+            return {
+                path: wsdlPath,
+                method: 'UpdateMasterCreditMethodRequest'
+            }
+        },
+
+        updateSafePayMethod: function(){
+            return {
+                path: wsdlPath,
+                method: 'UpdateSafePayMethodRequest'
+            }
+        },
 
     },
     service: {

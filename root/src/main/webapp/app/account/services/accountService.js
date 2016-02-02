@@ -142,6 +142,46 @@ define(['./module'], function (services) {
 
                 },
 
+                updateMasterCreditMethod : function(card){
+
+                    var expectToReceive = {
+                        cardNumber: "4886" + card.number,
+                        expirationDate: card.expirationDate.month + card.expirationDate.year,
+                        cvvNumber: card.cvv,
+                        customerName: card.name,
+                        referenceId: "??????",
+                    }
+                    var defer = $q.defer();
+                    var params = server.account.updateMasterCreditMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
+
+                updateSafePayMethod: function(savePay){
+
+                    var expectToReceive = {
+                        safePayUsername:safePay.username,
+                        referenceId: "???????"
+                    }
+                    var defer = $q.defer();
+                    var params = server.account.updateSafePayMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
 
 
 
