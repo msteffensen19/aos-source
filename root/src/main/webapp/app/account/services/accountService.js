@@ -34,11 +34,12 @@ define(['./module'], function (services) {
                                     "mobilePhone": response.MOBILEPHONE,
                                     "email": response.EMAIL,
                                     defaultPaymentMethodId: response.DEFAULTPAYMENTMETHODID,
-                                    allowOffersPromotion: response.ALLOWOFFERSPROMOTION,
+                                    allowOffersPromotion: response.ALLOWOFFERSPROMOTION == "true",
                                     internalUnsuccessfulLoginAttempts: response.INTERNALUNSUCCESSFULLOGINATTEMPTS,
                                     internalUserBlockedFromLoginUntil: response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
                                     internalLastSuccesssulLogin: response.INTERNALLASTSUCCESSSULLOGIN,
                                 }
+
                                 defer.resolve(user);
                             },
                             function (response) {
@@ -110,8 +111,7 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
-                accountUpdate : function(accountDetails, allowOffersPromotion){
-
+                accountUpdate : function(accountDetails){
                     var expectToReceive = {
                             lastName:accountDetails.lastName,
                             firstName:accountDetails.firstName,
@@ -124,7 +124,7 @@ define(['./module'], function (services) {
                             phoneNumber:accountDetails.mobilePhone,
                             email: accountDetails.email,
                             accountType: 20,
-                            allowOffersPromotion: allowOffersPromotion,
+                            allowOffersPromotion: accountDetails.allowOffersPromotion,
                     }
                     var defer = $q.defer();
                     var params = server.account.accountUpdate();
