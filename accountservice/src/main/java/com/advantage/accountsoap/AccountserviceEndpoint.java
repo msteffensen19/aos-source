@@ -99,7 +99,6 @@ public class AccountserviceEndpoint {
         return new GetAccountByIdNewResponse(dto);
     }
 
-
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
     @ResponsePayload
     public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
@@ -124,6 +123,32 @@ public class AccountserviceEndpoint {
             return new AccountLoginResponse(response);
         } else {
             return new AccountLoginResponse(response);
+        }
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLogoutRequest")
+    @ResponsePayload
+    public AccountLogoutResponse doLogout(@RequestPayload AccountLogoutRequest account) {
+        //todo set header
+
+        AccountStatusResponse response = accountService.doLogout(account.getLoginUser(),
+                account.getLoginPassword());
+
+        if (response.isSuccess()) {
+            //TODO-ALEX set session
+            /*HttpSession session = request.getSession();
+            session.setAttribute(Constants.UserSession.TOKEN, response.getToken());
+            session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());
+            session.setAttribute(Constants.UserSession.IS_SUCCESS, response.isSuccess());
+
+            //  Set SessionID to Response Entity
+            //response.getHeader().
+            response.setSessionId(session.getId());*/
+            response.setSessionId("fake_id");
+
+            return new AccountLogoutResponse(response);
+        } else {
+            return new AccountLogoutResponse(response);
         }
     }
 

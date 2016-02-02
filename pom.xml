@@ -21,11 +21,11 @@
         <module>root</module>
         <module>catalog</module>
         <module>order</module>
-        <!--<module>account</module>-->
-        <module>shipex</module>
         <module>mastercredit</module>
         <module>safepay</module>
         <module>accountservice</module>
+        <module>shipex</module>
+        <!--<module>account</module>-->
     </modules>
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
@@ -667,4 +667,29 @@
             <version>0.6.0</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>nexus</name>
+            <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>demoapp-release</id>
+            <name>ADM DemoApp Release Nexus repository</name>
+            <url>
+                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>demoapp-snapshot</id>
+            <name>ADM DemoApp Snapshot Nexus repository</name>
+            <url>
+                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

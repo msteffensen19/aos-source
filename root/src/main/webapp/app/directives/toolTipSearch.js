@@ -19,8 +19,10 @@ define(['./module'], function (directives) {
                 s.checkEnterKey = function(event)
                 {
                     if(event.which === 13) {
-                        console.log(event)
-                        console.log(event.which)
+                        $state.go('category',{
+                            id: (s.categoryFilter == null ? '' : s.categoryFilter),
+                            viewAll: s.autoCompleteValue
+                        });
                     }
                 }
 
@@ -69,13 +71,8 @@ define(['./module'], function (directives) {
                     }, (200 * navsLinks.length), navsLinks);
                 }
 
-                s.closeSearchSection = function(force) {
-
-                    if (!s.allowClosing && !force) {
-                        return;
-                    }
+                s.closeSearchForce = function(){
                     $('#searchSection .autoCompleteCover .iconCss.iconX').fadeOut(300);
-
                     setTimeout(function () {
                         $('#searchSection .autoCompleteCover')
                             .animate({
@@ -98,6 +95,14 @@ define(['./module'], function (directives) {
 
                     s.autoCompleteValue = lastRequest = '';
                     s.autoCompleteResult = {};
+                }
+
+                s.closeSearchSection = function() {
+
+                    if (!s.allowClosing || $location.path().indexOf('/category') != -1) {
+                        return;
+                    }
+                    s.closeSearchForce();
                 }
 
                 s.allowClosingLeave = function(){

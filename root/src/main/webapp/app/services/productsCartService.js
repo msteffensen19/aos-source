@@ -42,7 +42,7 @@ define(['./module'], function (services) {
                             cart = res;
                             responce.resolve(cart);
                         }).error(function (err) {
-                            alert('err')
+                            alert('An error occurred, please try again')
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
@@ -79,7 +79,7 @@ define(['./module'], function (services) {
                             cart = res;
                             responce.resolve(cart);
                         }).error(function (err) {
-                            alert('err')
+                            alert('An error occurred, please try again')
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
@@ -136,7 +136,7 @@ define(['./module'], function (services) {
                             cart = res;
                             responce.resolve(cart);
                         }).error(function (err) {
-                            alert('err')
+                            alert('An error occurred, please try again')
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }

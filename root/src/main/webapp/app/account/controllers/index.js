@@ -4,5 +4,7 @@
 'use strict';
 
 define([
-    './myAccountCtrl'
+    './myAccountCtrl',
+    './accountDetailsCtrl',
+    './accountPaymentEditCtrl'
 ], function() {});
