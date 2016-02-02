@@ -31,8 +31,18 @@ define(['./module'], function (controllers) {
                 s.years.push((now.getFullYear() + i) + "");
             }
 
-            s.saveMasterCredit = function(){
 
+            s.card = {
+                number : '',
+                cvv : '',
+                expirationDate : {
+                    month : '',
+                    year : ''
+                },
+                name: '',
+            }
+            s.saveMasterCredit = function(){
+                l(s.card)
             }
 
 

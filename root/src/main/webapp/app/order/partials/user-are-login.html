@@ -192,7 +192,7 @@
 
                     <sec-input
                             sec-required
-                            sec-placeholder="SafePay User name"
+                            sec-placeholder="{{ 'SafePay_User_name' | translate }}"
                             sec-min-length="5"
                             sec-max-length="15"
                             sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
@@ -203,7 +203,7 @@
 
                     <sec-input
                             sec-required
-                            sec-placeholder="SafePay Password"
+                            sec-placeholder="{{ 'SafePay_Password' | translate }}"
                             sec-min-length="4"
                             sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                             pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
@@ -299,6 +299,8 @@
 
                     <sec-input sec-required class="creditCard"
                                sec-placeholder="{{ 'CCV_Number' | translate }}"
+                               sec-pattern="^[0-9]{3,3}$"
+                               pattern-error-attr="{{ 'Invalid_CCV_number' | translate }}"
                                model-attr="card.cvv"
                                id-attr="Card_cvv">
                     </sec-input>
