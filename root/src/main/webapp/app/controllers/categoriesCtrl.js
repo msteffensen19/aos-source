@@ -19,8 +19,6 @@ define(['./module'], function (controllers) {
 
             Slider.AddSliderListener();
 
-            $("nav .navLinks").css("display" , "block");
-
             Helper.forAllPage();
 
 

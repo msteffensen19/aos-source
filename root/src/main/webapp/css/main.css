@@ -117,6 +117,10 @@ nav{
     direction: rtl;
 }
 
+nav .navLinks{
+    display: none;
+}
+
 nav ul {
     float: right;
     display: inline-block;
