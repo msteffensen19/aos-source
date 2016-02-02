@@ -38,6 +38,11 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
+    public AccountStatusResponse doLogout(final String loginUser, final String loginPassword) {
+        return accountRepository.doLogout(loginUser, loginPassword);
+    }
+
+    @Transactional(readOnly = true)
     public List<Account> getAllAppUsers() {
         return accountRepository.getAll();
     }
