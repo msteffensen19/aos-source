@@ -95,30 +95,29 @@ require.config({
 
 window.name = "NG_DEFER_BOOTSTRAP!";
 
-var i = 0;
-function ___load(){
-
-    if(i == 5){
-        require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
-                'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
-                'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
-                'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
-                'angularAnimate','ui-bootstrap'
-            ], function(angular, app)
-            {
-                angular.element().ready(['resHandleService', function() {
+require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
+        'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
+        'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
+        'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
+        'angularAnimate','ui-bootstrap'
+    ], function(angular, app)
+    {
+        function ___load(){
+            if(server.fileReady()) {
+                angular.element().ready(function() {
                     angular.bootstrap(document, ['aos']);
                     angular.resumeBootstrap();
-                }]);
+                });
             }
-        );
+            else{
+                setTimeout(___load, 1000)
+            }
+        }
+        ___load();
+
+
     }
-    else{
-        console.log(i)
-        i++;
-        setTimeout(___load, 1000)
-    }
-}
-___load();
+);
+
 
 

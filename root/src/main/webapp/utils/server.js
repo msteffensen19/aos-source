@@ -123,8 +123,15 @@ console.log("");
 console.log("");
 console.log("");
 
+//var i = 0;
+//var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
 
 var server = {
+
+    fileReady: function(){
+        var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
+        return check.indexOf('undefined') == -1;
+    },
 
     catalog: {
 
