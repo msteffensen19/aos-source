@@ -19,11 +19,15 @@ var fileText;
                 var allText = rawFile.responseText;
                 fileText = allText;
                 console.log('Extracted file: ' + file)
+                console.log("File: ");
+                console.log("");
+                console.log("");
                 console.log("");
                 console.log(allText);
                 console.log("");
                 console.log("");
                 console.log("");
+                console.log("end of file");
                 console.log("");
                 console.log("");
             }
@@ -113,6 +117,10 @@ var wsdlPath = "http://"+
     services_properties['account_soapservice_url_suffix'];
 console.log("wsdlPath = " + wsdlPath);
 
+
+console.log("");
+console.log("");
+console.log("");
 
 
 var server = {
@@ -254,6 +262,13 @@ var server = {
             return {
                 path: wsdlPath,
                 method: 'GetAddressesByAccountIdRequest'
+            }
+        },
+
+        accountUpdate: function(){
+            return {
+                path: wsdlPath,
+                method: 'AccountUpdateRequest'
             }
         },
 

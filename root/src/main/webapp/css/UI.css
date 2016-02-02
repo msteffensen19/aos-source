@@ -85,7 +85,7 @@ nav.pages {
 }
 
 nav.pages *{
-text-decoration: none;
+    text-decoration: none;
 }
 
 .pages a{
@@ -364,8 +364,12 @@ button:hover {
     color: #54b3ad;
 }
 
-a{
+a {
     text-decoration: none;
+}
+
+.invalid{
+    color: #f9003f !important;
 }
 
 .sec-validate-invalid , .sec-validate-invalid:hover{

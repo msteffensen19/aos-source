@@ -9,9 +9,6 @@ define(['./module'], function (controllers) {
         '$location', 'resolveParams',
         function (s, $timeout, $location, resolveParams) {
 
-            l("resolveParams")
-            l(resolveParams)
-
             checkLogin();
             function checkLogin(){
                 s.checkLogin();
@@ -34,21 +31,10 @@ define(['./module'], function (controllers) {
                 { categoryName : 'Mice', categoryValue : false, },
             ];
 
-            s.checkLogin();
-
             $("nav .navLinks").css("display" , "none");
 
             Helper.forAllPage();
 
-            $(document).ready(function(){
-
-                $("#myAccountContainer .cube").each(function(){
-
-
-
-                })
-
-            })
 
         }]);
 });
