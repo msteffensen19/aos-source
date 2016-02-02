@@ -34,11 +34,12 @@ define(['./module'], function (services) {
                                     "mobilePhone": response.MOBILEPHONE,
                                     "email": response.EMAIL,
                                     defaultPaymentMethodId: response.DEFAULTPAYMENTMETHODID,
-                                    allowOffersPromotion: response.ALLOWOFFERSPROMOTION,
+                                    allowOffersPromotion: response.ALLOWOFFERSPROMOTION == "true",
                                     internalUnsuccessfulLoginAttempts: response.INTERNALUNSUCCESSFULLOGINATTEMPTS,
                                     internalUserBlockedFromLoginUntil: response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
                                     internalLastSuccesssulLogin: response.INTERNALLASTSUCCESSSULLOGIN,
                                 }
+
                                 defer.resolve(user);
                             },
                             function (response) {
@@ -110,8 +111,7 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
-                accountUpdate : function(accountDetails, allowOffersPromotion){
-
+                accountUpdate : function(accountDetails){
                     var expectToReceive = {
                             lastName:accountDetails.lastName,
                             firstName:accountDetails.firstName,
@@ -124,7 +124,7 @@ define(['./module'], function (services) {
                             phoneNumber:accountDetails.mobilePhone,
                             email: accountDetails.email,
                             accountType: 20,
-                            allowOffersPromotion: allowOffersPromotion,
+                            allowOffersPromotion: accountDetails.allowOffersPromotion,
                     }
                     var defer = $q.defer();
                     var params = server.account.accountUpdate();
@@ -142,6 +142,46 @@ define(['./module'], function (services) {
 
                 },
 
+                updateMasterCreditMethod : function(card){
+
+                    var expectToReceive = {
+                        cardNumber: "4886" + card.number,
+                        expirationDate: card.expirationDate.month + card.expirationDate.year,
+                        cvvNumber: card.cvv,
+                        customerName: card.name,
+                        referenceId: "??????",
+                    }
+                    var defer = $q.defer();
+                    var params = server.account.updateMasterCreditMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
+
+                updateSafePayMethod: function(savePay){
+
+                    var expectToReceive = {
+                        safePayUsername:safePay.username,
+                        referenceId: "???????"
+                    }
+                    var defer = $q.defer();
+                    var params = server.account.updateSafePayMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
 
 
 

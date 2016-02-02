@@ -1,29 +1,26 @@
-
-
-
-
-
-
 <nav class="pages">
-    <a translate="HOME" href="#/" ></a>
-    <a translate="MY_ACCOUNT" href="#/myAccount" ></a>
-    <a class="select" translate="ACCOUNT_DETAILS">  </a>
+    <a translate="HOME" href="#/"></a>
+    <a translate="MY_ACCOUNT" href="#/myAccount"></a>
+    <a class="select" translate="ACCOUNT_DETAILS"> </a>
 </nav>
 <section>
     <article>
         <div id="accountCover">
-            <h3  class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
-            <div class="maxWidth" >
+            <h3 class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
+
+            <div class="maxWidth">
+
                 <div id="infoDemo">
                     <div class="notice">
-                        <h4 translate="NOTICE" ></h4>
+                        <h4 translate="NOTICE"></h4>
+
                         <p class="roboto-light" translate="This_is_a_demo"></p>
+
                         <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
                     </div>
                 </div>
 
                 <div id="form">
-
 
                     <!-- EDIT EDIT PAYMENT SECTION -->
 
@@ -50,6 +47,7 @@
 
                                 <div class="notice">
                                     <h4 translate="Notice"></h4>
+
                                     <p class="roboto-light">{{ 'This_is_a_demo' | translate }}.
                                         {{ 'Please_enter_a_fake_data' | translate }}</p>
                                 </div>
@@ -57,8 +55,7 @@
                                 <sec-validate>
 
                                     <sec-input
-                                            sec-required
-                                            sec-placeholder="SafePay User name"
+                                            sec-placeholder="{{ 'SafePay_User_name' | translate }}"
                                             sec-min-length="5"
                                             sec-max-length="15"
                                             sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
@@ -68,8 +65,7 @@
                                     </sec-input>
 
                                     <sec-input
-                                            sec-required
-                                            sec-placeholder="SafePay Password"
+                                            sec-placeholder="{{ 'SafePay_Password' | translate }}"
                                             sec-min-length="4"
                                             sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
                                             pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
@@ -80,7 +76,7 @@
 
                                     <div class="blueLink">
                                         <label>
-                                            <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
+                                            <input sec-submit-attr="saveSafePay()" a-sec-validate-invalid
                                                    class="roboto-medium sec-validate-invalid accountDetailsBtn"
                                                    type="button"
                                                    value="{{'SAVE' | translate}}"/>
@@ -94,7 +90,6 @@
                             <!-------------------------- END SAFEPAY SECCION -------------------------->
 
 
-
                             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
                             <div ng-show="imgRadioButton == 2 ">
@@ -102,7 +97,8 @@
                                 <div class="notice">
                                     <h4 translate="Notice"></h4>
 
-                                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{ 'Please_enter_a_fake_data' |
+                                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{
+                                        'Please_enter_a_fake_data' |
                                         translate }}</p>
                                 </div>
 
@@ -118,7 +114,8 @@
 
                                     <sec-input sec-required class="creditCard"
                                                sec-placeholder="{{ 'CCV_Number' | translate }}"
-                                               sec-pattern="^[0-3]{3,3}$"
+                                               sec-pattern="^[0-9]{3,3}$"
+                                               pattern-error-attr="{{ 'Invalid_CCV_number' | translate }}"
                                                model-attr="card.cvv"
                                                id-attr="Card_cvv">
                                     </sec-input>
@@ -171,74 +168,16 @@
                             <!---------------------------- END MANUAL PAYMENT SECCION ---------------------------->
 
 
-
-
-
-
-
-
                         </div>
+                    </div>
+                </div>
             </div>
         </div>
     </article>
 </section>
 
-
 <social-media-drtv></social-media-drtv>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<nav class="pages fixed fixedImportant">-->
-    <!--<a translate="HOME" href="#/" ></a>-->
-    <!--<a translate="SHOPPING_CART" href="#/shoppingCart" ></a>-->
-    <!--<a class="select" translate="ORDER_PAYMENT"></a>-->
-<!--</nav>-->
-
-<!--<section>-->
-    <!--<article>-->
-        <!--<h3 class="roboto-regular sticky fixed fixedImportant" translate="ORDER_PAYMENT"></h3>-->
-
-        <!--<div id="orderPayment">-->
-            <!--<div>-->
-                <!--<user-are-login></user-are-login>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</article>-->
-<!--</section>-->
-
-
-<!--<social-media-drtv></social-media-drtv>-->
 
 
 

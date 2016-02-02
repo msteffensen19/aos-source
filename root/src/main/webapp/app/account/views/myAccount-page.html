@@ -158,21 +158,23 @@
 
 
 
-
             <!--NOTIFY ME ABOUT PROMOTIONS SECCION-->
             <div class="cube">
                 <h3 class="blueLink">
                     <div class="option">
-                        <input type="checkbox" data-ng-model="Notify_me_about_Promotions">
+
+                        <input type="checkbox"
+                               data-ng-model="accountDetails.allowOffersPromotion"
+                               data-ng-click="allowOffersPromotionChanged()">
                         <span> {{ "Notify_me_about_Promotions" | translate }} </span>
                         <a class="floatRigth">
                             {{ "Edit" | translate }}
                         </a>
                     </div>
                 </h3>
-                <div class="categoriesBox">
+                <div class="categoriesBox" data-ng-class="{ disableBox : !accountDetails.allowOffersPromotion }">
                     <p>{{'Categories'| translate}}</p>
-                    <div class="categoriesCheckboxes">
+                    <div class="categoriesCheckboxes" >
                         <div class="option" data-ng-repeat="cat in categoriesPromotions track by $index">
                             <input type="checkbox" data-ng-model="cat.categoryValue">
                             <span> {{ cat.categoryName }} </span>
@@ -181,6 +183,9 @@
                 </div>
             </div>
             <!--END NOTIFY ME ABOUT PROMOTIONS SECCION-->
+
+
+
 
         </div>
 

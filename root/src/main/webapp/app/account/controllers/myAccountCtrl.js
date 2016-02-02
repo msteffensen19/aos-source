@@ -6,8 +6,8 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('myAccountCtrl', ['$scope', '$timeout',
-        '$location', 'resolveParams',
-        function (s, $timeout, $location, resolveParams) {
+        '$location', 'resolveParams', 'accountService',
+        function (s, $timeout, $location, resolveParams, accountService) {
 
             checkLogin();
             function checkLogin(){
@@ -22,7 +22,6 @@ define(['./module'], function (controllers) {
             s.masterCredit = resolveParams.paymentPreferences ?
                 resolveParams.paymentPreferences.masterCredit.substring(resolveParams.paymentPreferences.masterCredit.length - 4) : null;
 
-            s.Notify_me_about_Promotions = true;
             s.categoriesPromotions = [
                 { categoryName : 'Tablets', categoryValue : true, },
                 { categoryName : 'Laptops', categoryValue : false, },
@@ -30,6 +29,10 @@ define(['./module'], function (controllers) {
                 { categoryName : 'Speakers', categoryValue : false, },
                 { categoryName : 'Mice', categoryValue : false, },
             ];
+
+            s.allowOffersPromotionChanged = function(){
+                accountService.accountUpdate(s.accountDetails);
+            }
 
             $("nav .navLinks").css("display" , "none");
 
