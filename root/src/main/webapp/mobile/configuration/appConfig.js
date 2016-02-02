@@ -12,7 +12,8 @@ define([],function(){
             controller: 'categoriesMobCtrl',
             data: {
                 requireLogin: false, beforeLoader: false,
-                navLinks: true, breadcrumbName: "Home Page",
+                //navLinks: true,
+                breadcrumbName: "Home Page",
             },
             resolve : {
                 resolveParams: function(categoryService, $q) {

@@ -46,7 +46,7 @@ define(['./module'], function (controllers) {
                 s.colorSelected = color;
             }
 
-            $("nav .navLinks").css("display", "none");
+            //$("nav .navLinks").css("display", "none");
 
             Helper.forAllPage();
         }]);

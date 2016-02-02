@@ -16,7 +16,9 @@ define(['./module'], function (controllers) {
 
             $scope.go_up = function(){
                 $('body, html').animate({scrollTop: 0}, 10, function(){
-                    $("nav .navLinks").css("display", "block");
+                    if($(".autoCompleteCover").width() < 100){
+                        $("nav .navLinks").css("display", "block");
+                    }
                 });
             }
 
@@ -277,16 +279,19 @@ define(['./module'], function (controllers) {
 
                 Helper.UpdatePageFixed();
 
-                $timeout(function(){
-                    if($location.path().indexOf('/category') == -1)
+                if($location.path().indexOf('/category') == -1)
                     $scope.closeSearchForce();
 
-                    if($location.path() == '/')
-                        $("nav .navLinks").css("display" , "block");
-                    else
+                $timeout(function(){
+                    if($location.path() == '/') {
+                        if ($(".autoCompleteCover").width() < 100) {
+                            $("nav .navLinks").css("display", "block");
+                        }
+                    }
+                    else{
                         $("nav .navLinks").css("display" , "none");
-
-                }, 2250)
+                    }
+                }, 1050)
 
             });
 
