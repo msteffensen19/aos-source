@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilterPK;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
@@ -27,6 +29,39 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
         entityManager.persist(category);
 
         return category;
+    }
+
+    @Override
+    public List<CategoryAttributeFilter> getAllCategoryAttributeFilter() {
+        List<CategoryAttributeFilter> caf = entityManager.createNamedQuery(CategoryAttributeFilter.QUERY_GET_ALL, CategoryAttributeFilter.class)
+                .getResultList();
+
+        return caf.isEmpty() ? null : caf;
+    }
+
+    @Override
+    public void addCategoryAttributeFilter(CategoryAttributeFilter categoryAttributeFilterObj) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(categoryAttributeFilterObj,"CategoryAttributeFilter object");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(categoryAttributeFilterObj.getCategoryId(),"category id");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(categoryAttributeFilterObj.getAttributeId(),"attribute id");
+        entityManager.persist(categoryAttributeFilterObj);
+    }
+
+    @Override
+    public void updateCategoryAttributeFilter(Long categoryId, Long attributeId, boolean showInFilter) {
+        CategoryAttributeFilter categoryAttributeFilter = findCategoryAttributeFilter(categoryId, attributeId);
+        if (categoryAttributeFilter != null) {
+            categoryAttributeFilter.setShowInFilter(showInFilter);
+            entityManager.persist(categoryAttributeFilter);
+        }
+    }
+
+    @Override
+    public CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId) {
+        CategoryAttributeFilterPK categoryAttributeFilterPk = new CategoryAttributeFilterPK(categoryId, attributeId);
+        CategoryAttributeFilter categoryAttributeFilter = entityManager.find(CategoryAttributeFilter.class, categoryAttributeFilterPk);
+
+        return categoryAttributeFilter;
     }
 
     @Override

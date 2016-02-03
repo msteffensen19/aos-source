@@ -3,6 +3,9 @@ package com.advantage.catalog.store.services;
 import java.util.List;
 
 import com.advantage.catalog.store.dao.category.CategoryRepository;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.common.dto.CategoryAttributeFilterResponse;
+import com.advantage.common.dto.CategoryAttributeShowInFilter;
 import com.advantage.common.dto.CategoryDto;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.Product;
@@ -37,6 +40,28 @@ public class CategoryService {
     public Category getCategory(final Long categoryId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(categoryId, "category id");
         return categoryRepository.get(categoryId);
+    }
+
+    //by moti
+    @Transactional(readOnly = true)
+    public CategoryAttributeFilterResponse getAllCategoryAttributesFilter() {
+
+        List<CategoryAttributeFilter> categoriesAttributes = categoryRepository.getAllCategoryAttributeFilter();
+
+        CategoryAttributeFilterResponse categoryAttributeFilterResponse = new CategoryAttributeFilterResponse();
+
+        if ((categoriesAttributes != null) && (categoriesAttributes.size() > 0)) {
+            for (CategoryAttributeFilter categoryAttributeFilter: categoriesAttributes) {
+                categoryAttributeFilterResponse.createCategoryAttributeShowInFilter(new CategoryAttributeShowInFilter(
+                        categoryAttributeFilter.getCategoryId(),
+                        categoryAttributeFilter.getAttributeId(),
+                        categoryAttributeFilter.isShowInFilter()));
+            }
+        } else {
+            categoryAttributeFilterResponse = null;
+        }
+
+        return categoryAttributeFilterResponse;
     }
 
     public CategoryDto getCategoryDto(long categoryId) {

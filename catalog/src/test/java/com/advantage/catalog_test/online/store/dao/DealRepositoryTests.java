@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionDefinition;
@@ -29,10 +30,17 @@ import com.advantage.catalog.store.model.deal.DealType;
 public class DealRepositoryTests extends GenericRepositoryTests {
 
     public static final int DEALS_COUNT = 10;
+    public static final int CATEGORY_NUMBER = 5;
+
+    @Qualifier("categoryRepository")
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Qualifier("productRepository")
     @Autowired
     private ProductRepository productRepository;
+
+    @Qualifier("dealRepository")
     @Autowired
     private DealRepository dealRepository;
 
@@ -83,4 +91,38 @@ public class DealRepositoryTests extends GenericRepositoryTests {
         categoryRepository.delete(category);
         transactionManager.commit(transactionStatusForDeletion);
     }
+
+//    @Test
+//    public void testCategoriesFilled() throws IOException {
+//        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+//        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+//
+//        //create categories
+//        System.out.println("creating 5 categories...");
+//        Category category = null;
+//        category = categoryRepository.createCategory("LAPTOPS", "1235");
+//        category = categoryRepository.createCategory("HEADPHONES", "1234");
+//        category = categoryRepository.createCategory("TABLETS", "1236");
+//        category = categoryRepository.createCategory("SPEAKERS", "1237");
+//        category = categoryRepository.createCategory("MICE", "1238");
+//
+//        System.out.println("COMMITing 5 categories.");
+//        transactionManager.commit(transactionStatusForCreation);
+//
+//        System.out.println("Going to retrieve categories from table...");
+//        final List<Category> categories = categoryRepository.getAll();
+//        System.out.println("Retrieved " + categories.size() + " categories from table");
+//
+//        Assert.assertEquals("Error! Expecting " + CATEGORY_NUMBER + " categories, but got " + categories.size(), CATEGORY_NUMBER, categories.size());
+//
+//        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+//
+//        //delete categories
+//        for(Category selected : categories) {
+//            //categoryRepository.delete(selected.getCategoryId());
+//            categoryRepository.delete(selected);
+//        }
+//
+//        transactionManager.commit(transactionStatusForDeletion);
+//    }
 }

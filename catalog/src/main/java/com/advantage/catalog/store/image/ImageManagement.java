@@ -60,7 +60,7 @@ public interface ImageManagement {
     /**
      * Get the managed image with the given id.
      *
-     * @param managedImageId the id of the managed image to get.
+     * @param managedImageId the id of the managed image to getAllCategoryAttributeFilter.
      * @return the managed image with the given id, or <b>null<b>, if there is no such a
      * managed image in the repository.
      * @throws IllegalArgumentException if the given managed image id references <b>null</b>,

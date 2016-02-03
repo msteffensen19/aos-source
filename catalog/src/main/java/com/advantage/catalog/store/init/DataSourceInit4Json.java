@@ -1,8 +1,10 @@
 package com.advantage.catalog.store.init;
 
+import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.category.CategoryRepository;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
@@ -28,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -37,6 +40,9 @@ public class DataSourceInit4Json {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    private AttributeRepository attributeRepository;
 
     @Autowired
     private ProductService productService;
@@ -81,6 +87,20 @@ public class DataSourceInit4Json {
         transaction.commit();
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
             session.save(entry.getValue());
+        }
+
+        //for categories-attributes show filter
+        final List<Category> categories = categoryRepository.getAll();
+        //Assert.assertEqual(category_number, categories.size());
+
+        final List<Attribute> attributesToShow = attributeRepository.getAll();
+
+        for (Category category : categories) {
+            for (Attribute attribute : attributesToShow ) {
+                //CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
+                //session.persist(categoryAttributeFilter);
+                session.persist(new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true));
+            }
         }
 
         ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @author Binyamin Regev on 02/02/2016.
  */
 @Service
-public class ContactUsMailService {
+public class ContactSupportService {
     private static int SUCCESS = 1;
     private static int FAILURE = -1;
 
