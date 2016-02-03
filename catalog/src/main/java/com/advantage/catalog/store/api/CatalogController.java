@@ -245,7 +245,7 @@ public class CatalogController {
     }
     //endregion
 
-    @RequestMapping(value = "/support/contact_us/email/", method = RequestMethod.POST)
+    @RequestMapping(value = "/support/contact_us/email", method = RequestMethod.POST)
     @ApiOperation(value = "Contact support by email")
     public ResponseEntity<ContactUsResponse> supportSendMail(@RequestBody ContactUsMailRequest contactUsRequest,
                                                              final HttpServletRequest request,
