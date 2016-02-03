@@ -151,6 +151,10 @@ define(['./module'], function (services) {
                         customerName: card.name,
                         referenceId: "??????",
                     }
+
+                    l("updateMasterCreditMethod ")
+                    l(JSON.stringify(expectToReceive))
+
                     var defer = $q.defer();
                     var params = server.account.updateMasterCreditMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).
@@ -164,12 +168,15 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
-                updateSafePayMethod: function(savePay){
+                updateSafePayMethod: function(safePay){
 
                     var expectToReceive = {
                         safePayUsername:safePay.username,
                         referenceId: "???????"
                     }
+                    l("updateSafePayMethod")
+                    l(JSON.stringify(expectToReceive))
+
                     var defer = $q.defer();
                     var params = server.account.updateSafePayMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).
