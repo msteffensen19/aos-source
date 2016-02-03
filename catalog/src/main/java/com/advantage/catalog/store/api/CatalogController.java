@@ -180,6 +180,10 @@ public class CatalogController {
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
+    /**
+     * Retrieve all categories and their attributes with the flag indicating
+     * whether to show in category Filter.
+     */
     @RequestMapping(value = "/categories/attributes", method = RequestMethod.GET)
     public ResponseEntity<CategoryAttributeFilterResponse> getAllCategoriesAttributes(HttpServletRequest request) {
 
