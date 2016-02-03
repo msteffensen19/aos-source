@@ -19,8 +19,6 @@ define(['./module'], function (directives) {
                     $scope.config = null;
                     /*================================ END VARIABLES ======================================*/
 
-
-
                     /* Sign user in */
                     $scope.signIn = function(user, rememberMe) {
 
@@ -56,7 +54,7 @@ define(['./module'], function (directives) {
                                         expires: 60
                                     });
                                     $cookie('lastlogin', userCookie.getKey(userCookie));
-                                    console.log($cookie(userCookie.getKey(userCookie)));
+                                    $scope.refreshTimeOut();
                                 }
                                 else {
                                     $cookie.remove("userCookie" + user.email);
