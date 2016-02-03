@@ -232,8 +232,8 @@ define(['./module'], function (controllers) {
                     $timeout.cancel(_____autoLogOut);
                     _____autoLogOut = $timeout(function () {
                         $scope.signOut()
-                    }, $scope.config || $scope.config.userLoginTimeout == 0 ? 60 * 60000
-                        : $scope.config.userLoginTimeout * 60000);
+                    }, $scope.config.userLoginTimeout == 0 ? (60 * 60000)
+                        : ($scope.config.userLoginTimeout * 60000));
                 }
             }
 
