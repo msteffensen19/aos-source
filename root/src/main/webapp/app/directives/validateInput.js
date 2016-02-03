@@ -248,9 +248,7 @@ define(['./module'], function (directives) {
 
                     function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
 
-
                         var invalidToReturn = false;
-
                         try {
 
                             for (var i in s.warnings) {
@@ -386,7 +384,6 @@ define(['./module'], function (directives) {
 
                             e.bind('change', function () {
                                 var select = $($(this).find("select"))
-                                var _this = this;
                                 if (select.length > 0) {
                                     s.$apply(function () {
                                         ctrls[1].shiftInvalidField(a.idAttr);
@@ -398,6 +395,7 @@ define(['./module'], function (directives) {
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
+                        ctrls[1].setStartingValue(s.modelAttr, a.idAttr)
                     },
                     post: function(s){
                         if(s.modelAttr != '' && s.modelAttr != undefined){
