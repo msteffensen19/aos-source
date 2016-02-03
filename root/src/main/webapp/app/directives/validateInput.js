@@ -395,7 +395,7 @@ define(['./module'], function (directives) {
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
-                        ctrls[1].setStartingValue(s.modelAttr, a.idAttr)
+                       // ctrls[1].setStartingValue(s.modelAttr, a.idAttr)
                     },
                     post: function(s){
                         if(s.modelAttr != '' && s.modelAttr != undefined){
