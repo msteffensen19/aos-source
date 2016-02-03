@@ -10,7 +10,7 @@ define(['./module'], function (controllers) {
 
             s.checkCart();
 
-            $("nav .navLinks").css("display" , "none");
+            //$("nav .navLinks").css("display" , "none");
 
             Helper.forAllPage();
 

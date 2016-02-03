@@ -6,9 +6,9 @@ define(['./module'], function (controllers) {
 
     'use strict';
     controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService',
-                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state',
+                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state', '$timeout',
         function ($scope, $q, productService, smoothScroll, userService,
-                        $location, $cookie, $rootScope, productsCartService, $filter, $state) {
+                        $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
             $scope.cart;
             $scope.autoCompleteValue = '';
@@ -16,11 +16,11 @@ define(['./module'], function (controllers) {
 
             $scope.go_up = function(){
                 $('body, html').animate({scrollTop: 0}, 10, function(){
-                    $("nav .navLinks").css("display", "block");
+                    if($(".autoCompleteCover").width() < 100){
+                        $("nav .navLinks").css("display", "block");
+                    }
                 });
             }
-
-
 
 
 
@@ -278,6 +278,20 @@ define(['./module'], function (controllers) {
                 $("#searchSection #output").css("opacity", $location.path().indexOf('/category') == -1 ? 1 : 0);
 
                 Helper.UpdatePageFixed();
+
+                if($location.path().indexOf('/category') == -1)
+                    $scope.closeSearchForce();
+
+                $timeout(function(){
+                    if($location.path() == '/') {
+                        if ($(".autoCompleteCover").width() < 100) {
+                            $("nav .navLinks").css("display", "block");
+                        }
+                    }
+                    else{
+                        $("nav .navLinks").css("display" , "none");
+                    }
+                }, 1050)
 
             });
 

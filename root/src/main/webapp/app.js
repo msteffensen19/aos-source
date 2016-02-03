@@ -80,7 +80,7 @@ define([
     config(accountConfig).
 
 
-    run(function ($rootScope, $state, ipCookie) {
+    run(function ($rootScope, $state, ipCookie, resHandleService) {
 
             var pcBlocked = ipCookie("pcBlocked");
             if(pcBlocked)
@@ -104,7 +104,7 @@ define([
                 }
             }
 
-            $rootScope.$on('$stateChangeError', function(event) {
+            $rootScope.$on('$stateChangeError', function() {
                 $state.go('404');
             });
 

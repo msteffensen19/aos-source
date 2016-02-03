@@ -9,7 +9,7 @@ define(['./module'], function(controllers){
 
             s.checkCart();
             Helper.forAllPage();
-            $("nav .navLinks").css("display" , "none");
+            //$("nav .navLinks").css("display" , "none");
 
             s.saveCart = function(){
                 cartService.saveCart(s.cart);

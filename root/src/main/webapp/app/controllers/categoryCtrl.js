@@ -13,16 +13,13 @@ define(['./module'], function (controllers) {
 
             s.viewAll = paramsToReturn.viewAll;
 
-            l("s.viewAll")
-            l(s.viewAll)
             s.categoryData = paramsToReturn.searchResult.length > 0 ? paramsToReturn.searchResult[0] : [];
-            l(s.categoryData)
 
             s.noProducts = s.categoryData.products == undefined || s.categoryData.products.length == 0;
 
             s.categoryName = paramsToReturn.categoryName;
 
-            $("nav .navLinks").css("display" , "none");
+            //$("nav .navLinks").css("display" , "none");
 
             Helper.forAllPage();
 

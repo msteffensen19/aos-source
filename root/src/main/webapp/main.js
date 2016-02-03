@@ -94,16 +94,28 @@ require.config({
 });
 
 window.name = "NG_DEFER_BOOTSTRAP!";
+
 require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
-         'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
+        'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
         'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
         'angularAnimate','ui-bootstrap'
     ], function(angular, app)
     {
-        angular.element().ready(function() {
-            angular.bootstrap(document, ['aos']);
-            angular.resumeBootstrap();
-        });
+        function loadServerPropertiesBeforeRunTheApp(){
+            if(server.fileReady()) {
+                angular.element().ready(function() {
+                    angular.bootstrap(document, ['aos']);
+                    angular.resumeBootstrap();
+                });
+            }
+            else{
+                setTimeout(loadServerPropertiesBeforeRunTheApp, 1000)
+            }
+        }
+        loadServerPropertiesBeforeRunTheApp();
     }
 );
+
+
+

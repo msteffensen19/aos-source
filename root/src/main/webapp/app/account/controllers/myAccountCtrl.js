@@ -34,7 +34,7 @@ define(['./module'], function (controllers) {
                 accountService.accountUpdate(s.accountDetails);
             }
 
-            $("nav .navLinks").css("display" , "none");
+            //$("nav .navLinks").css("display" , "none");
 
             Helper.forAllPage();
 

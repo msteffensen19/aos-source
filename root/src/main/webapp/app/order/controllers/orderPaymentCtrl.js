@@ -60,7 +60,7 @@ define(['./module'], function (controllers) {
             s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
 
-            $("nav .navLinks").css("display" , "none");
+            //$("nav .navLinks").css("display" , "none");
 
             Helper.forAllPage();
 
