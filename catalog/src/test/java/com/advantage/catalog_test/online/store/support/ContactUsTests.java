@@ -18,12 +18,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={AdvantageTestContextConfiguration.class})
-public class ContactUsMailTests {
+public class ContactUsTests {
 
     @Autowired
     private ContactSupportService contactSupportService;
 
-    public ContactUsMailTests() {
+    public ContactUsTests() {
     }
 
     @Test
