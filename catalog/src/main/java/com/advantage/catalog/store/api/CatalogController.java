@@ -1,13 +1,9 @@
 package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
-import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
-import com.advantage.catalog.store.services.AttributeService;
-import com.advantage.catalog.store.services.CategoryService;
-import com.advantage.catalog.store.services.DealService;
-import com.advantage.catalog.store.services.ProductService;
+import com.advantage.catalog.store.services.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
@@ -41,6 +37,8 @@ public class CatalogController {
     private AttributeService attributeService;
     @Autowired
     private DealService dealService;
+    @Autowired
+    private ContactSupportService contactSupportService;
 
     //region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
@@ -247,4 +245,18 @@ public class CatalogController {
     }
     //endregion
 
+    @RequestMapping(value = "/support/contact_us/email/", method = RequestMethod.POST)
+    @ApiOperation(value = "Contact support by email")
+    public ResponseEntity<ContactUsResponse> supportSendMail(@RequestBody ContactUsMailRequest contactUsRequest,
+                                                             final HttpServletRequest request,
+                                                             final HttpServletResponse response) {
+
+        ArgumentValidationHelper.validateArgumentIsNotNull(contactUsRequest, "Contact Us Mail Request");
+        ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
+        ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
+
+        ContactUsResponse contactUsResponse = contactSupportService.sendMail(contactUsRequest);
+
+        return new ResponseEntity<>(contactUsResponse, HttpStatus.OK);
+    }
 }

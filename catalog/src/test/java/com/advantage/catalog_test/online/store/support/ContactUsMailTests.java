@@ -1,6 +1,6 @@
 package com.advantage.catalog_test.online.store.support;
 
-import com.advantage.catalog.store.services.ContactUsMailService;
+import com.advantage.catalog.store.services.ContactSupportService;
 import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * Need to call method{@link ContactUsMailService#sendMail}
+ * Need to call method{@link ContactSupportService#sendMail}
  * with parameters to test {@code success} and {@code failure}.
  * @author Binyamin Regev on 02/02/2016.
  */
@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes={AdvantageTestContextConfiguration.class})
 public class ContactUsMailTests {
 
-    private ContactUsMailService contactUsMailService = new ContactUsMailService();
+    private ContactSupportService contactSupportService = new ContactSupportService();
 
     public ContactUsMailTests() {
     }
