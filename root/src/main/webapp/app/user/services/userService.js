@@ -12,38 +12,35 @@ define(['./module'], function (services) {
                 getConfiguration: getConfiguration,
             });
 
-            this.userIsLogin;
-
+            var appConfiguration;
             function getConfiguration() {
 
-                //var request = $http({
-                //    "method": "get",
-                //    "url": server.service.getConfiguration(),
-                //});
-                //return ( request.then(
-                //    responseService.handleSuccess,
-                //    responseService.handleError
-                //));
-
                 var defer = $q.defer();
-                var params = server.service.getConfiguration();
-                mini_soap.post(params.path, params.method).
-                then(function (res) {
-                        defer.resolve({
-                            numberOfFiledLoginAttemptsBeforeBlocking: res.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING,
-                            loginBlockingInterval: res.LOGINBLOCKINGINTERVALINMILLISECONDS,
-                            emailAddressInLogin : res.EMAILADDRESSINLOGIN,
-                            productInStockDefaultValue : res.PRODUCTINSTOCKDEFAULTVALUE,
-                            userSecondWsdl : res.USERSECONDWSDL,
+                if(appConfiguration){
+                    defer.resolve(appConfiguration);
+                    l("web")
+                }
+                else {
+                    l("server")
+                    var params = server.service.getConfiguration();
+                    mini_soap.post(params.path, params.method).
+                    then(function (res) {
+                            appConfiguration = {
+                                numberOfFiledLoginAttemptsBeforeBlocking: res.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING,
+                                loginBlockingInterval: res.LOGINBLOCKINGINTERVALINMILLISECONDS,
+                                emailAddressInLogin: res.EMAILADDRESSINLOGIN,
+                                productInStockDefaultValue: res.PRODUCTINSTOCKDEFAULTVALUE,
+                                userSecondWsdl: res.USERSECONDWSDL,
+                                userLoginTimeout: res.USERLOGINTIMEOUT,
+                            }
+                            defer.resolve(appConfiguration);
+                        },
+                        function (response) {
+                            console.log(response);
+                            defer.reject("Request failed! ");
                         });
-                    },
-                    function (response) {
-                        console.log(response);
-                        defer.reject("Request failed! ");
-                    });
-
+                }
                 return defer.promise;
-
             }
 
             function login(user) {

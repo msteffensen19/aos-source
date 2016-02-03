@@ -9,6 +9,7 @@
         <div id="accountCover">
             <h3  class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
             <div class="maxWidth" >
+
                 <div id="infoDemo">
                     <div class="notice">
                         <h4 translate="NOTICE" ></h4>
@@ -60,7 +61,6 @@
 
                             <div>
                                 <h3 translate="ADDRESS"></h3>
-
                                 <sec-input sec-placeholder="{{'Country' | translate }}"
                                            id-attr="country"
                                            model-attr="accountDetails.countryId"
@@ -71,8 +71,6 @@
                                             ng-options="country.name for country in countries track by country.id">
                                     </select>
                                 </sec-input>
-
-
                                 <sec-input sec-placeholder="{{'City' | translate }}"
                                            model-attr="accountDetails.cityName"
                                            sec-max-length="25"
@@ -107,6 +105,7 @@
                                        type="button"
                                        value="{{'SAVE' | translate}}" />
                             </div>
+
                             <div>
                                 <label class="{{accountDetailsAnswer.class}} center" style="margin: 100px 0" > {{ accountDetailsAnswer.message }} </label>
                             </div>

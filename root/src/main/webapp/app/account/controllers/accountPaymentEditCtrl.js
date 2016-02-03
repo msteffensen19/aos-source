@@ -62,7 +62,7 @@ define(['./module'], function (controllers) {
 
             s.savePay = { username : '', password : '' }
             s.saveSafePay = function () {
-                accountService.updateMasterCreditMethod(s.savePay).then(function (response) {
+                accountService.updateSafePayMethod(s.savePay).then(function (response) {
                     if (response && response.REASON) {
                         s.accountDetailsAnswer = {
                             message: response.REASON,

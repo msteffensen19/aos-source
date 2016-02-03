@@ -5,52 +5,35 @@ define(['./module'], function (controllers) {
 
 
     'use strict';
-    controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService',
-                    '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state', '$timeout',
-        function ($scope, $q, productService, smoothScroll, userService,
-                        $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
+    controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService', 'orderService',
+        '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state', '$timeout',
+        function ($scope, $q, productService, smoothScroll, userService, orderService,
+                  $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
             $scope.cart;
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
-            $scope.go_up = function(){
-                $('body, html').animate({scrollTop: 0}, 10, function(){
-                    if($(".autoCompleteCover").width() < 100){
+            $scope.go_up = function () {
+                $('body, html').animate({scrollTop: 0}, 10, function () {
+                    if ($(".autoCompleteCover").width() < 100) {
                         $("nav .navLinks").css("display", "block");
                     }
                 });
             }
 
 
-
-
-            /* enterKeyHandler */
-            $scope.enterKey;
-            $scope.enterKeyHandler = function(event){
-                if(event.which == 13){
-                    l("u ytiuygi ygt iuyg")
-                }
-            }
-            /*===========================  end enterKeyHandler ============================*/
-
-
-
-
             /* Get configuration */
-            userService.getConfiguration().then(function(response){
+            userService.getConfiguration().then(function (response) {
                 $scope.config = response;
+                $scope.refreshTimeOut();
             });
             /*===========================  end Get configuration ============================*/
 
 
-
-
-
-
             /* Cart section  */
 
-            productsCartService.loadCartProducts().then(function(cart){
+            productsCartService.loadCartProducts().then(function (cart) {
                 $scope.cart = cart;
             });
 
@@ -62,60 +45,60 @@ define(['./module'], function (controllers) {
                 });
             }
 
-           $scope.addProduct = function(product, quantity) {
-               clearInterval(Helper.____closeTooTipCart);
-               productsCartService.addProduct(product, quantity).then(function (cart) {
-                   $scope.cart = cart;
-                   animateToolTipCart();
-                   fixToolTipCartHeight();
-               });
-           }
-
-            $scope.updateProduct = function(product, color, quantity, oldColor) {
-                productsCartService.updateProduct(product, color, quantity, oldColor)
-                    .then(function(cart){
+            $scope.addProduct = function (product, quantity) {
+                clearInterval(Helper.____closeTooTipCart);
+                productsCartService.addProduct(product, quantity).then(function (cart) {
                     $scope.cart = cart;
                     animateToolTipCart();
+                    fixToolTipCartHeight();
                 });
             }
 
-            function animateToolTipCart(){
+            $scope.updateProduct = function (product, color, quantity, oldColor) {
+                productsCartService.updateProduct(product, color, quantity, oldColor)
+                    .then(function (cart) {
+                        $scope.cart = cart;
+                        animateToolTipCart();
+                    });
+            }
+
+            function animateToolTipCart() {
                 clearInterval(Helper.____closeTooTipCart);
-                    $('#toolTipCart').delay(500).slideDown(function () {
-                        $('#toolTipCart tbody').stop().animate({
-                            scrollTop: 0 + 'px',
-                        }, 500, function () {
-                        Helper.____closeTooTipCart = setTimeout(function(){
+                $('#toolTipCart').delay(500).slideDown(function () {
+                    $('#toolTipCart tbody').stop().animate({
+                        scrollTop: 0 + 'px',
+                    }, 500, function () {
+                        Helper.____closeTooTipCart = setTimeout(function () {
                             $('#toolTipCart').stop().slideUp();
                         }, 8000)
                     });
                 });
             }
 
-            $scope.enterCart = function(){
+            $scope.enterCart = function () {
                 clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
                 $('#toolTipCart').stop().slideDown();
                 fixToolTipCartHeight();
             }
 
-            $scope.leaveCart = function(){
+            $scope.leaveCart = function () {
                 Helper.closeToolTipCart();
             }
 
-            function fixToolTipCartHeight(){
+            function fixToolTipCartHeight() {
                 var winHeight = $(window).height() - 200;
                 var prodsHeight = ($scope.cart.productsInCart.length * 104);
                 var heightToAsign = (Math.round(winHeight / 104) * 104);
-                if(winHeight < prodsHeight){
+                if (winHeight < prodsHeight) {
                     $("#toolTipCart tbody").css({
-                        "height" : heightToAsign + "px",
-                        "overflow-y" : "auto"
+                        "height": heightToAsign + "px",
+                        "overflow-y": "auto"
                     });
                 }
-                else{
+                else {
                     $("#toolTipCart tbody").css({
-                        "height" : prodsHeight + "px",
-                        "overflow-y" : "hidden"
+                        "height": prodsHeight + "px",
+                        "overflow-y": "hidden"
                     });
                 }
             }
@@ -123,33 +106,28 @@ define(['./module'], function (controllers) {
             /* END Cart section */
 
 
-
-
-
-
-
-
-
             /* User section */
 
-            $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
+            $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
 
 
-            $scope.setUser = function(){
-                $scope.loginUser = {  email: 'a@b.com',loginPassword: 'Itshak1', loginUser: 'avinu.itshak', }
+            $scope.setUser = function () {
+                $scope.loginUser = {email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}
             }
 
-            $scope.accountSection = function(){
+            $scope.accountSection = function () {
                 $state.go('myAccount');
             }
 
-            $scope.signOut = function(even){
+            $scope.signOut = function (even) {
 
-                even.stopPropagation();
+                if(even){
+                    even.stopPropagation();
+                }
                 $cookie.remove('lastlogin');
                 $rootScope.userCookie = undefined;
-                $scope.loginUser = {  email: '',loginPassword: '', loginUser: '', }
-                productsCartService.loadCartProducts().then(function(cart){
+                $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+                productsCartService.loadCartProducts().then(function (cart) {
                     $scope.cart = cart;
                     $scope.checkCart();
                 });
@@ -158,34 +136,36 @@ define(['./module'], function (controllers) {
             }
 
             $scope.miniTitleIn = function (miniTitleId) {
-                if($rootScope.userCookie){
+                if ($rootScope.userCookie) {
                     $("#" + miniTitleId).stop().delay(500).stop().fadeIn(300);
                 }
             }
 
             $scope.miniTitleOut = function (miniTitleId) {
-                if($rootScope.userCookie){
+                if ($rootScope.userCookie) {
                     $("#" + miniTitleId).stop().delay(500).stop().fadeOut(300);
                 }
             }
 
             $scope.login = function (miniTitleId) {
 
-                if($rootScope.userCookie){
+                if ($rootScope.userCookie) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();
                 var top = "5%";
-                if(windowsWidth < 480) {
+                if (windowsWidth < 480) {
                     top = "0";
                 }
-                else if(windowsWidth < 700) { top = "18%"; }
+                else if (windowsWidth < 700) {
+                    top = "18%";
+                }
 
                 $(".PopUp").fadeIn(100, function () {
-                    $(".PopUp > div:nth-child(1)").animate({ "top": top }, 600);
-                    $("body").css({ "left": "0px", })
+                    $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
+                    $("body").css({"left": "0px",})
                 });
 
             }
@@ -195,7 +175,7 @@ define(['./module'], function (controllers) {
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
                 }, 600, function () {
-                    $(".PopUp").fadeOut(100, function(){
+                    $(".PopUp").fadeOut(100, function () {
                         $("body").css("overflow-y", "scroll");
                     });
                 });
@@ -208,18 +188,10 @@ define(['./module'], function (controllers) {
             /* END User section */
 
 
-
-
-
-
-
-
-
-
             /* Application helper section */
 
-            $scope.redirect = function(path) {
-                if($scope.cart.productsInCart.length == 0 && path == '/shoppingCart'){
+            $scope.redirect = function (path) {
+                if ($scope.cart.productsInCart.length == 0 && path == '/shoppingCart') {
                     return;
                 }
                 $location.path(path);
@@ -231,11 +203,10 @@ define(['./module'], function (controllers) {
                 }, 1000)
             };
 
-            $scope.checkCart = function(){
+            $scope.checkCart = function () {
 
-                if($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0)
-                {
-                    switch($location.$$path) {
+                if ($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0) {
+                    switch ($location.$$path) {
                         case '/shoppingCart':
                             window.history.back();
                             break;
@@ -247,20 +218,26 @@ define(['./module'], function (controllers) {
                 }
             }
 
-            $scope.checkLogin = function(){
+            $scope.checkLogin = function () {
                 var user = $rootScope.userCookie;
-                if(!(user && user.response && user.response.userId != -1 && user.response.token)){
+                if (!(user && user.response && user.response.userId != -1 && user.response.token)) {
                     $state.go("default");
                 }
             }
 
+
+            var _____autoLogOut;
+            $scope.refreshTimeOut = function () {
+                if (orderService.userIsLogin()) {
+                    $timeout.cancel(_____autoLogOut);
+                    _____autoLogOut = $timeout(function () {
+                        $scope.signOut()
+                    }, $scope.config.userLoginTimeout == 0 ? (60 * 60000)
+                        : ($scope.config.userLoginTimeout * 60000));
+                }
+            }
+
             /* END Application helper section */
-
-
-
-
-
-
 
 
             $rootScope.$on('clearCartEvent', function (event, args) {
@@ -279,24 +256,21 @@ define(['./module'], function (controllers) {
 
                 Helper.UpdatePageFixed();
 
-                if($location.path().indexOf('/category') == -1)
+                if ($location.path().indexOf('/category') == -1)
                     $scope.closeSearchForce();
 
-                $timeout(function(){
-                    if($location.path() == '/') {
+                $timeout(function () {
+                    if ($location.path() == '/') {
                         if ($(".autoCompleteCover").width() < 100) {
                             $("nav .navLinks").css("display", "block");
                         }
                     }
-                    else{
-                        $("nav .navLinks").css("display" , "none");
+                    else {
+                        $("nav .navLinks").css("display", "none");
                     }
-                }, 1050)
-
+                }, 1050);
+                $scope.refreshTimeOut();
             });
-
-
-
 
 
             /*
@@ -320,30 +294,29 @@ define(['./module'], function (controllers) {
              });
              */
 
-            function onBreadcrumbHandler(){
-                var existsRoot = $rootScope.breadcrumb;
-                var newBreadcrumb = [];
-                for(var index = 0; index < existsRoot.length; index++){
-                    var existState = existsRoot[index];
-                    newBreadcrumb.push({
-                        name: $state.current.data.breadcrumbName,
-                        path: $location.$$path
-                    });
-                    if(existState.name == $state.current.data.breadcrumbName)
-                    {
-                        break;
-                    }
-                }
-                $rootScope.breadcrumb = newBreadcrumb;
-            }
-
+            //function onBreadcrumbHandler(){
+            //    var existsRoot = $rootScope.breadcrumb;
+            //    var newBreadcrumb = [];
+            //    for(var index = 0; index < existsRoot.length; index++){
+            //        var existState = existsRoot[index];
+            //        newBreadcrumb.push({
+            //            name: $state.current.data.breadcrumbName,
+            //            path: $location.$$path
+            //        });
+            //        if(existState.name == $state.current.data.breadcrumbName)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //    $rootScope.breadcrumb = newBreadcrumb;
+            //}
 
 
             Main.addAnimPlaceholderEventListener();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
             var mobile_section_moved = $("#mobile-section").width();
 
-            $scope.openMobileSection = function(){
+            $scope.openMobileSection = function () {
                 $("body").animate({
                     left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
                 }, 200);
