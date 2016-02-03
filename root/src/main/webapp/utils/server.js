@@ -9,8 +9,6 @@ var services_properties = []
 //var accountKey = "http://localhost:8080/account";
 //var serviceKey = "http://localhost:8080/service";
 //var wsdlPath = 'http://localhost:8080/accountservice';
-
-
 var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
 
 (function readTextFile(file)
@@ -26,20 +24,12 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
             if(rawFile.status === 200 || rawFile.status == 0)
             {
                 var fileText  = rawFile.responseText;
-                console.log('Extracted file: ' + file)
-                console.log("File: ");
-                console.log(fileText);
-                console.log("end of file");
-                console.log("");
-
                 fileText = fileText.split('');
-
                 var _param = '';
                 var _value = '';
                 var attr = true;
                 var arrayApi = [];
                 var invalidChars = '#';
-
                 fileText.forEach(function(a){
                     switch (a.charCodeAt(0))
                     {
@@ -90,13 +80,6 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
                     services_properties['account_soapservice_url_port'] + "/" +
                     services_properties['account_soapservice_url_suffix'];
 
-
-                console.log("catalogKey = " + catalogKey);
-                console.log("orderKey = " + orderKey);
-                console.log("accountKey = " + accountKey);
-                console.log("serviceKey = " + serviceKey);
-                console.log("wsdlPath = " + wsdlPath);
-
             }
         }
     }
@@ -109,9 +92,6 @@ var server = {
 
     fileReady: function(){
         var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
-        console.log("");
-        console.log(check);
-        console.log("");
         return check.indexOf('undefined') == -1;
     },
 

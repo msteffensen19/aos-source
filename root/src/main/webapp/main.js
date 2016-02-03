@@ -110,7 +110,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
                 });
             }
             else{
-                setTimeout(___load, 1000)
+                setTimeout(loadServerPropertiesBeforeRunTheApp, 1000)
             }
         }
         loadServerPropertiesBeforeRunTheApp();
