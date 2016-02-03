@@ -16,6 +16,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
+import com.advantage.common.enums.ProductStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -93,6 +94,8 @@ public class ProductService {
         product.setColors(getColorAttributes(dto.getColors(), product));
         product.setImages(getImageAttribute(dto.getImages(), product));
 
+        //set product status
+        product.setProductStatus(ProductStatus.ACTIVE.getStringCode());
         return new ProductResponseDto(true, product.getId(), "Product was created successful");
     }
 

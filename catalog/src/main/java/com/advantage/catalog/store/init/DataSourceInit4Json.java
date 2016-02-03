@@ -91,7 +91,6 @@ public class DataSourceInit4Json {
 
         //for categories-attributes show filter
         final List<Category> categories = categoryRepository.getAll();
-        //Assert.assertEqual(category_number, categories.size());
 
         final List<Attribute> attributesToShow = attributeRepository.getAll();
 
