@@ -19,8 +19,6 @@ define(['./module'], function (controllers) {
 
             s.categoryName = paramsToReturn.categoryName;
 
-            //$("nav .navLinks").css("display" , "none");
-
             Helper.forAllPage();
 
     }]);

@@ -19,7 +19,8 @@ define(['./module'], function (directives) {
                     e.bind('click', function(){
                         if(!ctrl.getInvalidItems() && !e.hasClass("sec-validate-invalid"))
                         {
-                            s.submit()
+                            ctrl.initializeStartingValues()
+                            s.submit();
                         }
                     });
                 }
@@ -38,6 +39,38 @@ define(['./module'], function (directives) {
                         this.id = id;
                     }
 
+                    s.startingValues = [];
+                    this.setStartingValue = function(id, value){
+                        s.startingValues["secInput_" + id] = {
+                            startingValue: value,
+                            changed: false,
+                        };
+                    }
+
+                    this.initializeStartingValues = function(){
+                        for(var key in s.startingValues){
+                            s.startingValues[key] = {
+                                startingValue: $("#" + key).val(),
+                                changed: false,
+                            };
+                        }
+                        return false;
+                    }
+
+                    this.getInputsWasChangedBoolean = function(){
+                        for(var key in s.startingValues){
+                            if(s.startingValues[key].changed){
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+
+                    this.updateStartingValueChanged = function(input){
+                        var obj = s.startingValues[input.attr("id")];
+                        s.startingValues[input.attr("id")].changed = obj.startingValue != input.val();
+                    }
+
                     this.invokeOutFunctionWhenSecValidateReady = function(outFunction){
                         var invalid = this.getInvalidItems();
                         outFunction({ invalid : invalid});
@@ -45,7 +78,10 @@ define(['./module'], function (directives) {
 
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
-                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : s.invalidItems.length });
+                        $rootScope.$emit('invaliditemslengthUpdate', {
+                            invalidItems : s.invalidItems.length,
+                            inputsWasChanged : this.getInputsWasChangedBoolean()
+                        });
                         return s.invalidItems.length  > 0;
                     }
 
@@ -108,7 +144,7 @@ define(['./module'], function (directives) {
                     }, 100)
                     $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
                         if (args.invalidItems != undefined) {
-                            if(args.invalidItems > 0){
+                            if(args.invalidItems > 0 || !args.inputsWasChanged){
                                 e.addClass("sec-validate-invalid")
                             }
                             else{
@@ -147,6 +183,7 @@ define(['./module'], function (directives) {
 
                     s.inputKeyup = function (id) {
                         var input = $('#secInput_' + id);
+                        ctrlFather.updateStartingValueChanged(input);
                         var invalid = checkValidInput(s.warnings, input, 'keyup');
                         if (invalid) {
                             ctrlFather.addInvalidField(id);
@@ -154,7 +191,10 @@ define(['./module'], function (directives) {
                         else {
                             ctrlFather.shiftInvalidField(id);
                         }
-                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrlFather.getInvalidItemsCount()});
+                        $rootScope.$emit('invaliditemslengthUpdate', {
+                            invalidItems : ctrlFather.getInvalidItemsCount(),
+                            inputsWasChanged : ctrlFather.getInputsWasChangedBoolean()
+                        });
                     }
 
                     s.inputFocus = function (id) {
@@ -197,7 +237,10 @@ define(['./module'], function (directives) {
                         else {
                             ctrlFather.shiftInvalidField(id);
                         }
-                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrlFather.getInvalidItemsCount()});
+                        $rootScope.$emit('invaliditemslengthUpdate', {
+                            invalidItems : ctrlFather.getInvalidItemsCount(),
+                            inputsWasChanged : ctrlFather.getInputsWasChangedBoolean(),
+                        });
                         input.siblings(".validate-info").hide(200);
                     }
 
@@ -377,7 +420,10 @@ define(['./module'], function (directives) {
                                             $(this).find(".validateInvalid").fadeIn();
                                         }
                                         ctrls[1].getInvalidItems();
-                                        $rootScope.$emit('invaliditemslengthUpdate', { invalidItems : ctrls[1].getInvalidItemsCount()});
+                                        $rootScope.$emit('invaliditemslengthUpdate', {
+                                            invalidItems : ctrls[1].getInvalidItemsCount(),
+                                            inputsWasChanged : ctrls[1].getInputsWasChangedBoolean(),
+                                        });
                                     });
                                 }
                             })
@@ -395,7 +441,7 @@ define(['./module'], function (directives) {
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
-                       // ctrls[1].setStartingValue(s.modelAttr, a.idAttr)
+                        ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
                     },
                     post: function(s){
                         if(s.modelAttr != '' && s.modelAttr != undefined){

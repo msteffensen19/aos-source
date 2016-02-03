@@ -59,9 +59,6 @@ define(['./module'], function (controllers) {
             var d = new Date();
             s.Date_Ordered = [ d.getDate(),(d.getMonth()+1), d.getFullYear()].join('/');
 
-
-            //$("nav .navLinks").css("display" , "none");
-
             Helper.forAllPage();
 
         }]);

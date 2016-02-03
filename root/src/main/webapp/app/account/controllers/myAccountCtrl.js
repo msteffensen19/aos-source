@@ -24,17 +24,15 @@ define(['./module'], function (controllers) {
 
             s.categoriesPromotions = [
                 { categoryName : 'Tablets', categoryValue : true, },
-                { categoryName : 'Laptops', categoryValue : false, },
-                { categoryName : 'Headphones', categoryValue : false, },
-                { categoryName : 'Speakers', categoryValue : false, },
-                { categoryName : 'Mice', categoryValue : false, },
+                { categoryName : 'Laptops', categoryValue : true, },
+                { categoryName : 'Headphones', categoryValue : true, },
+                { categoryName : 'Speakers', categoryValue : true, },
+                { categoryName : 'Mice', categoryValue : true, },
             ];
 
             s.allowOffersPromotionChanged = function(){
                 accountService.accountUpdate(s.accountDetails);
             }
-
-            //$("nav .navLinks").css("display" , "none");
 
             Helper.forAllPage();
 

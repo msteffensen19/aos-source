@@ -56,9 +56,6 @@ define(['./module'], function (controllers) {
                 s.accountDetails.countryName = country.name;
             }
 
-
-            //$("nav .navLinks").css("display" , "none");
-
             Helper.forAllPage();
 
         }]);
