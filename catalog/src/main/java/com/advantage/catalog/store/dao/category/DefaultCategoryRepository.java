@@ -99,6 +99,7 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
                 entityId);
         Query query = entityManager.createQuery(selectCategoryHql);
 
-        return (Category) query.getSingleResult();
+        Category category = (Category) query.getSingleResult();
+        return (category != null ? category : null);
     }
 }

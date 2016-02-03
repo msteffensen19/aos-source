@@ -67,9 +67,10 @@ public class ProductService {
         Category category = categoryService.getCategory(dto.getCategoryId());
 
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
-
+        //check if
+        if(!ProductStatus.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
         Product product = productRepository.create(dto.getProductName(), dto.getDescription(), dto.getPrice(),
-                dto.getImageUrl(), category);
+                dto.getImageUrl(), category, dto.getProductStatus());
 
         if (product == null) return new ProductResponseDto(false, -1, "Product wasn't created");
 

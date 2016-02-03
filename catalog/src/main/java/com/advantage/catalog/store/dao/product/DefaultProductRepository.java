@@ -20,6 +20,25 @@ import java.util.List;
 public class DefaultProductRepository extends AbstractRepository implements ProductRepository {
     private static final int MAX_NUM_OF_PRODUCTS = 100;
 
+    /**
+     * Create Product entity
+     *
+     * @param name            {@link String} product name
+     * @param description     {@link String} product description
+     * @param price           {@link Integer} product price
+     * @param imgUrl
+     * @param category        {@link Category} category which be related with product
+     * @param productStatus @return entity reference
+     */
+    @Override
+    public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
+        Product product = new Product(name, description, price, category,productStatus);
+        product.setManagedImageId(imgUrl);
+        entityManager.persist(product);
+
+        return product;
+    }
+
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category) {
         Product product = new Product(name, description, price, category);

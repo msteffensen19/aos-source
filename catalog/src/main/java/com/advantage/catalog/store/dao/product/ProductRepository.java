@@ -19,6 +19,9 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      * @return entity reference
      */
     @Transactional
+    Product create(String name, String description, double price, String imgUrl, Category category, String productStatus);
+
+    @Transactional
     Product create(String name, String description, double price, String imgUrl, Category category);
 
     /**
