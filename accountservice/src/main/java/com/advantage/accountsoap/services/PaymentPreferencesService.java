@@ -32,9 +32,16 @@ public class PaymentPreferencesService {
         if(!ValidationHelper.isValidMasterCreditCVVNumber(cvvNumber)) {
             return new PaymentPreferencesStatusResponse(false, "Invalid CVV number", -1);
         }
-        if(!ValidationHelper.isValidDate(expirationDate)) {
+
+        /* convert expiration date "MMYYYY" to date format "DD.MM.YYYY" and validate it.    */
+        StringBuilder sb = new StringBuilder("01.")
+                                .append(expirationDate.substring(0, 2))
+                                .append('.')
+                                .append(expirationDate.substring(2, 6));
+        if(!ValidationHelper.isValidDate(sb.toString())) {
             return new PaymentPreferencesStatusResponse(false, "Invalid expiration date format", -1);
         }
+
         PaymentPreferences preferences = paymentPreferencesRepository.createMasterCredit(cardNumber, expirationDate,
                 cvvNumber, customerName, accountId);
         if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "", -1);
