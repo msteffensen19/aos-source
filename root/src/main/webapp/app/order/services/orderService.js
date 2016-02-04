@@ -80,12 +80,10 @@ define(['./module'], function (services) {
                     },
                 }).
                 then(function (res){
-                    // {reason, orderNumber, code, success}
-                    //console.log(JSON.stringify(res.data))
-                    //console.log(res.data)
                     defer.resolve(res.data)
                 }, function (err){
-                    //console.log(err); defer.reject("probl.")
+                    //console.log(err);
+                    defer.reject("probl.")
                 })
                 return defer.promise;
             }

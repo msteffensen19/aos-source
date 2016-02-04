@@ -136,18 +136,18 @@ define(['./module'], function (services) {
 
                 accountUpdate : function(accountDetails){
                     var expectToReceive = {
-                            lastName:accountDetails.lastName,
-                            firstName:accountDetails.firstName,
-                            accountId:accountDetails.id,
-                            countryId:accountDetails.countryId,
-                            stateProvince:accountDetails.stateProvince,
-                            cityName:accountDetails.cityName,
-                            address:accountDetails.homeAddress,
-                            zipcode:accountDetails.zipcode,
-                            phoneNumber:accountDetails.mobilePhone,
-                            email: accountDetails.email,
-                            accountType: 20,
-                            allowOffersPromotion: accountDetails.allowOffersPromotion,
+                        lastName:accountDetails.lastName,
+                        firstName:accountDetails.firstName,
+                        accountId:accountDetails.id,
+                        countryId:accountDetails.countryId,
+                        stateProvince:accountDetails.stateProvince,
+                        cityName:accountDetails.cityName,
+                        address:accountDetails.homeAddress,
+                        zipcode:accountDetails.zipcode,
+                        phoneNumber:accountDetails.mobilePhone,
+                        email: accountDetails.email,
+                        accountType: 20,
+                        allowOffersPromotion: accountDetails.allowOffersPromotion,
                     }
                     var defer = $q.defer();
                     var params = server.account.accountUpdate();
@@ -161,8 +161,6 @@ define(['./module'], function (services) {
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
-
-
                 },
 
                 updateMasterCreditMethod : function(card){

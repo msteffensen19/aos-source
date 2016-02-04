@@ -261,7 +261,12 @@ var server = {
                 method: 'ChangePasswordRequest'
             }
         },
-
+        accountLogout : function(){
+            return {
+                path: wsdlPath,
+                method: 'AccountLogoutRequest',
+            }
+        }
     },
     service: {
 
