@@ -1,7 +1,7 @@
 <!--
 
 <div id="png">
-    <img src="../../css/images/mariaDesigns/cart/cart.png" alt="img" >
+    <img src="../../css/images/mariaDesigns/cart/Shopping_cart_empty%20(2).png" alt="img" >
 </div>
 -->
 
@@ -15,12 +15,11 @@
         </nav>
 
         <h3 class="roboto-regular center sticky fixedImportant" >
-            {{'SHOPPING_CART' | translate}} ({{cart.productsInCart.length}})
+            {{'SHOPPING_CART' | translate}} <span ng-show="cart.productsInCart.length > 0" >({{cart.productsInCart.length}})</span>
         </h3>
 
         <div id="shoppingCart">
-
-            <table>
+            <table ng-show="cart.productsInCart.length > 0" >
                 <thead>
                 <tr>
                     <th class="imgHeader">
@@ -106,6 +105,10 @@
                 </tr>
                 </tfoot>
             </table>
+            <div ng-hide="cart.productsInCart.length > 0" class="bigEmptyCart center">
+                <label class="roboto-bold"> {{ 'Your_shopping_cart_is_empty' | translate}} </label>
+                <a href="#/" class="a-button" translate="CONTINUE_SHOPPING"></a>
+            </div>
         </div>
 
 

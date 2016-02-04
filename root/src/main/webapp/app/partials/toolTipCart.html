@@ -1,5 +1,11 @@
-<div ng-show="cart.productsInCart.length > 0">
-    <table>
+<div>
+    <div ng-hide="cart.productsInCart.length > 0" class="emptyCart">
+        <label class="center items roboto-bold"> {{ 'ITEMS' | translate}}
+            <span class="roboto-regular">(0)</span>
+        </label>
+        <label class="center roboto-medium"> {{ 'Your_shopping_cart_is_empty' | translate}} </label>
+    </div>
+    <table ng-show="cart.productsInCart.length > 0">
         <tbody>
             <tr ng-repeat="product in cart.productsInCart track by $index" id="product{{product.id}}" data-ng-class="{ lastProduct : $last }">
                 <td>
@@ -37,6 +43,7 @@
                 </td>
             </tr>
         </tfoot>
+
     </table>
 </div>
 

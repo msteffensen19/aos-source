@@ -21,6 +21,7 @@ define([
     './icon-cart',
     './icon-home',
     './icon-x',
+    './virtualFooter'
 ],
 
 function() {});

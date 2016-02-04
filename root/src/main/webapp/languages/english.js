@@ -76,7 +76,7 @@ var english = {
     'ALREADY_HAVE_AN_ACCOUNT' : 'ALREADY HAVE AN ACCOUNT?',
     'Already_have_an_account' : 'Already have an account?',
     'Clear' : 'Clear',
-
+    'Your_shopping_cart_is_empty': 'Your shopping cart is empty',
 
 
     'User_Name_required' : 'User Name required!',
@@ -97,6 +97,7 @@ var english = {
     'CHECKOUT': 'CHECKOUT',
     'TOTAL': 'TOTAL',
     'Items': 'Items',
+    'ITEMS' : 'ITEMS',
     'Color' : 'Color:',
     'SHOPPING_CART' : 'SHOPPING CART',
     'PAYMENT_OPTIONS' : 'PAYMENT OPTIONS',
@@ -163,6 +164,7 @@ var english = {
     'CONNECTION_DETAILS' : 'CONNECTION DETAILS',
     'Change_Password' : 'Change Password',
     'SAVE': 'SAVE',
+    'CONTINUE_SHOPPING': 'CONTINUE SHOPPING'
 
 };
 

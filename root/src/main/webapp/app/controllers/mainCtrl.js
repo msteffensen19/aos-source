@@ -208,9 +208,6 @@ define(['./module'], function (controllers) {
 
                 if ($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0) {
                     switch ($location.$$path) {
-                        case '/shoppingCart':
-                            window.history.back();
-                            break;
                         case '/login':
                         case '/orderPayment':
                             $state.go("default");
