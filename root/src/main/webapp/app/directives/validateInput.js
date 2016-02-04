@@ -144,7 +144,7 @@ define(['./module'], function (directives) {
                     }, 100)
                     $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
                         if (args.invalidItems != undefined) {
-                            if(args.invalidItems > 0 || !args.inputsWasChanged){
+                            if(args.invalidItems > 0 /*|| !args.inputsWasChanged*/){
                                 e.addClass("sec-validate-invalid")
                             }
                             else{
@@ -327,7 +327,7 @@ define(['./module'], function (directives) {
                                             }
                                             break;
                                         case 'secMinLength':
-                                            var _invalid = input.val().length < warn.min && input.val() != '';
+                                            var _invalid = input.val().length < warn.min && (input.val()+"").length != 0;
                                             invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
                                             if (event == 'keyup') {
                                                 warn.show = _invalid;
@@ -353,7 +353,7 @@ define(['./module'], function (directives) {
                                             }
                                             break;
                                         case 'secPattern':
-                                            var _invalid = !(new RegExp(warn.regex).test(input.val()));
+                                            var _invalid = !(new RegExp(warn.regex).test(input.val())) && (input.val()+"").length != 0;
                                             invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
                                             if (event == 'keyup') {
                                                 warn.show = _invalid;

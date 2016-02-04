@@ -4,11 +4,11 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state',
 
-        function (s, resolveParams) {
+        function (s, resolveParams, $state) {
 
-            var pageState = resolveParams.pageState;
+            s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
 
             s.message = null;
@@ -29,9 +29,9 @@ define(['./module'], function (controllers) {
 
                 var productToAdd = angular.copy(s.product);
                 productToAdd.colors = [s.colorSelected];
-                if(pageState == 'edit'){
+                if(s.pageState == 'edit'){
                     s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity,resolveParams_selectedColor);
-                    resolveParams_selectedColor = s.colorSelected.code;
+                    $state.go('shoppingCart');
                 }
                 else {
                     s.$parent.addProduct(productToAdd, s.quantity);

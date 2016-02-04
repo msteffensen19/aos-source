@@ -111,6 +111,29 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
+                changeUserPassword : function(accountId, passwords){
+                    var defer = $q.defer();
+                    if(passwords.new == '' || passwords.old == '' || passwords.confirm_new == ''){
+                        defer.resolve({SUCCESS: 'true'});
+                    }
+                    else {
+                        var expectToReceive = {
+                            accountId : accountId,
+                            newPassword : passwords.new
+                        }
+                        var params = server.account.changePassword();
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                console.log(response);
+                                defer.reject("Request failed!");
+                            });
+                    }
+                    return defer.promise;
+                },
+
                 accountUpdate : function(accountDetails){
                     var expectToReceive = {
                             lastName:accountDetails.lastName,
@@ -152,9 +175,6 @@ define(['./module'], function (services) {
                         referenceId: "??????",
                     }
 
-                    l("updateMasterCreditMethod ")
-                    l(JSON.stringify(expectToReceive))
-
                     var defer = $q.defer();
                     var params = server.account.updateMasterCreditMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).
@@ -174,9 +194,7 @@ define(['./module'], function (services) {
                         safePayUsername:safePay.username,
                         referenceId: "???????"
                     }
-                    l("updateSafePayMethod")
-                    l(JSON.stringify(expectToReceive))
-
+                    
                     var defer = $q.defer();
                     var params = server.account.updateSafePayMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).

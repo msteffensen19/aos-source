@@ -34,7 +34,40 @@
                                            id-attr="email">
                                 </sec-input>
                                 <br/>
-                                <a class="link" translate="Change_Password"></a>
+                                <a class="link" translate="Change_Password" data-ng-click="slideToggle('changePassword')"></a>
+
+                                <div class="changePassword">
+
+                                    <sec-input sec-placeholder="{{'Old_Password' | translate}}"
+                                               sec-min-length="4"
+                                               sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
+                                               pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
+                                               input-type-attr="password"
+                                               model-attr="passwords.old"
+                                               no-red-star="true"
+                                               id-attr="oldPassword">
+                                    </sec-input>
+
+                                    <sec-input sec-placeholder="{{'New_Password' | translate}}"
+                                               sec-min-length="4"
+                                               sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
+                                               pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
+                                               input-type-attr="password"
+                                               model-attr="passwords.new"
+                                               no-red-star="true"
+                                               id-attr="newPassword">
+                                    </sec-input>
+
+                                    <sec-input sec-placeholder="{{'Confirm_New_password' | translate}}"
+                                               sec-compare-to="newPassword"
+                                               compare-to-name="{{'New_Password' | translate}}"
+                                               input-type-attr="password"
+                                               model-attr="passwords.confirm_new"
+                                               no-red-star="true"
+                                               id-attr="confirmOldPassword">
+                                    </sec-input>
+
+                                </div>
                             </div>
 
                             <div>

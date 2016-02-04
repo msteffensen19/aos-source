@@ -255,6 +255,12 @@ var server = {
                 method: 'UpdateSafePayMethodRequest'
             }
         },
+        changePassword : function(){
+            return {
+                path: wsdlPath,
+                method: 'ChangePasswordRequest'
+            }
+        },
 
     },
     service: {

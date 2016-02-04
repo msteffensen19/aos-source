@@ -18,10 +18,8 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
                 if(appConfiguration){
                     defer.resolve(appConfiguration);
-                    l("web")
                 }
                 else {
-                    l("server")
                     var params = server.service.getConfiguration();
                     mini_soap.post(params.path, params.method).
                     then(function (res) {
