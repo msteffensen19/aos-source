@@ -879,6 +879,149 @@
             "attributeValue": "HP"
           }
         ]
+      },
+      {
+        "productName": "Logitech X100 Speaker System - Wireless Speaker(s)",
+        "price": 49.99,
+        "description": "Pump up the volume and enjoy crystal-clear sound from this mobile speaker. This portable speaker is perfect for life on-the-go. Take it on the road or relax and listen at home because this mobile speaker goes everywhere. Simple, intuitive design lets you wirelessly connect and stream music from your Bluetooth-enabled device from up to 30' away. Easily manage phone calls and volume control from your mobile phone. Enjoy five hours of continuous play before you need to recharge. Recharge the built-in, lithium-ion battery with the convenience of the included micro-USB cable.",
+        "imageUrl": "4500",
+        "images": [
+          4500
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Grey",
+            "code": "808080"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.0 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Logitech"
+          }
+        ]
+      },
+      {
+        "productName": "HP Roar Mini Wireless Speaker",
+        "price": 44.99,
+        "description": "Attention-getting design, color, and sound - the HP Roar Mini Wireless Speaker. Exceptional size-defying audio while streaming music and calls from a distinctively compact speaker.",
+        "imageUrl": "4600",
+        "images": [
+          4600,
+          4601
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Red",
+            "code": "FF0000"
+          },
+          {
+            "inStock": 10,
+            "name": "Yellow",
+            "code": "FFFF00"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled or a 3.5 mm audio connector."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.55 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "Bose SoundLink Wireless Speaker",
+        "price": 129,
+        "description": "If music is your motivation, wait until you hear the SoundLink® Color Bluetooth speaker. It plays your favorite tunes from your favorite Bluetooth device-out loud in clear, full audio-just about anywhere you want to go. It's small, durable and simple to use. And it comes in a spectrum of colors to match almost any style.",
+        "imageUrl": "4700",
+        "images": [
+          4700,
+          4701,
+          4702,
+          4704
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Mint",
+            "code": "E0FFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Red",
+            "code": "FF0000"
+          },
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "Blue",
+            "code": "0000FF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled or a 3.5 mm audio connector."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.25 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Bose"
+          }
+        ]
       }
     ]
   },
@@ -886,7 +1029,7 @@
     "categoryId": 5,
     "categoryName": "MICE",
     "promotedProduct": {
-      "id": "24",
+      "id": "27",
       "staringPrice": "29.99",
       "promotionHeader": "The feel and navigation of this sleek mouse remains familiar and purposeful with three standard buttons and scroll wheel gently blended into the low profile.",
       "promotionSubHeader": "Advanced 2.4 GHz wireless connectivity gives you the power to roam up to 30ft (10m). Simply insert the tiny dongle receiver, turn mouse on, done."
