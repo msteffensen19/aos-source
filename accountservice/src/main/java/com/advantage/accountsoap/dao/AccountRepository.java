@@ -53,7 +53,5 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     Collection<PaymentPreferences> getPaymentPreferences(long accountId);
 
-    AccountStatusResponse addMasterCreditPaymentMethod(PaymentPreferencesDto preferences, long accountId);
-
     AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId);
 }
