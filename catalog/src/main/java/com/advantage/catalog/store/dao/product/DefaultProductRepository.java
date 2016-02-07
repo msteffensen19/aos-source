@@ -5,6 +5,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.JPAQueryHelper;
+import com.advantage.common.enums.ProductStatus;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
      */
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
+        //validate productStatus
+        if(!ProductStatus.contains(productStatus)) return null;
         Product product = new Product(name, description, price, category,productStatus);
         product.setManagedImageId(imgUrl);
         entityManager.persist(product);

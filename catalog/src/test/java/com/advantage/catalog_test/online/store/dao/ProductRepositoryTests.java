@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionDefinition;
@@ -29,10 +30,17 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     public static final String CATEGORY_NAME = "LAPTOPS";
     public static final String IMAGE_ID = "1234";
     public static final String PRODUCT_NAME = "LG G3";
+    public static final String PRODUCT_STATUS_BAD = "Test";
+    public static final String PRODUCT_STATUS_ACTIVE = "Active";
+    public static final String PRODUCT_STATUS_BLOCK = "Block";
+    public static final String PRODUCT_STATUS_OUT_OF_STOCK = "OutOfStock";
     public static final String PRODUCT_DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
     public static final double PRODUCT_PRICE = 400;
+    @Qualifier("categoryRepository")
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Qualifier("productRepository")
     @Autowired
     private ProductRepository productRepository;
 
@@ -98,4 +106,57 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
         categoryRepository.delete(category);
         transactionManager.commit(transactionStatusForDeletion);
     }
+
+    @Test
+    public void testProductStatus() throws IOException {
+
+        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
+        final Category category = categoryRepository.createCategory(CATEGORY_NAME, IMAGE_ID);
+
+        //test set productStatus BAD
+       // System.out.println("create product with productStatus BAD");
+        Product product = null;
+        //System.out.println("product is null. [product] "+product);
+        Assert.assertNull("Error! Expecting product null but got not null. [product] "+product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID,category,PRODUCT_STATUS_BAD)));
+
+        //test set productStatus empty string ""
+        //System.out.println("create product with productStatus string empty");
+        Assert.assertNull("Error! Expecting product null but got not null. [product] "+product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,"")));
+        //product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID,
+
+        //System.out.println("test, productStatus Active");
+        //product have productStatus Active(true)
+        Assert.assertNotNull("Error! Expecting true but got false. [productStatus] " + product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,PRODUCT_STATUS_ACTIVE)));
+
+
+        //System.out.println("test, productStatus Block");
+        //product have productStatus Block(true)
+        Assert.assertNotNull("Error! Expecting true but got false. [productStatus] " + product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,PRODUCT_STATUS_BLOCK)));
+
+       // System.out.println("test, productStatus OutOfStock");
+        //product have productStatus OutOfStock(true)
+        Assert.assertNotNull("Error! Expecting true but got false. [productStatus] " + product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,PRODUCT_STATUS_OUT_OF_STOCK)));
+
+
+
+
+
+
+
+        transactionManager.commit(transactionStatusForCreation);
+        System.out.println("transactionManager.commit(transactionStatusForCreation);");
+
+        final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
+
+        productRepository.delete(product);
+        System.out.println("productRepository.delete(product);");
+        categoryRepository.delete(category);
+        System.out.println("categoryRepository.delete(category);");
+        transactionManager.commit(transactionStatusForDeletion);
+
+
+    }
+
+
 }

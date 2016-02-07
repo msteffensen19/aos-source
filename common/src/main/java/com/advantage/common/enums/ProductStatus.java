@@ -38,7 +38,7 @@ public enum ProductStatus {
     public static boolean contains(String test) {
 
         for (ProductStatus a : ProductStatus.values()) {
-            if (a.name().equals(test)) {
+            if (a.getStringCode().equals(test)) {
                 return true;
             }
         }
