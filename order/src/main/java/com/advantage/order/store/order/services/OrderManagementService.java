@@ -160,7 +160,7 @@ public class OrderManagementService {
 
         //  Step #3: Do payment MasterCredit / SafePay
         boolean paymentSuccessful = true;
-        if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.MASTER_CREDIT.getStringCode())) {
+        if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.MASTER_CREDIT.getName())) {
             MasterCreditRequest masterCreditRequest = new MasterCreditRequest(
                     paymentInfo.getTransactionType(),
                     Long.valueOf(paymentInfo.getCardNumber()),
@@ -189,7 +189,7 @@ public class OrderManagementService {
                 purchaseResponse.setTrackingNumber(0L);
             }
         }
-        else if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.SAFE_PAY.getStringCode())) {
+        else if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.SAFE_PAY.getName())) {
             SafePayRequest safePayRequest = new SafePayRequest(
                     paymentInfo.getTransactionType(),
                     paymentInfo.getUsername(),
