@@ -3,14 +3,27 @@ package com.advantage.accountsoap.dao;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.common.dao.DefaultCRUDOperations;
 
-public interface PaymentPreferencesRepository extends DefaultCRUDOperations<PaymentPreferences> {
+import java.util.List;
+
+//public interface PaymentPreferencesRepository extends DefaultCRUDOperations<PaymentPreferences> {
+public interface PaymentPreferencesRepository {
+
+    List<PaymentPreferences> getPaymentPreferencesByUserId(long userId);
+
+    PaymentPreferences find(long userId, int paymentMethod);
+
+    void create(PaymentPreferences entity);
 
     PaymentPreferences createMasterCredit(String cardNumber, String expirationDate, String cvvNumber, String customerName, long accountId);
 
     PaymentPreferences createSafePay(String safePayUsername, long accountId);
 
     PaymentPreferences updateMasterCredit(String cardNumber, String expirationDate,
-                                          String cvvNumber, String customerName, long preferenceId);
+                                          String cvvNumber, String customerName, long userId);
 
-    PaymentPreferences updateSafePay(String safePayUsername, long preferenceId);
+    PaymentPreferences updateSafePay(String safePayUsername, long userId);
+
+    int delete(PaymentPreferences... entities);
+
+    PaymentPreferences delete(long userId, int paymentMethod);
 }

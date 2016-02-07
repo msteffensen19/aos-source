@@ -1,50 +1,89 @@
 package com.advantage.accountsoap.model;
 
-import com.advantage.accountsoap.dto.payment.PaymentMethodEnum;
+import com.advantage.common.enums.PaymentMethodEnum;
 
 import javax.persistence.*;
 
 @Entity
+@IdClass(PaymentPreferencesPK.class)
 @NamedQueries({
         @NamedQuery(
                 name = PaymentPreferences.QUERY_GET_ALL,
                 query = "SELECT p FROM PaymentPreferences p"
         )
+        , @NamedQuery(
+                name = PaymentPreferences.QUERY_GET_PAYMENT_PREFERENCES_BY_USER_ID,
+                query = "select p from PaymentPreferences p" +
+                        " where " + PaymentPreferences.FIELD_USER_ID + " = :" + PaymentPreferences.PARAM_USER_ID +
+                        " order by p.paymentMethod ASC"
+        )
+        , @NamedQuery(
+                name = PaymentPreferences.QUERY_GET_PAYMENT_PREFERENCES_BY_PK_COLUMNS,
+                query = "select p from PaymentPreferences p " +
+                        "where " + PaymentPreferences.FIELD_USER_ID + " = :" + PaymentPreferences.PARAM_USER_ID +
+                        " AND " + PaymentPreferences.FIELD_PAYMENT_METHOD + " = :" + PaymentPreferences.PARAM_PAYMENT_METHOD
+        )
 })
 public class PaymentPreferences {
     public static final String QUERY_GET_ALL = "query.getAll";
-    public static final String FIELD_ID = "id";
+    public static final String QUERY_GET_PAYMENT_PREFERENCES_BY_USER_ID = "query.getPaymentPreferencesByUserId";
+    public static final String QUERY_GET_PAYMENT_PREFERENCES_BY_PK_COLUMNS = "query.getPaymentPreferencesByPkColumns";
+
+    public static final String FIELD_USER_ID = "user_id";
+    public static final String FIELD_PAYMENT_METHOD = "payment_method";
+
+    public static final String PARAM_USER_ID = "PARAM_USER_ID";
+    public static final String PARAM_PAYMENT_METHOD = "PARAM_PRODUCT_ID";
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = FIELD_USER_ID)
+    private long userId;
+
+    @Id
+    @Column(name = FIELD_PAYMENT_METHOD)
     private int paymentMethod;
+
+    @Column(name="card_number", length = 20)
     private String cardNumber;
+
+    @Column(name="expiration_date", length = 6)
     private String expirationDate;
+
+    @Column(name="cvv_number", length = 3)
     private String cvvNumber;
+
+    @Column(name="customer_name", length = 50)
     private String customerName;
+
+    @Column(name="safe_pay_username", length = 50)
     private String safePayUsername;
-    @ManyToOne/*(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)*/
-    @JoinColumn(name = Account.FIELD_ID)
-    private Account account;
 
     public PaymentPreferences() {
     }
 
-    public PaymentPreferences(String cardNumber, String expirationDate, String cvvNumber, String customerName) {
-        this.paymentMethod = PaymentMethodEnum.MasterCredit.getPaymentTypeCode();
+    public PaymentPreferences(long userId, String cardNumber, String expirationDate, String cvvNumber, String customerName) {
+        this.userId = userId;
+        this.setPaymentMethod(PaymentMethodEnum.MASTER_CREDIT.getCode());
+
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvvNumber = cvvNumber;
         this.customerName = customerName;
     }
 
-    public PaymentPreferences(String safePayUsername) {
-        this.safePayUsername = safePayUsername;
-        this.paymentMethod = PaymentMethodEnum.SafePay.getPaymentTypeCode();
+    public PaymentPreferences(long userId, String safePayUsername) {
+        this.setUserId(userId);
+        this.setPaymentMethod(PaymentMethodEnum.SAFE_PAY.getCode());
+        this.setSafePayUsername(safePayUsername);
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getPaymentMethod() {
@@ -95,11 +134,4 @@ public class PaymentPreferences {
         this.customerName = customerName;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }
