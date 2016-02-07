@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface ShoppingCartRepository {
 
+    ShoppingCartResponse getShoppingCartResponse();
+
     /*  Retrieve all products of user's ShoppingCart    */
     @Transactional(readOnly = true)
     List<ShoppingCart> getShoppingCartProductsByUserId(long userId);
@@ -40,7 +42,7 @@ public interface ShoppingCartRepository {
 
     /*  Delete a specific product with specific color from user's ShoppingCart  */
     @Transactional
-    ShoppingCartResponse removeProductFromUserCart(long userId, Long productId, int color);
+    int removeProductFromUserCart(long userId, Long productId, int color);
 
     /*  Delete all products of user's ShoppingCart  */
     @Transactional

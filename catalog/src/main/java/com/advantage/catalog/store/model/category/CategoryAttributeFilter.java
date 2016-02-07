@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "category_attribute_filter")
+@Table(name = "category_attributes_filter")
 @IdClass(CategoryAttributeFilterPK.class)
 @NamedQueries({
         @NamedQuery(

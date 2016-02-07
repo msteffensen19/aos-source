@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.Query;
+import java.util.*;
 
 /**
  * Order services - Data Manager
@@ -31,10 +30,6 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     private ShoppingCartResponse shoppingCartResponse;
     private String failureMessage;
 
-    public ShoppingCartResponse getShoppingCartResponse() {
-        return this.shoppingCartResponse;
-    }
-
     public String getFailureMessage() {
         return this.failureMessage;
     }
@@ -46,6 +41,11 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
         return new ShoppingCartResponseDto()
                 .createCartProduct(productId, Constants.NOT_FOUND, -999999.99, 0, Constants.NOT_FOUND, false);
+    }
+
+    @Override
+    public ShoppingCartResponse getShoppingCartResponse() {
+        return this.shoppingCartResponse;
     }
 
     /** Get all {@link ShoppingCart} lines of specific <i>registered user</i> by {@code userId}.    */
@@ -146,35 +146,39 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     @Override
-    public ShoppingCartResponse removeProductFromUserCart(long userId, Long productId, int color) {
+    public int removeProductFromUserCart(long userId, Long productId, int color) {
 
-        /*
-        //  Verify userId belongs to a registered user by calling "Account Service"
-        //  REST API GET REQUEST using URI
-        if (!isRegisteredUserExists(userId)) {
-            return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-        }
-         */
+        ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
+        ArgumentValidationHelper.validateLongArgumentIsPositive(Long.valueOf(productId), "product id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color RGB decimal value");
 
-        ShoppingCart shoppingCart = null;
+        ShoppingCart shoppingCart = this.find(userId, productId, color);
+        int result = 0;
 
-        shoppingCart = this.find(userId, productId, color);
-
-        if (shoppingCart != null) {
-            entityManager.remove(shoppingCart);
-
-            shoppingCartResponse.setSuccess(true);
-            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY);
-            shoppingCartResponse.setId(productId);
-
+        if (shoppingCart == null) {
+            shoppingCartResponse = new ShoppingCartResponse(
+                    false,
+                    ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                    productId);
         } else {
-            shoppingCartResponse.setSuccess(false);
-            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART);
-            shoppingCartResponse.setId(productId);
+            final StringBuilder hql = new StringBuilder("DELETE FROM ")
+                    .append(ShoppingCart.class.getName())
+                    .append(" WHERE ")
+                    .append(ShoppingCart.FIELD_USER_ID).append("=").append(userId).append(" AND ")
+                    .append(ShoppingCart.FIELD_PRODUCT_ID).append("=").append(productId).append(" AND ")
+                    .append(ShoppingCart.FIELD_COLOR_ID).append("=").append(color);
+
+            Query query = entityManager.createQuery(hql.toString());
+
+            shoppingCartResponse = new ShoppingCartResponse(
+                    true,
+                    ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY,
+                    productId);
+
+            result = query.executeUpdate();
         }
 
-
-        return shoppingCartResponse;
+        return result;
     }
 
     /**
