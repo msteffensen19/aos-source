@@ -121,6 +121,11 @@ Helper.mobileSectionClose = function(){
     }, 200);
 }
 
+Helper.mobileSectionFixer = function(){
+    Helper.mobile_section_moved = $("#mobile-section").width();
+    this.mobileSectionClose();
+}
+
 
 var Main = Main || {};
 

@@ -133,6 +133,10 @@ define(['./module'], function (controllers) {
                         $scope.checkCart();
                     });
                     $(".mini-title").css("display", "none");
+                    $timeout(function(){
+                        Helper.mobileSectionFixer();
+                    }, 500)
+
                 });
             }
 
@@ -154,22 +158,37 @@ define(['./module'], function (controllers) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
-                $('#toolTipCart').css('display', 'none');
-                var windowsWidth = $(window).width();
-                var top = "5%";
-                if (windowsWidth < 480) {
-                    top = "0";
+                else{
+                    openLogin();
                 }
-                else if (windowsWidth < 700) {
-                    top = "18%";
-                }
-
-                $(".PopUp").fadeIn(100, function () {
-                    $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
-                    $("body").css({"left": "0px",})
-                });
-
             }
+
+            $scope.mobileLogin = function(){
+
+                if ($rootScope.userCookie) {
+                    $(".mobileTitle .mini-title").fadeToggle();
+                }
+                else{
+                    openLogin();
+                }
+            }
+
+            function openLogin(){
+               $('#toolTipCart').css('display', 'none');
+               var windowsWidth = $(window).width();
+               var top = "5%";
+               if (windowsWidth < 480) {
+                   top = "0";
+               }
+               else if (windowsWidth < 700) {
+                   top = "18%";
+               }
+
+               $(".PopUp").fadeIn(100, function () {
+                   $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
+                   Helper.mobileSectionClose();
+               });
+           }
 
             $(".PopUp, .closePopUpBtn").click(function (e) {
 
@@ -192,9 +211,8 @@ define(['./module'], function (controllers) {
             /* Application helper section */
 
             $scope.redirect = function (path) {
-                if ($scope.cart.productsInCart.length == 0 && path == '/shoppingCart') {
-                    return;
-                }
+
+                Helper.mobileSectionClose();
                 $location.path(path);
             };
 
@@ -312,10 +330,12 @@ define(['./module'], function (controllers) {
 
             Main.addAnimPlaceholderEventListener();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-            Helper.mobile_section_moved = $("#mobile-section").width();
+
+            setTimeout(function(){
+                Helper.mobileSectionFixer();
+            }, 100)
 
             $scope.openMobileSection = function () {
-
                 Helper.mobileSectionHandler();
             }
 

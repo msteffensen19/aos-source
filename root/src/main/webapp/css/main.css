@@ -82,7 +82,7 @@ div.mobile-btn-handler span{
 }
 
 #mobile-section ul {
-font-size: 0;
+    font-size: 0;
 }
 
 #mobile-section .img{
@@ -90,11 +90,27 @@ font-size: 0;
     background-color: white;
     opacity: 0.6;
     display: block;
+    text-align: center;
 }
 
 #mobile-section .img:hover{
     opacity: 1;
+}
 
+#mobile-section .hi-user{
+    font-size: 16px;
+    display: block;
+}
+
+.mobileTitle {
+    position: fixed;
+    left: 155px;
+    top: 54px;
+    z-index: 9999;
+}
+
+.pointer{
+    cursor: pointer;
 }
 /* end mobile button */
 
