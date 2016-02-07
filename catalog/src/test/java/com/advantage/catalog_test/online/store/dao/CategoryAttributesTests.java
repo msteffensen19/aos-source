@@ -4,9 +4,11 @@ package com.advantage.catalog_test.online.store.dao;
 
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.category.CategoryRepository;
+import com.advantage.catalog.store.dao.product.ProductRepository;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,6 +44,10 @@ public class CategoryAttributesTests extends GenericRepositoryTests{
     @Qualifier("attributeRepository")
     @Autowired
     private AttributeRepository attributeRepository;
+
+    @Qualifier("attributeRepository")
+    @Autowired
+    private ProductRepository productRepository;
 
     @Test
     public void testCategoriesFilled() throws IOException {
@@ -179,6 +185,88 @@ public class CategoryAttributesTests extends GenericRepositoryTests{
         //System.out.println("get categoryAttributeFilters number= "+categoryAttributeFilter.size());
         //System.out.println("Retrieved " + categoryAttributeFilter.size() + " categoryAttributeFilter from table");
         Assert.assertEquals("Error! Expecting " + CATEGORY_ATTRIBUTES_NUMBER + " categoryAttributesFilter, but got " + categoryAttributeFilter.size(), CATEGORY_ATTRIBUTES_NUMBER, categoryAttributeFilter.size());
+    }
+
+
+    @Test
+    public void testProductStatus() throws IOException {
+        final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        final TransactionStatus transactionForCreation = transactionManager.getTransaction(transactionDefinition);
+
+        //init categories
+        //System.out.println("creating 5 categories...");
+        Category category = null;
+        category = categoryRepository.createCategory("LAPTOPS", "1235");
+        category = categoryRepository.createCategory("HEADPHONES", "1234");
+        category = categoryRepository.createCategory("TABLETS", "1236");
+        category = categoryRepository.createCategory("SPEAKERS", "1237");
+        category = categoryRepository.createCategory("MICE", "1238");
+
+        transactionManager.commit(transactionForCreation);
+        //System.out.println("categories from categoryRepository: "+categoryRepository.getAll().size());
+
+        //init attributes
+        //System.out.println("adding 13 attributes to AttributeRepository");
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer"};
+
+        final TransactionStatus transactionForAttributes = transactionManager.getTransaction(transactionDefinition);
+
+        Attribute attribute =null;
+        for (String attrib : newAttributes) {
+            //System.out.println("attributeRepository.create(\'" + attrib + "\')");
+            attribute = attributeRepository.create(attrib);
+            //System.out.println(" finished attributeRepository.create(attrib)");
+        }
+
+        //System.out.println("commiting 13 attributes to AttributeRepository");
+        transactionManager.commit(transactionForAttributes);
+
+        //init categories-attributes show
+        //for categories-attributes show filter
+        //System.out.println("creating 65 categoryAttributeFilters");
+        final TransactionStatus transactionForCaf = transactionManager.getTransaction(transactionDefinition);
+        final List<Category> categories = categoryRepository.getAll();
+        final List<Attribute> attributesToShow = attributeRepository.getAll();
+
+        for (Category categorySelected : categories) {
+            for (Attribute attributeSelecteted : attributesToShow ) {
+                //CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
+                //session.persist(categoryAttributeFilter);
+                CategoryAttributeFilter categoryAttributeFilter = null;
+                categoryRepository.addCategoryAttributeFilter(new CategoryAttributeFilter(categorySelected.getCategoryId(), attributeSelecteted.getId(), true));
+            }
+        }
+        //System.out.println("commiting 65 categoryAttributeFilters");
+        transactionManager.commit(transactionForCaf);
+
+        //System.out.println("get categoryAttributeFilters");
+        final List<CategoryAttributeFilter> categoryAttributeFilter = categoryRepository.getAllCategoryAttributeFilter();
+        //System.out.println("get categoryAttributeFilters number= "+categoryAttributeFilter.size());
+        //System.out.println("Retrieved " + categoryAttributeFilter.size() + " categoryAttributeFilter from table");
+
+        List<Product> products = productRepository.getAll();
+        if(products.isEmpty() || (products.equals(null)))
+        {
+            System.out.println("product list is empty or null");
+        }
+        else
+        {
+            for (Product product: products ) {
+                //product not have productStatus (false)
+                System.out.println("test, productStatus is no empty");
+                Assert.assertFalse("Error! Expecting not empty enum productStatus(active, block outOfStock enum), but got empty. Current ("+product.getProductStatus()+")",product.getProductStatus().isEmpty());
+
+                System.out.println("test, productStatus is empty");
+                //product have productStatus not valid(false)
+                Assert.assertFalse("Error! Expecting false for not enum productStatus value(not these: active, block outOfStock enum). , but got true. productStatus(" + product.getProductStatus() + ")", product.getProductStatus().contains(product.getProductStatus()));
+
+                System.out.println("test, productStatus not valid");
+                //product have productStatus valid(true)
+                Assert.assertTrue("Error! Expecting true for enum productStatus value(active, block outOfStock enum). , but got false. productStatus(" + product.getProductStatus() + ")", product.getProductStatus().contains(product.getProductStatus()));
+
+            }
+
+        }
     }
 
 }
