@@ -925,7 +925,9 @@
         "imageUrl": "4600",
         "images": [
           4600,
-          4601
+          4601,
+          4602,
+          4603
         ],
         "colors": [
           {
@@ -937,6 +939,16 @@
             "inStock": 10,
             "name": "Yellow",
             "code": "FFFF00"
+          },
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
           }
         ],
         "attributes": [
