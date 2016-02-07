@@ -10,9 +10,7 @@ $(document).on({
         var mobile_section_moved = $("#mobile-section").width();
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
 
-        //$("#mobile-btn").click(function () {
-        //    Helper.mobileSectionHandler();
-        //});
+        //$("#mobile-btn").click(function () { Helper.mobileSectionHandler(); });
 
         // end Mobile section handler
 

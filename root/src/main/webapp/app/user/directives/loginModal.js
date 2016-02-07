@@ -67,7 +67,9 @@ define(['./module'], function (directives) {
                                 if($location.path() == '/register'){
                                     $location.path('/')
                                 }
-
+                                $timeout(function(){
+                                    Helper.mobileSectionFixer();
+                                }, 500)
                                 wellcome();
                             }
                             else {

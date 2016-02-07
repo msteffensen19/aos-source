@@ -26,27 +26,27 @@
 
 <login-modal></login-modal>
 <!-- mobile slider -->
-
+<span class="mobileTitle" >
+    <div class="mini-title">
+        <label class="option" translate="My_account" ng-click="accountSection()"></label>
+        <label class="option" translate="Sign_out" ng-click="signOut()"></label>
+    </div>
+</span>
 <aside id="mobile-section" >
     <ul>
-        <li>
-            <a class="img">
+        <li data-ng-click="redirect('/shoppingCart')">
+            <a class="img" >
                 <!--<div icon-cart ></div>-->
-                <img src="css/images/Cart.jpg" data-ng-click="openCart()" />
+                <img src="css/images/Cart.jpg" />
                 <span>{{cartProducts.length}}</span>
             </a>
         </li>
-        <li>
-            <a class="img center">
-                <!--ng-hide="!userCookie.response" -->
-                <span class="hi-user containMiniTitle block" >
-                   {{userCookie.name}}
-                    <div class="mini-title">
-                        <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
-                        <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
-                    </div>
+        <li class="pointer" data-ng-click="mobileLogin('loginMiniTitle')">
+            <a class="img center" >
+                <img src="css/images/User.jpg" />
+                <span data-ng-show="userCookie.response" class="hi-user" >
+                    {{userCookie.name}}
                 </span>
-                <img ng-click="login()" src="css/images/User.jpg" />
             </a>
         </li>
         <li>
