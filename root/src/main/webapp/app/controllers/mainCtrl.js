@@ -312,12 +312,11 @@ define(['./module'], function (controllers) {
 
             Main.addAnimPlaceholderEventListener();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-            var mobile_section_moved = $("#mobile-section").width();
+            Helper.mobile_section_moved = $("#mobile-section").width();
 
             $scope.openMobileSection = function () {
-                $("body").animate({
-                    left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
-                }, 200);
+
+                Helper.mobileSectionHandler();
             }
 
         }]);

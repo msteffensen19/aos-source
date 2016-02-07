@@ -408,56 +408,7 @@ label.shop_now:after{
     }
 }
 
-
-@media screen and (max-width: 780px) {
-
-   /*
-
-    .container .bigSection{
-        width: 100%;
-    }
-
-    .container .smollSection{
-        width: 100%;
-    }
-    #div-special-offer h1{
-        font-size: 30px;
-    }
-    #div-special-offer p{
-        padding: 9px 0 0px 0;
-    }
-
-
-    .slider-length div:nth-child(2) .container h2{
-        margin-top: 2%;
-    }
-
-    .slider .container button{
-        padding: 10px 20px;
-        font-size: 24px;
-    }
-
-*/
-
-}
-
-
 @media screen and (max-width: 768px) {
-
-    /*    .rowSection > div {
-            display: block;
-            width: 100%;
-        }
-        .rowSection > div div {
-            display: block;
-            width: 100%;
-        }
-        .rowSection > div.emptyCell
-        {
-            display: none;
-        }
-    */
-
 
     /* end five images */
     .container {
@@ -546,8 +497,6 @@ label.shop_now:after{
     }
 
 
-
-
     .grid-table > div {
         width: 100%;
     }
@@ -559,60 +508,53 @@ label.shop_now:after{
     }
 
 
-    footer > div{
-    width: 300px;
-    }
-
-    footer img{
-        width: 80px;
-    }
 
 }
 
 
 @media screen and (max-width: 460px) {
 
-    #img-special-offer {
-        display: block;
-        width: 100%;
-    }
+    /*#img-special-offer {*/
+        /*display: block;*/
+        /*width: 100%;*/
+    /*}*/
 
-    #img-special-offer img {
-        margin: 10px 0;
-        width: 100%;
-    }
+    /*#img-special-offer img {*/
+        /*margin: 10px 0;*/
+        /*width: 100%;*/
+    /*}*/
 
-    #div-special-offer {
-        display: block;
-        width: 100%;
-        margin: 0 auto;
-        text-align: center;
-    }
+    /*#div-special-offer {*/
+        /*display: block;*/
+        /*width: 100%;*/
+        /*margin: 0 auto;*/
+        /*text-align: center;*/
+    /*}*/
 
-    #div-special-offer > div {
-        position: relative;
-        display: inline-block;
-        max-width: 277px;
-    }
+    /*#div-special-offer > div {*/
+        /*position: relative;*/
+        /*display: inline-block;*/
+        /*max-width: 277px;*/
+    /*}*/
 
-    #div-special-offer > div button {
-        margin: 10px auto;
-        display: block;
-    }
+    /*#div-special-offer > div button {*/
+        /*margin: 10px auto;*/
+        /*display: block;*/
+    /*}*/
 
 
-    .slider .container h2{
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 49%;
+    /*.slider .container h2{*/
+        /*font-size: 18px;*/
+        /*font-weight: bold;*/
+        /*margin-top: 49%;*/
 
-    }
+    /*}*/
 
-    .slider-length div:nth-child(2) .container h2{
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 47%;
-    }
+    /*.slider-length div:nth-child(2) .container h2{*/
+        /*font-size: 18px;*/
+        /*font-weight: bold;*/
+        /*margin-top: 47%;*/
+    /*}*/
 
 
 }

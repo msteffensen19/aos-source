@@ -58,10 +58,8 @@ body{
 /* start mobile button */
 
 div.mobile-btn-handler {
-    padding: 5px 0;
-    margin: 10px ;
-    border-radius: 4px;
-    border: solid 1px #ddd;
+    padding: 0 5px;
+    margin: 16px 10px;
     display: none;
 }
 
@@ -73,14 +71,13 @@ div.mobile-btn-handler span{
     display: block;
     width: 25px;
     height: 3px;
-    border-radius: 3px;
-    margin: 3px 10px;
-    background-color: #888;
+    margin: 5px 0;
+    background-color: #333;
 }
 
 #mobile-section{
     background-color: #e7e7e7;
-    position: absolute;
+    position: fixed;
     left: 9999px;
 }
 
@@ -263,7 +260,7 @@ footer{
 
 footer > div{
     padding: 10px 0;
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     text-align: center;
 }
@@ -302,13 +299,26 @@ footer .splitter{
 }
 
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
+
+    #special_offer_items, .slider, #popular_items{
+        display: none;
+    }
+    footer{
+        margin-top: 0;
+    }
+    footer > div{
+        width: 300px;
+    }
+
+    footer img{
+        width: 80px;
+    }
+
+
     #searchSection{
         display: none;
     }
-}
-
-@media screen and (max-width: 700px){
 
     #searchSection > .searchPopUp > div,
     #searchSection > .searchPopUp > div:nth-child(1)
@@ -322,16 +332,7 @@ footer .splitter{
         height: auto;
     }
 
-}
-
-
-@media screen and (max-width: 450px)
-{
     .desktop-handler{
-        display: none;
-    }
-
-    .mobile-btn-handler{
         display: none;
     }
 
@@ -351,3 +352,8 @@ footer .splitter{
 }
 
 
+
+
+/*@media screen and (max-width: 450px)*/
+/*{*/
+/*}*/

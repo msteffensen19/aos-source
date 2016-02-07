@@ -8,6 +8,7 @@ var stickyPossition = startPossition;
 
 var Helper = Helper || {};
 Helper.____closeTooTipCart;
+Helper.mobile_section_moved;
 
 Helper.forAllPage = function(){
     Helper.scrollPageUp();
@@ -101,32 +102,29 @@ Helper.checkPagePossitions = function(){
     }
 }
 
+Helper.mobileSectionHandler = function(){
+
+    $("body").animate({
+        left: $("body").css("left") != "0px" ? "0px" : Helper.mobile_section_moved
+    }, 200);
+    $("#mobile-section").animate({
+        left: $("#mobile-section").css("left") != "0px" ? "0px" : "-" + Helper.mobile_section_moved
+    }, 200);
+}
+
+Helper.mobileSectionClose = function(){
+    $("body").stop().animate({
+        left: "0px",
+    }, 200);
+    $("#mobile-section").stop().animate({
+        left: "-" + Helper.mobile_section_moved
+    }, 200);
+}
+
+
 var Main = Main || {};
 
 Main.addAnimPlaceholderEventListener = function(){
-/*
-    $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
-        //$(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-        $(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-        $(this).siblings(".validationInfo").fadeIn();
-    });
-
-    $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').blur(function(){
-        if($(this).val() == '') { $(this).siblings().not("img").not('.validationInfo').animate({'top': '11px'}, 800, $.bez([0.62,-0.14,0.35,1.34])); }
-        $(this).siblings(".validationInfo").delay(200).fadeOut();
-    });
-
-    $(".animPlaceholderUp label").click(function() {
-        $(this).parent().children().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-        $(this).prev('input').focus();
-        $(".animPlaceholderUp > .validationInfo").slideDown();
-    });
-
-*/
-//    $(".validationInfoImg").click(function() {
-  //      $(this).parent().find(".validationInfo").fadeToggle(500);
-    //});
-
 }
 
 
@@ -142,13 +140,14 @@ $(document).on({
 
         function  _scroll(){
             Helper.checkPagePossitions();
+            _resize();
         }
 
         _resize();
         function _resize() {
 
             $(".mini-title").css("display", "none");
-            $("body").css("left", "0px")
+            Helper.mobileSectionClose();
         }
 
     },
