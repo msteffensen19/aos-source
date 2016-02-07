@@ -26,18 +26,25 @@ public class PaymentPreferencesService {
     @Transactional
     public PaymentPreferencesStatusResponse addMasterCreditMethod(String cardNumber, String expirationDate,
                                                                   String cvvNumber, String customerName, long accountId) {
+
+        System.out.println("validate card number = " + cardNumber);
         if(!ValidationHelper.isValidMasterCreditCardNumber(cardNumber)) {
             return new PaymentPreferencesStatusResponse(false, "Invalid card number", -1);
         }
+
+        System.out.println("validate CVV number = " + cvvNumber);
         if(!ValidationHelper.isValidMasterCreditCVVNumber(cvvNumber)) {
             return new PaymentPreferencesStatusResponse(false, "Invalid CVV number", -1);
         }
 
         /* convert expiration date "MMYYYY" to date format "DD.MM.YYYY" and validate it.    */
+        System.out.println("validate ExpirationDate = \'" + expirationDate);
         StringBuilder sb = new StringBuilder("01.")
                                 .append(expirationDate.substring(0, 2))
                                 .append('.')
                                 .append(expirationDate.substring(2, 6));
+
+        System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
         if(!ValidationHelper.isValidDate(sb.toString())) {
             return new PaymentPreferencesStatusResponse(false, "Invalid expiration date format", -1);
         }
@@ -66,7 +73,15 @@ public class PaymentPreferencesService {
         if(!ValidationHelper.isValidMasterCreditCVVNumber(cvvNumber)) {
             return new PaymentPreferencesStatusResponse(false, "Invalid CVV number", -1);
         }
-        if(!ValidationHelper.isValidDate(expirationDate)) {
+
+        System.out.println("validate ExpirationDate = \'" + expirationDate);
+        StringBuilder sb = new StringBuilder("01.")
+                .append(expirationDate.substring(0, 2))
+                .append('.')
+                .append(expirationDate.substring(2, 6));
+
+        System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
+        if(!ValidationHelper.isValidDate(sb.toString())) {
             return new PaymentPreferencesStatusResponse(false, "Invalid expiration date format", -1);
         }
         PaymentPreferences preferences = paymentPreferencesRepository.updateMasterCredit(cardNumber, expirationDate,
