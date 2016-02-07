@@ -8,29 +8,36 @@ import java.util.List;
  * @author Binyamin Regev on 28/12/2015.
  */
 public enum PaymentMethodEnum {
-    MASTER_CREDIT("MasterCredit"),
-    SAFE_PAY("SafePay");
+    MASTER_CREDIT(20, "MasterCredit"),
+    SAFE_PAY(10, "SafePay");
 
-    private String stringCode;
+    private int code;
+    private String name;
 
-    PaymentMethodEnum(String stringCode) {
-        this.stringCode = stringCode;
+    PaymentMethodEnum(int code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
-    public String getStringCode() {
-        return this.stringCode;
+    public int getCode() {
+        return this.code;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     /**
-     * Return {@link List} of {@link String} with all {@code enum} values.
+     * Return {@link List} of {@link String} with all {@code enum} <i>names</i> values.
      *
-     * @return {@link List} of {@link String} with all {@code enum} values.
+     * @return {@link List} of {@link String} with all {@code enum} <i>names</i> values.
      */
     public static List<String> getAllNames() {
         List<String> values = new ArrayList<>();
 
         for (PaymentMethodEnum a : PaymentMethodEnum.values()) {
-            values.add(a.name());
+            //values.add(a.name());
+            values.add(a.getName());
         }
         return values;
     }
@@ -45,7 +52,7 @@ public enum PaymentMethodEnum {
     public static boolean contains(String test) {
 
         for (PaymentMethodEnum a : PaymentMethodEnum.values()) {
-            if (a.name().equals(test)) {
+            if (a.getName().equals(test)) {
                 return true;
             }
         }
