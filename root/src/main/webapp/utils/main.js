@@ -12,6 +12,36 @@ Helper.____closeTooTipCart;
 Helper.forAllPage = function(){
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
+    setTimeout(Helper.footerHandler(), 1000);
+}
+
+Helper.footerHandler = function() {
+
+    if ($("footer").height()) {
+
+        //$("#virtualFooter").height($(window).height() - $("#virtualFooter").offset().top + 80);
+        //var miss = $(window).height() - $("#virtualFooter").offset().top;
+        //
+        //l($(window).height());
+        //l($("#virtualFooter").offset().top);
+        //
+        //console.log("miss = " + miss);
+        //$("#virtualFooter").css("box-shadow", "0 0 0 10px red inset")
+        //
+        //if (miss > 0) {
+        //    $("footer").css({ "position": "fixed", 'background-color': '#FF0000' } )
+        //    $("#virtualFooter").height(
+        //        $("footer").height() + parseInt($("footer").css('margin-top').replace("px", "")));
+        //}
+        //else {
+        //    $("footer").css("position", "static")
+        //    $("footer").css({ 'background-color': '#d8d8d8' } )
+        //}
+
+    }
+    else {
+        //setTimeout(Helper.footerHandler, 200)
+    }
 }
 
 Helper.scrollPageUp = function(){

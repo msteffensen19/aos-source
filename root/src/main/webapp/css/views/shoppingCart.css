@@ -5,6 +5,7 @@
 
 .sticky.fixedImportant + #shoppingCart{
     margin-top:130px;
+    margin-bottom:130px;
 }
 
 #shoppingCart table{
@@ -268,6 +269,7 @@ padding: 30px;
     display: inline-block;
     font-size: 14px;
     padding: 13px 30px;
+    margin-bottom: 90px;
 }
 
 
@@ -330,7 +332,7 @@ padding: 30px;
     }
 
     #shoppingCart img {
-        width: 200px;
+        /*width: 200px;*/
         margin: 0 auto;
         display: block;
     }
