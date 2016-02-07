@@ -9,10 +9,7 @@ import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.ProductService;
-import com.advantage.common.dto.AttributeItem;
-import com.advantage.common.dto.CategoryDto;
-import com.advantage.common.dto.ProductDto;
-import com.advantage.common.dto.PromotedProductDto;
+import com.advantage.common.dto.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -89,24 +86,41 @@ public class DataSourceInit4Json {
             session.save(entry.getValue());
         }
 
-        //for categories-attributes show filter
-        final List<Category> categories = categoryRepository.getAll();
-        //Assert.assertEqual(category_number, categories.size());
+//        //for categories-attributes show filter
+//        final List<Category> categories = categoryRepository.getAll();
+//        //Assert.assertEqual(category_number, categories.size());
+//
+//        final List<Attribute> attributesToShow = attributeRepository.getAll();
+//
+//        for (Category category : categories) {
+//            for (Attribute attribute : attributesToShow ) {
+//                //CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
+//                //session.persist(categoryAttributeFilter);
+//                session.persist(new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true));
+//            }
+//        }
 
-        final List<Attribute> attributesToShow = attributeRepository.getAll();
-
-        for (Category category : categories) {
-            for (Attribute attribute : attributesToShow ) {
-                //CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
-                //session.persist(categoryAttributeFilter);
-                session.persist(new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true));
-            }
-        }
-
-        ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
+        //  Initialize "category_attributes_filter"
+        ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
         File json = filePath.getFile();
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
+
+        transaction = session.beginTransaction();
+
+        for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
+            session.persist(categoryAttributeFilter);
+        }
+
+        transaction.commit();
+
+        //  Initializr Category Products
+        filePath = new ClassPathResource("categoryProducts_4.json");
+        json = filePath.getFile();
+
+        objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         //Changed by Evgeney
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
@@ -143,6 +157,7 @@ public class DataSourceInit4Json {
                 productMap.put(product.getId(), product);
             }
 
+            //  Initialize Promoted products
             PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
             Long prodId = promotedProductDto.getId();
             Product product = productMap.get(prodId);

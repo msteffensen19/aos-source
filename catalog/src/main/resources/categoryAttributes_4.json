@@ -1,0 +1,67 @@
+[
+  {
+    "attributeId": 1,
+    "categoryId": 1,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 2,
+    "categoryId": 1,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 3,
+    "categoryId": 1,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 4,
+    "categoryId": 1,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 1,
+    "categoryId": 2,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 2,
+    "categoryId": 2,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 3,
+    "categoryId": 2,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 3,
+    "categoryId": 3,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 6,
+    "categoryId": 3,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 4,
+    "categoryId": 4,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 8,
+    "categoryId": 4,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 5,
+    "categoryId": 5,
+    "showInFilter": true
+  },
+  {
+    "attributeId": 10,
+    "categoryId": 5,
+    "showInFilter": true
+  }
+]
