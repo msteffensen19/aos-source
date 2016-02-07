@@ -229,9 +229,12 @@
         "productName": "HP ENVY x360 - 15t Laptop",
         "price": 699.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
-        "imageUrl": "1246",
+        "imageUrl": "1600",
         "images": [
-          1246
+          1600,
+          1601,
+          1602,
+          1603
         ],
         "colors": [
           {
