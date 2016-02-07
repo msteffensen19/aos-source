@@ -104,11 +104,11 @@ Helper.checkPagePossitions = function(){
 
 Helper.mobileSectionHandler = function(){
 
-    $("body").animate({
-        left: $("body").css("left") != "0px" ? "0px" : Helper.mobile_section_moved
+    $("body").stop().animate({
+        left: $("body").css("left") == "0px" ? Helper.mobile_section_moved : "0px"
     }, 200);
-    $("#mobile-section").animate({
-        left: $("#mobile-section").css("left") != "0px" ? "0px" : "-" + Helper.mobile_section_moved
+    $("#mobile-section").stop().animate({
+        left: $("#mobile-section").css("left") == "0px" ?  "-" + Helper.mobile_section_moved : "0px"
     }, 200);
 }
 
