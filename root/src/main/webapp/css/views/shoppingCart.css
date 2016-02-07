@@ -233,6 +233,45 @@
     cursor:pointer;
 }
 
+#shoppingCart > div.bigEmptyCart{
+padding: 30px;
+}
+
+#shoppingCart > div.bigEmptyCart label{
+    display: block;
+    width: 380px;
+    background-color: white;
+    font-size: 30px;
+    color: #2a2a2a;
+    padding: 20px 12px;
+    position: relative;
+    margin: 0 auto;
+}
+
+#shoppingCart > div.bigEmptyCart label:before{
+    content: "";
+    position: absolute;
+    top:36px;
+    left: -14px;
+    height: 3px;
+    background-color: #2a2a2a;
+    display: block;
+    width: 429px;
+    font-size: 30px;
+    color: #2a2a2a;
+    z-index: -1;
+}
+
+
+#shoppingCart > div.bigEmptyCart .a-button{
+    margin: 8px auto;
+    display: inline-block;
+    font-size: 14px;
+    padding: 13px 30px;
+}
+
+
+
 @media only screen and (max-width: 760px) {
 
     #shoppingCart table, #shoppingCart thead, #shoppingCart tbody,

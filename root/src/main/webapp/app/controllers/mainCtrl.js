@@ -124,15 +124,16 @@ define(['./module'], function (controllers) {
                 if(even){
                     even.stopPropagation();
                 }
-                $cookie.remove('lastlogin');
-                $rootScope.userCookie = undefined;
-                $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
-                productsCartService.loadCartProducts().then(function (cart) {
-                    $scope.cart = cart;
-                    $scope.checkCart();
+                userService.singOut().then(function(){
+                    $cookie.remove('lastlogin');
+                    $rootScope.userCookie = undefined;
+                    $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+                    productsCartService.loadCartProducts().then(function (cart) {
+                        $scope.cart = cart;
+                        $scope.checkCart();
+                    });
+                    $(".mini-title").css("display", "none");
                 });
-                $(".mini-title").css("display", "none");
-
             }
 
             $scope.miniTitleIn = function (miniTitleId) {
@@ -207,9 +208,6 @@ define(['./module'], function (controllers) {
 
                 if ($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0) {
                     switch ($location.$$path) {
-                        case '/shoppingCart':
-                            window.history.back();
-                            break;
                         case '/login':
                         case '/orderPayment':
                             $state.go("default");

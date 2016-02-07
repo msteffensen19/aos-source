@@ -16,6 +16,7 @@
 
 .validate-directive label.validateInvalid {
     color: #ff454f !important;
+    white-space: nowrap;
 }
 
 .validate-directive input {

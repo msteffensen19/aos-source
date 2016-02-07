@@ -6,6 +6,33 @@
     display: none;
     direction: ltr;
 }
+
+#toolTipCart .emptyCart{
+    border: solid 1px #d0d0d0;
+    background-color: white;
+    text-align: center;
+    width: 266px;
+    padding: 12px 0;
+}
+
+
+#toolTipCart .emptyCart > label{
+    display: block;
+    padding: 3px 0;
+    color: #2a2a2a;
+    font-size: 14px;
+}
+#toolTipCart .emptyCart > label.items{
+    font-size: 16px;
+}
+
+#toolTipCart .emptyCart > label span{
+    position: relative;
+    top: -2px;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
 #toolTipCart table{
     background-color: white;
     border: solid 1px #d0d0d0;

@@ -229,9 +229,12 @@
         "productName": "HP ENVY x360 - 15t Laptop",
         "price": 699.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
-        "imageUrl": "1246",
+        "imageUrl": "1600",
         "images": [
-          1246
+          1600,
+          1601,
+          1602,
+          1603
         ],
         "colors": [
           {
@@ -879,6 +882,161 @@
             "attributeValue": "HP"
           }
         ]
+      },
+      {
+        "productName": "Logitech X100 Speaker System - Wireless Speaker(s)",
+        "price": 49.99,
+        "description": "Pump up the volume and enjoy crystal-clear sound from this mobile speaker. This portable speaker is perfect for life on-the-go. Take it on the road or relax and listen at home because this mobile speaker goes everywhere. Simple, intuitive design lets you wirelessly connect and stream music from your Bluetooth-enabled device from up to 30' away. Easily manage phone calls and volume control from your mobile phone. Enjoy five hours of continuous play before you need to recharge. Recharge the built-in, lithium-ion battery with the convenience of the included micro-USB cable.",
+        "imageUrl": "4500",
+        "images": [
+          4500
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Grey",
+            "code": "808080"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled"
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.0 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Logitech"
+          }
+        ]
+      },
+      {
+        "productName": "HP Roar Mini Wireless Speaker",
+        "price": 44.99,
+        "description": "Attention-getting design, color, and sound - the HP Roar Mini Wireless Speaker. Exceptional size-defying audio while streaming music and calls from a distinctively compact speaker.",
+        "imageUrl": "4600",
+        "images": [
+          4600,
+          4601,
+          4602,
+          4603
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Red",
+            "code": "FF0000"
+          },
+          {
+            "inStock": 10,
+            "name": "Yellow",
+            "code": "FFFF00"
+          },
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled or a 3.5 mm audio connector."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.55 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          }
+        ]
+      },
+      {
+        "productName": "Bose SoundLink Wireless Speaker",
+        "price": 129,
+        "description": "If music is your motivation, wait until you hear the SoundLink® Color Bluetooth speaker. It plays your favorite tunes from your favorite Bluetooth device-out loud in clear, full audio-just about anywhere you want to go. It's small, durable and simple to use. And it comes in a spectrum of colors to match almost any style.",
+        "imageUrl": "4700",
+        "images": [
+          4700,
+          4701,
+          4702,
+          4704
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Mint",
+            "code": "E0FFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Red",
+            "code": "FF0000"
+          },
+          {
+            "inStock": 10,
+            "name": "White",
+            "code": "FFFFFF"
+          },
+          {
+            "inStock": 10,
+            "name": "Blue",
+            "code": "0000FF"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Wireless"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Any device that has bluetooth enabled or a 3.5 mm audio connector."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "1.25 lb"
+          },
+          {
+            "attributeName": "Wireless technology",
+            "attributeValue": "Bluetooh®"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Bose"
+          }
+        ]
       }
     ]
   },
@@ -886,7 +1044,7 @@
     "categoryId": 5,
     "categoryName": "MICE",
     "promotedProduct": {
-      "id": "24",
+      "id": "27",
       "staringPrice": "29.99",
       "promotionHeader": "The feel and navigation of this sleek mouse remains familiar and purposeful with three standard buttons and scroll wheel gently blended into the low profile.",
       "promotionSubHeader": "Advanced 2.4 GHz wireless connectivity gives you the power to roam up to 30ft (10m). Simply insert the tiny dongle receiver, turn mouse on, done."
@@ -928,6 +1086,10 @@
           {
             "attributeName": "Manufacturer",
             "attributeValue": "Kensington"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Ball"
           }
         ]
       },
@@ -975,6 +1137,10 @@
           {
             "attributeName": "Manufacturer",
             "attributeValue": "HP"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Whell"
           }
         ]
       },
@@ -1027,6 +1193,10 @@
           {
             "attributeName": "Manufacturer",
             "attributeValue": "HP"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Whell"
           }
         ]
       },
@@ -1048,7 +1218,7 @@
         "attributes": [
           {
             "attributeName": "CONNECTOR",
-            "attributeValue": "Cable"
+            "attributeValue": "USB Cord"
           },
           {
             "attributeName": "Sensor resolution",
@@ -1061,6 +1231,10 @@
           {
             "attributeName": "Manufacturer",
             "attributeValue": "HP"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Whell"
           }
         ]
       },
@@ -1108,6 +1282,164 @@
           {
             "attributeName": "Manufacturer",
             "attributeValue": "HP"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Whell"
+          }
+        ]
+      },
+      {
+        "productName": "Logitech G502 Proteus Core",
+        "price": 79.99,
+        "description": "MAKE IT YOURS!\nProteus Core perfectly tuned by you.\nProteus Core allows you to change the weight, balance, and enables you to adapt to wherever you choose to play. Customize it to the way you game and make it yours!\n\nPERSONALLY-TUNED PERFORMANCE\nAdapts to your environment\nFine tune the optical sensor in Proteus Core to your playing surface for better accuracy, precision and responsiveness. A quick tuning process, and you are battle ready.",
+        "imageUrl": "5600",
+        "images": [
+          5600
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "USB Cord"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N/A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Logitech"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Whell"
+          }
+        ]
+      },
+      {
+        "productName": "Kensington Orbit 72337 Trackball with Scroll Ring",
+        "price": 39.99,
+        "description": "All-day comfort and scrolling come together in the Kensington Orbit Trackball with Scroll Ring. The scroll ring allows you to fly through web pages and documents. And all while delivering comfort and space savings no mouse can match.",
+        "imageUrl": "5700",
+        "images": [
+          5700
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "USB Cord"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "N/A"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Trackball"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Kensington"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Scroll Ring"
+          }
+        ]
+      },
+      {
+        "productName": "HP Z8000 Bluetooth Mouse",
+        "price": 50.99,
+        "description": "The exquisite HP Z8000 Bluetooth Mouse is only 18mm (.7in) height, saves power with Bluetooth® Low Energy connectivity, and provides effortless capacitive touch control. The future is here.",
+        "imageUrl": "5800",
+        "images": [
+          5800,
+          5801,
+          5802
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Bluetooth®"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "1600 dpi"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "HP"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Touch Scroll"
+          }
+        ]
+      },
+      {
+        "productName": "Microsoft Sculpt Touch Mouse",
+        "price": 49.99,
+        "description": "Looking for a portable mouse that helps you get things done? Sculpt Touch Mouse saves time in long documents and works virtually anywhere, with no cables or transceivers to connect. And it's designed to fit comfortably in either hand.\nThe four-way touch scrolling pad on the Sculpt Touch Mouse lets you breeze up and down, left and right, and through windows and documents with just the swipe of your finger. While you scroll, you'll feel the nice surprise of tactile feedback. Sculpt Touch Mouse is also a powerful complement to Windows 8, navigating fluidly and intuitively around the Start Screen.\n",
+        "imageUrl": "5900",
+        "images": [
+          5900
+        ],
+        "colors": [
+          {
+            "inStock": 10,
+            "name": "Storm Gray",
+            "code": "697085"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Bluetooth®"
+          },
+          {
+            "attributeName": "Sensor resolution",
+            "attributeValue": "1000 dpi"
+          },
+          {
+            "attributeName": "Type",
+            "attributeValue": "Mouse"
+          },
+          {
+            "attributeName": "Manufacturer",
+            "attributeValue": "Microsoft"
+          },
+          {
+            "attributeName": "Scroller Type",
+            "attributeValue": "Touch Scroll"
           }
         ]
       }

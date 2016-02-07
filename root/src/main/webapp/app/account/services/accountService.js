@@ -111,20 +111,43 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
+                changeUserPassword : function(accountId, passwords){
+                    var defer = $q.defer();
+                    if(passwords.new == '' || passwords.old == '' || passwords.confirm_new == ''){
+                        defer.resolve({SUCCESS: 'true'});
+                    }
+                    else {
+                        var expectToReceive = {
+                            accountId : accountId,
+                            newPassword : passwords.new
+                        }
+                        var params = server.account.changePassword();
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                console.log(response);
+                                defer.reject("Request failed!");
+                            });
+                    }
+                    return defer.promise;
+                },
+
                 accountUpdate : function(accountDetails){
                     var expectToReceive = {
-                            lastName:accountDetails.lastName,
-                            firstName:accountDetails.firstName,
-                            accountId:accountDetails.id,
-                            countryId:accountDetails.countryId,
-                            stateProvince:accountDetails.stateProvince,
-                            cityName:accountDetails.cityName,
-                            address:accountDetails.homeAddress,
-                            zipcode:accountDetails.zipcode,
-                            phoneNumber:accountDetails.mobilePhone,
-                            email: accountDetails.email,
-                            accountType: 20,
-                            allowOffersPromotion: accountDetails.allowOffersPromotion,
+                        lastName:accountDetails.lastName,
+                        firstName:accountDetails.firstName,
+                        accountId:accountDetails.id,
+                        countryId:accountDetails.countryId,
+                        stateProvince:accountDetails.stateProvince,
+                        cityName:accountDetails.cityName,
+                        address:accountDetails.homeAddress,
+                        zipcode:accountDetails.zipcode,
+                        phoneNumber:accountDetails.mobilePhone,
+                        email: accountDetails.email,
+                        accountType: 20,
+                        allowOffersPromotion: accountDetails.allowOffersPromotion,
                     }
                     var defer = $q.defer();
                     var params = server.account.accountUpdate();
@@ -138,8 +161,6 @@ define(['./module'], function (services) {
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
-
-
                 },
 
                 updateMasterCreditMethod : function(card){
@@ -151,9 +172,6 @@ define(['./module'], function (services) {
                         customerName: card.name,
                         referenceId: "??????",
                     }
-
-                    l("updateMasterCreditMethod ")
-                    l(JSON.stringify(expectToReceive))
 
                     var defer = $q.defer();
                     var params = server.account.updateMasterCreditMethod();
@@ -174,9 +192,7 @@ define(['./module'], function (services) {
                         safePayUsername:safePay.username,
                         referenceId: "???????"
                     }
-                    l("updateSafePayMethod")
-                    l(JSON.stringify(expectToReceive))
-
+                    
                     var defer = $q.defer();
                     var params = server.account.updateSafePayMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).

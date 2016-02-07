@@ -7,9 +7,7 @@ define(['./module'], function(controllers){
     controllers.controller('shoppingCartCtrl', ['$scope', 'productsCartService',
         function(s, cartService){
 
-            s.checkCart();
             Helper.forAllPage();
-            //$("nav .navLinks").css("display" , "none");
 
             s.saveCart = function(){
                 cartService.saveCart(s.cart);

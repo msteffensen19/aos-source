@@ -12,7 +12,6 @@ define([],function(){
             controller: 'categoriesMobCtrl',
             data: {
                 requireLogin: false, beforeLoader: false,
-                //navLinks: true,
                 breadcrumbName: "Home Page",
             },
             resolve : {

@@ -62,21 +62,20 @@
 
 
 
-
 <!-- navegation -->
 
 <header ng-show="welcome" data-ng-cloak>
     <nav>
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" data-ng-click="redirect('/shoppingCart')" >
+                <a class="img" href="#/shoppingCart" >
                     <img src="css/images/Cart.jpg" alt="user">
                     <!--<div icon-cart></div>-->
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
                 <ul>
-                    <li style="position: relative; background-color: white" >
-                        <tool-tip-cart id="toolTipCart"></tool-tip-cart>
+                    <li style="position: relative; background-color: white">
+                        <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
                     </li>
                 </ul>
             </li>
@@ -124,9 +123,10 @@
 
 <div class="uiview" ui-view></div>
 
+<div virtual-footer></div>
+
 
 <script type="text/javascript" data-main="main" src="vendor/requirejs/require.js"></script>
-
 <input class="tempBtn" data-ng-click="setUser()" type="button" />
 <style>
     .tempBtn {

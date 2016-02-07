@@ -1,21 +1,3 @@
-<!--
-
-<section id="png">
-    <img src="../../css/images/product.png" />
-</section>
-
-<style>
-    #png{
-        top:-10px;
-    }
-</style>
-
-<nav class="pages">
-    <h1><a ng-repeat="link in breadcrumb" href="{{link.path}}">{{link.name}}{{link.path}}</a></h1>
-</nav>
-
--->
-
 
 <nav class="pages fixedImportant productImage" >
     <a translate="HOME" href="/#" ></a>
@@ -27,19 +9,19 @@
     <article class="max-width ">
 
         <!-- image section -->
-            <div id="product-image">
-                <figure>
-                    <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
-                </figure>
-                <div id="cover" ng-if="product.images.length > 1">
-                    <div id="length">
-                        <div class="imageAlias" data-ng-click="changeImage(img)" data-ng-repeat="img in product.images">
-                            <img alt="" data-ng-src="/catalog/fetchImage?image_id={{::img}}">
-                        </div>
+        <div id="product-image">
+            <figure>
+                <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
+            </figure>
+            <div id="cover" ng-if="product.images.length > 1">
+                <div id="length">
+                    <div class="imageAlias" data-ng-click="changeImage(img)" data-ng-repeat="img in product.images">
+                        <img alt="" data-ng-src="/catalog/fetchImage?image_id={{::img}}">
                     </div>
                 </div>
             </div>
-            <!-- end image section -->
+        </div>
+        <!-- end image section -->
 
 
 
@@ -65,7 +47,7 @@
             <e-sec-plus-minus num-attr="quantity"  ></e-sec-plus-minus>
             <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
             <br />
-            <button class="roboto-medium" translate="ADD_TO_CART"  ng-click="addToCart()"> </button>
+            <button class="roboto-medium" translate="ADD_TO_CART"  ng-click="addToCart()"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
         </div>
         <!-- end description section -->
 

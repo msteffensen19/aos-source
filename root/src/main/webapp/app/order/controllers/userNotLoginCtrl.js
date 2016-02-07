@@ -10,8 +10,6 @@ define(['./module'], function (controllers) {
 
             s.checkCart();
 
-            //$("nav .navLinks").css("display" , "none");
-
             Helper.forAllPage();
 
             s.orderPaymenLogin = {

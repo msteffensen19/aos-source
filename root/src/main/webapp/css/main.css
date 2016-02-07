@@ -52,6 +52,7 @@ body{
     position: relative;
     left: 0;
     overflow-x: hidden;
+    display: block;
 }
 
 /* start mobile button */
@@ -242,11 +243,51 @@ div.logo img{
 
 /* end scrolling page to top  */
 
-
-
 .cell{
     display: table-cell;
 }
+
+
+
+/* FOLLOW US ----- footer*/
+
+footer{
+    position: fixed;
+    left:0;
+    right: 0;
+    bottom: 0;
+    margin-top: 90px;
+    background-color: #F4F4F2;
+    font-size: 0;
+}
+
+footer > div{
+    padding: 10px 0;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+footer img{
+    margin: 17px 31px;
+}
+
+
+footer label{
+    font-size: 14px;
+    padding: 34px 0 0 0 ;
+    color: #6c6c6c;
+    display: block;
+}
+
+footer .splitter{
+    display: none;
+}
+
+
+/* end FOLLOW US */
+
+
 
 
 @media screen and (max-width: 950px)

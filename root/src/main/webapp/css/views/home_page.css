@@ -346,44 +346,6 @@ label.shop_now:after{
 
 
 
-/* FOLLOW US ----- footer*/
-
-footer{
-    margin-top: 90px;
-    background-color: #F4F4F2;
-    font-size: 0;
-}
-
-footer > div{
-    padding: 10px 0;
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
-}
-
-footer img{
-    margin: 17px 31px;
-}
-
-
-footer label{
-    font-size: 14px;
-    padding: 34px 0 0 0 ;
-    color: #6c6c6c;
-    display: block;
-}
-
-footer .splitter{
-    display: none;
-}
-
-
-/* end FOLLOW US */
-
-
-
-
-
 /*
 
   background-color: rgba(210, 0, 0, 0.1);
