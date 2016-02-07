@@ -265,7 +265,7 @@ div.logo img{
 /* FOLLOW US ----- footer*/
 
 footer{
-    position: static;
+    position: relative;
     left:0;
     right: 0;
     bottom: 0;
@@ -320,9 +320,7 @@ footer .splitter{
     #special_offer_items, .slider, #popular_items{
         display: none;
     }
-    footer{
-        margin-top: 0;
-    }
+
     footer > div{
         width: 300px;
     }

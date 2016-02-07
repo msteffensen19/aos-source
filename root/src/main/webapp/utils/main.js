@@ -119,6 +119,7 @@ Helper.mobileSectionClose = function(){
     $("#mobile-section").stop().animate({
         left: "-" + Helper.mobile_section_moved
     }, 200);
+    $(".mobileTitle .mini-title").fadeOut(300);
 }
 
 Helper.mobileSectionFixer = function(){
