@@ -66,13 +66,13 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCurrency(), "currency");
         ArgumentValidationHelper.validateDoubleArgumentIsPositive(totalAmount, "payment amount");
 
-        if (orderPaymentInformation.getPaymentMethod().equalsIgnoreCase(PaymentMethodEnum.MASTER_CREDIT.getStringCode())) {
+        if (orderPaymentInformation.getPaymentMethod().equalsIgnoreCase(PaymentMethodEnum.MASTER_CREDIT.getName())) {
             ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCardNumber(), "MasterCredit Card Number");
             ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getExpirationDate(), "MasterCredit card expiration date");
             ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCustomerName(), "MasterCredit customer name on card");
             ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCvvNumber(), "MasterCredit card CVV number");
         }
-        else if (orderPaymentInformation.getPaymentMethod().equalsIgnoreCase(PaymentMethodEnum.SAFE_PAY.getStringCode())) {
+        else if (orderPaymentInformation.getPaymentMethod().equalsIgnoreCase(PaymentMethodEnum.SAFE_PAY.getName())) {
             ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getUsername(), "SafePay Card Number");
         }
 
