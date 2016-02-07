@@ -154,7 +154,8 @@ public class ShoppingCartService {
                     1. Delete product with previous color, but save its quantity.
                     2. Add quantity of product with previous color to product with new color.
                  */
-                shoppingCartResponse = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+                int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+                shoppingCartResponse = shoppingCartRepository.getShoppingCartResponse();
                 if (shoppingCartResponse.isSuccess()) {
                     int totalQuantity = shoppingCart.getQuantity() + quantity;
                     shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
@@ -167,6 +168,7 @@ public class ShoppingCartService {
                     Unlikely to occur, but need to cover it:
                     Add a new product with the new color to user cart
                  */
+                shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
                 shoppingCartRepository.add(new ShoppingCart(userId, productId, newColor, quantity));
             }
         }
@@ -193,7 +195,8 @@ public class ShoppingCartService {
     @Transactional
     public ShoppingCartResponse removeProductFromUserCart(long userId, Long productId, String stringColor) {
         int color = ShoppingCart.convertHexColorToInt(stringColor);
-        return shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+        int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+        return shoppingCartRepository.getShoppingCartResponse();
     }
 
     /**
