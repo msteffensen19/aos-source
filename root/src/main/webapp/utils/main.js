@@ -17,7 +17,7 @@ Helper.forAllPage = function(){
 
 Helper.footerHandler = function() {
 
-    if ($("footer").height()) {
+    //if ($("footer").height()) {
 
         //$("#virtualFooter").height($(window).height() - $("#virtualFooter").offset().top + 80);
         //var miss = $(window).height() - $("#virtualFooter").offset().top;
@@ -38,10 +38,10 @@ Helper.footerHandler = function() {
         //    $("footer").css({ 'background-color': '#d8d8d8' } )
         //}
 
-    }
-    else {
+    //}
+    //else {
         //setTimeout(Helper.footerHandler, 200)
-    }
+    //}
 }
 
 Helper.scrollPageUp = function(){
