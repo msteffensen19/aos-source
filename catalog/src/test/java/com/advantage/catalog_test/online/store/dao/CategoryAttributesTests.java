@@ -4,21 +4,33 @@ package com.advantage.catalog_test.online.store.dao;
 
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.dao.category.CategoryRepository;
+import com.advantage.catalog.store.dao.product.ProductRepository;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.catalog.store.model.product.Product;
+import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
+import com.advantage.common.dto.AttributeItem;
+import com.advantage.common.dto.CategoryDto;
+import com.advantage.common.dto.ProductDto;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +54,8 @@ public class CategoryAttributesTests extends GenericRepositoryTests{
     @Qualifier("attributeRepository")
     @Autowired
     private AttributeRepository attributeRepository;
+
+
 
     @Test
     public void testCategoriesFilled() throws IOException {

@@ -3,6 +3,7 @@ package com.advantage.catalog.store.model.product;
 import javax.persistence.*;
 
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.common.enums.ProductStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
@@ -35,12 +36,12 @@ public class Product {
 
     public static final String FIELD_ID = "product_id";
     public static final String FIELD_CATEGORY_ID = "category.categoryId";
-
     public static final String PARAM_ID = "PARAM_PRODUCT_ID";
     public static final String PARAM_CATEGORY_ID = "PARAM_PRODUCT_CATEGORY_ID";
     public static final String PRODUCT_FILTER_BY_NAME = "product.FilterByName";
     public static final String GETFILTEREDPRODUCTS = "getfilteredproducts";
     public static final String PROCEDURE_PROD = "procedure_prod";
+    public static final String PRODUCT_STATUS = "product_status";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,26 +54,8 @@ public class Product {
     @Column(length = 2048)
     private String description;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Column(length = 10)
+    private String productStatus;
 
     @Column(name = "managed_image_id")
     private String managedImageId;
@@ -100,6 +83,7 @@ public class Product {
         this.productName = name;
         this.description = description;
         this.price = price;
+        this.productStatus= ProductStatus.ACTIVE.getStringCode();
     }
 
     public Product(String name, String description, double price, Category category) {
@@ -107,6 +91,15 @@ public class Product {
         this.description = description;
         this.price = price;
         this.category = category;
+        this.productStatus= ProductStatus.ACTIVE.getStringCode();
+    }
+
+    public Product(String name, String description, double price, Category category, String productStatus) {
+        this.productName = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.productStatus= ProductStatus.ACTIVE.getStringCode();
     }
 
     public Long getId() {
@@ -182,6 +175,10 @@ public class Product {
     public void setProductAttributes(Set<ProductAttributes> attributes) {
         this.productAttributes = attributes;
     }
+
+    public String getProductStatus() { return productStatus; }
+
+    public void setProductStatus(String productStatus) { this.productStatus = productStatus; }
 }
 
 

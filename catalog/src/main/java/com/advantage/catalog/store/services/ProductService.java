@@ -16,6 +16,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
+import com.advantage.common.enums.ProductStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -67,8 +68,9 @@ public class ProductService {
 
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
+        if(!ProductStatus.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
         Product product = productRepository.create(dto.getProductName(), dto.getDescription(), dto.getPrice(),
-                dto.getImageUrl(), category);
+                dto.getImageUrl(), category, dto.getProductStatus());
 
         if (product == null) return new ProductResponseDto(false, -1, "Product wasn't created");
 
@@ -93,6 +95,8 @@ public class ProductService {
         product.setColors(getColorAttributes(dto.getColors(), product));
         product.setImages(getImageAttribute(dto.getImages(), product));
 
+        //set product status
+        product.setProductStatus(ProductStatus.ACTIVE.getStringCode());
         return new ProductResponseDto(true, product.getId(), "Product was created successful");
     }
 
@@ -102,6 +106,7 @@ public class ProductService {
 
         if (product == null) return new ProductResponseDto(false, -1, "Product wasn't found");
 
+        if(!ProductStatus.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
         Category category = categoryService.getCategory(dto.getCategoryId());
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
@@ -110,6 +115,7 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setManagedImageId(dto.getImageUrl());
         product.setCategory(category);
+        product.setProductStatus(dto.getProductStatus());
 
         Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
         for (String s : dto.getImages()) {
