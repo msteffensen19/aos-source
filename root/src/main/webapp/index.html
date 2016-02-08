@@ -1,150 +1,3 @@
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="css/images/favicon.ico">
-    <meta name="viewport" content="width=device-width,  initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>&nbsp;Advantage Shopping</title>
-    &lt;!&ndash; build:css css/main.min.css &ndash;&gt;
-    <link href="css/main.css" rel="stylesheet">
-    &lt;!&ndash; endbuild &ndash;&gt;
-
-    &lt;!&ndash; HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries &ndash;&gt;
-    &lt;!&ndash;[if lt IE 9]>
-    &lt;!&ndash;
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]&ndash;&gt;
-
-</head>
-<body data-ng-controller="mainCtrl">
-
-
-<login-modal></login-modal>
-&lt;!&ndash; mobile slider &ndash;&gt;
-
-<aside id="mobile-section">
-    <ul>
-        <li>
-            <a class="img">
-                &lt;!&ndash;<div icon-cart ></div>&ndash;&gt;
-                <img src="css/images/Cart.jpg" data-ng-click="openCart()" />
-                <span>{{cartProducts.length}}</span>
-            </a>
-        </li>
-        <li>
-            <a class="img center">
-                &lt;!&ndash;ng-hide="!userCookie.response" &ndash;&gt;
-                <span class="hi-user containMiniTitle block" >
-                   {{userCookie.name}}
-                    <div class="mini-title">
-                        <label class="option" translate="PERSONAL_AREA" ng-click="accountSection()"></label>
-                        <label class="option" translate="SIGN_OUT" ng-click="signOut()"></label>
-                    </div>
-                </span>
-                <img ng-hide="userCookie.response" ng-click="login()" src="css/images/User.jpg" />
-            </a>
-        </li>
-        <li>
-            <a class="img"><img src="css/images/Search.jpg" /></a>
-        </li>
-    </ul>
-</aside>
-
-&lt;!&ndash; end mobile slider &ndash;&gt;
-
-
-
-
-
-
-&lt;!&ndash; navegation &ndash;&gt;
-
-<header ng-show="welcome" data-ng-cloak>
-    <nav>
-        <ul class="roboto-light desktop-handler">
-            <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" href="#/shoppingCart" >
-                    <img src="css/images/Cart.jpg" alt="user">
-                    &lt;!&ndash;<div icon-cart></div>&ndash;&gt;
-                    <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
-                </a>
-                <ul>
-                    <li style="position: relative; background-color: white">
-                        <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="img" data-ng-click="login('loginMiniTitle')"
-                   data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
-                   data-ng-mouseleave="miniTitleOut('loginMiniTitle')">
-                    <span data-ng-show="userCookie.response" class="hi-user containMiniTitle" >
-                        {{userCookie.name}}
-                    </span>
-                    <img src="css/images/User.jpg" alt="user">
-                    &lt;!&ndash;<div icon-user data-ng-class="{ selected : userCookie.response }" ></div>&ndash;&gt;
-                <div class="mini-title" id="loginMiniTitle" >
-                    <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
-                    <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
-                </div>
-                </a>
-            </li>
-            <li>
-                <a class="img">
-                    <tool-tip-search></tool-tip-search>
-                </a>
-            </li>
-            <li class="nav-li-Links">
-                <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
-            </li>
-            <li class="nav-li-Links">
-                <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
-            </li>
-            <li class="nav-li-Links">
-                <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
-            </li>
-
-        </ul>
-        <div class="logo">
-            <a href="#/" ng-click="go_up()"> <img src="css/images/logo.png" /></a>
-            <div id="mobile-btn" class="mobile-btn-handler" ng-click="openMobileSection()">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    </nav>
-</header>
-
-&lt;!&ndash; end navegation " ng-show="cartCount != 0 &ndash;&gt;
-
-<div class="uiview" ui-view></div>
-
-<div virtual-footer></div>
-
-
-<script type="text/javascript" data-main="main" src="vendor/requirejs/require.js"></script>
-<input class="tempBtn" data-ng-click="setUser()" type="button" />
-<style>
-    .tempBtn {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        border-radius: 0 100% 0 0;
-        height: 20px;
-        width: 20px;
-        background-color: rgba(237, 252, 255, 0.1);
-        border: solid 1px transparent;
-        cursor: none;
-    }
-</style>
-</body>
-</html>-->
-
 
 
 <!DOCTYPE html>
@@ -183,16 +36,16 @@
         <label class="option" translate="Sign_out" ng-click="signOut()"></label>
     </div>
 </span>
-<aside id="mobile-section" >
+<aside id="mobile-section" data-ng-cloak >
     <ul>
-        <li data-ng-click="redirect('/shoppingCart')">
+        <li data-ng-click="mobileRedirect('/shoppingCart')">
             <a class="img" >
                 <!--<div icon-cart ></div>-->
                 <img src="css/images/Cart.jpg" />
                 <span>{{cartProducts.length}}</span>
             </a>
         </li>
-        <li class="pointer" data-ng-click="mobileLogin('loginMiniTitle')">
+        <li class="pointer" data-ng-click="login('loginMiniTitle')">
             <a class="img center" >
                 <img src="css/images/User.jpg" />
                 <span data-ng-show="userCookie.response" class="hi-user" >
@@ -200,7 +53,7 @@
                 </span>
             </a>
         </li>
-        <li>
+        <li data-ng-click="mobileRedirect('/searchPage')">
             <a class="img"><img src="css/images/Search.jpg" /></a>
         </li>
     </ul>
@@ -247,7 +100,7 @@
             </li>
             <li>
                 <a class="img">
-                    <tool-tip-search></tool-tip-search>
+                    <search tool-tip-search></search>
                 </a>
             </li>
             <li class="nav-li-Links">
@@ -271,14 +124,6 @@
 </header>
 
 <!-- end navegation " ng-show="cartCount != 0 -->
-<div id="mobileSearch" data-ng-cloak>
-    <input type="text" class="roboto-medium" placeholder="{{ 'Search' | translate}}"
-           data-ng-keypress="checkEnterKey($event)"
-           data-ng-model="autoCompleteValue"
-           data-ng-keyup="runAutocomplete()"
-    >
-    <img src="css/images/Search.jpg" alt="search">
-</div>
 
 <div class="uiview" ui-view></div>
 

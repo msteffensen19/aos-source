@@ -431,7 +431,10 @@ div.mobile-btn-handler span{
 #mobile-section{
     background-color: #e7e7e7;
     position: fixed;
-    left: 9999px;
+    left: 0px;
+    z-index: -50;
+    top:0;
+    background-color: red;
 }
 
 #mobile-section ul {
@@ -474,6 +477,7 @@ header{
     background-color: white;
     width: 100%;
     z-index: 999;
+    top: 0;
 }
 
 nav{
@@ -653,7 +657,6 @@ footer .splitter{
 
 #mobileSearch{
     position: relative;
-    padding-top:65px;
     display: none;
 }
 
@@ -668,8 +671,9 @@ footer .splitter{
 
 #mobileSearch img {
     position: absolute;
-    top: 76px;
+    top: 11px;
     right: 10px;
+    cursor: pointer;
 }
 
 #mobileSearch ::-webkit-input-placeholder{
@@ -685,8 +689,17 @@ footer .splitter{
 }
 
 
+
+@media screen and (max-width: 1220px) {
+
+    #searchSection .searchPopUp > div .product{
+        padding: 24px 17px;
+        height: 166px;
+    }
+}
+
 @media screen and (max-width: 1050px)
-{
+    {
     .nav-li-Links{
         display: none;
     }
@@ -694,37 +707,18 @@ footer .splitter{
     footer > div{
         width: 100%;
     }
-    /*#searchSection{*/
-    /*width:  45%*/
-    /*}*/
-}
-
-
-@media screen and (max-width: 768px) {
-
-    /*#special_offer_items, .slider, #popular_items{*/
-    /*display: none;*/
-    /*}*/
-
-    /*footer > div{*/
-    /*width: 300px;*/
-    /*}*/
-
-    /*footer img{*/
-    /*width: 80px;*/
-    /*}*/
 
     #mobileSearch{
         display: block;
     }
 
-    .uiview {
-        padding-top: 0px;
-    }
-
     #searchSection{
         display: none;
     }
+}
+
+
+@media screen and (max-width: 768px) {
 
     #searchSection > .searchPopUp > div,
     #searchSection > .searchPopUp > div:nth-child(1)

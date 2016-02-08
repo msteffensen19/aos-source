@@ -90,29 +90,33 @@ define([],function(){
                 },
             }
         })
-        .state('product',{
-            url: '/product/:id?color&quantity&pageState',
-            templateUrl: 'app/views/product-page.html',
-            controller: 'productCtrl',
-            resolve : {
-                resolveParams: function(productService, categoryService, $stateParams, $q) {
-                    var defer = $q.defer();
-                    productService.getProductById($stateParams.id).then(function (product) {
-                        categoryService.getCategoryById(product.categoryId).then(function (category) {
-                            var paramsToReturn = {
-                                selectedColor: $stateParams.color,
-                                quantity: $stateParams.quantity,
-                                pageState: $stateParams.pageState,
-                                categoryName: category.categoryName,
-                                product: product,
-                            }
-                            defer.resolve(paramsToReturn)
+            .state('product',{
+                url: '/product/:id?color&quantity&pageState',
+                templateUrl: 'app/views/product-page.html',
+                controller: 'productCtrl',
+                resolve : {
+                    resolveParams: function(productService, categoryService, $stateParams, $q) {
+                        var defer = $q.defer();
+                        productService.getProductById($stateParams.id).then(function (product) {
+                            categoryService.getCategoryById(product.categoryId).then(function (category) {
+                                var paramsToReturn = {
+                                    selectedColor: $stateParams.color,
+                                    quantity: $stateParams.quantity,
+                                    pageState: $stateParams.pageState,
+                                    categoryName: category.categoryName,
+                                    product: product,
+                                }
+                                defer.resolve(paramsToReturn)
+                            });
                         });
-                    });
-                    return defer.promise;
+                        return defer.promise;
+                    }
                 }
-            }
-        }).
+            })
+            .state('searchPage',{
+                url: '/searchPage',
+                templateUrl: 'app/views/search-page.html',
+            }).
         state('404',{
             url: '/404',
             templateUrl: 'app/views/404.html',

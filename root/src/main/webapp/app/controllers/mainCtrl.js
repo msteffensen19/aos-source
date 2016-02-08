@@ -166,7 +166,7 @@ define(['./module'], function (controllers) {
 
                 $(".PopUp").fadeIn(100, function () {
                     $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
-                    $("body").css({"left": "0px",})
+                    $scope.closeMobileSection();
                 });
 
             }
@@ -191,10 +191,13 @@ define(['./module'], function (controllers) {
 
             /* Application helper section */
 
+
+            $scope.mobileRedirect = function (path) {
+                //$scope.openMobileSection();
+                $scope.redirect(path);
+            };
+
             $scope.redirect = function (path) {
-                if ($scope.cart.productsInCart.length == 0 && path == '/shoppingCart') {
-                    return;
-                }
                 $location.path(path);
             };
 
@@ -257,6 +260,10 @@ define(['./module'], function (controllers) {
                 if ($location.path().indexOf('/category') == -1)
                     $scope.closeSearchForce();
 
+
+
+
+
                 $timeout(function () {
                     if ($location.path() == '/') {
                         if ($(".autoCompleteCover").width() < 100) {
@@ -268,6 +275,8 @@ define(['./module'], function (controllers) {
                     }
                 }, 1050);
                 $scope.refreshTimeOut();
+                $scope.closeMobileSection();
+
             });
 
 
@@ -310,13 +319,30 @@ define(['./module'], function (controllers) {
             //}
 
 
-            Main.addAnimPlaceholderEventListener();
-            $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
             var mobile_section_moved = $("#mobile-section").width();
+
+            Main.addAnimPlaceholderEventListener();
+            setTimeout(function(){
+                $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+                mobile_section_moved = $("#mobile-section").width();
+                $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+            }, 100)
 
             $scope.openMobileSection = function () {
                 $("body").animate({
                     left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
+                }, 200);
+                $("#mobile-section").animate({
+                    left: $("body").css("left") == "0px" ? "0px" : "-" + mobile_section_moved
+                }, 200);
+            }
+
+            $scope.closeMobileSection = function () {
+                $("body").animate({
+                    left: "0px"
+                }, 200);
+                $("#mobile-section").animate({
+                    left: "-" + mobile_section_moved
                 }, 200);
             }
 
