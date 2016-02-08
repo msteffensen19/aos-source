@@ -100,6 +100,8 @@ public class ValidationHelper {
     public static boolean isValidDate(final String stringDate) {
         SimpleDateFormat dateFormat;
 
+        System.out.println("date to check: \'" + stringDate +"\'");
+
         if (Pattern.compile(AMERICAN_DATE_PATTERN).matcher(stringDate).matches()) {
             dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         } else if (Pattern.compile(EUROPEAN_DATE_PATTERN).matcher(stringDate).matches()) {
