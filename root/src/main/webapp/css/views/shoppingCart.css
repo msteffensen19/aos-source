@@ -401,7 +401,7 @@
 
 
     #shoppingCart tfoot .icons #paypal:after{
-    left:39px
+        left:39px
     }
 
     #shoppingCart tfoot .icons #discover:after{
@@ -418,3 +418,17 @@
     }
 
 }
+
+@media only screen and (max-width: 480px) {
+
+    #shoppingCart > div.bigEmptyCart label{
+        font-size: 21px;
+        padding: 20px 3px;
+        width: 165px;
+    }
+    #shoppingCart > div.bigEmptyCart label:before{
+        width: 199px;
+    }
+
+}
+
