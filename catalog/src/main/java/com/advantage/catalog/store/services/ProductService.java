@@ -106,6 +106,7 @@ public class ProductService {
 
         if (product == null) return new ProductResponseDto(false, -1, "Product wasn't found");
 
+        if(!ProductStatus.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
         Category category = categoryService.getCategory(dto.getCategoryId());
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
@@ -114,6 +115,7 @@ public class ProductService {
         product.setPrice(dto.getPrice());
         product.setManagedImageId(dto.getImageUrl());
         product.setCategory(category);
+        product.setProductStatus(dto.getProductStatus());
 
         Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
         for (String s : dto.getImages()) {

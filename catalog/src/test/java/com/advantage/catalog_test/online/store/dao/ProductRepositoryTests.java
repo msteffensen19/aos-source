@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import com.advantage.catalog.store.model.product.Product;
+import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog_test.cfg.AdvantageTestContextConfiguration;
+import com.advantage.common.dto.ProductDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +45,9 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     @Qualifier("productRepository")
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductService productService;
 
     @Test
     public void testGetCategoryProductsFetch() {
@@ -121,42 +126,89 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
         Assert.assertNull("Error! Expecting product null but got not null. [product] "+product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID,category,PRODUCT_STATUS_BAD)));
 
         //test set productStatus empty string ""
-        //System.out.println("create product with productStatus string empty");
+
         Assert.assertNull("Error! Expecting product null but got not null. [product] "+product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,"")));
         //product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID,
 
-        //System.out.println("test, productStatus Active");
+
         //product have productStatus Active(true)
         Assert.assertNotNull("Error! Expecting true but got false. [productStatus] " + product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,PRODUCT_STATUS_ACTIVE)));
-
-
-        //System.out.println("test, productStatus Block");
-        //product have productStatus Block(true)
-        Assert.assertNotNull("Error! Expecting true but got false. [productStatus] " + product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,PRODUCT_STATUS_BLOCK)));
-
-       // System.out.println("test, productStatus OutOfStock");
-        //product have productStatus OutOfStock(true)
-        Assert.assertNotNull("Error! Expecting true but got false. [productStatus] " + product, (product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category,PRODUCT_STATUS_OUT_OF_STOCK)));
-
-
-
-
-
-
-
         transactionManager.commit(transactionStatusForCreation);
-        System.out.println("transactionManager.commit(transactionStatusForCreation);");
 
+        final TransactionStatus transactionStatusForUpdate = transactionManager.getTransaction(transactionDefinition);
+
+        //product have productStatus Block(true)
+        ProductDto productDto=null;
+        productDto= productService.getDtoByEntity(product);
+        productDto.setProductStatus(PRODUCT_STATUS_BLOCK);
+
+        Assert.assertNotNull("Error! Expecting true but got false. [productStatusBLOCK] " + productDto.getProductStatus()+" "+ product.getProductStatus(),productService.updateProduct(productDto,product.getId()));
+        transactionManager.commit(transactionStatusForUpdate);
+
+        final TransactionStatus transactionStatusForUpdate2 = transactionManager.getTransaction(transactionDefinition);
+        //product have productStatus OutOfStock(true)
+          productDto= productService.getDtoByEntity(product);
+        productDto.setProductStatus(PRODUCT_STATUS_OUT_OF_STOCK);
+        Assert.assertNotNull("Error! Expecting true but got false. [productStatusOutOfStock] " + productDto.getProductStatus(), productService.updateProduct(productDto,product.getId()));
+        transactionManager.commit(transactionStatusForUpdate2);
+
+
+        /*String stringJson = "{ \"productId\": 1, \"categoryId\": 1, " +
+        "      \"productName\": \"HP Pavilion 15t Touch Laptop\"," +
+        "      \"price\": 519.99," +
+        "      \"description\": \"Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.\"," +
+        "      \"imageUrl\": \"1241\"," +
+        "      \"attributes\": [" +
+        "        {" +
+        "          \"attributeName\": \"DISPLAY\"," +
+        "          \"attributeValue\": \"15.6-inch diagonal HD WLED-backlit Display (1366x768) Touchscreen\"" +
+        "        }," +
+        "        {" +
+        "          \"attributeName\": \"MEMORY\"," +
+        "          \"attributeValue\": \"16GB DDR3 - 2 DIMM\"" +
+        "        }," +
+        "        {" +
+        "          \"attributeName\": \"PROCESSOR\"," +
+        "          \"attributeValue\": \"Intel(R) Core(TM) i5-6200U Dual CoreProcessor\"" +
+        "        }," +
+        "        {" +
+        "          \"attributeName\": \"OPERATING SYSTEM\"," +
+        "          \"attributeValue\": \"Windows 10\"" +
+        "        }," +
+        "        {" +
+        "          \"attributeName\": \"CUSTOMIZATION\"," +
+        "          \"attributeValue\": \"Gaming\" }" +
+        "      ]," +
+        "      \"colors\": [ {" +
+        "          \"code\": \"00FF00\"," +
+        "          \"name\": \"GREEN\"," +
+        "          \"inStock\": 10" +
+        "        }," +
+        "        {" +
+        "          \"code\": \"0000FF\"," +
+        "          \"name\": \"BLUE\"," +
+        "          \"inStock\": 10" +
+        "        }," +
+        "        {" +
+        "          \"code\": \"C0C0C0\",\n" +
+        "          \"name\": \"SILVER\",\n" +
+        "          \"inStock\": 10 }],\"images\": [\"1241\"],\"productStatus\": \"Active\"}";
+*/
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
 
-        productRepository.delete(product);
-        System.out.println("productRepository.delete(product);");
+
+        for (Product prod: productRepository.getAll()) {
+            productRepository.delete(prod);
+        }
+
         categoryRepository.delete(category);
         System.out.println("categoryRepository.delete(category);");
         transactionManager.commit(transactionStatusForDeletion);
 
 
+
     }
+
 
 
 }
