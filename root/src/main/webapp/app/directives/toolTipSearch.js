@@ -40,7 +40,7 @@ define(['./module'], function (directives) {
                 }
 
                 function checkCategoryPagePresent(){
-                    if($location.path().indexOf('/category') != -1){
+                    if($location.path().indexOf('/category') != -1 || $(window).width() < 770){
                         $state.go('category',{
                             id: (s.categoryFilter == null ? '' : s.categoryFilter),
                             viewAll: s.autoCompleteValue

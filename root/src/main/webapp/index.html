@@ -21,12 +21,14 @@
     <![endif]-->
 
 </head>
+
 <body data-ng-controller="mainCtrl">
 
 
 <login-modal></login-modal>
+
 <!-- mobile slider -->
-<span class="mobileTitle" >
+<span class="mobileTitle" data-ng-cloak>
     <div class="mini-title">
         <label class="option" translate="My_account" ng-click="accountSection()"></label>
         <label class="option" translate="Sign_out" ng-click="signOut()"></label>
@@ -120,6 +122,14 @@
 </header>
 
 <!-- end navegation " ng-show="cartCount != 0 -->
+<div id="mobileSearch" data-ng-cloak>
+    <input type="text" class="roboto-medium" placeholder="{{ 'Search' | translate}}"
+       data-ng-keypress="checkEnterKey($event)"
+       data-ng-model="autoCompleteValue"
+       data-ng-keyup="runAutocomplete()"
+    >
+    <img src="css/images/Search.jpg" alt="search">
+</div>
 
 <div class="uiview" ui-view></div>
 

@@ -366,7 +366,7 @@ label.shop_now:after{
     }
 
     .grid-table > div figure img{
-        width: 100%;
+        width: 65%;
     }
 
     .slider .container h2{
@@ -395,6 +395,92 @@ label.shop_now:after{
     footer > div {
         width: 100%;
     }
+
+
+
+    .shop_now{
+        font-size: 16px;
+        padding: 0 0 32px 18px;
+    }
+
+
+    .shop_nowSub{
+        bottom: 17px;
+        left: 18px;
+        font-size: 13px;
+    }
+
+
+
+    /* special offer */
+
+    #img-special-offer {
+        direction: rtl;
+        width: 31%;
+    }
+
+    #div-special-offer {
+        width: 35%;
+        color: #2a2a2a;
+    }
+
+    #div-special-offer span{
+        display: block;
+        font-size: 30px;
+    }
+
+    #div-special-offer > div{
+        font-size: 34px ;
+        top:-7%;
+        margin: 3% 5%;
+    }
+    #special_offer_items > div{
+        height: 190px;
+
+    }
+    .slider-length div:nth-child(2) .container h2{
+        margin-bottom: 11px;
+    }
+
+    #div-special-offer h1 {
+        font-size: 24px;
+    }
+
+    #div-special-offer p {
+        padding: 3px 0;
+    }
+
+    #div-special-offer button {
+        font-size: 14px;
+        padding: 10px;
+        margin: 16px 0;
+        height: 37px;
+        width: 133px;
+    }
+
+    .slider .container button{
+
+    }
+
+    /* end special offer */
+
+
+    .grid-table > div{
+        width: 31%;
+    }
+
+    .grid-table > div figure img{
+        width: 50%;
+    }
+
+    .grid-table > div p{
+        font-size: 12px;
+        height: 18px;
+    }
+    .grid-table .viewDetail{
+        font-size: 12px;
+    }
+
 }
 
 @media screen and (max-width: 900px) {
@@ -404,11 +490,29 @@ label.shop_now:after{
     }
     .slider .container h2{
         margin-top: 7%;
-        font-size: 37px;
+        font-size: 24px;
+        margin-bottom:18px;
+    }
+    .slider .container button{
+        padding: 8px 21px;
+        font-size: 14px;
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 960px) {
+
+    #div-special-offer span{
+        font-size: 24px;
+    }
+    #div-special-offer h1{
+        font-size: 22px;
+    }
+    #div-special-offer p{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
 
     /* end five images */
     .container {
@@ -507,54 +611,6 @@ label.shop_now:after{
         width: 80%;
     }
 
-
-
-}
-
-
-@media screen and (max-width: 460px) {
-
-    /*#img-special-offer {*/
-        /*display: block;*/
-        /*width: 100%;*/
-    /*}*/
-
-    /*#img-special-offer img {*/
-        /*margin: 10px 0;*/
-        /*width: 100%;*/
-    /*}*/
-
-    /*#div-special-offer {*/
-        /*display: block;*/
-        /*width: 100%;*/
-        /*margin: 0 auto;*/
-        /*text-align: center;*/
-    /*}*/
-
-    /*#div-special-offer > div {*/
-        /*position: relative;*/
-        /*display: inline-block;*/
-        /*max-width: 277px;*/
-    /*}*/
-
-    /*#div-special-offer > div button {*/
-        /*margin: 10px auto;*/
-        /*display: block;*/
-    /*}*/
-
-
-    /*.slider .container h2{*/
-        /*font-size: 18px;*/
-        /*font-weight: bold;*/
-        /*margin-top: 49%;*/
-
-    /*}*/
-
-    /*.slider-length div:nth-child(2) .container h2{*/
-        /*font-size: 18px;*/
-        /*font-weight: bold;*/
-        /*margin-top: 47%;*/
-    /*}*/
 
 
 }
