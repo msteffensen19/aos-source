@@ -13,6 +13,7 @@ public class Constants {
     public static final String FILE_PROPERTIES_GLOBAL = "classpath:/global.properties";
     public static final String FILE_PROPERTIES_DEMO_APP = "classpath:/DemoApp.properties";
     public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
+    public static final String FILE_CONFIG_DEMO_APP = "classpath:/DemoApp.config";
 
 
     public final static String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
