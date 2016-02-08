@@ -301,14 +301,49 @@ footer .splitter{
 /* end FOLLOW US */
 
 
+#mobileSearch{
+    position: relative;
+    padding-top:65px;
+    display: none;
+}
+
+#mobileSearch input {
+    width: 100%;
+    background-color: #ededed;
+    padding: 7px;
+    font-size: 18px;
+    border-bottom: none;
+    color: black;
+}
+
+#mobileSearch img {
+    position: absolute;
+    top: 76px;
+    right: 10px;
+}
+
+#mobileSearch ::-webkit-input-placeholder{
+    font-weight: 300;
+}
+
+#mobileSearch :-ms-input-placeholder{
+    font-weight: 300;
+}
+
+#mobileSearch :-moz-placeholder{
+    font-weight: 300;
+}
 
 
-@media screen and (max-width: 950px)
+@media screen and (max-width: 1050px)
 {
     .nav-li-Links{
         display: none;
     }
 
+    footer > div{
+        width: 100%;
+    }
     /*#searchSection{*/
         /*width:  45%*/
     /*}*/
@@ -317,18 +352,25 @@ footer .splitter{
 
 @media screen and (max-width: 768px) {
 
-    #special_offer_items, .slider, #popular_items{
-        display: none;
+    /*#special_offer_items, .slider, #popular_items{*/
+    /*display: none;*/
+    /*}*/
+
+    /*footer > div{*/
+    /*width: 300px;*/
+    /*}*/
+
+    /*footer img{*/
+    /*width: 80px;*/
+    /*}*/
+
+    #mobileSearch{
+        display: block;
     }
 
-    footer > div{
-        width: 300px;
+    .uiview {
+        padding-top: 0px;
     }
-
-    footer img{
-        width: 80px;
-    }
-
 
     #searchSection{
         display: none;
@@ -344,6 +386,46 @@ footer .splitter{
     #searchSection > .searchPopUp > div:nth-child(1)
     {
         height: auto;
+    }
+
+    /*.desktop-handler{*/
+        /*display: none;*/
+    /*}*/
+
+    /*div.logo img{*/
+        /*vertical-align: top;*/
+        /*padding: 10px 0;*/
+    /*}*/
+
+    /*div.mobile-btn-handler{*/
+        /*display: inline-block;*/
+    /*}*/
+
+    /*#searchSection > div {*/
+        /*width: 90%;*/
+    /*}*/
+
+}
+
+
+
+@media screen and (max-width: 480px) {
+
+
+    #special_offer_items, .slider, #popular_items{
+        display: none;
+    }
+
+    footer {
+        margin-top: 0px;
+    }
+
+    footer > div{
+        width: 300px;
+    }
+
+    footer img{
+        width: 80px;
     }
 
     .desktop-handler{

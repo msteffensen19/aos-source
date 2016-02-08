@@ -1,5 +1,7 @@
 package com.advantage.common.dto;
 
+import com.advantage.common.enums.ProductStatus;
+
 import java.util.*;
 
 public class ProductDto {
@@ -12,6 +14,7 @@ public class ProductDto {
     private List<AttributeItem> attributes;
     private List<ColorAttributeDto> colors;
     private List<String> images;
+    private String productStatus;
 
     public ProductDto() {
     }
@@ -34,6 +37,7 @@ public class ProductDto {
         this.attributes = attributes;
         this.colors = colors;
         this.images = images;
+        this.productStatus= ProductStatus.ACTIVE.getStringCode();
     }
 
     public List<String> getImages() {
@@ -107,4 +111,8 @@ public class ProductDto {
     public void setProductId(Long productId) {
         this.productId = productId;
     }
+
+    public String getProductStatus() { return productStatus; }
+
+    public void setProductStatus(String productStatus) { this.productStatus = productStatus; }
 }

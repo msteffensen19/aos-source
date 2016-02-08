@@ -5,34 +5,52 @@
     "categoryImageId": 1240,
     "promotedProduct": {
       "id": 3,
-      "staringPrice": 490,
-      "promotionHeader": "EXPLORE THE NEW DESIGN",
-      "promotionSubHeader": "Supremely thin, yet incredibly durable"
+      "staringPrice": 650,
+      "promotionHeader": "Eye-catching design",
+      "promotionSubHeader": "Stylish inside and out and with a new gradient-design around the keyboard, you'll be sure to make an impression wherever you take it."
     },
     "products": [
       {
         "productName": "HP Pavilion 15t Touch Laptop",
         "price": 519.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
-        "imageUrl": "1241",
+        "imageUrl": "1100",
         "images": [
-          1241
+          1100,
+          1101,
+          1102,
+          1103
         ],
         "colors": [
           {
             "inStock": 10,
-            "name": "Green",
-            "code": "00FF00"
+            "name": "Black",
+            "code": "000000"
           },
           {
             "inStock": 10,
-            "name": "BLUE",
-            "code": "0000FF"
+            "name": "Peachy Pink",
+            "code": "F74A75"
           },
           {
             "inStock": 10,
             "name": "SILVER",
             "code": "C0C0C0"
+          },
+          {
+            "inStock": 10,
+            "name": "Cobalt Blue",
+            "code": "142DBA"
+          },
+          {
+            "inStock": 10,
+            "name": "Sunset Red",
+            "code": "FA2020"
+          },
+          {
+            "inStock": 10,
+            "name": "Blizzard White",
+            "code": "EEEBEB"
           }
         ],
         "attributes": [
@@ -55,6 +73,22 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "16GB DDR3 - 2 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "15.6"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1366x768"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "Yes"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "-0 lb"
           }
         ]
       },
@@ -62,15 +96,48 @@
         "productName": "HP Pavilion 15z Laptop",
         "price": 549.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
-        "imageUrl": "1242",
+        "imageUrl": "1200",
         "images": [
-          1242
+          1200,
+          1201,
+          1202,
+          1203
         ],
         "colors": [
           {
-            "code": "000000",
-            "name": "black",
-            "inStock": 10
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Peachy Pink",
+            "code": "F74A75"
+          },
+          {
+            "inStock": 10,
+            "name": "SILVER",
+            "code": "C0C0C0"
+          },
+          {
+            "inStock": 10,
+            "name": "Cobalt Blue",
+            "code": "142DBA"
+          },
+          {
+            "inStock": 10,
+            "name": "Sunset Red",
+            "code": "FA2020"
+          },
+          {
+            "inStock": 10,
+            "name": "Blizzard White",
+            "code": "EEEBEB"
+          },
+          {
+            "inStock": 10,
+            "name": "Violet Purple",
+            "code": "A14AF7"
           }
         ],
         "attributes": [
@@ -93,22 +160,66 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "16GB DDR3 - 2 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "15.6"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1366x768"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "No"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "-0 lb"
           }
         ]
       },
       {
-        "productName": "HP ENVY - 15t Laptop",
-        "price": 549.99,
-        "description": "Designed for style and comfort",
-        "imageUrl": "1243",
+        "productName": "HP Pavilion 15z Touch Laptop",
+        "price": 449.99,
+        "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
+        "imageUrl": "1300",
         "images": [
-          1243
+          1300,
+          1301,
+          1302,
+          1303
         ],
         "colors": [
           {
-            "code": "FFFFFF",
-            "name": "white",
-            "inStock": 10
+            "inStock": 10,
+            "name": "Black",
+            "code": "000000"
+          },
+          {
+            "inStock": 10,
+            "name": "Peachy Pink",
+            "code": "F74A75"
+          },
+          {
+            "inStock": 10,
+            "name": "SILVER",
+            "code": "C0C0C0"
+          },
+          {
+            "inStock": 10,
+            "name": "Cobalt Blue",
+            "code": "142DBA"
+          },
+          {
+            "inStock": 10,
+            "name": "Sunset Red",
+            "code": "FA2020"
+          },
+          {
+            "inStock": 10,
+            "name": "Blizzard White",
+            "code": "EEEBEB"
           }
         ],
         "attributes": [
@@ -118,34 +229,53 @@
           },
           {
             "attributeName": "CUSTOMIZATION",
-            "attributeValue": "Gaming"
+            "attributeValue": "Simplicity"
           },
           {
             "attributeName": "PROCESSOR",
-            "attributeValue": "Intel(R) Core(TM) i7-5500U Dual Core Processor "
+            "attributeValue": "AMD Quad-Core A10-8700P Processor + AMD Radeon(TM) R6 Graphics"
           },
           {
             "attributeName": "DISPLAY",
-            "attributeValue": "15.6-inch diagonal QHD+ WLED-backlit UWVA Display (3200x1800)"
+            "attributeValue": "15.6-inch diagonal Full HD WLED-backlit Display (1920x1080) Touchscreen"
           },
           {
             "attributeName": "MEMORY",
             "attributeValue": "16GB DDR3 - 2 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "15.6"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1920x1080"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "Yes"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "5.51 lb"
           }
         ]
       },
       {
-        "productName": "HP Spectre x360 - 13-4101dx",
-        "price": 1169.99,
+        "productName": "HP Spectre x360 - 13-4102dx",
+        "price": 1399.99,
         "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
-        "imageUrl": "1244",
+        "imageUrl": "1400",
         "images": [
-          1244
+          1400,
+          1401,
+          1402,
+          1403
         ],
         "colors": [
           {
-            "code": "FFFFFF",
-            "name": "white",
+            "code": "C0C0C0",
+            "name": "Silver",
             "inStock": 10
           }
         ],
@@ -160,15 +290,31 @@
           },
           {
             "attributeName": "PROCESSOR",
-            "attributeValue": "Intel® Core™ i7-5500U with Intel HD Graphics 5500"
+            "attributeValue": "Intel® Core™ i7-5500U with Intel HD Graphics 5500 (2.4 GHz, 4 MB cache, 2 cores)"
           },
           {
             "attributeName": "DISPLAY",
-            "attributeValue": "13.3-diagonal FHD Radiance Infinity LED-backlit touch screen (1920 x 1080)"
+            "attributeValue": "13.3 inch diagonal QHD IPS Radiance Infinity LED-backlit touch screen (2560 x 1440)"
           },
           {
             "attributeName": "MEMORY",
-            "attributeValue": "8 GB DDR3L SDRAM"
+            "attributeValue": "8 GB DDR3L SDRAM (1 x 8 GB)"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "13.3"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "2560x1440"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "Yes"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "3.17 lb"
           }
         ]
       },
@@ -178,7 +324,9 @@
         "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
         "imageUrl": "1245",
         "images": [
-          1245
+          1245,
+          1501,
+          1502
         ],
         "colors": [
           {
@@ -188,18 +336,8 @@
           },
           {
             "inStock": 10,
-            "name": "Green",
-            "code": "00FF00"
-          },
-          {
-            "inStock": 10,
-            "name": "YELLOW",
-            "code": "FFFF00"
-          },
-          {
-            "inStock": 10,
-            "name": "SILVER",
-            "code": "C0C0C0"
+            "name": "Blue",
+            "code": "0000FF"
           }
         ],
         "attributes": [
@@ -222,6 +360,22 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "2 GB 1333 MHz DDR3 SDRAM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "11.6"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1366x768"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "No"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "2.6 lb"
           }
         ]
       },
@@ -240,11 +394,6 @@
           {
             "code": "C0C0C0",
             "name": "silver",
-            "inStock": 10
-          },
-          {
-            "code": "F0E68C",
-            "name": "khaki",
             "inStock": 10
           }
         ],
@@ -268,21 +417,40 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "8GB DDR3L - 1 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "15.6"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1920x1080"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "Yes"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "4.96 lb"
           }
         ]
       },
       {
         "productName": "HP ENVY - 17t Touch Laptop",
-        "price": 949.99,
+        "price": 849.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
-        "imageUrl": "1247",
+        "imageUrl": "1700",
         "images": [
-          1247
+          1700,
+          1701,
+          1702,
+          1703
         ],
         "colors": [
           {
-            "code": "000000",
-            "name": "black",
+            "code": "C0C0C0",
+            "name": "Silver",
             "inStock": 10
           }
         ],
@@ -306,44 +474,79 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "16GB DDR3 - 2 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "17.3"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1920x1080"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "Yes"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "7.25 lb"
           }
         ]
       },
       {
-        "productName": "HP ENVY - 17t Touch Laptop v2",
-        "price": 419.99,
-        "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
-        "imageUrl": "1248",
+        "productName": "HP ZBook 17 G2 Mobile Workstation",
+        "price": 1799,
+        "description": "On the go creativity knows no limits on a vivid 17.3 inch diagonal HP ZBook 17 G2. Showcase your best work in the office or on the go and take advantage of HP’s most powerful processing, graphics, simple scalability, and blazing-fast connectivity to perform and collaborate at the speed of creativity.",
+        "imageUrl": "1800",
         "images": [
-          1248
+          1800,
+          1801,
+          1802,
+          1803
         ],
         "colors": [
           {
-            "code": "0000A0",
-            "name": "blue",
+            "code": "000000",
+            "name": "Black",
             "inStock": 10
           }
         ],
         "attributes": [
           {
             "attributeName": "OPERATING SYSTEM",
-            "attributeValue": "Windows 10"
+            "attributeValue": "Windows 7 Professional 64"
           },
           {
             "attributeName": "CUSTOMIZATION",
-            "attributeValue": "Simplicity"
+            "attributeValue": "Business"
           },
           {
             "attributeName": "PROCESSOR",
-            "attributeValue": "Intel(R) Core(TM) i5-6200U Dual CoreProcessor"
+            "attributeValue": "Intel® Core™ i7-4710MQ with Intel HD Graphics 4600 (2.5 GHz, up to 3.5 GHz with Intel Turbo Boost Technology, 6 MB cache, 4 cores)"
           },
           {
             "attributeName": "DISPLAY",
-            "attributeValue": "15.6-inch diagonal HD WLED-backlit Display (1366x768)"
+            "attributeValue": "17.3 inch diagonal LED-backlit FHD WVA anti-glare (1920 x 1080)"
           },
           {
             "attributeName": "MEMORY",
-            "attributeValue": "8GB DDR3L - 1 DIMM"
+            "attributeValue": "8 GB 1600 MHz DDR3L SDRAM (2 x 4 GB)"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "17.3"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1920x1080"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "No"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "7.42 lb"
           }
         ]
       },
@@ -382,6 +585,22 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "16GB DDR3 - 2 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "14"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1366x768"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "No"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "-0 lb"
           }
         ]
       },
@@ -420,6 +639,89 @@
           {
             "attributeName": "MEMORY",
             "attributeValue": "16GB DDR3 - 2 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "14"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1600x900"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "No"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "-0 lb"
+          }
+        ]
+      },
+      {
+        "productName": "HP Pavilion x360 - 11t Touch Laptop",
+        "price": 319.99,
+        "description": "There’s no limit to what this value-packed convertible PC can do. Easily convert from notebook to stand to tent to tablet mode. It’s an app-loving, friend-connecting, 360°-bending machine.",
+        "imageUrl": "11100",
+        "images": [
+          11100,
+          11101,
+          11102,
+          11103
+        ],
+        "colors": [
+          {
+            "code": "C0C0C0",
+            "name": "silver",
+            "inStock": 10
+          },
+          {
+            "code": "A9F5A2",
+            "name": "Minty Green",
+            "inStock": 10
+          },
+          {
+            "code": "FA2020",
+            "name": "Sunset Red",
+            "inStock": 10
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "OPERATING SYSTEM",
+            "attributeValue": "Windows 10"
+          },
+          {
+            "attributeName": "CUSTOMIZATION",
+            "attributeValue": "Simplicity"
+          },
+          {
+            "attributeName": "PROCESSOR",
+            "attributeValue": "Intel(R) Celeron(R) N3050 Processor"
+          },
+          {
+            "attributeName": "DISPLAY",
+            "attributeValue": "11.6-inch diagonal HD WLED-backlit IPS Display (1366x768) Touchscreen"
+          },
+          {
+            "attributeName": "MEMORY",
+            "attributeValue": "8GB DDR3L - 1 DIMM"
+          },
+          {
+            "attributeName": "Display Size",
+            "attributeValue": "11.6"
+          },
+          {
+            "attributeName": "Display Resolution",
+            "attributeValue": "1366x768"
+          },
+          {
+            "attributeName": "Touchscreen",
+            "attributeValue": "Yes"
+          },
+          {
+            "attributeName": "Weight",
+            "attributeValue": "3.21 lb"
           }
         ]
       }
@@ -430,7 +732,7 @@
     "categoryName": "HEADPHONES",
     "categoryImageId": 1240,
     "promotedProduct": {
-      "id": 12,
+      "id": 13,
       "staringPrice": 200,
       "promotionHeader": "Be heard",
       "promotionSubHeader": "Never lose a call. The in-line microphone is subtly designed into the flat cord and includes simple controls for volume, mute, answer and cancel"
@@ -514,7 +816,7 @@
     "categoryId": 3,
     "categoryName": "TABLETS",
     "promotedProduct": {
-      "id": 15,
+      "id": 16,
       "staringPrice": 1429,
       "promotionHeader": "Built for durability and mobility",
       "promotionSubHeader": "Hit the road with a sleek tablet that’s just as durable as it is stylish. Pair it with the crisp keys and consistent force of the full-sized HP Premium Keyboard with a durable reflex hinge."
@@ -678,7 +980,7 @@
     "categoryId": 4,
     "categoryName": "SPEAKERS",
     "promotedProduct": {
-      "id": 18,
+      "id": 19,
       "staringPrice": 200,
       "promotionHeader": "Engineered for performance",
       "promotionSubHeader": "Combining an unique triangular shape and passive radiator design with sound shaping DSP (digital signal processor) and Smart Amp technologies, consistently resonating an enhanced audio performance."
@@ -1044,8 +1346,8 @@
     "categoryId": 5,
     "categoryName": "MICE",
     "promotedProduct": {
-      "id": "27",
-      "staringPrice": "29.99",
+      "id": 28,
+      "staringPrice": 29.99,
       "promotionHeader": "The feel and navigation of this sleek mouse remains familiar and purposeful with three standard buttons and scroll wheel gently blended into the low profile.",
       "promotionSubHeader": "Advanced 2.4 GHz wireless connectivity gives you the power to roam up to 30ft (10m). Simply insert the tiny dongle receiver, turn mouse on, done."
     },

@@ -71,7 +71,7 @@ public class DataSourceInit4Json {
 
         /*Attributes INIT*/
 
-        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type"};
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen"};
 
         Map<String, Attribute> defAttributes = new HashMap<>();
 
@@ -86,19 +86,8 @@ public class DataSourceInit4Json {
             session.save(entry.getValue());
         }
 
-//        //for categories-attributes show filter
-//        final List<Category> categories = categoryRepository.getAll();
-//        //Assert.assertEqual(category_number, categories.size());
-//
-//        final List<Attribute> attributesToShow = attributeRepository.getAll();
-//
-//        for (Category category : categories) {
-//            for (Attribute attribute : attributesToShow ) {
-//                //CategoryAttributeFilter categoryAttributeFilter = new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true);
-//                //session.persist(categoryAttributeFilter);
-//                session.persist(new CategoryAttributeFilter(category.getCategoryId(), attribute.getId(), true));
-//            }
-//        }
+        //for categories-attributes show filter
+        final List<Category> categories = categoryRepository.getAll();
 
         //  Initialize "category_attributes_filter"
         ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
