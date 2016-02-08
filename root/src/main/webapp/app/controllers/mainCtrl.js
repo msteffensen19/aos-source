@@ -37,7 +37,8 @@ define(['./module'], function (controllers) {
                 $scope.cart = cart;
             });
 
-            $scope.removeProduct = function (index) {
+            $scope.removeProduct = function (index, event) {
+                event.stopPropagation();
                 productsCartService.removeProduct(index).then(function (cart) {
                     $scope.cart = cart;
                     $scope.checkCart();
