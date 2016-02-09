@@ -6,7 +6,8 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-       "cardNumber",
+        "userId",
+        "cardNumber",
         "expirationDate",
         "cvvNumber",
         "customerName",
@@ -14,6 +15,8 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "UpdateMasterCreditMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class UpdateMasterCreditMethodRequest {
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private long userId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String cardNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -34,6 +37,23 @@ public class UpdateMasterCreditMethodRequest {
         this.cvvNumber = cvvNumber;
         this.customerName = customerName;
         this.referenceId = referenceId;
+    }
+
+    public UpdateMasterCreditMethodRequest(long userId, String cardNumber, String expirationDate, String cvvNumber, String customerName, long referenceId) {
+        this.userId = userId;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+        this.cvvNumber = cvvNumber;
+        this.customerName = customerName;
+        this.referenceId = referenceId;
+    }
+
+    public long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getCardNumber() {

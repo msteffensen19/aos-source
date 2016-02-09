@@ -6,12 +6,14 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "userId",
         "safePayUsername",
         "referenceId"
-
 })
 @XmlRootElement(name = "UpdateSafePayMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class UpdateSafePayMethodRequest {
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private long userId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String safePayUsername;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -23,6 +25,20 @@ public class UpdateSafePayMethodRequest {
     public UpdateSafePayMethodRequest(String safePayUsername, long referenceId) {
         this.safePayUsername = safePayUsername;
         this.referenceId = referenceId;
+    }
+
+    public UpdateSafePayMethodRequest(long userId, String safePayUsername, long referenceId) {
+        this.userId = userId;
+        this.safePayUsername = safePayUsername;
+        this.referenceId = referenceId;
+    }
+
+    public long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getSafePayUsername() {
