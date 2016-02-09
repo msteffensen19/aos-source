@@ -10,6 +10,8 @@ public interface PaymentPreferencesRepository {
 
     List<PaymentPreferences> getPaymentPreferencesByUserId(long userId);
 
+    PaymentPreferences get(long userId);
+
     PaymentPreferences find(long userId, int paymentMethod);
 
     void create(PaymentPreferences entity);
@@ -21,7 +23,7 @@ public interface PaymentPreferencesRepository {
     PaymentPreferences updateMasterCredit(String cardNumber, String expirationDate,
                                           String cvvNumber, String customerName, long userId);
 
-    PaymentPreferences updateSafePay(String safePayUsername, long userId);
+    PaymentPreferences updateSafePay(long userId, String safePayUsername);
 
     int delete(PaymentPreferences... entities);
 

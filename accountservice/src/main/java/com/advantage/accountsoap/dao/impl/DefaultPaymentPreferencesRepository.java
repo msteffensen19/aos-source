@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Component
@@ -20,6 +21,28 @@ import java.util.List;
 public class DefaultPaymentPreferencesRepository extends AbstractRepository implements PaymentPreferencesRepository {
     @Autowired
     AccountService accountService;
+
+    /*
+    public int delete(long userId, int paymentMethod) {
+
+        PaymentPreferences paymentPreferences = this.find(userId, paymentMethod);
+        int result = 0;
+
+        if (paymentPreferences != null) {
+            final StringBuilder hql = new StringBuilder("DELETE FROM ")
+                    .append(PaymentPreferences.class.getName())
+                    .append(" WHERE ")
+                    .append(PaymentPreferences.FIELD_USER_ID).append("=").append(userId).append(" AND ")
+                    .append(PaymentPreferences.FIELD_PAYMENT_METHOD).append("=").append(paymentMethod);
+
+            Query query = entityManager.createQuery(hql.toString());
+
+            result = query.executeUpdate();
+        }
+
+        return result;
+    }
+    */
 
     @Override
     public int delete(PaymentPreferences... entities) {
@@ -50,6 +73,19 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
                                                             .getResultList();
 
         return accounts.isEmpty() ? null : accounts;
+    }
+
+    @Override
+    public PaymentPreferences get(long userId) {
+        ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "payment preferences user-id");
+
+        PaymentPreferences paymentPreferences = this.find(userId, PaymentMethodEnum.MASTER_CREDIT.getCode());
+
+        if (paymentPreferences == null) {
+            paymentPreferences = this.find(userId, PaymentMethodEnum.SAFE_PAY.getCode());
+        }
+
+        return ( paymentPreferences != null ? paymentPreferences : null);
     }
 
     @Override
@@ -130,7 +166,7 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     }
 
     @Override
-    public PaymentPreferences updateSafePay(String safePayUsername, long userId) {
+    public PaymentPreferences updateSafePay(long userId, String safePayUsername) {
 
         PaymentPreferences paymentPreferences = find(userId, PaymentMethodEnum.SAFE_PAY.getCode());
         if (paymentPreferences == null) return null;
