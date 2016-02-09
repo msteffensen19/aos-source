@@ -8,6 +8,7 @@ define(['./module'], function (controllers) {
         '$location', 'resolveParams', 'registerService', 'accountService',
         function (s, $timeout, $location, resolveParams, registerService, accountService) {
 
+            s.userSecondWsdl = s.getConfigUserSecondWsdl();
             checkLogin();
             function checkLogin() {
                 s.checkLogin();

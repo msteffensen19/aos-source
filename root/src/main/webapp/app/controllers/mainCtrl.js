@@ -28,6 +28,10 @@ define(['./module'], function (controllers) {
                 $scope.config = response;
                 $scope.refreshTimeOut();
             });
+
+            $scope.getConfigUserSecondWsdl = function(){
+                return $scope.config.userSecondWsdl == 'true';
+            }
             /*===========================  end Get configuration ============================*/
 
 
