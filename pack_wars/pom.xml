@@ -23,7 +23,7 @@
         <profile>
             <id>staging</id>
             <properties>
-                <resources.source.path>stage</resources.source.path>
+                <resources.source.path>stag</resources.source.path>
             </properties>
         </profile>
         <profile>
