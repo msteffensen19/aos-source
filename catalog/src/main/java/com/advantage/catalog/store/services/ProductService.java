@@ -16,7 +16,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
-import com.advantage.common.enums.ProductStatus;
+import com.advantage.common.enums.ProductStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -68,7 +68,7 @@ public class ProductService {
 
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
-        if(!ProductStatus.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
+        if(!ProductStatusEnum.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
         Product product = productRepository.create(dto.getProductName(), dto.getDescription(), dto.getPrice(),
                 dto.getImageUrl(), category, dto.getProductStatus());
 
@@ -96,7 +96,7 @@ public class ProductService {
         product.setImages(getImageAttribute(dto.getImages(), product));
 
         //set product status
-        product.setProductStatus(ProductStatus.ACTIVE.getStringCode());
+        product.setProductStatus(ProductStatusEnum.ACTIVE.getStringCode());
         return new ProductResponseDto(true, product.getId(), "Product was created successful");
     }
 
@@ -106,7 +106,7 @@ public class ProductService {
 
         if (product == null) return new ProductResponseDto(false, -1, "Product wasn't found");
 
-        if(!ProductStatus.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
+        if(!ProductStatusEnum.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
         Category category = categoryService.getCategory(dto.getCategoryId());
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 

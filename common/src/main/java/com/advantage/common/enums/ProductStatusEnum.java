@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Author Moti Ostrovski on 03/02/2016.
  */
-public enum ProductStatus {
+public enum ProductStatusEnum {
     //product block by moderator
     BLOCK("Block"),
 
@@ -17,7 +17,7 @@ public enum ProductStatus {
     ACTIVE("Active");
 
     private String stringCode;
-    ProductStatus(String stringCode) {this.stringCode=stringCode; }
+    ProductStatusEnum(String stringCode) {this.stringCode=stringCode; }
 
     public String getStringCode() {
         return this.stringCode;
@@ -29,7 +29,7 @@ public enum ProductStatus {
     public static List<String> getAllNames() {
         List<String> values = new ArrayList<>();
 
-        for (ProductStatus a : ProductStatus.values()) {
+        for (ProductStatusEnum a : ProductStatusEnum.values()) {
             values.add(a.name());
         }
         return values;
@@ -37,7 +37,7 @@ public enum ProductStatus {
 
     public static boolean contains(String test) {
 
-        for (ProductStatus a : ProductStatus.values()) {
+        for (ProductStatusEnum a : ProductStatusEnum.values()) {
             if (a.getStringCode().equals(test)) {
                 return true;
             }

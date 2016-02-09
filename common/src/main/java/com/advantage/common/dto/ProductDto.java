@@ -1,6 +1,6 @@
 package com.advantage.common.dto;
 
-import com.advantage.common.enums.ProductStatus;
+import com.advantage.common.enums.ProductStatusEnum;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class ProductDto {
         this.attributes = attributes;
         this.colors = colors;
         this.images = images;
-        this.productStatus= ProductStatus.ACTIVE.getStringCode();
+        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
     }
 
     public List<String> getImages() {
