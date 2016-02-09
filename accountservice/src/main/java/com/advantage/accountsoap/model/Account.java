@@ -124,8 +124,8 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ShippingAddress> addresses = new HashSet<>();
 
-    @OneToMany(orphanRemoval = true, mappedBy = "account", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<PaymentPreferences> paymentPreferences = new HashSet<>();
+    //@OneToMany(orphanRemoval = true, mappedBy = "account", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    //private Set<PaymentPreferences> paymentPreferences = new HashSet<>();
 
     private long defaultPaymentMethodId;
 
@@ -320,6 +320,7 @@ public class Account {
         this.addresses = addresses;
     }
 
+    /*
     public Set<PaymentPreferences> getPaymentPreferences() {
         return paymentPreferences;
     }
@@ -327,7 +328,7 @@ public class Account {
     public void setPaymentPreferences(Set<PaymentPreferences> paymentPreferences) {
         this.paymentPreferences = paymentPreferences;
     }
-
+    */
     public long getDefaultPaymentMethodId() {
         return defaultPaymentMethodId;
     }
