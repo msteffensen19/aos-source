@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <profiles>
