@@ -30,9 +30,9 @@ public class PaymentPreferencesStatusResponse {
      * @param id
      */
     public PaymentPreferencesStatusResponse(boolean success, String reason, long id) {
+        this.setSuccess(success);
         this.setId(id);
         this.setReason(reason);
-        this.setSuccess(success);
     }
 
     /**

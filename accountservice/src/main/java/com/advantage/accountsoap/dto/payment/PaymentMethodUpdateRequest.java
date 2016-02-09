@@ -16,6 +16,14 @@ public class PaymentMethodUpdateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected Integer paymentMethod;
 
+    public PaymentMethodUpdateRequest() {
+    }
+
+    public PaymentMethodUpdateRequest(long accountId, Integer paymentMethod) {
+        this.setAccountId(accountId);
+        this.setPaymentMethod(paymentMethod);
+    }
+
     public long getAccountId() {
         return accountId;
     }

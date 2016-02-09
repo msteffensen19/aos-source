@@ -359,14 +359,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         Account account = getAppUserByLogin(loginName);
 
         if (account == null) {
-            //  Invalid user login.
+            //  user login not found
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
         }
 
-        //  Return: Successful login attempt
-        return new AccountStatusResponse(true, "Login Successful", account.getId(),
-                getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType())
-                ).generateToken());
+        //  Return: Successful logout attempt, no need to create JWT Token
+        return new AccountStatusResponse(true, "Login Successful", account.getId());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -479,6 +477,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         return new AccountStatusResponse(true, "Successfully", accountId);
     }
 
+    /*
     @Override
     public Collection<PaymentPreferences> getPaymentPreferences(long accountId) {
         Account account = get(accountId);
@@ -486,32 +485,34 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         return account.getPaymentPreferences();
     }
-
-    @Override
-    public AccountStatusResponse addMasterCreditPaymentMethod(PaymentPreferencesDto preferences, long accountId) {
-        Account account = get(accountId);
-        if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
-
-        PaymentPreferences payment = new PaymentPreferences(preferences.getCardNumber(),
-                preferences.getExpirationDate(),
-                preferences.getCvvNumber(),
-                preferences.getCustomerName());
-
-
-        return new AccountStatusResponse(true, "Successfully", accountId);
-    }
-
+    */
     @Override
     public AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId) {
-        Account account = get(accountId);
-        if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
-        PaymentPreferences p = account.getPaymentPreferences()
-                .stream()
-                .filter(x -> x.getId() == preferenceId)
-                .findFirst().get();
-        if(p == null)return new AccountStatusResponse(false, "Preference not fount", -1);
-        account.getPaymentPreferences().remove(p);
+        //Account account = get(accountId);
+        //if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
+        //PaymentPreferences p = account.getPaymentPreferences()
+        //        .stream()
+        //        .filter(x -> x.getId() == preferenceId)
+        //        .findFirst().get();
+        //if(p == null)return new AccountStatusResponse(false, "Preference not fount", -1);
+        //account.getPaymentPreferences().remove(p);
 
-        return new AccountStatusResponse(true, "Successfully", accountId);
+        final StringBuilder hql = new StringBuilder("DELETE FROM ")
+                .append(PaymentPreferences.class.getName())
+                .append(" WHERE ")
+                .append(PaymentPreferences.FIELD_USER_ID).append("=").append(accountId);
+
+        Query query = entityManager.createQuery(hql.toString());
+        int result = query.executeUpdate();
+
+        AccountStatusResponse accountStatusResponse;
+        if (result == 1) {
+            accountStatusResponse = new AccountStatusResponse(true, "Successfully", accountId);
+        }
+        else {
+            accountStatusResponse = new AccountStatusResponse(false, "Payment preferences not deleted", accountId);
+        }
+
+        return accountStatusResponse;
     }
 }

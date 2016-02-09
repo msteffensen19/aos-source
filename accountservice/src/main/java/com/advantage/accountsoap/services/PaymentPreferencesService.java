@@ -20,7 +20,7 @@ public class PaymentPreferencesService {
         PaymentPreferences preferences = paymentPreferencesRepository.createSafePay(safePayUsername, accountId);
         if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "", -1);
 
-        return new PaymentPreferencesStatusResponse(true, "Successfully", preferences.getId());
+        return new PaymentPreferencesStatusResponse(true, "Successful", 0);
     }
 
     @Transactional
@@ -53,20 +53,20 @@ public class PaymentPreferencesService {
                 cvvNumber, customerName, accountId);
         if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "", -1);
 
-        return new PaymentPreferencesStatusResponse(true, "Successfully", preferences.getId());
+        return new PaymentPreferencesStatusResponse(true, "Successful", 0);
     }
 
     @Transactional
-    public PaymentPreferencesStatusResponse updateSafePayMethod(String safePayUsername, long preferenceId) {
-        PaymentPreferences preferences = paymentPreferencesRepository.updateSafePay(safePayUsername, preferenceId);
+    public PaymentPreferencesStatusResponse updateSafePayMethod(long userId, String safePayUsername) {
+        PaymentPreferences preferences = paymentPreferencesRepository.updateSafePay(userId, safePayUsername);
         if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "", -1);
 
-        return new PaymentPreferencesStatusResponse(true, "Successfully", preferences.getId());
+        return new PaymentPreferencesStatusResponse(true, "Successful", 0);
     }
 
     @Transactional
-    public PaymentPreferencesStatusResponse updateMasterCreditMethod(String cardNumber, String expirationDate,
-                                                                  String cvvNumber, String customerName, long preferenceId) {
+    public PaymentPreferencesStatusResponse updateMasterCreditMethod(long userId, String cardNumber, String expirationDate,
+                                                                  String cvvNumber, String customerName, long referenceId) {
         if(!ValidationHelper.isValidMasterCreditCardNumber(cardNumber)) {
             return new PaymentPreferencesStatusResponse(false, "Invalid card number", -1);
         }
@@ -85,23 +85,23 @@ public class PaymentPreferencesService {
             return new PaymentPreferencesStatusResponse(false, "Invalid expiration date format", -1);
         }
         PaymentPreferences preferences = paymentPreferencesRepository.updateMasterCredit(cardNumber, expirationDate,
-                cvvNumber, customerName, preferenceId);
+                cvvNumber, customerName, userId);
         if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "", -1);
 
-        return new PaymentPreferencesStatusResponse(true, "Successfully", preferences.getId());
+        return new PaymentPreferencesStatusResponse(true, "Successful", 0);
     }
 
     @Transactional
-    public PaymentPreferencesStatusResponse deletePaymentPreference(long preferenceId) {
-        PaymentPreferences paymentPreferences = paymentPreferencesRepository.delete(preferenceId);
+    public PaymentPreferencesStatusResponse deletePaymentPreference(long userId, int paymentMethod) {
+        PaymentPreferences paymentPreferences = paymentPreferencesRepository.delete(userId, paymentMethod);
         if(paymentPreferences == null ) return  new PaymentPreferencesStatusResponse(false, "", -1);
 
-        return  new PaymentPreferencesStatusResponse(true, "succssefully", paymentPreferences.getId());
+        return  new PaymentPreferencesStatusResponse(true, "successful", 0);
     }
 
     @Transactional
-    public boolean isPaymentPreferencesExist(long preferenceId) {
-        PaymentPreferences paymentPreferences = paymentPreferencesRepository.get(preferenceId);
+    public boolean isPaymentPreferencesExist(long accountId) {
+        PaymentPreferences paymentPreferences = paymentPreferencesRepository.get(accountId);
 
         return (paymentPreferences != null);
     }
