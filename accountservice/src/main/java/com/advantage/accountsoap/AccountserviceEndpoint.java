@@ -136,16 +136,17 @@ public class AccountserviceEndpoint {
 
         if (response.isSuccess()) {
             //TODO-ALEX set session
-            /*HttpSession session = request.getSession();
+            /*
+            HttpSession session = request.getSession();
             session.setAttribute(Constants.UserSession.TOKEN, response.getToken());
             session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());
             session.setAttribute(Constants.UserSession.IS_SUCCESS, response.isSuccess());
 
             //  Set SessionID to Response Entity
             //response.getHeader().
-            response.setSessionId(session.getId());*/
+            response.setSessionId(session.getId());
             response.setSessionId("fake_id");
-
+            */
             return new AccountLogoutResponse(response);
         } else {
             return new AccountLogoutResponse(response);
@@ -275,8 +276,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
     @ResponsePayload
     public PaymentMethodUpdateResponse updateDefaultPaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
-        AccountStatusResponse response =
-                accountService.updateDefaultPaymentMethod(request.getAccountId(), request.getPaymentMethod());
+        AccountStatusResponse response = accountService.updateDefaultPaymentMethod(request.getAccountId(), request.getPaymentMethod());
 
         return new PaymentMethodUpdateResponse(response);
     }
@@ -302,8 +302,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateMasterCreditMethodRequest")
     @ResponsePayload
     public UpdateMasterCreditMethodResponse updateMasterCreditMethod(@RequestPayload UpdateMasterCreditMethodRequest request) {
-        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateMasterCreditMethod(request.getCardNumber(),
-                request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getReferenceId());
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateMasterCreditMethod(request.getUserId(),
+                request.getCardNumber(), request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getReferenceId());
 
         return new UpdateMasterCreditMethodResponse(response);
     }
@@ -311,8 +311,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
     @ResponsePayload
     public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) {
-        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getSafePayUsername(),
-                request.getReferenceId());
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getUserId(),
+                request.getSafePayUsername());
 
         return new UpdateSafePayMethodResponse(response);
     }
@@ -347,7 +347,8 @@ public class AccountserviceEndpoint {
     //endregion
 
 
-    /*protected HttpServletRequest getHttpServletRequest() {
+    /*
+    protected HttpServletRequest getHttpServletRequest() {
         TransportContext ctx = TransportContextHolder.getTransportContext();
         return ( null != ctx ) ? ((HttpServletConnection) ctx.getConnection()).getHttpServletRequest() : null;
     }
@@ -355,5 +356,6 @@ public class AccountserviceEndpoint {
     protected String getHttpHeaderValue( final String headerName ) {
         HttpServletRequest httpServletRequest = getHttpServletRequest();
         return ( null != httpServletRequest ) ? httpServletRequest.getHeader( headerName ) : null;
-    }*/
+    }
+    */
 }
