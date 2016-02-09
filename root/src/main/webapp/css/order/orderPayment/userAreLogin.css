@@ -336,3 +336,64 @@
     z-index: 10;
     opacity: 0.7;
 }
+
+@media screen and (max-width: 480px){
+    #userDetails > div{
+        width: 100%;
+    }
+
+    #userDetails > div:nth-child(2){
+        border-top: solid #454545 1px;
+        border-bottom: solid #454545 1px;
+        border-left: none #454545 1px;
+        border-right: none #454545 1px;
+    }
+    #orderPayment > div > div{
+        padding: 0 8px;
+    }
+
+    #orderPayment #detailslink > label{
+        font-size: 12px;
+    }
+
+    #detailslink > label{
+        width: 39% !important;
+    }
+
+
+    #userDetailsEditMode .smollInput .validate-directive {
+        width: 100%;
+    }
+
+    #userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext,
+    #userDetailsEditMode .sec-validate .inputtext{
+        width: 90%;
+    }
+
+    #userDetailsEditMode .smollInput .validate-directive{
+        margin: 14px 13px;
+    }
+
+
+    #paymentMethod .sec-validate .inputtext{
+        width: 90% !important;
+    }
+
+    #paymentMethod .validate-directive{
+        margin: 14px 16px;
+    }
+
+    #paymentMethod .smollInput .validate-directive
+    {
+        width: 93% !important;
+    }
+
+    #paymentMethod .payment_date {
+        width: 100% !important;
+    }
+
+    #paymentMethod .payment_date .validate-directive{
+        width: 35% !important;
+    }
+}
+

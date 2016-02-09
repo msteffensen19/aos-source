@@ -110,45 +110,7 @@ Helper.loaderHandler = function(enable){
 var Main = Main || {};
 
 Main.addAnimPlaceholderEventListener = function(){
-/*
-    $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').focus(function(){
-        //$(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-        $(this).siblings().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-        $(this).siblings(".validationInfo").fadeIn();
-    });
 
-    $('.animPlaceholderUp input[type=text], .animPlaceholderUp input[type=password], .animPlaceholderUp .inputtext').blur(function(){
-        if($(this).val() == '') { $(this).siblings().not("img").not('.validationInfo').animate({'top': '11px'}, 800, $.bez([0.62,-0.14,0.35,1.34])); }
-        $(this).siblings(".validationInfo").delay(200).fadeOut();
-    });
-
-    $(".animPlaceholderUp label").click(function() {
-        $(this).parent().children().not("img").not('.validationInfo').animate({'top': '-10px'}, 800, $.bez([0.62,-0.14,0.35,1.34]));
-        $(this).prev('input').focus();
-        $(".animPlaceholderUp > .validationInfo").slideDown();
-    });
-
-*/
-//    $(".validationInfoImg").click(function() {
-  //      $(this).parent().find(".validationInfo").fadeToggle(500);
-    //});
 
 }
-
-
-$(document).ready(function() {
-
-        $(window).on({
-            resize: _resize,
-            scroll: _scroll,
-        });
-        function  _scroll(){
-            Helper.checkPagePossitions();
-        }
-        _resize();
-        function _resize() {
-            $(".mini-title").css("display", "none");
-        }
-
-});
 

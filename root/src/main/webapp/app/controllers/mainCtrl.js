@@ -135,6 +135,8 @@ define(['./module'], function (controllers) {
                         $scope.cart = cart;
                         $scope.checkCart();
                     });
+                    $scope.calculateMobileSection()
+
                     $(".mini-title").css("display", "none");
                 });
             }
@@ -283,6 +285,8 @@ define(['./module'], function (controllers) {
             });
 
 
+
+
             /*
              $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
 
@@ -325,11 +329,17 @@ define(['./module'], function (controllers) {
             var mobile_section_moved = $("#mobile-section").width();
 
             Main.addAnimPlaceholderEventListener();
-            setTimeout(function(){
-                $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-                mobile_section_moved = $("#mobile-section").width();
-                $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-            }, 100)
+
+            $scope.calculateMobileSection = function(){
+                setTimeout(function(){
+                    $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+                    mobile_section_moved = $("#mobile-section").width();
+                    $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+                    $scope.closeMobileSection()
+                }, 100)
+            }
+
+            $scope.calculateMobileSection()
 
             $scope.openMobileSection = function () {
                 $("body").animate({
@@ -341,13 +351,34 @@ define(['./module'], function (controllers) {
             }
 
             $scope.closeMobileSection = function () {
+
                 $("body").animate({
                     left: "0px"
                 }, 200);
                 $("#mobile-section").animate({
                     left: "-" + mobile_section_moved
                 }, 200);
+
+                $("#loginMobileMiniTitle").fadeOut(300);
+
             }
+
+            $(document).ready(function() {
+
+                $(window).on({
+                    resize: _resize,
+                    scroll: _scroll,
+                });
+                function  _scroll(){
+                    Helper.checkPagePossitions();
+                }
+                _resize();
+                function _resize() {
+                    $scope.closeMobileSection();
+                    $(".mini-title").css("display", "none");
+                }
+
+            });
 
         }]);
 });

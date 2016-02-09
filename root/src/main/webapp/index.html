@@ -64,11 +64,12 @@
 
 <!-- mobile slider -->
 <span class="mobileTitle" data-ng-cloak>
-    <div class="mini-title">
+    <div class="mini-title" id="loginMobileMiniTitle">
         <label class="option" translate="My_account" ng-click="accountSection()"></label>
         <label class="option" translate="Sign_out" ng-click="signOut()"></label>
     </div>
 </span>
+
 <aside id="mobile-section" data-ng-cloak>
     <ul>
         <li data-ng-click="mobileRedirect('/shoppingCart')">
@@ -78,7 +79,7 @@
                 <span>{{cartProducts.length}}</span>
             </a>
         </li>
-        <li class="pointer" data-ng-click="login('loginMiniTitle')">
+        <li class="pointer" data-ng-click="login('loginMobileMiniTitle')">
             <a class="img center">
                 <img src="css/images/User.jpg"/>
                 <span data-ng-show="userCookie.response" class="hi-user">

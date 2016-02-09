@@ -224,6 +224,51 @@
 
 
 
+@media screen and (max-width: 480px)
+{
+
+    #myAccountContainer .cube > div > div{
+        width: 100%;
+    }
+
+    #myAccountContainer .cube > div > div.middle{
+        border-top: solid 1px #454545;
+        border-bottom: solid 1px #454545;
+        border-left: none 1px #454545;
+        border-right: none 1px #454545;
+    }
+
+    .fixed + #myAccountContainer{
+    margin-bottom: 40px;
+    }
+
+    #myAccountContainer .cube .floatRigth{
+        top: 0px;
+    }
+
+    #myAccountContainer .cube > h3{
+        font-size: 14px;
+    }
+
+    #myAccountContainer .cube .option span{
+        font-size: 12px;
+    }
+
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes{
+        width: 100%;
+    }
+    #myAccountContainer .cube .categoriesBox p{
+        padding-bottom: 0;
+    }
+
+
+    #infoDemo > div{
+        width: 185px;
+        margin: 34px auto;
+    }
+}
+
+
 
 
 

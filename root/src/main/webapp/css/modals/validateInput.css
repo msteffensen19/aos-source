@@ -12,6 +12,7 @@
     left: 0;
     top: 8px;
     font-size: 14px;
+    white-space: nowrap;
 }
 
 .validate-directive label.validateInvalid {

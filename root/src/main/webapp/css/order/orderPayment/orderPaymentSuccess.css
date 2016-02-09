@@ -124,3 +124,46 @@
     font-weight: 500;
 }
 
+@media screen and (max-width: 1100px) {
+
+    #orderPaymentSuccess > div {
+        margin: 0 33px;
+    }
+
+
+    #orderPaymentSuccess > h2{
+        padding: 0 39px;
+    }
+
+    #orderPaymentSuccess > h2 span{
+        font-size: 13px;
+    }
+
+    /*#orderPaymentSuccess > h2 span:before{*/
+        /*top: 27px;*/
+    /*}*/
+
+    #orderPaymentSuccess span.separator{
+        display: block;
+        font-size: 0;
+    }
+
+    #orderPaymentSuccess > div{
+        width: 90%;
+    }
+
+    #orderPaymentSuccess > div > div.seccion{
+        border-right: none #454545 0px;
+        height: auto;
+        padding: 20px 0;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    #orderPaymentSuccess > div {
+        margin: 0 auto;
+   }
+
+}

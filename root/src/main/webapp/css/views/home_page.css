@@ -513,7 +513,29 @@ label.shop_now:after{
     #div-special-offer p{
         font-size: 14px;
     }
+
 }
+
+@media screen and (max-width: 768px) {
+
+    h3.roboto-regular{
+        font-size: 26px;
+    }
+
+    #special_offer_items > div{
+        height: 160px
+    }
+    #div-special-offer span{
+        font-size: 19px;
+    }
+    #div-special-offer h1{
+        font-size: 15px;
+    }
+    #div-special-offer p{
+        font-size: 10px;
+    }
+}
+
 
 @media screen and (max-width: 480px) {
 
