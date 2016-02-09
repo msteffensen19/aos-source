@@ -8,7 +8,6 @@ import com.advantage.common.dto.ProductDto;
 import com.advantage.order.store.order.dao.ShoppingCartRepository;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
-import com.advantage.order.store.order.model.ShoppingCartPK;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
