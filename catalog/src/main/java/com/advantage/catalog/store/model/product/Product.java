@@ -3,7 +3,7 @@ package com.advantage.catalog.store.model.product;
 import javax.persistence.*;
 
 import com.advantage.catalog.store.model.category.Category;
-import com.advantage.common.enums.ProductStatus;
+import com.advantage.common.enums.ProductStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
@@ -83,7 +83,7 @@ public class Product {
         this.productName = name;
         this.description = description;
         this.price = price;
-        this.productStatus= ProductStatus.ACTIVE.getStringCode();
+        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
     }
 
     public Product(String name, String description, double price, Category category) {
@@ -91,7 +91,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.category = category;
-        this.productStatus= ProductStatus.ACTIVE.getStringCode();
+        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
     }
 
     public Product(String name, String description, double price, Category category, String productStatus) {
@@ -99,7 +99,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.category = category;
-        this.productStatus= ProductStatus.ACTIVE.getStringCode();
+        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
     }
 
     public Long getId() {
