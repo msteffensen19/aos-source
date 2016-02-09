@@ -7,10 +7,14 @@ define(['./module'], function (services) {
 
         return({
 
-            handleSuccess : function ( response ) { return( response.data ); },
+            handleSuccess : function ( response ) {
+                Helper.loaderHandler(false);
+                return( response.data );
+            },
 
 
             handleError: function ( response ) {
+                Helper.loaderHandler(false);
                 if ( ! angular.isObject( response.data ) || ! response.data.message ) {
                     return( response /*$q.reject( "An unknown error occurred." ) */);
                 }
@@ -24,20 +28,6 @@ define(['./module'], function (services) {
                 });
                 return( request.then( this.handleSuccess, this.handleError ) );
             },
-
-
-            startWebBuildingWhenServerPropertiesAsLoader : function(){
-
-                var defer = $q.defer();
-
-                $timeout(function(){
-                    alert()
-                    defer.resolve(null);
-                }, 5000);
-
-                return defer.promise;
-
-            }
 
         });
 

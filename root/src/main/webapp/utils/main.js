@@ -101,6 +101,12 @@ Helper.checkPagePossitions = function(){
     }
 }
 
+Helper.loaderHandler = function(enable){
+    var e = enable ? 'block' : 'none';
+    $("#loader").css("display", e);
+}
+
+
 var Main = Main || {};
 
 Main.addAnimPlaceholderEventListener = function(){
@@ -130,27 +136,19 @@ Main.addAnimPlaceholderEventListener = function(){
 }
 
 
-$(document).on({
-
-    ready: function() {
-
+$(document).ready(function() {
 
         $(window).on({
-        resize: _resize,
-        scroll: _scroll,
+            resize: _resize,
+            scroll: _scroll,
         });
-
         function  _scroll(){
             Helper.checkPagePossitions();
         }
-
         _resize();
         function _resize() {
-
             $(".mini-title").css("display", "none");
-            $("body").css("left", "0px")
         }
 
-    },
 });
 

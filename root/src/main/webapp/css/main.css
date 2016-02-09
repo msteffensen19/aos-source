@@ -1,4 +1,5 @@
-/*
+
+
 @import "UI.css";
 @import "../utils/noUiSlider.8.2.1/nouislider.css";
 @import "animation.css";
@@ -48,360 +49,43 @@
     outline: none;
 }
 
-
-body{
-    position: relative;
-    left: 0;
-    overflow-x: hidden;
-    display: block;
-}
-
-!* start mobile button *!
-
-div.mobile-btn-handler {
-    padding: 5px 0;
-    margin: 10px ;
-    border-radius: 4px;
-    border: solid 1px #ddd;
-    display: none;
-}
-
-div.mobile-btn-handler:hover {
-    background-color: #ddd;
-}
-
-div.mobile-btn-handler span{
-    display: block;
-    width: 25px;
-    height: 3px;
-    border-radius: 3px;
-    margin: 3px 10px;
-    background-color: #888;
-}
-
-#mobile-section{
-    background-color: #e7e7e7;
-    position: absolute;
-    left: 9999px;
-}
-
-#mobile-section ul {
-font-size: 0;
-}
-
-#mobile-section .img{
-    padding: 30px;
-    background-color: white;
-    opacity: 0.6;
-    display: block;
-}
-
-#mobile-section .img:hover{
-    opacity: 1;
-
-}
-!* end mobile button *!
-
-
-.uiview {
-    padding-top: 65px;
-}
-
-!* navagation *!
-header{
-    position: fixed;
-    background-color: white;
+#loader {
     width: 100%;
-    z-index: 999;
-}
-
-nav{
-    direction: rtl;
-}
-
-nav .navLinks{
-    display: none;
-}
-
-nav ul {
-    float: right;
-    display: inline-block;
-    margin: 7px 15px 0 0;
-}
-
-nav ul li {
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-}
-
-nav ul li > ul{
-    font-size: 0;
-}
-
-nav ul li > a{
-    font-size:16px;
-    cursor: pointer;
-    display: block;
-    text-decoration: none;
-    padding:9px;
-    transition: all 1s ease;
-    transform: scale(1);
-    opacity: 1;
-}
-
-nav ul li a.searchSectionEnabled{
-    transform: scale(0);
-    opacity: 0;
-}
-
-nav ul li a span.cart{
-    position: absolute;
-    font-size:13px;
-    top: -3px;
-    right: -2px;
-}
-
-
-nav ul li a.menu{
-    padding:10px 66px;
-}
-
-nav ul li:nth-child(3) a.menu{
-    padding-right: 53px;
-}
-
-nav ul li > a:not(.img){
-    opacity: .8;
-    padding:15px 18px;
-}
-
-nav ul li a:not(.img):hover{
-    opacity: 1;
-}
-
-nav .img {
-    position: relative;
-    top:4px;
-}
-
-nav .img > img {
-    !*height: 25px;*!
-}
-
-
-nav .img > .hi-user{
-    font-size: 15px;
-    position: relative;
-    top: -7px;
-    padding: 0;
-    left:-7px;
-    margin-left: 11px;
-    font-weight: 400;
-    z-index: 1;
-}
-
-
-div.logo {
-    float: left;
-}
-div.logo img{
-    vertical-align: top;
-    padding: 10px 25px ;
-}
-
-
-
-
-
-!* scrolling page to top  *!
-
-#scrollToTop{
+    height: 100%;
     position: fixed;
-    margin: 70px 20px;
-    bottom: 0;
-    right: 0;
-    opacity: .8;
-    transition: all 1s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 90;
     display: none;
-    z-index: 9999;
-    border-radius: 100%;
 }
 
-#scrollToTop p{
-    transform:scale(0.8);
-    opacity: 0;
-}
-
-#scrollToTop:hover {
-    opacity: 1;
-}
-
-
-.nav-li-Links{
-    display: inline-block;
-}
-
-!* end scrolling page to top  *!
-
-.cell{
-    display: table-cell;
-}
-
-
-
-!* FOLLOW US ----- footer*!
-
-footer{
-    position: static;
-    left:0;
+#loader > div{
+    position: fixed;
+    top: 52%;
+    left: 0;
     right: 0;
-    bottom: 0;
-    margin-top: 90px;
-    background-color: #F4F4F2;
-    font-size: 0;
-}
-
-footer > div{
-    padding: 10px 0;
-    width: 60%;
+    width: 50px;
+    height: 50px;
     margin: 0 auto;
-    text-align: center;
+    transform: scale(1.6);
+
+/*background-color: red;*/
 }
 
-footer img{
-    margin: 17px 31px;
+#loader div:before{
+    /*position: fixed;*/
+    /*top: 50%;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*width: 50px;*/
+    /*height: 50px;*/
+    /*margin: 0 auto;*/
+    /*background: -moz-linear-gradient(left,  rgba(135,224,253,0) 0%, rgba(85,180,174,1) 74%, rgba(84,179,173,1) 75%, rgba(84,179,173,1) 100%);*/
+    /*background: -webkit-linear-gradient(left,  rgba(135,224,253,0) 0%,rgba(85,180,174,1) 74%,rgba(84,179,173,1) 75%,rgba(84,179,173,1) 100%);*/
+    /*background: linear-gradient(to right,  rgba(135,224,253,0) 0%,rgba(85,180,174,1) 74%,rgba(84,179,173,1) 75%,rgba(84,179,173,1) 100%);*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0087e0fd', endColorstr='#54b3ad',GradientType=1 );*/
+    /*border-radius: 50%;*/
 }
 
-
-footer label{
-    font-size: 14px;
-    padding: 34px 0 0 0 ;
-    color: #6c6c6c;
-    display: block;
-}
-
-footer .splitter{
-    display: none;
-}
-
-
-!* end FOLLOW US *!
-
-
-
-
-@media screen and (max-width: 950px)
-{
-    .nav-li-Links{
-        display: none;
-    }
-
-    !*#searchSection{*!
-        !*width:  45%*!
-    !*}*!
-}
-
-
-@media screen and (max-width: 760px) {
-    #searchSection{
-        display: none;
-    }
-}
-
-@media screen and (max-width: 700px){
-
-    #searchSection > .searchPopUp > div,
-    #searchSection > .searchPopUp > div:nth-child(1)
-    {
-        display: block;
-        width: 100%;
-    }
-
-    #searchSection > .searchPopUp > div:nth-child(1)
-    {
-        height: auto;
-    }
-
-}
-
-
-@media screen and (max-width: 450px)
-{
-    .desktop-handler{
-        display: none;
-    }
-
-    .mobile-btn-handler{
-        display: none;
-    }
-
-    div.logo img{
-        vertical-align: top;
-        padding: 10px 0;
-    }
-
-    div.mobile-btn-handler{
-        display: inline-block;
-    }
-
-    #searchSection > div {
-        width: 90%;
-    }
-
-}
-
-
-*/
-
-@import "UI.css";
-@import "../utils/noUiSlider.8.2.1/nouislider.css";
-@import "animation.css";
-
-@import "icons/cart.css";
-@import "icons/home.css";
-@import "icons/magnifyingGlass.css";
-@import "icons/phone.css";
-@import "icons/user.css";
-@import "icons/X.css";
-
-@import "views/home_page.css";
-@import "views/categoryPage.css";
-@import "views/category_type_products_tpl.css";
-@import "views/productPage.css";
-@import "views/toolTipCart.css";
-@import "views/toolTipSearch.css";
-@import "views/shoppingCart.css";
-
-@import "modals/popUp.css";
-@import "modals/e-sec-plus-minus.css";
-@import "modals/validateInput.css";
-
-@import "user/login.css";
-@import "user/register.css";
-
-@import "order/orderPayment/orderPayment.css";
-@import "order/orderPayment/userNotLogin.css";
-@import "order/orderPayment/userAreLogin.css";
-@import "order/orderPayment/orderPaymentSuccess.css";
-
-
-@import "account/myAccount.css";
-
-#png {
-    position: absolute;
-    z-index: 90000;
-    top:0;
-    top:-14px;
-    opacity: 0.39;
-}
-
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto';
-    outline: none;
-}
 
 
 body{

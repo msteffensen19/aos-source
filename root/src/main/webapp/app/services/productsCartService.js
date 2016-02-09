@@ -230,12 +230,13 @@ define(['./module'], function (services) {
             }
 
             function updateProduct(product, color, quantity, oldColor) {
+
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
                 if(product.colors){
                     if (user && user.response) {
+                        Helper.loaderHandler(true);
                         if (user.response.userId != -1) {
-
                             var request = $http({
                                 method: "put",
                                 headers: {
@@ -248,6 +249,7 @@ define(['./module'], function (services) {
                             });
                             request.then(function (newCart) {
                                 cart = newCart.data;
+                                Helper.loaderHandler(false);
                                 response.resolve(cart);
                             })
                             return response.promise;
@@ -314,6 +316,7 @@ define(['./module'], function (services) {
                 var user = $rootScope.userCookie;
                 if (user && user.response) {
                     if (user.response.userId != -1) {
+                        Helper.loaderHandler(true);
                         var request = $http({
                             method: "post",
                             headers: {
@@ -326,6 +329,7 @@ define(['./module'], function (services) {
                         });
                         request.then(function (newCart) {
                             cart = newCart.data;
+                            Helper.loaderHandler(false);
                             response.resolve(cart);
                         })
                         return response.promise;
@@ -366,86 +370,7 @@ define(['./module'], function (services) {
                 }
             }
 
-            //function updateProduct(product) {
-            //    return addProduct(product, product.quantity)
-            //}
-
-            //function addProduct(product, quantity) {
-            //    var response = $q.defer();
-            //    var user = $rootScope.userCookie;
-            //    if (user && user.response) {
-            //        if (user.response.userId != -1) {
-            //            var request = $http({
-            //                method: "post",
-            //                headers: {
-            //                    "content-type": "application/json",
-            //                    "Authorization": "Bearer " + user.response.token,
-            //                },
-            //                async: false,
-            //                url: server.order.addProductToUser(user.response.userId,
-            //                    product.productId, product.colors[0].code, quantity),
-            //            });
-            //            request.then(function (newCart) {
-            //                cart = newCart.data;
-            //                response.resolve(cart);
-            //                return response.promise;
-            //            })
-            //            return response.promise;
-            //        }
-            //    }
-            //    else {
-            //        var find = null;
-            //        var thisIsUpdateMode = false;
-            //        var productIndex = 0;
-            //        angular.forEach(cart.productsInCart, function (productInCart, index) {
-            //            if (product.productId == productInCart.productId) {
-            //                if(product.colors == undefined){
-            //                    if (productInCart.color.code == product.color.code) {
-            //                        thisIsUpdateMode = true;
-            //                        productInCart.quantity = product.quantity;
-            //                    }
-            //                }
-            //                else{
-            //                    angular.forEach(product.colors, function (color) {
-            //                        if (productInCart.color.code == color.code) {
-            //                            productIndex = index;
-            //                            productInCart.quantity += quantity;
-            //                            find = product;
-            //                        }
-            //                    });
-            //                }
-            //            }
-            //        });
-            //
-            //        if(!thisIsUpdateMode) {
-            //            if (!find) {
-            //                var color;
-            //                if (product.colors == undefined) {
-            //                    color = product.color;
-            //                }
-            //                else {
-            //                    color = product.colors.length > 0 ? product.colors[0] : 'FFFFFF';
-            //                }
-            //                cart.productsInCart.unshift({
-            //                    "productId": product.productId,
-            //                    "imageUrl": product.imageUrl,
-            //                    "productName": product.productName,
-            //                    "color": color,
-            //                    "quantity": quantity,
-            //                    "price": product.price
-            //                });
-            //            }
-            //            else {
-            //                cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
-            //            }
-            //        }
-            //        updateCart(cart);
-            //        response.resolve(cart);
-            //        return response.promise;
-            //    }
-            //}
         }]);
-
 
 
 });

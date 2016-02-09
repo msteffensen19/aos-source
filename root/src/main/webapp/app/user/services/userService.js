@@ -24,14 +24,16 @@ define(['./module'], function (services) {
                         loginUser: user.response.userId,
                         loginPassword: "Aa123",
                     }
-                    l(expectToReceive)
+
+                    Helper.loaderHandler(true);
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function (response) {
-                        l(response)
-                        defer.resolve(response);
+                            Helper.loaderHandler(false);
+                            defer.resolve(response);
                         },
                         function (response) {
                             console.log(response);
+                            Helper.loaderHandler(false);
                             defer.reject("Request failed! ");
                         });
                 }
@@ -75,13 +77,18 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.account.login();
+                Helper.loaderHandler(true);
+                $(".PopUp").addClass('BlockPopUp');
                 mini_soap.post(params.path, params.method, user).
                 then(function (response) {
-                        console.log(response);
+                        Helper.loaderHandler(false);
+                        $(".PopUp").removeClass('BlockPopUp');
                         defer.resolve(response);
                     },
                     function (response) {
                         console.log(response);
+                        Helper.loaderHandler(false);
+                        $(".PopUp").removeClass('BlockPopUp');
                         defer.reject("Request failed! ");
                     });
 

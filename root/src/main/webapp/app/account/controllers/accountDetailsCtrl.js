@@ -19,7 +19,6 @@ define(['./module'], function (controllers) {
             s.accountDetails = resolveParams.accountDetails;
             s.accountDetailsAnswer = {message: '', class: 'invalid'}
             s.saveAccountDetails = function () {
-
                 accountService.changeUserPassword(s.accountDetails.id, s.passwords)
                     .then(function (changeUserPasswordRes) {
                         if (changeUserPasswordRes && changeUserPasswordRes.SUCCESS == 'true') {
@@ -42,8 +41,8 @@ define(['./module'], function (controllers) {
                         }
                         else {
                             s.accountDetailsAnswer = {
-                                class : 'invalid',
-                                message : changeUserPasswordRes.REASON,
+                                class: 'invalid',
+                                message: changeUserPasswordRes.REASON,
                             }
                         }
                     });

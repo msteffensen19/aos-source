@@ -18,7 +18,8 @@
     "jquery-bez": "1.0.11",
     "jquery-color-animation": "~1.6.0",
     "ngAutocomplete": "~1.0.0",
-    "angular-breadcrumb": "~0.4.1"
+    "angular-breadcrumb": "~0.4.1",
+    "SVG-Loaders": "svg-loaders#~1.0.2"
   },
   "resolutions": {
     "angular": "~1.4.7"
