@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.advantage.online.store</groupId>
     <artifactId>main_project</artifactId>
-    <version>0.1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>main_project</name>
     <scm>
@@ -48,6 +48,41 @@
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
     </properties>
     <profiles>
+        <profile>
+            <id>development</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <version>2.6</version>
+                            <configuration>
+                                <warSourceExcludes>node_modules/**</warSourceExcludes>
+                                <failOnMissingWebXml>false</failOnMissingWebXml>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>2.5.4</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!--dev plugins vvv-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                    </plugin>
+                    <!--dev plugins ^^^-->
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>production</id>
             <modules>
@@ -112,134 +147,6 @@
                         <groupId>com.soebes.maven.plugins</groupId>
                         <artifactId>echo-maven-plugin</artifactId>
                     </plugin>
-                </plugins>
-            </build>
-            <distributionManagement>
-                <repository>
-                    <id>demoapp-release</id>
-                    <name>ADM DemoApp Release Nexus repository</name>
-                    <url>
-                        http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
-                    </url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>staging</id>
-            <modules>
-                <module>pack_wars</module>
-            </modules>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.soebes.maven.plugins</groupId>
-                            <artifactId>echo-maven-plugin</artifactId>
-                            <version>0.2</version>
-                            <executions>
-                                <execution>
-                                    <phase>process-resources</phase>
-                                    <goals>
-                                        <goal>echo</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <echos>
-                                    <echo>#########</echo>
-                                    <!--suppress MavenModelInspection -->
-                                    <echo>buildNumber=${buildNumber}</echo>
-                                    <!--suppress MavenModelInspection -->
-                                    <echo>Branch = ${scmBranch}</echo>
-                                    <echo>basedir=${basedir}</echo>
-                                    <echo>project.basedir=${project.basedir}</echo>
-                                    <!--It's a parent POM-->
-                                    <echo>project.parent.basedir=${project.parent.basedir}</echo>
-                                    <echo>project.build.directory=${project.build.directory}</echo>
-                                    <echo>***JAVA VER**</echo>
-                                    <echo>java.home=${java.home}</echo>
-                                    <echo>env.JAVA_HOME=${env.JAVA_HOME}</echo>
-                                    <echo>java.runtime.name=${java.runtime.name}</echo>
-                                    <echo>java.runtime.version=${java.runtime.version}</echo>
-                                    <echo>java.vm.version=${java.vm.version}</echo>
-                                    <echo>env.COMPUTERNAME=${env.COMPUTERNAME}</echo>
-                                    <ech>Test for Jenkins: 25/Jan/2016 01:07</ech>
-                                </echos>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-war-plugin</artifactId>
-                            <version>2.6</version>
-                            <configuration>
-                                <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
-                                <failOnMissingWebXml>false</failOnMissingWebXml>
-                                <webResources>
-                                    <resource>
-                                        <directory>${basedir}/target</directory>
-                                    </resource>
-                                </webResources>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>com.soebes.maven.plugins</groupId>
-                        <artifactId>echo-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-            <distributionManagement>
-                <repository>
-                    <id>demoapp-snapshot</id>
-                    <name>ADM DemoApp Snapshot Nexus repository</name>
-                    <url>
-                        http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
-                    </url>
-                </repository>
-                <!--<snapshotRepository>-->
-                <!--<id>demoapp-snapshot</id>-->
-                <!--<name>ADM DemoApp Snapshot Nexus repository</name>-->
-                <!--<url>-->
-                <!--http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/-->
-                <!--</url>-->
-                <!--</snapshotRepository>-->
-            </distributionManagement>
-        </profile>
-
-        <profile>
-            <id>development</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-war-plugin</artifactId>
-                            <version>2.6</version>
-                            <configuration>
-                                <warSourceExcludes>node_modules/**</warSourceExcludes>
-                                <failOnMissingWebXml>false</failOnMissingWebXml>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-assembly-plugin</artifactId>
-                            <version>2.5.4</version>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <!--dev plugins vvv-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                    </plugin>
-                    <!--dev plugins ^^^-->
                 </plugins>
             </build>
         </profile>
@@ -768,6 +675,21 @@
             <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/groups/public/</url>
         </repository>
     </repositories>
-
+    <distributionManagement>
+        <repository>
+            <id>demoapp-release</id>
+            <name>ADM DemoApp Release Nexus repository</name>
+            <url>
+                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>demoapp-snapshot</id>
+            <name>ADM DemoApp Snapshot Nexus repository</name>
+            <url>
+                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

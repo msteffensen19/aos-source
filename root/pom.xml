@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
-        <version>0.1.0</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <profiles>
@@ -124,120 +124,6 @@
                 </pluginManagement>
             </build>
         </profile>
-        <profile>
-            <id>staging</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>exec-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>exec-npm-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>npm.cmd</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-bower-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>bower</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-grunt</id>
-                                    <phase>process-resources</phase>
-                                    <configuration>
-                                        <executable>grunt</executable>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-war-plugin</artifactId>
-                            <version>2.6</version>
-                            <configuration>
-                                <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
-                                <failOnMissingWebXml>false</failOnMissingWebXml>
-                                <webResources>
-                                    <resource>
-                                        <directory>${basedir}/src/main/webapp/target</directory>
-                                    </resource>
-                                </webResources>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>exec-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>exec-npm-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>npm.cmd</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-bower-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>bower</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-grunt</id>
-                                    <phase>process-resources</phase>
-                                    <configuration>
-                                        <executable>grunt</executable>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-
         <profile>
             <id>development</id>
             <build>
@@ -390,7 +276,7 @@
         <dependency><!--Use shared resources-->
             <groupId>com.advantage.online.store</groupId>
             <artifactId>shared_resources</artifactId>
-            <version>0.1.0</version>
+            <version>1.0-SNAPSHOT</version>
             <classifier>resources</classifier>
             <type>zip</type>
             <scope>provided</scope>
@@ -398,7 +284,7 @@
         <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
-            <version>0.1.0</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

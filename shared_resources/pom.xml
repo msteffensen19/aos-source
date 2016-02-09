@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
-        <version>0.1.0</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <profiles>
@@ -18,12 +18,6 @@
             <id>production</id>
             <properties>
                 <resources.source.path>prod</resources.source.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>staging</id>
-            <properties>
-                <resources.source.path>stag</resources.source.path>
             </properties>
         </profile>
         <profile>
