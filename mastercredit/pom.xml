@@ -24,6 +24,19 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>staging</id>
+            <build>
+                <plugins>
+                    <!--prod plugins vvv-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                    </plugin>
+                    <!--prod plugins ^^^-->
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <build>
         <finalName>MasterCredit</finalName>

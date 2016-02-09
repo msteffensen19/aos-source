@@ -21,6 +21,12 @@
             </properties>
         </profile>
         <profile>
+            <id>staging</id>
+            <properties>
+                <resources.source.path>stage</resources.source.path>
+            </properties>
+        </profile>
+        <profile>
             <id>development</id>
             <properties>
                 <resources.source.path>dev</resources.source.path>
