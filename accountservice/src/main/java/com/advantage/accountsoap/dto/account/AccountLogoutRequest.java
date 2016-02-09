@@ -1,8 +1,6 @@
 package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.model.Account;
-import com.advantage.accountsoap.util.ArgumentValidationHelper;
 
 import javax.xml.bind.annotation.*;
 
@@ -30,7 +28,7 @@ public class AccountLogoutRequest {
     }
 
     public String getLoginUser() {
-        return loginUser;
+        return this.loginUser;
     }
 
     public void setLoginUser(String loginUser) {
@@ -38,7 +36,7 @@ public class AccountLogoutRequest {
     }
 
     public String getLoginPassword() {
-        return loginPassword;
+        return this.loginPassword;
     }
 
     public void setLoginPassword(String loginPassword) {

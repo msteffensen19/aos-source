@@ -2,13 +2,12 @@ package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * @author Binyamin Regev on 02/02/2016.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "",
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
@@ -27,7 +26,7 @@ public class AccountLogoutResponse {
     }
 
     public AccountStatusResponse getResponse() {
-        return response;
+        return this.response;
     }
 
     public void setResponse(AccountStatusResponse response) {

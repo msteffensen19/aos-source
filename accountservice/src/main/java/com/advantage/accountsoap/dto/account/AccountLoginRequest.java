@@ -17,9 +17,9 @@ public class AccountLoginRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginUser;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String loginPassword;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String email;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String loginPassword;
 
     public String getLoginUser() {
         return loginUser;
@@ -49,7 +49,7 @@ public class AccountLoginRequest {
         ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
         this.setLoginUser(account.getLoginName());
-        this.setLoginPassword(account.getPassword());
         this.setEmail(account.getEmail());
+        this.setLoginPassword(account.getPassword());
     }
 }
