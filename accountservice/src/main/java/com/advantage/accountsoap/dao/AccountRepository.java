@@ -51,7 +51,7 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     AccountStatusResponse changePassword(long accountId, String newPassword);
 
-    Collection<PaymentPreferences> getPaymentPreferences(long accountId);
+    //Collection<PaymentPreferences> getPaymentPreferences(long accountId);
 
     AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId);
 }

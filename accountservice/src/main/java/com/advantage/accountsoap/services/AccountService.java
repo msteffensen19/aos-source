@@ -98,13 +98,17 @@ public class AccountService {
     @Transactional
     public AccountStatusResponse updateDefaultPaymentMethod(long accountId, Integer paymentMethodId) {
         Account account = getById(accountId);
-        if(account == null || !paymentPreferencesService.isPaymentPreferencesExist(paymentMethodId)) {
+        if(account == null) {
             return new AccountStatusResponse(false, "Data not valid", -1);
         }
 
-        account.setDefaultPaymentMethodId(paymentMethodId);
+        if(!paymentPreferencesService.isPaymentPreferencesExist(accountId)) {
+            return new AccountStatusResponse(false, "Data not valid", -2);
+        }
 
-        return  new AccountStatusResponse(true, "", accountId);
+        account.setDefaultPaymentMethodId(((long) Integer.valueOf(paymentMethodId)));
+
+        return  new AccountStatusResponse(true, "Update default payment method was successful", accountId);
     }
 
     @Transactional
@@ -112,8 +116,19 @@ public class AccountService {
         return accountRepository.get(id);
     }
 
+    /**
+     * Get registered user account by login user name. Verify login username with old password.
+     * When verified: update new password to registered user.
+     * @param accountId
+     * @param newPassword
+     * @return {@link AccountStatusResponse}
+     */
     @Transactional
     public AccountStatusResponse changePassword(long accountId, String newPassword) {
+        //  TODO Benny - Add argument String oldPassword to method signature.
+        //  TODO Benny - Add the argument to XSD file.
+        //  TODO Benny - get user account by login user name. Verify user login user name with old password.
+        //  TODO Benny - ONLY WHEN verified: Update new password to registed user account.
         return accountRepository.changePassword(accountId, newPassword);
     }
 
@@ -122,7 +137,8 @@ public class AccountService {
         Account account = accountRepository.get(accountId);
         if(account == null) return null;
 
-        return fillPaymentPreferencesDto(account.getPaymentPreferences());
+        //return fillPaymentPreferencesDto(account.getPaymentPreferences());
+        return null;
     }
 
     @Transactional
@@ -135,7 +151,7 @@ public class AccountService {
         for (PaymentPreferences item : paymentPreferences) {
             dtos.add(new PaymentPreferencesDto(item.getPaymentMethod(),
                     item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername(),
-                    item.getId()));
+                    item.getUserId()));
         }
 
         return dtos;
