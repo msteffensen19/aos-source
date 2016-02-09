@@ -8,7 +8,6 @@ var stickyPossition = startPossition;
 
 var Helper = Helper || {};
 Helper.____closeTooTipCart;
-Helper.mobile_section_moved;
 
 Helper.forAllPage = function(){
     Helper.scrollPageUp();
@@ -18,7 +17,7 @@ Helper.forAllPage = function(){
 
 Helper.footerHandler = function() {
 
-    //if ($("footer").height()) {
+    if ($("footer").height()) {
 
         //$("#virtualFooter").height($(window).height() - $("#virtualFooter").offset().top + 80);
         //var miss = $(window).height() - $("#virtualFooter").offset().top;
@@ -39,10 +38,10 @@ Helper.footerHandler = function() {
         //    $("footer").css({ 'background-color': '#d8d8d8' } )
         //}
 
-    //}
-    //else {
+    }
+    else {
         //setTimeout(Helper.footerHandler, 200)
-    //}
+    }
 }
 
 Helper.scrollPageUp = function(){
@@ -102,60 +101,16 @@ Helper.checkPagePossitions = function(){
     }
 }
 
-Helper.mobileSectionHandler = function(){
-
-    $("body").stop().animate({
-        left: $("body").css("left") == "0px" ? Helper.mobile_section_moved : "0px"
-    }, 200);
-    $("#mobile-section").stop().animate({
-        left: $("#mobile-section").css("left") == "0px" ?  "-" + Helper.mobile_section_moved : "0px"
-    }, 200);
-}
-
-Helper.mobileSectionClose = function(){
-    $("body").stop().animate({
-        left: "0px",
-    }, 200);
-    $("#mobile-section").stop().animate({
-        left: "-" + Helper.mobile_section_moved
-    }, 200);
-    $(".mobileTitle .mini-title").fadeOut(300);
-}
-
-Helper.mobileSectionFixer = function(){
-    Helper.mobile_section_moved = $("#mobile-section").width();
-    this.mobileSectionClose();
+Helper.loaderHandler = function(enable){
+    var e = enable ? 'block' : 'none';
+    $("#loader").css("display", e);
 }
 
 
 var Main = Main || {};
 
 Main.addAnimPlaceholderEventListener = function(){
+
+
 }
-
-
-$(document).on({
-
-    ready: function() {
-
-
-        $(window).on({
-        resize: _resize,
-        scroll: _scroll,
-        });
-
-        function  _scroll(){
-            Helper.checkPagePossitions();
-            _resize();
-        }
-
-        _resize();
-        function _resize() {
-
-            $(".mini-title").css("display", "none");
-            Helper.mobileSectionClose();
-        }
-
-    },
-});
 

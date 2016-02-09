@@ -4,17 +4,20 @@
 
     <!--  five pictures  -->
     <article id="our_products">
+
+        <search mobile-search></search>
+
         <div class="container ">
 
             <div class="rowSection">
-                <div ng-click="redirect('/category/' + categories[3].categoryId)" class="SpeaakersImg"
+                <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)" class="SpeaakersImg"
                      a-sec-back-img="{{categories[3].managedImageId}}" >
                     <div>
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate  }} </label>
                     </div>
                 </div>
-                <div ng-click="redirect('/category/' + categories[2].categoryId)"
+                <div  id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
                      a-sec-back-img="{{categories[2].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[2].categoryName}}</span>
@@ -156,6 +159,16 @@
 
 
 <social-media-drtv></social-media-drtv>
+
+
+
+
+
+
+
+
+
+
 
 
 

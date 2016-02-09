@@ -1,0 +1,8 @@
+<div id="mobileSearch" data-ng-cloak>
+    <input type="text" class="roboto-medium" placeholder="{{ 'Search' | translate}}"
+           data-ng-keypress="checkEnterKey($event)"
+           data-ng-model="autoCompleteValue"
+           data-ng-keyup="runAutocomplete()"
+    >
+    <img src="css/images/Search.jpg" data-ng-click="goToCategoryPage()" alt="search">
+</div>

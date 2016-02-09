@@ -4,19 +4,19 @@
 define(['./module'], function (services) {
     'use strict';
     services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService',
-        function (mini_soap, $http, $q, responseService) {
+        function (mini_soap, $http, $q) {
         // Return public API.
         return({
             register: register,
             getAllCountries: getAllCountries,
         });
 
-
         function getAllCountries() {
 
             var defer = $q.defer();
             var params = server.account.getAllCountries();
 
+            Helper.loaderHandler(true);
             mini_soap.post(params.path, params.method).
             then(function(response){
                     var countries = [];
@@ -28,10 +28,12 @@ define(['./module'], function (services) {
                             phonePrefix: country.PHONEPREFIX,
                         });
                     });
+                    Helper.loaderHandler(false);
                     defer.resolve(countries);
                 },
                 function(response){
                     console.log(response);
+                    Helper.loaderHandler(false);
                     defer.reject("Request failed! ");
                 });
             return defer.promise;
@@ -58,12 +60,15 @@ define(['./module'], function (services) {
             var defer = $q.defer();
             var params = server.account.register();
 
+            Helper.loaderHandler(true);
             mini_soap.post(params.path, params.method, expectToReceive).
             then(function(response){
+                    Helper.loaderHandler(false);
                     defer.resolve(response);
                 },
                 function(response){
                     console.log(response);
+                    Helper.loaderHandler(false);
                     defer.reject("Request failed! ");
                 });
             return defer.promise;

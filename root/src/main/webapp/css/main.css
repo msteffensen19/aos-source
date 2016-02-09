@@ -1,3 +1,5 @@
+
+
 @import "UI.css";
 @import "../utils/noUiSlider.8.2.1/nouislider.css";
 @import "animation.css";
@@ -47,6 +49,44 @@
     outline: none;
 }
 
+#loader {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 90;
+    display: none;
+}
+
+#loader > div{
+    position: fixed;
+    top: 52%;
+    left: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    transform: scale(1.6);
+
+/*background-color: red;*/
+}
+
+#loader div:before{
+    /*position: fixed;*/
+    /*top: 50%;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*width: 50px;*/
+    /*height: 50px;*/
+    /*margin: 0 auto;*/
+    /*background: -moz-linear-gradient(left,  rgba(135,224,253,0) 0%, rgba(85,180,174,1) 74%, rgba(84,179,173,1) 75%, rgba(84,179,173,1) 100%);*/
+    /*background: -webkit-linear-gradient(left,  rgba(135,224,253,0) 0%,rgba(85,180,174,1) 74%,rgba(84,179,173,1) 75%,rgba(84,179,173,1) 100%);*/
+    /*background: linear-gradient(to right,  rgba(135,224,253,0) 0%,rgba(85,180,174,1) 74%,rgba(84,179,173,1) 75%,rgba(84,179,173,1) 100%);*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0087e0fd', endColorstr='#54b3ad',GradientType=1 );*/
+    /*border-radius: 50%;*/
+}
+
+
 
 body{
     position: relative;
@@ -61,10 +101,7 @@ div.mobile-btn-handler {
     padding: 0 5px;
     margin: 16px 10px;
     display: none;
-}
-
-div.mobile-btn-handler:hover {
-    background-color: #ddd;
+    cursor: pointer;
 }
 
 div.mobile-btn-handler span{
@@ -78,7 +115,10 @@ div.mobile-btn-handler span{
 #mobile-section{
     background-color: #e7e7e7;
     position: fixed;
-    left: 9999px;
+    left: 0px;
+    z-index: -50;
+    top:0;
+    background-color: red;
 }
 
 #mobile-section ul {
@@ -88,13 +128,9 @@ div.mobile-btn-handler span{
 #mobile-section .img{
     padding: 30px;
     background-color: white;
-    opacity: 0.6;
     display: block;
     text-align: center;
-}
-
-#mobile-section .img:hover{
-    opacity: 1;
+    cursor: pointer;
 }
 
 #mobile-section .hi-user{
@@ -125,6 +161,7 @@ header{
     background-color: white;
     width: 100%;
     z-index: 999;
+    top: 0;
 }
 
 nav{
@@ -283,6 +320,7 @@ footer > div{
 
 footer img{
     margin: 17px 31px;
+    width: 12%;
 }
 
 
@@ -303,7 +341,6 @@ footer .splitter{
 
 #mobileSearch{
     position: relative;
-    padding-top:65px;
     display: none;
 }
 
@@ -318,8 +355,9 @@ footer .splitter{
 
 #mobileSearch img {
     position: absolute;
-    top: 76px;
+    top: 11px;
     right: 10px;
+    cursor: pointer;
 }
 
 #mobileSearch ::-webkit-input-placeholder{
@@ -335,8 +373,17 @@ footer .splitter{
 }
 
 
+
+@media screen and (max-width: 1220px) {
+
+    #searchSection .searchPopUp > div .product{
+        padding: 24px 17px;
+        height: 166px;
+    }
+}
+
 @media screen and (max-width: 1050px)
-{
+    {
     .nav-li-Links{
         display: none;
     }
@@ -344,37 +391,18 @@ footer .splitter{
     footer > div{
         width: 100%;
     }
-    /*#searchSection{*/
-        /*width:  45%*/
-    /*}*/
-}
-
-
-@media screen and (max-width: 768px) {
-
-    /*#special_offer_items, .slider, #popular_items{*/
-    /*display: none;*/
-    /*}*/
-
-    /*footer > div{*/
-    /*width: 300px;*/
-    /*}*/
-
-    /*footer img{*/
-    /*width: 80px;*/
-    /*}*/
 
     #mobileSearch{
         display: block;
     }
 
-    .uiview {
-        padding-top: 0px;
-    }
-
     #searchSection{
         display: none;
     }
+}
+
+
+@media screen and (max-width: 768px) {
 
     #searchSection > .searchPopUp > div,
     #searchSection > .searchPopUp > div:nth-child(1)
@@ -389,21 +417,31 @@ footer .splitter{
     }
 
     /*.desktop-handler{*/
-        /*display: none;*/
+    /*display: none;*/
     /*}*/
 
     /*div.logo img{*/
-        /*vertical-align: top;*/
-        /*padding: 10px 0;*/
+    /*vertical-align: top;*/
+    /*padding: 10px 0;*/
     /*}*/
 
     /*div.mobile-btn-handler{*/
-        /*display: inline-block;*/
+    /*display: inline-block;*/
     /*}*/
 
     /*#searchSection > div {*/
-        /*width: 90%;*/
+    /*width: 90%;*/
     /*}*/
+
+    footer img{
+        margin: 0 12px;
+    }
+
+    div.logo img{
+        vertical-align: top;
+        padding: 10px 0;
+        margin: 0 12px;
+    }
 
 }
 
@@ -416,25 +454,12 @@ footer .splitter{
         display: none;
     }
 
-    footer {
-        margin-top: 0px;
-    }
-
-    footer > div{
-        width: 300px;
-    }
-
-    footer img{
-        width: 80px;
-    }
-
     .desktop-handler{
         display: none;
     }
 
-    div.logo img{
-        vertical-align: top;
-        padding: 10px 0;
+    footer {
+        margin-top: 0px;
     }
 
     div.mobile-btn-handler{
@@ -445,6 +470,9 @@ footer .splitter{
         width: 90%;
     }
 
+    #scrollToTop{
+        display: none !important;
+    }
 }
 
 

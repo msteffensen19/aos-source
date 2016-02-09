@@ -9,9 +9,11 @@ $(document).on({
         // Mobile section handler
         var mobile_section_moved = $("#mobile-section").width();
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-
-        //$("#mobile-btn").click(function () { Helper.mobileSectionHandler(); });
-
+        $("#mobile-btn").click(function () {
+            $("body").animate({
+                left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
+            }, 200);
+        });
         // end Mobile section handler
 
 

@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="css/images/favicon.ico">
-    <meta name="viewport" content="width=device-width,  initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>&nbsp;Advantage Shopping</title>
     <!-- build:css css/main.min.css -->
     <link href="css/main.css" rel="stylesheet">
@@ -24,44 +24,76 @@
 
 <body data-ng-controller="mainCtrl">
 
+<div id="loader" >
+    <div>
+        <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+                    <stop stop-color="#54B3AD" stop-opacity="0" offset="0%"/>
+                    <stop stop-color="#54B3AD" stop-opacity=".631" offset="63.146%"/>
+                    <stop stop-color="#54B3AD" offset="100%"/>
+                </linearGradient>
+            </defs>
+            <g fill="none" fill-rule="evenodd">
+                <g transform="translate(1 1)">
+                    <path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="url(#a)" stroke-width="2">
+                        <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 18 18"
+                                to="360 18 18"
+                                dur="0.9s"
+                                repeatCount="indefinite"/>
+                    </path>
+                    <circle fill="#54B3AD" cx="36" cy="18" r="1">
+                        <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 18 18"
+                                to="360 18 18"
+                                dur="0.9s"
+                                repeatCount="indefinite"/>
+                    </circle>
+                </g>
+            </g>
+        </svg>
+    </div>
+</div>
 
 <login-modal></login-modal>
 
 <!-- mobile slider -->
 <span class="mobileTitle" data-ng-cloak>
-    <div class="mini-title">
+    <div class="mini-title" id="loginMobileMiniTitle">
         <label class="option" translate="My_account" ng-click="accountSection()"></label>
         <label class="option" translate="Sign_out" ng-click="signOut()"></label>
     </div>
 </span>
-<aside id="mobile-section" >
+
+<aside id="mobile-section" data-ng-cloak>
     <ul>
-        <li data-ng-click="redirect('/shoppingCart')">
-            <a class="img" >
+        <li data-ng-click="mobileRedirect('/shoppingCart')">
+            <a class="img">
                 <!--<div icon-cart ></div>-->
-                <img src="css/images/Cart.jpg" />
+                <img src="css/images/Cart.jpg"/>
                 <span>{{cartProducts.length}}</span>
             </a>
         </li>
-        <li class="pointer" data-ng-click="mobileLogin('loginMiniTitle')">
-            <a class="img center" >
-                <img src="css/images/User.jpg" />
-                <span data-ng-show="userCookie.response" class="hi-user" >
+        <li class="pointer" data-ng-click="login('loginMobileMiniTitle')">
+            <a class="img center">
+                <img src="css/images/User.jpg"/>
+                <span data-ng-show="userCookie.response" class="hi-user">
                     {{userCookie.name}}
                 </span>
             </a>
         </li>
-        <li>
-            <a class="img"><img src="css/images/Search.jpg" /></a>
+        <li data-ng-click="mobileRedirect('/searchPage')">
+            <a class="img"><img src="css/images/Search.jpg"/></a>
         </li>
     </ul>
 </aside>
 
 <!-- end mobile slider -->
-
-
-
-
 
 
 <!-- navegation -->
@@ -70,14 +102,14 @@
     <nav>
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" href="#/shoppingCart" >
+                <a class="img" href="#/shoppingCart">
                     <img src="css/images/Cart.jpg" alt="user">
                     <!--<div icon-cart></div>-->
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
                 <ul>
                     <li style="position: relative; background-color: white">
-                        <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
+                        <tool-tip-cart id="toolTipCart"></tool-tip-cart>
                     </li>
                 </ul>
             </li>
@@ -85,27 +117,28 @@
                 <a class="img" data-ng-click="login('loginMiniTitle')"
                    data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
                    data-ng-mouseleave="miniTitleOut('loginMiniTitle')">
-                    <span data-ng-show="userCookie.response" class="hi-user containMiniTitle" >
+                    <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
                         {{userCookie.name}}
                     </span>
                     <img src="css/images/User.jpg" alt="user">
                     <!--<div icon-user data-ng-class="{ selected : userCookie.response }" ></div>-->
-                <div class="mini-title" id="loginMiniTitle" >
-                    <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
-                    <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
-                </div>
+                    <div class="mini-title" id="loginMiniTitle">
+                        <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
+                        <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
+                    </div>
                 </a>
             </li>
             <li>
                 <a class="img">
-                    <tool-tip-search></tool-tip-search>
+                    <search tool-tip-search></search>
                 </a>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
             </li>
             <li class="nav-li-Links">
-                <a class="menu navLinks" ng-click="gotoElement('special_offer_items')" translate="SPECIAL_OFFER_ITEMS"></a>
+                <a class="menu navLinks" ng-click="gotoElement('special_offer_items')"
+                   translate="SPECIAL_OFFER_ITEMS"></a>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
@@ -113,7 +146,8 @@
 
         </ul>
         <div class="logo">
-            <a href="#/" ng-click="go_up()"> <img src="css/images/logo.png" /></a>
+            <a href="#/" ng-click="go_up()"> <img src="css/images/logo.png"/></a>
+
             <div id="mobile-btn" class="mobile-btn-handler" ng-click="openMobileSection()">
                 <span></span><span></span><span></span>
             </div>
@@ -122,14 +156,6 @@
 </header>
 
 <!-- end navegation " ng-show="cartCount != 0 -->
-<div id="mobileSearch" data-ng-cloak>
-    <input type="text" class="roboto-medium" placeholder="{{ 'Search' | translate}}"
-       data-ng-keypress="checkEnterKey($event)"
-       data-ng-model="autoCompleteValue"
-       data-ng-keyup="runAutocomplete()"
-    >
-    <img src="css/images/Search.jpg" alt="search">
-</div>
 
 <div class="uiview" ui-view></div>
 
@@ -137,7 +163,7 @@
 
 
 <script type="text/javascript" data-main="main" src="vendor/requirejs/require.js"></script>
-<input class="tempBtn" data-ng-click="setUser()" type="button" />
+<input class="tempBtn" data-ng-click="setUser()" type="button"/>
 <style>
     .tempBtn {
         position: fixed;

@@ -1,13 +1,14 @@
-<div>
+<div data-ng-click="redirect('/shoppingCart')">
     <div ng-hide="cart.productsInCart.length > 0" class="emptyCart">
         <label class="center items roboto-bold"> {{ 'ITEMS' | translate}}
             <span class="roboto-regular">(0)</span>
         </label>
         <label class="center roboto-medium"> {{ 'Your_shopping_cart_is_empty' | translate}} </label>
     </div>
-    <table ng-show="cart.productsInCart.length > 0">
-        <tbody>
-            <tr ng-repeat="product in cart.productsInCart track by $index" id="product{{product.id}}" data-ng-class="{ lastProduct : $last }">
+    <table ng-show="cart.productsInCart.length > 0"  >
+        <tbody >
+            <tr ng-repeat="product in cart.productsInCart track by $index" id="product{{product.id}}"
+                data-ng-class="{ lastProduct : $last }">
                 <td>
                     <img class="imageUrl" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
                 </td>
@@ -21,7 +22,7 @@
                 <td>
                     <p class="price roboto-regular">{{ product.price * product.quantity | currency:'$' }}</p>
                     <div class="closeDiv">
-                        <div icon-x class="removeProduct" ng-click="removeProduct($index)"></div>
+                        <div icon-x class="removeProduct" ng-click="removeProduct($index, $event)"></div>
                     </div>
                 </td>
             </tr>
@@ -39,12 +40,14 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <button class="roboto-medium" data-ng-click="checkout()">{{'CHECKOUT' | translate}}</button>
+                    <button class="roboto-medium" data-ng-click="checkout($event)">{{'CHECKOUT' | translate}}</button>
                 </td>
             </tr>
         </tfoot>
 
     </table>
 </div>
+
+
 
 
