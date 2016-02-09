@@ -114,6 +114,15 @@
                     </plugin>
                 </plugins>
             </build>
+            <distributionManagement>
+                <repository>
+                    <id>demoapp-release</id>
+                    <name>ADM DemoApp Release Nexus repository</name>
+                    <url>
+                        http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
+                    </url>
+                </repository>
+            </distributionManagement>
         </profile>
         <profile>
             <id>staging</id>
@@ -181,6 +190,15 @@
                     </plugin>
                 </plugins>
             </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>demoapp-snapshot</id>
+                    <name>ADM DemoApp Snapshot Nexus repository</name>
+                    <url>
+                        http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
+                    </url>
+                </snapshotRepository>
+            </distributionManagement>
         </profile>
 
         <profile>
@@ -743,21 +761,6 @@
             <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/groups/public/</url>
         </repository>
     </repositories>
-    <distributionManagement>
-        <repository>
-            <id>demoapp-release</id>
-            <name>ADM DemoApp Release Nexus repository</name>
-            <url>
-                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
-            </url>
-        </repository>
-        <snapshotRepository>
-            <id>demoapp-snapshot</id>
-            <name>ADM DemoApp Snapshot Nexus repository</name>
-            <url>
-                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
-            </url>
-        </snapshotRepository>
-    </distributionManagement>
+
 
 </project>
