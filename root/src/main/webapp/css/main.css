@@ -125,6 +125,12 @@ div.mobile-btn-handler span{
     font-size: 0;
 }
 
+#mobile-section .cart{
+    font-size: 12px;
+    position: relative;
+    top:-20px;
+}
+
 #mobile-section .img{
     padding: 30px;
     background-color: white;
@@ -403,6 +409,41 @@ footer .splitter{
 
 
 @media screen and (max-width: 768px) {
+
+
+    /*!* For all Pages *!*/
+
+    nav.pages
+    {
+        display: inline-block;
+        width: 100%;
+    }
+
+    header, .pages,  .fixedImportant, h3.roboto-regular{
+        position: static !important;
+    }
+
+    .noPromotedProductDiv{
+        margin-top: 0px;
+    }
+
+    .sticky.fixed + div .category-type-products{
+        margin-top: 0px;
+    }
+
+    .categoryData{
+        display: none !important;
+    }
+
+    /*end For all Pages*/
+
+
+
+
+
+
+
+
 
     #searchSection > .searchPopUp > div,
     #searchSection > .searchPopUp > div:nth-child(1)
