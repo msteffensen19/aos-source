@@ -56,7 +56,7 @@
 #orderPayment .noUserSection .cover div{
     border-left: solid 2px #454545;
     padding: 0 0 0 27px;
-    height: 156px;
+    /*height: 156px;*/
     height: 213px;
 }
 
@@ -114,8 +114,43 @@
 
 
 
+@media screen and (max-width: 650px)
+{
+    #orderPayment{
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
 
+    #orderPayment .noUserSection{
+        width: 100%;
+        display: block;
+    }
 
+    #orderPayment .noUserSection .cover{
+        max-width: 650px;
+        margin: 56px auto;
+        width: 100%;
+    }
+
+    #orderPayment .noUserSection .cover div{
+        height: 125px;
+    }
+
+    #orderPayment .noUserSection .cover a{
+        margin: 18px 0
+    }
+
+    #orderPayment > #userCart{
+        width: 90%;
+        display: block;
+        margin: 288px auto;
+    }
+    #orderPayment > div:nth-child(1){
+        width: 90%;
+        display: block;
+        margin: 0 auto;
+    }
+}
 
 
 
