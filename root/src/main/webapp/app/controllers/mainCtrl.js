@@ -150,6 +150,7 @@ define(['./module'], function (controllers) {
 
             $scope.login = function (miniTitleId) {
 
+                Helper.mobileSectionClose();
                 if ($rootScope.userCookie) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
@@ -192,11 +193,13 @@ define(['./module'], function (controllers) {
             /* Application helper section */
 
             $scope.redirect = function (path) {
-                if ($scope.cart.productsInCart.length == 0 && path == '/shoppingCart') {
-                    return;
-                }
+                Helper.mobileSectionClose();
                 $location.path(path);
             };
+            $scope.mobileRedirect = function (path) {
+                $scope.redirect(path);
+            };
+
 
             $scope.gotoElement = function (id) {
                 $("body").animate({
@@ -254,8 +257,10 @@ define(['./module'], function (controllers) {
 
                 Helper.UpdatePageFixed();
 
-                if ($location.path().indexOf('/category') == -1)
+                if ($location.path().indexOf('/category') == -1 && $scope.closeSearchForce + ""  != "undefined"){
                     $scope.closeSearchForce();
+                }
+                Helper.mobileSectionClose();
 
                 $timeout(function () {
                     if ($location.path() == '/') {

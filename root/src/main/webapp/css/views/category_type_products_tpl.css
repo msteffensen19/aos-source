@@ -223,9 +223,10 @@
     }
 
     .cell.categoryLeft{
-        width: 93%;
+        width: 100%;
         margin: 0 auto;
         box-sizing: border-box;
+        padding: 0;
     }
 
     .cell.categoryLeft ul {
@@ -233,12 +234,32 @@
     }
 
     .cell.categoryLeft ul .fill{
-    vertical-align: top;
+        vertical-align: top;
         display: inline-block !important;
+    }
+
+    .categoryLeft .filterCount{
+        padding: 3px 23px;
+    }
+
+    .categoryLeft label{
+        padding: 0 23px;
     }
 
     .cell.categoryRight{
         text-align: center;
+    }
+
+    .categoryLeft ul li h4{
+        padding: 9px 23px;
+    }
+
+    .categoryLeft ul li h4:before{
+        top: 14px;
+        right: 22px;
+    }
+    .categoryLeft .option{
+        padding: 10px 23px;
     }
 
 }

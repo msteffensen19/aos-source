@@ -333,7 +333,7 @@ footer > div{
 
 footer img{
     margin: 17px 31px;
-    width: 12%;
+    width: 14%;
 }
 
 
@@ -486,7 +486,8 @@ footer .splitter{
     /*}*/
 
     footer img{
-        margin: 0 12px;
+        margin: 0 10px;
+        width: 16%;
     }
 
     div.logo img{

@@ -273,7 +273,7 @@
 
 
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 768px) {
 
     #shoppingCart table, #shoppingCart thead, #shoppingCart tbody,
     #shoppingCart th, #shoppingCart td, #shoppingCart tr {
@@ -290,7 +290,7 @@
         text-align: left;
     }
 
-    #shoppingCart td *{
+    #shoppingCart td * {
         display: inline-block;
         margin: 0;
         padding: 0;
@@ -305,19 +305,18 @@
     }
 
     #shoppingCart tbody tr:nth-child(even) td {
-        border-top:  solid 1px white;
+        border-top: solid 1px white;
     }
 
-    #shoppingCart tbody tr td:first-child  {
+    #shoppingCart tbody tr td:first-child {
         border-top: none 1px transparent;
     }
 
     #shoppingCart tbody tr:nth-child(even) .productColor {
-        border:solid 1px white;
+        border: solid 1px white;
     }
 
-
-    #shoppingCart td .mobileViewer{
+    #shoppingCart td .mobileViewer {
         width: calc(50% - 40px);
         text-align: right;
         float: left;
@@ -345,7 +344,7 @@
         line-height: 2;
     }
 
-    #shoppingCart .smollCell{
+    #shoppingCart .smollCell {
         width: 100%;
         text-align: left;
     }
@@ -367,7 +366,7 @@
         display: none;
     }
 
-    #shoppingCart .smollCell > span a.remove{
+    #shoppingCart .smollCell > span a.remove {
         text-align: center;
         padding: 10px 25px;
         border: solid 1px;
@@ -378,16 +377,14 @@
         margin: 14px auto;
     }
 
-    #shoppingCart .smollCell > span a.remove:hover{
-        color:white;
+    #shoppingCart .smollCell > span a.remove:hover {
+        color: white;
         background-color: #2a2a2a;
     }
 
-
-    #shoppingCart tbody tr:last-child td{
+    #shoppingCart tbody tr:last-child td {
         border-bottom: none;
     }
-
 
     #shoppingCart tfoot {
         width: 100%;
@@ -395,28 +392,30 @@
         margin-top: 40px;
     }
 
-    #shoppingCart tfoot td{
+    #shoppingCart tfoot td {
         text-align: center;
     }
 
-
-    #shoppingCart tfoot .icons #paypal:after{
-        left:39px
+    #shoppingCart tfoot .icons #paypal:after {
+        left: 39px
     }
 
-    #shoppingCart tfoot .icons #discover:after{
-        left:44px;
+    #shoppingCart tfoot .icons #discover:after {
+        left: 44px;
     }
 
-    #shoppingCart tfoot .icons #visa:after{
-        left:-16px;
+    #shoppingCart tfoot .icons #visa:after {
+        left: -16px;
     }
 
     #shoppingCart tfoot td > span:last-child,
-    #shoppingCart tfoot td > button{
+    #shoppingCart tfoot td > button {
         margin-right: 25px;
     }
 
+    .sticky.fixedImportant + #shoppingCart {
+    margin: 0;
+    }
 }
 
 @media only screen and (max-width: 480px) {

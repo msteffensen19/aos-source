@@ -104,18 +104,18 @@ Helper.checkPagePossitions = function(){
 
 Helper.mobileSectionHandler = function(){
 
-    $("body").animate({
-        left: $("body").css("left") != "0px" ? "0px" : Helper.mobile_section_moved
-    }, 200);
+    //$("body").animate({
+    //    left: $("body").css("left") != "0px" ? "0px" : Helper.mobile_section_moved
+    //}, 200);
     $("#mobile-section").animate({
         left: $("#mobile-section").css("left") != "0px" ? "0px" : "-" + Helper.mobile_section_moved
     }, 200);
 }
 
 Helper.mobileSectionClose = function(){
-    $("body").stop().animate({
-        left: "0px",
-    }, 200);
+    //$("body").stop().animate({
+    //    left: "0px",
+    //}, 200);
     $("#mobile-section").stop().animate({
         left: "-" + Helper.mobile_section_moved
     }, 200);
@@ -128,28 +128,23 @@ Main.addAnimPlaceholderEventListener = function(){
 }
 
 
-$(document).on({
+$(document).ready(function() {
 
-    ready: function() {
+    $(window).on({
+    resize: _resize,
+    scroll: _scroll,
+    });
 
-
-        $(window).on({
-        resize: _resize,
-        scroll: _scroll,
-        });
-
-        function  _scroll(){
-            Helper.checkPagePossitions();
-            _resize();
-        }
-
+    function  _scroll(){
+        Helper.checkPagePossitions();
         _resize();
-        function _resize() {
+    }
 
-            $(".mini-title").css("display", "none");
-            Helper.mobileSectionClose();
-        }
+    _resize();
+    function _resize() {
 
-    },
+        $(".mini-title").css("display", "none");
+        Helper.mobileSectionClose();
+    }
 });
 

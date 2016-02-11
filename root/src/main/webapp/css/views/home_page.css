@@ -637,6 +637,21 @@ label.shop_now:after{
     }
 
 
+    footer > div {
+        width: 100%;
+    }
+
+    .shop_now{
+        font-size: 22px;
+        padding: 0 0 32px 18px;
+        bottom: 4px;
+    }
+
+    .shop_nowSub{
+        bottom: 17px;
+        left: 18px;
+        font-size: 17px;
+    }
 
 }
 

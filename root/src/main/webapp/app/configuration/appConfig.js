@@ -113,6 +113,10 @@ define([],function(){
                 }
             }
         }).
+        state('searchPage',{
+            url: '/searchPage',
+            templateUrl: 'app/views/search-page.html',
+        }).
         state('404',{
             url: '/404',
             templateUrl: 'app/views/404.html',
