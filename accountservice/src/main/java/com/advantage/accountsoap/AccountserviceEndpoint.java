@@ -197,7 +197,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
     @ResponsePayload
     public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
-        AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getNewPassword());
+        AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getOldPassword(), request.getNewPassword(), request.getBase64Token());
         return new ChangePasswordResponse(response);
     }
     //endregion
