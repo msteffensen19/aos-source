@@ -5,23 +5,24 @@ import com.advantage.accountsoap.dao.AbstractRepository;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
-import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
+import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.util.AccountPassword;
-import com.advantage.common.security.TokenJWT;
-import com.advantage.common.enums.AccountType;
-import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
 import com.advantage.accountsoap.util.ValidationHelper;
+import com.advantage.common.enums.AccountType;
 import com.advantage.common.security.Token;
+import com.advantage.common.security.TokenJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Qualifier("accountRepository")
 @Repository
@@ -257,7 +258,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public AccountStatusResponse doLogin(String loginUser, String loginPassword, String email) {
         //  Check arguments: Not NULL and Not BLANK
-        if ((loginUser == null) || (loginUser.length() == 0)) {
+        if ((loginUser.isEmpty()) || (loginUser.length() == 0)) {
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
@@ -265,8 +266,10 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
-        if ((email == null) || (email.length() == 0)) {
-            return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+        if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.equalsIgnoreCase("Yes")) {
+            if ((email == null) || (email.length() == 0)) {
+                return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+            }
         }
 
         //  Try to get user details by login user-name
