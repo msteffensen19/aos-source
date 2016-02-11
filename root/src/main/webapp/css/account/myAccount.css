@@ -224,8 +224,35 @@
 
 
 
+@media screen and (max-width: 768px)
+{
+    #myAccountContainer{
+        padding-top: 0px !important;
+    }
+
+}
+
+
+
+@media screen and (max-width: 780px) {
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
+        width: 25%;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
+        width: 38%;
+    }
+}
+
 @media screen and (max-width: 480px)
 {
+
+    #myAccountContainer{
+        margin-bottom: 60px;
+    }
 
     #myAccountContainer .cube > div > div{
         width: 100%;
@@ -239,7 +266,7 @@
     }
 
     .fixed + #myAccountContainer{
-    margin-bottom: 40px;
+        margin-bottom: 40px;
     }
 
     #myAccountContainer .cube .floatRigth{
@@ -257,14 +284,21 @@
     #myAccountContainer .cube .categoriesBox .categoriesCheckboxes{
         width: 100%;
     }
+
     #myAccountContainer .cube .categoriesBox p{
         padding-bottom: 0;
     }
 
-
     #infoDemo > div{
         width: 185px;
         margin: 34px auto;
+    }
+}
+
+@media screen and (max-width: 350px)
+{
+    #myAccountContainer .cube .floatRigth{
+        float: none;
     }
 }
 

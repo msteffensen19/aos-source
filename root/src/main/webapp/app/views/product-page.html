@@ -10,13 +10,17 @@
 
 
         <!-- mobile description section  -->
+
         <div id="mobileDescription" class="screen480">
             <h1 class="roboto-regular" > {{::product.productName | uppercase}} </h1>
             <h2 class="roboto-thin"> {{::product.price | currency:'$'}} </h2>
         </div>
+
         <!-- end mobile description section -->
 
+
         <!-- image section -->
+
         <div id="product-image">
             <figure>
                 <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
@@ -45,6 +49,7 @@
         <div id="productProperties">
             <div class="colors" ng-if="product.colors.length > 0">
                 <h2 translate="Color" class="Colors roboto-light" class="roboto-light" ></h2>
+                <div>
                 <span title="{{color.name}}" data-ng-repeat="color in product.colors" class="productColor"
                       data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
@@ -52,6 +57,7 @@
                       data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 } '
                       data-ng-click="setColor(color)" >
                 </span>
+                </div>
             </div>
             <div>
                 <label class="Quantity roboto-light" translate="Quantity:" ></label>

@@ -86,6 +86,9 @@ define(['./module'], function (directives) {
                     }
                 }],
                 link: function(s, e, a, ctrl) {
+
+                    e.addClass("sec-plus-minus")
+
                     var minValue = ctrl.getMinValue();
                     var maxValue = ctrl.getMaxValue();
                     if (s.numAttr <= minValue) {

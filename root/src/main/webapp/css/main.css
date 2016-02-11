@@ -503,6 +503,10 @@ footer .splitter{
 @media screen and (max-width: 480px) {
 
 
+    .pages{
+        display: none !important;
+    }
+
     #special_offer_items, .slider, #popular_items{
         display: none;
     }

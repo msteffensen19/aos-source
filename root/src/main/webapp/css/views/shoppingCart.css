@@ -301,7 +301,7 @@
     }
 
     #shoppingCart tbody tr:nth-child(even) {
-        background: #CCC
+        /*background: #CCC*/
     }
 
     #shoppingCart tbody tr:nth-child(even) td {
@@ -330,7 +330,7 @@
     }
 
     #shoppingCart img {
-        /*width: 200px;*/
+        width: 70%;
         margin: 0 auto;
         display: block;
     }
@@ -368,18 +368,27 @@
 
     #shoppingCart .smollCell > span a.remove {
         text-align: center;
-        padding: 10px 25px;
-        border: solid 1px;
-        border-radius: 4px;
+        /*padding: 10px 25px;*/
+        padding: 10px 10px;
+        /*border: solid 1px;*/
+        /*border-radius: 4px;*/
         transition: all .3s ease;
         font-size: 16px;
-        display: block;
+        /*display: block;*/
+        display: inline-block;
+        width: auto;
         margin: 14px auto;
+        color: #54b3ad;
+    }
+
+    #shoppingCart .smollCell > span a.remove.red {
+        color: #9d1823;
     }
 
     #shoppingCart .smollCell > span a.remove:hover {
-        color: white;
-        background-color: #2a2a2a;
+        /*color: white;*/
+        /*background-color: #2a2a2a;*/
+        text-decoration: underline !important;
     }
 
     #shoppingCart tbody tr:last-child td {
@@ -414,7 +423,11 @@
     }
 
     .sticky.fixedImportant + #shoppingCart {
-    margin: 0;
+        margin: 0;
+    }
+
+    #shoppingCart td button {
+        float: none;
     }
 }
 
@@ -428,6 +441,8 @@
     #shoppingCart > div.bigEmptyCart label:before{
         width: 199px;
     }
-
+    #shoppingCart table{
+        padding-bottom: 90px;
+    }
 }
 

@@ -140,11 +140,12 @@
         margin: 18px 0
     }
 
-    #orderPayment > #userCart{
+    .noUserLogin #orderPayment > #userCart{
         width: 90%;
         display: block;
         margin: 288px auto;
     }
+
     #orderPayment > div:nth-child(1){
         width: 90%;
         display: block;

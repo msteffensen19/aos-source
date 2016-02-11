@@ -150,11 +150,11 @@ define(['./module'], function (controllers) {
 
             $scope.login = function (miniTitleId) {
 
-                Helper.mobileSectionClose();
                 if ($rootScope.userCookie) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
+                Helper.mobileSectionClose();
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();
                 var top = "5%";
