@@ -26,7 +26,7 @@ define(['./module'], function (directives) {
                 }
             }
         })
-        .directive('secValidate', ['$templateCache', '$timeout', '$interval', function($templateCache, $timeout, $interval){
+        .directive('secValidate', ['$templateCache', '$timeout', function($templateCache, $timeout){
             return{
                 restrict: 'E',
                 require: 'secValidate',
@@ -75,18 +75,6 @@ define(['./module'], function (directives) {
                         var invalid = this.getInvalidItems();
                         outFunction({ invalid : invalid});
                     }
-
-                    //var temp = 0;
-                    //$timeout(checkValidation, 2000, this);
-                    //
-                    //function checkValidation(_this){
-                    //    $rootScope.$emit('invaliditemslengthUpdate', {
-                    //        invalidItems : s.invalidItems.length,
-                    //        //inputsWasChanged : this.getInputsWasChangedBoolean()
-                    //    });
-                    //    console.log(++temp)
-                    //    $timeout(checkValidation, 2000, this);
-                    //}
 
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
@@ -167,7 +155,7 @@ define(['./module'], function (directives) {
                 }
             }
         })
-        .directive('secInput', ['$templateCache', '$timeout', '$interval', '$rootScope', function($templateCache, $timeout, $interval,$rootScope){
+        .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
             return {
                 restrict: 'E',
                 replace: true,
@@ -447,14 +435,9 @@ define(['./module'], function (directives) {
                                         ctrls[1].shiftInvalidField(a.idAttr);
                                         s.inputFocus(s.id);
                                     });
-                                    $rootScope.$emit('invaliditemslengthUpdate', {
-                                        invalidItems : ctrls[1].getInvalidItemsCount(),
-                                        inputsWasChanged : ctrls[1].getInputsWasChangedBoolean(),
-                                    });
                                 }
-                            });
+                            })
                         }
-
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
@@ -466,7 +449,6 @@ define(['./module'], function (directives) {
                         }
                         $timeout(function(){ s.inputBlur(s.id, true); }, 100)
                         $timeout(function(){ s.inputKeyup(s.id); }, 200)
-
                     }
                 }
             }

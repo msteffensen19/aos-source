@@ -70,7 +70,6 @@ define(['./module'], function (services) {
                     },
                     "purchasedProducts": purchasedProducts,
                 }
-                Helper.loaderHandler(true);
                 $http({
                     method: "post",
                     url: server.order.safePay(user.id),
@@ -81,11 +80,9 @@ define(['./module'], function (services) {
                     },
                 }).
                 then(function (res){
-                    Helper.loaderHandler(false);
                     defer.resolve(res.data)
                 }, function (err){
                     //console.log(err);
-                    Helper.loaderHandler(false);
                     defer.reject("probl.")
                 })
                 return defer.promise;
@@ -110,10 +107,8 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.order.accountUpdate();
-                Helper.loaderHandler(true);
                 mini_soap.post(params.path, params.method, paramsToPass).
                 then(function (res) {
-                        Helper.loaderHandler(false);
                         defer.resolve({
                             success: res.SUCCESS,
                             userId: res.USERID,
@@ -121,7 +116,6 @@ define(['./module'], function (services) {
                         });
                     },
                     function (response) {
-                        Helper.loaderHandler(false);
                         console.log(response);
                         defer.reject("Request failed! ");
                     });
@@ -136,7 +130,6 @@ define(['./module'], function (services) {
                 if (user && user.response && user.response.userId != -1) {
 
                     var params = server.account.getAccountById();
-                    Helper.loaderHandler(true);
                     mini_soap.post(params.path, params.method, {
                             accountId: user.response.userId
                         })
@@ -156,12 +149,10 @@ define(['./module'], function (services) {
                                     "phoneNumber": response.PHONENUMBER,
                                     "email": response.EMAIL,
                                 }
-                                Helper.loaderHandler(false);
                                 defer.resolve(user);
                             },
                             function (response) {
                                 console.log(response);
-                                Helper.loaderHandler(false);
                                 defer.reject("Request failed! (getAccountById)");
                             });
                 }
@@ -192,17 +183,14 @@ define(['./module'], function (services) {
                         "senumberOfProducts": $filter('productsCartCount')(cart),
                         "setransactionType": "SHIPPINGCOST"
                     };
-                    Helper.loaderHandler(true);
                     $http({
                         method: "post",
                         url: server.order.getShippingCost(),
                         data: paramsToPass
                     }).
                     then(function (shippingCost){
-                        Helper.loaderHandler(false);
                         defer.resolve(shippingCost.data)
                     }, function (err){
-                        Helper.loaderHandler(false);
                         console.log(err); defer.reject("probl.")
                     })
                 })
@@ -274,6 +262,7 @@ define(['./module'], function (services) {
             //    return defer.promise;
             //}
             //
+
 
         }]);
 });

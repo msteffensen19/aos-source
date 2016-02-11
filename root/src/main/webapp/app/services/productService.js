@@ -30,7 +30,6 @@ define(['./module'], function (services) {
 
         function getProductsBySearch(word, quantity) {
 
-            Helper.loaderHandler(true);
             var request = $http({
                 method: "get",
                 url: server.catalog.getProductsBySearch(word, quantity)

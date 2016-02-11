@@ -113,12 +113,13 @@ div.mobile-btn-handler span{
 }
 
 #mobile-section{
-    background-color: #e7e7e7;
+    background-color: white;
     position: fixed;
     left: 0px;
     z-index: -50;
-    top:0;
-    background-color: red;
+    top:66px;
+    height: 100%;
+    z-index: 990;
 }
 
 #mobile-section ul {
@@ -132,16 +133,22 @@ div.mobile-btn-handler span{
 }
 
 #mobile-section .img{
-    padding: 30px;
+    padding: 14px;
     background-color: white;
     display: block;
     text-align: center;
     cursor: pointer;
 }
 
+#mobile-section .img:active{
+    background-color: #ededed;
+}
+
 #mobile-section .hi-user{
     font-size: 16px;
     display: block;
+    position: relative;
+    top: 7px;
 }
 
 .mobileTitle {
@@ -412,16 +419,20 @@ footer .splitter{
 
 
     /*!* For all Pages *!*/
+    /*
 
+
+    */
     nav.pages
     {
         display: inline-block;
         width: 100%;
     }
 
-    header, .pages,  .fixedImportant, h3.roboto-regular{
+    .pages,  .fixedImportant, h3.roboto-regular{
         position: static !important;
     }
+
 
     .noPromotedProductDiv{
         margin-top: 0px;

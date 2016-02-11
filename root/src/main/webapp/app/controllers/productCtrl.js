@@ -26,6 +26,7 @@ define(['./module'], function (controllers) {
             s.colorSelected = s.colorSelected || s.product.colors[0];
 
             s.addToCart = function(){
+
                 var productToAdd = angular.copy(s.product);
                 productToAdd.colors = [s.colorSelected];
                 if(s.pageState == 'edit'){

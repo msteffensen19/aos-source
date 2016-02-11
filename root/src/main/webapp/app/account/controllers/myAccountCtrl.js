@@ -17,7 +17,6 @@ define(['./module'], function (controllers) {
                 }
             }
 
-            s.userSecondWsdl = s.getConfigUserSecondWsdl();
             s.accountDetails = resolveParams.accountDetails;
             s.shippingDetails = resolveParams.shippingDetails;
             s.masterCredit = resolveParams.paymentPreferences ?
