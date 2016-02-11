@@ -113,29 +113,42 @@ div.mobile-btn-handler span{
 }
 
 #mobile-section{
-    background-color: #e7e7e7;
+    background-color: white;
     position: fixed;
     left: 0px;
     z-index: -50;
-    top:0;
-    background-color: red;
+    top:66px;
+    height: 100%;
+    z-index: 990;
 }
 
 #mobile-section ul {
     font-size: 0;
 }
 
+#mobile-section .cart{
+    font-size: 12px;
+    position: relative;
+    top:-20px;
+}
+
 #mobile-section .img{
-    padding: 30px;
+    padding: 14px;
     background-color: white;
     display: block;
     text-align: center;
     cursor: pointer;
 }
 
+#mobile-section .img:active{
+    background-color: #ededed;
+}
+
 #mobile-section .hi-user{
     font-size: 16px;
     display: block;
+    position: relative;
+    top: 7px;
 }
 
 .mobileTitle {
@@ -403,6 +416,45 @@ footer .splitter{
 
 
 @media screen and (max-width: 768px) {
+
+
+    /*!* For all Pages *!*/
+    /*
+
+
+    */
+    nav.pages
+    {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .pages,  .fixedImportant, h3.roboto-regular{
+        position: static !important;
+    }
+
+
+    .noPromotedProductDiv{
+        margin-top: 0px;
+    }
+
+    .sticky.fixed + div .category-type-products{
+        margin-top: 0px;
+    }
+
+    .categoryData{
+        display: none !important;
+    }
+
+    /*end For all Pages*/
+
+
+
+
+
+
+
+
 
     #searchSection > .searchPopUp > div,
     #searchSection > .searchPopUp > div:nth-child(1)

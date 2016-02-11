@@ -9,10 +9,7 @@ define(['./module'], function (directives) {
         return {
             template: $templateCache.get('app/partials/toolTipCart.html'),
             link: function(s) {
-                s.checkout = function(event){
-                    if(event){
-                        event.stopPropagation();
-                    }
+                s.checkout = function(){
                     if(orderService.userIsLogin())
                     {
                         location.path('/orderPayment');

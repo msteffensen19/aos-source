@@ -67,7 +67,7 @@ define(['./module'], function (directives) {
                                 if($location.path() == '/register'){
                                     $location.path('/')
                                 }
-                                $scope.calculateMobileSection()
+
                                 wellcome();
                             }
                             else {

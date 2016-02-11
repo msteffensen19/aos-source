@@ -26,6 +26,7 @@ define([],function(){
                         {
                             orderService.getShippingCost(user).
                             then(function (shippingCost) {
+
                                 defer.resolve({
                                     shippingCost : shippingCost,
                                     user : user,

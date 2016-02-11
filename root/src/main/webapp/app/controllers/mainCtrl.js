@@ -28,10 +28,6 @@ define(['./module'], function (controllers) {
                 $scope.config = response;
                 $scope.refreshTimeOut();
             });
-
-            $scope.getConfigUserSecondWsdl = function(){
-                return $scope.config.userSecondWsdl == 'true';
-            }
             /*===========================  end Get configuration ============================*/
 
 
@@ -41,10 +37,7 @@ define(['./module'], function (controllers) {
                 $scope.cart = cart;
             });
 
-            $scope.removeProduct = function (index, event) {
-                if(event){
-                    event.stopPropagation();
-                }
+            $scope.removeProduct = function (index) {
                 productsCartService.removeProduct(index).then(function (cart) {
                     $scope.cart = cart;
                     $scope.checkCart();
@@ -139,8 +132,6 @@ define(['./module'], function (controllers) {
                         $scope.cart = cart;
                         $scope.checkCart();
                     });
-                    $scope.calculateMobileSection()
-
                     $(".mini-title").css("display", "none");
                 });
             }
@@ -175,7 +166,7 @@ define(['./module'], function (controllers) {
 
                 $(".PopUp").fadeIn(100, function () {
                     $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
-                    $scope.closeMobileSection();
+                    $("body").css({"left": "0px",})
                 });
 
             }
@@ -200,13 +191,10 @@ define(['./module'], function (controllers) {
 
             /* Application helper section */
 
-
-            $scope.mobileRedirect = function (path) {
-                //$scope.openMobileSection();
-                $scope.redirect(path);
-            };
-
             $scope.redirect = function (path) {
+                if ($scope.cart.productsInCart.length == 0 && path == '/shoppingCart') {
+                    return;
+                }
                 $location.path(path);
             };
 
@@ -269,10 +257,6 @@ define(['./module'], function (controllers) {
                 if ($location.path().indexOf('/category') == -1)
                     $scope.closeSearchForce();
 
-
-
-
-
                 $timeout(function () {
                     if ($location.path() == '/') {
                         if ($(".autoCompleteCover").width() < 100) {
@@ -284,11 +268,7 @@ define(['./module'], function (controllers) {
                     }
                 }, 1050);
                 $scope.refreshTimeOut();
-                $scope.closeMobileSection();
-
             });
-
-
 
 
             /*
@@ -330,59 +310,14 @@ define(['./module'], function (controllers) {
             //}
 
 
-            var mobile_section_moved = $("#mobile-section").width();
-
             Main.addAnimPlaceholderEventListener();
-
-            $scope.calculateMobileSection = function(){
-                setTimeout(function(){
-                    $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-                    mobile_section_moved = $("#mobile-section").width();
-                    $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-                    $scope.closeMobileSection()
-                }, 100)
-            }
-
-            $scope.calculateMobileSection()
+            $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+            Helper.mobile_section_moved = $("#mobile-section").width();
 
             $scope.openMobileSection = function () {
-                $("body").animate({
-                    left: $("body").css("left") != "0px" ? "0px" : mobile_section_moved
-                }, 200);
-                $("#mobile-section").animate({
-                    left: $("body").css("left") == "0px" ? "0px" : "-" + mobile_section_moved
-                }, 200);
+
+                Helper.mobileSectionHandler();
             }
-
-            $scope.closeMobileSection = function () {
-
-                $("body").animate({
-                    left: "0px"
-                }, 200);
-                $("#mobile-section").animate({
-                    left: "-" + mobile_section_moved
-                }, 200);
-
-                $("#loginMobileMiniTitle").fadeOut(300);
-
-            }
-
-            $(document).ready(function() {
-
-                $(window).on({
-                    resize: _resize,
-                    scroll: _scroll,
-                });
-                function  _scroll(){
-                    Helper.checkPagePossitions();
-                }
-                _resize();
-                function _resize() {
-                    $scope.closeMobileSection();
-                    $(".mini-title").css("display", "none");
-                }
-
-            });
 
         }]);
 });

@@ -76,7 +76,7 @@
             <a class="img">
                 <!--<div icon-cart ></div>-->
                 <img src="css/images/Cart.jpg"/>
-                <span>{{cartProducts.length}}</span>
+                <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
             </a>
         </li>
         <li class="pointer" data-ng-click="login('loginMobileMiniTitle')">
@@ -163,7 +163,9 @@
 
 
 <script type="text/javascript" data-main="main" src="vendor/requirejs/require.js"></script>
+
 <input class="tempBtn" data-ng-click="setUser()" type="button"/>
+
 <style>
     .tempBtn {
         position: fixed;
@@ -177,5 +179,6 @@
         cursor: none;
     }
 </style>
+
 </body>
 </html>
