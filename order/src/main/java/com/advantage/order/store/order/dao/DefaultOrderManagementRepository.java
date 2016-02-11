@@ -163,7 +163,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
             final String messageString = getBlankStringArgumentMessage(argumentInformativeName);
             throw new IllegalArgumentException(messageString);
         }
-        else if (PaymentMethodEnum.contains(paymentMethod)) {
+        else if (!PaymentMethodEnum.contains(paymentMethod)) {
             final String stringMessage = getNotInListArgumentMessage(paymentMethod, argumentInformativeName);
             throw new IllegalArgumentException(stringMessage);
         }

@@ -5,7 +5,6 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
-import com.advantage.common.enums.TransactionTypeEnum;
 import com.advantage.order.store.order.dao.ShoppingCartRepository;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.dao.OrderManagementRepository;
