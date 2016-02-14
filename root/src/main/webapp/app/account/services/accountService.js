@@ -170,7 +170,7 @@ define(['./module'], function (services) {
                         expirationDate: card.expirationDate.month + card.expirationDate.year,
                         cvvNumber: card.cvv,
                         customerName: card.name,
-                        referenceId: "??????",
+                        referenceId: "1234567890",
                     }
 
                     var defer = $q.defer();
@@ -190,7 +190,7 @@ define(['./module'], function (services) {
 
                     var expectToReceive = {
                         safePayUsername:safePay.username,
-                        referenceId: "???????"
+                        referenceId: "1234567890"
                     }
                     
                     var defer = $q.defer();

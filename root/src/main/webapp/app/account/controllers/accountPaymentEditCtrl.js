@@ -13,6 +13,10 @@ define(['./module'], function (controllers) {
         '$location', 'resolveParams', 'accountService',
         function (s, $timeout, $location, resolveParams, accountService) {
 
+            l("resolveParams.paymentPreferences");
+            l(resolveParams.paymentPreferences);
+            l("resolveParams.paymentPreferences");
+
             var _i = 0;
             checkLogin();
             function checkLogin() {
@@ -31,7 +35,6 @@ define(['./module'], function (controllers) {
                 s.years.push((now.getFullYear() + i) + "");
             }
 
-
             s.card = {
                 number: '',
                 cvv: '',
@@ -41,6 +44,7 @@ define(['./module'], function (controllers) {
                 },
                 name: '',
             }
+
             s.saveMasterCredit = function () {
                 accountService.updateMasterCreditMethod(s.card).then(function (response) {
                     if (response && response.REASON) {

@@ -17,6 +17,7 @@ define(['./module'], function (controllers) {
             }
 
             s.accountDetails = resolveParams.accountDetails;
+
             s.accountDetailsAnswer = {message: '', class: 'invalid'}
             s.saveAccountDetails = function () {
 
