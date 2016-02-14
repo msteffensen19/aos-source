@@ -55,11 +55,16 @@
 .PopUp input[type=text]{
     border-bottom: 1px solid #CECCCC;
     border-top: 1px solid #CECCCC;
+    padding: 5px 0;
 }
 
 
 .login input[type="text"]:first-child{
     border-top: 1px solid #CECCCC;
+}
+
+.login input[type="password"] {
+    padding: 5px 0;
 }
 
 .login input[type="password"].bottomLine {
@@ -88,6 +93,7 @@
     display: block;
     opacity: .5;
     cursor: pointer;
+    padding: 8px 0;
 }
 
 .create-new-account{
@@ -119,18 +125,17 @@
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
 
-    .facebook {
-        background-position: 21px center;
+    .PopUp > div:nth-child(1){
+        margin: 10%;
+        width: 80%;
+        padding: 20px 38px;
     }
-}
-
-@media screen and (max-width: 360px) {
 
     .facebook {
         background-image: none;
         background-position: 21px center;
     }
-
 }
+

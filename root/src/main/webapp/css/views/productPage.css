@@ -103,7 +103,7 @@
 }
 
 #productProperties >  div{
-    padding: 20px 0px;
+    padding: 5px 0px;
     margin-bottom: 20px ;
 }
 
@@ -129,7 +129,7 @@
     white-space: nowrap;
     font-size: 16px;
     position: relative;
-    top:2px;
+    top:5px;
     padding-right: 18px;
     vertical-align: top;
 }
@@ -140,8 +140,7 @@
     display: inline-block;
     position: relative;
     top: 0px;
-    margin: 0 11px;
-    margin-bottom:8px;
+    margin: 5px 11px;
     border-radius: 50%;
     background: white;
     border:solid 1px #9d9d9d;
@@ -263,16 +262,16 @@
     }
 
     #description {
-        max-width: 434px;
+        max-width: 1434px;
         width: auto;
         margin: 0 auto;
-        padding: 10px 40px;
+        padding: 10px 30px;
         display: block;
     }
 
     #description h1{
         text-align: center;
-        padding-bottom: 50px;
+        padding-bottom: 0px;
     }
 
     #productProperties {
@@ -281,8 +280,9 @@
     }
 
     #productProperties > div{
-        padding: 30px;
+        padding: 15px 30px;
         margin: 0;
+        display: table-cell;
     }
 
     .product_specifications{
@@ -307,12 +307,12 @@
         padding-top: 0;
     }
 
-    .sec-plus-minus{
+    #productProperties > div .sec-plus-minus{
         transform: scale(1.4);
         display: inline-block;
         transform-origin: left;
-
     }
+
 
 }
 
@@ -327,6 +327,14 @@
     margin: 0;
     }
 
+    .productImage.pages.fixed + section,
+    .productImage.fixedImportant + section,
+    #product-image > figure > img{
+        margin-top:0px;
+        margin:0px;
+        padding: 0;
+    }
+
     #product-image{
         width: 90%;
         margin: 0 auto;
@@ -334,7 +342,7 @@
 
     #mobileDescription{
         display: inline-block;
-        padding: 30px;
+        padding: 0 30px;
     }
 
 
@@ -354,11 +362,11 @@
 
     #productProperties button{
         width: calc(100% - 60px);
-        margin: 10px 30px;
+        margin: 0px 30px;
     }
 
     .product_specifications{
-        padding: 32px;
+        padding: 0 32px;
     }
 
     .list{
@@ -369,6 +377,15 @@
         border-bottom: none 1px #e8e8e8;
         margin-bottom: 30px;
     }
+
+    #productProperties .Quantity {
+        font-size: 14px;
+        color: #020202;
+        margin: 0 8px 0 0 0;
+        position: relative;
+        top: -7px;
+    }
+
 }
 
 

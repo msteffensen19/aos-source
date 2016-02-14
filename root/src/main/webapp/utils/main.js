@@ -146,6 +146,13 @@ $(document).ready(function() {
 
         $(".mini-title").css("display", "none");
         Helper.mobileSectionClose();
+
+
+
+
+
+
+
     }
 });
 

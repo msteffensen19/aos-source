@@ -1,5 +1,5 @@
-<div data-ng-click="redirect('/shoppingCart')">
-    <div ng-hide="cart.productsInCart.length > 0" class="emptyCart">
+<div>
+    <div ng-hide="cart.productsInCart.length > 0" class="emptyCart" data-ng-click="redirect('/shoppingCart')">
         <label class="center items roboto-bold"> {{ 'ITEMS' | translate}}
             <span class="roboto-regular">(0)</span>
         </label>
@@ -8,7 +8,8 @@
     <table ng-show="cart.productsInCart.length > 0"  >
         <tbody >
             <tr ng-repeat="product in cart.productsInCart track by $index" id="product{{product.id}}"
-                data-ng-class="{ lastProduct : $last }">
+                data-ng-class="{ lastProduct : $last }"
+                data-ng-click="redirect('/product/' + product.productId + '?color=' + product.color.code + '&quantity=' + product.quantity + '&pageState=edit')">
                 <td>
                     <img class="imageUrl" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
                 </td>
@@ -27,7 +28,7 @@
                 </td>
             </tr>
         </tbody>
-        <tfoot>
+        <tfoot  data-ng-click="redirect('/shoppingCart')">
             <tr>
                 <td colspan="2">
                     <span class="roboto-medium">{{'TOTAL' | translate}}
@@ -47,6 +48,9 @@
 
     </table>
 </div>
+
+
+
 
 
 
