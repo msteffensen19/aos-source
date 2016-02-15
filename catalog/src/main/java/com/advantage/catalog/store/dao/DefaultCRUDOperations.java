@@ -39,7 +39,7 @@ public interface DefaultCRUDOperations<T> {
     int delete(T... entities);
 
     /**
-     * Delete recprd by id
+     * Delete record by id
      *
      * @param id record id
      * @return entity reference

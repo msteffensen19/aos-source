@@ -158,6 +158,33 @@ public class ProductService {
         return new ProductResponseDto(true, product.getId(), "Product was updated successful");
     }
 
+    /**
+     * Delete a product with all its attributes, colors and images.
+     * @param productId
+     * @param hexColor
+     * @return
+     */
+    @Transactional
+    public ProductResponseDto deleteProduct(Long productId) {
+        ArgumentValidationHelper.validateLongArgumentIsPositive(productId, "product id");
+
+        ProductResponseDto productResponse;
+
+        Product productToDelete = productRepository.get(productId);
+        if (productToDelete != null) {
+            int result = productRepository.delete(productToDelete);
+            if (result == 1) {
+                productResponse = new ProductResponseDto(true, productToDelete.getId(), "Product was deleted successful");
+            } else {
+                productResponse = new ProductResponseDto(false, productToDelete.getId(), "Product was not deleted");
+            }
+        } else {
+            productResponse = new ProductResponseDto(false, productToDelete.getId(), "Product id=" + productId + " was not found in products catalog");
+        }
+
+        return productResponse;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public ImageUrlResponseDto fileUpload(MultipartFile file) {
         String imageManagementRepository =
