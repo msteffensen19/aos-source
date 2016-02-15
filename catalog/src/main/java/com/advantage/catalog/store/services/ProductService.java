@@ -158,6 +158,29 @@ public class ProductService {
         return new ProductResponseDto(true, product.getId(), "Product was updated successful");
     }
 
+    /**
+     * Delete a product can be done in 2 ways:
+     *  1.  Delete a specific color of a product.
+     *      (a) If the product has the specific color then delete it, return SUCCESSFUL.
+     *      (b) If the product does not have the specific color then return FAILURE.
+     *  2.  Delete a product with all its colors (delete the product, all its attributes,
+     *      colors and images).
+     *      (a)
+     * @param productId
+     * @param hexColor
+     * @return
+     */
+    @Transactional
+    public ProductResponseDto deleteProduct(Long productId, String hexColor) {
+        Product product = productRepository.get(productId);
+
+
+        //TODO Benny
+        //productRepository.deleteProduct(productId, hexColor);
+
+        return new ProductResponseDto(true, product.getId(), "Product was deleted successful");
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public ImageUrlResponseDto fileUpload(MultipartFile file) {
         String imageManagementRepository =

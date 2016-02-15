@@ -49,6 +49,14 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
     int delete(final Collection<Product> products);
 
     /**
+     * Delete a specific color from a product's {@link Set} of colors attributes.
+     * @param product {@link Product} from which to delete the color.
+     * @param hexColor RGB hexadecimal value of the color to delete.
+     * @return 1 when successful, otherwise 0.
+     */
+    int deleteColorFromProduct(final Long productId, final String hexColor);
+
+    /**
      * Search products by name pattern
      *
      * @param pattern  name pattern
