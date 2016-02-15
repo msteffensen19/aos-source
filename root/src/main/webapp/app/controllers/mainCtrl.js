@@ -142,13 +142,13 @@ define(['./module'], function (controllers) {
 
             $scope.miniTitleIn = function (miniTitleId) {
                 if ($rootScope.userCookie) {
-                    $("#" + miniTitleId).stop().delay(500).stop().fadeIn(300);
+                    $("#" + miniTitleId).stop().delay(500).fadeIn(300);
                 }
             }
 
             $scope.miniTitleOut = function (miniTitleId) {
                 if ($rootScope.userCookie) {
-                    $("#" + miniTitleId).stop().delay(500).stop().fadeOut(300);
+                    $("#" + miniTitleId).stop().delay(500).fadeOut(300);
                 }
             }
 
@@ -277,6 +277,7 @@ define(['./module'], function (controllers) {
                     }
                 }, 1050);
                 $scope.refreshTimeOut();
+                $scope.miniTitleOut();
             });
 
 

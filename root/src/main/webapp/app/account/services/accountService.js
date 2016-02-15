@@ -186,15 +186,60 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
+                addMasterCreditMethod : function(card){
+
+                    var user = $rootScope.userCookie;
+                    var expectToReceive = {
+                        cardNumber: "4886" + card.number,
+                        expirationDate: card.expirationDate.month + card.expirationDate.year,
+                        cvvNumber: card.cvv,
+                        customerName: card.name,
+                        accountId: user.response.userId,
+                    }
+
+                    var defer = $q.defer();
+                    var params = server.account.addMasterCreditMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
+
                 updateSafePayMethod: function(safePay){
 
                     var expectToReceive = {
                         safePayUsername:safePay.username,
                         referenceId: "1234567890"
                     }
-                    
+
                     var defer = $q.defer();
                     var params = server.account.updateSafePayMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
+
+                addSafePayMethod: function(safePay){
+
+                    var user = $rootScope.userCookie;
+                    var expectToReceive = {
+                        safePayUsername:safePay.username,
+                        accountId: user.response.userId
+                    }
+
+                    var defer = $q.defer();
+                    var params = server.account.addSafePayMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
                             defer.resolve(response);

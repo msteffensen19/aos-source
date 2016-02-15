@@ -2,10 +2,6 @@
  * Created by correnti on 02/02/2016.
  */
 
-/**
- * Created by correnti on 31/12/2015.
- */
-
 
 define(['./module'], function (controllers) {
     'use strict';
@@ -46,7 +42,14 @@ define(['./module'], function (controllers) {
             }
 
             s.saveMasterCredit = function () {
-                accountService.updateMasterCreditMethod(s.card).then(function (response) {
+                var response;
+                if (true) {
+                    response = accountService.addMasterCreditMethod(s.card)
+                }
+                else {
+                    response = accountService.updateMasterCreditMethod(s.card)
+                }
+                response.then(function (response) {
                     if (response && response.REASON) {
                         s.accountDetailsAnswer = {
                             message: response.REASON,
@@ -66,7 +69,14 @@ define(['./module'], function (controllers) {
 
             s.savePay = { username : '', password : '' }
             s.saveSafePay = function () {
-                accountService.updateSafePayMethod(s.savePay).then(function (response) {
+                var response;
+                if (true) {
+                    response = accountService.addSafePayMethod(s.savePay)
+                }
+                else {
+                    response = accountService.updateSafePayMethod(s.savePay)
+                }
+                response.then(function (response) {
                     if (response && response.REASON) {
                         s.accountDetailsAnswer = {
                             message: response.REASON,
