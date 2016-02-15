@@ -68,7 +68,10 @@ define(['./module'], function (directives) {
 
                     this.updateStartingValueChanged = function(input){
                         var obj = s.startingValues[input.attr("id")];
-                        s.startingValues[input.attr("id")].changed = obj.startingValue != input.val();
+                        if(obj)
+                        {
+                            s.startingValues[input.attr("id")].changed = obj.startingValue != input.val();
+                        }
                     }
 
                     this.invokeOutFunctionWhenSecValidateReady = function(outFunction){

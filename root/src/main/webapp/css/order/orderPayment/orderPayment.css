@@ -222,6 +222,13 @@
 }
 
 
+@media screen and (max-width: 768px) {
+
+    #orderPayment{
+        margin: 0px auto;
+    }
+
+}
 
 @media screen and (max-width: 480px) {
 
@@ -229,9 +236,6 @@
         margin: 0px auto;
         padding-top: 20px;
     }
-
-
-
 
 }
 
