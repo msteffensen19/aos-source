@@ -81,6 +81,7 @@ define(['./module'], function (directives) {
 
                     s.invalidItems = [];
                     this.getInvalidItems = function(){
+                        console.log(s.invalidItems)
                         $rootScope.$emit('invaliditemslengthUpdate', {
                             invalidItems : s.invalidItems.length,
                             inputsWasChanged : this.getInputsWasChangedBoolean()
@@ -141,17 +142,19 @@ define(['./module'], function (directives) {
             return{
                 restrict: 'A',
                 require: '^secValidate',
+                //scope: {},
                 link: function(s, e, a, ctrl){
                     $timeout(function(){
                         ctrl.getInvalidItems();
-                    }, 100)
+                    }, 5000);
+
                     $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
                         if (args.invalidItems != undefined) {
                             if(args.invalidItems > 0 /*|| !args.inputsWasChanged*/){
-                                e.addClass("sec-validate-invalid")
+                                e.addClass("sec-validate-invalid");
                             }
                             else{
-                                e.removeClass("sec-validate-invalid")
+                                e.removeClass("sec-validate-invalid");
                             }
                         }
                     });

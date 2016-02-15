@@ -6,8 +6,8 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService',
-        'registerService', '$location',
-        function (rs, $templateCache, orderService, registerService, $location) {
+        'registerService', '$timeout',
+        function (rs, $templateCache, orderService, registerService, $timeout) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
@@ -48,12 +48,25 @@ define(['./module'], function (directives) {
                         s.userDetailsEditMode = false;
                     }
 
+                    var aaaa = 0;
                     s.accountUpdate = function(){
-                        var agree_Agreement = s.agree_Agreement;
-                        orderService.accountUpdate(s.user, agree_Agreement).then(function(res){
-                            s.invalidUser = s.userDetailsEditMode = false;
-                            s.firstTag = false;
-                        });
+                        l(++aaaa)
+                        l(s.agree_Agreement)
+                        if(s.agree_Agreement)
+                        {
+                            orderService.accountUpdate(s.user).then(function(res){
+                                s.invalidUser = false;
+                                s.userDetailsEditMode = false;
+                                s.firstTag = false;
+                            });
+                        }
+                        else{
+                            $timeout(function(){
+                                s.invalidUser = false;
+                                s.userDetailsEditMode = false;
+                                s.firstTag = false;
+                            }, 100)
+                        }
                     }
 
                     s.setDefaultCard = true;
