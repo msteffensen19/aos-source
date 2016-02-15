@@ -159,26 +159,30 @@ public class ProductService {
     }
 
     /**
-     * Delete a product can be done in 2 ways:
-     *  1.  Delete a specific color of a product.
-     *      (a) If the product has the specific color then delete it, return SUCCESSFUL.
-     *      (b) If the product does not have the specific color then return FAILURE.
-     *  2.  Delete a product with all its colors (delete the product, all its attributes,
-     *      colors and images).
-     *      (a)
+     * Delete a product with all its attributes, colors and images.
      * @param productId
      * @param hexColor
      * @return
      */
     @Transactional
-    public ProductResponseDto deleteProduct(Long productId, String hexColor) {
-        Product product = productRepository.get(productId);
+    public ProductResponseDto deleteProduct(Long productId) {
+        ArgumentValidationHelper.validateLongArgumentIsPositive(productId, "product id");
 
+        ProductResponseDto productResponse;
 
-        //TODO Benny
-        //productRepository.deleteProduct(productId, hexColor);
+        Product productToDelete = productRepository.get(productId);
+        if (productToDelete != null) {
+            int result = productRepository.delete(productToDelete);
+            if (result == 1) {
+                productResponse = new ProductResponseDto(true, productToDelete.getId(), "Product was deleted successful");
+            } else {
+                productResponse = new ProductResponseDto(false, productToDelete.getId(), "Product was not deleted");
+            }
+        } else {
+            productResponse = new ProductResponseDto(false, productToDelete.getId(), "Product id=" + productId + " was not found in products catalog");
+        }
 
-        return new ProductResponseDto(true, product.getId(), "Product was deleted successful");
+        return productResponse;
     }
 
     @Transactional(rollbackFor = Exception.class)

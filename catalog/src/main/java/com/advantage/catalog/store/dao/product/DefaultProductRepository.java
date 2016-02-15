@@ -111,27 +111,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         return deleteByIds(productIds);
     }
 
-    /**
-     * Delete a specific product with all its colors, or just a specific color.
-     * @param productId
-     * @param hexColor RGB hexadecimal value of the color to delete. If {@code null} or empty then delete the product with all its colors.
-     * @return 1 when successful, otherwise 0.
-     */
-    public int deleteColorFromProduct(final Long productId, final String hexColor) {
-        ArgumentValidationHelper.validateLongArgumentIsPositive(productId, "product id");
-
-        int result = 0;
-
-        if (hexColor.isEmpty()) {
-            Product product = this.get(productId);
-            result = this.delete(product);
-        } else {
-            result = this.deleteColorFromProduct(productId, hexColor);
-        }
-
-        return result;
-    }
-
     @Override
     public List<Product> getAll() {
         List<Product> products = entityManager.createNamedQuery(Product.QUERY_GET_ALL, Product.class)

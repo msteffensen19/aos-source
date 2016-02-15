@@ -166,10 +166,9 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.DELETE)
     public ResponseEntity<ProductResponseDto> deleteProduct(@PathVariable("product_id") Long productId,
-                                                            @RequestParam(value = "color", defaultValue = "-1", required = false) String hexColor,
                                                             HttpServletRequest request) {
 
-        ProductResponseDto responseStatus = productService.deleteProduct(productId, hexColor);
+        ProductResponseDto responseStatus = productService.deleteProduct(productId);
 
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
