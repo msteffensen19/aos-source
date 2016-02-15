@@ -71,6 +71,7 @@ define(['./module'], function (directives) {
 
                     s.productToShow = $filter("productsFilterForCategoriesProduct")
                     ([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
+
                 }
 
                 s.clearSelection = function(){

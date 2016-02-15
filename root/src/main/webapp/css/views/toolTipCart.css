@@ -54,6 +54,10 @@
     margin: 0;
 }
 
+#toolTipCart *{
+    cursor: pointer;
+}
+
 #toolTipCart tbody tr {
     display: block;
     border-bottom: solid 1px #d0d0d0;

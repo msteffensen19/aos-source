@@ -63,7 +63,7 @@ define([],function(){
                     var defer = $q.defer()
                     accountService.getAccountPaymentPreferences().then(
                         function (paymentPreferences) {
-                            defer.resolve({
+                           defer.resolve({
                                 paymentPreferences: paymentPreferences,
                             });
                         });
