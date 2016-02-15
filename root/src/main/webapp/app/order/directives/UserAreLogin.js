@@ -76,9 +76,7 @@ define(['./module'], function (directives) {
                         s.years.push((now.getFullYear() + i) + "");
                     }
 
-
                     var safePayBussy = false;
-
                     function safePay(TransPaymentMethod, accountNumber) {
 
                         if (safePayBussy) {

@@ -212,23 +212,23 @@
                             id-attr="savePay_password">
                     </sec-input>
 
-                    <sec-input
-                            sec-required
-                            id-attr="agree_Agreement"
-                            no-red-star="true"
-                            input-type-attr="transclude"
-                            model-attr="agree_Agreement"
-                            select-tag="true">
-                        <div class="option">
-                            <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" />
-                            <span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
-                            <label class="validateInvalid" style="display: none">
-                                {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
-                            </label>
-                         </div>
-                    </sec-input>
+                    <!--<sec-input-->
+                            <!--sec-required-->
+                            <!--id-attr="agree_Agreement"-->
+                            <!--no-red-star="true"-->
+                            <!--input-type-attr="transclude"-->
+                            <!--model-attr="agree_Agreement"-->
+                            <!--select-tag="true">-->
+                        <!--<div class="option">-->
+                            <!--<input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" />-->
+                            <!--<span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>-->
+                            <!--<label class="validateInvalid" style="display: none">-->
+                                <!--{{'Must_agree_to_the_Advantage_com_Agreement' | translate }}-->
+                            <!--</label>-->
+                         <!--</div>-->
+                    <!--</sec-input>-->
 
-                    <div class="blueLink">
+                    <div class="blueLink margin15px">
                         <a data-ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
                             <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
@@ -237,9 +237,6 @@
                                    value="{{'PAY_NOW' | translate}}"/>
                         </label>
                     </div>
-
-
-
 
                 </sec-validate>
 
@@ -376,4 +373,10 @@ SECTION-->
 
 
 </div>
+
+
+
+
+
+
 

@@ -26,6 +26,18 @@ define(['./module'], function (directives) {
                 }
             }
         })
+
+        .directive('aSecValidateInvalid', function($rootScope, $timeout){
+            return{
+                restrict: 'A',
+                require: ['^secValidate'],
+                priority: 0,
+                link: function(s, e, a, ctrls){
+                    ctrls[0].setElement(e)
+                }
+            }
+        })
+
         .directive('secValidate', ['$templateCache', '$timeout', function($templateCache, $timeout){
             return{
                 restrict: 'E',
@@ -79,13 +91,28 @@ define(['./module'], function (directives) {
                         outFunction({ invalid : invalid});
                     }
 
+                    var element = null;
+                    this.setElement = function (e){
+                        element = e;
+                    }
+
+                    s.invaliditemslengthUpdate = function (n) {
+                        if (n != undefined) {
+                            if(n > 0 /*|| !args.inputsWasChanged*/){
+                                element.addClass("sec-validate-invalid");
+                            }
+                            else{
+                                element.removeClass("sec-validate-invalid");
+                            }
+                        }
+                    };
                     s.invalidItems = [];
+
                     this.getInvalidItems = function(){
-                        console.log(s.invalidItems)
-                        $rootScope.$emit('invaliditemslengthUpdate', {
-                            invalidItems : s.invalidItems.length,
-                            inputsWasChanged : this.getInputsWasChangedBoolean()
-                        });
+                        if(s.invaliditemslengthUpdate != null)
+                        {
+                            s.invaliditemslengthUpdate(s.invalidItems.length);
+                        }
                         return s.invalidItems.length  > 0;
                     }
 
@@ -138,29 +165,6 @@ define(['./module'], function (directives) {
             }
         }])
 
-        .directive('aSecValidateInvalid', function($rootScope, $timeout){
-            return{
-                restrict: 'A',
-                require: '^secValidate',
-                //scope: {},
-                link: function(s, e, a, ctrl){
-                    $timeout(function(){
-                        ctrl.getInvalidItems();
-                    }, 5000);
-
-                    $rootScope.$on('invaliditemslengthUpdate', function(event, args) {
-                        if (args.invalidItems != undefined) {
-                            if(args.invalidItems > 0 /*|| !args.inputsWasChanged*/){
-                                e.addClass("sec-validate-invalid");
-                            }
-                            else{
-                                e.removeClass("sec-validate-invalid");
-                            }
-                        }
-                    });
-                }
-            }
-        })
         .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
             return {
                 restrict: 'E',
@@ -179,6 +183,7 @@ define(['./module'], function (directives) {
                     var labelStartColor;
 
                     var ctrlFather;
+
                     s.warnings = [];
                     s.noRedStar = false;
                     s.id;
@@ -197,10 +202,9 @@ define(['./module'], function (directives) {
                         else {
                             ctrlFather.shiftInvalidField(id);
                         }
-                        $rootScope.$emit('invaliditemslengthUpdate', {
-                            invalidItems : ctrlFather.getInvalidItemsCount(),
-                            inputsWasChanged : ctrlFather.getInputsWasChangedBoolean()
-                        });
+                        if(s.invaliditemslengthUpdate + "" != "undefined") {
+                            s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
+                        }
                     }
 
                     s.inputFocus = function (id) {
@@ -243,10 +247,10 @@ define(['./module'], function (directives) {
                         else {
                             ctrlFather.shiftInvalidField(id);
                         }
-                        $rootScope.$emit('invaliditemslengthUpdate', {
-                            invalidItems : ctrlFather.getInvalidItemsCount(),
-                            inputsWasChanged : ctrlFather.getInputsWasChangedBoolean(),
-                        });
+
+                        if(s.invaliditemslengthUpdate + "" != "undefined") {
+                            s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
+                        }
                         input.siblings(".validate-info").hide(200);
                     }
 
@@ -426,10 +430,11 @@ define(['./module'], function (directives) {
                                             $(this).find(".validateInvalid").fadeIn();
                                         }
                                         ctrls[1].getInvalidItems();
-                                        $rootScope.$emit('invaliditemslengthUpdate', {
-                                            invalidItems : ctrls[1].getInvalidItemsCount(),
-                                            inputsWasChanged : ctrls[1].getInputsWasChangedBoolean(),
-                                        });
+
+                                        if(s.invaliditemslengthUpdate + "" != "undefined") {
+                                            s.invaliditemslengthUpdate(ctrls[1].getInvalidItemsCount());
+                                        }
+
                                     });
                                 }
                             })
