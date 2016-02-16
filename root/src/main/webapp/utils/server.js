@@ -135,7 +135,12 @@ var server = {
                 path += "&quantityPerEachCategory=" + quantity;
             }
             return path;
-        }
+        },
+
+        getAllCategoriesAttributes : function () {
+            return catalogKey + "categories/attributes";
+        },
+
 
     },
     order: {

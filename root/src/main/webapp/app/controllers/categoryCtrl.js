@@ -19,10 +19,12 @@ define(['./module'], function (controllers) {
             s.categoryName = paramsToReturn.categoryName;
 
             Helper.forAllPage();
-           // l(paramsToReturn.searchResult[0].products)
-           //angular.forEach(paramsToReturn.searchResult[0].products, function(prod){
-           //    l(prod)
-           //});
+
+
+            l(paramsToReturn.searchResult[0].products)
+            angular.forEach(paramsToReturn.searchResult[0].products, function(prod){
+                l(prod)
+            });
 
     }]);
 });

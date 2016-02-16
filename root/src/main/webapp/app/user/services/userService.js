@@ -27,8 +27,7 @@ define(['./module'], function (services) {
                     l(expectToReceive)
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function (response) {
-                        l(response)
-                        defer.resolve(response);
+                            defer.resolve(response);
                         },
                         function (response) {
                             console.log(response);
@@ -77,7 +76,6 @@ define(['./module'], function (services) {
                 var params = server.account.login();
                 mini_soap.post(params.path, params.method, user).
                 then(function (response) {
-                        console.log(response);
                         defer.resolve(response);
                     },
                     function (response) {

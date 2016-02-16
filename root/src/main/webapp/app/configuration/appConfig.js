@@ -80,9 +80,13 @@ define([],function(){
                             });
                         }
                         else{
-                            defer.resolve({
-                                searchResult: [category],
-                                categoryName: category.categoryName
+                            productService.getAllCategoriesAttributes().then(function (attributes) {
+
+                                defer.resolve({
+                                    attributes: attributes,
+                                    searchResult: [category],
+                                    categoryName: category.categoryName
+                                });
                             });
                         }
                     });

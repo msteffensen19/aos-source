@@ -8,7 +8,8 @@ define(['./module'], function (services) {
         return({
             getProducts: getProducts,
             getProductById : getProductById,
-            getProductsBySearch : getProductsBySearch
+            getProductsBySearch : getProductsBySearch,
+            getAllCategoriesAttributes : getAllCategoriesAttributes,
         });
 
         function getProducts() {
@@ -36,5 +37,16 @@ define(['./module'], function (services) {
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
+
+        function getAllCategoriesAttributes() {
+
+            var request = $http({
+                method: "get",
+                url: server.catalog.getAllCategoriesAttributes()
+            });
+            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+        }
+
+
     }]);
 });
