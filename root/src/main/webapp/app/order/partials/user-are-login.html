@@ -127,7 +127,7 @@
 
                 <div class="option marginTop">
                     <input ng-model="agree_Agreement" type="checkbox" />
-                    <span class="roboto-light">{{'offers_promotion' | translate }}</span>
+                    <span class="roboto-light">{{'Save_changes_in_profile_for_future_use' | translate }}</span>
                 </div>
 
                 <div class="blueLink">
@@ -160,7 +160,7 @@
 
     <!-- EDIT EDIT PAYMENT SECTION -->
 
-    <div id="paymentMethod" ng-hide="firstTag">
+    <div id="paymentMethod" data-ng-hide="firstTag">
         <div>
             <label class="Choose_payment roboto-medium">
                 {{ 'Choose_payment_method_below' | translate }}
@@ -212,24 +212,24 @@
                             id-attr="savePay_password">
                     </sec-input>
 
-                    <sec-input
-                            sec-required
-                            id-attr="agree_Agreement"
-                            no-red-star="true"
-                            input-type-attr="transclude"
-                            model-attr="agree_Agreement"
-                            select-tag="true">
-                        <div class="option">
-                            <input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" />
-                            <span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>
-                            <label class="validateInvalid" style="display: none">
-                                {{'Must_agree_to_the_Advantage_com_Agreement' | translate }}
-                            </label>
-                         </div>
-                    </sec-input>
+                    <!--<sec-input-->
+                            <!--sec-required-->
+                            <!--id-attr="agree_Agreement"-->
+                            <!--no-red-star="true"-->
+                            <!--input-type-attr="transclude"-->
+                            <!--model-attr="agree_Agreement"-->
+                            <!--select-tag="true">-->
+                        <!--<div class="option">-->
+                            <!--<input ng-model="agree_Agreement" name="agree_Agreement" type="checkbox" />-->
+                            <!--<span class="roboto-light grayCheckbox">{{'I_agree_to_the_Advantage_com_Agreement' | translate }}</span>-->
+                            <!--<label class="validateInvalid" style="display: none">-->
+                                <!--{{'Must_agree_to_the_Advantage_com_Agreement' | translate }}-->
+                            <!--</label>-->
+                         <!--</div>-->
+                    <!--</sec-input>-->
 
-                    <div class="blueLink">
-                        <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                    <div class="blueLink margin15px">
+                        <a data-ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
                             <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
                                    class="roboto-medium float-button a-button"
@@ -237,9 +237,6 @@
                                    value="{{'PAY_NOW' | translate}}"/>
                         </label>
                     </div>
-
-
-
 
                 </sec-validate>
 
@@ -376,4 +373,10 @@ SECTION-->
 
 
 </div>
+
+
+
+
+
+
 

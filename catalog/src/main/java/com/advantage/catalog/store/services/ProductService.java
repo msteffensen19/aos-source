@@ -104,56 +104,15 @@ public class ProductService {
     public ProductResponseDto updateProduct(ProductDto dto, Long id) {
         Product product = productRepository.get(id);
 
-        if (product == null) return new ProductResponseDto(false, -1, "Product wasn't found");
+        if (product == null) return new ProductResponseDto(false, -1, "Product not found");
 
-        if(!ProductStatusEnum.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product wasn't created, productStatus not valid");
+        if(!ProductStatusEnum.contains(dto.getProductStatus()))return new ProductResponseDto(false, -1, "Product not created, productStatus not valid");
         Category category = categoryService.getCategory(dto.getCategoryId());
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
-        product.setProductName(dto.getProductName());
-        product.setDescription(dto.getDescription());
-        product.setPrice(dto.getPrice());
-        product.setManagedImageId(dto.getImageUrl());
-        product.setCategory(category);
-        product.setProductStatus(dto.getProductStatus());
-
-        Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
-        for (String s : dto.getImages()) {
-            ImageAttribute imageAttribute = new ImageAttribute(s);
-            imageAttribute.setProduct(product);
-            imageAttributes.add(imageAttribute);
-        }
-
         product.setColors(getColorAttributes(dto.getColors(), product));
-        product.setImages(imageAttributes);
 
-        for (AttributeItem item : dto.getAttributes()) {
-            String attrName = item.getAttributeName();
-            String attrValue = item.getAttributeValue();
-
-            ProductAttributes productAttributes = new ProductAttributes();
-            boolean isAttributeExist = product.getProductAttributes().stream().
-                    anyMatch(i -> i.getAttribute().getName().equalsIgnoreCase(attrName));
-
-            if (isAttributeExist) {
-                productAttributes = product.getProductAttributes().stream().
-                        filter(x -> x.getAttribute().getName().equalsIgnoreCase(attrName)).
-                        findFirst().get();
-
-                productAttributes.setAttributeValue(attrValue);
-            }
-
-            Attribute attribute = getAttributeByDto(item);
-            if (attribute == null) {
-                attribute = attributeService.createAttribute(attrName);
-            }
-
-            productAttributes.setAttributeValue(attrValue);
-            productAttributes.setProduct(product);
-
-            productAttributes.setAttribute(attribute);
-            product.getProductAttributes().add(productAttributes);
-        }
+        productRepository.update(dto, id);
 
         return new ProductResponseDto(true, product.getId(), "Product was updated successful");
     }
@@ -215,7 +174,7 @@ public class ProductService {
         dto.setProducts(fillProducts(products));
         dto.setColors(getColorsSet(products));
         dto.setMinPrice(getMinPrice(products));
-        dto.setMaxPrice(geMaxPrice(products));
+        dto.setMaxPrice(getMaxPrice(products));
 
         return dto;
     }
@@ -296,7 +255,7 @@ public class ProductService {
      * @param products {@link Collection} Product collection
      * @return {@link Double} price value
      */
-    public String geMaxPrice(Collection<Product> products) {
+    public String getMaxPrice(Collection<Product> products) {
         double price = products.stream().max(Comparator.comparing(Product::getPrice)).get().getPrice();
 
         return Double.toString(price);
@@ -375,7 +334,8 @@ public class ProductService {
                 product.getManagedImageId(),
                 fillAttributes(product),
                 fillColorAttributes(product),
-                fillImages(product.getImages()));
+                fillImages(product.getImages()),product.getProductStatus());
+
     }
 
     /**
@@ -446,7 +406,7 @@ public class ProductService {
      * @param attribute {@link AttributeItem} DTO
      * @return {@link Attribute} Attribute entity
      */
-    private Attribute getAttributeByDto(AttributeItem attribute) {
+    public Attribute getAttributeByDto(AttributeItem attribute) {
         return attributeRepository.get(attribute.getAttributeName());
     }
 

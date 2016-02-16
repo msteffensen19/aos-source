@@ -1,19 +1,27 @@
 package com.advantage.catalog.store.dao.product;
 
+import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.product.ImageAttribute;
+import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.catalog.store.services.AttributeService;
+import com.advantage.catalog.store.services.CategoryService;
+import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.JPAQueryHelper;
+import com.advantage.common.dto.AttributeItem;
+import com.advantage.common.dto.ProductDto;
 import com.advantage.common.enums.ProductStatusEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Qualifier("productRepository")
@@ -31,12 +39,75 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
      * @param category        {@link Category} category which be related with product
      * @param productStatus @return entity reference
      */
+
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    public ProductService productService;
+    @Autowired
+    public AttributeService attributeService;
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
         //validate productStatus
         if(!ProductStatusEnum.contains(productStatus)) return null;
         Product product = new Product(name, description, price, category,productStatus);
         product.setManagedImageId(imgUrl);
+        entityManager.persist(product);
+
+        return product;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Product update(ProductDto dto, long id) {
+        Product product = get(id);
+        Category category = categoryService.getCategory(dto.getCategoryId());
+        if(!ProductStatusEnum.contains(product.getProductStatus()) || product==null) return null;
+        product.setProductName(dto.getProductName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setManagedImageId(dto.getImageUrl());
+        product.setCategory(category);
+        product.setProductStatus(dto.getProductStatus());
+
+        Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        for (String s : dto.getImages()) {
+            ImageAttribute imageAttribute = new ImageAttribute(s);
+            imageAttribute.setProduct(product);
+            imageAttributes.add(imageAttribute);
+        }
+
+        product.setColors(productService.getColorAttributes(dto.getColors(), product));
+        product.setImages(imageAttributes);
+
+        for (AttributeItem item : dto.getAttributes()) {
+            String attrName = item.getAttributeName();
+            String attrValue = item.getAttributeValue();
+
+            ProductAttributes productAttributes = new ProductAttributes();
+            boolean isAttributeExist = product.getProductAttributes().stream().
+                    anyMatch(i -> i.getAttribute().getName().equalsIgnoreCase(attrName));
+
+            if (isAttributeExist) {
+                productAttributes = product.getProductAttributes().stream().
+                        filter(x -> x.getAttribute().getName().equalsIgnoreCase(attrName)).
+                        findFirst().get();
+
+                productAttributes.setAttributeValue(attrValue);
+            }
+
+            Attribute attribute = productService.getAttributeByDto(item);
+            if (attribute == null) {
+                attribute = attributeService.createAttribute(attrName);
+            }
+
+            productAttributes.setAttributeValue(attrValue);
+            productAttributes.setProduct(product);
+
+            productAttributes.setAttribute(attribute);
+            product.getProductAttributes().add(productAttributes);
+        }
+
         entityManager.persist(product);
 
         return product;

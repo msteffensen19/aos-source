@@ -40,6 +40,27 @@ public class ProductDto {
         this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
     }
 
+    public ProductDto(Long productId,
+                      Long categoryId,
+                      String productName,
+                      double price,
+                      String description,
+                      String imageUrl,
+                      List<AttributeItem> attributes,
+                      List<ColorAttributeDto> colors,
+                      List<String> images, String productStatus ) {
+        this.productId = productId;
+        this.categoryId = categoryId;
+        this.productName = productName;
+        this.price = price;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.attributes = attributes;
+        this.colors = colors;
+        this.images = images;
+        this.productStatus= productStatus;
+    }
+
     public List<String> getImages() {
         return images;
     }
