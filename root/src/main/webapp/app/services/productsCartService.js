@@ -4,29 +4,34 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('productsCartService', ['$http', '$q', 'resHandleService', 'ipCookie', '$rootScope',
-        function ($http, $q, responseService, $cookie, $rootScope) {
+    services.service('productsCartService', ['$http', '$q', 'resHandleService', 'ipCookie',
+        '$rootScope', '$timeout',
+        function ($http, $q, responseService, $cookie, $rootScope, $timeout) {
 
             var responce = $q.defer();
             var cart = null;
-            function getTempCart(){ return { "userId": -1, "productsInCart": [], } }
 
-            return({
-                addProduct : addProduct,
-                updateProduct : updateProduct,
-                loadCartProducts : loadCartProducts,
-                joinCartProducts : joinCartProducts,
+            function getTempCart() {
+                return {"userId": -1, "productsInCart": [],}
+            }
+
+            return ({
+                addProduct: addProduct,
+                updateProduct: updateProduct,
+                loadCartProducts: loadCartProducts,
+                joinCartProducts: joinCartProducts,
                 removeProduct: removeProduct,
                 checkout: checkout,
-                getCart : getCart,
-                saveCart : saveCart,
-                clearCart : clearCart,
+                getCart: getCart,
+                saveCart: saveCart,
+                clearCart: clearCart,
+                checkOutOfStockProductsInCart: checkOutOfStockProductsInCart,
             });
 
             /* returned functions */
 
 
-            function clearCart(){
+            function clearCart() {
                 var responce = $q.defer();
                 var user = $rootScope.userCookie;
                 if (user && user.response) {
@@ -51,10 +56,6 @@ define(['./module'], function (services) {
                     responce.resolve(null);
                 }
                 return responce.promise;
-            }
-
-            function saveCart(_cart) {
-                updateCart(_cart);
             }
 
             function saveCart(_cart) {
@@ -96,7 +97,7 @@ define(['./module'], function (services) {
                 return responce.promise;
             }
 
-            function removeProduct(index){
+            function removeProduct(index) {
                 var responce = $q.defer();
                 var user = $rootScope.userCookie;
                 var prod = cart.productsInCart[index];
@@ -111,7 +112,7 @@ define(['./module'], function (services) {
                         }
                     });
                 }
-                else{
+                else {
                     updateCart(cart);
                 }
                 responce.resolve(cart);
@@ -148,10 +149,10 @@ define(['./module'], function (services) {
                 return responce.promise;
             }
 
-            function loadGuestCartProducts(){
+            function loadGuestCartProducts() {
 
                 var guestCart = $cookie("userCart");
-                if(!guestCart){
+                if (!guestCart) {
                     guestCart = getTempCart();
                     updateCart(guestCart);
                 }
@@ -166,19 +167,18 @@ define(['./module'], function (services) {
                     var guestCart = loadGuestCartProducts();
 
                     var tempCart = [];
-                    angular.forEach(cart.productsInCart, function(userProduct){
+                    angular.forEach(cart.productsInCart, function (userProduct) {
                         var find = false;
-                        angular.forEach(guestCart.productsInCart, function(guestProduct) {
-                            if(userProduct.productId == guestProduct.productId && userProduct.color.code == guestProduct.color.code)
-                            {
+                        angular.forEach(guestCart.productsInCart, function (guestProduct) {
+                            if (userProduct.productId == guestProduct.productId && userProduct.color.code == guestProduct.color.code) {
                                 find = true;
                             }
                         });
-                        if(!find){
+                        if (!find) {
                             tempCart.push(userProduct);
                         }
                     });
-                    angular.forEach(guestCart.productsInCart, function(guestProduct) {
+                    angular.forEach(guestCart.productsInCart, function (guestProduct) {
                         tempCart.push(guestProduct);
                     });
 
@@ -191,33 +191,32 @@ define(['./module'], function (services) {
             }
 
 
-            function updateUserCart(){
+            function updateUserCart() {
 
                 var user = $rootScope.userCookie;
-                if(user && user.response) {
+                if (user && user.response) {
                     if (user.response.userId != -1) {
 
                         var cartToReplace = [];
-                        angular.forEach(cart.productsInCart, function(product){
+                        angular.forEach(cart.productsInCart, function (product) {
                             cartToReplace.push({
                                 "hexColor": product.color.code,
                                 "productId": product.productId,
                                 "quantity": product.quantity,
                             });
                         })
-                        if(cartToReplace.length > 0)
-                        {
+                        if (cartToReplace.length > 0) {
                             $http({
                                 method: "put",
-                                data : JSON.stringify(cartToReplace),
+                                data: JSON.stringify(cartToReplace),
                                 headers: {
-                                  "content-type": "application/json",
-                                  "Authorization": "Bearer " + user.response.token,
+                                    "content-type": "application/json",
+                                    "Authorization": "Bearer " + user.response.token,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
-                            }).success(function(res){
+                            }).success(function (res) {
                                 console.log(res);
-                            }).error(function(_err){
+                            }).error(function (_err) {
                                 console.log("updateUserCart() rejected!  ====== " + _err)
                             });
                         }
@@ -225,14 +224,14 @@ define(['./module'], function (services) {
                 }
             }
 
-            function updateCart(guestCart){
-                $cookie("userCart", guestCart, { expires: 365*5 });
+            function updateCart(guestCart) {
+                $cookie("userCart", guestCart, {expires: 365 * 5});
             }
 
             function updateProduct(product, color, quantity, oldColor) {
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
-                if(product.colors){
+                if (product.colors) {
                     if (user && user.response) {
                         if (user.response.userId != -1) {
 
@@ -255,8 +254,7 @@ define(['./module'], function (services) {
                     }
                     else {
                         var productIndex = -1;
-                        for(var index in cart.productsInCart)
-                        {
+                        for (var index in cart.productsInCart) {
                             var productInCart = cart.productsInCart[index];
                             if (product.productId == productInCart.productId && productInCart.color.code == oldColor) {
                                 productIndex = index;
@@ -265,8 +263,7 @@ define(['./module'], function (services) {
                                 }
                                 else {
                                     var finded = false;
-                                    for(var _index in cart.productsInCart)
-                                    {
+                                    for (var _index in cart.productsInCart) {
                                         var _productInCart = cart.productsInCart[_index];
                                         if (product.productId == _productInCart.productId) {
                                             if (_productInCart.color.code == color.code) {
@@ -276,7 +273,7 @@ define(['./module'], function (services) {
                                             }
                                         }
                                     }
-                                    if(finded){
+                                    if (finded) {
                                         cart.productsInCart.splice(productIndex, 1);
                                     }
                                     else {
@@ -286,16 +283,15 @@ define(['./module'], function (services) {
                                 }
                                 break;
                             }
-                            else{
+                            else {
                                 var sameProductIdCount = 0;
-                                for(var _index in cart.productsInCart)
-                                {
+                                for (var _index in cart.productsInCart) {
                                     var _productInCart = cart.productsInCart[_index];
                                     if (product.productId == _productInCart.productId) {
                                         sameProductIdCount++;
                                     }
                                 }
-                                if(sameProductIdCount == 1){
+                                if (sameProductIdCount == 1) {
                                     productInCart.color = color
                                     productInCart.quantity = quantity
                                     break;
@@ -366,84 +362,59 @@ define(['./module'], function (services) {
                 }
             }
 
-            //function updateProduct(product) {
-            //    return addProduct(product, product.quantity)
-            //}
+            function checkOutOfStockProductsInCart() {
 
-            //function addProduct(product, quantity) {
-            //    var response = $q.defer();
-            //    var user = $rootScope.userCookie;
-            //    if (user && user.response) {
-            //        if (user.response.userId != -1) {
-            //            var request = $http({
-            //                method: "post",
-            //                headers: {
-            //                    "content-type": "application/json",
-            //                    "Authorization": "Bearer " + user.response.token,
-            //                },
-            //                async: false,
-            //                url: server.order.addProductToUser(user.response.userId,
-            //                    product.productId, product.colors[0].code, quantity),
-            //            });
-            //            request.then(function (newCart) {
-            //                cart = newCart.data;
-            //                response.resolve(cart);
-            //                return response.promise;
-            //            })
-            //            return response.promise;
-            //        }
-            //    }
-            //    else {
-            //        var find = null;
-            //        var thisIsUpdateMode = false;
-            //        var productIndex = 0;
-            //        angular.forEach(cart.productsInCart, function (productInCart, index) {
-            //            if (product.productId == productInCart.productId) {
-            //                if(product.colors == undefined){
-            //                    if (productInCart.color.code == product.color.code) {
-            //                        thisIsUpdateMode = true;
-            //                        productInCart.quantity = product.quantity;
-            //                    }
-            //                }
-            //                else{
-            //                    angular.forEach(product.colors, function (color) {
-            //                        if (productInCart.color.code == color.code) {
-            //                            productIndex = index;
-            //                            productInCart.quantity += quantity;
-            //                            find = product;
-            //                        }
-            //                    });
-            //                }
-            //            }
-            //        });
-            //
-            //        if(!thisIsUpdateMode) {
-            //            if (!find) {
-            //                var color;
-            //                if (product.colors == undefined) {
-            //                    color = product.color;
-            //                }
-            //                else {
-            //                    color = product.colors.length > 0 ? product.colors[0] : 'FFFFFF';
-            //                }
-            //                cart.productsInCart.unshift({
-            //                    "productId": product.productId,
-            //                    "imageUrl": product.imageUrl,
-            //                    "productName": product.productName,
-            //                    "color": color,
-            //                    "quantity": quantity,
-            //                    "price": product.price
-            //                });
-            //            }
-            //            else {
-            //                cart.productsInCart.splice(0, 0, cart.productsInCart.splice(productIndex, 1)[0]);
-            //            }
-            //        }
-            //        updateCart(cart);
-            //        response.resolve(cart);
-            //        return response.promise;
-            //    }
-            //}
+                var user = $rootScope.userCookie;
+                if (user && user.response && user.response.userId != -1) {
+                    return;
+                }
+
+                var defer = $q.defer()
+                var cartToReplace = [];
+
+                for(var prodIndex = 0 ; prodIndex < cart.productsInCart.length; prodIndex++)
+                {
+                    var product = cart.productsInCart[prodIndex];
+                    checkOutOfStockProduct(product, prodIndex).then(function(res){
+
+                        if(res._prod != null)
+                        {
+                            cartToReplace.push(res.real_prod);
+                        }
+
+                        if(res._prodIndex == cart.productsInCart.length - 1){
+                            cart.productsInCart = cartToReplace;
+                            updateCart(cart);
+                            defer.resolve(cart);
+                        }
+                    });
+                }
+                if(cart.productsInCart.length == 0)
+                {
+                    defer.resolve(cart);
+                }
+                return defer.promise;
+            }
+
+            function checkOutOfStockProduct(product, prodIndex){
+
+                var defer = $q.defer()
+                $http({
+                    method: "get",
+                    url: server.catalog.getProductById(product.productId)
+                }).success(function (res) {
+                    defer.resolve(res.productStatus == 'OutOfStock' ?
+                    {real_prod : product, _prod : null, _prodIndex : prodIndex } :
+                    {real_prod : product, _prod : res, _prodIndex : prodIndex });
+                }).error(function (_err) {
+                    console.log("checkOutOfStockProduct() rejected!  ====== " + _err)
+                    console.log(_err)
+                    defer.resolve({real_prod : product, _prod : res, _prodIndex : prodIndex });
+                });
+                return defer.promise;
+
+            }
+
         }]);
 
 

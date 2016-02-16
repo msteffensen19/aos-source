@@ -35,6 +35,14 @@ define(['./module'], function (controllers) {
 
             productsCartService.loadCartProducts().then(function (cart) {
                 $scope.cart = cart;
+                l(cart)
+                $timeout(function(){
+                    productsCartService.checkOutOfStockProductsInCart().then(function(_cart){
+                        l("out")
+                        l(cart)
+                        $scope.cart = cart;
+                    });
+                })
             });
 
             $scope.removeProduct = function (index, event) {

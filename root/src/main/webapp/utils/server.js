@@ -138,7 +138,7 @@ var server = {
         },
 
         getAllCategoriesAttributes : function () {
-            return catalogKey + "categories/attributes";
+            return catalogKey + "/categories/attributes";
         },
 
 
