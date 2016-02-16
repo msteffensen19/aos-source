@@ -42,6 +42,11 @@ define(['./module'], function (directives) {
                     $("#productsColors" + code).toggleClass('colorSelected');
                 }
 
+                s.toggleFilterSlide = function(id){
+                    $("#" + id).slideToggle();
+                }
+
+
                 s.includeProducts = function(attributeVal, attributesName) {
 
                     if(!attributeVal) return;

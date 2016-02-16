@@ -233,6 +233,10 @@
 }
 
 
+.categoryLeft .filterCount img{
+    display: none;
+}
+
 @media screen and (max-width: 1550px) {
     .categoryRight ul li {
         width: 23%;
@@ -291,10 +295,25 @@
 
     .categoryLeft .filterCount{
         padding: 3px 23px;
+        position: relative;
+    }
+
+    .categoryLeft .filterCount img{
+        display: block;
+        position: absolute;
+        right: 22px;
+        bottom:0;
+        cursor: pointer;
+        transform: scale(0.8);
+    }
+
+    #mobileSlide{
+        display: none;
     }
 
     .categoryLeft label{
         padding: 3px 23px;
+        padding-top: 15px;
     }
 
     .cell.categoryRight{

@@ -24,6 +24,7 @@ define([
     './icon-cart-svg',
     './icon-user-svg',
     './icon-search-svg',
+    './icon-home-svg',
     './virtualFooter'
 ],
 
