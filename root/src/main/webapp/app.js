@@ -103,8 +103,12 @@ define([
                 }
             }
 
-            $rootScope.$on('$stateChangeError', function() {
-                $state.go('404');
+            $rootScope.$on('$stateChangeError', function(a, b, c, d) {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(d);
+                //$state.go('404');
             });
 
             $rootScope.breadcrumb = [{

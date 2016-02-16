@@ -249,12 +249,27 @@ var server = {
             }
         },
 
+        addMasterCreditMethod: function(){
+            return {
+                path: wsdlPath,
+                method: 'AddMasterCreditMethodRequest'
+            }
+        },
+
         updateSafePayMethod: function(){
             return {
                 path: wsdlPath,
                 method: 'UpdateSafePayMethodRequest'
             }
         },
+
+        addSafePayMethod: function(){
+            return {
+                path: wsdlPath,
+                method: 'AddSafePayMethodRequest'
+            }
+        },
+
         changePassword : function(){
             return {
                 path: wsdlPath,

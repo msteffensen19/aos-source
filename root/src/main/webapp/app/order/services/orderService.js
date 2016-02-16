@@ -88,8 +88,9 @@ define(['./module'], function (services) {
                 return defer.promise;
             }
 
-            function accountUpdate(user, allowOffersPromotion) {
+            function accountUpdate(user) {
 
+                l(user)
                 var paramsToPass = {
                     lastName: user.lastName,
                     firstName: user.firstName,
@@ -102,7 +103,7 @@ define(['./module'], function (services) {
                     phoneNumber: user.phoneNumber,
                     email: user.email,
                     accountType: 20,
-                    allowOffersPromotion: allowOffersPromotion
+                    allowOffersPromotion: user.allowOffersPromotion
                 }
 
                 var defer = $q.defer();
@@ -148,6 +149,7 @@ define(['./module'], function (services) {
                                     "zipcode": response.ZIPCODE,
                                     "phoneNumber": response.PHONENUMBER,
                                     "email": response.EMAIL,
+                                    "allowOffersPromotion" : response.ALLOWOFFERSPROMOTION,
                                 }
                                 defer.resolve(user);
                             },

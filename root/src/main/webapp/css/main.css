@@ -116,8 +116,7 @@ div.mobile-btn-handler span{
     background-color: white;
     position: fixed;
     left: 0px;
-    z-index: -50;
-    top:66px;
+    top:56px;
     height: 100%;
     z-index: 990;
 }
@@ -271,7 +270,7 @@ div.logo {
 div.logo a{
     direction: ltr;
     display: inline-block;
-    padding: 10px 0;
+    padding: 10px;
     vertical-align: top;
 }
 
@@ -519,6 +518,11 @@ footer .splitter{
 
 @media screen and (max-width: 480px) {
 
+
+    div.logo a{
+        padding: 0;
+        padding-top: 10px;
+    }
 
     .pages{
         display: none !important;

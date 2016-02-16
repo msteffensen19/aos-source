@@ -164,7 +164,8 @@ var english = {
     'CONNECTION_DETAILS' : 'CONNECTION DETAILS',
     'Change_Password' : 'Change Password',
     'SAVE': 'SAVE',
-    'CONTINUE_SHOPPING': 'CONTINUE SHOPPING'
+    'CONTINUE_SHOPPING': 'CONTINUE SHOPPING',
+    'Save_changes_in_profile_for_future_use': 'Save changes in profile for future use'
 
 };
 
