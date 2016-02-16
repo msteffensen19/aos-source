@@ -6,6 +6,7 @@ import java.util.List;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
 import com.advantage.catalog.store.model.product.Product;
+import com.advantage.common.dto.ProductDto;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ProductRepository extends DefaultCRUDOperations<Product> {
@@ -20,6 +21,9 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      */
     @Transactional
     Product create(String name, String description, double price, String imgUrl, Category category, String productStatus);
+
+    @Transactional
+    Product update(ProductDto productDto, long id);
 
     @Transactional
     Product create(String name, String description, double price, String imgUrl, Category category);
