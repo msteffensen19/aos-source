@@ -62,6 +62,17 @@ public class PaymentPreferences {
     public PaymentPreferences() {
     }
 
+    public PaymentPreferences(long userId, int paymentMethod) {
+        this.userId = userId;
+        this.paymentMethod = paymentMethod;
+
+        this.cardNumber = null;
+        this.expirationDate = null;
+        this.cvvNumber = null;
+        this.customerName = null;
+        this.safePayUsername = null;
+    }
+
     public PaymentPreferences(long userId, String cardNumber, String expirationDate, String cvvNumber, String customerName) {
         this.userId = userId;
         this.setPaymentMethod(PaymentMethodEnum.MASTER_CREDIT.getCode());
