@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.dao;
 
+import com.advantage.common.dao.DefaultCRUDOperations;
 import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.order.model.ShoppingCart;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author Binyamin Regev on 03/12/2015.
  */
-public interface ShoppingCartRepository {
+public interface ShoppingCartRepository extends DefaultCRUDOperations<ShoppingCart> {
 
     ShoppingCartResponse getShoppingCartResponse();
 

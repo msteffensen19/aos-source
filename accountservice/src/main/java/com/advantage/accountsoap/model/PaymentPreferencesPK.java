@@ -18,7 +18,7 @@ public class PaymentPreferencesPK implements Serializable {
     }
 
     /**
-     * Mandatory Definition: Full Primay Key Constructor
+     * Mandatory Definition: Full Primary Key Constructor
      * @param userId
      * @param paymentMethod
      */

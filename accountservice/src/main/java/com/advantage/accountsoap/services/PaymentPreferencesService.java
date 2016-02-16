@@ -62,7 +62,7 @@ public class PaymentPreferencesService {
             return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod. Error: Invalid expiration date format", -1);
         }
 
-        PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.SAFE_PAY.getCode());
+        PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.MASTER_CREDIT.getCode());
         if (paymentPreferences == null) {
             paymentPreferences = paymentPreferencesRepository.createMasterCredit(cardNumber, expirationDate,
                     cvvNumber, customerName, accountId);

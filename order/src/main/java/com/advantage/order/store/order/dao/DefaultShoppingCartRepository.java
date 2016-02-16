@@ -146,6 +146,19 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     }
 
     @Override
+    public int delete(ShoppingCart... entities) {
+        int count = 0;
+        for (ShoppingCart entity : entities) {
+            if (entityManager.contains(entity)) {
+                entityManager.remove(entity);
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    @Override
     public int removeProductFromUserCart(long userId, Long productId, int color) {
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
@@ -155,27 +168,48 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ShoppingCart shoppingCart = this.find(userId, productId, color);
         int result = 0;
 
-        if (shoppingCart == null) {
-            shoppingCartResponse = new ShoppingCartResponse(
-                    false,
-                    ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
-                    productId);
-        } else {
-            final StringBuilder hql = new StringBuilder("DELETE FROM ")
-                    .append(ShoppingCart.class.getName())
-                    .append(" WHERE ")
-                    .append(ShoppingCart.FIELD_USER_ID).append("=").append(userId).append(" AND ")
-                    .append(ShoppingCart.FIELD_PRODUCT_ID).append("=").append(productId).append(" AND ")
-                    .append(ShoppingCart.FIELD_COLOR_ID).append("=").append(color);
 
-            Query query = entityManager.createQuery(hql.toString());
+        if (shoppingCart != null) {
+
+            entityManager.remove(shoppingCart);
+
+            result = 1;
+
+            //final StringBuilder hql = new StringBuilder("DELETE FROM ")
+            //        .append(ShoppingCart.class.getName())
+            //        .append(" WHERE ")
+            //        .append(ShoppingCart.FIELD_USER_ID).append(" = ").append(userId).append(" AND ")
+            //        .append(ShoppingCart.FIELD_PRODUCT_ID).append(" = ").append(productId).append(" AND ")
+            //        .append(ShoppingCart.FIELD_COLOR_ID).append(" = ").append(color);
+            //
+            //Query query = entityManager.createQuery(hql.toString());
+            //
+            //result = query.executeUpdate();
+
+            entityManager.remove(shoppingCart);
+
+            result = 1;
+
+            //final StringBuilder hql = new StringBuilder("DELETE FROM ")
+            //        .append(ShoppingCart.class.getName())
+            //        .append(" WHERE ")
+            //        .append(ShoppingCart.FIELD_USER_ID).append(" = ").append(userId).append(" AND ")
+            //        .append(ShoppingCart.FIELD_PRODUCT_ID).append(" = ").append(productId).append(" AND ")
+            //        .append(ShoppingCart.FIELD_COLOR_ID).append(" = ").append(color);
+            //
+            //Query query = entityManager.createQuery(hql.toString());
+            //
+            //result = query.executeUpdate();
 
             shoppingCartResponse = new ShoppingCartResponse(
                     true,
                     ShoppingCart.MESSAGE_PRODUCT_WAS_DELETED_FROM_USER_CART_SUCCESSFULLY,
                     productId);
-
-            result = query.executeUpdate();
+        } else {
+            shoppingCartResponse = new ShoppingCartResponse(
+                    false,
+                    ShoppingCart.MESSAGE_PRODUCT_WITH_COLOR_NOT_FOUND_IN_SHOPPING_CART,
+                    productId);
         }
 
         return result;
@@ -193,7 +227,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
         ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
 
-        System.out.println("deleteShoppingCartsByUserId.userId=" + userId);
+        System.out.println("clearUserCart.userId=" + userId);
 
         /*
         //  Verify userId belongs to a registered user by calling "Account Service"
@@ -212,9 +246,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         }
 
         for (ShoppingCart cart : shoppingCarts) {
-            this.removeProductFromUserCart(userId, cart.getProductId(), cart.getColor());
-            if (!shoppingCartResponse.isSuccess()) {
-                return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
+            //this.removeProductFromUserCart(userId, cart.getProductId(), cart.getColor());
+            //if (!shoppingCartResponse.isSuccess()) {
+            //    return new ShoppingCartResponse(false, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
+            //}
+            ShoppingCart shoppingCart = this.find(userId, cart.getProductId(), cart.getColor());
+            if (shoppingCart != null) {
+                this.delete(shoppingCart);
             }
         }
         return new ShoppingCartResponse(true, ShoppingCart.MESSAGE_USER_SHOPPING_CART_WAS_CLEARED, -1);
@@ -256,4 +294,13 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         return shoppingCartResponse;
     }
 
+    @Override
+    public List<ShoppingCart> getAll() {
+        return null;
+    }
+
+    @Override
+    public ShoppingCart get(Long entityId) {
+        return null;
+    }
 }
