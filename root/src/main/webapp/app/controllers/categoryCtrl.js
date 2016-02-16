@@ -10,7 +10,6 @@ define(['./module'], function (controllers) {
             s.catId = $stateParams.id;
 
             s.paramsToPass = paramsToReturn;
-
             s.viewAll = paramsToReturn.viewAll;
 
             s.categoryData = paramsToReturn.searchResult.length > 0 ? paramsToReturn.searchResult[0] : [];
@@ -20,6 +19,10 @@ define(['./module'], function (controllers) {
             s.categoryName = paramsToReturn.categoryName;
 
             Helper.forAllPage();
+           // l(paramsToReturn.searchResult[0].products)
+           //angular.forEach(paramsToReturn.searchResult[0].products, function(prod){
+           //    l(prod)
+           //});
 
     }]);
 });

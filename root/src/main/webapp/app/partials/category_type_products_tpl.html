@@ -121,13 +121,19 @@
         <ul>
             <li ng-repeat="product in [] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude"
                 ng-click="$location.path('/product/' + product.productId)" >
-                <div class="AddToCard">
+                <div class="soulOut" data-ng-show="product.productStatus == 'OutOfStock'" >
+                    <span class="roboto-medium">{{ 'SOUL_OUT' | translate }}</span>
+                </div>
+                <div class="AddToCard"
+                     data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } " >
                     <label> {{'SHOP_NOW' | translate}} </label>
                     <img alt="" src="../../css/images/cart_18x18.png"  />
                 </div>
-                <img alt="" class="imgProduct" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
+                <img alt="" class="imgProduct"
+                     data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } "
+                     data-ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
                 <p><a>{{product.productName}}</a></p>
-                <p><a class="productPrice">{{product.price | currency:"$"}}</a></p>
+                <p><a class="productPrice">{{product.price | currency:"$"}} </a></p>
             </li>
             <li data-ng-if="([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length == 0">
                 <a style="font-size: 50px; color: #C0C0A1; padding: 30px 0; display: inline-block; cursor: default">NO PRODUCTS TO SHOW</a>
@@ -135,6 +141,24 @@
         </ul>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

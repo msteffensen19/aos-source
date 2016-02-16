@@ -89,6 +89,16 @@
 }
 
 
+#description h2 span, #mobileDescription h2 span{
+    color: white;
+    font-size: 12px;
+    background-color: #454545;
+    padding: 3px 8px;
+    margin: 0 2px;
+    vertical-align: middle;
+}
+
+
 #description p{
     margin: 13px 0;
     font-size: 14px;
@@ -168,6 +178,12 @@
 }
 
 
+.product_specifications{
+    font-size: 23px;
+    color: #2a2a2a;
+    padding-bottom: 28px;
+}
+
 #productProperties button{
     font-size: 14px;
     color: #2a2a2a;
@@ -177,16 +193,20 @@
     margin: 36px 0;
 }
 
-.product_specifications{
-    font-size: 23px;
-    color: #2a2a2a;
-    padding-bottom: 28px;
-}
-
 #productProperties button:hover {
     background-color: #2a2a2a;
     color: white;
 }
+
+#productProperties button.disable{
+    border: solid 2px #d1d1d1 !important;
+    color: #d1d1d1 !important;
+}
+
+#productProperties button.disable:hover {
+    background-color: white;
+    border: solid 2px #d1d1d1 !important;
+    color: #d1d1d1 !important;}
 
 .list{
     padding: 13px 0;

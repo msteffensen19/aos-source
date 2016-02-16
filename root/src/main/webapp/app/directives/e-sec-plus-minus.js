@@ -14,6 +14,7 @@ define(['./module'], function (directives) {
                 scope: {
                     numAttr: '=',
                     updateProductAttr: '&',
+                    aDisable: '='
                 },
                 controller: ['$scope', function(s){
 
@@ -88,7 +89,9 @@ define(['./module'], function (directives) {
                 link: function(s, e, a, ctrl) {
 
                     e.addClass("sec-plus-minus")
-
+                    if(s.aDisable){
+                        e.addClass("sec-plus-minus-disable")
+                    }
                     var minValue = ctrl.getMinValue();
                     var maxValue = ctrl.getMaxValue();
                     if (s.numAttr <= minValue) {

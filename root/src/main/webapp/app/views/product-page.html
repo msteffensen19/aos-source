@@ -13,7 +13,11 @@
 
         <div id="mobileDescription" class="screen480">
             <h1 class="roboto-regular" > {{::product.productName | uppercase}} </h1>
-            <h2 class="roboto-thin"> {{::product.price | currency:'$'}} </h2>
+            <h2 class="roboto-thin"> {{::product.price | currency:'$'}}
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" >
+                    {{ 'SOUL_OUT' | translate }}
+                </span>
+            </h2>
         </div>
 
         <!-- end mobile description section -->
@@ -43,8 +47,12 @@
 
         <div id="description">
             <h1 class="roboto-regular screen768" > {{::product.productName | uppercase}} </h1>
-            <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}} </h2>
-            <p class="roboto-light"> {{::product.description }} </p>
+            <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" >
+                    {{ 'SOUL_OUT' | translate }}
+                </span>
+            </h2>
+            <p class="roboto-light"> {{::product.description }}  </p>
         </div>
         <div id="productProperties">
             <div class="colors" ng-if="product.colors.length > 0">
@@ -54,17 +62,19 @@
                       data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
-                      data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 } '
+                      data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 && product.productStatus == "Active" } '
                       data-ng-click="setColor(color)" >
                 </span>
                 </div>
             </div>
             <div>
                 <label class="Quantity roboto-light" translate="Quantity:" ></label>
-                <e-sec-plus-minus num-attr="quantity"  ></e-sec-plus-minus>
+                <e-sec-plus-minus num-attr="quantity" a-disable="product.productStatus == 'OutOfStock'" ></e-sec-plus-minus>
                 <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
             </div>
-            <button class="roboto-medium" translate="ADD_TO_CART"  ng-click="addToCart()"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
+            <button class="roboto-medium"
+                    data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
+                    translate="ADD_TO_CART"  data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
         </div>
         <!-- end description section -->
 

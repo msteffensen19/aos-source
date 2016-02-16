@@ -148,11 +148,39 @@
     transition: box-shadow 0.3s ease;
     cursor: pointer;
     vertical-align: top;
+    position: relative;
 }
 
-.categoryRight ul li .imgProduct{
+.categoryRight ul li .soulOut{
+    width: 56px;
+    height: 56px;
+    z-index: 10;
+    position: absolute;
+    top: 4px;
+    left: 36px;
+    border-radius: 50%;
+    background-color: #454545;
+}
+
+.categoryRight ul li .soulOut span{
+    position: relative;
+    top: 8px;
+    font-size: 12px;
+    text-align: center;
+    color: white;
+}
+
+.categoryRight ul li .imgProduct {
     width: 90%;
     position: relative;
+}
+
+.categoryRight ul li .AddToCard.outOfStock *{
+    opacity: 0;
+}
+
+.categoryRight ul li .imgProduct.outOfStock{
+    opacity: 0.35;
 }
 
 .categoryRight ul li .AddToCard{
