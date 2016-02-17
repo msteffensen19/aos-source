@@ -172,6 +172,47 @@ display: block;
 }
 
 
+/* Register Success seccion */
+
+
+#registerSuccessCover{
+    padding: 100px 0;
+    font-size: 26px;
+}
+
+#registerSuccessCover h1{
+}
+
+#registerSuccessCover .successMessage {
+    display: inline-block;
+    position: relative;
+}
+
+#registerSuccessCover .successMessage:before{
+    content: "";
+    position: absolute;
+    top:6px;
+    left:-29px;
+    width: 20px;
+    height: 10px;
+    border-bottom: solid #54b3ad 4px;
+    border-left: solid #54b3ad 4px;
+    transform: rotate(-48deg);
+    z-index: 10;
+}
+
+#registerSuccessCover .a-button{
+    padding: 13px 30px;
+    margin: 30px 0 80px 0;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Register Success seccion */
+
+
+
+
 @media screen and (max-width: 1200px)
 {
     #formCover > div span {
@@ -236,6 +277,9 @@ display: block;
         white-space: normal;
     }
 
+    #registerSuccessCover .successMessage {
+        width: 240px;
+    }
 }
 
 

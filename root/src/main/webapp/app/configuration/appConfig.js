@@ -42,6 +42,11 @@ define([],function(){
             resolve : {
                 
             }
+        }).
+        state('registerSuccess',{
+            url: '/registerSuccess',
+            templateUrl: 'app/user/views/registerSuccess-page.html',
+            controller: 'registerSuccessCtrl',
         })
         .state('shoppingCart',{
             url: '/shoppingCart',

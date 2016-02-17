@@ -41,7 +41,7 @@ var english = {
     'REMEMBER_ME' : 'REMEMBER ME',
     'PRICE' : 'PRICE',
 
-    'hi' : 'Hi',
+    'Hi' : 'Hi',
     'Sign_out' : 'Sign out',
     'My_account' : 'My account',
     "PRODUCT_SPECIFICATIONS" : "PRODUCT SPECIFICATIONS",
@@ -167,6 +167,8 @@ var english = {
     'CONTINUE_SHOPPING': 'CONTINUE SHOPPING',
     'Save_changes_in_profile_for_future_use': 'Save changes in profile for future use',
     'SOUL_OUT': 'SOUL OUT',
+    'your_Account_was_created_successfully' : 'your Account was created successfully',
+    'CONTINUE_SHOPPING' : 'CONTINUE SHOPPING'
 };
 
 

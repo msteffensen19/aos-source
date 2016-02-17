@@ -7,6 +7,10 @@ define(['./module'], function (controllers) {
     controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout', '$filter',
         function (s, registerService, $location, $timeout, $filter) {
 
+
+            s.registerSuccess = false;
+            s.WellcomeName = "";
+
             s.countries = {};
             s.registerAnswer = {
                 message: '',
@@ -29,12 +33,13 @@ define(['./module'], function (controllers) {
                 registerService.register(s.model).then(function (response) {
                     s.registerAnswer.message = response.REASON || $filter('translate')('register_faild'),
                     s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
-                    $timeout(function () {
-                        s.registerAnswer = {message: '', class: 'invalid'}
-                        if (response.SUCCESS == 'true') {
-                            window.history.back();
-                        }
-                    }, 4000)
+                    if (response.SUCCESS == 'true') {
+                        $('body, html').animate({ scrollTop: 0 }, 10);
+                        s.WellcomeName = s.model.firstName.replace(/\s/g, "").length > 0 ? s.model.firstName :
+                            s.model.lastName.replace(/\s/g, "").length > 0 ? s.model.lastName :
+                            s.model.username;
+                        s.registerSuccess = true;
+                    }
                 });
             }
 
