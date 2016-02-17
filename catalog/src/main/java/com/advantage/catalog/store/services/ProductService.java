@@ -119,9 +119,6 @@ public class ProductService {
 
     /**
      * Delete a product with all its attributes, colors and images.
-     * @param productId
-     * @param hexColor
-     * @return
      */
     @Transactional
     public ProductResponseDto deleteProduct(Long productId) {
