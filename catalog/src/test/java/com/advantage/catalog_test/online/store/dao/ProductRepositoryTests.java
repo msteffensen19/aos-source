@@ -91,15 +91,27 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
     @Test
     public void testProductCreate() throws IOException {
 
+        System.out.println("testProductCreate() - Begin");
+
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         final TransactionStatus transactionStatusForCreation = transactionManager.getTransaction(transactionDefinition);
-        final Category category = categoryRepository.createCategory(CATEGORY_NAME, IMAGE_ID);
-        final Product product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID,
-                category);
 
+        System.out.println("categoryRepository.createCategory(\'" + CATEGORY_NAME + "\', \'" + IMAGE_ID + "\')");
+        final Category category = categoryRepository.createCategory(CATEGORY_NAME, IMAGE_ID);
+
+        System.out.println("categoryRepository.create(\'" + PRODUCT_NAME + "\', description, " + PRODUCT_PRICE + ", \'" + IMAGE_ID + "\', category)");
+        final Product product = productRepository.create(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, IMAGE_ID, category);
+
+        System.out.println("transactionManager.commit(transactionStatusForCreation)");
         transactionManager.commit(transactionStatusForCreation);
+
+        System.out.println("long id = product.getId()");
         long id = product.getId();
+
+        System.out.println("Assert.assertNotNull(product)");
         Assert.assertNotNull(product);
+
+        System.out.println("Assert.assertNotNull(id)");
         Assert.assertNotNull(id);
         Assert.assertEquals(PRODUCT_NAME, product.getProductName());
         Assert.assertEquals(PRODUCT_DESCRIPTION, product.getDescription());
@@ -107,9 +119,17 @@ public class ProductRepositoryTests extends GenericRepositoryTests {
         Assert.assertEquals(IMAGE_ID, product.getManagedImageId());
         final TransactionStatus transactionStatusForDeletion = transactionManager.getTransaction(transactionDefinition);
 
+        System.out.println("productRepository.delete(product)");
         productRepository.delete(product);
+
+        System.out.println("categoryRepository.delete(category)");
         categoryRepository.delete(category);
+
+        System.out.println("transactionManager.commit(transactionStatusForDeletion)");
         transactionManager.commit(transactionStatusForDeletion);
+
+        System.out.println("testProductCreate() - End");
+
     }
 
     @Test

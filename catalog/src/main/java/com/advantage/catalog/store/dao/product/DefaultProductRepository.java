@@ -169,17 +169,29 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         return hql.toString();
     }
 
+    //@Override
+    //public int delete(Product... entities) {
+    //    ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "products");
+    //    int productsCount = entities.length;
+    //    Collection<Long> productIds = new ArrayList<>(productsCount);
+    //
+    //    for (final Product product : entities) {
+    //        productIds.add(product.getId());
+    //    }
+    //
+    //    return deleteByIds(productIds);
+    //}
     @Override
     public int delete(Product... entities) {
-        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "products");
-        int productsCount = entities.length;
-        Collection<Long> productIds = new ArrayList<>(productsCount);
-
-        for (final Product product : entities) {
-            productIds.add(product.getId());
+        int count = 0;
+        for (Product entity : entities) {
+            if (entityManager.contains(entity)) {
+                entityManager.remove(entity);
+                count++;
+            }
         }
 
-        return deleteByIds(productIds);
+        return count;
     }
 
     @Override

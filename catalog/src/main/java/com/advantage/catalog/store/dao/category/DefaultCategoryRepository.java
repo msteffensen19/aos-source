@@ -64,23 +64,35 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
         return categoryAttributeFilter;
     }
 
+    //@Override
+    //public int delete(Category... entities) {
+    //    ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "categories");
+    //    int categoriesCount = entities.length;
+    //    Collection<Long> categoryIds = new ArrayList<>(categoriesCount);
+    //
+    //    for (Category category : entities) {
+    //        Long categoryId = category.getCategoryId();
+    //        categoryIds.add(categoryId);
+    //    }
+    //
+    //    String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Category.class, Category.FIELD_CATEGORY_ID,
+    //            Category.PARAM_CATEGORY_ID);
+    //    Query query = entityManager.createQuery(hql);
+    //    query.setParameter(Category.PARAM_CATEGORY_ID, categoryIds);
+    //
+    //    return query.executeUpdate();
+    //}
     @Override
     public int delete(Category... entities) {
-        ArgumentValidationHelper.validateArrayArgumentIsNotNullAndNotZeroLength(entities, "categories");
-        int categoriesCount = entities.length;
-        Collection<Long> categoryIds = new ArrayList<>(categoriesCount);
-
-        for (Category category : entities) {
-            Long categoryId = category.getCategoryId();
-            categoryIds.add(categoryId);
+        int count = 0;
+        for (Category entity : entities) {
+            if (entityManager.contains(entity)) {
+                entityManager.remove(entity);
+                count++;
+            }
         }
 
-        String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Category.class, Category.FIELD_CATEGORY_ID,
-                Category.PARAM_CATEGORY_ID);
-        Query query = entityManager.createQuery(hql);
-        query.setParameter(Category.PARAM_CATEGORY_ID, categoryIds);
-
-        return query.executeUpdate();
+        return count;
     }
 
     @Override
