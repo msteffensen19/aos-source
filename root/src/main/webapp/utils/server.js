@@ -141,6 +141,10 @@ var server = {
             return catalogKey + "/categories/attributes";
         },
 
+        sendSupportEmail : function () {
+            return catalogKey + "/support/contact_us/email";
+        },
+
 
     },
     order: {

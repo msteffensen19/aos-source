@@ -364,12 +364,14 @@ define(['./module'], function (services) {
 
             function checkOutOfStockProductsInCart() {
 
+                var defer = $q.defer()
+
                 var user = $rootScope.userCookie;
                 if (user && user.response && user.response.userId != -1) {
-                    return;
+                    defer.resolve(cart);
+                    return defer.promise;
                 }
 
-                var defer = $q.defer()
                 var cartToReplace = [];
 
                 for(var prodIndex = 0 ; prodIndex < cart.productsInCart.length; prodIndex++)

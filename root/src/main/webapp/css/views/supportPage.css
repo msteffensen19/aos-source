@@ -1,0 +1,51 @@
+#supportCover {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 200px;
+}
+
+
+#supportCover input[type=text], #supportCover input[type="password"], #supportCover .inputtext{
+    width: 100%;
+}
+
+#supportCover textarea.inputtext{
+    height: 200px;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 10px 0;
+    background-color: #fbfbfb;
+}
+
+#supportCover .buttonCover {
+    direction: rtl;
+}
+
+#supportCover button{
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 15px 30px;
+    display: block;
+}
+
+#supportCover label.center{
+    display: block;
+    padding: 10px 0;
+}
+
+@media screen and (max-width: 768px) {
+    #supportCover {
+        margin-top: 0px;
+        margin-bottom: 200px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    #supportCover {
+        margin: 0px 28px;
+        margin-bottom: 200px;
+    }
+}
+

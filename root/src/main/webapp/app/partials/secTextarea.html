@@ -6,17 +6,13 @@
            ng-click="validateLabelClicked(id)">
         {{textToShow.text}}
     </label>
-    <input type="{{inputType}}" name="{{id}}" autocapitalize="off"
-           autocomplete="off" autocorrect="off" class="inputtext"
+    <textarea name="{{id}}" class="inputtext"
            data-ng-class="{ validateInvalid : !textToShow.valid }"
-           data-ng-hide="inputType == 'transclude'"
            data-ng-model="modelAttr"
            data-ng-focus="inputFocus(id)"
            data-ng-blur="inputBlur(id)"
            data-ng-keyup="inputKeyup(id)"
            id="secInput_{{id}}" />
-
-    <div ng-transclude data-ng-show="inputType == 'transclude'"></div>
 
     <div class="validate-info" ng-show="warnings.length > 0">
         <ul>
@@ -26,4 +22,11 @@
         </ul>
     </div>
 </div>
+
+
+
+
+
+
+
 

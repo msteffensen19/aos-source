@@ -43,10 +43,22 @@ define([],function(){
                 
             }
         }).
-        state('registerSuccess',{
-            url: '/registerSuccess',
-            templateUrl: 'app/user/views/registerSuccess-page.html',
-            controller: 'registerSuccessCtrl',
+        state('support',{
+            url: '/support',
+            templateUrl: 'app/views/support-page.html',
+            controller: 'supportCtrl',
+            controllerAs: 'suppCtrl',
+                resolve : {
+                    paramsToResorve: function (categoryService, $q) {
+                        var defer = $q.defer()
+                        categoryService.getCategories().then(function (categories) {
+                            defer.resolve({
+                                categories: categories,
+                            });
+                        });
+                        return defer.promise;
+                    }
+                }
         })
         .state('shoppingCart',{
             url: '/shoppingCart',
