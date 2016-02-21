@@ -165,6 +165,233 @@ define(['./module'], function (directives) {
             }
         }])
 
+        .controller("secInputCtrl", ['$scope', function (s) {
+
+            var labelStartPossition;
+            var labelStartfont;
+            var labelStartColor;
+
+            var ctrlFather;
+
+            s.warnings = [];
+            s.noRedStar = false;
+            s.id;
+            s.textToShow = {
+                text: "",
+                valid: true
+            };
+
+            s.inputKeyup = function (id) {
+                var input = $('#secInput_' + id);
+                ctrlFather.updateStartingValueChanged(input);
+                var invalid = checkValidInput(s.warnings, input, 'keyup');
+                if (invalid) {
+                    ctrlFather.addInvalidField(id);
+                }
+                else {
+                    ctrlFather.shiftInvalidField(id);
+                }
+                if(s.invaliditemslengthUpdate + "" != "undefined") {
+                    s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
+                }
+            }
+
+            s.inputFocus = function (id) {
+                var input = $('#secInput_' + id);
+                s.textToShow = {
+                    text: s.placeHolder,
+                    valid: true,
+                };
+                checkValidInput(s.warnings, input, 'keyup');
+                var lab = input.prev();
+                labelStartPossition = labelStartPossition || lab.css('top');
+                labelStartfont = labelStartfont  || lab.css('font-size');
+                labelStartColor = labelStartColor || lab.css('color');
+                input.prev().animate({
+                    'top': '-9px',
+                    'font-size' : '12px',
+                    'color' : '#828282'
+                }, 300, 'linear');
+                input.siblings(".validate-info").show(200);
+            }
+
+            s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
+
+                var input = $('#secInput_' + id);
+                if(input.val() == undefined){
+                    return;
+                }
+
+                if (input.val().length == 0) {
+                    input.prev().animate({
+                        'top': labelStartPossition,
+                        'font-size' : labelStartfont,
+                        'color' : labelStartColor
+                    }, 300, 'linear');
+                }
+                var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
+                if (invalid) {
+                    ctrlFather.addInvalidField(id);
+                }
+                else {
+                    ctrlFather.shiftInvalidField(id);
+                }
+
+                if(s.invaliditemslengthUpdate + "" != "undefined") {
+                    s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
+                }
+                input.siblings(".validate-info").hide(200);
+            }
+
+            s.validateLabelClicked = function (id) {
+                $('#secInput_' + id).focus();
+            }
+
+            this.setCtrlFather = function (_ctrlFather) {
+                ctrlFather = _ctrlFather;
+            }
+
+            this.addWarningInfo = function (warningInfo) {
+                s.warnings.push(warningInfo);
+                ctrlFather.addInvalidField(s.id);
+            }
+
+            this.setPlaceHolder = function (placeHolder) {
+                s.placeHolder = placeHolder;
+                s.textToShow = {
+                    text: placeHolder,
+                    valid: true,
+                    key: ''
+                };
+            }
+
+            this.setId = function (id) {
+                s.id = id;
+            }
+
+            this.enableNoRedStar = function () {
+                s.noRedStar = true;
+            }
+
+            this.setInputType = function (inputType) {
+                s.inputType = inputType;
+            }
+
+            function setTextToShow(warn, justTestThisField_do_not_active_her_Field) {
+                warn.show = true;
+                if(justTestThisField_do_not_active_her_Field){
+                    return;
+                }
+                s.textToShow = {
+                    text: warn.warning,
+                    valid: false
+                };
+            }
+
+            function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
+
+                var invalidToReturn = false;
+                try {
+
+                    for (var i in s.warnings) {
+                        var warn = s.warnings[i];
+
+                        if (s.textToShow.valid) {
+                            switch (warn.key) {
+                                case 'secRequired':
+                                    var _invalid = (input.val() == '');
+                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                    if (event == 'keyup') {
+                                        warn.show = _invalid;
+                                        if (!invalidToReturn) {
+                                            ctrlFather.getInvalidItems()
+                                        }
+                                    }
+                                    else if (invalidToReturn) {
+                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                    }
+                                    break;
+                                case 'secOnlyNumbers':
+                                    var _invalid = !((input.val() - 0) == input.val() &&
+                                    input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
+                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                    if (event == 'keyup') {
+                                        warn.show = _invalid;
+                                        if (!invalidToReturn) {
+                                            ctrlFather.getInvalidItems()
+                                        }
+                                    }
+                                    else if (invalidToReturn) {
+                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                    }
+                                    break;
+                                case 'secMinLength':
+                                    var _invalid = input.val().length < warn.min && (input.val()+"").length != 0;
+                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                    if (event == 'keyup') {
+                                        warn.show = _invalid;
+                                        if (!invalidToReturn) {
+                                            ctrlFather.getInvalidItems()
+                                        }
+                                    }
+                                    else if (invalidToReturn) {
+                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                    }
+                                    break;
+                                case 'secMaxLength':
+                                    var _invalid = input.val().length > warn.max;
+                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                    if (event == 'keyup') {
+                                        warn.show = _invalid;
+                                        if (!invalidToReturn) {
+                                            ctrlFather.getInvalidItems()
+                                        }
+                                    }
+                                    else if (invalidToReturn) {
+                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                    }
+                                    break;
+                                case 'secPattern':
+                                    var _invalid = !(new RegExp(warn.regex).test(input.val())) && (input.val()+"").length != 0;
+                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                    if (event == 'keyup') {
+                                        warn.show = _invalid;
+                                        if (!invalidToReturn) {
+                                            ctrlFather.getInvalidItems()
+                                        }
+                                    }
+                                    else if (invalidToReturn) {
+                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                    }
+                                    break;
+                                case 'secCompareTo':
+                                    var comparedInput = $('#secInput_' + warn.compareId);
+                                    var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
+                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
+                                    if (event == 'keyup') {
+                                        warn.show = _invalid;
+                                        if (!invalidToReturn) {
+                                            ctrlFather.getInvalidItems()
+                                        }
+                                    }
+                                    else if (invalidToReturn) {
+                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
+                                    }
+                                    break;
+                                default:
+                                    throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
+                            }
+                        }
+                    }
+                    return invalidToReturn;
+                }
+                catch (err) {
+                    console.log(err);
+                    return false;
+                }
+            }
+        }])
+
         .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
             return {
                 restrict: 'E',
@@ -172,236 +399,12 @@ define(['./module'], function (directives) {
                 transclude: true,
                 require: ['secInput', '^secValidate'],
                 scope: {
-                    modelAttr: '=',
-                    idAttr: '@'
-                },
+                    modelAttr : '=',
+                    idAttr: '@',
+                    secChange: '&',
+                 },
                 template: $templateCache.get('app/partials/secInput.html'),
-                controller: ['$scope', function (s) {
-
-                    var labelStartPossition;
-                    var labelStartfont;
-                    var labelStartColor;
-
-                    var ctrlFather;
-
-                    s.warnings = [];
-                    s.noRedStar = false;
-                    s.id;
-                    s.textToShow = {
-                        text: "",
-                        valid: true
-                    };
-
-                    s.inputKeyup = function (id) {
-                        var input = $('#secInput_' + id);
-                        ctrlFather.updateStartingValueChanged(input);
-                        var invalid = checkValidInput(s.warnings, input, 'keyup');
-                        if (invalid) {
-                            ctrlFather.addInvalidField(id);
-                        }
-                        else {
-                            ctrlFather.shiftInvalidField(id);
-                        }
-                        if(s.invaliditemslengthUpdate + "" != "undefined") {
-                            s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
-                        }
-                    }
-
-                    s.inputFocus = function (id) {
-                        var input = $('#secInput_' + id);
-                        s.textToShow = {
-                            text: s.placeHolder,
-                            valid: true,
-                        };
-                        checkValidInput(s.warnings, input, 'keyup');
-                        var lab = input.prev();
-                        labelStartPossition = labelStartPossition || lab.css('top');
-                        labelStartfont = labelStartfont  || lab.css('font-size');
-                        labelStartColor = labelStartColor || lab.css('color');
-                        input.prev().animate({
-                            'top': '-9px',
-                            'font-size' : '12px',
-                            'color' : '#828282'
-                        }, 300, 'linear');
-                        input.siblings(".validate-info").show(200);
-                    }
-
-                    s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
-
-                        var input = $('#secInput_' + id);
-                        if(input.val() == undefined){
-                            return;
-                        }
-
-                        if (input.val().length == 0) {
-                            input.prev().animate({
-                                'top': labelStartPossition,
-                                'font-size' : labelStartfont,
-                                'color' : labelStartColor
-                            }, 300, 'linear');
-                        }
-                        var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
-                        if (invalid) {
-                            ctrlFather.addInvalidField(id);
-                        }
-                        else {
-                            ctrlFather.shiftInvalidField(id);
-                        }
-
-                        if(s.invaliditemslengthUpdate + "" != "undefined") {
-                            s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
-                        }
-                        input.siblings(".validate-info").hide(200);
-                    }
-
-                    s.validateLabelClicked = function (id) {
-                        $('#secInput_' + id).focus();
-                    }
-
-                    this.setCtrlFather = function (_ctrlFather) {
-                        ctrlFather = _ctrlFather;
-                    }
-
-                    this.addWarningInfo = function (warningInfo) {
-                        s.warnings.push(warningInfo);
-                        ctrlFather.addInvalidField(s.id);
-                    }
-
-                    this.setPlaceHolder = function (placeHolder) {
-                        s.placeHolder = placeHolder;
-                        s.textToShow = {
-                            text: placeHolder,
-                            valid: true,
-                            key: ''
-                        };
-                    }
-
-                    this.setId = function (id) {
-                        s.id = id;
-                    }
-
-                    this.enableNoRedStar = function () {
-                        s.noRedStar = true;
-                    }
-
-                    this.setInputType = function (inputType) {
-                        s.inputType = inputType;
-                    }
-
-                    function setTextToShow(warn, justTestThisField_do_not_active_her_Field) {
-                        warn.show = true;
-                        if(justTestThisField_do_not_active_her_Field){
-                            return;
-                        }
-                        s.textToShow = {
-                            text: warn.warning,
-                            valid: false
-                        };
-                    }
-
-                    function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
-
-                        var invalidToReturn = false;
-                        try {
-
-                            for (var i in s.warnings) {
-                                var warn = s.warnings[i];
-
-                                if (s.textToShow.valid) {
-                                    switch (warn.key) {
-                                        case 'secRequired':
-                                            var _invalid = (input.val() == '');
-                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                            if (event == 'keyup') {
-                                                warn.show = _invalid;
-                                                if (!invalidToReturn) {
-                                                    ctrlFather.getInvalidItems()
-                                                }
-                                            }
-                                            else if (invalidToReturn) {
-                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                            }
-                                            break;
-                                        case 'secOnlyNumbers':
-                                            var _invalid = !((input.val() - 0) == input.val() &&
-                                            input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
-                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                            if (event == 'keyup') {
-                                                warn.show = _invalid;
-                                                if (!invalidToReturn) {
-                                                    ctrlFather.getInvalidItems()
-                                                }
-                                            }
-                                            else if (invalidToReturn) {
-                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                            }
-                                            break;
-                                        case 'secMinLength':
-                                            var _invalid = input.val().length < warn.min && (input.val()+"").length != 0;
-                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                            if (event == 'keyup') {
-                                                warn.show = _invalid;
-                                                if (!invalidToReturn) {
-                                                    ctrlFather.getInvalidItems()
-                                                }
-                                            }
-                                            else if (invalidToReturn) {
-                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                            }
-                                            break;
-                                        case 'secMaxLength':
-                                            var _invalid = input.val().length > warn.max;
-                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                            if (event == 'keyup') {
-                                                warn.show = _invalid;
-                                                if (!invalidToReturn) {
-                                                    ctrlFather.getInvalidItems()
-                                                }
-                                            }
-                                            else if (invalidToReturn) {
-                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                            }
-                                            break;
-                                        case 'secPattern':
-                                            var _invalid = !(new RegExp(warn.regex).test(input.val())) && (input.val()+"").length != 0;
-                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                            if (event == 'keyup') {
-                                                warn.show = _invalid;
-                                                if (!invalidToReturn) {
-                                                    ctrlFather.getInvalidItems()
-                                                }
-                                            }
-                                            else if (invalidToReturn) {
-                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                            }
-                                            break;
-                                        case 'secCompareTo':
-                                            var comparedInput = $('#secInput_' + warn.compareId);
-                                            var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
-                                            invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-                                            if (event == 'keyup') {
-                                                warn.show = _invalid;
-                                                if (!invalidToReturn) {
-                                                    ctrlFather.getInvalidItems()
-                                                }
-                                            }
-                                            else if (invalidToReturn) {
-                                                setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-                                            }
-                                            break;
-                                        default:
-                                            throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
-                                    }
-                                }
-                            }
-                            return invalidToReturn;
-                        }
-                        catch (err) {
-                            console.log(err);
-                            return false;
-                        }
-                    }
-                }],
+                controller: 'secInputCtrl',
                 link: {
                     pre: function (s, e, a, ctrls) {
 
@@ -431,16 +434,22 @@ define(['./module'], function (directives) {
                                         }
                                         ctrls[1].getInvalidItems();
 
-                                        if(s.invaliditemslengthUpdate + "" != "undefined") {
+                                        if (s.invaliditemslengthUpdate + "" != "undefined") {
                                             s.invaliditemslengthUpdate(ctrls[1].getInvalidItemsCount());
                                         }
-
                                     });
                                 }
-                            })
+                            });
 
                             e.bind('change', function () {
                                 var select = $($(this).find("select"))
+
+                                if(a.secSiblings != undefined){
+                                    s.inputFocus(a.secSiblings);
+                                }
+                                if(a.secChange != undefined){
+                                    s.secChange();
+                                }
                                 if (select.length > 0) {
                                     s.$apply(function () {
                                         ctrls[1].shiftInvalidField(a.idAttr);
@@ -464,6 +473,46 @@ define(['./module'], function (directives) {
                 }
             }
         }])
+        .directive('secTextarea', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
+            return {
+                restrict: 'E',
+                replace: true,
+                require: ['secTextarea', '^secValidate'],
+                scope: {
+                    modelAttr: '=',
+                    idAttr: '@'
+                },
+                template: $templateCache.get('app/partials/secTextarea.html'),
+                controller: 'secInputCtrl',
+                link: {
+                    pre: function (s, e, a, ctrls) {
+
+                        var me = ctrls[0];
+                        e.addClass('validate-directive');
+
+                        if (!a.idAttr) {
+                            throw "id attribute  in directive <secInput></secInput> is must! "
+                        }
+
+                        if (a.noRedStar) {
+                            me.enableNoRedStar();
+                        }
+
+                        me.setCtrlFather(ctrls[1]);
+                        me.setInputType(a.inputTypeAttr || 'text')
+                        me.setId(a.idAttr)
+                        ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
+                    },
+                    post: function(s){
+                        if(s.modelAttr != '' && s.modelAttr != undefined){
+                            $timeout(function(){ s.inputFocus(s.id); }, 0)
+                        }
+                        $timeout(function(){ s.inputBlur(s.id, true); }, 100)
+                        $timeout(function(){ s.inputKeyup(s.id); }, 200)
+                    }
+                }
+            }
+        }])
         .directive('secRequired', function(){
             return{
                 restrict: 'A',
@@ -471,6 +520,22 @@ define(['./module'], function (directives) {
                 require: 'secInput',
                 link: function(s, e, a, ctrl){
                     var warning = a.secRequired || 'This field is required'
+                    ctrl.addWarningInfo({
+                        key : 'secRequired',
+                        warning : warning,
+                        info: '',
+                        show: false
+                    })
+                }
+            }
+        })
+        .directive('secTRequired', function(){
+            return{
+                restrict: 'A',
+                priority: 0,
+                require: 'secTextarea',
+                link: function(s, e, a, ctrl){
+                    var warning = a.secTRequired || 'This field is required'
                     ctrl.addWarningInfo({
                         key : 'secRequired',
                         warning : warning,
@@ -613,6 +678,15 @@ define(['./module'], function (directives) {
                 require: 'secInput',
                 link: function(s, e, a, ctrl){
                     ctrl.setPlaceHolder(a.secPlaceholder)
+                }
+            }
+        })
+        .directive('secTPlaceholder', function(){
+            return{
+                restrict: 'A',
+                require: 'secTextarea',
+                link: function(s, e, a, ctrl){
+                    ctrl.setPlaceHolder(a.secTPlaceholder)
                 }
             }
         })

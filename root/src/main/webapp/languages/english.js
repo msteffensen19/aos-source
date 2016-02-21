@@ -13,7 +13,6 @@ var english = {
     'LOGIN': 'LOGIN',
     'LOGOUT': 'This is a paragraph.',
     'SPACIAL_OFFER' : 'SPECIAL OFFER',
-    'ITEMS' : 'ITEMS',
     'SPECIAL_OFFER_ITEMS' : 'SPECIAL OFFER ITEMS',
     'POPULAR_ITEMS' : 'POPULAR ITEMS',
     'FOLLOW_US' : 'FOLLOW US',
@@ -41,7 +40,7 @@ var english = {
     'REMEMBER_ME' : 'REMEMBER ME',
     'PRICE' : 'PRICE',
 
-    'hi' : 'Hi',
+    'Hi' : 'Hi',
     'Sign_out' : 'Sign out',
     'My_account' : 'My account',
     "PRODUCT_SPECIFICATIONS" : "PRODUCT SPECIFICATIONS",
@@ -105,6 +104,8 @@ var english = {
     'Search' : 'Search',
     'CATEGORIES' : 'CATEGORIES',
     'Categories': 'Categories',
+    'Category': 'Category',
+    'Product' : 'Product',
     'TOP' : 'TOP',
     'RESULTS_FOR' : 'RESULTS FOR',
     'TOP_RESULTS_FOR' : 'TOP RESULTS FOR',
@@ -164,9 +165,13 @@ var english = {
     'CONNECTION_DETAILS' : 'CONNECTION DETAILS',
     'Change_Password' : 'Change Password',
     'SAVE': 'SAVE',
-    'CONTINUE_SHOPPING': 'CONTINUE SHOPPING',
     'Save_changes_in_profile_for_future_use': 'Save changes in profile for future use',
     'SOUL_OUT': 'SOUL OUT',
+    'your_Account_was_created_successfully' : 'your Account was created successfully',
+    'CONTINUE_SHOPPING' : 'CONTINUE SHOPPING',
+    'Problem_sending_mail_please_try_later': 'Problem sending mail, please try later',
+    'Subject': 'Subject',
+    'SUPPORT':'SUPPORT',
 };
 
 

@@ -20,5 +20,10 @@ define(['./module'], function (controllers) {
             s.categoryName = paramsToReturn.categoryName;
 
             Helper.forAllPage();
+
     }]);
+
 });
+
+
+

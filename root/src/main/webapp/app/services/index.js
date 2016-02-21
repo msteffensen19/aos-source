@@ -10,4 +10,5 @@ define([
     './categoryService',
     './dealService',
     './responseHandleService',
+    './supportService',
     './smoothScroll'], function() {});
