@@ -386,6 +386,14 @@ a {
     background-color: white !important;
 }
 
+.dirRight {
+    direction: rtl;
+}
+
+.noPadding{
+    padding: 0 !important;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
     display: none !important;
 }

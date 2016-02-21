@@ -153,7 +153,6 @@
 #form .accountDetailsBtn{
     width: 137px !important;
     height: 34px !important;
-    float: right;
 }
 
 #form .accountDetailsBtn.withMargin{
@@ -185,6 +184,7 @@
     display: block;
     margin: 28px 0;
 }
+
 
 /*//// end accountDetails PAGE ///*/
 
@@ -234,20 +234,20 @@
 
 
 
+@media screen and (max-width: 780px) {
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
+        width: 25%;
+    }
+}
+
+
+
 @media screen and (max-width: 768px)
 {
     #myAccountContainer{
         padding-top: 0px !important;
     }
 
-}
-
-
-
-@media screen and (max-width: 780px) {
-    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
-        width: 25%;
-    }
 }
 
 
@@ -263,6 +263,9 @@
     #accountCover #form .accountDetailsBtn.withMargin{
         margin: 0 !important;
         width: 100% !important;
+        height: auto !important;
+        padding: 12px 0;
+        font-size: 15px;
         float: none;
     }
 
