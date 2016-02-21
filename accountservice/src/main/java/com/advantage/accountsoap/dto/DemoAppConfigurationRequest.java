@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto.DemoAppConfig;
+package com.advantage.accountsoap.dto;
 
 /**
  * For Requesting a value from &quat;DemoAppConfig.xml&quat; file. <br/>
