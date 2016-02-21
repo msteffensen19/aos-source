@@ -36,6 +36,37 @@ public abstract class XmlHelper {
     }
 
     /**
+     * Get XML {@link Document} from the file in the given path.
+     * @param xmlFilePath
+     * @return XML {@link Document} from the file in the given path.
+     * @throws IOException              if an I/O error occurs.
+     * @throws IllegalArgumentException if the given file path argument references
+     *                                  <b>null</b>, or if it <b>is</b> a blank string.
+     */
+    public static Document getXmlDocument(final String xmlFilePath) {
+
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(xmlFilePath, "file path");
+
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            Document document = docBuilder.parse(xmlFilePath);
+            document.getDocumentElement().normalize();
+
+            return document;
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (SAXException sae) {
+            sae.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Get a document from the file in the given path.
      *
      * @param filePath the path of the file, to a document from.
