@@ -1,8 +1,8 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.config.DemoAppConfigurationXml;
-import com.advantage.accountsoap.dto.DemoAppConfig.DemoAppConfigParameter;
-import com.advantage.accountsoap.dto.DemoAppConfig.DemoAppConfigurationResponse;
+import com.advantage.accountsoap.dto.DemoAppConfigParameter;
+import com.advantage.accountsoap.dto.DemoAppConfigurationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
