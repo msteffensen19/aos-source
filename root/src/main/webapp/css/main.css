@@ -521,9 +521,23 @@ footer .splitter{
 @media screen and (max-width: 480px) {
 
 
+    .uiview {
+        padding-top: 60px;
+    }
+
+    header{
+        border-bottom: solid #d0d0d0 1px
+    }
+
     div.logo a{
         padding: 0;
-        padding-top: 10px;
+        padding-top: 6px;
+    }
+
+    div.logo svg{
+        transform: scale(0.8);
+        position: relative;
+        top:5px;
     }
 
     .pages{

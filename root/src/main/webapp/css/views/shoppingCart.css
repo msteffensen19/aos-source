@@ -305,6 +305,10 @@
         margin: 0;
     }
 
+    #mobileShoppingCart #toolTipCart tbody img{
+        width: 80px;
+    }
+
     #mobileShoppingCart #toolTipCart > div{
         margin-bottom: 80px;
     }
@@ -336,8 +340,10 @@
         display: block;
         width: 100%;
         margin: 0;
-        margin-top: 10px;
+        margin-top: 26px;
         box-sizing: border-box;
+        line-height: 28px;
+        font-size: 15px;
     }
 
 

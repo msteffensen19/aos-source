@@ -18,6 +18,7 @@ var english = {
     'FOLLOW_US' : 'FOLLOW US',
     'LEGALS_FOOTER' : '© Advantage Inc, 2016.',
     'FILTER_BY' : 'FILTER BY: ',
+    'Filter' : 'Filter',
     'SHOP_NOW' : 'SHOP NOW',
     'ADD_TO_CART' : 'ADD TO CART',
     'UPDATE_CART': 'UPDATE CART',

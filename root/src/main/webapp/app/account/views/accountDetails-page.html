@@ -132,11 +132,20 @@
                             </div>
 
                             <div>
-                                <input sec-submit-attr="saveAccountDetails()"
+
+                                <!--<input sec-submit-attr="saveAccountDetails()"-->
+                                       <!--class="roboto-medium sec-validate-invalid accountDetailsBtn withMargin"-->
+                                       <!--a-sec-validate-invalid-->
+                                       <!--type="button"-->
+                                       <!--value="{{'SAVE' | translate}}" />-->
+
+
+                                <button sec-submit-attr="saveAccountDetails()"
                                        class="roboto-medium sec-validate-invalid accountDetailsBtn withMargin"
-                                       a-sec-validate-invalid
-                                       type="button"
-                                       value="{{'SAVE' | translate}}" />
+                                       a-sec-validate-invalid >
+                                    {{'SAVE' | translate}}
+                                </button>
+
                             </div>
 
                             <div>

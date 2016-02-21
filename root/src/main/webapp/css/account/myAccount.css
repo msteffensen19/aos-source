@@ -217,9 +217,19 @@
 
 @media screen and (max-width: 940px)
 {
+    /*#accountCover .maxWidth{*/
+        /*padding: 15px 50px;*/
+    /*}*/
+
     #accountCover .maxWidth{
-        padding: 15px 50px;
+        margin-top: 0;
+        padding: 0 !important;
     }
+
+    #accountCover #form{
+        padding: 0 20px;
+    }
+
 }
 
 
@@ -249,6 +259,20 @@
 
 @media screen and (max-width: 480px)
 {
+
+    #accountCover #form .accountDetailsBtn.withMargin{
+        margin: 0 !important;
+        width: 100% !important;
+        float: none;
+    }
+
+    #accountCover #formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
+    {
+        width: 100% !important
+    }
+
+
+
 
     #myAccountContainer{
         margin-bottom: 60px;
