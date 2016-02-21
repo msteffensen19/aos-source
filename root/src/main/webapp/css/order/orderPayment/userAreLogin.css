@@ -83,6 +83,17 @@
     margin: 0 48px;
     margin-top: 18px;
     padding: 10px 0 4px 0;
+    color: #313131;
+    font-weight: 600;
+    transition: .3s all ease;
+}
+
+#userDetailsEditMode .sec-validate .a-link:hover {
+    margin: 0 48px;
+    margin-top: 18px;
+    padding: 10px 0 4px 0;
+    color: #54b3ad;
+    font-weight: 900;
 }
 
 #userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext{
@@ -352,6 +363,12 @@
 @media screen and (max-width: 480px){
     #userDetails > div{
         width: 100%;
+    }
+
+    #userSection .nextBtn {
+        font-size: 15px;
+        width: 100%;
+        padding: 13px 0;
     }
 
     #userDetails > div:nth-child(2){

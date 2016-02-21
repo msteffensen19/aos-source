@@ -132,20 +132,38 @@
 
                 <div class="blueLink">
                     <label>
-                        <input sec-submit-attr="accountUpdate()"
-                               a-sec-validate-invalid
-                               class="roboto-medium float-button a-button "
-                               type="button"
-                               value="{{'NEXT' | translate}}"/>
+                        <button
+                                sec-submit-attr="accountUpdate()"
+                                a-sec-validate-invalid
+                                class="roboto-medium float-button a-button" >
+                               {{'NEXT' | translate}}
+                        </button>
                     </label>
                     <label>
-                        <input class="roboto-medium float-button a-link "
-                               type="button" value="{{'BACK' | translate}}"
-                               data-ng-class="{ buttonDisable : invalidUser}"
-                               data-ng-click="backToMainShippingDetails()"
-                        />
+                        <a class="roboto-medium float-button a-link "
+                           data-ng-class="{ buttonDisable : invalidUser}"
+                           data-ng-click="backToMainShippingDetails()"
+                        >
+                            {{'BACK' | translate}}
+                        </a>
                     </label>
                 </div>
+                <!--<div class="blueLink">-->
+                    <!--<label>-->
+                        <!--<input sec-submit-attr="accountUpdate()"-->
+                               <!--a-sec-validate-invalid-->
+                               <!--class="roboto-medium float-button a-button "-->
+                               <!--type="button"-->
+                               <!--value="{{'NEXT' | translate}}"/>-->
+                    <!--</label>-->
+                    <!--<label>-->
+                        <!--<input class="roboto-medium float-button a-link "-->
+                               <!--type="button" value="{{'BACK' | translate}}"-->
+                               <!--data-ng-class="{ buttonDisable : invalidUser}"-->
+                               <!--data-ng-click="backToMainShippingDetails()"-->
+                        <!--/>-->
+                    <!--</label>-->
+                <!--</div>-->
 
             </sec-validate>
 
@@ -231,10 +249,17 @@
                     <div class="blueLink margin15px">
                         <a data-ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
+<!--
                             <input sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
                                    class="roboto-medium float-button a-button"
                                    type="button"
                                    value="{{'PAY_NOW' | translate}}"/>
+-->
+                            <button sec-submit-attr="payNow_SafePay()" a-sec-validate-invalid
+                                   class="roboto-medium float-button a-button" >
+                                {{'PAY_NOW' | translate }}
+                            </button>
+
                         </label>
                     </div>
 
@@ -264,11 +289,17 @@
                 <div class="blueLink">
                     <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                     <label>
-                        <input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"
-                               type="button" value="{{'PAY_NOW' | translate}}"/>
+                        <!--<input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"-->
+                        <!--type="button" value="{{'PAY_NOW' | translate}}"/>-->
+                        <button class="roboto-medium float-button a-button" data-ng-click="payNow_manual()">
+                            {{'PAY_NOW' | translate}}
+                        </button>
                     </label>
                 </div>
             </div>
+
+
+
 
             <!-------------------------- END MASTERCREDIT SECCION --------------------->
 
@@ -337,11 +368,17 @@
                         <a ng-click="firstTag = true"
                         >{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
-                            <input sec-submit-attr="payNow_masterCredit()"
+                            <!-- <input sec-submit-attr="payNow_masterCredit()"
+                                    class="roboto-medium float-button a-button"
+                                    a-sec-validate-invalid
+                                    type="button"
+                                    value="{{'PAY_NOW' | translate}}"/>-->
+
+                             <button sec-submit-attr="payNow_masterCredit()"
                                    class="roboto-medium float-button a-button"
-                                   a-sec-validate-invalid
-                                   type="button"
-                                   value="{{'PAY_NOW' | translate}}"/>
+                                   a-sec-validate-invalid >
+                                 {{'PAY_NOW' | translate}}
+                             </button>
                         </label>
                     </div>
 

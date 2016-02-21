@@ -149,11 +149,12 @@
                         </div>
                     </div>
 
-                    <input sec-submit-attr="register()"
+                    <button sec-submit-attr="register()"
                            class="roboto-medium sec-validate-invalid"
-                           a-sec-validate-invalid
-                           type="button"
-                           value="{{'REGISTER' | translate}}"/>
+                           a-sec-validate-invalid >
+                        {{'REGISTER' | translate}}
+                    </button>
+
 
                     <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium">
                         <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()"></a>
