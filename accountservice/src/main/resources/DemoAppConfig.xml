@@ -4,6 +4,8 @@
         User level configuration.
         Managed by Admin-User in ADM Demo .NET administration application
     -->
+    <!-- "Yes"=e-mail address mandatory in create-user and shown in login/sign-in page -->
+    <Email_address_in_login tools="">Yes</Email_address_in_login>
     <!-- 0=Disabled, any other positive number is the amount of memory leak in MegaBytes -->
     <Generate_memory_leak tools="LoadRunner;LeanFt">0</Generate_memory_leak>
     <!-- 0=Disabled, any other positive number is the number of repeat calls to ShipEx -->
