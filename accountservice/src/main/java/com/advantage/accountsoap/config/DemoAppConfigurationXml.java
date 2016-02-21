@@ -1,18 +1,14 @@
 package com.advantage.accountsoap.config;
 
-import com.advantage.accountsoap.dto.DemoAppConfigParameter;
-import com.advantage.accountsoap.dto.DemoAppConfigurationResponse;
+import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
+import com.advantage.accountsoap.dto.account.DemoAppConfigurationResponse;
 import com.advantage.common.Constants;
 import com.advantage.root.util.xml.XmlHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
