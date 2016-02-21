@@ -64,7 +64,7 @@ public class DemoAppConfigurationXmlTests {
     @Test
     public void testGetDemoAppConfigParameterByTool() {
         //  region Test LeanFT
-        DemoAppConfigurationResponse response = service.getAllParametersByTool("LeanFt");
+        DemoAppConfigurationResponse response = service.getParametersByTool("LeanFt");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         long numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -72,7 +72,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test LoadRunner
-        response = service.getAllParametersByTool("LoadRunner");
+        response = service.getParametersByTool("LoadRunner");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -80,7 +80,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test MobileCenter
-        response = service.getAllParametersByTool("MobileCenter");
+        response = service.getParametersByTool("MobileCenter");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -88,7 +88,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test NV
-        response = service.getAllParametersByTool("MobileCenter");
+        response = service.getParametersByTool("MobileCenter");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -96,7 +96,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test Sprinter
-        response = service.getAllParametersByTool("Sprinter");
+        response = service.getParametersByTool("Sprinter");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -104,7 +104,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test StormRunner
-        response = service.getAllParametersByTool("StormRunner");
+        response = service.getParametersByTool("StormRunner");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -112,7 +112,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test SV
-        response = service.getAllParametersByTool("SV");
+        response = service.getParametersByTool("SV");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();
@@ -120,7 +120,7 @@ public class DemoAppConfigurationXmlTests {
         //  endregion
 
         //  region Test UFT
-        response = service.getAllParametersByTool("UFT");
+        response = service.getParametersByTool("UFT");
         Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
 
         numberOfParameters = response.getDemoAppConfigParameters().size();

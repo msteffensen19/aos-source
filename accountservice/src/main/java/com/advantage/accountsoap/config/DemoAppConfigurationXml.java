@@ -290,7 +290,7 @@ public class DemoAppConfigurationXml {
     }
 
     public List<DemoAppConfigParameter> getAllParametersByTool(String toolName) {
-        System.out.println("getAllParametersByTool(\"" + toolName + "\") - Begin");
+        System.out.println("getParametersByTool(\"" + toolName + "\") - Begin");
 
         NodeList nodesList = this.getAllParametersNodeList();
         if (nodesList == null) {
@@ -314,7 +314,7 @@ public class DemoAppConfigurationXml {
                 System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
             }
         }
-        System.out.println("getAllParametersByTool(\"" + toolName + "\") - End");
+        System.out.println("getParametersByTool(\"" + toolName + "\") - End");
         System.out.println("");
 
         return parameters;
@@ -367,10 +367,10 @@ public class DemoAppConfigurationXml {
     //
     //        demoAppConfigXml.getAllDemoAppConfigParameters();
     //
-    //        demoAppConfigXml.getAllParametersByTool("UFT");
-    //        demoAppConfigXml.getAllParametersByTool("LeanFT");
-    //        demoAppConfigXml.getAllParametersByTool("Sprinter");
-    //        demoAppConfigXml.getAllParametersByTool("LoadRunner");
+    //        demoAppConfigXml.getParametersByTool("UFT");
+    //        demoAppConfigXml.getParametersByTool("LeanFT");
+    //        demoAppConfigXml.getParametersByTool("Sprinter");
+    //        demoAppConfigXml.getParametersByTool("LoadRunner");
     //
     //        // Get the staff element by tag name directly
     //        demoAppConfigXml.setParameters(demoAppConfigXml.getDoc().getElementsByTagName(ROOT_ELEMENT_NAME).item(0));
