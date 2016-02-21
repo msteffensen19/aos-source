@@ -359,98 +359,100 @@ public class DemoAppConfigurationXml {
         return returnList;
     }
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        try {
-            DemoAppConfigurationXml demoAppConfigXml = new DemoAppConfigurationXml();
-            demoAppConfigXml.setDoc(XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME));
-            System.out.println("Document URL\"" + demoAppConfigXml.getDoc().getDocumentURI() + "\"");
-
-            demoAppConfigXml.getAllDemoAppConfigParameters();
-
-            demoAppConfigXml.getAllParametersByTool("UFT");
-            demoAppConfigXml.getAllParametersByTool("LeanFT");
-            demoAppConfigXml.getAllParametersByTool("Sprinter");
-            demoAppConfigXml.getAllParametersByTool("LoadRunner");
-
-            // Get the staff element by tag name directly
-            demoAppConfigXml.setParameters(demoAppConfigXml.getDoc().getElementsByTagName(ROOT_ELEMENT_NAME).item(0));
-
-            NodeList nodesList = demoAppConfigXml.getParameters().getChildNodes();
-            if (nodesList.getLength() == 0) {
-                throw new Exception("No child nodes found for Root Element \"" + ROOT_ELEMENT_NAME + "\"");
-            }
-
-            for (int i = 0; i < nodesList.getLength(); i++) {
-                Node node = nodesList.item(i);
-
-                switch (node.getNodeName()) {
-                    case "#comment":
-                        System.out.println("<!--" + node.getTextContent() + "-->");
-                        break;
-                    case "#text":
-                        break;
-                    default:
-                        NamedNodeMap attr = node.getAttributes();
-                        Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
-                        String attributeValue = nodeAttr.getTextContent();
-
-                        System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
-                        break;
-                }
-            }
-
-            //// update staff attribute
-            //NamedNodeMap attr = parameters.getAttributes();
-            //Node nodeAttr = attr.getNamedItem("id");
-            //nodeAttr.setTextContent("2");
-            //
-            //// append a new node to staff
-            //Element age = demoAppConfigXml.getDoc().createElement("age");
-            //age.appendChild(demoAppConfigXml.getDoc().createTextNode("28"));
-            //parameters.appendChild(age);
-            //
-            //// loop the staff child node
-            //NodeList list = parameters.getChildNodes();
-            //
-            //for (int i = 0; i < list.getLength(); i++) {
-            //
-            //    Node node = list.item(i);
-            //
-            //    // get the salary element, and update the value
-            //    if ("salary".equals(node.getNodeName())) {
-            //        node.setTextContent("2000000");
-            //    }
-            //
-            //    //remove firstname
-            //    if ("firstname".equals(node.getNodeName())) {
-            //        parameters.removeChild(node);
-            //    }
-            //
-            //}
-
-            //// write the content into xml file
-            //TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            //Transformer transformer = transformerFactory.newTransformer();
-            //DOMSource source = new DOMSource(demoAppConfigXml.getDoc());
-            //StreamResult result = new StreamResult(new File(DEMO_APP_CONFIG_XML_FILE_NAME));
-            //transformer.transform(source, result);
-            //
-            //System.out.println("Done");
-
-        } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (SAXException sae) {
-            sae.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //  region public static void main
+    ///**
+    // * @param args
+    // */
+    //public static void main(String[] args) {
+    //
+    //    try {
+    //        DemoAppConfigurationXml demoAppConfigXml = new DemoAppConfigurationXml();
+    //        demoAppConfigXml.setDoc(XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME));
+    //        System.out.println("Document URL\"" + demoAppConfigXml.getDoc().getDocumentURI() + "\"");
+    //
+    //        demoAppConfigXml.getAllDemoAppConfigParameters();
+    //
+    //        demoAppConfigXml.getAllParametersByTool("UFT");
+    //        demoAppConfigXml.getAllParametersByTool("LeanFT");
+    //        demoAppConfigXml.getAllParametersByTool("Sprinter");
+    //        demoAppConfigXml.getAllParametersByTool("LoadRunner");
+    //
+    //        // Get the staff element by tag name directly
+    //        demoAppConfigXml.setParameters(demoAppConfigXml.getDoc().getElementsByTagName(ROOT_ELEMENT_NAME).item(0));
+    //
+    //        NodeList nodesList = demoAppConfigXml.getParameters().getChildNodes();
+    //        if (nodesList.getLength() == 0) {
+    //            throw new Exception("No child nodes found for Root Element \"" + ROOT_ELEMENT_NAME + "\"");
+    //        }
+    //
+    //        for (int i = 0; i < nodesList.getLength(); i++) {
+    //            Node node = nodesList.item(i);
+    //
+    //            switch (node.getNodeName()) {
+    //                case "#comment":
+    //                    System.out.println("<!--" + node.getTextContent() + "-->");
+    //                    break;
+    //                case "#text":
+    //                    break;
+    //                default:
+    //                    NamedNodeMap attr = node.getAttributes();
+    //                    Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
+    //                    String attributeValue = nodeAttr.getTextContent();
+    //
+    //                    System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+    //                    break;
+    //            }
+    //        }
+    //
+    //        //// update staff attribute
+    //        //NamedNodeMap attr = parameters.getAttributes();
+    //        //Node nodeAttr = attr.getNamedItem("id");
+    //        //nodeAttr.setTextContent("2");
+    //        //
+    //        //// append a new node to staff
+    //        //Element age = demoAppConfigXml.getDoc().createElement("age");
+    //        //age.appendChild(demoAppConfigXml.getDoc().createTextNode("28"));
+    //        //parameters.appendChild(age);
+    //        //
+    //        //// loop the staff child node
+    //        //NodeList list = parameters.getChildNodes();
+    //        //
+    //        //for (int i = 0; i < list.getLength(); i++) {
+    //        //
+    //        //    Node node = list.item(i);
+    //        //
+    //        //    // get the salary element, and update the value
+    //        //    if ("salary".equals(node.getNodeName())) {
+    //        //        node.setTextContent("2000000");
+    //        //    }
+    //        //
+    //        //    //remove firstname
+    //        //    if ("firstname".equals(node.getNodeName())) {
+    //        //        parameters.removeChild(node);
+    //        //    }
+    //        //
+    //        //}
+    //
+    //        //// write the content into xml file
+    //        //TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    //        //Transformer transformer = transformerFactory.newTransformer();
+    //        //DOMSource source = new DOMSource(demoAppConfigXml.getDoc());
+    //        //StreamResult result = new StreamResult(new File(DEMO_APP_CONFIG_XML_FILE_NAME));
+    //        //transformer.transform(source, result);
+    //        //
+    //        //System.out.println("Done");
+    //
+    //    } catch (ParserConfigurationException pce) {
+    //        pce.printStackTrace();
+    //    } catch (TransformerException tfe) {
+    //        tfe.printStackTrace();
+    //    } catch (IOException ioe) {
+    //        ioe.printStackTrace();
+    //    } catch (SAXException sae) {
+    //        sae.printStackTrace();
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
+    //}
+    //  end region
 }
