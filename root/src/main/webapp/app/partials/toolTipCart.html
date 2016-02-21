@@ -22,8 +22,8 @@
                 </td>
                 <td>
                     <p class="price roboto-regular">{{ product.price * product.quantity | currency:'$' }}</p>
-                    <div class="closeDiv">
-                        <div icon-x class="removeProduct" ng-click="removeProduct($index, $event)"></div>
+                    <div class="closeDiv" ng-click="removeProduct($index, $event)">
+                        <div icon-x class="removeProduct"></div>
                     </div>
                 </td>
             </tr>
@@ -48,6 +48,13 @@
 
     </table>
 </div>
+
+
+
+
+
+
+
 
 
 

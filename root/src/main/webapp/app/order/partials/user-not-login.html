@@ -46,12 +46,20 @@
         <br />
 
 
-        <input sec-submit-attr="orderPaymenLogin_signIn()"
-               class="a-button roboto-medium"
-               a-sec-validate-invalid
-               type="button"
-               value="{{'LOGIN' | translate}}" />
+        <button sec-submit-attr="orderPaymenLogin_signIn()"
+        class="a-button roboto-medium"
+        a-sec-validate-invalid >
+            {{'LOGIN' | translate}}
+        </button>
         <br />
+
+
+        <!--<input sec-submit-attr="orderPaymenLogin_signIn()"-->
+        <!--class="a-button roboto-medium"-->
+        <!--a-sec-validate-invalid-->
+        <!--type="button"-->
+        <!--value="{{'LOGIN' | translate}}" />-->
+        <!--<br />-->
 
         <label ng-class="{ invalid : wrongFields.success == 'false' }" >{{ wrongFields.reason }}</label>
 
@@ -70,6 +78,13 @@
     </div>
 </div>
 </div>
+
+
+
+
+
+
+
 
 
 

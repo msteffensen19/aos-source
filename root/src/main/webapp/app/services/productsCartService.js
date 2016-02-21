@@ -39,7 +39,7 @@ define(['./module'], function (services) {
                         $http({
                             method: "delete",
                             headers: {
-                                "content-type": "application/json",
+                                "content-type": "application/json; charset=utf-8",
                                 "Authorization": "Bearer " + user.response.token,
                             },
                             url: server.order.clearCart(user.response.userId)
@@ -72,7 +72,7 @@ define(['./module'], function (services) {
                             method: "get",
                             async: false,
                             headers: {
-                                "content-type": "application/json",
+                                "content-type": "application/json; charset=utf-8",
                                 "Authorization": "Bearer " + user.response.token,
                             },
                             url: server.order.loadCartProducts(user.response.userId)
@@ -107,7 +107,7 @@ define(['./module'], function (services) {
                         method: "delete",
                         url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
                         headers: {
-                            "content-type": "application/json",
+                            "content-type": "application/json; charset=utf-8",
                             "Authorization": "Bearer " + user.response.token,
                         }
                     });
@@ -129,7 +129,7 @@ define(['./module'], function (services) {
                             method: "get",
                             async: false,
                             headers: {
-                                "content-type": "application/json",
+                                "content-type": "application/json; charset=utf-8",
                                 "Authorization": "Bearer " + user.response.token,
                             },
                             url: server.order.loadCartProducts(user.response.userId)
@@ -210,7 +210,7 @@ define(['./module'], function (services) {
                                 method: "put",
                                 data: JSON.stringify(cartToReplace),
                                 headers: {
-                                    "content-type": "application/json",
+                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
@@ -238,7 +238,7 @@ define(['./module'], function (services) {
                             var request = $http({
                                 method: "put",
                                 headers: {
-                                    "content-type": "application/json",
+                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 async: false,
@@ -313,7 +313,7 @@ define(['./module'], function (services) {
                         var request = $http({
                             method: "post",
                             headers: {
-                                "content-type": "application/json",
+                                "content-type": "application/json; charset=utf-8",
                                 "Authorization": "Bearer " + user.response.token,
                             },
                             async: false,
@@ -403,6 +403,7 @@ define(['./module'], function (services) {
                 var defer = $q.defer()
                 $http({
                     method: "get",
+                    "content-type": "application/json; charset=utf-8",
                     url: server.catalog.getProductById(product.productId)
                 }).success(function (res) {
                     defer.resolve(res.productStatus == 'OutOfStock' ?

@@ -79,7 +79,7 @@
     font-size: 17px;
     opacity: 0.8;
     margin: 36px 0 5px 0;
-    padding: 15px;
+    padding: 12px 0;
     cursor: pointer;
 }
 
@@ -128,7 +128,7 @@
 @media screen and (max-width: 600px) {
 
     .PopUp > div:nth-child(1){
-        margin: 10%;
+        margin-top: 10%;
         width: 80%;
         padding: 20px 38px;
     }
@@ -137,5 +137,24 @@
         background-image: none;
         background-position: 21px center;
     }
+
+    .PopUp img{
+
+        display: none;
+    }
+
+    .PopUp .onlineShop{
+
+        display: none;
+    }
+
 }
+
+
+@media screen and (max-width: 480px) {
+
+
+}
+
+
 
