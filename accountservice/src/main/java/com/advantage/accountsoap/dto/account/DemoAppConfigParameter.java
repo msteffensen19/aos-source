@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.account;
 
 /**
  * @author Binyamin Regev on 21/02/2016.

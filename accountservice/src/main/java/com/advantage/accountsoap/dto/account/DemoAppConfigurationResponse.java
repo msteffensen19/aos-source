@@ -1,4 +1,4 @@
-package com.advantage.accountsoap.dto;
+package com.advantage.accountsoap.dto.account;
 
 import java.util.List;
 
