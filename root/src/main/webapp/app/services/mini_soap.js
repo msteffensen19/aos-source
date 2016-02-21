@@ -1,6 +1,4 @@
-/**
- * Created by kubany on 10/13/2015.
- */
+
 define(['./module'], function (services) {
     'use strict';
     services.service('mini_soap', ['$q', function ($q) {
