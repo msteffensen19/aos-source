@@ -33,6 +33,9 @@ public class AccountserviceEndpoint {
     @Autowired
     private AccountConfigurationService accountConfigurationService;
 
+    @Autowired
+    private DemoAppConfigService service;
+
     //region Account
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
@@ -345,6 +348,45 @@ public class AccountserviceEndpoint {
         return accountConfigurationService.getAllConfigurationParameters();
     }
     //endregion
+
+    //  region User level configuration - DemoAppConfig.xml
+    /**
+     * Gets all parameters from {@code DemoAppConfig.xml} file,
+     * with their current values and tools attribute.
+     * @return {@link DemoAppConfigurationResponse}
+     */
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
+    @ResponsePayload
+    public DemoAppConfigurationResponse getAllConfigurationParameters() {
+        DemoAppConfigurationResponse response = service.getAllConfigurationParameters();
+        return response;
+    }
+
+    /**
+     * Get a list of parameters which were requested by a specific tool.
+     * @param request
+     * @return {@link DemoAppConfigurationResponse}
+     */
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
+    @ResponsePayload
+    public DemoAppConfigurationResponse getParametersByTool(@RequestPayload DemoAppConfigurationRequest request) {
+        DemoAppConfigurationResponse response = service.getParametersByTool(request.getAttributeTools());
+        return response;
+    }
+
+    /**
+     * Update a specific parameter by name to a given value.
+     * {@link DemoAppConfigurationRequest#attributeTools} property is ignored.
+     * @param request
+     * @return {@link DemoAppConfigurationResponse}
+     */
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
+    @ResponsePayload
+    public DemoAppConfigurationResponse updateParameterValue(@RequestPayload DemoAppConfigurationRequest request) {
+        DemoAppConfigurationResponse response = service.updateParameterValue(request.getParameterName(), request.getParameterNewValue());
+        return response;
+    }
+    //  endregion
 
 
     /*
