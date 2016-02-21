@@ -40,7 +40,6 @@ import java.util.List;
  *  </pre>
  *  @author Binyamin Regev on 17/02/2016.
  */
-@Configuration
 @Qualifier("demoAppConfigurationXml")
 public class DemoAppConfigurationXml {
 
