@@ -6,6 +6,7 @@ import com.advantage.common.Constants;
 import com.advantage.root.util.xml.XmlHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Repository;
 import org.w3c.dom.*;
 
 import java.io.File;
@@ -40,7 +41,6 @@ import java.util.List;
  *  </pre>
  *  @author Binyamin Regev on 17/02/2016.
  */
-@Qualifier("demoAppConfigurationXml")
 public class DemoAppConfigurationXml {
 
     public static final String DEMO_APP_CONFIG_XML_FILE_NAME = "DemoAppConfig.xml";
@@ -150,7 +150,6 @@ public class DemoAppConfigurationXml {
         ////  Child Element - Tool
         //NodeList tool = doc.getElementsByTagName(ELEMENTS_TAG_NAME);
 
-        boolean success = false;
         Node nodeToUpdate = findParameterByName(parameterName);
         if (nodeToUpdate != null) {
             nodeToUpdate.setNodeValue(parameterNewValue);
@@ -222,6 +221,11 @@ public class DemoAppConfigurationXml {
         return null;
     }
 
+    /**
+     *
+     * @param parameterName
+     * @return
+     */
     public Node findParameterByName(String parameterName) {
         System.out.println("findParameterByName(\"" + parameterName + "\") - Begin");
 
@@ -250,6 +254,10 @@ public class DemoAppConfigurationXml {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     private NodeList getAllParametersNodeList() {
         this.setParameters(this.getDoc().getElementsByTagName(ROOT_ELEMENT_NAME).item(0));
 
@@ -258,6 +266,10 @@ public class DemoAppConfigurationXml {
         return (nodesList.getLength() != 0 ? nodesList : null);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<DemoAppConfigParameter> getAllDemoAppConfigParameters() {
         System.out.println("getAllDemoAppConfigParameters() - Begin");
 
@@ -283,12 +295,17 @@ public class DemoAppConfigurationXml {
             System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
         }
 
-        System.out.println("getAllDemoAppConfigParameters() - Begin");
+        System.out.println("getAllDemoAppConfigParameters() - End");
         System.out.println("");
 
         return parameters;
     }
 
+    /**
+     *
+     * @param toolName
+     * @return
+     */
     public List<DemoAppConfigParameter> getAllParametersByTool(String toolName) {
         System.out.println("getParametersByTool(\"" + toolName + "\") - Begin");
 
@@ -320,6 +337,10 @@ public class DemoAppConfigurationXml {
         return parameters;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getDemoAppConfigXmlFile() {
         System.out.println("getDemoAppConfigXmlFile - Begin");
         NodeList nodesList = this.getAllParametersNodeList();

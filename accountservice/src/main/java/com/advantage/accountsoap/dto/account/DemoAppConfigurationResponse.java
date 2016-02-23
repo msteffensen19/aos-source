@@ -1,28 +1,35 @@
 package com.advantage.accountsoap.dto.account;
 
+import com.advantage.accountsoap.config.WebServiceConfig;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by regevb on 21/02/2016.
+ * @author Binyamin Regev on 21/02/2016.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "",
+        namespace = WebServiceConfig.NAMESPACE_URI,
+        propOrder = {
+                "success",
+                "code",
+                "reason"
+        })
+@XmlRootElement(name = "DemoAppConfigurationResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class DemoAppConfigurationResponse {
-    private List<DemoAppConfigParameter> demoAppConfigParameters;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean success;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String reason;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long code;          //  Additional Success/Error code
 
     /**
      *
      */
     public DemoAppConfigurationResponse() {
-    }
-
-    /**
-     *
-     * @param demoAppConfigParameters
-     */
-    public DemoAppConfigurationResponse(List<DemoAppConfigParameter> demoAppConfigParameters) {
-        this.demoAppConfigParameters = demoAppConfigParameters;
     }
 
     /**
@@ -46,33 +53,6 @@ public class DemoAppConfigurationResponse {
         this.success = success;
         this.reason = reason;
         this.code = code;
-    }
-
-    /**
-     *
-     * @param success
-     * @param reason
-     * @param demoAppConfigParameters
-     */
-    public DemoAppConfigurationResponse(boolean success, String reason, List<DemoAppConfigParameter> demoAppConfigParameters) {
-        this.success = success;
-        this.reason = reason;
-        this.code = 0;
-        this.demoAppConfigParameters = demoAppConfigParameters;
-    }
-
-    /**
-     *
-     * @param success
-     * @param reason
-     * @param code
-     * @param demoAppConfigParameters
-     */
-    public DemoAppConfigurationResponse(boolean success, String reason, long code, List<DemoAppConfigParameter> demoAppConfigParameters) {
-        this.success = success;
-        this.reason = reason;
-        this.code = code;
-        this.demoAppConfigParameters = demoAppConfigParameters;
     }
 
     /**
@@ -121,29 +101,5 @@ public class DemoAppConfigurationResponse {
      */
     public void setCode(long code) {
         this.code = code;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<DemoAppConfigParameter> getDemoAppConfigParameters() {
-        return this.demoAppConfigParameters;
-    }
-
-    /**
-     *
-     * @param demoAppConfigParameters
-     */
-    public void setDemoAppConfigParameters(List<DemoAppConfigParameter> demoAppConfigParameters) {
-        this.demoAppConfigParameters = demoAppConfigParameters;
-    }
-
-    /**
-     *
-     * @param parameter
-     */
-    public void addDemoAppConfigParameter(DemoAppConfigParameter parameter) {
-        this.demoAppConfigParameters.add(parameter);
     }
 }

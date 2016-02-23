@@ -357,35 +357,43 @@ public class AccountserviceEndpoint {
      */
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
     @ResponsePayload
-    public DemoAppConfigurationResponse getAllConfigurationParameters() {
-        DemoAppConfigurationResponse response = service.getAllConfigurationParameters();
+    public DemoAppConfigGetParametersResponse getAllConfigurationParameters() {
+        DemoAppConfigGetParametersResponse response = new DemoAppConfigGetParametersResponse();
+
+        List<DemoAppConfigParameter> parameters = service.getAllConfigurationParameters();
+        response.setParameter(parameters);
+
         return response;
     }
 
-    /**
-     * Get a list of parameters which were requested by a specific tool.
-     * @param request
-     * @return {@link DemoAppConfigurationResponse}
-     */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
-    @ResponsePayload
-    public DemoAppConfigurationResponse getParametersByTool(@RequestPayload DemoAppConfigurationRequest request) {
-        DemoAppConfigurationResponse response = service.getParametersByTool(request.getAttributeTools());
-        return response;
-    }
-
-    /**
-     * Update a specific parameter by name to a given value.
-     * {@link DemoAppConfigurationRequest#attributeTools} property is ignored.
-     * @param request
-     * @return {@link DemoAppConfigurationResponse}
-     */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
-    @ResponsePayload
-    public DemoAppConfigurationResponse updateParameterValue(@RequestPayload DemoAppConfigurationRequest request) {
-        DemoAppConfigurationResponse response = service.updateParameterValue(request.getParameterName(), request.getParameterNewValue());
-        return response;
-    }
+//    /**
+//     * Get a list of parameters which were requested by a specific tool.
+//     * @param request
+//     * @return {@link DemoAppConfigurationResponse}
+//     */
+//    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
+//    @ResponsePayload
+//    public GetAllDemoAppConfigParametersResponse getParametersByTool(@RequestPayload DemoAppConfigurationRequest request) {
+//        GetAllDemoAppConfigParametersResponse response = new GetAllDemoAppConfigParametersResponse();
+//
+//        List<DemoAppConfigParameter> parameters = service.getParametersByTool(request.getAttributeTools());
+//        response.setParameters(parameters);
+//
+//        return response;
+//    }
+//
+//    /**
+//     * Update a specific parameter by name to a given value.
+//     * {@link DemoAppConfigurationRequest#attributeTools} property is ignored.
+//     * @param request
+//     * @return {@link DemoAppConfigurationResponse}
+//     */
+//    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
+//    @ResponsePayload
+//    public DemoAppConfigurationResponse updateParameterValue(@RequestPayload DemoAppConfigurationRequest request) {
+//        DemoAppConfigurationResponse response = service.updateParameterValue(request.getParameterName(), request.getParameterNewValue());
+//        return response;
+//    }
     //  endregion
 
 

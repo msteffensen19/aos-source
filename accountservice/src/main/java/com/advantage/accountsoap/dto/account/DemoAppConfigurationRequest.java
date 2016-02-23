@@ -19,11 +19,11 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "DemoAppConfigurationRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class DemoAppConfigurationRequest {
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = false)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String parameterName;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = false)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String attributeTools;      //  e.g. "LeanFT;LoadRunner;UFT...;StormRunner"
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = false)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String parameterNewValue;
 
     /**

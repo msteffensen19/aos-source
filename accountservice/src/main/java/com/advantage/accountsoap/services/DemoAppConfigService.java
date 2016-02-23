@@ -5,6 +5,7 @@ import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
 import com.advantage.accountsoap.dto.account.DemoAppConfigurationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Node;
 
@@ -15,9 +16,8 @@ import java.util.List;
  * database involved and no transaction management reuired.
  * @author Binyamin Regev on 21/02/2016.
  */
+@Service
 public class DemoAppConfigService {
-    @Autowired
-    @Qualifier("demoAppConfigurationXml")
     private DemoAppConfigurationXml demoAppConfigurationXml;
 
     /**
@@ -25,9 +25,9 @@ public class DemoAppConfigService {
      * @return
      */
     @Transactional(readOnly = true)
-    public DemoAppConfigurationResponse getAllConfigurationParameters() {
+    public List<DemoAppConfigParameter> getAllConfigurationParameters() {
         List<DemoAppConfigParameter> parameters = demoAppConfigurationXml.getAllDemoAppConfigParameters();
-        return new DemoAppConfigurationResponse(parameters);
+        return parameters;
     }
 
     /**
@@ -36,9 +36,9 @@ public class DemoAppConfigService {
      * @return
      */
     @Transactional(readOnly = true)
-    public DemoAppConfigurationResponse getParametersByTool(String toolName) {
+    public List<DemoAppConfigParameter> getParametersByTool(String toolName) {
         List<DemoAppConfigParameter> parameters = demoAppConfigurationXml.getAllParametersByTool(toolName);
-        return new DemoAppConfigurationResponse(parameters);
+        return parameters;
     }
 
     /**

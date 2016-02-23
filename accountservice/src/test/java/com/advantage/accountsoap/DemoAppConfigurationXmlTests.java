@@ -1,6 +1,7 @@
 package com.advantage.accountsoap;
 
 import com.advantage.accountsoap.config.DemoAppConfigurationXml;
+import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
 import com.advantage.accountsoap.dto.account.DemoAppConfigurationResponse;
 import com.advantage.accountsoap.services.DemoAppConfigService;
 import com.advantage.root.util.xml.XmlHelper;
@@ -51,9 +52,8 @@ public class DemoAppConfigurationXmlTests {
     public void testGetAllDemoAppConfigParameters() {
         try {
 
-            DemoAppConfigurationResponse response = service.getAllConfigurationParameters();
-            Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-            Assert.assertEquals("Expected " + DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER + " total parameters, but got " + response.getDemoAppConfigParameters().size(), DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER, response.getDemoAppConfigParameters().size());
+            List<DemoAppConfigParameter> response = service.getAllConfigurationParameters();
+            Assert.assertEquals("Expected " + DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER + " total parameters, but got " + response.size(), DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER, response.size());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,66 +64,50 @@ public class DemoAppConfigurationXmlTests {
     @Test
     public void testGetDemoAppConfigParameterByTool() {
         //  region Test LeanFT
-        DemoAppConfigurationResponse response = service.getParametersByTool("LeanFt");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        long numberOfParameters = response.getDemoAppConfigParameters().size();
+        List<DemoAppConfigParameter> response = service.getParametersByTool("LeanFt");
+        long numberOfParameters = response.size();
         Assert.assertEquals("For \"LeanFT\": Expected " + CONFIG_PARAM_LEAN_FT + ", but got " + numberOfParameters, CONFIG_PARAM_LEAN_FT, numberOfParameters);
         //  endregion
 
         //  region Test LoadRunner
         response = service.getParametersByTool("LoadRunner");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"LoadRunner\": Expected " + CONFIG_PARAM_LOAD_RUNNER + ", but got " + numberOfParameters, CONFIG_PARAM_LOAD_RUNNER, numberOfParameters);
         //  endregion
 
         //  region Test MobileCenter
         response = service.getParametersByTool("MobileCenter");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"MobileCenter\": Expected " + CONFIG_PARAM_MOBILE_CENTER + ", but got " + numberOfParameters, CONFIG_PARAM_MOBILE_CENTER, numberOfParameters);
         //  endregion
 
         //  region Test NV
         response = service.getParametersByTool("MobileCenter");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"NV\": Expected " + CONFIG_PARAM_NV + ", but got " + numberOfParameters, CONFIG_PARAM_NV, numberOfParameters);
         //  endregion
 
         //  region Test Sprinter
         response = service.getParametersByTool("Sprinter");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"Sprinter\": Expected " + CONFIG_PARAM_SPRINTER + ", but got " + numberOfParameters, CONFIG_PARAM_SPRINTER, numberOfParameters);
         //  endregion
 
         //  region Test StormRunner
         response = service.getParametersByTool("StormRunner");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"StormRunner\": Expected " + CONFIG_PARAM_STORM_RUNNER + ", but got " + numberOfParameters, CONFIG_PARAM_STORM_RUNNER, numberOfParameters);
         //  endregion
 
         //  region Test SV
         response = service.getParametersByTool("SV");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"SV\": Expected " + CONFIG_PARAM_SV + ", but got " + numberOfParameters, CONFIG_PARAM_SV, numberOfParameters);
         //  endregion
 
         //  region Test UFT
         response = service.getParametersByTool("UFT");
-        Assert.assertTrue("Expected [Success], but got [Failure]", response.isSuccess());
-
-        numberOfParameters = response.getDemoAppConfigParameters().size();
+        numberOfParameters = response.size();
         Assert.assertEquals("For \"UFT\": Expected " + CONFIG_PARAM_UFT + ", but got " + numberOfParameters, CONFIG_PARAM_UFT, numberOfParameters);
         //  endregion
 
