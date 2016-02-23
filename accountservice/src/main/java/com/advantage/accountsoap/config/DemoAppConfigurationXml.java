@@ -40,7 +40,6 @@ import java.util.List;
  *  </pre>
  *  @author Binyamin Regev on 17/02/2016.
  */
-@Qualifier("demoAppConfigurationXml")
 public class DemoAppConfigurationXml {
 
     public static final String DEMO_APP_CONFIG_XML_FILE_NAME = "DemoAppConfig.xml";

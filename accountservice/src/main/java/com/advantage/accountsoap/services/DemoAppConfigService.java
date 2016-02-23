@@ -16,8 +16,8 @@ import java.util.List;
  * @author Binyamin Regev on 21/02/2016.
  */
 public class DemoAppConfigService {
-    @Autowired
-    @Qualifier("demoAppConfigurationXml")
+    //@Autowired
+    //@Qualifier("demoAppConfigurationXml")
     private DemoAppConfigurationXml demoAppConfigurationXml;
 
     /**
