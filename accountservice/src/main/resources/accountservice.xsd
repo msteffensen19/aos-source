@@ -12,6 +12,14 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="DemoAppConfigParameter">
+        <xs:sequence>
+            <xs:element name="parameterName" type="xs:string"/>
+            <xs:element name="attributeTools" type="xs:string"/>
+            <xs:element name="parameterValue" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="CountryStatusResponse">
         <xs:sequence>
             <xs:element name="reason" type="xs:string"/>
