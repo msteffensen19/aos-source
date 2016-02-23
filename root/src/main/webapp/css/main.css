@@ -335,13 +335,14 @@ div.logo img{
 /* FOLLOW US ----- footer*/
 
 footer{
-    position: relative;
+    position: absolute;
     left:0;
     right: 0;
     bottom: 0;
     margin-top: 90px;
     background-color: #F4F4F2;
     font-size: 0;
+    z-index: 50;
 }
 
 footer > div{
