@@ -11,9 +11,6 @@ import java.util.List;
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class CategoryAttributeFilterResponse {
-    /**
-     * Public inner class for Category-Attribute
-     */
 
     private List<CategoryAttributeShowInFilter> categoriesAttributes = new ArrayList<>();
 

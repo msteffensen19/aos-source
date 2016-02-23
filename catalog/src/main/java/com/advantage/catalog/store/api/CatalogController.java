@@ -208,8 +208,8 @@ public class CatalogController {
 
         return new ResponseEntity<>(response, httpStatus);
     }
-
     //endregion
+
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @ApiResponses(value = {
