@@ -55,6 +55,7 @@
                                 <sec-validate>
 
                                     <sec-input
+                                            sec-required
                                             sec-placeholder="{{ 'SafePay_User_name' | translate }}"
                                             sec-min-length="5"
                                             sec-max-length="15"
@@ -65,6 +66,7 @@
                                     </sec-input>
 
                                     <sec-input
+                                            sec-required
                                             sec-placeholder="{{ 'SafePay_Password' | translate }}"
                                             sec-min-length="4"
                                             sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
@@ -76,10 +78,10 @@
 
                                     <div class="blueLink">
                                         <label>
-                                            <input sec-submit-attr="saveSafePay()" a-sec-validate-invalid
-                                                   class="roboto-medium sec-validate-invalid accountDetailsBtn"
-                                                   type="button"
-                                                   value="{{'SAVE' | translate}}"/>
+                                            <button sec-submit-attr="saveSafePay()" a-sec-validate-invalid
+                                                    class="roboto-medium sec-validate-invalid accountDetailsBtn">
+                                                {{'SAVE' | translate}}
+                                            </button>
                                         </label>
                                     </div>
 
@@ -151,7 +153,7 @@
                                                id-attr="Card_name">
                                     </sec-input>
 
-                                    <div class="blueLink">
+                                    <div class="blueLink" style="">
                                         <label>
                                             <input sec-submit-attr="saveMasterCredit()"
                                                    class="roboto-medium sec-validate-invalid accountDetailsBtn"

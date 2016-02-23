@@ -276,8 +276,6 @@
     display: none;
 }
 
-#mobileShoppingCart #toolTipCart{
-}
 
 @media only screen and (max-width: 768px) {
 
@@ -318,14 +316,6 @@
         box-sizing: border-box;
     }
 
-    /*#mobileShoppingCart #toolTipCart tfoot,*/
-    /*#mobileShoppingCart #toolTipCart tfoot tr,*/
-    /*#mobileShoppingCart #toolTipCart tfoot td {*/
-        /*display: block;*/
-        /*margin: 0;*/
-        /*padding: 0;*/
-    /*}*/
-
     #mobileShoppingCart #toolTipCart tfoot {
         padding: 10px;
         background-color:white;
@@ -346,19 +336,17 @@
         font-size: 15px;
     }
 
-
-    /*.sticky.fixedImportant + #shoppingCart{*/
-        /*margin: 0;*/
-    /*}*/
-    /*#shoppingCart table thead{*/
-        /*display: none;*/
-    /*}*/
 }
 
 
 
-/*@media only screen and (max-width: 768px) {*/
+@media only screen and (max-width: 488px) {
 
+
+    #mobileShoppingCart #toolTipCart > div{
+        margin-bottom: 20px;
+    }
+}
     /*#shoppingCart table, #shoppingCart thead, #shoppingCart tbody,*/
     /*#shoppingCart th, #shoppingCart td, #shoppingCart tr {*/
         /*display: block;*/

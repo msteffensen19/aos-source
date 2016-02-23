@@ -317,6 +317,7 @@
         top: 3px;
         position: relative;
         display: inline-block;
+        padding-right: 3px;
     }
 
     #mobileSlide{

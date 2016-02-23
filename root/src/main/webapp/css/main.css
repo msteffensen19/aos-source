@@ -117,7 +117,7 @@ div.mobile-btn-handler span{
     background-color: white;
     position: fixed;
     left: 0px;
-    top:56px;
+    top:38px;
     height: 100%;
     z-index: 990;
 }
@@ -157,8 +157,7 @@ div.mobile-btn-handler span{
 
 .mobileTitle {
     position: fixed;
-    left: 110px;
-    top: 118px;
+    top: 91px;
     z-index: 9999;
 }
 
@@ -354,7 +353,7 @@ footer > div{
 
 footer img{
     margin: 17px 31px;
-    width: 100px;
+    width: 82px;
 }
 
 
@@ -459,6 +458,11 @@ footer .splitter{
 
 
     /*!* For all Pages *!*/
+
+    h3.roboto-regular{
+        font-size: 26px;
+    }
+
     /*
 
 
@@ -543,7 +547,7 @@ footer .splitter{
 
 
     .uiview {
-        padding-top: 60px;
+        padding-top: 40px;
     }
 
     header{
@@ -596,17 +600,35 @@ footer .splitter{
     }
 
     div.logo a{
-        -webkit-transform: translateX(-29px) scale(0.8);
-        -ms-transform: translateX(-29px) scale(0.8);
-        -o-transform: translateX(-29px) scale(0.8);
-        transform: translateX(-29px) scale(0.8);
+        -webkit-transform: translateX(-29px);
+        -ms-transform: translateX(-29px);
+        -o-transform: translateX(-29px);
+        transform: translateX(-29px);
+    }
+
+    div.logo a span {
+        font-size: 22px;
+    }
+
+    div.logo svg{
+        width: 25px;
+        height: 25px;
+        top: 2px;
     }
 
     div.logo #mobile-btn{
         float: left;
     }
 
+    div.mobile-btn-handler{
+        margin: 5px 2px;
+    }
 
+    h3.roboto-regular{
+        font-size: 22px;
+        padding: 13px 0;
+        padding-bottom: 0;
+    }
 
 }
 

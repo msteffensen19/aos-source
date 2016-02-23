@@ -104,18 +104,19 @@ Helper.checkPagePossitions = function(){
 
 Helper.mobileSectionHandler = function(){
 
-    //$("body").animate({
-    //    left: $("body").css("left") != "0px" ? "0px" : Helper.mobile_section_moved
-    //}, 200);
+    if($("#mobile-section").css("left") == "0px"){
+        $(".mobileTitle .mini-title").fadeOut();
+    }
     $("#mobile-section").animate({
         left: $("#mobile-section").css("left") != "0px" ? "0px" : "-" + Helper.mobile_section_moved
-    }, 200);
+    }, 200, function(){
+        $(".mobileTitle").css('left', $(this).width());
+    });
+
 }
 
 Helper.mobileSectionClose = function(){
-    //$("body").stop().animate({
-    //    left: "0px",
-    //}, 200);
+
     $("#mobile-section").stop().animate({
         left: "-" + Helper.mobile_section_moved
     }, 200);

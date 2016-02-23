@@ -67,14 +67,16 @@
                 </span>
                 </div>
             </div>
-            <div>
+            <div class="smoolMargin">
                 <label class="Quantity roboto-light" translate="Quantity:" ></label>
                 <e-sec-plus-minus num-attr="quantity" a-disable="product.productStatus == 'OutOfStock'" ></e-sec-plus-minus>
                 <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
             </div>
-            <button class="roboto-medium"
-                    data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
-                    translate="ADD_TO_CART"  data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
+            <div class="fixedBtn">
+                <button class="roboto-medium"
+                        data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
+                        translate="ADD_TO_CART"  data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
+            </div>
         </div>
         <!-- end description section -->
 
@@ -92,6 +94,7 @@
 
 <social-media-drtv></social-media-drtv>
 
+<div class="trickProductBtn"></div>
 
 
 

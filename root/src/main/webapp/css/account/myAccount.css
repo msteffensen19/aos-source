@@ -153,6 +153,7 @@
 #form .accountDetailsBtn{
     width: 137px !important;
     height: 34px !important;
+    margin: 20px 0;
 }
 
 #form .accountDetailsBtn.withMargin{
@@ -253,7 +254,37 @@
 
 @media screen and (max-width: 600px) {
     #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
-        width: 38%;
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    #myAccountContainer .cube input[type=checkbox]{
+        transform: scale(2.5);
+    }
+
+    #myAccountContainer .cube .option span{
+        padding-left: 42px;
+    }
+
+    #accountCover #formCover > div{
+        margin: 0 0 26px 0;
+    }
+
+    #accountCover .link{
+        padding-top: 2px;
+    }
+
+    #accountCover  .changePassword .validate-directive{
+        margin: 18px 0;
+    }
+
+    #accountCover #formCover > div h3
+    {
+        margin: 20px 0 13px 0;
+    }
+
+    #myAccountContainer .cube .notPromotionCheckbox {
+        margin: 20px 30px;
     }
 }
 
@@ -274,11 +305,9 @@
         width: 100% !important
     }
 
-
-
-
     #myAccountContainer{
-        margin-bottom: 60px;
+        margin: 0 25px;
+        margin-bottom: 35px;
     }
 
     #myAccountContainer .cube > div > div{
@@ -302,10 +331,14 @@
 
     #myAccountContainer .cube > h3{
         font-size: 14px;
+        padding-top: 18px;
     }
 
     #myAccountContainer .cube .option span{
         font-size: 12px;
+        color: #020202;
+        font-size: 14px;
+        font-weight: 400;
     }
 
     #myAccountContainer .cube .categoriesBox .categoriesCheckboxes{

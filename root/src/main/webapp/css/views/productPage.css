@@ -239,6 +239,13 @@
 
 }
 
+#productProperties > div.fixedBtn{
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    z-index: 10;
+    display: block;
+}
 
 #productProperties .productColor > label{
     top:-43px;
@@ -247,6 +254,10 @@
 
 .screen480{
     display: none;
+}
+
+#productProperties .smoolMargin{
+    padding: 0px;
 }
 
 @media screen and (max-width: 950px) {
@@ -267,10 +278,21 @@
     .list label{
         width: calc(100% - 80px);
         padding: 0 20px;
+        color: #828282;
+        font-size: 14px;
     }
+
     .list label.attr{
         padding-left: 20px;
+        color: black;
+        font-weight: 400;
     }
+}
+
+.trickProductBtn{
+    background-color: #F4F4F2;
+    height: 70px;
+    display: none;
 }
 
 
@@ -279,7 +301,7 @@
 
     #product-image{
         float: none;
-        margin: 50px auto;
+        margin: 0px auto;
         margin-bottom: 0;
     }
 
@@ -326,7 +348,7 @@
 
     .topSpace{
         padding-top: 0;
-        top:20px;
+        top:12px;
     }
 
     .imageAlias img{
@@ -334,7 +356,7 @@
     }
 
     #productProperties > div .sec-plus-minus{
-        transform: scale(1.3);
+        transform: scale(1.5);
         display: inline-block;
         transform-origin: left;
     }
@@ -360,6 +382,11 @@
         width: calc(100% - 60px);
         margin: 10px 30px;
     }
+
+    #productProperties .smoolMargin{
+        padding: 29px 26px;
+    }
+
 }
 
 
@@ -369,71 +396,90 @@
 
 @media screen and (max-width: 580px) {
 
-    .pages.fixed + section{
+    .productImage.pages.fixed + section {
         margin: 0;
     }
 
     .productImage.pages.fixed + section,
     .productImage.fixedImportant + section,
-    #product-image > figure > img{
-        margin-top:0px;
-        margin:0px;
+    #product-image > figure > img {
+        margin-top: 0px;
+        margin: 0px;
         padding: 0;
     }
 
-    #product-image{
+    #product-image {
         width: 90%;
-        margin: 0 auto;
+        margin: 0px auto;
     }
 
-    #mobileDescription{
+    #product-image #cover {
+        margin-top: 15px;
+    }
+
+    #mobileDescription {
         display: inline-block;
         padding: 0 30px;
     }
 
-
-    #mobileDescription h1{
+    #mobileDescription h1 {
         display: inline;
         font-size: 23px;
         color: #2a2a2a;
     }
 
-
-    #mobileDescription h2{
+    #mobileDescription h2 {
         font-size: 23px;
         color: #2a2a2a;
-        padding: 8px 0;
+        padding: 0;
         display: block;
     }
 
-
-    .product_specifications{
+    .product_specifications {
         padding: 0 32px;
     }
 
-    .list{
+    .list {
         padding: 13px;
     }
 
-    .list:last-child{
+    .list:last-child {
         border-bottom: none 1px #e8e8e8;
         margin-bottom: 30px;
     }
 
     #productProperties .Quantity {
         color: #020202;
-        margin: 0 8px 0 0 ;
+        margin: 0 8px 0 0;
         position: relative;
         top: -7px;
     }
 
-    #mobileDescription{
+    #mobileDescription {
         text-align: left;
 
     }
 
-}
+    #productProperties > div > h2 {
+        top: 10px;
+    }
 
+    #productProperties .colors span {
+        width: 30px;
+        height: 30px;
+    }
+
+    #productProperties > div.fixedBtn {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .trickProductBtn {
+        display: block;
+    }
+
+}
 
 
 @media screen and (max-width: 480px) {

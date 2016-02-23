@@ -5,7 +5,7 @@
 </nav>
 
 <section>
-    <article>
+    <article >
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="MY_ACCOUNT"></h3>
 
         <div id="myAccountContainer">
@@ -95,7 +95,7 @@
                 <h3 class="blueLink">
                     {{ "Shipping_Details" | translate }}
                     <!--<a class="floatRigth">-->
-                        <!--{{ "Edit" | translate }}-->
+                    <!--{{ "Edit" | translate }}-->
                     <!--</a>-->
                 </h3>
                 <div class="borderBox">
@@ -157,23 +157,15 @@
 
 
 
-
             <!--NOTIFY ME ABOUT PROMOTIONS SECCION-->
             <div class="cube">
                 <h3 class="blueLink">
-                    <div class="option">
-
-                        <input type="checkbox"
-                               data-ng-model="accountDetails.allowOffersPromotion"
-                               data-ng-click="allowOffersPromotionChanged()">
-                        <span> {{ "Notify_me_about_Promotions" | translate }} </span>
-                        <a class="floatRigth">
-                            {{ "Edit" | translate }}
-                        </a>
-                    </div>
+                    {{'Categories'| translate}}
+                    <!--<a class="floatRigth" href="#/">-->
+                        <!--{{ "Edit" | translate }}-->
+                    <!--</a>-->
                 </h3>
                 <div class="categoriesBox" data-ng-class="{ disableBox : !accountDetails.allowOffersPromotion }">
-                    <p>{{'Categories'| translate}}</p>
                     <div class="categoriesCheckboxes" >
                         <div class="option" data-ng-repeat="cat in categoriesPromotions track by $index">
                             <input type="checkbox" data-ng-model="cat.categoryValue">
@@ -181,10 +173,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="option notPromotionCheckbox">
+                    <input type="checkbox"
+                           data-ng-model="accountDetails.allowOffersPromotion"
+                           data-ng-click="allowOffersPromotionChanged()">
+                    <span> {{ "Notify_me_about_Promotions" | translate }} </span>
+                </div>
             </div>
             <!--END NOTIFY ME ABOUT PROMOTIONS SECCION-->
-
-
 
 
         </div>

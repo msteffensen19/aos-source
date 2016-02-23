@@ -216,7 +216,8 @@ define(['./module'], function (controllers) {
                 $location.path(path);
             };
             $scope.mobileRedirect = function (path) {
-                $scope.redirect(path);
+                Helper.mobileSectionClose();
+                $state.go(path)
             };
 
 

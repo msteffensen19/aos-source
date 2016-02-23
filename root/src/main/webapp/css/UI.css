@@ -398,3 +398,28 @@ a {
     display: none !important;
 }
 
+.mobileTitle .mini-title:before {
+    content: "";
+    position: absolute;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-right: 10px solid rgba(100, 100, 100, 0.82);
+    z-index: 200;
+    top: calc(50% - 10px);
+    left: -10px;
+
+}
+
+.mobileTitle .mini-title:after {
+    content: "";
+    position: absolute;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-right: 10px solid white;
+    z-index: 200;
+    top: calc(50% - 10px);
+    left: -9px;
+
+}
+
+
