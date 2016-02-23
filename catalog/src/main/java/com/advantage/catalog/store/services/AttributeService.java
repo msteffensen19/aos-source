@@ -17,7 +17,7 @@ public class AttributeService {
     AttributeRepository attributeRepository;
 
     @Transactional(readOnly = true)
-    private List<Attribute> getAllAttributes() {
+    public List<Attribute> getAllAttributes() {
         return attributeRepository.getAll();
     }
 

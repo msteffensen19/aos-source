@@ -1,8 +1,11 @@
 package com.advantage.catalog.store.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.advantage.catalog.store.dao.category.CategoryRepository;
+import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.common.dto.CategoryAttributeFilterResponse;
 import com.advantage.common.dto.CategoryAttributeShowInFilter;
@@ -46,15 +49,34 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryAttributeFilterResponse getAllCategoryAttributesFilter() {
 
+        List<Attribute> attributes = attributeService.getAllAttributes();
+        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(attributes, "attributes list");
+
+        //  Sort attributes list (attribute-id 1 in List position 0)
+        Collections.sort(attributes,
+                new Comparator<Attribute>() {
+                    public int compare(Attribute attribute1, Attribute attribute2) {
+                        return (int)(attribute1.getId() - attribute2.getId());
+                    }
+                });
+
+        //  Display attributes list
+        for (int i = 0; i < attributes.size(); i++) {
+            System.out.println("attributes(" + i + "): attribute .id=" + attributes.get(i).getId() + " - .name=\'" + attributes.get(i).getName() + "\'");
+        }
+
         List<CategoryAttributeFilter> categoriesAttributes = categoryRepository.getAllCategoryAttributeFilter();
 
         CategoryAttributeFilterResponse categoryAttributeFilterResponse = new CategoryAttributeFilterResponse();
 
         if ((categoriesAttributes != null) && (categoriesAttributes.size() > 0)) {
             for (CategoryAttributeFilter categoryAttributeFilter: categoriesAttributes) {
+                String attributeName = attributes.get((int) (categoryAttributeFilter.getAttributeId() - 1)).getName();
+
                 categoryAttributeFilterResponse.createCategoryAttributeShowInFilter(new CategoryAttributeShowInFilter(
                         categoryAttributeFilter.getCategoryId(),
                         categoryAttributeFilter.getAttributeId(),
+                        attributeName,
                         categoryAttributeFilter.isShowInFilter()));
             }
         } else {
