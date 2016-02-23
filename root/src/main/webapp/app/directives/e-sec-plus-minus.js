@@ -120,6 +120,9 @@ define(['./module'], function (directives) {
                         else{
                             $(e).find('.plus').removeClass('disableBtn')
                         }
+                        if((s.numAttr - 0) == s.numAttr && (''+s.numAttr).trim().length > 0){
+                            s.numAttr = parseInt(s.numAttr);
+                        }
                     }
                 }
             }

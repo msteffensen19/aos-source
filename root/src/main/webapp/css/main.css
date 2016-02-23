@@ -129,7 +129,10 @@ div.mobile-btn-handler span{
 #mobile-section .cart{
     font-size: 12px;
     position: absolute;
-    top:10px;
+    top:0px;
+    padding: 10px 4px 10px 0;
+    background-color: white;
+    border-radius:0 10px 10px 0;
 }
 
 #mobile-section .img{
@@ -403,7 +406,26 @@ footer .splitter{
     font-weight: 300;
 }
 
+#toast {
+    bottom: 50%;
+    border-radius: 50px;
+    background-color: rgba(128, 128, 128, 0.85);
+    z-index: 999;
+    position: fixed;
+    display: none;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 88%;
+    text-align: center;
+    font-weight: 600;
+    color:white;
+}
 
+#toast a{
+    padding: 10px;
+    display: block;
+}
 
 @media screen and (max-width: 1220px) {
 
@@ -413,8 +435,8 @@ footer .splitter{
     }
 }
 
-@media screen and (max-width: 1050px)
-    {
+@media screen and (max-width: 1050px) {
+
     .nav-li-Links{
         display: none;
     }
@@ -504,8 +526,8 @@ footer .splitter{
     /*}*/
 
     footer img{
-        margin: 0 10px;
-        width: 12%;
+        margin: 0 19px;
+        width: 16%;
     }
 
     div.logo img{
@@ -515,7 +537,6 @@ footer .splitter{
     }
 
 }
-
 
 
 @media screen and (max-width: 480px) {

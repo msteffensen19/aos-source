@@ -54,25 +54,35 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            $scope.addProduct = function (product, quantity) {
+            $scope.addProduct = function (product, quantity, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
                 productsCartService.addProduct(product, quantity).then(function (cart) {
                     $scope.cart = cart;
-                    animateToolTipCart();
+                    animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();
                 });
             }
 
-            $scope.updateProduct = function (product, color, quantity, oldColor) {
+            $scope.updateProduct = function (product, color, quantity, oldColor, toastMessage) {
                 productsCartService.updateProduct(product, color, quantity, oldColor)
                     .then(function (cart) {
                         $scope.cart = cart;
-                        animateToolTipCart();
+                        animateToolTipCart(toastMessage);
                     });
             }
 
-            function animateToolTipCart() {
+            function animateToolTipCart(toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
+
+                if($(window).width() < 480)
+                {
+                    $("#toast a").html(toastMessage);
+                    $("#toast").stop().fadeIn(500);
+                    setTimeout(function(){
+                        $("#toast").stop().fadeOut(1500);
+                    }, 1500)
+                }
+
                 $('#toolTipCart').delay(500).slideDown(function () {
                     $('#toolTipCart tbody').stop().animate({
                         scrollTop: 0 + 'px',

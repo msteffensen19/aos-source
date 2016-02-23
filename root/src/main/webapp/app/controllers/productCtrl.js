@@ -4,9 +4,9 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter',
 
-        function (s, resolveParams, $state) {
+        function (s, resolveParams, $state, $filter) {
 
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
@@ -30,14 +30,15 @@ define(['./module'], function (controllers) {
                 if(disable){
                     return;
                 }
+
                 var productToAdd = angular.copy(s.product);
                 productToAdd.colors = [s.colorSelected];
                 if(s.pageState == 'edit'){
-                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity,resolveParams_selectedColor);
+                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity,resolveParams_selectedColor, $filter("translate")("toast_Product_Added_Successfully"));
                     $state.go('shoppingCart');
                 }
                 else {
-                    s.$parent.addProduct(productToAdd, s.quantity);
+                    s.$parent.addProduct(productToAdd, s.quantity, $filter("translate")("toast_Product_Added_Successfully"));
                 }
             }
 

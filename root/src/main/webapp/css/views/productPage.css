@@ -165,7 +165,7 @@
 }
 
 #productProperties .Quantity {
-    font-size: 14px;
+    font-size: 16px;
     color: #020202;
     margin-right: 5px;
     position: relative;
@@ -257,11 +257,11 @@
         font-size: 15px;
     }
     .topSpace{
-        padding-top: 94px;
+        padding-top: 0px;
     }
 
     .product_specifications{
-        padding: 80px 0 30px 20px;
+        padding: 10px 0 30px 20px;
     }
 
     .list label{
@@ -312,11 +312,11 @@
     }
 
     .product_specifications{
-        padding: 80px 0 30px 68px;
+        padding: 10px 0 30px 28px;
     }
 
     .list{
-        padding: 13px 50px;
+        padding: 13px 10px;
     }
 
     .list label{
@@ -356,6 +356,10 @@
         display: none;
     }
 
+    #productProperties button{
+        width: calc(100% - 60px);
+        margin: 10px 30px;
+    }
 }
 
 
@@ -402,10 +406,6 @@
         display: block;
     }
 
-    #productProperties button{
-        width: calc(100% - 60px);
-        margin: 10px 30px;
-    }
 
     .product_specifications{
         padding: 0 32px;
@@ -421,7 +421,6 @@
     }
 
     #productProperties .Quantity {
-        font-size: 14px;
         color: #020202;
         margin: 0 8px 0 0 ;
         position: relative;
