@@ -263,8 +263,8 @@ h3.roboto-regular{
 
 .option input[type=checkbox]:checked {
     background-image: url("images/Check.png");
-    background-position: 56% 44%;
-    background-size: 73% 55%;
+    background-position: 60% 36%;
+    background-size: 95%;
     background-color: #54b3ad;
 }
 

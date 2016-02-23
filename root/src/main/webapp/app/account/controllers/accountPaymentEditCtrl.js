@@ -31,14 +31,26 @@ define(['./module'], function (controllers) {
                 s.years.push((now.getFullYear() + i) + "");
             }
 
-            s.card = {
-                number: '',
-                cvv: '',
-                expirationDate: {
-                    month: '',
-                    year: ''
-                },
-                name: '',
+            s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
+            s.savePay = { username : '', password : '' }
+
+            var masterCredit = resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit ?
+                resolveParams.paymentPreferences.masterCredit : null;
+            if(masterCredit != null){
+                s.card = {
+                    number: masterCredit.cardNumber.substring(4),
+                    cvv: masterCredit.cvvNumber,
+                    expirationDate: {
+                        month: masterCredit.expirationDate.substring(0, 2),
+                        year: masterCredit.expirationDate.substring(2)
+                    },
+                    name: "",
+                }
+            }
+            var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
+                resolveParams.paymentPreferences.safePay : null;
+            if(safePay != null){
+                s.savePay.username = safePay.safepayUsername;
             }
 
             s.saveMasterCredit = function () {
@@ -67,7 +79,6 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            s.savePay = { username : '', password : '' }
             s.saveSafePay = function () {
                 var response;
                 if (true) {

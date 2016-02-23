@@ -90,18 +90,41 @@ define(['./module'], function (services) {
                             accountId: user.response.userId
                         })
                         .then(function (response) {
-                                var paymentPreferences = null;
-                                if(response.ID) {
-                                    paymentPreferences = {
-                                        "id": response.ID,
-                                        "cardNumber": response.CARDNUMBER,
-                                        "custumerName": response.CUSTUMERNAME,
-                                        "cvvNumber": response.CVVNUMBER,
-                                        "expirationDate": response.EXPIRATIONDATE,
-                                        "paymentMethod": response.PAYMENTMETHOD,
+                                var masterCredit = null;
+                                var safePay = null;
+                                var MCard;
+                                var SPay;
+                                if(response.PAYMENTMETHOD + "" == "20"){
+                                    MCard = response;
+                                }
+                                if(response.PAYMENTMETHOD + "" == "10"){
+                                    SPay = response;
+                                }
+                                if (response.length && response.length == 2) {
+                                    MCard = response[0].PAYMENTMETHOD + "" == "20" ? response[0] :
+                                        response[1].PAYMENTMETHOD + "" == "20"  ? response[1] : null;
+                                    SPay = response[0].PAYMENTMETHOD + "" == "10" ? response[0] :
+                                        response[1].PAYMENTMETHOD + "" == "10"  ? response[1] : null;
+                                }
+                                if(MCard != null){
+                                    masterCredit = {
+                                        "id": MCard.PREFERENCEID,
+                                        "cardNumber": MCard.CARDNUMBER,
+                                        "cvvNumber": MCard.CVVNUMBER,
+                                        "expirationDate": MCard.EXPIRATIONDATE,
+                                        "paymentMethod": MCard.PAYMENTMETHOD,
                                     }
                                 }
-                                defer.resolve(paymentPreferences);
+                                if(SPay != null){
+                                    safePay = {
+                                        "id": SPay.PREFERENCEID,
+                                        "safepayUsername": SPay.SAFEPAYUSERNAME,
+                                        "paymentMethod": SPay.PAYMENTMETHOD,
+                                    }
+                                }
+                                l(masterCredit)
+                                l(safePay)
+                                defer.resolve({masterCredit: masterCredit, safePay: safePay });
                             },
                             function (response) {
                                 console.log(response);

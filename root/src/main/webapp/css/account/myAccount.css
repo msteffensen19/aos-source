@@ -254,7 +254,7 @@
 
 @media screen and (max-width: 600px) {
     #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
-        width: 100%;
+        width: 40%;
         margin: 15px 0;
     }
 
@@ -298,6 +298,11 @@
         padding: 12px 0;
         font-size: 15px;
         float: none;
+    }
+
+    #accountCover #form .accountDetailsBtn{
+        width: 100% !important;
+        height: 49px !important;
     }
 
     #accountCover #formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
@@ -355,6 +360,18 @@
         margin: 34px auto;
     }
 }
+
+@media screen and (max-width: 366px)
+{
+    #myAccountContainer .cube .paymentBox .mastercart{
+        padding: 15px 0px;
+        padding-right: 0;
+        display: none;
+    }
+
+}
+
+
 
 @media screen and (max-width: 350px)
 {

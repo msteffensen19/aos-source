@@ -105,33 +105,46 @@ define(['./module'], function (directives) {
                 configSlider();
 
                 s.productToShow = $filter("productsFilterForCategoriesProduct")([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
-                s.attributesToShow = getAttributesToShow(s.productToShow);
+
+                s.attributesToShow = getAttributesToShow(s.productToShow, s.paramsToPass.attributes.categoriesAttributes);
                 s.productsColors = getColorsInProducts(s.productToShow);
 
 
 
 
-                function getAttributesToShow(productToShow){
+                function getAttributesToShow(productToShow, attrFilter){
 
-                    var attributes = []
+                    var attributes = [];
+                    var attrShowInFilter = "";
+                    angular.forEach(attrFilter, function(attr){
+                        if(attr.showInFilter){
+                            attrShowInFilter += "(" + attr.attributeName + ")";
+                        }
+                    });
+
                     for(var index in productToShow){
 
                         var prod = productToShow[index];
                         for(var categIndex in prod.attributes)
                         {
                             var categ = prod.attributes[categIndex];
-                            if(attributes[categ.attributeName] == undefined){
-                                attributes[categ.attributeName] = [];
+                            if(attrShowInFilter.indexOf(categ.attributeName) != -1)
+                            {
+                                if(attributes[categ.attributeName] == undefined){
+                                    attributes[categ.attributeName] = [];
+                                }
+                                attributes[categ.attributeName].push(categ.attributeValue)
                             }
-                            attributes[categ.attributeName].push(categ.attributeValue)
                         }
                     }
+
                     for(var index in attributes){
                         attributes[index] = attributes[index].filter(
                             function(val, index, arr){
                                 return arr.indexOf(val) == index;
                             });
                     }
+
                     var attributesToShow = [];
                     for(var name in attributes) {
                         attributesToShow.push({

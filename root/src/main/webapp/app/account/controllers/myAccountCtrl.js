@@ -19,8 +19,14 @@ define(['./module'], function (controllers) {
 
             s.accountDetails = resolveParams.accountDetails;
             s.shippingDetails = resolveParams.shippingDetails;
-            s.masterCredit = resolveParams.paymentPreferences ?
-                resolveParams.paymentPreferences.masterCredit.substring(resolveParams.paymentPreferences.masterCredit.length - 4) : null;
+
+            //l("1")
+            //l(resolveParams.paymentPreferences )
+            //l(resolveParams.paymentPreferences.masterCredit.cardNumber)
+            s.masterCredit = resolveParams.paymentPreferences &&
+                             resolveParams.paymentPreferences.masterCredit &&
+                             resolveParams.paymentPreferences.masterCredit.cardNumber ?
+                resolveParams.paymentPreferences.masterCredit.cardNumber.substring(resolveParams.paymentPreferences.masterCredit.cardNumber.length - 4) : null;
 
             s.categoriesPromotions = [
                 { categoryName : 'Tablets', categoryValue : true, },

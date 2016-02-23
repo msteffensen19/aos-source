@@ -127,6 +127,7 @@
                                         <label class="roboto-regular">{{'Expiration_Date' | translate}}</label>
 
                                         <sec-input sec-required
+                                                   model-attr="card.expirationDate.month"
                                                    input-type-attr="transclude" id-attr="Card_date"
                                                    sec-placeholder="{{ 'MM' | translate }}" select-tag="true">
                                             <a class="must">*</a>
@@ -136,7 +137,9 @@
                                             </select>
                                         </sec-input>
 
-                                        <sec-input sec-required input-type-attr="transclude" id-attr="Card_year"
+                                        <sec-input sec-required input-type-attr="transclude"
+                                                   id-attr="Card_year"
+                                                   model-attr="card.expirationDate.year"
                                                    sec-placeholder="{{ 'YY' | translate }}" select-tag="true">
                                             <a class="must">*</a>
                                             <select class="inputtext"
@@ -155,11 +158,11 @@
 
                                     <div class="blueLink" style="">
                                         <label>
-                                            <input sec-submit-attr="saveMasterCredit()"
+                                            <button sec-submit-attr="saveMasterCredit()"
                                                    class="roboto-medium sec-validate-invalid accountDetailsBtn"
-                                                   a-sec-validate-invalid
-                                                   type="button"
-                                                   value="{{'SAVE' | translate}}"/>
+                                                   a-sec-validate-invalid >
+                                            {{'SAVE' | translate}}
+                                            </button>
                                         </label>
                                     </div>
 
