@@ -173,6 +173,9 @@ var english = {
     'Problem_sending_mail_please_try_later': 'Problem sending mail, please try later',
     'Subject': 'Subject',
     'SUPPORT':'SUPPORT',
+
+    'toast_Product_Added_Successfully': 'Product Added Successfully',
+    'toast_Product_Updated_Successfully': 'Product Update Successfully',
 };
 
 
