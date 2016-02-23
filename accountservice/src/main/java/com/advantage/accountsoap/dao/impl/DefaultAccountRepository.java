@@ -495,7 +495,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         //if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
         //PaymentPreferences p = account.getPaymentPreferences()
         //        .stream()
-        //        .filter(x -> x.getId() == preferenceId)
+        //        .filter(x -> x.getAccountId() == preferenceId)
         //        .findFirst().get();
         //if(p == null)return new AccountStatusResponse(false, "Preference not fount", -1);
         //account.getPaymentPreferences().remove(p);

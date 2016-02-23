@@ -213,7 +213,9 @@ public class AccountService {
         if(account == null) return null;
 
         //return fillPaymentPreferencesDto(account.getPaymentPreferences());
-        return null;
+        List<PaymentPreferencesDto> paymentPreferencesDto = paymentPreferencesService.getPaymentPreferencesByUserId(accountId);
+
+        return paymentPreferencesDto;
     }
 
     @Transactional

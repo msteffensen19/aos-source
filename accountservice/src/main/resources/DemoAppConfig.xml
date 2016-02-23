@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Parameters>
+    <!--
+        User level configuration.
+        Managed by Admin-User in ADM Demo .NET administration application
+    -->
+    <!-- "Yes"=e-mail address mandatory in create-user and shown in login/sign-in page -->
+    <Email_address_in_login tools="">Yes</Email_address_in_login>
+    <!-- 0=Disabled, any other positive number is the amount of memory leak in MegaBytes -->
+    <Generate_memory_leak tools="LoadRunner;LeanFt">0</Generate_memory_leak>
+    <!-- 0=Disabled, any other positive number is the number of repeat calls to ShipEx -->
+    <Repeat_ShipEx_call tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
+    <!-- 0=Disables, any other number is the sum to add to cart calculation -->
+    <Sum_to_add_to_cart_calculation tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
+    <!-- 0=Disabled, any other positive number is the product id to add to speakers category -->
+    <Add_wrong_product_to_speakers_category tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <!-- "No"=(Default) Do not make OR "Yes"=make spelling mistakes in order payment page -->
+    <Spelling_mistakes_in_order_payment_page tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
+    <!-- (-1)=(default) Disabled, any other number is the number of concurrentSessions -->
+    <Max_concurrent_sessions tools="LoadRunner;NV;StormRunner">-1</Max_concurrent_sessions>
+    <!-- "No"=(Default) Do not, or "Yes"=Mix places of pictures in home page -->
+    <Mix_pictures_in_home_page tools="LeanFT;MobileCenter;UFT">No</Mix_pictures_in_home_page>
+    <!-- 0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
+    <Slow_DB_call tools="LoadRunner;StormRunner">0</Slow_DB_call>
+</Parameters>
+

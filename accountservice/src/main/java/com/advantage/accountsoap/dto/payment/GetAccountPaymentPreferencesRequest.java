@@ -14,11 +14,11 @@ public class GetAccountPaymentPreferencesRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long accountId;
 
-    public long getId() {
-        return accountId;
+    public long getAccountId() {
+        return this.accountId;
     }
 
-    public void setId(long id) {
-        this.accountId = id;
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
     }
 }

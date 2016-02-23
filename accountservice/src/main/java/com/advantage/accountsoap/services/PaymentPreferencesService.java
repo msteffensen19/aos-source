@@ -1,15 +1,20 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.PaymentPreferencesRepository;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.model.PaymentPreferencesPK;
 import com.advantage.common.enums.PaymentMethodEnum;
+import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PaymentPreferencesService {
@@ -116,6 +121,23 @@ public class PaymentPreferencesService {
         if(paymentPreferences == null ) return  new PaymentPreferencesStatusResponse(false, "", -1);
 
         return  new PaymentPreferencesStatusResponse(true, "successful", 0);
+    }
+
+    @Transactional
+    public List<PaymentPreferencesDto> getPaymentPreferencesByUserId(long userId) {
+        ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "user id");
+
+        List<PaymentPreferences> prefs = paymentPreferencesRepository.getPaymentPreferencesByUserId(userId);
+
+        if (prefs == null) { return null; }
+        List<PaymentPreferencesDto> prefsDto = new ArrayList<>();
+        for (PaymentPreferences pref : prefs) {
+            PaymentPreferencesDto prefDto = new PaymentPreferencesDto(pref.getPaymentMethod(), pref.getCardNumber(),
+                    pref.getExpirationDate(), pref.getCvvNumber(), pref.getSafePayUsername(), /* preferenceId */ 0);
+            prefsDto.add(prefDto);
+        }
+
+        return prefsDto;
     }
 
     @Transactional

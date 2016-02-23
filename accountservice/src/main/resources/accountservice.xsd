@@ -97,6 +97,14 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="DemoAppConfigurationResponse">
+        <xs:sequence>
+            <xs:element name="success" type="xs:boolean"/>
+            <xs:element name="reason" type="xs:string"/>
+            <xs:element name="code" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="GetAllAccountsResponse">
         <xs:complexType>
             <xs:sequence>
@@ -166,6 +174,28 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Country" type="tns:CountryDto" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllDemoAppConfigParametersRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="DemoAppConfigParameter">
+        <xs:sequence>
+            <xs:element name="parameterName" type="xs:string" />
+            <xs:element name="attributeName" type="xs:string" />
+            <xs:element name="parameterValue" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="GetAllDemoAppConfigParametersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Parameter" type="tns:DemoAppConfigParameter" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -253,6 +283,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
     <xs:element name="AccountUpdateResponse">
         <xs:complexType>
             <xs:sequence>
