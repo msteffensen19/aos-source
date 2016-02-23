@@ -385,40 +385,44 @@ public class ShoppingCartService {
 
         ProductDto dto = this.getProductDtoDetails(productId);
 
-        ShoppingCartResponseDto.CartProduct cartProduct = null;
+        ShoppingCartResponseDto.CartProduct cartProduct;
+        if (dto.getProductName() != null) {
+            if (!dto.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
 
-        if (!dto.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
+                ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
 
-            ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
+                if (colorAttrib != null) {
+                    cartProduct = new ShoppingCartResponseDto()
+                            .createCartProduct(dto.getProductId(),
+                                    dto.getProductName(),
+                                    dto.getPrice(),
+                                    0,
+                                    dto.getImageUrl(),
+                                    true);
 
-            if (colorAttrib != null) {
-                cartProduct = new ShoppingCartResponseDto()
-                        .createCartProduct(dto.getProductId(),
-                                dto.getProductName(),
-                                dto.getPrice(),
-                                0,
-                                dto.getImageUrl(),
-                                true);
+                    cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
+                            colorAttrib.getName().toUpperCase(),
+                            colorAttrib.getInStock());
 
-                cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
-                        colorAttrib.getName().toUpperCase(),
-                        colorAttrib.getInStock());
-
-                System.out.println("Received Product information: ");
-                System.out.println("   product id = " + dto.getProductId());
-                System.out.println("   product name = " + dto.getProductName());
-                System.out.println("   price per item = " + dto.getPrice());
-                System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                System.out.println("   ColorAttrubute.Code (hex) = \'" + colorAttrib.getCode().toUpperCase() + "\'");
-                System.out.println("   ColorAttrubute.Color (name) = \"" + colorAttrib.getName().toUpperCase() + "\"");
-                System.out.println("   ColorAttrubute.inStock = " + colorAttrib.getInStock());
+                    System.out.println("Received Product information: ");
+                    System.out.println("   product id = " + dto.getProductId());
+                    System.out.println("   product name = " + dto.getProductName());
+                    System.out.println("   price per item = " + dto.getPrice());
+                    System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
+                    System.out.println("   ColorAttrubute.Code (hex) = \'" + colorAttrib.getCode().toUpperCase() + "\'");
+                    System.out.println("   ColorAttrubute.Color (name) = \"" + colorAttrib.getName().toUpperCase() + "\"");
+                    System.out.println("   ColorAttrubute.inStock = " + colorAttrib.getInStock());
+                } else {
+                    //  Product with specific color NOT FOUND in Product table in CATALOG schema
+                    cartProduct = setNotFoundCartProduct(productId);
+                }
             } else {
-                //  Product with specific color NOT FOUND in Product table in CATALOG schema
+                //  Product with this productId not found in Product table in CATALOG schema (409)
                 cartProduct = setNotFoundCartProduct(productId);
             }
         } else {
-            //  Product with this productId not found in Product table in CATALOG schema (409)
-            cartProduct = setNotFoundCartProduct(productId);
+            //  dto.getProductName() == null
+            cartProduct = null;
         }
 
         return cartProduct;
@@ -498,13 +502,11 @@ public class ShoppingCartService {
 
         ProductDto productDetails = getProductDtoDetails(productId);
         if (!productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
-            if (productDetails != null) {
-                List<ColorAttributeDto> colors = productDetails.getColors();
-                for (ColorAttributeDto color : colors) {
-                    //  Better to compare integers than Strings - no problem with leading zeros
-                    if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
-                        result = true;
-                    }
+            List<ColorAttributeDto> colors = productDetails.getColors();
+            for (ColorAttributeDto color : colors) {
+                //  Better to compare integers than Strings - no problem with leading zeros
+                if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
+                    result = true;
                 }
             }
         }
