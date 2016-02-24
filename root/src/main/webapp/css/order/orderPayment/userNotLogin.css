@@ -133,10 +133,7 @@
     }
 
     #orderPayment .noUserSection .cover div{
-        border-left: none 2px #FFFFFF;
-    }
-
-    #orderPayment .noUserSection .cover div{
+        border-left: none 0 #FFF;
         height: auto;
         padding: 0;
     }

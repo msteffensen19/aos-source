@@ -20,20 +20,23 @@ Helper.footerHandler = function() {
 
     if ($("footer").height()) {
 
-        var paddingTop = $(window).width() > 480 ? 90 : 0;
-        $("#virtualFooter").height($("footer").height() + paddingTop);
-        $("#virtualFooter").css('width' , "100%" );
 
-        var miss = $(window).height() - $("#virtualFooter").offset().top;
-        //l($(window).height());
-        //l($("#virtualFooter").offset().top);
-        //console.log("miss = " + miss);
-        if (miss > 0) {
-            $("footer").css({ "position": "fixed" } )
-        }
-        else {
-            $("footer").css("position", "absolute")
-        }
+        setTimeout(function(){
+            var paddingTop = $(window).width() > 480 ? 90 : 0;
+            $("#virtualFooter").height($("footer").height() + paddingTop);
+            $("#virtualFooter").css('width' , "100%" );
+
+            var miss = $(window).height() - $("#virtualFooter").offset().top;
+            l($(window).height());
+            l($("#virtualFooter").offset().top);
+            console.log("miss = " + miss);
+            if (miss - 90 > 0) {
+                $("footer").css({ "position": "fixed" } )
+            }
+            else {
+                $("footer").css("position", "absolute")
+            }
+        }, 200)
     }
     else {
         setTimeout(Helper.footerHandler, 200)
