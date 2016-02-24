@@ -11,6 +11,8 @@ define(['./module'], function (controllers) {
 
 
             s.user = resolveParams.user
+            s.masterCredit = resolveParams.paymentPreferences.masterCredit;
+            s.safePay = resolveParams.paymentPreferences.safePay;
             if(resolveParams.user == null){
                 $location.path('login')
                 return;
@@ -36,6 +38,30 @@ define(['./module'], function (controllers) {
 
             s.cardNumber = resolveParams.CardNumber;
 
+            s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
+            s.savePay = { username : '', password : '' }
+
+            var masterCredit = resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit ?
+                resolveParams.paymentPreferences.masterCredit : null;
+            if(masterCredit != null){
+                s.card = {
+                    number: masterCredit.cardNumber.substring(4),
+                    cvv: masterCredit.cvvNumber,
+                    expirationDate: {
+                        month: masterCredit.expirationDate.substring(0, 2),
+                        year: masterCredit.expirationDate.substring(2)
+                    },
+                    name: "",
+                }
+            }
+            var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
+                resolveParams.paymentPreferences.safePay : null;
+            if(safePay != null){
+                s.savePay.username = safePay.safepayUsername;
+            }
+
+/*
+
             s.card = {
                 number : '',
                 cvv : '',
@@ -50,6 +76,7 @@ define(['./module'], function (controllers) {
                 username : '',
                 password : ''
             }
+*/
             s.agree_Agreement = true;
 
             s.shipping = resolveParams.shippingCost;

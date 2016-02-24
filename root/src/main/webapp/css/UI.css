@@ -369,7 +369,9 @@ a {
 }
 
 .invalid{
-    color: #f9003f !important;
+    color: #FF454F !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
 }
 
 .sec-validate-invalid , .sec-validate-invalid:hover{

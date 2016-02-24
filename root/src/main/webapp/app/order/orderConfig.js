@@ -17,22 +17,26 @@ define([],function(){
                 breadcrumbName: "orderPayment",
             },
             resolve : {
-                resolveParams: function ($q, orderService) {
+                resolveParams: function ($q, orderService, accountService) {
                     var defer = $q.defer();
 
                     orderService.getAccountById().
                     then(function (user) {
-                        if(user)
-                        {
+                        if(user) {
+
                             orderService.getShippingCost(user).
                             then(function (shippingCost) {
 
-                                defer.resolve({
-                                    shippingCost : shippingCost,
-                                    user : user,
-                                    noCards: true,
-                                    CardNumber: [],
-                                });
+                                accountService.getAccountPaymentPreferences().
+                                then(function (paymentPreferences) {
+                                        defer.resolve({
+                                            paymentPreferences: paymentPreferences,
+                                            shippingCost: shippingCost,
+                                            user: user,
+                                            noCards: true,
+                                            CardNumber: [],
+                                        });
+                                    });
                             });
                         }
                         else {

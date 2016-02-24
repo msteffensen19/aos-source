@@ -4,35 +4,45 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie',
-        '$templateCache', '$location', '$timeout', 'productsCartService',
-        function($rootScope, userService, $cookie, $templateCache, $location, $timeout, productsCartService) {
+        '$templateCache', '$location', '$timeout', 'productsCartService', '$filter',
+        function ($rootScope, userService, $cookie, $templateCache, $location,
+                  $timeout, productsCartService, $filter) {
             return {
                 restrict: 'E',
-                replace:false,
+                replace: false,
                 template: $templateCache.get('app/user/partials/login.html'),
                 controller: function ($scope) {
 
 
                     /* VARIABLES */
-                    $scope.rememberMe = false;
-                    $scope.message = "";
+                    //$scope.rememberMe = false;
+                    //$scope.message = "";
+                    $scope.message = {text: $filter('translate')('OR'), _class: ''};
                     $scope.config = null;
                     /*================================ END VARIABLES ======================================*/
 
                     /* Sign user in */
-                    $scope.signIn = function(user, rememberMe) {
+                    $scope.signIn = function (user, rememberMe) {
 
                         userService.login(user).then(function (res) {
 
-                            var response = { userId : res.USERID, reason: res.REASON, success : res.SUCCESS, token: res.TOKEN }
-
+                            var response = {
+                                userId: res.USERID,
+                                reason: res.REASON,
+                                success: res.SUCCESS,
+                                token: res.TOKEN
+                            }
 
                             if (response.userId != -1 && response.success == 'true') {
 
                                 if (response.userId === undefined) {
 
-                                    $timeout(function () { $scope.message = ""; }, 2000);
-                                    $scope.message = response.reason;
+                                    $timeout(function () {
+                                        $scope.message.text = $filter('translate')('OR');
+                                        $scope.message._class = "";
+                                    }, 2000);
+                                    $scope.message.text = response.reason;
+                                    $scope.message._class = response.success == 'true' ? '' : 'invalid';
 
                                     var count = incrementLogins();
                                     if (count >= 3) {
@@ -64,15 +74,19 @@ define(['./module'], function (directives) {
                                     $scope.cart = cart;
                                 });
 
-                                if($location.path() == '/register'){
+                                if ($location.path() == '/register') {
                                     $location.path('/')
                                 }
 
                                 wellcome();
                             }
                             else {
-                                $scope.wrongFields = response;
-                                $timeout(function () { $scope.wrongFields = null; }, 4000);
+                                $timeout(function () {
+                                    $scope.message.text = $filter('translate')('OR');
+                                    $scope.message._class = "";
+                                }, 2000);
+                                $scope.message.text = response.reason;
+                                $scope.message._class = "invalid";
                             }
                             return user;
                         });
@@ -80,50 +94,42 @@ define(['./module'], function (directives) {
                     /*=============================== end Sign in ===============================*/
 
 
-
-
-
                     /* increment wrong user login  */
-                    var incrementLogins = function (){
+                    var incrementLogins = function () {
                         var test = $cookie("loginsCounter");
                         var loginsCounter = test === undefined ? -1 : test;
-                        return function(){
-                            if(loginsCounter == -1)
-                            {
+                        return function () {
+                            if (loginsCounter == -1) {
                                 var test = $cookie("loginsCounter");
-                                if(test === undefined)
-                                { test = 0; }
+                                if (test === undefined) {
+                                    test = 0;
+                                }
 
                                 loginsCounter = test;
                             }
                             var count = ++loginsCounter;
-                            $cookie("loginsCounter", count, { expires: 365 });
+                            $cookie("loginsCounter", count, {expires: 365});
                             return count;
                         }
                     }();
                     /*=============================== end increment logins ===============================*/
 
 
-
-
                     /* create to user new account in application */
-                    $scope.createNewAccount = function(user) {
+                    $scope.createNewAccount = function (user) {
                         wellcome();
                         $location.path('register');
                     }
                     /*================ end create to user new account in application  ========================*/
 
 
-
-
-                    $scope.forgotPassword = function() {
+                    $scope.forgotPassword = function () {
                         console.log("forgotPassword");
                         $location.path('404');
                     }
 
 
-
-                    $scope.singWithFacebook = function(user) {
+                    $scope.singWithFacebook = function (user) {
                         console.log("singWithFacebook");
                         $location.path('404');
                     }
@@ -135,10 +141,9 @@ define(['./module'], function (directives) {
 });
 
 
-
 function wellcome() {
     $(".login").css("opacity", "0.2")
-    $(".PopUp > div:nth-child(1)").animate({ "top": "-150%" }, 600, function () {
+    $(".PopUp > div:nth-child(1)").animate({"top": "-150%"}, 600, function () {
 
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
         $(".PopUp").fadeOut(100);

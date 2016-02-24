@@ -16,11 +16,11 @@
 
         <div id="orderPayment" ng-switch="userCookie.response != undefined" ng-hide="paymentEnd">
 
-            <div ng-switch-when="false">
-                <user-not-login></user-not-login>
-            </div>
+            <!--<div ng-switch-when="false">-->
+                <!--<user-not-login></user-not-login>-->
+            <!--</div>-->
             <div ng-switch-when="true">
-                <user-are-login></user-are-login>
+                <user-are-login paramsToPass="resolveParams"></user-are-login>
             </div>
             <div id="userCart" data-ng-show="(cart | productsCartCount) > 0" >
                 <h5 translate="ORDER_SUMMARY"></h5>

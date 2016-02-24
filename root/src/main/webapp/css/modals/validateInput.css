@@ -13,6 +13,7 @@
     top: 8px;
     font-size: 14px;
     white-space: nowrap;
+    z-index: 5;
 }
 
 .validate-directive label.validateInvalid {
@@ -34,6 +35,10 @@
 
 .validate-directive > .validate-info ul {
     list-style: none;
+}
+
+.validate-directive > .validate-info ul li{
+    text-align: left
 }
 
 .validate-directive > .validate-info ul a {

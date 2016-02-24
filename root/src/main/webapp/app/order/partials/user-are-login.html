@@ -338,8 +338,11 @@
                         <label class="roboto-regular">{{'Expiration_Date' | translate}}</label>
 
                         <sec-input sec-required
-                                   input-type-attr="transclude" id-attr="Card_date"
-                                   sec-placeholder="{{ 'MM' | translate }}" select-tag="true">
+                                   model-attr="card.expirationDate.month"
+                                   input-type-attr="transclude"
+                                   id-attr="Card_date"
+                                   sec-placeholder="{{ 'MM' | translate }}"
+                                   select-tag="true">
                             <a class="must">*</a>
                             <select class="inputtext"
                                     ng-model="card.expirationDate.month"
@@ -347,8 +350,12 @@
                             </select>
                         </sec-input>
 
-                        <sec-input sec-required input-type-attr="transclude" id-attr="Card_year"
-                                   sec-placeholder="{{ 'YY' | translate }}" select-tag="true">
+                        <sec-input sec-required
+                                   input-type-attr="transclude"
+                                   model-attr="card.expirationDate.year"
+                                   id-attr="Card_year"
+                                   sec-placeholder="{{ 'YY' | translate }}"
+                                   select-tag="true">
                             <a class="must">*</a>
                             <select class="inputtext"
                                     ng-model="card.expirationDate.year"
