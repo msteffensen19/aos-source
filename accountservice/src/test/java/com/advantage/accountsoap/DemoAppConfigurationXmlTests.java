@@ -2,7 +2,6 @@ package com.advantage.accountsoap;
 
 import com.advantage.accountsoap.config.DemoAppConfigurationXml;
 import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
-import com.advantage.accountsoap.dto.account.DemoAppConfigurationResponse;
 import com.advantage.accountsoap.services.DemoAppConfigService;
 import com.advantage.root.util.xml.XmlHelper;
 import org.junit.Assert;
@@ -52,7 +51,7 @@ public class DemoAppConfigurationXmlTests {
     public void testGetAllDemoAppConfigParameters() {
         try {
 
-            List<DemoAppConfigParameter> response = service.getAllConfigurationParameters();
+            List<DemoAppConfigParameter> response = service.getDemoAppConfigParametersByTool();
             Assert.assertEquals("Expected " + DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER + " total parameters, but got " + response.size(), DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER, response.size());
 
         } catch (Exception e) {
@@ -64,49 +63,49 @@ public class DemoAppConfigurationXmlTests {
     @Test
     public void testGetDemoAppConfigParameterByTool() {
         //  region Test LeanFT
-        List<DemoAppConfigParameter> response = service.getParametersByTool("LeanFt");
+        List<DemoAppConfigParameter> response = service.getDemoAppConfigParametersByTool("LeanFt");
         long numberOfParameters = response.size();
         Assert.assertEquals("For \"LeanFT\": Expected " + CONFIG_PARAM_LEAN_FT + ", but got " + numberOfParameters, CONFIG_PARAM_LEAN_FT, numberOfParameters);
         //  endregion
 
         //  region Test LoadRunner
-        response = service.getParametersByTool("LoadRunner");
+        response = service.getDemoAppConfigParametersByTool("LoadRunner");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"LoadRunner\": Expected " + CONFIG_PARAM_LOAD_RUNNER + ", but got " + numberOfParameters, CONFIG_PARAM_LOAD_RUNNER, numberOfParameters);
         //  endregion
 
         //  region Test MobileCenter
-        response = service.getParametersByTool("MobileCenter");
+        response = service.getDemoAppConfigParametersByTool("MobileCenter");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"MobileCenter\": Expected " + CONFIG_PARAM_MOBILE_CENTER + ", but got " + numberOfParameters, CONFIG_PARAM_MOBILE_CENTER, numberOfParameters);
         //  endregion
 
         //  region Test NV
-        response = service.getParametersByTool("MobileCenter");
+        response = service.getDemoAppConfigParametersByTool("MobileCenter");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"NV\": Expected " + CONFIG_PARAM_NV + ", but got " + numberOfParameters, CONFIG_PARAM_NV, numberOfParameters);
         //  endregion
 
         //  region Test Sprinter
-        response = service.getParametersByTool("Sprinter");
+        response = service.getDemoAppConfigParametersByTool("Sprinter");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"Sprinter\": Expected " + CONFIG_PARAM_SPRINTER + ", but got " + numberOfParameters, CONFIG_PARAM_SPRINTER, numberOfParameters);
         //  endregion
 
         //  region Test StormRunner
-        response = service.getParametersByTool("StormRunner");
+        response = service.getDemoAppConfigParametersByTool("StormRunner");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"StormRunner\": Expected " + CONFIG_PARAM_STORM_RUNNER + ", but got " + numberOfParameters, CONFIG_PARAM_STORM_RUNNER, numberOfParameters);
         //  endregion
 
         //  region Test SV
-        response = service.getParametersByTool("SV");
+        response = service.getDemoAppConfigParametersByTool("SV");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"SV\": Expected " + CONFIG_PARAM_SV + ", but got " + numberOfParameters, CONFIG_PARAM_SV, numberOfParameters);
         //  endregion
 
         //  region Test UFT
-        response = service.getParametersByTool("UFT");
+        response = service.getDemoAppConfigParametersByTool("UFT");
         numberOfParameters = response.size();
         Assert.assertEquals("For \"UFT\": Expected " + CONFIG_PARAM_UFT + ", but got " + numberOfParameters, CONFIG_PARAM_UFT, numberOfParameters);
         //  endregion

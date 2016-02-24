@@ -1,12 +1,8 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
-import com.advantage.accountsoap.dto.account.DemoAppConfigurationResponse;
 import com.advantage.common.Constants;
 import com.advantage.root.util.xml.XmlHelper;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Repository;
 import org.w3c.dom.*;
 
 import java.io.File;
