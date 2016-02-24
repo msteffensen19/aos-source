@@ -131,29 +131,33 @@
 
 
             <!--PREFERRED PAYMENT METHOD DETAILS SECCION-->
-            <div class="cube">
+            <div class="cube" >
                 <h3 class="blueLink">
                     {{ userSecondWsdl ? "Preferred_payment_method2" : "Preferred_payment_method" | translate }}
                     <a class="floatRigth" href="#/accountPaymentEdit">
                         {{ "Edit" | translate }}
                     </a>
                 </h3>
-                <div class="paymentBox" data-ng-show="masterCredit == null">
+                <div class="paymentBox" data-ng-show="defaultPaymentMethodId == 0">
                     <label class="mastercart" style="width: 100%; text-align: center; box-sizing: border-box">
-                        MasterCredit not found
+                        {{ 'Preferred_payment_has_not_been_set' | translate}}
                     </label>
                 </div>
-                <div class="paymentBox"  data-ng-hide="masterCredit == null">
+                <div class="paymentBox" data-ng-show="defaultPaymentMethodId == 20 && masterCredit4Digits != null">
                     <img src="css/images/Master_credit.png">
                     <label class="mastercart">{{'MasterCredit' | translate}}</label>
                     <span>****</span>
                     <span>****</span>
                     <span>****</span>
-                    <span>{{masterCredit}}</span>
+                    <span>{{masterCredit4Digits}}</span>
+                </div>
+                <div class="paymentBox" data-ng-show="defaultPaymentMethodId == 10 && safePayName != null">
+                    <img src="css/images/SafePay.png">
+                    <label class="mastercart">{{'SafePay' | translate}}</label>
+                    <span>{{safePayName}}</span>
                 </div>
             </div>
             <!--END PREFERRED PAYMENT METHOD DETAILS SECCION-->
-
 
 
 

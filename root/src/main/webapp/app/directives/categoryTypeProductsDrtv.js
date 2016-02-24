@@ -114,6 +114,7 @@ define(['./module'], function (directives) {
 
                 function getAttributesToShow(productToShow, attrFilter){
 
+                    /*Build long String to search showInFilter param*/
                     var attributes = [];
                     var attrShowInFilter = "";
                     angular.forEach(attrFilter, function(attr){
@@ -122,6 +123,7 @@ define(['./module'], function (directives) {
                         }
                     });
 
+                    /*filtering showInFilter param*/
                     for(var index in productToShow){
 
                         var prod = productToShow[index];
@@ -138,6 +140,7 @@ define(['./module'], function (directives) {
                         }
                     }
 
+                    /*filtering repeated parameters*/
                     for(var index in attributes){
                         attributes[index] = attributes[index].filter(
                             function(val, index, arr){
@@ -145,8 +148,25 @@ define(['./module'], function (directives) {
                             });
                     }
 
+
+                    /* Sorting attributes in atrributes by abc */
+                    for(var name in attributes) {
+                        attributes[name] = attributes[name].sort(function (a, b) {
+                            return a == b ? 0 : a < b ? -1 : 1;
+                        });
+                    }
+
+
+
+                    //users
+
+
+                    /* Builder attributes to show */
                     var attributesToShow = [];
                     for(var name in attributes) {
+                        if(Object.keys(attributes[name]).length <= 1){
+                            continue;
+                        }
                         attributesToShow.push({
                             name: name,
                             values: [],
@@ -177,6 +197,12 @@ define(['./module'], function (directives) {
                                 productsColors.push(color)
                             }
                         });
+                    });
+
+                    /* Builder attributes to show */
+
+                    productsColors = productsColors.sort(function (a, b) {
+                        return a.name == b.name ? 0 : a.name < b.name ? -1 : 1;
                     });
                     return productsColors;
                 }

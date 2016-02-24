@@ -76,6 +76,11 @@
                                             id-attr="savePay_password">
                                     </sec-input>
 
+                                    <div class="option marginTop">
+                                        <input ng-model="preferredPayment_SafePay" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                                        <span class="roboto-light ng-binding"> {{ 'Set_SafePay_as_Preferred_payment' | translate }} </span>
+                                    </div>
+
                                     <div class="blueLink">
                                         <label>
                                             <button sec-submit-attr="saveSafePay()" a-sec-validate-invalid
@@ -155,6 +160,12 @@
                                                model-attr="card.name"
                                                id-attr="Card_name">
                                     </sec-input>
+
+                                    <div class="option marginTop">
+                                        <input ng-model="preferredPayment_MasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                                        <span class="roboto-light ng-binding"> {{ 'Set_MasterCredit_as_Preferred_payment' | translate }} </span>
+                                    </div>
+
 
                                     <div class="blueLink" style="">
                                         <label>

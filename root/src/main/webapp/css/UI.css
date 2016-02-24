@@ -58,12 +58,16 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     font-weight: 500;
 }
 
-button.roboto-medium,
+/*button.roboto-medium,*/
+button,
 input[type=submit].roboto-medium,
 input[type=reset].roboto-medium,
 input[type=button].roboto-medium {
     font-weight: 600 !important;
     letter-spacing: 0.5px;
+    -webkit-border-radius:0 !important;
+    -moz-border-radius:0 !important;
+    border-radius:0 !important;
 }
 
 .roboto-bold {

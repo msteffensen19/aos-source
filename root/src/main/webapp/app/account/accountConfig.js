@@ -2,7 +2,7 @@
  * Created by correnti on 31/12/2015.
  */
 
-define([],function(){
+define([], function () {
 
     function config($stateProvider) {
 
@@ -63,7 +63,7 @@ define([],function(){
                     var defer = $q.defer()
                     accountService.getAccountPaymentPreferences().then(
                         function (paymentPreferences) {
-                           defer.resolve({
+                            defer.resolve({
                                 paymentPreferences: paymentPreferences,
                             });
                         });
@@ -76,20 +76,6 @@ define([],function(){
     return ['$stateProvider', config];
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //var defer = $q.defer();

@@ -17,16 +17,25 @@ define(['./module'], function (controllers) {
                 }
             }
 
+
+            //s.defaultPaymentMethodId = resolveParams.user
+            l("resolveParams")
+            l(resolveParams)
+
             s.accountDetails = resolveParams.accountDetails;
             s.shippingDetails = resolveParams.shippingDetails;
+            s.defaultPaymentMethodId = resolveParams.accountDetails.defaultPaymentMethodId
 
-            //l("1")
-            //l(resolveParams.paymentPreferences )
-            //l(resolveParams.paymentPreferences.masterCredit.cardNumber)
-            s.masterCredit = resolveParams.paymentPreferences &&
-                             resolveParams.paymentPreferences.masterCredit &&
-                             resolveParams.paymentPreferences.masterCredit.cardNumber ?
+            s.masterCredit4Digits = resolveParams.paymentPreferences &&
+            resolveParams.paymentPreferences.masterCredit &&
+            resolveParams.paymentPreferences.masterCredit.cardNumber ?
                 resolveParams.paymentPreferences.masterCredit.cardNumber.substring(resolveParams.paymentPreferences.masterCredit.cardNumber.length - 4) : null;
+
+            s.safePayName = resolveParams.paymentPreferences &&
+            resolveParams.paymentPreferences.safePay &&
+            resolveParams.paymentPreferences.safePay.safepayUsername ?
+            resolveParams.paymentPreferences.safePay.safepayUsername : null;
+
 
             s.categoriesPromotions = [
                 { categoryName : 'Tablets', categoryValue : true, },
