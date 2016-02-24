@@ -9,5 +9,7 @@ define([
     './categoryCtrl',
     './productCtrl',
     './supportCtrl',
-    './shoppingCartCtrl']
+    './shoppingCartCtrl',
+    './searchCtrl',
+]
     , function() {});

@@ -19,6 +19,7 @@
 @import "views/toolTipSearch.css";
 @import "views/shoppingCart.css";
 @import "views/supportPage.css";
+@import "views/searchPage.css";
 
 @import "modals/popUp.css";
 @import "modals/e-sec-plus-minus.css";
@@ -627,8 +628,6 @@ footer .splitter{
 
     h3.roboto-regular{
         font-size: 22px;
-        padding: 13px 0;
-        padding-bottom: 0;
     }
 
 }

@@ -36,7 +36,7 @@ define(['./module'], function (directives) {
                         }
 
                         function checkCategoryPagePresent(){
-                            if($location.path().indexOf('/category') != -1){
+                            if($location.path().indexOf('/search') != -1){
                                 s.goToCategoryPage();
                             }
                         }
@@ -45,7 +45,7 @@ define(['./module'], function (directives) {
                             l(s.categoryFilter);
                             l(s.autoCompleteValue);
                             l("");
-                            $state.go('category',{
+                            $state.go('search',{
                                 id: (s.categoryFilter == null ? '' : s.categoryFilter),
                                 viewAll: s.autoCompleteValue
                             });
@@ -102,7 +102,7 @@ define(['./module'], function (directives) {
 
                         s.closeSearchSection = function() {
 
-                            if (!s.allowClosing || $location.path().indexOf('/category') != -1) {
+                            if (!s.allowClosing || $location.path().indexOf('/search') != -1) {
                                 return;
                             }
                             s.closeSearchForce();

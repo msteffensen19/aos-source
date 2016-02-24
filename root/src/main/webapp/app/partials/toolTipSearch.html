@@ -27,7 +27,7 @@
                 <h3 class="roboto-medium" translate="CATEGORIES"
                     data-ng-mouseenter="searchByCategoryId(null, '')">
                 </h3>
-                <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}">
+                <a href="#/search/{{categoryFilter}}?viewAll={{autoCompleteValue}}">
                     <label class="roboto-light"
                            data-ng-repeat="result in autoCompleteResult"
                            data-ng-mouseenter="searchByCategoryId(result.categoryId, result.categoryName)">
@@ -39,7 +39,7 @@
                 <h3 class="roboto-medium" >{{ 'TOP' | translate }} {{ 'RESULTS_FOR' | translate }}: "{{autoCompleteValue}}"
                     <p style="font-size: 11px !important; font-weight: 300 !important;" > {{ categoryName }} </p>
                 </h3>
-                <a href="#/category/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"
+                <a href="#/search/{{categoryFilter}}?viewAll={{autoCompleteValue}}" translate="View_All"
                    class="roboto-medium viewAll"></a>
                 <a class="product" href="#/product/{{product.productId}}"
                    data-ng-click="closeSearchSection()"
@@ -50,8 +50,14 @@
                 </a>
             </div>
         </div>
+
+
     </div>
+
+
 </div>
+
+
 
 
 

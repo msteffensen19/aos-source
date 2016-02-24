@@ -271,13 +271,13 @@ define(['./module'], function (controllers) {
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
 
                 $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
-                $scope.showCategoryHeader = $location.path().indexOf('/category') <= -1;
+                $scope.showCategoryHeader = $location.path().indexOf('/search') <= -1;
 
-                $("#searchSection #output").css("opacity", $location.path().indexOf('/category') == -1 ? 1 : 0);
+                $("#searchSection #output").css("opacity", $location.path().indexOf('/search') == -1 ? 1 : 0);
 
                 Helper.UpdatePageFixed();
 
-                if ($location.path().indexOf('/category') == -1 && $scope.closeSearchForce + ""  != "undefined"){
+                if ($location.path().indexOf('/search') == -1 && $scope.closeSearchForce + ""  != "undefined"){
                     $scope.closeSearchForce();
                 }
                 Helper.mobileSectionClose();

@@ -25,7 +25,7 @@ define([
     './icon-user-svg',
     './icon-search-svg',
     './icon-home-svg',
-    './virtualFooter'
+    './virtualFooter',
 ],
 
 function() {});

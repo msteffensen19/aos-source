@@ -164,6 +164,7 @@
     #orderPaymentSuccess {
         margin:0px auto;
     }
+
 }
 
 
@@ -173,6 +174,10 @@
 
     #orderPaymentSuccess {
         padding-top:0px;
+        padding-bottom:30px;
+    }
+    #orderPaymentSuccess > h2 span:before{
+        top:17px;
     }
 }
 
@@ -183,5 +188,6 @@
     #orderPaymentSuccess > div {
         margin: 0 auto;
     }
+
 
 }

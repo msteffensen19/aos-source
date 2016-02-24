@@ -176,6 +176,8 @@ var english = {
 
     'toast_Product_Added_Successfully': 'Product Added Successfully',
     'toast_Product_Updated_Successfully': 'Product Update Successfully',
+    'Search_Result': "Search Result",
+
 };
 
 
