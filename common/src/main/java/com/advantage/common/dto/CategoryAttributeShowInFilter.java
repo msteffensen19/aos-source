@@ -26,13 +26,6 @@ public class CategoryAttributeShowInFilter {
         this.showInFilter = showInFilter;
     }
 
-    public CategoryAttributeShowInFilter(Long categoryId, Long attributeId, String attributeName, boolean showInFilter) {
-        this.categoryId = categoryId;
-        this.attributeId = attributeId;
-        this.attributeName = attributeName;
-        this.showInFilter = showInFilter;
-    }
-
     public Long getCategoryId() {
         return categoryId;
     }
