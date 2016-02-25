@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
-import com.advantage.accountsoap.dto.account.DemoAppConfigResponse;
+import com.advantage.accountsoap.dto.account.DemoAppConfigStatusResponse;
 import com.advantage.common.Constants;
 import com.advantage.root.util.xml.XmlHelper;
 import org.springframework.stereotype.Service;
@@ -110,15 +110,16 @@ public class DemoAppConfigService {
      * @param parameterName
      * @return
      */
-    public Node findParameterByName(String parameterName) {
+    public Node findParameterByName(Document doc, String parameterName) {
         System.out.println("findParameterByName(\"" + parameterName + "\") - Begin");
 
-        NodeList nodesList = this.getAllParametersNodeList();
+        NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList != null) {
             for (int i = 0; i < nodesList.getLength(); i++) {
                 Node node = nodesList.item(i);
 
-                if ((!node.getNodeName().equals("#comment")) && (! node.getNodeName().equals("#text"))) {
+                /*if ((!node.getNodeName().equals("#comment")) && (! node.getNodeName().equals("#text"))) { */
+                if (node.getNodeName().toUpperCase().equals(parameterName.toUpperCase())) {
 
                     NamedNodeMap attr = node.getAttributes();
                     Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
@@ -144,7 +145,9 @@ public class DemoAppConfigService {
      */
     public List<String> getDemoAppConfigXmlFile() {
         System.out.println("getDemoAppConfigXmlFile - Begin");
-        NodeList nodesList = this.getAllParametersNodeList();
+        Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
+
+        NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
             return null;
         }
@@ -180,10 +183,9 @@ public class DemoAppConfigService {
      *
      * @return
      */
-    private NodeList getAllParametersNodeList() {
+    private NodeList getAllParametersNodeList(Document doc) {
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
-        Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
+        //System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
 
         Node rootElement = doc.getElementsByTagName(ROOT_ELEMENT_NAME).item(0);
 
@@ -201,9 +203,11 @@ public class DemoAppConfigService {
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
+        if (doc == null) {
+            return null;
+        }
 
-        NodeList nodesList = this.getAllParametersNodeList();
+        NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
             return null;
         }
@@ -238,13 +242,14 @@ public class DemoAppConfigService {
      */
     public List<DemoAppConfigParameter> getDemoAppConfigParametersByTool(String toolName) {
         System.out.println("getDemoAppConfigParametersByTool(\"" + toolName + "\") - Begin");
+
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
         System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
 
         Node rootElement;   //  parameter
 
-        NodeList nodesList = this.getAllParametersNodeList();
+        NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
             return null;
         }
@@ -278,14 +283,21 @@ public class DemoAppConfigService {
      * @param parameterName     Parameter name linked to the specific tool.
      * @param parameterNewValue   Tool's new parameter value.
      */
-    public DemoAppConfigResponse updateParameterValue(String parameterName, String parameterNewValue) {
-        Node nodeToUpdate = findParameterByName(parameterName);
+    public DemoAppConfigStatusResponse updateParameterValue(String parameterName, String parameterNewValue) {
+        //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
+        Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
+        System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
+
+        Node nodeToUpdate = findParameterByName(doc, parameterName);
         if (nodeToUpdate != null) {
             nodeToUpdate.setNodeValue(parameterNewValue);
-            return new DemoAppConfigResponse(true, "update successful");
+
+            XmlHelper.writeXmlDocumentContent(doc, DEMO_APP_CONFIG_XML_FILE_NAME);
+
+            return new DemoAppConfigStatusResponse(true, "update successful");
         }
 
-        return new DemoAppConfigResponse(false, "update failed with error: [parameter name] not found");
+        return new DemoAppConfigStatusResponse(false, "update failed with error: [parameter name] not found");
     }
 
     /**

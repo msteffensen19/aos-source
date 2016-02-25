@@ -367,34 +367,31 @@ public class AccountserviceEndpoint {
         return response;
     }
 
-//    /**
-//     * Get a list of parameters which were requested by a specific tool.
-//     * @param request
-//     * @return {@link DemoAppConfigResponse}
-//     */
-//    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
-//    @ResponsePayload
-//    public GetAllDemoAppConfigParametersResponse getParametersByTool(@RequestPayload DemoAppConfigurationRequest request) {
-//        GetAllDemoAppConfigParametersResponse response = new GetAllDemoAppConfigParametersResponse();
-//
-//        List<DemoAppConfigParameter> parameters = service.getParametersByTool(request.getAttributeTools());
-//        response.setParameters(parameters);
-//
-//        return response;
-//    }
-//
-//    /**
-//     * Update a specific parameter by name to a given value.
-//     * {@link DemoAppConfigurationRequest#attributeTools} property is ignored.
-//     * @param request
-//     * @return {@link DemoAppConfigResponse}
-//     */
-//    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigurationRequest")
-//    @ResponsePayload
-//    public DemoAppConfigResponse updateParameterValue(@RequestPayload DemoAppConfigurationRequest request) {
-//        DemoAppConfigResponse response = service.updateParameterValue(request.getParameterName(), request.getParameterNewValue());
-//        return response;
-//    }
+    /**
+     * Get a list of parameters which were requested by a specific tool.
+     */
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetDemoAppConfigParametersByToolRequest")
+    @ResponsePayload
+    public GetDemoAppConfigParametersByToolResponse getDemoAppConfigParametersByTool(@RequestPayload GetDemoAppConfigParametersByToolRequest request) {
+        GetDemoAppConfigParametersByToolResponse response = new GetDemoAppConfigParametersByToolResponse();
+
+        List<DemoAppConfigParameter> parameters = service.getDemoAppConfigParametersByTool(request.getToolName());
+        response.setParameter(parameters);
+
+        return response;
+    }
+
+    /**
+     * Update a specific parameter by name to a given value.
+     */
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateDemoAppConfigParameterRequest")
+    @ResponsePayload
+    public UpdateDemoAppConfigParameterResponse updateDemoAppConfigParameterValue(@RequestPayload UpdateDemoAppConfigParameterRequest request) {
+
+        DemoAppConfigStatusResponse updateResponse = service.updateParameterValue(request.getParameterName(), request.getParameterNewValue());
+
+        return new UpdateDemoAppConfigParameterResponse(updateResponse);
+    }
     //  endregion
 
 

@@ -51,7 +51,7 @@ public class DemoAppConfigurationXmlTests {
     public void testGetAllDemoAppConfigParameters() {
         try {
 
-            List<DemoAppConfigParameter> response = service.getDemoAppConfigParametersByTool();
+            List<DemoAppConfigParameter> response = service.getAllDemoAppConfigParameters();
             Assert.assertEquals("Expected " + DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER + " total parameters, but got " + response.size(), DEMO_APP_CONFIG_PARAMETERS_TOTAL_NUMBER, response.size());
 
         } catch (Exception e) {

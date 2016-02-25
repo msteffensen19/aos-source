@@ -147,6 +147,12 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="GetAllDemoAppConfigParametersRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="GetCountriesRequest">
             <xs:complexType>
                 <xs:sequence/>
@@ -174,6 +180,14 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Country" type="tns:CountryDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetDemoAppConfigParametersByToolRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="toolName" type="xs:string" form="qualified"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -458,6 +472,32 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="UpdateDemoAppConfigParameterRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parameterName" type="xs:string" form="qualified"/>
+                <xs:element name="attributeTools" type="xs:string" form="qualified"/>
+                <xs:element name="parameterNewValue" type="xs:string" form="qualified"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateDemoAppConfigParameterResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" form="qualified">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="success" type="xs:boolean" form="qualified"/>
+                            <xs:element name="reason" type="xs:string" form="qualified"/>
+                            <xs:element name="code" type="xs:long" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="UpdateMasterCreditMethodRequest">
         <xs:complexType>
             <xs:sequence>
@@ -519,6 +559,38 @@
     <xs:element name="AccountConfigurationStatusRequest">
         <xs:complexType>
             <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllDemoAppConfigParametersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parameter" form="qualified" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="parameterName" type="xs:string" form="qualified"/>
+                            <xs:element name="attributeTools" type="xs:string" form="qualified"/>
+                            <xs:element name="parameterValue" type="xs:string" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetDemoAppConfigParametersByToolResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parameter" form="qualified" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="parameterName" type="xs:string" form="qualified"/>
+                            <xs:element name="attributeTools" type="xs:string" form="qualified"/>
+                            <xs:element name="parameterValue" type="xs:string" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 
