@@ -33,8 +33,8 @@ public class AccountserviceEndpoint {
     @Autowired
     private AccountConfigurationService accountConfigurationService;
 
-    //@Autowired
-    //private DemoAppConfigService service;
+    @Autowired
+    private DemoAppConfigService service;
 
     //region Account
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
