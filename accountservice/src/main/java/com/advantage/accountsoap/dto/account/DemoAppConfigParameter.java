@@ -1,11 +1,27 @@
 package com.advantage.accountsoap.dto.account;
 
+import com.advantage.accountsoap.config.WebServiceConfig;
+
+import javax.xml.bind.annotation.*;
+
 /**
  * @author Binyamin Regev on 21/02/2016.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "",
+        namespace = WebServiceConfig.NAMESPACE_URI,
+        propOrder = {
+                "parameterName",
+                "attributeTools",
+                "parameterValue"
+        })
+@XmlRootElement(name = "Parameter", namespace = WebServiceConfig.NAMESPACE_URI)
 public class DemoAppConfigParameter {
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String parameterName;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String attributeTools;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String parameterValue;
 
     /**

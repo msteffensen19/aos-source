@@ -15,6 +15,14 @@ public class CategoryAttributeShowInFilter {
     public CategoryAttributeShowInFilter(Long categoryId, Long attributeId, boolean showInFilter) {
         this.categoryId = categoryId;
         this.attributeId = attributeId;
+        this.attributeName = null;
+        this.showInFilter = showInFilter;
+    }
+
+    public CategoryAttributeShowInFilter(Long categoryId, Long attributeId, String attributeName, boolean showInFilter) {
+        this.categoryId = categoryId;
+        this.attributeId = attributeId;
+        this.attributeName = attributeName;
         this.showInFilter = showInFilter;
     }
 

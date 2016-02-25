@@ -174,6 +174,7 @@ public class CatalogController {
     }
 
     //endregion
+
     //region /categories
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request) {
