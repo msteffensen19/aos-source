@@ -290,8 +290,7 @@ public class DemoAppConfigService {
 
         Node nodeToUpdate = findParameterByName(doc, parameterName);
         if (nodeToUpdate != null) {
-            nodeToUpdate.setNodeValue(parameterNewValue);
-
+            nodeToUpdate.setTextContent(parameterNewValue);
             XmlHelper.writeXmlDocumentContent(doc, DEMO_APP_CONFIG_XML_FILE_NAME);
 
             return new DemoAppConfigStatusResponse(true, "update successful");

@@ -77,8 +77,9 @@ public abstract class XmlHelper {
             ClassPathResource filePath = new ClassPathResource(xmlFileName);
             File xmlFile = filePath.getFile();
 
-            xmlFile = new File(xmlFileName);
-            StreamResult result = new StreamResult(xmlFile);
+            /*xmlFile = new File(xmlFileName);*/
+            /*StreamResult result = new StreamResult(xmlFile);  */
+            StreamResult result = new StreamResult(new File(filePath.getURL().getFile()));
 
             transformer.transform(source, result);
         } catch (TransformerConfigurationException e) {
