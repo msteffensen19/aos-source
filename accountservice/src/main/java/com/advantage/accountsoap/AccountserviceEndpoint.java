@@ -370,10 +370,10 @@ public class AccountserviceEndpoint {
     /**
      * Get a list of parameters which were requested by a specific tool.
      */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetDemoAppConfigParametersByToolRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigGetParametersByToolRequest")
     @ResponsePayload
-    public GetDemoAppConfigParametersByToolResponse getDemoAppConfigParametersByTool(@RequestPayload GetDemoAppConfigParametersByToolRequest request) {
-        GetDemoAppConfigParametersByToolResponse response = new GetDemoAppConfigParametersByToolResponse();
+    public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(@RequestPayload DemoAppConfigGetParametersByToolRequest request) {
+        DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse();
 
         List<DemoAppConfigParameter> parameters = service.getDemoAppConfigParametersByTool(request.getToolName());
         response.setParameter(parameters);

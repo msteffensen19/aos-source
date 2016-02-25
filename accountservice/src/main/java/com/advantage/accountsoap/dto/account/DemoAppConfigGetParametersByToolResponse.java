@@ -15,8 +15,8 @@ import java.util.List;
         propOrder = {
                 "parameter"
         })
-@XmlRootElement(name = "GetDemoAppConfigParametersByToolResponse")
-public class GetDemoAppConfigParametersByToolResponse {
+@XmlRootElement(name = "DemoAppConfigGetParametersByToolResponse")
+public class DemoAppConfigGetParametersByToolResponse {
      @XmlElement(name = "parameter",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
      protected List<DemoAppConfigParameter> parameter;
 
