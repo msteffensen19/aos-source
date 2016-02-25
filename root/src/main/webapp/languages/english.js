@@ -177,10 +177,10 @@ var english = {
     'toast_Product_Added_Successfully': 'Product Added Successfully',
     'toast_Product_Updated_Successfully': 'Product Update Successfully',
     'Search_Result': "Search Result",
-    'Preferred_payment_has_not_been_set': 'Preferred payment has not been set',
+    'Preferred_payment_has_not_been_set': 'Preferred payment was not specified',
     'SafePay' : 'SafePay',
-    'Set_SafePay_as_Preferred_payment' : 'Set SafePay as Preferred payment',
-    'Set_MasterCredit_as_Preferred_payment' : 'Set MasterCredit as Preferred payment',
+    'Set_SafePay_as_Preferred_payment' : 'Set SafePay as your preferred payment',
+    'Set_MasterCredit_as_Preferred_payment' : 'Set MasterCredit as your preferred payment',
 
 
 };

@@ -80,6 +80,11 @@ define(['./module'], function (controllers) {
             }
 
             s.saveSafePay = function () {
+
+                if(s.preferredPayment_SafePay){
+
+                }
+
                 var response;
                 if (true) {
                     response = accountService.addSafePayMethod(s.savePay)

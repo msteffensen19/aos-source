@@ -17,7 +17,6 @@ define(['./module'], function (controllers) {
                 }
             }
 
-
             //s.defaultPaymentMethodId = resolveParams.user
             l("resolveParams")
             l(resolveParams)

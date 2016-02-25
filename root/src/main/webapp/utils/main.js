@@ -119,6 +119,18 @@ Helper.mobileSectionClose = function(){
     $("#loginMobileMiniTitle").fadeOut();
 }
 
+Helper.sortArrayByAbc = function(arr){
+    return arr.sort(function (a, b) {
+        return a == b ? 0 : a < b ? -1 : 1;
+    });
+}
+
+Helper.sortArrayByColorName = function(colors){
+    return colors.sort(function (a, b) {
+        return a.name == b.name ? 0 : a.name < b.name ? -1 : 1;
+    });
+}
+
 
 var Main = Main || {};
 

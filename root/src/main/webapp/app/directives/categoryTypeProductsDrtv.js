@@ -102,6 +102,7 @@ define(['./module'], function (directives) {
                     $('#' + id).toggleClass('arrowUp');
                 }
 
+
                 configSlider();
 
                 s.productToShow = $filter("productsFilterForCategoriesProduct")([], s.searchResult, s.minPriceToFilter, s.maxPriceToFilter)
@@ -151,9 +152,7 @@ define(['./module'], function (directives) {
 
                     /* Sorting attributes in atrributes by abc */
                     for(var name in attributes) {
-                        attributes[name] = attributes[name].sort(function (a, b) {
-                            return a == b ? 0 : a < b ? -1 : 1;
-                        });
+                        attributes[name] = Helper.sortArrayByAbc(attributes[name]);
                     }
 
 
@@ -199,12 +198,7 @@ define(['./module'], function (directives) {
                         });
                     });
 
-                    /* Builder attributes to show */
-
-                    productsColors = productsColors.sort(function (a, b) {
-                        return a.name == b.name ? 0 : a.name < b.name ? -1 : 1;
-                    });
-                    return productsColors;
+                    return Helper.sortArrayByColorName(productsColors);
                 }
 
 

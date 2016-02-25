@@ -58,7 +58,7 @@
             <div class="colors" ng-if="product.colors.length > 0">
                 <h2 translate="Color" class="Colors roboto-light" class="roboto-light" ></h2>
                 <div>
-                <span title="{{color.name}}" data-ng-repeat="color in product.colors" class="productColor"
+                <span title="{{color.name}}" data-ng-repeat="color in [] | sortArrayByColorName:product.colors" class="productColor"
                       data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"

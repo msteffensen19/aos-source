@@ -16,13 +16,20 @@ define(['./module'], function (controllers) {
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
 
-            for(var i = 0; i < s.product.colors.length; i++){
-                if(s.product.colors[i].code == resolveParams.selectedColor)
-                {
-                    s.colorSelected = s.product.colors[i];
-                    break;
+            if(!resolveParams.selectedColor && s.product.colors.length > 0){
+                var colors = Helper.sortArrayByColorName(s.product.colors);
+                s.colorSelected = colors[0];
+            }
+            else{
+                for(var i = 0; i < s.product.colors.length; i++){
+                    if(s.product.colors[i].code == resolveParams.selectedColor)
+                    {
+                        s.colorSelected = s.product.colors[i];
+                        break;
+                    }
                 }
             }
+
             s.colorSelected = s.colorSelected || s.product.colors[0];
 
             s.addToCart = function(disable){
@@ -49,6 +56,7 @@ define(['./module'], function (controllers) {
             s.setColor = function(color){
                 s.colorSelected = color;
             }
+
 
             Helper.forAllPage();
         }]);

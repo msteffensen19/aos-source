@@ -13,6 +13,7 @@ define([
     './productQuantity',
     './filterFullArrayforAutoComplate',
     './getCategoriesInArray',
-    './productsFilterForCategoriesProduct'
+    './productsFilterForCategoriesProduct',
+    './sortArrayByColorName',
 
 ], function() {});

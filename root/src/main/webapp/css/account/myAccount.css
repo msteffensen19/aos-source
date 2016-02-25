@@ -210,6 +210,10 @@
     top: 1px;
 }
 
+#paymentMethod .option span{
+    font-weight: 400;
+}
+
 /*//// END accountPaymentEdit PAGE ///*/
 
 
