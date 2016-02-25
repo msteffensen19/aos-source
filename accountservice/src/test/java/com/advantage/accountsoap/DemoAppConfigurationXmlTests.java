@@ -115,15 +115,15 @@ public class DemoAppConfigurationXmlTests {
     @Ignore
     @Test
     public void testFindDemoAppConfigParameterByName() {
-        Assert.assertNotNull("Expected to find parameter [Add_wrong_product_to_speakers_category], but got [null]", demoAppConfigurationXml.findParameterByName("Add_wrong_product_to_speakers_category"));
-        Assert.assertNotNull("Expected to find parameter [Email_address_in_login], but got [null]", demoAppConfigurationXml.findParameterByName("Email_address_in_login"));
-        Assert.assertNotNull("Expected to find parameter [Generate_memory_leak], but got [null]", demoAppConfigurationXml.findParameterByName("Generate_memory_leak"));
-        Assert.assertNotNull("Expected to find parameter [Max_concurrent_sessions], but got [null]", demoAppConfigurationXml.findParameterByName("Max_concurrent_sessions"));
-        Assert.assertNotNull("Expected to find parameter [Mix_pictures_in_home_page], but got [null]", demoAppConfigurationXml.findParameterByName("Mix_pictures_in_home_page"));
-        Assert.assertNotNull("Expected to find parameter [Repeat_ShipEx_call], but got [null]", demoAppConfigurationXml.findParameterByName("Repeat_ShipEx_call"));
-        Assert.assertNotNull("Expected to find parameter [Slow_DB_call], but got [null]", demoAppConfigurationXml.findParameterByName("Slow_DB_call"));
-        Assert.assertNotNull("Expected to find parameter [Spelling_mistakes_in_order_payment_page], but got [null]", demoAppConfigurationXml.findParameterByName("Spelling_mistakes_in_order_payment_page"));
-        Assert.assertNotNull("Expected to find parameter [Sum_to_add_to_cart_calculation], but got [null]", demoAppConfigurationXml.findParameterByName("Sum_to_add_to_cart_calculation"));
+        Assert.assertNotNull("Expected to find parameters [Add_wrong_product_to_speakers_category], but got [null]", demoAppConfigurationXml.findParameterByName("Add_wrong_product_to_speakers_category"));
+        Assert.assertNotNull("Expected to find parameters [Email_address_in_login], but got [null]", demoAppConfigurationXml.findParameterByName("Email_address_in_login"));
+        Assert.assertNotNull("Expected to find parameters [Generate_memory_leak], but got [null]", demoAppConfigurationXml.findParameterByName("Generate_memory_leak"));
+        Assert.assertNotNull("Expected to find parameters [Max_concurrent_sessions], but got [null]", demoAppConfigurationXml.findParameterByName("Max_concurrent_sessions"));
+        Assert.assertNotNull("Expected to find parameters [Mix_pictures_in_home_page], but got [null]", demoAppConfigurationXml.findParameterByName("Mix_pictures_in_home_page"));
+        Assert.assertNotNull("Expected to find parameters [Repeat_ShipEx_call], but got [null]", demoAppConfigurationXml.findParameterByName("Repeat_ShipEx_call"));
+        Assert.assertNotNull("Expected to find parameters [Slow_DB_call], but got [null]", demoAppConfigurationXml.findParameterByName("Slow_DB_call"));
+        Assert.assertNotNull("Expected to find parameters [Spelling_mistakes_in_order_payment_page], but got [null]", demoAppConfigurationXml.findParameterByName("Spelling_mistakes_in_order_payment_page"));
+        Assert.assertNotNull("Expected to find parameters [Sum_to_add_to_cart_calculation], but got [null]", demoAppConfigurationXml.findParameterByName("Sum_to_add_to_cart_calculation"));
     }
 
     @Ignore

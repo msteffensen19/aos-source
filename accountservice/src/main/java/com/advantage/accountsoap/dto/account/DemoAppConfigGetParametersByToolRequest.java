@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "toolName"
 })
-@XmlRootElement(name = "GetDemoAppConfigParametersByToolRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class GetDemoAppConfigParametersByToolRequest {
+@XmlRootElement(name = "DemoAppConfigGetParametersByToolRequest", namespace = WebServiceConfig.NAMESPACE_URI)
+public class DemoAppConfigGetParametersByToolRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String toolName;
 
