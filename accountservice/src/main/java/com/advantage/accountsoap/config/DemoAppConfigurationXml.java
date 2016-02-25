@@ -1,11 +1,9 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
-import com.advantage.accountsoap.dto.account.DemoAppConfigurationResponse;
+import com.advantage.accountsoap.dto.account.DemoAppConfigStatusResponse;
 import com.advantage.common.Constants;
 import com.advantage.root.util.xml.XmlHelper;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
 import org.w3c.dom.*;
 
 import java.io.File;
@@ -145,17 +143,16 @@ public class DemoAppConfigurationXml {
      * @param parameterName     Parameter name linked to the specific tool.
      * @param parameterNewValue   Tool's new parameter value.
      */
-    public DemoAppConfigurationResponse updateParameterValue(String parameterName, String parameterNewValue) {
+    public DemoAppConfigStatusResponse updateParameterValue(String parameterName, String parameterNewValue) {
         ////  Child Element - Tool
         //NodeList tool = doc.getElementsByTagName(ELEMENTS_TAG_NAME);
 
-        boolean success = false;
         Node nodeToUpdate = findParameterByName(parameterName);
         if (nodeToUpdate != null) {
             nodeToUpdate.setNodeValue(parameterNewValue);
-            return new DemoAppConfigurationResponse(true, "update successful");
+            return new DemoAppConfigStatusResponse(true, "update successful");
         }
-        return new DemoAppConfigurationResponse(false, "update failed with error: parameter name not found");
+        return new DemoAppConfigStatusResponse(false, "update failed with error: parameter name not found");
     }
 
     /**
@@ -221,6 +218,11 @@ public class DemoAppConfigurationXml {
         return null;
     }
 
+    /**
+     *
+     * @param parameterName
+     * @return
+     */
     public Node findParameterByName(String parameterName) {
         System.out.println("findParameterByName(\"" + parameterName + "\") - Begin");
 
@@ -249,6 +251,10 @@ public class DemoAppConfigurationXml {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     private NodeList getAllParametersNodeList() {
         this.setParameters(this.getDoc().getElementsByTagName(ROOT_ELEMENT_NAME).item(0));
 
@@ -257,6 +263,10 @@ public class DemoAppConfigurationXml {
         return (nodesList.getLength() != 0 ? nodesList : null);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<DemoAppConfigParameter> getAllDemoAppConfigParameters() {
         System.out.println("getAllDemoAppConfigParameters() - Begin");
 
@@ -282,14 +292,19 @@ public class DemoAppConfigurationXml {
             System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
         }
 
-        System.out.println("getAllDemoAppConfigParameters() - Begin");
+        System.out.println("getAllDemoAppConfigParameters() - End");
         System.out.println("");
 
         return parameters;
     }
 
+    /**
+     *
+     * @param toolName
+     * @return
+     */
     public List<DemoAppConfigParameter> getAllParametersByTool(String toolName) {
-        System.out.println("getParametersByTool(\"" + toolName + "\") - Begin");
+        System.out.println("getDemoAppConfigParametersByTool(\"" + toolName + "\") - Begin");
 
         NodeList nodesList = this.getAllParametersNodeList();
         if (nodesList == null) {
@@ -313,12 +328,16 @@ public class DemoAppConfigurationXml {
                 System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
             }
         }
-        System.out.println("getParametersByTool(\"" + toolName + "\") - End");
+        System.out.println("getDemoAppConfigParametersByTool(\"" + toolName + "\") - End");
         System.out.println("");
 
         return parameters;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getDemoAppConfigXmlFile() {
         System.out.println("getDemoAppConfigXmlFile - Begin");
         NodeList nodesList = this.getAllParametersNodeList();
@@ -366,10 +385,10 @@ public class DemoAppConfigurationXml {
     //
     //        demoAppConfigXml.getAllDemoAppConfigParameters();
     //
-    //        demoAppConfigXml.getParametersByTool("UFT");
-    //        demoAppConfigXml.getParametersByTool("LeanFT");
-    //        demoAppConfigXml.getParametersByTool("Sprinter");
-    //        demoAppConfigXml.getParametersByTool("LoadRunner");
+    //        demoAppConfigXml.getDemoAppConfigParametersByTool("UFT");
+    //        demoAppConfigXml.getDemoAppConfigParametersByTool("LeanFT");
+    //        demoAppConfigXml.getDemoAppConfigParametersByTool("Sprinter");
+    //        demoAppConfigXml.getDemoAppConfigParametersByTool("LoadRunner");
     //
     //        // Get the staff element by tag name directly
     //        demoAppConfigXml.setParameters(demoAppConfigXml.getDoc().getElementsByTagName(ROOT_ELEMENT_NAME).item(0));

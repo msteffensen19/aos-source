@@ -60,10 +60,13 @@ public class CategoryService {
                     }
                 });
 
-        //  Display attributes list
+        //  region Display attributes list
+        System.out.println("CategoryService.getAllCategoryAttributesFilter");
         for (int i = 0; i < attributes.size(); i++) {
             System.out.println("attributes(" + i + "): attribute .id=" + attributes.get(i).getId() + " - .name=\'" + attributes.get(i).getName() + "\'");
         }
+        System.out.println("");
+        //  endregion
 
         List<CategoryAttributeFilter> categoriesAttributes = categoryRepository.getAllCategoryAttributeFilter();
 
