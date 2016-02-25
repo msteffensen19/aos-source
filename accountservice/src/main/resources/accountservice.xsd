@@ -184,7 +184,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetDemoAppConfigParametersByToolRequest">
+    <xs:element name="DemoAppConfigGetParametersByTool">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="toolName" type="xs:string" form="qualified"/>
@@ -578,7 +578,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetDemoAppConfigParametersByToolResponse">
+    <xs:element name="DemoAppConfigGetParametersByToolResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parameter" form="qualified" maxOccurs="unbounded">
