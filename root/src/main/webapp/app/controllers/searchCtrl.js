@@ -14,8 +14,6 @@ define(['./module'], function (controllers) {
 
             s.paramsToPass = paramsToReturn;
 
-            //s.viewAll = paramsToReturn.viewAll;
-
             s.categoryData = paramsToReturn.searchResult.length > 0 ? paramsToReturn.searchResult[0] : [];
 
             s.noProducts = s.categoryData.products == undefined || s.categoryData.products.length == 0;

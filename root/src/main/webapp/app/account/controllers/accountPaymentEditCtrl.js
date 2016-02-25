@@ -54,6 +54,11 @@ define(['./module'], function (controllers) {
             }
 
             s.saveMasterCredit = function () {
+
+                if(s.preferredPayment_MasterCredit){
+                    alert("method not done yet - user story 77")
+                }
+
                 var response;
                 if (true) {
                     response = accountService.addMasterCreditMethod(s.card)
@@ -82,7 +87,7 @@ define(['./module'], function (controllers) {
             s.saveSafePay = function () {
 
                 if(s.preferredPayment_SafePay){
-
+                    alert("method not done yet")
                 }
 
                 var response;

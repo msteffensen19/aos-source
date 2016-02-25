@@ -1,148 +1,146 @@
 <div>
+
     <div class="cell categoryLeft">
         <p class="filterCount roboto-light">
-            {{([] |
-            productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}}
-            ITEMS
-            <span data-ng-click="toggleFilterSlide('mobileSlide')" >
-                <img src="../../css/images/Filter.png" alt="filter" />
+            {{([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}} ITEMS
+            <span data-ng-click="toggleFilterSlide('mobileSlide')">
+                <img src="../../css/images/Filter.png" alt="filter"/>
                 {{ 'Filter' | translate }}
             </span>
         </p>
+
+
         <div id="mobileSlide">
-        <label class="roboto-regular">{{ 'FILTER_BY' | translate }}
+            <label class="roboto-regular">{{ 'FILTER_BY' | translate }}
 
-        <label class="roboto-regular clear" ng-click="clearSelection()" translate="Clear"
-               ng-show="showClear"></label>
-        </label>
-        <ul>
+                <label class="roboto-regular clear" ng-click="clearSelection()" translate="Clear"
+                       ng-show="showClear"></label>
+            </label>
+            <ul>
 
-            <!--- categories filter Section -->
-            <li ng-if="categoriesFilter != null">
-                <!-- <h4 class="accordion roboto-regular arrowDown" Close by default -->
-                <h4 class="accordion roboto-regular arrowDown arrowUp"
-                    id="accordionCategories"
-                    ng-click="toggleColapse('accordionCategories')">
-                    {{'CATEGORIES' | translate }}
-                </h4>
-                <!--<label class="roboto-light"-->
-                <!--data-ng-mouseenter="searchByCategoryId(result.categoryId)" >-->
-                <!--{{result.categoryName | lowercase}}-->
-                <!--</label>-->
-                <!--<div class="option">-->
-                <div class="option" style="display: block">
-                    <div ng-repeat="categ in categoriesFilter">
-                        <div class="fill">
-                            <input type="checkbox"
-                                   ng-model="categ.checked"
-                                   ng-click="includeProducts(categ.id, 'CATEGORIES')">
-                            <span class="roboto-regular">{{categ.name}}</span>
+                <!--- categories filter Section -->
+                <li ng-if="categoriesFilter != null">
+                    <h4 class="accordion roboto-regular arrowDown arrowUp"
+                        id="accordionCategories"
+                        ng-click="toggleColapse('accordionCategories')">
+                        {{'CATEGORIES' | translate }}
+                    </h4>
+                    <div class="option" style="display: block">
+                        <div ng-repeat="categ in categoriesFilter">
+                            <div class="fill">
+                                <input type="checkbox"
+                                       ng-model="categ.checked"
+                                       ng-click="includeProducts(categ.id, 'CATEGORIES')">
+                                <span class="roboto-regular">{{categ.name}}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <!--- END categories filter Section -->
+                </li>
+                <!--- END categories filter Section -->
 
 
-            <!--- Price filter Section-->
-            <li>
-                <!--data-ng-class="{ arrowUp : viewAll }"-->
-                <h4 class="accordion roboto-regular arrowDown"
-                    id="accordionPrice"
-                    ng-click="toggleColapse('accordionPrice')">
-                    {{'PRICE' | translate }}
-                </h4>
+                <!--- Price filter Section-->
+                <li>
+                    <!--data-ng-class="{ arrowUp : viewAll }"-->
+                    <h4 class="accordion roboto-regular arrowDown"
+                        id="accordionPrice"
+                        ng-click="toggleColapse('accordionPrice')">
+                        {{'PRICE' | translate }}
+                    </h4>
 
-                <!--<div class="option">-->
-                <div class="option" style="text-align: center"
-                    data-ng-style="viewAll ? {'display': 'block'} : {}" >
-                    <div id="slider"></div>
-                    <br/>
+                    <!--<div class="option">-->
+                    <div class="option" style="text-align: center"
+                         data-ng-style="viewAll ? {'display': 'block'} : {}">
+                        <div id="slider"></div>
+                        <br/>
 
-                    <p class="sliderSteps left">${{ minPriceToFilter | number }}</p>
+                        <p class="sliderSteps left">${{ minPriceToFilter | number }}</p>
 
-                    <p class="sliderSteps ">${{ maxPriceToFilter | number }}</p>
-                </div>
-            </li>
-            <!--- END Price filter Section -->
+                        <p class="sliderSteps ">${{ maxPriceToFilter | number }}</p>
+                    </div>
+                </li>
+                <!--- END Price filter Section -->
 
 
-            <!--- attributes filter Section -->
-            <li ng-repeat="attrib in attributesToShow">
-                <h4 class="accordion roboto-regular arrowDown" id="accordionAttrib{{$index}}"
-                    ng-click="toggleColapse('accordionAttrib' + $index)">
-                    {{attrib.name}}
-                </h4>
+                <!--- attributes filter Section -->
+                <li ng-repeat="attrib in attributesToShow">
+                    <h4 class="accordion roboto-regular arrowDown" id="accordionAttrib{{$index}}"
+                        ng-click="toggleColapse('accordionAttrib' + $index)">
+                        {{attrib.name}}
+                    </h4>
 
-                <div class="option">
-                    <div ng-repeat="attrVal in attrib.values">
-                        <div class="fill">
-                            <input type="checkbox" ng-model="item.selected"
-                                   ng-click="includeProducts(attrVal, attrib.name)">
-                            <span class="roboto-regular">{{attrVal}}</span>
+                    <div class="option">
+                        <div ng-repeat="attrVal in attrib.values">
+                            <div class="fill">
+                                <input type="checkbox" ng-model="item.selected"
+                                       ng-click="includeProducts(attrVal, attrib.name)">
+                                <span class="roboto-regular">{{attrVal}}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <!--- END attributes filter Section -->
+                </li>
+                <!--- END attributes filter Section -->
 
 
-            <!--- color filter Section -->
-            <li ng-if="productsColors.length > 0">
-                <h4 class="accordion roboto-regular arrowDown" id="accordionColor"
-                    ng-click="toggleColapse('accordionColor')">
-                    {{'COLOR' | translate }}
-                </h4>
+                <!--- color filter Section -->
+                <li ng-if="productsColors.length > 0">
+                    <h4 class="accordion roboto-regular arrowDown" id="accordionColor"
+                        ng-click="toggleColapse('accordionColor')">
+                        {{'COLOR' | translate }}
+                    </h4>
 
-                <div class="option">
-                    <div ng-repeat="color in productsColors" class="inline-block">
-                        <a title="{{color.name}}" class="productColor " id="productsColors{{color.code}}"
-                           ng-click="includeProducts(color, 'COLOR'); toggleColorSelectedClass(color.code)"
-                           ng-style=" color.code == 'FFFFFF' ?
+                    <div class="option">
+                        <div ng-repeat="color in productsColors" class="inline-block">
+                            <a title="{{color.name}}" class="productColor " id="productsColors{{color.code}}"
+                               ng-click="includeProducts(color, 'COLOR'); toggleColorSelectedClass(color.code)"
+                               ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
-                            <!--- <label></label> -->
-                        </a>
+                                <!--- <label></label> -->
+                            </a>
+                        </div>
                     </div>
-                </div>
 
-            </li>
-            <!--- END color filter Section -->
-
+                </li>
+                <!--- END color filter Section -->
 
 
-        </ul>
+            </ul>
+        </div>
     </div>
-</div>
-<div class="cell categoryRight">
-    <ul>
-        <li ng-repeat="product in [] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude"
-            ng-click="$location.path('/product/' + product.productId)">
-            <div class="soulOut" data-ng-show="product.productStatus == 'OutOfStock'">
-                <span class="roboto-medium">{{ 'SOUL_OUT' | translate }}</span>
-            </div>
-            <div class="AddToCard"
-                 data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } ">
-                <label> {{'SHOP_NOW' | translate}} </label>
-                <div icon-cart-svg style="width: 18px; height: 18px; "></div>
-                <!--<img alt="" src="../../css/images/cart_18x18.png"/>-->
-            </div>
-            <img alt="" class="imgProduct"
-                 data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } "
-                 data-ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
+    <div class="cell categoryRight" data-ng-show="([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length != 0">
+        <ul>
+            <li ng-repeat="product in [] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude"
+                ng-click="$location.path('/product/' + product.productId)">
+                <div class="soulOut" data-ng-show="product.productStatus == 'OutOfStock'">
+                    <span class="roboto-medium">{{ 'SOUL_OUT' | translate }}</span>
+                </div>
+                <div class="AddToCard"
+                     data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } ">
+                    <label> {{'SHOP_NOW' | translate}} </label>
 
-            <p><a>{{product.productName}}</a></p>
+                    <div icon-cart-svg style="width: 18px; height: 18px; "></div>
+                    <!--<img alt="" src="../../css/images/cart_18x18.png"/>-->
+                </div>
+                <img alt="" class="imgProduct"
+                     data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } "
+                     data-ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
 
-            <p><a class="productPrice">{{product.price | currency:"$"}} </a></p>
-        </li>
-        <li data-ng-if="([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length == 0">
-            <a style="font-size: 50px; color: #C0C0A1; padding: 30px 0; display: inline-block; cursor: default">NO
-                PRODUCTS TO SHOW</a>
-        </li>
-    </ul>
+                <p><a>{{product.productName}}</a></p>
 
+                <p><a class="productPrice">{{product.price | currency:"$"}} </a></p>
+            </li>
+        </ul>
 
-</div>
+    </div>
+
+    <div class="cell categoryRight textAlignCenter" data-ng-show="([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length == 0">
+            <label class="noProducts roboto-bold ">
+                <span>
+                    {{ 'No_results' | translate}}
+                </span>
+            </label>
+    </div>
 </div>
 
 
