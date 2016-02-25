@@ -6,20 +6,20 @@
 -->
 
 
-    <section>
-        <article class="sp">
+<section>
+    <article class="sp">
 
         <nav class="pages fixedImportant " style="top:65px">
-            <a translate="HOME" href="#/" ></a>
+            <a translate="HOME" href="#/"></a>
             <a class="select "> {{ 'SHOPPING_CART' | translate }}</a>
         </nav>
 
-        <h3 class="roboto-regular center sticky fixedImportant" >
-            {{'SHOPPING_CART' | translate}} <span ng-show="cart.productsInCart.length > 0" >({{ cart | productsCartCount }})</span>
+        <h3 class="roboto-regular center sticky fixedImportant">
+            {{'SHOPPING_CART' | translate}} <span ng-show="cart.productsInCart.length > 0">({{ cart | productsCartCount }})</span>
         </h3>
 
         <div id="shoppingCart">
-            <table ng-show="cart.productsInCart.length > 0" >
+            <table ng-show="cart.productsInCart.length > 0">
                 <thead>
                 <tr>
                     <th class="imgHeader">
@@ -41,7 +41,7 @@
                     </th>
                     <th class="smollCell">
                         <label class="roboto-light">
-                        {{'PRICE' | translate}}
+                            {{'PRICE' | translate}}
                         </label>
                     </th>
                 </tr>
@@ -49,7 +49,8 @@
                 <tbody>
                 <tr ng-repeat="product in cart.productsInCart track by $index">
                     <td>
-                         <img class="imageUrl" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}"  alt="imgProduct" />
+                        <img class="imageUrl" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}"
+                             alt="imgProduct"/>
                     </td>
                     <td>
                         <label class="roboto-regular productName">{{product.productName | uppercase}}</label>
@@ -58,23 +59,27 @@
                         <label class="roboto-light mobileViewer">
                             {{'COLOR' | translate}}:
                         </label>
-                        <span ng-style="product.color.code != 'FFFFFF' ? {'backgroundColor': '#' + product.color.code, 'border': 'none 0px white'} : { 'backgroundColor': '#' + product.color.code }" class="productColor"></span>
+                        <span ng-style="product.color.code != 'FFFFFF' ? {'backgroundColor': '#' + product.color.code, 'border': 'none 0px white'} : { 'backgroundColor': '#' + product.color.code }"
+                              class="productColor"></span>
                     </td>
-                    <td class="smollCell quantityMobile" >
+                    <td class="smollCell quantityMobile">
                         <label class="roboto-light mobileViewer">
                             {{'QUANTITY' | translate}}:
                         </label>
-                        <e-sec-plus-minus num-attr="product.quantity" update-product-attr="saveCart()" ></e-sec-plus-minus>
+                        <e-sec-plus-minus num-attr="product.quantity"
+                                          update-product-attr="saveCart()"></e-sec-plus-minus>
                     </td>
                     <td class="smollCell">
                         <label class="roboto-light mobileViewer">
                             {{'PRICE' | translate}}:
                         </label>
+
                         <p class="price roboto-regular">
                             {{ (product.price * product.quantity) | currency:'$' }}
                         </p>
                         <span class="actions">
-                            <a class="remove" href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">
+                            <a class="remove"
+                               href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">
                                 {{ 'EDIT' | translate }}
                             </a>
                             <a class="separator">|</a>
@@ -86,7 +91,7 @@
                 <tfoot>
                 <tr>
                     <td colspan="3" class="icons">
-                        <label>{{'PAYMENT_OPTIONS'  | translate}}: </label>
+                        <label>{{'PAYMENT_OPTIONS' | translate}}: </label>
                         <ul>
                             <li>
                                 <img src="../../css/images/Shipex.png">
@@ -94,8 +99,8 @@
                         </ul>
                     </td>
                     <td colspan="2">
-                        <span class="roboto-light" >{{'TOTAL' + ': ' | translate}}</span>
-                        <span class="roboto-medium" >{{cart | productsCartSum | currency:'$'}}</span>
+                        <span class="roboto-light">{{'TOTAL' + ': ' | translate}}</span>
+                        <span class="roboto-medium">{{cart | productsCartSum | currency:'$'}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -111,10 +116,9 @@
             </div>
         </div>
 
-
-            <div id="mobileShoppingCart">
-                <tool-tip-cart id="toolTipCart" style="display: block !important;"></tool-tip-cart>
-            </div>
+        <div id="mobileShoppingCart">
+            <tool-tip-cart id="toolTipCart" style="display: block !important;"></tool-tip-cart>
+        </div>
 
     </article>
 </section>

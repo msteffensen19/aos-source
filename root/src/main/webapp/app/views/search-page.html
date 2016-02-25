@@ -1,29 +1,31 @@
 
-
 <section>
     <article id="searchPage" ng-switch="noProducts">
         <search mobile-search ></search>
-        <!--<div>
-            <nav class="pages categoryDataFixedNav"  data-ng-class="{ fixedImportant : viewAll }">
-                <a translate="HOME" href="#/" ></a>
-                <a class="select "> {{categoryName}} </a>
-            </nav>
-        </div>-->
-
+        <!--
+            <div>
+                <nav class="pages categoryDataFixedNav"  data-ng-class="{ fixedImportant : viewAll }">
+                    <a translate="HOME" href="#/" ></a>
+                    <a class="select "> {{categoryName}} </a>
+                </nav>
+            </div>
+        -->
         <div>
             <nav class="pages categoryDataFixedNav"  data-ng-class="{ fixedImportant : viewAll }">
                 <a translate="HOME" href="#/" ></a>
-                <a class="select "> {{categoryName}} </a>
+                <a class="select "> {{ 'Search_Result' | translate}}: "{{ searchKey }}" </a>
             </nav>
         </div>
 
-        <h3 class="roboto-regular center sticky fixedImportant" > {{ searchKey }} </h3>
+        <h3 class="roboto-regular center sticky fixedImportant" data-ng-hide="noProducts" > {{ 'Search_Result' | translate}}: "{{ searchKey }}" </h3>
 
         <!--data-ng-show="categoryData.promotedProduct == null"-->
         <div class="noPromotedProductDiv">
-            <div ng-switch-when="true">
-                <label style="display: block; text-align: center; color:black; font-size: 100px">
-                    No products!
+            <div ng-switch-when="true" class="textAlignCenter">
+                <label class="noProducts roboto-bold ">
+                    <span>
+                     {{ 'No_results_for' | translate}} "{{searchKey}}"
+                    </span>
                 </label>
             </div>
             <div ng-switch-when="false">
@@ -35,5 +37,45 @@
             <social-media-drtv></social-media-drtv>
         </div>
     </article>
+
+
+
+<!--
+    <article id="searchPage" ng-switch="noProducts">
+        <search mobile-search ></search>
+        &lt;!&ndash;<div>
+            <nav class="pages categoryDataFixedNav"  data-ng-class="{ fixedImportant : viewAll }">
+                <a translate="HOME" href="#/" ></a>
+                <a class="select "> {{categoryName}} </a>
+            </nav>
+        </div>&ndash;&gt;
+
+        <div>
+            <nav class="pages categoryDataFixedNav"  data-ng-class="{ fixedImportant : viewAll }">
+                <a translate="HOME" href="#/" ></a>
+                <a class="select "> {{categoryName}} </a>
+            </nav>
+        </div>
+
+        <h3 class="roboto-regular center sticky fixedImportant" > {{ searchKey }} </h3>
+
+        &lt;!&ndash;data-ng-show="categoryData.promotedProduct == null"&ndash;&gt;
+        <div class="noPromotedProductDiv">
+            <div ng-switch-when="tr             <label style="display: block; text-align: center; color:black; font-size: 100px">
+                    No products!
+                </label></label>
+            </div>
+            <div ng-switch-when="false">
+                <div class="category-type-products"
+                     category-type-products-drtv
+                     params-to-pass="paramsToPass"
+                ></div>
+            </div>
+            <social-media-drtv></social-media-drtv>
+        </div>
+    </article>
+-->
+
+
 </section>
 

@@ -102,7 +102,7 @@ define([], function () {
                                 searchResult: result,
                                 viewAll: true,
                                 categoryId: 1,
-                                searchKey: $filter("translate")("Search_Result") + ": '" + $stateParams.viewAll + "'",
+                                searchKey: $stateParams.viewAll ,
                                 categoriesFilter: categoriesFilter,
                                 attributes: [],
                             }

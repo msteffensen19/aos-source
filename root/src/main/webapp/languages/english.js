@@ -181,6 +181,9 @@ var english = {
     'SafePay' : 'SafePay',
     'Set_SafePay_as_Preferred_payment' : 'Set SafePay as your preferred payment',
     'Set_MasterCredit_as_Preferred_payment' : 'Set MasterCredit as your preferred payment',
+    'No_results_for' : 'No results for',
+    'No_results' : 'No results',
+    'SEND' : 'SEND',
 
 
 };

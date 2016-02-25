@@ -47,5 +47,8 @@
         margin: 0px 28px;
         margin-bottom: 200px;
     }
+    #supportCover button{
+        width: 100%;
+    }
 }
 
