@@ -139,9 +139,9 @@ public class DemoAppConfigurationXml {
     }
 
     /**
-     * Update the value of a specific tool's parameter. Tool is identified by it's name.
+     * Update the value of a specific tool's parameters. Tool is identified by it's name.
      * @param parameterName     Parameter name linked to the specific tool.
-     * @param parameterNewValue   Tool's new parameter value.
+     * @param parameterNewValue   Tool's new parameters value.
      */
     public DemoAppConfigStatusResponse updateParameterValue(String parameterName, String parameterNewValue) {
         ////  Child Element - Tool
@@ -152,7 +152,7 @@ public class DemoAppConfigurationXml {
             nodeToUpdate.setNodeValue(parameterNewValue);
             return new DemoAppConfigStatusResponse(true, "update successful");
         }
-        return new DemoAppConfigStatusResponse(false, "update failed with error: parameter name not found");
+        return new DemoAppConfigStatusResponse(false, "update failed with error: parameters name not found");
     }
 
     /**
@@ -188,7 +188,7 @@ public class DemoAppConfigurationXml {
 
         for (int i = 0; i < nodesList.getLength(); i++) {
             Node node = doc.getElementsByTagName(nodeName).item(i);
-            System.out.println("parameter name=\"" + node.getNodeName() + "\"");
+            System.out.println("parameters name=\"" + node.getNodeName() + "\"");
 
             NamedNodeMap attr = node.getAttributes();
             if (attr.getLength() == 0) {

@@ -76,7 +76,7 @@ public class DemoAppConfigService {
 
         for (int i = 0; i < nodesList.getLength(); i++) {
             Node node = doc.getElementsByTagName(nodeName).item(i);
-            System.out.println("parameter name=\"" + node.getNodeName() + "\"");
+            System.out.println("parameters name=\"" + node.getNodeName() + "\"");
 
             NamedNodeMap attr = node.getAttributes();
             if (attr.getLength() == 0) {
@@ -248,7 +248,7 @@ public class DemoAppConfigService {
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
         System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
 
-        Node rootElement;   //  parameter
+        Node rootElement;   //  parameters
 
         NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
@@ -280,9 +280,9 @@ public class DemoAppConfigService {
     }
 
     /**
-     * Update the value of a specific tool's parameter. Tool is identified by it's name.
+     * Update the value of a specific tool's parameters. Tool is identified by it's name.
      * @param parameterName     Parameter name linked to the specific tool.
-     * @param parameterNewValue   Tool's new parameter value.
+     * @param parameterNewValue   Tool's new parameters value.
      */
     public DemoAppConfigStatusResponse updateParameterValue(String parameterName, String parameterNewValue) {
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
@@ -297,7 +297,7 @@ public class DemoAppConfigService {
             return new DemoAppConfigStatusResponse(true, "update successful");
         }
 
-        return new DemoAppConfigStatusResponse(false, "update failed with error: [parameter name] not found");
+        return new DemoAppConfigStatusResponse(false, "update failed with error: [parameters name] not found");
     }
 
     /**
@@ -336,7 +336,7 @@ public class DemoAppConfigService {
     /**
      * Restore DemoAppConfig.xml file to all default values.
      */
-    public void restoreFactorySettingsDemoAppConfig() {
+    public DemoAppConfigStatusResponse restoreFactorySettingsDemoAppConfig() {
         this.updateParameterValue("Generate_memory_leak", "0");
         this.updateParameterValue("Repeat_ShipEx_call", "0");
         this.updateParameterValue("Sum_to_add_to_cart_calculation", "0");
@@ -346,6 +346,7 @@ public class DemoAppConfigService {
         this.updateParameterValue("Mix_pictures_in_home_page", "No");
         this.updateParameterValue("Slow_DB_call", "0");
 
+        return new DemoAppConfigStatusResponse(true, "\"DemoAppConfig.xml\" restore factory settings successful");
     }
 
 }

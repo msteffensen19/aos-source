@@ -147,7 +147,13 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetAllDemoAppConfigParametersRequest">
+    <xs:element name="DemoAppConfigGetAllParametersRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DemoAppConfigRestoreFactorySettingsRequest">
         <xs:complexType>
             <xs:sequence/>
         </xs:complexType>
@@ -184,7 +190,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="DemoAppConfigGetParametersByTool">
+    <xs:element name="DemoAppConfigGetParametersByToolRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="toolName" type="xs:string" form="qualified"/>
@@ -562,10 +568,10 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetAllDemoAppConfigParametersResponse">
+    <xs:element name="DemoAppConfigGetAllParametersResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="parameter" form="qualified" maxOccurs="unbounded">
+                <xs:element name="parameters" form="qualified" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="parameterName" type="xs:string" form="qualified"/>
@@ -581,12 +587,28 @@
     <xs:element name="DemoAppConfigGetParametersByToolResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="parameter" form="qualified" maxOccurs="unbounded">
+                <xs:element name="parameters" form="qualified" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="parameterName" type="xs:string" form="qualified"/>
                             <xs:element name="attributeTools" type="xs:string" form="qualified"/>
                             <xs:element name="parameterValue" type="xs:string" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DemoAppConfigRestoreFactorySettingsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" form="qualified">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="success" type="xs:boolean" form="qualified"/>
+                            <xs:element name="reason" type="xs:string" form="qualified"/>
+                            <xs:element name="code" type="xs:long" form="qualified"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

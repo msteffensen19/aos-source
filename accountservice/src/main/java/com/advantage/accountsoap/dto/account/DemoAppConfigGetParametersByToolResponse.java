@@ -13,22 +13,22 @@ import java.util.List;
 @XmlType(name = "",
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
-                "parameter"
+                "parameters"
         })
 @XmlRootElement(name = "DemoAppConfigGetParametersByToolResponse")
 public class DemoAppConfigGetParametersByToolResponse {
-     @XmlElement(name = "parameter",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-     protected List<DemoAppConfigParameter> parameter;
+     @XmlElement(name = "parameters",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+     protected List<DemoAppConfigParameter> parameters;
 
-     public List<DemoAppConfigParameter> getParameter() {
-         if (parameter == null) {
-             parameter = new ArrayList<>();
+     public List<DemoAppConfigParameter> getParameters() {
+         if (parameters == null) {
+             parameters = new ArrayList<>();
          }
-         return parameter;
+         return parameters;
      }
 
-     public void setParameter(List<DemoAppConfigParameter> parameter) {
-         this.parameter = parameter;
+     public void setParameters(List<DemoAppConfigParameter> parameters) {
+         this.parameters = parameters;
      }
 }
 
