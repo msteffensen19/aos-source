@@ -60,7 +60,7 @@ public enum ColorPalletEnum {
 
     public static ColorPalletEnum getColorByCode(String hexColor) {
         for (ColorPalletEnum colorEnum : ColorPalletEnum.values()) {
-            if (colorEnum.getColorName().equals(hexColor)) {
+            if (colorEnum.getColorCode().toUpperCase().equals(hexColor.toUpperCase())) {
                 return colorEnum;
             }
         }
