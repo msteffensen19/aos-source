@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -190,6 +191,18 @@ public class CatalogController {
         CategoryDto categoryDto = categoryService.getCategoryDto(categoryId);
 
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/attributes/colors_pallet", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, String>> getColorPallet(HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        Map<String, String> response = attributeService.getColorPallet();
+
+        if ((response == null) || (response.size() == 0)) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(response, httpStatus);
     }
 
     /**
