@@ -5,6 +5,9 @@ import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.common.dto.ColorAttributeDto;
+import com.advantage.common.enums.ColorPalletEnum;
+import com.advantage.root.util.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +66,23 @@ public class AttributeService {
         }
 
         return attributeItems;
+    }
+
+    /**
+     *  Get the color pallet supported by &quot;ADM Demo App&quot;.
+     * @return <i>Map&lt;ColorName, colorCode&gt;</i>
+     */
+    public Map<String, String> getColorPallet() {
+        List<String> hexColors = ColorPalletEnum.getAllColorCodes();
+        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(hexColors, "colors hexadecimal RGB values");
+
+        /*List<ColorAttributeDto> colorPallet = new ArrayList<>();*/
+        Map<String, String> colorPallet = new HashMap<>();
+        for (String hexColor : hexColors) {
+            String colorName = ColorPalletEnum.getColorByCode(hexColor).getColorName();
+            colorPallet.put(colorName, hexColor);
+        }
+
+        return colorPallet;
     }
 }
