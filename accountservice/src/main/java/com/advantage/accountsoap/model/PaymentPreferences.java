@@ -25,6 +25,11 @@ import javax.persistence.*;
         )
 })
 public class PaymentPreferences {
+    public static final String MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD = "Error: Invalid SafePay user name or password";
+    public static final String MESSAGE_SAFE_PAY_DATA_UPDATED_SUCCESSFULLY = "SafePay data updated successfully";
+    public static final String MESSAGE_SAFE_PAY_DATA_DELETED_SUCCESSFULLY = "SafePay data deleted successfully";
+    public static final String MESSAGE_SAFE_PAY_DATA_FAILED_UPDATE = "SafePay data failed update";
+
     public static final String QUERY_GET_ALL = "query.getAll";
     public static final String QUERY_GET_PAYMENT_PREFERENCES_BY_USER_ID = "query.getPaymentPreferencesByUserId";
     public static final String QUERY_GET_PAYMENT_PREFERENCES_BY_PK_COLUMNS = "query.getPaymentPreferencesByPkColumns";

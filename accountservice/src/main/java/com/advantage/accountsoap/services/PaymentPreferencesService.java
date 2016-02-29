@@ -23,22 +23,29 @@ public class PaymentPreferencesService {
     public PaymentPreferencesRepository paymentPreferencesRepository;
 
     @Transactional
-    public PaymentPreferencesStatusResponse addSafePayMethod(String safePayUsername, long accountId) {
+    public PaymentPreferencesStatusResponse addSafePayMethod(long accountId, String safePayUsername, String safePayPassword) {
+
+        //  region Arguments Validation
         if ((safePayUsername.length() < 1) || (safePayUsername.length() > 20)) {
-            return new PaymentPreferencesStatusResponse(false, "Failure. Invalid SafePay user name", 0);
+            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
         }
+
+        if ((safePayPassword.length() < 1) || (safePayPassword.length() > 20)) {
+            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
+        }
+        //  endregion
 
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.SAFE_PAY.getCode());
 
         if (paymentPreferences == null) {
-            paymentPreferences = paymentPreferencesRepository.createSafePay(safePayUsername, accountId);
+            paymentPreferences = paymentPreferencesRepository.createSafePay(accountId, safePayUsername, safePayPassword);
         } else {
-            paymentPreferences = paymentPreferencesRepository.updateSafePay(accountId, safePayUsername);
+            paymentPreferences = paymentPreferencesRepository.updateSafePay(accountId, safePayUsername, safePayPassword);
         }
 
-        if (paymentPreferences == null ) return new PaymentPreferencesStatusResponse(false, "addSafePayMethod: Failed", -1);
+        if (paymentPreferences == null ) return new PaymentPreferencesStatusResponse(false, "addSafePayMethod: " + PaymentPreferences.MESSAGE_SAFE_PAY_DATA_FAILED_UPDATE, -1);
 
-        return new PaymentPreferencesStatusResponse(true, "Successful", 0);
+        return new PaymentPreferencesStatusResponse(true, PaymentPreferences.MESSAGE_SAFE_PAY_DATA_UPDATED_SUCCESSFULLY, 0);
     }
 
     @Transactional
@@ -81,11 +88,22 @@ public class PaymentPreferencesService {
     }
 
     @Transactional
-    public PaymentPreferencesStatusResponse updateSafePayMethod(long userId, String safePayUsername) {
-        PaymentPreferences preferences = paymentPreferencesRepository.updateSafePay(userId, safePayUsername);
+    public PaymentPreferencesStatusResponse updateSafePayMethod(long userId, String safePayUsername, String safePayPassword) {
+
+        //  region Arguments Validation
+        if ((safePayUsername.length() < 1) || (safePayUsername.length() > 20)) {
+            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
+        }
+
+        if ((safePayPassword.length() < 1) || (safePayPassword.length() > 20)) {
+            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
+        }
+        //  endregion
+
+        PaymentPreferences preferences = paymentPreferencesRepository.updateSafePay(userId, safePayUsername, safePayPassword);
         if (preferences == null) return new PaymentPreferencesStatusResponse(false, "updateSafePayMethod: user-id=" + userId + ", Failed", -1);
 
-        return new PaymentPreferencesStatusResponse(true, "Successful", 0);
+        return new PaymentPreferencesStatusResponse(true, PaymentPreferences.MESSAGE_SAFE_PAY_DATA_UPDATED_SUCCESSFULLY, 0);
     }
 
     @Transactional
@@ -118,9 +136,9 @@ public class PaymentPreferencesService {
     @Transactional
     public PaymentPreferencesStatusResponse deletePaymentPreference(long userId, int paymentMethod) {
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.delete(userId, paymentMethod);
-        if(paymentPreferences == null ) return  new PaymentPreferencesStatusResponse(false, "", -1);
+        if (paymentPreferences == null ) return  new PaymentPreferencesStatusResponse(false, "deletePaymentPreference: " + PaymentPreferences.MESSAGE_SAFE_PAY_DATA_FAILED_UPDATE, -1);
 
-        return  new PaymentPreferencesStatusResponse(true, "successful", 0);
+        return  new PaymentPreferencesStatusResponse(true, PaymentPreferences.MESSAGE_SAFE_PAY_DATA_DELETED_SUCCESSFULLY, 0);
     }
 
     @Transactional
