@@ -9,7 +9,6 @@
 
             <img src="../../css/images/logo.png">
 
-            <label translate="ONLINE_SHOPPING" class="onlineShop"></label>
             <span class="facebook" translate="FACEBOOK_SIGN_IN" data-ng-click="singWithFacebook()"></span>
             <label class="or {{ message._class }} center">
                 {{message.text}}
@@ -25,7 +24,7 @@
                            sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
                            pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                            model-attr="loginUser.loginUser"
-                           id-attr="username">
+                           id-attr="smollLoginUsername">
                 </sec-input>
 
                 <sec-input sec-placeholder="{{'Password' | translate}}"
@@ -36,7 +35,7 @@
                            pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                            input-type-attr="password"
                            model-attr="loginUser.loginPassword"
-                           id-attr="password">
+                           id-attr="smollLoginPassword">
                 </sec-input>
 
 
@@ -46,7 +45,7 @@
                            no-red-star="true"
                            input-type-attr="email"
                            model-attr="loginUser.email"
-                           id-attr="email">
+                           id-attr="smollLoginEmail">
                 </sec-input>
 
                 <div class="left option " style="top: 20px">
@@ -69,6 +68,8 @@
 
         </div>
     </div>
+
+
 </div>
 
 

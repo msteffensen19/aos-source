@@ -464,11 +464,15 @@ define(['./module'], function (directives) {
                         ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
                     },
                     post: function(s){
-                        if(s.modelAttr != '' && s.modelAttr != undefined){
-                            $timeout(function(){ s.inputFocus(s.id); }, 0)
-                        }
-                        $timeout(function(){ s.inputBlur(s.id, true); }, 100)
-                        $timeout(function(){ s.inputKeyup(s.id); }, 200)
+                        $timeout(function(){
+                            l("s.modelAttr")
+                            l(s.modelAttr != '' && s.modelAttr != undefined)
+                            if(s.modelAttr != '' && s.modelAttr != undefined){
+                                s.inputFocus(s.id);
+                            }
+                        }, 500)
+                        $timeout(function(){ s.inputBlur(s.id, true); }, 1000)
+                        $timeout(function(){ s.inputKeyup(s.id); }, 2000)
                     }
                 }
             }

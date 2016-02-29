@@ -186,29 +186,6 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
-                updateMasterCreditMethod : function(card){
-
-                    var expectToReceive = {
-                        cardNumber: "4886" + card.number,
-                        expirationDate: card.expirationDate.month + card.expirationDate.year,
-                        cvvNumber: card.cvv,
-                        customerName: card.name,
-                        referenceId: "1234567890",
-                    }
-
-                    var defer = $q.defer();
-                    var params = server.account.updateMasterCreditMethod();
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function(response){
-                            defer.resolve(response);
-                        },
-                        function(response){
-                            console.log(response);
-                            defer.reject("Request failed! ");
-                        });
-                    return defer.promise;
-                },
-
                 addMasterCreditMethod : function(card){
 
                     var user = $rootScope.userCookie;
@@ -222,26 +199,6 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     var params = server.account.addMasterCreditMethod();
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function(response){
-                            defer.resolve(response);
-                        },
-                        function(response){
-                            console.log(response);
-                            defer.reject("Request failed! ");
-                        });
-                    return defer.promise;
-                },
-
-                updateSafePayMethod: function(safePay){
-
-                    var expectToReceive = {
-                        safePayUsername:safePay.username,
-                        referenceId: "1234567890"
-                    }
-
-                    var defer = $q.defer();
-                    var params = server.account.updateSafePayMethod();
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
                             defer.resolve(response);
@@ -274,8 +231,69 @@ define(['./module'], function (services) {
                     return defer.promise;
                 },
 
+                updateSafePayMethod: function(safePay){
 
+                    var expectToReceive = {
+                        safePayUsername:safePay.username,
+                        referenceId: "1234567890"
+                    }
 
+                    var defer = $q.defer();
+                    var params = server.account.updateSafePayMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
+
+                updateMasterCreditMethod : function(card){
+
+                    var expectToReceive = {
+                        cardNumber: "4886" + card.number,
+                        expirationDate: card.expirationDate.month + card.expirationDate.year,
+                        cvvNumber: card.cvv,
+                        customerName: card.name,
+                        referenceId: "1234567890",
+                    }
+
+                    var defer = $q.defer();
+                    var params = server.account.updateMasterCreditMethod();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                },
+
+                updatePrefferedPaymentMethod  : function(paymentMethod){
+
+                    var user = $rootScope.userCookie;
+                    var expectToReceive = {
+                        accountId: user.response.userId,
+                        paymentMethod: paymentMethod,
+                    }
+
+                    var defer = $q.defer();
+                    var params = server.account.paymentMethodUpdate();
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function(response){
+                            defer.resolve(response);
+                        },
+                        function(response){
+                            console.log(response);
+                            defer.reject("Request failed! ");
+                        });
+                    return defer.promise;
+                }
             };
         }]);
 });

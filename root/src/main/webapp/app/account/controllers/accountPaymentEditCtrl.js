@@ -55,10 +55,6 @@ define(['./module'], function (controllers) {
 
             s.saveMasterCredit = function () {
 
-                if(s.preferredPayment_MasterCredit){
-                    alert("method not done yet - user story 77")
-                }
-
                 var response;
                 if (true) {
                     response = accountService.addMasterCreditMethod(s.card)
@@ -67,28 +63,19 @@ define(['./module'], function (controllers) {
                     response = accountService.updateMasterCreditMethod(s.card)
                 }
                 response.then(function (response) {
-                    if (response && response.REASON) {
-                        s.accountDetailsAnswer = {
-                            message: response.REASON,
-                            class: response.SUCCESS == 'true' ? 'valid' : 'invalid'
-                        }
-                        if (response.SUCCESS == 'true') {
-                            $location.path('myAccount');
-                        }
-                        else {
-                            $timeout(function () {
-                                s.accountDetailsAnswer = {message: '', class: 'invalid'}
-                            }, 4000)
-                        }
+
+                    if(s.preferredPayment_MasterCredit && response && response.REASON && response.SUCCESS == 'true'){
+                        accountService.updatePrefferedPaymentMethod(20).then(function(res){
+                            setMessage(res);
+                        });
+                    }
+                    else{
+                        setMessage(response);
                     }
                 });
             }
 
             s.saveSafePay = function () {
-
-                if(s.preferredPayment_SafePay){
-                    alert("method not done yet")
-                }
 
                 var response;
                 if (true) {
@@ -98,21 +85,34 @@ define(['./module'], function (controllers) {
                     response = accountService.updateSafePayMethod(s.savePay)
                 }
                 response.then(function (response) {
-                    if (response && response.REASON) {
-                        s.accountDetailsAnswer = {
-                            message: response.REASON,
-                            class: response.SUCCESS == 'true' ? 'valid' : 'invalid'
-                        }
-                        if (response.SUCCESS == 'true') {
-                            $location.path('myAccount');
-                        }
-                        else {
-                            $timeout(function () {
-                                s.accountDetailsAnswer = {message: '', class: 'invalid'}
-                            }, 4000)
-                        }
+
+                    if(s.preferredPayment_SafePay && response && response.REASON && response.SUCCESS == 'true'){
+                        accountService.updatePrefferedPaymentMethod(10).then(function(res){
+                            setMessage(res);
+                        });
+                    }
+                    else{
+                        setMessage(response);
                     }
                 });
+            }
+
+            function setMessage(response){
+
+                if (response && response.REASON) {
+                    s.accountDetailsAnswer = {
+                        message: response.REASON,
+                        class: response.SUCCESS == 'true' ? 'valid' : 'invalid'
+                    }
+                    if (response.SUCCESS == 'true') {
+                        $location.path('myAccount');
+                    }
+                    else {
+                        $timeout(function () {
+                            s.accountDetailsAnswer = {message: '', class: 'invalid'}
+                        }, 4000)
+                    }
+                }
             }
 
             Helper.forAllPage();

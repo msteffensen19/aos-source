@@ -91,7 +91,7 @@ var english = {
     'User_Name_pattern' : "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
     'I_agree_to_the_Advantage_com_Agreement' : 'I agree to Advantage.com Conditions of Use and Privacy Notice',
     'Must_agree_to_the_Advantage_com_Agreement' : 'Agreement to the Advantage.com is must',
-    'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number': 'Use up to 12 characters Include at least one letter and one number',
+    'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number': 'Use between 4-12 characters, where at least one is an upper case, one is a lower case and one character is a number',
     'Use_letters_number_and_the_following_symbols_only' : 'Use letters, number and the following symbols only: .-_',
 
     'CHECKOUT': 'CHECKOUT',
