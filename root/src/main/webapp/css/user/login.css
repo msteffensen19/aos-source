@@ -1,15 +1,9 @@
 
 .PopUp img{
-
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-.PopUp input{
-    width: 100%;
-    position: relative;
-    top: 7px;
+    height: 34px;
 }
 
 .PopUp label{
@@ -17,7 +11,6 @@
 }
 
 .PopUp img{
-
     display: block;
     margin: 5px auto;
 }
@@ -51,10 +44,10 @@
 }
 
 
+.login input[type="password"],
 .PopUp input[type=text]{
     /*border-bottom: 1px solid #CECCCC;*/
     /*border-top: 1px solid #CECCCC;*/
-    padding: 2px 0;
 }
 
 
@@ -62,16 +55,8 @@
     /*border-top: 1px solid #CECCCC;*/
 }
 
-.login input[type="password"] {
-    padding: 2px 0;
-}
-
 .login input[type="password"].bottomLine {
     border: none;
-}
-
-.validate-directive > .validate-info ul li {
-    padding: 8px;
 }
 
 .login .sing-in{
@@ -140,15 +125,8 @@
     }
 
     .PopUp img{
-
         display: none;
     }
-
-    .PopUp .onlineShop{
-
-        display: none;
-    }
-
 }
 
 

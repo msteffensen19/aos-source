@@ -22,9 +22,8 @@ define(['./module'], function (services) {
                     var params = server.account.accountLogout();
                     var expectToReceive = {
                         loginUser: user.response.userId,
-                        loginPassword: "Aa123",
+                        loginPassword: "Bearer " + user.response.token,
                     }
-                    l(expectToReceive)
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function (response) {
                             defer.resolve(response);

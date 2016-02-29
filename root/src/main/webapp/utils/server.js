@@ -285,10 +285,18 @@ var server = {
                 method: 'ChangePasswordRequest'
             }
         },
+
         accountLogout : function(){
             return {
                 path: wsdlPath,
                 method: 'AccountLogoutRequest',
+            }
+        },
+
+        paymentMethodUpdate : function(){
+            return {
+                path: wsdlPath,
+                method: 'PaymentMethodUpdateRequest',
             }
         }
     },
