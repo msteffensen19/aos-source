@@ -138,7 +138,7 @@ public class AccountserviceEndpoint {
         //todo set header
 
         AccountStatusResponse response = accountService.doLogout(account.getLoginUser(),
-                account.getLoginPassword());
+                account.getBase64Token());
 
         if (response.isSuccess()) {
             //TODO-ALEX set session

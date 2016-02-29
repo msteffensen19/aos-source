@@ -10,21 +10,21 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "loginUser",
-        "loginPassword"
+        "base64Token"
 })
 @XmlRootElement(name = "AccountLogoutRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountLogoutRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginUser;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String loginPassword;
+    private String base64Token;
 
     public AccountLogoutRequest() {
     }
 
-    public AccountLogoutRequest(final String loginUser, final String loginPassword) {
+    public AccountLogoutRequest(final String loginUser, final String base64Token) {
         this.setLoginUser(loginUser);
-        this.setLoginPassword(loginPassword);
+        this.setBase64Token(base64Token);
     }
 
     public String getLoginUser() {
@@ -35,12 +35,12 @@ public class AccountLogoutRequest {
         this.loginUser = loginUser;
     }
 
-    public String getLoginPassword() {
-        return this.loginPassword;
+    public String getBase64Token() {
+        return this.base64Token;
     }
 
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword;
+    public void setBase64Token(String base64Token) {
+        this.base64Token = base64Token;
     }
 
 }

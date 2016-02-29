@@ -45,8 +45,8 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public AccountStatusResponse doLogout(final String loginUser, final String loginPassword) {
-        return accountRepository.doLogout(loginUser, loginPassword);
+    public AccountStatusResponse doLogout(final String loginUser, final String base64Token) {
+        return accountRepository.doLogout(loginUser, base64Token);
     }
 
     @Transactional(readOnly = true)

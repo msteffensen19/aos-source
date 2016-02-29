@@ -348,13 +348,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * Currently there's nothing to do in BACK-END for Logout.
      */
     @Override
-    public AccountStatusResponse doLogout(String loginName, String loginPassword) {
+    public AccountStatusResponse doLogout(String loginName, String base64Token) {
         //  Check arguments: Not NULL and Not BLANK
         if (loginName.isEmpty()) {
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
         }
 
-        if (loginPassword.isEmpty()) {
+        if (base64Token.isEmpty()) {
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
         }
 
@@ -366,8 +366,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
         }
 
+        Token token = getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType()));
+        if (! token.generateToken().equals(base64Token)) {
+            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+        }
+
         //  Return: Successful logout attempt, no need to create JWT Token
-        return new AccountStatusResponse(true, "Login Successful", account.getId());
+        return new AccountStatusResponse(true, "Logout Successful", account.getId());
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
