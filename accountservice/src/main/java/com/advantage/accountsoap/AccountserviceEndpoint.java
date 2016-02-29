@@ -18,6 +18,8 @@ import java.util.List;
 
 @Endpoint
 public class AccountserviceEndpoint {
+
+    //  region Accountservice Services
     @Autowired
     private AccountService accountService;
 
@@ -35,6 +37,7 @@ public class AccountserviceEndpoint {
 
     @Autowired
     private DemoAppConfigService service;
+    //  endregion
 
     //region Account
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
@@ -275,7 +278,7 @@ public class AccountserviceEndpoint {
     }
     //endregion
 
-    //region Payment details
+    //  region Payment details
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
     @ResponsePayload
     public PaymentMethodUpdateResponse updateDefaultPaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
@@ -284,15 +287,7 @@ public class AccountserviceEndpoint {
         return new PaymentMethodUpdateResponse(response);
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddSafePayMethodRequest")
-    @ResponsePayload
-    public AddSafePayMethodResponse addSafePayMethod(@RequestPayload AddSafePayMethodRequest request) {
-        PaymentPreferencesStatusResponse response = paymentPreferencesService.addSafePayMethod(request.getSafePayUsername(),
-                request.getAccountId());
-
-        return new AddSafePayMethodResponse(response);
-    }
-
+    //  region MasterCredit
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddMasterCreditMethodRequest")
     @ResponsePayload
     public AddMasterCreditMethodResponse addMasterCreditMethod(@RequestPayload AddMasterCreditMethodRequest request) {
@@ -310,15 +305,29 @@ public class AccountserviceEndpoint {
 
         return new UpdateMasterCreditMethodResponse(response);
     }
+    //  endregion
+
+    //  region SafePay
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddSafePayMethodRequest")
+    @ResponsePayload
+    public AddSafePayMethodResponse addSafePayMethod(@RequestPayload AddSafePayMethodRequest request) {
+        PaymentPreferencesStatusResponse response = paymentPreferencesService.addSafePayMethod(request.getAccountId(),
+                request.getSafePayUsername(),
+                request.getSafePayPassword());
+
+        return new AddSafePayMethodResponse(response);
+    }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
     @ResponsePayload
     public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) {
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getUserId(),
-                request.getSafePayUsername());
+                request.getSafePayUsername(),
+                request.getSafePayPassword());
 
         return new UpdateSafePayMethodResponse(response);
     }
+    //  endregion
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountPaymentPreferencesRequest")
     @ResponsePayload
@@ -339,8 +348,6 @@ public class AccountserviceEndpoint {
 
         return new DeletePaymentPreferenceResponse(response);
     }
-
-
     //endregion
 
 

@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.*;
                 "expirationDate",
                 "cvvNumber",
                 "safePayUsername",
+                "safePayPassword",
                 "customerName",
                 "preferenceId"
         })
@@ -29,6 +30,8 @@ public class PaymentPreferencesDto {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String safePayUsername;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String safePayPassword;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String customerName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long preferenceId;
@@ -37,12 +40,13 @@ public class PaymentPreferencesDto {
     }
 
     public PaymentPreferencesDto(int paymentMethod, String cardNumber, String expirationDate, String cvvNumber,
-                                 String safePayUsername, long preferenceId) {
+                                 String safePayUsername, String safePayPassword, long preferenceId) {
         this.paymentMethod = paymentMethod;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvvNumber = cvvNumber;
         this.safePayUsername = safePayUsername;
+        this.safePayPassword = safePayPassword;
         this.preferenceId = preferenceId;
     }
 
@@ -84,6 +88,14 @@ public class PaymentPreferencesDto {
 
     public void setSafePayUsername(String safePayUsername) {
         this.safePayUsername = safePayUsername;
+    }
+
+    public String getSafePayPassword() {
+        return this.safePayPassword;
+    }
+
+    public void setSafePayPassword(String safePayPassword) {
+        this.safePayPassword = safePayPassword;
     }
 
     public String getCustomerName() {

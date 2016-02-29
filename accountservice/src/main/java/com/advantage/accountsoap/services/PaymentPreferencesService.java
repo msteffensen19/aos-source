@@ -150,8 +150,13 @@ public class PaymentPreferencesService {
         if (prefs == null) { return null; }
         List<PaymentPreferencesDto> prefsDto = new ArrayList<>();
         for (PaymentPreferences pref : prefs) {
-            PaymentPreferencesDto prefDto = new PaymentPreferencesDto(pref.getPaymentMethod(), pref.getCardNumber(),
-                    pref.getExpirationDate(), pref.getCvvNumber(), pref.getSafePayUsername(), /* preferenceId */ 0);
+            PaymentPreferencesDto prefDto = new PaymentPreferencesDto(pref.getPaymentMethod(),
+                    pref.getCardNumber(),
+                    pref.getExpirationDate(),
+                    pref.getCvvNumber(),
+                    pref.getSafePayUsername(),
+                    pref.getSafePayPassword(),
+                    /* preferenceId */ 0);
             prefsDto.add(prefDto);
         }
 

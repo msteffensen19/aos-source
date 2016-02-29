@@ -465,8 +465,9 @@
     <xs:element name="AddSafePayMethodRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="safePayUsername" type="xs:string"/>
                 <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="safePayUsername" type="xs:string"/>
+                <xs:element name="safePayPassword" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -504,6 +505,7 @@
             <xs:sequence>
                 <xs:element name="userId" type="xs:long"/>
                 <xs:element name="safePayUsername" type="xs:string"/>
+                <xs:element name="safePayPassword" type="xs:string"/>
                 <xs:element name="referenceId" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
@@ -555,6 +557,7 @@
             <xs:element name= "expirationDate" type="xs:string" />
             <xs:element name= "cvvNumber" type="xs:string" />
             <xs:element name= "safePayUsername" type="xs:string" />
+            <xs:element name= "safePayPassword" type="xs:string" />
             <xs:element name= "customerName" type="xs:string" />
             <xs:element name= "preferenceId" type="xs:long" />
         </xs:sequence>

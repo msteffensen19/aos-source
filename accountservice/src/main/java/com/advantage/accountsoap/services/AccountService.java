@@ -227,7 +227,11 @@ public class AccountService {
         List<PaymentPreferencesDto> dtos = new ArrayList<>();
         for (PaymentPreferences item : paymentPreferences) {
             dtos.add(new PaymentPreferencesDto(item.getPaymentMethod(),
-                    item.getCardNumber(), item.getExpirationDate(), item.getCvvNumber(), item.getSafePayUsername(),
+                    item.getCardNumber(),
+                    item.getExpirationDate(),
+                    item.getCvvNumber(),
+                    item.getSafePayUsername(),
+                    item.getSafePayPassword(),
                     item.getUserId()));
         }
 

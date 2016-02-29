@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "userId",
         "safePayUsername",
+        "safePayPassword",
         "referenceId"
 })
 @XmlRootElement(name = "UpdateSafePayMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
@@ -17,18 +18,22 @@ public class UpdateSafePayMethodRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String safePayUsername;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String safePayPassword;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long referenceId;
 
     public UpdateSafePayMethodRequest() {
     }
 
-    public UpdateSafePayMethodRequest(String safePayUsername, long referenceId) {
+    public UpdateSafePayMethodRequest(String safePayUsername, String safePayPassword, long referenceId) {
         this.safePayUsername = safePayUsername;
+        this.safePayPassword = safePayPassword;
         this.referenceId = referenceId;
     }
 
-    public UpdateSafePayMethodRequest(long userId, String safePayUsername, long referenceId) {
+    public UpdateSafePayMethodRequest(long userId, String safePayUsername, String safePayPassword, long referenceId) {
         this.userId = userId;
+        this.safePayPassword = safePayPassword;
         this.safePayUsername = safePayUsername;
         this.referenceId = referenceId;
     }
@@ -47,6 +52,14 @@ public class UpdateSafePayMethodRequest {
 
     public void setSafePayUsername(String safePayUsername) {
         this.safePayUsername = safePayUsername;
+    }
+
+    public String getSafePayPassword() {
+        return this.safePayPassword;
+    }
+
+    public void setSafePayPassword(String safePayPassword) {
+        this.safePayPassword = safePayPassword;
     }
 
     public long getReferenceId() {
