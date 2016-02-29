@@ -124,7 +124,7 @@ public class AccountserviceEndpoint {
             //  Set SessionID to Response Entity
             //response.getHeader().
             response.setSessionId(session.getAccountId());*/
-            response.setSessionId("fake_id");
+            response.setSessionId("session_id");
 
             return new AccountLoginResponse(response);
         } else {
@@ -151,7 +151,7 @@ public class AccountserviceEndpoint {
             //  Set SessionID to Response Entity
             //response.getHeader().
             response.setSessionId(session.getAccountId());
-            response.setSessionId("fake_id");
+            response.setSessionId("session_id");
             */
             return new AccountLogoutResponse(response);
         } else {
