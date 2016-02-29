@@ -59,6 +59,9 @@ public class PaymentPreferences {
     @Column(name="safe_pay_username", length = 50)
     private String safePayUsername;
 
+    @Column(name="safe_pay_password", length = 50)
+    private String safePayPassword;
+
     public PaymentPreferences() {
     }
 
@@ -83,10 +86,11 @@ public class PaymentPreferences {
         this.customerName = customerName;
     }
 
-    public PaymentPreferences(long userId, String safePayUsername) {
+    public PaymentPreferences(long userId, String safePayUsername, String safePayPassword) {
         this.setUserId(userId);
         this.setPaymentMethod(PaymentMethodEnum.SAFE_PAY.getCode());
         this.setSafePayUsername(safePayUsername);
+        this.setSafePayPassword(safePayPassword);
     }
 
     public long getUserId() {
@@ -135,6 +139,14 @@ public class PaymentPreferences {
 
     public void setSafePayUsername(String safePayUsername) {
         this.safePayUsername = safePayUsername;
+    }
+
+    public String getSafePayPassword() {
+        return this.safePayPassword;
+    }
+
+    public void setSafePayPassword(String safePayPassword) {
+        this.safePayPassword = safePayPassword;
     }
 
     public String getCustomerName() {

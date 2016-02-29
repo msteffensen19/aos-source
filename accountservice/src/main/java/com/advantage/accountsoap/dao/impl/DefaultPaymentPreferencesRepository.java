@@ -131,16 +131,17 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
 
     /**
      * Create SafePay Prefered payment method line
-     * @param safePayUsername   SafePay user name
      * @param accountId         user id who used this payment method
+     * @param safePayUsername   SafePay user name
+     * @param safePayPassword   SafePay password
      * @return {@link PaymentPreferences}
      */
     @Override
-    public PaymentPreferences createSafePay(String safePayUsername, long accountId) {
+    public PaymentPreferences createSafePay(long accountId, String safePayUsername, String safePayPassword) {
         //Account account = accountService.getById(accountId);
         //if (account == null) return null;
 
-        PaymentPreferences paymentPreferences = new PaymentPreferences(accountId, safePayUsername);
+        PaymentPreferences paymentPreferences = new PaymentPreferences(accountId, safePayUsername, safePayPassword);
         //paymentPreferences.setAccount(account);
 
         entityManager.persist(paymentPreferences);
@@ -166,12 +167,14 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     }
 
     @Override
-    public PaymentPreferences updateSafePay(long userId, String safePayUsername) {
+    public PaymentPreferences updateSafePay(long userId, String safePayUsername, String safePayPassword) {
 
         PaymentPreferences paymentPreferences = find(userId, PaymentMethodEnum.SAFE_PAY.getCode());
         if (paymentPreferences == null) return null;
 
         paymentPreferences.setSafePayUsername(safePayUsername);
+        paymentPreferences.setSafePayPassword(safePayPassword);
+
         entityManager.persist(paymentPreferences);
 
         return paymentPreferences;

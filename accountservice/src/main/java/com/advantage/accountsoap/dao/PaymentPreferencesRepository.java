@@ -18,12 +18,12 @@ public interface PaymentPreferencesRepository {
 
     PaymentPreferences createMasterCredit(String cardNumber, String expirationDate, String cvvNumber, String customerName, long accountId);
 
-    PaymentPreferences createSafePay(String safePayUsername, long accountId);
+    PaymentPreferences createSafePay(long accountId, String safePayUsername, String safePayPassword);
 
     PaymentPreferences updateMasterCredit(String cardNumber, String expirationDate,
                                           String cvvNumber, String customerName, long userId);
 
-    PaymentPreferences updateSafePay(long userId, String safePayUsername);
+    PaymentPreferences updateSafePay(long userId, String safePayUsername, String safePayPassword);
 
     int delete(PaymentPreferences... entities);
 
