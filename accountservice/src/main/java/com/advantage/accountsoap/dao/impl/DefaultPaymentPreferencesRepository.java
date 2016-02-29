@@ -118,31 +118,7 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     @Override
     public PaymentPreferences createMasterCredit(String cardNumber, String expirationDate, String cvvNumber, String customerName, long accountId) {
 
-        //Account account = accountService.getById(accountId);
-        //if (account == null) return null;
-
         PaymentPreferences paymentPreferences = new PaymentPreferences(accountId, cardNumber, expirationDate, cvvNumber, customerName);
-        //paymentPreferences.setAccount(account);
-
-        entityManager.persist(paymentPreferences);
-
-        return paymentPreferences;
-    }
-
-    /**
-     * Create SafePay Prefered payment method line
-     * @param accountId         user id who used this payment method
-     * @param safePayUsername   SafePay user name
-     * @param safePayPassword   SafePay password
-     * @return {@link PaymentPreferences}
-     */
-    @Override
-    public PaymentPreferences createSafePay(long accountId, String safePayUsername, String safePayPassword) {
-        //Account account = accountService.getById(accountId);
-        //if (account == null) return null;
-
-        PaymentPreferences paymentPreferences = new PaymentPreferences(accountId, safePayUsername, safePayPassword);
-        //paymentPreferences.setAccount(account);
 
         entityManager.persist(paymentPreferences);
 
@@ -164,6 +140,23 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
         entityManager.persist(preferences);
 
         return preferences;
+    }
+
+    /**
+     * Create SafePay Prefered payment method line
+     * @param accountId         user id who used this payment method
+     * @param safePayUsername   SafePay user name
+     * @param safePayPassword   SafePay password
+     * @return {@link PaymentPreferences}
+     */
+    @Override
+    public PaymentPreferences createSafePay(long accountId, String safePayUsername, String safePayPassword) {
+
+        PaymentPreferences paymentPreferences = new PaymentPreferences(accountId, safePayUsername, safePayPassword);
+
+        entityManager.persist(paymentPreferences);
+
+        return paymentPreferences;
     }
 
     @Override
