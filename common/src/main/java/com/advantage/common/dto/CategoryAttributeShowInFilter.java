@@ -5,6 +5,7 @@ package com.advantage.common.dto;
  */
 public class CategoryAttributeShowInFilter {
     private Long categoryId;
+    private String categoryName;
     private Long attributeId;
     private String attributeName;
     private boolean showInFilter;
@@ -14,13 +15,15 @@ public class CategoryAttributeShowInFilter {
 
     public CategoryAttributeShowInFilter(Long categoryId, Long attributeId, boolean showInFilter) {
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.attributeId = attributeId;
         this.attributeName = null;
         this.showInFilter = showInFilter;
     }
 
-    public CategoryAttributeShowInFilter(Long categoryId, Long attributeId, String attributeName, boolean showInFilter) {
+    public CategoryAttributeShowInFilter(Long categoryId, String categoryName, Long attributeId, String attributeName, boolean showInFilter) {
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.attributeId = attributeId;
         this.attributeName = attributeName;
         this.showInFilter = showInFilter;
@@ -32,6 +35,14 @@ public class CategoryAttributeShowInFilter {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Long getAttributeId() {

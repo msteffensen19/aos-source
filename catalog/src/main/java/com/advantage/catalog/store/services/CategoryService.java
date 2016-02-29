@@ -49,6 +49,25 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryAttributeFilterResponse getAllCategoryAttributesFilter() {
 
+        System.out.println("CategoryService.getAllCategoryAttributesFilter");
+
+        //  region Get and display categories list
+        List<Category> categories = this.getAllCategories();
+        ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(categories, "categories list");
+        //  Sort attributes list (attribute-id 1 in List position 0)
+        Collections.sort(categories,
+                new Comparator<Category>() {
+                    public int compare(Category category1, Category category2) {
+                        return (int)(category1.getCategoryId() - category2.getCategoryId());
+                    }
+                });
+        for (int i = 0; i < categories.size(); i++) {
+            System.out.println("categories(" + i + "): category .id=" + categories.get(i).getCategoryId() + " - .name=\'" + categories.get(i).getCategoryName() + "\'");
+        }
+        System.out.println("");
+        //  endregion
+
+        //  region Get and display attributes list
         List<Attribute> attributes = attributeService.getAllAttributes();
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(attributes, "attributes list");
 
@@ -60,8 +79,6 @@ public class CategoryService {
                     }
                 });
 
-        //  region Display attributes list
-        System.out.println("CategoryService.getAllCategoryAttributesFilter");
         for (int i = 0; i < attributes.size(); i++) {
             System.out.println("attributes(" + i + "): attribute .id=" + attributes.get(i).getId() + " - .name=\'" + attributes.get(i).getName() + "\'");
         }
@@ -74,10 +91,12 @@ public class CategoryService {
 
         if ((categoriesAttributes != null) && (categoriesAttributes.size() > 0)) {
             for (CategoryAttributeFilter categoryAttributeFilter: categoriesAttributes) {
+                String categoryName =  categories.get((int) (categoryAttributeFilter.getCategoryId() - 1)).getCategoryName();
                 String attributeName = attributes.get((int) (categoryAttributeFilter.getAttributeId() - 1)).getName();
 
                 categoryAttributeFilterResponse.createCategoryAttributeShowInFilter(new CategoryAttributeShowInFilter(
                         categoryAttributeFilter.getCategoryId(),
+                        categoryName,
                         categoryAttributeFilter.getAttributeId(),
                         attributeName,
                         categoryAttributeFilter.isShowInFilter()));

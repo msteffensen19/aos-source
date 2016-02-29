@@ -2,14 +2,16 @@ package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dto.account.DemoAppConfigParameter;
 import com.advantage.accountsoap.dto.account.DemoAppConfigStatusResponse;
-import com.advantage.accountsoap.dto.account.UpdateDemoAppConfigParameterResponse;
 import com.advantage.common.Constants;
+import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.xml.XmlHelper;
+import com.google.common.base.Splitter;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -237,43 +239,53 @@ public class DemoAppConfigService {
     }
 
     /**
-     *
-     * @param toolName
-     * @return
+     *  Gets tools names in a String separated by semi-colon (';') and returns all parameters
+     *  which are requested by those tools, meaning: the parameter {@code tools} attribute
+     *  contains the tool name.
+     *  @param toolsNames
+     *  @return {@link List} of {@link DemoAppConfigParameter} which has one or more of the
+     *  tools names in its {@code tools} attribute.
      */
-    public List<DemoAppConfigParameter> getDemoAppConfigParametersByTool(String toolName) {
-        System.out.println("getDemoAppConfigParametersByTool(\"" + toolName + "\") - Begin");
+    public List<DemoAppConfigParameter> getDemoAppConfigParametersByTool(String toolsNames) {
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(toolsNames, "tools names");
+
+        System.out.println("getDemoAppConfigParametersByTool(\"" + toolsNames + "\") - Begin");
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
         System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
-
-        Node rootElement;   //  parameters
 
         NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
             return null;
         }
 
+        //// Use Splitter, on method, and splitToList to separate the substrings into a List
+        //List<String> tools = Splitter.on(';').splitToList(toolsNames);
+        String[] tools = toolsNames.split(";");
+        //List<String> toolsList = Arrays.asList(tools);
+
         List<DemoAppConfigParameter> parameters = new ArrayList<>();
-        for (int i = 0; i < nodesList.getLength(); i++) {
-            Node node = nodesList.item(i);
+        for (String tool : tools) {
+            for (int i = 0; i < nodesList.getLength(); i++) {
+                Node node = nodesList.item(i);
 
-            if ((node.getNodeName().equals("#comment")) || (node.getNodeName().equals("#text"))) {
-                continue;
-            }
+                if ((node.getNodeName().equals("#comment")) || (node.getNodeName().equals("#text"))) {
+                    continue;
+                }
 
-            NamedNodeMap attr = node.getAttributes();
-            Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
-            String attributeValue = nodeAttr.getTextContent();
+                NamedNodeMap attr = node.getAttributes();
+                Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
+                String attributeValue = nodeAttr.getTextContent();
 
-            if (attributeValue.contains(toolName)) {
-                parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
-                System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                if (attributeValue.contains(tool)) {
+                    parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
+                    System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                }
             }
         }
 
-        System.out.println("getDemoAppConfigParametersByTool(\"" + toolName + "\") - End");
+        System.out.println("getDemoAppConfigParametersByTool(\"" + toolsNames + "\") - End");
         System.out.println("");
 
         return parameters;
