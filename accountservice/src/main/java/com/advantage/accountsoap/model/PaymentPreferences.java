@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.model;
 
+import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.enums.PaymentMethodEnum;
 
 import javax.persistence.*;
@@ -91,7 +92,7 @@ public class PaymentPreferences {
         this.customerName = customerName;
     }
 
-    public PaymentPreferences(long userId, String safePayUsername, String safePayPassword) {
+    public PaymentPreferences(long userId, String safePayUsername, String safePayPassword) throws Exception {
         this.setUserId(userId);
         this.setPaymentMethod(PaymentMethodEnum.SAFE_PAY.getCode());
         this.setSafePayUsername(safePayUsername);
@@ -150,7 +151,10 @@ public class PaymentPreferences {
         return this.safePayPassword;
     }
 
-    public void setSafePayPassword(String safePayPassword) {
+    public void setSafePayPassword(String safePayPassword) throws Exception {
+        AccountPassword accountPassword = new AccountPassword(getSafePayUsername(), safePayPassword);
+        this.safePayPassword = accountPassword.getEncryptedPassword();
+
         this.safePayPassword = safePayPassword;
     }
 
