@@ -13,7 +13,8 @@ import javax.xml.bind.annotation.*;
                 "emailAddressInLogin",
                 "productInStockDefaultValue",
                 "userSecondWsdl",
-                "userLoginTimeout"
+                "userLoginTimeout",
+                "adminDemoAppConfigAllowed"
         })
 @XmlRootElement(name = "AccountConfigurationStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountConfigurationStatusResponse {
@@ -29,6 +30,8 @@ public class AccountConfigurationStatusResponse {
     private boolean userSecondWsdl;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private int userLoginTimeout;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private boolean adminDemoAppConfigAllowed;
 
     public AccountConfigurationStatusResponse() {
     }
@@ -38,13 +41,15 @@ public class AccountConfigurationStatusResponse {
                                               boolean emailAddressInLogin,
                                               int productInStockDefaultValue,
                                               boolean userSecondWsdl,
-                                              int userLoginTimeout) {
+                                              int userLoginTimeout,
+                                              boolean adminDemoAppConfigAllowed) {
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
         this.emailAddressInLogin = emailAddressInLogin;
         this.productInStockDefaultValue = productInStockDefaultValue;
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
+        this.adminDemoAppConfigAllowed = adminDemoAppConfigAllowed;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -93,5 +98,13 @@ public class AccountConfigurationStatusResponse {
 
     public void setUserLoginTimeout(int userLoginTimeout) {
         this.userLoginTimeout = userLoginTimeout;
+    }
+
+    public boolean isAdminDemoAppConfigAllowed() {
+        return this.adminDemoAppConfigAllowed;
+    }
+
+    public void setAdminDemoAppConfigAllowed(boolean adminDemoAppConfigAllowed) {
+        this.adminDemoAppConfigAllowed = adminDemoAppConfigAllowed;
     }
 }
