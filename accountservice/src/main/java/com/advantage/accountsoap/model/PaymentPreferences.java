@@ -154,8 +154,6 @@ public class PaymentPreferences {
     public void setSafePayPassword(String safePayPassword) throws Exception {
         AccountPassword accountPassword = new AccountPassword(getSafePayUsername(), safePayPassword);
         this.safePayPassword = accountPassword.getEncryptedPassword();
-
-        this.safePayPassword = safePayPassword;
     }
 
     public String getCustomerName() {
