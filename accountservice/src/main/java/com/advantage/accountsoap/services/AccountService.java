@@ -230,6 +230,7 @@ public class AccountService {
                     item.getCardNumber(),
                     item.getExpirationDate(),
                     item.getCvvNumber(),
+                    item.getCustomerName(),
                     item.getSafePayUsername(),
                     item.getSafePayPassword(),
                     item.getUserId()));
