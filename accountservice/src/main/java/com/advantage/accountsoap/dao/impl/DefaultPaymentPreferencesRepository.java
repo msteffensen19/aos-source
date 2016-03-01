@@ -152,9 +152,13 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
     @Override
     public PaymentPreferences createSafePay(long accountId, String safePayUsername, String safePayPassword) {
 
-        PaymentPreferences paymentPreferences = new PaymentPreferences(accountId, safePayUsername, safePayPassword);
-
-        entityManager.persist(paymentPreferences);
+        PaymentPreferences paymentPreferences = null;
+        try {
+            paymentPreferences = new PaymentPreferences(accountId, safePayUsername, safePayPassword);
+            entityManager.persist(paymentPreferences);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return paymentPreferences;
     }
@@ -166,7 +170,11 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
         if (paymentPreferences == null) return null;
 
         paymentPreferences.setSafePayUsername(safePayUsername);
-        paymentPreferences.setSafePayPassword(safePayPassword);
+        try {
+            paymentPreferences.setSafePayPassword(safePayPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         entityManager.persist(paymentPreferences);
 
