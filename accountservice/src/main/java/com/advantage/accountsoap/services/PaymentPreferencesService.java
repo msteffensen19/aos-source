@@ -154,6 +154,7 @@ public class PaymentPreferencesService {
                     pref.getCardNumber(),
                     pref.getExpirationDate(),
                     pref.getCvvNumber(),
+                    pref.getCustomerName(),
                     pref.getSafePayUsername(),
                     pref.getSafePayPassword(),
                     /* preferenceId */ 0);

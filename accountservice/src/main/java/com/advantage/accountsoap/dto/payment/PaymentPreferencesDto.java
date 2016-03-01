@@ -39,12 +39,14 @@ public class PaymentPreferencesDto {
     public PaymentPreferencesDto() {
     }
 
-    public PaymentPreferencesDto(int paymentMethod, String cardNumber, String expirationDate, String cvvNumber,
-                                 String safePayUsername, String safePayPassword, long preferenceId) {
+    public PaymentPreferencesDto(int paymentMethod, String cardNumber, String expirationDate,
+                                 String cvvNumber, String customerName, String safePayUsername,
+                                 String safePayPassword, long preferenceId) {
         this.paymentMethod = paymentMethod;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvvNumber = cvvNumber;
+        this.customerName = customerName;
         this.safePayUsername = safePayUsername;
         this.safePayPassword = safePayPassword;
         this.preferenceId = preferenceId;
@@ -82,6 +84,14 @@ public class PaymentPreferencesDto {
         this.cvvNumber = cvvNumber;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public String getSafePayUsername() {
         return safePayUsername;
     }
@@ -96,14 +106,6 @@ public class PaymentPreferencesDto {
 
     public void setSafePayPassword(String safePayPassword) {
         this.safePayPassword = safePayPassword;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
     }
 
     public long getPreferenceId() {
