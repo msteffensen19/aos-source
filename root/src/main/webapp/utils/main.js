@@ -125,6 +125,12 @@ Helper.sortArrayByAbc = function(arr){
     });
 }
 
+Helper.sortAttributesByName = function(attrs){
+    return attrs.sort(function (a, b) {
+        return a.attributeName == b.attributeName ? 0 : a.attributeName < b.attributeName ? -1 : 1;
+    });
+}
+
 Helper.sortArrayByColorName = function(colors){
     return colors.sort(function (a, b) {
         return a.name == b.name ? 0 : a.name < b.name ? -1 : 1;

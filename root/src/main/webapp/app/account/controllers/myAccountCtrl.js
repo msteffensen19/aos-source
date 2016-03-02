@@ -21,10 +21,6 @@ define(['./module'], function (controllers) {
             l("resolveParams")
             l(resolveParams)
 
-            s.accountDetails = resolveParams.accountDetails;
-            s.shippingDetails = resolveParams.shippingDetails;
-            s.defaultPaymentMethodId = resolveParams.accountDetails.defaultPaymentMethodId
-
             s.masterCredit4Digits = resolveParams.paymentPreferences &&
             resolveParams.paymentPreferences.masterCredit &&
             resolveParams.paymentPreferences.masterCredit.cardNumber ?
@@ -33,8 +29,12 @@ define(['./module'], function (controllers) {
             s.safePayName = resolveParams.paymentPreferences &&
             resolveParams.paymentPreferences.safePay &&
             resolveParams.paymentPreferences.safePay.safepayUsername ?
-            resolveParams.paymentPreferences.safePay.safepayUsername : null;
+                resolveParams.paymentPreferences.safePay.safepayUsername : null;
 
+            s.accountDetails = resolveParams.accountDetails;
+            s.shippingDetails = resolveParams.shippingDetails;
+            s.defaultPaymentMethodId = resolveParams.accountDetails.defaultPaymentMethodId == 0 ?
+                s.masterCredit4Digits != null ? 20 : s.safePayName != null ? 10 : 0 : resolveParams.accountDetails.defaultPaymentMethodId;
 
             s.categoriesPromotions = [
                 { categoryName : 'Tablets', categoryValue : true, },

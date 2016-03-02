@@ -78,13 +78,15 @@
                         translate="ADD_TO_CART"  data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
             </div>
         </div>
+
         <!-- end description section -->
+
 
     </article>
 
     <article class="max-width " data-ng-class="{ topSpace : product.images.length > 1 }" >
         <h2 class="roboto-regular product_specifications" translate="PRODUCT_SPECIFICATIONS"></h2>
-        <div class="roboto-light list" ng-repeat="attr in product.attributes">
+        <div class="roboto-light list" ng-repeat="attr in product_attributes">
             <label class="attr">{{ attr.attributeName | uppercase}}</label>
             <label class="value">{{ attr.attributeValue }}</label>
         </div>
