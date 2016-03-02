@@ -29,6 +29,7 @@ define(['./module'], function (controllers) {
 
             s.accountDetails = resolveParams.accountDetails;
             s.shippingDetails = resolveParams.shippingDetails;
+
             s.defaultPaymentMethodId = resolveParams.accountDetails.defaultPaymentMethodId == 0 ?
                 s.masterCredit4Digits != null ? 20 : s.safePayName != null ? 10 : 0 : resolveParams.accountDetails.defaultPaymentMethodId;
 

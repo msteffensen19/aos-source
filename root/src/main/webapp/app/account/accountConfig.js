@@ -46,7 +46,7 @@ define([], function () {
                     accountService.getAccountDetails().then(
                         function (accountDetails) {
                             defer.resolve({
-                                accountDetails: accountDetails
+                                accountDetails: accountDetails,
                             });
                         });
                     return defer.promise;
@@ -61,11 +61,15 @@ define([], function () {
             resolve: {
                 resolveParams: function ($q, accountService) {
                     var defer = $q.defer()
-                    accountService.getAccountPaymentPreferences().then(
-                        function (paymentPreferences) {
-                            defer.resolve({
-                                paymentPreferences: paymentPreferences,
-                            });
+                    accountService.getAccountDetails().then(
+                        function (accountDetails) {
+                            accountService.getAccountPaymentPreferences().then(
+                                function (paymentPreferences) {
+                                    defer.resolve({
+                                        paymentPreferences: paymentPreferences,
+                                        accountDetails: accountDetails,
+                                    });
+                                });
                         });
                     return defer.promise;
                 }

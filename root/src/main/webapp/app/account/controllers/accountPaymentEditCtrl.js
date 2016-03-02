@@ -17,7 +17,8 @@ define(['./module'], function (controllers) {
                 }
             }
 
-            s.imgRadioButton = 1;
+            s.imgRadioButton = resolveParams.accountDetails.defaultPaymentMethodId + "" == "20" ? 2 : 1;
+
             s.years = [];
             var now = new Date();
             for (var i = 0; i < 10; i++) {
