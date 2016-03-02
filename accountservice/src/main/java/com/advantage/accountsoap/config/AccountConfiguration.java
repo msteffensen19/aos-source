@@ -20,7 +20,7 @@ public class AccountConfiguration {
     private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
     private final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
     private final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
-    private final String ENV_ALLOW_DEMO_APP_CONFIG = "allow.demo.app.config";
+    private final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
 
     @Inject
     private Environment env;
@@ -33,7 +33,7 @@ public class AccountConfiguration {
     public static int PRODUCT_IN_STOCK_DEFAULT_VALUE;
     public static String USER_SECOND_WSDL_VALUE;
     public static int USER_LOGIN_TIMEOUT;
-    public static String ALLOW_DEMO_APP_CONFIG;
+    public static String ALLOW_USER_CONFIGURATION;
 
     //  //  Class that is called must have a method "public void init() throws Exception"
     //@Bean(initMethod = "init")
@@ -49,7 +49,7 @@ public class AccountConfiguration {
         this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserSecondWsdlValue(ENV_USER_SECOND_WSDL_VALUE);
         this.setUserLoginTimeout(ENV_USER_LOGIN_TIMEOUT);
-        this.setAllowDemoAppConfig(ENV_ALLOW_DEMO_APP_CONFIG);
+        this.setAllowUserConfiguration(ENV_ALLOW_USER_CONFIGURATION);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS=" + this.getLoginBlockingIntervalInMilliseconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
@@ -57,7 +57,7 @@ public class AccountConfiguration {
         System.out.println("Configuration: PRODUCT_IN_STOCK_DEFAULT_VALUE=\"" + this.getProductInStockDefaultValue() + "\"");
         System.out.println("Configuration: USER_SECOND_WSDL_VALUE=\"" + this.getUserSecondWsdlValue() + "\"");
         System.out.println("Configuration: USER_LOGIN_TIMEOUT=\"" + this.getUserLoginTimeout() + "\"");
-        System.out.println("Configuration: ALLOW_DEMO_APP_CONFIG=\"" + this.getAllowDemoAppConfig() + "\"");
+        System.out.println("Configuration: ALLOW_USER_CONFIGURATION=\"" + this.getAllowUserConfiguration() + "\"");
 
         return 1;   //  Successful
     }
@@ -137,12 +137,12 @@ public class AccountConfiguration {
         return this.USER_LOGIN_TIMEOUT;
     }
 
-    public void setAllowDemoAppConfig(final String parameterKey) {
-        this.ALLOW_DEMO_APP_CONFIG = env.getProperty(parameterKey);
+    public void setAllowUserConfiguration(final String parameterKey) {
+        this.ALLOW_USER_CONFIGURATION = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
     }
 
-    public String getAllowDemoAppConfig() {
-        return this.ALLOW_DEMO_APP_CONFIG;
+    public String getAllowUserConfiguration() {
+        return this.ALLOW_USER_CONFIGURATION;
     }
 
     public List<String> getAllAccountParameters() {
@@ -154,7 +154,7 @@ public class AccountConfiguration {
         parameters.add("int,PRODUCT_IN_STOCK_DEFAULT_VALUE," + PRODUCT_IN_STOCK_DEFAULT_VALUE);
         parameters.add("string,USER_SECOND_WSDL_VALUE," + USER_SECOND_WSDL_VALUE);
         parameters.add("int,USER_LOGIN_TIMEOUT," + USER_LOGIN_TIMEOUT);
-        parameters.add("string,ALLOW_DEMO_APP_CONFIG," + ALLOW_DEMO_APP_CONFIG);
+        parameters.add("string,ALLOW_USER_CONFIGURATION," + ALLOW_USER_CONFIGURATION);
 
         return parameters;
     }
@@ -166,7 +166,7 @@ public class AccountConfiguration {
                 this.getProductInStockDefaultValue(),
                 this.getUserSecondWsdlValue().equalsIgnoreCase("yes"),
                 this.getUserLoginTimeout(),
-                this.getAllowDemoAppConfig().equalsIgnoreCase("yes"));
+                this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
 
     }
 }

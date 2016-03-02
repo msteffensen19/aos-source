@@ -46,7 +46,7 @@
             <xs:element name="productInStockDefaultValue" type="xs:int"/>
             <xs:element name="userSecondWsdl" type="xs:boolean"/>
             <xs:element name="userLoginTimeout" type="xs:int"/>
-            <xs:element name="adminDemoAppConfigAllowed" type="xs:boolean"/>
+            <xs:element name="allowUserConfiguration" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
 

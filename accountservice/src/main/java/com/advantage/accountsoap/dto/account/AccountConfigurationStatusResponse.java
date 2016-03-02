@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.*;
                 "productInStockDefaultValue",
                 "userSecondWsdl",
                 "userLoginTimeout",
-                "adminDemoAppConfigAllowed"
+                "allowUserConfiguration"
         })
 @XmlRootElement(name = "AccountConfigurationStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountConfigurationStatusResponse {
@@ -31,7 +31,7 @@ public class AccountConfigurationStatusResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private int userLoginTimeout;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private boolean adminDemoAppConfigAllowed;
+    private boolean allowUserConfiguration;
 
     public AccountConfigurationStatusResponse() {
     }
@@ -42,14 +42,14 @@ public class AccountConfigurationStatusResponse {
                                               int productInStockDefaultValue,
                                               boolean userSecondWsdl,
                                               int userLoginTimeout,
-                                              boolean adminDemoAppConfigAllowed) {
+                                              boolean allowUserConfiguration) {
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
         this.emailAddressInLogin = emailAddressInLogin;
         this.productInStockDefaultValue = productInStockDefaultValue;
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
-        this.adminDemoAppConfigAllowed = adminDemoAppConfigAllowed;
+        this.allowUserConfiguration = allowUserConfiguration;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -100,11 +100,11 @@ public class AccountConfigurationStatusResponse {
         this.userLoginTimeout = userLoginTimeout;
     }
 
-    public boolean isAdminDemoAppConfigAllowed() {
-        return this.adminDemoAppConfigAllowed;
+    public boolean isAllowUserConfiguration() {
+        return this.allowUserConfiguration;
     }
 
-    public void setAdminDemoAppConfigAllowed(boolean adminDemoAppConfigAllowed) {
-        this.adminDemoAppConfigAllowed = adminDemoAppConfigAllowed;
+    public void setAllowUserConfiguration(boolean allowUserConfiguration) {
+        this.allowUserConfiguration = allowUserConfiguration;
     }
 }
