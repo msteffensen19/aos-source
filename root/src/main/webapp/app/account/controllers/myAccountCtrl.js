@@ -17,10 +17,6 @@ define(['./module'], function (controllers) {
                 }
             }
 
-            //s.defaultPaymentMethodId = resolveParams.user
-            l("resolveParams")
-            l(resolveParams)
-
             s.masterCredit4Digits = resolveParams.paymentPreferences &&
             resolveParams.paymentPreferences.masterCredit &&
             resolveParams.paymentPreferences.masterCredit.cardNumber ?
@@ -49,7 +45,6 @@ define(['./module'], function (controllers) {
             }
 
             Helper.forAllPage();
-
 
         }]);
 });

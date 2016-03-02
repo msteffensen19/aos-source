@@ -78,10 +78,8 @@ define(['./module'], function (controllers) {
 
             Helper.forAllPage();
 
-        }])
-    ;
-})
-;
+        }]);
+});
 
 
 
