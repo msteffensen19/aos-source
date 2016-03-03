@@ -16,6 +16,13 @@ public class DemoAppConfigGetParametersByToolRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String toolName;
 
+    public DemoAppConfigGetParametersByToolRequest() {
+    }
+
+    public DemoAppConfigGetParametersByToolRequest(String toolName) {
+        this.toolName = toolName;
+    }
+
     public String getToolName() {
         return this.toolName;
     }
