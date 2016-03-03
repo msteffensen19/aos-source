@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="country" type="{com.advantage.online.store.accountservice}country" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="Country" type="{com.advantage.online.store.accountservice}CountryDto" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,7 +36,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "GetCountriesResponse")
 public class GetCountriesResponse {
 
-    protected List<Country> country;
+    @XmlElement(name = "Country")
+    protected List<CountryDto> country;
 
     /**
      * Gets the value of the country property.
@@ -55,13 +57,13 @@ public class GetCountriesResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Country }
+     * {@link CountryDto }
      * 
      * 
      */
-    public List<Country> getCountry() {
+    public List<CountryDto> getCountry() {
         if (country == null) {
-            country = new ArrayList<Country>();
+            country = new ArrayList<CountryDto>();
         }
         return this.country;
     }

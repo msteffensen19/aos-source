@@ -26,18 +26,6 @@ public interface AccountServicePort {
 
     /**
      * 
-     * @param getCountriesRequest
-     * @return
-     *     returns AccountServiceClient.GetCountriesResponse
-     */
-    @WebMethod(operationName = "GetCountries")
-    @WebResult(name = "GetCountriesResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetCountriesResponse")
-    public GetCountriesResponse getCountries(
-        @WebParam(name = "GetCountriesRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetCountriesRequest")
-        Object getCountriesRequest);
-
-    /**
-     * 
      * @param getAccountByIdRequest
      * @return
      *     returns AccountServiceClient.GetAccountByIdResponse
@@ -50,64 +38,308 @@ public interface AccountServicePort {
 
     /**
      * 
-     * @param countryCreateRequest
-     */
-    @WebMethod(operationName = "CountryCreate")
-    @Oneway
-    public void countryCreate(
-        @WebParam(name = "CountryCreateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "CountryCreateRequest")
-        CountryCreateRequest countryCreateRequest);
-
-    /**
-     * 
-     * @param accountsRequest
+     * @param getAllAccountsRequest
      * @return
-     *     returns AccountServiceClient.AccountsResponse
+     *     returns AccountServiceClient.GetAllAccountsResponse
      */
-    @WebMethod(operationName = "Accounts")
-    @WebResult(name = "AccountsResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountsResponse")
-    public AccountsResponse accounts(
-        @WebParam(name = "AccountsRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountsRequest")
-        Object accountsRequest);
+    @WebMethod(operationName = "GetAllAccounts")
+    @WebResult(name = "GetAllAccountsResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAllAccountsResponse")
+    public GetAllAccountsResponse getAllAccounts(
+        @WebParam(name = "GetAllAccountsRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAllAccountsRequest")
+        GetAllAccountsRequest getAllAccountsRequest);
 
     /**
      * 
-     * @param accountCreateRequest
+     * @param addressUpdateRequest
+     * @return
+     *     returns AccountServiceClient.AddressUpdateResponse
      */
-    @WebMethod(operationName = "AccountCreate")
-    @Oneway
-    public void accountCreate(
-        @WebParam(name = "AccountCreateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountCreateRequest")
-        AccountCreateRequest accountCreateRequest);
+    @WebMethod(operationName = "AddressUpdate")
+    @WebResult(name = "AddressUpdateResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddressUpdateResponse")
+    public AddressUpdateResponse addressUpdate(
+        @WebParam(name = "AddressUpdateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddressUpdateRequest")
+        AddressUpdateRequest addressUpdateRequest);
 
     /**
      * 
-     * @param accountUpdateRequest
+     * @param accountConfigurationStatusRequest
      */
-    @WebMethod(operationName = "AccountUpdate")
+    @WebMethod(operationName = "AccountConfigurationStatus")
     @Oneway
-    public void accountUpdate(
-        @WebParam(name = "AccountUpdateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountUpdateRequest")
-        AccountUpdateRequest accountUpdateRequest);
+    public void accountConfigurationStatus(
+        @WebParam(name = "AccountConfigurationStatusRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountConfigurationStatusRequest")
+        AccountConfigurationStatusRequest accountConfigurationStatusRequest);
+
+    /**
+     * 
+     * @param addSafePayMethodRequest
+     * @return
+     *     returns AccountServiceClient.AddSafePayMethodResponse
+     */
+    @WebMethod(operationName = "AddSafePayMethod")
+    @WebResult(name = "AddSafePayMethodResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddSafePayMethodResponse")
+    public AddSafePayMethodResponse addSafePayMethod(
+        @WebParam(name = "AddSafePayMethodRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddSafePayMethodRequest")
+        AddSafePayMethodRequest addSafePayMethodRequest);
 
     /**
      * 
      * @param countrySearchRequest
+     * @return
+     *     returns AccountServiceClient.CountrySearchResponse
      */
     @WebMethod(operationName = "CountrySearch")
-    @Oneway
-    public void countrySearch(
+    @WebResult(name = "CountrySearchResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "CountrySearchResponse")
+    public CountrySearchResponse countrySearch(
         @WebParam(name = "CountrySearchRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "CountrySearchRequest")
         CountrySearchRequest countrySearchRequest);
 
     /**
      * 
+     * @param demoAppConfigRestoreFactorySettingsRequest
+     * @return
+     *     returns AccountServiceClient.DemoAppConfigRestoreFactorySettingsResponse
+     */
+    @WebMethod(operationName = "DemoAppConfigRestoreFactorySettings")
+    @WebResult(name = "DemoAppConfigRestoreFactorySettingsResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "DemoAppConfigRestoreFactorySettingsResponse")
+    public DemoAppConfigRestoreFactorySettingsResponse demoAppConfigRestoreFactorySettings(
+        @WebParam(name = "DemoAppConfigRestoreFactorySettingsRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "DemoAppConfigRestoreFactorySettingsRequest")
+        DemoAppConfigRestoreFactorySettingsRequest demoAppConfigRestoreFactorySettingsRequest);
+
+    /**
+     * 
+     * @param updateDemoAppConfigParameterRequest
+     * @return
+     *     returns AccountServiceClient.UpdateDemoAppConfigParameterResponse
+     */
+    @WebMethod(operationName = "UpdateDemoAppConfigParameter")
+    @WebResult(name = "UpdateDemoAppConfigParameterResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "UpdateDemoAppConfigParameterResponse")
+    public UpdateDemoAppConfigParameterResponse updateDemoAppConfigParameter(
+        @WebParam(name = "UpdateDemoAppConfigParameterRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "UpdateDemoAppConfigParameterRequest")
+        UpdateDemoAppConfigParameterRequest updateDemoAppConfigParameterRequest);
+
+    /**
+     * 
+     * @param updateMasterCreditMethodRequest
+     */
+    @WebMethod(operationName = "UpdateMasterCreditMethod")
+    @Oneway
+    public void updateMasterCreditMethod(
+        @WebParam(name = "UpdateMasterCreditMethodRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "UpdateMasterCreditMethodRequest")
+        UpdateMasterCreditMethodRequest updateMasterCreditMethodRequest);
+
+    /**
+     * 
+     * @param accountCreateRequest
+     * @return
+     *     returns AccountServiceClient.AccountCreateResponse
+     */
+    @WebMethod(operationName = "AccountCreate")
+    @WebResult(name = "AccountCreateResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountCreateResponse")
+    public AccountCreateResponse accountCreate(
+        @WebParam(name = "AccountCreateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountCreateRequest")
+        AccountCreateRequest accountCreateRequest);
+
+    /**
+     * 
+     * @param accountLogoutRequest
+     * @return
+     *     returns AccountServiceClient.AccountLogoutResponse
+     */
+    @WebMethod(operationName = "AccountLogout")
+    @WebResult(name = "AccountLogoutResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountLogoutResponse")
+    public AccountLogoutResponse accountLogout(
+        @WebParam(name = "AccountLogoutRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountLogoutRequest")
+        AccountLogoutRequest accountLogoutRequest);
+
+    /**
+     * 
+     * @param demoAppConfigGetAllParametersRequest
+     * @return
+     *     returns AccountServiceClient.DemoAppConfigGetAllParametersResponse
+     */
+    @WebMethod(operationName = "DemoAppConfigGetAllParameters")
+    @WebResult(name = "DemoAppConfigGetAllParametersResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "DemoAppConfigGetAllParametersResponse")
+    public DemoAppConfigGetAllParametersResponse demoAppConfigGetAllParameters(
+        @WebParam(name = "DemoAppConfigGetAllParametersRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "DemoAppConfigGetAllParametersRequest")
+        DemoAppConfigGetAllParametersRequest demoAppConfigGetAllParametersRequest);
+
+    /**
+     * 
+     * @param addMasterCreditMethodRequest
+     * @return
+     *     returns AccountServiceClient.AddMasterCreditMethodResponse
+     */
+    @WebMethod(operationName = "AddMasterCreditMethod")
+    @WebResult(name = "AddMasterCreditMethodResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddMasterCreditMethodResponse")
+    public AddMasterCreditMethodResponse addMasterCreditMethod(
+        @WebParam(name = "AddMasterCreditMethodRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddMasterCreditMethodRequest")
+        AddMasterCreditMethodRequest addMasterCreditMethodRequest);
+
+    /**
+     * 
+     * @param getAllDemoAppConfigParametersRequest
+     * @return
+     *     returns AccountServiceClient.GetAllDemoAppConfigParametersResponse
+     */
+    @WebMethod(operationName = "GetAllDemoAppConfigParameters")
+    @WebResult(name = "GetAllDemoAppConfigParametersResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAllDemoAppConfigParametersResponse")
+    public GetAllDemoAppConfigParametersResponse getAllDemoAppConfigParameters(
+        @WebParam(name = "GetAllDemoAppConfigParametersRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAllDemoAppConfigParametersRequest")
+        GetAllDemoAppConfigParametersRequest getAllDemoAppConfigParametersRequest);
+
+    /**
+     * 
+     * @param addAddressesRequest
+     * @return
+     *     returns AccountServiceClient.AddAddressesResponse
+     */
+    @WebMethod(operationName = "AddAddresses")
+    @WebResult(name = "AddAddressesResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddAddressesResponse")
+    public AddAddressesResponse addAddresses(
+        @WebParam(name = "AddAddressesRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddAddressesRequest")
+        AddAddressesRequest addAddressesRequest);
+
+    /**
+     * 
+     * @param getAccountByIdNewRequest
+     * @return
+     *     returns AccountServiceClient.GetAccountByIdNewResponse
+     */
+    @WebMethod(operationName = "GetAccountByIdNew")
+    @WebResult(name = "GetAccountByIdNewResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAccountByIdNewResponse")
+    public GetAccountByIdNewResponse getAccountByIdNew(
+        @WebParam(name = "GetAccountByIdNewRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAccountByIdNewRequest")
+        GetAccountByIdNewRequest getAccountByIdNewRequest);
+
+    /**
+     * 
+     * @param changePasswordRequest
+     * @return
+     *     returns AccountServiceClient.ChangePasswordResponse
+     */
+    @WebMethod(operationName = "ChangePassword")
+    @WebResult(name = "ChangePasswordResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "ChangePasswordResponse")
+    public ChangePasswordResponse changePassword(
+        @WebParam(name = "ChangePasswordRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "ChangePasswordRequest")
+        ChangePasswordRequest changePasswordRequest);
+
+    /**
+     * 
+     * @param accountUpdateRequest
+     * @return
+     *     returns AccountServiceClient.AccountUpdateResponse
+     */
+    @WebMethod(operationName = "AccountUpdate")
+    @WebResult(name = "AccountUpdateResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountUpdateResponse")
+    public AccountUpdateResponse accountUpdate(
+        @WebParam(name = "AccountUpdateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountUpdateRequest")
+        AccountUpdateRequest accountUpdateRequest);
+
+    /**
+     * 
      * @param accountLoginRequest
+     * @return
+     *     returns AccountServiceClient.AccountLoginResponse
      */
     @WebMethod(operationName = "AccountLogin")
-    @Oneway
-    public void accountLogin(
+    @WebResult(name = "AccountLoginResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountLoginResponse")
+    public AccountLoginResponse accountLogin(
         @WebParam(name = "AccountLoginRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AccountLoginRequest")
         AccountLoginRequest accountLoginRequest);
+
+    /**
+     * 
+     * @param paymentMethodUpdateRequest
+     * @return
+     *     returns AccountServiceClient.PaymentMethodUpdateResponse
+     */
+    @WebMethod(operationName = "PaymentMethodUpdate")
+    @WebResult(name = "PaymentMethodUpdateResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "PaymentMethodUpdateResponse")
+    public PaymentMethodUpdateResponse paymentMethodUpdate(
+        @WebParam(name = "PaymentMethodUpdateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "PaymentMethodUpdateRequest")
+        PaymentMethodUpdateRequest paymentMethodUpdateRequest);
+
+    /**
+     * 
+     * @param updateSafePayMethodRequest
+     */
+    @WebMethod(operationName = "UpdateSafePayMethod")
+    @Oneway
+    public void updateSafePayMethod(
+        @WebParam(name = "UpdateSafePayMethodRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "UpdateSafePayMethodRequest")
+        UpdateSafePayMethodRequest updateSafePayMethodRequest);
+
+    /**
+     * 
+     * @param countryCreateRequest
+     * @return
+     *     returns AccountServiceClient.CountryCreateResponse
+     */
+    @WebMethod(operationName = "CountryCreate")
+    @WebResult(name = "CountryCreateResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "CountryCreateResponse")
+    public CountryCreateResponse countryCreate(
+        @WebParam(name = "CountryCreateRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "CountryCreateRequest")
+        CountryCreateRequest countryCreateRequest);
+
+    /**
+     * 
+     * @param getAccountPaymentPreferencesRequest
+     * @return
+     *     returns AccountServiceClient.GetAccountPaymentPreferencesResponse
+     */
+    @WebMethod(operationName = "GetAccountPaymentPreferences")
+    @WebResult(name = "GetAccountPaymentPreferencesResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAccountPaymentPreferencesResponse")
+    public GetAccountPaymentPreferencesResponse getAccountPaymentPreferences(
+        @WebParam(name = "GetAccountPaymentPreferencesRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAccountPaymentPreferencesRequest")
+        GetAccountPaymentPreferencesRequest getAccountPaymentPreferencesRequest);
+
+    /**
+     * 
+     * @param getAddressesByAccountIdRequest
+     * @return
+     *     returns AccountServiceClient.GetAddressesByAccountIdResponse
+     */
+    @WebMethod(operationName = "GetAddressesByAccountId")
+    @WebResult(name = "GetAddressesByAccountIdResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAddressesByAccountIdResponse")
+    public GetAddressesByAccountIdResponse getAddressesByAccountId(
+        @WebParam(name = "GetAddressesByAccountIdRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAddressesByAccountIdRequest")
+        GetAddressesByAccountIdRequest getAddressesByAccountIdRequest);
+
+    /**
+     * 
+     * @param demoAppConfigGetParametersByToolRequest
+     * @return
+     *     returns AccountServiceClient.DemoAppConfigGetParametersByToolResponse
+     */
+    @WebMethod(operationName = "DemoAppConfigGetParametersByTool")
+    @WebResult(name = "DemoAppConfigGetParametersByToolResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "DemoAppConfigGetParametersByToolResponse")
+    public DemoAppConfigGetParametersByToolResponse demoAppConfigGetParametersByTool(
+        @WebParam(name = "DemoAppConfigGetParametersByToolRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "DemoAppConfigGetParametersByToolRequest")
+        DemoAppConfigGetParametersByToolRequest demoAppConfigGetParametersByToolRequest);
+
+    /**
+     * 
+     * @param getCountriesRequest
+     * @return
+     *     returns AccountServiceClient.GetCountriesResponse
+     */
+    @WebMethod(operationName = "GetCountries")
+    @WebResult(name = "GetCountriesResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetCountriesResponse")
+    public GetCountriesResponse getCountries(
+        @WebParam(name = "GetCountriesRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetCountriesRequest")
+        GetCountriesRequest getCountriesRequest);
+
+    /**
+     * 
+     * @param deletePaymentPreferenceRequest
+     * @return
+     *     returns AccountServiceClient.DeletePaymentPreferenceResponse
+     */
+    @WebMethod(operationName = "DeletePaymentPreference")
+    @WebResult(name = "DeletePaymentPreferenceResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "DeletePaymentPreferenceResponse")
+    public DeletePaymentPreferenceResponse deletePaymentPreference(
+        @WebParam(name = "DeletePaymentPreferenceRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "DeletePaymentPreferenceRequest")
+        DeletePaymentPreferenceRequest deletePaymentPreferenceRequest);
 
 }

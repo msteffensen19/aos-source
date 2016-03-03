@@ -3,6 +3,7 @@ package AccountServiceClient;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -17,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="AccountResponse" type="{com.advantage.online.store.accountservice}AccountDto"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,27 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "result"
+    "accountResponse"
 })
 @XmlRootElement(name = "GetAccountByIdResponse")
 public class GetAccountByIdResponse {
 
-    protected boolean result;
+    @XmlElement(name = "AccountResponse", required = true)
+    protected AccountDto accountResponse;
 
     /**
-     * Gets the value of the result property.
+     * Gets the value of the accountResponse property.
      * 
+     * @return
+     *     possible object is
+     *     {@link AccountDto }
+     *     
      */
-    public boolean isResult() {
-        return result;
+    public AccountDto getAccountResponse() {
+        return accountResponse;
     }
 
     /**
-     * Sets the value of the result property.
+     * Sets the value of the accountResponse property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link AccountDto }
+     *     
      */
-    public void setResult(boolean value) {
-        this.result = value;
+    public void setAccountResponse(AccountDto value) {
+        this.accountResponse = value;
     }
 
 }
