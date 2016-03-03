@@ -15,6 +15,7 @@ define(['./module'], function (controllers) {
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
+            s.product_attributes = Helper.sortAttributesByName(s.product.attributes);
 
             if(!resolveParams.selectedColor && s.product.colors.length > 0){
                 var colors = Helper.sortArrayByColorName(s.product.colors);
@@ -37,7 +38,6 @@ define(['./module'], function (controllers) {
                 if(disable){
                     return;
                 }
-
                 var productToAdd = angular.copy(s.product);
                 productToAdd.colors = [s.colorSelected];
                 if(s.pageState == 'edit'){

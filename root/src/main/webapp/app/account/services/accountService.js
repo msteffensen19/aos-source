@@ -113,6 +113,7 @@ define(['./module'], function (services) {
                                         "cvvNumber": MCard.CVVNUMBER,
                                         "expirationDate": MCard.EXPIRATIONDATE,
                                         "paymentMethod": MCard.PAYMENTMETHOD,
+                                        "customername": MCard.CUSTOMERNAME
                                     }
                                 }
                                 if(SPay != null){
@@ -120,6 +121,7 @@ define(['./module'], function (services) {
                                         "id": SPay.PREFERENCEID,
                                         "safepayUsername": SPay.SAFEPAYUSERNAME,
                                         "paymentMethod": SPay.PAYMENTMETHOD,
+                                        "safepayPassword" : SPay.SAFEPAYPASSWORD,
                                     }
                                 }
                                 l(masterCredit)
@@ -215,7 +217,8 @@ define(['./module'], function (services) {
                     var user = $rootScope.userCookie;
                     var expectToReceive = {
                         safePayUsername:safePay.username,
-                        accountId: user.response.userId
+                        accountId: user.response.userId,
+                        safePayPassword: safePay.password
                     }
 
                     var defer = $q.defer();
@@ -235,7 +238,8 @@ define(['./module'], function (services) {
 
                     var expectToReceive = {
                         safePayUsername:safePay.username,
-                        referenceId: "1234567890"
+                        referenceId: "1234567890",
+                        safePayPassword: safePay.password
                     }
 
                     var defer = $q.defer();

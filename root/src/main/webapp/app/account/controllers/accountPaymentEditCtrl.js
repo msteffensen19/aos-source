@@ -9,21 +9,15 @@ define(['./module'], function (controllers) {
         '$location', 'resolveParams', 'accountService',
         function (s, $timeout, $location, resolveParams, accountService) {
 
-            l("resolveParams.paymentPreferences");
-            l(resolveParams.paymentPreferences);
-            l("resolveParams.paymentPreferences");
-
-            var _i = 0;
             checkLogin();
             function checkLogin() {
-                console.log(++_i);
                 s.checkLogin();
                 if ($location.path().indexOf('/accountPaymentEdit') != -1) {
                     $timeout(checkLogin, 2000);
                 }
             }
 
-            s.imgRadioButton = 1;
+            s.imgRadioButton = resolveParams.accountDetails.defaultPaymentMethodId + "" == "20" ? 2 : 1;
 
             s.years = [];
             var now = new Date();
@@ -44,17 +38,17 @@ define(['./module'], function (controllers) {
                         month: masterCredit.expirationDate.substring(0, 2),
                         year: masterCredit.expirationDate.substring(2)
                     },
-                    name: "",
+                    name: masterCredit.customername,
                 }
             }
             var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
                 resolveParams.paymentPreferences.safePay : null;
             if(safePay != null){
                 s.savePay.username = safePay.safepayUsername;
+                s.savePay.password = safePay.safepayPassword;
             }
 
             s.saveMasterCredit = function () {
-
                 var response;
                 if (true) {
                     response = accountService.addMasterCreditMethod(s.card)

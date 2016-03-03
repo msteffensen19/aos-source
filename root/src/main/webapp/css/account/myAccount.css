@@ -105,7 +105,10 @@
 #myAccountContainer .cube .option span{
     font-weight: 300;
     font-size: 14px;
-    padding-bottom: 0;
+}
+
+#myAccountContainer .cube .notPromotionCheckbox {
+    margin-top: 6px;
 }
 
 #myAccountContainer .cube .categoriesBox p{
