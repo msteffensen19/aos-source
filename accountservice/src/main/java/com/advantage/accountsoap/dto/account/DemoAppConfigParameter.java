@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.*;
                 "attributeTools",
                 "parameterValue"
         })
-@XmlRootElement(name = "Parameter", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "DemoAppConfigParameter", namespace = WebServiceConfig.NAMESPACE_URI)
 public class DemoAppConfigParameter {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String parameterName;

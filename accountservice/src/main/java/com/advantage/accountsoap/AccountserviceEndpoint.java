@@ -367,7 +367,7 @@ public class AccountserviceEndpoint {
      */
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigGetAllParametersRequest")
     @ResponsePayload
-    public DemoAppConfigGetAllParametersResponse getAllDemoAppConfigParameters() {
+    public DemoAppConfigGetAllParametersResponse demoAppConfigGetAllParameters() {
         List<DemoAppConfigParameter> parameters = service.getAllDemoAppConfigParameters();
 
         DemoAppConfigGetAllParametersResponse response = new DemoAppConfigGetAllParametersResponse();

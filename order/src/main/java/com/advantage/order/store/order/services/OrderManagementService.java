@@ -577,7 +577,9 @@ public class OrderManagementService {
 
         AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
 
-        DemoAppConfigGetParametersByToolResponse response = accountServicePort.demoAppConfigGetParametersByTool(new DemoAppConfigGetParametersByToolRequest());
+        DemoAppConfigGetParametersByToolRequest request = new DemoAppConfigGetParametersByToolRequest();
+        request.setToolName(toolName);
+        DemoAppConfigGetParametersByToolResponse response = accountServicePort.demoAppConfigGetParametersByTool(request);
 
         return response;
     }

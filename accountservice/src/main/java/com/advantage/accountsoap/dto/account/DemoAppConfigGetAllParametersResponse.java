@@ -13,7 +13,8 @@ import java.util.List;
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
                 "parameters"
-        })
+        }
+)
 @XmlRootElement(name = "DemoAppConfigGetAllParametersResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class DemoAppConfigGetAllParametersResponse {
     @XmlElement(name = "parameters",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
