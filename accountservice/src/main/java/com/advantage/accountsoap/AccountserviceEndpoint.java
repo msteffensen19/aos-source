@@ -385,7 +385,10 @@ public class AccountserviceEndpoint {
     public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(@RequestPayload DemoAppConfigGetParametersByToolRequest request) {
 
         List<DemoAppConfigParameter> parameters = service.getDemoAppConfigParametersByTool(request.getToolName());
-        DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse(parameters);
+
+        //DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse(parameters);
+        DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse();
+        response.setParameters(parameters);
 
         return response;
     }

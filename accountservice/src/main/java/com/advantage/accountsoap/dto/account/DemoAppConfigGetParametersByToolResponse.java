@@ -28,10 +28,7 @@ public class DemoAppConfigGetParametersByToolResponse {
      }
 
      public List<DemoAppConfigParameter> getParameters() {
-         if (parameters == null) {
-             parameters = new ArrayList<>();
-         }
-         return parameters;
+         return this.parameters;
      }
 
      public void setParameters(List<DemoAppConfigParameter> parameters) {
