@@ -354,7 +354,7 @@ public class OrderController {
         DemoAppConfigGetParametersByToolResponse getByToolResponse = orderManagementService.getDemoAppConfigParametersByTool(toolName);
 
         if ((getByToolResponse != null) &&
-                (getByToolResponse.getParameters() != null)) {
+                (getByToolResponse.getParameter() != null)) {
             System.out.println("OrderController -> getDemoAppConfigParametersByTool() - Successful");
             return new ResponseEntity<>(getByToolResponse, HttpStatus.OK);
         } else {

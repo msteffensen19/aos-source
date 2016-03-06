@@ -46,22 +46,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DemoAppConfigGetAllParametersResponse }
-     * 
-     */
-    public DemoAppConfigGetAllParametersResponse createDemoAppConfigGetAllParametersResponse() {
-        return new DemoAppConfigGetAllParametersResponse();
-    }
-
-    /**
-     * Create an instance of {@link DemoAppConfigGetParametersByToolResponse }
-     * 
-     */
-    public DemoAppConfigGetParametersByToolResponse createDemoAppConfigGetParametersByToolResponse() {
-        return new DemoAppConfigGetParametersByToolResponse();
-    }
-
-    /**
      * Create an instance of {@link DemoAppConfigRestoreFactorySettingsRequest }
      * 
      */
@@ -270,22 +254,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAllDemoAppConfigParametersResponse }
-     * 
-     */
-    public GetAllDemoAppConfigParametersResponse createGetAllDemoAppConfigParametersResponse() {
-        return new GetAllDemoAppConfigParametersResponse();
-    }
-
-    /**
-     * Create an instance of {@link DemoAppConfigParameter }
-     * 
-     */
-    public DemoAppConfigParameter createDemoAppConfigParameter() {
-        return new DemoAppConfigParameter();
-    }
-
-    /**
      * Create an instance of {@link AccountCreateRequest }
      * 
      */
@@ -315,14 +283,6 @@ public class ObjectFactory {
      */
     public AddAddressesResponse createAddAddressesResponse() {
         return new AddAddressesResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetAllDemoAppConfigParametersRequest }
-     * 
-     */
-    public GetAllDemoAppConfigParametersRequest createGetAllDemoAppConfigParametersRequest() {
-        return new GetAllDemoAppConfigParametersRequest();
     }
 
     /**
@@ -462,11 +422,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DemoAppConfigGetAllParametersResponse.Parameters }
+     * Create an instance of {@link DemoAppConfigGetAllParametersResponse }
      * 
      */
-    public DemoAppConfigGetAllParametersResponse.Parameters createDemoAppConfigGetAllParametersResponseParameters() {
-        return new DemoAppConfigGetAllParametersResponse.Parameters();
+    public DemoAppConfigGetAllParametersResponse createDemoAppConfigGetAllParametersResponse() {
+        return new DemoAppConfigGetAllParametersResponse();
+    }
+
+    /**
+     * Create an instance of {@link DemoAppConfigParameter }
+     * 
+     */
+    public DemoAppConfigParameter createDemoAppConfigParameter() {
+        return new DemoAppConfigParameter();
     }
 
     /**
@@ -518,11 +486,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DemoAppConfigGetParametersByToolResponse.Parameters }
+     * Create an instance of {@link DemoAppConfigGetParametersByToolResponse }
      * 
      */
-    public DemoAppConfigGetParametersByToolResponse.Parameters createDemoAppConfigGetParametersByToolResponseParameters() {
-        return new DemoAppConfigGetParametersByToolResponse.Parameters();
+    public DemoAppConfigGetParametersByToolResponse createDemoAppConfigGetParametersByToolResponse() {
+        return new DemoAppConfigGetParametersByToolResponse();
     }
 
     /**

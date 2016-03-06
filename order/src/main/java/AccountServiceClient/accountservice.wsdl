@@ -191,12 +191,6 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetAllDemoAppConfigParametersRequest">
-        <xs:complexType>
-            <xs:sequence/>
-        </xs:complexType>
-    </xs:element>
-
     <xs:complexType name="DemoAppConfigParameter">
         <xs:sequence>
             <xs:element name="parameterName" type="xs:string"/>
@@ -205,7 +199,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="GetAllDemoAppConfigParametersResponse">
+    <xs:element name="DemoAppConfigGetAllParametersResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameter" type="tns:DemoAppConfigParameter"/>
@@ -603,34 +597,10 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="DemoAppConfigGetAllParametersResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element form="qualified" maxOccurs="unbounded" name="parameters">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element form="qualified" name="parameterName" type="xs:string"/>
-                            <xs:element form="qualified" name="attributeTools" type="xs:string"/>
-                            <xs:element form="qualified" name="parameterValue" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
     <xs:element name="DemoAppConfigGetParametersByToolResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element form="qualified" maxOccurs="unbounded" name="parameters">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element form="qualified" name="parameterName" type="xs:string"/>
-                            <xs:element form="qualified" name="attributeTools" type="xs:string"/>
-                            <xs:element form="qualified" name="parameterValue" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameter" type="tns:DemoAppConfigParameter"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -709,10 +679,6 @@
     <wsdl:part element="tns:AddMasterCreditMethodRequest" name="AddMasterCreditMethodRequest">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="GetAllDemoAppConfigParametersResponse">
-    <wsdl:part element="tns:GetAllDemoAppConfigParametersResponse" name="GetAllDemoAppConfigParametersResponse">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="GetAllAccountsResponse">
     <wsdl:part element="tns:GetAllAccountsResponse" name="GetAllAccountsResponse">
     </wsdl:part>
@@ -735,10 +701,6 @@
   </wsdl:message>
   <wsdl:message name="AccountUpdateRequest">
     <wsdl:part element="tns:AccountUpdateRequest" name="AccountUpdateRequest">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="GetAllDemoAppConfigParametersRequest">
-    <wsdl:part element="tns:GetAllDemoAppConfigParametersRequest" name="GetAllDemoAppConfigParametersRequest">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="AccountLoginResponse">
@@ -932,12 +894,6 @@
       <wsdl:output message="tns:AddMasterCreditMethodResponse" name="AddMasterCreditMethodResponse">
     </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetAllDemoAppConfigParameters">
-      <wsdl:input message="tns:GetAllDemoAppConfigParametersRequest" name="GetAllDemoAppConfigParametersRequest">
-    </wsdl:input>
-      <wsdl:output message="tns:GetAllDemoAppConfigParametersResponse" name="GetAllDemoAppConfigParametersResponse">
-    </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="AddAddresses">
       <wsdl:input message="tns:AddAddressesRequest" name="AddAddressesRequest">
     </wsdl:input>
@@ -1125,15 +1081,6 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="AddMasterCreditMethodResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllDemoAppConfigParameters">
-      <soap:operation soapAction=""/>
-      <wsdl:input name="GetAllDemoAppConfigParametersRequest">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="GetAllDemoAppConfigParametersResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

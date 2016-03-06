@@ -178,18 +178,6 @@ public interface AccountServicePort {
 
     /**
      * 
-     * @param getAllDemoAppConfigParametersRequest
-     * @return
-     *     returns AccountServiceClient.GetAllDemoAppConfigParametersResponse
-     */
-    @WebMethod(operationName = "GetAllDemoAppConfigParameters")
-    @WebResult(name = "GetAllDemoAppConfigParametersResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAllDemoAppConfigParametersResponse")
-    public GetAllDemoAppConfigParametersResponse getAllDemoAppConfigParameters(
-        @WebParam(name = "GetAllDemoAppConfigParametersRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "GetAllDemoAppConfigParametersRequest")
-        GetAllDemoAppConfigParametersRequest getAllDemoAppConfigParametersRequest);
-
-    /**
-     * 
      * @param addAddressesRequest
      * @return
      *     returns AccountServiceClient.AddAddressesResponse
