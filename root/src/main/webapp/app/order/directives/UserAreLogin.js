@@ -6,8 +6,8 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService',
-        'registerService', '$timeout',
-        function (rs, $templateCache, orderService, registerService, $timeout) {
+        'registerService', '$timeout', 'accountService',
+        function (rs, $templateCache, orderService, registerService, $timeout, accountService) {
         return {
             replace: true,
             template: $templateCache.get('app/order/partials/user-are-login.html'),
@@ -21,8 +21,13 @@ define(['./module'], function (directives) {
                 },
                 post: function(s){
 
+                    var alreadyHaveMasterCreditCart = s.card.number.length > 0;
+                    var alreadyHaveSafePayCart = s.savePay.username.length > 0;
+
                     s.firstTag = true;
-                    s.imgRadioButton = 1;
+                    s.imgRadioButton = s.accountDetails.defaultPaymentMethodId + "" == "20" ? 2
+                        : s.savePay.username.length > 0 ? 1
+                        : s.card.number.length > 0  ? 2 : 1;
 
                     s.countries = null;
                     registerService.getAllCountries().then(function (countries) {
@@ -36,6 +41,8 @@ define(['./module'], function (directives) {
                         s.countries = countries;
                     });
 
+                    s.cardNumber
+
                     s.countryChange = function(country){
                         s.user.countryId = country.id;
                         s.user.country = country.isoName;
@@ -48,10 +55,7 @@ define(['./module'], function (directives) {
                         s.userDetailsEditMode = false;
                     }
 
-                    var aaaa = 0;
                     s.accountUpdate = function(){
-                        l(++aaaa)
-                        l(s.agree_Agreement)
                         if(s.agree_Agreement)
                         {
                             orderService.accountUpdate(s.user).then(function(res){
@@ -103,22 +107,34 @@ define(['./module'], function (directives) {
                     }
 
                     s.payNow_SafePay = function () {
+                        if(s.saveSafePay){
+                            if (!alreadyHaveSafePayCart) {
+                                accountService.addSafePayMethod(s.savePay)
+                            }
+                            else {
+                                accountService.updateSafePayMethod(s.savePay)
+                            }
+                        }
                         var TransPaymentMethod = "SafePay";
                         var accountNumber = 843200971;
                         safePay(TransPaymentMethod, accountNumber);
                     }
 
                     s.payNow_masterCredit = function () {
+                        if(s.saveMasterCredit) {
+                            if (!alreadyHaveMasterCreditCart) {
+                                accountService.addMasterCreditMethod(s.card)
+                            }
+                            else {
+                                accountService.updateMasterCreditMethod(s.card)
+                            }
+                        }
                         var TransPaymentMethod = "MasterCredit";
                         var accountNumber = 112987298763;
                         safePay(TransPaymentMethod, accountNumber);
                     }
 
                     s.payNow_manual = function () {
-                        s.card.number = '';
-                        angular.forEach(s.CardNumber, function (fourDigits) {
-                            s.card.number += fourDigits + "";
-                        })
                         s.payNow_masterCredit()
                     }
 
@@ -132,6 +148,11 @@ define(['./module'], function (directives) {
 
                     s.paymentMethod_edit = function () {
                         s.noCards = true;
+                    }
+
+                    s.Back_to_shipping_details = function(){
+                        s.firstTag = true;
+                        s.showMasterCart = s.noCards;
                     }
                 }
             }

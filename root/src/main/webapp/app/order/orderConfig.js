@@ -2,7 +2,7 @@
  * Created by correnti on 31/12/2015.
  */
 
-define([],function(){
+define([], function () {
 
     function config($stateProvider) {
 
@@ -16,33 +16,36 @@ define([],function(){
                 //requireLogin: true,  // this property will apply to all children of 'app'
                 breadcrumbName: "orderPayment",
             },
-            resolve : {
+            resolve: {
                 resolveParams: function ($q, orderService, accountService) {
                     var defer = $q.defer();
 
                     orderService.getAccountById().
                     then(function (user) {
-                        if(user) {
+                        if (user) {
 
-                            orderService.getShippingCost(user).
-                            then(function (shippingCost) {
+                            accountService.getAccountDetails().then(
+                                function (accountDetails) {
 
-                                accountService.getAccountPaymentPreferences().
-                                then(function (paymentPreferences) {
-                                        defer.resolve({
-                                            paymentPreferences: paymentPreferences,
-                                            shippingCost: shippingCost,
-                                            user: user,
-                                            noCards: true,
-                                            CardNumber: [],
+                                    orderService.getShippingCost(user).
+                                    then(function (shippingCost) {
+
+                                        accountService.getAccountPaymentPreferences().
+                                        then(function (paymentPreferences) {
+                                            defer.resolve({
+                                                paymentPreferences: paymentPreferences,
+                                                shippingCost: shippingCost,
+                                                user: user,
+                                                accountDetails: accountDetails,
+                                            });
                                         });
                                     });
-                            });
+                                });
                         }
                         else {
                             defer.resolve({
-                                shippingCost : null,
-                                user : null
+                                shippingCost: null,
+                                user: null
                             });
                         }
                     });

@@ -45,13 +45,6 @@
 
                             <div ng-show="imgRadioButton == 1">
 
-                                <div class="notice">
-                                    <h4 translate="Notice"></h4>
-
-                                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}.
-                                        {{ 'Please_enter_a_fake_data' | translate }}</p>
-                                </div>
-
                                 <sec-validate>
 
                                     <sec-input
@@ -76,7 +69,7 @@
                                             id-attr="savePay_password">
                                     </sec-input>
 
-                                    <div class="option marginTop">
+                                    <div class="option marginTop " data-ng-class="{ blocked : savePayBlocked }">
                                         <input ng-model="preferredPayment_SafePay" type="checkbox" class="ng-pristine ng-untouched ng-valid">
                                         <span class="roboto-light ng-binding"> {{ 'Set_SafePay_as_Preferred_payment' | translate }} </span>
                                     </div>
@@ -100,14 +93,6 @@
                             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
                             <div ng-show="imgRadioButton == 2 ">
-
-                                <div class="notice">
-                                    <h4 translate="Notice"></h4>
-
-                                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }}. {{
-                                        'Please_enter_a_fake_data' |
-                                        translate }}</p>
-                                </div>
 
                                 <sec-validate class="smollInput">
 
@@ -161,13 +146,13 @@
                                                id-attr="Card_name">
                                     </sec-input>
 
-                                    <div class="option marginTop">
+                                    <div class="option marginTop" data-ng-class="{ blocked : savePayBlocked }">
                                         <input ng-model="preferredPayment_MasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
                                         <span class="roboto-light ng-binding"> {{ 'Set_MasterCredit_as_Preferred_payment' | translate }} </span>
                                     </div>
 
 
-                                    <div class="blueLink" style="">
+                                    <div class="blueLink" >
                                         <label>
                                             <button sec-submit-attr="saveMasterCredit()"
                                                    class="roboto-medium sec-validate-invalid accountDetailsBtn"

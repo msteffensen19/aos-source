@@ -129,9 +129,15 @@ define(['./module'], function (controllers) {
 
             $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
 
-
+            var _setUser = 0;
             $scope.setUser = function () {
-                $scope.loginUser = {email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}
+                if(_setUser > 0){
+                    $scope.signIn({ email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak', } , true);
+                }
+                _setUser++;
+                setTimeout(function(){
+                    _setUser = 0;
+                }, 1000);
             }
 
             $scope.accountSection = function () {

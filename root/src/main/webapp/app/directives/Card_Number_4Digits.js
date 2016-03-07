@@ -9,8 +9,11 @@ define(['./module'], function (directives) {
     directives.directive('cardNumberFourDigits', function(){
         return{
             restrict: 'A',
-            link: function(s, e, a, ctrl){
 
+            link: function(s, e, a, ctrl){
+                if(s.card && s.card.number && s.card.number.length > 0 ){
+                    e.addClass('Card_Number_4Digits');
+                }
                 var input = $(e).find('.inputtext');
                 $(input).on({
                     focus: function () {

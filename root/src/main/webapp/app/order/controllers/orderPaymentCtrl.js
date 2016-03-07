@@ -10,14 +10,12 @@ define(['./module'], function (controllers) {
         function (s, rs, resolveParams, orderService, cartService, $filter, $location) {
 
 
-            s.user = resolveParams.user
-            s.masterCredit = resolveParams.paymentPreferences.masterCredit;
-            s.safePay = resolveParams.paymentPreferences.safePay;
-            if(resolveParams.user == null){
+           if(resolveParams.user == null){
                 $location.path('login')
                 return;
             }
-
+            s.user = resolveParams.user;
+            s.accountDetails = resolveParams.accountDetails;
             s.checkCart();
 
             ///// PAYMENT SUCCESS ////
@@ -34,15 +32,19 @@ define(['./module'], function (controllers) {
             });
             ///// END PAYMENT SUCCESS ////
 
-            s.noCards = resolveParams.noCards; //check if have cards
-
-            s.cardNumber = resolveParams.CardNumber;
-
+            s.noCards = !(resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit);
+            s.showMasterCart = false;
             s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
             s.savePay = { username : '', password : '' }
 
+            //s.masterCredit = resolveParams.paymentPreferences.masterCredit;
+            //s.safePay = resolveParams.paymentPreferences.safePay;
+
+            l(resolveParams)
             var masterCredit = resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit ?
                 resolveParams.paymentPreferences.masterCredit : null;
+
+            s.CardNumber = [];
             if(masterCredit != null){
                 s.card = {
                     number: masterCredit.cardNumber.substring(4),
@@ -51,17 +53,33 @@ define(['./module'], function (controllers) {
                         month: masterCredit.expirationDate.substring(0, 2),
                         year: masterCredit.expirationDate.substring(2)
                     },
-                    name: "",
+                    name: masterCredit.customername,
                 }
+                s.CardNumber = splitCartNumber(masterCredit.cardNumber);
             }
+
+            function splitCartNumber(cartNum){
+                var arr = [];
+                for (var i  = 0; i < cartNum.length && i + 3 < cartNum.length; i+=4)
+                {
+                    arr.push(cartNum.substring(i, i + 4));
+                }
+                return arr;
+            }
+
             var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
                 resolveParams.paymentPreferences.safePay : null;
             if(safePay != null){
                 s.savePay.username = safePay.safepayUsername;
+                //s.savePay.password = safePay.safepayPassword;
             }
+            s.saveSafePay = true;
+            s.saveMasterCredit = true;
 
-/*
 
+
+
+            /*
             s.card = {
                 number : '',
                 cvv : '',
