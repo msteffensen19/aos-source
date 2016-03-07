@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="accountId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="accountId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,13 +33,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "GetAccountByIdRequest")
 public class GetAccountByIdRequest {
 
-    protected int accountId;
+    protected long accountId;
 
     /**
      * Gets the value of the accountId property.
      * 
      */
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
@@ -47,7 +47,7 @@ public class GetAccountByIdRequest {
      * Sets the value of the accountId property.
      * 
      */
-    public void setAccountId(int value) {
+    public void setAccountId(long value) {
         this.accountId = value;
     }
 

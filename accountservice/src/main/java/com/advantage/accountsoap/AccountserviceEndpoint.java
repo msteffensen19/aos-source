@@ -367,7 +367,7 @@ public class AccountserviceEndpoint {
      */
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigGetAllParametersRequest")
     @ResponsePayload
-    public DemoAppConfigGetAllParametersResponse getAllDemoAppConfigParameters() {
+    public DemoAppConfigGetAllParametersResponse demoAppConfigGetAllParameters() {
         List<DemoAppConfigParameter> parameters = service.getAllDemoAppConfigParameters();
 
         DemoAppConfigGetAllParametersResponse response = new DemoAppConfigGetAllParametersResponse();
@@ -383,9 +383,11 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigGetParametersByToolRequest")
     @ResponsePayload
     public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(@RequestPayload DemoAppConfigGetParametersByToolRequest request) {
-        DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse();
 
         List<DemoAppConfigParameter> parameters = service.getDemoAppConfigParametersByTool(request.getToolName());
+
+        //DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse(parameters);
+        DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse();
         response.setParameters(parameters);
 
         return response;

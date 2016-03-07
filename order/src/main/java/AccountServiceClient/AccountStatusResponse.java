@@ -17,11 +17,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="sessionId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="sessionId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,22 +32,54 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AccountStatusResponse", propOrder = {
-    "reason",
-    "sessionId",
     "success",
+    "userId",
+    "reason",
     "token",
-    "userId"
+    "sessionId"
 })
 public class AccountStatusResponse {
 
+    protected boolean success;
+    protected long userId;
     @XmlElement(required = true)
     protected String reason;
     @XmlElement(required = true)
-    protected String sessionId;
-    protected boolean success;
-    @XmlElement(required = true)
     protected String token;
-    protected long userId;
+    @XmlElement(required = true)
+    protected String sessionId;
+
+    /**
+     * Gets the value of the success property.
+     * 
+     */
+    public boolean isSuccess() {
+        return success;
+    }
+
+    /**
+     * Sets the value of the success property.
+     * 
+     */
+    public void setSuccess(boolean value) {
+        this.success = value;
+    }
+
+    /**
+     * Gets the value of the userId property.
+     * 
+     */
+    public long getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets the value of the userId property.
+     * 
+     */
+    public void setUserId(long value) {
+        this.userId = value;
+    }
 
     /**
      * Gets the value of the reason property.
@@ -71,46 +103,6 @@ public class AccountStatusResponse {
      */
     public void setReason(String value) {
         this.reason = value;
-    }
-
-    /**
-     * Gets the value of the sessionId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    /**
-     * Sets the value of the sessionId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSessionId(String value) {
-        this.sessionId = value;
-    }
-
-    /**
-     * Gets the value of the success property.
-     * 
-     */
-    public boolean isSuccess() {
-        return success;
-    }
-
-    /**
-     * Sets the value of the success property.
-     * 
-     */
-    public void setSuccess(boolean value) {
-        this.success = value;
     }
 
     /**
@@ -138,19 +130,27 @@ public class AccountStatusResponse {
     }
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the sessionId property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public long getUserId() {
-        return userId;
+    public String getSessionId() {
+        return sessionId;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the sessionId property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setUserId(long value) {
-        this.userId = value;
+    public void setSessionId(String value) {
+        this.sessionId = value;
     }
 
 }

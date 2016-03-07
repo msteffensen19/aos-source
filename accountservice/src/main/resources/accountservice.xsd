@@ -191,12 +191,6 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetAllDemoAppConfigParametersRequest">
-        <xs:complexType>
-            <xs:sequence/>
-        </xs:complexType>
-    </xs:element>
-
     <xs:complexType name="DemoAppConfigParameter">
         <xs:sequence>
             <xs:element name="parameterName" type="xs:string" />
@@ -205,7 +199,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="GetAllDemoAppConfigParametersResponse">
+    <xs:element name="DemoAppConfigGetAllParametersResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Parameter" type="tns:DemoAppConfigParameter" minOccurs="0" maxOccurs="unbounded"/>
@@ -603,34 +597,10 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="DemoAppConfigGetAllParametersResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="parameters" form="qualified" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="parameterName" type="xs:string" form="qualified"/>
-                            <xs:element name="attributeTools" type="xs:string" form="qualified"/>
-                            <xs:element name="parameterValue" type="xs:string" form="qualified"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
     <xs:element name="DemoAppConfigGetParametersByToolResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="parameters" form="qualified" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="parameterName" type="xs:string" form="qualified"/>
-                            <xs:element name="attributeTools" type="xs:string" form="qualified"/>
-                            <xs:element name="parameterValue" type="xs:string" form="qualified"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="Parameter" type="tns:DemoAppConfigParameter" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -20,11 +20,15 @@ public class DemoAppConfigGetParametersByToolResponse {
      @XmlElement(name = "parameters",namespace = WebServiceConfig.NAMESPACE_URI, required = true)
      protected List<DemoAppConfigParameter> parameters;
 
+     public DemoAppConfigGetParametersByToolResponse() {
+     }
+
+     public DemoAppConfigGetParametersByToolResponse(List<DemoAppConfigParameter> parameters) {
+         this.parameters = parameters;
+     }
+
      public List<DemoAppConfigParameter> getParameters() {
-         if (parameters == null) {
-             parameters = new ArrayList<>();
-         }
-         return parameters;
+         return this.parameters;
      }
 
      public void setParameters(List<DemoAppConfigParameter> parameters) {

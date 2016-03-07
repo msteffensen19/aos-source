@@ -2,6 +2,7 @@ package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 
+import AccountServiceClient.DemoAppConfigGetParametersByToolResponse;
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
@@ -331,4 +332,36 @@ public class OrderController {
             return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
         }
     }
+
+    //  region call DemoAppConfigGetParametersByTool
+    /*  =========================================================================================================   */
+    @RequestMapping(value = "/orders/DemoAppConfig/parameters/{tool_name}", method = RequestMethod.GET)
+    @ApiOperation(value = "DemoAppConfig Get Parameters By Tool")
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Bad Request", response = OrderPurchaseResponse.class),
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class),
+            }
+    )
+    public ResponseEntity<DemoAppConfigGetParametersByToolResponse> getDemoAppConfigParametersByTool(@PathVariable("tool_name") String toolName,
+                                                                                                     HttpServletRequest request,
+                                                                                                     HttpServletResponse response) {
+
+        System.out.println("OrderController -> getDemoAppConfigParametersByTool() - Begin");
+
+        DemoAppConfigGetParametersByToolResponse getByToolResponse = orderManagementService.getDemoAppConfigParametersByTool(toolName);
+
+        if ((getByToolResponse != null) &&
+                (getByToolResponse.getParameter() != null)) {
+            System.out.println("OrderController -> getDemoAppConfigParametersByTool() - Successful");
+            return new ResponseEntity<>(getByToolResponse, HttpStatus.OK);
+        } else {
+            // TODO-Benny return error code suitable to the error
+            System.out.println("OrderController -> getDemoAppConfigParametersByTool() - Failure");
+            return new ResponseEntity<>(getByToolResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+    //  endregion
 }

@@ -18,18 +18,18 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="accountType" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="allowOffersPromotion" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="cityName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="phoneNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="accountId" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="countryId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="stateProvince" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="cityName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="zipcode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="phoneNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="accountType" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="allowOffersPromotion" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,171 +40,65 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "accountType",
-    "address",
-    "allowOffersPromotion",
-    "cityName",
-    "country",
-    "email",
-    "firstName",
     "lastName",
-    "password",
-    "phoneNumber",
+    "firstName",
+    "accountId",
+    "countryId",
     "stateProvince",
-    "zipcode"
+    "cityName",
+    "address",
+    "zipcode",
+    "phoneNumber",
+    "email",
+    "accountType",
+    "allowOffersPromotion"
 })
 @XmlRootElement(name = "AccountUpdateRequest")
 public class AccountUpdateRequest {
 
-    protected int accountType;
-    @XmlElement(required = true)
-    protected String address;
-    @XmlElement(required = true)
-    protected String allowOffersPromotion;
-    @XmlElement(required = true)
-    protected String cityName;
-    protected int country;
-    @XmlElement(required = true)
-    protected String email;
-    @XmlElement(required = true)
-    protected String firstName;
     @XmlElement(required = true)
     protected String lastName;
     @XmlElement(required = true)
-    protected String password;
-    @XmlElement(required = true)
-    protected String phoneNumber;
+    protected String firstName;
+    protected long accountId;
+    protected long countryId;
     @XmlElement(required = true)
     protected String stateProvince;
     @XmlElement(required = true)
+    protected String cityName;
+    @XmlElement(required = true)
+    protected String address;
+    @XmlElement(required = true)
     protected String zipcode;
+    @XmlElement(required = true)
+    protected String phoneNumber;
+    @XmlElement(required = true)
+    protected String email;
+    protected int accountType;
+    protected boolean allowOffersPromotion;
 
     /**
-     * Gets the value of the accountType property.
-     * 
-     */
-    public int getAccountType() {
-        return accountType;
-    }
-
-    /**
-     * Sets the value of the accountType property.
-     * 
-     */
-    public void setAccountType(int value) {
-        this.accountType = value;
-    }
-
-    /**
-     * Gets the value of the address property.
+     * Gets the value of the lastName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAddress() {
-        return address;
+    public String getLastName() {
+        return lastName;
     }
 
     /**
-     * Sets the value of the address property.
+     * Sets the value of the lastName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAddress(String value) {
-        this.address = value;
-    }
-
-    /**
-     * Gets the value of the allowOffersPromotion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAllowOffersPromotion() {
-        return allowOffersPromotion;
-    }
-
-    /**
-     * Sets the value of the allowOffersPromotion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAllowOffersPromotion(String value) {
-        this.allowOffersPromotion = value;
-    }
-
-    /**
-     * Gets the value of the cityName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCityName() {
-        return cityName;
-    }
-
-    /**
-     * Sets the value of the cityName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCityName(String value) {
-        this.cityName = value;
-    }
-
-    /**
-     * Gets the value of the country property.
-     * 
-     */
-    public int getCountry() {
-        return country;
-    }
-
-    /**
-     * Sets the value of the country property.
-     * 
-     */
-    public void setCountry(int value) {
-        this.country = value;
-    }
-
-    /**
-     * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEmail(String value) {
-        this.email = value;
+    public void setLastName(String value) {
+        this.lastName = value;
     }
 
     /**
@@ -232,75 +126,35 @@ public class AccountUpdateRequest {
     }
 
     /**
-     * Gets the value of the lastName property.
+     * Gets the value of the accountId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getLastName() {
-        return lastName;
+    public long getAccountId() {
+        return accountId;
     }
 
     /**
-     * Sets the value of the lastName property.
+     * Sets the value of the accountId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setLastName(String value) {
-        this.lastName = value;
+    public void setAccountId(long value) {
+        this.accountId = value;
     }
 
     /**
-     * Gets the value of the password property.
+     * Gets the value of the countryId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getPassword() {
-        return password;
+    public long getCountryId() {
+        return countryId;
     }
 
     /**
-     * Sets the value of the password property.
+     * Sets the value of the countryId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setPassword(String value) {
-        this.password = value;
-    }
-
-    /**
-     * Gets the value of the phoneNumber property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the value of the phoneNumber property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPhoneNumber(String value) {
-        this.phoneNumber = value;
+    public void setCountryId(long value) {
+        this.countryId = value;
     }
 
     /**
@@ -328,6 +182,54 @@ public class AccountUpdateRequest {
     }
 
     /**
+     * Gets the value of the cityName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCityName() {
+        return cityName;
+    }
+
+    /**
+     * Sets the value of the cityName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCityName(String value) {
+        this.cityName = value;
+    }
+
+    /**
+     * Gets the value of the address property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Sets the value of the address property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAddress(String value) {
+        this.address = value;
+    }
+
+    /**
      * Gets the value of the zipcode property.
      * 
      * @return
@@ -349,6 +251,86 @@ public class AccountUpdateRequest {
      */
     public void setZipcode(String value) {
         this.zipcode = value;
+    }
+
+    /**
+     * Gets the value of the phoneNumber property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Sets the value of the phoneNumber property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPhoneNumber(String value) {
+        this.phoneNumber = value;
+    }
+
+    /**
+     * Gets the value of the email property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the value of the email property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEmail(String value) {
+        this.email = value;
+    }
+
+    /**
+     * Gets the value of the accountType property.
+     * 
+     */
+    public int getAccountType() {
+        return accountType;
+    }
+
+    /**
+     * Sets the value of the accountType property.
+     * 
+     */
+    public void setAccountType(int value) {
+        this.accountType = value;
+    }
+
+    /**
+     * Gets the value of the allowOffersPromotion property.
+     * 
+     */
+    public boolean isAllowOffersPromotion() {
+        return allowOffersPromotion;
+    }
+
+    /**
+     * Sets the value of the allowOffersPromotion property.
+     * 
+     */
+    public void setAllowOffersPromotion(boolean value) {
+        this.allowOffersPromotion = value;
     }
 
 }

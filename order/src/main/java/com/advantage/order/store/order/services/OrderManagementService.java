@@ -1,5 +1,6 @@
 package com.advantage.order.store.order.services;
 
+import AccountServiceClient.*;
 import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
@@ -567,5 +568,19 @@ public class OrderManagementService {
         orderResponse.setTransactionReference("");
 
         return orderResponse;
+    }
+    public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(String toolName) {
+
+        URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
+
+        AccountServicePortService accountServicePostService = new AccountServicePortService(urlWsdlLocation);
+
+        AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
+
+        DemoAppConfigGetParametersByToolRequest request = new DemoAppConfigGetParametersByToolRequest();
+        request.setToolName(toolName);
+        DemoAppConfigGetParametersByToolResponse response = accountServicePort.demoAppConfigGetParametersByTool(request);
+
+        return response;
     }
 }
