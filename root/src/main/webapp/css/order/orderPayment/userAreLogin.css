@@ -311,7 +311,7 @@
 #paymentMethod .payment_date {
     width: 48%;
     display: inline-block;
-    margin: 22px 0;
+    margin-top: 22px;
 }
 
 #paymentMethod .payment_date > label{

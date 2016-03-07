@@ -246,6 +246,12 @@
                          <!--</div>-->
                     <!--</sec-input>-->
 
+
+                    <div class="option marginTop">
+                        <input ng-model="saveSafePay" type="checkbox">
+                        <span class="roboto-light ng-binding"> {{ 'Save_changes_in_profile_for_future_use' | translate }} </span>
+                    </div>
+
                     <div class="blueLink margin15px">
                         <a data-ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
@@ -272,7 +278,7 @@
 
             <!-------------------------- MASTERCREDIT SECCION --------------------------->
 
-            <div ng-show="imgRadioButton == 2 && !noCards">
+            <div ng-show="imgRadioButton == 2 && !noCards && !showMasterCart">
 
                 <div class="masterCreditSeccion">
                     <div class="roboto-regular">
@@ -280,14 +286,15 @@
                         <span data-ng-repeat="_4numbers in CardNumber track by $index">
                             {{ _4numbers | showLast4DigitsCard:$last:$index}}
                         </span>
-                        <label class="edit">
+                        <label class="edit" data-ng-click="showMasterCart = !showMasterCart">
                             {{'Edit' | translate}}
                         </label>
                     </div>
                 </div>
 
+
                 <div class="blueLink">
-                    <a ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                    <a ng-click="Back_to_shipping_details()">{{ 'Back_to_shipping_details' | translate }}</a>
                     <label>
                         <!--<input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"-->
                         <!--type="button" value="{{'PAY_NOW' | translate}}"/>-->
@@ -301,12 +308,15 @@
 
 
 
+
+
+
             <!-------------------------- END MASTERCREDIT SECCION --------------------->
 
 
             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
-            <div ng-show="imgRadioButton == 2 && noCards">
+            <div ng-show="(imgRadioButton == 2) && noCards || showMasterCart">
 
                 <div class="notice">
                     <h4 translate="Notice"></h4>
@@ -371,8 +381,13 @@
                                id-attr="Card_name">
                     </sec-input>
 
+                    <div class="option marginTop">
+                        <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                        <span class="roboto-light ng-binding"> {{ 'Save_changes_in_profile_for_future_use' | translate }} </span>
+                    </div>
+
                     <div class="blueLink">
-                        <a ng-click="firstTag = true"
+                        <a ng-click="Back_to_shipping_details()"
                         >{{ 'Back_to_shipping_details' | translate }}</a>
                         <label>
                             <!-- <input sec-submit-attr="payNow_masterCredit()"
