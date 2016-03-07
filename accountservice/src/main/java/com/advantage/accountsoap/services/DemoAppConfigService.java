@@ -278,7 +278,7 @@ public class DemoAppConfigService {
                 Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
                 String attributeValue = nodeAttr.getTextContent();
 
-                if (attributeValue.contains(tool)) {
+                if (attributeValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
                     parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
                     System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
                 }
