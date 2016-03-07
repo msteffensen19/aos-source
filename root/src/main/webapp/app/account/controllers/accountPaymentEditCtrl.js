@@ -17,8 +17,6 @@ define(['./module'], function (controllers) {
                 }
             }
 
-            s.imgRadioButton = resolveParams.accountDetails.defaultPaymentMethodId + "" == "20" ? 2 : 1;
-
             s.years = [];
             var now = new Date();
             for (var i = 0; i < 10; i++) {
@@ -28,8 +26,11 @@ define(['./module'], function (controllers) {
             s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
             s.savePay = { username : '', password : '' }
 
+            var alreadyHaveMasterCreditCart = false;
+            var alreadyHaveSafePayCart = false;
             var masterCredit = resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit ?
                 resolveParams.paymentPreferences.masterCredit : null;
+
             if(masterCredit != null){
                 s.card = {
                     number: masterCredit.cardNumber.substring(4),
@@ -40,17 +41,27 @@ define(['./module'], function (controllers) {
                     },
                     name: masterCredit.customername,
                 }
+                alreadyHaveMasterCreditCart = true;
             }
             var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
                 resolveParams.paymentPreferences.safePay : null;
             if(safePay != null){
                 s.savePay.username = safePay.safepayUsername;
-                s.savePay.password = safePay.safepayPassword;
+                //s.savePay.password = safePay.safepayPassword;
+                alreadyHaveSafePayCart = true;
             }
+
+            s.preferredPayment_MasterCredit = true;
+            s.preferredPayment_SafePay = true;
+            s.savePayBlocked = safePay == null || masterCredit == null;
+
+            s.imgRadioButton = resolveParams.accountDetails.defaultPaymentMethodId + "" == "20" ? 2
+                : safePay != null ? 1
+                : masterCredit != null ? 2 : 1;
 
             s.saveMasterCredit = function () {
                 var response;
-                if (true) {
+                if (!alreadyHaveMasterCreditCart) {
                     response = accountService.addMasterCreditMethod(s.card)
                 }
                 else {
@@ -70,9 +81,8 @@ define(['./module'], function (controllers) {
             }
 
             s.saveSafePay = function () {
-
                 var response;
-                if (true) {
+                if (!alreadyHaveSafePayCart) {
                     response = accountService.addSafePayMethod(s.savePay)
                 }
                 else {

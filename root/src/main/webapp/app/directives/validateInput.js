@@ -196,7 +196,8 @@ define(['./module'], function (directives) {
                 }
             }
 
-            s.inputFocus = function (id) {
+            s.inputFocus = function (id, speed) {
+
                 var input = $('#secInput_' + id);
                 s.textToShow = {
                     text: s.placeHolder,
@@ -207,11 +208,18 @@ define(['./module'], function (directives) {
                 labelStartPossition = labelStartPossition || lab.css('top');
                 labelStartfont = labelStartfont  || lab.css('font-size');
                 labelStartColor = labelStartColor || lab.css('color');
-                input.prev().animate({
+
+                var animStyle = {
                     'top': '-9px',
                     'font-size' : '12px',
                     'color' : '#828282'
-                }, 300, 'linear');
+                };
+                if(speed == 0){
+                    input.prev().css(animStyle);
+                }
+                else{
+                    input.prev().animate(animStyle, speed || 300, 'linear');
+                }
                 input.siblings(".validate-info").show(200);
             }
 
@@ -465,10 +473,8 @@ define(['./module'], function (directives) {
                     },
                     post: function(s){
                         $timeout(function(){
-                            l("s.modelAttr")
-                            l(s.modelAttr != '' && s.modelAttr != undefined)
                             if(s.modelAttr != '' && s.modelAttr != undefined){
-                                s.inputFocus(s.id);
+                                s.inputFocus(s.id, 0);
                             }
                         }, 500)
                         $timeout(function(){ s.inputBlur(s.id, true); }, 1000)
