@@ -569,6 +569,22 @@ public class OrderManagementService {
 
         return orderResponse;
     }
+
+    public DemoAppConfigGetAllParametersResponse getAllDemoAppConfigParameters() {
+
+        URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
+
+        AccountServicePortService accountServicePostService = new AccountServicePortService(urlWsdlLocation);
+
+        AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
+
+        DemoAppConfigGetAllParametersRequest request = new DemoAppConfigGetAllParametersRequest();
+
+        DemoAppConfigGetAllParametersResponse response = accountServicePort.demoAppConfigGetAllParameters(request);
+
+        return response;
+    }
+
     public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(String toolName) {
 
         URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
