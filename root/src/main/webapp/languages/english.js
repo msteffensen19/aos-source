@@ -144,7 +144,7 @@ var english = {
     'YY' : 'YY',
     'Expiration_Date' : 'Expiration Date',
     'Thank_you_for_buying_with_Advantage' : 'Thank you for buying with Advantage',
-    'Yor_tracking_number_is' : 'Yor tracking number is',
+    'Yor_tracking_number_is' : 'Your tracking number is',
     'Your_order_number_is' : 'Your order number is',
     'Shipping_to' : 'Shipping to',
     'Payment_Method' : 'Payment Method',
