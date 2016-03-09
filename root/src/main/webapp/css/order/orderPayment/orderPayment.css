@@ -22,14 +22,14 @@
 #orderPayment > #userCart {
     width: 330px;
     padding: 20px 25px ;
-    background-color: rgb(249, 249, 249);
+    /*background-color: rgb(249, 249, 249);*/
     position: relative;
     right: -50px;
 }
 
 #orderPayment > #userCart #toolTipCart {
     display: block;
-    background-color: rgb(249, 249, 249);
+    /*background-color: rgb(249, 249, 249);*/
     z-index: 20;
     position: static;
 }
@@ -226,6 +226,13 @@
 
     #orderPayment{
         margin: 0px auto;
+        padding-top: 0px;
+    }
+    #orderPayment > #userCart{
+        margin-top: 20px;
+    }
+    #orderPayment .noUserSection .cover{
+        margin: 16px auto;
     }
 
 }

@@ -1,8 +1,6 @@
 #supportCover {
     max-width: 500px;
     margin: 0 auto;
-    margin-top: 100px;
-    margin-bottom: 200px;
 }
 
 
@@ -45,7 +43,6 @@
 @media screen and (max-width: 600px) {
     #supportCover {
         margin: 0px 28px;
-        margin-bottom: 200px;
     }
     #supportCover button{
         width: 100%;

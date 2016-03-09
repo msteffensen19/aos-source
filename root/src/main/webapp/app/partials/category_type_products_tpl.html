@@ -2,12 +2,16 @@
 
     <div class="cell categoryLeft">
         <p class="filterCount roboto-light">
-            {{([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}} ITEMS
+            <a class="titleItemsCount">
+                {{([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}} {{ 'ITEMS' | translate }}
+            </a>
             <span data-ng-click="toggleFilterSlide('mobileSlide')">
                 <img src="../../css/images/Filter.png" alt="filter"/>
                 {{ 'Filter' | translate }}
+                ({{([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}})
             </span>
         </p>
+
 
 
         <div id="mobileSlide">
@@ -17,7 +21,6 @@
                        ng-show="showClear"></label>
             </label>
             <ul>
-
                 <!--- categories filter Section -->
                 <li ng-if="categoriesFilter != null">
                     <h4 class="accordion roboto-regular arrowDown arrowUp"

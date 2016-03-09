@@ -135,6 +135,11 @@ define(['./module'], function (directives) {
                 },
                 link: function(s, e, a, ctrl){
 
+                    e.on('click',function ($event){
+                            this.select();
+                        }
+                    );
+
                     e.on('keydown', function (event) {
 
                         switch (event.keyCode){

@@ -7,7 +7,7 @@ var english = {
     'OUR_PRODUCTS' : 'OUR PRODUCTS',
     'HOT_PRODUCTS' : 'Hot Products',
     'DEAL_OF_THE_DAY' : 'Deal of the Day',
-    'CONTACT_US' : 'Contact Us',
+    'CONTACT_US' : 'CONTACT US',
     'AOS' : 'AOS',
     'Login': 'Login',
     'LOGIN': 'LOGIN',
@@ -184,6 +184,7 @@ var english = {
     'No_results_for' : 'No results for',
     'No_results' : 'No results',
     'SEND' : 'SEND',
+    'Product_removed': 'Product removed'
 
 
 };

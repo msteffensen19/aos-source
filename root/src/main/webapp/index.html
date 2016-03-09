@@ -125,9 +125,11 @@
                 </ul>
             </li>
             <li>
-                <a class="img" data-ng-click="login('loginMiniTitle')"
-                   data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
-                   data-ng-mouseleave="miniTitleOut('loginMiniTitle')">
+<!--
+                data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
+                data-ng-mouseleave="miniTitleOut('loginMiniTitle')"
+-->
+                <a class="img" data-ng-click="login('loginMiniTitle')">
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
                         {{userCookie.name}}
                     </span>
@@ -139,14 +141,12 @@
                 </a>
             </li>
             <li>
-                <a class="img" href="#/support">
-                    <img src="css/images/contact.png" alt="contact">
-                </a>
-            </li>
-            <li>
                 <a class="img">
                     <search tool-tip-search></search>
                 </a>
+            </li>
+            <li class="nav-li-Links">
+                <a class="menu navLinks" ng-click="gotoElement('contact_us')" translate="CONTACT_US"></a>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
