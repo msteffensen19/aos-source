@@ -1,10 +1,12 @@
 package com.advantage.catalog.store.dao.category;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.ParameterMode;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
@@ -12,6 +14,10 @@ import com.advantage.catalog.store.model.category.CategoryAttributeFilterPK;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
+import com.advantage.root.util.JsonHelper;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -114,4 +120,43 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
         Category category = (Category) query.getSingleResult();
         return (category != null ? category : null);
     }
+
+    @Override
+    public String getCategoryName(int categoryId) {
+
+        //StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("getCategoryName")
+        //        .registerStoredProcedureParameter(1, Long.class, ParameterMode.IN)
+        //        .setParameter(1, categoryId);
+
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("getCategoryName");
+
+        query = query.registerStoredProcedureParameter("category_id", Integer.class, ParameterMode.IN)
+                     .registerStoredProcedureParameter("category_name", Object.class, ParameterMode.OUT)
+                     .setParameter("category_id", categoryId);
+
+        boolean result = query.execute();
+
+        System.out.println("query.execute() returned " + result);
+
+        String categoryName = (String) query.getSingleResult();
+
+        return categoryName;
+    }
+
+    @Override
+    public String getAllCategories02(int seconds_to_sleep) {
+        //StoredProcedureQuery spq = entityManager.createNamedStoredProcedureQuery("getAllCategories02")
+        //        .registerStoredProcedureParameter("p_int" , Integer.class , ParameterMode.IN)
+        //        .setParameter("p_int", 10);
+
+        String statement = "SELECT * FROM public.get_all_categories_02(" + seconds_to_sleep + ")";
+
+        String jsonCategories = (String) entityManager.createNativeQuery(statement)
+                .getSingleResult();
+
+        Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(jsonCategories);
+
+        return jsonCategories;
+    }
+
 }

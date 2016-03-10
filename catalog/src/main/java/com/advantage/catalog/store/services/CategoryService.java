@@ -134,4 +134,14 @@ public class CategoryService {
 
         return dto;
     }
+
+    public String getCategoryName(int categoryId) {
+        String categoryName = categoryRepository.getCategoryName(categoryId);
+        return categoryName;
+    }
+
+    public String getAllCategories02(int p_int) {
+        String categoryName = categoryRepository.getAllCategories02(p_int);
+        return categoryName;
+    }
 }

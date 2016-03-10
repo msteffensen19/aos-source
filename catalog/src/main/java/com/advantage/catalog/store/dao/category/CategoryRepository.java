@@ -3,6 +3,8 @@ package com.advantage.catalog.store.dao.category;
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import org.springframework.data.jpa.repository.query.Procedure;
+
 import java.util.List;
 
 public interface CategoryRepository extends DefaultCRUDOperations<Category> {
@@ -34,4 +36,10 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
     void updateCategoryAttributeFilter(Long categoryId, Long attributeId, boolean showInFilter);
 
     CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId);
+
+    @Procedure(name="getCategoryName", procedureName="get_category_name")
+    String getCategoryName(int categoryId);
+
+    @Procedure(name="getAllCategories02", procedureName="get_all_categories_02")
+    String getAllCategories02(int seconds_to_sleep);
 }

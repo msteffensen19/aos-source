@@ -286,4 +286,41 @@ public class CatalogController {
 
         return new ResponseEntity<>(contactUsResponse, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/categories/getName/{category_id}", method = RequestMethod.GET)
+    @ApiOperation(value = "FOR DEV: get category name by category-id")
+    public ResponseEntity<String> getCategoryName(@PathVariable("category_id") int categoryId) {
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        String categoryName = categoryService.getCategoryName(categoryId);
+        if (categoryName.isEmpty()) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(categoryName, httpStatus);
+    }
+
+    @RequestMapping(value = "/categories/01/getAll", method = RequestMethod.GET)
+    @ApiOperation(value = "FOR DEV: get all categories 01")
+    public ResponseEntity<List<Category>> getAllCategories() {
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        List<Category> categories = categoryService.getAllCategories01();
+        if (categories.size() == 0) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(categories, httpStatus);
+    }
+
+    @RequestMapping(value = "/categories/02/{seconds_to_sleep}", method = RequestMethod.GET)
+    @ApiOperation(value = "FOR DEV: get all categories as JSON string")
+    public ResponseEntity<String> getAllCategories02(@PathVariable("seconds_to_sleep") int seconds_to_slow) {
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        String jsonCategories = categoryService.getAllCategories02(seconds_to_slow);
+        if (jsonCategories.isEmpty()) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(jsonCategories, httpStatus);
+    }
 }
