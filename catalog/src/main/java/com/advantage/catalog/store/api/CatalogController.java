@@ -8,6 +8,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
+import com.advantage.root.util.JsonHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -299,28 +300,21 @@ public class CatalogController {
         return new ResponseEntity<>(categoryName, httpStatus);
     }
 
-    @RequestMapping(value = "/categories/01/getAll", method = RequestMethod.GET)
-    @ApiOperation(value = "FOR DEV: get all categories 01")
-    public ResponseEntity<List<Category>> getAllCategories() {
-        HttpStatus httpStatus = HttpStatus.OK;
-
-        List<Category> categories = categoryService.getAllCategories01();
-        if (categories.size() == 0) {
-            httpStatus = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(categories, httpStatus);
-    }
-
     @RequestMapping(value = "/categories/02/{seconds_to_sleep}", method = RequestMethod.GET)
-    @ApiOperation(value = "FOR DEV: get all categories as JSON string")
+    @ApiOperation(value = "FOR DEV: get all categories as a JSON string")
     public ResponseEntity<String> getAllCategories02(@PathVariable("seconds_to_sleep") int seconds_to_slow) {
+//    public ResponseEntity<List<Category>> getAllCategories02(@PathVariable("seconds_to_sleep") int seconds_to_slow) {
         HttpStatus httpStatus = HttpStatus.OK;
 
         String jsonCategories = categoryService.getAllCategories02(seconds_to_slow);
-        if (jsonCategories.isEmpty()) {
+        if (! jsonCategories.isEmpty()) {
+            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(jsonCategories);
+//            List<Category> categories = new ArrayList<>();
+        } else {
             httpStatus = HttpStatus.BAD_REQUEST;
         }
 
         return new ResponseEntity<>(jsonCategories, httpStatus);
+//        return new ResponseEntity<>(categories, httpStatus);
     }
 }

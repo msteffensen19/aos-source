@@ -145,18 +145,12 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
 
     @Override
     public String getAllCategories02(int seconds_to_sleep) {
-        //StoredProcedureQuery spq = entityManager.createNamedStoredProcedureQuery("getAllCategories02")
-        //        .registerStoredProcedureParameter("p_int" , Integer.class , ParameterMode.IN)
-        //        .setParameter("p_int", 10);
-
         String statement = "SELECT * FROM public.get_all_categories_02(" + seconds_to_sleep + ")";
 
-        String jsonCategories = (String) entityManager.createNativeQuery(statement)
+        String jsonString = (String) entityManager.createNativeQuery(statement)
                 .getSingleResult();
 
-        Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(jsonCategories);
-
-        return jsonCategories;
+        return jsonString;
     }
 
 }

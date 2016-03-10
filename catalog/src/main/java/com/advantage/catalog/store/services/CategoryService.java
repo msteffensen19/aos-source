@@ -141,7 +141,12 @@ public class CategoryService {
     }
 
     public String getAllCategories02(int p_int) {
-        String categoryName = categoryRepository.getAllCategories02(p_int);
-        return categoryName;
+        //  Make it a flat string, remove all TABs and NEW_LINE characters
+        String jsonString = categoryRepository.getAllCategories02(p_int)
+                .replaceAll("\\t", "")
+                .replaceAll("\\n", "");
+
+
+        return jsonString;
     }
 }

@@ -22,14 +22,6 @@ import java.util.Set;
                 }
         ),
         @NamedStoredProcedureQuery(
-                name="getAllCategories01",
-                resultClasses = Category.class,
-                procedureName="get_all_categories_01",
-                parameters={
-                        @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, name = "ref", type = void.class)
-                }
-        ),
-        @NamedStoredProcedureQuery(
                 name="getAllCategories02",
                 resultClasses = String.class,
                 procedureName="get_all_categories_02",
