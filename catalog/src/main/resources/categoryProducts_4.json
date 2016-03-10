@@ -25,32 +25,32 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
-            "name": "Peachy Pink",
-            "code": "F74A75"
+            "name": "Purple",
+            "code": "545195"
           },
           {
             "inStock": 10,
-            "name": "SILVER",
-            "code": "C0C0C0"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
-            "name": "Cobalt Blue",
-            "code": "142DBA"
+            "name": "Blue",
+            "code": "3683D1"
           },
           {
             "inStock": 10,
-            "name": "Sunset Red",
-            "code": "FA2020"
+            "name": "Red",
+            "code": "DD3A5B"
           },
           {
             "inStock": 10,
-            "name": "Blizzard White",
-            "code": "EEEBEB"
+            "name": "White",
+            "code": "FFFFFF"
           }
         ],
         "attributes": [
@@ -107,37 +107,37 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
-            "name": "Peachy Pink",
-            "code": "F74A75"
+            "name": "Purple",
+            "code": "545195"
           },
           {
             "inStock": 10,
-            "name": "SILVER",
-            "code": "C0C0C0"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
-            "name": "Cobalt Blue",
-            "code": "142DBA"
+            "name": "Blue",
+            "code": "3683D1"
           },
           {
             "inStock": 10,
-            "name": "Sunset Red",
-            "code": "FA2020"
+            "name": "Red",
+            "code": "DD3A5B"
           },
           {
             "inStock": 10,
-            "name": "Blizzard White",
-            "code": "EEEBEB"
+            "name": "White",
+            "code": "FFFFFF"
           },
           {
             "inStock": 10,
-            "name": "Violet Purple",
-            "code": "A14AF7"
+            "name": "Yellow",
+            "code": "FCC23D"
           }
         ],
         "attributes": [
@@ -194,32 +194,32 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
-            "name": "Peachy Pink",
-            "code": "F74A75"
+            "name": "Purple",
+            "code": "545195"
           },
           {
             "inStock": 10,
-            "name": "SILVER",
-            "code": "C0C0C0"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
-            "name": "Cobalt Blue",
-            "code": "142DBA"
+            "name": "Blue",
+            "code": "3683D1"
           },
           {
             "inStock": 10,
-            "name": "Sunset Red",
-            "code": "FA2020"
+            "name": "Red",
+            "code": "DD3A5B"
           },
           {
             "inStock": 10,
-            "name": "Blizzard White",
-            "code": "EEEBEB"
+            "name": "White",
+            "code": "FFFFFF"
           }
         ],
         "attributes": [
@@ -274,8 +274,8 @@
         ],
         "colors": [
           {
-            "code": "C0C0C0",
-            "name": "Silver",
+            "code": "C3C3C3",
+            "name": "Gray",
             "inStock": 10
           }
         ],
@@ -330,14 +330,14 @@
         ],
         "colors": [
           {
-            "code": "FFC0CB",
-            "name": "pink",
+            "code": "55CDD5",
+            "name": "Turquoise",
             "inStock": 10
           },
           {
             "inStock": 10,
             "name": "Blue",
-            "code": "0000FF"
+            "code": "3683D1"
           }
         ],
         "attributes": [
@@ -392,8 +392,8 @@
         ],
         "colors": [
           {
-            "code": "C0C0C0",
-            "name": "silver",
+            "code": "C3C3C3",
+            "name": "Gray",
             "inStock": 10
           }
         ],
@@ -449,8 +449,8 @@
         ],
         "colors": [
           {
-            "code": "C0C0C0",
-            "name": "Silver",
+            "code": "C3C3C3",
+            "name": "Gray",
             "inStock": 10
           }
         ],
@@ -506,7 +506,7 @@
         ],
         "colors": [
           {
-            "code": "000000",
+            "code": "414141",
             "name": "Black",
             "inStock": 10
           }
@@ -560,8 +560,8 @@
         ],
         "colors": [
           {
-            "code": "C0C0C0",
-            "name": "silver",
+            "code": "C3C3C3",
+            "name": "Gray",
             "inStock": 10
           }
         ],
@@ -614,8 +614,8 @@
         ],
         "colors": [
           {
-            "code": "C0C0C0",
-            "name": "silver",
+            "code": "C3C3C3",
+            "name": "Gray",
             "inStock": 10
           }
         ],
@@ -671,18 +671,18 @@
         ],
         "colors": [
           {
-            "code": "C0C0C0",
-            "name": "silver",
+            "code": "C3C3C3",
+            "name": "Gray",
             "inStock": 10
           },
           {
-            "code": "A9F5A2",
-            "name": "Minty Green",
+            "code": "FCC23D",
+            "name": "Yellow",
             "inStock": 10
           },
           {
-            "code": "FA2020",
-            "name": "Sunset Red",
+            "code": "DD3A5B",
+            "name": "Red",
             "inStock": 10
           }
         ],
@@ -750,13 +750,13 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Pink",
-            "code": "FFC0CB"
+            "name": "Turquoise",
+            "code": "55CDD5"
           },
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -786,13 +786,13 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "khaki",
-            "code": "F0E68C"
+            "name": "Yellow",
+            "code": "FCC23D"
           },
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -836,18 +836,18 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Green",
-            "code": "00FF00"
+            "name": "Yellow",
+            "code": "FCC23D"
           },
           {
             "inStock": 10,
             "name": "BLUE",
-            "code": "0000FF"
+            "code": "3683D1"
           },
           {
             "inStock": 10,
-            "name": "SILVER",
-            "code": "C0C0C0"
+            "name": "Gray",
+            "code": "C3C3C3"
           }
         ],
         "attributes": [
@@ -886,18 +886,18 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Green",
-            "code": "00FF00"
+            "name": "Yellow",
+            "code": "FCC23D"
           },
           {
             "inStock": 10,
             "name": "BLUE",
-            "code": "0000FF"
+            "code": "3683D1"
           },
           {
             "inStock": 10,
-            "name": "SILVER",
-            "code": "C0C0C0"
+            "name": "Gray",
+            "code": "C3C3C3"
           }
         ],
         "attributes": [
@@ -937,18 +937,18 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "BlueViolet ",
-            "code": "8A2BE2"
+            "name": "Yellow",
+            "code": "FCC23D"
           },
           {
             "inStock": 10,
             "name": "BLUE",
-            "code": "0000FF"
+            "code": "3683D1"
           },
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -998,18 +998,18 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "gray",
-            "code": "808080"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
-            "name": "LightGray",
-            "code": "D3D3D3"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -1046,18 +1046,18 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "gray",
-            "code": "808080"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
-            "name": "Silver",
-            "code": "C0C0C0"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
             "name": "BLACK",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -1097,18 +1097,18 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "DeepSkyBlue",
-            "code": "00BFFF"
+            "name": "Blue",
+            "code": "3683D1"
           },
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
             "name": "Purple",
-            "code": "800080"
+            "code": "545195"
           }
         ],
         "attributes": [
@@ -1153,13 +1153,13 @@
           },
           {
             "inStock": 10,
-            "name": "DeepSkyBlue",
-            "code": "00BFFF"
+            "name": "Blue",
+            "code": "3683D1"
           },
           {
             "inStock": 10,
             "name": "Yellow",
-            "code": "FFFF00"
+            "code": "DD3A5B"
           }
         ],
         "attributes": [
@@ -1196,8 +1196,8 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Grey",
-            "code": "808080"
+            "name": "Gray",
+            "code": "C3C3C3"
           }
         ],
         "attributes": [
@@ -1243,12 +1243,12 @@
           {
             "inStock": 10,
             "name": "Yellow",
-            "code": "FFFF00"
+            "code": "DD3A5B"
           },
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
@@ -1293,13 +1293,13 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Mint",
-            "code": "E0FFFF"
+            "name": "Yellow",
+            "code": "FCC23D"
           },
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
@@ -1314,7 +1314,7 @@
           {
             "inStock": 10,
             "name": "Blue",
-            "code": "0000FF"
+            "code": "3683D1"
           }
         ],
         "attributes": [
@@ -1363,13 +1363,13 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Graphite",
-            "code": "383428"
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
-            "name": "Rubi Red",
-            "code": "9B111E"
+            "name": "Red",
+            "code": "DD3A5B"
           }
         ],
         "attributes": [
@@ -1410,17 +1410,17 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           },
           {
             "inStock": 10,
-            "name": "Pink",
-            "code": "FFC0CB"
+            "name": "Turquoise",
+            "code": "55CDD5"
           },
           {
             "inStock": 10,
             "name": "Blue",
-            "code": "0000FF"
+            "code": "3683D1"
           }
         ],
         "attributes": [
@@ -1460,18 +1460,23 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Pink",
-            "code": "FFC0CB"
+            "name": "Turquoise",
+            "code": "55CDD5"
           },
           {
             "inStock": 10,
-            "name": "Zebra",
-            "code": "998E64"
+            "name": "Yellow",
+            "code": "FCC23D"
           },
           {
             "inStock": 10,
-            "name": "Cheetah",
-            "code": "D4C9A4"
+            "name": "Blue",
+            "code": "3683D1"
+          },
+          {
+            "inStock": 10,
+            "name": "Black",
+            "code": "414141"
           },
           {
             "inStock": 10,
@@ -1514,7 +1519,7 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -1555,7 +1560,7 @@
           {
             "inStock": 10,
             "name": "Purple",
-            "code": "800080"
+            "code": "545195"
           },
           {
             "inStock": 10,
@@ -1565,7 +1570,7 @@
           {
             "inStock": 10,
             "name": "Blue",
-            "code": "0000FF"
+            "code": "3683D1"
           }
         ],
         "attributes": [
@@ -1603,7 +1608,7 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -1641,7 +1646,7 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -1681,7 +1686,7 @@
           {
             "inStock": 10,
             "name": "Black",
-            "code": "000000"
+            "code": "414141"
           }
         ],
         "attributes": [
@@ -1718,8 +1723,8 @@
         "colors": [
           {
             "inStock": 10,
-            "name": "Storm Gray",
-            "code": "697085"
+            "name": "Gray",
+            "code": "C3C3C3"
           }
         ],
         "attributes": [
