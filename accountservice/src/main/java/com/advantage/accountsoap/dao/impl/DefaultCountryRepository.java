@@ -9,16 +9,21 @@ import com.advantage.accountsoap.util.JPAQueryHelper;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
 import com.advantage.root.util.JsonHelper;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Component
 @Qualifier("countryRepository")
@@ -215,10 +220,28 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
             String jsonCountries = this.getAllCountriesWithSleep(configSlowDBCall)
                     .replaceAll("\\t", "")
                     .replaceAll("\\n", "");
+
             if (! jsonCountries.isEmpty()) {
-                Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(jsonCountries);
+                try {
+                    JsonNode node = new ObjectMapper()
+                            .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+                            .readValue(jsonCountries, JsonNode.class);
+
+                    JsonNode countriesNode = node.get("countries");
+                    for (int i = 0; i < countriesNode.size(); i++) {
+                        JsonNode jsonNode = countriesNode.get(i);
+                        Country country = new Country(jsonNode.get("name").asText(),
+                                jsonNode.get("isoName").asText(),
+                                jsonNode.get("phonePrefix").asInt());
+                        country.setId(jsonNode.get("id").asLong());
+
+                        countries.add(country);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 int i = 0;
-                i++;
             }
 
         }
