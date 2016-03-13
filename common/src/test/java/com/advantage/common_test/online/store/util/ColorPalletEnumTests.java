@@ -16,7 +16,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AdvantageTestContextConfiguration.class})
 public class ColorPalletEnumTests {
-    private final int NUMBER_OF_COLORS_IN_PALLET = 8;
+    private final int NUMBER_OF_COLORS_IN_PALLET = 9;
 
     @Test
     public void testGetAllColorsByCodes() {
