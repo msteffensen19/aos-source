@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Color pallet as received from UI.
+ * Only the colors in the pallet are allowed in <i>ADM Demo App</i>.
  * @author Binyamin Regev on 28/02/2016.
  */
 public enum ColorPalletEnum {
@@ -14,7 +16,8 @@ public enum ColorPalletEnum {
     PURPLE("545195", "Purple"),
     YELLOW("FCC23D", "Yellow"),
     RED("DD3A5B", "Red"),
-    TURQUOISE("55CDD5", "Turquoise");
+    TURQUOISE("55CDD5", "Turquoise"),
+    UNASSIGNED("ABCDEF", "Unassigned");
 
     private String colorCode;
     private String colorName;
