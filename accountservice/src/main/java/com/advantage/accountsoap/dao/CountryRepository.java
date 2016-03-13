@@ -3,6 +3,7 @@ package com.advantage.accountsoap.dao;
 import com.advantage.accountsoap.dto.country.CountryStatusResponse;
 import com.advantage.common.dao.DefaultCRUDOperations;
 import com.advantage.accountsoap.model.Country;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,4 +36,6 @@ public interface CountryRepository extends DefaultCRUDOperations<Country> {
 
     List<Country> getCountriesByPhonePrefix(int phonePrefix);
 
+    @Procedure(name="getAllCountriesWithSleep", procedureName="get_all_countries_with_sleep")
+    String getAllCountriesWithSleep(int seconds_to_sleep);
 }

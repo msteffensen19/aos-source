@@ -8,7 +8,9 @@ import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
+import com.advantage.root.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Qualifier("countryRepository")
@@ -202,13 +205,23 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
      */
     @Override
     public List<Country> getAllCountries() {
+        int configSlowDBCall = 0;
+        List<Country> countries = new ArrayList<>();
 
-        //List<Country> countries = entityManager.createNamedQuery(Country.QUERY_GET_ALL, Country.class)
-        //        .setMaxResults(Country.MAX_NUM_OF_COUNTRIES)
-        //        .getResultList();
-        List<Country> countries = entityManager.createNamedQuery(Country.QUERY_GET_ALL, Country.class)
-                .getResultList();
+        if (configSlowDBCall == 0) {
+            countries = entityManager.createNamedQuery(Country.QUERY_GET_ALL, Country.class)
+                    .getResultList();
+        } else {
+            String jsonCountries = this.getAllCountriesWithSleep(configSlowDBCall)
+                    .replaceAll("\\t", "")
+                    .replaceAll("\\n", "");
+            if (! jsonCountries.isEmpty()) {
+                Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(jsonCountries);
+                int i = 0;
+                i++;
+            }
 
+        }
         return countries.isEmpty() ? null : countries;
     }
 
@@ -260,5 +273,15 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     @Override
     public Country get(Long entityId) {
         return entityManager.find(Country.class, entityId);
+    }
+
+    @Override
+    public String getAllCountriesWithSleep(int seconds_to_sleep) {
+        String statement = "SELECT * FROM public.get_all_countries_with_sleep(" + seconds_to_sleep + ")";
+
+        String jsonString = (String) entityManager.createNativeQuery(statement)
+                .getSingleResult();
+
+        return jsonString;
     }
 }
