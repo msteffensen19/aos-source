@@ -122,7 +122,7 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     }
 
     @Override
-    public String resetDBToFactorySettings() {
+    public String restoreDBFactorySettings() {
         String jsonString = "";
 
         return jsonString;
