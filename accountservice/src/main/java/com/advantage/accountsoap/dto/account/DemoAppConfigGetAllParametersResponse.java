@@ -23,6 +23,10 @@ public class DemoAppConfigGetAllParametersResponse {
     public DemoAppConfigGetAllParametersResponse() {
     }
 
+    public DemoAppConfigGetAllParametersResponse(List<DemoAppConfigParameter> parameters) {
+        this.parameters = parameters;
+    }
+
     public List<DemoAppConfigParameter> getParameters() {
         return parameters;
     }

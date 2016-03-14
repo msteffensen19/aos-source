@@ -202,7 +202,15 @@
     <xs:element name="DemoAppConfigGetAllParametersResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Parameter" type="tns:DemoAppConfigParameter" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="parameters" form="qualified" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="parameterName" type="xs:string" form="qualified"/>
+                            <xs:element name="attributeTools" type="xs:string" form="qualified"/>
+                            <xs:element name="parameterValue" type="xs:string" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

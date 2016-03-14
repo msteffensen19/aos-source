@@ -335,33 +335,33 @@ public class OrderController {
     }
 
     //  region call DemoAppConfigGetParametersByTool
-    @RequestMapping(value = "/orders/DemoAppConfig/parameters/all", method = RequestMethod.GET)
-    @ApiOperation(value = "DemoAppConfig Get All Parameters")
-    @AuthorizeAsUser
-    @ApiImplicitParams({@ApiImplicitParam(name = "T_Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Basic ")})
-    @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "Bad Request", response = com.advantage.common.dto.ErrorResponseDto.class),
-            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
-            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class),
-    }
-    )
-    public ResponseEntity<DemoAppConfigGetAllParametersResponse> getAllDemoAppConfigParameters(HttpServletRequest request,
-                                                                                                  HttpServletResponse response) {
-
-        System.out.println("OrderController -> getAllDemoAppConfigParameters() - Begin");
-        DemoAppConfigGetAllParametersResponse getAllParametersResponse = new DemoAppConfigGetAllParametersResponse();
-
-        getAllParametersResponse = orderManagementService.getAllDemoAppConfigParameters();
-
-        if ((getAllParametersResponse != null) && (getAllParametersResponse.getParameter() != null)) {
-            System.out.println("OrderController -> getAllDemoAppConfigParameters() - Successful");
-            return new ResponseEntity<>(getAllParametersResponse, HttpStatus.OK);
-        } else {
-            // TODO-Benny return error code suitable to the error
-            System.out.println("OrderController -> getAllDemoAppConfigParameters() - Failure");
-            return new ResponseEntity<>(getAllParametersResponse, HttpStatus.BAD_REQUEST);
-        }
-    }
+    //@RequestMapping(value = "/orders/DemoAppConfig/parameters/all", method = RequestMethod.GET)
+    //@ApiOperation(value = "DemoAppConfig Get All Parameters")
+    //@AuthorizeAsUser
+    //@ApiImplicitParams({@ApiImplicitParam(name = "T_Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Basic ")})
+    //@ApiResponses(value = {
+    //        @ApiResponse(code = 400, message = "Bad Request", response = com.advantage.common.dto.ErrorResponseDto.class),
+    //        @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+    //        @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class),
+    //}
+    //)
+    //public ResponseEntity<DemoAppConfigGetAllParametersResponse> getAllDemoAppConfigParameters(HttpServletRequest request,
+    //                                                                                              HttpServletResponse response) {
+    //
+    //    System.out.println("OrderController -> getAllDemoAppConfigParameters() - Begin");
+    //    DemoAppConfigGetAllParametersResponse getAllParametersResponse = new DemoAppConfigGetAllParametersResponse();
+    //
+    //    getAllParametersResponse = orderManagementService.getAllDemoAppConfigParameters();
+    //
+    //    if ((getAllParametersResponse != null) && (getAllParametersResponse.getParameter() != null)) {
+    //        System.out.println("OrderController -> getAllDemoAppConfigParameters() - Successful");
+    //        return new ResponseEntity<>(getAllParametersResponse, HttpStatus.OK);
+    //    } else {
+    //        // TODO-Benny return error code suitable to the error
+    //        System.out.println("OrderController -> getAllDemoAppConfigParameters() - Failure");
+    //        return new ResponseEntity<>(getAllParametersResponse, HttpStatus.BAD_REQUEST);
+    //    }
+    //}
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/orders/DemoAppConfig/parameters/{tool_name}", method = RequestMethod.GET)
@@ -382,7 +382,7 @@ public class OrderController {
 
         DemoAppConfigGetParametersByToolResponse getByToolResponse = orderManagementService.getDemoAppConfigParametersByTool(toolName);
 
-        if ((getByToolResponse != null) && (getByToolResponse.getParameter() != null)) {
+        if ((getByToolResponse != null) && (getByToolResponse.getParameters() != null)) {
             System.out.println("OrderController -> getDemoAppConfigParametersByTool() - Successful");
             return new ResponseEntity<>(getByToolResponse, HttpStatus.OK);
         } else {

@@ -278,9 +278,15 @@ public class DemoAppConfigService {
                 Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
                 String attributeValue = nodeAttr.getTextContent();
 
-                if (attributeValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
+                if (tool.trim().equalsIgnoreCase("ALL")) {
                     parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
                     System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                }
+                else if (attributeValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
+                    if (! parameters.contains(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()))) {
+                        parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
+                        System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    }
                 }
             }
         }
