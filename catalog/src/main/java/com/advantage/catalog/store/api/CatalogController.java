@@ -8,7 +8,6 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
-import com.advantage.root.util.JsonHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -288,33 +287,20 @@ public class CatalogController {
         return new ResponseEntity<>(contactUsResponse, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/categories/getName/{category_id}", method = RequestMethod.GET)
-    @ApiOperation(value = "FOR DEV: get category name by category-id")
-    public ResponseEntity<String> getCategoryName(@PathVariable("category_id") int categoryId) {
+    @RequestMapping(value = "/catalog/Reset_db_to_factory_settings", method = RequestMethod.GET)
+    @ApiOperation(value = "Reset Databse to factory settings")
+    public ResponseEntity<CatalogResponse> restoreDBFactorySettings() {
         HttpStatus httpStatus = HttpStatus.OK;
 
-        String categoryName = categoryService.getCategoryName(categoryId);
-        if (categoryName.isEmpty()) {
-            httpStatus = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(categoryName, httpStatus);
-    }
-
-    @RequestMapping(value = "/categories/02/{seconds_to_sleep}", method = RequestMethod.GET)
-    @ApiOperation(value = "FOR DEV: get all categories as a JSON string")
-    public ResponseEntity<String> getAllCategories02(@PathVariable("seconds_to_sleep") int seconds_to_slow) {
-//    public ResponseEntity<List<Category>> getAllCategories02(@PathVariable("seconds_to_sleep") int seconds_to_slow) {
-        HttpStatus httpStatus = HttpStatus.OK;
-
-        String jsonCategories = categoryService.getAllCategories02(seconds_to_slow);
-        if (! jsonCategories.isEmpty()) {
-            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(jsonCategories);
-//            List<Category> categories = new ArrayList<>();
+        String result = categoryService.restoreDBFactorySettings();
+        CatalogResponse response;
+        if (! result.isEmpty()) {
+            response = new CatalogResponse(true, "Restore factory settings successful", 1);
         } else {
             httpStatus = HttpStatus.BAD_REQUEST;
+            response = new CatalogResponse(false, "Restore factory settings FAILED", -1);
         }
 
-        return new ResponseEntity<>(jsonCategories, httpStatus);
-//        return new ResponseEntity<>(categories, httpStatus);
+        return new ResponseEntity<>(response, httpStatus);
     }
 }

@@ -37,9 +37,5 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
 
     CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId);
 
-    @Procedure(name="getCategoryName", procedureName="get_category_name")
-    String getCategoryName(int categoryId);
-
-    @Procedure(name="getAllCategories02", procedureName="get_all_categories_02")
-    String getAllCategories02(int seconds_to_sleep);
+    String restoreDBFactorySettings();
 }
