@@ -193,6 +193,15 @@ public class CatalogController {
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/categories/all_data", method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriesDto>> getCategoryDtoData(HttpServletRequest request,
+                                                                  HttpServletResponse response) {
+
+        List<CategoriesDto> categories = categoryService.getCategoryDtoData();
+
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/attributes/colors_pallet", method = RequestMethod.GET)
     public ResponseEntity<Map<String, String>> getColorPallet(HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
@@ -224,6 +233,7 @@ public class CatalogController {
     }
     //endregion
 
+    //  region /Images
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @ApiResponses(value = {
@@ -241,6 +251,7 @@ public class CatalogController {
                     "Failed to upload, file was empty."), HttpStatus.EXPECTATION_FAILED);
         }
     }
+    //  endregion
 
     //region /deals
     @RequestMapping(value = "/deals", method = RequestMethod.GET)
@@ -272,6 +283,7 @@ public class CatalogController {
     }
     //endregion
 
+    //  region /Contact Us
     @RequestMapping(value = "/support/contact_us/email", method = RequestMethod.POST)
     @ApiOperation(value = "Contact support by email")
     public ResponseEntity<ContactUsResponse> supportSendMail(@RequestBody ContactUsMailRequest contactUsRequest,
@@ -286,21 +298,35 @@ public class CatalogController {
 
         return new ResponseEntity<>(contactUsResponse, HttpStatus.OK);
     }
+    //  endregion
 
-    @RequestMapping(value = "/catalog/Reset_db_to_factory_settings", method = RequestMethod.GET)
-    @ApiOperation(value = "Reset Databse to factory settings")
+
+    //  region /Restore Database Factory Settings
+    @RequestMapping(value = "/catalog/Restore_db_factory_settings", method = RequestMethod.GET)
+    @ApiOperation(value = "Restore Databse factory settings")
     public ResponseEntity<CatalogResponse> restoreDBFactorySettings() {
         HttpStatus httpStatus = HttpStatus.OK;
 
-        String result = categoryService.restoreDBFactorySettings();
-        CatalogResponse response;
-        if (! result.isEmpty()) {
-            response = new CatalogResponse(true, "Restore factory settings successful", 1);
-        } else {
+        CatalogResponse response = categoryService.restoreDBFactorySettings();
+        if (! response.isSuccess()) {
             httpStatus = HttpStatus.BAD_REQUEST;
-            response = new CatalogResponse(false, "Restore factory settings FAILED", -1);
+            response.setReason("Restore database factory settings FAILED - Table CATEGORY");
+            response.setReturnCode(-1);
+
+            return new ResponseEntity<>(response, httpStatus);
+        }
+
+        response = attributeService.restoreDBFactorySettings();
+        if (! response.isSuccess()) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+            response.setReason("Restore database factory settings FAILED - Table ATTRIBUTE");
+            response.setReturnCode(-1);
+
+            return new ResponseEntity<>(response, httpStatus);
         }
 
         return new ResponseEntity<>(response, httpStatus);
     }
+    //  endregion
+
 }

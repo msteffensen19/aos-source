@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.services;
 
 import com.advantage.catalog.store.dao.deal.DealRepository;
+import com.advantage.common.dto.CatalogResponse;
 import com.advantage.common.dto.PromotedProductDto;
 import com.advantage.catalog.store.model.deal.Deal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,9 @@ public class DealService {
                         promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
                         productService.getDtoByEntity(promotion.getProduct()));
     }
+
+    public CatalogResponse restoreDBFactorySettings() {
+        return new CatalogResponse(true, "Default", 0);
+    }
+
 }

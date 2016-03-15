@@ -1,13 +1,11 @@
 package com.advantage.accountsoap.dao;
 
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
-import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Account;
-import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.common.dao.DefaultCRUDOperations;
+import com.advantage.common.dto.CatalogResponse;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface AccountRepository extends DefaultCRUDOperations<Account> {
@@ -54,4 +52,6 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
     //Collection<PaymentPreferences> getPaymentPreferences(long accountId);
 
     AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId);
+
+    CatalogResponse restoreDBFactorySettings();
 }

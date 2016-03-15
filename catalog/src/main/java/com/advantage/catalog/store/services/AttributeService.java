@@ -5,6 +5,7 @@ import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.common.dto.CatalogResponse;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.root.util.ArgumentValidationHelper;
@@ -85,4 +86,9 @@ public class AttributeService {
 
         return colorPallet;
     }
+
+    public CatalogResponse restoreDBFactorySettings() {
+        return new CatalogResponse(true, "Default", 0);
+    }
+
 }

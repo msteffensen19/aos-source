@@ -3,6 +3,7 @@ package com.advantage.catalog.store.dao.attribute;
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.common.dto.CatalogResponse;
 
 public interface AttributeRepository extends DefaultCRUDOperations<Attribute> {
     /**
@@ -13,4 +14,5 @@ public interface AttributeRepository extends DefaultCRUDOperations<Attribute> {
      */
     Attribute get(String name);
 
+    CatalogResponse restoreDBFactorySettings();
 }
