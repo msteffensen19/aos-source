@@ -7,7 +7,7 @@ var english = {
     'OUR_PRODUCTS' : 'OUR PRODUCTS',
     'HOT_PRODUCTS' : 'Hot Products',
     'DEAL_OF_THE_DAY' : 'Deal of the Day',
-    'CONTACT_US' : 'Contact Us',
+    'CONTACT_US' : 'CONTACT US',
     'AOS' : 'AOS',
     'Login': 'Login',
     'LOGIN': 'LOGIN',
@@ -144,7 +144,7 @@ var english = {
     'YY' : 'YY',
     'Expiration_Date' : 'Expiration Date',
     'Thank_you_for_buying_with_Advantage' : 'Thank you for buying with Advantage',
-    'Yor_tracking_number_is' : 'Yor tracking number is',
+    'Yor_tracking_number_is' : 'Your tracking number is',
     'Your_order_number_is' : 'Your order number is',
     'Shipping_to' : 'Shipping to',
     'Payment_Method' : 'Payment Method',
@@ -154,13 +154,13 @@ var english = {
     'field_is_required' : 'field is required',
     'User_name' : 'User name',
     'Confirm_Password' : 'Confirm Password',
-    'Confirm_password' : 'Confirm password',
     'register_faild' : 'register faild! please try again later',
     'Receiver_Details' : 'Receiver Details',
     'MY_ACCOUNT' : 'MY ACCOUNT',
     'Account_Details' : 'Account Details',
     'Shipping_Details' : 'Shipping Details',
     'Preferred_payment_method' : 'Preferred payment method',
+    'Preferred_payment_method2' : 'Payment method',
     'Notify_me_about_Promotions' : 'Notify me about Promotions',
     'MasterCredit' : 'MasterCredit',
     'CONNECTION_DETAILS' : 'CONNECTION DETAILS',
@@ -184,6 +184,7 @@ var english = {
     'No_results_for' : 'No results for',
     'No_results' : 'No results',
     'SEND' : 'SEND',
+    'Product_removed': 'Product removed'
 
 
 };
