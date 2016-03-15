@@ -5,13 +5,11 @@ import com.advantage.accountsoap.dto.account.DemoAppConfigStatusResponse;
 import com.advantage.common.Constants;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.xml.XmlHelper;
-import com.google.common.base.Splitter;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,7 +48,8 @@ public class DemoAppConfigService {
     public static final String DEMO_APP_CONFIG_XML_FILE_NAME = "DemoAppConfig.xml";
 
     public static final String ROOT_ELEMENT_NAME = "Parameters";
-    public static final String ELEMENTS_TAG_NAME = "tools";
+    public static final String ATTRIBUTE_TOOLS_TAG_NAME = "tools";
+    public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
     //  endregion
 
     //  region Class Properties
@@ -125,10 +124,13 @@ public class DemoAppConfigService {
                 if (node.getNodeName().toUpperCase().equals(parameterName.toUpperCase())) {
 
                     NamedNodeMap attr = node.getAttributes();
-                    Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
-                    String attributeValue = nodeAttr.getTextContent();
+                    Node nodeAttr1 = attr.getNamedItem(ATTRIBUTE_TOOLS_TAG_NAME);
+                    String attributeValue = nodeAttr1.getTextContent();
 
-                    System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    Node nodeAttr2 = attr.getNamedItem(ATTRIBUTE_DATA_TYPE_TAG_NAME);
+                    String attributeDataTypeValue = nodeAttr2.getTextContent();
+
+                    System.out.println("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
                     System.out.println("findParameterByName(\"" + parameterName + "\") - End");
                     System.out.println("");
                     return node;
@@ -167,11 +169,13 @@ public class DemoAppConfigService {
                     break;
                 default:
                     NamedNodeMap attr = node.getAttributes();
-                    Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
-                    String attributeValue = nodeAttr.getTextContent();
+                    Node nodeAttr1 = attr.getNamedItem(ATTRIBUTE_TOOLS_TAG_NAME);
+                    String attributeValue = nodeAttr1.getTextContent();
 
-                    returnList.add("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
-                    System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    Node nodeAttr2 = attr.getNamedItem(ATTRIBUTE_DATA_TYPE_TAG_NAME);
+                    String attributeDataTypeValue = nodeAttr2.getTextContent();
+
+                    System.out.println("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
                     break;
             }
         }
@@ -224,12 +228,15 @@ public class DemoAppConfigService {
             }
 
             NamedNodeMap attr = node.getAttributes();
-            Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
-            String attributeValue = nodeAttr.getTextContent();
+            Node nodeAttr1 = attr.getNamedItem(ATTRIBUTE_TOOLS_TAG_NAME);
+            String attributeValue = nodeAttr1.getTextContent();
+
+            Node nodeAttr2 = attr.getNamedItem(ATTRIBUTE_DATA_TYPE_TAG_NAME);
+            String attributeDataTypeValue = nodeAttr2.getTextContent();
 
             parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
 
-            System.out.println("<" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+            System.out.println("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
         }
 
         System.out.println("getAllDemoAppConfigParameters() - End");
@@ -275,12 +282,21 @@ public class DemoAppConfigService {
                 }
 
                 NamedNodeMap attr = node.getAttributes();
-                Node nodeAttr = attr.getNamedItem(ELEMENTS_TAG_NAME);
-                String attributeValue = nodeAttr.getTextContent();
+                Node nodeAttr1 = attr.getNamedItem(ATTRIBUTE_TOOLS_TAG_NAME);
+                String attributeValue = nodeAttr1.getTextContent();
 
-                if (attributeValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
+                Node nodeAttr2 = attr.getNamedItem(ATTRIBUTE_DATA_TYPE_TAG_NAME);
+                String attributeDataTypeValue = nodeAttr2.getTextContent();
+
+                if (tool.trim().equalsIgnoreCase("ALL")) {
                     parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
-                    System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ELEMENTS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                }
+                else if (attributeValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
+                    if (! parameters.contains(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()))) {
+                        parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeValue, node.getTextContent()));
+                        System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    }
                 }
             }
         }
@@ -319,7 +335,7 @@ public class DemoAppConfigService {
         Element parameter = null;
 
         //  Child Element - Tool
-        NodeList tool = doc.getElementsByTagName(ELEMENTS_TAG_NAME);
+        NodeList tool = doc.getElementsByTagName(ATTRIBUTE_TOOLS_TAG_NAME);
 
         //loop for each Parameter
         for (int i = 0; i < tool.getLength(); i++) {
@@ -335,7 +351,7 @@ public class DemoAppConfigService {
         Element parameter = null;
 
         //  Child Element - Tool
-        NodeList tool = doc.getElementsByTagName(ELEMENTS_TAG_NAME);
+        NodeList tool = doc.getElementsByTagName(ATTRIBUTE_TOOLS_TAG_NAME);
 
         //loop for each Parameter
         for (int i = 0; i < tool.getLength(); i++) {

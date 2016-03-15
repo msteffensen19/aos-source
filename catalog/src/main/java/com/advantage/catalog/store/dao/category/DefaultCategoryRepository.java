@@ -122,33 +122,8 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     }
 
     @Override
-    public String getCategoryName(int categoryId) {
-
-        //StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("getCategoryName")
-        //        .registerStoredProcedureParameter(1, Long.class, ParameterMode.IN)
-        //        .setParameter(1, categoryId);
-
-        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("getCategoryName");
-
-        query = query.registerStoredProcedureParameter("category_id", Integer.class, ParameterMode.IN)
-                     .registerStoredProcedureParameter("category_name", Object.class, ParameterMode.OUT)
-                     .setParameter("category_id", categoryId);
-
-        boolean result = query.execute();
-
-        System.out.println("query.execute() returned " + result);
-
-        String categoryName = (String) query.getSingleResult();
-
-        return categoryName;
-    }
-
-    @Override
-    public String getAllCategories02(int seconds_to_sleep) {
-        String statement = "SELECT * FROM public.get_all_categories_02(" + seconds_to_sleep + ")";
-
-        String jsonString = (String) entityManager.createNativeQuery(statement)
-                .getSingleResult();
+    public String restoreDBFactorySettings() {
+        String jsonString = "";
 
         return jsonString;
     }

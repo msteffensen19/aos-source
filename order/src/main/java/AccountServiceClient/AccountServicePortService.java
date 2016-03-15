@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "AccountServicePortService", targetNamespace = "com.advantage.online.store.accountservice", wsdlLocation = "http://localhost:8080/accountservice/accountservice.wsdl")
+@WebServiceClient(name = "AccountServicePortService", targetNamespace = "com.advantage.online.store.accountservice", wsdlLocation = "http://localhost:8080/accountservice/accountservice_prev.wsdl")
 public class AccountServicePortService
     extends Service
 {
@@ -30,7 +30,7 @@ public class AccountServicePortService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8080/accountservice/accountservice.wsdl");
+            url = new URL("http://localhost:8080/accountservice/accountservice_prev.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

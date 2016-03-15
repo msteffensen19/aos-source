@@ -8,6 +8,16 @@ import java.util.Set;
 
 @Entity
 @Table(name = "COUNTRY")
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name="getAllCountriesWithSleep",
+                resultClasses = String.class,
+                procedureName="get_all_countries_with_sleep",
+                parameters={
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_int", type = Integer.class)
+                }
+        )
+})
 @NamedQueries({
         @NamedQuery(
                 name = Country.QUERY_GET_ALL,

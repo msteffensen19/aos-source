@@ -135,18 +135,8 @@ public class CategoryService {
         return dto;
     }
 
-    public String getCategoryName(int categoryId) {
-        String categoryName = categoryRepository.getCategoryName(categoryId);
-        return categoryName;
-    }
-
-    public String getAllCategories02(int p_int) {
-        //  Make it a flat string, remove all TABs and NEW_LINE characters
-        String jsonString = categoryRepository.getAllCategories02(p_int)
-                .replaceAll("\\t", "")
-                .replaceAll("\\n", "");
-
-
+    public String restoreDBFactorySettings() {
+        String jsonString = "";
         return jsonString;
     }
 }

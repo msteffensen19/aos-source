@@ -46,6 +46,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DemoAppConfigGetParametersByToolResponse }
+     * 
+     */
+    public DemoAppConfigGetParametersByToolResponse createDemoAppConfigGetParametersByToolResponse() {
+        return new DemoAppConfigGetParametersByToolResponse();
+    }
+
+    /**
      * Create an instance of {@link DemoAppConfigRestoreFactorySettingsRequest }
      * 
      */
@@ -486,11 +494,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DemoAppConfigGetParametersByToolResponse }
+     * Create an instance of {@link DemoAppConfigGetParametersByToolResponse.Parameters }
      * 
      */
-    public DemoAppConfigGetParametersByToolResponse createDemoAppConfigGetParametersByToolResponse() {
-        return new DemoAppConfigGetParametersByToolResponse();
+    public DemoAppConfigGetParametersByToolResponse.Parameters createDemoAppConfigGetParametersByToolResponseParameters() {
+        return new DemoAppConfigGetParametersByToolResponse.Parameters();
     }
 
     /**
