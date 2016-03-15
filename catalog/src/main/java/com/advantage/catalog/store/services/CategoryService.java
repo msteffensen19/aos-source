@@ -1,5 +1,6 @@
 package com.advantage.catalog.store.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -7,9 +8,7 @@ import java.util.List;
 import com.advantage.catalog.store.dao.category.CategoryRepository;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
-import com.advantage.common.dto.CategoryAttributeFilterResponse;
-import com.advantage.common.dto.CategoryAttributeShowInFilter;
-import com.advantage.common.dto.CategoryDto;
+import com.advantage.common.dto.*;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.ArgumentValidationHelper;
@@ -45,7 +44,6 @@ public class CategoryService {
         return categoryRepository.get(categoryId);
     }
 
-    //by moti
     @Transactional(readOnly = true)
     public CategoryAttributeFilterResponse getAllCategoryAttributesFilter() {
 
@@ -61,6 +59,7 @@ public class CategoryService {
                         return (int)(category1.getCategoryId() - category2.getCategoryId());
                     }
                 });
+
         for (int i = 0; i < categories.size(); i++) {
             System.out.println("categories(" + i + "): category .id=" + categories.get(i).getCategoryId() + " - .name=\'" + categories.get(i).getCategoryName() + "\'");
         }
@@ -119,10 +118,32 @@ public class CategoryService {
         return dto;
     }
 
+    public List<CategoriesDto> getCategoryDtoData() {
+        List<CategoriesDto> categories = new ArrayList<>();
+
+        for (long i = 1; i < 6; i++) {
+            CategoriesDto dto = applyCategories(i);
+            List<Product> categoryProducts = productService.getCategoryProducts(i);
+            dto.setAttributes(attributeService.fillAttributeDto(categoryProducts));
+            dto.setProducts(productService.getCategoryProductDtoByEntityCollection(categoryProducts));
+            dto.setPromotedProduct(dealService.getPromotedProductDtoInCategory(i));
+            dto.setColors(productService.getColorsSet(categoryProducts));
+            categories.add(dto);
+        }
+
+        return categories;
+    }
+
     private CategoryDto applyCategory(long categoryId) {
         Category category = getCategory(categoryId);
 
         return getCategoryDto(category);
+    }
+
+    private CategoriesDto applyCategories(long categoryId) {
+        Category category = getCategory(categoryId);
+
+        return getCategoriesDto(category);
     }
 
     public CategoryDto getCategoryDto(Category category) {
@@ -135,8 +156,24 @@ public class CategoryService {
         return dto;
     }
 
+    public CategoriesDto getCategoriesDto(Category category) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(category, "category");
+        CategoriesDto dto = new CategoriesDto();
+        dto.setCategoryId(category.getCategoryId());
+        dto.setCategoryName(category.getCategoryName());
+        dto.setCategoryImageId(category.getManagedImageId());
+
+        return dto;
+    }
+
     public String restoreDBFactorySettings() {
         String jsonString = "";
         return jsonString;
     }
+
+    public CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId) {
+        CategoryAttributeFilter categoryAttributeFilter = categoryRepository.findCategoryAttributeFilter(categoryId, attributeId);
+        return categoryAttributeFilter;
+    }
+
 }

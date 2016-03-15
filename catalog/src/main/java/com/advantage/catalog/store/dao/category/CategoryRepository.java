@@ -38,4 +38,5 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
     CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId);
 
     String restoreDBFactorySettings();
+
 }

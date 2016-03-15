@@ -193,6 +193,15 @@ public class CatalogController {
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/categories/all_data", method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriesDto>> getCategoryDtoData(HttpServletRequest request,
+                                                                  HttpServletResponse response) {
+
+        List<CategoriesDto> categories = categoryService.getCategoryDtoData();
+
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/attributes/colors_pallet", method = RequestMethod.GET)
     public ResponseEntity<Map<String, String>> getColorPallet(HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
