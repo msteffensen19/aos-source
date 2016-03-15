@@ -1,14 +1,15 @@
 package com.advantage.catalog.store.dao.attribute;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import com.advantage.catalog.store.model.attribute.Attribute;
-import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
+import com.advantage.common.dto.CatalogResponse;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -70,5 +71,22 @@ public class DefaultAttributeRepository extends AbstractRepository implements At
         List<Attribute> attributes = query.getResultList();
 
         return attributes.isEmpty() ? null : attributes.get(0);
+    }
+
+    public CatalogResponse restoreDBFactorySettings() {
+
+        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String[] attributes = new String[] {"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen" };
+
+        for (String attributeName : attributes) {
+            session.persist(new Attribute(attributeName));
+        }
+        transaction.commit();
+
+        return new CatalogResponse(true, "Restore factory settings ATTRIBUTES successful", 1);
     }
 }
