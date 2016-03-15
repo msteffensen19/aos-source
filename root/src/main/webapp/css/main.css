@@ -408,7 +408,7 @@ footer .splitter{
 }
 
 #toast {
-    bottom: 50%;
+    top: 60px;
     border-radius: 50px;
     background-color: rgba(128, 128, 128, 0.85);
     z-index: 999;
@@ -553,7 +553,7 @@ footer .splitter{
     }
 
     header{
-        border-bottom: solid #d0d0d0 1px
+        /*border-bottom: solid #d0d0d0 1px*/
     }
 
     div.logo a{
@@ -628,6 +628,10 @@ footer .splitter{
 
     h3.roboto-regular{
         font-size: 22px;
+    }
+
+    #mobileSearch .img {
+        top: 51px;
     }
 
 }

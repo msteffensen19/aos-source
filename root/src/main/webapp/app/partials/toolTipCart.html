@@ -8,17 +8,21 @@
     <table ng-show="cart.productsInCart.length > 0"  >
         <tbody >
             <tr ng-repeat="product in cart.productsInCart track by $index" id="product{{product.id}}"
-                data-ng-class="{ lastProduct : $last }"
-                data-ng-click="redirect('/product/' + product.productId + '?color=' + product.color.code + '&quantity=' + product.quantity + '&pageState=edit')">
+                data-ng-class="{ lastProduct : $last }" >
                 <td>
-                    <img class="imageUrl" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
+                    <a href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">
+                        <img class="imageUrl" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}" alt="imgProduct" />
+                    </a>
                 </td>
                 <td>
-                    <h3>{{ product.productName  | uppercase | secCatWord:30 }}</h3>
-                    <label>{{'QTY' | translate}} {{product.quantity}}</label>
-                    <label>{{'Color' | translate }}
-                        <span>{{product.color.name}}</span>
-                    </label>
+
+                    <a href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">
+                        <h3>{{ product.productName  | uppercase | secCatWord:30 }}</h3>
+                        <label>{{'QTY' | translate}} {{product.quantity}}</label>
+                        <label>{{'Color' | translate }}
+                            <span>{{product.color.name}}</span>
+                        </label>
+                    </a>
                 </td>
                 <td>
                     <p class="price roboto-regular">{{ product.price * product.quantity | currency:'$' }}</p>

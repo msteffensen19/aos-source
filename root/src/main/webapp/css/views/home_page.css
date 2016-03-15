@@ -326,11 +326,16 @@ label.shop_now:after{
     padding: 18px 0;
 }
 
+.grid-table .productName{
+    padding-bottom: 10px;
+}
+
+
 .grid-table .viewDetail{
     font-size: 15px;
     position: relative;
     left: 0;
-    bottom: -8px;
+    bottom: 0px;
 }
 
 /* end POPULAR ITEMS */

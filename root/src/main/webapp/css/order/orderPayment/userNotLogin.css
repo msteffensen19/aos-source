@@ -128,7 +128,7 @@
 
     #orderPayment .noUserSection .cover{
         max-width: 650px;
-        margin: 56px auto;
+        margin: 20px auto;
         width: 100%;
     }
 
@@ -138,6 +138,17 @@
         padding: 0;
     }
 
+    #orderPayment > #userCart{
+        margin: 0 auto;
+        padding: 0px 25px;
+        padding-bottom: 50px;
+    }
+
+    #orderPayment .itemsCount{
+        top: -15px;
+        position: relative;
+        right: 0;
+    }
 
     #orderPayment .noUserSection .cover a,
     #orderPayment .noUserSection .a-button{
@@ -157,6 +168,10 @@
         width: 90%;
         display: block;
         margin: 0 auto;
+    }
+
+    #orderPayment  > div > h5 {
+        padding-bottom: 36px;
     }
 }
 

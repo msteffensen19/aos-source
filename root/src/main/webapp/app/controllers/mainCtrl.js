@@ -51,6 +51,16 @@ define(['./module'], function (controllers) {
                     $scope.cart = cart;
                     $scope.checkCart();
                     fixToolTipCartHeight();
+
+                    if($(window).width() < 480)
+                    {
+                        $("#toast a").html($filter("translate")("Product_removed"));
+                        $("#toast").stop().fadeIn(500);
+                        setTimeout(function(){
+                            $("#toast").stop().fadeOut(1500);
+                        }, 1500)
+                    }
+
                 });
             }
 
@@ -217,14 +227,16 @@ define(['./module'], function (controllers) {
 
             /* Application helper section */
 
+
+
             $scope.redirect = function (path) {
                 Helper.mobileSectionClose();
                 $location.path(path);
-            };
+            }
             $scope.mobileRedirect = function (path) {
                 Helper.mobileSectionClose();
                 $state.go(path)
-            };
+            }
 
 
             $scope.gotoElement = function (id) {

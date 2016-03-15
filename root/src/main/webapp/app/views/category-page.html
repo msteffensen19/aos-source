@@ -29,7 +29,11 @@
         </div>
         <!--data-ng-show="categoryData.promotedProduct == null"-->
         <h3 class="categoryTitle roboto-regular sticky"
-            data-ng-class="{ noPromotedProduct : viewAll }" >{{categoryName}}</h3>
+            data-ng-class="{ noPromotedProduct : viewAll }" >{{categoryName}}
+<!--
+            <a> {{([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}} </a>
+-->
+        </h3>
         <div ng-class="{ noPromotedProductDiv : viewAll }">
             <div ng-switch-when="true">
                 <label style="display: block; text-align: center; color:black; font-size: 100px">

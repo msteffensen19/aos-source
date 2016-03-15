@@ -96,6 +96,10 @@
     vertical-align: middle;
 }
 
+#toolTipCart tbody a {
+    text-decoration: none;
+}
+
 #toolTipCart tbody h3{
     font-size: 13px;
     padding-bottom: 7px;
@@ -104,6 +108,7 @@
     text-overflow: ellipsis;
     max-height:  1.9em;
     font-weight: 400;
+    color: #313131;
 }
 
 #toolTipCart tbody label{
