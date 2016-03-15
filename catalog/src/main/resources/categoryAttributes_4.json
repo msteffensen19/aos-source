@@ -200,6 +200,21 @@
     "showInFilter": true
   },
   {
+    "categoryId": 4,
+    "attributeId": 11,
+    "showInFilter": false
+  },
+  {
+    "categoryId": 4,
+    "attributeId": 12,
+    "showInFilter": false
+  },
+  {
+    "categoryId": 4,
+    "attributeId": 13,
+    "showInFilter": true
+  },
+  {
     "categoryId": 5,
     "attributeId": 1,
     "showInFilter": false

@@ -8,6 +8,7 @@ import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.ImageAttribute;
 import com.advantage.catalog.store.model.product.Product;
@@ -335,6 +336,19 @@ public class ProductService {
 
     }
 
+    public CategoryProductDto getCategoryProductsDtoByEntity(Product product) {
+        return new CategoryProductDto(product.getId(),
+                product.getCategory().getCategoryId(),
+                product.getProductName(),
+                product.getPrice(),
+                product.getDescription(),
+                product.getManagedImageId(),
+                fillCategoryProductAttributes(product),
+                fillColorAttributes(product),
+                fillImages(product.getImages()),product.getProductStatus());
+
+    }
+//
     /**
      * Determine collection DTO from entities collection
      * @param products {@link List} collection of Products
@@ -344,6 +358,18 @@ public class ProductService {
         List<ProductDto> productDtos = new ArrayList<>(products.size());
         for (Product categoryProduct : products) {
             ProductDto productDto = getDtoByEntity(categoryProduct);
+
+            productDtos.add(productDto);
+        }
+
+        return productDtos;
+    }
+
+    public List<CategoryProductDto> getCategoryProductDtoByEntityCollection(List<Product> products) {
+        List<CategoryProductDto> productDtos = new ArrayList<>(products.size());
+
+        for (Product categoryProduct : products) {
+            CategoryProductDto productDto = getCategoryProductsDtoByEntity(categoryProduct);
 
             productDtos.add(productDto);
         }
@@ -377,6 +403,24 @@ public class ProductService {
         List<AttributeItem> items = new ArrayList<>(productAttributes.size());
         for (ProductAttributes attribute : productAttributes) {
             items.add(new AttributeItem(attribute.getAttribute().getName(), attribute.getAttributeValue()));
+        }
+
+        return items;
+    }
+
+    /**
+     * Build AttributeItem collection from Products attributes
+     *
+     * @param product {@link Product} Product object
+     * @return {@link List} collection of attributes
+     */
+    private List<CategoryProductAttributeItem> fillCategoryProductAttributes(Product product) {
+        Set<ProductAttributes> productAttributes = product.getProductAttributes();
+        List<CategoryProductAttributeItem> items = new ArrayList<>(productAttributes.size());
+        for (ProductAttributes attribute : productAttributes) {
+            CategoryAttributeFilter categoryAttributeFilter = categoryService.findCategoryAttributeFilter(product.getCategory().getCategoryId(), attribute.getAttribute().getId());
+
+            items.add(new CategoryProductAttributeItem(attribute.getAttribute().getName(), attribute.getAttributeValue(), categoryAttributeFilter.isShowInFilter()));
         }
 
         return items;
