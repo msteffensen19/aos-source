@@ -451,4 +451,8 @@ public class ProductService {
         return attributeRepository.get(attribute.getAttributeName());
     }
 
+    public CatalogResponse restoreDBFactorySettings() {
+        return new CatalogResponse(true, "Default", 0);
+    }
+
 }

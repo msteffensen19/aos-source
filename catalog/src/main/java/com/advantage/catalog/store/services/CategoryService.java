@@ -166,14 +166,13 @@ public class CategoryService {
         return dto;
     }
 
-    public String restoreDBFactorySettings() {
-        String jsonString = "";
-        return jsonString;
-    }
-
     public CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId) {
         CategoryAttributeFilter categoryAttributeFilter = categoryRepository.findCategoryAttributeFilter(categoryId, attributeId);
         return categoryAttributeFilter;
+    }
+
+    public CatalogResponse restoreDBFactorySettings() {
+        return new CatalogResponse(true, "Default", 0);
     }
 
 }
