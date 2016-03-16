@@ -120,11 +120,23 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     @Override
     public CatalogResponse restoreDBFactorySettings() {
 
-
         String statement = "SELECT * FROM public.restore_db_factory_settings()";
 
-        int result = (Integer) entityManager.createNativeQuery(statement)
-                .executeUpdate();
+        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
+
+        Session session = sessionFactory.openSession();
+
+        Transaction transaction = session.beginTransaction();
+
+
+        //int result = entityManager.createNativeQuery(statement)
+        //        .executeUpdate();
+
+        int result = session.createSQLQuery(statement).executeUpdate();
+
+        transaction.commit();
+
+        session.close();
 
         return new CatalogResponse(true, "Restore factory settings successful", 1);
     }
