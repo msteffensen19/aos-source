@@ -204,7 +204,7 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/catalog/LastUpdate/create/{last_update_name}", method = RequestMethod.POST)
-    @ApiOperation(value = "FOR DEV: Create a new Last-Update name and set Last-Update Timestamp (0 = Now")
+    @ApiOperation(value = "FOR DEV: Create new Last-Update and set its Timestamp (0 = Now")
     public ResponseEntity<LastUpdate> createLastUpdate(@PathVariable("last_update_name") String lastUpdateName,
                                                        @RequestParam(value = "timestamp", defaultValue = "0", required = false) long timestamp,
                                                        HttpServletRequest request) {
@@ -223,7 +223,7 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/catalog/LastUpdate/update", method = RequestMethod.PUT)
-    @ApiOperation(value = "FOR DEV: Update an existing Last-Update Timestamp")
+    @ApiOperation(value = "FOR DEV: Update Timestamp of an existing Last-Update")
     public ResponseEntity<LastUpdate> updateLastUpdate(LastUpdate lastUpdateDto, long id) {
         HttpStatus httpStatus = HttpStatus.OK;
 
