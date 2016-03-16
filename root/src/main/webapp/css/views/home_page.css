@@ -319,6 +319,7 @@ label.shop_now:after{
     width: 33.3%;
     display: inline-block;
     position: relative;
+    margin-bottom: 60px;
 }
 
 .grid-table > div figure img{

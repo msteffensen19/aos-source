@@ -11,13 +11,13 @@
 
             <div class="rowSection">
                 <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)" class="SpeaakersImg"
-                     a-sec-back-img="{{categories[3].managedImageId}}" >
+                     a-sec-back-img="{{categories[3].managedImageId}}">
                     <div>
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName}}</span>
-                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate  }} </label>
+                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
                 </div>
-                <div  id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
+                <div id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
                      a-sec-back-img="{{categories[2].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[2].categoryName}}</span>
@@ -30,14 +30,14 @@
 
             <div class="rowSection">
                 <div ng-click="redirect('/category/' + categories[0].categoryId)" class="laptopImg"
-                     a-sec-back-img="{{categories[0].managedImageId}}" >
+                     a-sec-back-img="{{categories[0].managedImageId}}">
                     <div>
-                        <span class="shop_now" > {{::categories[0].categoryName}}</span>
+                        <span class="shop_now"> {{::categories[0].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
                 </div>
                 <div ng-click="redirect('/category/' + categories[4].categoryId)" class="micesImg"
-                     a-sec-back-img="{{categories[4].managedImageId}}" >
+                     a-sec-back-img="{{categories[4].managedImageId}}">
                     <div>
                         <span class="shop_now">{{::categories[4].categoryName}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
@@ -56,24 +56,28 @@
     <!-- end five pictures -->
 
 
-
     <!-- SPACIAL OFFER -->
-    <article id="special_offer_items" >
-        <h3 class="roboto-regular center" >
+    <article id="special_offer_items">
+        <h3 class="roboto-regular center">
             {{'SPACIAL_OFFER' | translate}}
         </h3>
+
         <div>
             <div id="img-special-offer">
                 <figure>
-                    <img src="css/images/Special-offer.jpg" alt="Special-offer" >
+                    <img src="css/images/Special-offer.jpg" alt="Special-offer">
                 </figure>
             </div>
             <div id="div-special-offer">
                 <div>
                     <span class="roboto-light"> {{specialOffer[0].promotionHeader}} </span>
-                    <h1 class="roboto-thin" > {{specialOffer[0].product.productName}} </h1>
+
+                    <h1 class="roboto-thin"> {{specialOffer[0].product.productName}} </h1>
+
                     <p> {{specialOffer[0].promotionSubHeader}} </p>
-                    <a href="#/product/{{specialOffer[0].product.id}}"><button> {{ 'SEE_OFFER' | translate}} </button></a>
+                    <a href="#/product/{{specialOffer[0].product.id}}">
+                        <button> {{ 'SEE_OFFER' | translate}}</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -82,56 +86,44 @@
     <!-- end SPACIAL OFFER -->
 
 
-
-
     <!-- check directive -->
-
-
-
-
-
 
 
     <!-- slider -->
     <article>
         <div class="slider">
             <div class="slider-length transition">
-                <div ng-repeat="img in images" class="imgSection" >
+                <div ng-repeat="img in images" class="imgSection">
                     <div class="imgContainer">
-                        <img data-ng-src="../../css/images/{{img.imageName}}" ng-click="redirect('/category/' + categories[img.categoryId].categoryId)"  />
+                        <img data-ng-src="../../css/images/{{img.imageName}}"
+                             ng-click="redirect('/category/' + categories[img.categoryId].categoryId)"/>
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" >
+                        <button ng-click="redirect('/category/' + categories[img.categoryId].categoryId)">
                             {{ 'EXPLORE_NOW' | translate}}
                         </button>
                     </div>
                 </div>
-                <div class="imgSection" >
+                <div class="imgSection">
                     <div class="imgContainer">
                         <img data-ng-src="../../css/images/{{images[0].imageName}}"
-                             ng-click="redirect('/category/' + categories[0].categoryId)" />
+                             ng-click="redirect('/category/' + categories[0].categoryId)"/>
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button ng-click="redirect('/category/' + categories[0].categoryId)"  class="white">{{ 'EXPLORE_NOW' | translate}}</button>
+                        <button ng-click="redirect('/category/' + categories[0].categoryId)" class="white">{{
+                            'EXPLORE_NOW' | translate}}
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="slider-steps" >
+            <div class="slider-steps">
                 <span ng-repeat="img in images" ng-class="{selected : ({{img.imageId === 0}})}"></span>
             </div>
         </div>
     </article>
     <!-- end slider -->
-
-
-
-
-
-
-
-
 
 
     <!-- POPULAR ITEMS
@@ -140,79 +132,91 @@
 
     <article id="popular_items">
         <h3 class="roboto-regular center" translate="POPULAR_ITEMS"></h3>
+
         <div class="grid-table center">
             <div ng-repeat="product in popularProducts" ng-if="popularProducts.length > 0">
                 <figure>
-                    <img data-ng-src="{{product.imageUrl}}" alt="Special-offer" >
+                    <img data-ng-src="{{product.imageUrl}}" alt="Special-offer">
                 </figure>
                 <p class="center productName roboto-medium">{{product.productName | uppercase}}</p>
-                <a href="#/product/{{product.id}}"><label class="shop_nowSub viewDetail " translate="View_details"></label></a>
+                <a href="#/product/{{product.id}}"><label class="shop_nowSub viewDetail "
+                                                          translate="View_details"></label></a>
             </div>
         </div>
     </article>
     <!-- end POPULAR ITEMS -->
 
 
-
-
-
     <article id="contact_us">
 
         <div data-ng-hide="supportSuccess">
-            <h3 class="roboto-regular center" translate="SUPPORT"></h3>
+
 
             <div id="supportCover">
 
+                <div>
 
-                <sec-validate>
+                    <h1 class="roboto-bold contact_us" translate="CONTACT_US"></h1>
 
-                    <!--sec-siblings="Product"-->
-                    <sec-input sec-placeholder="{{'Category' | translate }}"
-                               id-attr="Category"
-                               input-type-attr="transclude"
-                               select-tag="true" >
-                        <select class="inputtext" ng-change="categoryChange()"
-                                ng-model="supportModel.category"
-                                ng-options="category.categoryName for category in categories track by category.categoryId">
-                        </select>
-                    </sec-input>
+                    <sec-validate>
 
+                        <div class="splitter">
 
-                    <sec-input sec-placeholder="{{'Product' | translate }}"
-                               id-attr="Product"
-                               input-type-attr="transclude"
-                               select-tag="true" >
-                        <select class="inputtext"
-                                ng-model="supportModel.product" ng-change="productChange()"
-                                ng-options="p.productName for p in products" >
-                        </select>
-                    </sec-input>
+                            <div class="inputMargin">
+                            <!--sec-siblings="Product"-->
+                            <sec-input sec-placeholder="{{'Category' | translate }}"
+                                       id-attr="Category"
+                                       input-type-attr="transclude"
+                                       select-tag="true">
+                                <select class="inputtext" ng-change="categoryChange()"
+                                        ng-model="supportModel.category"
+                                        ng-options="category.categoryName for category in categories track by category.categoryId">
+                                </select>
+                            </sec-input>
 
 
+                            <sec-input sec-placeholder="{{'Product' | translate }}"
+                                       id-attr="Product"
+                                       input-type-attr="transclude"
+                                       select-tag="true">
+                                <select class="inputtext"
+                                        ng-model="supportModel.product" ng-change="productChange()"
+                                        ng-options="p.productName for p in products">
+                                </select>
+                            </sec-input>
 
-                    <sec-input sec-placeholder="{{'Email' | translate}}"
-                               sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
-                               model-attr="supportModel.email"
-                               id-attr="text">
-                    </sec-input>
+
+                            <sec-input sec-placeholder="{{'Email' | translate}}"
+                                       sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
+                                       model-attr="supportModel.email"
+                                       id-attr="text">
+                            </sec-input>
+
+                            </div>
+                        </div>
+                        <div class="splitter">
+                            <div class="smollPadding">
+                            <label>{{'Subject' | translate }}</label>
+                            <sec-textarea model-attr="supportModel.subject"
+                                          sec-t-required="{{'Subject' | translate}} {{'field_is_required' | translate}}"
+                                          id-attr="Subject">
+                            </sec-textarea>
+
+                                </div>
+                        </div>
+
+                        <div class="buttonCover">
+                            <button sec-submit-attr="sendSupportEmail()"
+                                    class="roboto-medium sec-validate-invalid"
+                                    a-sec-validate-invalid >
+                                {{'SEND' | translate}}
+                            </button>
+                        </div>
+                        <label class="{{registerAnswer.class}} invalid center"> {{registerAnswer.message}} </label>
 
 
-                    <sec-textarea sec-t-placeholder="{{'Subject' | translate }}"
-                                  sec-t-required="{{'Subject' | translate}} {{'field_is_required' | translate}}"
-                                  model-attr="supportModel.subject"
-                                  id-attr="Subject">
-                    </sec-textarea>
-
-                    <div class="buttonCover">
-                        <button sec-submit-attr="sendSupportEmail()"
-                                class="roboto-medium sec-validate-invalid"
-                                a-sec-validate-invalid
-                        >{{'SEND' | translate}}</button>
-                    </div>
-
-                    <label class="{{registerAnswer.class}} invalid center"> {{registerAnswer.message}} </label>
-
-                </sec-validate>
+                    </sec-validate>
+                </div>
             </div>
         </div>
 
@@ -228,9 +232,6 @@
     </article>
 
 </section>
-
-
-
 
 
 <social-media-drtv></social-media-drtv>

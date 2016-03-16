@@ -187,6 +187,7 @@ nav{
 
 nav .navLinks{
     display: none;
+    white-space: nowrap;
 }
 
 nav ul {
@@ -214,6 +215,7 @@ nav ul li > a{
     transition: all 1s ease;
     transform: scale(1);
     opacity: 1;
+    color: #313131;
 }
 
 nav ul li a.searchSectionEnabled{
@@ -277,6 +279,7 @@ div.logo a{
     display: inline-block;
     padding: 10px;
     vertical-align: top;
+    font-size: 0;
 }
 
 div.logo a span{
@@ -285,7 +288,13 @@ div.logo a span{
     vertical-align: bottom;
     display: inline-block;
     position: relative;
-    left:-5px;
+    left:-2px;
+    top:3px;
+}
+
+div.logo span.logoDemo{
+    font-size: 21.5px;
+    padding: 3px 0;
 }
 
 div.logo img{
@@ -434,6 +443,12 @@ footer .splitter{
         padding: 24px 17px;
         height: 166px;
     }
+
+
+    nav ul li > a:not(.img){
+        padding:15px 12px;
+    }
+
 }
 
 @media screen and (max-width: 1050px) {
