@@ -118,9 +118,10 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     }
 
     @Override
-    public CatalogResponse restoreDBFactorySettings() {
+    public CatalogResponse dbRestoreFactorySettings() {
 
-        String statement = "SELECT * FROM public.restore_db_factory_settings()";
+        //String statement = "SELECT * FROM public.restore_db_factory_settings()";
+        String statement = "SELECT public.restore_db_factory_settings()";
 
         SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
 
@@ -128,11 +129,8 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
 
         Transaction transaction = session.beginTransaction();
 
-
-        //int result = entityManager.createNativeQuery(statement)
-        //        .executeUpdate();
-
-        int result = session.createSQLQuery(statement).executeUpdate();
+        //entityManager.createNativeQuery(statement).executeUpdate();
+        session.createSQLQuery(statement).executeUpdate();
 
         transaction.commit();
 

@@ -2,12 +2,14 @@ package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
+import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
+import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +44,7 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
-    //region /products
+    //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
         return new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
@@ -174,9 +177,66 @@ public class CatalogController {
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
-    //endregion
+    //  endregion
 
-    //region /categories
+    //  region /last update
+
+    /**
+     * Valid values: case insensitive. "ALL" or valid Last-Update Name.
+     * @return {@link LastUpdate}.
+     */
+    @RequestMapping(value = "/catalog/LastUpdate/{what_to_get}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get Last-Update by ID, By Name or ALL")
+    public ResponseEntity<List<LastUpdate>> getLastUpdates(@PathVariable("what_to_get") String whatToGet) {
+        HttpStatus httpStatus = HttpStatus.OK;
+
+
+        List<LastUpdate> listLastUpdates = new ArrayList<>();
+        if (ValidationHelper.isNumeric(whatToGet)) {
+            listLastUpdates.add(productService.getLastUpdate(Long.valueOf(whatToGet)));
+        } else if (whatToGet.equalsIgnoreCase("ALL")) {
+            listLastUpdates = productService.getAllLastUpdates();
+        } else {
+            listLastUpdates.add(productService.getLastUpdateByName(whatToGet));
+        }
+
+        return new ResponseEntity<>(listLastUpdates, httpStatus);
+    }
+
+    @RequestMapping(value = "/catalog/LastUpdate/create/{last_update_name}", method = RequestMethod.POST)
+    @ApiOperation(value = "FOR DEV: Create a new Last-Update name and set Last-Update Timestamp (0 = Now")
+    public ResponseEntity<LastUpdate> createLastUpdate(@PathVariable("last_update_name") String lastUpdateName,
+                                                       @RequestParam(value = "timestamp", defaultValue = "0", required = false) long timestamp,
+                                                       HttpServletRequest request) {
+        //  Already exists?
+        if (productService.getLastUpdateByName(lastUpdateName) != null) {
+            return new ResponseEntity<>(new LastUpdate(), HttpStatus.BAD_REQUEST);
+        }
+
+        if (timestamp <= 0) {
+            timestamp = new Date().getTime();
+        }
+
+        LastUpdate lastUpdate = productService.createLastUpdate(lastUpdateName, timestamp);
+
+        return new ResponseEntity<>(lastUpdate, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/catalog/LastUpdate/update", method = RequestMethod.PUT)
+    @ApiOperation(value = "FOR DEV: Update an existing Last-Update Timestamp")
+    public ResponseEntity<LastUpdate> updateLastUpdate(LastUpdate lastUpdateDto, long id) {
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        LastUpdate lastUpdate = productService.updateLastUpdate(lastUpdateDto, id);
+        if (lastUpdate == null) {
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(lastUpdate, httpStatus);
+    }
+    //  endregion
+
+    //  region /categories
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request) {
         List<Category> category = categoryService.getAllCategories();
@@ -231,7 +291,7 @@ public class CatalogController {
 
         return new ResponseEntity<>(response, httpStatus);
     }
-    //endregion
+    //  endregion
 
     //  region /Images
     @AuthorizeAsAdmin
@@ -253,7 +313,7 @@ public class CatalogController {
     }
     //  endregion
 
-    //region /deals
+    //  region /deals
     @RequestMapping(value = "/deals", method = RequestMethod.GET)
     public ResponseEntity<List<Deal>> getAllDeals(final HttpServletRequest request,
                                                   final HttpServletResponse response) {
@@ -281,7 +341,7 @@ public class CatalogController {
 
         return new ResponseEntity<>(deals, HttpStatus.OK);
     }
-    //endregion
+    //  endregion
 
     //  region /Contact Us
     @RequestMapping(value = "/support/contact_us/email", method = RequestMethod.POST)
@@ -304,7 +364,7 @@ public class CatalogController {
     //  region /Restore Database Factory Settings
     @RequestMapping(value = "/catalog/Restore_db_factory_settings", method = RequestMethod.GET)
     @ApiOperation(value = "Restore Databse factory settings")
-    public ResponseEntity<CatalogResponse> restoreDBFactorySettings() {
+    public ResponseEntity<CatalogResponse> dbRestoreFactorySettings() {
         HttpStatus httpStatus = HttpStatus.OK;
 
         CatalogResponse response = categoryService.restoreDBFactorySettings();
@@ -316,7 +376,7 @@ public class CatalogController {
             return new ResponseEntity<>(response, httpStatus);
         }
 
-        //response = attributeService.restoreDBFactorySettings();
+        //response = attributeService.dbRestoreFactorySettings();
         //if (! response.isSuccess()) {
         //    httpStatus = HttpStatus.BAD_REQUEST;
         //    response.setReason("Restore database factory settings FAILED - Table ATTRIBUTE");

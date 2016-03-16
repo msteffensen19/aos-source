@@ -38,6 +38,6 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
 
     CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId);
 
-    CatalogResponse restoreDBFactorySettings();
+    CatalogResponse dbRestoreFactorySettings();
 
 }

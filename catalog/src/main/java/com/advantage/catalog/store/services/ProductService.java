@@ -9,10 +9,7 @@ import com.advantage.catalog.store.image.ManagedImage;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
-import com.advantage.catalog.store.model.product.ColorAttribute;
-import com.advantage.catalog.store.model.product.ImageAttribute;
-import com.advantage.catalog.store.model.product.Product;
-import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.catalog.store.model.product.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
@@ -176,48 +173,6 @@ public class ProductService {
 
         return dto;
     }
-    /**
-     * Determine entity object from DTO
-     * @param images {@link Collection} collection of images ids
-     * @param product {@link Product}
-     * @return {@link Set} set of ImageAttribute
-     */
-    public Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
-        Set<ImageAttribute> imageAttributes = new HashSet<>();
-        for (String s : images) {
-            ImageAttribute image = new ImageAttribute(s);
-            image.setProduct(product);
-            imageAttributes.add(image);
-        }
-
-        return imageAttributes;
-    }
-
-    /**
-     * Determine entity object from DTO
-     * @param colors {@link Collection} ColorAttributeDto collection
-     * @param product {@link Product} Product entity
-     * @return {@link Set} set of ColorAttributes
-     */
-    public Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors, Product product) {
-        Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
-        for (ColorAttributeDto s : colors) {
-            if (!(s.getInStock() > 0))
-                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
-            Optional<ColorAttribute> attribute =
-                    colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
-            if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
-                attribute.get().setInStock(s.getInStock());
-            }
-            s.setName(s.getName().toUpperCase());
-            s.setCode(s.getCode().toUpperCase());
-            ColorAttribute colorAttribute = new ColorAttribute(s.getName(), s.getCode(), s.getInStock());
-            colorAttribute.setProduct(product);
-            colorAttributes.add(colorAttribute);
-        }
-
-        return colorAttributes;
-    }
 
     /**
      * Return colors unique set from Products collection
@@ -257,23 +212,6 @@ public class ProductService {
         double price = products.stream().max(Comparator.comparing(Product::getPrice)).get().getPrice();
 
         return Double.toString(price);
-    }
-
-    /**
-     * Convert ProductAttributes collection to AttributeItem DTO
-     *
-     * @param attributes - ProductAttributes collection
-     * @return AttributeItem DTO collection
-     */
-    public List<AttributeItem> productAttributesToAttributeValues(Collection<ProductAttributes> attributes) {
-        List<AttributeItem> items = new ArrayList<>();
-        for (ProductAttributes attribute : attributes) {
-            String name = attribute.getAttribute().getName();
-            String value = attribute.getAttributeValue();
-            items.add(new AttributeItem(name, value));
-        }
-
-        return items;
     }
 
     /**
@@ -377,6 +315,67 @@ public class ProductService {
         return productDtos;
     }
 
+    //  region Attributes, ColorAttributes, Images, etc.
+    /**
+     * Determine entity object from DTO
+     * @param images {@link Collection} collection of images ids
+     * @param product {@link Product}
+     * @return {@link Set} set of ImageAttribute
+     */
+    public Set<ImageAttribute> getImageAttribute(Collection<String> images, Product product) {
+        Set<ImageAttribute> imageAttributes = new HashSet<>();
+        for (String s : images) {
+            ImageAttribute image = new ImageAttribute(s);
+            image.setProduct(product);
+            imageAttributes.add(image);
+        }
+
+        return imageAttributes;
+    }
+
+    /**
+     * Determine entity object from DTO
+     * @param colors {@link Collection} ColorAttributeDto collection
+     * @param product {@link Product} Product entity
+     * @return {@link Set} set of ColorAttributes
+     */
+    public Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors, Product product) {
+        Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
+        for (ColorAttributeDto s : colors) {
+            if (!(s.getInStock() > 0))
+                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
+            Optional<ColorAttribute> attribute =
+                    colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
+            if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
+                attribute.get().setInStock(s.getInStock());
+            }
+            s.setName(s.getName().toUpperCase());
+            s.setCode(s.getCode().toUpperCase());
+            ColorAttribute colorAttribute = new ColorAttribute(s.getName(), s.getCode(), s.getInStock());
+            colorAttribute.setProduct(product);
+            colorAttributes.add(colorAttribute);
+        }
+
+        return colorAttributes;
+    }
+
+    /**
+     * Convert ProductAttributes collection to AttributeItem DTO
+     *
+     * @param attributes - ProductAttributes collection
+     * @return AttributeItem DTO collection
+     */
+    public List<AttributeItem> productAttributesToAttributeValues(Collection<ProductAttributes> attributes) {
+        List<AttributeItem> items = new ArrayList<>();
+        for (ProductAttributes attribute : attributes) {
+            String name = attribute.getAttribute().getName();
+            String value = attribute.getAttributeValue();
+            items.add(new AttributeItem(name, value));
+        }
+
+        return items;
+    }
+
     /**
      * Build images IDs collection
      *
@@ -450,9 +449,49 @@ public class ProductService {
     public Attribute getAttributeByDto(AttributeItem attribute) {
         return attributeRepository.get(attribute.getAttributeName());
     }
+    //  endregion
 
-    public CatalogResponse restoreDBFactorySettings() {
+    //  region Last Update
+    public List<LastUpdate> getAllLastUpdates() {
+        List<LastUpdate> listLastUpdates = productRepository.getAllLastUpdates();
+        return listLastUpdates;
+    }
+
+    public LastUpdate getLastUpdate(Long lastUpdateId) {
+        LastUpdate lastUpdate = productRepository.getLastUpdate(lastUpdateId);
+        return lastUpdate;
+    }
+
+    public LastUpdate getLastUpdateByName(final String lastUpdateName) {
+        LastUpdate lastUpdate = productRepository.getLastUpdateByName(lastUpdateName);
+        return lastUpdate;
+    }
+
+    public LastUpdate createLastUpdate(String lastUpdateName, long lastUpdateTimestamp) {
+        //  Already exists?
+        if (this.getLastUpdateByName(lastUpdateName) != null) return null;
+
+        if (lastUpdateTimestamp <= 0) {
+            lastUpdateTimestamp = new Date().getTime();
+        }
+
+        LastUpdate lastUpdate = productRepository.createLastUpdate(lastUpdateName, lastUpdateTimestamp);
+
+        return lastUpdate;
+    }
+
+    public LastUpdate updateLastUpdate(LastUpdate lastUpdateDto, long id) {
+        LastUpdate lastUpdate = productRepository.updateLastUpdate(lastUpdateDto, id);
+
+        return lastUpdate;
+    }
+    //  endregion
+
+    //  region Database Restore Factory Settings
+    @Transactional(rollbackFor = Exception.class)
+    public CatalogResponse dbRestoreFactorySettings() {
         return new CatalogResponse(true, "Default", 0);
     }
+    //  endregion
 
 }
