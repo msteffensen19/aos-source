@@ -316,14 +316,14 @@ public class CatalogController {
             return new ResponseEntity<>(response, httpStatus);
         }
 
-        response = attributeService.restoreDBFactorySettings();
-        if (! response.isSuccess()) {
-            httpStatus = HttpStatus.BAD_REQUEST;
-            response.setReason("Restore database factory settings FAILED - Table ATTRIBUTE");
-            response.setReturnCode(-1);
-
-            return new ResponseEntity<>(response, httpStatus);
-        }
+        //response = attributeService.restoreDBFactorySettings();
+        //if (! response.isSuccess()) {
+        //    httpStatus = HttpStatus.BAD_REQUEST;
+        //    response.setReason("Restore database factory settings FAILED - Table ATTRIBUTE");
+        //    response.setReturnCode(-1);
+        //
+        //    return new ResponseEntity<>(response, httpStatus);
+        //}
 
         return new ResponseEntity<>(response, httpStatus);
     }

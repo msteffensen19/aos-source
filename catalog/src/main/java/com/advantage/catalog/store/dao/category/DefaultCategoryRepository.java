@@ -1,14 +1,9 @@
 package com.advantage.catalog.store.dao.category;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.ParameterMode;
 import javax.persistence.Query;
-import javax.persistence.StoredProcedureQuery;
 
-import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilterPK;
@@ -16,7 +11,6 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
 import com.advantage.common.dto.CatalogResponse;
-import com.advantage.root.util.JsonHelper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -126,20 +120,13 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     @Override
     public CatalogResponse restoreDBFactorySettings() {
 
-        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
 
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        String statement = "SELECT * FROM public.restore_db_factory_settings()";
 
-        session.persist(new Category("LAPTOPS", "1235"));
-        session.persist(new Category("HEADPHONES", "1234"));
-        session.persist(new Category("TABLETS", "1236"));
-        session.persist(new Category("SPEAKERS", "1237"));
-        session.persist(new Category("MICE", "1238"));
+        int result = (Integer) entityManager.createNativeQuery(statement)
+                .executeUpdate();
 
-        transaction.commit();
-
-        return new CatalogResponse(true, "Restore factory settings CATEGORY successful", 1);
+        return new CatalogResponse(true, "Restore factory settings successful", 1);
     }
 
 }

@@ -13,6 +13,4 @@ public interface AttributeRepository extends DefaultCRUDOperations<Attribute> {
      * @return entity reference
      */
     Attribute get(String name);
-
-    CatalogResponse restoreDBFactorySettings();
 }
