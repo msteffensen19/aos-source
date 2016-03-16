@@ -443,6 +443,12 @@ footer .splitter{
         padding: 24px 17px;
         height: 166px;
     }
+
+
+    nav ul li > a:not(.img){
+        padding:15px 12px;
+    }
+
 }
 
 @media screen and (max-width: 1050px) {
