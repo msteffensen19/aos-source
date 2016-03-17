@@ -171,18 +171,4 @@ public class CategoryService {
         return categoryAttributeFilter;
     }
 
-    //  region Database Restore Factory Settings
-    @Transactional(rollbackFor = Exception.class)
-    public CatalogResponse dbRestoreFactorySettings() {
-        CatalogResponse response = categoryRepository.dbRestoreFactorySettings();
-
-        System.out.println("Response: " + response);
-        //if (response.isSuccess()) {
-        //    response = categoryRepository.dbRestoreFactorySettingsCategoryAttributesFilter();
-        //}
-
-        return response;
-    }
-    //  endregion
-
 }

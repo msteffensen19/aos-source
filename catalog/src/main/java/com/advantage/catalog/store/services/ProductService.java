@@ -490,7 +490,11 @@ public class ProductService {
     //  region Database Restore Factory Settings
     @Transactional(rollbackFor = Exception.class)
     public CatalogResponse dbRestoreFactorySettings() {
-        return new CatalogResponse(true, "Default", 0);
+        CatalogResponse response = productRepository.dbRestoreFactorySettings();
+
+        System.out.println("Response: " + response.isSuccess() + ", " + response.getReason());
+
+        return response;
     }
     //  endregion
 
