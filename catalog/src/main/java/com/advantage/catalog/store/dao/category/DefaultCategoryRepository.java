@@ -1,5 +1,7 @@
 package com.advantage.catalog.store.dao.category;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -10,11 +12,17 @@ import com.advantage.catalog.store.model.category.CategoryAttributeFilterPK;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
+import com.advantage.common.Constants;
 import com.advantage.common.dto.CatalogResponse;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -120,9 +128,6 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
     @Override
     public CatalogResponse dbRestoreFactorySettings() {
 
-        //String statement = "SELECT * FROM public.restore_db_factory_settings()";
-        String statement = "SELECT public.restore_db_factory_settings()";
-
         SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
 
         Session session = sessionFactory.openSession();
@@ -130,13 +135,94 @@ public class DefaultCategoryRepository extends AbstractRepository implements Cat
         Transaction transaction = session.beginTransaction();
 
         //entityManager.createNativeQuery(statement).executeUpdate();
-        session.createSQLQuery(statement).executeUpdate();
-
+        //int result = session.createSQLQuery(statement).executeUpdate();
+        String resultTruncate = (String) entityManager.createNativeQuery("SELECT public.truncate_catalog_tables()")
+                .getSingleResult();
         transaction.commit();
-
+        session.flush();
         session.close();
 
-        return new CatalogResponse(true, "Restore factory settings successful", 1);
+        session = sessionFactory.openSession();
+        transaction = session.beginTransaction();
+        String resultInserts = (String) entityManager.createNativeQuery("SELECT public.restore_db_factory_settings()")
+                .getSingleResult();
+        transaction.commit();
+        boolean commited = transaction.wasCommitted();
+        session.flush();
+        session.close();
+        StringBuilder sb = new StringBuilder("Database Restore factory settings successful").append(Constants.NEW_LINE)
+                .append(Constants.TRIPLE_SPACES).append("table \"category\"").append(Constants.NEW_LINE)
+                .append(Constants.TRIPLE_SPACES).append("table \"attribute\"").append(Constants.NEW_LINE);
+
+        //  region Restore Factory Settings table CATEGORY_ATTRIBUTES_FILTER
+        try {
+            ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
+
+            File json = filePath.getFile();
+
+            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+            CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
+
+            for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
+                entityManager.persist(categoryAttributeFilter);
+            }
+
+            if (this.getAllCategoryAttributeFilter().size() > 0) {
+                sb.append(Constants.TRIPLE_SPACES).append("table \"category_attribute_filter\"").append(Constants.NEW_LINE);
+                System.out.println("Database Restore Factory Settings successful - table \"category_attributes_filter\"");
+            }
+
+            //transaction.commit();
+            //session.flush();
+            //session.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -1);
+        }
+
+        //  endregion
+
+        return new CatalogResponse(true, sb.toString(), 1);
     }
 
+    @Override
+    public CatalogResponse dbRestoreFactorySettingsCategoryAttributesFilter() {
+
+        //try {
+        //    ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
+        //
+        //    File json = filePath.getFile();
+        //
+        //    ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        //    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        //    CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
+        //
+        //    ////  Initialize "category_attributes_filter"
+        //    //SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
+        //    //Session session = sessionFactory.openSession();
+        //    //
+        //    //Transaction transaction = session.beginTransaction();
+        //    //entityManager.getTransaction().begin();
+        //
+        //    for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
+        //        entityManager.persist(categoryAttributeFilter);
+        //    }
+        //
+        //    if (this.getAllCategoryAttributeFilter().size() > 0) {
+        //        System.out.println("Database Restore Factory Settings successful - table \"category_attributes_filter\"");
+        //    }
+        //
+        //    //transaction.commit();
+        //    //session.flush();
+        //    //session.close();
+        //
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //    return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -1);
+        //}
+
+        return new CatalogResponse(true, "Restore factory settings successful - table Category_Attribute_Filter", 1);
+    }
 }

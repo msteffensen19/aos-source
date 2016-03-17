@@ -367,7 +367,7 @@ public class CatalogController {
     public ResponseEntity<CatalogResponse> dbRestoreFactorySettings() {
         HttpStatus httpStatus = HttpStatus.OK;
 
-        CatalogResponse response = categoryService.restoreDBFactorySettings();
+        CatalogResponse response = categoryService.dbRestoreFactorySettings();
         if (! response.isSuccess()) {
             httpStatus = HttpStatus.BAD_REQUEST;
             response.setReason("Restore database factory settings FAILED - Table CATEGORY");

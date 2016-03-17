@@ -40,4 +40,5 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
 
     CatalogResponse dbRestoreFactorySettings();
 
+    CatalogResponse dbRestoreFactorySettingsCategoryAttributesFilter();
 }
