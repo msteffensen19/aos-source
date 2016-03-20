@@ -285,15 +285,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         System.out.println("Database Restore Factory Settings - CATALOG schema truncated successfully");
         //  endregion
 
-        //session = sessionFactory.openSession();
-        //transaction = session.beginTransaction();
-        //String resultInserts = (String) entityManager.createNativeQuery("SELECT public.restore_db_factory_settings()")
-        //        .getSingleResult();
-        //transaction.commit();
-        //boolean commited = transaction.wasCommitted();
-        //session.flush();
-        //session.close();
-
         sb.append("Database Restore Factory Settings: ");
 
         //  region CATEGORY
