@@ -37,7 +37,4 @@ public interface CategoryRepository extends DefaultCRUDOperations<Category> {
     void updateCategoryAttributeFilter(Long categoryId, Long attributeId, boolean showInFilter);
 
     CategoryAttributeFilter findCategoryAttributeFilter(Long categoryId, Long attributeId);
-
-    CatalogResponse dbRestoreFactorySettings();
-
 }

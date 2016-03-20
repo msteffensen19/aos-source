@@ -179,9 +179,25 @@ public class Product {
     public String getProductStatus() { return productStatus; }
 
     public void setProductStatus(String productStatus) { this.productStatus = productStatus; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (Double.compare(product.getPrice(), getPrice()) != 0) return false;
+        if (!getId().equals(product.getId())) return false;
+        if (!getProductName().equals(product.getProductName())) return false;
+        if (!getDescription().equals(product.getDescription())) return false;
+        if (!getProductStatus().equals(product.getProductStatus())) return false;
+        if (!getManagedImageId().equals(product.getManagedImageId())) return false;
+        if (!getCategory().equals(product.getCategory())) return false;
+        if (!getProductAttributes().equals(product.getProductAttributes())) return false;
+        if (!getColors().equals(product.getColors())) return false;
+        return getImages().equals(product.getImages());
+
+    }
+
 }
-
-
-
-
-

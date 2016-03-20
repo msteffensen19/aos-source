@@ -223,6 +223,11 @@ public class AccountService {
         return accountRepository.removePaymentPreferences(accountId, preferenceId);
     }
 
+    public AccountStatusResponse dbRestoreFactorySettings() {
+        AccountStatusResponse response = accountRepository.dbRestoreFactorySettings();
+        return response;
+    }
+
     private List<PaymentPreferencesDto> fillPaymentPreferencesDto(Set<PaymentPreferences> paymentPreferences) {
         List<PaymentPreferencesDto> dtos = new ArrayList<>();
         for (PaymentPreferences item : paymentPreferences) {

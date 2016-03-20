@@ -2,6 +2,8 @@ package com.advantage.catalog.store.dao.product;
 
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.ImageAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.ProductAttributes;
@@ -12,22 +14,36 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.store.dao.AbstractRepository;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.JPAQueryHelper;
-import com.advantage.common.dto.AttributeItem;
-import com.advantage.common.dto.ProductDto;
+import com.advantage.common.Constants;
+import com.advantage.common.dto.*;
 import com.advantage.common.enums.ProductStatusEnum;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.persistence.Query;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Component
 @Qualifier("productRepository")
 @Repository
 public class DefaultProductRepository extends AbstractRepository implements ProductRepository {
+
+    private static final int TOTAL_CATEGORIES_COUNT = 5;
+    private static final int TOTAL_ATTRIBUTES_COUNT = 17;
     private static final int MAX_NUM_OF_PRODUCTS = 100;
 
     /**
@@ -47,6 +63,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public ProductService productService;
     @Autowired
     public AttributeService attributeService;
+
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
         //validate productStatus
@@ -111,6 +128,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         entityManager.persist(product);
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return product;
     }
 
@@ -120,12 +144,26 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setManagedImageId(imgUrl);
         entityManager.persist(product);
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return product;
     }
 
     @Override
     public Long create(Product product) {
         entityManager.persist(product);
+
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
 
         return product.getId();
     }
@@ -136,6 +174,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Product.class, Product.FIELD_ID, Product.PARAM_ID);
         Query query = entityManager.createQuery(hql);
         query.setParameter(Product.PARAM_ID, ids);
+
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
 
         return query.executeUpdate();
     }
@@ -192,6 +237,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             }
         }
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return count;
     }
 
@@ -245,7 +297,180 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             productIds.add(productId);
         }
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return deleteByIds(productIds);
+    }
+
+    public CatalogResponse dbRestoreFactorySettings() {
+
+        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
+
+        Session session = sessionFactory.openSession();
+
+        Transaction transaction = session.beginTransaction();
+
+        //  region TRUNCATE_CATALOG_TABLES()
+        //entityManager.createNativeQuery(statement).executeUpdate();
+        //int result = session.createSQLQuery(statement).executeUpdate();
+        String resultTruncate = (String) entityManager.createNativeQuery("SELECT public.truncate_catalog_tables()")
+                .getSingleResult();
+        transaction.commit();
+        session.flush();
+        session.close();
+
+        StringBuilder sb = new StringBuilder("Database Restore Factory Settings - CATALOG schema truncated successfully. ");
+        System.out.println("Database Restore Factory Settings - CATALOG schema truncated successfully");
+        //  endregion
+
+        sb.append("Database Restore Factory Settings: ");
+
+        //  region CATEGORY
+        final Category category1 = new Category("LAPTOPS", "1235");
+        final Category category2 = new Category("HEADPHONES", "1234");
+        final Category category3 = new Category("TABLETS", "1236");
+        final Category category4 = new Category("SPEAKERS", "1237");
+        final Category category5 = new Category("MICE", "1238");
+
+        entityManager.persist(category1);
+        entityManager.persist(category2);
+        entityManager.persist(category3);
+        entityManager.persist(category4);
+        entityManager.persist(category5);
+
+        if (categoryService.getAllCategories().size() == TOTAL_CATEGORIES_COUNT) {
+            sb.append("Category").append(Constants.COMMA).append(Constants.SPACE);
+            System.out.println("Database Restore Factory Settings successful - table \"category\"");
+        } else {
+            sb.append("Table \"category\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+            System.out.println("Database Restore Factory Settings - table \"category\" - FAILED");
+            return new CatalogResponse(false, "Database Restore Factory Settings - table 'category'", -1);
+        }
+        //  endregion
+
+        //  region ATTRIBUTE
+        String[] attributes = new String[] {"Graphics", "Customization", "Operating System", "Processor", "Memory", "Display", "Connector", "Compatibility", "Weight", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen" };
+        Map<String, Attribute> defAttributes = new HashMap<>();
+
+        for (String attrib : attributes) {
+            Attribute attribute = new Attribute(attrib);
+            entityManager.persist(attribute);
+            defAttributes.put(attrib.toUpperCase(), attribute);
+        }
+
+        if (attributeService.getAllAttributes().size() == TOTAL_ATTRIBUTES_COUNT) {
+            sb.append("Attribute").append(Constants.COMMA).append(Constants.SPACE);
+            System.out.println("Database Restore Factory Settings successful - table \"attribute\"");
+        } else {
+            sb.append("Table \"attribute\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+            System.out.println("Database Restore Factory Settings - table \"attribute\" - FAILED");
+            return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -2);
+        }
+        //  endregion
+
+        //  region CATEGORY_ATTRIBUTES_FILTER
+        try {
+            ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
+
+            File json = filePath.getFile();
+
+            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+            CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
+
+            for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
+                entityManager.persist(categoryAttributeFilter);
+            }
+
+            if (categoryService.getAllCategoryAttributesFilter().getCategoriesAttributes().size() > 0) {
+                sb.append("Category_Attribute_Filter").append(Constants.COMMA).append(Constants.SPACE);
+                System.out.println("Database Restore Factory Settings successful - table \"category_attributes_filter\"");
+            } else {
+                sb.append("Table \"category_attribute_filter\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+                System.out.println("Database Restore Factory Settings - table \"category_attribute_filter\" - FAILED");
+                return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -3);
+            }
+
+            //transaction.commit();
+            //session.flush();
+            //session.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -99999);
+        }
+        //  endregion
+
+        //  region Product (colors, attributes, images, etc)
+        try {
+            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+
+            //  Initializr Category Products
+            ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
+            File json = filePath.getFile();
+
+            objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+
+            CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
+            //Transaction transaction = session.beginTransaction();
+            Map<Long, Product> productMap = new HashMap<>();
+            for (CategoryDto categoryDto : categoryDtos) {
+                Category category = categoryService.getCategory(categoryDto.getCategoryId());
+
+                /*PRODUCT*/
+                ProductService productService = new ProductService();
+
+                for (ProductDto productDto : categoryDto.getProducts()) {
+                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category);
+                    product.setManagedImageId(productDto.getImageUrl());
+                    entityManager.persist(product);
+
+                    //load attributes
+                    for (AttributeItem attributeItem : productDto.getAttributes()) {
+                        ProductAttributes productAttributes = new ProductAttributes();
+                        productAttributes.setProduct(product);
+                        productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
+                        productAttributes.setAttributeValue(attributeItem.getAttributeValue());
+
+                        entityManager.persist(productAttributes);
+                    }
+
+                    if (productDto.getImages().size() == 0) {
+                        productDto.getImages().add(product.getManagedImageId());
+                    }
+
+                    product.setColors(productService.getColorAttributes(productDto.getColors(), product));
+                    product.setImages(productService.getImageAttribute(productDto.getImages(), product));
+
+                    productMap.put(product.getId(), product);
+                }
+
+                //  Initialize Promoted products
+                PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
+                Long prodId = promotedProductDto.getId();
+                Product product = productMap.get(prodId);
+                Assert.notNull(product, "\nPromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
+                Deal deal = new Deal(10, product.getDescription(), promotedProductDto.getPromotionHeader(), promotedProductDto.getPromotionSubHeader(), promotedProductDto.getStaringPrice(),
+                        promotedProductDto.getPromotionImageId(), 0, "", "", product);
+
+                entityManager.persist(deal);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CatalogResponse(false, "Restore factory settings FAILED - table Product", -1);
+        }
+        //  endregion
+
+        return new CatalogResponse(true, sb.toString(), 1);
     }
 
     //  region Last Update
@@ -264,10 +489,12 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
      */
     @Override
     public LastUpdate getLastUpdateByName(final String name) {
-        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_LAST_UPDATE_BY_NAME, LastUpdate.class)
-                .setParameter("luname", "%" + name.toUpperCase() + "%")
-                .getResultList();
+//        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_LAST_UPDATE_BY_NAME, LastUpdate.class)
+//                .setParameter("luname", "%" + name.toUpperCase() + "%")
+//                .getResultList();
 
+        List<LastUpdate> lastUpdates = entityManager.createQuery("SELECT u FROM LastUpdate u WHERE u.lastUpdateName = '" + name + "'", LastUpdate.class)
+                .getResultList();
         return lastUpdates.isEmpty() ? null : lastUpdates.get(0);
     }
 
@@ -275,7 +502,12 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public LastUpdate createLastUpdate(String lastUpdateName, long lastUpdateTimestamp) {
         if ((lastUpdateName == null) || (lastUpdateName.isEmpty())) return null;
 
+        if (lastUpdateTimestamp <= 0) {
+            lastUpdateTimestamp = new Date().getTime();
+        }
+
         LastUpdate lastUpdate = new LastUpdate(lastUpdateName, lastUpdateTimestamp);
+
         entityManager.persist(lastUpdate);
 
         return lastUpdate;
@@ -284,11 +516,21 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     @Override
     public LastUpdate updateLastUpdate(LastUpdate lastUpdateDto, long id) {
 
-        LastUpdate lastUpdate = getLastUpdate(id);
-        if (lastUpdate == null) return null;
+        long timestamp = lastUpdateDto.getLastUpdate();
+        if (timestamp <= 0) {
+            timestamp = new Date().getTime();
+            lastUpdateDto.setLastUpdate(timestamp);
+        }
 
-        //  Update LastUpdate Timestamp
-        lastUpdate.setLastUpdate(lastUpdateDto.getLastUpdate());
+        //LastUpdate lastUpdate = getLastUpdate(id);
+        LastUpdate lastUpdate = entityManager.find(LastUpdate.class, id);
+        if (lastUpdate != null) {
+            //  Update LastUpdate Timestamp
+            lastUpdate.setLastUpdate(lastUpdateDto.getLastUpdate());
+        } else {
+            //  New LastUpdate
+            lastUpdate = lastUpdateDto;
+        }
 
         entityManager.persist(lastUpdate);
 

@@ -1,7 +1,13 @@
 package com.advantage.common;
 
 public class Constants {
+
+    public static final char TAB = '\t';
+    public static final char COMMA = ',';
     public static final char SPACE = ' ';
+    public static final String DOUBLE_SPACES = "  ";
+    public static final String TRIPLE_SPACES = "   ";
+    public static final String NEW_LINE = "\n\r";
 
     public static final String NOT_FOUND = "NOT FOUND";
 

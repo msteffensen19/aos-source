@@ -171,9 +171,4 @@ public class CategoryService {
         return categoryAttributeFilter;
     }
 
-    public CatalogResponse restoreDBFactorySettings() {
-        CatalogResponse response = categoryRepository.dbRestoreFactorySettings();
-        return response;
-    }
-
 }

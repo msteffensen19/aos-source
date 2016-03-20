@@ -11,7 +11,7 @@ import javax.persistence.*;
         @NamedQuery(
                 name = LastUpdate.QUERY_GET_ALL,
                 query = "select l from LastUpdate l"
-       ),
+                ),
         @NamedQuery(
                 name = LastUpdate.QUERY_LAST_UPDATE_BY_NAME,
                 query = "select l from LastUpdate l where UPPER(l.lastUpdateName) = :luname"
