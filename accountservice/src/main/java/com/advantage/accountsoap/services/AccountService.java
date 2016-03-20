@@ -207,6 +207,64 @@ public class AccountService {
         return response;
     }
 
+    /**
+     *  <p>
+     *  Reset the registered user's password. Only USER-ADMIN can perform this operation. <br/>
+     *  <ul>NOTE:</ul> {@link TokenJWT#getAccountType()} must by <i>ADMIN</i>. <br/>
+     *  (a) Verify the account type in the token is ADMIN. If NOT then return HTTP code 401 (Unauthorized). <br/>
+     *  (b) Get the registered user account details by accountId. <br/>
+     *  (c) Change the user's password, Return <b>Successful</b>with HTTP code 202 (Accepted). <br/>
+     *  </p>
+     *  @param accountId     user-id to update his password.
+     *  @param newPassword   The password that will replace the old password.
+     *  @param base64Token   The Base-64 Token that identifies the <b><i>CURRENT USER</i></b>.
+     *  @return {@link AccountStatusResponse}
+     *  @throws VerificationTokenException
+     *  @throws WrongTokenTypeException
+     *  @throws ContentTokenException
+     */
+    @Transactional
+    public AccountStatusResponse resetPassword(long accountId, String newPassword, String base64Token) {
+        //  TODO Benny - Add the argument to XSD file.
+        Account account = accountRepository.get(accountId);
+
+        AccountStatusResponse response = new AccountStatusResponse(false, "", -1);
+
+        try {
+            TokenJWT tokenJWT = new TokenJWT(base64Token);
+
+            //  Get current user details from Token
+            long currentUserId = tokenJWT.getUserId();
+            String currentUserLogin = tokenJWT.getLoginName();
+            AccountType currentUserAccountType = tokenJWT.getAccountType();
+
+            if (accountId != currentUserId) {
+                //  Registered user and current user are not the same
+                if (currentUserAccountType.getAccountTypeCode() == AccountType.ADMIN.getAccountTypeCode()) {
+                    //  Not the same user and current user is ADMIN
+                    String compareToPassword = new AccountPassword(account.getLoginName(), newPassword)
+                            .getEncryptedPassword();
+
+                    //  Update new password into registered user account
+                    response = accountRepository.changePassword(accountId, newPassword);
+                } else {
+                    //  Not the same user and current user is not ADMIN
+                    response = new AccountStatusResponse(false, HttpStatus.UNAUTHORIZED.getReasonPhrase(), -2);
+                }
+            }
+        } catch (VerificationTokenException e) {
+            e.printStackTrace();
+        } catch (WrongTokenTypeException e) {
+            e.printStackTrace();
+        } catch (ContentTokenException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
     @Transactional
     public List<PaymentPreferencesDto> getPaymentPreferences(long accountId) {
         Account account = accountRepository.get(accountId);
