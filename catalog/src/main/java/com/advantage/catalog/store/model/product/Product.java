@@ -200,21 +200,4 @@ public class Product {
 
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = getId().hashCode();
-        result = 31 * result + getProductName().hashCode();
-        temp = Double.doubleToLongBits(getPrice());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getProductStatus().hashCode();
-        result = 31 * result + getManagedImageId().hashCode();
-        result = 31 * result + getCategory().hashCode();
-        result = 31 * result + getProductAttributes().hashCode();
-        result = 31 * result + getColors().hashCode();
-        result = 31 * result + getImages().hashCode();
-        return result;
-    }
 }

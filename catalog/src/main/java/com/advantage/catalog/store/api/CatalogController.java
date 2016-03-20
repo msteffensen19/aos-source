@@ -367,23 +367,12 @@ public class CatalogController {
     public ResponseEntity<CatalogResponse> dbRestoreFactorySettings() {
         HttpStatus httpStatus = HttpStatus.OK;
 
-        CatalogResponse response = categoryService.dbRestoreFactorySettings();
+        CatalogResponse response = productService.dbRestoreFactorySettings();
         if (! response.isSuccess()) {
             httpStatus = HttpStatus.BAD_REQUEST;
-            response.setReason("Restore database factory settings FAILED - Table CATEGORY");
-            response.setReturnCode(-1);
 
             return new ResponseEntity<>(response, httpStatus);
         }
-
-        //response = attributeService.dbRestoreFactorySettings();
-        //if (! response.isSuccess()) {
-        //    httpStatus = HttpStatus.BAD_REQUEST;
-        //    response.setReason("Restore database factory settings FAILED - Table ATTRIBUTE");
-        //    response.setReturnCode(-1);
-        //
-        //    return new ResponseEntity<>(response, httpStatus);
-        //}
 
         return new ResponseEntity<>(response, httpStatus);
     }
