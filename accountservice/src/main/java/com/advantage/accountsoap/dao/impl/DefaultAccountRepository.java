@@ -530,7 +530,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public CatalogResponse restoreDBFactorySettings() {
+    public CatalogResponse dbRestoreFactorySettings() {
 
         SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
 
