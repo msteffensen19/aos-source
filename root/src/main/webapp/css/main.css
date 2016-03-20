@@ -582,6 +582,10 @@ footer .splitter{
         top:5px;
     }
 
+    div.logo span.logoDemo{
+        font-size: 14px;
+    }
+
     .pages{
         display: none !important;
     }
