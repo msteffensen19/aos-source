@@ -468,19 +468,27 @@ public class ProductService {
     }
 
     public LastUpdate createLastUpdate(String lastUpdateName, long lastUpdateTimestamp) {
-        //  Already exists?
-        if (this.getLastUpdateByName(lastUpdateName) != null) return null;
 
         if (lastUpdateTimestamp <= 0) {
             lastUpdateTimestamp = new Date().getTime();
         }
 
-        LastUpdate lastUpdate = productRepository.createLastUpdate(lastUpdateName, lastUpdateTimestamp);
+        //  Already exists?
+        LastUpdate lastUpdate = this.getLastUpdateByName(lastUpdateName);
+        if (lastUpdate != null) {
+            long id = lastUpdate.getLastUpdateId();
+
+            lastUpdate.setLastUpdate(lastUpdateTimestamp);
+            lastUpdate = updateLastUpdate(lastUpdate, id);
+        } else {
+            lastUpdate = productRepository.createLastUpdate(lastUpdateName, lastUpdateTimestamp);
+        }
 
         return lastUpdate;
     }
 
     public LastUpdate updateLastUpdate(LastUpdate lastUpdateDto, long id) {
+
         LastUpdate lastUpdate = productRepository.updateLastUpdate(lastUpdateDto, id);
 
         return lastUpdate;

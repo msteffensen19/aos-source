@@ -181,6 +181,12 @@ public class CatalogController {
 
     //  region /last update
 
+    @RequestMapping(value = "/catalog/LastUpdate/timestamp", method = RequestMethod.GET)
+    @ApiOperation(value = "Get Current Timestamp")
+    public ResponseEntity<Long> getTimestamp() {
+        return new ResponseEntity<>(new Date().getTime(), HttpStatus.OK);
+    }
+
     /**
      * Valid values: case insensitive. "ALL" or valid Last-Update Name.
      * @return {@link LastUpdate}.
@@ -189,7 +195,6 @@ public class CatalogController {
     @ApiOperation(value = "Get Last-Update by ID, By Name or ALL")
     public ResponseEntity<List<LastUpdate>> getLastUpdates(@PathVariable("what_to_get") String whatToGet) {
         HttpStatus httpStatus = HttpStatus.OK;
-
 
         List<LastUpdate> listLastUpdates = new ArrayList<>();
         if (ValidationHelper.isNumeric(whatToGet)) {

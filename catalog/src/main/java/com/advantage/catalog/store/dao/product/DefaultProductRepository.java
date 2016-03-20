@@ -63,6 +63,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public ProductService productService;
     @Autowired
     public AttributeService attributeService;
+
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
         //validate productStatus
@@ -127,6 +128,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         entityManager.persist(product);
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return product;
     }
 
@@ -136,12 +144,26 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setManagedImageId(imgUrl);
         entityManager.persist(product);
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return product;
     }
 
     @Override
     public Long create(Product product) {
         entityManager.persist(product);
+
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
 
         return product.getId();
     }
@@ -152,6 +174,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         String hql = JPAQueryHelper.getDeleteByPkFieldsQuery(Product.class, Product.FIELD_ID, Product.PARAM_ID);
         Query query = entityManager.createQuery(hql);
         query.setParameter(Product.PARAM_ID, ids);
+
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
 
         return query.executeUpdate();
     }
@@ -208,6 +237,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             }
         }
 
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
+        }
+
         return count;
     }
 
@@ -259,6 +295,13 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
             final long productId = product.getId();
             productIds.add(productId);
+        }
+
+        //  Update TIMESTAMP of Last-Update "Data"
+        LastUpdate lastUpdate = this.getLastUpdate(1L);
+        if (lastUpdate != null) {
+            lastUpdate.setLastUpdate(new Date().getTime());
+            entityManager.persist(lastUpdate);
         }
 
         return deleteByIds(productIds);
@@ -446,10 +489,12 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
      */
     @Override
     public LastUpdate getLastUpdateByName(final String name) {
-        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_LAST_UPDATE_BY_NAME, LastUpdate.class)
-                .setParameter("luname", "%" + name.toUpperCase() + "%")
-                .getResultList();
+//        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_LAST_UPDATE_BY_NAME, LastUpdate.class)
+//                .setParameter("luname", "%" + name.toUpperCase() + "%")
+//                .getResultList();
 
+        List<LastUpdate> lastUpdates = entityManager.createQuery("SELECT u FROM LastUpdate u WHERE u.lastUpdateName = '" + name + "'", LastUpdate.class)
+                .getResultList();
         return lastUpdates.isEmpty() ? null : lastUpdates.get(0);
     }
 
@@ -457,7 +502,12 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public LastUpdate createLastUpdate(String lastUpdateName, long lastUpdateTimestamp) {
         if ((lastUpdateName == null) || (lastUpdateName.isEmpty())) return null;
 
+        if (lastUpdateTimestamp <= 0) {
+            lastUpdateTimestamp = new Date().getTime();
+        }
+
         LastUpdate lastUpdate = new LastUpdate(lastUpdateName, lastUpdateTimestamp);
+
         entityManager.persist(lastUpdate);
 
         return lastUpdate;
@@ -466,11 +516,21 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     @Override
     public LastUpdate updateLastUpdate(LastUpdate lastUpdateDto, long id) {
 
-        LastUpdate lastUpdate = getLastUpdate(id);
-        if (lastUpdate == null) return null;
+        long timestamp = lastUpdateDto.getLastUpdate();
+        if (timestamp <= 0) {
+            timestamp = new Date().getTime();
+            lastUpdateDto.setLastUpdate(timestamp);
+        }
 
-        //  Update LastUpdate Timestamp
-        lastUpdate.setLastUpdate(lastUpdateDto.getLastUpdate());
+        //LastUpdate lastUpdate = getLastUpdate(id);
+        LastUpdate lastUpdate = entityManager.find(LastUpdate.class, id);
+        if (lastUpdate != null) {
+            //  Update LastUpdate Timestamp
+            lastUpdate.setLastUpdate(lastUpdateDto.getLastUpdate());
+        } else {
+            //  New LastUpdate
+            lastUpdate = lastUpdateDto;
+        }
 
         entityManager.persist(lastUpdate);
 
