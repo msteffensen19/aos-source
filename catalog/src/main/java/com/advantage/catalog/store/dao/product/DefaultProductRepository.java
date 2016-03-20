@@ -80,7 +80,9 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public Product update(ProductDto dto, long id) {
         Product product = get(id);
         Category category = categoryService.getCategory(dto.getCategoryId());
+
         if(!ProductStatusEnum.contains(product.getProductStatus()) || product==null) return null;
+
         product.setProductName(dto.getProductName());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
