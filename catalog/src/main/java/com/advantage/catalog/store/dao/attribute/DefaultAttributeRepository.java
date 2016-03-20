@@ -72,21 +72,4 @@ public class DefaultAttributeRepository extends AbstractRepository implements At
 
         return attributes.isEmpty() ? null : attributes.get(0);
     }
-
-    public CatalogResponse restoreDBFactorySettings() {
-
-        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
-
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        String[] attributes = new String[] {"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen" };
-
-        for (String attributeName : attributes) {
-            session.persist(new Attribute(attributeName));
-        }
-        transaction.commit();
-
-        return new CatalogResponse(true, "Restore factory settings ATTRIBUTES successful", 1);
-    }
 }

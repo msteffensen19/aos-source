@@ -11,8 +11,16 @@ import java.util.regex.Pattern;
  * @author Binyamin Regev on 19/11/2015.
  */
 public class ValidationHelper {
+    //  RegEx to match a number with optional minus ('-') sign and decimal dot (.)
+    private static final String NUMERIC_PATTERN = "-?\\d+(\\.\\d+)?";
+
+    //  RegEx to match a color RGB hexadecimal value
     private static final String COLOR_HEX_PATTERN = "^#([A-Fa-f0-9]{1,6})$";
 
+    /**
+     *  RegEx to match a full-name with optional characters: ".'-". <br/>
+     *  e.g. James T. Kirk, Walter O'Brian, Bat-Sheva
+     */
     private static final String FULL_NAME_PATTERN = "^[\\p{L} .'-]+$";
 
     private static final String MASTER_CREDIT_CVV_NUMBER_PATTERN = "([0-9]{3})";
@@ -32,12 +40,12 @@ public class ValidationHelper {
 
     /**
      * <ul><code>Password</code> must be compliant with <b>AOS policy</b></ul>:
-     * Password length must be 5 to 10 characters.
-     * Password must contain one or more numerical digits and
-     * both UPPER-CASE and lower-case characters (case sensitivity)
+     * Password length must be 4 to 12 characters which include <ul>at least 1
+     * UPPER-case letter</ul> (A-Z), <ul>at least 1 lower-case letter</ul> (a-z)
+     * and <ul>at least 1 digit</ul> (0-9).
      */
     //private static final String LOGIN_PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%\\.\\-\\+\\*]).{6,20})";
-    private static final String LOGIN_PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,10})";
+    private static final String LOGIN_PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,12})";
 
     private static final String TIME_24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
 
@@ -45,6 +53,7 @@ public class ValidationHelper {
     private static final String AMERICAN_DATE_PATTERN = "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)";
     private static final String EUROPEAN_DATE_PATTERN = "(0?[1-9]|[12][0-9]|3[01]).(0?[1-9]|1[012]).((19|20)\\d\\d)";
     private static final String SCANDINAVIAN_DATE_PATTERN = "((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"; //YYYY-MM-DD
+
     //private static final String SAFE_PAY_ACCOUNT_NUMBER = "843200971";
     private static final String SAFE_PAY_ACCOUNT_NUMBER_PATTERN = "([0-9]{9})";
     private static final String CURRENCY_PATTERN = "[A-Z]{3}";
@@ -177,6 +186,11 @@ public class ValidationHelper {
         }
 
         return isValid;
+    }
+
+    public static boolean isNumeric(final String str)
+    {
+        return str.matches(NUMERIC_PATTERN);
     }
 
     /**

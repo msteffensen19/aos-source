@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
+import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.common.dto.ProductDto;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,4 +69,15 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      * @return {@link List} collection of Products
      */
     List<Product> filterByName(String pattern);
+
+    List<LastUpdate> getAllLastUpdates();
+
+    LastUpdate getLastUpdate(Long entityId);
+
+    LastUpdate getLastUpdateByName(final String name);
+
+    LastUpdate createLastUpdate(String lastUpdateName, long lastUpdateTimestamp);
+
+    LastUpdate updateLastUpdate(LastUpdate lastUpdateDto, long id);
+
 }

@@ -3,6 +3,7 @@ package com.advantage.catalog.store.dao.product;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.product.ImageAttribute;
+import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
@@ -246,4 +247,65 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         return deleteByIds(productIds);
     }
+
+    //  region Last Update
+    @Override
+    public List<LastUpdate> getAllLastUpdates() {
+        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_GET_ALL, LastUpdate.class)
+                .getResultList();
+
+        return lastUpdates.isEmpty() ? null : lastUpdates;
+    }
+
+    /**
+     * Get selected LAST_UPDATE by name, e.g. "DATA"
+     * @param name
+     * @return
+     */
+    @Override
+    public LastUpdate getLastUpdateByName(final String name) {
+        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_LAST_UPDATE_BY_NAME, LastUpdate.class)
+                .setParameter("luname", "%" + name.toUpperCase() + "%")
+                .getResultList();
+
+        return lastUpdates.isEmpty() ? null : lastUpdates.get(0);
+    }
+
+    @Override
+    public LastUpdate createLastUpdate(String lastUpdateName, long lastUpdateTimestamp) {
+        if ((lastUpdateName == null) || (lastUpdateName.isEmpty())) return null;
+
+        LastUpdate lastUpdate = new LastUpdate(lastUpdateName, lastUpdateTimestamp);
+        entityManager.persist(lastUpdate);
+
+        return lastUpdate;
+    }
+
+    @Override
+    public LastUpdate updateLastUpdate(LastUpdate lastUpdateDto, long id) {
+
+        LastUpdate lastUpdate = getLastUpdate(id);
+        if (lastUpdate == null) return null;
+
+        //  Update LastUpdate Timestamp
+        lastUpdate.setLastUpdate(lastUpdateDto.getLastUpdate());
+
+        entityManager.persist(lastUpdate);
+
+        return lastUpdate;
+    }
+
+    @Override
+    public LastUpdate getLastUpdate(Long entityId) {
+        ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "last update id");
+
+        String hql = JPAQueryHelper.getSelectByPkFieldQuery(LastUpdate.class, LastUpdate.FIELD_ID, entityId);
+
+        Query query = entityManager.createQuery(hql);
+
+        List<LastUpdate> lastUpdateList = query.getResultList();
+
+        return lastUpdateList.size() != 0 ? lastUpdateList.get(0) : null;
+    }
+    //  endregion
 }

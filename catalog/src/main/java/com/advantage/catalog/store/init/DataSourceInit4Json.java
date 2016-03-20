@@ -6,6 +6,7 @@ import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
+import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.ProductService;
@@ -26,6 +27,7 @@ import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +159,11 @@ public class DataSourceInit4Json {
             session.persist(deal);
 
         }
+        transaction.commit();
+
+        //  Added by Binyamin Regev for Android and iOs mobile devices
+        transaction = session.beginTransaction();
+        session.persist(new LastUpdate("Data", new Date().getTime()));
         transaction.commit();
     }
 

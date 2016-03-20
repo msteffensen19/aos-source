@@ -172,7 +172,7 @@ public class CategoryService {
     }
 
     public CatalogResponse restoreDBFactorySettings() {
-        CatalogResponse response = categoryRepository.restoreDBFactorySettings();
+        CatalogResponse response = categoryRepository.dbRestoreFactorySettings();
         return response;
     }
 
