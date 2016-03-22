@@ -22,5 +22,7 @@
     <Mix_pictures_in_home_page datatype="enum:[Yes,No]" tools="LeanFT;MobileCenter;UFT">No</Mix_pictures_in_home_page>
     <!-- 0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
     <Slow_DB_call datatype="string" tools="LoadRunner;StormRunner">0</Slow_DB_call>
+    <!-- 0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
+    <Slow_Page datatype="enum:[Yes,No]" tools="NV;StormRunner">0</Slow_Page>
 </Parameters>
 
