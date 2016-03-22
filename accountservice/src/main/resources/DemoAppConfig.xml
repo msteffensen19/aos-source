@@ -5,7 +5,7 @@
         Managed by Admin-User in ADM Demo .NET administration application
     -->
     <!-- No=(Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
-    <Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not" tools="LoadRunner;BPT">Yes</Email_address_in_login>
+    <Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not" tools="LoadRunner;BPT">No</Email_address_in_login>
     <!-- 0=Disabled, any other positive number is the amount of memory leak in MegaBytes -->
     <Generate_memory_leak datatype="string" description="0=(Default) Disabled" tools="LoadRunner;LeanFt">0</Generate_memory_leak>
     <!-- 0=Disabled, any other positive number is the number of repeat calls to ShipEx -->
