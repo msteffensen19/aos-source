@@ -1,18 +1,18 @@
 package com.advantage.catalog.store.dao.product;
 
+import com.advantage.catalog.store.dao.AbstractRepository;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
 import com.advantage.catalog.store.model.product.ImageAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
+import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
 import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
 import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog.util.ArgumentValidationHelper;
-import com.advantage.catalog.store.dao.AbstractRepository;
-import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
@@ -207,12 +207,17 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     }
 
     private String getSelectProductsByCategoryIdHql() {
-        StringBuilder hql = new StringBuilder("FROM ");
-        hql.append(Product.class.getName());
-        hql.append(" P WHERE P.");
-        hql.append(Product.FIELD_CATEGORY_ID);
-        hql.append(" = :");
-        hql.append(Product.PARAM_CATEGORY_ID);
+        StringBuilder hql = new StringBuilder("FROM ")
+                .append(Product.class.getName())
+                .append(" P")
+                .append(" WHERE ")
+                .append("UPPER(P.active)")
+                .append(" = ")
+                .append('Y')
+                .append(" AND P.")
+                .append(Product.FIELD_CATEGORY_ID)
+                .append(" = :")
+                .append(Product.PARAM_CATEGORY_ID);
 
         return hql.toString();
     }
@@ -234,7 +239,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         int count = 0;
         for (Product entity : entities) {
             if (entityManager.contains(entity)) {
-                entityManager.remove(entity);
+                entity.setActive('N');              //  Logical DELETE
+                entityManager.persist(entity);
                 count++;
             }
         }
@@ -279,7 +285,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     @Override
     public Product get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "product id");
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);
+        String hql = JPAQueryHelper.getSelectActiveByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);
         Query query = entityManager.createQuery(hql);
 
         List<Product> productList = query.getResultList();
@@ -410,14 +416,11 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         //  region Product (colors, attributes, images, etc)
         try {
-            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-
             //  Initializr Category Products
             ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
             File json = filePath.getFile();
 
-            objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 
             CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -163,6 +164,7 @@ public class CatalogController {
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Delete Product From Catalog")
     @AuthorizeAsAdmin
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @ApiResponses(value = {

@@ -14,11 +14,11 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Product.QUERY_GET_ALL,
-                query = "select p from Product p"
+                query = "select p from Product p where UPPER(active) = 'Y'"
         ),
         @NamedQuery(
                 name = Product.PRODUCT_FILTER_BY_NAME,
-                query = "select p from Product p where UPPER(p.productName) like :pname"
+                query = "select p from Product p where UPPER(active) = 'Y' and UPPER(p.productName) like :pname"
         )
 })
 @NamedStoredProcedureQuery(
@@ -76,6 +76,9 @@ public class Product {
     @JsonIgnore
     private Set<ImageAttribute> images = new HashSet<>();
 
+    @JsonIgnore
+    private char active;
+
     public Product() {
     }
 
@@ -84,6 +87,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
+        this.active = 'Y';
     }
 
     public Product(String name, String description, double price, Category category) {
@@ -92,6 +96,7 @@ public class Product {
         this.price = price;
         this.category = category;
         this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
+        this.active = 'Y';
     }
 
     public Product(String name, String description, double price, Category category, String productStatus) {
@@ -100,6 +105,7 @@ public class Product {
         this.price = price;
         this.category = category;
         this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
+        this.active = 'Y';
     }
 
     public Long getId() {
@@ -127,7 +133,6 @@ public class Product {
     }
 
     public String getProductName() {
-
         return productName;
     }
 
@@ -180,6 +185,20 @@ public class Product {
 
     public void setProductStatus(String productStatus) { this.productStatus = productStatus; }
 
+    public char getActive() {
+        return active;
+    }
+
+    public void setActive(char active) {
+        this.active = active;
+    }
+
+    /**
+     * Don't compare {@link #getActive()} becaues it's just an indicator whether or not the
+     * product is active or deleted.
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

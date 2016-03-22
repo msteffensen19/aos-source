@@ -1,5 +1,6 @@
 package com.advantage.catalog.store.dao.product;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
