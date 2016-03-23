@@ -11,6 +11,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class DemoAppConfigParameter {
     @JsonProperty("parameterName")
     private String parameterName;
+    @JsonProperty("datatype")
+    private String datatype;
+    @JsonProperty("description")
+    private String description;
     @JsonProperty("attributeTools")
     private String attributeTools;
     @JsonProperty("parameterValue")
@@ -44,6 +48,14 @@ public class DemoAppConfigParameter {
         this.parameterValue = parameterValue;
     }
 
+    public DemoAppConfigParameter(String parameterName, String datatype, String description, String attributeTools, String parameterValue) {
+        this.parameterName = parameterName;
+        this.datatype = datatype;
+        this.description = description;
+        this.attributeTools = attributeTools;
+        this.parameterValue = parameterValue;
+    }
+
     /**
      *
      * @return
@@ -58,6 +70,22 @@ public class DemoAppConfigParameter {
      */
     public void setParameterName(String parameterName) {
         this.parameterName = parameterName;
+    }
+
+    public String getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**

@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +41,8 @@ public class CatalogController {
     private AttributeService attributeService;
     @Autowired
     private DealService dealService;
+    @Autowired
+    private DemoAppConfigService demoAppConfigService;
     @Autowired
     private ContactSupportService contactSupportService;
 
@@ -347,6 +348,56 @@ public class CatalogController {
         deals.add(dealOfTheDay);
 
         return new ResponseEntity<>(deals, HttpStatus.OK);
+    }
+    //  endregion
+
+    //  region DemoAppConfig.xml
+    @RequestMapping(value = "/DemoAppConfig/parameters/by_tool/{tools_names}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get parameters by tools (separate tools by semi-colon (;))")
+    public ResponseEntity<List<DemoAppConfigParameter>> getDemoAppConfigParametersByTools(@PathVariable("tools_names") String toolsNames,
+                                                                                          final HttpServletRequest request,
+                                                                                          final HttpServletResponse response) {
+        List<DemoAppConfigParameter> parameters = new ArrayList<>();
+        if (toolsNames.equalsIgnoreCase("ALL")) {
+            parameters = demoAppConfigService.getAllDemoAppConfigParameters();
+        } else {
+            parameters = demoAppConfigService.getDemoAppConfigParametersByTool(toolsNames);
+        }
+
+        return new ResponseEntity<>(parameters, (parameters != null ? HttpStatus.OK : HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/DemoAppConfig/parameters/{parameter_name}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get configuration paramenter by name")
+    public ResponseEntity<DemoAppConfigParameter> getDemoAppConfigParameterByName(@PathVariable("parameter_name") String parameterName,
+                                                                                  final HttpServletRequest request,
+                                                                                  final HttpServletResponse response) {
+
+        DemoAppConfigParameter parameter = demoAppConfigService.getDemoAppConfigParametersByName(parameterName);
+
+        return new ResponseEntity<>(parameter, (parameter != null ? HttpStatus.OK : HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/DemoAppConfig/Restore_Factory_Settings", method = RequestMethod.GET)
+    @ApiOperation(value = "Restore parameters default values")
+    public ResponseEntity<DemoAppConfigStatusResponse> restoreFactorySettings(final HttpServletRequest request,
+                                                                              final HttpServletResponse response) {
+
+        DemoAppConfigStatusResponse restoreFactorySettingsResponse = demoAppConfigService.restoreFactorySettingsDemoAppConfig();
+
+        return new ResponseEntity<>(restoreFactorySettingsResponse, (restoreFactorySettingsResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
+    }
+
+    @RequestMapping(value = "/DemoAppConfig/update/parameter/{name}/value/{new_value}", method = RequestMethod.PUT)
+    @ApiOperation(value = "Update DemoAppConfig parameter value")
+    public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameter(@PathVariable("name") String parameterName,
+                                                                                    @PathVariable("new_value") String parameterValue,
+                                                                                    final HttpServletRequest request,
+                                                                                    final HttpServletResponse response) {
+
+        DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParameterValue(parameterName, parameterValue);
+
+        return new ResponseEntity<>(statusResponse, (statusResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
     }
     //  endregion
 
