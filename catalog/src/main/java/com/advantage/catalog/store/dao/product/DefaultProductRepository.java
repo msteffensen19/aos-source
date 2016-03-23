@@ -75,7 +75,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         return product;
     }
 
-    private Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors) {
+    private Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors, Product product) {
         Set<ColorAttribute> colorAttributes = new HashSet<>();
 
         for (ColorAttributeDto s : colors) {
@@ -122,7 +122,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setImages(imageAttributes);
 
         //product.setColors(productService.getColorAttributes(dto.getColors(), product));
-        product.setColors(this.getColorAttributes(dto.getColors()));
+        product.setColors(this.getColorAttributes(dto.getColors(), product));
 
         for (AttributeItem item : dto.getAttributes()) {
             String attrName = item.getAttributeName();
