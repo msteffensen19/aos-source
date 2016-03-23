@@ -1,25 +1,18 @@
 package com.advantage.common.dto;
 
-import com.advantage.accountsoap.config.WebServiceConfig;
-
-import javax.xml.bind.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
- * @author Binyamin Regev on 24/02/2016.
+ * @author Binyamin Regev on 22/03/2016.
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-        "parameterName",
-        "attributeTools",
-        "parameterNewValue"
-})
-@XmlRootElement(name = "UpdateDemoAppConfigParameterRequest", namespace = WebServiceConfig.NAMESPACE_URI)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class UpdateDemoAppConfigParameterRequest {
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @JsonProperty("parameterName")
     private String parameterName;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @JsonProperty("attributeTools")
     private String attributeTools;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @JsonProperty("parameterNewValue")
     private String parameterNewValue;
 
     public String getParameterName() {
