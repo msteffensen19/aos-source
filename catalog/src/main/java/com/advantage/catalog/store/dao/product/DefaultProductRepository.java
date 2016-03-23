@@ -5,10 +5,7 @@ import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
-import com.advantage.catalog.store.model.product.ImageAttribute;
-import com.advantage.catalog.store.model.product.LastUpdate;
-import com.advantage.catalog.store.model.product.Product;
-import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.catalog.store.model.product.*;
 import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
 import com.advantage.catalog.store.services.ProductService;
@@ -26,6 +23,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -63,6 +61,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public ProductService productService;
     @Autowired
     public AttributeService attributeService;
+    @Autowired
+    private Environment environment;
 
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
@@ -73,6 +73,27 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         entityManager.persist(product);
 
         return product;
+    }
+
+    private Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors) {
+        Set<ColorAttribute> colorAttributes = new HashSet<>();
+
+        for (ColorAttributeDto s : colors) {
+            if (!(s.getInStock() > 0))
+                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
+            Optional<ColorAttribute> attribute =
+                    colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
+            if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
+                attribute.get().setInStock(s.getInStock());
+            }
+            s.setName(s.getName().toUpperCase());
+            s.setCode(s.getCode().toUpperCase());
+            ColorAttribute colorAttribute = new ColorAttribute(s.getName(), s.getCode(), s.getInStock());
+            colorAttribute.setProduct(product);
+            colorAttributes.add(colorAttribute);
+        }
+
+        return colorAttributes;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -90,15 +111,18 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setCategory(category);
         product.setProductStatus(dto.getProductStatus());
 
-        Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        //  Binyamin Regev 2016-03-23: Try to save new images without dragging the old ones too
+        //Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        Set<ImageAttribute> imageAttributes = new HashSet<>();
         for (String s : dto.getImages()) {
             ImageAttribute imageAttribute = new ImageAttribute(s);
             imageAttribute.setProduct(product);
             imageAttributes.add(imageAttribute);
         }
-
-        product.setColors(productService.getColorAttributes(dto.getColors(), product));
         product.setImages(imageAttributes);
+
+        //product.setColors(productService.getColorAttributes(dto.getColors(), product));
+        product.setColors(this.getColorAttributes(dto.getColors()));
 
         for (AttributeItem item : dto.getAttributes()) {
             String attrName = item.getAttributeName();
