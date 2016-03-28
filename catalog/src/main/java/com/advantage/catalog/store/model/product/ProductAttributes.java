@@ -5,7 +5,7 @@ import com.advantage.catalog.store.model.attribute.Attribute;
 import javax.persistence.*;
 
 /**
- * Created by dalie on 11/9/2015.
+ * @author Eli Dali on 09/11/2015.
  */
 @Entity
 @Table(name = "PRODUCT_ATTRIBUTES")

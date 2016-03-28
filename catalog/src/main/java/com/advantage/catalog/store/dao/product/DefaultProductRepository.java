@@ -1,18 +1,15 @@
 package com.advantage.catalog.store.dao.product;
 
+import com.advantage.catalog.store.dao.AbstractRepository;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.deal.Deal;
-import com.advantage.catalog.store.model.product.ImageAttribute;
-import com.advantage.catalog.store.model.product.LastUpdate;
-import com.advantage.catalog.store.model.product.ProductAttributes;
+import com.advantage.catalog.store.model.product.*;
 import com.advantage.catalog.store.services.AttributeService;
 import com.advantage.catalog.store.services.CategoryService;
 import com.advantage.catalog.store.services.ProductService;
 import com.advantage.catalog.util.ArgumentValidationHelper;
-import com.advantage.catalog.store.dao.AbstractRepository;
-import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.JPAQueryHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
@@ -26,6 +23,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -63,6 +61,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public ProductService productService;
     @Autowired
     public AttributeService attributeService;
+    @Autowired
+    private Environment environment;
 
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
@@ -75,12 +75,35 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         return product;
     }
 
+    private Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors, Product product) {
+        Set<ColorAttribute> colorAttributes = new HashSet<>();
+
+        for (ColorAttributeDto s : colors) {
+            if (!(s.getInStock() > 0))
+                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
+            Optional<ColorAttribute> attribute =
+                    colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
+            if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
+                attribute.get().setInStock(s.getInStock());
+            }
+            s.setName(s.getName().toUpperCase());
+            s.setCode(s.getCode().toUpperCase());
+            ColorAttribute colorAttribute = new ColorAttribute(s.getName(), s.getCode(), s.getInStock());
+            colorAttribute.setProduct(product);
+            colorAttributes.add(colorAttribute);
+        }
+
+        return colorAttributes;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Product update(ProductDto dto, long id) {
         Product product = get(id);
         Category category = categoryService.getCategory(dto.getCategoryId());
+
         if(!ProductStatusEnum.contains(product.getProductStatus()) || product==null) return null;
+
         product.setProductName(dto.getProductName());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
@@ -88,15 +111,18 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setCategory(category);
         product.setProductStatus(dto.getProductStatus());
 
-        Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        //  Binyamin Regev 2016-03-23: Try to save new images without dragging the old ones too
+        //Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        Set<ImageAttribute> imageAttributes = new HashSet<>();
         for (String s : dto.getImages()) {
             ImageAttribute imageAttribute = new ImageAttribute(s);
             imageAttribute.setProduct(product);
             imageAttributes.add(imageAttribute);
         }
-
-        product.setColors(productService.getColorAttributes(dto.getColors(), product));
         product.setImages(imageAttributes);
+
+        //product.setColors(productService.getColorAttributes(dto.getColors(), product));
+        product.setColors(this.getColorAttributes(dto.getColors(), product));
 
         for (AttributeItem item : dto.getAttributes()) {
             String attrName = item.getAttributeName();
@@ -205,12 +231,17 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     }
 
     private String getSelectProductsByCategoryIdHql() {
-        StringBuilder hql = new StringBuilder("FROM ");
-        hql.append(Product.class.getName());
-        hql.append(" P WHERE P.");
-        hql.append(Product.FIELD_CATEGORY_ID);
-        hql.append(" = :");
-        hql.append(Product.PARAM_CATEGORY_ID);
+        StringBuilder hql = new StringBuilder("FROM ")
+                .append(Product.class.getName())
+                .append(" P")
+                .append(" WHERE ")
+                .append("UPPER(P.active)")
+                .append(" = ")
+                .append('Y')
+                .append(" AND P.")
+                .append(Product.FIELD_CATEGORY_ID)
+                .append(" = :")
+                .append(Product.PARAM_CATEGORY_ID);
 
         return hql.toString();
     }
@@ -232,7 +263,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         int count = 0;
         for (Product entity : entities) {
             if (entityManager.contains(entity)) {
-                entityManager.remove(entity);
+                entity.setActive('N');              //  Logical DELETE
+                entityManager.persist(entity);
                 count++;
             }
         }
@@ -277,7 +309,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     @Override
     public Product get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "product id");
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);
+        String hql = JPAQueryHelper.getSelectActiveByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);
         Query query = entityManager.createQuery(hql);
 
         List<Product> productList = query.getResultList();
@@ -408,14 +440,11 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         //  region Product (colors, attributes, images, etc)
         try {
-            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-
             //  Initializr Category Products
             ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
             File json = filePath.getFile();
 
-            objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 
             CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);

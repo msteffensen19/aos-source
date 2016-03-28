@@ -1,7 +1,7 @@
 package com.advantage.catalog.store.model.product;
 
 /**
- * Created by dalie on 11/9/2015.
+ * @author Eli Dali 09/11/2015.
  */
 
 import com.advantage.catalog.store.model.attribute.Attribute;
@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-@Embeddable
+ @Embeddable
 public class ProductAttributeId implements Serializable {
     private Product product;
     private Attribute attribute;

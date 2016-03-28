@@ -95,7 +95,7 @@ public class OrderController {
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.PUT)
-    @ApiOperation(value = "Update quantity of product in shopping cart")
+    @ApiOperation(value = "Update Cart-Product quantity and/or color")
     @AuthorizeAsUser
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @ApiResponses(value = {
