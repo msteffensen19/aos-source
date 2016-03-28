@@ -23,6 +23,6 @@
     <!-- 0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
     <Slow_DB_call datatype="string" description="0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution" tools="LoadRunner;StormRunner">0</Slow_DB_call>
     <!-- No=(Default) Do not, or "Yes"=show more than 40 seconds difference between WiFi and 3G in optimization report -->
-    <Slow_Page datatype="enum:[Yes,No]" description="'No'=(Default) Do not, or 'Yes'=show more than 40 seconds difference between WiFi and 3G in optimization report" tools="NV;StormRunner">0</Slow_Page>
+    <Slow_Page datatype="enum:[Yes,No]" description="'No'=(Default) Do not, or 'Yes'=show more than 40 seconds difference between WiFi and 3G in optimization report" tools="NV;StormRunner">No</Slow_Page>
 </Parameters>
 
