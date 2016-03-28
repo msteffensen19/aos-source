@@ -8,6 +8,8 @@ define(['./module'], function (controllers) {
 
         function (s, resolveParams, $state, $filter) {
 
+            l(resolveParams)
+
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
 

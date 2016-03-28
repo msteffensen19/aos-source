@@ -24,12 +24,11 @@ define(['./module'], function (services) {
                     url: server.catalog.sendSupportEmail(),
                     data: paramsToPass,
                 }).success(function (res) {
-                    l("res $q")
-                    l(res)
                     defer.resolve(res)
+                    Loger.Received(res);
                 }).error(function (_err) {
                     console.log("sendSupportEmail() rejected!  ====== " + _err)
-                    console.log(_err)
+                    Loger.Received(_err);
                     defer.resolve({
                         "success": false,
                         "reason": $filter('translate')('Problem_sending_mail_please_try_later'),
@@ -39,8 +38,6 @@ define(['./module'], function (services) {
                 return defer.promise;
 
             }
-
-
 
     }
 

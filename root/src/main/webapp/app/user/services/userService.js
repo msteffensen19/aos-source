@@ -3,7 +3,7 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.factory('userService',['$rootScope', '$q', '$http', "resHandleService", "mini_soap",
+    services.factory('userService', ['$rootScope', '$q', '$http', "resHandleService", "mini_soap",
 
         function ($rootScope, $q, $http, responseService, mini_soap) {
 
@@ -14,7 +14,7 @@ define(['./module'], function (services) {
             });
 
 
-            function singOut(){
+            function singOut() {
 
                 var defer = $q.defer();
                 var user = $rootScope.userCookie;
@@ -24,16 +24,18 @@ define(['./module'], function (services) {
                         loginUser: user.response.userId,
                         loginPassword: "Bearer " + user.response.token,
                     }
+                    Loger.Params(expectToReceive, params.method);
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function (response) {
+                            Loger.Received(response);
                             defer.resolve(response);
                         },
                         function (response) {
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                 }
-                else{
+                else {
                     defer.resolve("no user");
                 }
                 return defer.promise;
@@ -41,10 +43,11 @@ define(['./module'], function (services) {
 
 
             var appConfiguration;
+
             function getConfiguration() {
 
                 var defer = $q.defer();
-                if(appConfiguration){
+                if (appConfiguration) {
                     defer.resolve(appConfiguration);
                 }
                 else {
@@ -59,10 +62,11 @@ define(['./module'], function (services) {
                                 userSecondWsdl: res.USERSECONDWSDL,
                                 userLoginTimeout: res.USERLOGINTIMEOUT,
                             }
+                            Loger.Received(appConfiguration);
                             defer.resolve(appConfiguration);
                         },
                         function (response) {
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                 }
@@ -75,10 +79,11 @@ define(['./module'], function (services) {
                 var params = server.account.login();
                 mini_soap.post(params.path, params.method, user).
                 then(function (response) {
+                        Loger.Received(response);
                         defer.resolve(response);
                     },
                     function (response) {
-                        console.log(response);
+                        Loger.Received(response);
                         defer.reject("Request failed! ");
                     });
 

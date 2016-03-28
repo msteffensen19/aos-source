@@ -8,7 +8,7 @@ define(['./module'], function (services) {
         '$rootScope', '$timeout',
         function ($http, $q, responseService, $cookie, $rootScope, $timeout) {
 
-            var responce = $q.defer();
+            //var responce = $q.defer();
             var cart = null;
 
             function getTempCart() {
@@ -45,9 +45,11 @@ define(['./module'], function (services) {
                             url: server.order.clearCart(user.response.userId)
                         }).success(function (res) {
                             cart = res;
+                            Loger.Received(res)
                             responce.resolve(cart);
                         }).error(function (err) {
                             alert('An error occurred, please try again')
+                            Loger.Received(err);
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
@@ -77,10 +79,12 @@ define(['./module'], function (services) {
                             },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
+                            Loger.Received(res)
                             cart = res;
                             responce.resolve(cart);
                         }).error(function (err) {
                             alert('An error occurred, please try again')
+                            Loger.Received(err)
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
                     }
@@ -103,6 +107,7 @@ define(['./module'], function (services) {
                 var prod = cart.productsInCart[index];
                 cart.productsInCart.splice(index, 1);
                 if (user && user.response && user.response.userId != -1) {
+                    Loger.Received("deleted product, no returns!");
                     $http({
                         method: "delete",
                         url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
@@ -134,9 +139,11 @@ define(['./module'], function (services) {
                             },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
+                            Loger.Received(res)
                             cart = res;
                             responce.resolve(cart);
                         }).error(function (err) {
+                            Loger.Received(err)
                             alert('An error occurred, please try again')
                             responce.reject('error in load cart (productCartService - loadCartProducts)');
                         });
@@ -215,8 +222,10 @@ define(['./module'], function (services) {
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
                             }).success(function (res) {
+                                Loger.Received(res);
                                 console.log(res);
                             }).error(function (_err) {
+                                Loger.Received(_err);
                                 console.log("updateUserCart() rejected!  ====== " + _err)
                             });
                         }
@@ -246,9 +255,10 @@ define(['./module'], function (services) {
                                     product.productId, product.colors[0].code, quantity, oldColor),
                             });
                             request.then(function (newCart) {
+                                Loger.Received(newCart);
                                 cart = newCart.data;
                                 response.resolve(cart);
-                            })
+                            });
                             return response.promise;
                         }
                     }
@@ -321,6 +331,7 @@ define(['./module'], function (services) {
                                 product.productId, product.colors[0].code, quantity),
                         });
                         request.then(function (newCart) {
+                            Loger.Received(newCart);
                             cart = newCart.data;
                             response.resolve(cart);
                         })
@@ -406,10 +417,12 @@ define(['./module'], function (services) {
                     "content-type": "application/json; charset=utf-8",
                     url: server.catalog.getProductById(product.productId)
                 }).success(function (res) {
+                    Loger.Received(res);
                     defer.resolve(res.productStatus == 'OutOfStock' ?
                     {real_prod : product, _prod : null, _prodIndex : prodIndex } :
                     {real_prod : product, _prod : res, _prodIndex : prodIndex });
                 }).error(function (_err) {
+                    Loger.Received(_err);
                     console.log("checkOutOfStockProduct() rejected!  ====== " + _err)
                     console.log(_err)
                     defer.resolve({real_prod : product, _prod : res, _prodIndex : prodIndex });

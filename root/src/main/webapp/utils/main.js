@@ -10,6 +10,7 @@ var Helper = Helper || {};
 Helper.____closeTooTipCart;
 Helper.mobile_section_moved;
 
+
 Helper.forAllPage = function(){
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
@@ -71,7 +72,7 @@ Helper.getRandom = function(length){
     for(var i = 0; i < length; i++){
         ranVal += (Math.floor(Math.random() * 9) + 1)
     }
-    return ranVal
+    return ranVal;
 }
 
 Helper.checkPagePossitions = function(){
@@ -161,13 +162,6 @@ $(document).ready(function() {
 
         $(".mini-title").css("display", "none");
         Helper.mobileSectionClose();
-
-
-
-
-
-
-
     }
 });
 
