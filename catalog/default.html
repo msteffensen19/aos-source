@@ -21,12 +21,12 @@
         messagesTextArea.value += "Server connect...\n";
     }
     function processMessage(message) {
-        messagesTextArea.value += "Receive From Server ==> " + message.data + "\n";
+        messagesTextArea.value += message.data + "\n";
     }
     function sendMessage() {
         if (textMessage.value != "close") {
             webSocket.send(textMessage.value);
-            messagesTextArea.value += "Send To Server ==> " + textMessage.value + "\n";
+            messagesTextArea.value += textMessage.value + "\n";
             textMessage.value = "";
         } else {
             webSocket.close();
