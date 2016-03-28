@@ -9,7 +9,6 @@ define(['./module'], function (services) {
         function ($rootScope, $q, mini_soap, $http, $filter, productsCartService) {
             return {
 
-
                 getAccountDetails: function(){
 
                     var defer = $q.defer();
@@ -304,7 +303,6 @@ define(['./module'], function (services) {
                     var defer = $q.defer();
                     var params = server.account.paymentMethodUpdate();
                     Loger.Params(expectToReceive, params.method);
-
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
                             defer.resolve(response);
