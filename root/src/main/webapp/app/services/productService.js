@@ -47,6 +47,5 @@ define(['./module'], function (services) {
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
 
-
     }]);
 });

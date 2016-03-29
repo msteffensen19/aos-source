@@ -2,6 +2,104 @@
  * Created by correnti on 13/12/2015.
  */
 
+
+var Loger = Loger ? Loger : function() {};
+
+
+Loger.Params = function (params, url) {
+    spaces(3);
+    lines(2);
+    console.log('Param to pass to ' + url);
+    if(params) {
+        if (params.orderPaymentInformation && params.orderPaymentInformation.Transaction_SafePay_Password) {
+            console.log({
+                "Transaction_AccountNumber": params.Transaction_AccountNumber, "Transaction_Currency": params.Transaction_Currency,
+                "Transaction_CustomerPhone": params.Transaction_CustomerPhone, "Transaction_MasterCredit_CVVNumber": params.Transaction_MasterCredit_CVVNumber,
+                "Transaction_MasterCredit_CardNumber": params.Transaction_MasterCredit_CardNumber, "Transaction_MasterCredit_CustomerName": params.Transaction_MasterCredit_CustomerName,
+                "Transaction_MasterCredit_ExpirationDate": params.Transaction_MasterCredit_ExpirationDate, "Transaction_PaymentMethod": params.Transaction_PaymentMethod,
+                "Transaction_ReferenceNumber": params.Transaction_ReferenceNumber, "Transaction_SafePay_UserName": params.Transaction_SafePay_UserName,
+                "Transaction_TransactionDate": params.Transaction_TransactionDate, "Transaction_Type": params.Transaction_Type
+            });
+        }
+        else if(params.safePayPassword){
+            console.log({ safePayUsername: params.safePayUsername, referenceId: params.referenceId});
+        }
+        else if (params.password) {
+            console.log({
+                "accountType": params.accountType, "address": params.address,
+                "allowOffersPromotion": params.allowOffersPromotion, "cityName": params.cityName,
+                "countryId": params.countryId, "email": params.email,
+                "firstName": params.firstName, "lastName": params.lastName,
+                "loginName": params.loginName, "phoneNumber": params.phoneNumber,
+                "stateProvince": params.stateProvince, "zipcode": params.zipcode,
+            });
+        }
+    }
+    else{
+        console.log(params);
+    }
+    spaces(1);
+    lines(1);
+};
+Loger.Extract = function (file, obj, paths) {
+    spaces(3);
+    lines(2);
+    console.log('Extracted file: ' + file);
+    spaces(1);
+    console.log("Recieve: ");
+    console.log(obj);
+    spaces(1);
+    for (var i = 0; i < paths.length; i++){
+        console.log(paths[i])
+    }
+    spaces(1);
+    lines(2);
+    spaces(3);
+};
+
+Loger.CallingWSDL = function (obj) {
+    spaces(3);
+    lines(1);
+    console.log("========================   Reading wsdl  =================================")
+    console.log("url: " + obj.path);
+    console.log("method: " + obj.method);
+    lines(1);
+};
+
+Loger.Calling = function (str) {
+    spaces(3);
+    lines(1);
+    console.log("===========================   Calling  ===================================")
+    console.log("Path: " + str);
+    lines(1);
+};
+
+Loger.Received = function (str) {
+    console.log("============================  Received  ==================================")
+    lines(1);
+    console.log(str)
+    lines(3);
+    spaces(5);
+};
+
+function spaces(num) {
+    var v = ""
+    for (var i = 0; i < num; i++){
+        v+=" ";
+        console.log("" + v)
+    }
+}
+
+function lines(num) {
+    var v = ""
+    for (var i = 0; i < num; i++){
+        v+=" ";
+        console.log("==========================================================================" + v)
+    }
+}
+
+
+
 var services_properties = []
 
 //var catalogKey = "http://localhost:8080/catalog";
@@ -13,7 +111,7 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
 
 (function readTextFile(file)
 {
-    console.log('Extracting file: ' + file)
+    console.log("Extracting file: " + file);
 
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
@@ -24,6 +122,7 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
             if(rawFile.status === 200 || rawFile.status == 0)
             {
                 var fileText  = rawFile.responseText;
+                var rawFile_responseText = fileText;
                 fileText = fileText.split('');
                 var _param = '';
                 var _value = '';
@@ -80,6 +179,15 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
                     services_properties['account_soapservice_url_port'] + "/" +
                     services_properties['account_soapservice_url_suffix'];
 
+                console.log("File extracted: " + file);
+                Loger.Extract(file, rawFile_responseText, [
+                    'Catalog path: ' + catalogKey,
+                    'Order path: ' + orderKey,
+                    'Account path: ' + accountKey,
+                    'Service path: ' + serviceKey,
+                    'WSDL (Web Services Description Language) path: ' + wsdlPath,
+                ]);
+
             }
         }
     }
@@ -101,48 +209,66 @@ var server = {
             return catalogKey;
         },
         getPopularProducts : function () {
-            return "app/tempFiles/popularProducts.json";
+            var paramToReturn = "app/tempFiles/popularProducts.json";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getCategories: function(){
-            return catalogKey + "/categories";
+            var paramToReturn = catalogKey + "/categories";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getCategoryById : function(id) {
-            return catalogKey + "/categories/" + id + "/products";
+            var paramToReturn = catalogKey + "/categories/" + id + "/products";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getDeals : function () {
-            return catalogKey + "/deals";
+            var paramToReturn = catalogKey + "/deals";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getDealOfTheDay : function () {
-            return catalogKey + "/deals/search?dealOfTheDay=true";
+            var paramToReturn = catalogKey + "/deals/search?dealOfTheDay=true";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getProducts : function () {
-            return catalogKey + "/products.json";
+            var paramToReturn = catalogKey + "/products.json";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getProductById : function (id) {
-            return catalogKey + '/products/' + id;
+            var paramToReturn = catalogKey + '/products/' + id;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getProductsBySearch : function (word, quantity) {
-            var path = catalogKey + "/products/search?name=" + word;
-            if(quantity > 0)
-            {
-                path += "&quantityPerEachCategory=" + quantity;
+            var paramToReturn = catalogKey + "/products/search?name=" + word;
+            if(quantity > 0){
+                paramToReturn += "&quantityPerEachCategory=" + quantity;
             }
-            return path;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getAllCategoriesAttributes : function () {
-            return catalogKey + "/categories/attributes";
+            var paramToReturn = catalogKey + "/categories/attributes";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         sendSupportEmail : function () {
-            return catalogKey + "/support/contact_us/email";
+            var paramToReturn = catalogKey + "/support/contact_us/email";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
 
@@ -150,163 +276,213 @@ var server = {
     order: {
 
         updateUserCart: function (userId){
-            return orderKey + "/carts/" + userId;
+            var paramToReturn = orderKey + "/carts/" + userId;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         removeProductToUser: function (userId, productId, color){
-            return orderKey + "/carts/" + userId +
+            var paramToReturn = orderKey + "/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         updateProductToUser: function (userId, productId, color, quantity, oldColor){
             var path = server.order.addProductToUser(userId, productId, oldColor, quantity);
-            return color != oldColor ? path += "&new_color=" + color : path;
+            var paramToReturn = color != oldColor ? path += "&new_color=" + color : path;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         addProductToUser: function (userId, productId, color, quantity){
-            return orderKey + "/carts/" + userId + "/product/" + productId +
+            var paramToReturn = orderKey + "/carts/" + userId + "/product/" + productId +
                 "/color/" + color + "?quantity=" + quantity;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         loadCartProducts : function (userId){
-            return orderKey + "/carts/" + userId;
+            var paramToReturn = orderKey + "/carts/" + userId;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         clearCart : function (userId){
-            return orderKey + "/carts/" + userId;
+            var paramToReturn = orderKey + "/carts/" + userId;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         getShippingCost: function(){
-            return orderKey + "/shippingcost/" ;
+            var paramToReturn = orderKey + "/shippingcost/";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         safePay: function(userId){
-            return orderKey + "/orders/users/" + userId ;
+            var paramToReturn = orderKey + "/orders/users/" + userId;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         },
 
         accountUpdate: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountUpdateRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
     },
     account: {
 
         getAllCountries : function (){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetCountriesRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         register : function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountCreateRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         login : function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountLoginRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         getAccountById: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAccountByIdRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         getAccountById_new: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAccountByIdNewRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         getAccountPaymentPreferences: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAccountPaymentPreferencesRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         getAddressesByAccountId: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAddressesByAccountIdRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         accountUpdate: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountUpdateRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         updateMasterCreditMethod: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'UpdateMasterCreditMethodRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         addMasterCreditMethod: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AddMasterCreditMethodRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         updateSafePayMethod: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'UpdateSafePayMethodRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         addSafePayMethod: function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AddSafePayMethodRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         changePassword : function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'ChangePasswordRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         accountLogout : function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountLogoutRequest',
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
 
         paymentMethodUpdate : function(){
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'PaymentMethodUpdateRequest',
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         }
     },
     service: {
 
         getConfiguration: function () {
-            return {
+            var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountConfigurationStatusRequest'
             }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
         },
     }
 }

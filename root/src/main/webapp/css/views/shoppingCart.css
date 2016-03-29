@@ -276,6 +276,9 @@
     display: none;
 }
 
+#shoppingCart .productColor{
+    cursor: default;
+}
 
 @media only screen and (max-width: 768px) {
 

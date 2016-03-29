@@ -36,8 +36,10 @@ define(['./module'], function (services) {
                     method: "get",
                     url: server.catalog.getCategoryById(id)
                 }).success(function(res){
+                    Loger.Received(res)
                     defer.resolve(res)
                 }).error(function(err){
+                    Loger.Received(err)
                     defer.reject(null)
                 });
             }

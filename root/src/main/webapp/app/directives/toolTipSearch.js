@@ -23,7 +23,6 @@ define(['./module'], function (directives) {
 
                         var lastRequest = '';
                         s.runAutocomplete = function(){
-                            l(s.autoCompleteValue)
                             lastRequest = s.autoCompleteValue;
                             if(lastRequest == '') {
                                 s.autoCompleteResult = {};
@@ -42,9 +41,6 @@ define(['./module'], function (directives) {
                         }
 
                         s.goToCategoryPage = function(){
-                            l(s.categoryFilter);
-                            l(s.autoCompleteValue);
-                            l("");
                             $state.go('search',{
                                 id: (s.categoryFilter == null ? '' : s.categoryFilter),
                                 viewAll: s.autoCompleteValue

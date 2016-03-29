@@ -9,7 +9,6 @@ define(['./module'], function (services) {
         function ($rootScope, $q, mini_soap, $http, $filter, productsCartService) {
             return {
 
-
                 getAccountDetails: function(){
 
                     var defer = $q.defer();
@@ -39,7 +38,7 @@ define(['./module'], function (services) {
                                     internalUserBlockedFromLoginUntil: response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
                                     internalLastSuccesssulLogin: response.INTERNALLASTSUCCESSSULLOGIN,
                                 }
-
+                                Loger.Received(user);
                                 defer.resolve(user);
                             },
                             function (response) {
@@ -71,10 +70,11 @@ define(['./module'], function (services) {
                                         "userId": response.USERID,
                                     }
                                 }
+                                Loger.Received(response);
                                 defer.resolve(shippingDetails);
                             },
                             function (response) {
-                                console.log(response);
+                                Loger.Received(response);
                                 defer.reject("Request failed! (getAccountDetails)");
                             });
 
@@ -124,12 +124,11 @@ define(['./module'], function (services) {
                                         "safepayPassword" : SPay.SAFEPAYPASSWORD,
                                     }
                                 }
-                                l(masterCredit)
-                                l(safePay)
+                                Loger.Received({masterCredit: masterCredit, safePay: safePay });
                                 defer.resolve({masterCredit: masterCredit, safePay: safePay });
                             },
                             function (response) {
-                                console.log(response);
+                                Loger.Received(response);
                                 defer.reject("Request failed! (getAccountDetails)");
                             });
 
@@ -149,10 +148,11 @@ define(['./module'], function (services) {
                         var params = server.account.changePassword();
                         mini_soap.post(params.path, params.method, expectToReceive).
                         then(function (response) {
+                                Loger.Received(response);
                                 defer.resolve(response);
                             },
                             function (response) {
-                                console.log(response);
+                                Loger.Received(response);
                                 defer.reject("Request failed!");
                             });
                     }
@@ -176,13 +176,15 @@ define(['./module'], function (services) {
                     }
                     var defer = $q.defer();
                     var params = server.account.accountUpdate();
+                    Loger.Params(expectToReceive, params.method);
 
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
+                            Loger.Received(response);
                             defer.resolve(response);
                         },
                         function(response){
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
@@ -201,12 +203,15 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     var params = server.account.addMasterCreditMethod();
+                    Loger.Params(expectToReceive, params.method);
+
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
+                            Loger.Received(response);
                             defer.resolve(response);
                         },
                         function(response){
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
@@ -223,12 +228,15 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     var params = server.account.addSafePayMethod();
+                    Loger.Params(expectToReceive, params.method);
+
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
+                            Loger.Received(response);
                             defer.resolve(response);
                         },
                         function(response){
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
@@ -244,12 +252,15 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     var params = server.account.updateSafePayMethod();
+                    Loger.Params(expectToReceive, params.method);
+
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
+                            Loger.Received(response);
                             defer.resolve(response);
                         },
                         function(response){
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
@@ -267,12 +278,15 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     var params = server.account.updateMasterCreditMethod();
+                    Loger.Params(expectToReceive, params.method);
+
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
+                            Loger.Received(response);
                             defer.resolve(response);
                         },
                         function(response){
-                            console.log(response);
+                            Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
                     return defer.promise;
@@ -288,6 +302,7 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     var params = server.account.paymentMethodUpdate();
+                    Loger.Params(expectToReceive, params.method);
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function(response){
                             defer.resolve(response);

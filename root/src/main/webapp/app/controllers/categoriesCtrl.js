@@ -55,9 +55,23 @@ define(['./module'], function (controllers) {
                             s.registerAnswer = { class: "", message: "" }
                         }, 2000)
                     }
+                    if(res.success){
+                        s.supportModel = {
+                            "category": {},
+                            "email": "",
+                            "product": {},
+                            "subject": ""
+                        }
+                        $timeout(function(){
+                            s.supportSuccess = false;
+                            s.registerAnswer = { class: "", message: "" }
+                        }, 10000)
+                    }
 
                 }, function(err){
+
                 });
+
 
             }
 

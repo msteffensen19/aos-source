@@ -19,6 +19,7 @@ define(['./module'], function (services) {
 
             mini_soap.post(params.path, params.method).
             then(function(response){
+                    Loger.Received(response);
                     var countries = [];
                     angular.forEach(response, function(country){
                         countries.push({
@@ -31,7 +32,7 @@ define(['./module'], function (services) {
                     defer.resolve(countries);
                 },
                 function(response){
-                    console.log(response);
+                    Loger.Received(response);
                     defer.reject("Request failed! ");
                 });
             return defer.promise;
@@ -57,12 +58,15 @@ define(['./module'], function (services) {
 
             var defer = $q.defer();
             var params = server.account.register();
+            Loger.Params(expectToReceive, params.method);
 
             mini_soap.post(params.path, params.method, expectToReceive).
             then(function(response){
+                    Loger.Received(response);
                     defer.resolve(response);
                 },
                 function(response){
+                    Loger.Received(response);
                     console.log(response);
                     defer.reject("Request failed! ");
                 });
