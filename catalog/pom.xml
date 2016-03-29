@@ -12,6 +12,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <dependencies>
+        <!-- WebSocket -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
         <!--shared resources-->
         <dependency>
             <groupId>com.advantage.online.store</groupId>
