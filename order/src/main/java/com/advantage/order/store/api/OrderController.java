@@ -2,16 +2,16 @@ package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 
-import AccountServiceClient.DemoAppConfigGetAllParametersResponse;
 import AccountServiceClient.DemoAppConfigGetParametersByToolResponse;
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.security.AuthorizeAsUser;
+import com.advantage.order.store.dto.*;
 import com.advantage.order.store.order.dto.*;
-import com.advantage.order.store.order.model.ShoppingCart;
-import com.advantage.order.store.order.services.OrderManagementService;
-import com.advantage.order.store.order.services.ShoppingCartService;
+import com.advantage.order.store.model.ShoppingCart;
+import com.advantage.order.store.services.OrderManagementService;
+import com.advantage.order.store.services.ShoppingCartService;
 import com.advantage.root.util.ValidationHelper;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
