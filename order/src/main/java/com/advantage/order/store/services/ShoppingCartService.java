@@ -9,7 +9,6 @@ import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.ShoppingCartDto;
 import com.advantage.order.store.dto.ShoppingCartResponse;
 import com.advantage.order.store.dto.ShoppingCartResponseDto;
-import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;

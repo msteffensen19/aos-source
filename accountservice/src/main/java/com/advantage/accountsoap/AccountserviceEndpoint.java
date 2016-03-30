@@ -34,9 +34,6 @@ public class AccountserviceEndpoint {
 
     @Autowired
     private AccountConfigurationService accountConfigurationService;
-
-    @Autowired
-    private DemoAppConfigService service;
     //  endregion
 
     //region Account
@@ -358,66 +355,6 @@ public class AccountserviceEndpoint {
         return accountConfigurationService.getAllConfigurationParameters();
     }
     //endregion
-
-    //  region User level configuration - DemoAppConfig.xml
-    /**
-     * Gets all parameters from {@code DemoAppConfig.xml} file,
-     * with their current values and tools attribute.
-     * @return {@link DemoAppConfigGetAllParametersResponse}
-     */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigGetAllParametersRequest")
-    @ResponsePayload
-    public DemoAppConfigGetAllParametersResponse demoAppConfigGetAllParameters() {
-        List<DemoAppConfigParameter> parameters = service.getAllDemoAppConfigParameters();
-
-        DemoAppConfigGetAllParametersResponse response = new DemoAppConfigGetAllParametersResponse();
-
-        response.setParameters(parameters);
-
-        return response;
-    }
-
-    /**
-     * Get a list of parameters which were requested by a specific tool.
-     */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigGetParametersByToolRequest")
-    @ResponsePayload
-    public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(@RequestPayload DemoAppConfigGetParametersByToolRequest request) {
-
-        List<DemoAppConfigParameter> parameters = service.getDemoAppConfigParametersByTool(request.getToolName());
-
-        //DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse(parameters);
-        DemoAppConfigGetParametersByToolResponse response = new DemoAppConfigGetParametersByToolResponse();
-        response.setParameters(parameters);
-
-        return response;
-    }
-
-    /**
-     * Update a specific parameters by name to a given value.
-     */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateDemoAppConfigParameterRequest")
-    @ResponsePayload
-    public UpdateDemoAppConfigParameterResponse updateDemoAppConfigParameterValue(@RequestPayload UpdateDemoAppConfigParameterRequest request) {
-
-        DemoAppConfigStatusResponse updateResponse = service.updateParameterValue(request.getParameterName(), request.getParameterNewValue());
-
-        return new UpdateDemoAppConfigParameterResponse(updateResponse);
-    }
-
-    /**
-     * Restore &quat;DemoAppConfig.xml&quat; parameters values to factory settings.
-     * @return {@link DemoAppConfigRestoreFactorySettingsResponse}
-     */
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DemoAppConfigRestoreFactorySettingsRequest")
-    @ResponsePayload
-    public DemoAppConfigRestoreFactorySettingsResponse restoreFactorySettingsDemoAppConfig() {
-        DemoAppConfigStatusResponse response = service.restoreFactorySettingsDemoAppConfig();
-
-        return new DemoAppConfigRestoreFactorySettingsResponse(response);
-    }
-    //  endregion
-
 
     /*
     protected HttpServletRequest getHttpServletRequest() {

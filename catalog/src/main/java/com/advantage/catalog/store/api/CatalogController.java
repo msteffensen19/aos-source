@@ -354,9 +354,9 @@ public class CatalogController {
     //  region DemoAppConfig.xml
     @RequestMapping(value = "/DemoAppConfig/parameters/by_tool/{tools_names}", method = RequestMethod.GET)
     @ApiOperation(value = "Get parameters by tools (separate tools by semi-colon (;))")
-    public ResponseEntity<List<DemoAppConfigParameter>> getDemoAppConfigParametersByTools(@PathVariable("tools_names") String toolsNames,
-                                                                                          final HttpServletRequest request,
-                                                                                          final HttpServletResponse response) {
+    public ResponseEntity<DemoAppConfigResponse> getDemoAppConfigParametersByTools(@PathVariable("tools_names") String toolsNames,
+                                                                                   final HttpServletRequest request,
+                                                                                   final HttpServletResponse response) {
         List<DemoAppConfigParameter> parameters = new ArrayList<>();
         if (toolsNames.equalsIgnoreCase("ALL")) {
             parameters = demoAppConfigService.getAllDemoAppConfigParameters();
@@ -364,7 +364,7 @@ public class CatalogController {
             parameters = demoAppConfigService.getDemoAppConfigParametersByTool(toolsNames);
         }
 
-        return new ResponseEntity<>(parameters, (parameters != null ? HttpStatus.OK : HttpStatus.NOT_FOUND));
+        return new ResponseEntity<>(new DemoAppConfigResponse(parameters), (parameters != null ? HttpStatus.OK : HttpStatus.NOT_FOUND));
     }
 
     @RequestMapping(value = "/DemoAppConfig/parameters/{parameter_name}", method = RequestMethod.GET)

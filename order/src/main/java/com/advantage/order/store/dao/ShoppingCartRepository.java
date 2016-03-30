@@ -3,7 +3,6 @@ package com.advantage.order.store.dao;
 import com.advantage.common.dao.DefaultCRUDOperations;
 import com.advantage.order.store.dto.ShoppingCartDto;
 import com.advantage.order.store.dto.ShoppingCartResponse;
-import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import org.springframework.transaction.annotation.Transactional;
 

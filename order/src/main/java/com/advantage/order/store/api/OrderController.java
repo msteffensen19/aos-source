@@ -8,7 +8,6 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.dto.*;
-import com.advantage.order.store.order.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
 import com.advantage.order.store.services.ShoppingCartService;

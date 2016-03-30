@@ -52,27 +52,33 @@ public class InitDataBase {
             countryMap.put(country.getId(), country);
         }
         transaction.commit();
+
         transaction = session.beginTransaction();
 
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "Avraham", "avinu.avraham", "Avraham1", countryMap.get(12l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "itshak", "avinu.itshak", "Itshak1", countryMap.get(12l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "jakob", "avinu.jakob", "Israel7", countryMap.get(12l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        /*
+        ===========================================================================================================================================================================================================
+        new Account(accountType, lastName, firstName, loginName, password, countryCode+"L", phoneNumber, stateProvinceName, cityName, address, zipcodeString, email, offerPromotionBoolean)
+        ===========================================================================================================================================================================================================
+         */
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "Avraham", "avinu.avraham", "Avraham1", countryMap.get(12L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "itshak", "avinu.itshak", "Itshak1", countryMap.get(12L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Avinu", "jakob", "avinu.jakob", "Israel7", countryMap.get(12L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
 
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Sara", "sara.imenu", "Saramom2", countryMap.get(18l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Rivka", "rivka.imenu", "Rivka2", countryMap.get(18l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Lea", "lea.imenu", "Motherlea2", countryMap.get(18l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Rachel", "rachel.imenu", "Rachel21", countryMap.get(18l), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Sara", "sara.imenu", "Saramom2", countryMap.get(18L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Rivka", "rivka.imenu", "Rivka2", countryMap.get(18L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Lea", "lea.imenu", "Motherlea2", countryMap.get(18L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "imenu", "Rachel", "rachel.imenu", "Rachel21", countryMap.get(128L), "077-7654321", "Jerusalem1", "Alonei Mamreh", "address", "9876543", "a@b.com", true));
 
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "King", "David", "king.david", "DavidK1", countryMap.get(10l), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "King", "solomon", "king.solomon", "SolomonK2", countryMap.get(10l), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Queen", "Sheeba", "queen.sheeba", "SheebaQ1", countryMap.get(10l), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "King", "David", "king.david", "DavidK1", countryMap.get(128L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "King", "Solomon", "king.solomon", "SolomonK2", countryMap.get(128L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Queen", "Sheeba", "queen.sheeba", "SheebaQ1", countryMap.get(10L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
 
 
-        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Fiskin", "Evgeney", "fizpok", "ASas12", countryMap.get(10l), "052-4898919", "Jerusalem1", "Jerusalem", "address", "9876543", "evgeney.fiskin@hpe.com", true));
+        session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Fiskin", "Evgeney", "fizpok", "ASas12", countryMap.get(10L), "052-4898919", "Jerusalem1", "Jerusalem", "address", "9876543", "evgeney.fiskin@hpe.com", true));
 
-        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Regev", "Binyamin", "beni.regev", "Qe7uwt2v!", countryMap.get(128), "054-7654321", "Jerusalem", "Jerusalem", "Holly Land", "9876543", "nakdimon@ben-guryon.com", false));
-        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Mercury", "Admin User", "Mercury", "Mercury", countryMap.get(10l), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "mercury@hpe.com", true));
-        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10l), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
+        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Regev", "Binyamin", "beni.regev", "Qe7uwt2v!", countryMap.get(128L), "054-7654321", "Jerusalem", "Jerusalem", "Holly Land", "9876543", "nakdimon@ben-guryon.com", false));
+        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Mercury", "Admin User", "Mercury", "Mercury", countryMap.get(10L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "mercury@hpe.com", true));
+        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
         transaction.commit();
     }
 }
