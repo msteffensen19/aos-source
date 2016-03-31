@@ -237,7 +237,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                 .append(" WHERE ")
                 .append("UPPER(P.active)")
                 .append(" = ")
-                .append('Y')
+                .append("'Y'")
                 .append(" AND P.")
                 .append(Product.FIELD_CATEGORY_ID)
                 .append(" = :")

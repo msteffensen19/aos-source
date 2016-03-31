@@ -343,8 +343,10 @@ public class ProductService {
     public Set<ColorAttribute> getColorAttributes(Collection<ColorAttributeDto> colors, Product product) {
         Set<ColorAttribute> colorAttributes = new HashSet<>(product.getColors());
         for (ColorAttributeDto s : colors) {
-            if (!(s.getInStock() > 0))
-                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
+            ////  Binyamin Regev 2016-03-31: Allow quantity = 0 in color of a new product
+            //if (!(s.getInStock() > 0))
+            //    s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
+            ////  Binyamin Regev 2016-03-31 - End
             Optional<ColorAttribute> attribute =
                     colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
             if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
