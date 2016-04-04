@@ -41,7 +41,7 @@
     <xs:complexType name="AccountConfigurationStatusResponse">
         <xs:sequence>
             <xs:element name="emailAddressInLogin" type="xs:boolean"/>
-            <xs:element name="loginBlockingIntervalInMilliSeconds" type="xs:long"/>
+            <xs:element name="loginBlockingIntervalInSeconds" type="xs:long"/>
             <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int"/>
             <xs:element name="productInStockDefaultValue" type="xs:int"/>
             <xs:element name="userSecondWsdl" type="xs:boolean"/>

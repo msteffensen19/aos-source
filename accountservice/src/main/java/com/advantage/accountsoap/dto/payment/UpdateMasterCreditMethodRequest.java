@@ -31,14 +31,6 @@ public class UpdateMasterCreditMethodRequest {
     public UpdateMasterCreditMethodRequest() {
     }
 
-    public UpdateMasterCreditMethodRequest(String cardNumber, String expirationDate, String cvvNumber, String customerName, long referenceId) {
-        this.cardNumber = cardNumber;
-        this.expirationDate = expirationDate;
-        this.cvvNumber = cvvNumber;
-        this.customerName = customerName;
-        this.referenceId = referenceId;
-    }
-
     public UpdateMasterCreditMethodRequest(long userId, String cardNumber, String expirationDate, String cvvNumber, String customerName, long referenceId) {
         this.userId = userId;
         this.cardNumber = cardNumber;

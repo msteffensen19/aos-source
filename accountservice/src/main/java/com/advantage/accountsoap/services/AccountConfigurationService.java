@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
-import com.advantage.accountsoap.dto.account.AccountConfigurationStatusResponse;
+import com.advantage.accountsoap.dto.account.GetAccountConfigurationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,10 @@ public class AccountConfigurationService {
     public AccountConfiguration accountConfiguration;
 
     @Transactional(readOnly = true)
-    public AccountConfigurationStatusResponse getAllConfigurationParameters() {
-        return accountConfiguration.getAllConfigurationParameters();
+    public GetAccountConfigurationResponse getAllConfigurationParameters() {
+        GetAccountConfigurationResponse getAccountConfigurationResponse = new GetAccountConfigurationResponse();
+        getAccountConfigurationResponse = accountConfiguration.getAllConfigurationParameters();
+        return getAccountConfigurationResponse;
     }
 
 }

@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*;
         propOrder = {
                 "response"
         })
-@XmlRootElement(name = "AddSafePayMethodResponse", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "UpdateSafePayMethodResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class UpdateSafePayMethodResponse {
     @XmlElement(name = "StatusMessage", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private PaymentPreferencesStatusResponse response;

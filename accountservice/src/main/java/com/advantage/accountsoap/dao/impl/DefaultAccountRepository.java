@@ -275,11 +275,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
-        if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.equalsIgnoreCase("Yes")) {
-            if ((email == null) || (email.length() == 0)) {
-                return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
-            }
-        }
+        //  TODO - Benny - No longer in AccountCounfiguration
+        //if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.equalsIgnoreCase("Yes")) {
+        //    if ((email == null) || (email.length() == 0)) {
+        //        return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
+        //    }
+        //}
 
         //  Try to get user details by login user-name
         Account account = getAppUserByLogin(loginUser);
@@ -320,25 +321,26 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
         }
 
+        //  TODO - Benny - No longer in AccountCounfiguration
         //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
-        if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
-            if ((!email.isEmpty()) && (email.trim().length() > 0)) {
-                if ((!account.getEmail().isEmpty()) && (account.getEmail().trim().length() > 0)) {
-                    if (account.getEmail().compareToIgnoreCase(email) != 0) {
-                        //  email does not match the email set in user details
-                        account = addUnsuccessfulLoginAttempt(account);
-                        return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, account.getId());
-                    }
-                } else {
-                    //
-                    account = addUnsuccessfulLoginAttempt(account);
-                    return new AccountStatusResponse(false, Account.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, account.getId());
-                }
-
-            } else {
-                return new AccountStatusResponse(false, Account.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, account.getId());
-            }
-        }
+        //if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
+        //    if ((!email.isEmpty()) && (email.trim().length() > 0)) {
+        //        if ((!account.getEmail().isEmpty()) && (account.getEmail().trim().length() > 0)) {
+        //            if (account.getEmail().compareToIgnoreCase(email) != 0) {
+        //                //  email does not match the email set in user details
+        //                account = addUnsuccessfulLoginAttempt(account);
+        //                return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, account.getId());
+        //            }
+        //        } else {
+        //            //
+        //            account = addUnsuccessfulLoginAttempt(account);
+        //            return new AccountStatusResponse(false, Account.MESSAGE_NO_EMAIL_EXISTS_FOR_USER, account.getId());
+        //        }
+        //
+        //    } else {
+        //        return new AccountStatusResponse(false, Account.MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY, account.getId());
+        //    }
+        //}
 
         //  Reset user-blocking
         account.setInternalUnsuccessfulLoginAttempts(0);
@@ -416,7 +418,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         if (account.getInternalUnsuccessfulLoginAttempts() == AccountConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
 
             //  Update Account class with timestamp when user can attempt login again according to configuration interval
-            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp(AccountConfiguration.LOGIN_BLOCKING_INTERVAL_IN_MILLISECONDS));
+            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp(AccountConfiguration.LOGIN_BLOCKING_INTERVAL_IN_SECONDS));
         }
 
         //  Update data changes made for application user into application users table
