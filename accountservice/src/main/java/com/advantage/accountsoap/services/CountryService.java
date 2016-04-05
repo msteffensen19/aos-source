@@ -3,7 +3,6 @@ package com.advantage.accountsoap.services;
 import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.country.CountryDto;
 import com.advantage.accountsoap.dto.country.CountryStatusResponse;
-import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

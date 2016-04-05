@@ -347,12 +347,12 @@ public class AccountserviceEndpoint {
     }
     //endregion
 
-
     //region Configuration
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountConfigurationStatusRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountConfigurationRequest")
     @ResponsePayload
-    public AccountConfigurationStatusResponse getConfigurationParameters() {
-        return accountConfigurationService.getAllConfigurationParameters();
+    public GetAccountConfigurationResponse getAccountConfiguration() {
+        GetAccountConfigurationResponse configurationResponse = accountConfigurationService.getAllConfigurationParameters();
+        return configurationResponse;
     }
     //endregion
 

@@ -9,21 +9,18 @@ import javax.xml.bind.annotation.*;
         namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
                 "numberOfFailedLoginAttemptsBeforeBlocking",
-                "loginBlockingIntervalInMilliSeconds",
-                "emailAddressInLogin",
+                "loginBlockingIntervalInSeconds",
                 "productInStockDefaultValue",
                 "userSecondWsdl",
                 "userLoginTimeout",
                 "allowUserConfiguration"
         })
-@XmlRootElement(name = "AccountConfigurationStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AccountConfigurationStatusResponse {
+@XmlRootElement(name = "GetAccountConfigurationResponse", namespace = WebServiceConfig.NAMESPACE_URI)
+public class GetAccountConfigurationResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private int numberOfFailedLoginAttemptsBeforeBlocking;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private long loginBlockingIntervalInMilliSeconds;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private boolean emailAddressInLogin;
+    private long loginBlockingIntervalInSeconds;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private int productInStockDefaultValue;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -33,19 +30,18 @@ public class AccountConfigurationStatusResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean allowUserConfiguration;
 
-    public AccountConfigurationStatusResponse() {
+    public GetAccountConfigurationResponse() {
     }
 
-    public AccountConfigurationStatusResponse(int numberOfFailedLoginAttemptsBeforeBlocking,
-                                              long loginBlockingIntervalInMilliSeconds,
-                                              boolean emailAddressInLogin,
-                                              int productInStockDefaultValue,
-                                              boolean userSecondWsdl,
-                                              int userLoginTimeout,
-                                              boolean allowUserConfiguration) {
+    public GetAccountConfigurationResponse(int numberOfFailedLoginAttemptsBeforeBlocking,
+                                           long loginBlockingIntervalInMilliSeconds,
+                                           int productInStockDefaultValue,
+                                           boolean userSecondWsdl,
+                                           int userLoginTimeout,
+                                           boolean allowUserConfiguration) {
+
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
-        this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
-        this.emailAddressInLogin = emailAddressInLogin;
+        this.loginBlockingIntervalInSeconds = loginBlockingIntervalInMilliSeconds;
         this.productInStockDefaultValue = productInStockDefaultValue;
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
@@ -60,20 +56,12 @@ public class AccountConfigurationStatusResponse {
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
     }
 
-    public long getLoginBlockingIntervalInMilliSeconds() {
-        return loginBlockingIntervalInMilliSeconds;
+    public long getLoginBlockingIntervalInSeconds() {
+        return loginBlockingIntervalInSeconds;
     }
 
-    public void setLoginBlockingIntervalInMilliSeconds(long loginBlockingIntervalInMilliSeconds) {
-        this.loginBlockingIntervalInMilliSeconds = loginBlockingIntervalInMilliSeconds;
-    }
-
-    public boolean isEmailAddressInLogin() {
-        return emailAddressInLogin;
-    }
-
-    public void setEmailAddressInLogin(boolean emailAddressInLogin) {
-        this.emailAddressInLogin = emailAddressInLogin;
+    public void setLoginBlockingIntervalInSeconds(long loginBlockingIntervalInSeconds) {
+        this.loginBlockingIntervalInSeconds = loginBlockingIntervalInSeconds;
     }
 
     public int getProductInStockDefaultValue() {

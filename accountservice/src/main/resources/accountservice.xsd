@@ -38,17 +38,18 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="AccountConfigurationStatusResponse">
-        <xs:sequence>
-            <xs:element name="emailAddressInLogin" type="xs:boolean"/>
-            <xs:element name="loginBlockingIntervalInMilliSeconds" type="xs:long"/>
-            <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int"/>
-            <xs:element name="productInStockDefaultValue" type="xs:int"/>
-            <xs:element name="userSecondWsdl" type="xs:boolean"/>
-            <xs:element name="userLoginTimeout" type="xs:int"/>
-            <xs:element name="allowUserConfiguration" type="xs:boolean"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="GetAccountConfigurationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int" form="qualified"/>
+                <xs:element name="loginBlockingIntervalInSeconds" type="xs:long" form="qualified"/>
+                <xs:element name="productInStockDefaultValue" type="xs:int" form="qualified"/>
+                <xs:element name="userSecondWsdl" type="xs:boolean" form="qualified"/>
+                <xs:element name="userLoginTimeout" type="xs:int" form="qualified"/>
+                <xs:element name="allowUserConfiguration" type="xs:boolean" form="qualified"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="AccountDto">
         <xs:sequence>
@@ -152,6 +153,12 @@
             <xs:complexType>
                 <xs:sequence/>
             </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAccountConfigurationRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
     </xs:element>
 
     <xs:complexType name="CountryDto">
@@ -462,6 +469,22 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="UpdateSafePayMethodResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" form="qualified">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="success" type="xs:boolean" form="qualified"/>
+                            <xs:element name="id" type="xs:long" form="qualified"/>
+                            <xs:element name="reason" type="xs:string" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="UpdateMasterCreditMethodRequest">
         <xs:complexType>
             <xs:sequence>
@@ -471,6 +494,22 @@
                 <xs:element name = "cvvNumber" type="xs:string" />
                 <xs:element name = "customerName" type="xs:string" />
                 <xs:element name = "referenceId" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateMasterCreditMethodResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="StatusMessage" form="qualified">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="success" type="xs:boolean" form="qualified"/>
+                            <xs:element name="id" type="xs:long" form="qualified"/>
+                            <xs:element name="reason" type="xs:string" form="qualified"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -518,12 +557,6 @@
             <xs:sequence>
                 <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
             </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountConfigurationStatusRequest">
-        <xs:complexType>
-            <xs:sequence/>
         </xs:complexType>
     </xs:element>
 
