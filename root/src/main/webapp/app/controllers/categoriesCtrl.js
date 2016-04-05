@@ -85,7 +85,6 @@ define(['./module'], function (controllers) {
 
             Helper.forAllPage();
 
-
             $('#scrollToTop').click(function () {
                 $('body, html').animate({ scrollTop: 0 }, 1000);
             });

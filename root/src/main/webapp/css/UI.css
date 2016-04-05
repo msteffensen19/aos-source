@@ -35,6 +35,7 @@
 html, body{
     margin: 0;
     padding: 0;
+    opacity: 0;
 }
 
 input, select, button, #follow img, .slider-steps span, #scrollToTop img{
@@ -400,7 +401,8 @@ a {
     padding: 0 !important;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
+[ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak,
+[ng\:cloak] *, [ng-cloak] *, [data-ng-cloak] *, .ng-cloak * {
     display: none !important;
 }
 

@@ -117,8 +117,8 @@ div.mobile-btn-handler span{
 #mobile-section{
     background-color: white;
     position: fixed;
-    left: 0px;
     top:38px;
+    left: 9999px;
     height: 100%;
     z-index: 990;
 }

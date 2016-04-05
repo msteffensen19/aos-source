@@ -62,7 +62,7 @@ define(['./module'], function (services) {
                                 userSecondWsdl: res.USERSECONDWSDL,
                                 userLoginTimeout: res.USERLOGINTIMEOUT,
                             }
-                            Loger.Received(appConfiguration);
+                            Loger.Received(res);
                             defer.resolve(appConfiguration);
                         },
                         function (response) {

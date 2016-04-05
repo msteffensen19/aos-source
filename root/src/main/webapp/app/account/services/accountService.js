@@ -6,7 +6,7 @@ define(['./module'], function (services) {
     'use strict';
     services.service('accountService',['$rootScope', '$q', 'mini_soap', '$http', '$filter', 'productsCartService',
 
-        function ($rootScope, $q, mini_soap, $http, $filter, productsCartService) {
+        function ($rootScope, $q, mini_soap) {
             return {
 
                 getAccountDetails: function(){

@@ -52,7 +52,11 @@ define(['./module'], function (services) {
                 method: "get",
                 url: server.catalog.getPopularProducts()
             });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
+            return(
+                request.then(
+                    responseService.handleSuccess,
+                    responseService.handleError
+                ));
         }
 
     }]);

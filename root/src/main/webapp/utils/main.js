@@ -12,9 +12,15 @@ Helper.mobile_section_moved;
 
 
 Helper.forAllPage = function(){
+
+    setTimeout(function () {
+        $("html, body").animate({opacity: 1}, 800);
+    }, 0);
+
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
     setTimeout(Helper.footerHandler, 200);
+
 }
 
 Helper.footerHandler = function() {
@@ -44,7 +50,7 @@ Helper.footerHandler = function() {
 }
 
 Helper.scrollPageUp = function(){
-    $("body").scrollTop(0);
+    $("body, html").scrollTop(0);
 }
 
 

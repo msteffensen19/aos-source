@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -22,7 +22,7 @@
 
 </head>
 
-<body data-ng-controller="mainCtrl">
+<body data-ng-controller="mainCtrl"  data-ng-cloak>
 
 <div id="loader" >
     <div>
@@ -63,32 +63,32 @@
 <login-modal></login-modal>
 
 <!-- mobile slider -->
-<span class="mobileTitle" data-ng-cloak>
+<span class="mobileTitle">
     <div class="mini-title" id="loginMobileMiniTitle">
         <label class="option" translate="My_account" ng-click="accountSection()"></label>
         <label class="option" translate="Sign_out" ng-click="signOut()"></label>
     </div>
 </span>
 
-<aside id="mobile-section" data-ng-cloak>
+<aside id="mobile-section" data-ng-cloak >
     <ul>
         <li data-ng-click="mobileRedirect('default')">
             <a class="img">
-                <div icon-home-svg ></div>
+                <div icon-home-svg></div>
             </a>
         </li>
         <li data-ng-click="mobileRedirect('shoppingCart')">
             <a class="img">
                 <!--<div icon-cart ></div>-->
                 <!--<img src="css/images/Cart.jpg"/>-->
-                <div icon-cart-svg ></div>
+                <div icon-cart-svg></div>
                 <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
             </a>
         </li>
         <li class="pointer" data-ng-click="login('loginMobileMiniTitle')">
             <a class="img center">
                 <!--<img src="css/images/User.jpg"/>-->
-                <div icon-user-svg ></div>
+                <div icon-user-svg></div>
                 <span data-ng-show="userCookie.response" class="hi-user">
                     {{userCookie.name}}
                 </span>
@@ -96,7 +96,7 @@
         </li>
         <li data-ng-click="mobileRedirect('searchPage')">
             <a class="img">
-                <div icon-search-svg ></div>
+                <div icon-search-svg></div>
                 <!--<img src="css/images/Search.jpg"/>-->
             </a>
         </li>
@@ -113,7 +113,7 @@
         <ul class="roboto-light desktop-handler">
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
                 <a class="img" href="#/shoppingCart">
-                    <div icon-cart-svg ></div>
+                    <div icon-cart-svg></div>
                     <!--<img src="css/images/Cart.jpg" alt="user">-->
                     <!--<div icon-cart></div>-->
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
@@ -125,15 +125,16 @@
                 </ul>
             </li>
             <li>
-<!--
-                data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
-                data-ng-mouseleave="miniTitleOut('loginMiniTitle')"
--->
+                <!--
+                                data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
+                                data-ng-mouseleave="miniTitleOut('loginMiniTitle')"
+                -->
                 <a class="img" data-ng-click="login('loginMiniTitle')">
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
                         {{userCookie.name}}
                     </span>
-                    <div icon-user-svg ></div>
+
+                    <div icon-user-svg></div>
                     <div class="mini-title" id="loginMiniTitle">
                         <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
                         <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
@@ -146,7 +147,7 @@
                 </a>
             </li>
             <li class="nav-li-Links">
-                <a class="menu navLinks" ng-click="gotoElement('contact_us')" translate="CONTACT_US"></a>
+                <a ng-click="gotoElement('contact_us')" class="menu navLinks" translate="CONTACT_US"></a>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
@@ -173,6 +174,7 @@
                 </span>
                 <span class="logoDemo roboto-light">{{'DEMO' | translate}}</span>
             </a>
+
             <div id="mobile-btn" class="mobile-btn-handler" ng-click="openMobileSection()">
                 <span></span><span></span><span></span>
             </div>
