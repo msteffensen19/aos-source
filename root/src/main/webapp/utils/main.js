@@ -72,8 +72,10 @@ Helper.scrollPageUp = function(){
 
 
 Helper.UpdatePageFixed = function(){
-    $('.pages').removeClass('fixed');
-    $('.sticky').removeClass('fixed');
+    if(document.URL.indexOf("category") == -1){
+        $('.pages').removeClass('fixed');
+        $('.sticky').removeClass('fixed');
+    }
     pagesPossition = startPossition;
     stickyPossition = startPossition;
     Helper.checkPagePossitions()
@@ -102,7 +104,10 @@ Helper.checkPagePossitions = function(){
 
     if ($('.pages').length > 0) {
 
-        if (pagesPossition < $('body').scrollTop() + $('header').height()) {
+        var scrollTop = $('body').scrollTop() > 0 ? $('body').scrollTop() : $('html').scrollTop();
+        console.log(scrollTop)
+
+        if (pagesPossition < scrollTop + $('header').height()) {
             $('.pages').addClass('fixed');
         }
         else {
@@ -112,7 +117,7 @@ Helper.checkPagePossitions = function(){
     }
 
     if ($('.sticky').length > 0) {
-        if (stickyPossition < $('body').scrollTop()
+        if (stickyPossition < scrollTop
             + 100 + ($('.pages').length > 0) ? $('.pages').height() : 0 ) {
             $('.sticky').addClass('fixed');
         }
