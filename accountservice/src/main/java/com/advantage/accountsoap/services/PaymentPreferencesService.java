@@ -53,12 +53,12 @@ public class PaymentPreferencesService {
 
         System.out.println("validate card number = " + cardNumber);
         if(!ValidationHelper.isValidMasterCreditCardNumber(cardNumber)) {
-            return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod. Error: Invalid card number", -1);
+            return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_INVALID_CARD_NUMBER, -1);
         }
 
         System.out.println("validate CVV number = " + cvvNumber);
         if(!ValidationHelper.isValidMasterCreditCVVNumber(cvvNumber)) {
-            return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod. Error: Invalid CVV number", -1);
+            return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_INVALID_CVV_NUMBER, -1);
         }
 
         /* convert expiration date "MMYYYY" to date format "DD.MM.YYYY" and validate it.    */
@@ -70,7 +70,7 @@ public class PaymentPreferencesService {
 
         System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
         if(!ValidationHelper.isValidDate(sb.toString())) {
-            return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod. Error: Invalid expiration date format", -1);
+            return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_EXPIRATION_DATE_FORMAT, -1);
         }
 
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.MASTER_CREDIT.getCode());
@@ -81,7 +81,7 @@ public class PaymentPreferencesService {
             paymentPreferences = paymentPreferencesRepository.updateMasterCredit(cardNumber, expirationDate, cvvNumber, customerName, accountId);
         }
 
-        if (paymentPreferences == null) return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: Failed", -1);
+        if (paymentPreferences == null) return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_GENERAL_FAILURE, -1);
 
         return new PaymentPreferencesStatusResponse(true, "Successful", 0);
     }
@@ -109,10 +109,10 @@ public class PaymentPreferencesService {
     public PaymentPreferencesStatusResponse updateMasterCreditMethod(long userId, String cardNumber, String expirationDate,
                                                                   String cvvNumber, String customerName, long referenceId) {
         if(!ValidationHelper.isValidMasterCreditCardNumber(cardNumber)) {
-            return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod. Error: Invalid card number", -1);
+            return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_INVALID_CARD_NUMBER, -1);
         }
         if(!ValidationHelper.isValidMasterCreditCVVNumber(cvvNumber)) {
-            return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod. Error: Invalid CVV number", -1);
+            return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_INVALID_CVV_NUMBER, -1);
         }
 
         System.out.println("validate ExpirationDate = \'" + expirationDate);
@@ -123,11 +123,11 @@ public class PaymentPreferencesService {
 
         System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
         if(!ValidationHelper.isValidDate(sb.toString())) {
-            return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod. Error: Invalid expiration date format", -1);
+            return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_EXPIRATION_DATE_FORMAT, -1);
         }
         PaymentPreferences preferences = paymentPreferencesRepository.updateMasterCredit(cardNumber, expirationDate,
                 cvvNumber, customerName, userId);
-        if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod: Failed", -1);
+        if(preferences == null ) return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_GENERAL_FAILURE, -1);
 
         return new PaymentPreferencesStatusResponse(true, "Successful", 0);
     }

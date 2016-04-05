@@ -86,9 +86,4 @@ public class AttributeService {
 
         return colorPallet;
     }
-
-    public CatalogResponse restoreDBFactorySettings() {
-        return new CatalogResponse(true, "Default", 0);
-    }
-
 }

@@ -574,16 +574,16 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
             if (countryRepository.getAll().size() == TOTAL_COUNTRIES_COUNT) {
                 sb.append("Country").append(Constants.COMMA).append(Constants.SPACE) ;
-                System.out.println("Database Restore Factory Settings successful - table \"country\"");
+                System.out.println("Database Restore Factory Settings successful - table 'country'");
             } else {
-                sb.append("Table \"Country\" - FAILED").append(Constants.COMMA).append(Constants.SPACE) ;
-                System.out.println("Database Restore Factory Settings - table \"country\" - FAILED");
+                sb.append("Table 'Country' - FAILED").append(Constants.COMMA).append(Constants.SPACE) ;
+                System.out.println("Database Restore Factory Settings - table 'country' - FAILED");
                 return new AccountStatusResponse(false, "Database Restore Factory Settings - table 'country'", -1);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            sb.append("Table \"Country\" - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE) ;
-            System.out.println("Database Restore Factory Settings - table \"country\" - FAILED with Exception");
+            sb.append("Table 'Country' - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE) ;
+            System.out.println("Database Restore Factory Settings - table 'country' - FAILED with Exception");
             return new AccountStatusResponse(false, "Database Restore Factory Settings - table 'country' FAILED with Exception", -1);
         }
         //  endregion
@@ -611,16 +611,16 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
             if (this.getAll().size() == TOTAL_ACCOUNTS_COUNT) {
                 sb.append("Account").append(Constants.COMMA).append(Constants.SPACE);
-                System.out.println("Database Restore Factory Settings successful - table \"account\"");
+                System.out.println("Database Restore Factory Settings successful - table 'account'");
             } else {
-                sb.append("Table \"account\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
-                System.out.println("Database Restore Factory Settings - table \"account\" - FAILED");
+                sb.append("Table 'account' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+                System.out.println("Database Restore Factory Settings - table 'account' - FAILED");
                 return new AccountStatusResponse(false, "Database Restore Factory Settings - table 'account'", -1);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            sb.append("Table \"Account\" - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE) ;
-            System.out.println("Database Restore Factory Settings - table \"account\" - FAILED with Exception");
+            sb.append("Table 'Account' - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE) ;
+            System.out.println("Database Restore Factory Settings - table 'account' - FAILED with Exception");
             return new AccountStatusResponse(false, "Restore factory settings FAILED - ACCOUNT table", -1);
         }
         //  endregion

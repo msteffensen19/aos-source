@@ -47,9 +47,4 @@ public class DealService {
                         promotion.getPromotionSubHeader(), promotion.getManagedImageId(),
                         productService.getDtoByEntity(promotion.getProduct()));
     }
-
-    public CatalogResponse restoreDBFactorySettings() {
-        return new CatalogResponse(true, "Default", 0);
-    }
-
 }

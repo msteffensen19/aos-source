@@ -377,10 +377,10 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         if (categoryService.getAllCategories().size() == TOTAL_CATEGORIES_COUNT) {
             sb.append("Category").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings successful - table \"category\"");
+            System.out.println("Database Restore Factory Settings successful - table 'category'");
         } else {
-            sb.append("Table \"category\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings - table \"category\" - FAILED");
+            sb.append("Table 'category' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+            System.out.println("Database Restore Factory Settings - table 'category' - FAILED");
             return new CatalogResponse(false, "Database Restore Factory Settings - table 'category'", -1);
         }
         //  endregion
@@ -397,11 +397,11 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         if (attributeService.getAllAttributes().size() == TOTAL_ATTRIBUTES_COUNT) {
             sb.append("Attribute").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings successful - table \"attribute\"");
+            System.out.println("Database Restore Factory Settings successful - table 'attribute'");
         } else {
-            sb.append("Table \"attribute\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings - table \"attribute\" - FAILED");
-            return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -2);
+            sb.append("Table 'attribute' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+            System.out.println("Database Restore Factory Settings - table 'attribute' - FAILED");
+            return new CatalogResponse(false, "Restore factory settings FAILED - table 'attribute'", -2);
         }
         //  endregion
 
@@ -421,11 +421,11 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
             if (categoryService.getAllCategoryAttributesFilter().getCategoriesAttributes().size() > 0) {
                 sb.append("Category_Attribute_Filter").append(Constants.COMMA).append(Constants.SPACE);
-                System.out.println("Database Restore Factory Settings successful - table \"category_attributes_filter\"");
+                System.out.println("Database Restore Factory Settings successful - table 'category_attributes_filter'");
             } else {
-                sb.append("Table \"category_attribute_filter\" - FAILED").append(Constants.COMMA).append(Constants.SPACE);
-                System.out.println("Database Restore Factory Settings - table \"category_attribute_filter\" - FAILED");
-                return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -3);
+                sb.append("Table 'category_attribute_filter' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+                System.out.println("Database Restore Factory Settings - table 'category_attribute_filter' - FAILED");
+                return new CatalogResponse(false, "Restore factory settings FAILED - table 'category_attribute_filter'", -3);
             }
 
             //transaction.commit();
@@ -434,7 +434,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         } catch (IOException e) {
             e.printStackTrace();
-            return new CatalogResponse(false, "Restore factory settings FAILED - table Category_Attribute_Filter", -99999);
+            return new CatalogResponse(false, "Restore factory settings FAILED - table 'Category_Attribute_Filter'", -99999);
         }
         //  endregion
 
@@ -495,7 +495,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         } catch (IOException e) {
             e.printStackTrace();
-            return new CatalogResponse(false, "Restore factory settings FAILED - table Product", -1);
+            return new CatalogResponse(false, "Restore factory settings FAILED - table 'Product'", -1);
         }
         //  endregion
 
