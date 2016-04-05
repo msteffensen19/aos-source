@@ -8,13 +8,36 @@ var stickyPossition = startPossition;
 
 var Helper = Helper || {};
 Helper.____closeTooTipCart;
+Helper.____showPage;
 Helper.mobile_section_moved;
 
+Helper.defaultTimeLoaderToEnable = 0;
+Helper.enableLoader = function() {
+    $("div.loader").css({display: "block"});
+    $("div.loader").stop().animate({opacity: 1}, 300);
+};
+
+Helper.disableLoader = function() {
+    $("div.loader").stop().animate({opacity: 0}, 300, function(){
+        $(this).css({display: "none"});
+    });
+};
 
 Helper.forAllPage = function(){
+
+    clearTimeout(Helper.____showPage)
+    Helper.____showPage = setTimeout(function () {
+        $("div.loader").css({opacity: 1, display: "block", });
+        $("html, body").stop().animate({opacity: 1}, 400, function(){
+            $("div.loader").delay(500).animate({opacity: 0}, 500, function(){
+                $(this).css({display: "none",  });
+            });
+        });
+    }, 1000);
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
     setTimeout(Helper.footerHandler, 200);
+
 }
 
 Helper.footerHandler = function() {
@@ -44,13 +67,15 @@ Helper.footerHandler = function() {
 }
 
 Helper.scrollPageUp = function(){
-    $("body").scrollTop(0);
+    $("body, html").scrollTop(0);
 }
 
 
 Helper.UpdatePageFixed = function(){
-    $('.pages').removeClass('fixed');
-    $('.sticky').removeClass('fixed');
+    if(document.URL.indexOf("category") == -1){
+        $('.pages').removeClass('fixed');
+        $('.sticky').removeClass('fixed');
+    }
     pagesPossition = startPossition;
     stickyPossition = startPossition;
     Helper.checkPagePossitions()
@@ -79,7 +104,10 @@ Helper.checkPagePossitions = function(){
 
     if ($('.pages').length > 0) {
 
-        if (pagesPossition < $('body').scrollTop() + $('header').height()) {
+        var scrollTop = $('body').scrollTop() > 0 ? $('body').scrollTop() : $('html').scrollTop();
+        console.log(scrollTop)
+
+        if (pagesPossition < scrollTop + $('header').height()) {
             $('.pages').addClass('fixed');
         }
         else {
@@ -89,7 +117,7 @@ Helper.checkPagePossitions = function(){
     }
 
     if ($('.sticky').length > 0) {
-        if (stickyPossition < $('body').scrollTop()
+        if (stickyPossition < scrollTop
             + 100 + ($('.pages').length > 0) ? $('.pages').height() : 0 ) {
             $('.sticky').addClass('fixed');
         }

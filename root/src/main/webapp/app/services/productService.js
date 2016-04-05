@@ -3,49 +3,95 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('productService', ['$http', '$q', 'resHandleService', function ($http, $q, responseService) {
-        // Return public API.
-        return({
-            getProducts: getProducts,
-            getProductById : getProductById,
-            getProductsBySearch : getProductsBySearch,
-            getAllCategoriesAttributes : getAllCategoriesAttributes,
-        });
-
-        function getProducts() {
-            var request = $http({
-                method: "get",
-                url: server.catalog.getProducts()
+    services.service('productService', ['$http', '$q', 'resHandleService', '$timeout',
+        function ($http, $q, responseService, $timeout) {
+            // Return public API.
+            return ({
+                getProducts: getProducts,
+                getProductById: getProductById,
+                getProductsBySearch: getProductsBySearch,
+                getAllCategoriesAttributes: getAllCategoriesAttributes,
             });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
-        }
 
-        function getProductById(id) {
+            function getProducts() {
+                var request = $http({
+                    method: "get",
+                    url: server.catalog.getProducts()
+                });
+                return ( request.then(responseService.handleSuccess, responseService.handleError) );
+            }
 
-            var request = $http({
-                method: "get",
-                url: server.catalog.getProductById(id)
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
-        }
+            function getProductById(id) {
 
-        function getProductsBySearch(word, quantity) {
+                var response = $q.defer();
+                Helper.enableLoader();
+                $timeout(function () {
+                    var request = $http({
+                        method: "get",
+                        url: server.catalog.getProductById(id)
+                    });
+                    request.then(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res);
+                            response.resolve(res.data);
+                        },
+                        function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res);
+                            response.resolve(res);
+                        })
+                }, Helper.defaultTimeLoaderToEnable);
 
-            var request = $http({
-                method: "get",
-                url: server.catalog.getProductsBySearch(word, quantity)
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
-        }
+                return response.promise;
+            }
 
-        function getAllCategoriesAttributes() {
+            function getProductsBySearch(word, quantity) {
 
-            var request = $http({
-                method: "get",
-                url: server.catalog.getAllCategoriesAttributes()
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
-        }
+                var response = $q.defer();
+                Helper.enableLoader();
+                $timeout(function () {
+                    var request = $http({
+                        method: "get",
+                        url: server.catalog.getProductsBySearch(word, quantity)
+                    });
+                    request.then(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res);
+                            response.resolve(res.data);
+                        },
+                        function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res);
+                            response.resolve(res);
+                        })
+                }, Helper.defaultTimeLoaderToEnable);
 
-    }]);
+                return response.promise;
+            }
+
+            function getAllCategoriesAttributes() {
+
+                var response = $q.defer();
+                Helper.enableLoader();
+                $timeout(function () {
+                    var request = $http({
+                        method: "get",
+                        url: server.catalog.getAllCategoriesAttributes()
+                    });
+                    request.then(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res);
+                            response.resolve(res.data);
+                        },
+                        function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res);
+                            response.resolve(res);
+                        })
+                }, Helper.defaultTimeLoaderToEnable);
+
+                return response.promise;
+            }
+
+        }]);
 });

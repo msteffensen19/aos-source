@@ -8,7 +8,6 @@ var Loger = Loger ? Loger : function() {};
 
 Loger.Params = function (params, url) {
     spaces(3);
-    lines(2);
     console.log('Param to pass to ' + url);
     if(params) {
         if (params.orderPaymentInformation && params.orderPaymentInformation.Transaction_SafePay_Password) {
@@ -39,7 +38,6 @@ Loger.Params = function (params, url) {
         console.log(params);
     }
     spaces(1);
-    lines(1);
 };
 Loger.Extract = function (file, obj, paths) {
     spaces(3);
@@ -58,28 +56,22 @@ Loger.Extract = function (file, obj, paths) {
 };
 
 Loger.CallingWSDL = function (obj) {
-    spaces(3);
-    lines(1);
+    spaces(1);
     console.log("========================   Reading wsdl  =================================")
     console.log("url: " + obj.path);
     console.log("method: " + obj.method);
-    lines(1);
 };
 
 Loger.Calling = function (str) {
-    spaces(3);
-    lines(1);
+    spaces(1);
     console.log("===========================   Calling  ===================================")
     console.log("Path: " + str);
-    lines(1);
 };
 
 Loger.Received = function (str) {
     console.log("============================  Received  ==================================")
-    lines(1);
     console.log(str)
-    lines(3);
-    spaces(5);
+    spaces(1);
 };
 
 function spaces(num) {

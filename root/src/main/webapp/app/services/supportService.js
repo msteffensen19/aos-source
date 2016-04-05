@@ -5,7 +5,7 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('supportService', ['$filter', '$q', '$http', function($filter, $q, $http){
+    services.service('supportService', ['$filter', '$q', '$http', function ($filter, $q, $http) {
 
 
         return {
@@ -19,27 +19,32 @@ define(['./module'], function (services) {
                     "text": supportModel.subject,
                 }
                 var defer = $q.defer()
-                $http({
-                    method: "post",
-                    url: server.catalog.sendSupportEmail(),
-                    data: paramsToPass,
-                }).success(function (res) {
-                    defer.resolve(res)
-                    Loger.Received(res);
-                }).error(function (_err) {
-                    console.log("sendSupportEmail() rejected!  ====== " + _err)
-                    Loger.Received(_err);
-                    defer.resolve({
-                        "success": false,
-                        "reason": $filter('translate')('Problem_sending_mail_please_try_later'),
-                        "returnCode": 1
+                Helper.enableLoader();
+                $timeout(function () {
+                    $http({
+                        method: "post",
+                        url: server.catalog.sendSupportEmail(),
+                        data: paramsToPass,
+                    }).success(function (res) {
+                        Helper.disableLoader();
+                        defer.resolve(res)
+                        Loger.Received(res);
+                    }).error(function (_err) {
+                        console.log("sendSupportEmail() rejected!  ====== " + _err)
+                        Helper.disableLoader();
+                        Loger.Received(_err);
+                        defer.resolve({
+                            "success": false,
+                            "reason": $filter('translate')('Problem_sending_mail_please_try_later'),
+                            "returnCode": 1
+                        });
                     });
-                });
+                }, Helper.defaultTimeLoaderToEnable);
                 return defer.promise;
 
             }
 
-    }
+        }
 
     }]);
 });

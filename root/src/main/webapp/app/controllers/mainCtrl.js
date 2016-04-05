@@ -35,8 +35,8 @@ define(['./module'], function (controllers) {
 
             productsCartService.loadCartProducts().then(function (cart) {
                 $scope.cart = cart;
-                $timeout(function(){
-                    productsCartService.checkOutOfStockProductsInCart().then(function(_cart){
+                $timeout(function () {
+                    productsCartService.checkOutOfStockProductsInCart().then(function (_cart) {
                         $scope.cart = cart;
                     });
                 })
@@ -44,7 +44,7 @@ define(['./module'], function (controllers) {
 
             $scope.removeProduct = function (index, event) {
 
-                if(event){
+                if (event) {
                     event.stopPropagation();
                 }
                 productsCartService.removeProduct(index).then(function (cart) {
@@ -52,11 +52,10 @@ define(['./module'], function (controllers) {
                     $scope.checkCart();
                     fixToolTipCartHeight();
 
-                    if($(window).width() < 480)
-                    {
+                    if ($(window).width() < 480) {
                         $("#toast a").html($filter("translate")("Product_removed"));
                         $("#toast").stop().fadeIn(500);
-                        setTimeout(function(){
+                        setTimeout(function () {
                             $("#toast").stop().fadeOut(1500);
                         }, 1500)
                     }
@@ -66,7 +65,9 @@ define(['./module'], function (controllers) {
 
             $scope.addProduct = function (product, quantity, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
+                console.log("addProduct enter")
                 productsCartService.addProduct(product, quantity).then(function (cart) {
+                    console.log("addProduct back")
                     $scope.cart = cart;
                     animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();
@@ -84,11 +85,10 @@ define(['./module'], function (controllers) {
             function animateToolTipCart(toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
 
-                if($(window).width() < 480)
-                {
+                if ($(window).width() < 480) {
                     $("#toast a").html(toastMessage);
                     $("#toast").stop().fadeIn(500);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#toast").stop().fadeOut(1500);
                     }, 1500)
                 }
@@ -141,11 +141,11 @@ define(['./module'], function (controllers) {
 
             var _setUser = 0;
             $scope.setUser = function () {
-                if(_setUser > 0){
-                    $scope.signIn({ email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak', } , true);
+                if (_setUser > 0) {
+                    $scope.signIn({email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}, true);
                 }
                 _setUser++;
-                setTimeout(function(){
+                setTimeout(function () {
                     _setUser = 0;
                 }, 1000);
             }
@@ -156,10 +156,11 @@ define(['./module'], function (controllers) {
 
             $scope.signOut = function (even) {
 
-                if(even){
+                if (even) {
                     even.stopPropagation();
                 }
-                userService.singOut().then(function(){
+                userService.singOut().then(function () {
+
                     $cookie.remove('lastlogin');
                     $rootScope.userCookie = undefined;
                     $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
@@ -207,7 +208,7 @@ define(['./module'], function (controllers) {
 
             }
 
-            $(".PopUp, .closePopUpBtn").click(function (e) {
+            $(".PopUp, .closePopUpBtn").click(function () {
 
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
@@ -228,11 +229,11 @@ define(['./module'], function (controllers) {
             /* Application helper section */
 
 
-
             $scope.redirect = function (path) {
                 Helper.mobileSectionClose();
                 $location.path(path);
             }
+
             $scope.mobileRedirect = function (path) {
                 Helper.mobileSectionClose();
                 $state.go(path)
@@ -240,7 +241,7 @@ define(['./module'], function (controllers) {
 
 
             $scope.gotoElement = function (id) {
-                $("body").animate({
+                $("body, html").animate({
                     scrollTop: ($("#" + id).offset().top - 60) + "px",
                 }, 1000)
             };
@@ -267,6 +268,7 @@ define(['./module'], function (controllers) {
 
             var _____autoLogOut;
             $scope.refreshTimeOut = function () {
+
                 if (orderService.userIsLogin()) {
                     $timeout.cancel(_____autoLogOut);
                     _____autoLogOut = $timeout(function () {
@@ -286,6 +288,11 @@ define(['./module'], function (controllers) {
             });
 
 
+
+            $rootScope.$on('$locationChangeStart', function (event, current, previous) {
+                $("html, body").css({opacity: 0});
+            });
+
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
 
                 $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
@@ -295,7 +302,7 @@ define(['./module'], function (controllers) {
 
                 Helper.UpdatePageFixed();
 
-                if ($location.path().indexOf('/search') == -1 && $scope.closeSearchForce + ""  != "undefined"){
+                if ($location.path().indexOf('/search') == -1 && $scope.closeSearchForce + "" != "undefined") {
                     $scope.closeSearchForce();
                 }
                 Helper.mobileSectionClose();
@@ -314,55 +321,16 @@ define(['./module'], function (controllers) {
                 $scope.miniTitleOut();
             });
 
-
-            /*
-             $rootScope.$on("$stateChangeStart", function (event, current, previous, rejection, rejection2) {
-
-             console.log('==========================start======================================================')
-             console.log('$location')
-             console.log($location)
-             console.log('$state')
-             console.log($state)
-             console.log('cart')
-             console.log($scope.cart)
-             //if (to.redirectTo) {
-             //    evt.preventDefault();
-             //    $state.go("userNotlogin", params)
-             //}
-
-             });
-             $rootScope.$on("$stateChangeSuccess", function (event, current, previous, rejection, rej2) {
-             onBreadcrumbHandler();
-             });
-             */
-
-            //function onBreadcrumbHandler(){
-            //    var existsRoot = $rootScope.breadcrumb;
-            //    var newBreadcrumb = [];
-            //    for(var index = 0; index < existsRoot.length; index++){
-            //        var existState = existsRoot[index];
-            //        newBreadcrumb.push({
-            //            name: $state.current.data.breadcrumbName,
-            //            path: $location.$$path
-            //        });
-            //        if(existState.name == $state.current.data.breadcrumbName)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //    $rootScope.breadcrumb = newBreadcrumb;
-            //}
-
-
-            Main.addAnimPlaceholderEventListener();
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
             Helper.mobile_section_moved = $("#mobile-section").width();
 
             $scope.openMobileSection = function () {
-
                 Helper.mobileSectionHandler();
             }
 
+            $scope.$on('$viewContentLoaded', function(event) {
+                Helper.forAllPage();
+            });
         }]);
 });
 

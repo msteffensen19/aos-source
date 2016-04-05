@@ -81,10 +81,10 @@ define(['./module'], function (controllers) {
 
 
 
+
             Slider.AddSliderListener();
 
             Helper.forAllPage();
-
 
             $('#scrollToTop').click(function () {
                 $('body, html').animate({ scrollTop: 0 }, 1000);
