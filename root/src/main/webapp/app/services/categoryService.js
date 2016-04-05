@@ -3,65 +3,71 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('categoryService', ['$http', '$q',
-        'resHandleService', function ($http, $q, responseService) {
+    services.service('categoryService', ['$http', '$q', '$timeout',
+        'resHandleService', function ($http, $q, $timeout, responseService) {
 
-        return{
-            getCategories : getCategories,
-            getCategoryProducts : getCategoryProducts,
-            getCategoryById : getCategoryById,
-            getPopularProducts : getPopularProducts
-        }
-
-        function getCategories() {
-            var request = $http({
-                method: "get",
-                url: server.catalog.getCategories()
-            });
-            return( request.then( responseService.handleSuccess, responseService.handleError ) );
-        }
-
-        function getCategoryProducts(id) {
-        //      var request = $http({ method: "get", url: "api/categoryProducts?category_id=" + id });
-        //      return( request.then( responseService.handleSuccess, responseService.handleError ));
-        }
-
-        function getCategoryById(id) {
-            var defer = $q.defer();
-            if(id == ''){
-                defer.resolve(null)
+            return {
+                getCategories: getCategories,
+                getCategoryProducts: getCategoryProducts,
+                getCategoryById: getCategoryById,
+                getPopularProducts: getPopularProducts
             }
-            else{
-                $http({
+
+            function getCategories() {
+                var request = $http({
                     method: "get",
-                    url: server.catalog.getCategoryById(id)
-                }).success(function(res){
-                    Loger.Received(res)
-                    defer.resolve(res)
-                }).error(function(err){
-                    Loger.Received(err)
-                    defer.reject(null)
+                    url: server.catalog.getCategories()
                 });
+                return ( request.then(responseService.handleSuccess, responseService.handleError) );
             }
 
-            return defer.promise;
-        };
+            function getCategoryProducts(id) {
+                //      var request = $http({ method: "get", url: "api/categoryProducts?category_id=" + id });
+                //      return( request.then( responseService.handleSuccess, responseService.handleError ));
+            }
 
-        function getPopularProducts() {
-            var request = $http({
-                method: "get",
-                url: server.catalog.getPopularProducts()
-            });
-            return(
-                request.then(
-                    responseService.handleSuccess,
-                    responseService.handleError
-                ));
-        }
+            function getCategoryById(id) {
 
-    }]);
+                var defer = $q.defer();
+                Helper.enableLoader();
+                $timeout(function () {
+                    if (id == '') {
+                        defer.resolve(null)
+                    }
+                    else {
+                        $http({
+                            method: "get",
+                            url: server.catalog.getCategoryById(id)
+                        }).success(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res)
+                            defer.resolve(res)
+                        }).error(function (err) {
+                            Helper.disableLoader();
+                            Loger.Received(err)
+                            defer.reject(null)
+                        });
+                    }
+                }, Helper.defaultTimeLoaderToEnable);
+
+                return defer.promise;
+            };
+
+            function getPopularProducts() {
+
+                var request = $http({
+                    method: "get",
+                    url: server.catalog.getPopularProducts()
+                });
+                return (
+                    request.then(
+                        responseService.handleSuccess,
+                        responseService.handleError
+                    ));
+            }
+
+        }]);
 });
-
 
 
 //url: "api/catalog/products/categories/" + id + "/products"

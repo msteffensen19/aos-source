@@ -11,19 +11,19 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('orderService',['$rootScope', '$q', 'mini_soap', '$http', '$filter', 'productsCartService',
+    services.service('orderService', ['$rootScope', '$q', 'mini_soap', '$http', '$filter', 'productsCartService', '$timeout',
 
-        function ($rootScope, $q, mini_soap, $http, $filter, productsCartService) {
+        function ($rootScope, $q, mini_soap, $http, $filter, productsCartService, $timeout) {
 
             return ({
                 getAccountById: getAccountById,
                 getShippingCost: getShippingCost,
                 SafePay: SafePay,
-                accountUpdate : accountUpdate,
-                userIsLogin : userIsLogin
+                accountUpdate: accountUpdate,
+                userIsLogin: userIsLogin
             });
 
-            function userIsLogin(){
+            function userIsLogin() {
                 var user = $rootScope.userCookie;
                 return user && user.response && user.response.userId != -1;
             }
@@ -32,7 +32,7 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
 
                 var purchasedProducts = [];
-                angular.forEach(cart.productsInCart, function(product){
+                angular.forEach(cart.productsInCart, function (product) {
                     purchasedProducts.push({
                         "hexColor": product.color.code,
                         "productId": product.productId,
@@ -64,7 +64,7 @@ define(['./module'], function (services) {
                         "Shipping_Address_CustomerPhone": user.phoneNumber,
                         "Shipping_Address_PostalCode": user.zipcode,
                         "Shipping_Address_State": user.stateProvince,
-                        "Shipping_Cost":  $filter('productsCartSum')(cart),
+                        "Shipping_Cost": $filter('productsCartSum')(cart),
                         "Shipping_NumberOfProducts": $filter('productsCartCount')(cart),
                         "Shipping_TrackingNumber": 0
                     },
@@ -73,22 +73,27 @@ define(['./module'], function (services) {
 
                 Loger.Params(paramsToPass, server.order.safePay(user.id));
 
-                $http({
-                    method: "post",
-                    url: server.order.safePay(user.id),
-                    data: paramsToPass,
-                    headers: {
-                        "content-type": "application/json",
-                        "Authorization": "Bearer " + $rootScope.userCookie.response.token,
-                    },
-                }).
-                then(function (res){
-                    Loger.Received(res);
-                    defer.resolve(res.data)
-                }, function (err){
-                    Loger.Received(err);
-                    defer.reject("probl.")
-                })
+                Helper.enableLoader();
+                $timeout(function () {
+                    $http({
+                        method: "post",
+                        url: server.order.safePay(user.id),
+                        data: paramsToPass,
+                        headers: {
+                            "content-type": "application/json",
+                            "Authorization": "Bearer " + $rootScope.userCookie.response.token,
+                        },
+                    }).
+                    then(function (res) {
+                        Helper.disableLoader();
+                        Loger.Received(res);
+                        defer.resolve(res.data)
+                    }, function (err) {
+                        Helper.disableLoader();
+                        Loger.Received(err);
+                        defer.reject("probl.")
+                    })
+                }, Helper.defaultTimeLoaderToEnable);
                 return defer.promise;
             }
 
@@ -98,7 +103,7 @@ define(['./module'], function (services) {
                     lastName: user.lastName,
                     firstName: user.firstName,
                     accountId: user.id,
-                    countryId : user.countryId,
+                    countryId: user.countryId,
                     stateProvince: user.stateProvince,
                     cityName: user.cityName,
                     address: user.address,
@@ -113,19 +118,25 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.order.accountUpdate();
-                mini_soap.post(params.path, params.method, paramsToPass).
-                then(function (res) {
-                        Loger.Received(res);
-                        defer.resolve({
-                            success: res.SUCCESS,
-                            userId: res.USERID,
-                            reason: res.REASON,
+
+                Helper.enableLoader();
+                $timeout(function () {
+                    mini_soap.post(params.path, params.method, paramsToPass).
+                    then(function (res) {
+                            Loger.Received(res);
+                            Helper.disableLoader();
+                            defer.resolve({
+                                success: res.SUCCESS,
+                                userId: res.USERID,
+                                reason: res.REASON,
+                            });
+                        },
+                        function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
                         });
-                    },
-                    function (response) {
-                        Loger.Received(response);
-                        defer.reject("Request failed! ");
-                    });
+                }, Helper.defaultTimeLoaderToEnable);
 
                 return defer.promise;
             }
@@ -137,34 +148,39 @@ define(['./module'], function (services) {
                 if (user && user.response && user.response.userId != -1) {
 
                     var params = server.account.getAccountById();
-                    mini_soap.post(params.path, params.method, {
-                            accountId: user.response.userId
-                        })
-                        .then(function (response) {
-                            Loger.Received(response);
-                            var user = {
-                                "id": response.ID,
-                                "lastName": response.LASTNAME,
-                                "firstName": response.FIRSTNAME,
-                                "loginName": response.LOGINNAME,
-                                "countryId": response.COUNTRYID,
-                                "country": response.COUNTRYISONAME,
-                                "stateProvince": response.STATEPROVINCE,
-                                "cityName": response.CITYNAME,
-                                "address": response.ADDRESS,
-                                "zipcode": response.ZIPCODE,
-                                "phoneNumber": response.PHONENUMBER,
-                                "email": response.EMAIL,
-                                "allowOffersPromotion" : response.ALLOWOFFERSPROMOTION,
-                            }
-                            defer.resolve(user);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            defer.reject("Request failed! (getAccountById)");
-                        });
+                    Helper.enableLoader();
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, {
+                                accountId: user.response.userId
+                            })
+                            .then(function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    var user = {
+                                        "id": response.ID,
+                                        "lastName": response.LASTNAME,
+                                        "firstName": response.FIRSTNAME,
+                                        "loginName": response.LOGINNAME,
+                                        "countryId": response.COUNTRYID,
+                                        "country": response.COUNTRYISONAME,
+                                        "stateProvince": response.STATEPROVINCE,
+                                        "cityName": response.CITYNAME,
+                                        "address": response.ADDRESS,
+                                        "zipcode": response.ZIPCODE,
+                                        "phoneNumber": response.PHONENUMBER,
+                                        "email": response.EMAIL,
+                                        "allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
+                                    }
+                                    defer.resolve(user);
+                                },
+                                function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    defer.reject("Request failed! (getAccountById)");
+                                });
+                    }, Helper.defaultTimeLoaderToEnable);
                 }
-                else{
+                else {
                     defer.resolve(null);
                 }
                 return defer.promise;
@@ -174,7 +190,7 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
 
-                productsCartService.getCart().then(function(cart){
+                productsCartService.getCart().then(function (cart) {
 
                     var paramsToPass = {
                         "seaddress": {
@@ -185,25 +201,30 @@ define(['./module'], function (services) {
                             "postalCode": user.zipcode,
                             "state": user.stateProvince
                         },
-                        "secustomerName": user.firstName + " " + user.lastName ,
+                        "secustomerName": user.firstName + " " + user.lastName,
                         "secustomerPhone": user.phoneNumber,
                         "senumberOfProducts": $filter('productsCartCount')(cart),
                         "setransactionType": "SHIPPINGCOST"
                     };
                     Loger.Params(paramsToPass, server.order.getShippingCost());
 
-                    $http({
-                        method: "post",
-                        url: server.order.getShippingCost(),
-                        data: paramsToPass
-                    }).
-                    then(function (shippingCost){
-                        Loger.Received(shippingCost);
-                        defer.resolve(shippingCost.data)
-                    }, function (err){
-                        Loger.Received(err);
-                        defer.reject("probl.")
-                    })
+                    Helper.enableLoader();
+                    $timeout(function () {
+                        $http({
+                            method: "post",
+                            url: server.order.getShippingCost(),
+                            data: paramsToPass
+                        }).
+                        then(function (shippingCost) {
+                            Loger.Received(shippingCost);
+                            Helper.disableLoader();
+                            defer.resolve(shippingCost.data)
+                        }, function (err) {
+                            Loger.Received(err);
+                            Helper.disableLoader();
+                            defer.reject("probl.")
+                        })
+                    }, Helper.defaultTimeLoaderToEnable);
                 })
 
                 return defer.promise;

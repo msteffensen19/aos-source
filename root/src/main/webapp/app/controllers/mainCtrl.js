@@ -65,7 +65,9 @@ define(['./module'], function (controllers) {
 
             $scope.addProduct = function (product, quantity, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
+                console.log("addProduct enter")
                 productsCartService.addProduct(product, quantity).then(function (cart) {
+                    console.log("addProduct back")
                     $scope.cart = cart;
                     animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();
@@ -158,6 +160,7 @@ define(['./module'], function (controllers) {
                     even.stopPropagation();
                 }
                 userService.singOut().then(function () {
+
                     $cookie.remove('lastlogin');
                     $rootScope.userCookie = undefined;
                     $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
@@ -265,6 +268,7 @@ define(['./module'], function (controllers) {
 
             var _____autoLogOut;
             $scope.refreshTimeOut = function () {
+
                 if (orderService.userIsLogin()) {
                     $timeout.cancel(_____autoLogOut);
                     _____autoLogOut = $timeout(function () {

@@ -3,9 +3,9 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.factory('userService', ['$rootScope', '$q', '$http', "resHandleService", "mini_soap",
+    services.factory('userService', ['$rootScope', '$q', '$http', "resHandleService", "mini_soap", '$timeout',
 
-        function ($rootScope, $q, $http, responseService, mini_soap) {
+        function ($rootScope, $q, $http, responseService, mini_soap, $timeout) {
 
             return ({
                 login: login,
@@ -19,6 +19,8 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
                 var user = $rootScope.userCookie;
                 if (user && user.response && user.response.userId != -1) {
+
+
                     var params = server.account.accountLogout();
                     var expectToReceive = {
                         loginUser: user.response.userId,
@@ -34,6 +36,7 @@ define(['./module'], function (services) {
                             Loger.Received(response);
                             defer.reject("Request failed! ");
                         });
+
                 }
                 else {
                     defer.resolve("no user");
@@ -51,24 +54,29 @@ define(['./module'], function (services) {
                     defer.resolve(appConfiguration);
                 }
                 else {
-                    var params = server.service.getConfiguration();
-                    mini_soap.post(params.path, params.method).
-                    then(function (res) {
-                            appConfiguration = {
-                                numberOfFiledLoginAttemptsBeforeBlocking: res.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING,
-                                loginBlockingInterval: res.LOGINBLOCKINGINTERVALINMILLISECONDS,
-                                emailAddressInLogin: res.EMAILADDRESSINLOGIN,
-                                productInStockDefaultValue: res.PRODUCTINSTOCKDEFAULTVALUE,
-                                userSecondWsdl: res.USERSECONDWSDL,
-                                userLoginTimeout: res.USERLOGINTIMEOUT,
-                            }
-                            Loger.Received(res);
-                            defer.resolve(appConfiguration);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            defer.reject("Request failed! ");
-                        });
+                    Helper.enableLoader();
+                    $timeout(function () {
+                        var params = server.service.getConfiguration();
+                        mini_soap.post(params.path, params.method).
+                        then(function (res) {
+                                appConfiguration = {
+                                    numberOfFiledLoginAttemptsBeforeBlocking: res.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING,
+                                    loginBlockingInterval: res.LOGINBLOCKINGINTERVALINMILLISECONDS,
+                                    emailAddressInLogin: res.EMAILADDRESSINLOGIN,
+                                    productInStockDefaultValue: res.PRODUCTINSTOCKDEFAULTVALUE,
+                                    userSecondWsdl: res.USERSECONDWSDL,
+                                    userLoginTimeout: res.USERLOGINTIMEOUT,
+                                }
+                                Helper.disableLoader();
+                                Loger.Received(res);
+                                defer.resolve(appConfiguration);
+                            },
+                            function (response) {
+                                Helper.disableLoader();
+                                Loger.Received(response);
+                                defer.reject("Request failed! ");
+                            });
+                    }, Helper.defaultTimeLoaderToEnable);
                 }
                 return defer.promise;
             }
@@ -77,15 +85,20 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.account.login();
-                mini_soap.post(params.path, params.method, user).
-                then(function (response) {
-                        Loger.Received(response);
-                        defer.resolve(response);
-                    },
-                    function (response) {
-                        Loger.Received(response);
-                        defer.reject("Request failed! ");
-                    });
+                Helper.enableLoader();
+                $timeout(function () {
+                    mini_soap.post(params.path, params.method, user).
+                    then(function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.resolve(response);
+                        },
+                        function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        });
+                }, Helper.defaultTimeLoaderToEnable);
 
                 return defer.promise;
             }

@@ -11,14 +11,14 @@ Helper.____closeTooTipCart;
 Helper.____showPage;
 Helper.mobile_section_moved;
 
-
+Helper.defaultTimeLoaderToEnable = 0;
 Helper.enableLoader = function() {
     $("div.loader").css({display: "block"});
-    $("div.loader").animate({opacity: 1}, 300);
+    $("div.loader").stop().animate({opacity: 1}, 300);
 };
 
 Helper.disableLoader = function() {
-    $("div.loader").animate({opacity: 0}, 300, function(){
+    $("div.loader").stop().animate({opacity: 0}, 300, function(){
         $(this).css({display: "none"});
     });
 };
@@ -28,7 +28,7 @@ Helper.forAllPage = function(){
     clearTimeout(Helper.____showPage)
     Helper.____showPage = setTimeout(function () {
         $("div.loader").css({opacity: 1, display: "block", });
-        $("html, body").animate({opacity: 1}, 400, function(){
+        $("html, body").stop().animate({opacity: 1}, 400, function(){
             $("div.loader").delay(500).animate({opacity: 0}, 500, function(){
                 $(this).css({display: "none",  });
             });

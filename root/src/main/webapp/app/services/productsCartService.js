@@ -316,25 +316,33 @@ define(['./module'], function (services) {
             }
 
             function addProduct(product, quantity) {
+
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
                 if (user && user.response) {
+                    var i = 0;
                     if (user.response.userId != -1) {
-                        var request = $http({
-                            method: "post",
-                            headers: {
-                                "content-type": "application/json; charset=utf-8",
-                                "Authorization": "Bearer " + user.response.token,
-                            },
-                            async: false,
-                            url: server.order.addProductToUser(user.response.userId,
-                                product.productId, product.colors[0].code, quantity),
-                        });
-                        request.then(function (newCart) {
-                            Loger.Received(newCart);
-                            cart = newCart.data;
-                            response.resolve(cart);
-                        })
+
+                        Helper.enableLoader();
+                        $timeout(function(){
+                            var request = $http({
+                                method: "post",
+                                headers: {
+                                    "content-type": "application/json; charset=utf-8",
+                                    "Authorization": "Bearer " + user.response.token,
+                                },
+                                async: false,
+                                url: server.order.addProductToUser(user.response.userId,
+                                    product.productId, product.colors[0].code, quantity),
+                            });
+                            request.then(function (newCart) {
+                                Helper.disableLoader();
+                                Loger.Received(newCart);
+                                cart = newCart.data;
+                                response.resolve(cart);
+                            })
+                        }, Helper.defaultTimeLoaderToEnable);
+
                         return response.promise;
                     }
                 }
