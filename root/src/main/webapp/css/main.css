@@ -51,7 +51,7 @@
     outline: none;
 }
 
-#loader {
+.loader {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -60,7 +60,7 @@
     display: none;
 }
 
-#loader > div{
+.loader > div{
     position: fixed;
     top: 52%;
     left: 0;
@@ -73,7 +73,7 @@
 /*background-color: red;*/
 }
 
-#loader div:before{
+.loader div:before{
     /*position: fixed;*/
     /*top: 50%;*/
     /*left: 0;*/

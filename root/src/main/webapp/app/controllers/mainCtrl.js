@@ -230,6 +230,7 @@ define(['./module'], function (controllers) {
                 Helper.mobileSectionClose();
                 $location.path(path);
             }
+
             $scope.mobileRedirect = function (path) {
                 Helper.mobileSectionClose();
                 $state.go(path)
@@ -316,14 +317,15 @@ define(['./module'], function (controllers) {
                 $scope.miniTitleOut();
             });
 
-
             $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
             Helper.mobile_section_moved = $("#mobile-section").width();
 
             $scope.openMobileSection = function () {
                 Helper.mobileSectionHandler();
             }
+
             $scope.$on('$viewContentLoaded', function(event) {
+                Helper.forAllPage();
             });
         }]);
 });

@@ -81,6 +81,7 @@ define(['./module'], function (controllers) {
 
 
 
+
             Slider.AddSliderListener();
 
             Helper.forAllPage();

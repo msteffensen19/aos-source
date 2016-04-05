@@ -8,14 +8,16 @@ var stickyPossition = startPossition;
 
 var Helper = Helper || {};
 Helper.____closeTooTipCart;
+Helper.____showPage;
 Helper.mobile_section_moved;
 
 
 Helper.forAllPage = function(){
 
-    setTimeout(function () {
+    clearTimeout(Helper.____showPage)
+    Helper.____showPage = setTimeout(function () {
         $("html, body").animate({opacity: 1}, 800);
-    }, 0);
+    }, 100);
 
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
