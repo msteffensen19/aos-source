@@ -12,13 +12,28 @@ Helper.____showPage;
 Helper.mobile_section_moved;
 
 
+Helper.enableLoader = function() {
+    $("div.loader").css({display: "block"});
+    $("div.loader").animate({opacity: 1}, 300);
+};
+
+Helper.disableLoader = function() {
+    $("div.loader").animate({opacity: 0}, 300, function(){
+        $(this).css({display: "none"});
+    });
+};
+
 Helper.forAllPage = function(){
 
     clearTimeout(Helper.____showPage)
     Helper.____showPage = setTimeout(function () {
-        $("html, body").animate({opacity: 1}, 800);
-    }, 100);
-
+        $("div.loader").css({opacity: 1, display: "block", });
+        $("html, body").animate({opacity: 1}, 400, function(){
+            $("div.loader").delay(500).animate({opacity: 0}, 500, function(){
+                $(this).css({display: "none",  });
+            });
+        });
+    }, 1000);
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
     setTimeout(Helper.footerHandler, 200);

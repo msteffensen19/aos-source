@@ -205,7 +205,7 @@ define(['./module'], function (controllers) {
 
             }
 
-            $(".PopUp, .closePopUpBtn").click(function (e) {
+            $(".PopUp, .closePopUpBtn").click(function () {
 
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
