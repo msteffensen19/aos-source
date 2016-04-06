@@ -4,25 +4,29 @@
         User level configuration.
         Managed by Admin-User in ADM Demo .NET administration application
     -->
-    <!-- No=(Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
-    <Email_address_in_login datatype="enum:[Yes,No]" description="'No'=(Default) Do Not, or 'Yes'=e-mail address is mandatory in create-user and shown it in login/sign-in page" tools="LoadRunner;BPT">No</Email_address_in_login>
-    <!-- 0=Disabled, any other positive number is the amount of memory leak in MegaBytes -->
-    <Generate_memory_leak datatype="string" description="0=Disabled, any other positive number is the amount of memory leak in MegaBytes" tools="LoadRunner;LeanFt">0</Generate_memory_leak>
-    <!-- 0=Disabled, any other positive number is the number of repeat calls to ShipEx -->
-    <Repeat_ShipEx_call datatype="string" description="0=Disabled, any other positive number is the number of repeat calls to ShipEx" tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
-    <!-- 0=Disabled, any other number is the sum to add to cart calculation -->
-    <Sum_to_add_to_cart_calculation datatype="string" description="0=Disabled, any other number is the sum to add to cart calculation" tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
-    <!-- 0=Disabled, any other positive number is the product id to add to speakers category -->
-    <Add_wrong_product_to_speakers_category datatype="string" description="0=Disabled, any other positive number is the product id to add to speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
-    <!-- No=(Default) Do not make OR Yes=make spelling mistakes in order payment page -->
-    <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="'No'=(Default) Do not make OR 'Yes'=make spelling mistakes in order payment page" tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
-    <!-- (-1)=(default) Disabled, any other number is the number of concurrentSessions -->
-    <Max_concurrent_sessions datatype="string" description="(-1)=(default) Disabled, any other number is the number of concurrentSessions" tools="LoadRunner;NV;StormRunner">-1</Max_concurrent_sessions>
-    <!-- No=(Default) Do not, or Yes=Mix places of pictures in home page -->
-    <Mix_pictures_in_home_page datatype="enum:[Yes,No]" description="'No'=(Default) Do not, or 'Yes'=Mix places of pictures in home page" tools="LeanFT;MobileCenter;UFT">No</Mix_pictures_in_home_page>
-    <!-- 0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
-    <Slow_DB_call datatype="string" description="0=Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution" tools="LoadRunner;StormRunner">0</Slow_DB_call>
-    <!-- No=(Default) Do not, or "Yes"=show more than 40 seconds difference between WiFi and 3G in optimization report -->
-    <Slow_Page datatype="enum:[Yes,No]" description="'No'=(Default) Do not, or 'Yes'=show more than 40 seconds difference between WiFi and 3G in optimization report" tools="NV;StormRunner">No</Slow_Page>
+    <!-- No = (Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
+    <Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not; or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page" tools="LoadRunner;BPT">No</Email_address_in_login>
+    <!-- 0 = (Default) Disabled, any other positive number is the amount of memory leak in MegaBytes -->
+    <Generate_memory_leak datatype="string" description="0=(Default) Disabled; any other positive number is the amount of memory leak in MegaBytes" tools="LoadRunner;LeanFt">0</Generate_memory_leak>
+    <!-- 0 = (Default) Disabled, any other positive number is the number of repeat calls to ShipEx -->
+    <Repeat_ShipEx_call datatype="string" description="0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx" tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
+    <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
+    <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation" tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
+    <!-- 0 = (Default) Disabled, any other positive number is the product id to add to speakers category -->
+    <Add_wrong_product_to_speakers_category datatype="string" description="0=(Default) Disabled; any other positive number is the product id to add to speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
+    <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="No=(Default) Do not make; Yes=make spelling mistakes in order payment page" tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
+    <!-- (-1) = (Default) Disabled, any other number is the number of concurrentSessions -->
+    <Max_concurrent_sessions datatype="string" description="(-1)=(Default) Disabled; any other number is the number of concurrentSessions" tools="LoadRunner;NV;StormRunner">-1</Max_concurrent_sessions>
+    <!-- No = (Default) Do not, or Yes=Mix places of pictures in home page -->
+    <Mix_pictures_in_home_page datatype="enum:[Yes,No]" description="No=(Default) Do not; Yes=Mix places of pictures in home page" tools="LeanFT;MobileCenter;UFT">No</Mix_pictures_in_home_page>
+    <!-- 0 = Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
+    <Slow_DB_call datatype="string" description="0=(Default) Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution" tools="LoadRunner;StormRunner">0</Slow_DB_call>
+    <!-- No=(Default) Do not, or Yes=show more than 40 seconds difference between WiFi and 3G in optimization report -->
+    <Slow_Page datatype="enum:[Yes,No]" description="No=(Default) Do not; Yes=show more than 40 seconds difference between WiFi and 3G in optimization report" tools="NV;StormRunner">No</Slow_Page>
+    <!-- "SLA: Add delay in add to cart response time (seconds)": 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time -->
+    <SLA_Add_Delay_In_Add_To_Cart_Response_Time datatype="string" description="0=(Default) Disabled; any other positive number = the number of seconds to add as a delay in response time" tools="LoadRunner;StormRunner">0</SLA_Add_Delay_In_Add_To_Cart_Response_Time>
+    <!-- This parameter is enabled only if "SLA: Add delay in add to cart response time (seconds)" is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20. -->
+    <SLA_Number_Of_Sessions_To_Add_The_Delay datatype="string" description="This parameter is enabled only if 'SLA_Add_Delay_In_Add_To_Cart_Response_Time' is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20" tools="LoadRunner;StormRunner">20</SLA_Number_Of_Sessions_To_Add_The_Delay>
 </Parameters>
 
