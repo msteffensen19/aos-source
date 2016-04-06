@@ -80,10 +80,11 @@ define(['./module'], function (services) {
                                         config.productInStockDefaultValue = parseInt(response.PRODUCTINSTOCKDEFAULTVALUE);
                                         config.userLoginTimeOut = parseInt(response.USERLOGINTIMEOUT);
                                         config.userSecondWSDL = response.USERSECONDWSDL.toLowerCase() == "true";
+                                        appConfiguration = config;
                                         defer.resolve(config);
                                     },
                                     function (response) {
-                                        Loger.Received(config);
+                                        Loger.Received(response);
                                         defer.reject("Request failed! ");
                                     });
                             }, function (err) {

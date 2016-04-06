@@ -19,46 +19,62 @@ define(['./module'], function (directives) {
                     //$scope.message = "";
                     $scope.message = {text: $filter('translate')('OR'), _class: ''};
                     $scope.config = null;
+                    var _____errorMessage;
+
+                    $scope.setErrorMessage = function(reason) {
+                        $timeout.cancel(_____errorMessage);
+                        _____errorMessage = $timeout(function () {
+                            $scope.message.text = $filter('translate')('OR');
+                            $scope.message._class = "";
+                        }, 2000);
+                        $timeout(function () {
+                            $scope.message = { text: reason, _class: "invalid" }
+                        }, 0);
+                    }
+
                     /*================================ END VARIABLES ======================================*/
 
                     /* Sign user in */
                     $scope.signIn = function (user, rememberMe) {
 
                         var userBlocked = $cookie(user.loginUser);
+                        if (userBlocked) {
+                            var rest = userBlocked.dateUntil - userBlocked.dateFrom;
+                            var date = new Date();
+                            var millisecondsLess = userBlocked.dateUntil - new Date(date.getTime() - new Date(rest)).getTime();
 
-                        //if (checkUserBlocked()) {
-                        //    $cookie("pcBlocked", new Date(new Date()).getTime() + (10 * 60000));
-                        //    return;
-                        //}
+                            console.log("");
+                            console.log("Seconds to unblock user");
+                            console.log((millisecondsLess / 1000) + (" seconds"));
+                            console.log("=================================");
+                            console.log("");
+
+                            $scope.setErrorMessage(userBlocked.reason);
+                            if (millisecondsLess < 0) {
+                                $cookie.remove(user.loginUser);
+                            }
+                            else {
+                                return user;
+                            }
+                        }
+
+
 
                         userService.login(user).then(function (response) {
 
                             if (response.userId != -1 && response.success) {
 
                                 if (response.userId === undefined) {
-
-                                    $timeout(function () {
-                                        $scope.message.text = $filter('translate')('OR');
-                                        $scope.message._class = "";
-                                    }, 2000);
-                                    $scope.message.text = response.reason;
-                                    $scope.message._class = response.success ? '' : 'invalid';
-
-                                    if (1 == 2) {
-                                        $cookie(user.loginUser, new Date(new Date()).getTime() + (10 * 60000));
-                                        return;
-                                    }
-                                    return;
+                                    $scope.setErrorMessage(response.reason);
+                                    return user;
                                 }
 
-                                $cookie.remove("loginsCounter");
                                 userCookie.fillParams(user.loginUser, user.email, response);
                                 $rootScope.userCookie = userCookie;
 
                                 if (rememberMe) {
                                     $cookie(userCookie.getKey(userCookie), userCookie, {
-                                        expirationUnit: 'minutes',
-                                        expires: 60
+                                        expirationUnit: 'minutes', expires: 60
                                     });
                                     $cookie('lastlogin', userCookie.getKey(userCookie));
                                     $scope.refreshTimeOut();
@@ -78,12 +94,22 @@ define(['./module'], function (directives) {
                                 wellcome();
                             }
                             else {
-                                $timeout(function () {
-                                    $scope.message.text = $filter('translate')('OR');
-                                    $scope.message._class = "";
-                                }, 2000);
-                                $scope.message.text = response.reason;
-                                $scope.message._class = "invalid";
+                                if (response.reason.toLowerCase().indexOf('blocked') != -1) {
+
+                                    userService.getConfiguration().then(function(conf){
+                                        var now = new Date();
+                                        userBlocked = {
+                                            dateFrom: now.getTime(),
+                                            dateUntil: now.getTime() + (conf.loginBlockingIntervalInSeconds * 1000),
+                                            reason : response.reason,
+                                        }
+                                        $cookie(user.loginUser, userBlocked, {
+                                            expirationUnit: 'milliseconds', expires: userBlocked.dateUntil - userBlocked.dateFrom,
+                                        });
+
+                                    });
+                                }
+                                $scope.setErrorMessage(response.reason);
                             }
                             return user;
                         });

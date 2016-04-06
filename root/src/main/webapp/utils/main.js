@@ -62,6 +62,10 @@ Helper.scrollPageUp = function(){
     $("body, html").scrollTop(0);
 }
 
+Helper.parseBoolean = function(str){
+    return str.toLowerCase() == 'true'
+}
+
 
 Helper.UpdatePageFixed = function(){
     if(document.URL.indexOf("category") == -1){

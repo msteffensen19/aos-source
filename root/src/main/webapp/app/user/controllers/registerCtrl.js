@@ -4,8 +4,9 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location', '$timeout', '$filter',
-        function (s, registerService, $location, $timeout, $filter) {
+    controllers.controller('registerCtrl', ['$scope', 'registerService', '$location',
+        '$timeout', '$filter', '$state',
+        function (s, registerService, $location, $timeout, $filter, $state) {
 
 
             s.registerSuccess = false;
@@ -31,21 +32,25 @@ define(['./module'], function (controllers) {
             s.register = function () {
 
                 registerService.register(s.model).then(function (response) {
-                    s.registerAnswer.message = response.REASON || $filter('translate')('register_faild'),
-                    s.registerAnswer.class = response.SUCCESS == 'true' ? 'valid' : 'invalid';
-                    if (response.SUCCESS == 'true') {
-                        $('body, html').animate({ scrollTop: 0 }, 10);
+
+                    s.registerAnswer.message = response.reason || $filter('translate')('register_faild'),
+                        s.registerAnswer.class = response.success ? 'valid' : 'invalid';
+
+                    if (response.success) {
+                        $('body, html').animate({scrollTop: 0}, 10);
                         s.WellcomeName = s.model.firstName.replace(/\s/g, "").length > 0 ? s.model.firstName :
                             s.model.lastName.replace(/\s/g, "").length > 0 ? s.model.lastName :
-                            s.model.username;
+                                s.model.username;
                         s.registerSuccess = true;
+                        $timeout(function(){
+                            $state.go('default')
+                        }, 5000)
                     }
                 });
             }
 
             $(document).on("keydown", function (event) {
                 if (event.keyCode == 13) {
-                    console.log("keyCode 13 pressed")
                     s.register();
                     return false;
                 }
