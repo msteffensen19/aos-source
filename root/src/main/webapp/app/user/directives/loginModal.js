@@ -24,16 +24,16 @@ define(['./module'], function (directives) {
                     /* Sign user in */
                     $scope.signIn = function (user, rememberMe) {
 
-                        userService.login(user).then(function (res) {
+                        var userBlocked = $cookie(user.loginUser);
 
-                            var response = {
-                                userId: res.USERID,
-                                reason: res.REASON,
-                                success: res.SUCCESS,
-                                token: res.TOKEN
-                            }
+                        //if (checkUserBlocked()) {
+                        //    $cookie("pcBlocked", new Date(new Date()).getTime() + (10 * 60000));
+                        //    return;
+                        //}
 
-                            if (response.userId != -1 && response.success == 'true') {
+                        userService.login(user).then(function (response) {
+
+                            if (response.userId != -1 && response.success) {
 
                                 if (response.userId === undefined) {
 
@@ -42,13 +42,10 @@ define(['./module'], function (directives) {
                                         $scope.message._class = "";
                                     }, 2000);
                                     $scope.message.text = response.reason;
-                                    $scope.message._class = response.success == 'true' ? '' : 'invalid';
+                                    $scope.message._class = response.success ? '' : 'invalid';
 
-                                    var count = incrementLogins();
-                                    if (count >= 3) {
-                                        console.log(count);
-                                        $cookie("pcBlocked", new Date(new Date()).getTime() + (10 * 60000));
-                                        //question: Ask maria what to show!
+                                    if (1 == 2) {
+                                        $cookie(user.loginUser, new Date(new Date()).getTime() + (10 * 60000));
                                         return;
                                     }
                                     return;

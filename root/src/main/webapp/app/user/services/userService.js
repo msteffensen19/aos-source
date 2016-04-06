@@ -20,7 +20,6 @@ define(['./module'], function (services) {
                 var user = $rootScope.userCookie;
                 if (user && user.response && user.response.userId != -1) {
 
-
                     var params = server.account.accountLogout();
                     var expectToReceive = {
                         loginUser: user.response.userId,
@@ -49,6 +48,8 @@ define(['./module'], function (services) {
 
             function getConfiguration() {
 
+                var config = {};
+
                 var defer = $q.defer();
                 if (appConfiguration) {
                     defer.resolve(appConfiguration);
@@ -56,26 +57,40 @@ define(['./module'], function (services) {
                 else {
                     Helper.enableLoader();
                     $timeout(function () {
-                        var params = server.service.getConfiguration();
-                        mini_soap.post(params.path, params.method).
-                        then(function (res) {
-                                appConfiguration = {
-                                    numberOfFiledLoginAttemptsBeforeBlocking: res.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING,
-                                    loginBlockingInterval: res.LOGINBLOCKINGINTERVALINMILLISECONDS,
-                                    emailAddressInLogin: res.EMAILADDRESSINLOGIN,
-                                    productInStockDefaultValue: res.PRODUCTINSTOCKDEFAULTVALUE,
-                                    userSecondWsdl: res.USERSECONDWSDL,
-                                    userLoginTimeout: res.USERLOGINTIMEOUT,
-                                }
+                            $http({
+                                method: "get",
+                                url: server.catalog.getEmailConfiguration(),
+                                headers: {
+                                    "content-type": "application/json",
+                                },
+                            }).
+                            then(function (res) {
                                 Helper.disableLoader();
                                 Loger.Received(res);
-                                defer.resolve(appConfiguration);
-                            },
-                            function (response) {
+
+                                config.emailAddressInLogin = res && res.data && res.data.parameterValue && res.data.parameterValue.toLowerCase() == "yes";
+
+                                var params = server.catalog.getAccountConfiguration();
+                                mini_soap.post(params.path, params.method).
+                                then(function (response) {
+                                        Loger.Received(response);
+                                        config.allowUserConfiguration = response.ALLOWUSERCONFIGURATION.toLowerCase() == "true";
+                                        config.loginBlockingIntervalInSeconds = parseInt(response.LOGINBLOCKINGINTERVALINSECONDS);
+                                        config.numberOfFailedLoginAttemptsBeforeBlocking = parseInt(response.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING);
+                                        config.productInStockDefaultValue = parseInt(response.PRODUCTINSTOCKDEFAULTVALUE);
+                                        config.userLoginTimeOut = parseInt(response.USERLOGINTIMEOUT);
+                                        config.userSecondWSDL = response.USERSECONDWSDL.toLowerCase() == "true";
+                                        defer.resolve(config);
+                                    },
+                                    function (response) {
+                                        Loger.Received(config);
+                                        defer.reject("Request failed! ");
+                                    });
+                            }, function (err) {
                                 Helper.disableLoader();
-                                Loger.Received(response);
-                                defer.reject("Request failed! ");
-                            });
+                                Loger.Received(err);
+                                defer.reject("probl.")
+                            })
                     }, Helper.defaultTimeLoaderToEnable);
                 }
                 return defer.promise;
@@ -88,7 +103,15 @@ define(['./module'], function (services) {
                 Helper.enableLoader();
                 $timeout(function () {
                     mini_soap.post(params.path, params.method, user).
-                    then(function (response) {
+                    then(function (res) {
+
+                            var response = {
+                                userId: parseInt(res.USERID),
+                                reason: res.REASON,
+                                success: res.SUCCESS == "true",
+                                token: res.TOKEN
+                            }
+
                             Loger.Received(response);
                             Helper.disableLoader();
                             defer.resolve(response);

@@ -3,8 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService',
-        function (mini_soap, $http, $q, responseService) {
+    services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService', '$timeout',
+        function (mini_soap, $http, $q, responseService, $timeout) {
             // Return public API.
             return ({
                 register: register,

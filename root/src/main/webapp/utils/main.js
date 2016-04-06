@@ -11,7 +11,7 @@ Helper.____closeTooTipCart;
 Helper.____showPage;
 Helper.mobile_section_moved;
 
-Helper.defaultTimeLoaderToEnable = 0;
+Helper.defaultTimeLoaderToEnable = 200;
 Helper.enableLoader = function() {
     $("div.loader").css({display: "block"});
     $("div.loader").stop().animate({opacity: 1}, 300);
@@ -27,9 +27,9 @@ Helper.forAllPage = function(){
 
     clearTimeout(Helper.____showPage)
     Helper.____showPage = setTimeout(function () {
-        $("div.loader").css({opacity: 1, display: "block", });
-        $("html, body").stop().animate({opacity: 1}, 400, function(){
-            $("div.loader").delay(500).animate({opacity: 0}, 500, function(){
+        $(".waitBackground").stop().animate({opacity: 0,}, 100, function(){
+            $(this).css({display: "none",  });
+            $("div.loader").stop().animate({opacity: 0}, 700, function(){
                 $(this).css({display: "none",  });
             });
         });
@@ -50,15 +50,7 @@ Helper.footerHandler = function() {
             $("#virtualFooter").css('width' , "100%" );
 
             var miss = $(window).height() - ($("#virtualFooter").offset().top + $("#virtualFooter").height());
-            //l($(window).height());
-            //l($("#virtualFooter").offset().top);
-            //console.log("miss = " + miss);
-            if (miss> 0) {
-                $("footer").css({ "position": "fixed" } )
-            }
-            else {
-                $("footer").css("position", "absolute")
-            }
+            $("footer").css({ "position": miss > 0 ? "fixed" : "absolute" } )
         }, 200)
     }
     else {
@@ -105,7 +97,6 @@ Helper.checkPagePossitions = function(){
     if ($('.pages').length > 0) {
 
         var scrollTop = $('body').scrollTop() > 0 ? $('body').scrollTop() : $('html').scrollTop();
-        console.log(scrollTop)
 
         if (pagesPossition < scrollTop + $('header').height()) {
             $('.pages').addClass('fixed');

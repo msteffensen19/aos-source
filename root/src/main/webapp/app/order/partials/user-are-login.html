@@ -37,7 +37,7 @@
             <div class="blueLink">
                 <a data-ng-click="userDetailsEditMode = true">{{ 'Edit_shipping_Details' | translate }}</a>
                 <label class="float-button">{{ 'SHIPPING_BY' | translate }}:
-                    <img src="css/images/Shipex.png" alt="ShipEx"/></label>
+                <img src="css/images/Shipex.png" alt="ShipEx"/></label>
             </div>
             <div class="mobileBtnHandler">
                 <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75">
@@ -316,7 +316,7 @@
 
             <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
 
-            <div ng-show="(imgRadioButton == 2) && noCards || showMasterCart">
+            <div ng-show="(imgRadioButton == 2) && (noCards || showMasterCart">
 
                 <div class="notice">
                     <h4 translate="Notice"></h4>

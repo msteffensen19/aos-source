@@ -269,12 +269,17 @@ define(['./module'], function (controllers) {
             var _____autoLogOut;
             $scope.refreshTimeOut = function () {
 
+                if($scope.config == null){
+                    return;
+                }
                 if (orderService.userIsLogin()) {
+
                     $timeout.cancel(_____autoLogOut);
                     _____autoLogOut = $timeout(function () {
                         $scope.signOut()
-                    }, $scope.config.userLoginTimeout == 0 ? (60 * 60000)
-                        : ($scope.config.userLoginTimeout * 60000));
+                    }, $scope.config.userLoginTimeOut == 0 ? (60 * 60000)
+                        : ($scope.config.userLoginTimeOut * 60000));
+
                 }
             }
 
@@ -290,7 +295,9 @@ define(['./module'], function (controllers) {
 
 
             $rootScope.$on('$locationChangeStart', function (event, current, previous) {
-                $("html, body").css({opacity: 0});
+                //$("html, body").css({opacity: 0});
+                    $(".waitBackground").css({opacity: 1, display: "block",});
+                    $("div.loader").css({opacity: 1, display: "block", });
             });
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {

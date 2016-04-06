@@ -161,9 +161,8 @@ label.shop_now:after{
 
 #div-special-offer button {
     font-size: 14px;
-    padding: 10px;
+    padding: 8px;
     margin: 16px 0;
-    height: 37px;
     width: 133px;
 }
 
@@ -461,18 +460,6 @@ label.shop_now:after{
 
     #div-special-offer p {
         padding: 3px 0;
-    }
-
-    #div-special-offer button {
-        font-size: 14px;
-        padding: 10px;
-        margin: 16px 0;
-        height: 37px;
-        width: 133px;
-    }
-
-    .slider .container button{
-
     }
 
     /* end special offer */

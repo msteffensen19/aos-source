@@ -8,7 +8,6 @@ define(['./module'], function (services) {
         '$rootScope', '$timeout',
         function ($http, $q, responseService, $cookie, $rootScope, $timeout) {
 
-            //var responce = $q.defer();
             var cart = null;
 
             function getTempCart() {
