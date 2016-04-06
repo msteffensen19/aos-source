@@ -127,13 +127,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                         entityManager.persist(account);
 
                         //  New user created successfully.
-                        this.failureMessage = "New user created successfully.";
+                        this.failureMessage = "New user created successfully";
                         accountStatusResponse = new AccountStatusResponse(true, Account.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, account.getId());
 
                         return account;
                     } else {
                         //  User with this login already exists
-                        this.failureMessage = "User with this login already exists.";
+                        this.failureMessage = "User with this login already exists";
                         accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
                         return null;
 
@@ -144,13 +144,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                 }
             } else {
                 //  Invalid password
-                this.failureMessage = "Invalid password.";
+                this.failureMessage = "Invalid password";
                 accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
                 return null;
             }
         } else {
             //  Invalid login user-name.
-            this.failureMessage = "Invalid login user-name.";
+            this.failureMessage = "Invalid login user-name";
             accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
             return null;
         }
@@ -216,7 +216,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public int deleteAppUser(Account account) {
+    public int deleteAcoount(Account account) {
         ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
         Long userId = account.getId();
@@ -390,7 +390,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         //  Check phone number validation if not null
         if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {
             if (!ValidationHelper.isValidPhoneNumber(phoneNumber)) {
-                accountStatusResponse = new AccountStatusResponse(false, "Invalid phone number.", -1);
+                accountStatusResponse = new AccountStatusResponse(false, "Invalid phone number", -1);
 
                 return false;
             }
@@ -399,7 +399,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         //  Check e-mail address validation if not null
         if (email != null) {
             if (!ValidationHelper.isValidEmail(email)) {
-                accountStatusResponse = new AccountStatusResponse(false, "Invalid e-mail address.", -1);
+                accountStatusResponse = new AccountStatusResponse(false, "Invalid e-mail address", -1);
 
                 return false;
             }
@@ -418,7 +418,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         if (account.getInternalUnsuccessfulLoginAttempts() == AccountConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
 
             //  Update Account class with timestamp when user can attempt login again according to configuration interval
-            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp(AccountConfiguration.LOGIN_BLOCKING_INTERVAL_IN_SECONDS));
+            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp((AccountConfiguration.LOGIN_BLOCKING_INTERVAL_IN_SECONDS * 1000)));
         }
 
         //  Update data changes made for application user into application users table
@@ -456,7 +456,19 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     @Override
     public int delete(Account... entities) {
+        for (Account account : entities) {
+            entityManager.remove(account);
+        }
         return 0;
+    }
+
+    @Override
+    public Account delete(Long id) {
+        Account account = this.get(id);
+
+        entityManager.remove(account);
+
+        return account;
     }
 
     @Override
@@ -484,7 +496,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, "Invalid password", -1);
         }
         Account account = get(accountId);
-        if (account == null) return new AccountStatusResponse(false, "Account not fount", -1);
+        if (account == null) return new AccountStatusResponse(false, "Account not found", -1);
 
         try {
             account.setPassword(newPassword);

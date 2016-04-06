@@ -34,10 +34,7 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     String getFailureMessage();
 
-    int deleteAppUser(Account account);
-//    int deleteAppUsersByEmails(Collection<String> emails);
-//    int deleteAppUsersByLogins(Collection<String> logins);
-
+    int deleteAcoount(Account account);
 
     Account getAppUserByLogin(String login);
 
