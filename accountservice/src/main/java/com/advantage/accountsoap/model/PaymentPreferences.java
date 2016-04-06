@@ -31,6 +31,12 @@ public class PaymentPreferences {
     public static final String MESSAGE_SAFE_PAY_DATA_DELETED_SUCCESSFULLY = "SafePay data deleted successfully";
     public static final String MESSAGE_SAFE_PAY_DATA_FAILED_UPDATE = "SafePay data failed update";
 
+    public static final String MESSAGE_ERROR_INVALID_CARD_NUMBER = "Error: Invalid card number";
+    public static final String MESSAGE_ERROR_INVALID_CVV_NUMBER = "Error: Invalid CVV number";
+    public static final String MESSAGE_ERROR_EXPIRATION_DATE_FORMAT = "Error: Invalid expiration date format";
+    public static final String MESSAGE_ERROR_GENERAL_FAILURE = "Failed";
+
+
     public static final String QUERY_GET_ALL = "query.getAll";
     public static final String QUERY_GET_PAYMENT_PREFERENCES_BY_USER_ID = "query.getPaymentPreferencesByUserId";
     public static final String QUERY_GET_PAYMENT_PREFERENCES_BY_PK_COLUMNS = "query.getPaymentPreferencesByPkColumns";

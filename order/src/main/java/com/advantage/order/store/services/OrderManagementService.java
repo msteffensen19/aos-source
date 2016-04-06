@@ -395,7 +395,7 @@ public class OrderManagementService {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -465,7 +465,7 @@ public class OrderManagementService {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "SafePay JSON string sent: '" + input + "'");
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
