@@ -102,11 +102,14 @@ public class SafePayService {
 
         if (isValid) {
             /*  Customer phone  */
-            if (!ValidationHelper.isValidPhoneNumber(safePayDto.getCustomerPhone())) {
-                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'SPCustomerPhone\' value=" + safePayDto.getCustomerPhone());
-                responseStatus.setReferenceNumber(0);
-                isValid = false;
+            //if (!ValidationHelper.isValidPhoneNumber(safePayDto.getCustomerPhone())) {
+            if (!(safePayDto.getCustomerPhone() != null)) {
+                if (safePayDto.getCustomerPhone().length() > 20) {
+                    responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                    responseStatus.setResponseReason("Wrong field value. Field \'SPCustomerPhone\' value=" + safePayDto.getCustomerPhone());
+                    responseStatus.setReferenceNumber(0);
+                    isValid = false;
+                }
             }
         }
 
