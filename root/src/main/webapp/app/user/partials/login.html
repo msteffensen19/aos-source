@@ -64,12 +64,11 @@
                            id-attr="smollLoginUsername">
                 </sec-input>
 
+                <!-- sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})" pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}" -->
                 <sec-input sec-placeholder="{{'Password' | translate}}"
                            sec-required="{{'Password' | translate}} {{'field_is_required' | translate}}"
                            sec-min-length="4"
                            no-red-star="true"
-                           sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                           pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
                            input-type-attr="password"
                            model-attr="loginUser.loginPassword"
                            id-attr="smollLoginPassword">
@@ -105,6 +104,10 @@
 
         </div>
     </div>
+
+
+
+
 
 </div>
 
