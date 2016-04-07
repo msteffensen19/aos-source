@@ -4,13 +4,17 @@
 
 define([], function () {
 
-    function config($translateProvider, $stateProvider, $urlRouterProvider) {
+    function config($translateProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
 
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
         $translateProvider.translations('en', english);
 
         $urlRouterProvider.otherwise("/#");
+
+        //$locationProvider.html5Mode(true);
+
+        $translateProvider.preferredLanguage('en');
 
         $stateProvider.state('default', {
                 url: '/',
@@ -143,8 +147,6 @@ define([], function () {
             //    breadcrumbName: "Home Page",
             //}
         });
-
-        $translateProvider.preferredLanguage('en');
     }
 
     config.$inject = ['$translateProvider', '$stateProvider', '$urlRouterProvider'];

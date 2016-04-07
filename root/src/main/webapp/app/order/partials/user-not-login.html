@@ -17,12 +17,11 @@
                 id-attr="orderPaymenLogin_username" >
         </sec-input>
 
+        <!--sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})" pattern-error-attr="Use_up_to_12_characters_Include_at_least_one_letter_and_one_number"-->
         <sec-input
                 sec-required="{{'Password' | translate}} {{'field is required' | translate}}"
                 sec-placeholder="{{'Password' | translate}}"
                 sec-min-length="4"
-                sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                pattern-error-attr="Use up to 12 characters Include at least one letter and one number"
                 input-type-attr="password"
                 model-attr="orderPaymenLogin.loginPassword"
                 id-attr="orderPaymenLogin_password">
@@ -71,17 +70,6 @@
     </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
