@@ -394,11 +394,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         //        return false;
         //    }
         //}
-        if ((phoneNumber == null) || (phoneNumber.trim().length() < 1)) {
-            accountStatusResponse = new AccountStatusResponse(false, "Invalid phone number", -1);
-            return false;
-        }
-
 
         //  Check e-mail address validation if not null
         if (email != null) {
