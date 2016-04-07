@@ -118,7 +118,9 @@ define(['./module'], function (directives) {
                         var TransPaymentMethod = "SafePay";
                         var accountNumber = 843200971;
                         safePay(TransPaymentMethod, accountNumber);
+
                     }
+
 
                     s.payNow_masterCredit = function () {
                         if(s.saveMasterCredit) {
@@ -126,7 +128,7 @@ define(['./module'], function (directives) {
                                 accountService.addMasterCreditMethod(s.card)
                             }
                             else {
-                                accountService.updateMasterCreditMethod(s.card)
+                                accountService.updateMasterCreditMethod(s.card);
                             }
                         }
                         var TransPaymentMethod = "MasterCredit";
@@ -144,6 +146,7 @@ define(['./module'], function (directives) {
 
                     s.imgRadioButtonClicked = function (num) {
                         s.imgRadioButton = num;
+                        s.showMasterCart = s.noCards;
                     }
 
                     s.paymentMethod_edit = function () {

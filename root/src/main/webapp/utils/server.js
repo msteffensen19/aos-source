@@ -263,6 +263,22 @@ var server = {
             return paramToReturn;
         },
 
+        getEmailConfiguration: function () {
+
+            var paramToReturn = catalogKey + "/DemoAppConfig/parameters/Email_address_in_login";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        },
+
+        getAccountConfiguration: function () {
+
+            var wsdlToReturn = {
+                path: wsdlPath,
+                method: 'GetAccountConfigurationRequest'
+            }
+            Loger.CallingWSDL(wsdlToReturn);
+            return wsdlToReturn;
+        },
 
     },
     order: {
@@ -466,15 +482,4 @@ var server = {
             return wsdlToReturn;
         }
     },
-    service: {
-
-        getConfiguration: function () {
-            var wsdlToReturn = {
-                path: wsdlPath,
-                method: 'AccountConfigurationStatusRequest'
-            }
-            Loger.CallingWSDL(wsdlToReturn);
-            return wsdlToReturn;
-        },
-    }
 }

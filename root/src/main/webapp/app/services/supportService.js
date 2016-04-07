@@ -5,7 +5,7 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('supportService', ['$filter', '$q', '$http', function ($filter, $q, $http) {
+    services.service('supportService', ['$filter', '$q', '$http', '$timeout', function ($filter, $q, $http, $timeout) {
 
 
         return {

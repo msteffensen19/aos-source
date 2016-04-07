@@ -3,8 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService',
-        function (mini_soap, $http, $q, responseService) {
+    services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService', '$timeout',
+        function (mini_soap, $http, $q, responseService, $timeout) {
             // Return public API.
             return ({
                 register: register,
@@ -63,16 +63,26 @@ define(['./module'], function (services) {
                 Helper.enableLoader();
                 $timeout(function () {
                     mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
+                    then(function (res) {
+
+                            var response = {
+                                reason: res.REASON,
+                                success: Helper.parseBoolean(res.SUCCESS),
+                            }
                             Helper.disableLoader();
                             Loger.Received(response);
                             defer.resolve(response);
                         },
-                        function (response) {
+                        function (res) {
+                            Loger.Received(res);
+                            var response = {
+                                reason: res.REASON ? res.REASON : "Request failed! ",
+                                success: res.SUCCESS ? Helper.parseBoolean(res.SUCCESS) : false,
+                            }
                             Helper.disableLoader();
-                            Loger.Received(response);
-                            defer.reject("Request failed! ");
+                            defer.reject(response);
                         });
+
                 }, Helper.defaultTimeLoaderToEnable);
 
                 return defer.promise;

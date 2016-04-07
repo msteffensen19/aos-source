@@ -213,6 +213,10 @@
     top: 1px;
 }
 
+#accountCover #paymentMethod .blueLink {
+    display: inline-block;
+}
+
 #paymentMethod .option span{
     font-weight: 400;
 }
