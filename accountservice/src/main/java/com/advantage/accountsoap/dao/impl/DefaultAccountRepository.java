@@ -387,20 +387,23 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
-        //  Check phone number validation if not null
-        if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {
-            if (!ValidationHelper.isValidPhoneNumber(phoneNumber)) {
-                accountStatusResponse = new AccountStatusResponse(false, "Invalid phone number", -1);
-
-                return false;
-            }
+        ////  Check phone number validation if not null
+        //if ((phoneNumber != null) && (phoneNumber.trim().length() > 0)) {
+        //    if (!ValidationHelper.isValidPhoneNumber(phoneNumber)) {
+        //        accountStatusResponse = new AccountStatusResponse(false, "Invalid phone number", -1);
+        //        return false;
+        //    }
+        //}
+        if ((phoneNumber == null) || (phoneNumber.trim().length() < 1)) {
+            accountStatusResponse = new AccountStatusResponse(false, "Invalid phone number", -1);
+            return false;
         }
+
 
         //  Check e-mail address validation if not null
         if (email != null) {
             if (!ValidationHelper.isValidEmail(email)) {
                 accountStatusResponse = new AccountStatusResponse(false, "Invalid e-mail address", -1);
-
                 return false;
             }
         }
