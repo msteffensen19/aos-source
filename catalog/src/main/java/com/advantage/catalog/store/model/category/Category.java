@@ -11,25 +11,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "CATEGORY")
-@NamedStoredProcedureQueries({
-        @NamedStoredProcedureQuery(
-                name="getCategoryName",
-                resultClasses = String.class,
-                procedureName="get_category_name",
-                parameters={
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "category_code", type = Integer.class),
-                        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "category_name", type = String.class)
-                }
-        ),
-        @NamedStoredProcedureQuery(
-                name="getAllCategories02",
-                resultClasses = String.class,
-                procedureName="get_all_categories_02",
-                parameters={
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_int", type = Integer.class)
-                }
-        )
-})
 @NamedQueries({
         @NamedQuery(
                 name = Category.QUERY_GET_ALL,
