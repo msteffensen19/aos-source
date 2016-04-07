@@ -4,7 +4,7 @@
 
 define([], function () {
 
-    function config($translateProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
+    function config($translateProvider, $stateProvider, $urlRouterProvider/*, $locationProvider*/) {
 
         $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
@@ -12,7 +12,7 @@ define([], function () {
 
         $urlRouterProvider.otherwise("/#");
 
-        //$locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true).hashPrefix("#");
 
         $translateProvider.preferredLanguage('en');
 
@@ -21,6 +21,7 @@ define([], function () {
                 templateUrl: 'app/views/home-page.html',
                 controller: 'categoriesCtrl',
                 resolve: {
+
                     resolveParams: function (categoryService, dealService, $q) {
                         var defer = $q.defer();
                         categoryService.getCategories().then(function (categories) {
