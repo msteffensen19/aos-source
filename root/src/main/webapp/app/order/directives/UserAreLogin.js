@@ -56,21 +56,21 @@ define(['./module'], function (directives) {
                     }
 
                     s.accountUpdate = function(){
-                        if(s.agree_Agreement)
-                        {
-                            orderService.accountUpdate(s.user).then(function(res){
-                                s.invalidUser = false;
-                                s.userDetailsEditMode = false;
-                                s.firstTag = false;
-                            });
-                        }
-                        else{
+
+                        orderService.getShippingCost(s.user).then(function(shipping){
+                            s.shipping = shipping;
+                            if(s.agree_Agreement)
+                            {
+                                orderService.accountUpdate(s.user).then(function(res){
+                                });
+                            }
                             $timeout(function(){
                                 s.invalidUser = false;
                                 s.userDetailsEditMode = false;
                                 s.firstTag = false;
                             }, 100)
-                        }
+                        });
+
                     }
 
                     s.setDefaultCard = true;

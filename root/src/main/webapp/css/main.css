@@ -216,6 +216,10 @@ nav ul li > a{
     transform: scale(1);
     opacity: 1;
     color: #313131;
+    white-space: nowrap;
+}
+nav ul li > a .mini-title{
+    white-space: normal;
 }
 
 nav ul li a.searchSectionEnabled{

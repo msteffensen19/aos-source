@@ -42,9 +42,8 @@ define(['./module'], function (controllers) {
                             s.model.lastName.replace(/\s/g, "").length > 0 ? s.model.lastName :
                                 s.model.username;
                         s.registerSuccess = true;
-                        $timeout(function(){
-                            $state.go('default')
-                        }, 5000)
+
+                       /* $timeout(function(){ $state.go('default') }, 5000)*/
                     }
                 });
             }
