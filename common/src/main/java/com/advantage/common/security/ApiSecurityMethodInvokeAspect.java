@@ -45,7 +45,8 @@ public class ApiSecurityMethodInvokeAspect {
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         try {
-            SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER);
+            //SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER);
+            SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER, AccountType.ADMIN);
             response = (ResponseEntity) joinPoint.proceed();
         } catch (AuthorizationException e) {
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(false, e.getMessage());
