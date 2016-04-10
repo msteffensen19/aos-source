@@ -23,7 +23,7 @@ define(['./module'], function (services) {
                     var params = server.account.accountLogout();
                     var expectToReceive = {
                         loginUser: user.response.userId,
-                        loginPassword: "Bearer " + user.response.token,
+                        base64Token: "Bearer " + user.response.token,
                     }
                     Loger.Params(expectToReceive, params.method);
                     mini_soap.post(params.path, params.method, expectToReceive).

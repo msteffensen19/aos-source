@@ -33,9 +33,9 @@ Loger.Params = function (params, url) {
                 "stateProvince": params.stateProvince, "zipcode": params.zipcode,
             });
         }
-    }
-    else{
-        console.log(params);
+        else{
+            console.log(params);
+        }
     }
     spaces(1);
 };
