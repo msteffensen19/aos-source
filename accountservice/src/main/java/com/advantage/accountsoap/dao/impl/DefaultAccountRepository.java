@@ -365,21 +365,28 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
         }
 
-        if (base64Token.isEmpty()) {
-            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
-        }
+        Account account = null;
+        if (base64Token != null) {
+            if (base64Token.isEmpty()) {
+                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+            }
 
-        //  Try to get user details by login user-name
-        Account account = getAppUserByLogin(loginName);
+            //  Try to get user details by login user-name
+            //Account account = getAppUserByLogin(loginName);
+            account = get(Long.valueOf(loginName));
 
-        if (account == null) {
-            //  user login not found
-            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
-        }
+            if (account == null) {
+                //  user login not found
+                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+            }
 
-        Token token = getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType()));
-        if (! token.generateToken().equals(base64Token)) {
-            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+            //  Remove "Bearer " or "Basic " prefix in the base64Token
+            String receivedToken = base64Token.substring(base64Token.indexOf(' ') + 1);
+
+            Token token = getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType()));
+            if (! token.generateToken().equals(receivedToken)) {
+                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+            }
         }
 
         //  Return: Successful logout attempt, no need to create JWT Token
