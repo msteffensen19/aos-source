@@ -27,12 +27,12 @@
 
         <div id="product-image">
             <figure>
-                <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
+                <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
             </figure>
             <div id="cover" ng-if="product.images.length > 1">
                 <div id="length">
-                    <div class="imageAlias" data-ng-click="changeImage(img)" data-ng-repeat="img in product.images">
-                        <img alt="" data-ng-src="/catalog/fetchImage?image_id={{::img}}">
+                    <div class="imageAlias" data-ng-click="changeImage(img)" data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
+                        <img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@ define(['./module'], function (controllers) {
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
+            s.imageUrl = angular.copy(s.product.imageUrl);
             s.product_attributes = Helper.sortAttributesByName(s.product.attributes);
 
             if(!resolveParams.selectedColor && s.product.colors.length > 0){
@@ -50,10 +51,11 @@ define(['./module'], function (controllers) {
             }
 
             s.changeImage = function(img){
-                s.product.imageUrl = img;
+                s.imageUrl = img;
             }
 
             s.setColor = function(color){
+                s.imageUrl = s.product.imageUrl;
                 s.colorSelected = color;
             }
 
