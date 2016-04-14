@@ -300,7 +300,6 @@ public class OrderController {
         costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
         */
 
-        //TODO Moti: get configuration parameter
         int repeat= checkRepeatShipExCall();
         repeat= repeat>0 ? repeat : 1;
         ShippingCostResponse costResponse =null; //orderManagementService.getShippingCostFromShipEx(costRequest);
@@ -329,6 +328,7 @@ public class OrderController {
         return new ResponseEntity<>(costResponse, httpStatus);
     }
 
+    //return count of return ShipExCall
     private int checkRepeatShipExCall()
     {
         int repeat=0;
@@ -369,6 +369,7 @@ public class OrderController {
         return repeat;
     }
 
+    //Convert JSON object to DemoAppConfig Parameter
     private  DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
@@ -380,6 +381,7 @@ public class OrderController {
         return parameter;
     }
 
+    //get serialized DemoAppConfig parameter from REST
     private  String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
