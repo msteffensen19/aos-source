@@ -15,5 +15,7 @@ define([
     './getCategoriesInArray',
     './productsFilterForCategoriesProduct',
     './sortArrayByColorName',
+    './getAllImagesByColor',
+    './getImageId'
 
 ], function() {});
