@@ -12,8 +12,8 @@
     <Repeat_ShipEx_call datatype="string" description="0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx" tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
     <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation" tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
-    <!-- 0 = (Default) Disabled, any other positive number is the product id to add to speakers category -->
-    <Add_wrong_product_to_speakers_category datatype="string" description="0=(Default) Disabled; any other positive number is the product id to add to speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <!-- No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category -->
+    <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
     <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
     <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="No=(Default) Do not make; Yes=make spelling mistakes in order payment page" tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
     <!-- (-1) = (Default) Disabled, any other number is the number of concurrentSessions -->
