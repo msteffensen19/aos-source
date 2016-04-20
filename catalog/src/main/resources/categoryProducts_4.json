@@ -790,6 +790,90 @@
         ]
       },
       {
+        "productName": "Bose SoundLink Around-ear Wireless Headphones II",
+        "price": 279.95,
+        "description": "Wireless freedom meets best-in-class sound.",
+        "imageUrl": "2100",
+        "images": [
+          "55CDD5##2100",
+          "414141##2300"
+        ],
+        "colors": [
+          {
+            "inStock": 0,
+            "name": "Turquoise",
+            "code": "55CDD5"
+          },
+          {
+            "inStock": 0,
+            "name": "White",
+            "code": "FFFFFF"
+          },
+          {
+            "inStock": 0,
+            "name": "BLACK",
+            "code": "414141"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "BlueTooth"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with BlueTooth support."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.15 lb"
+          }
+        ]
+      },
+
+      {
+        "productName": "Logitech USB Headset H390",
+        "price": 39.99,
+        "description": "Features on this product will exceeded your expectations.",
+        "imageUrl": "2100",
+        "images": [
+          "55CDD5##2100",
+          "FCC23D##2100",
+          "414141##2300"
+        ],
+        "colors": [
+          {
+            "inStock": 0,
+            "name": "Turquoise",
+            "code": "55CDD5"
+          },
+          {
+            "inStock": 10,
+            "name": "Yellow",
+            "code": "FCC23D"
+          },
+          {
+            "inStock": 0,
+            "name": "BLACK",
+            "code": "414141"
+          }
+        ],
+        "attributes": [
+          {
+            "attributeName": "CONNECTOR",
+            "attributeValue": "Jack 3.5 mm"
+          },
+          {
+            "attributeName": "COMPATIBILITY",
+            "attributeValue": "Compatible with most notebook PCs, netbooks, tablets, mobile phones, and MP3 players with a 3.5 mm port available."
+          },
+          {
+            "attributeName": "WEIGHT",
+            "attributeValue": "0.07 lb"
+          }
+        ]
+      },
+      {
         "productName": "Beats Studio 2 Over-Ear Matte Black Headphones",
         "price": 179.99,
         "description": "The world’s most famous headphone has been completely redesigned and reimagined. The new Beats Studio® is lighter, sexier, stronger, and more comfortable, with precision sound, Adaptive Noise Canceling, a 20-hour rechargeable battery, and RemoteTalk™. It has all the energy and excitement you expect from Beats, plus a powerful, reengineered sound.",
