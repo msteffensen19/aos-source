@@ -1,1 +1,2 @@
 echo "TEST"
+which mvn
