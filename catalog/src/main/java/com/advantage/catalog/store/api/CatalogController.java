@@ -134,6 +134,26 @@ public class CatalogController {
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
+    @AuthorizeAsAdmin
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    @RequestMapping(value = "/products/to_speakers", method = RequestMethod.PUT)
+    public ResponseEntity<ProductResponseDto> updateProductCategoryToSpeakers(HttpServletRequest request,
+                                                                              HttpServletResponse response) {
+        /*
+        Change Category of product id=13 to Speakers:
+        1. Verify Admin-User Base64Token.
+        2. check DemoAppConfig.xml parameter "Add_wrong_product_to_speakers_category" value = "Yes".
+        3. update category of the product to Speakers.
+        4. return response.
+         */
+        //  TODO-Moti to change code, return success / failure, etc.
+        ProductResponseDto responseStatus = null;
+        return new ResponseEntity<>(responseStatus, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/products/search", method = RequestMethod.GET)
     @ApiOperation(value = "Search product by Name")
     public ResponseEntity<List<CategoryDto>> searchProductByName(@RequestParam("name") String name,
