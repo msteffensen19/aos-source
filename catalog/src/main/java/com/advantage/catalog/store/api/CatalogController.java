@@ -152,26 +152,23 @@ public class CatalogController {
         //  TODO-Moti to change code, return success / failure, etc.
         HttpStatus httpStatus= HttpStatus.PRECONDITION_FAILED;
         ProductResponseDto responseStatus=null;
+        //productID to move to speakers category = 13
         long productID=13;
+        //speakers category =4
         long categoryID =4;
         DemoAppConfigParameter parameter = demoAppConfigService.getDemoAppConfigParametersByName("Add_wrong_product_to_speakers_category");
-
-        //if ((demoAppConfigService.getDemoAppConfigParametersByName("Add_wrong_product_to_speakers_category").getParameterValue()=="true"){
         if(parameter.getParameterValue().equalsIgnoreCase("yes")){
             Product product =  productService.getProductById(productID);
             ProductDto dto = productService.getDtoByEntity(product);
             dto.setCategoryId(categoryID);
-
             responseStatus = productService.updateProduct(dto,productID);
-            System.out.println(product.getProductName());
+
             httpStatus= responseStatus.isSuccess()? httpStatus=HttpStatus.OK : HttpStatus.BAD_REQUEST;
-            //responseStatus = productService.updateProduct(product, productID);
         }
-        //ProductResponseDto responseStatus = null;
         else{
             httpStatus=HttpStatus.PRECONDITION_FAILED;
-            responseStatus.setReason("Configuration parameter is not ready");
-            responseStatus.setSuccess(false);
+            String responceReason = "Configuration parameter is not ready";
+            responseStatus=new ProductResponseDto(false,productID,responceReason);
         }
         return new ResponseEntity<>(responseStatus, httpStatus);
     }
