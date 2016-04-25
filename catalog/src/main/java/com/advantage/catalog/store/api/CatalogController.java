@@ -150,6 +150,7 @@ public class CatalogController {
         4. return response.
          */
         //  TODO-Moti to change code, return success / failure, etc.
+
         ProductResponseDto responseStatus = null;
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
