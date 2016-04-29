@@ -2,16 +2,21 @@ package com.advantage.order.store.api;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
 
-import AccountServiceClient.DemoAppConfigGetParametersByToolResponse;
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
+import com.advantage.common.Url_resources;
+import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
 import com.advantage.order.store.services.ShoppingCartService;
 import com.advantage.root.util.ValidationHelper;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +25,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -42,6 +53,8 @@ public class OrderController {
 
     private ShoppingCartResponse shoppingCartResponse;
 
+    private static final String DemoAppConfig = "DemoAppConfig/parameters/";
+    private static final String ParameterName ="Repeat_ShipEx_call";
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
@@ -286,27 +299,126 @@ public class OrderController {
         costRequest.setSENumberOfProducts(1);
         costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
         */
-        ShippingCostResponse costResponse = orderManagementService.getShippingCostFromShipEx(costRequest);
 
-        switch (costResponse.getReason()) {
-            case OrderManagementService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
-                httpStatus = HttpStatus.BAD_REQUEST;
-                break;
-            /* Response failure */
-            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
-            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
-            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
-            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
-            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
-            case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
-                httpStatus = HttpStatus.NOT_IMPLEMENTED;
-                break;
-            default:
-                httpStatus = HttpStatus.OK;
+        int repeat= checkRepeatShipExCall();
+        repeat= repeat>0 ? repeat : 1;
+        ShippingCostResponse costResponse =null; //orderManagementService.getShippingCostFromShipEx(costRequest);
+
+        do {
+            costResponse =orderManagementService.getShippingCostFromShipEx(costRequest);
+            switch (costResponse.getReason()) {
+                case OrderManagementService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
+                    httpStatus = HttpStatus.BAD_REQUEST;
+                    break;
+                /* Response failure */
+                case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY:
+                case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT:
+                case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH:
+                case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY:
+                case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY:
+                case OrderManagementService.ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH:
+                    httpStatus = HttpStatus.NOT_IMPLEMENTED;
+                    break;
+                default:
+                    httpStatus = HttpStatus.OK;
+            }
+
         }
-
+        while (--repeat>0);
         return new ResponseEntity<>(costResponse, httpStatus);
     }
+
+    //return count of return ShipExCall
+    private int checkRepeatShipExCall()
+    {
+        int repeat=0;
+        URL DemoAppConfigPrefixUrl;
+        URL parameterByNameUrl = null;
+        try {
+            DemoAppConfigPrefixUrl = new URL(Url_resources.getUrlCatalog(), DemoAppConfig);
+            parameterByNameUrl = new URL(DemoAppConfigPrefixUrl, String.valueOf(ParameterName));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        DemoAppConfigParameter parameter = null;
+
+        try {
+            String stringResponse = httpGet(parameterByNameUrl);
+            System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+            if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
+                //  tool not found (409)
+                return repeat=0;
+            } else {
+                parameter = getDemoAppConfigParameterfromJsonObjectString(stringResponse);
+                if(parameter!=null)
+                    return repeat= Integer.parseInt(parameter.getParameterValue());
+            }
+        } catch (IOException e) {
+            System.out.println("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ");
+            e.printStackTrace();
+            return repeat;
+        }
+        catch (NullPointerException e) {
+            System.out.println("convert Repeat_ShipEx_call value to int throws IOException: ");
+            e.printStackTrace();
+            return repeat;
+        }
+
+        return repeat;
+    }
+
+    //Convert JSON object to DemoAppConfig Parameter
+    private  DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        DemoAppConfigParameter parameter = objectMapper.readValue(jsonObjectString, DemoAppConfigParameter.class);
+
+        return parameter;
+    }
+
+    //get serialized DemoAppConfig parameter from REST
+    private  String httpGet(URL url) throws IOException {
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        int responseCode = conn.getResponseCode();
+
+        String returnValue;
+        switch (responseCode) {
+            case org.apache.http.HttpStatus.SC_OK: {
+                // Buffer the result into a string
+                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(inputStream);
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+                returnValue = sb.toString();
+                break;
+            }
+            case org.apache.http.HttpStatus.SC_CONFLICT:
+                //  Product not found
+                returnValue = "Not found";
+                break;
+
+            default:
+                System.out.println("httpGet -> responseCode=" + responseCode);
+                throw new IOException(conn.getResponseMessage());
+        }
+
+        conn.disconnect();
+
+        return returnValue;
+    }
+
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)

@@ -12,8 +12,8 @@
     <Repeat_ShipEx_call datatype="string" description="0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx" tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
     <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation" tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
-    <!-- 0 = (Default) Disabled, any other positive number is the product id to add to speakers category -->
-    <Add_wrong_product_to_speakers_category datatype="string" description="0=(Default) Disabled; any other positive number is the product id to add to speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <!-- No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category -->
+    <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
     <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
     <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="No=(Default) Do not make; Yes=make spelling mistakes in order payment page" tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
     <!-- (-1) = (Default) Disabled, any other number is the number of concurrentSessions -->
@@ -28,5 +28,7 @@
     <SLA_Add_Delay_In_Add_To_Cart_Response_Time datatype="string" description="0=(Default) Disabled; any other positive number = the number of seconds to add as a delay in response time" tools="LoadRunner;StormRunner">0</SLA_Add_Delay_In_Add_To_Cart_Response_Time>
     <!-- This parameter is enabled only if "SLA: Add delay in add to cart response time (seconds)" is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20. -->
     <SLA_Number_Of_Sessions_To_Add_The_Delay datatype="string" description="This parameter is enabled only if 'SLA_Add_Delay_In_Add_To_Cart_Response_Time' is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20" tools="LoadRunner;StormRunner">20</SLA_Number_Of_Sessions_To_Add_The_Delay>
+    <!-- No=(Default) Do not; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End) -->
+    <Different_price_in_UI_and_API datatype="enum:[Yes,No]" description="No=(Default) Do not; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End)" tools="LeanFT;UFT">No</Different_price_in_UI_and_API>
 </Parameters>
 

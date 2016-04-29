@@ -3,7 +3,6 @@ package com.advantage.common.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-
 /**
  * @author Binyamin Regev on 22/03/2016.
  */

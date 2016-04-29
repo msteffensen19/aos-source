@@ -38,8 +38,18 @@ public class SwaggerConfiguration {
     }
 
     private ApiInfo apiInfo() {
-        String apiInfoDescription = String.format("Git Branch = %s<br/>Last commit revision = %s<br/>Last build time = %s<br/>Build on machine %s",
-                env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"), env.getProperty("mvn.buildComputerName"));
+        String apiInfoDescription = null;
+        apiInfoDescription = String.format("Git Branch = %s<br/>Last commit revision = %s<br/>Last build time = %s",
+                env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"));
+
+//        try {
+//            apiInfoDescription = String.format("Git Branch = %s<br/>Last commit revision = %s<br/>Last build time = %s<br/>Build on machine %s",
+//                    env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"), env.getProperty("mvn.buildComputerName"));
+//        } catch (Exception e) {
+//            //e.printStackTrace();
+//            apiInfoDescription = String.format("Git Branch = %s<br/>Last commit revision = %s<br/>Last build time = %s<br/>Build on machine %s",
+//                    env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"), "Unknown");
+//        }
         ApiInfo apiInfo = new ApiInfo(
                 "Advantage - " + env.getProperty("mvn.project.build.finalName") + ".war REST API",
                 apiInfoDescription + "<hr/>" + SecurityTools.SWAGGER_NOTE,

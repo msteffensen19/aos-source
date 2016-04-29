@@ -1,6 +1,5 @@
 package com.advantage.catalog.store.dao.product;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import com.advantage.catalog.store.dao.DefaultCRUDOperations;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.common.dto.CatalogResponse;
-import com.advantage.common.dto.CategoryDto;
 import com.advantage.common.dto.ProductDto;
 import org.springframework.transaction.annotation.Transactional;
 
