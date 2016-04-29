@@ -211,6 +211,7 @@ define(['./module'], function (services) {
                             "senumberOfProducts": $filter('productsCartCount')(cart),
                             "setransactionType": "SHIPPINGCOST"
                         };
+
                         Loger.Params(paramsToPass, server.order.getShippingCost());
 
                         Helper.enableLoader();

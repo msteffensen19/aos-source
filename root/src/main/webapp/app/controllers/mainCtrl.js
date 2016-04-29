@@ -142,13 +142,14 @@ define(['./module'], function (controllers) {
             var _setUser = 0;
             $scope.setUser = function () {
                 if (_setUser > 0) {
-                    $scope.signIn({email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}, true);
+                    //$scope.signIn({email: 'a@b.com', loginPassword: 'Itshak14', loginUser: 'avinu.itshak',}, true);
                 }
                 _setUser++;
                 setTimeout(function () {
                     _setUser = 0;
                 }, 1000);
             }
+
 
             $scope.accountSection = function () {
                 $state.go('myAccount');

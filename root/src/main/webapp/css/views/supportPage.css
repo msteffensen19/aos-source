@@ -7,7 +7,7 @@
 }
 
 #supportCover > div{
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     text-align: center;
 }
@@ -15,7 +15,8 @@
 #supportCover .contact_us{
     font-size: 35px;
     text-align: left;
-    padding: 50px calc(20px + 1%);
+    padding: 50px calc(20px + 4%);
+    padding-bottom: 20px;
     color:white;
     letter-spacing: 2px;
 }
@@ -33,7 +34,7 @@
 }
 
 #supportCover .splitter > div{
-    margin: 0 20px;
+    margin: 0 50px;
     text-align: left;
 }
 
@@ -51,11 +52,21 @@
 
 #supportCover textarea.inputtext{
     height: 135px;
-    max-width: 100%;
-    min-width: 100%;
     padding: 10px 5px;
     border: 1px solid #ffffff;
     box-sizing: border-box;
+    resize: none;
+}
+
+#supportCover option{
+    background-color: white;
+    color: #313131;
+    font-size: 12px;
+}
+
+
+#supportCover select>option:hover{
+    background: #F4F4F2 !important;
 }
 
 #supportCover .buttonCover {
@@ -65,12 +76,22 @@
 
 #supportCover button{
     font-size: 14px;
-    margin: 20px 0;
+    margin: 20px 4%;
     padding: 8px 46px;
     display: block;
     color: white;
     background-color: #54b3ad;
     border: solid 2px white;
+}
+
+#supportCover .sec-validate-invalid, .sec-validate-invalid:hover{
+    color: #82c8c3 !important;
+    background-color: #54b3ad !important;
+    border: solid 2px #82c8c3 !important;;
+}
+
+#supportCover .validate-directive input.validateInvalid {
+    border-bottom: solid white 1px !important;
 }
 
 #supportCover button:hover{
@@ -89,6 +110,7 @@
         width: 100%;
     }
 }
+
 @media screen and (max-width: 768px) {
 
     #supportCover {
@@ -117,7 +139,7 @@
         margin-left: auto;
     }
     #supportCover .contact_us{
-        padding: 20px calc(20px + 1%);
+        padding: 20px calc(20px + 4%);
         padding-top: 50px;
     }
 }

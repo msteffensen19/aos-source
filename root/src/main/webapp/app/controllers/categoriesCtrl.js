@@ -7,6 +7,14 @@ define(['./module'], function (controllers) {
         'dealService', '$location', 'resolveParams', 'supportService', '$timeout',
         function (s, categoryService, dealService, $location, resolveParams, supportService, $timeout ) {
 
+            for(var i = 0; i < resolveParams.categories.length ; i++){
+                var cate = [];
+                for(var index = 0; index < resolveParams.categories[i].categoryName.length; index++){
+                    cate.push(index == 0 ? resolveParams.categories[i].categoryName[index] : resolveParams.categories[i].categoryName[index].toLowerCase());
+                }
+                resolveParams.categories[i].categoryName = cate.join("");
+            }
+
             s.categories = resolveParams.categories;
             s.specialOffer= resolveParams.specialOffer;
             s.popularProducts = resolveParams.popularProducts;
@@ -33,7 +41,6 @@ define(['./module'], function (controllers) {
             s.categoryChange = function() {
                 categoryService.getCategoryById(s.supportModel.category.categoryId).
                 then(function (category) {
-                    l(category.products)
                     s.products = category.products;
                     //s.supportModel.product = category.products[0];
                 });
