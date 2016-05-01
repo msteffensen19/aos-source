@@ -545,7 +545,11 @@ define(['./module'], function (directives) {
                 priority: 0,
                 require: 'secTextarea',
                 link: function(s, e, a, ctrl){
+
                     var warning = a.secTRequired || 'This field is required'
+                    if(a.secTRequired == "null"){
+                        warning = '';
+                    }
                     ctrl.addWarningInfo({
                         key : 'secRequired',
                         warning : warning,

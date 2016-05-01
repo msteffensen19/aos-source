@@ -281,7 +281,9 @@ define(['./module'], function (services) {
 
                 updateSafePayMethod: function (safePay) {
 
+                    var accountId = $rootScope.userCookie.response.userId;
                     var expectToReceive = {
+                        accountId: accountId,
                         safePayUsername: safePay.username,
                         referenceId: "1234567890",
                         safePayPassword: safePay.password
