@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,26 +31,6 @@
     <build>
         <finalName>res</finalName>
         <plugins>
-            <plugin>
-                <groupId>com.soebes.maven.plugins</groupId>
-                <artifactId>echo-maven-plugin</artifactId>
-                <version>0.2</version>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>echo</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <echos>
-                        <echo>
-                            ******************************resources.source.path=${resources.source.path}**************************
-                        </echo>
-                    </echos>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
