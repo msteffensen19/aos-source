@@ -4,7 +4,6 @@
     <groupId>com.advantage.online.store</groupId>
     <artifactId>Advantage_Online_Shopping_Design_Release</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
  
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Codar design file</description>
@@ -14,36 +13,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-  
-<build>
-
-    <plugins>
-    <plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-dependency-plugin</artifactId>
-  <executions>
-    <execution>
-      <id>upload_json</id>
-      <phase>package</phase>
-      <configuration>
-        <outputDirectory>${basedir}</outputDirectory>
-        <stripVersion>true</stripVersion>
-        <artifactItems>
-          <artifactItem>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>${project.artifactId}</artifactId>
-            <version>${project.version}</version>
-            <overWrite>true</overWrite>
-            <type>json</type>
-          </artifactItem>
-        </artifactItems>
-      </configuration>
-    </execution>
-  </executions>
-</plugin>
-</plugins>
-
-</build>
  
  <distributionManagement>
 
