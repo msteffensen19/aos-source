@@ -56,12 +56,5 @@
             <directory>${parent.basedir}/shipex/target/</directory>
             <outputDirectory></outputDirectory>
         </fileSet>
-        <fileSet>
-            <includes>
-                <include>*.json</include>
-            </includes>
-            <directory>${parent.basedir}/codar/designs/</directory>
-            <outputDirectory></outputDirectory>
-        </fileSet>
     </fileSets>
 </assembly>
