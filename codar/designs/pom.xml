@@ -13,20 +13,52 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <build>
+      <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-jar</id>
+            <phase>never</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>attach-artifacts</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>attach-artifact</goal>
+                    </goals>
+                    <configuration>
+                        <artifacts>
+                            <artifact>
+                                <file>Advantage_Online_Shopping_Design_Release.json</file>
+                                <type>json</type>
+                                <classifier></classifier>
+                            </artifact>
+                        </artifacts>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+      </plugins>
+    </build>
  
  <distributionManagement>
-
   <repository>
     <id>adm-demo-app-release</id>
     <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release</url>
   </repository>
-  
   <snapshotRepository>
     <id>adm-demo-app-snapshot</id>
     <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot</url>
   </snapshotRepository>
-
 </distributionManagement>
-
 </project>
-
