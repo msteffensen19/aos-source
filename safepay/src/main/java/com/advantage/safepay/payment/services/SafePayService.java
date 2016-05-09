@@ -93,11 +93,18 @@ public class SafePayService {
         }
 
         /*  User name*/
-        if (safePayDto.getPassword() == null | safePayDto.getPassword().length() < 1 || safePayDto.getPassword().length() > 20) {
+        if (safePayDto.getPassword() == null | safePayDto.getPassword().length() < 1 ) {
             responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
             responseStatus.setResponseReason("Wrong field value. Field \'SPPassword\' value=" + safePayDto.getPassword());
             responseStatus.setReferenceNumber(0);
             isValid = false;
+        }
+        else if (safePayDto.getPassword().length() > 20) {
+            //  SafePay Password ENCRYPTED - Get first 20 characters
+            safePayDto.setPassword(safePayDto.getPassword().substring(0, 19));
+        }
+        else {
+            //  SafePay Password size is 1-20 characters = Typed Password as is
         }
 
 //        if (isValid) {
