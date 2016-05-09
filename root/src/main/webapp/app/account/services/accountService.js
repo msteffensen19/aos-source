@@ -223,6 +223,7 @@ define(['./module'], function (services) {
                     Helper.enableLoader();
                     $timeout(function () {
                         var user = $rootScope.userCookie;
+
                         var expectToReceive = {
                             cardNumber: "4886" + card.number,
                             expirationDate: card.expirationDate.month + card.expirationDate.year,
