@@ -13,7 +13,7 @@
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
     <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation when the user is logged in. UI only, Web and mobiles." tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
     <!-- No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category -->
-    <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id=13 from Headphones category to Speakers category. UI and API. " tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id=13 from Headphones category to Speakers category. UI and API. " tools="LeanFT;UFT">No</Add_wrong_product_to_speakers_category>
     <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
     <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="In order payment page change 'SHIPPING DETAILS' to 'SHIPING DETAILS', 'Receiver Details' to 'Reciever Details', 'City' to 'Ciity', 'ORDER SUMMARY' to 'ORDERR SUMMARY'. Parameter values: No=(Default) Do nothing; Yes=make spelling mistakes in order payment page. Web and mobile." tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
     <!-- (-1) = (Default) Disabled, any other number is the number of concurrentSessions -->
