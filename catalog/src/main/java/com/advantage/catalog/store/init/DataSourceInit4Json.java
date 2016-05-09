@@ -175,6 +175,7 @@ public class DataSourceInit4Json {
 
         return fullPath.substring(1);
 
+
         /*File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
         File propertyFile = new File(catalinaBase, "webapps/root/app");
 

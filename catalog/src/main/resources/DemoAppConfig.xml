@@ -5,15 +5,16 @@
         Managed by Admin-User in ADM Demo .NET administration application
     -->
     <!-- No = (Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
-    <Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not; or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page" tools="LoadRunner;BPT">No</Email_address_in_login>
+    <Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not; or Yes = e-mail address is mandatory in create-user and show it in login/sign-in page. With this feature (2 screens with one difference to show a change ), BPT shows that if there is one change in one page, if it was defined as a component, the user can change this component only, and not touch all tests like in UFT." tools="BPT">No</Email_address_in_login>
     <!-- 0 = (Default) Disabled, any other positive number is the amount of memory leak in MegaBytes -->
-    <Generate_memory_leak datatype="string" description="0=(Default) Disabled; any other positive number is the amount of memory leak in MegaBytes" tools="LoadRunner;LeanFt">0</Generate_memory_leak>
+    <Generate_memory_leak datatype="string" description="0=(Default) Disabled; any other positive number is the amount of memory leak in MegaBytes" tools="LoadRunner;StormRunner">0</Generate_memory_leak>
     <!-- 0 = (Default) Disabled, any other positive number is the number of repeat calls to ShipEx -->
-    <Repeat_ShipEx_call datatype="string" description="0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx" tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
+    <Repeat_ShipEx_call datatype="string" description="0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx. The goal of this capability is to find multiple calls to the same methods usually done by multiple developers causing inefficient application" tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
-    <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation" tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
+    <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation when the user is logged in. UI only, Web and mobiles, " tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
     <!-- No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category -->
-    <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category" tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id=13 from Headphones category to Speakers category. UI and API. " tools="LeanFT;UFT">0</Add_wrong_product_to_speakers_category>
+    <!-- *********************************************************************************************** -->
     <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
     <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="No=(Default) Do not make; Yes=make spelling mistakes in order payment page" tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
     <!-- (-1) = (Default) Disabled, any other number is the number of concurrentSessions -->

@@ -109,15 +109,15 @@ public class MasterCreditService {
             }
         }
 
-        if (isValid) {
-            /*  Customer phone  */
-            if (!ValidationHelper.isValidPhoneNumber(masterCreditDto.getCustomerPhone())) {
-                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'customer phone\' value=" + masterCreditDto.getCustomerPhone());
-                responseStatus.setReferenceNumber(0);
-                isValid = false;
-            }
-        }
+//        if (isValid) {
+//            /*  Customer phone  */
+//            if (!ValidationHelper.isValidPhoneNumber(masterCreditDto.getCustomerPhone())) {
+//                responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+//                responseStatus.setResponseReason("Wrong field value. Field \'customer phone\' value=" + masterCreditDto.getCustomerPhone());
+//                responseStatus.setReferenceNumber(0);
+//                isValid = false;
+//            }
+//        }
 
         if (isValid) {
             /*  CVV Number  */
