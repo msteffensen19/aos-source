@@ -3,25 +3,32 @@
  */
 
 
-var Loger = Loger ? Loger : function() {};
+var Loger = Loger ? Loger : function () {
+};
 
 
 Loger.Params = function (params, url) {
     spaces(3);
     console.log('Param to pass to ' + url);
-    if(params) {
+    if (params) {
         if (params.orderPaymentInformation && params.orderPaymentInformation.Transaction_SafePay_Password) {
             console.log({
-                "Transaction_AccountNumber": params.Transaction_AccountNumber, "Transaction_Currency": params.Transaction_Currency,
-                "Transaction_CustomerPhone": params.Transaction_CustomerPhone, "Transaction_MasterCredit_CVVNumber": params.Transaction_MasterCredit_CVVNumber,
-                "Transaction_MasterCredit_CardNumber": params.Transaction_MasterCredit_CardNumber, "Transaction_MasterCredit_CustomerName": params.Transaction_MasterCredit_CustomerName,
-                "Transaction_MasterCredit_ExpirationDate": params.Transaction_MasterCredit_ExpirationDate, "Transaction_PaymentMethod": params.Transaction_PaymentMethod,
-                "Transaction_ReferenceNumber": params.Transaction_ReferenceNumber, "Transaction_SafePay_UserName": params.Transaction_SafePay_UserName,
-                "Transaction_TransactionDate": params.Transaction_TransactionDate, "Transaction_Type": params.Transaction_Type
+                "Transaction_AccountNumber": params.Transaction_AccountNumber,
+                "Transaction_Currency": params.Transaction_Currency,
+                "Transaction_CustomerPhone": params.Transaction_CustomerPhone,
+                "Transaction_MasterCredit_CVVNumber": params.Transaction_MasterCredit_CVVNumber,
+                "Transaction_MasterCredit_CardNumber": params.Transaction_MasterCredit_CardNumber,
+                "Transaction_MasterCredit_CustomerName": params.Transaction_MasterCredit_CustomerName,
+                "Transaction_MasterCredit_ExpirationDate": params.Transaction_MasterCredit_ExpirationDate,
+                "Transaction_PaymentMethod": params.Transaction_PaymentMethod,
+                "Transaction_ReferenceNumber": params.Transaction_ReferenceNumber,
+                "Transaction_SafePay_UserName": params.Transaction_SafePay_UserName,
+                "Transaction_TransactionDate": params.Transaction_TransactionDate,
+                "Transaction_Type": params.Transaction_Type
             });
         }
-        else if(params.safePayPassword){
-            console.log({ safePayUsername: params.safePayUsername, referenceId: params.referenceId});
+        else if (params.safePayPassword) {
+            console.log({safePayUsername: params.safePayUsername, referenceId: params.referenceId});
         }
         else if (params.password) {
             console.log({
@@ -33,7 +40,7 @@ Loger.Params = function (params, url) {
                 "stateProvince": params.stateProvince, "zipcode": params.zipcode,
             });
         }
-        else{
+        else {
             console.log(params);
         }
     }
@@ -47,7 +54,7 @@ Loger.Extract = function (file, obj, paths) {
     console.log("Recieve: ");
     console.log(obj);
     spaces(1);
-    for (var i = 0; i < paths.length; i++){
+    for (var i = 0; i < paths.length; i++) {
         console.log(paths[i])
     }
     spaces(1);
@@ -76,20 +83,19 @@ Loger.Received = function (str) {
 
 function spaces(num) {
     var v = ""
-    for (var i = 0; i < num; i++){
-        v+=" ";
+    for (var i = 0; i < num; i++) {
+        v += " ";
         console.log("" + v)
     }
 }
 
 function lines(num) {
     var v = ""
-    for (var i = 0; i < num; i++){
-        v+=" ";
+    for (var i = 0; i < num; i++) {
+        v += " ";
         console.log("==========================================================================" + v)
     }
 }
-
 
 
 var services_properties = []
@@ -101,19 +107,15 @@ var services_properties = []
 //var wsdlPath = 'http://localhost:8080/accountservice';
 var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
 
-(function readTextFile(file)
-{
+(function readTextFile(file) {
     console.log("Extracting file: " + file);
 
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var fileText  = rawFile.responseText;
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                var fileText = rawFile.responseText;
                 var rawFile_responseText = fileText;
                 fileText = fileText.split('');
                 var _param = '';
@@ -121,35 +123,38 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
                 var attr = true;
                 var arrayApi = [];
                 var invalidChars = '#';
-                fileText.forEach(function(a){
-                    switch (a.charCodeAt(0))
-                    {
-                        case 10: case 13:
-                        var validParam = true;
-                        for(var i = 0; i < invalidChars.length; i++)
-                        {
-                            if(_param.indexOf(invalidChars[i]) != -1)
-                            {
-                                validParam = false; break;
+                fileText.forEach(function (a) {
+                    switch (a.charCodeAt(0)) {
+                        case 10:
+                        case 13:
+                            var validParam = true;
+                            for (var i = 0; i < invalidChars.length; i++) {
+                                if (_param.indexOf(invalidChars[i]) != -1) {
+                                    validParam = false;
+                                    break;
+                                }
                             }
-                        }
-                        if(validParam && _param != '' && _value != '' )
-                        {
-                            arrayApi.push("{\"" + _param.split(".").join("_") +  "\":\"" + _value + "\"}");
-                            _param = ''; _value = '';
-                        }
-                        attr = true;
-                        break;
+                            if (validParam && _param != '' && _value != '') {
+                                arrayApi.push("{\"" + _param.split(".").join("_") + "\":\"" + _value + "\"}");
+                                _param = '';
+                                _value = '';
+                            }
+                            attr = true;
+                            break;
                         case 61:
                             attr = false;
                             break;
                         default:
-                            if(attr) { _param += a; } else { _value += a; }
+                            if (attr) {
+                                _param += a;
+                            } else {
+                                _value += a;
+                            }
                             break;
                     }
                 });
 
-                arrayApi.forEach(function(a) {
+                arrayApi.forEach(function (a) {
                     var jsonObj = JSON.parse(a);
                     services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
                 });
@@ -163,10 +168,10 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
                 accountKey = "http://" + services_properties['account_service_url_host'] + ":" +
                     services_properties['account_service_url_port'] + "/" + services_properties['account_service_url_suffix'];
 
-                serviceKey = "http://"+ services_properties['service_service_url_host'] + ":" +
+                serviceKey = "http://" + services_properties['service_service_url_host'] + ":" +
                     services_properties['service_service_url_port'] + "/" + services_properties['service_service_url_suffix'];
 
-                wsdlPath = "http://"+
+                wsdlPath = "http://" +
                     services_properties['account_soapservice_url_host'] + ":" +
                     services_properties['account_soapservice_url_port'] + "/" +
                     services_properties['account_soapservice_url_suffix'];
@@ -187,77 +192,76 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
 })('services.properties');
 
 
-
 var server = {
 
-    fileReady: function(){
+    fileReady: function () {
         var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
         return check.indexOf('undefined') == -1;
     },
 
     catalog: {
 
-        getKey : function(){
+        getKey: function () {
             return catalogKey;
         },
-        getPopularProducts : function () {
+        getPopularProducts: function () {
             var paramToReturn = "app/tempFiles/popularProducts.json";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getCategories: function(){
+        getCategories: function () {
             var paramToReturn = catalogKey + "/categories";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getCategoryById : function(id) {
+        getCategoryById: function (id) {
             var paramToReturn = catalogKey + "/categories/" + id + "/products";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getDeals : function () {
+        getDeals: function () {
             var paramToReturn = catalogKey + "/deals";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getDealOfTheDay : function () {
+        getDealOfTheDay: function () {
             var paramToReturn = catalogKey + "/deals/search?dealOfTheDay=true";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getProducts : function () {
+        getProducts: function () {
             var paramToReturn = catalogKey + "/products.json";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getProductById : function (id) {
+        getProductById: function (id) {
             var paramToReturn = catalogKey + '/products/' + id;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getProductsBySearch : function (word, quantity) {
+        getProductsBySearch: function (word, quantity) {
             var paramToReturn = catalogKey + "/products/search?name=" + word;
-            if(quantity > 0){
+            if (quantity > 0) {
                 paramToReturn += "&quantityPerEachCategory=" + quantity;
             }
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getAllCategoriesAttributes : function () {
+        getAllCategoriesAttributes: function () {
             var paramToReturn = catalogKey + "/categories/attributes";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        sendSupportEmail : function () {
+        sendSupportEmail: function () {
             var paramToReturn = catalogKey + "/support/contact_us/email";
             Loger.Calling(paramToReturn);
             return paramToReturn;
@@ -283,13 +287,13 @@ var server = {
     },
     order: {
 
-        updateUserCart: function (userId){
+        updateUserCart: function (userId) {
             var paramToReturn = orderKey + "/carts/" + userId;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        removeProductToUser: function (userId, productId, color){
+        removeProductToUser: function (userId, productId, color) {
             var paramToReturn = orderKey + "/carts/" + userId +
                 "/product/" + productId +
                 "/color/" + color;
@@ -297,45 +301,45 @@ var server = {
             return paramToReturn;
         },
 
-        updateProductToUser: function (userId, productId, color, quantity, oldColor){
+        updateProductToUser: function (userId, productId, color, quantity, oldColor) {
             var path = server.order.addProductToUser(userId, productId, oldColor, quantity);
             var paramToReturn = color != oldColor ? path += "&new_color=" + color : path;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        addProductToUser: function (userId, productId, color, quantity){
+        addProductToUser: function (userId, productId, color, quantity) {
             var paramToReturn = orderKey + "/carts/" + userId + "/product/" + productId +
                 "/color/" + color + "?quantity=" + quantity;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        loadCartProducts : function (userId){
+        loadCartProducts: function (userId) {
             var paramToReturn = orderKey + "/carts/" + userId;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        clearCart : function (userId){
+        clearCart: function (userId) {
             var paramToReturn = orderKey + "/carts/" + userId;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        getShippingCost: function(){
+        getShippingCost: function () {
             var paramToReturn = orderKey + "/shippingcost/";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        safePay: function(userId){
+        safePay: function (userId) {
             var paramToReturn = orderKey + "/orders/users/" + userId;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
 
-        accountUpdate: function(){
+        accountUpdate: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountUpdateRequest'
@@ -347,7 +351,7 @@ var server = {
     },
     account: {
 
-        getAllCountries : function (){
+        getAllCountries: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetCountriesRequest'
@@ -356,7 +360,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        register : function(){
+        register: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountCreateRequest'
@@ -365,7 +369,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        login : function(){
+        login: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountLoginRequest'
@@ -374,7 +378,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        getAccountById: function(){
+        getAccountById: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAccountByIdRequest'
@@ -383,7 +387,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        getAccountById_new: function(){
+        getAccountById_new: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAccountByIdNewRequest'
@@ -392,7 +396,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        getAccountPaymentPreferences: function(){
+        getAccountPaymentPreferences: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAccountPaymentPreferencesRequest'
@@ -401,7 +405,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        getAddressesByAccountId: function(){
+        getAddressesByAccountId: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'GetAddressesByAccountIdRequest'
@@ -410,7 +414,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        accountUpdate: function(){
+        accountUpdate: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountUpdateRequest'
@@ -419,7 +423,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        updateMasterCreditMethod: function(){
+        updateMasterCreditMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'UpdateMasterCreditMethodRequest'
@@ -428,7 +432,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        addMasterCreditMethod: function(){
+        addMasterCreditMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AddMasterCreditMethodRequest'
@@ -437,7 +441,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        updateSafePayMethod: function(){
+        updateSafePayMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'UpdateSafePayMethodRequest'
@@ -446,7 +450,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        addSafePayMethod: function(){
+        addSafePayMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AddSafePayMethodRequest'
@@ -455,7 +459,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        changePassword : function(){
+        changePassword: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'ChangePasswordRequest'
@@ -464,7 +468,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        accountLogout : function(){
+        accountLogout: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountLogoutRequest',
@@ -473,7 +477,7 @@ var server = {
             return wsdlToReturn;
         },
 
-        paymentMethodUpdate : function(){
+        paymentMethodUpdate: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'PaymentMethodUpdateRequest',

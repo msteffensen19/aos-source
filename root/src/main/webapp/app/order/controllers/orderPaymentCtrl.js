@@ -19,7 +19,7 @@ define(['./module'], function (controllers) {
             s.checkCart();
 
             ///// PAYMENT SUCCESS ////
-            s.paymentEnd = false;
+            s.paymentEnd = false; 
             s.$on('updatePaymentEnd', function (event, args) {
                 s.paymentEnd = args.paymentEnd;
                 s.orderNumber = args.orderNumber;
