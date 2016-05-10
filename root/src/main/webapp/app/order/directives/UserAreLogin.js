@@ -41,7 +41,7 @@ define(['./module'], function (directives) {
                         s.countries = countries;
                     });
 
-                    s.cardNumber
+                    //s.cardNumber
 
                     s.countryChange = function(country){
                         s.user.countryId = country.id;
@@ -105,6 +105,8 @@ define(['./module'], function (directives) {
                                 s.paymentEnd = false;
                             });
                     }
+
+
 
                     s.payNow_SafePay = function () {
                         if(s.saveSafePay){
