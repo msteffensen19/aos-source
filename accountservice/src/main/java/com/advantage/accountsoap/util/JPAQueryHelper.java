@@ -6,7 +6,6 @@ package com.advantage.accountsoap.util;
 public abstract class JPAQueryHelper {
 
     private JPAQueryHelper() {
-
         throw new UnsupportedOperationException();
     }
 
@@ -83,6 +82,29 @@ public abstract class JPAQueryHelper {
         hql.append(pkFieldName);
         hql.append(" = ");
         hql.append(pkFieldValue);
+        return hql.toString();
+    }
+
+    public static String getSelectActiveByPkFieldQuery(final Class<?> entityClass,
+                                                       final String pkFieldName,
+                                                       final Object pkFieldValue) {
+
+        ArgumentValidationHelper.validateArgumentIsNotNull(entityClass, "entity class");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(pkFieldName, "pk field name");
+        ArgumentValidationHelper.validateArgumentIsNotNull(pkFieldValue, "pk field value");
+
+        final String entityClassName = entityClass.getName();
+        final StringBuilder hql = new StringBuilder("FROM ")
+                .append(entityClassName)
+                .append(" WHERE ")
+                .append("UPPER(active)")
+                .append(" = ")
+                .append("'Y'")
+                .append(" AND ")
+                .append(pkFieldName)
+                .append(" = ")
+                .append(pkFieldValue);
+
         return hql.toString();
     }
 }

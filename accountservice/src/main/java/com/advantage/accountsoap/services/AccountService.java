@@ -123,6 +123,52 @@ public class AccountService {
         return accountRepository.get(id);
     }
 
+    @Transactional
+    public AccountStatusResponse accountDelete(long accountId, String base64Token) {
+        Account account = accountRepository.get(accountId);
+
+        AccountStatusResponse response = new AccountStatusResponse(false, "", account.getId());
+
+        try {
+            TokenJWT tokenJWT = new TokenJWT(base64Token);
+
+            //  Get current user details from Token
+            long currentUserId = tokenJWT.getUserId();
+            String currentUserLogin = tokenJWT.getLoginName();
+            AccountType currentUserAccountType = tokenJWT.getAccountType();
+
+            if (currentUserAccountType.getAccountTypeCode() == AccountType.ADMIN.getAccountTypeCode()) {
+                //  ADMIN-USER - Authorized to Delete Account
+                int result = accountRepository.deleteAccount(account);
+
+                if (result == 1) {
+                    response.setSuccess(true);
+                    response.setReason("Account delete successful");
+                    response.setUserId(account.getId());
+                } else {
+                    response.setSuccess(false);
+                    response.setReason("Account delete failed");
+                    response.setUserId(account.getId());
+                }
+
+            } else {
+                //  Not ADMIN-USER - UNAUTHORIZED!
+                response = new AccountStatusResponse(false, HttpStatus.UNAUTHORIZED.getReasonPhrase(), account.getId());
+            }
+        } catch (VerificationTokenException e) {
+            e.printStackTrace();
+        } catch (WrongTokenTypeException e) {
+            e.printStackTrace();
+        } catch (ContentTokenException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return response;
+
+    }
+
     /**
      * Change the password of a registered user. This can happen in 1 of 2 ways: <br/>
      *  1.  Registered user changes his own password (can be USER or ADMIN-USER). <br/>
@@ -149,7 +195,7 @@ public class AccountService {
      */
     @Transactional
     public AccountStatusResponse changePassword(long accountId, String oldPassword, String newPassword, String base64Token) {
-        //  TODO Benny - Add the argument to XSD file.
+
         Account account = accountRepository.get(accountId);
 
         AccountStatusResponse response = new AccountStatusResponse(false, "", -1);
