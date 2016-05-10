@@ -208,7 +208,17 @@ public class AccountService {
             String currentUserLogin = tokenJWT.getLoginName();
             AccountType currentUserAccountType = tokenJWT.getAccountType();
 
-            if (accountId != currentUserId) {
+            if ((oldPassword == null) || (oldPassword.isEmpty())) {
+                if (currentUserAccountType.getAccountTypeCode() == AccountType.ADMIN.getAccountTypeCode()) {
+                    //  Reset-Password: Old Password is empty and current user is ADMIN-USER - OK to change password
+                    response = accountRepository.changePassword(accountId, newPassword);
+                }
+                else {
+                    //  Reset-Password FAILED! Old Password is empty and current user is not ADMIN-USER
+                    response = new AccountStatusResponse(false, HttpStatus.UNAUTHORIZED.getReasonPhrase(), -2);
+                }
+            }
+            else if (accountId != currentUserId) {
                 //  Registered user and current user are not the same
                 if (currentUserAccountType.getAccountTypeCode() == AccountType.ADMIN.getAccountTypeCode()) {
                     //  Not the same user and current user is ADMIN
