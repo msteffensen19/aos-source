@@ -20,19 +20,19 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Account.QUERY_GET_ALL,
-                query = "SELECT a FROM Account a"
+                query = "SELECT a FROM Account a WHERE UPPER(active)='Y'"
         ),
         @NamedQuery(
         name = Account.QUERY_GET_BY_USER_LOGIN,
-        query = "SELECT a FROM Account a WHERE " + Account.FIELD_USER_LOGIN + " = :" + Account.PARAM_USER_LOGIN
+        query = "SELECT a FROM Account a WHERE UPPER(active)='Y' AND " + Account.FIELD_USER_LOGIN + " = :" + Account.PARAM_USER_LOGIN
         ),
         @NamedQuery(
         name = Account.QUERY_GET_USERS_BY_COUNTRY,
-        query = "SELECT a FROM Account a WHERE " + Account.FIELD_COUNTRY + " = :" + Account.PARAM_COUNTRY
+        query = "SELECT a FROM Account a WHERE UPPER(active)='Y' AND " + Account.FIELD_COUNTRY + " = :" + Account.PARAM_COUNTRY
         ),
         @NamedQuery(
         name = Account.QUERT_GET_ACCOUNT_BY_ID,
-        query = "SELECT a FROM Account a WHERE " + Account.FIELD_ID + " = :" + Account.PARAM_ID
+        query = "SELECT a FROM Account a WHERE UPPER(active)='Y' AND " + Account.FIELD_ID + " = :" + Account.PARAM_ID
         )
 })
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -133,6 +133,9 @@ public class Account {
     @JoinColumn(name = Country.FIELD_ID)
     private Country country;
 
+    @Column
+    private char active;
+
     public Account() {
 
     }
@@ -173,6 +176,7 @@ public class Account {
         this.setInternalUnsuccessfulLoginAttempts(0);   //  Initial default value
         this.setInternalUserBlockedFromLoginUntil(0);   //  initial default value
         this.setInternalLastSuccesssulLogin(0);         //  initial default value
+        this.setActive('Y');
     }
 
     public Account(AccountType accountType, String lastName, String firstName, String loginName, String password, Country country, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean offersPromotion) throws Exception {
@@ -343,6 +347,14 @@ public class Account {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public char getActive() {
+        return active;
+    }
+
+    public void setActive(char active) {
+        this.active = Character.toUpperCase(active);
     }
 
     /**

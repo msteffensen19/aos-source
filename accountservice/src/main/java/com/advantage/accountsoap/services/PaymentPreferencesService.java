@@ -94,13 +94,19 @@ public class PaymentPreferencesService {
             return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
         }
 
-        if ((safePayPassword.length() < 1) || (safePayPassword.length() > 20)) {
+//        if ((safePayPassword.length() < 1) || (safePayPassword.length() > 20)) {
+//            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
+//        }
+        if (safePayPassword.length() < 1) {
             return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
         }
         //  endregion
 
-        PaymentPreferences preferences = paymentPreferencesRepository.updateSafePay(userId, safePayUsername, safePayPassword);
-        if (preferences == null) return new PaymentPreferencesStatusResponse(false, "updateSafePayMethod: user-id=" + userId + ", Failed", -1);
+        if (safePayPassword.length() < 21) {
+            //  Password has been re-typed - Update new Password
+            PaymentPreferences preferences = paymentPreferencesRepository.updateSafePay(userId, safePayUsername, safePayPassword);
+            if (preferences == null) return new PaymentPreferencesStatusResponse(false, "updateSafePayMethod: user-id=" + userId + ", Failed", -1);
+        }
 
         return new PaymentPreferencesStatusResponse(true, PaymentPreferences.MESSAGE_SAFE_PAY_DATA_UPDATED_SUCCESSFULLY, 0);
     }

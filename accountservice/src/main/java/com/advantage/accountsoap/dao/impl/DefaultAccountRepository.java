@@ -216,17 +216,29 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     @Override
-    public int deleteAcoount(Account account) {
+    public int deleteAccount(Account account) {
         ArgumentValidationHelper.validateArgumentIsNotNull(account, "application user");
 
         Long userId = account.getId();
-        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Account.class,
-                Account.FIELD_ID,
-                userId);
-        Query query = entityManager.createQuery(hql);
 
-        return query.executeUpdate();
+//        String hql = JPAQueryHelper.getDeleteByPkFieldQuery(Account.class,
+//                Account.FIELD_ID,
+//                userId);
+//        Query query = entityManager.createQuery(hql);
+//
+//        return query.executeUpdate();
+
+        if (account == null) {
+            return 0;
+        }
+
+        account.setActive('N');
+
+        entityManager.persist(account);
+
+        return 1;
     }
+
 
     @Override
     public List<Account> getAppUsersByCountry(Integer countryId) {
@@ -462,7 +474,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public int delete(Account... entities) {
         for (Account account : entities) {
-            entityManager.remove(account);
+            //entityManager.remove(account);
+            account.setActive('N');
+            entityManager.persist(account);
         }
         return 0;
     }
@@ -470,8 +484,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public Account delete(Long id) {
         Account account = this.get(id);
+        if (account == null) {
+            return null;
+        }
 
-        entityManager.remove(account);
+        //entityManager.remove(account);
+        account.setActive('N');
+        entityManager.persist(account);
 
         return account;
     }
@@ -488,7 +507,10 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public Account get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "user id");
-        String hql = JPAQueryHelper.getSelectByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
+
+        //String hql = JPAQueryHelper.getSelectByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
+        String hql = JPAQueryHelper.getSelectActiveByPkFieldQuery(Account.class, Account.FIELD_ID, entityId);
+
         Query query = entityManager.createQuery(hql);
 
         return (Account) query.getSingleResult();

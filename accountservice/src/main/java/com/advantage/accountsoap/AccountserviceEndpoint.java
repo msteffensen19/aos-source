@@ -203,6 +203,13 @@ public class AccountserviceEndpoint {
         AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getOldPassword(), request.getNewPassword(), request.getBase64Token());
         return new ChangePasswordResponse(response);
     }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountDeleteRequest")
+    @ResponsePayload
+    public AccountDeleteResponse accountDelete(@RequestPayload AccountDeleteRequest request) {
+        AccountStatusResponse response = accountService.accountDelete(request.getAccountId(), request.getBase64Token());
+        return new AccountDeleteResponse(response);
+    }
     //endregion
 
     //region Countries
