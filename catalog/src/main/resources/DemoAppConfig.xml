@@ -35,6 +35,9 @@
     <!-- feature="1510" -->
     <user_second_wsdl datatype="enum:[Yes,No]" description="Whether to use the second WSDL in user registration page. Parameter values: NO=(Default) Don't use, Yes = Use the second WSDL request to register new user." tools="UFT">No</user_second_wsdl>
 
+    <!-- No = (Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
+    <Show_error_500_in_update_cart datatype="enum:[Yes,No]" description="No=(Default) Do Not Show; or Yes=Show HTTP error code 500 when trying to update cart." tools="">Yes</Show_error_500_in_update_cart>
+
     <!-- Feature 1539 -->
 
     <!-- Feature 1296 for mobile -->
