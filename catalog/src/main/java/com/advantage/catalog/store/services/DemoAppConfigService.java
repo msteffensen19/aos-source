@@ -384,6 +384,7 @@ public class DemoAppConfigService {
         }
         System.out.println("end update parameters");
         return new DemoAppConfigStatusResponse(false,"update failed with error: parameters is null");
+
     }
 
     /**
