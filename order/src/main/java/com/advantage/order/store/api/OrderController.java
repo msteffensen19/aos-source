@@ -127,9 +127,15 @@ public class OrderController {
                 (! hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0))
         {
             shoppingCartResponse = shoppingCartService.updateProductInCart(Long.valueOf(userId), productId, hexColor, hexColorNew, quantity);
-        }
-        else {
+        } else {
             httpStatus = HttpStatus.BAD_REQUEST;
+        }
+
+        /*
+            http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/Show_error_500_in_update_cart
+         */
+        if (shoppingCartResponse.getId() == 500) {
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
