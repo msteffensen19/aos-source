@@ -2,10 +2,11 @@ package com.advantage.catalog.store.services;
 
 import com.advantage.common.Constants;
 import com.advantage.common.dto.DemoAppConfigParameter;
+import com.advantage.common.dto.DemoAppConfigParameterDto;
+import com.advantage.common.dto.DemoAppConfigParametersDto;
 import com.advantage.common.dto.DemoAppConfigStatusResponse;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.xml.XmlHelper;
-import com.sun.org.apache.xerces.internal.dom.DeferredCommentImpl;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 
@@ -107,6 +108,7 @@ public class DemoAppConfigService {
                     String attributeDataTypeValue = nodeAttr2.getTextContent();
 
                     System.out.println("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    //System.out.println("newValue(\"" + parameterName + "\") - End");
                     System.out.println("findParameterByName(\"" + parameterName + "\") - End");
                     System.out.println("");
                     return node;
@@ -347,7 +349,7 @@ public class DemoAppConfigService {
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
         System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
-
+        System.out.println("newValue:" + parameterNewValue);
         Node nodeToUpdate = findParameterByName(doc, parameterName);
         if (nodeToUpdate != null) {
             nodeToUpdate.setTextContent(parameterNewValue);
@@ -357,6 +359,31 @@ public class DemoAppConfigService {
         }
 
         return new DemoAppConfigStatusResponse(false, "update failed with error: [parameters name] not found");
+    }
+
+    /**
+     * Update the value of a specific tool's parameters. Tool is identified by it's name.
+     * @param parameters     all parameters and new values
+     *
+     */
+    public DemoAppConfigStatusResponse updateParametersValues(DemoAppConfigParametersDto parameters) {
+
+        System.out.println("start update parameters");
+        if(parameters != null) {
+            String errorMessage = "";
+            boolean result = true;
+            for (DemoAppConfigParameterDto parameter : parameters.getParameters()) {
+                DemoAppConfigStatusResponse demoAppConfigStatusResponse = updateParameterValue(parameter.getName(), parameter.getNewValue());
+                result = !result || !demoAppConfigStatusResponse.isSuccess() ? false : true;
+                errorMessage += !demoAppConfigStatusResponse.isSuccess() ? demoAppConfigStatusResponse.getReason() + "\r\n" : "";
+            }
+            DemoAppConfigStatusResponse demoAppConfigStatusResponse;
+            demoAppConfigStatusResponse = result ? new DemoAppConfigStatusResponse(result, "update successful") : new DemoAppConfigStatusResponse(result, errorMessage);
+            System.out.println("end update parameters");
+            return demoAppConfigStatusResponse;
+        }
+        System.out.println("end update parameters");
+        return new DemoAppConfigStatusResponse(false,"update failed with error: parameters is null");
     }
 
     /**
