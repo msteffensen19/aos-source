@@ -15,8 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <b>MasterCredit</b> MOCK server service. <br/>
- * The {@link SafePayResponse#referenceNumber} is set from {@code static}
- * {@link AtomicLong} type property.
+ * The {@link SafePayResponse#referenceNumber} is set from {@link AtomicLong} type property.
  *
  * @author Binyamin Regev on 21/12/2015.
  * @see AtomicLong
