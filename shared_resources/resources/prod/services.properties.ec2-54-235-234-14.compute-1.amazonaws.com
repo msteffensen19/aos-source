@@ -1,7 +1,3 @@
-account.service.url.host=ec2-54-235-234-14.compute-1.amazonaws.com
-account.service.url.port=8080
-account.service.url.suffix=account/api/v1
-
 account.soapservice.url.host=ec2-54-235-234-14.compute-1.amazonaws.com
 account.soapservice.url.port=8080
 account.soapservice.url.suffix=accountservice
@@ -14,10 +10,6 @@ catalog.service.url.suffix=catalog/api/v1
 order.service.url.host=ec2-54-235-234-14.compute-1.amazonaws.com
 order.service.url.port=8080
 order.service.url.suffix=order/api/v1
-
-service.service.url.host=ec2-54-235-234-14.compute-1.amazonaws.com
-service.service.url.port=8080
-service.service.url.suffix=account/service/api/v1
 
 mastercredit.service.url.host=ec2-54-235-234-14.compute-1.amazonaws.com
 mastercredit.service.url.port=8080

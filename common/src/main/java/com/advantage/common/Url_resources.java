@@ -17,12 +17,11 @@ import java.net.URL;
 @PropertySources(value = {@PropertySource(Constants.FILE_PROPERTIES_EXTERNAL)})
 public class Url_resources {
 
-    private static URL urlPrefixAccount;
     private static URL urlPrefixCatalog;
     private static URL urlPrefixMasterCredit;
     private static URL urlPrefixOrder;
     private static URL urlPrefixSafePay;
-    private static URL urlPrefixService;
+    //private static URL urlPrefixService;
 
     private static URL urlPrefixSoapAccount;
     private static URL urlPrefixSoapShipEx;
@@ -32,12 +31,12 @@ public class Url_resources {
 
     @Bean
     public int setConfiguration() {
-        urlPrefixAccount = generateUrlPrefix("Account");
+
         urlPrefixCatalog = generateUrlPrefix("Catalog");
         urlPrefixMasterCredit = generateUrlPrefix("MasterCredit");
         urlPrefixOrder = generateUrlPrefix("Order");
         urlPrefixSafePay = generateUrlPrefix("SafePay");
-        urlPrefixService = generateUrlPrefix("Service");
+        //urlPrefixService = generateUrlPrefix("Service");
 
         urlPrefixSoapAccount = generateUrlSoapPrefix("Account");
         urlPrefixSoapShipEx = generateUrlSoapPrefix("ShipEx");
@@ -47,7 +46,7 @@ public class Url_resources {
         System.out.println("   MasterCredit=\'" + getUrlMasterCredit() + "\'");
         System.out.println("   Order=\'" + getUrlOrder() + "\'");
         System.out.println("   SafePay=\'" + getUrlSafePay() + "\'");
-        System.out.println("   Service=\'" + getUrlService() + "\'");
+        //System.out.println("   Service=\'" + getUrlService() + "\'");
         System.out.println("   Account (SOAP)=\'" + getUrlSoapAccount() + "\'");
         System.out.println("   ShipEx (SOAP)=\'" + getUrlSoapShipEx() + "\'");
 
@@ -127,10 +126,6 @@ public class Url_resources {
         return Constants.URI_SERVER_SHIP_EX;
     }
 
-    public static URL getUrlAccount() {
-        return urlPrefixAccount;
-    }
-
     public static URL getUrlSoapAccount() { return urlPrefixSoapAccount; }
 
     public static URL getUrlCatalog() {
@@ -147,9 +142,9 @@ public class Url_resources {
 
     public static URL getUrlSafePay() { return urlPrefixSafePay; }
 
-    public static URL getUrlService() {
-        return urlPrefixService;
-    }
+//    public static URL getUrlService() {
+//        return urlPrefixService;
+//    }
 
     public static URL getUrlSoapShipEx() { return urlPrefixSoapShipEx; }
 

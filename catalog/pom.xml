@@ -43,19 +43,6 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>production</id>
-            <build>
-                <plugins>
-                    <!--prod plugins vvv-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                    </plugin>
-                    <!--prod plugins ^^^-->
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>development</id>
             <build>
                 <pluginManagement>
@@ -78,6 +65,26 @@
                     </plugins>
                 </pluginManagement>
                 <plugins>
+                    <!-- TODO-EVG TEMP-->
+                    <plugin>
+                        <groupId>com.soebes.maven.plugins</groupId>
+                        <artifactId>echo-maven-plugin</artifactId>
+                        <version>0.2</version>
+                        <executions>
+                            <execution>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>echo</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <echos>
+                                <!--suppress MavenModelInspection -->
+                                <echo>####create database "${catalog.hibernate.db.name}"#####</echo>
+                            </echos>
+                        </configuration>
+                    </plugin>
                     <!--run sql-->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
