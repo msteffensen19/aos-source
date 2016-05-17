@@ -228,10 +228,11 @@ public class ShoppingCartService {
                 shoppingCartResponse.setId(productId);
             }
         } else if (parameterValue.equalsIgnoreCase("Yes")) {
-            //  Simulate HttpStatus code 500
-            shoppingCartResponse.setSuccess(false);
-            shoppingCartResponse.setReason("Error: Internal Server Error");
-            shoppingCartResponse.setId(500);
+            ////  Simulate HttpStatus code 500
+            //shoppingCartResponse.setSuccess(false);
+            //shoppingCartResponse.setReason("Error: Internal Server Error");
+            //shoppingCartResponse.setId(500);
+            throw new RuntimeException("A problem occured while updating cart.");
         }
 
         return shoppingCartResponse;

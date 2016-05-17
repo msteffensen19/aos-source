@@ -428,12 +428,17 @@ public class DemoAppConfigService {
         this.updateParameterValue("Generate_memory_leak", "0");
         this.updateParameterValue("Repeat_ShipEx_call", "0");
         this.updateParameterValue("Sum_to_add_to_cart_calculation", "0");
-        this.updateParameterValue("Add_wrong_product_to_speakers_category", "0");
+        this.updateParameterValue("Add_wrong_product_to_speakers_category", "No");
         this.updateParameterValue("Spelling_mistakes_in_order_payment_page", "No");
         this.updateParameterValue("Max_concurrent_sessions", "-1");
         this.updateParameterValue("Mix_pictures_in_home_page", "No");
         this.updateParameterValue("Slow_DB_call", "0");
         this.updateParameterValue("Slow_Page", "No");
+        this.updateParameterValue("Different_price_in_UI_and_API", "No");
+        this.updateParameterValue("SLA_Add_Delay_In_Add_To_Cart_Response_Time", "0");
+        this.updateParameterValue("SLA_Number_Of_Sessions_To_Add_The_Delay", "20");
+        this.updateParameterValue("user_second_wsdl", "No");
+        this.updateParameterValue("Error_500_in_update_cart", "No");
 
         return new DemoAppConfigStatusResponse(true, "\"DemoAppConfig.xml\" restore factory settings successful");
     }
