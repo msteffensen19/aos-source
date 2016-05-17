@@ -177,8 +177,9 @@ public class ShoppingCartService {
         ShoppingCartResponse shoppingCartResponse = null;
 
         //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
+
         String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
-        if (parameterValue.equalsIgnoreCase("No")) {
+        if ((parameterValue == null) || (parameterValue.equalsIgnoreCase("No"))) {
 
             int color = ShoppingCart.convertHexColorToInt(hexColor);
 
