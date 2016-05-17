@@ -138,9 +138,9 @@
     </profiles>
     <build>
         <!--<filters>-->
-            <!--<filter>${project.build.directory}/generated-resources/global.properties</filter>-->
-            <!--<filter>${project.build.directory}/generated-resources/internal_config_for_env.properties</filter>-->
-            <!--<filter>${project.build.directory}/generated-resources/services.properties</filter>-->
+        <!--<filter>${project.build.directory}/generated-resources/global.properties</filter>-->
+        <!--<filter>${project.build.directory}/generated-resources/internal_config_for_env.properties</filter>-->
+        <!--<filter>${project.build.directory}/generated-resources/services.properties</filter>-->
         <!--</filters>-->
         <resources>
             <resource>
@@ -151,6 +151,18 @@
             <!--shared resources-->
             <resource>
                 <directory>${project.build.directory}/generated-resources</directory>
+                <excludes>
+                    <exclude>*.properties</exclude>
+                </excludes>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
