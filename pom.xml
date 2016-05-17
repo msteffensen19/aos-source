@@ -68,7 +68,7 @@
             </activation>
             <properties>
                 <!--suppress-->
-                <compName>${env.HOSTNAME}</compName>
+                <compName>${HOSTNAME}</compName>
             </properties>
         </profile>
         <profile>
@@ -96,10 +96,6 @@
                     <!--dev plugins vvv-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
                     </plugin>
                     <!--dev plugins ^^^-->
@@ -119,31 +115,43 @@
                             <artifactId>maven-war-plugin</artifactId>
                             <version>2.6</version>
                             <configuration>
-                                <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
                                 <failOnMissingWebXml>false</failOnMissingWebXml>
-                                <webResources>
-                                    <resource>
-                                        <directory>${basedir}/target</directory>
-                                    </resource>
-                                </webResources>
+                                <!--<warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>-->
+                                <!--<archiveClasses>true</archiveClasses>-->
+                                <!--<warSourceExcludes>classes/</warSourceExcludes>-->
+                                <!--<webResources>-->
+                                <!--<resource>-->
+                                <!--&lt;!&ndash;<directory>${basedir}/target</directory>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<directory>${project.build.outputDirectory}</directory>&ndash;&gt;-->
+                                <!--<directory>${project.build.directory}</directory>-->
+                                <!--<excludes>-->
+                                <!--<exclude>**/generated-resources/*.*</exclude>-->
+                                <!--</excludes>-->
+                                <!--</resource>-->
+                                <!--</webResources>-->
                             </configuration>
                         </plugin>
                     </plugins>
                 </pluginManagement>
-                <plugins>
-                </plugins>
             </build>
         </profile>
     </profiles>
     <build>
+        <!--<filters>-->
+            <!--<filter>${project.build.directory}/generated-resources/global.properties</filter>-->
+            <!--<filter>${project.build.directory}/generated-resources/internal_config_for_env.properties</filter>-->
+            <!--<filter>${project.build.directory}/generated-resources/services.properties</filter>-->
+        <!--</filters>-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
             <!--shared resources-->
             <resource>
                 <directory>${project.build.directory}/generated-resources</directory>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
             <!--<resource>-->
@@ -153,6 +161,51 @@
         </resources>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.soebes.maven.plugins</groupId>
+                    <artifactId>echo-maven-plugin</artifactId>
+                    <version>0.2</version>
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>echo</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <echos>
+                            <echo>#########</echo>
+                            <!--suppress MavenModelInspection -->
+                            <echo>buildNumber=${buildNumber}</echo>
+                            <!--suppress MavenModelInspection -->
+                            <echo>Branch = ${scmBranch}</echo>
+                            <echo>=======</echo>
+                            <!--It's a parent POM-->
+                            <echo>project.parent.basedir=${project.parent.basedir}</echo>
+                            <echo>----</echo>
+                            <echo>project.basedir=${project.basedir}</echo>
+                            <echo>----</echo>
+                            <echo>project.build.sourceDirectory=${project.build.sourceDirectory}</echo>
+                            <echo>project.build.scriptSourceDirectory=${project.build.scriptSourceDirectory}</echo>
+                            <echo>project.build.testSourceDirectory=${project.build.testSourceDirectory}</echo>
+                            <echo>----</echo>
+                            <echo>project.build.directory=${project.build.directory}</echo>
+                            <echo>project.build.outputDirectory=${project.build.outputDirectory}</echo>
+                            <echo>project.build.testOutputDirectory=${project.build.testOutputDirectory}</echo>
+                            <echo>=======</echo>
+                            <echo>***JAVA VER**</echo>
+                            <echo>java.home=${java.home}</echo>
+                            <echo>env.JAVA_HOME=${env.JAVA_HOME}</echo>
+                            <echo>java.runtime.name=${java.runtime.name}</echo>
+                            <echo>java.runtime.version=${java.runtime.version}</echo>
+                            <echo>java.vm.version=${java.vm.version}</echo>
+                            <echo>Computer name=${compName}</echo>
+                            <ech>Test for Jenkins: 25/Jan/2016 01:07</ech>
+                        </echos>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -182,6 +235,11 @@
                             <groupId>org.postgresql</groupId>
                             <artifactId>postgresql</artifactId>
                             <version>${postgres.driver.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>3.1.0</version>
                         </dependency>
                     </dependencies>
                     <configuration>
@@ -277,7 +335,7 @@
                         <!--<timestampPropertyName>buildTime</timestampPropertyName>-->
                         <doCheck>false</doCheck>
                         <doUpdate>false</doUpdate>
-                        <revisionOnScmFailure>revisionOnScmFailure_EVG</revisionOnScmFailure>
+                        <revisionOnScmFailure>UNKNOWN COMMIT REV ID</revisionOnScmFailure>
                         <scmDirectory>${project.parent.basedir}</scmDirectory>
                         <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                         <!--<outputName>build.properties</outputName>-->
@@ -302,6 +360,11 @@
                     <version>2.7</version>
                     <executions>
                         <execution>
+                            <id>copy-shared-resources-into-webapp</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
                             <configuration>
                                 <encoding>${project.build.sourceEncoding}</encoding>
                                 <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
@@ -318,11 +381,6 @@
                                     </resource>
                                 </resources>
                             </configuration>
-                            <id>copy-shared-resources-into-webapp</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
                         </execution>
                     </executions>
                 </plugin>
@@ -330,6 +388,14 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>com.soebes.maven.plugins</groupId>
+                <artifactId>echo-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

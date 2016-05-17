@@ -1,7 +1,3 @@
-ccount.service.url.host=www.advantageonlineshopping.com
-account.service.url.port=80
-account.service.url.suffix=account/api/v1
-
 account.soapservice.url.host=www.advantageonlineshopping.com
 account.soapservice.url.port=80
 account.soapservice.url.suffix=accountservice
@@ -14,10 +10,6 @@ catalog.service.url.suffix=catalog/api/v1
 order.service.url.host=www.advantageonlineshopping.com
 order.service.url.port=80
 order.service.url.suffix=order/api/v1
-
-service.service.url.host=www.advantageonlineshopping.com
-service.service.url.port=80
-service.service.url.suffix=account/service/api/v1
 
 mastercredit.service.url.host=www.advantageonlineshopping.com
 mastercredit.service.url.port=80

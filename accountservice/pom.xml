@@ -35,6 +35,11 @@
                                     <!-- TODO-EVG replace with property after move maven variables into properties file-->
                                     <version>9.3-1100-jdbc41</version>
                                 </dependency>
+                                <dependency>
+                                    <groupId>org.apache.maven.shared</groupId>
+                                    <artifactId>maven-filtering</artifactId>
+                                    <version>3.1.0</version>
+                                </dependency>
                             </dependencies>
                             <configuration>
                                 <!-- Merge of main pom and this cause the AccountSoapService pom isn't a child of main pom-->
@@ -212,7 +217,19 @@
 
     <build>
         <finalName>accountservice</finalName>
-        <!--shared resources-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+            <!--shared resources-->
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>

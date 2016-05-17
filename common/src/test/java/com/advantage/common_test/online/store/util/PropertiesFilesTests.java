@@ -31,10 +31,6 @@ public class PropertiesFilesTests {
                 "order.service.url.port",
                 "order.service.url.suffix",
 
-                "service.service.url.host",
-                "service.service.url.port",
-                "service.service.url.suffix",
-
                 "mastercredit.service.url.host",
                 "mastercredit.service.url.port",
                 "mastercredit.service.url.suffix",
@@ -84,7 +80,6 @@ public class PropertiesFilesTests {
                 "account.soapservice.url.port",
                 "catalog.service.url.port",
                 "order.service.url.port",
-                "service.service.url.port",
                 "mastercredit.service.url.port",
                 "shipex.soapservice.url.port",
                 "safepay.service.url.port"
@@ -96,9 +91,9 @@ public class PropertiesFilesTests {
     @Test
     public void testGlobalProperties() throws Exception {
         String[] properties = {
-                "hibernate.format_sql",
-                "hibernate.show_sql",
-                "hibernate.hbm2ddl.auto",
+//                "hibernate.format_sql",
+//                "hibernate.show_sql",
+//                "hibernate.hbm2ddl.auto",
                 "hibernate.dialect",
                 "hibernate.db.driver_classname",
 
