@@ -137,7 +137,7 @@
                                     <id>exec-npm-install</id>
                                     <phase>generate-sources</phase>
                                     <configuration>
-                                        <executable>npm</executable>
+                                        <executable>npm.cmd</executable>
                                         <arguments>
                                             <argument>install</argument>
                                         </arguments>
