@@ -60,7 +60,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCity(), "shipping city");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getPostalCode(), "shipping postal code");
         //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getState(), "shipping state");
-        gumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCountryCode(), "shipping country");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCountryCode(), "shipping country");
 
         this.validatePaymentMethod(orderPaymentInformation.getPaymentMethod(), "payment method");
         this.validateTransactionType(StringHelper.toInitCap(orderPaymentInformation.getTransactionType()), "transaction type");
