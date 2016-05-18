@@ -87,10 +87,10 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
 
         orderHeader.setNumberOfProducts(orderShippingInformation.getNumberOfProducts());
         orderHeader.setShippingCost(orderShippingInformation.getShippingCost());
-        orderHeader.setShippingAddress(orderShippingInformation.getAddress());
-        orderHeader.setShippingCity(orderShippingInformation.getCity());
-        orderHeader.setShippingPostalCode(orderShippingInformation.getPostalCode());
-        orderHeader.setShippingState(orderShippingInformation.getState());
+        //orderHeader.setShippingAddress(orderShippingInformation.getAddress());
+        //orderHeader.setShippingCity(orderShippingInformation.getCity());
+        //orderHeader.setShippingPostalCode(orderShippingInformation.getPostalCode());
+        //orderHeader.setShippingState(orderShippingInformation.getState());
         orderHeader.setShippingCountry(orderShippingInformation.getCountryCode());
 
         orderHeader.setPaymentMethod(orderPaymentInformation.getPaymentMethod());
