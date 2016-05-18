@@ -22,7 +22,7 @@
 #orderPayment > #userCart {
     width: 330px;
     padding: 20px 25px ;
-    /*background-color: rgb(249, 249, 249);*/
+    background-color: rgb(249, 249, 249);
     position: relative;
     right: -50px;
 }

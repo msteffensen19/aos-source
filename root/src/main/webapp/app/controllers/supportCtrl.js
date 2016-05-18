@@ -8,6 +8,20 @@ define(['./module'], function (controllers) {
 
         function (s, supportService, paramsToResorve, categoryService) {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //l(paramsToResorve.categories)
 
 
