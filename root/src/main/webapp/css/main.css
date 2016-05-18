@@ -443,12 +443,6 @@ footer .splitter{
 
 @media screen and (max-width: 1220px) {
 
-    #searchSection .searchPopUp > div .product{
-        padding: 24px 17px;
-        height: 166px;
-    }
-
-
     nav ul li > a:not(.img){
         padding:15px 12px;
     }

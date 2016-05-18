@@ -37,8 +37,8 @@ Helper.forAllPage = function(){
     Helper.scrollPageUp();
     Helper.UpdatePageFixed();
     setTimeout(Helper.footerHandler, 200);
-
 }
+
 
 Helper.footerHandler = function() {
 

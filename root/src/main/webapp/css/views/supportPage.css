@@ -65,6 +65,10 @@
 }
 
 
+#supportCover select{
+    cursor: pointer;
+}
+
 #supportCover select>option:hover{
     background: #F4F4F2 !important;
 }

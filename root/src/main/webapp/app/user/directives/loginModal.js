@@ -43,12 +43,6 @@ define(['./module'], function (directives) {
                             var date = new Date();
                             var millisecondsLess = userBlocked.dateUntil - new Date(date.getTime() - new Date(rest)).getTime();
 
-                            console.log("");
-                            console.log("Seconds to unblock user");
-                            console.log((millisecondsLess / 1000) + (" seconds"));
-                            console.log("=================================");
-                            console.log("");
-
                             $scope.setErrorMessage(userBlocked.reason);
                             if (millisecondsLess < 0) {
                                 $cookie.remove(user.loginUser);

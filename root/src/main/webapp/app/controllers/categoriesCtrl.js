@@ -5,30 +5,35 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoriesCtrl', ['$scope', 'categoryService',
         'dealService', '$location', 'resolveParams', 'supportService', '$timeout',
-        function (s, categoryService, dealService, $location, resolveParams, supportService, $timeout ) {
+        function (s, categoryService, dealService, $location, resolveParams, supportService, $timeout) {
 
-            for(var i = 0; i < resolveParams.categories.length ; i++){
+            for (var i = 0; i < resolveParams.categories.length; i++) {
                 var cate = [];
-                for(var index = 0; index < resolveParams.categories[i].categoryName.length; index++){
+                for (var index = 0; index < resolveParams.categories[i].categoryName.length; index++) {
                     cate.push(index == 0 ? resolveParams.categories[i].categoryName[index] : resolveParams.categories[i].categoryName[index].toLowerCase());
                 }
                 resolveParams.categories[i].categoryName = cate.join("");
             }
 
             s.categories = resolveParams.categories;
-            s.specialOffer= resolveParams.specialOffer;
+            s.specialOffer = resolveParams.specialOffer;
             s.popularProducts = resolveParams.popularProducts;
 
             s.images = [
-                { imageName : 'Banner1.jpg', imageId : 0, message : "ALL YOU WANT FROM A TABLET", categoryId : 2 },
-                { imageName : 'Banner2.jpg', imageId : 1, message : "EXPLORE OUR LATEST <br />INNOVATIVE PRODUCTS", categoryId : 3 },
-                { imageName : 'Banner3.jpg', imageId : 2, message : "START EXPLORING HP NOTEBOOKS", categoryId : 0 }
+                {imageName: 'Banner1.jpg', imageId: 0, message: "ALL YOU WANT FROM A TABLET", categoryId: 2},
+                {
+                    imageName: 'Banner2.jpg',
+                    imageId: 1,
+                    message: "EXPLORE OUR LATEST <br />INNOVATIVE PRODUCTS",
+                    categoryId: 3
+                },
+                {imageName: 'Banner3.jpg', imageId: 2, message: "START EXPLORING HP NOTEBOOKS", categoryId: 0}
             ];
 
             /* suport section */
 
             s.supportSuccess = false;
-            s.registerAnswer = { class: "", message: "" }
+            s.registerAnswer = {class: "", message: ""}
             s.supportModel = {
                 "category": {},
                 "email": "",
@@ -38,7 +43,7 @@ define(['./module'], function (controllers) {
 
             s.products;
 
-            s.categoryChange = function() {
+            s.categoryChange = function () {
                 categoryService.getCategoryById(s.supportModel.category.categoryId).
                 then(function (category) {
                     s.products = category.products;
@@ -46,47 +51,53 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            s.productChange = function() {
+            s.productChange = function () {
 
             }
 
-            s.sendSupportEmail = function(){
+            var _____continueShopping;
+            s.sendSupportEmail = function () {
 
-                supportService.sendSupportEmail(s.supportModel).then(function(res){
+                supportService.sendSupportEmail(s.supportModel).then(function (res) {
 
                     s.registerAnswer.class = res.success ? "valid" : "invalid";
                     s.registerAnswer.message = res.reason;
                     s.supportSuccess = res.success;
-                    if(!res.success){
-                        $timeout(function(){
-                            s.registerAnswer = { class: "", message: "" }
+                    if (!res.success) {
+                        _____continueShopping = $timeout(function () {
+                            s.registerAnswer = {class: "", message: ""}
                         }, 2000)
                     }
-                    if(res.success){
+                    if (res.success) {
                         s.supportModel = {
                             "category": {},
                             "email": "",
                             "product": {},
                             "subject": ""
                         }
-                        $timeout(function(){
+                        _____continueShopping = $timeout(function () {
                             s.supportSuccess = false;
-                            s.registerAnswer = { class: "", message: "" }
+                            s.registerAnswer = {class: "", message: ""}
                         }, 10000)
                     }
 
-                }, function(err){
+                }, function (err) {
 
                 });
 
 
             }
 
+            s.continueShopping = function () {
+                if (_____continueShopping) {
+                    s.supportSuccess = false;
+                    s.registerAnswer = { class: "", message: "" }
+                    $timeout.cancel(_____continueShopping)
+                }
+                s.go_up();
+            }
 
             /* end suport section */
-
-
-
 
 
             Slider.AddSliderListener();
@@ -94,10 +105,10 @@ define(['./module'], function (controllers) {
             Helper.forAllPage();
 
             $('#scrollToTop').click(function () {
-                $('body, html').animate({ scrollTop: 0 }, 1000);
+                $('body, html').animate({scrollTop: 0}, 1000);
             });
 
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $(window).on({
                     scroll: function () {
                         if ($(window).scrollTop() > 800) {
@@ -108,18 +119,19 @@ define(['./module'], function (controllers) {
                     },
                     resize: resize,
                 });
-                function resize(){
+                function resize() {
                     turnTheOrderOfImagesInCategoriesGrid()
                 }
+
                 setTimeout(resize, 0)
-                function turnTheOrderOfImagesInCategoriesGrid(){
+                function turnTheOrderOfImagesInCategoriesGrid() {
                     var elemToMove = $("#SpeakersImg");
                     var indexToFind = "TabletsImg";
-                    if($(window).width() <= 480){
+                    if ($(window).width() <= 480) {
                         elemToMove = $("#TabletsImg");
                         indexToFind = "SpeakersImg";
                     }
-                    if(elemToMove.prev().attr("id") && elemToMove.prev().attr("id").indexOf(indexToFind) != -1){
+                    if (elemToMove.prev().attr("id") && elemToMove.prev().attr("id").indexOf(indexToFind) != -1) {
                         elemToMove.parent().prepend(elemToMove);
                     }
                 }
