@@ -141,14 +141,14 @@ define(['./module'], function (directives) {
 
 
                     $scope.forgotPassword = function () {
-                        console.log("forgotPassword");
-                        $location.path('404');
+                        console.log("forgotPassword not done yet!");
+                        //$location.path('404');
                     }
 
 
                     $scope.singWithFacebook = function (user) {
-                        console.log("singWithFacebook");
-                        $location.path('404');
+                        console.log("singWithFacebook not done yet!");
+                        //$location.path('404');
                     }
 
                 }
