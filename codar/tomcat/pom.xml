@@ -46,7 +46,7 @@
                                 <delete dir="${project.build.directory}/tomcat/webapps/ROOT" />
                                 <replaceregexp file="${project.build.directory}/tomcat/conf/server.xml" flags="gs" match="\&lt;!--.*?--\&gt;" replace="" byline="false" />
                                 <replaceregexp file="${project.build.directory}/tomcat/conf/server.xml" flags="g" match="^\s*" replace="" byline="true" />
-                                <replace file="${project.build.directory}/tomcat/conf/server.xml" token='Server port="8005" shutdown="SHUTDOWN"' value='Server port="-1" shutdown="NOTSAFESHUTDOWN"' />
+                                <replace file="${project.build.directory}/tomcat/conf/server.xml" token='Server port="8005" shutdown="SHUTDOWN"' value='Server port="8005" shutdown="SHUTDOWN"' />
                                 <echo file="${project.build.directory}/tomcat/conf/logging.properties" append="true">org.apache.catalina.core.StandardContext.[Catalina].level = ALL
 org.apache.catalina.core.StandardContext.[Catalina].handlers = java.util.logging.ConsoleHandler</echo>
                                 <zip destfile="${tomcat.archive.file}" basedir="${project.build.directory}/tomcat" />

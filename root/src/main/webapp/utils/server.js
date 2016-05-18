@@ -105,7 +105,7 @@ var services_properties = []
 //var accountKey = "http://localhost:8080/account";
 //var serviceKey = "http://localhost:8080/service";
 //var wsdlPath = 'http://localhost:8080/accountservice';
-var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
+var catalogKey = orderKey = /*accountKey =*//* serviceKey =*/ wsdlPath = "undefined";
 
 (function readTextFile(file) {
     console.log("Extracting file: " + file);
@@ -165,11 +165,11 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
                 orderKey = "http://" + services_properties['order_service_url_host'] + ":" +
                     services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'];
 
-                accountKey = "http://" + services_properties['account_service_url_host'] + ":" +
-                    services_properties['account_service_url_port'] + "/" + services_properties['account_service_url_suffix'];
+                //accountKey = "http://" + services_properties['account_soapservice_url_host'] + ":" +
+                //    services_properties['account_soapservice_url_port'] + "/" + services_properties['account_soapservice_url_suffix'];
 
-                serviceKey = "http://" + services_properties['service_service_url_host'] + ":" +
-                    services_properties['service_service_url_port'] + "/" + services_properties['service_service_url_suffix'];
+                //serviceKey = "http://" + services_properties['service_service_url_host'] + ":" +
+                //    services_properties['service_service_url_port'] + "/" + services_properties['service_service_url_suffix'];
 
                 wsdlPath = "http://" +
                     services_properties['account_soapservice_url_host'] + ":" +
@@ -180,9 +180,9 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
                 Loger.Extract(file, rawFile_responseText, [
                     'Catalog path: ' + catalogKey,
                     'Order path: ' + orderKey,
-                    'Account path: ' + accountKey,
-                    'Service path: ' + serviceKey,
-                    'WSDL (Web Services Description Language) path: ' + wsdlPath,
+                    //'Account path: ' + accountKey,
+                    //'Service path: ' + serviceKey,
+                    'Account WSDL (Web Services Description Language) path: ' + wsdlPath,
                 ]);
 
             }
@@ -195,7 +195,7 @@ var catalogKey = orderKey = accountKey = serviceKey = wsdlPath = "undefined";
 var server = {
 
     fileReady: function () {
-        var check = catalogKey + orderKey + accountKey + serviceKey + wsdlPath;
+        var check = catalogKey + orderKey + /* accountKey +*/ /*serviceKey +*/ wsdlPath;
         return check.indexOf('undefined') == -1;
     },
 

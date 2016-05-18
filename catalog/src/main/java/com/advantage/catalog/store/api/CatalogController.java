@@ -440,6 +440,18 @@ public class CatalogController {
     }
     //  endregion
 
+    @RequestMapping(value = "/DemoAppConfig/update/parameters", method = RequestMethod.PUT)
+    @ApiOperation(value = "Update DemoAppConfig all parameters values")
+    public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameters(@RequestBody DemoAppConfigParametersDto parameters,
+                                                                                    final HttpServletRequest request,
+                                                                                    final HttpServletResponse response) {
+
+        DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParametersValues(parameters);
+
+        return new ResponseEntity<>(statusResponse, (statusResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
+    }
+    //  endregion
+
     //  region /Contact Us
     @RequestMapping(value = "/support/contact_us/email", method = RequestMethod.POST)
     @ApiOperation(value = "Contact support by email")

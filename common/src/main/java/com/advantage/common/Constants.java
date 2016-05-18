@@ -14,9 +14,9 @@ public class Constants {
     public static final String URI_API = "/api";
 
     //
-    public static final String FILE_PROPERTIES_INTERNAL = "classpath:/internal_config_for_env.properties";
-    public static final String FILE_PROPERTIES_EXTERNAL = "classpath:/services.properties";
-    public static final String FILE_PROPERTIES_GLOBAL = "classpath:/global.properties";
+    public static final String FILE_PROPERTIES_INTERNAL = "classpath:properties/internal_config_for_env.properties";
+    public static final String FILE_PROPERTIES_EXTERNAL = "classpath:properties/services.properties";
+    public static final String FILE_PROPERTIES_GLOBAL = "classpath:properties/global.properties";
     public static final String FILE_PROPERTIES_DEMO_APP = "classpath:/DemoApp.properties";
     public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
     public static final String FILE_DEMO_APP_CONFIG_XML = "classpath:/DemoAppConfig.xml";

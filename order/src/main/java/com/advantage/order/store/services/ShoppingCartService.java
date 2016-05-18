@@ -4,7 +4,9 @@ package com.advantage.order.store.services;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.ColorAttributeDto;
+import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.ProductDto;
+import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.ShoppingCartDto;
 import com.advantage.order.store.dto.ShoppingCartResponse;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,8 @@ import java.util.List;
 public class ShoppingCartService {
 
     private static final String CATALOG_PRODUCT = "products/";
+    private static final String DEMO_APP_CONFIG_BY_PARAMETER_NAME = "DemoAppConfig/parameters/";    //  Show_error_500_in_update_cart
+    private static final Logger LOGGER = Logger.getLogger(ShoppingCartService.class);
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -110,6 +115,50 @@ public class ShoppingCartService {
         return shoppingCartResponse;
     }
 
+    private DemoAppConfigParameter getConfigParameterValueFromJsonObjectString(String jsonObjectString) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        DemoAppConfigParameter demoAppConfigParameter = objectMapper.readValue(jsonObjectString, DemoAppConfigParameter.class);
+
+        return demoAppConfigParameter;
+    }
+
+    private String getDemoAppConfigParameterValue(String parameterName) {
+        URL productsPrefixUrl;
+        URL getDemoAppConfigByParameterName = null;
+
+        try {
+            productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), DEMO_APP_CONFIG_BY_PARAMETER_NAME);
+            getDemoAppConfigByParameterName = new URL(productsPrefixUrl, parameterName);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("stringURL=\"" + getDemoAppConfigByParameterName.toString() + "\"");
+
+        DemoAppConfigParameter demoAppConfigParameter = null;
+        String parameterValue = null;
+
+        try {
+            String stringResponse = httpGet(getDemoAppConfigByParameterName);
+            System.out.println("stringResponse = \"" + stringResponse + "\"");
+
+            if (! stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
+                demoAppConfigParameter = getConfigParameterValueFromJsonObjectString(stringResponse);
+                if (demoAppConfigParameter != null) {
+                    parameterValue = demoAppConfigParameter.getParameterValue();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Calling httpGet(\"" + getDemoAppConfigByParameterName.toString() + "\") throws IOException: ");
+            e.printStackTrace();
+        }
+
+        return parameterValue;
+    }
+
     /*
         productId   color       Quantity
         1           YELLOW      5
@@ -130,55 +179,67 @@ public class ShoppingCartService {
 
         ShoppingCartResponse shoppingCartResponse = null;
 
-        int color = ShoppingCart.convertHexColorToInt(hexColor);
+        //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
 
-        /*  Update QUANTITY of product in user cart */
-        if (quantity > 0) {
-            /* Update product quantity in cart  */
-            System.out.println("ShoppingCartService.update(" + userId + ", " + productId + ", " + color + ", " + quantity + ")");
-            shoppingCartResponse = shoppingCartRepository.update(userId, productId, color, quantity);
-        }
+        String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
+        LOGGER.info("Updating product " + productId + " in cart.");
+        LOGGER.info("Updating product details with color: " + ((hexColorNew.equals("-1"))? ColorPalletEnum.getColorByCode(hexColor).toString().toLowerCase() : ColorPalletEnum.getColorByCode(hexColorNew).toString().toLowerCase()) + " and quantity: " + quantity + ".");
+        LOGGER.info("Verifying that updated product is available at vendor shop.");
+        if (parameterValue.equalsIgnoreCase("No")) {
 
-        /*  Update COLOR CHANGE of product in user cart */
-        if ((ValidationHelper.isValidColorHexNumber(hexColor)) &&
-                (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
-                (! hexColor.equalsIgnoreCase(hexColorNew)))
-        {
+            int color = ShoppingCart.convertHexColorToInt(hexColor);
 
-            /*  Try to find a product with the same productId and new color in the user's cart  */
-            int newColor = ShoppingCart.convertHexColorToInt(hexColorNew);
-            ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, newColor);
+            /*  Update QUANTITY of product in user cart */
+            if (quantity > 0) {
+                /* Update product quantity in cart  */
+                System.out.println("ShoppingCartService.update(" + userId + ", " + productId + ", " + color + ", " + quantity + ")");
+                shoppingCartResponse = shoppingCartRepository.update(userId, productId, color, quantity);
+            }
 
-            if (shoppingCart != null) {
-                /*
-                    There's already a product with the new color:
-                    1. Delete product with previous color, but save its quantity.
-                    2. Add quantity of product with previous color to product with new color.
-                 */
-                int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
-                shoppingCartResponse = shoppingCartRepository.getShoppingCartResponse();
-                if (shoppingCartResponse.isSuccess()) {
-                    int totalQuantity = shoppingCart.getQuantity() + quantity;
-                    shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
+            /*  Update COLOR CHANGE of product in user cart */
+            if ((ValidationHelper.isValidColorHexNumber(hexColor)) &&
+                    (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
+                    (!hexColor.equalsIgnoreCase(hexColorNew))) {
+
+                /*  Try to find a product with the same productId and new color in the user's cart  */
+                int newColor = ShoppingCart.convertHexColorToInt(hexColorNew);
+                ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, newColor);
+
+                if (shoppingCart != null) {
+                    /*
+                        There's already a product with the new color:
+                        1. Delete product with previous color, but save its quantity.
+                        2. Add quantity of product with previous color to product with new color.
+                     */
+                    int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+                    shoppingCartResponse = shoppingCartRepository.getShoppingCartResponse();
+                    if (shoppingCartResponse.isSuccess()) {
+                        int totalQuantity = shoppingCart.getQuantity() + quantity;
+                        shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
+                    } else {
+                        shoppingCartResponse.setReason("Error: failed to change product's color");
+                    }
                 } else {
-                    shoppingCartResponse.setReason("Error: failed to change product's color");
+                    /*
+                        Unlikely to occur, but need to cover it:
+                        Add a new product with the new color to user cart
+                     */
+                    shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+                    shoppingCartRepository.add(new ShoppingCart(userId, productId, newColor, quantity));
                 }
+            } else {
+                //  Nothing to update - Bad Request
+                shoppingCartResponse.setSuccess(false);
+                shoppingCartResponse.setReason("Error: Bad request. Product's color was not changed");
+                shoppingCartResponse.setId(productId);
             }
-            else {
-                /*
-                    Unlikely to occur, but need to cover it:
-                    Add a new product with the new color to user cart
-                 */
-                shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
-                shoppingCartRepository.add(new ShoppingCart(userId, productId, newColor, quantity));
-            }
+        } else if (parameterValue.equalsIgnoreCase("Yes")) {
+			//simulate error 500
+            RuntimeException re = new RuntimeException("Failed to update product in cart.");            
+            LOGGER.error("Internal Server Error. Failed to update product in cart.", re);
+            throw re;
         }
-        else {
-            //  Nothing to update - Bad Request
-            shoppingCartResponse.setSuccess(false);
-            shoppingCartResponse.setReason("Error: Bad request. Product's color was not changed");
-            shoppingCartResponse.setId(productId);
-        }
+
 
         return shoppingCartResponse;
     }

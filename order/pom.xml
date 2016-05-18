@@ -12,19 +12,6 @@
     </parent>
     <profiles>
         <profile>
-            <id>production</id>
-            <build>
-                <plugins>
-                    <!--prod plugins vvv-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                    </plugin>
-                    <!--prod plugins ^^^-->
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>development</id>
             <build>
                 <plugins>
@@ -111,6 +98,11 @@
             <version>1.0-SNAPSHOT</version>
             <classifier>classes</classifier>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
     </dependencies>
 </project>

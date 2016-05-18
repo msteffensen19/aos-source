@@ -12,11 +12,13 @@ import org.springframework.context.annotation.PropertySources;
 @Configuration
 @ComponentScan
 @PropertySources({
-		@PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
-		@PropertySource("classpath:/db.properties")})
+        @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
+        @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
+        @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
+        @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})
 public class AccountserviceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AccountserviceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AccountserviceApplication.class, args);
+    }
 }

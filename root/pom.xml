@@ -151,7 +151,7 @@
                                     <id>exec-bower-install</id>
                                     <phase>generate-sources</phase>
                                     <configuration>
-                                        <executable>bower</executable>
+                                        <executable>bower.cmd</executable>
                                         <arguments>
                                             <argument>install</argument>
                                         </arguments>
@@ -165,7 +165,7 @@
                                     <id>exec-grunt</id>
                                     <phase>process-resources</phase>
                                     <configuration>
-                                        <executable>grunt</executable>
+                                        <executable>grunt.cmd</executable>
                                         <workingDirectory>src/main/webapp</workingDirectory>
                                         <arguments>
                                             <argument>dev</argument>
@@ -184,6 +184,21 @@
     </profiles>
     <build>
         <finalName>ROOT</finalName>
+        <resources>
+            <!-- Do not copy *.properties files and ver.txt to WEB-INF\classes (in ROOT project)-->
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <excludes>
+                    <exclude>
+                        *.properties
+                    </exclude>
+                    <exclude>
+                        *.properties.*
+                    </exclude>
+                    <exclude>ver.txt</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -229,29 +244,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-            </plugin>
-            <!--echo property test-->
-            <plugin>
-                <!-- TODO-EVG make decision WTD -->
-                <groupId>com.soebes.maven.plugins</groupId>
-                <artifactId>echo-maven-plugin</artifactId>
-                <version>0.2</version>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>echo</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <echos>
-                        <echo>basedir=${basedir}</echo>
-                        <echo>project.basedir=${project.basedir}</echo>
-                        <echo>project.parent.basedir=${project.parent.basedir}</echo>
-                        <echo>project.build.directory=${project.build.directory}</echo>
-                    </echos>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
