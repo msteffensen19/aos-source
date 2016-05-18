@@ -448,7 +448,7 @@ public class OrderManagementService {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
 
-            //  SafePay PAYMENT request
+            //  region SafePay PAYMENT request
             String input = "{" +
                     "\"SPCustomerPhone\": \"" + safePayRequest.getCustomerPhone() + "\"," +
                     "\"SPPassword\": \"" + safePayRequest.getPassword() + "\"," +
@@ -459,6 +459,7 @@ public class OrderManagementService {
                     "\"SPTransactionType\": \"" + safePayRequest.getTransactionType() + "\"," +
                     "\"SPUserName\":\"" + safePayRequest.getUserName() + "\"" +
                     "}";
+            //  endregion
 
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());

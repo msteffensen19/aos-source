@@ -108,6 +108,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
         orderHeader.setCvvNumber(orderPaymentInformation.getCvvNumber());
         orderHeader.setUsername(orderPaymentInformation.getUsername());
 
+        //  Order Header - persist
         entityManager.persist(orderHeader);
 
         //  Validate OrderLines information

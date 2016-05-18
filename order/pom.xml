@@ -12,19 +12,6 @@
     </parent>
     <profiles>
         <profile>
-            <id>production</id>
-            <build>
-                <plugins>
-                    <!--prod plugins vvv-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                    </plugin>
-                    <!--prod plugins ^^^-->
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>development</id>
             <build>
                 <plugins>

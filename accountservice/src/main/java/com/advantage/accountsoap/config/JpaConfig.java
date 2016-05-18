@@ -19,11 +19,11 @@ public class JpaConfig {
     @Inject
     DataSource dataSource;
 
-    @Value("${db.driver}")
-    private String DB_DRIVER;
+//    @Value("${db.driver}")
+//    private String DB_DRIVER;
 
-    @Value("${db.password}")
-    private String DB_PASSWORD;
+//    @Value("${db.password}")
+//    private String DB_PASSWORD;
 
     @Value("${hibernate.dialect}")
     private String HIBERNATE_DIALECT;
@@ -34,8 +34,8 @@ public class JpaConfig {
     @Value("${hibernate.hbm2ddl.auto}")
     private String HIBERNATE_HBM2DDL_AUTO;
 
-    @Value("${entitymanager.packagesToScan}")
-    private String ENTITYMANAGER_PACKAGES_TO_SCAN;
+//    @Value("${entitymanager.packagesToScan}")
+//    private String ENTITYMANAGER_PACKAGES_TO_SCAN;
 
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

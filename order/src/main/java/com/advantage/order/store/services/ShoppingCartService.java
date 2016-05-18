@@ -177,8 +177,9 @@ public class ShoppingCartService {
         ShoppingCartResponse shoppingCartResponse = null;
 
         //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
+
         String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
-        if (parameterValue.equalsIgnoreCase("No")) {
+        if ((parameterValue == null) || (parameterValue.equalsIgnoreCase("No"))) {
 
             int color = ShoppingCart.convertHexColorToInt(hexColor);
 
@@ -227,10 +228,11 @@ public class ShoppingCartService {
                 shoppingCartResponse.setId(productId);
             }
         } else if (parameterValue.equalsIgnoreCase("Yes")) {
-            //  Simulate HttpStatus code 500
-            shoppingCartResponse.setSuccess(false);
-            shoppingCartResponse.setReason("Error: Internal Server Error");
-            shoppingCartResponse.setId(500);
+            ////  Simulate HttpStatus code 500
+            //shoppingCartResponse.setSuccess(false);
+            //shoppingCartResponse.setReason("Error: Internal Server Error");
+            //shoppingCartResponse.setId(500);
+            throw new RuntimeException("A problem occured while updating cart.");
         }
 
         return shoppingCartResponse;
