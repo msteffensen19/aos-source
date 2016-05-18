@@ -6,6 +6,7 @@ import com.advantage.common.Url_resources;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.ProductDto;
+import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.ShoppingCartDto;
 import com.advantage.order.store.dto.ShoppingCartResponse;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,7 @@ public class ShoppingCartService {
 
     private static final String CATALOG_PRODUCT = "products/";
     private static final String DEMO_APP_CONFIG_BY_PARAMETER_NAME = "DemoAppConfig/parameters/";    //  Show_error_500_in_update_cart
+    private static final Logger LOGGER = Logger.getLogger(ShoppingCartService.class);
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -179,7 +182,10 @@ public class ShoppingCartService {
         //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
 
         String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
-        if ((parameterValue == null) || (parameterValue.equalsIgnoreCase("No"))) {
+        LOGGER.info("Updating product " + productId + " in cart.");
+        LOGGER.info("Updating product details with color: " + ((hexColorNew.equals("-1"))? ColorPalletEnum.getColorByCode(hexColor).toString().toLowerCase() : ColorPalletEnum.getColorByCode(hexColorNew).toString().toLowerCase()) + " and quantity: " + quantity + ".");
+        LOGGER.info("Verifying that updated product is available at vendor shop.");
+        if (parameterValue.equalsIgnoreCase("No")) {
 
             int color = ShoppingCart.convertHexColorToInt(hexColor);
 
@@ -228,12 +234,12 @@ public class ShoppingCartService {
                 shoppingCartResponse.setId(productId);
             }
         } else if (parameterValue.equalsIgnoreCase("Yes")) {
-            ////  Simulate HttpStatus code 500
-            //shoppingCartResponse.setSuccess(false);
-            //shoppingCartResponse.setReason("Error: Internal Server Error");
-            //shoppingCartResponse.setId(500);
-            throw new RuntimeException("A problem occured while updating cart.");
+			//simulate error 500
+            RuntimeException re = new RuntimeException("Failed to update product in cart.");            
+            LOGGER.error("Internal Server Error. Failed to update product in cart.", re);
+            throw re;
         }
+
 
         return shoppingCartResponse;
     }
