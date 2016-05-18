@@ -190,10 +190,10 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
 
-                if((user.firstName + user.lastName).replace(/\s/g, "").length < 1){
-                    defer.resolve(null);
-                }
-                else {
+                //if((user.firstName + user.lastName).replace(/\s/g, "").length < 1){
+                //    defer.resolve(null);
+                //}
+                //else {
 
                     productsCartService.getCart().then(function (cart) {
 
@@ -232,7 +232,7 @@ define(['./module'], function (services) {
                             })
                         }, Helper.defaultTimeLoaderToEnable);
                     })
-                }
+                //}
                 return defer.promise;
             }
         }]);

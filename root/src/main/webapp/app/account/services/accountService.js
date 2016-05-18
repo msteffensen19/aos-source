@@ -162,7 +162,9 @@ define(['./module'], function (services) {
                         $timeout(function () {
                             var expectToReceive = {
                                 accountId: accountId,
-                                newPassword: passwords.new
+                                newPassword: passwords.new,
+                                oldPassword: passwords.old,
+                                base64Token: "Bearer " + $rootScope.userCookie.response.token,
                             }
                             var params = server.account.changePassword();
                             mini_soap.post(params.path, params.method, expectToReceive).
@@ -284,10 +286,10 @@ define(['./module'], function (services) {
 
                     var accountId = $rootScope.userCookie.response.userId;
                     var expectToReceive = {
-                        accountId: accountId,
+                        userId: accountId,
                         safePayUsername: safePay.username,
+                        safePayPassword: safePay.password,
                         referenceId: "1234567890",
-                        safePayPassword: safePay.password
                     }
 
                     var defer = $q.defer();
@@ -356,18 +358,18 @@ define(['./module'], function (services) {
 
                     Helper.enableLoader();
                     $timeout(function () {
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
 
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
                     }, Helper.defaultTimeLoaderToEnable);
 
                     return defer.promise;

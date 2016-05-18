@@ -46,6 +46,9 @@ Helper.footerHandler = function() {
 
         setTimeout(function(){
             var paddingTop = $(window).width() > 480 ? 90 : 0;
+            if(document.location.hash == "#/"){
+                paddingTop = 0;
+            }
             $("#virtualFooter").height($("footer").height() + paddingTop);
             $("#virtualFooter").css('width' , "100%" );
 

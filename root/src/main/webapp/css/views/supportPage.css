@@ -1,5 +1,6 @@
 #supportCover {
     background-color: #54b3ad;
+    padding-bottom: 30px;
 }
 
 #supportCover .inputMargin .validate-directive {
@@ -80,7 +81,7 @@
 
 #supportCover button{
     font-size: 14px;
-    margin: 20px 4%;
+    margin: 10px 32px;
     padding: 8px 46px;
     display: block;
     color: white;

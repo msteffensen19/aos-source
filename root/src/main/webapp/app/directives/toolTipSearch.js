@@ -116,7 +116,8 @@ define(['./module'], function (directives) {
                         });
 
                         function getAutocompleateWidth() {
-                            return ($(document).width() > 1000 ? 530 : 300) -
+                            return ($(document).width() > 1000 ? 680 :
+                                    $(document).width() > 1000 ? 530 : 300) -
                                 ($(".hi-user").width() * 1.5);
                         }
 

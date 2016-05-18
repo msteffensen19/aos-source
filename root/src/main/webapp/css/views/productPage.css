@@ -19,7 +19,7 @@
 }
 
 .productImage.pages.fixed + section{
-    margin-top:40px;
+    margin-top:0px;
 }
 
 #product-image > figure > img{
@@ -235,8 +235,6 @@
 .topSpace{
     position: relative;
     padding-top: 56px;
-    top: 50px;
-
 }
 
 #productProperties > div.fixedBtn{

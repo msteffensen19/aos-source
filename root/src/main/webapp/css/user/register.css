@@ -117,7 +117,7 @@ display: block;
     margin:0;
 }
 
-#form button{
+.sec-validate button.register{
     border:  solid 2px #2a2a2a;
     color:#2a2a2a;
     background-color: white;
@@ -129,14 +129,30 @@ display: block;
     transition: all .3s ease;
 }
 
-#form button:hover{
+
+.sec-validate button.register:hover{
     color:white;
     background-color: #2a2a2a;
 }
 
+.sec-validate button.sec-validate-invalid:hover {
+    color:#b2b2b2 !important;
+    background-color: white !important;
+    border: solid 2px #d1d1d1 !important
+}
+
+
+
+.sec-validate .center.block{
+    display: block;
+    padding-bottom: 10px;
+}
+
+
 .ALREADY_HAVE_AN_ACCOUNT{
     display: block;
     text-align: center;
+    margin-bottom: 40px;
 }
 
 .ALREADY_HAVE_AN_ACCOUNT a{
@@ -225,8 +241,13 @@ display: block;
         display: block;
     }
 
-    #registerCover{
-        padding-top: 0px;
+    /*#registerCover{*/
+        /*padding-top: 0px;*/
+    /*}*/
+
+    #formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
+    {
+        /*width: 100% !important;*/
     }
 
     #infoDemo{

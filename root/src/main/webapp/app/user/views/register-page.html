@@ -4,22 +4,19 @@
 </nav>
 <section>
     <article>
-        <div id="registerCover" data-ng-hide="registerSuccess">
-            <h3 class="roboto-regular sticky fixedImportant fixed" translate="CREATE_ACCOUNT"></h3>
+        <h3 class="roboto-regular sticky fixedImportant fixed" translate="CREATE_ACCOUNT"></h3>
+        <sec-validate>
+            <div id="registerCover" data-ng-hide="registerSuccess">
+                <div id="infoDemo">
+                    <div class="notice">
+                        <h4 translate="NOTICE"></h4>
 
-            <div id="infoDemo">
-                <div class="notice">
-                    <h4 translate="NOTICE"></h4>
+                        <p class="roboto-light" translate="This_is_a_demo"></p>
 
-                    <p class="roboto-light" translate="This_is_a_demo"></p>
-
-                    <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
+                        <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
+                    </div>
                 </div>
-            </div>
-
-            <div id="form">
-
-                <sec-validate>
+                <div id="form">
                     <div id="formCover">
 
                         <div>
@@ -149,30 +146,31 @@
                             </sec-input>
                         </div>
                     </div>
-
-                    <button sec-submit-attr="register()"
-                           class="roboto-medium sec-validate-invalid"
-                           a-sec-validate-invalid >
-                        {{'REGISTER' | translate}}
-                    </button>
-
-
-                    <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium">
-                        <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()"></a>
-                    </label>
-                    <label class="{{registerAnswer.class}} center">{{registerAnswer.message}}</label>
-
-                </sec-validate>
+                </div>
             </div>
-        </div>
+
+            <button sec-submit-attr="register() "
+                    class="roboto-medium sec-validate-invalid register"
+                    a-sec-validate-invalid>
+                {{'REGISTER' | translate}}
+            </button>
+            <label class="{{registerAnswer.class}} center block " data-ng-show="!registerSuccess">
+                {{registerAnswer.message}}</label>
+
+            <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" data-ng-show="!registerSuccess">
+                <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()"></a>
+            </label>
+
+        </sec-validate>
 
         <div id="registerSuccessCover" data-ng-show="registerSuccess">
             <div class="center">
                 <h1 class="roboto-medium"> {{ 'Hi' | translate }} {{ WellcomeName }}, </h1>
+
                 <p class="roboto-regular successMessage">
                     {{ 'your_Account_was_created_successfully' | translate}}
                 </p>
-                <br />
+                <br/>
                 <a class="a-button" href="/"> {{ 'CONTINUE_SHOPPING' | translate}} </a>
             </div>
         </div>
