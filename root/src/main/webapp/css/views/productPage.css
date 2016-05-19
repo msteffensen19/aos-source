@@ -234,6 +234,7 @@
 
 .topSpace{
     position: relative;
+    margin-top: 90px;
 }
 
 #productProperties > div.fixedBtn{

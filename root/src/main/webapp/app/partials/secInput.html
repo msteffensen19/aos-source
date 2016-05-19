@@ -6,6 +6,7 @@
            ng-click="validateLabelClicked(id)">
         {{textToShow.text}}
     </label>
+
     <input type="{{inputType}}" name="{{id}}" autocapitalize="off"
            autocomplete="off" autocorrect="off" class="inputtext"
            data-ng-class="{ validateInvalid : !textToShow.valid }"
