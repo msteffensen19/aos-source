@@ -18,12 +18,14 @@
 
     <div ng-transclude data-ng-show="inputType == 'transclude'"></div>
 
-    <div class="validate-info" ng-show="warnings.length > 0">
+    <div class="validate-info" ng-show="warnings.length > 0 && !doNotShowInfo">
         <ul>
             <li data-ng-repeat="info in warnings" data-ng-show="info.info != '' && info.show" >
                 <a>{{ info.info }}</a>
             </li>
         </ul>
     </div>
+
+
 </div>
 

@@ -161,6 +161,7 @@ define(['./module'], function (directives) {
                             ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
                         }, 1000);
                     }
+
                 }
             }
         }])
@@ -180,6 +181,15 @@ define(['./module'], function (directives) {
                 text: "",
                 valid: true
             };
+
+            s.doNotShowInfo = false;
+            s.setDoNotShowInfo = function(b){
+                s.doNotShowInfo = b;
+            }
+            this.isBlockingMessage = function(){
+                return s.doNotShowInfo;
+            }
+
 
             s.inputKeyup = function (id) {
                 var input = $('#secInput_' + id);
@@ -203,6 +213,7 @@ define(['./module'], function (directives) {
                     text: s.placeHolder,
                     valid: true,
                 };
+
                 checkValidInput(s.warnings, input, 'keyup');
                 var lab = input.prev();
                 labelStartPossition = labelStartPossition || lab.css('top');
@@ -260,6 +271,7 @@ define(['./module'], function (directives) {
             }
 
             this.addWarningInfo = function (warningInfo) {
+                s.doNotShowInfo = this.isBlockingMessage();
                 s.warnings.push(warningInfo);
                 ctrlFather.addInvalidField(s.id);
             }
