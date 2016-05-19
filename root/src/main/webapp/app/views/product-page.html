@@ -1,7 +1,6 @@
-
-<nav class="pages fixedImportant productImage" >
-    <a translate="HOME" href="/#" ></a>
-    <a href="#/category/{{product.categoryId}}" > {{categoryName}} </a>
+<nav class="pages fixedImportant productImage">
+    <a translate="HOME" href="/#"></a>
+    <a href="#/category/{{product.categoryId}}"> {{categoryName}} </a>
     <a class="select">{{::product.productName | uppercase}}</a>
 </nav>
 
@@ -12,9 +11,10 @@
         <!-- mobile description section  -->
 
         <div id="mobileDescription" class="screen480">
-            <h1 class="roboto-regular" > {{::product.productName | uppercase}} </h1>
+            <h1 class="roboto-regular"> {{::product.productName | uppercase}} </h1>
+
             <h2 class="roboto-thin"> {{::product.price | currency:'$'}}
-                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" >
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">
                     {{ 'SOUL_OUT' | translate }}
                 </span>
             </h2>
@@ -31,7 +31,8 @@
             </figure>
             <div id="cover" ng-if="product.images.length > 1">
                 <div id="length">
-                    <div class="imageAlias" data-ng-click="changeImage(img)" data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
+                    <div class="imageAlias" data-ng-click="changeImage(img)"
+                         data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
                         <img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">
                     </div>
                 </div>
@@ -41,43 +42,48 @@
         <!-- end image section -->
 
 
-
-
         <!-- description section -->
 
         <div id="description">
-            <h1 class="roboto-regular screen768" > {{::product.productName | uppercase}} </h1>
+            <h1 class="roboto-regular screen768"> {{::product.productName | uppercase}} </h1>
+
             <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}
-                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" >
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">
                     {{ 'SOUL_OUT' | translate }}
                 </span>
             </h2>
-            <p class="roboto-light"> {{::product.description }}  </p>
+
+            <p class="roboto-light"> {{::product.description }} </p>
         </div>
 
 
         <div id="productProperties">
             <div class="colors" ng-if="product.colors.length > 0">
-                <h2 translate="Color" class="Colors roboto-light" class="roboto-light" ></h2>
+                <h2 translate="Color" class="Colors roboto-light" class="roboto-light"></h2>
+
                 <div>
-                <span title="{{color.name}}" data-ng-repeat="color in [] | sortArrayByColorName:product.colors" class="productColor"
-                       data-ng-hide="color.code == 'ABCDEF'" data-ng-style=" color.code == 'FFFFFF' ?
+                <span title="{{color.name}}" data-ng-repeat="color in [] | sortArrayByColorName:product.colors"
+                      class="productColor"
+                      data-ng-hide="color.code == 'ABCDEF'" data-ng-style=" color.code == 'FFFFFF' ?
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
                               {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
                       data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 && product.productStatus == "Active" } '
-                      data-ng-click="setColor(color)" >
+                      data-ng-click="setColor(color)">
                 </span>
                 </div>
             </div>
             <div class="smoolMargin">
-                <label class="Quantity roboto-light" translate="Quantity:" ></label>
-                <e-sec-plus-minus num-attr="quantity" a-disable="product.productStatus == 'OutOfStock'" ></e-sec-plus-minus>
+                <label class="Quantity roboto-light" translate="Quantity:"></label>
+                <e-sec-plus-minus num-attr="quantity"
+                                  a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>
                 <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
             </div>
             <div class="fixedBtn">
                 <button class="roboto-medium"
                         data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
-                        translate="ADD_TO_CART"  data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}} </button>
+                        translate="ADD_TO_CART" data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{
+                    pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}
+                </button>
             </div>
         </div>
 
@@ -86,8 +92,9 @@
 
     </article>
 
-    <article class="max-width " data-ng-class="{ topSpace : product.images.length > 1 }" >
+    <article class="max-width " data-ng-class="{ topSpace : product.images.length > 1 }">
         <h2 class="roboto-regular product_specifications" translate="PRODUCT_SPECIFICATIONS"></h2>
+
         <div class="roboto-light list" ng-repeat="attr in product_attributes">
             <label class="attr">{{ attr.attributeName | uppercase}}</label>
             <label class="value">{{ attr.attributeValue }}</label>

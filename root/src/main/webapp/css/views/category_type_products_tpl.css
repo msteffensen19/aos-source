@@ -141,14 +141,20 @@
 .categoryRight ul li {
     text-align: center;
     display: inline-block;
-    width: 300px;
+    width: 250px;
     padding: 10px;
-    margin: 10px;
+    margin: 20px;
     box-sizing: border-box;
     transition: box-shadow 0.3s ease;
     cursor: pointer;
     vertical-align: top;
     position: relative;
+    transform: scale(1.1);
+    transition: all 0.5s ease;
+}
+
+.categoryRight ul li:hover{
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .categoryRight ul li .soulOut{
@@ -171,7 +177,7 @@
 }
 
 .categoryRight ul li .imgProduct {
-    width: 90%;
+    width: 80%;
     position: relative;
 }
 
@@ -187,6 +193,7 @@
     white-space: nowrap;
     opacity: 0;
     float: right;
+    padding: 0 1px;
 }
 
 .categoryRight ul li:hover .AddToCard{
@@ -281,14 +288,14 @@
 
 @media screen and (max-width: 1550px) {
     .categoryRight ul li {
-        width: 23%;
+        width: 20%;
     }
 }
 
 
 @media screen and (max-width: 1250px) {
     .categoryRight ul li{
-        width: 31.1%;
+        width: 27%;
     }
 }
 

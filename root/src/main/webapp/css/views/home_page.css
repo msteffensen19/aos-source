@@ -61,7 +61,6 @@
 }
 
 .categoryCell:hover .shop_now_slider .shop_now{
-    font-size: 22px;
     padding: 26px 28px 26px 28px;
 }
 
@@ -96,7 +95,7 @@
     cursor: pointer;
 
     padding: 26px 28px 65px 28px;
-    font-size: 28px;
+    font-size: 22px;
 }
 
 
@@ -257,7 +256,7 @@ label.shop_now:after{
 .slider  div.transition {
     /*-webkit-transition: right 2s cubic-bezier(.65,.01,1,.45);*/
     transition: right 1.5s cubic-bezier(.65,.01,.8,.48);
-    transition-delay:1s;
+    transition-delay:0.2s;
 }
 
 .slider .container h2{
@@ -267,7 +266,7 @@ label.shop_now:after{
     margin-bottom: 41px;
     color: white;
     position: relative;
-    animation-duration: 4s;
+    animation-duration: 1.6s;
 }
 
 .slider .container button{
@@ -276,7 +275,7 @@ label.shop_now:after{
     padding: 16px 40px;
     font-size: 29px;
     position: relative;
-    animation-duration: 4.5s;
+    animation-duration: 2s;
 }
 
 .slider-length div .container button:hover {
