@@ -186,7 +186,9 @@ var english = {
     'No_results_for' : 'No results for',
     'No_results' : 'No results',
     'SEND' : 'SEND',
-    'Product_removed': 'Product removed'
+    'Product_removed': 'Product removed',
+    'USER': 'USER',
+    'SEARCH': 'SEARCH'
 
 
 };

@@ -26,7 +26,7 @@
 
 <div class="waitBackground">
     <div>
-<!--
+        <!--
         <svg version="1.1" id="Layer_1"
              xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -143,7 +143,7 @@
                                 data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
                                 data-ng-mouseleave="miniTitleOut('loginMiniTitle')"
                 -->
-                <a class="img" data-ng-click="login('loginMiniTitle')">
+                <a class="img" data-ng-click="login('loginMiniTitle')" title="{{ 'USER' | translate }}" >
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
                         {{userCookie.name}}
                     </span>
@@ -156,8 +156,9 @@
                 </a>
             </li>
             <li>
-                <a class="img">
-                    <search tool-tip-search></search>
+
+                <a class="img" title="{{ 'SEARCH' | translate }}">
+                    <search tool-tip-search ></search>
                 </a>
             </li>
             <li class="nav-li-Links">

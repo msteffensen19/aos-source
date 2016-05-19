@@ -410,7 +410,7 @@ define(['./module'], function (directives) {
                     modelAttr : '=',
                     idAttr: '@',
                     secChange: '&',
-                 },
+                },
                 template: $templateCache.get('app/partials/secInput.html'),
                 controller: 'secInputCtrl',
                 link: {

@@ -8,7 +8,7 @@ define(['./module'], function (controllers) {
 
         function (s, supportService, paramsToResorve, categoryService) {
 
-
+            s.hola_mundo = "hola_mundohola_mundohola_mundohola_mundo"
 
 
 
