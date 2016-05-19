@@ -7,7 +7,7 @@
   {
     "categoryId": 1,
     "attributeId": 2,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 1,
@@ -22,7 +22,7 @@
   {
     "categoryId": 1,
     "attributeId": 5,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 1,
@@ -72,17 +72,17 @@
   {
     "categoryId": 1,
     "attributeId": 15,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 1,
     "attributeId": 16,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 1,
     "attributeId": 17,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 2,
@@ -102,7 +102,7 @@
   {
     "categoryId": 3,
     "attributeId": 1,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 3,
@@ -112,7 +112,7 @@
   {
     "categoryId": 3,
     "attributeId": 3,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 3,
@@ -122,7 +122,7 @@
   {
     "categoryId": 3,
     "attributeId": 5,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 3,
@@ -247,7 +247,7 @@
   {
     "categoryId": 5,
     "attributeId": 7,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 5,
@@ -267,17 +267,17 @@
   {
     "categoryId": 5,
     "attributeId": 11,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 5,
     "attributeId": 12,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 5,
     "attributeId": 13,
-    "showInFilter": true
+    "showInFilter": false
   },
   {
     "categoryId": 5,

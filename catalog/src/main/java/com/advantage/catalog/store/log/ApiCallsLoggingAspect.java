@@ -29,11 +29,13 @@ public class ApiCallsLoggingAspect {
 
     @AfterReturning(value = "execution(* com.advantage.catalog.store.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
-        Logger logger = getLoggerFactory("HttpResponse");
-        String builder = joinPoint.getSignature().getName() +
-                " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
+        if (result != null) {
+            Logger logger = getLoggerFactory("HttpResponse");
+            String builder = joinPoint.getSignature().getName() +
+                    " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
-        logger.info(builder);
+            logger.info(builder);
+        }
     }
 
     private void logApiRequest(HttpServletRequest request) {

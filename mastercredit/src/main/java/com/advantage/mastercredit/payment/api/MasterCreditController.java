@@ -23,6 +23,11 @@ public class MasterCreditController {
     @Autowired
     private MasterCreditService masterCreditService;
 
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.addHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+    }
+
     /**
      * @param masterCreditDto
      * @param request
