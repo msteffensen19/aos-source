@@ -46,10 +46,17 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.addHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+    }
+
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
-        return new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        return productCollectionDtoResponseEntity;
+
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
@@ -69,7 +76,7 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto product,
-                                                               HttpServletRequest request) {
+                                                            HttpServletRequest request) {
         if (product == null) {
             return new ResponseEntity<>(new ProductResponseDto(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
@@ -87,8 +94,8 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/images", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProductWithImage(@RequestParam("product") String product,
-                                                                        @RequestParam("file") MultipartFile file,
-                                                                        HttpServletRequest request) {
+                                                                     @RequestParam("file") MultipartFile file,
+                                                                     HttpServletRequest request) {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
                 JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
@@ -128,8 +135,8 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
     public ResponseEntity<ProductResponseDto> updateProduct(@RequestBody ProductDto product,
-                                                               @PathVariable("product_id") Long id,
-                                                               HttpServletRequest request) {
+                                                            @PathVariable("product_id") Long id,
+                                                            HttpServletRequest request) {
         ProductResponseDto responseStatus = productService.updateProduct(product, id);
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
@@ -150,25 +157,24 @@ public class CatalogController {
         4. return response.
          */
         //  TODO-Moti to change code, return success / failure, etc.
-        HttpStatus httpStatus= HttpStatus.PRECONDITION_FAILED;
-        ProductResponseDto responseStatus=null;
+        HttpStatus httpStatus = HttpStatus.PRECONDITION_FAILED;
+        ProductResponseDto responseStatus = null;
         //productID to move to speakers category = 13
-        long productID=13;
+        long productID = 13;
         //speakers category =4
-        long categoryID =4;
+        long categoryID = 4;
         DemoAppConfigParameter parameter = demoAppConfigService.getDemoAppConfigParametersByName("Add_wrong_product_to_speakers_category");
-        if(parameter.getParameterValue().equalsIgnoreCase("yes")){
-            Product product =  productService.getProductById(productID);
+        if (parameter.getParameterValue().equalsIgnoreCase("yes")) {
+            Product product = productService.getProductById(productID);
             ProductDto dto = productService.getDtoByEntity(product);
             dto.setCategoryId(categoryID);
-            responseStatus = productService.updateProduct(dto,productID);
+            responseStatus = productService.updateProduct(dto, productID);
 
-            httpStatus= responseStatus.isSuccess()? httpStatus=HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        }
-        else{
-            httpStatus=HttpStatus.PRECONDITION_FAILED;
+            httpStatus = responseStatus.isSuccess() ? httpStatus = HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        } else {
+            httpStatus = HttpStatus.PRECONDITION_FAILED;
             String responceReason = "Configuration parameter is not ready";
-            responseStatus=new ProductResponseDto(false,productID,responceReason);
+            responseStatus = new ProductResponseDto(false, productID, responceReason);
         }
         return new ResponseEntity<>(responseStatus, httpStatus);
     }
@@ -231,6 +237,7 @@ public class CatalogController {
 
     /**
      * Valid values: case insensitive. "ALL" or valid Last-Update Name.
+     *
      * @return {@link LastUpdate}.
      */
     @RequestMapping(value = "/catalog/LastUpdate/{what_to_get}", method = RequestMethod.GET)
@@ -348,7 +355,7 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/images", method = RequestMethod.POST)
     public ResponseEntity<ImageUrlResponseDto> imageUpload(@RequestParam("file") MultipartFile file,
-                                                              HttpServletRequest request) {
+                                                           HttpServletRequest request) {
         if (!file.isEmpty()) {
             ImageUrlResponseDto responseStatus = productService.fileUpload(file);
             return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
@@ -443,8 +450,8 @@ public class CatalogController {
     @RequestMapping(value = "/DemoAppConfig/update/parameters", method = RequestMethod.PUT)
     @ApiOperation(value = "Update DemoAppConfig all parameters values")
     public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameters(@RequestBody DemoAppConfigParametersDto parameters,
-                                                                                    final HttpServletRequest request,
-                                                                                    final HttpServletResponse response) {
+                                                                                     final HttpServletRequest request,
+                                                                                     final HttpServletResponse response) {
 
         DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParametersValues(parameters);
 
@@ -477,7 +484,7 @@ public class CatalogController {
         HttpStatus httpStatus = HttpStatus.OK;
 
         CatalogResponse response = productService.dbRestoreFactorySettings();
-        if (! response.isSuccess()) {
+        if (!response.isSuccess()) {
             httpStatus = HttpStatus.BAD_REQUEST;
 
             return new ResponseEntity<>(response, httpStatus);

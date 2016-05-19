@@ -56,6 +56,12 @@ public class OrderController {
     private static final String DemoAppConfig = "DemoAppConfig/parameters/";
     private static final String ParameterName ="Repeat_ShipEx_call";
     /*  =========================================================================================================   */
+
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.addHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+    }
+
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
     @AuthorizeAsUser
