@@ -5,7 +5,7 @@
 'use strict';
 
 define([
-        './sec-input-validation',
+        './directives/sec-input-validation',
 
     ],
     function() {});

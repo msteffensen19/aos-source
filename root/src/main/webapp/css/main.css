@@ -1,7 +1,7 @@
-
+@import "../app/SECORRENTI/sec-input/css/sec-input-validation.css";
+@import "../utils/noUiSlider.8.2.1/nouislider.css";
 
 @import "UI.css";
-@import "../utils/noUiSlider.8.2.1/nouislider.css";
 @import "animation.css";
 
 @import "icons/cart.css";

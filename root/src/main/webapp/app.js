@@ -35,6 +35,7 @@ define([
     './app/user/directives/index',
     './app/order/directives/index',
     './app/account/directives/index',
+    './app/SECORRENTI/sec-input/index',
 
     './app/templates/module',
 

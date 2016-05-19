@@ -37,13 +37,13 @@ module.exports = function (grunt) {
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/css',
                         ext: '.min.css'
-                    },{
+                    }, {
                         expand: true,
                         cwd: 'app/user/css',
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/app/user/css',
                         ext: '.min.css'
-                    },{
+                    }, {
                         expand: true,
                         cwd: 'app/order/css',
                         src: ['*.css', '!*.min.css'],
@@ -58,7 +58,8 @@ module.exports = function (grunt) {
                 files: [
                     // includes files within path
                     {
-                        expand: true, src: ['css/fonts/*', 'css/images/*', '!css/*.css'],
+                        expand: true,
+                        src: ['css/fonts/*', 'css/images/*', '!css/*.css'],
                         dest: 'target',
                         filter: 'isFile'
                     },
@@ -69,6 +70,7 @@ module.exports = function (grunt) {
                             'app/user/views/*', 'app/user/partials/*',
                             'app/order/views/*', 'app/order/partials/*',
                             'app/account/views/*', 'app/account/partials/*',
+                            'app/SECORRENTI/sec-input/views/*',
                         ],
                         dest: 'target',
                         filter: 'isFile'
@@ -89,6 +91,7 @@ module.exports = function (grunt) {
                     'app/user/partials/**.html',
                     'app/order/partials/**.html',
                     'app/account/partials/**.html',
+                    'app/SECORRENTI/sec-input/views/sec-input-validation.html',
                 ],
                 dest: 'app/templates/module.js',
                 options: {

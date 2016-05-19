@@ -15,15 +15,17 @@ define(['./../../../directives/module'], function (directives) {
                 idAttr: '@',
                 secChange: '&',
             },
-            template: $templateCache.get('app/partials/sec-input-validation.html'),
+            template: $templateCache.get('app/SECORRENTI/sec-input/views/sec-input-validation.html'),
             link: function (scope, element, attr) {
 
-                var input;
-                this.setValidation = function(element){
-                    input = element;
-                };
+                element.addClass("sec-input-validation")
 
-                alert();
+                var input;
+
+                //this.setValidation = function(element){
+                //    input = element;
+                //};
+
             }
         };
     }]);
