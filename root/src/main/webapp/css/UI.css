@@ -90,7 +90,7 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     font-weight: 400;
 }
 .roboto-medium {
-    font-family: 'Roboto', 'localRobotoThin';
+    font-family: 'Roboto', 'localRobotoMedium';
     font-weight: 500;
 }
 
