@@ -15,10 +15,16 @@ define(['./../../../directives/module'], function (directives) {
                 idAttr: '@',
                 secChange: '&',
             },
-            template: $templateCache.get('app/SECORRENTI/sec-input/views/sec-input-validation.html'),
+            //template: $templateCache.get('app/SECORRENTI/sec-input/views/sec-input-validation.html'),
             link: function (scope, element, attr) {
 
                 element.addClass("sec-input-validation")
+
+                var input = $("<input type=\"text\" />");
+
+
+
+                element.append(input)
 
                 var input;
 

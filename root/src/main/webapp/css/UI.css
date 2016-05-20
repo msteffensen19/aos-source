@@ -18,6 +18,22 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 
+@font-face {
+    font-family: 'localRobotoThin';
+    src: url('fonts/Roboto-Thin.ttf'); format('truetype'),
+}
+@font-face {
+    font-family: 'localRobotoLight';
+    src: url('fonts/Roboto-Light.ttf'); format('truetype'),
+}
+@font-face {
+    font-family: 'localRobotoRegular';
+    src: url('fonts/Roboto-Regular.ttf'); format('truetype'),
+}
+@font-face {
+    font-family: 'localRobotoMedium';
+    src: url('fonts/Roboto-Medium.ttf'); format('truetype'),
+}
 
 
 .iconCss{
@@ -62,19 +78,19 @@ input, select, button, #follow img, .slider-steps span, #scrollToTop img{
 }
 
 .roboto-thin {
-    font-family: 'Roboto';
+    font-family: 'Roboto', 'localRobotoThin';
     font-weight: 100;
 }
 .roboto-light {
-    font-family: 'Roboto';
+    font-family: 'Roboto', 'localRobotoLight';
     font-weight: 300;
 }
 .roboto-regular {
-    font-family: 'Roboto';
+    font-family: 'Roboto', 'localRobotoRegular';
     font-weight: 400;
 }
 .roboto-medium {
-    font-family: 'Roboto';
+    font-family: 'Roboto', 'localRobotoThin';
     font-weight: 500;
 }
 
