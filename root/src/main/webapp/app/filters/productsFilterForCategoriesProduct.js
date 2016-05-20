@@ -4,8 +4,13 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.filter('productsFilterForCategoriesProduct',  function($filter){
-        return function (_a, searchResult, minPrice, maxPrice, productsInclude, categoryFilter){
+    controllers.filter('productsFilterForCategoriesProduct', function ($filter) {
+
+        function buildSeparator(val) {
+            return "((START) " + val + " (END))";
+        }
+
+        return function (_a, searchResult, minPrice, maxPrice, productsInclude) {
 
             var categories = searchResult;
 
@@ -22,17 +27,16 @@ define(['./module'], function (controllers) {
                         var count = 0;
                         if (prd.attributes) {
 
-                            for(var name in productsInclude)
-                            {
+                            for (var name in productsInclude) {
                                 var prop = '';
 
-                                for(var index in productsInclude[name]) {
-                                    prop+= productsInclude[name][index];
+                                for (var index in productsInclude[name]) {
+                                    prop += buildSeparator(productsInclude[name][index]);
                                 }
 
-                                for(var index in prd.attributes){
+                                for (var index in prd.attributes) {
 
-                                    if(prop.indexOf(prd.attributes[index].attributeValue) > -1){
+                                    if (prop.indexOf(buildSeparator(prd.attributes[index].attributeValue)) > -1) {
                                         count++;
                                         break;
                                     }
@@ -40,19 +44,17 @@ define(['./module'], function (controllers) {
                             }
 
                             var colors = '';
-                            for(var index in productsInclude['COLOR']) {
+                            for (var index in productsInclude['COLOR']) {
                                 colors += "(" + productsInclude['COLOR'][index].code + ")";
                             }
-
 
                         }
 
                         var colorFound = true;
-                        if(prd.colors && colors != ''){
+                        if (prd.colors && colors != '') {
                             colorFound = false;
-                            for(var index in prd.colors)
-                            {
-                                if(colors.indexOf(prd.colors[index].code) > -1){
+                            for (var index in prd.colors) {
+                                if (colors.indexOf(prd.colors[index].code) > -1) {
                                     colorFound = true;
                                     count++;
                                     break;
@@ -62,34 +64,33 @@ define(['./module'], function (controllers) {
 
                         var categoryFound = true;
                         var categoriesStr = '';
-                        for(var index in productsInclude['CATEGORIES']) {
+                        for (var index in productsInclude['CATEGORIES']) {
                             categoriesStr += "(" + productsInclude['CATEGORIES'][index] + ")";
                         }
-                        if(prd.categoryId && categoriesStr != ''){
+                        if (prd.categoryId && categoriesStr != '') {
                             categoryFound = false;
-                            if(categoriesStr.indexOf(prd.categoryId) > -1){
+                            if (categoriesStr.indexOf(prd.categoryId) > -1) {
                                 categoryFound = true;
                                 count++;
                             }
                         }
 
 
-                        if(count == Object.keys(productsInclude).length &&
+                        if (count == Object.keys(productsInclude).length &&
                             prd.price >= minPrice && prd.price <= maxPrice &&
-                            colorFound && categoryFound )
-                        {
+                            colorFound && categoryFound) {
                             productsFilterized.push(prd);
                         }
                     }
                     productsToReturn.push({products: productsFilterized})
                 }
             }
-            else{
+            else {
                 for (var key in categories) {
                     var productsFilterized = [];
                     for (var index in categories[key].products) {
                         var prd = categories[key].products[index];
-                        if(prd.price >= minPrice && prd.price <= maxPrice ){
+                        if (prd.price >= minPrice && prd.price <= maxPrice) {
                             productsFilterized.push(prd)
                         }
                     }
@@ -101,16 +102,6 @@ define(['./module'], function (controllers) {
         }
     });
 });
-
-
-
-
-
-
-
-
-
-
 
 
 //for (var prdAttrIndex in prd.attributes) {
@@ -130,13 +121,6 @@ define(['./module'], function (controllers) {
 //        }
 //    }
 //}
-
-
-
-
-
-
-
 
 
 //for(var attrib in productsInclude){
