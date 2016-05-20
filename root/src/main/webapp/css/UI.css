@@ -22,14 +22,17 @@
     font-family: 'localRobotoThin';
     src: url('fonts/Roboto-Thin.ttf'); format('truetype'),
 }
+
 @font-face {
     font-family: 'localRobotoLight';
     src: url('fonts/Roboto-Light.ttf'); format('truetype'),
 }
+
 @font-face {
     font-family: 'localRobotoRegular';
     src: url('fonts/Roboto-Regular.ttf'); format('truetype'),
 }
+
 @font-face {
     font-family: 'localRobotoMedium';
     src: url('fonts/Roboto-Medium.ttf'); format('truetype'),

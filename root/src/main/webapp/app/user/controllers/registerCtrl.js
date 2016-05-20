@@ -43,7 +43,13 @@ define(['./module'], function (controllers) {
                                 s.model.username;
                         s.registerSuccess = true;
 
-                       /* $timeout(function(){ $state.go('default') }, 5000)*/
+                        var user = {
+                            email: s.model.email,
+                            loginPassword: s.model.password,
+                            loginUser: s.model.username,
+                        }
+                        s.signIn(user , false)
+                        $timeout(function(){ $state.go('default') }, 5000)
                     }
                 });
             }
