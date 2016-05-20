@@ -48,6 +48,7 @@ public class Account {
     public static final String MESSAGE_USER_LOGIN_FAILED = "Invalid user name or password";
     public static final String MESSAGE_USER_LOGOUT_FAILED = "Invalid user name or password";
     public static final String MESSAGE_USER_IS_BLOCKED_FROM_LOGIN = "User is temporary blocked from login";
+    public static final String MESSAGE_USER_NAME_ALREAY_EXISTS = "User name already exists";
     public static final String MESSAGE_INVALID_EMAIL_ADDRESS = "Invalid email address.";
     public static final String MESSAGE_NO_EMAIL_EXISTS_FOR_USER = "No emails exists for user.";
     public static final String MESSAGE_LOGIN_EMAIL_ADDRESS_IS_EMPTY = "Login e-mail address is empty.";

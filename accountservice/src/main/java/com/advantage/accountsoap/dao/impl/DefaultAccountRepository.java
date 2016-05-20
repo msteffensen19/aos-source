@@ -133,8 +133,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                         return account;
                     } else {
                         //  User with this login already exists
-                        this.failureMessage = "User with this login already exists";
-                        accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
+                        this.failureMessage = "User name already exists";
+                        accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_NAME_ALREAY_EXISTS, -1);
                         return null;
 
                     }
