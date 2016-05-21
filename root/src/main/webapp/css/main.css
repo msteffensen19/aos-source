@@ -1,4 +1,6 @@
 @import "../app/SECORRENTI/sec-input/css/sec-input-validation.css";
+
+
 @import "../utils/noUiSlider.8.2.1/nouislider.css";
 
 @import "UI.css";
@@ -35,6 +37,7 @@
 
 
 @import "account/myAccount.css";
+
 
 #png {
     position: absolute;
@@ -472,7 +475,7 @@ footer .splitter{
 @media screen and (max-width: 768px) {
 
 
-    /*!* For all Pages *!*/
+    /* For all Pages */
 
     h3.roboto-regular{
         font-size: 26px;
@@ -653,9 +656,3 @@ footer .splitter{
 
 }
 
-
-
-
-/*@media screen and (max-width: 450px)*/
-/*{*/
-/*}*/

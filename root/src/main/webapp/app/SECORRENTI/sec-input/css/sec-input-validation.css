@@ -1,3 +1,47 @@
-.sec-input-validation input {
+.sec-input-validation {
+    position: relative;
+    display: block;
+    padding-top: 27px;
+}
 
+
+.sec-input-validation label {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.sec-input-validation label,
+.sec-input-validation input {
+    width: 100%;
+    display: block;
+    padding: 6px 3px;
+    font-size: 14px;
+}
+
+.sec-input-validation label {
+    position: absolute;
+    top: 27px;
+    transition: all .8s ease, top .3s ease, transform .8s ease;
+    transform-origin: 0;
+    border: 1px solid lime;
+}
+
+.sec-input-validation label.animated {
+    top: 10px;
+    transform: scale(0.8, 1);
+    padding: 0 3px;
+    transition: all .8s ease, top .8s ease, transform .3s ease;
+}
+
+
+.sec-input-validation input {
+    margin: 0;
+    outline: none;
+    cursor: text;
+    border: none;
+    border-bottom: 1px solid #CECCCC;
+
+    border: 1px solid red;
 }

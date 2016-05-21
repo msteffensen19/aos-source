@@ -11,15 +11,7 @@ define(['./module'], function (controllers) {
             s.hola_mundo = "hola_mundohola_mundohola_mundohola_mundo"
 
 
-
-
-
-
-
-
-
-
-
+            s.model = "123";
 
 
             //l(paramsToResorve.categories)
