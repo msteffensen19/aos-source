@@ -29,7 +29,7 @@
             <figure>
                 <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
             </figure>
-            <div id="cover" ng-if="product.images.length > 1">
+            <div id="cover" ng-show="(product.images | getAllImagesByColor: colorSelected).length > 1">
                 <div id="length">
                     <div class="imageAlias" data-ng-click="changeImage(img)"
                          data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
@@ -91,7 +91,7 @@
 
 
     </article>
-
+<div id="separator"></div>
     <article class="max-width " data-ng-class="{ topSpace : product.images.length > 1 }">
         <h2 class="roboto-regular product_specifications" translate="PRODUCT_SPECIFICATIONS"></h2>
 
