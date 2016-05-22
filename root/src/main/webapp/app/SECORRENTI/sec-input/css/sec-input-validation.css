@@ -4,7 +4,6 @@
     padding-top: 27px;
 }
 
-
 .sec-input-validation label {
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -25,16 +24,21 @@
     top: 27px;
     transition: all .8s ease, top .3s ease, transform .8s ease;
     transform-origin: 0;
-    border: 1px solid lime;
+    color: #313131;
 }
 
 .sec-input-validation label.animated {
     top: 10px;
     transform: scale(0.8, 1);
     padding: 0 3px;
-    transition: all .8s ease, top .8s ease, transform .3s ease;
+    margin: 5px 0;
+    transition: all .8s ease, transform .3s ease;
+    color: rgb(130, 130, 130);
 }
 
+.sec-input-validation label.invalid {
+    color: #ff454f;
+}
 
 .sec-input-validation input {
     margin: 0;
@@ -42,6 +46,23 @@
     cursor: text;
     border: none;
     border-bottom: 1px solid #CECCCC;
-
-    border: 1px solid red;
+    transition: border-bottom .8s ease;
 }
+
+.sec-input-validation input.invalid {
+    border-bottom: 1px solid #ff454f;
+}
+
+.sec-input-validation ul {
+    list-style: none;
+    display: none;
+}
+
+.sec-input-validation ul li a {
+    color: #828282;
+    font-size: 12px;
+    padding: 4px 0;
+    text-decoration: none;
+}
+
+

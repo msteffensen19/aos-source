@@ -1,6 +1,5 @@
-
 <style>
-    section{
+    section {
         width: 800px;
         height: 800px;
         padding: 50px;
@@ -13,24 +12,58 @@
 <section>
     <article>
 
-        <input type="text" data-ng-model="model">
 
         <!--a-type="password"-->
-        <sec-input-validation a-hint="Username" model-attr="model">
-
+        <sec-input-validation
+                a-hint="Username"
+                sec-model="model"
+                sec-is-field-valid="isFieldValid(valid)"
+                sec-require="require"
+                sec-min-length="minLength"
+                sec-max-length="maxLength"
+                sec-pattern="email"
+        >
         </sec-input-validation>
-        <sec-input-validation a-hint="First Name" model-attr="model">
 
+        <sec-input-validation
+                a-hint="Second Username"
+                sec-model="model2"
+                sec-require="require"
+                sec-compare-to="compareTo"
+                s-model-compare-to="model"
+        >
         </sec-input-validation>
-        <sec-input-validation a-hint="Last Name" model-attr="model">
 
+        <sec-input-validation
+                a-hint="Username"
+                sec-model="model7"
+        >
         </sec-input-validation>
-        <sec-input-validation a-hint="Address" model-attr="model">
+        <sec-input-validation
+                a-hint="Username"
+                sec-model="model8"
+                sec-is-field-valid="isFieldValid(valid)"
+                sec-require="require"
+                sec-min-length="minLength"
+                sec-max-length="maxLength"
+                sec-pattern="email"
+        >
+        </sec-input-validation>
+        <sec-input-validation
+                a-hint="Username"
+                sec-model="model9"
+                sec-is-field-valid="isFieldValid(valid)"
+                sec-require="require"
+                sec-min-length="minLength"
+                sec-max-length="maxLength"
+                sec-pattern="email"
+        >
+        </sec-input-validation>
 
-        </sec-input-validation>
+        <input type="text" data-ng-model="model">
+
     </article>
 </section>
-
 
 
 <!--
@@ -62,25 +95,6 @@
     </ul>
 </div>
 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!--
