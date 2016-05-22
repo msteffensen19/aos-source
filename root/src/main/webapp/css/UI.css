@@ -40,6 +40,9 @@
     src: url('fonts/Roboto-Medium.ttf'); format('truetype'),
 }
 
+*{
+    font-family: 'localRobotoRegular';
+}
 
 .iconCss{
     -moz-user-select: none;
