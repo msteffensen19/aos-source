@@ -67,8 +67,7 @@
                 </os>
             </activation>
             <properties>
-                <!--suppress-->
-                <compName>${HOSTNAME}</compName>
+                <compName>Unknown *nix machine</compName>
             </properties>
         </profile>
         <profile>
