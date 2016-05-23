@@ -144,6 +144,8 @@ define(['./module'], function (directives) {
                         }
                         return -1;
                     }
+
+
                 }],
                 link: function(s, e, a, ctrl){
                     e.addClass('sec-validate');
@@ -152,9 +154,7 @@ define(['./module'], function (directives) {
                         e.attr('id', a.idAttr);
                         ctrl.addId(a.idAttr);
                     }
-                    if(s.doNotShowInfo){
-                        ctrl.setDoNotShowInfo(true);
-                    }
+
                     if(s.invokeWhenReady)
                     {
                         $timeout(function(){
@@ -182,13 +182,9 @@ define(['./module'], function (directives) {
                 valid: true
             };
 
-            s.doNotShowInfo = false;
-            s.setDoNotShowInfo = function(b){
-                s.doNotShowInfo = b;
-            }
-            this.isBlockingMessage = function(){
-                return s.doNotShowInfo;
-            }
+            //this.isBlockingMessage = function(){
+            //    return s.doNotShowInfo;
+            //}
 
 
             s.inputKeyup = function (id) {
@@ -266,12 +262,17 @@ define(['./module'], function (directives) {
                 $('#secInput_' + id).focus();
             }
 
+            s.doNotShowInfo = false;
+            this.setDoNotShowInfo = function(b){
+                s.doNotShowInfo = b;
+            }
+
             this.setCtrlFather = function (_ctrlFather) {
                 ctrlFather = _ctrlFather;
             }
 
             this.addWarningInfo = function (warningInfo) {
-                s.doNotShowInfo = this.isBlockingMessage();
+                //s.doNotShowInfo = this.isBlockingMessage();
                 s.warnings.push(warningInfo);
                 ctrlFather.addInvalidField(s.id);
             }
@@ -481,6 +482,10 @@ define(['./module'], function (directives) {
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr)
+
+                        if(a.doNotShowInfo == "true"){
+                            me.setDoNotShowInfo(true);
+                        }
                         ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
                     },
                     post: function(s){
