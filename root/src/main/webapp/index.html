@@ -139,11 +139,10 @@
                 </ul>
             </li>
             <li>
-                <!--
-                                data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
-                                data-ng-mouseleave="miniTitleOut('loginMiniTitle')"
-                -->
-                <a class="img" data-ng-click="login('loginMiniTitle')" title="{{ 'USER' | translate }}" >
+                <a class="img" data-ng-click="login('loginMiniTitle')"
+                   data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
+                   data-ng-mouseleave="miniTitleOut('loginMiniTitle')"
+                   title="{{ 'USER' | translate }}" >
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
                         {{userCookie.name}}
                     </span>

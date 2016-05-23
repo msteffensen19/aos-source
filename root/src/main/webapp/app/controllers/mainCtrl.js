@@ -185,12 +185,26 @@ define(['./module'], function (controllers) {
                 }
             }
 
+            var ____loginInterval;
+            $scope.miniTitleIn = function(){
+                if(____loginInterval){
+                    $timeout.cancel(____loginInterval);
+                }
+            }
+
+            $scope.miniTitleOut= function(miniTitleId){
+                ____loginInterval = $timeout(function(){
+                    $("#" + miniTitleId).fadeToggle(300);
+                }, 2000);
+            }
+
             $scope.login = function (miniTitleId) {
 
                 if ($rootScope.userCookie) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
+
                 Helper.mobileSectionClose();
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();

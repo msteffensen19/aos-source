@@ -109,10 +109,6 @@
     padding: 10px 0;
 }
 
-#separator{
-    height: 100px;
-}
-
 @media screen and (max-width: 1000px) {
 
     #supportCover > div {
