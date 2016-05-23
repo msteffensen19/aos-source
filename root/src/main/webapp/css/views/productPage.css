@@ -11,14 +11,13 @@
     margin-top: 100px;
 }
 
-
 .half {
     display: table-cell;
     width: 50%;
     vertical-align: top;
 }
 
-#separator{
+#separator {
     height: 50px;
 }
 
@@ -99,6 +98,10 @@
     width: 33.6%;
 }
 
+#product-section #mainImg {
+    width: 100%;
+}
+
 /*
 #description h1{
     font-size: 25px;
@@ -172,7 +175,6 @@
     white-space: nowrap;
     font-size: 16px;
     position: relative;
-    top: -2px;
     padding-right: 18px;
     position: relative;
     top: -9px;
@@ -291,6 +293,34 @@
 }
 
 @media screen and (max-width: 950px) {
+    #product_2 {
+        margin-top: 20px;
+    }
+
+    #product-section #mainImg {
+        width: 80%;
+    }
+
+    .half {
+        width: 100%;
+        display: block;
+    }
+
+    #product-section {
+        text-align: center;
+    }
+
+    #Description {
+        margin: 0;
+        margin-top: 40px;
+        box-sizing: border-box;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    #productProperties {
+        width: 100%;
+    }
 
     #productProperties button {
         width: 260px;
@@ -303,27 +333,42 @@
     }
 
     .product_specifications {
-        padding: 10px 0 30px 20px;
+        padding: 10px 40px 30px 50px;
     }
 
     .list label {
         width: calc(100% - 80px);
-        padding: 0 20px;
+        padding: 0 50px;
         color: #828282;
         font-size: 14px;
     }
 
     .list label.attr {
-        padding-left: 20px;
+        padding: 0 50px;
         color: black;
         font-weight: 400;
     }
-}
 
-.trickProductBtn {
-    /*background-color: #F4F4F2;*/
-    /*height: 70px;*/
-    /*display: none;*/
+
+    #mobileDescription {
+        display: inline-block;
+        padding: 0 30px;
+        margin-top: 30px;
+    }
+
+    #mobileDescription h1 {
+        display: inline;
+        font-size: 23px;
+        color: #2a2a2a;
+    }
+
+    #mobileDescription h2 {
+        font-size: 23px;
+        color: #2a2a2a;
+        padding: 0;
+        display: block;
+    }
+
 }
 
 @media screen and (max-width: 750px) {
@@ -345,10 +390,6 @@
         display: block;
     }
 
-    /*#description h1{*/
-    /*text-align: center;*/
-    /*padding-bottom: 0px;*/
-    /*}*/
     #imagesDescription h1 {
         text-align: center;
         padding-bottom: 0px;
@@ -366,7 +407,7 @@
     }
 
     .product_specifications {
-        padding: 10px 0 30px 28px;
+        padding: 10px 40px 30px 40px;
     }
 
     .list {
@@ -397,11 +438,6 @@
         margin: 0 30px;
     }
 
-    #mobileDescription {
-        margin-top: 30px;
-        text-align: center;
-    }
-
     .screen480 {
         display: block;
     }
@@ -411,17 +447,41 @@
     }
 
     #productProperties button {
-        width: calc(100% - 60px);
-        margin: 10px 30px;
+        width: 100%;
+        margin: 10px 0px;
     }
 
     #productProperties .smoolMargin {
         padding: 29px 26px;
     }
 
+    .list label {
+        padding: 0 30px;
+    }
+
+    .list label.attr {
+        padding: 0 30px;
+    }
+
+
+
+
 }
 
 @media screen and (max-width: 580px) {
+
+
+    #productProperties > div > h2{
+        vertical-align: top;
+    }
+
+    .list label {
+        padding: 0 10px;
+    }
+
+    .list label.attr {
+        padding: 0 10px;
+    }
 
     .productImage.pages.fixed + section {
         margin: 0;
@@ -444,26 +504,8 @@
         margin-top: 15px;
     }
 
-    #mobileDescription {
-        display: inline-block;
-        padding: 0 30px;
-    }
-
-    #mobileDescription h1 {
-        display: inline;
-        font-size: 23px;
-        color: #2a2a2a;
-    }
-
-    #mobileDescription h2 {
-        font-size: 23px;
-        color: #2a2a2a;
-        padding: 0;
-        display: block;
-    }
-
     .product_specifications {
-        padding: 0 32px;
+        padding: 0 23px;
     }
 
     .list {
@@ -484,7 +526,6 @@
 
     #mobileDescription {
         text-align: left;
-
     }
 
     #productProperties > div > h2 {
@@ -504,6 +545,11 @@
 
     .trickProductBtn {
         display: block;
+    }
+
+    #Description{
+        padding-right: 23px;
+        padding-left: 23px;
     }
 
 }
