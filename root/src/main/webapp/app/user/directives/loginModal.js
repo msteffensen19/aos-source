@@ -26,9 +26,12 @@ define(['./module'], function (directives) {
                         _____errorMessage = $timeout(function () {
                             $scope.message.text = $filter('translate')('OR');
                             $scope.message._class = "";
+                            $rootScope.rsMessage.text = "";
+                            $rootScope.rsMessage._class = "";
                         }, 2000);
                         $timeout(function () {
                             $scope.message = { text: reason, _class: "invalid" }
+                            $rootScope.rsMessage = { text: reason, _class: "invalid" }
                         }, 0);
                     }
 
@@ -51,8 +54,6 @@ define(['./module'], function (directives) {
                                 return user;
                             }
                         }
-
-
 
                         userService.login(user).then(function (response) {
 

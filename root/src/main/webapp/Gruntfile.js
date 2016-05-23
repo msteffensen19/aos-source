@@ -91,7 +91,6 @@ module.exports = function (grunt) {
                     'app/user/partials/**.html',
                     'app/order/partials/**.html',
                     'app/account/partials/**.html',
-                    'app/SECORRENTI/sec-input/views/sec-input-validation.html',
                 ],
                 dest: 'app/templates/module.js',
                 options: {
@@ -145,3 +144,6 @@ module.exports = function (grunt) {
     grunt.registerTask('useminTest', ['copy', 'regex-replace', 'usemin']);
 
 };
+
+
+//'app/SECORRENTI/sec-input/views/sec-input-validation.html',
