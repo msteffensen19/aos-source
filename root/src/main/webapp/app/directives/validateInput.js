@@ -7,17 +7,16 @@
 define(['./module'], function (directives) {
     'use strict';
     directives
-        .directive('secSubmitAttr', function(){
-            return{
+        .directive('secSubmitAttr', function () {
+            return {
                 restrict: 'A',
-                scope:{
-                    submit : '&secSubmitAttr'
+                scope: {
+                    submit: '&secSubmitAttr'
                 },
                 require: '^secValidate',
-                link: function(s, e, a, ctrl){
-                    e.bind('click', function(){
-                        if(!ctrl.getInvalidItems() && !e.hasClass("sec-validate-invalid"))
-                        {
+                link: function (s, e, a, ctrl) {
+                    e.bind('click', function () {
+                        if (!ctrl.getInvalidItems() && !e.hasClass("sec-validate-invalid")) {
                             ctrl.initializeStartingValues()
                             s.submit();
                         }
@@ -25,39 +24,39 @@ define(['./module'], function (directives) {
                 }
             }
         })
-        .directive('aSecValidateInvalid', function($rootScope, $timeout){
-            return{
+        .directive('aSecValidateInvalid', function ($rootScope, $timeout) {
+            return {
                 restrict: 'A',
                 require: ['^secValidate'],
                 priority: 0,
-                link: function(s, e, a, ctrls){
+                link: function (s, e, a, ctrls) {
                     ctrls[0].setElement(e)
                 }
             }
         })
-        .directive('secValidate', ['$templateCache', '$timeout', function($templateCache, $timeout){
-            return{
+        .directive('secValidate', ['$templateCache', '$timeout', function ($templateCache, $timeout) {
+            return {
                 restrict: 'E',
                 require: 'secValidate',
                 scope: {
-                    invokeWhenReady : '&'
+                    invokeWhenReady: '&'
                 },
-                controller: ['$scope', '$rootScope', function(s, $rootScope){
+                controller: ['$scope', '$rootScope', function (s, $rootScope) {
 
-                    this.addId = function(id){
+                    this.addId = function (id) {
                         this.id = id;
                     }
 
                     s.startingValues = [];
-                    this.setStartingValue = function(id, value){
+                    this.setStartingValue = function (id, value) {
                         s.startingValues["secInput_" + id] = {
                             startingValue: value,
                             changed: false,
                         };
                     }
 
-                    this.initializeStartingValues = function(){
-                        for(var key in s.startingValues){
+                    this.initializeStartingValues = function () {
+                        for (var key in s.startingValues) {
                             s.startingValues[key] = {
                                 startingValue: $("#" + key).val(),
                                 changed: false,
@@ -66,79 +65,73 @@ define(['./module'], function (directives) {
                         return false;
                     }
 
-                    this.getInputsWasChangedBoolean = function(){
-                        for(var key in s.startingValues){
-                            if(s.startingValues[key].changed){
+                    this.getInputsWasChangedBoolean = function () {
+                        for (var key in s.startingValues) {
+                            if (s.startingValues[key].changed) {
                                 return true;
                             }
                         }
                         return false;
                     }
 
-                    this.updateStartingValueChanged = function(input){
+                    this.updateStartingValueChanged = function (input) {
                         var obj = s.startingValues[input.attr("id")];
-                        if(obj)
-                        {
+                        if (obj) {
                             s.startingValues[input.attr("id")].changed = obj.startingValue != input.val();
                         }
                     }
 
-                    this.invokeOutFunctionWhenSecValidateReady = function(outFunction){
+                    this.invokeOutFunctionWhenSecValidateReady = function (outFunction) {
                         var invalid = this.getInvalidItems();
-                        outFunction({ invalid : invalid});
+                        outFunction({invalid: invalid});
                     }
 
                     var element = null;
-                    this.setElement = function (e){
+                    this.setElement = function (e) {
                         element = e;
                     }
 
                     s.invaliditemslengthUpdate = function (n) {
                         if (n != undefined) {
-                            if(n > 0 /*|| !args.inputsWasChanged*/){
+                            if (n > 0 /*|| !args.inputsWasChanged*/) {
                                 element.addClass("sec-validate-invalid");
                             }
-                            else{
+                            else {
                                 element.removeClass("sec-validate-invalid");
                             }
                         }
                     };
                     s.invalidItems = [];
 
-                    this.getInvalidItems = function(){
-                        if(s.invaliditemslengthUpdate != null)
-                        {
+                    this.getInvalidItems = function () {
+                        if (s.invaliditemslengthUpdate != null) {
                             s.invaliditemslengthUpdate(s.invalidItems.length);
                         }
-                        return s.invalidItems.length  > 0;
+                        return s.invalidItems.length > 0;
                     }
 
-                    this.getInvalidItemsCount = function(){
+                    this.getInvalidItemsCount = function () {
                         return s.invalidItems.length;
                     }
 
-                    this.addInvalidField = function(invalidInput){
-                        if(searchIndexOfInput(invalidInput) == -1)
-                        {
+                    this.addInvalidField = function (invalidInput) {
+                        if (searchIndexOfInput(invalidInput) == -1) {
                             s.invalidItems.push(invalidInput);
                         }
                     }
 
-                    this.shiftInvalidField = function(invalidInput){
+                    this.shiftInvalidField = function (invalidInput) {
 
                         var find = searchIndexOfInput(invalidInput);
-                        if(find != -1)
-                        {
+                        if (find != -1) {
                             s.invalidItems.splice(find, 1);
                         }
                     }
 
-                    function searchIndexOfInput(invalidInput){
+                    function searchIndexOfInput(invalidInput) {
 
-                        for(var i = 0 ; i < s.invalidItems.length; i++)
-                        {
-                            if(s.invalidItems[i] == invalidInput)
-                            {
+                        for (var i = 0; i < s.invalidItems.length; i++) {
+                            if (s.invalidItems[i] == invalidInput) {
                                 return i;
                             }
                         }
@@ -147,17 +140,15 @@ define(['./module'], function (directives) {
 
 
                 }],
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     e.addClass('sec-validate');
-                    if(a.idAttr)
-                    {
+                    if (a.idAttr) {
                         e.attr('id', a.idAttr);
                         ctrl.addId(a.idAttr);
                     }
 
-                    if(s.invokeWhenReady)
-                    {
-                        $timeout(function(){
+                    if (s.invokeWhenReady) {
+                        $timeout(function () {
                             ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
                         }, 1000);
                     }
@@ -197,9 +188,13 @@ define(['./module'], function (directives) {
                 else {
                     ctrlFather.shiftInvalidField(id);
                 }
-                if(s.invaliditemslengthUpdate + "" != "undefined") {
+                if (s.invaliditemslengthUpdate + "" != "undefined") {
                     s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
                 }
+            }
+
+            this.inputFocus = function(){
+                s.inputFocus(s.id);
             }
 
             s.inputFocus = function (id, speed) {
@@ -213,18 +208,18 @@ define(['./module'], function (directives) {
                 checkValidInput(s.warnings, input, 'keyup');
                 var lab = input.prev();
                 labelStartPossition = labelStartPossition || lab.css('top');
-                labelStartfont = labelStartfont  || lab.css('font-size');
+                labelStartfont = labelStartfont || lab.css('font-size');
                 labelStartColor = labelStartColor || lab.css('color');
 
                 var animStyle = {
                     'top': '-9px',
-                    'font-size' : '12px',
-                    'color' : '#828282'
+                    'font-size': '12px',
+                    'color': '#828282'
                 };
-                if(speed == 0){
+                if (speed == 0) {
                     input.prev().css(animStyle);
                 }
-                else{
+                else {
                     input.prev().animate(animStyle, speed || 300, 'linear');
                 }
                 input.siblings(".validate-info").show(200);
@@ -233,15 +228,15 @@ define(['./module'], function (directives) {
             s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
 
                 var input = $('#secInput_' + id);
-                if(input.val() == undefined){
+                if (input.val() == undefined) {
                     return;
                 }
 
                 if (input.val().length == 0) {
                     input.prev().animate({
                         'top': labelStartPossition,
-                        'font-size' : labelStartfont,
-                        'color' : labelStartColor
+                        'font-size': labelStartfont,
+                        'color': labelStartColor
                     }, 300, 'linear');
                 }
                 var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
@@ -252,7 +247,7 @@ define(['./module'], function (directives) {
                     ctrlFather.shiftInvalidField(id);
                 }
 
-                if(s.invaliditemslengthUpdate + "" != "undefined") {
+                if (s.invaliditemslengthUpdate + "" != "undefined") {
                     s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
                 }
                 input.siblings(".validate-info").hide(200);
@@ -263,7 +258,7 @@ define(['./module'], function (directives) {
             }
 
             s.doNotShowInfo = false;
-            this.setDoNotShowInfo = function(b){
+            this.setDoNotShowInfo = function (b) {
                 s.doNotShowInfo = b;
             }
 
@@ -288,7 +283,7 @@ define(['./module'], function (directives) {
 
             this.setId = function (id) {
                 s.id = id;
-            }
+            };
 
             this.enableNoRedStar = function () {
                 s.noRedStar = true;
@@ -300,7 +295,7 @@ define(['./module'], function (directives) {
 
             function setTextToShow(warn, justTestThisField_do_not_active_her_Field) {
                 warn.show = true;
-                if(justTestThisField_do_not_active_her_Field){
+                if (justTestThisField_do_not_active_her_Field) {
                     return;
                 }
                 s.textToShow = {
@@ -347,7 +342,7 @@ define(['./module'], function (directives) {
                                     }
                                     break;
                                 case 'secMinLength':
-                                    var _invalid = input.val().length < warn.min && (input.val()+"").length != 0;
+                                    var _invalid = input.val().length < warn.min && (input.val() + "").length != 0;
                                     invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
                                     if (event == 'keyup') {
                                         warn.show = _invalid;
@@ -373,7 +368,7 @@ define(['./module'], function (directives) {
                                     }
                                     break;
                                 case 'secPattern':
-                                    var _invalid = !(new RegExp(warn.regex).test(input.val())) && (input.val()+"").length != 0;
+                                    var _invalid = !(new RegExp(warn.regex).test(input.val())) && (input.val() + "").length != 0;
                                     invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
                                     if (event == 'keyup') {
                                         warn.show = _invalid;
@@ -411,16 +406,18 @@ define(['./module'], function (directives) {
                     return false;
                 }
             }
-        }])
+        }
+        ])
 
-        .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
+        .
+        directive('secInput', ['$templateCache', '$timeout', '$rootScope', function ($templateCache, $timeout, $rootScope) {
             return {
                 restrict: 'E',
                 replace: true,
                 transclude: true,
                 require: ['secInput', '^secValidate'],
                 scope: {
-                    modelAttr : '=',
+                    modelAttr: '=',
                     idAttr: '@',
                     secChange: '&',
                 },
@@ -465,10 +462,10 @@ define(['./module'], function (directives) {
                             e.bind('change', function () {
                                 var select = $($(this).find("select"))
 
-                                if(a.secSiblings != undefined){
+                                if (a.secSiblings != undefined) {
                                     s.inputFocus(a.secSiblings);
                                 }
-                                if(a.secChange != undefined){
+                                if (a.secChange != undefined) {
                                     s.secChange();
                                 }
                                 if (select.length > 0) {
@@ -481,26 +478,34 @@ define(['./module'], function (directives) {
                         }
                         me.setCtrlFather(ctrls[1]);
                         me.setInputType(a.inputTypeAttr || 'text')
-                        me.setId(a.idAttr)
+                        me.setId(a.idAttr, s.modelAttr)
 
-                        if(a.doNotShowInfo == "true"){
+                        s.$watch('modelAttr', function(){
+                            me.inputFocus();
+                        });
+
+                        if (a.doNotShowInfo == "true") {
                             me.setDoNotShowInfo(true);
                         }
                         ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
                     },
-                    post: function(s){
-                        $timeout(function(){
-                            if(s.modelAttr != '' && s.modelAttr != undefined){
+                    post: function (s) {
+                        $timeout(function () {
+                            if (s.modelAttr != '' && s.modelAttr != undefined) {
                                 s.inputFocus(s.id, 0);
                             }
                         }, 500)
-                        $timeout(function(){ s.inputBlur(s.id, true); }, 1000)
-                        $timeout(function(){ s.inputKeyup(s.id); }, 2000)
+                        $timeout(function () {
+                            s.inputBlur(s.id, true);
+                        }, 1000)
+                        $timeout(function () {
+                            s.inputKeyup(s.id);
+                        }, 2000)
                     }
                 }
             }
         }])
-        .directive('secTextarea', ['$templateCache', '$timeout', '$rootScope', function($templateCache, $timeout, $rootScope){
+        .directive('secTextarea', ['$templateCache', '$timeout', '$rootScope', function ($templateCache, $timeout, $rootScope) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -530,198 +535,205 @@ define(['./module'], function (directives) {
                         me.setId(a.idAttr)
                         ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
                     },
-                    post: function(s){
-                        if(s.modelAttr != '' && s.modelAttr != undefined){
-                            $timeout(function(){ s.inputFocus(s.id); }, 0)
+                    post: function (s) {
+                        if (s.modelAttr != '' && s.modelAttr != undefined) {
+                            $timeout(function () {
+                                s.inputFocus(s.id);
+                            }, 0)
                         }
-                        $timeout(function(){ s.inputBlur(s.id, true); }, 100)
-                        $timeout(function(){ s.inputKeyup(s.id); }, 200)
+                        $timeout(function () {
+                            s.inputBlur(s.id, true);
+                        }, 100)
+                        $timeout(function () {
+                            s.inputKeyup(s.id);
+                        }, 200)
                     }
                 }
             }
         }])
 
-        .directive('secRequired', function(){
-            return{
+        .directive('secRequired', function () {
+            return {
                 restrict: 'A',
                 priority: 0,
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     var warning = a.secRequired || 'This field is required'
                     ctrl.addWarningInfo({
-                        key : 'secRequired',
-                        warning : warning,
+                        key: 'secRequired',
+                        warning: warning,
                         info: '',
                         show: false
                     })
                 }
             }
         })
-        .directive('secTRequired', function(){
-            return{
+        .directive('secTRequired', function () {
+            return {
                 restrict: 'A',
                 priority: 0,
                 require: 'secTextarea',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
 
                     var warning = a.secTRequired || 'This field is required'
-                    if(a.secTRequired == "null"){
+                    if (a.secTRequired == "null") {
                         warning = '';
                     }
                     ctrl.addWarningInfo({
-                        key : 'secRequired',
-                        warning : warning,
+                        key: 'secRequired',
+                        warning: warning,
                         info: '',
                         show: false
                     })
                 }
             }
         })
-        .directive('secOnlyNumbers', function(){
-            return{
+        .directive('secOnlyNumbers', function () {
+            return {
                 restrict: 'A',
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     var warning = a.secOnlyNumbers || 'Only Digits allowed'
                     ctrl.addWarningInfo({
-                        key : 'secOnlyNumbers',
-                        warning : warning,
+                        key: 'secOnlyNumbers',
+                        warning: warning,
                         info: warning,
                         show: false
                     })
                 }
             }
         })
-        .directive('secMinLength', function(){
-            return{
+        .directive('secMinLength', function () {
+            return {
                 restrict: 'A',
                 require: 'secInput',
                 priority: 40,
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     var min = a.secMinLength - 0;
-                    if(!a.idAttr){
+                    if (!a.idAttr) {
                         throw "if secMinLength is used in directive <secInput></secInput>, value is must! "
                     }
-                    if(!((min - 0) == min && (''+min).trim().length > 0) || min < 0){
-                        throw "Invalid value in attribute secMinLength, the value in directive "+
+                    if (!((min - 0) == min && ('' + min).trim().length > 0) || min < 0) {
+                        throw "Invalid value in attribute secMinLength, the value in directive " +
                         "<secInput></secInput> must be a positive number! "
                     }
-                    var warning = 'Use '+ min +' characters or longer'
+                    var warning = 'Use ' + min + ' characters or longer'
                     ctrl.addWarningInfo({
-                        key : 'secMinLength',
-                        warning : warning,
+                        key: 'secMinLength',
+                        warning: warning,
                         info: warning,
-                        min : min,
+                        min: min,
                         show: false
                     })
                 }
             }
         })
-        .directive('secMaxLength', function(){
-            return{
+        .directive('secMaxLength', function () {
+            return {
                 restrict: 'A',
                 priority: 50,
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     var max = a.secMaxLength - 0;
-                    if(!a.idAttr){
+                    if (!a.idAttr) {
                         throw "if secMaxLength is used in directive <secInput></secInput>, value is must! "
                     }
-                    if(!((max - 0) == max && (''+max).trim().length > 0) || max < 0){
-                        throw "Invalid value in attribute secMaxLength, the value in directive "+
+                    if (!((max - 0) == max && ('' + max).trim().length > 0) || max < 0) {
+                        throw "Invalid value in attribute secMaxLength, the value in directive " +
                         "<secInput></secInput> must be a positive number! "
                     }
-                    var warning = 'Use up to '+ max +' characters'
+                    var warning = 'Use up to ' + max + ' characters'
                     ctrl.addWarningInfo({
-                        key : 'secMaxLength',
-                        warning : warning,
+                        key: 'secMaxLength',
+                        warning: warning,
                         info: warning,
                         show: false,
-                        max : max,
+                        max: max,
                     })
                 }
             }
         })
-        .directive('secPattern', function(){
-            return{
+        .directive('secPattern', function () {
+            return {
                 restrict: 'A',
                 priority: 100,
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
 
-                    if(!a.patternErrorAttr){
+                    if (!a.patternErrorAttr) {
                         throw "if secPattern is used in directive <secInput></secInput>, pattern-error-attr attribute is must! "
                     }
                     ctrl.addWarningInfo({
-                        key : 'secPattern',
-                        warning : a.patternErrorAttr,
+                        key: 'secPattern',
+                        warning: a.patternErrorAttr,
                         info: a.patternErrorAttr,
                         show: false,
-                        regex : a.secPattern,
+                        regex: a.secPattern,
                     })
                 }
             }
         })
-        .directive('secEmail', function(){
-            return{
+        .directive('secEmail', function () {
+            return {
                 restrict: 'A',
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     ctrl.addWarningInfo({
-                        key : 'secPattern',
-                        warning : "Your email address isn’t formatted correctly",
+                        key: 'secPattern',
+                        warning: "Your email address isn’t formatted correctly",
                         info: "Your email address isn’t formatted correctly",
                         show: false,
-                        regex : a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+                        regex: a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                     })
                     //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                 }
             }
         })
-        .directive('secCompareTo', function(){
-            return{
+        .directive('secCompareTo', function () {
+            return {
                 restrict: 'A',
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     var max = a.secMaxLength - 0;
-                    if(!a.idAttr){
+                    if (!a.idAttr) {
                         throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
                     }
-                    if(!a.secCompareTo){
+                    if (!a.secCompareTo) {
                         throw "if sec-compare-to is used in directive <secInput></secInput>, must to be a comparable id! "
                     }
-                    if(!a.compareToName){
+                    if (!a.compareToName) {
                         throw "if sec-compare-to is used in directive <secInput></secInput>, must to be compare-to-name attribute! "
                     }
                     var warning = 'Same as ' + a.compareToName;
                     ctrl.addWarningInfo({
-                        key : 'secCompareTo',
-                        warning : warning,
-                        info : warning,
+                        key: 'secCompareTo',
+                        warning: warning,
+                        info: warning,
                         show: true,
-                        compareId : a.secCompareTo,
+                        compareId: a.secCompareTo,
                     })
                 }
             }
         })
-        .directive('secPlaceholder', function(){
-            return{
+        .directive('secPlaceholder', function () {
+            return {
                 restrict: 'A',
                 require: 'secInput',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     ctrl.setPlaceHolder(a.secPlaceholder)
                 }
             }
         })
-        .directive('secTPlaceholder', function(){
-            return{
+        .directive('secTPlaceholder', function () {
+            return {
                 restrict: 'A',
                 require: 'secTextarea',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
                     ctrl.setPlaceHolder(a.secTPlaceholder)
                 }
             }
         })
     ;
-});
+})
+;
 
