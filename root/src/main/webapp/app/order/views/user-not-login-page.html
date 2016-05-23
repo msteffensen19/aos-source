@@ -20,7 +20,10 @@
             <div id="userCart" data-ng-show="(cart | productsCartCount) > 0" >
                 <h5 translate="ORDER_SUMMARY" class="roboto-regular"></h5>
                 <span class="itemsCount roboto-medium">
-                    {{ cart | productsCartCount }} {{ 'ITEMS' | translate }}
+
+                    {{ cart | productsCartCount }} {{ (cart | productsCartCount) == 1 ?  'ITEM' : 'ITEMS' | translate }}
+
+
                 </span>
                 <div class="penetrationInCart">
                     <span class="roboto-regular" > {{ 'PRODUCT' | translate }} </span>

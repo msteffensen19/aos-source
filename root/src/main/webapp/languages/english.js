@@ -42,7 +42,6 @@ var english = {
     'CREATE_NEW_ACCOUNT': 'CREATE NEW ACCOUNT',
     'REMEMBER_ME': 'REMEMBER ME',
     'PRICE': 'PRICE',
-    'ITEM': 'ITEM',
 
     'Hi': 'Hi',
     'Sign_out': 'Sign out',
@@ -101,6 +100,7 @@ var english = {
     'TOTAL': 'TOTAL',
     'Items': 'Items',
     'ITEMS': 'ITEMS',
+    'ITEM': 'ITEM',
     'Color': 'Color:',
     'SHOPPING_CART': 'SHOPPING CART',
     'PAYMENT_OPTIONS': 'PAYMENT OPTIONS',

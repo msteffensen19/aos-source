@@ -51,7 +51,7 @@ public class CatalogController {
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-        response.addHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
     }
 
     //  region /products
