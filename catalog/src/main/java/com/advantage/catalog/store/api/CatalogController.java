@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author Binyamin Regev on 23/05/2016
+ */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
 public class CatalogController {
