@@ -16,10 +16,10 @@
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1100",
         "images": [
-          "414141##1100",
-          "FFFFFF##1101",
           "3683D1##1102",
-          "3683D1##1103"
+          "C3C3C3##1100",
+          "DD3A5B##1101",
+          "DD3A5B##1103"
         ],
         "colors": [
           {
@@ -98,27 +98,12 @@
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1200",
         "images": [
+          "ABCDEF##1202",
+          "3683D1##1201",
           "3683D1##1200",
-          "FCC23D##1201",
-          "FCC23D##1202",
-          "FCC23D##1203"
+          "DD3A5B##1203"
         ],
         "colors": [
-          {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
-          },
-          {
-            "inStock": 10,
-            "name": "Purple",
-            "code": "545195"
-          },
-          {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
-          },
           {
             "inStock": 10,
             "name": "Blue",
@@ -128,16 +113,6 @@
             "inStock": 10,
             "name": "Red",
             "code": "DD3A5B"
-          },
-          {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
-          },
-          {
-            "inStock": 10,
-            "name": "Yellow",
-            "code": "FCC23D"
           }
         ],
         "attributes": [
@@ -191,34 +166,34 @@
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
+            "code": "414141",
+            "name": "BLACK",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Purple",
-            "code": "545195"
+            "code": "3683D1",
+            "name": "BLUE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
+            "code": "C3C3C3",
+            "name": "GRAY",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
+            "code": "545195",
+            "name": "PURPLE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Red",
-            "code": "DD3A5B"
+            "code": "DD3A5B",
+            "name": "RED",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
+            "code": "FCC23D",
+            "name": "Yellow",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -266,25 +241,25 @@
         "description": "Stunning, ultra-slim convertible PC with a 360° hinge",
         "imageUrl": "1400",
         "images": [
-          "414141##1400",
-          "FFFFFF##1401",
-          "C3C3C3##1402",
-          "FFFFFF##1403"
+          "C3C3C3##1401",
+          "C3C3C3##1403",
+          "C3C3C3##1400",
+          "C3C3C3##1402"
         ],
         "colors": [
           {
+            "code": "414141",
+            "name": "BLACK",
+            "inStock": 10
+          },
+          {
             "code": "C3C3C3",
-            "name": "Gray",
+            "name": "GRAY",
             "inStock": 10
           },
           {
             "code": "FFFFFF",
-            "name": "White",
-            "inStock": 10
-          },
-          {
-            "code": "414141",
-            "name": "Black",
+            "name": "WHITE",
             "inStock": 10
           }
         ],
@@ -333,20 +308,20 @@
         "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
         "imageUrl": "1245",
         "images": [
-          "55CDD5##1245",
-          "55CDD5##1501",
-          "3683D1##1502"
+          "3683D1##1502",
+          "3683D1##1501",
+          "DD3A5B##1245"
         ],
         "colors": [
           {
-            "code": "55CDD5",
-            "name": "Turquoise",
+            "code": "3683D1",
+            "name": "BLUE",
             "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -395,9 +370,9 @@
         "imageUrl": "1600",
         "images": [
           "ABCDEF##1600",
-          "ABCDEF##1601",
-          "ABCDEF##1602",
-          "ABCDEF##1603"
+          "C3C3C3##1601",
+          "C3C3C3##1603",
+          "C3C3C3##1602"
         ],
         "colors": [
           {
@@ -452,9 +427,9 @@
         "imageUrl": "1700",
         "images": [
           "C3C3C3##1700",
+          "C3C3C3##1703",
           "C3C3C3##1701",
-          "C3C3C3##1702",
-          "C3C3C3##1703"
+          "C3C3C3##1702"
         ],
         "colors": [
           {
@@ -508,10 +483,10 @@
         "description": "On the go creativity knows no limits on a vivid 17.3 inch diagonal HP ZBook 17 G2. Showcase your best work in the office or on the go and take advantage of HP’s most powerful processing, graphics, simple scalability, and blazing-fast connectivity to perform and collaborate at the speed of creativity.",
         "imageUrl": "1800",
         "images": [
-          "414141##1800",
-          "414141##1801",
-          "FFFFFF##1802",
-          "FFFFFF##1803"
+          "ABCDEF##1803",
+          "ABCDEF##1802",
+          "ABCDEF##1801",
+          "ABCDEF##1800"
         ],
         "colors": [
           {
@@ -678,9 +653,9 @@
         "description": "There’s no limit to what this value-packed convertible PC can do. Easily convert from notebook to stand to tent to tablet mode. It’s an app-loving, friend-connecting, 360°-bending machine.",
         "imageUrl": "11100",
         "images": [
-          "FCC23D##11100",
+          "ABCDEF##11100",
           "C3C3C3##11101",
-          "FCC23D##11102",
+          "C3C3C3##11102",
           "DD3A5B##11103"
         ],
         "colors": [
@@ -758,8 +733,7 @@
         "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
         "imageUrl": "2100",
         "images": [
-          "55CDD5##2100",
-          "414141##2300"
+          "ABCDEF##2100"
         ],
         "colors": [
           {
@@ -794,24 +768,18 @@
         "description": "Wireless freedom meets best-in-class sound.",
         "imageUrl": "2100",
         "images": [
-          "55CDD5##2100",
-          "414141##2300"
+          "ABCDEF##2100"
         ],
         "colors": [
           {
-            "inStock": 0,
-            "name": "Turquoise",
-            "code": "55CDD5"
-          },
-          {
-            "inStock": 0,
-            "name": "White",
-            "code": "FFFFFF"
-          },
-          {
-            "inStock": 0,
+            "inStock": 10,
             "name": "BLACK",
             "code": "414141"
+          },
+          {
+            "inStock": 10,
+            "name": "Turquoise",
+            "code": "55CDD5"
           }
         ],
         "attributes": [
@@ -836,13 +804,12 @@
         "description": "Features on this product will exceeded your expectations.",
         "imageUrl": "2100",
         "images": [
-          "55CDD5##2100",
-          "FCC23D##2100",
-          "414141##2300"
+          "ABCDEF##2100",
+          "ABCDEF##2100"
         ],
         "colors": [
           {
-            "inStock": 0,
+            "inStock": 10,
             "name": "Turquoise",
             "code": "55CDD5"
           },
@@ -852,7 +819,7 @@
             "code": "FCC23D"
           },
           {
-            "inStock": 0,
+            "inStock": 10,
             "name": "BLACK",
             "code": "414141"
           }
@@ -878,15 +845,10 @@
         "description": "The world’s most famous headphone has been completely redesigned and reimagined. The new Beats Studio® is lighter, sexier, stronger, and more comfortable, with precision sound, Adaptive Noise Canceling, a 20-hour rechargeable battery, and RemoteTalk™. It has all the energy and excitement you expect from Beats, plus a powerful, reengineered sound.",
         "imageUrl": "2200",
         "images": [
-          "FCC23D##2200",
+          "414141##2200",
           "414141##2201"
         ],
         "colors": [
-          {
-            "inStock": 10,
-            "name": "Yellow",
-            "code": "FCC23D"
-          },
           {
             "inStock": 10,
             "name": "BLACK",
@@ -926,17 +888,12 @@
         "description": "More than a tablet—a total business solution. The elegant and sleek HP ElitePad 1000 G2 has the performance and flexibility to transform the way you work. Redefine productivity and stay light with the confidence of the leading manageability, security, and support you expect from HP.",
         "imageUrl": "3100",
         "images": [
-          "3683D1##3100",
-          "FCC23D##3101",
-          "FCC23D##3102",
-          "C3C3C3##3103"
+          "ABCDEF##3100",
+          "ABCDEF##3101",
+          "C3C3C3##3102",
+          "ABCDEF##3103"
         ],
         "colors": [
-          {
-            "inStock": 10,
-            "name": "Yellow",
-            "code": "FCC23D"
-          },
           {
             "inStock": 10,
             "name": "BLUE",
@@ -977,25 +934,25 @@
         "description": "Ultrabook™[2] Power\nPower up for ultimate power with Windows 8.1,[1] 5th Gen Intel® Core™ M processors,[4] with optional vPro™[5] and long battery life provided by dual tablet and keyboard base batteries.",
         "imageUrl": "3200",
         "images": [
-          "C3C3C3##3200",
-          "FCC23D##3201",
-          "3683D1##3202"
+          "ABCDEF##3200",
+          "ABCDEF##3201",
+          "ABCDEF##3202"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Yellow",
-            "code": "FCC23D"
-          },
-          {
-            "inStock": 10,
+            "code": "3683D1",
             "name": "BLUE",
-            "code": "3683D1"
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
+            "code": "55CDD5",
+            "name": "Turquoise",
+            "inStock": 10
+          },
+          {
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1027,10 +984,10 @@
         "description": "Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize nearly any business process. Choose from an expansive choice of accessories[2] for a customized experience.",
         "imageUrl": "3300",
         "images": [
-          "FCC23D##3300",
-          "FCC23D##3301",
-          "414141##3302",
-          "FCC23D##3303"
+          "ABCDEF##3300",
+          "ABCDEF##3303",
+          "ABCDEF##3301",
+          "414141##3302"
         ],
         "colors": [
           {
@@ -1090,24 +1047,14 @@
         "description": "Impress … everyone! Futuristic design with perforated steel formed into subtle angles. Requiring only minimal space, this speaker is the ideal complement to any setting.",
         "imageUrl": "4100",
         "images": [
-          "FFFFFF##4100",
-          "414141##4101"
+          "ABCDEF##4100",
+          "ABCDEF##4101"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
-          },
-          {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
-          },
-          {
-            "inStock": 10,
-            "name": "BLACK",
-            "code": "414141"
+            "code": "C3C3C3",
+            "name": "GRAY",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1139,14 +1086,9 @@
         "description": "Meet the speaker that brings your music and friends together-with a style that's all your own. The SoundLink® Bluetooth speaker III is our best-performing mobile Bluetooth speaker. It plays louder and longer than its popular predecessor, with advanced Bose® technologies that reproduce the fullness, clarity and depth of your music. And a colorful assortment of optional covers let you personalize your speaker.",
         "imageUrl": "4200",
         "images": [
-          "414141##4200"
+          "ABCDEF##4200"
         ],
         "colors": [
-          {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
-          },
           {
             "inStock": 10,
             "name": "BLACK",
@@ -1182,26 +1124,26 @@
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4300",
         "images": [
-          "3683D1##4300",
+          "ABCDEF##4308",
           "414141##4301",
-          "545195##4304",
-          "ABCDEF##4308"
+          "3683D1##4300",
+          "545195##4304"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
+            "code": "414141",
+            "name": "BLACK",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
+            "code": "3683D1",
+            "name": "BLUE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Purple",
-            "code": "545195"
+            "code": "545195",
+            "name": "PURPLE",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1219,7 +1161,7 @@
           },
           {
             "attributeName": "Wireless technology",
-            "attributeValue": "Bluetooh®"
+            "attributeValue": "Bluetooth®"
           },
           {
             "attributeName": "Manufacturer",
@@ -1233,26 +1175,21 @@
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4400",
         "images": [
-          "3683D1##4400",
-          "DD3A5B##4401",
-          "FFFFFF##4404",
-          "ABCDEF##4408"
+          "ABCDEF##4400",
+          "ABCDEF##4401",
+          "3683D1##4404",
+          "FCC23D##4408"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
+            "code": "3683D1",
+            "name": "BLUE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
-          },
-          {
-            "inStock": 10,
+            "code": "FCC23D",
             "name": "Yellow",
-            "code": "DD3A5B"
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1284,13 +1221,13 @@
         "description": "Pump up the volume and enjoy crystal-clear sound from this mobile speaker. This portable speaker is perfect for life on-the-go. Take it on the road or relax and listen at home because this mobile speaker goes everywhere. Simple, intuitive design lets you wirelessly connect and stream music from your Bluetooth-enabled device from up to 30' away. Easily manage phone calls and volume control from your mobile phone. Enjoy five hours of continuous play before you need to recharge. Recharge the built-in, lithium-ion battery with the convenience of the included micro-USB cable.",
         "imageUrl": "4500",
         "images": [
-          "C3C3C3##4500"
+          "414141##4500"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
+            "code": "414141",
+            "name": "Black",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1322,31 +1259,26 @@
         "description": "Attention-getting design, color, and sound - the HP Roar Mini Wireless Speaker. Exceptional size-defying audio while streaming music and calls from a distinctively compact speaker.",
         "imageUrl": "4600",
         "images": [
-          "FFFFFF##4600",
-          "DD3A5B##4601",
-          "DD3A5B##4602",
-          "ABCDEF##4603"
+          "ABCDEF##4603",
+          "414141##4602",
+          "FCC23D##4601",
+          "DD3A5B##4600"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Red",
-            "code": "DD3A5B"
+            "code": "414141",
+            "name": "BLACK",
+            "inStock": 10
           },
           {
-            "inStock": 10,
+            "code": "FCC23D",
             "name": "Yellow",
-            "code": "DD3A5B"
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
-          },
-          {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1378,36 +1310,26 @@
         "description": "If music is your motivation, wait until you hear the SoundLink® Color Bluetooth speaker. It plays your favorite tunes from your favorite Bluetooth device-out loud in clear, full audio-just about anywhere you want to go. It's small, durable and simple to use. And it comes in a spectrum of colors to match almost any style.",
         "imageUrl": "4700",
         "images": [
-          "3683D1##4700",
-          "FFFFFF##4701",
-          "ABCDEF##4702",
-          "ABCDEF##4704"
+          "ABCDEF##4701",
+          "3683D1##4704",
+          "DD3A5B##4702",
+          "55CDD5##4700"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Yellow",
-            "code": "FCC23D"
-          },
-          {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
-          },
-          {
-            "inStock": 10,
-            "name": "Red",
-            "code": "FF0000"
-          },
-          {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
-          },
-          {
-            "inStock": 10,
+            "code": "3683D1",
             "name": "Blue",
-            "code": "3683D1"
+            "inStock": 10
+          },
+          {
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 10
+          },
+          {
+            "code": "55CDD5",
+            "name": "Turquoise",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1451,7 +1373,7 @@
         "description": "The Kensington Orbit Wireless Mobile Trackball offers a precise, compact and versatile experience with a centered-ball design. With no wires to tie you down, the 2.4 GHz wireless with storable nano receiver works wherever you do -- at your home or office. And the unique touch scrolling lets you glide effortlessly through web pages and documents.",
         "imageUrl": "5100",
         "images": [
-          "C3C3C3##5100"
+          "ABCDEF##5100"
         ],
         "colors": [
           {
@@ -1494,26 +1416,26 @@
         "description": "The tiny HP Wireless Mouse Z3600 provides stylish comfort and control for your mobile computing needs. With optical tracking, 3 button controls, and the freedom to connect up to 30ft (10m) away, this compact mouse provides oversized performance.",
         "imageUrl": "5200",
         "images": [
-          "414141##5200",
-          "55CDD5##5201",
-          "ABCDEF##5203",
-          "ABCDEF##5206"
+          "ABCDEF##5200",
+          "ABCDEF##5201",
+          "3683D1##5203",
+          "DD3A5B##5206"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
+            "code": "414141",
+            "name": "BLACK",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Turquoise",
-            "code": "55CDD5"
+            "code": "3683D1",
+            "name": "BLUE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1545,36 +1467,26 @@
         "description": "The HP Wireless Mouse Z3200 provides powerful Blue LED optical tracking. Its ambidextrous shape and familiar button controls are easy to use. Compact contoured control.",
         "imageUrl": "5300",
         "images": [
-          "55CDD5##5300",
-          "FCC23D##5301",
-          "3683D1##5304",
-          "ABCDEF##5306"
+          "ABCDEF##5304",
+          "DD3A5B##5301",
+          "C3C3C3##5300",
+          "FFFFFF##5306"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Turquoise",
-            "code": "55CDD5"
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Yellow",
-            "code": "FCC23D"
+            "code": "C3C3C3",
+            "name": "Gray",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
-          },
-          {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
-          },
-          {
-            "inStock": 10,
+            "code": "FFFFFF",
             "name": "White",
-            "code": "FFFFFF"
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -1596,7 +1508,7 @@
           },
           {
             "attributeName": "Scroller Type",
-            "attributeValue": "Scroll Whell"
+            "attributeValue": "Scroll Wheel"
           }
         ]
       },
@@ -1606,7 +1518,7 @@
         "description": "Smooth and Accurate - The HP USB 3-Button Optical Mouse is the affordable desktop optical mouse solution that combines functionality with style",
         "imageUrl": "5400",
         "images": [
-          "ABCDEF##5400"
+          "414141##5400"
         ],
         "colors": [
           {
@@ -1644,26 +1556,26 @@
         "description": "The sleek and low-profiled design make the Z4000 the must-have companion to every thin notebook or tablet. Style and comfort within a dynamic ultra-mobile wireless mouse.",
         "imageUrl": "5505",
         "images": [
-          "545195##5506",
-          "FF0000##5501",
-          "ABCDEF##5504",
-          "ABCDEF##5505"
+          "3683D1##5506",
+          "545195##5501",
+          "DD3A5B##5504",
+          "DD3A5B##5505"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Purple",
-            "code": "545195"
+            "code": "3683D1",
+            "name": "BLUE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
+            "code": "545195",
+            "name": "PURPLE",
+            "inStock": 10
+          },
+          {
+            "code": "DD3A5B",
             "name": "Red",
-            "code": "FF0000"
-          },
-          {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
+            "inStock": 10
           }
         ],
         "attributes": [
