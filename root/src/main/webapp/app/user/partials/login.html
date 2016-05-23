@@ -51,7 +51,7 @@
                 {{message.text}}
             </label>
 
-            <sec-validate do-not-show-info="true" >
+            <sec-validate >
 
 
                 <sec-input sec-placeholder="{{'User_name' | translate}}"
@@ -62,6 +62,7 @@
                            sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
                            pattern-error-attr="{{ 'Use_letters_number_and_the_following_symbols_only' | translate }}"
                            model-attr="loginUser.loginUser"
+                           do-not-show-info="true"
                            id-attr="smollLoginUsername">
                 </sec-input>
 
@@ -72,6 +73,7 @@
                            no-red-star="true"
                            input-type-attr="password"
                            model-attr="loginUser.loginPassword"
+                           do-not-show-info="true"
                            id-attr="smollLoginPassword">
                 </sec-input>
 
@@ -82,6 +84,7 @@
                            no-red-star="true"
                            input-type-attr="email"
                            model-attr="loginUser.email"
+                           do-not-show-info="true"
                            id-attr="smollLoginEmail">
                 </sec-input>
 
