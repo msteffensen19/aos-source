@@ -52,7 +52,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setMultipartConfig(getMultipartConfigElement());
-        registration.setInitParameter("dispatchOptionsRequest", "true");
     }
 
     private MultipartConfigElement getMultipartConfigElement() {
