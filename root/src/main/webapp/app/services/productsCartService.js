@@ -397,8 +397,7 @@ define(['./module'], function (services) {
                     var product = cart.productsInCart[prodIndex];
                     checkOutOfStockProduct(product, prodIndex).then(function(res){
 
-                        if(res._prod != null)
-                        {
+                        if(res._prod != null) {
                             cartToReplace.push(res.real_prod);
                         }
 

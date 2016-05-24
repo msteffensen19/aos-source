@@ -14,6 +14,9 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 url: server.catalog.getDeals(),
+                headers: {
+                    "content-type": "application/json; charset=utf-8",
+                },
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
@@ -22,6 +25,9 @@ define(['./module'], function (services) {
             var request = $http({
                 method: "get",
                 url: server.catalog.getDealOfTheDay(),
+                headers: {
+                    "content-type": "application/json; charset=utf-8",
+                },
             });
             return( request.then( responseService.handleSuccess, responseService.handleError ) );
         }
