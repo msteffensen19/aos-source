@@ -7,11 +7,11 @@ public class SystemParameters {
 
     public static String getHibernateHbm2ddlAuto() {
         String result;
-        String db_create_or_update = System.getenv("DB_CHANGE").toLowerCase();
-        if (db_create_or_update == null && db_create_or_update.isEmpty()) {
+        String demoapp_db_change = System.getenv("DEMOAPP_DB_CHANGE");
+        if (demoapp_db_change == null || demoapp_db_change.isEmpty()) {
             result = "validate";
         } else {
-            switch (db_create_or_update) {
+            switch (demoapp_db_change.toLowerCase()) {
                 case "new":
                     result = "create";
                     break;
@@ -27,6 +27,7 @@ public class SystemParameters {
                     break;
             }
         }
+        System.out.println(Constants.ENV_HIBERNATE_HBM2DDL_AUTO + "=" + result);
         return result;
     }
 }
