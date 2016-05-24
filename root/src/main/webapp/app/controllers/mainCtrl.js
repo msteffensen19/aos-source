@@ -10,6 +10,19 @@ define(['./module'], function (controllers) {
         function ($scope, $q, productService, smoothScroll, userService, orderService,
                   $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
+
+            var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            //var type = connection.type;
+
+            function updateConnectionStatus() {
+                alert("Connection type is change from " + type + " to " + connection.type);
+            }
+            if(connection){
+                connection.addEventListener('typechange', updateConnectionStatus);
+            }
+
+
+
             $scope.cart;
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
