@@ -14,15 +14,9 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{
-                AppConfiguration.class
-                //Binyamin - creating MasterCredit - , DataSourceConfiguration.class
-                , AppSecurityConfig.class
-                //Binyamin - creating MasterCredit - , JpaConfiguration.class
-                //Binyamin - creating MasterCredit - , DataJpaConfiguration.class
-                , JacksonObjectMapperConfiguration.class
-                //EVG Split - , AppUserConfiguration.class
-                //EVG Split - , AdvantageAspects.class
-                //Binyamin - creating MasterCredit - , ImageManagementConfiguration.class
+                AppConfiguration.class,
+                AppSecurityConfig.class,
+                JacksonObjectMapperConfiguration.class
         };
     }
 
@@ -51,6 +45,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setMultipartConfig(getMultipartConfigElement());
+        registration.setInitParameter("dispatchOptionsRequest", "true");
     }
 
     private MultipartConfigElement getMultipartConfigElement() {
