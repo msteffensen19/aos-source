@@ -1,6 +1,7 @@
 package com.advantage.root.store.config;
 
 import com.advantage.common.Constants;
+import com.advantage.common.SystemParameters;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class JpaConfiguration {
         Properties extraProperties = new Properties();
 //        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
 //        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
-        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, "create-drop");
+        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, SystemParameters.getHibernateHbm2ddlAuto());
         if (log.isDebugEnabled()) {
             log.debug(" hibernate.dialect @" + env.getProperty(Constants.ENV_HIBERNATE_DIALECT));
         }
