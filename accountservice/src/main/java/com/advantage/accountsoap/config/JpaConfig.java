@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.config;
 
+import com.advantage.common.SystemParameters;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +32,8 @@ public class JpaConfig {
     @Value("${hibernate.show_sql}")
     private String HIBERNATE_SHOW_SQL;
 
-    @Value("${hibernate.hbm2ddl.auto}")
-    private String HIBERNATE_HBM2DDL_AUTO;
+//    @Value("${hibernate.hbm2ddl.auto}")
+//    private String HIBERNATE_HBM2DDL_AUTO;
 
 //    @Value("${entitymanager.packagesToScan}")
 //    private String ENTITYMANAGER_PACKAGES_TO_SCAN;
@@ -49,7 +50,7 @@ public class JpaConfig {
 
     private Properties jpaProperties() {
         Properties extraProperties = new Properties();
-        extraProperties.put("hibernate.hbm2ddl.auto", "create-drop");
+        extraProperties.put("hibernate.hbm2ddl.auto", SystemParameters.getHibernateHbm2ddlAuto());
 
         extraProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
 
