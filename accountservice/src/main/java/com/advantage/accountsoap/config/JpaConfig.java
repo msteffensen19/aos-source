@@ -32,6 +32,9 @@ public class JpaConfig {
     @Value("${hibernate.show_sql}")
     private String HIBERNATE_SHOW_SQL;
 
+    @Value("${account.hibernate.db.hbm2ddlAuto}")
+    private String hibernate_db_hbm2ddlAuto;
+
 //    @Value("${hibernate.hbm2ddl.auto}")
 //    private String HIBERNATE_HBM2DDL_AUTO;
 
@@ -50,7 +53,7 @@ public class JpaConfig {
 
     private Properties jpaProperties() {
         Properties extraProperties = new Properties();
-        extraProperties.put("hibernate.hbm2ddl.auto", SystemParameters.getHibernateHbm2ddlAuto());
+        extraProperties.put("hibernate.hbm2ddl.auto", SystemParameters.getHibernateHbm2ddlAuto(hibernate_db_hbm2ddlAuto));
 
         extraProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
 
