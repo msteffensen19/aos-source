@@ -494,4 +494,12 @@ public class CatalogController {
     }
     //  endregion
 
+    // region Order History
+  //  @RequestMapping(value = "/orders", method = RequestMethod.GET)
+//    public ResponseEntity<ProductCollectionDto> getAllOrders(HttpServletRequest request) {
+//        ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+//        return productCollectionDtoResponseEntity;
+//
+//    }
+    //endregion
 }
