@@ -48,7 +48,7 @@ public class JpaConfiguration {
         Properties extraProperties = new Properties();
 //        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
 //        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
-        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, SystemParameters.getHibernateHbm2ddlAuto());
+        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("order.hibernate.db.hbm2ddlAuto")));
         if (log.isDebugEnabled()) {
             log.debug(" hibernate.dialect @" + env.getProperty(ENV_HIBERNATE_DIALECT));
         }

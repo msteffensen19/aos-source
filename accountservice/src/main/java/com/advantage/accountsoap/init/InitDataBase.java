@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +28,11 @@ public class InitDataBase {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+    @Autowired
+    private Environment env;
+
     public void init() throws Exception {
-        if (!SystemParameters.getHibernateHbm2ddlAuto().equals("validate")) {
+        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("account.hibernate.db.hbm2ddlAuto")).equals("validate")) {
             SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
             Session session = sessionFactory.openSession();
             Transaction transaction;

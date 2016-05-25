@@ -136,6 +136,8 @@ public class OrderManagementService {
      */
     @Transactional
     public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest purchaseRequest) {
+        //Moti Ostrovski: reset total Amount before new purchase
+        totalAmount=0.0;
 
         long orderNumber = 0;
         long paymentRefNumber = 0;
@@ -600,4 +602,17 @@ public class OrderManagementService {
 
         return response;
     }
+
+    //region get orders
+    public void getAllOrders()
+    {
+
+    }
+
+    public  void getOrdersByAccountId(long accountId)
+    {
+
+    }
+
+    //endregion get orders
 }
