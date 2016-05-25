@@ -24,6 +24,9 @@ define(['./module'], function (services) {
                     $http({
                         method: "post",
                         url: server.catalog.sendSupportEmail(),
+                        headers: {
+                            "content-type": "application/json; charset=utf-8",
+                        },
                         data: paramsToPass,
                     }).success(function (res) {
                         Helper.disableLoader();

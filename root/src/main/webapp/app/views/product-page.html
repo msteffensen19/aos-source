@@ -25,74 +25,135 @@
 
         <!-- image section -->
 
-        <div id="product-image">
-            <figure>
-                <img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
-            </figure>
-            <div id="cover" ng-show="(product.images | getAllImagesByColor: colorSelected).length > 1">
-                <div id="length">
-                    <div class="imageAlias" data-ng-click="changeImage(img)"
-                         data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
-                        <img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">
+        <div id="product_2">
+            <div id="product-section" class="half">
+                <figure>
+                    <img alt="" id="mainImg" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
+                </figure>
+                <div id="coverImages" ng-show="(product.images | getAllImagesByColor: colorSelected).length > 1">
+                    <div id="lengthAllImages">
+                        <div class="imageAlias" data-ng-click="changeImage(img)"
+                             data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
+                            <img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Description" class="half">
+                <h1 class="roboto-regular screen768"> {{::product.productName | uppercase}} </h1>
+
+                <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">
+                    {{ 'SOUL_OUT' | translate }}
+                </span>
+                </h2>
+
+                <p class="roboto-light"> {{::product.description }} </p>
+
+                <div id="productProperties">
+                    <div class="colors" ng-if="product.colors.length > 0">
+                        <h2 translate="Color" class="Colors roboto-light" class="roboto-light"></h2>
+
+                        <div>
+                            <span title="{{color.name}}"
+                                  data-ng-repeat="color in [] | sortArrayByColorName:product.colors"
+                                  class="productColor"
+                                  data-ng-hide="color.code == 'ABCDEF'" data-ng-style="color.code == 'FFFFFF' ?
+                                          {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
+                                          {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
+                                  data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 && product.productStatus == "Active" } '
+                                  data-ng-click="setColor(color)">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="smoolMargin">
+                        <label class="Quantity roboto-light" translate="Quantity:"></label>
+                        <e-sec-plus-minus num-attr="quantity"
+                                          a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>
+                        <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
+                    </div>
+                    <div class="fixedBtn">
+                        <button class="roboto-medium"
+                                data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
+                                translate="ADD_TO_CART"
+                                data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{
+                            pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- end image section -->
+
+        <!--<div id="product-image">-->
+            <!--<figure>-->
+                <!--<img alt="" id="imgToBuy" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">-->
+            <!--</figure>-->
+            <!--<div id="cover" ng-show="(product.images | getAllImagesByColor: colorSelected).length > 1">-->
+                <!--<div id="length">-->
+                    <!--<div class="imageAlias" data-ng-click="changeImage(img)"-->
+                         <!--data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">-->
+                        <!--<img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; end image section &ndash;&gt;-->
 
 
-        <!-- description section -->
+        <!--&lt;!&ndash; description section &ndash;&gt;-->
 
-        <div id="description">
-            <h1 class="roboto-regular screen768"> {{::product.productName | uppercase}} </h1>
+        <!--<div id="description">-->
+            <!--<h1 class="roboto-regular screen768"> {{::product.productName | uppercase}} </h1>-->
 
-            <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}
-                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">
-                    {{ 'SOUL_OUT' | translate }}
-                </span>
-            </h2>
+            <!--<h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}-->
+                <!--<span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">-->
+                    <!--{{ 'SOUL_OUT' | translate }}-->
+                <!--</span>-->
+            <!--</h2>-->
 
-            <p class="roboto-light"> {{::product.description }} </p>
-        </div>
+            <!--<p class="roboto-light"> {{::product.description }} </p>-->
+        <!--</div>-->
 
 
-        <div id="productProperties">
-            <div class="colors" ng-if="product.colors.length > 0">
-                <h2 translate="Color" class="Colors roboto-light" class="roboto-light"></h2>
+        <!--<div id="productProperties">-->
+            <!--<div class="colors" ng-if="product.colors.length > 0">-->
+                <!--<h2 translate="Color" class="Colors roboto-light" class="roboto-light"></h2>-->
 
-                <div>
-                <span title="{{color.name}}" data-ng-repeat="color in [] | sortArrayByColorName:product.colors"
-                      class="productColor"
-                      data-ng-hide="color.code == 'ABCDEF'" data-ng-style=" color.code == 'FFFFFF' ?
-                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
-                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"
-                      data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 && product.productStatus == "Active" } '
-                      data-ng-click="setColor(color)">
-                </span>
-                </div>
-            </div>
-            <div class="smoolMargin">
-                <label class="Quantity roboto-light" translate="Quantity:"></label>
-                <e-sec-plus-minus num-attr="quantity"
-                                  a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>
-                <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
-            </div>
-            <div class="fixedBtn">
-                <button class="roboto-medium"
-                        data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
-                        translate="ADD_TO_CART" data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{
-                    pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}
-                </button>
-            </div>
-        </div>
+                <!--<div>-->
+                <!--<span title="{{color.name}}" data-ng-repeat="color in [] | sortArrayByColorName:product.colors"-->
+                      <!--class="productColor"-->
+                      <!--data-ng-hide="color.code == 'ABCDEF'" data-ng-style=" color.code == 'FFFFFF' ?-->
+                              <!--{'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :-->
+                              <!--{'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}"-->
+                      <!--data-ng-class='{ colorSelected : colorSelected.name == color.name && product.colors.length > 1 && product.productStatus == "Active" } '-->
+                      <!--data-ng-click="setColor(color)">-->
+                <!--</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="smoolMargin">-->
+                <!--<label class="Quantity roboto-light" translate="Quantity:"></label>-->
+                <!--<e-sec-plus-minus num-attr="quantity"-->
+                                  <!--a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>-->
+                <!--&lt;!&ndash;<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div class="fixedBtn">-->
+                <!--<button class="roboto-medium"-->
+                        <!--data-ng-class='{ disable : product.productStatus == "OutOfStock" } '-->
+                        <!--translate="ADD_TO_CART" data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{-->
+                    <!--pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <!-- end description section -->
+        <!--&lt;!&ndash; end description section &ndash;&gt;-->
 
 
     </article>
-<div id="separator"></div>
-    <article class="max-width " data-ng-class="{ topSpace : product.images.length > 1 }">
+    <!--data-ng-class="{ topSpace : product.images.length > 1 }"-->
+    <div id="separator"></div>
+    <article class="max-width " >
         <h2 class="roboto-regular product_specifications" translate="PRODUCT_SPECIFICATIONS"></h2>
 
         <div class="roboto-light list" ng-repeat="attr in product_attributes">

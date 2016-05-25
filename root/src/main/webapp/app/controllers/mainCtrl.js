@@ -10,6 +10,19 @@ define(['./module'], function (controllers) {
         function ($scope, $q, productService, smoothScroll, userService, orderService,
                   $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
+
+            var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            //var type = connection.type;
+
+            function updateConnectionStatus() {
+                alert("Connection type is change from " + type + " to " + connection.type);
+            }
+            if(connection){
+                connection.addEventListener('typechange', updateConnectionStatus);
+            }
+
+
+
             $scope.cart;
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
@@ -185,12 +198,26 @@ define(['./module'], function (controllers) {
                 }
             }
 
+            var ____loginInterval;
+            $scope.miniTitleIn = function(){
+                if(____loginInterval){
+                    $timeout.cancel(____loginInterval);
+                }
+            }
+
+            $scope.miniTitleOut= function(miniTitleId){
+                ____loginInterval = $timeout(function(){
+                    $("#" + miniTitleId).fadeToggle(300);
+                }, 2000);
+            }
+
             $scope.login = function (miniTitleId) {
 
                 if ($rootScope.userCookie) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
+
                 Helper.mobileSectionClose();
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();

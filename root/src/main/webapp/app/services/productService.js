@@ -16,6 +16,9 @@ define(['./module'], function (services) {
             function getProducts() {
                 var request = $http({
                     method: "get",
+                    headers: {
+                        "content-type": "application/json; charset=utf-8",
+                    },
                     url: server.catalog.getProducts()
                 });
                 return ( request.then(responseService.handleSuccess, responseService.handleError) );
@@ -28,7 +31,10 @@ define(['./module'], function (services) {
                 $timeout(function () {
                     var request = $http({
                         method: "get",
-                        url: server.catalog.getProductById(id)
+                        url: server.catalog.getProductById(id),
+                        headers: {
+                            "content-type": "application/json; charset=utf-8",
+                        },
                     });
                     request.then(function (res) {
                             Helper.disableLoader();
@@ -52,7 +58,10 @@ define(['./module'], function (services) {
                 $timeout(function () {
                     var request = $http({
                         method: "get",
-                        url: server.catalog.getProductsBySearch(word, quantity)
+                        url: server.catalog.getProductsBySearch(word, quantity),
+                        headers: {
+                            "content-type": "application/json; charset=utf-8",
+                        },
                     });
                     request.then(function (res) {
                             Helper.disableLoader();
@@ -76,6 +85,9 @@ define(['./module'], function (services) {
                 $timeout(function () {
                     var request = $http({
                         method: "get",
+                        headers: {
+                            "content-type": "application/json; charset=utf-8",
+                        },
                         url: server.catalog.getAllCategoriesAttributes()
                     });
                     request.then(function (res) {

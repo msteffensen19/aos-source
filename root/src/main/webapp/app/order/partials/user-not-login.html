@@ -5,7 +5,6 @@
 
     <sec-validate >
 
-
         <sec-input
                 sec-required="{{'User_name' | translate}} {{'field is required' | translate}}"
                 sec-placeholder="{{'User_name' | translate}}"
@@ -53,7 +52,7 @@
         <br />
 
 
-        <label ng-class="{ invalid : rsMessage._class == 'false' }" > {{ rsMessage.text }}</label>
+        <label ng-class="{ invalid : rsMessage._class == 'invalid' }" > {{ rsMessage.text }}</label>
 
     </sec-validate>
 </div>

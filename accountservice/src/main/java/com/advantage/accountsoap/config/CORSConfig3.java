@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.config;
 
+import com.google.common.net.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -23,7 +24,6 @@ public class CORSConfig3 extends OncePerRequestFilter {
                     request.getHeader("Access-Control-Request-Headers"));
         }*/
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Request-Method", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
@@ -31,6 +31,9 @@ public class CORSConfig3 extends OncePerRequestFilter {
 
         if (request.getMethod().equals("OPTIONS")) {
             try {
+                //ogger.info("Method OPTIONS, Origin header=" + request.getHeader("Origin"));
+//                response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+                response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
                 response.getWriter().print("OK");
                 response.getWriter().flush();
             } catch (IOException e) {

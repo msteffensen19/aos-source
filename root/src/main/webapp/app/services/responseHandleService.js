@@ -25,6 +25,9 @@ define(['./module'], function (services) {
             getAllCountries : function () {
                 var request = $http({
                     method: "get",
+                    headers: {
+                        "content-type": "application/json; charset=utf-8",
+                    },
                     url: server.account.getAllCountries(),
                 });
                 return( request.then( this.handleSuccess, this.handleError ) );
