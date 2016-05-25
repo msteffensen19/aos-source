@@ -117,6 +117,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             if (ValidationHelper.isValidPassword(password)) {
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
                     if (getAppUserByLogin(loginName) == null) {
+
+                        //Moti Ostrovski: if not set countryID or equals 0=> set country USA
                         countryId = countryId==0 ? 40: countryId;
                         Country country = countryRepository.get(countryId);
                         Account account = null;
@@ -181,6 +183,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     "Invalid phone number or email",
                     account.getId());
         }
+
+        //Moti Ostrovski: if not set countryID or equals 0=> set country USA
         countryId = countryId==0 ? 40: countryId;
         Country country = countryRepository.get(countryId);
 
