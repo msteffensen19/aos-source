@@ -1,7 +1,6 @@
-/*
-/!**
+/**
  * Created by correnti on 19/05/2016.
- *!/
+ */
 
 
 define(['./../../../directives/module'], function (directives) {
@@ -44,7 +43,6 @@ define(['./../../../directives/module'], function (directives) {
 
                 secCompareTo: '=',
                 sModelCompareTo: '=',
-
 
                 secIsValid: '&',
             },
@@ -123,7 +121,7 @@ define(['./../../../directives/module'], function (directives) {
                 this.focus = function () {
                     $(label).addClass(animated);
                     normalHint();
-                    if(s.validations.length > 0){
+                    if (s.validations.length > 0) {
                         ul.stop().slideDown(500);
                     }
                 }
@@ -168,7 +166,7 @@ define(['./../../../directives/module'], function (directives) {
                     }
                 }
 
-                function normalHint(){
+                function normalHint() {
                     input.removeClass(invalid)
                     label.removeClass(invalid)
                     label.text(hint)
@@ -270,4 +268,3 @@ define(['./../../../directives/module'], function (directives) {
 });
 
 
-*/
