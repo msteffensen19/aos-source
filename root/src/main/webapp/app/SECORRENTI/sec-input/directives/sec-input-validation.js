@@ -77,20 +77,12 @@ define(['./../../../directives/module'], function (directives) {
                     s.validations.push(validation)
                 }
 
-
-                var firstLoader = true;
                 this.change = function (val) {
                     if (val != undefined && val != "") {
                         $(label).addClass(animated);
                         if (val.trim() == "") {
                             $(label).removeClass(animated);
                         }
-
-                        //if (firstLoader) {
-                        //    firstLoader = false;
-                        //    $(input).val(val)
-                        //    this.blur($(input).val());
-                        //}
                     }
                 }
 
@@ -232,7 +224,6 @@ define(['./../../../directives/module'], function (directives) {
                 if (s.secPattern) {
                     ctrl.pushValidation(s.secPattern, Keys.secPattern);
                 }
-
 
                 var div = $("<div></div>")
                 var input = $("<input type='" + type + "' data-ng-model='secModel' />")
