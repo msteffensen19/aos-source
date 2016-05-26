@@ -7,6 +7,7 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.DemoAppConfigParameter;
+import com.advantage.common.dto.OrdersHistoryDto;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
@@ -456,5 +457,17 @@ public class OrderController {
             return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
         }
     }
+
+    @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
+    @ApiOperation(value = "Get all order history")
+    public ResponseEntity<OrdersHistoryDto> getAllOrderHistory(HttpServletRequest request) {
+        OrdersHistoryDto ordersDto= orderManagementService.getAllOrders();
+        if (ordersDto == null) {
+            return new ResponseEntity<>(ordersDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+        } else {
+            return new ResponseEntity<>(ordersDto, HttpStatus.OK);
+        }
+    }
+
 
 }
