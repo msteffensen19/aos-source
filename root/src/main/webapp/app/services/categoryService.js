@@ -41,9 +41,6 @@ define(['./module'], function (services) {
                         $http({
                             method: "get",
                             url: server.catalog.getCategoryById(id),
-                            headers: {
-                                "content-type": "application/json; charset=utf-8",
-                            },
                         }).success(function (res) {
                             Helper.disableLoader();
                             Loger.Received(res)
@@ -64,9 +61,6 @@ define(['./module'], function (services) {
                 var request = $http({
                     method: "get",
                     url: server.catalog.getPopularProducts(),
-                    headers: {
-                        "content-type": "application/json; charset=utf-8",
-                    },
                 });
                 return (
                     request.then(

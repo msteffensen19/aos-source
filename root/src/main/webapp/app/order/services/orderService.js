@@ -220,9 +220,6 @@ define(['./module'], function (services) {
                                 method: "post",
                                 url: server.order.getShippingCost(),
                                 data: paramsToPass,
-                                headers: {
-                                    "content-type": "application/json; charset=utf-8",
-                                },
                             }).
                             then(function (shippingCost) {
                                 Loger.Received(shippingCost);

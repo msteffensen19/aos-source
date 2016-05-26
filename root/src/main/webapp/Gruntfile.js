@@ -162,6 +162,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['clean', 'ngtemplates', 'requirejs', 'copy', 'regex-replace', 'usemin', 'cssmin']);
     grunt.registerTask('dev', ['clean', 'ngtemplates']);
     grunt.registerTask('ngTemplatesBuild', ['ngtemplates']);
+    grunt.registerTask('ngt', ['ngtemplates']);
     grunt.registerTask('useminTest', ['copy', 'regex-replace', 'usemin']);
 
 };
