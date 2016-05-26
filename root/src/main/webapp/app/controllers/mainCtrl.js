@@ -11,6 +11,7 @@ define(['./module'], function (controllers) {
                   $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
 
+            console.log(navigator.network)
             var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
             //var type = connection.type;
 
