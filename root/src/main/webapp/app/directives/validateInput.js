@@ -550,22 +550,22 @@ define(['./module'], function (directives) {
             }
         }])
 
-        .directive('secRequired', function () {
-            return {
-                restrict: 'A',
-                priority: 0,
-                require: 'secInput',
-                link: function (s, e, a, ctrl) {
-                    var warning = a.secRequired || 'This field is required'
-                    ctrl.addWarningInfo({
-                        key: 'secRequired',
-                        warning: warning,
-                        info: '',
-                        show: false
-                    })
-                }
-            }
-        })
+        //.directive('secRequired', function () {
+        //    return {
+        //        restrict: 'A',
+        //        priority: 0,
+        //        require: 'secInput',
+        //        link: function (s, e, a, ctrl) {
+        //            var warning = a.secRequired || 'This field is required'
+        //            ctrl.addWarningInfo({
+        //                key: 'secRequired',
+        //                warning: warning,
+        //                info: '',
+        //                show: false
+        //            })
+        //        }
+        //    }
+        //})
         .directive('secTRequired', function () {
             return {
                 restrict: 'A',
@@ -601,127 +601,127 @@ define(['./module'], function (directives) {
                 }
             }
         })
-        .directive('secMinLength', function () {
-            return {
-                restrict: 'A',
-                require: 'secInput',
-                priority: 40,
-                link: function (s, e, a, ctrl) {
-                    var min = a.secMinLength - 0;
-                    if (!a.idAttr) {
-                        throw "if secMinLength is used in directive <secInput></secInput>, value is must! "
-                    }
-                    if (!((min - 0) == min && ('' + min).trim().length > 0) || min < 0) {
-                        throw "Invalid value in attribute secMinLength, the value in directive " +
-                        "<secInput></secInput> must be a positive number! "
-                    }
-                    var warning = 'Use ' + min + ' characters or longer'
-                    ctrl.addWarningInfo({
-                        key: 'secMinLength',
-                        warning: warning,
-                        info: warning,
-                        min: min,
-                        show: false
-                    })
-                }
-            }
-        })
-        .directive('secMaxLength', function () {
-            return {
-                restrict: 'A',
-                priority: 50,
-                require: 'secInput',
-                link: function (s, e, a, ctrl) {
-                    var max = a.secMaxLength - 0;
-                    if (!a.idAttr) {
-                        throw "if secMaxLength is used in directive <secInput></secInput>, value is must! "
-                    }
-                    if (!((max - 0) == max && ('' + max).trim().length > 0) || max < 0) {
-                        throw "Invalid value in attribute secMaxLength, the value in directive " +
-                        "<secInput></secInput> must be a positive number! "
-                    }
-                    var warning = 'Use up to ' + max + ' characters'
-                    ctrl.addWarningInfo({
-                        key: 'secMaxLength',
-                        warning: warning,
-                        info: warning,
-                        show: false,
-                        max: max,
-                    })
-                }
-            }
-        })
-        .directive('secPattern', function () {
-            return {
-                restrict: 'A',
-                priority: 100,
-                require: 'secInput',
-                link: function (s, e, a, ctrl) {
-
-                    if (!a.patternErrorAttr) {
-                        throw "if secPattern is used in directive <secInput></secInput>, pattern-error-attr attribute is must! "
-                    }
-                    ctrl.addWarningInfo({
-                        key: 'secPattern',
-                        warning: a.patternErrorAttr,
-                        info: a.patternErrorAttr,
-                        show: false,
-                        regex: a.secPattern,
-                    })
-                }
-            }
-        })
-        .directive('secEmail', function () {
-            return {
-                restrict: 'A',
-                require: 'secInput',
-                link: function (s, e, a, ctrl) {
-                    ctrl.addWarningInfo({
-                        key: 'secPattern',
-                        warning: "Your email address isn’t formatted correctly",
-                        info: "Your email address isn’t formatted correctly",
-                        show: false,
-                        regex: a.secEmail || "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
-                    })
-                    //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
-                    //"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
-                }
-            }
-        })
-        .directive('secCompareTo', function () {
-            return {
-                restrict: 'A',
-                require: 'secInput',
-                link: function (s, e, a, ctrl) {
-                    if (!a.idAttr) {
-                        throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
-                    }
-                    if (!a.secCompareTo) {
-                        throw "if sec-compare-to is used in directive <secInput></secInput>, must to be a comparable id! "
-                    }
-                    if (!a.compareToName) {
-                        throw "if sec-compare-to is used in directive <secInput></secInput>, must to be compare-to-name attribute! "
-                    }
-                    var warning = 'Same as ' + a.compareToName;
-                    ctrl.addWarningInfo({
-                        key: 'secCompareTo',
-                        warning: warning,
-                        info: warning,
-                        show: true,
-                        compareId: a.secCompareTo,
-                    })
-                }
-            }
-        })
-        .directive('secPlaceholder', function () {
-            return {
-                restrict: 'A',
-                require: 'secInput',
-                link: function (s, e, a, ctrl) {
-                    ctrl.setPlaceHolder(a.secPlaceholder)
-                }
-            }
-        })
+        //.directive('secMinLength', function () {
+        //    return {
+        //        restrict: 'A',
+        //        require: 'secInput',
+        //        priority: 40,
+        //        link: function (s, e, a, ctrl) {
+        //            var min = a.secMinLength - 0;
+        //            if (!a.idAttr) {
+        //                throw "if secMinLength is used in directive <secInput></secInput>, value is must! "
+        //            }
+        //            if (!((min - 0) == min && ('' + min).trim().length > 0) || min < 0) {
+        //                throw "Invalid value in attribute secMinLength, the value in directive " +
+        //                "<secInput></secInput> must be a positive number! "
+        //            }
+        //            var warning = 'Use ' + min + ' characters or longer'
+        //            ctrl.addWarningInfo({
+        //                key: 'secMinLength',
+        //                warning: warning,
+        //                info: warning,
+        //                min: min,
+        //                show: false
+        //            })
+        //        }
+        //    }
+        //})
+        //.directive('secMaxLength', function () {
+        //    return {
+        //        restrict: 'A',
+        //        priority: 50,
+        //        require: 'secInput',
+        //        link: function (s, e, a, ctrl) {
+        //            var max = a.secMaxLength - 0;
+        //            if (!a.idAttr) {
+        //                throw "if secMaxLength is used in directive <secInput></secInput>, value is must! "
+        //            }
+        //            if (!((max - 0) == max && ('' + max).trim().length > 0) || max < 0) {
+        //                throw "Invalid value in attribute secMaxLength, the value in directive " +
+        //                "<secInput></secInput> must be a positive number! "
+        //            }
+        //            var warning = 'Use up to ' + max + ' characters'
+        //            ctrl.addWarningInfo({
+        //                key: 'secMaxLength',
+        //                warning: warning,
+        //                info: warning,
+        //                show: false,
+        //                max: max,
+        //            })
+        //        }
+        //    }
+        //})
+        //.directive('secPattern', function () {
+        //    return {
+        //        restrict: 'A',
+        //        priority: 100,
+        //        require: 'secInput',
+        //        link: function (s, e, a, ctrl) {
+        //
+        //            if (!a.patternErrorAttr) {
+        //                throw "if secPattern is used in directive <secInput></secInput>, pattern-error-attr attribute is must! "
+        //            }
+        //            ctrl.addWarningInfo({
+        //                key: 'secPattern',
+        //                warning: a.patternErrorAttr,
+        //                info: a.patternErrorAttr,
+        //                show: false,
+        //                regex: a.secPattern,
+        //            })
+        //        }
+        //    }
+        //})
+        //.directive('secEmail', function () {
+        //    return {
+        //        restrict: 'A',
+        //        require: 'secInput',
+        //        link: function (s, e, a, ctrl) {
+        //            ctrl.addWarningInfo({
+        //                key: 'secPattern',
+        //                warning: "Your email address isn’t formatted correctly",
+        //                info: "Your email address isn’t formatted correctly",
+        //                show: false,
+        //                regex: a.secEmail || "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
+        //            })
+        //            //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
+        //            //"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+        //        }
+        //    }
+        //})
+        //.directive('secCompareTo', function () {
+        //    return {
+        //        restrict: 'A',
+        //        require: 'secInput',
+        //        link: function (s, e, a, ctrl) {
+        //            if (!a.idAttr) {
+        //                throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
+        //            }
+        //            if (!a.secCompareTo) {
+        //                throw "if sec-compare-to is used in directive <secInput></secInput>, must to be a comparable id! "
+        //            }
+        //            if (!a.compareToName) {
+        //                throw "if sec-compare-to is used in directive <secInput></secInput>, must to be compare-to-name attribute! "
+        //            }
+        //            var warning = 'Same as ' + a.compareToName;
+        //            ctrl.addWarningInfo({
+        //                key: 'secCompareTo',
+        //                warning: warning,
+        //                info: warning,
+        //                show: true,
+        //                compareId: a.secCompareTo,
+        //            })
+        //        }
+        //    }
+        //})
+        //.directive('secPlaceholder', function () {
+        //    return {
+        //        restrict: 'A',
+        //        require: 'secInput',
+        //        link: function (s, e, a, ctrl) {
+        //            ctrl.setPlaceHolder(a.secPlaceholder)
+        //        }
+        //    }
+        //})
         .directive('secTPlaceholder', function () {
             return {
                 restrict: 'A',
