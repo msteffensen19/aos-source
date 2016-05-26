@@ -9,6 +9,19 @@ import java.util.Collection;
  */
 public abstract class ArgumentValidationHelper {
 
+    private static final String STATUS_ERROR_CITY_VALUE = "ERROR. City value not valid";
+    private static final String STATUS_ERROR_STATE_VALUE = "ERROR. State value not valid";
+    private static final String STATUS_ERROR_POSTAL_VALUE = "ERROR. Postal value valid";
+    private static final String STATUS_ERROR_ADDRESS_LINE1 = "ERROR. Address value not valid";
+    private static final String STATUS_ERROR_NAME_VALUE = "ERROR. Name Value not valid";
+    private static final int COUNTRY_PATTERN = 10;
+    private static final int ADDRESS_LINE_PATTERN = 50;
+    private static final int STATE_PATTERN = 10;
+    private static final int NAME_MIN_PATTERN = 2;
+    private static final int NAME_MAX_PATTERN = 30;
+    private static final int CITY_PATTERN = 25;
+    private static final int POSTALCODE_PATTERN = 10;
+
     private static final String ARGUMENT_INFORMATIVE_NAME = "argument informative name";
 
     private ArgumentValidationHelper() {
@@ -329,4 +342,45 @@ public abstract class ArgumentValidationHelper {
         message.append("]");
         return message.toString();
     }
+
+    public static void lastFirstNameValidation(String firstLastName) {
+        if(firstLastName != null && firstLastName.length()>0)
+            if (!(firstLastName.length() > NAME_MIN_PATTERN) || firstLastName.length() > NAME_MAX_PATTERN) {
+                throw new IllegalArgumentException(STATUS_ERROR_NAME_VALUE);
+            }
+    }
+
+    public static void sityValidation(String sity) {
+        if(sity != null && sity.length()>0) {
+            if (sity.length() > CITY_PATTERN) {
+                throw new IllegalArgumentException(STATUS_ERROR_CITY_VALUE);
+            }
+        }
+    }
+
+    public static void stateValidation(String state) {
+        if(state != null && state.length()>0) {
+            if (state.length()> STATE_PATTERN) {
+                throw new IllegalArgumentException(STATUS_ERROR_STATE_VALUE);
+            }
+        }
+    }
+
+    public static void addressValidation(String address) {
+        if(address != null && address.length()>0) {
+            if (address.length()> ADDRESS_LINE_PATTERN) {
+                throw new IllegalArgumentException(STATUS_ERROR_ADDRESS_LINE1);
+            }
+        }
+    }
+
+    public static void zipCodeValidation(String zipcode) {
+        if(zipcode != null && zipcode.length()>0) {
+            if (zipcode.length()> POSTALCODE_PATTERN) {
+                throw new IllegalArgumentException(STATUS_ERROR_POSTAL_VALUE);
+            }
+        }
+    }
+
+
 }
