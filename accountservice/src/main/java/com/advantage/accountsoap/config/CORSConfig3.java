@@ -29,6 +29,9 @@ public class CORSConfig3 extends OncePerRequestFilter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, soapaction");
 
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+
         if (request.getMethod().equals("OPTIONS")) {
             try {
                 //ogger.info("Method OPTIONS, Origin header=" + request.getHeader("Origin"));

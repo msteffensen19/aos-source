@@ -49,10 +49,12 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
-//    @ModelAttribute
-//    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-//    }
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+    }
 
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)

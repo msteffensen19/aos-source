@@ -61,6 +61,9 @@ public class OrderController {
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+
 //    <param-name>cors.supportedHeaders</param-name>
 //    <param-value>Content-Type,Accept,Origin, Authorization</param-value>
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type,Accept,Origin, Authorization");
@@ -76,7 +79,7 @@ public class OrderController {
         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3601");
 //    <param-name>cors.supportsCredentials</param-name>
 //    <param-value>true</param-value>
-       // response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        // response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
     }
 
 

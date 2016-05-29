@@ -1,10 +1,10 @@
 package com.advantage.safepay.payment.api;
 
+import com.advantage.common.Constants;
+import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.dto.SafePayDto;
 import com.advantage.safepay.payment.dto.SafePayResponse;
-import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.services.SafePayService;
-import com.advantage.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,11 @@ public class SafePayController {
     @Autowired
     private SafePayService safePayService;
 
-//    @ModelAttribute
-//    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-//    }
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+    }
 
     /**
      * @param safePayDto
@@ -36,8 +37,8 @@ public class SafePayController {
      */
     @RequestMapping(value = "/payments/payment", method = RequestMethod.POST)
     public ResponseEntity<SafePayResponse> doPayment(@RequestBody SafePayDto safePayDto,
-                                                          HttpServletRequest request,
-                                                          HttpServletResponse response) {
+                                                     HttpServletRequest request,
+                                                     HttpServletResponse response) {
 
         SafePayResponse safePayResponse = safePayService.doPayment(safePayDto);
         //response.setHeader("sessionId", request.getSession().getId());
