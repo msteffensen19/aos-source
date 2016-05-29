@@ -228,9 +228,6 @@ define(['./module'], function (services) {
                                 data: paramsToPass,
                             }).
                             then(function (shippingCost) {
-                                if(user.firstName == "no_name"){
-                                    user.firstName = "";
-                                }
 
                                 Loger.Received(shippingCost);
                                 Helper.disableLoader();
