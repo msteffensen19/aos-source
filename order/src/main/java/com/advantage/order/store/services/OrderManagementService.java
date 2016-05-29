@@ -4,6 +4,7 @@ import AccountServiceClient.*;
 import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
+import com.advantage.common.dto.OrdersHistoryDto;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.order.store.dao.ShoppingCartRepository;
@@ -604,15 +605,17 @@ public class OrderManagementService {
     }
 
     //region get orders
-    public void getAllOrders()
-    {
+    public OrdersHistoryDto getAllOrders(){
+        //TODO Moti: complete return all orders history
+        return new OrdersHistoryDto();
+    }
+
+    public  void getOrdersByAccountId(long accountId){
 
     }
 
-    public  void getOrdersByAccountId(long accountId)
-    {
+    public  void getOrderByOrderId(long orderdId){
 
     }
-
     //endregion get orders
 }

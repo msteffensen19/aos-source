@@ -216,7 +216,6 @@ define(['./module'], function (services) {
                                 method: "put",
                                 data: JSON.stringify(cartToReplace),
                                 headers: {
-                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
@@ -246,7 +245,6 @@ define(['./module'], function (services) {
                             var request = $http({
                                 method: "put",
                                 headers: {
-                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 async: false,
@@ -319,7 +317,6 @@ define(['./module'], function (services) {
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
                 if (user && user.response) {
-                    var i = 0;
                     if (user.response.userId != -1) {
 
                         Helper.enableLoader();
@@ -327,9 +324,9 @@ define(['./module'], function (services) {
                             var request = $http({
                                 method: "post",
                                 headers: {
-                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
+                                data: {},
                                 async: false,
                                 url: server.order.addProductToUser(user.response.userId,
                                     product.productId, product.colors[0].code, quantity),
@@ -420,7 +417,6 @@ define(['./module'], function (services) {
                 var defer = $q.defer()
                 $http({
                     method: "get",
-                    "content-type": "application/json; charset=utf-8",
                     url: server.catalog.getProductById(product.productId)
                 }).success(function (res) {
                     Loger.Received(res);

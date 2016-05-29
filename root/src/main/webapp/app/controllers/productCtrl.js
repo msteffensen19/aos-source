@@ -21,7 +21,9 @@ define(['./module'], function (controllers) {
 
             s.getFirstImageUrl = function () {
                 var array = $filter("getAllImagesByColor")(s.product.images, s.colorSelected);
-                s.imageUrl = array.length > 0 ? array[0] : "";
+                if(array.length > 0){
+                    s.imageUrl = array[0];
+                }
             }
 
             s.product_attributes = Helper.sortAttributesByName(s.product.attributes);

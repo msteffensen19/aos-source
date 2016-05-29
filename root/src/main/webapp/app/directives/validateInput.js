@@ -681,9 +681,10 @@ define(['./module'], function (directives) {
                         warning: "Your email address isn’t formatted correctly",
                         info: "Your email address isn’t formatted correctly",
                         show: false,
-                        regex: a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+                        regex: a.secEmail || "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
                     })
                     //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
+                    //"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                 }
             }
         })
@@ -692,7 +693,6 @@ define(['./module'], function (directives) {
                 restrict: 'A',
                 require: 'secInput',
                 link: function (s, e, a, ctrl) {
-                    var max = a.secMaxLength - 0;
                     if (!a.idAttr) {
                         throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
                     }

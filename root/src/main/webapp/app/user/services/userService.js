@@ -60,9 +60,6 @@ define(['./module'], function (services) {
                             $http({
                                 method: "get",
                                 url: server.catalog.getEmailConfiguration(),
-                                headers: {
-                                    "content-type": "application/json",
-                                },
                             }).
                             then(function (res) {
                                 Helper.disableLoader();
