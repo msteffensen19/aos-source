@@ -112,7 +112,7 @@ define(['./../../../directives/module'], function (directives) {
 
                 this.focus = function () {
                     $(label).addClass(animated);
-                    normalHint();
+                    setNormalHint();
                     if (s.validations.length > 0) {
                         ul.stop().slideDown(500);
                     }
@@ -151,14 +151,14 @@ define(['./../../../directives/module'], function (directives) {
                                     break;
                             }
                         }
-                        normalHint();
+                        setNormalHint();
                         return true;
                     } catch (e) {
                         throwInvalidObjectFormat(validation);
                     }
                 }
 
-                function normalHint() {
+                function setNormalHint() {
                     input.removeClass(invalid)
                     label.removeClass(invalid)
                     label.text(hint)
