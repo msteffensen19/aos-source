@@ -112,6 +112,7 @@ define(['./module'], function (directives) {
                                 }
                                 s.paymentEnd = false;
                             }, function (res) {
+                                alert('An error occurred, please try again');
                                 console.log(res);
                                 safePayBussy = false;
                             });
