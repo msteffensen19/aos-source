@@ -76,7 +76,7 @@ public class OrderController {
         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3601");
 //    <param-name>cors.supportsCredentials</param-name>
 //    <param-value>true</param-value>
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+       // response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
     }
 
 
