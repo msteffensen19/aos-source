@@ -681,7 +681,7 @@ define(['./module'], function (directives) {
                         warning: "Your email address isn’t formatted correctly",
                         info: "Your email address isn’t formatted correctly",
                         show: false,
-                        regex: a.secEmail || "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
+                        regex: a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                     })
                     //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                     //"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
