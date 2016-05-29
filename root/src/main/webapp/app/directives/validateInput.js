@@ -177,7 +177,6 @@ define(['./module'], function (directives) {
             //    return s.doNotShowInfo;
             //}
 
-
             s.inputKeyup = function (id) {
                 var input = $('#secInput_' + id);
                 ctrlFather.updateStartingValueChanged(input);

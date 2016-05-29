@@ -111,6 +111,9 @@ define(['./module'], function (directives) {
                                     return;
                                 }
                                 s.paymentEnd = false;
+                            }, function (res) {
+                                console.log(res);
+                                safePayBussy = false;
                             });
                     }
 
