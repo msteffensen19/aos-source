@@ -131,6 +131,10 @@ public class MasterCreditService {
 
         if (isValid) {
             /*  Transaction Date    */
+            if (masterCreditDto.getTransactionDate() == null) {
+                masterCreditDto.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));
+            }
+
             sb = new StringBuilder(masterCreditDto.getTransactionDate().substring(0, 2))
                     .append('.')
                     .append(masterCreditDto.getTransactionDate().substring(2, 4))
@@ -162,6 +166,10 @@ public class MasterCreditService {
         }
         else {
             System.out.println(masterCreditDto.getValue() + " : true");
+        }
+
+        if (masterCreditDto.getCurrency() == null) {
+            masterCreditDto.setCurrency("USD");
         }
 
         if (!ValidationHelper.isValidCurrency(masterCreditDto.getCurrency())) {
