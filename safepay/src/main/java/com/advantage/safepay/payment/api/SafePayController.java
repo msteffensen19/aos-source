@@ -23,10 +23,10 @@ public class SafePayController {
     @Autowired
     private SafePayService safePayService;
 
-    @ModelAttribute
-    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-    }
+//    @ModelAttribute
+//    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//    }
 
     /**
      * @param safePayDto

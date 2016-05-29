@@ -46,10 +46,10 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
-    @ModelAttribute
-    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-    }
+//    @ModelAttribute
+//    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//    }
 
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)

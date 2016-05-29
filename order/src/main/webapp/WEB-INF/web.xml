@@ -42,6 +42,10 @@
             <param-name>cors.supportsCredentials</param-name>
             <param-value>true</param-value>
         </init-param>
+        <init-param>
+            <param-name>cors.allowOrigin</param-name>
+            <param-value>*</param-value>
+        </init-param>
     </filter>
 
     <filter-mapping>
