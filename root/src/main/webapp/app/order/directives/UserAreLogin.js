@@ -119,7 +119,6 @@ define(['./module'], function (directives) {
                     }
 
 
-
                     s.payNow_SafePay = function () {
                         if(s.saveSafePay){
                             if (!alreadyHaveSafePayCart) {
