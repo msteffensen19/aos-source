@@ -43,7 +43,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
-public class OrderController {
+public class OrderController{
 
     @Autowired
     private ShoppingCartService shoppingCartService;
@@ -456,5 +456,14 @@ public class OrderController {
             return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
         }
     }
+
+    @RequestMapping(value = "/order/history", method = RequestMethod.GET)
+    @ApiOperation(value = "Get all order history")
+    public ResponseEntity<OrderHistoryCollectionDto> getAllOrderHistory(
+                                                               HttpServletRequest request) {
+        OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getAllOrderHistory();
+            return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
+        }
+
 
 }

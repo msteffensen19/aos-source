@@ -6,10 +6,13 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
+import com.advantage.order.store.dao.OrderHistoryHeaderManagementRepository;
+import com.advantage.order.store.dao.OrderHistoryLineManagementRepository;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.dao.OrderManagementRepository;
 import com.advantage.order.store.model.OrderHeader;
+import com.advantage.order.store.model.OrderLines;
 import com.advantage.root.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,6 +50,14 @@ public class OrderManagementService {
     @Autowired
     @Qualifier("orderManagementRepository")
     public OrderManagementRepository orderManagementRepository;
+
+    @Autowired
+    @Qualifier("orderHistoryHeaderManagementRepository")
+    public OrderHistoryHeaderManagementRepository orderHistoryHeaderManagementRepository;
+
+    @Autowired
+    @Qualifier("orderHistoryLineManagementRepository")
+    public OrderHistoryLineManagementRepository orderHistoryLineManagementRepository;
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -605,9 +616,48 @@ public class OrderManagementService {
     }
 
     //region get orders
-    public void getAllOrders()
+    public OrderHistoryCollectionDto getAllOrderHistory()
     {
-        //List<OrderHeader> ordersId=
+        List<OrderHeader> orderHistoryHeaders=orderHistoryHeaderManagementRepository.getAll();
+/*
+        long orderNumber, long orderTimestamp,
+        double shippingTrackingNumber, String paymentMethod,
+        double orderTotalSum, double orderShipingCost,
+        String shippingAddress, OrderHistoryAccountDto customer,OrderHistoryProductDto product
+
+        */
+
+        OrderHistoryCollectionDto orderHistoryCollectionDto=new OrderHistoryCollectionDto();
+        try {
+
+            orderHistoryHeaders.forEach(order -> {
+                OrderHistoryDto orderHistoryDto  = new OrderHistoryDto();
+                //get products by orderID
+                List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
+//
+                //set order fields
+                orderHistoryDto.setOrderNumber(order.getOrderNumber());
+                orderHistoryDto.setOrderTimestamp( order.getOrderTimestamp());
+                orderHistoryDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
+                orderHistoryDto.setPaymentMethod( order.getPaymentMethod());
+                orderHistoryDto.setOrderTotalSum( order.getAmount());
+                orderHistoryDto.setOrderShipingCost( order.getShippingCost());
+                orderHistoryDto.setShippingAddress( order.getShippingAddress());
+                //set user
+                orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(),order.getCustomerName(), order.getCustomerPhone()));
+                //set products
+                orderLines.forEach(product->{
+                    orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(),product.getProductColor(),
+                    product.getProductColorName(),product.getPricePerItem(),product.getQuantity(),product.getOrderNumber() ));
+                });
+                orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
+            });
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return orderHistoryCollectionDto;
     }
 
     public  void getOrdersByAccountId(long accountId)
