@@ -9,6 +9,7 @@ import com.advantage.common.enums.ResponseEnum;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.dao.OrderManagementRepository;
+import com.advantage.order.store.model.OrderHeader;
 import com.advantage.root.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -606,7 +607,7 @@ public class OrderManagementService {
     //region get orders
     public void getAllOrders()
     {
-
+        //List<OrderHeader> ordersId=
     }
 
     public  void getOrdersByAccountId(long accountId)
