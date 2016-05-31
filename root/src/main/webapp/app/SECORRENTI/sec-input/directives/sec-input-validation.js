@@ -7,7 +7,10 @@ define(['./../../../directives/module'], function (directives) {
     'use strict';
     directives.directive('secInputValidation', ['$templateCache', "$compile", function ($templateCache, $compile) {
 
-        function throwInvalidObjectFormat(obj) {
+        function throwInvalidObjectFormat(obj, e) {
+
+            console.log(e);
+            console.log(JSON.stringify(e));
             throw "-----------  Invalid object format ! \n\n" +
             "The element must be like this:\n\n" +
             "var obj = {\n" +
@@ -19,6 +22,7 @@ define(['./../../../directives/module'], function (directives) {
             "   model: 'add this param if you use secCompareTo directive, model have to pass sModelCompareTo model to compare', \n" +
             "}\n" +
             "\nYou object is: " + JSON.stringify(obj) + "\n\n\n\n";
+
         }
 
         var Keys = {
@@ -31,6 +35,7 @@ define(['./../../../directives/module'], function (directives) {
 
         var invalid = "invalid";
         var animated = "animated";
+        var in_focus = "in-focus";
 
         return {
             restrict: 'E',
@@ -53,38 +58,31 @@ define(['./../../../directives/module'], function (directives) {
                 var isFieldValid;
                 var hint;
                 var ul;
+                var ctrl;
                 s.compareTo;
                 s.validations = [];
 
                 this.getListValidations = function () {
                     var li = "";
                     for (var i = 0; i < s.validations.length; i++) {
-                        if (s.validations[i].info) {
-                            li += "<li><a>" + s.validations[i].info + " </a></li>"
+                        var validation = s.validations[i];
+                        if (validation.info) {
+                            li += "<li><a>" + validation.info + " </a></li>"
                         }
                     }
                     return li;
-                }
+                };
 
 
                 this.setCompareTo = function (_compareTo) {
                     s.compareTo = _compareTo;
-                }
+                };
 
 
                 this.pushValidation = function (validation, key) {
                     validation.key = key;
                     s.validations.push(validation)
-                }
-
-                this.change = function (val) {
-                    if (val != undefined && val != "") {
-                        $(label).addClass(animated);
-                        if (val.trim() == "") {
-                            $(label).removeClass(animated);
-                        }
-                    }
-                }
+                };
 
                 var firstLoader2 = true;
                 this.modelCompareToChange = function (val) {
@@ -97,26 +95,45 @@ define(['./../../../directives/module'], function (directives) {
                         this.blur($(input).val());
                     }
                     firstLoader2 = false;
-                }
+                };
+
+                this.change = function (val) {
+                    if (val == undefined) {
+                        return;
+                    }
+                    else if (val.trim() == "") {
+                        if (s.validations.length > 0) {
+                            if (input.val().trim() == '' && input.hasClass(in_focus)) {
+                                ul.find('li').slideDown()
+                            }
+                        }
+                    }
+                    else {
+                        if (!$(label).hasClass(animated)) {
+                            $(label).addClass(animated);
+                        }
+                        checkRightValidations();
+                    }
+                };
 
                 this.blur = function (val) {
                     if (val.trim() == "") {
-                        $(label).removeClass(animated);
+                        label.removeClass(animated);
                     }
                     var valid = getValidation();
                     if (isFieldValid) {
                         isFieldValid({valid: valid});
                     }
-                    ul.stop().slideUp(500);
-                }
+                    ul.find('li').slideUp();
+                    input.removeClass(in_focus);
+                };
 
                 this.focus = function () {
-                    $(label).addClass(animated);
+                    label.addClass(animated);
+                    input.addClass(in_focus);
+                    this.change(input.val());
                     setNormalHint();
-                    if (s.validations.length > 0) {
-                        ul.stop().slideDown(500);
-                    }
-                }
+                };
 
                 function getValidation() {
                     var validation = null;
@@ -158,6 +175,76 @@ define(['./../../../directives/module'], function (directives) {
                     }
                 }
 
+                function checkRightValidations() {
+                    var validation = null;
+                    var invalidInput = false;
+                    try {
+                        for (var i = 0; i < s.validations.length; i++) {
+                            validation = s.validations[i];
+                            switch (validation.key) {
+                                case Keys.secRequired:
+                                    if (input.val().trim() == '') {
+                                        showValidation(i)
+                                        invalidInput = true;
+                                    }
+                                    else {
+                                        hideValidation(i)
+                                    }
+                                    break;
+                                case Keys.secMinLength:
+                                    if (input.val().length < validation.min && (input.val() + "").length != 0) {
+                                        showValidation(i)
+                                        invalidInput = true;
+                                    }
+                                    else {
+                                        hideValidation(i)
+                                    }
+                                    break;
+                                case Keys.secMaxLength:
+                                    if (input.val().length > validation.max) {
+                                        showValidation(i)
+                                        invalidInput = true;
+                                    }
+                                    else {
+                                        hideValidation(i)
+                                    }
+                                    break;
+                                case Keys.secPattern:
+                                    if (!(new RegExp(validation.regex).test(input.val()))) { // && (input.val()+"").length != 0
+                                        showValidation(i)
+                                        invalidInput = true;
+                                    }
+                                    else {
+                                        hideValidation(i)
+                                    }
+                                    break;
+                                case Keys.secCompareTo:
+                                    if (s.compareTo.val() != input.val() && s.compareTo.val() != "") { // && input.val() != ""
+                                        showValidation(i)
+                                        invalidInput = true;
+                                    }
+                                    else {
+                                        hideValidation(i)
+                                    }
+                                    break;
+                            }
+                        }
+                        //updateFormValidation(invalidInput);
+                        return true;
+                    } catch (e) {
+                        throwInvalidObjectFormat(validation, e);
+                    }
+                }
+
+                function hideValidation(index) {
+                    ul.find("li:nth-child(" + (index + 1) + ")").slideUp();
+                }
+
+                function showValidation(index) {
+                    ul.find("li:nth-child(" + (index + 1) + ")").slideDown();
+                }
+
+
                 function setNormalHint() {
                     input.removeClass(invalid)
                     label.removeClass(invalid)
@@ -177,80 +264,93 @@ define(['./../../../directives/module'], function (directives) {
                     isFieldValid = _isFieldValid;
                     ul = _ul;
                     hint = label.text();
-                    var ctrl = this;
+                    ctrl = this;
 
-                    $(label).on({
+                    label.on({
                         click: function () {
-                            if (!$(label).hasClass(animated)) {
+                            if (!label.hasClass(animated)) {
                                 input.focus();
                                 ctrl.focus();
                             }
                         }
                     });
 
-                    $(input).on({
+                    input.on({
                         blur: function () {
-                            ctrl.blur($(input).val());
+                            ctrl.blur(input.val());
                         },
                         focus: function () {
                             ctrl.focus();
                         },
                     });
                 }
-            }],
+            }
 
-            link: function (s, e, a, ctrl) {
+            ],
 
-                e.addClass("sec-input-validation");
+            link: {
+                pre: function (s, e, a, ctrl) {
 
-                var type = "text"
-                if (a.aType) {
-                    type = a.aType;
-                }
+                    e.addClass("sec-input-validation");
 
-                s.$watch('secModel', function (n, o) {
-                    ctrl.change(n);
-                }, true);
+                    var type = "text"
+                    if (a.aType) {
+                        type = a.aType;
+                    }
 
-                if (s.secRequire) {
-                    ctrl.pushValidation(s.secRequire, Keys.secRequired);
-                }
-                if (s.secMinLength) {
-                    ctrl.pushValidation(s.secMinLength, Keys.secMinLength);
-                }
-                if (s.secMaxLength) {
-                    ctrl.pushValidation(s.secMaxLength, Keys.secMaxLength);
-                }
-                if (s.secPattern) {
-                    ctrl.pushValidation(s.secPattern, Keys.secPattern);
-                }
-
-                var div = $("<div></div>")
-                var input = $("<input type='" + type + "' data-ng-model='secModel' />")
-                var label = $("<label>" + a.aHint + "</label>")
-
-                div.append(input)
-                div.append(label)
-
-                $compile(div)(s);
-                e.append(div);
-
-                if (s.secCompareTo) {
-                    s.$watch('sModelCompareTo', function (n, o) {
-                        ctrl.modelCompareToChange(n);
+                    s.$watch('secModel', function (n, o) {
+                        ctrl.change(n);
                     }, true);
-                    ctrl.pushValidation(s.secCompareTo, Keys.secCompareTo);
-                    var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='sModelCompareTo' />")
-                    $compile(compareTo)(s);
-                    ctrl.setCompareTo(compareTo);
-                    e.append(compareTo);
+
+                    if (s.secRequire) {
+                        ctrl.pushValidation(s.secRequire, Keys.secRequired);
+                    }
+                    if (s.secMinLength) {
+                        ctrl.pushValidation(s.secMinLength, Keys.secMinLength);
+                    }
+                    if (s.secMaxLength) {
+                        ctrl.pushValidation(s.secMaxLength, Keys.secMaxLength);
+                    }
+                    if (s.secPattern) {
+                        ctrl.pushValidation(s.secPattern, Keys.secPattern);
+                    }
+
+                    var div = $("<div class='inputContainer'></div>");
+                    var input = $("<input type='" + type + "' data-ng-model='secModel' />");
+                    var label = $("<label>" + a.aHint + "</label>");
+
+                    div.append(input);
+                    div.append(label);
+
+                    $compile(div)(s);
+                    e.append(div);
+
+                    if (s.secCompareTo) {
+                        s.$watch('sModelCompareTo', function (n, o) {
+                            ctrl.modelCompareToChange(n);
+                        }, true);
+                        ctrl.pushValidation(s.secCompareTo, Keys.secCompareTo);
+                        var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='sModelCompareTo' />")
+                        $compile(compareTo)(s);
+                        ctrl.setCompareTo(compareTo);
+                        e.append(compareTo);
+                    }
+
+                    var ul = $("<ul>" + ctrl.getListValidations() + "</ul>");
+                    e.append(ul);
+                    ctrl.setItems(input, label, ul, s.secIsValid);
+
                 }
+            },
+            post: function (s, e, a, ctrl) {
 
-                var ul = $("<ul>" + ctrl.getListValidations() + "</ul>");
-                ctrl.setItems(input, label, ul, s.secIsValid);
-
-                e.append(ul);
-
+            }
+        }
+    }
+    ]).animation('.fade', [function () {
+        return {
+            enter: function (element, doneFn) {
+                jQuery(element).slideIn(1000, doneFn);
             }
         }
     }])

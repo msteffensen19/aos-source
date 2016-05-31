@@ -15,6 +15,11 @@ define(['./module'], function (controllers) {
             s.model8 = "e@e.sec";
             s.model9 = "r@r.sec";
 
+            s.model  = "";
+            s.model7 = "";
+            s.model8 = "";
+            s.model9 = "";
+
             s.isValid = function (valid) {
                 console.log(valid);
             }

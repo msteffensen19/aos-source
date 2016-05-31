@@ -1,7 +1,11 @@
 .sec-input-validation {
     position: relative;
     display: block;
-    padding-top: 27px;
+}
+
+.sec-input-validation .inputContainer {
+    margin: 2px 0;
+    padding-top: 22px;
 }
 
 .sec-input-validation label {
@@ -21,14 +25,14 @@
 
 .sec-input-validation label {
     position: absolute;
-    top: 27px;
+    top: 22px;
     transition: all .8s ease, top .3s ease, transform .8s ease;
     transform-origin: 0;
     color: #313131;
 }
 
 .sec-input-validation label.animated {
-    top: 10px;
+    top: 2px;
     transform: scale(0.8, 1);
     padding: 0 3px;
     margin: 5px 0;
@@ -55,14 +59,18 @@
 
 .sec-input-validation ul {
     list-style: none;
+}
+
+.sec-input-validation ul li{
     display: none;
 }
 
 .sec-input-validation ul li a {
     color: #828282;
     font-size: 12px;
-    padding: 4px 0;
+    padding: 2px 0;
     text-decoration: none;
 }
+
 
 
