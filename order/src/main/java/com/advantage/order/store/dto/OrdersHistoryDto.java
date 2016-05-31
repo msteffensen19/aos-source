@@ -1,4 +1,4 @@
-package com.advantage.common.dto;
+package com.advantage.order.store.dto;
 
 import java.util.List;
 

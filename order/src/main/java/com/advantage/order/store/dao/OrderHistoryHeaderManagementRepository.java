@@ -11,10 +11,10 @@ public interface OrderHistoryHeaderManagementRepository {
 
     List<OrderHeader> getAll();
 
-    List<OrderHeader> getByUserId(long userId);
+    List<OrderHeader> getOrdersHeaderByUserId(long userId);
 
-    List<OrderHeader> getOrderHeaderByOrderId(long orderId);
+    List<OrderHeader> getOrdersHeaderByOrderId(long orderId);
 
-    List<OrderHeader> getOrderHeaderByOrderIdAndUserId(long orderId,long userId);
+    List<OrderHeader> getOrdersHeaderByOrderIdAndUserId(long orderId,long userId);
 
 }

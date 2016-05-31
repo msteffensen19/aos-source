@@ -7,7 +7,6 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.DemoAppConfigParameter;
-import com.advantage.common.dto.OrdersHistoryDto;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;

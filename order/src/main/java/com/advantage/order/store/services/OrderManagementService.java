@@ -617,42 +617,12 @@ public class OrderManagementService {
     }
 
     //region get orders
-    /*public OrderHistoryCollectionDto getAllOrderHistory()
-    {
-        List<OrderHeader> orderHistoryHeaders=orderHistoryHeaderManagementRepository.getAll();
-        OrderHistoryCollectionDto orderHistoryCollectionDto=new OrderHistoryCollectionDto();
-        try {
-
-            orderHistoryHeaders.forEach(order -> {
-                OrderHistoryDto orderHistoryDto  = new OrderHistoryDto();
-                //get products by orderID
-                List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
-//
-                //set order fields
-                orderHistoryDto.setOrderNumber(order.getOrderNumber());
-                orderHistoryDto.setOrderTimestamp( order.getOrderTimestamp());
-                orderHistoryDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
-                orderHistoryDto.setPaymentMethod( order.getPaymentMethod());
-                orderHistoryDto.setOrderTotalSum( order.getAmount());
-                orderHistoryDto.setOrderShipingCost( order.getShippingCost());
-                orderHistoryDto.setShippingAddress( order.getShippingAddress());
-                //set user
-                orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(),order.getCustomerName(), order.getCustomerPhone()));
-                //set products
-                orderLines.forEach(product->{
-                    orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(),product.getProductColor(),
-                    product.getProductColorName(),product.getPricePerItem(),product.getQuantity(),product.getOrderNumber() ));
-                });
-                orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
-            });
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return orderHistoryCollectionDto;
-    }*/
-
+    /*
+    get orders history by userID or orderID
+    not set any value(userID =0, orderID=0 or not set in REST) => get all
+    currently order saved by unique orderID
+    if change to unique per user the option get by userID and orderID available
+     */
     public  OrderHistoryCollectionDto getOrdersHistory(Long userId, Long orderId)
     {
         OrderHistoryCollectionDto orderHistoryCollectionDto = new OrderHistoryCollectionDto();
@@ -661,13 +631,13 @@ public class OrderManagementService {
             orderHistoryHeaders = orderHistoryHeaderManagementRepository.getAll();//getByUserId(accountId);
         }
         else if((userId ==null || userId==0) && (orderId !=null && orderId>0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrderHeaderByOrderId(orderId);
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderId(orderId);
         }
         else if((orderId ==null || orderId==0) && (userId !=null && userId>0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrderHeaderByOrderId(orderId);
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByUserId(userId);
         }
         else if((orderId !=null || orderId>0) && (userId !=null && userId>0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrderHeaderByOrderIdAndUserId(orderId,userId);
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderIdAndUserId(orderId,userId);
         }
         if(orderHistoryHeaders.size()>0) {
             try {
@@ -702,40 +672,6 @@ public class OrderManagementService {
         return orderHistoryCollectionDto;
     }
 
-   /* public  OrderHistoryCollectionDto getOrdersByOrderId(long orderId)
-    {
-        List<OrderHeader> orderHistoryHeaders=orderHistoryHeaderManagementRepository.getByUserId(accountId);
-        OrderHistoryCollectionDto orderHistoryCollectionDto=new OrderHistoryCollectionDto();
-        try {
 
-            orderHistoryHeaders.forEach(order -> {
-                OrderHistoryDto orderHistoryDto  = new OrderHistoryDto();
-                //get products by orderID
-                List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
-//
-                //set order fields
-                orderHistoryDto.setOrderNumber(order.getOrderNumber());
-                orderHistoryDto.setOrderTimestamp( order.getOrderTimestamp());
-                orderHistoryDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
-                orderHistoryDto.setPaymentMethod( order.getPaymentMethod());
-                orderHistoryDto.setOrderTotalSum( order.getAmount());
-                orderHistoryDto.setOrderShipingCost( order.getShippingCost());
-                orderHistoryDto.setShippingAddress( order.getShippingAddress());
-                //set user
-                orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(),order.getCustomerName(), order.getCustomerPhone()));
-                //set products
-                orderLines.forEach(product->{
-                    orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(),product.getProductColor(),
-                            product.getProductColorName(),product.getPricePerItem(),product.getQuantity(),product.getOrderNumber() ));
-                });
-                orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
-            });
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return orderHistoryCollectionDto;
-    }*/
     //endregion get orders
 }
