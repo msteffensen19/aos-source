@@ -32,11 +32,11 @@ public class CORSConfig3 extends OncePerRequestFilter {
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
 
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         if (request.getMethod().equals("OPTIONS")) {
             try {
                 //ogger.info("Method OPTIONS, Origin header=" + request.getHeader("Origin"));
 //                response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-                response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
                 response.getWriter().print("OK");
                 response.getWriter().flush();
             } catch (IOException e) {
