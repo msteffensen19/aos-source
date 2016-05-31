@@ -111,9 +111,12 @@ define(['./module'], function (directives) {
                                     return;
                                 }
                                 s.paymentEnd = false;
+                            }, function (res) {
+                                alert('An error occurred, please try again');
+                                console.log(res);
+                                safePayBussy = false;
                             });
                     }
-
 
 
                     s.payNow_SafePay = function () {

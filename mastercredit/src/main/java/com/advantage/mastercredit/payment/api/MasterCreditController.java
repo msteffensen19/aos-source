@@ -25,7 +25,9 @@ public class MasterCreditController {
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
     }
 
     /**

@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -163,6 +164,15 @@ public class OrderManagementService {
 
         //  Step #3: Do payment MasterCredit / SafePay
         boolean paymentSuccessful = true;
+
+        if (paymentInfo.getTransactionDate() == null) {
+            paymentInfo.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));
+        }
+
+        if (paymentInfo.getCurrency() == null) {
+            paymentInfo.setCurrency("USD");
+        }
+
         if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.MASTER_CREDIT.getName())) {
             MasterCreditRequest masterCreditRequest = new MasterCreditRequest(
                     paymentInfo.getTransactionType(),
@@ -202,6 +212,7 @@ public class OrderManagementService {
                     Long.valueOf(paymentInfo.getAccountNumber()),
                     totalAmount,
                     paymentInfo.getCurrency());
+
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
 
@@ -442,10 +453,11 @@ public class OrderManagementService {
 
         SafePayResponse safePayResponse = new SafePayResponse();
 
+        HttpURLConnection conn = null;
         try {
             urlPayment = new URL(Url_resources.getUrlSafePay(), "payments/payment");
 
-            HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
+            conn = (HttpURLConnection) urlPayment.openConnection();
 
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
@@ -498,6 +510,8 @@ public class OrderManagementService {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            conn.disconnect();
         }
 
         return safePayResponse;

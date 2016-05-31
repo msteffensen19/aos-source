@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.HttpHeaders;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,13 +56,32 @@ public class OrderController {
     private ShoppingCartResponse shoppingCartResponse;
 
     private static final String DemoAppConfig = "DemoAppConfig/parameters/";
-    private static final String ParameterName ="Repeat_ShipEx_call";
+    private static final String ParameterName = "Repeat_ShipEx_call";
     /*  =========================================================================================================   */
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+
+//    <param-name>cors.supportedHeaders</param-name>
+//    <param-value>Content-Type,Accept,Origin, Authorization</param-value>
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type,Accept,Origin, Authorization");
+//    <param-name>cors.allowOrigin</param-name>
+//    <param-value>*</param-value>
         response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+
+//    <param-name>cors.supportedMethods</param-name>
+//    <param-value>GET, POST, HEAD, OPTIONS, PUT, DELETE</param-value>
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, HEAD, OPTIONS, PUT, DELETE");
+//    <param-name>cors.maxAge</param-name>
+//    <param-value>3601</param-value>
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3601");
+//    <param-name>cors.supportsCredentials</param-name>
+//    <param-value>true</param-value>
+        // response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
     }
+
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
@@ -124,15 +144,14 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> updateProductInCart(@PathVariable("userId") Long userId,
                                                                        @PathVariable("productId") Long productId,
                                                                        @PathVariable("color") String hexColor,
-																	   @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
+                                                                       @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
                                                                        @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
                                                                        HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
 
         if (((ValidationHelper.isValidColorHexNumber(hexColor)) &&
                 (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
-                (! hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0))
-        {
+                (!hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0)) {
             shoppingCartResponse = shoppingCartService.updateProductInCart(Long.valueOf(userId), productId, hexColor, hexColorNew, quantity);
         } else {
             httpStatus = HttpStatus.BAD_REQUEST;
@@ -313,12 +332,12 @@ public class OrderController {
         costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
         */
 
-        int repeat= checkRepeatShipExCall();
-        repeat= repeat>0 ? repeat : 1;
-        ShippingCostResponse costResponse =null; //orderManagementService.getShippingCostFromShipEx(costRequest);
+        int repeat = checkRepeatShipExCall();
+        repeat = repeat > 0 ? repeat : 1;
+        ShippingCostResponse costResponse = null; //orderManagementService.getShippingCostFromShipEx(costRequest);
 
         do {
-            costResponse =orderManagementService.getShippingCostFromShipEx(costRequest);
+            costResponse = orderManagementService.getShippingCostFromShipEx(costRequest);
             switch (costResponse.getReason()) {
                 case OrderManagementService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
                     httpStatus = HttpStatus.BAD_REQUEST;
@@ -337,14 +356,13 @@ public class OrderController {
             }
 
         }
-        while (--repeat>0);
+        while (--repeat > 0);
         return new ResponseEntity<>(costResponse, httpStatus);
     }
 
     //return count of return ShipExCall
-    private int checkRepeatShipExCall()
-    {
-        int repeat=0;
+    private int checkRepeatShipExCall() {
+        int repeat = 0;
         URL DemoAppConfigPrefixUrl;
         URL parameterByNameUrl = null;
         try {
@@ -362,18 +380,17 @@ public class OrderController {
 
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  tool not found (409)
-                return repeat=0;
+                return repeat = 0;
             } else {
                 parameter = getDemoAppConfigParameterfromJsonObjectString(stringResponse);
-                if(parameter!=null)
-                    return repeat= Integer.parseInt(parameter.getParameterValue());
+                if (parameter != null)
+                    return repeat = Integer.parseInt(parameter.getParameterValue());
             }
         } catch (IOException e) {
             System.out.println("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ");
             e.printStackTrace();
             return repeat;
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println("convert Repeat_ShipEx_call value to int throws IOException: ");
             e.printStackTrace();
             return repeat;
@@ -383,7 +400,7 @@ public class OrderController {
     }
 
     //Convert JSON object to DemoAppConfig Parameter
-    private  DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
+    private DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
@@ -395,7 +412,7 @@ public class OrderController {
     }
 
     //get serialized DemoAppConfig parameter from REST
-    private  String httpGet(URL url) throws IOException {
+    private String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         int responseCode = conn.getResponseCode();
@@ -461,7 +478,7 @@ public class OrderController {
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get all order history")
     public ResponseEntity<OrdersHistoryDto> getAllOrderHistory(HttpServletRequest request) {
-        OrdersHistoryDto ordersDto= orderManagementService.getAllOrders();
+        OrdersHistoryDto ordersDto = orderManagementService.getAllOrders();
         if (ordersDto == null) {
             return new ResponseEntity<>(ordersDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {

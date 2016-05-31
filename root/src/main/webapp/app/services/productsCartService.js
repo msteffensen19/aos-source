@@ -216,7 +216,6 @@ define(['./module'], function (services) {
                                 method: "put",
                                 data: JSON.stringify(cartToReplace),
                                 headers: {
-                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
@@ -246,7 +245,6 @@ define(['./module'], function (services) {
                             var request = $http({
                                 method: "put",
                                 headers: {
-                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 async: false,
