@@ -33,6 +33,11 @@ define(['./../../../directives/module'], function (directives) {
             secCompareTo: 4,
         }
 
+        var Types = {
+            text: "text",
+            select: "select",
+        }
+
         var invalid = "invalid";
         var animated = "animated";
         var in_focus = "in-focus";
@@ -45,6 +50,7 @@ define(['./../../../directives/module'], function (directives) {
                 secMinLength: '=',
                 secMaxLength: '=',
                 secPattern: '=',
+                secSelectOptions: '=',
 
                 secCompareTo: '=',
                 sModelCompareTo: '=',
@@ -95,6 +101,14 @@ define(['./../../../directives/module'], function (directives) {
                         this.blur($(input).val());
                     }
                     firstLoader2 = false;
+                };
+
+                this.fillSelect = function (arr) {
+                    input.empty();
+                    for(var i = 0; i < arr.length; i++){
+                        var item = arr[i];
+                        input.append("<option value='item'>" + item.name + "</option>");
+                    }
                 };
 
                 this.change = function (val) {
@@ -244,7 +258,6 @@ define(['./../../../directives/module'], function (directives) {
                     ul.find("li:nth-child(" + (index + 1) + ")").slideDown();
                 }
 
-
                 function setNormalHint() {
                     input.removeClass(invalid)
                     label.removeClass(invalid)
@@ -269,6 +282,9 @@ define(['./../../../directives/module'], function (directives) {
                     label.on({
                         click: function () {
                             if (!label.hasClass(animated)) {
+                                if(input.is(Types.select)){
+                                    input.trigger('click');
+                                }
                                 input.focus();
                                 ctrl.focus();
                             }
@@ -284,19 +300,13 @@ define(['./../../../directives/module'], function (directives) {
                         },
                     });
                 }
-            }
-
-            ],
+            }],
 
             link: {
+
                 pre: function (s, e, a, ctrl) {
 
                     e.addClass("sec-input-validation");
-
-                    var type = "text"
-                    if (a.aType) {
-                        type = a.aType;
-                    }
 
                     s.$watch('secModel', function (n, o) {
                         ctrl.change(n);
@@ -315,8 +325,24 @@ define(['./../../../directives/module'], function (directives) {
                         ctrl.pushValidation(s.secPattern, Keys.secPattern);
                     }
 
+                    if (a.aType) {
+                        ctrl.pushValidation(s.secPattern, Keys.secPattern);
+                    }
+
                     var div = $("<div class='inputContainer'></div>");
-                    var input = $("<input type='" + type + "' data-ng-model='secModel' />");
+                    var type = a.aType || "text"
+                    var input;
+                    switch(type){
+                        case Types.select:
+                            s.$watch('secSelectOptions', function (n, o) {
+                                ctrl.fillSelect(n);
+                            }, true);
+                            input = $("<select data-ng-model='secModel' />");
+                            break;
+                        default:
+                            input = $("<input type='" + type + "' data-ng-model='secModel' />");
+                            break;
+                    }
                     var label = $("<label>" + a.aHint + "</label>");
 
                     div.append(input);

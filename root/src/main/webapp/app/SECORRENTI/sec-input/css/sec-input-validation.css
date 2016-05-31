@@ -3,27 +3,28 @@
     display: block;
 }
 
-.sec-input-validation .inputContainer {
+.sec-input-validation div.inputContainer {
     margin: 2px 0;
     padding-top: 22px;
 }
 
-.sec-input-validation label {
+.sec-input-validation div label {
     -webkit-user-select: none;
     -ms-user-select: none;
     -moz-user-select: none;
     user-select: none;
 }
 
-.sec-input-validation label,
-.sec-input-validation input {
+.sec-input-validation div label,
+.sec-input-validation div input,
+.sec-input-validation div select {
     width: 100%;
     display: block;
     padding: 6px 3px;
     font-size: 14px;
 }
 
-.sec-input-validation label {
+.sec-input-validation div label {
     position: absolute;
     top: 22px;
     transition: all .8s ease, top .3s ease, transform .8s ease;
@@ -31,7 +32,7 @@
     color: #313131;
 }
 
-.sec-input-validation label.animated {
+.sec-input-validation div label.animated {
     top: 2px;
     transform: scale(0.8, 1);
     padding: 0 3px;
@@ -40,11 +41,11 @@
     color: rgb(130, 130, 130);
 }
 
-.sec-input-validation label.invalid {
+.sec-input-validation div label.invalid {
     color: #ff454f;
 }
 
-.sec-input-validation input {
+.sec-input-validation div input, .sec-input-validation div select {
     margin: 0;
     outline: none;
     cursor: text;
@@ -53,7 +54,7 @@
     transition: border-bottom .8s ease;
 }
 
-.sec-input-validation input.invalid {
+.sec-input-validation div input.invalid, .sec-input-validation div select.invalid{
     border-bottom: 1px solid #ff454f;
 }
 

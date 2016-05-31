@@ -12,11 +12,22 @@
 <section>
     <article>
 
+        <select ng-model="country" ng-change="countryChange(country)"
+                class="inputtext"
+                ng-options="country.name for country in countries track by country.id">
+        </select>
 
         <!--a-type="password"-->
         <sec-input-validation
                 a-hint="Username"
-                sec-model="model"
+                a-type="select"
+                sec-model="country"
+                sec-select-options="countries"
+                sec-select-order="sec_select_order"
+
+
+
+
                 sec-is-field-valid="isFieldValid(valid)"
                 sec-require="require"
                 sec-min-length="minLength"
@@ -34,7 +45,6 @@
                 s-model-compare-to="model"
         >
         </sec-input-validation>
-
 
 
         <sec-input-validation
@@ -65,13 +75,13 @@
         >
         </sec-input-validation>
 
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <input type="text" data-ng-model="model">
 
     </article>

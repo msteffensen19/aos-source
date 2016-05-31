@@ -4,9 +4,9 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('supportCtrl', ['$scope', 'supportService', 'paramsToResorve', 'categoryService',
+    controllers.controller('supportCtrl', ['$scope', 'registerService',
 
-        function (s, supportService, paramsToResorve, categoryService) {
+        function (s, registerService) {
 
             s.hola_mundo = "hola_mundohola_mundohola_mundohola_mundo"
 
@@ -23,6 +23,22 @@ define(['./module'], function (controllers) {
             s.isValid = function (valid) {
                 console.log(valid);
             }
+
+            //ng-options="country.name for country in countries track by country.id"
+
+
+            s.countries;
+            registerService.getAllCountries().then(function (countries) {
+                s.countries = countries;
+            });
+
+            s.sec_select_order = {
+                showBy : 'name',
+            }
+
+            //option.name for option in data.availableOptions track by option.id
+
+
 
             s.require = {
                 error: 'this field is required',
