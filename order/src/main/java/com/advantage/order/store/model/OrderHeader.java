@@ -24,6 +24,7 @@ import javax.persistence.*;
         , @NamedQuery(
         name = OrderHeader.QUERY_GET_All_ORDERS_HISTORY,
         query = "select o from OrderHeader o "
+
 )
 })
 public class OrderHeader {

@@ -37,7 +37,11 @@ public class DefaultOrderHistoryHeaderManagementRepository extends AbstractRepos
 
     @Override
     public List<OrderHeader> getByUserId(long userId) {
-        return null;
+
+        List<OrderHeader> orderHeaders = entityManager.createNamedQuery(OrderHeader.QUERY_GET_ORDERS_BY_USER_ID, OrderHeader.class)
+                .getResultList();
+
+        return orderHeaders;
     }
 
     @Override

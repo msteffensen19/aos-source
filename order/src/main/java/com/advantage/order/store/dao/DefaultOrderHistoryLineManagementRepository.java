@@ -16,10 +16,9 @@ import java.util.List;
 @Repository
 public class DefaultOrderHistoryLineManagementRepository extends AbstractRepository implements OrderHistoryLineManagementRepository {
     @Override
-    public List<OrderLines> getAllOrderLinesByOrderId(long orderId) {
+    public List<OrderLines> getAllOrderLinesByOrderId (long orderId) {
         try {
             List<OrderLines> orderLines = entityManager.createNamedQuery(OrderLines.QUERY_GET_ORDER_LINES_BY_ORDER, OrderLines.class).setParameter("onum",orderId)
-                    //.setParameter("onum", orderId)
                     .getResultList();
             return orderLines;
         }catch (Exception e)
