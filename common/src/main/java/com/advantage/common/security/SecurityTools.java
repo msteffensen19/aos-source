@@ -22,7 +22,19 @@ public class SecurityTools {
     private static final CompressionCodec compressionCodec = null;
     //public static final CompressionCodec compressionCodec = new GzipCompressionCodec();
     private static final Key key = decodeBase64Key(BASE64_CRYPTO_KEY);
-    public static final String SWAGGER_NOTE = "For authorization as USER with ID = 1 (\"avinu.avraham\", password \"Avraham1\", email \"a@b.com\") use token  \"<span style=\"font-family:Courier New;font-size:0.75em\">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxLCJzdWIiOiJhdmludS5hdnJhaGFtIiwicm9sZSI6IlVTRVIifQ.sadgAYdH5xlqqNFlA_eVoV-ttyL5hgHLdmF5ScMoWEw</span>\".<br/>For authorization as ADMIN with ID = 13 (\"admin\", password \"adm1n\", email \"admin@admin.ad\") use token  \"<span style=\"font-family:Courier New;font-size:0.75em\">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMywic3ViIjoiYWRtaW4iLCJyb2xlIjoiQURNSU4ifQ.XssBjww5LFdYt6ONUYCcJDvdIJinQN1TI_ehyhcdylA</span>\"<br/>Or just generate your ouwn in page <a href=\"http://jwt.io/\">jwt.io</a> with base64 secret key \"<span style=\"font-family:Courier New;font-size:0.75em\">" + BASE64_CRYPTO_KEY + "</span>\"";
+    //    public static final String SWAGGER_NOTE = "For authorization as USER with ID = 1 (\"avinu.avraham\", password \"Avraham1\", email \"a@b.com\") use token  \"<span style=\"font-family:Courier New;font-size:0.75em\">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxLCJzdWIiOiJhdmludS5hdnJhaGFtIiwicm9sZSI6IlVTRVIifQ.sadgAYdH5xlqqNFlA_eVoV-ttyL5hgHLdmF5ScMoWEw</span>\".<br/>For authorization as ADMIN with ID = 13 (\"admin\", password \"adm1n\", email \"admin@admin.ad\") use token  \"<span style=\"font-family:Courier New;font-size:0.75em\">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR3YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxMywic3ViIjoiYWRtaW4iLCJyb2xlIjoiQURNSU4ifQ.XssBjww5LFdYt6ONUYCcJDvdIJinQN1TI_ehyhcdylA</span>\"<br/>Or just generate your ouwn in page <a href=\"http://jwt.io/\">jwt.io</a> with base64 secret key \"<span style=\"font-family:Courier New;font-size:0.75em\">" + BASE64_CRYPTO_KEY + "</span>\"";
+    public static final String SWAGGER_NOTE = "Create your own JSON Web Token with <a href=\"http://jwt.io/\" target=\"_blank\">jwt.io site</a> with your Base64 secret key with this template: <br/>{" +
+            "<ul style=\"list-style-type:none;margin: 0 0 0 0;\">" +
+            "  <li>\"typ\": \"JWT\",</li>" +
+            "  <li>\"alg\": \"HS256\"</li>" +
+            "</ul>}" +
+            "<br/>{" +
+            "<ul style=\"list-style-type:none;margin: 0 0 0 0;\">" +
+            "<li>\"iss\": \"www.adwantageonlineshopping.com\",</li>" +
+            "<li>  \"userId\": [user id],</li>" +
+            "<li>  \"sub\": \"[user name]\",</li>" +
+            "<li>  \"role\": \"USER\" / \"ADMIN\"</li>" +
+            "</ul>}";
 
     public static String getSignatureAlgorithmName() {
         return signatureAlgorithmName;

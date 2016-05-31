@@ -177,7 +177,6 @@ define(['./module'], function (directives) {
             //    return s.doNotShowInfo;
             //}
 
-
             s.inputKeyup = function (id) {
                 var input = $('#secInput_' + id);
                 ctrlFather.updateStartingValueChanged(input);
@@ -193,7 +192,7 @@ define(['./module'], function (directives) {
                 }
             }
 
-            this.inputFocus = function(){
+            this.inputFocus = function () {
                 s.inputFocus(s.id);
             }
 
@@ -408,9 +407,7 @@ define(['./module'], function (directives) {
             }
         }
         ])
-
-        .
-        directive('secInput', ['$templateCache', '$timeout', '$rootScope', function ($templateCache, $timeout, $rootScope) {
+        .directive('secInput', ['$templateCache', '$timeout', '$rootScope', function ($templateCache, $timeout, $rootScope) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -480,7 +477,7 @@ define(['./module'], function (directives) {
                         me.setInputType(a.inputTypeAttr || 'text')
                         me.setId(a.idAttr, s.modelAttr)
 
-                        s.$watch('modelAttr', function(){
+                        s.$watch('modelAttr', function () {
                             me.inputFocus();
                         });
 
@@ -686,6 +683,7 @@ define(['./module'], function (directives) {
                         regex: a.secEmail || "^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                     })
                     //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
+                    //"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
                 }
             }
         })
@@ -694,7 +692,6 @@ define(['./module'], function (directives) {
                 restrict: 'A',
                 require: 'secInput',
                 link: function (s, e, a, ctrl) {
-                    var max = a.secMaxLength - 0;
                     if (!a.idAttr) {
                         throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
                     }

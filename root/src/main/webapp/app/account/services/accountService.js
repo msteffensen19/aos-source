@@ -164,7 +164,7 @@ define(['./module'], function (services) {
                                 accountId: accountId,
                                 newPassword: passwords.new,
                                 oldPassword: passwords.old,
-                                base64Token: "Bearer " + $rootScope.userCookie.response.token,
+                                base64Token: $rootScope.userCookie.response.token,
                             }
                             var params = server.account.changePassword();
                             mini_soap.post(params.path, params.method, expectToReceive).

@@ -7,6 +7,7 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.DemoAppConfigParameter;
+import com.advantage.common.dto.OrdersHistoryDto;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.HttpHeaders;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,8 +61,27 @@ public class OrderController{
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+
+//    <param-name>cors.supportedHeaders</param-name>
+//    <param-value>Content-Type,Accept,Origin, Authorization</param-value>
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type,Accept,Origin, Authorization");
+//    <param-name>cors.allowOrigin</param-name>
+//    <param-value>*</param-value>
         response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+
+//    <param-name>cors.supportedMethods</param-name>
+//    <param-value>GET, POST, HEAD, OPTIONS, PUT, DELETE</param-value>
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, HEAD, OPTIONS, PUT, DELETE");
+//    <param-name>cors.maxAge</param-name>
+//    <param-value>3601</param-value>
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3601");
+//    <param-name>cors.supportsCredentials</param-name>
+//    <param-value>true</param-value>
+        // response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
     }
+
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
@@ -130,8 +151,7 @@ public class OrderController{
 
         if (((ValidationHelper.isValidColorHexNumber(hexColor)) &&
                 (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
-                (! hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0))
-        {
+                (!hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0)) {
             shoppingCartResponse = shoppingCartService.updateProductInCart(Long.valueOf(userId), productId, hexColor, hexColorNew, quantity);
         } else {
             httpStatus = HttpStatus.BAD_REQUEST;
@@ -341,8 +361,7 @@ public class OrderController{
     }
 
     //return count of return ShipExCall
-    private int checkRepeatShipExCall()
-    {
+    private int checkRepeatShipExCall() {
         int repeat=0;
         URL DemoAppConfigPrefixUrl;
         URL parameterByNameUrl = null;
@@ -371,8 +390,7 @@ public class OrderController{
             System.out.println("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ");
             e.printStackTrace();
             return repeat;
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println("convert Repeat_ShipEx_call value to int throws IOException: ");
             e.printStackTrace();
             return repeat;

@@ -16,7 +16,10 @@ define(['./module'], function (services) {
             function getCategories() {
                 var request = $http({
                     method: "get",
-                    url: server.catalog.getCategories()
+                    url: server.catalog.getCategories(),
+                    headers: {
+                        "content-type": "application/json; charset=utf-8",
+                    },
                 });
                 return ( request.then(responseService.handleSuccess, responseService.handleError) );
             }
@@ -37,7 +40,7 @@ define(['./module'], function (services) {
                     else {
                         $http({
                             method: "get",
-                            url: server.catalog.getCategoryById(id)
+                            url: server.catalog.getCategoryById(id),
                         }).success(function (res) {
                             Helper.disableLoader();
                             Loger.Received(res)
@@ -57,7 +60,7 @@ define(['./module'], function (services) {
 
                 var request = $http({
                     method: "get",
-                    url: server.catalog.getPopularProducts()
+                    url: server.catalog.getPopularProducts(),
                 });
                 return (
                     request.then(

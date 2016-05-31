@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author Binyamin Regev on 23/05/2016
+ */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
 public class CatalogController {
@@ -48,7 +51,9 @@ public class CatalogController {
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
     }
 
     //  region /products
@@ -494,12 +499,12 @@ public class CatalogController {
     }
     //  endregion
 
-    // region Order History
-  //  @RequestMapping(value = "/orders", method = RequestMethod.GET)
-//    public ResponseEntity<ProductCollectionDto> getAllOrders(HttpServletRequest request) {
-//        ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
-//        return productCollectionDtoResponseEntity;
-//
-//    }
-    //endregion
+    /*// region Order History
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public ResponseEntity<ProductCollectionDto> getAllOrders(HttpServletRequest request) {
+        ResponseEntity<ProductCollectionDto> order = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        return productCollectionDtoResponseEntity;
+
+    }
+    //endregion*/
 }

@@ -174,6 +174,16 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         Account account = get(accountId);
 
+        //Moti add validation fields
+        ArgumentValidationHelper.lastFirstNameValidation(lastName);
+        ArgumentValidationHelper.lastFirstNameValidation(firstName);
+        ArgumentValidationHelper.sityValidation(cityName);
+        ArgumentValidationHelper.stateValidation(stateProvince);
+        ArgumentValidationHelper.addressValidation(address);
+        ArgumentValidationHelper.zipCodeValidation(zipcode);
+
+
+
         if (account == null) {
             return new AccountStatusResponse(false, "Invalid login user-name", -1);
         }
@@ -212,6 +222,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                                         String password, Long countryId, String phoneNumber, String stateProvince,
                                         String cityName, String address, String zipcode, String email,
                                         boolean allowOffersPromotion) {
+        //Moti add validation fields
+        ArgumentValidationHelper.lastFirstNameValidation(lastName);
+        ArgumentValidationHelper.lastFirstNameValidation(firstName);
+        ArgumentValidationHelper.sityValidation(cityName);
+        ArgumentValidationHelper.stateValidation(stateProvince);
+        ArgumentValidationHelper.addressValidation(address);
+        ArgumentValidationHelper.zipCodeValidation(zipcode);
         Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber,
                 stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 

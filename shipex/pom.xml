@@ -96,6 +96,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.thetransactioncompany</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -116,6 +121,9 @@
                                 <includeArtifactIds>shared_resources</includeArtifactIds>
                                 <includeGroupIds>com.advantage.online.store</includeGroupIds>
                                 <excludeTransitive>true</excludeTransitive>
+                                <excludes>
+                                    internal_config_for_env.properties
+                                </excludes>
                             </configuration>
                         </execution>
                     </executions>
@@ -127,6 +135,11 @@
                     <version>2.7</version>
                     <executions>
                         <execution>
+                            <id>copy-shared-resources-into-webapp</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
                             <configuration>
                                 <encoding>${project.build.sourceEncoding}</encoding>
                                 <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
@@ -143,11 +156,6 @@
                                     </resource>
                                 </resources>
                             </configuration>
-                            <id>copy-shared-resources-into-webapp</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
                         </execution>
                     </executions>
                 </plugin>

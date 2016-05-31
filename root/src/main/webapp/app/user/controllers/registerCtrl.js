@@ -31,6 +31,15 @@ define(['./module'], function (controllers) {
 
             s.register = function () {
 
+                if (!s.model.country.id) {
+                    for (var i = 0; i < s.countries.length; i++) {
+                        if(s.countries[i].id == 40){
+                            s.model.country = s.countries[i];
+                            break;
+                        }
+                    }
+                }
+
                 registerService.register(s.model).then(function (response) {
 
                     s.registerAnswer.message = response.reason || $filter('translate')('register_faild'),
@@ -48,8 +57,10 @@ define(['./module'], function (controllers) {
                             loginPassword: s.model.password,
                             loginUser: s.model.username,
                         }
-                        s.signIn(user , false)
-                        $timeout(function(){ $state.go('default') }, 5000)
+                        s.signIn(user, false)
+                        $timeout(function () {
+                            $state.go('default')
+                        }, 5000)
                     }
                 });
             }

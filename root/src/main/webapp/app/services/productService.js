@@ -28,7 +28,7 @@ define(['./module'], function (services) {
                 $timeout(function () {
                     var request = $http({
                         method: "get",
-                        url: server.catalog.getProductById(id)
+                        url: server.catalog.getProductById(id),
                     });
                     request.then(function (res) {
                             Helper.disableLoader();
@@ -52,7 +52,7 @@ define(['./module'], function (services) {
                 $timeout(function () {
                     var request = $http({
                         method: "get",
-                        url: server.catalog.getProductsBySearch(word, quantity)
+                        url: server.catalog.getProductsBySearch(word, quantity),
                     });
                     request.then(function (res) {
                             Helper.disableLoader();

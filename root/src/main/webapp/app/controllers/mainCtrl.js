@@ -10,6 +10,20 @@ define(['./module'], function (controllers) {
         function ($scope, $q, productService, smoothScroll, userService, orderService,
                   $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
+
+            //console.log(navigator.network)
+            //var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            ////var type = connection.type;
+            //
+            //function updateConnectionStatus() {
+            //    alert("Connection type is change from " + type + " to " + connection.type);
+            //}
+            //if(connection){
+            //    connection.addEventListener('typechange', updateConnectionStatus);
+            //}
+
+
+
             $scope.cart;
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
@@ -193,9 +207,11 @@ define(['./module'], function (controllers) {
             }
 
             $scope.miniTitleOut= function(miniTitleId){
-                ____loginInterval = $timeout(function(){
-                    $("#" + miniTitleId).fadeToggle(300);
-                }, 2000);
+                if($("#" + miniTitleId).css('display') != 'none'){
+                    ____loginInterval = $timeout(function(){
+                        $("#" + miniTitleId).fadeOut(300);
+                    }, 2000);
+                }
             }
 
             $scope.login = function (miniTitleId) {

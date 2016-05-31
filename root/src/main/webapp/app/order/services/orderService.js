@@ -91,7 +91,7 @@ define(['./module'], function (services) {
                     }, function (err) {
                         Helper.disableLoader();
                         Loger.Received(err);
-                        defer.reject("probl.")
+                        defer.reject(JSON.stringify(err))
                     })
                 }, Helper.defaultTimeLoaderToEnable);
                 return defer.promise;
@@ -197,6 +197,12 @@ define(['./module'], function (services) {
 
                     productsCartService.getCart().then(function (cart) {
 
+                        /// plaster
+                        if((user.firstName + user.lastName).trim().length < 1){
+                            user.firstName = "no_name";
+                        }
+                        /// end plaster
+
                         var paramsToPass = {
                             "seaddress": {
                                 "addressLine1": user.address,
@@ -219,16 +225,17 @@ define(['./module'], function (services) {
                             $http({
                                 method: "post",
                                 url: server.order.getShippingCost(),
-                                data: paramsToPass
+                                data: paramsToPass,
                             }).
                             then(function (shippingCost) {
+
                                 Loger.Received(shippingCost);
                                 Helper.disableLoader();
                                 defer.resolve(shippingCost.data)
                             }, function (err) {
                                 Loger.Received(err);
                                 Helper.disableLoader();
-                                defer.reject("probl.")
+                                defer.reject(JSON.stringify(err))
                             })
                         }, Helper.defaultTimeLoaderToEnable);
                     })

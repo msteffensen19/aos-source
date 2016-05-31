@@ -16,41 +16,41 @@
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1100",
         "images": [
+          "ABCDEF##1100",
           "3683D1##1102",
-          "C3C3C3##1100",
           "DD3A5B##1101",
           "DD3A5B##1103"
         ],
         "colors": [
           {
-            "inStock": 10,
-            "name": "Black",
-            "code": "414141"
+            "code": "414141",
+            "name": "BLACK",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Purple",
-            "code": "545195"
+            "code": "3683D1",
+            "name": "BLUE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Gray",
-            "code": "C3C3C3"
+            "code": "C3C3C3",
+            "name": "GRAY",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Blue",
-            "code": "3683D1"
+            "code": "545195",
+            "name": "PURPLE",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "Red",
-            "code": "DD3A5B"
+            "code": "DD3A5B",
+            "name": "RED",
+            "inStock": 10
           },
           {
-            "inStock": 10,
-            "name": "White",
-            "code": "FFFFFF"
+            "code": "FFFFFF",
+            "name": "WHITE",
+            "inStock": 10
           }
         ],
         "attributes": [
@@ -160,9 +160,9 @@
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1300",
         "images": [
-          "545195##1300",
-          "3683D1##1301",
-          "3683D1##1302"
+          "ABCDEF##1302",
+          "ABCDEF##1301",
+          "545195##1300"
         ],
         "colors": [
           {
@@ -248,18 +248,8 @@
         ],
         "colors": [
           {
-            "code": "414141",
-            "name": "BLACK",
-            "inStock": 10
-          },
-          {
             "code": "C3C3C3",
             "name": "GRAY",
-            "inStock": 10
-          },
-          {
-            "code": "FFFFFF",
-            "name": "WHITE",
             "inStock": 10
           }
         ],
@@ -1124,10 +1114,10 @@
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4300",
         "images": [
-          "ABCDEF##4308",
-          "414141##4301",
+          "414141##4304",
+          "3683D1##4301",
           "3683D1##4300",
-          "545195##4304"
+          "DD3A5B##4308"
         ],
         "colors": [
           {
@@ -1141,9 +1131,9 @@
             "inStock": 10
           },
           {
-            "code": "545195",
-            "name": "PURPLE",
-            "inStock": 10
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 0
           }
         ],
         "attributes": [

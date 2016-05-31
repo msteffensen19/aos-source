@@ -57,21 +57,29 @@ define(['./module'], function (directives) {
 
                     s.accountUpdate = function(){
 
+                        if(s.agree_Agreement)
+                        {
+                            orderService.accountUpdate(s.user).then(function(res){
+                                UpdateShippingCost();
+                            });
+                        }
+                        else{
+                            UpdateShippingCost();
+                        }
+
+                    }
+
+                    function UpdateShippingCost(){
                         orderService.getShippingCost(s.user).then(function(shipping){
                             s.shipping = shipping;
-                            if(s.agree_Agreement)
-                            {
-                                orderService.accountUpdate(s.user).then(function(res){
-                                });
-                            }
                             $timeout(function(){
                                 s.invalidUser = false;
                                 s.userDetailsEditMode = false;
                                 s.firstTag = false;
                             }, 100)
                         });
-
                     }
+
 
                     s.setDefaultCard = true;
                     s.years = [];
@@ -103,9 +111,12 @@ define(['./module'], function (directives) {
                                     return;
                                 }
                                 s.paymentEnd = false;
+                            }, function (res) {
+                                alert('An error occurred, please try again');
+                                console.log(res);
+                                safePayBussy = false;
                             });
                     }
-
 
 
                     s.payNow_SafePay = function () {
