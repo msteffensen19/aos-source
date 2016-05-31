@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.net.HttpHeaders;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,27 +59,10 @@ public class OrderController{
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
-
-//    <param-name>cors.supportedHeaders</param-name>
-//    <param-value>Content-Type,Accept,Origin, Authorization</param-value>
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type,Accept,Origin, Authorization");
-//    <param-name>cors.allowOrigin</param-name>
-//    <param-value>*</param-value>
-        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-
-//    <param-name>cors.supportedMethods</param-name>
-//    <param-value>GET, POST, HEAD, OPTIONS, PUT, DELETE</param-value>
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, HEAD, OPTIONS, PUT, DELETE");
-//    <param-name>cors.maxAge</param-name>
-//    <param-value>3601</param-value>
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3601");
-//    <param-name>cors.supportsCredentials</param-name>
-//    <param-value>true</param-value>
-        // response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
     }
-
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
