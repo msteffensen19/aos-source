@@ -13,6 +13,8 @@ public interface OrderHistoryHeaderManagementRepository {
 
     List<OrderHeader> getByUserId(long userId);
 
-    OrderHeader getOrderHeaderByOrderId(long orderId);
+    List<OrderHeader> getOrderHeaderByOrderId(long orderId);
+
+    List<OrderHeader> getOrderHeaderByOrderIdAndUserId(long orderId,long userId);
 
 }

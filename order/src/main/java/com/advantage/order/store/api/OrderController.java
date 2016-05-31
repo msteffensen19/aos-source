@@ -457,13 +457,21 @@ public class OrderController{
         }
     }
 
-    @RequestMapping(value = "/order/history", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/order/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get all order history")
     public ResponseEntity<OrderHistoryCollectionDto> getAllOrderHistory(
                                                                HttpServletRequest request) {
         OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getAllOrderHistory();
             return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
-        }
+        }*/
+
+    @RequestMapping(value = "/orders/history/{user_id}/{order_id}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get orders history by userID or/and orderId")
+    public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
+                                                                                @RequestParam(value = "orderId", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
+        OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
+        return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
+    }
 
 
 }

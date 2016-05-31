@@ -37,15 +37,27 @@ public class DefaultOrderHistoryHeaderManagementRepository extends AbstractRepos
 
     @Override
     public List<OrderHeader> getByUserId(long userId) {
-
         List<OrderHeader> orderHeaders = entityManager.createNamedQuery(OrderHeader.QUERY_GET_ORDERS_BY_USER_ID, OrderHeader.class)
+                .setParameter(OrderHeader.PARAM_USER_ID,userId)
                 .getResultList();
 
         return orderHeaders;
     }
 
     @Override
-    public OrderHeader getOrderHeaderByOrderId(long orderId) {
-        return null;
+    public List<OrderHeader> getOrderHeaderByOrderId(long orderId) {
+        List<OrderHeader> orderHeaders = entityManager.createNamedQuery(OrderHeader.QUERY_GET_ORDER_BY_ORDER, OrderHeader.class)
+                .setParameter(OrderHeader.PARAM_ORDER_NUMBER,orderId)
+                .getResultList();
+        return orderHeaders;
+    }
+
+    @Override
+    public List<OrderHeader> getOrderHeaderByOrderIdAndUserId(long orderId, long userId) {
+        List<OrderHeader> orderHeaders = entityManager.createNamedQuery(OrderHeader.QUERY_GET_ORDER_BY_PK_COLUMNS, OrderHeader.class)
+                .setParameter(OrderHeader.PARAM_ORDER_NUMBER,orderId)
+                .setParameter(OrderHeader.PARAM_USER_ID, userId)
+                .getResultList();
+        return orderHeaders;
     }
 }
