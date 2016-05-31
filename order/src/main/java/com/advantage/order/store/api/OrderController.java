@@ -464,13 +464,58 @@ public class OrderController{
             return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
         }*/
 
-    @RequestMapping(value = "/orders/history/{user_id}/{order_id}", method = RequestMethod.GET)
+    //@RequestMapping(value = "/orders/history/{user_id}/{order_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by userID or/and orderId")
     public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
-                                                                                @RequestParam(value = "orderId", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
+                                                                                @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
         OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
         return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/carts/{userId}/orders/{orderId}", method = RequestMethod.POST)
+    @ApiOperation(value = "Add old order to shopping cart")
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    public ResponseEntity<ShoppingCartResponse> addOldOrderToCart(@PathVariable("userId") Long userId,
+                                                                    @PathVariable("orderId") Long orderId,
+                                                                HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        if (userId != null) {
+            shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
+
+            if (shoppingCartResponse.isSuccess()) {
+                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
+
+                if (userCartResponseDto == null) {
+                    //  Unlikely scenario - update of user cart successful and get user cart failed
+                    httpStatus = HttpStatus.NOT_FOUND;
+                    shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+                } else {
+                    httpStatus = HttpStatus.OK;
+                }
+            } else {
+                //  Replace user cart failed
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
+
+                shoppingCartResponse.setSuccess(false);
+                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
+                shoppingCartResponse.setId(-1);
+            }
+        } else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
+        }
+
+        return new ResponseEntity<>(shoppingCartResponse, httpStatus);
+    }
 
 }
