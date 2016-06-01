@@ -82,13 +82,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, int price) {
-        this.productName = name;
-        this.description = description;
-        this.price = price;
-        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
-        this.active = 'Y';
-    }
+
 
     public Product(String name, String description, double price, Category category) {
         this.productName = name;
@@ -104,7 +98,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.category = category;
-        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
+        this.productStatus= ProductStatusEnum.getValueByPropertyName(productStatus).getStringCode();
         this.active = 'Y';
     }
 

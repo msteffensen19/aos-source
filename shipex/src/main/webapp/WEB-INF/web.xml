@@ -5,9 +5,13 @@
         <filter-name>CORS</filter-name>
         <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
         <init-param>
+            <param-name>cors.allowOrigin</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
             <param-name>cors.supportedHeaders</param-name>
             <!--<param-value>Content-Type,Accept,Origin, Authorization</param-value>-->
-            <param-value>Content-Type,Accept,Origin</param-value>
+            <param-value>Content-Type,Accept,Origin,soapaction</param-value>
         </init-param>
         <init-param>
             <param-name>cors.supportedMethods</param-name>
@@ -22,8 +26,8 @@
             <param-value>true</param-value>
         </init-param>
         <init-param>
-            <param-name>cors.allowOrigin</param-name>
-            <param-value>*</param-value>
+            <param-name>cors.allowSubdomains</param-name>
+            <param-value>true</param-value>
         </init-param>
     </filter>
 

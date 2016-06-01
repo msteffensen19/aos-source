@@ -762,12 +762,12 @@
         ],
         "colors": [
           {
-            "inStock": 10,
+            "inStock": 0,
             "name": "BLACK",
             "code": "414141"
           },
           {
-            "inStock": 10,
+            "inStock": 0,
             "name": "Turquoise",
             "code": "55CDD5"
           }
@@ -785,7 +785,8 @@
             "attributeName": "WEIGHT",
             "attributeValue": "0.15 lb"
           }
-        ]
+        ],
+        "productStatus": "OutOfStock"
       },
 
       {
