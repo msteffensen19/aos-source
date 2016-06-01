@@ -485,28 +485,10 @@ public class OrderController{
                                                                     @PathVariable("orderId") Long orderId,
                                                                 HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
+        ShoppingCartResponseDto userCartResponseDto;
+        if (userId != null &&  (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId)))!=null) {
+            httpStatus = HttpStatus.OK;
 
-        if (userId != null) {
-          //  shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
-
-            if (shoppingCartResponse.isSuccess()) {
-                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
-
-                if (userCartResponseDto == null) {
-                    //  Unlikely scenario - update of user cart successful and get user cart failed
-                    httpStatus = HttpStatus.NOT_FOUND;
-                    shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
-                } else {
-                    httpStatus = HttpStatus.OK;
-                }
-            } else {
-                //  Replace user cart failed
-                httpStatus = HttpStatus.NOT_IMPLEMENTED;
-
-                shoppingCartResponse.setSuccess(false);
-                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
-                shoppingCartResponse.setId(-1);
-            }
         } else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
 
