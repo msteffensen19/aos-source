@@ -457,7 +457,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                 ProductService productService = new ProductService();
 
                 for (ProductDto productDto : categoryDto.getProducts()) {
-                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category);
+                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
                     product.setManagedImageId(productDto.getImageUrl());
                     entityManager.persist(product);
 

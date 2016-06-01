@@ -132,7 +132,7 @@ public class DataSourceInit4Json {
 
                 /*PRODUCT*/
                 for (ProductDto productDto : categoryDto.getProducts()) {
-                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category);
+                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
                     product.setManagedImageId(productDto.getImageUrl());
                     session.persist(product);
                     //load attributes

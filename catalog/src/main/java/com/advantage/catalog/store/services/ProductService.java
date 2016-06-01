@@ -92,9 +92,6 @@ public class ProductService {
         product.setColors(getColorAttributes(dto.getColors(), product));
         product.setImages(getImageAttribute(dto.getImages(), product));
 
-        //set product status
-        product.setProductStatus(ProductStatusEnum.ACTIVE.getStringCode());
-
         ProductResponseDto productResponseDto = new ProductResponseDto(true, product.getId(), "Product was created successful");
         return productResponseDto;
     }
