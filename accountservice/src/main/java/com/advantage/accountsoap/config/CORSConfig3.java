@@ -12,6 +12,7 @@ import java.io.IOException;
 @Component
 public class CORSConfig3 extends OncePerRequestFilter {
     static final String ORIGIN = "Origin";
+    //
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
