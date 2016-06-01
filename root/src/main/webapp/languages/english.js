@@ -15,7 +15,6 @@ var english = {
     'LOGIN': 'LOGIN',
     'LOGOUT': 'This is a paragraph.',
     'SPACIAL_OFFER': 'SPECIAL OFFER',
-    'SPECIAL_OFFER_ITEMS': 'SPECIAL OFFER ITEMS',
     'POPULAR_ITEMS': 'POPULAR ITEMS',
     'FOLLOW_US': 'FOLLOW US',
     'LEGALS_FOOTER': '© Advantage Inc, 2016.',

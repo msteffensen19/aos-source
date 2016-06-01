@@ -5,7 +5,7 @@
 
 define(['./../../../directives/module'], function (directives) {
     'use strict';
-    directives.directive('secInputValidation', ['$templateCache', "$compile", function ($templateCache, $compile) {
+    directives.directive('secInputValidation', ['$templateCache', "$compile", "$timeout", function ($templateCache, $compile, $timeout) {
 
         function throwInvalidObjectFormat(obj, e) {
 
@@ -41,6 +41,7 @@ define(['./../../../directives/module'], function (directives) {
         var invalid = "invalid";
         var animated = "animated";
         var in_focus = "in-focus";
+        var select_value = "select-value";
 
         return {
             restrict: 'E',
@@ -97,21 +98,44 @@ define(['./../../../directives/module'], function (directives) {
                             return;
                         }
                         s.compareTo.val(val)
-
                         this.blur($(input).val());
                     }
                     firstLoader2 = false;
                 };
 
                 this.fillSelect = function (arr) {
-                    input.empty();
-                    for(var i = 0; i < arr.length; i++){
+                    var selectList = ctrl.getSelectlist();
+                    selectList.empty();
+                    for (var i = 0; i < arr.length; i++) {
                         var item = arr[i];
-                        input.append("<option value='item'>" + item.name + "</option>");
+                        var span = $("<span data-ng-click='selectItemChangeModel("+ JSON.stringify(item) + ")'>" + item.name + "</span>");
+
+                        $compile(span)(s);
+
+                        selectList.append(span);
                     }
                 };
 
+                s.selectItemChangeModel = function(validation){
+                    console.log(validation);
+                    if (!label.hasClass(animated)) {
+                        label.addClass(animated)
+                        $timeout(function(){
+                            s.secModel = validation;
+                        }, 200)
+                    }
+                    else{
+                        s.secModel = validation;
+                    }
+                }
+
                 this.change = function (val) {
+
+                    if (input.find(select_value)) {
+                        ctrl.getSelectlist().fadeOut();
+                        return;
+                    }
+
                     if (val == undefined) {
                         return;
                     }
@@ -148,6 +172,10 @@ define(['./../../../directives/module'], function (directives) {
                     this.change(input.val());
                     setNormalHint();
                 };
+
+                 this.getSelectlist = function(){
+                    return input.find(".selectList");
+                }
 
                 function getValidation() {
                     var validation = null;
@@ -281,10 +309,12 @@ define(['./../../../directives/module'], function (directives) {
 
                     label.on({
                         click: function () {
+                            if (input.find(select_value)) {
+                                ctrl.getSelectlist().fadeToggle();
+                                return;
+                            }
                             if (!label.hasClass(animated)) {
-                                if(input.is(Types.select)){
-                                    input.trigger('click');
-                                }
+
                                 input.focus();
                                 ctrl.focus();
                             }
@@ -325,25 +355,31 @@ define(['./../../../directives/module'], function (directives) {
                         ctrl.pushValidation(s.secPattern, Keys.secPattern);
                     }
 
-                    if (a.aType) {
-                        ctrl.pushValidation(s.secPattern, Keys.secPattern);
-                    }
+                    //if (a.aType) {
+                    //    ctrl.pushValidation(s.secPattern, Keys.secPattern);
+                    //}
 
                     var div = $("<div class='inputContainer'></div>");
                     var type = a.aType || "text"
                     var input;
-                    switch(type){
+                    var label = $("<label>" + a.aHint + "</label>");
+                    switch (type) {
                         case Types.select:
                             s.$watch('secSelectOptions', function (n, o) {
                                 ctrl.fillSelect(n);
                             }, true);
-                            input = $("<select data-ng-model='secModel' />");
+                            label.css("cursor", "pointer");
+                            input = $("<div><label class='select-value'> {{secModel.name}} </label><div class='selectList'></div></div>");
+                            input.find(".select-value").on({
+                                click: function(){
+                                    ctrl.getSelectlist().fadeToggle(150);
+                                }
+                            })
                             break;
                         default:
                             input = $("<input type='" + type + "' data-ng-model='secModel' />");
                             break;
                     }
-                    var label = $("<label>" + a.aHint + "</label>");
 
                     div.append(input);
                     div.append(label);

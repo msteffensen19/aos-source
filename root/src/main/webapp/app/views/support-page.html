@@ -1,6 +1,6 @@
 <style>
     section {
-        width: 800px;
+        max-width: 800px;
         height: 800px;
         padding: 50px;
         border: solid #dcfef7;
@@ -21,59 +21,62 @@
         <sec-input-validation
                 a-hint="Username"
                 a-type="select"
-                sec-model="country"
+                sec-model="model"
                 sec-select-options="countries"
                 sec-select-order="sec_select_order"
 
 
-
-
-                sec-is-field-valid="isFieldValid(valid)"
-                sec-require="require"
-                sec-min-length="minLength"
-                sec-max-length="maxLength"
-                sec-pattern="email"
         >
         </sec-input-validation>
 
-
-        <sec-input-validation
-                a-hint="Second Username"
-                sec-model="model2"
-                sec-require="require"
-                sec-compare-to="compareTo"
-                s-model-compare-to="model"
-        >
-        </sec-input-validation>
+        <!--sec-is-field-valid="isFieldValid(valid)"-->
+        <!--sec-require="require"-->
+        <!--sec-min-length="minLength"-->
+        <!--sec-max-length="maxLength"-->
+        <!--sec-pattern="email"-->
 
 
-        <sec-input-validation
-                a-hint="Username"
-                sec-model="model7"
-        >
-        </sec-input-validation>
 
 
-        <sec-input-validation
-                a-hint="Username"
-                sec-model="model8"
-                sec-is-field-valid="isFieldValid(valid)"
-                sec-require="require"
-                sec-min-length="minLength"
-                sec-max-length="maxLength"
-                sec-pattern="email"
-        >
-        </sec-input-validation>
-        <sec-input-validation
-                a-hint="Username"
-                sec-model="model9"
-                sec-is-field-valid="isFieldValid(valid)"
-                sec-require="require"
-                sec-min-length="minLength"
-                sec-max-length="maxLength"
-                sec-pattern="email"
-        >
-        </sec-input-validation>
+
+
+        <!--<sec-input-validation-->
+                <!--a-hint="Second Username"-->
+                <!--sec-model="model2"-->
+                <!--sec-require="require"-->
+                <!--sec-compare-to="compareTo"-->
+                <!--s-model-compare-to="model"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+
+        <!--<sec-input-validation-->
+                <!--a-hint="Username"-->
+                <!--sec-model="model7"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+
+        <!--<sec-input-validation-->
+                <!--a-hint="Username"-->
+                <!--sec-model="model8"-->
+                <!--sec-is-field-valid="isFieldValid(valid)"-->
+                <!--sec-require="require"-->
+                <!--sec-min-length="minLength"-->
+                <!--sec-max-length="maxLength"-->
+                <!--sec-pattern="email"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+        <!--<sec-input-validation-->
+                <!--a-hint="Username"-->
+                <!--sec-model="model9"-->
+                <!--sec-is-field-valid="isFieldValid(valid)"-->
+                <!--sec-require="require"-->
+                <!--sec-min-length="minLength"-->
+                <!--sec-max-length="maxLength"-->
+                <!--sec-pattern="email"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
 
         <br/>
         <br/>
