@@ -177,6 +177,10 @@ define(['./../../../directives/module'], function (directives) {
                     return input.find(".selectList");
                 }
 
+                //this.setPropertyToShow = function(aShow){
+                //    propertyToShow
+                //};
+
                 function getValidation() {
                     var validation = null;
                     try {
@@ -365,11 +369,13 @@ define(['./../../../directives/module'], function (directives) {
                     var label = $("<label>" + a.aHint + "</label>");
                     switch (type) {
                         case Types.select:
+                            //ctrl.setPropertyToShow(a.aShow);
                             s.$watch('secSelectOptions', function (n, o) {
                                 ctrl.fillSelect(n);
                             }, true);
                             label.css("cursor", "pointer");
-                            input = $("<div><label class='select-value'> {{secModel.name}} </label><div class='selectList'></div></div>");
+                            var property = a.aShow;
+                            input = $("<div><label class='select-value'> {{secModel['" + property + "']}}</label><div class='selectList'></div></div>");
                             input.find(".select-value").on({
                                 click: function(){
                                     ctrl.getSelectlist().fadeToggle(150);
