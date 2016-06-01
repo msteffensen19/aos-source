@@ -487,7 +487,7 @@ public class OrderController{
         HttpStatus httpStatus = HttpStatus.OK;
 
         if (userId != null) {
-            shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
+          //  shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
 
             if (shoppingCartResponse.isSuccess()) {
                 ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
