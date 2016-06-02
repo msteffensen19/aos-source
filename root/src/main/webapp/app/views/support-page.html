@@ -12,67 +12,86 @@
 <section>
     <article>
 
-        <select ng-model="country" ng-change="countryChange(country)"
-                class="inputtext"
-                ng-options="country.name for country in countries track by country.id">
-        </select>
+        <sec-form>
 
-        <!--a-type="password"-->
-        <sec-input-validation
-                a-hint="Username"
-                a-type="select"
-                a-show="name"
-                sec-model="model"
-                sec-select-options="countries"
-        >
-        </sec-input-validation>
+            <!--a-type="password"-->
 
+            </sec-view>
+
+
+            <sec-view
+                    a-hint="Username"
+                    a-type="select"
+                    a-show="name"
+                    sec-require="require"
+                    sec-model="model"
+                    sec-select-options="countries"
+            >
+            </sec-view>
+
+
+            <sec-view
+                    a-hint="First name"
+                    sec-model="model2"
+
+                    sec-is-field-valid="isFieldValid(valid)"
+                    sec-require="require"
+                    sec-min-length="minLength"
+                    sec-max-length="maxLength"
+                    sec-pattern="email"
+            >
+            </sec-view>
+
+
+            <!--a-dont-change="true"-->
+            <sec-view
+                    a-type="checkbox"
+                    sec-require="checkboxRequire"
+                    sec-model="model30"
+            ></sec-view>
+
+            <sec-sender a-value="SEND" sec-send="isSended(param)"></sec-sender>
+
+            <sec-sender a-value="Lock" sec-send="isSended(param)"></sec-sender>
+
+
+        </sec-form>
+
+        <!--<sec-input-validation-->
+        <!--a-hint="Second Username"-->
+        <!--sec-model="model2"-->
+        <!--sec-require="require"-->
+        <!--sec-compare-to="compareTo"-->
+        <!--s-model-compare-to="model"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+
+        <!--<sec-input-validation-->
+        <!--a-hint="Username"-->
+        <!--sec-model="model7"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+
+        <!--<sec-input-validation-->
+        <!--a-hint="Username"-->
+        <!--sec-model="model8"-->
         <!--sec-is-field-valid="isFieldValid(valid)"-->
         <!--sec-require="require"-->
         <!--sec-min-length="minLength"-->
         <!--sec-max-length="maxLength"-->
         <!--sec-pattern="email"-->
-
-
-
-
-
-
-        <!--<sec-input-validation-->
-                <!--a-hint="Second Username"-->
-                <!--sec-model="model2"-->
-                <!--sec-require="require"-->
-                <!--sec-compare-to="compareTo"-->
-                <!--s-model-compare-to="model"-->
-        <!--&gt;-->
-        <!--</sec-input-validation>-->
-
-
-        <!--<sec-input-validation-->
-                <!--a-hint="Username"-->
-                <!--sec-model="model7"-->
-        <!--&gt;-->
-        <!--</sec-input-validation>-->
-
-
-        <!--<sec-input-validation-->
-                <!--a-hint="Username"-->
-                <!--sec-model="model8"-->
-                <!--sec-is-field-valid="isFieldValid(valid)"-->
-                <!--sec-require="require"-->
-                <!--sec-min-length="minLength"-->
-                <!--sec-max-length="maxLength"-->
-                <!--sec-pattern="email"-->
         <!--&gt;-->
         <!--</sec-input-validation>-->
         <!--<sec-input-validation-->
-                <!--a-hint="Username"-->
-                <!--sec-model="model9"-->
-                <!--sec-is-field-valid="isFieldValid(valid)"-->
-                <!--sec-require="require"-->
-                <!--sec-min-length="minLength"-->
-                <!--sec-max-length="maxLength"-->
-                <!--sec-pattern="email"-->
+        <!--a-hint="Username"-->
+        <!--sec-model="model9"-->
+        <!--sec-is-field-valid="isFieldValid(valid)"-->
+        <!--sec-require="require"-->
+        <!--sec-min-length="minLength"-->
+        <!--sec-max-length="maxLength"-->
+        <!--sec-pattern="email"-->
         <!--&gt;-->
         <!--</sec-input-validation>-->
 
@@ -83,7 +102,7 @@
         <br/>
         <br/>
         <br/>
-        <input type="text" data-ng-model="model">
+        <input type="text" data-ng-model="model2">
 
     </article>
 </section>

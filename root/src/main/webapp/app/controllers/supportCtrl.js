@@ -10,19 +10,20 @@ define(['./module'], function (controllers) {
 
             s.hola_mundo = "hola_mundohola_mundohola_mundohola_mundo"
 
-            s.model  = "s@s.sec";
-            s.model7 = "t@y.sec";
-            s.model8 = "e@e.sec";
-            s.model9 = "r@r.sec";
+            //s.model = "";
+            s.model2 = "t@y.sec";
+            s.model3 = "e@e.sec";
+            s.model4 = "r@r.sec";
 
-            s.model  = "";
-            s.model7 = "";
-            s.model8 = "";
-            s.model9 = "";
+            s.model30 = null;
 
-            s.isValid = function (valid) {
-                console.log(valid);
+            s.isSended = function (sended) {
+                alert(sended);
             }
+
+            //s.isSended = function (valid) {
+            //    console.log(valid);
+            //}
 
             //ng-options="country.name for country in countries track by country.id"
 
@@ -41,9 +42,15 @@ define(['./module'], function (controllers) {
 
 
             s.require = {
-                error: 'this field is required',
+                error: 'this field is required 765454354765437535',
                 info: '- this field have to have value',
             }
+
+            s.checkboxRequire = {
+                error: ' You must agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice. ',
+                info: 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
+            }
+
 
             s.minLength = {
                 error: 'Use up of 4 character',
