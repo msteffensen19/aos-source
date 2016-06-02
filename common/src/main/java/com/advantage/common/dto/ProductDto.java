@@ -35,8 +35,8 @@ public class ProductDto {
         this.description = description;
         this.imageUrl = imageUrl;
         this.attributes = attributes;
-        this.colors = colors;
-        this.images = images;
+        setColors( colors);
+        setImages(images);
         this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
     }
 
@@ -56,8 +56,8 @@ public class ProductDto {
         this.description = description;
         this.imageUrl = imageUrl;
         this.attributes = attributes;
-        this.colors = colors;
-        this.images = images;
+        setColors( colors);
+        setImages(images);
         this.productStatus= productStatus;
     }
 
@@ -67,6 +67,7 @@ public class ProductDto {
 
     public void setImages(List<String> images) {
         this.images = images;
+        images.sort((a,b)->a.compareTo(b));
     }
 
     public String getProductName() {
@@ -106,6 +107,7 @@ public class ProductDto {
     }
 
     public void setAttributes(List<AttributeItem> attributes) {
+
         this.attributes = attributes;
     }
 
@@ -114,6 +116,7 @@ public class ProductDto {
     }
 
     public void setColors(List<ColorAttributeDto> colors) {
+        colors.sort((a,b) -> a.getName().compareTo(b.getName()));
         this.colors = colors;
     }
 
