@@ -13,6 +13,7 @@ import com.advantage.order.store.dto.*;
 import com.advantage.order.store.dao.OrderManagementRepository;
 import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
+import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -659,8 +660,8 @@ public class OrderManagementService {
                     orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
                     //set products
                     orderLines.forEach(product -> {
-                        orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), product.getProductColor(),
-                                product.getProductColorName(), product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
+                        orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
+                                 product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
                     });
                     orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
                 });

@@ -7,8 +7,7 @@ public class OrderHistoryProductDto {
 
     private long productId;
     private String productName;
-    private int productColor;
-    private int productColorName;
+    private String productColor;
     private double pricePerItem;
     private int productQuantity;
     private long orderNumber;
@@ -17,14 +16,12 @@ public class OrderHistoryProductDto {
         initFields();
     }
 
-    public OrderHistoryProductDto(long productId, String productName, int productColor,
-                                  int productColorName, double pricePerItem, int productQuantity,
-                                  long orderNumber) {
+    public OrderHistoryProductDto(long productId, String productName, String productColor,
+         double pricePerItem, int productQuantity,long orderNumber) {
         initFields();
         this.productId = productId;
         this.productName = productName;
         this.productColor = productColor;
-        this.productColorName = productColorName;
         this.pricePerItem = pricePerItem;
         this.productQuantity = productQuantity;
         this.orderNumber = orderNumber;
@@ -46,20 +43,12 @@ public class OrderHistoryProductDto {
         this.productName = productName;
     }
 
-    public int getProductColor() {
+    public String getProductColor() {
         return productColor;
     }
 
-    public void setProductColor(int productColor) {
+    public void setProductColor(String productColor) {
         this.productColor = productColor;
-    }
-
-    public int getProductColorName() {
-        return productColorName;
-    }
-
-    public void setProductColorName(int productColorName) {
-        this.productColorName = productColorName;
     }
 
     public double getPricePerItem() {
@@ -90,8 +79,7 @@ public class OrderHistoryProductDto {
     {
         productId = 0;
         productName="";
-        productColor=0;
-        productColorName=0;
+        productColor="";
         pricePerItem=0.0;
         productQuantity=0;
         orderNumber=0;

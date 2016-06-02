@@ -75,7 +75,6 @@ public class CatalogController {
         Product product = productService.getProductById(id);
         if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         ProductDto dto = productService.getDtoByEntity(product);
-
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
