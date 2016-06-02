@@ -101,7 +101,6 @@ public class OrderController{
             HttpServletRequest request) {
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
-
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
@@ -456,15 +455,7 @@ public class OrderController{
         }
     }
 
-    /*@RequestMapping(value = "/order/history", method = RequestMethod.GET)
-    @ApiOperation(value = "Get all order history")
-    public ResponseEntity<OrderHistoryCollectionDto> getAllOrderHistory(
-                                                               HttpServletRequest request) {
-        OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getAllOrderHistory();
-            return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
-        }*/
 
-    //@RequestMapping(value = "/orders/history/{user_id}/{order_id}", method = RequestMethod.GET)
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by userID or/and orderId")
     public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
@@ -488,8 +479,21 @@ public class OrderController{
         ShoppingCartResponseDto userCartResponseDto;
         if (userId != null &&  (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId)))!=null) {
             httpStatus = HttpStatus.OK;
-
-        } else {
+            //get order by userID and orderID
+            OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
+            if(orderHistoryCollectionDto!=null && orderHistoryCollectionDto.getOrderHistoryCollection().size()>0 ) {
+                orderHistoryCollectionDto.getOrderHistoryCollection().forEach(
+                        order-> {
+                            order.getProducts().forEach(product ->{
+                                long id = product.getProductId();
+                                String productColor = String.valueOf(product.getProductColor());
+                                int quantity = product.getProductQuantity();
+                                shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
+                            });
+                        });
+            }
+        }
+        else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
 
             shoppingCartResponse.setSuccess(false);
