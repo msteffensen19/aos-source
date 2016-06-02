@@ -11,7 +11,7 @@
         <init-param>
             <param-name>cors.supportedHeaders</param-name>
             <!--<param-value>Content-Type,Accept,Origin, Authorization</param-value>-->
-            <param-value>Content-Type,Accept,Origin,soapaction</param-value>
+            <param-value>Content-Type,Accept,Origin</param-value>
         </init-param>
         <init-param>
             <param-name>cors.supportedMethods</param-name>
