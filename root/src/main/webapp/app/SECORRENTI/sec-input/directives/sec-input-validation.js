@@ -2,10 +2,13 @@
 // * Created by correnti on 19/05/2016.
 // */
 //
-//
-//define(['./../../../directives/module'], function (directives) {
-//    'use strict';
-//
+
+define(['./../../../directives/module'], function (directives) {
+    'use strict';
+
+});
+
+
 //    directives.directive('secForm', ["$compile", "$timeout", function ($compile, $timeout) {
 //
 //        var invalid = "invalid";
@@ -620,7 +623,5 @@
 //        }
 //    }
 //    ])
-//
-//});
 //
 //

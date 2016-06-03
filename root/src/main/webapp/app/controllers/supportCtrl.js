@@ -42,7 +42,7 @@ define(['./module'], function (controllers) {
 
 
             s.require = {
-                error: 'this field is required 765454354765437535',
+                error: 'this field is required ',
                 info: '- this field have to have value',
             }
 

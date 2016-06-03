@@ -23,7 +23,6 @@ define(['./module'], function (controllers) {
             //}
 
 
-
             $scope.cart;
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
@@ -200,15 +199,15 @@ define(['./module'], function (controllers) {
             }
 
             var ____loginInterval;
-            $scope.miniTitleIn = function(){
-                if(____loginInterval){
+            $scope.miniTitleIn = function () {
+                if (____loginInterval) {
                     $timeout.cancel(____loginInterval);
                 }
             }
 
-            $scope.miniTitleOut= function(miniTitleId){
-                if($("#" + miniTitleId).css('display') != 'none'){
-                    ____loginInterval = $timeout(function(){
+            $scope.miniTitleOut = function (miniTitleId) {
+                if ($("#" + miniTitleId).css('display') != 'none') {
+                    ____loginInterval = $timeout(function () {
                         $("#" + miniTitleId).fadeOut(300);
                     }, 2000);
                 }
@@ -300,7 +299,7 @@ define(['./module'], function (controllers) {
             var _____autoLogOut;
             $scope.refreshTimeOut = function () {
 
-                if($scope.config == null){
+                if ($scope.config == null) {
                     return;
                 }
                 if (orderService.userIsLogin()) {
@@ -324,11 +323,10 @@ define(['./module'], function (controllers) {
             });
 
 
-
             $rootScope.$on('$locationChangeStart', function (event, current, previous) {
                 //$("html, body").css({opacity: 0});
-                    $(".waitBackground").css({opacity: 1, display: "block",});
-                    $("div.loader").css({opacity: 1, display: "block", });
+                $(".waitBackground").css({opacity: 1, display: "block",});
+                $("div.loader").css({opacity: 1, display: "block",});
             });
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
@@ -366,9 +364,85 @@ define(['./module'], function (controllers) {
                 Helper.mobileSectionHandler();
             }
 
-            $scope.$on('$viewContentLoaded', function(event) {
+            $scope.$on('$viewContentLoaded', function (event) {
                 Helper.forAllPage();
             });
+
+
+            this.getRequire = function (nameRequire) {
+                return JSON.stringify({
+                    error: $filter("translate")(nameRequire) + " " + $filter("translate")("field_is_required"),
+                });
+            }
+
+
+            this.getCompare = function (name, model) {
+                var nameAfterTranslate = $filter("translate")(name);
+                return JSON.stringify({
+                    error: $filter("translate")('This_field_not_match_with') + " " + nameAfterTranslate + " " + $filter("translate")('field'),
+                    info: "- " + $filter("translate")("Same_as") + " " + nameAfterTranslate,
+                    model: model,
+                });
+            }
+
+            this.getPattern = function (data) {
+
+                if (typeof data === 'string') {
+                    switch (data) {
+                        case 'Username':
+                            data = [
+                                ['letters_number_symbols_only', 'letters_number_symbols_only',
+                                    '^[A-Za-z0-9_.-]{0,999}$']]
+                            break;
+                        case 'Email':
+                            data = [['email_no_formatted_correctly', 'valid_email_required',
+                                '^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$']]
+                            break;
+                        case 'Password':
+                            data = [
+                                ['one_lower_letter_required', 'Including_one_lower_letter', '(?=.*[a-z])'],
+                                ['one_upper_letter_required', 'Including_one_upper_letter', '(?=.*[A-Z])'],
+                                ['one_number_required', 'Including_one_number', '(?=.*[0-9])'],
+                            ]
+                            break;
+                        case 'Compare':
+                            data = [
+                                ['letters_number_symbols_only', 'letters_number_symbols_only',
+                                    '^[A-Za-z0-9_.-]{0,999}$']]
+                        default:
+                            throw "type of pattern not match"
+                    }
+                }
+                var arr = [];
+                for (var i = 0; i < data.length; i++) {
+                    arr.push({
+                        error: $filter("translate")(data[i][0]),
+                        info: "- " + $filter("translate")(data[i][1]),
+                        regex: data[i][2],
+                    });
+                }
+                return JSON.stringify({
+                    regexes: arr
+                });
+            }
+
+            this.getMin = function (min) {
+                return JSON.stringify({
+                    error: $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character"),
+                    info: "- " + $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character"),
+                    min: min
+                });
+            }
+
+
+            this.getMax = function (max) {
+                return JSON.stringify({
+                    error: $filter("translate")("Use_maximum") + " " + max + " " + $filter("translate")("character"),
+                    info: "- " + $filter("translate")("Use_maximum") + " " + max + " " + $filter("translate")("character"),
+                    max: max
+                });
+            }
+
         }]);
 });
 

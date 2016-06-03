@@ -10,7 +10,8 @@
 }
 
 .sec-view div label,
-.sec-view div .selectList {
+.sec-view div .selectList,
+.sec-sender {
     -webkit-user-select: none;
     -ms-user-select: none;
     -moz-user-select: none;
