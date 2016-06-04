@@ -33,8 +33,8 @@ define(['./module'], function (controllers) {
 
                 registerService.register(s.model).then(function (response) {
 
-                    s.registerAnswer.message = response.reason || $filter('translate')('register_faild'),
-                        s.registerAnswer.class = response.success ? 'valid' : 'invalid';
+                    s.registerAnswer.message = response.reason || $filter('translate')('register_faild');
+                    s.registerAnswer.class = response.success ? 'valid' : 'invalid';
 
                     if (response.success) {
                         $('body, html').animate({scrollTop: 0}, 10);
@@ -48,9 +48,25 @@ define(['./module'], function (controllers) {
                             loginPassword: s.model.password,
                             loginUser: s.model.username,
                         }
-                        s.signIn(user , false)
-                        $timeout(function(){ $state.go('default') }, 5000)
+                        s.signIn(user, false)
+                        $timeout(function () {
+                            $state.go('default')
+                        }, 5000)
                     }
+                    else {
+                        $timeout(function () {
+                            s.registerAnswer.message = "";
+                            s.registerAnswer.class = "";
+                        }, 5000)
+                    }
+                }, function (err) {
+                    console.log(err);
+                    s.registerAnswer.message = $filter('translate')('register_faild');
+                    s.registerAnswer.class = 'invalid';
+                    $timeout(function () {
+                        s.registerAnswer.message = "";
+                        s.registerAnswer.class = "";
+                    }, 5000)
                 });
             }
 

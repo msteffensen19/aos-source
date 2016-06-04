@@ -148,15 +148,16 @@
             </div>
             <div class="center">
 
-                <sec-sender class="roboto-medium" a-value="{{'REGISTER' | translate}}"
-                            sec-send="register()"></sec-sender>
+                <sec-sender class="roboto-medium" a-value="{{'REGISTER' | translate}}" sec-send="register()"></sec-sender>
 
                 <label class="{{registerAnswer.class}} center block " data-ng-show="!registerSuccess">
-                    {{registerAnswer.message}}</label>
+                    {{registerAnswer.message}}
+                </label>
 
                 <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" data-ng-show="!registerSuccess">
                     <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()"></a>
                 </label>
+
             </div>
 
         </sec-form>

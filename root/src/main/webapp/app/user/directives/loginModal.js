@@ -107,6 +107,8 @@ define(['./module'], function (directives) {
                                 $scope.setErrorMessage(response.reason);
                             }
                             return user;
+                        }, function(){
+                            $scope.setErrorMessage($filter('translate')('login_faild'));
                         });
                     }
                     /*=============================== end Sign in ===============================*/

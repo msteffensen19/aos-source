@@ -156,7 +156,6 @@ var english = {
     'field_is_required': 'field is required',
     'User_name': 'Username',
     'Confirm_password': 'Confirm password',
-    'register_faild': 'Registration failed. Try again later.',
     'Receiver_Details': 'Recipient details',
     'MY_ACCOUNT': 'MY ACCOUNT',
     'Account_Details': 'Account details',
@@ -190,6 +189,13 @@ var english = {
     'USER': 'USER',
     'SEARCH': 'SEARCH',
 
+
+
+
+
+
+    'register_faild': 'Registration failed. Try again later.',
+    'login_faild': 'Login failed. Try again later.',
 
     'email_no_formatted_correctly': 'Your email address isn\'t formatted correctly',
     'valid_email_required': 'A valid email required',
