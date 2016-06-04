@@ -1,101 +1,122 @@
 #registerCover{
-    width: 100%;
-    max-width: 1366px;
+    /*width: 100%;*/
+    max-width: 1260px;
     margin: 0 auto;
-    padding-top: 110px;
+    padding: 110px 30px 30px 30px;
+
 }
 
-#form{
-    width: 100%;
-}
+/*#form{*/
+    /*width: 100%;*/
+/*}*/
 
 #infoDemo, #form{
     display: table-cell;
     vertical-align: top;
 }
 
+#form{
+    width: 100%;
+}
+
 #infoDemo{
-white-space: nowrap;
+    white-space: nowrap;
 }
 
-#infoDemo > div {
-    padding: 22px 23px;
-    margin: 34px 50px;
-    position: relative;
-    border: solid 1px #454545;
+/*#infoDemo > div {*/
+    /*padding: 22px 23px;*/
+    /*margin: 34px 50px;*/
+    /*position: relative;*/
+    /*border: solid 1px #454545;*/
+/*}*/
+
+/*#infoDemo > div:before {*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*top:30px;*/
+    /*left: 28px;*/
+    /*width: 2px;*/
+    /*height: 68px;*/
+    /*background-color:#454545;*/
+    /*z-index: 50;*/
+    /*color: #454545;*/
+/*}*/
+
+/*#infoDemo > div.notice h4 {*/
+    /*background-image: url(/css/images/Bell.png);*/
+    /*background-repeat:no-repeat;*/
+    /*background-position: 12% 50%;*/
+    /*font-size: 20px;*/
+    /*font-weight: 500;*/
+    /*text-indent: 45px;*/
+    /*padding: 6px;*/
+/*}*/
+
+/*#infoDemo > div p {*/
+    /*font-size: 15px;*/
+    /*font-weight: 300;*/
+    /*text-indent: 15px;*/
+    /*margin: 4px 9px;*/
+    /*color: #828282;*/
+/*}*/
+
+#registerPage .spliter{
+    white-space: nowrap;
+    width: 90%;
 }
 
-#infoDemo > div:before {
-    content: "";
-    position: absolute;
-    top:30px;
-    left: 28px;
-    width: 2px;
-    height: 68px;
-    background-color:#454545;
-    z-index: 50;
-    color: #454545;
+#registerPage .spliter .sec-view{
+    width: 50%;
+    display: inline-block;
+    padding-right: 80px;
+    box-sizing: border-box;
+    vertical-align: top;
 }
 
-#infoDemo > div.notice h4 {
-    background-image: url(/css/images/Bell.png);
-    background-repeat:no-repeat;
-    background-position: 12% 50%;
-    font-size: 20px;
-    font-weight: 500;
-    text-indent: 45px;
-    padding: 6px;
-}
-
-#infoDemo > div p {
-    font-size: 15px;
-    font-weight: 300;
-    text-indent: 15px;
-    margin: 4px 9px;
-    color: #828282;
+#registerPage .spliter .sec-view div label.select-value {
+    width: 82%;
 }
 
 #formCover > div {
-    max-width:  942px;
-    margin: 0 0 56px 0;
+     margin-bottom: 56px;
 }
 
 #formCover > div h3 {
-    margin: 30px  0  13px  0 ;
+    margin: 30px 0 13px  0 ;
     letter-spacing: 1px;
     font-size: 16px;
 }
 
-#formCover > div span{
-    display: inline-block;
-    width: 350px;
-    margin-right: 50px;
-}
+/*#formCover > div span{*/
+    /*display: inline-block;*/
+    /*width: 350px;*/
+    /*margin-right: 50px;*/
+/*}*/
 
-#formCover > div input[type=text],
-#formCover > div input[type=password],
-#formCover > div .inputtext{
-    width: 100%;
-}
+/*#formCover > div input[type=text],*/
+/*#formCover > div input[type=password],*/
+/*#formCover > div .inputtext{*/
+    /*width: 100%;*/
+/*}*/
 
-.animPlaceholderUp > .validationInfo label{
-display: block;
-}
+/*.animPlaceholderUp > .validationInfo label{*/
+/*display: block;*/
+/*}*/
 
 
-.animPlaceholderUp .validationInfo{
-    display: none;
-}
+/*.animPlaceholderUp .validationInfo{*/
+    /*display: none;*/
+/*}*/
 
-.animPlaceholderUp img {
-    position: absolute;
-    right: 0px;
-    top: 12px;
-}
+/*.animPlaceholderUp img {*/
+    /*position: absolute;*/
+    /*right: 0px;*/
+    /*top: 12px;*/
+/*}*/
 
-#formCover .validationInfo ul li span{
-    color: #ff454f;
-}
+/*#formCover .validationInfo ul li span{*/
+    /*color: #ff454f;*/
+/*}*/
 
 #formCover .option {
     margin: 3px 0;
@@ -117,36 +138,54 @@ display: block;
     margin:0;
 }
 
-.sec-validate button.register{
-    border:  solid 2px #2a2a2a;
-    color:#2a2a2a;
-    background-color: white;
+/*.sec-validate button.register{*/
+    /*border:  solid 2px #2a2a2a;*/
+    /*color:#2a2a2a;*/
+    /*background-color: white;*/
+    /*width: 330px;*/
+    /*font-size: 16px;*/
+    /*height: 47px;*/
+    /*display: block;*/
+    /*margin: 20px auto;*/
+    /*transition: all .3s ease;*/
+/*}*/
+
+#registerPage .sec-sender .sec-sender-a {
     width: 330px;
     font-size: 16px;
-    height: 47px;
-    display: block;
     margin: 20px auto;
-    transition: all .3s ease;
 }
 
+/*.sec-validate button.register{*/
+    /*border:  solid 2px #2a2a2a;*/
+    /*color:#2a2a2a;*/
+    /*background-color: white;*/
+    /*width: 330px;*/
+    /*font-size: 16px;*/
+    /*height: 47px;*/
+    /*display: block;*/
+    /*margin: 20px auto;*/
+    /*transition: all .3s ease;*/
+/*}*/
 
-.sec-validate button.register:hover{
-    color:white;
-    background-color: #2a2a2a;
-}
 
-.sec-validate button.sec-validate-invalid:hover {
-    color:#b2b2b2 !important;
-    background-color: white !important;
-    border: solid 2px #d1d1d1 !important
-}
+/*.sec-validate button.register:hover{*/
+    /*color:white;*/
+    /*background-color: #2a2a2a;*/
+/*}*/
+
+/*.sec-validate button.sec-validate-invalid:hover {*/
+    /*color:#b2b2b2 !important;*/
+    /*background-color: white !important;*/
+    /*border: solid 2px #d1d1d1 !important*/
+/*}*/
 
 
 
-.sec-validate .center.block{
-    display: block;
-    padding-bottom: 10px;
-}
+/*.sec-validate .center.block{*/
+    /*display: block;*/
+    /*padding-bottom: 10px;*/
+/*}*/
 
 
 .ALREADY_HAVE_AN_ACCOUNT{
@@ -182,7 +221,7 @@ display: block;
 
 #formCover > div input[type=text], #formCover > div input[type=password], #formCover > div .inputtext
 {
-    width: 90% !important;
+    /*width: 90% !important;*/
 }
 
 
@@ -232,6 +271,11 @@ display: block;
     #formCover > div span {
         width: 40%;
     }
+
+    #registerPage .spliter{
+        width: 100%;
+    }
+
 }
 
 @media screen and (max-width: 940px)

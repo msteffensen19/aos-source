@@ -77,8 +77,6 @@
 }
 
 
-/*
-
 .roboto-thin {
     font-family: "localRobotoThin";
     font-weight: 100;
@@ -110,16 +108,18 @@
     -webkit-user-select: none;
     user-select: none;
 }
-
+/*
 .a *{
     margin: 0;
     padding: 0;
 }
 
+
 html, body{
     margin: 0;
     padding: 0;
 }
+*/
 
 .waitBackground{
     position: fixed;
@@ -144,9 +144,9 @@ html, body{
 input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     cursor: pointer;
 }
+/*!*button.roboto-medium,*!*/
 
-!*button.roboto-medium,*!
-
+/*
 button,
 input[type=submit].roboto-medium,
 input[type=reset].roboto-medium,
@@ -157,6 +157,7 @@ input[type=button].roboto-medium {
     -moz-border-radius:0 !important;
     border-radius:0 !important;
 }
+*/
 
 .fixed{
     position: fixed !important;
@@ -256,7 +257,7 @@ nav.pages *{
     display: block;
 }
 
-
+/*
 input[type="text"], input[type="password"], .inputtext {
     display: block;
     margin: 0;
@@ -308,7 +309,7 @@ input[type="password"]:-ms-input-placeholder,
     font-size: 14px;
     cursor: text;
 }
-
+*/
 
 .center{
     text-align: center;
@@ -331,7 +332,12 @@ h3.roboto-regular{
     position: relative;
 }
 
-.option input[type=checkbox] {
+.option.marginTop {
+    margin-top: 10px;
+}
+
+
+input[type=checkbox] {
     display: inline-block;
     -webkit-appearance: none;
     outline: 0;
@@ -343,19 +349,19 @@ h3.roboto-regular{
     vertical-align: top;
 }
 
-.option input[type=checkbox] {
+input[type=checkbox] {
     width: 16px;
     height: 16px;
     background-color: white;
     border: solid #54b3ad 1px;
 }
 
-.option input[type=checkbox]:not(:checked) {
+input[type=checkbox]:not(:checked) {
     background-image: url("");
     border: solid #d0d0d0 1px;
 }
 
-.option input[type=checkbox]:checked {
+input[type=checkbox]:checked {
     background-image: url("images/Check.png");
     background-position: 60% 36%;
     background-size: 95%;
@@ -376,9 +382,11 @@ h3.roboto-regular{
 .word{
     display: inline-block;
 }
+
 .block{
     display: block;
 }
+
 .mini-title {
     position: absolute;
     top:45px;
@@ -402,7 +410,6 @@ h3.roboto-regular{
     padding: 7px;
     cursor: pointer;
 }
-
 
 .display{
     display: block;
@@ -462,6 +469,7 @@ a {
     text-decoration: none;
 }
 
+/*
 .invalid{
     color: #FF454F !important;
     font-weight: 400 !important;
@@ -474,7 +482,7 @@ a {
     cursor: default;
     background-color: white !important;
 }
-
+*/
 .buttonDisable, .buttonDisable:hover {
     color: #b2b2b2 !important;
     border: solid 2px #d1d1d1 !important;
@@ -504,7 +512,6 @@ a {
     z-index: 200;
     top: calc(50% - 10px);
     left: -10px;
-
 }
 
 .mobileTitle .mini-title:after {
@@ -519,4 +526,4 @@ a {
 
 }
 
-*/
+

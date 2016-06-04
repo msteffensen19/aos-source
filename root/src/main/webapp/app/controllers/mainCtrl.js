@@ -392,25 +392,25 @@ define(['./module'], function (controllers) {
                         case 'Username':
                             data = [
                                 ['letters_number_symbols_only', 'letters_number_symbols_only',
-                                    '^[A-Za-z0-9_.-]{0,999}$']]
+                                    '^[A-Za-z0-9_.-]{0,999}$']];
                             break;
                         case 'Email':
                             data = [['email_no_formatted_correctly', 'valid_email_required',
-                                '^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$']]
+                                '^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,100})$']];
                             break;
                         case 'Password':
                             data = [
                                 ['one_lower_letter_required', 'Including_one_lower_letter', '(?=.*[a-z])'],
                                 ['one_upper_letter_required', 'Including_one_upper_letter', '(?=.*[A-Z])'],
                                 ['one_number_required', 'Including_one_number', '(?=.*[0-9])'],
-                            ]
+                            ];
                             break;
                         case 'Compare':
                             data = [
                                 ['letters_number_symbols_only', 'letters_number_symbols_only',
-                                    '^[A-Za-z0-9_.-]{0,999}$']]
+                                    '^[A-Za-z0-9_.-]{0,999}$']];
                         default:
-                            throw "type of pattern not match"
+                            throw "type of pattern not match (this.getPattern('" +data+ "');"
                     }
                 }
                 var arr = [];
@@ -442,6 +442,21 @@ define(['./module'], function (controllers) {
                     max: max
                 });
             }
+
+            this.getAgreeAgreementRequire = function(){
+                return JSON.stringify({
+                    error: ' You must agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice. ',
+                    info: 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
+                });
+            }
+
+            this.getNoticeInfo = function(){
+                return JSON.stringify([
+                    $filter("translate")("This_is_a_demo"),
+                    $filter("translate")("Please_enter_a_fake_data"),
+                ]);
+            }
+
 
         }]);
 });

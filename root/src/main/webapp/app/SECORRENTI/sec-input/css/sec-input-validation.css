@@ -23,7 +23,7 @@
 .sec-view div .selectList span {
     width: 100%;
     display: block;
-    padding: 6px 3px;
+    padding: 3px 3px;
     font-size: 14px;
 }
 
@@ -38,8 +38,8 @@
 }
 
 .sec-view div .selectList {
-    position: absolute;
-    top: 52px;
+    position: relative;
+    top: 28px;
     height: 161px;
     width: 100%;
     border: solid 1px rgb(213, 213, 213);
@@ -52,7 +52,6 @@
 }
 
 .sec-view div .selectList span {
-    border-bottom: solid 1px rgb(213, 213, 213);
     background-color: white;
     transition: all .2s ease;
 }
@@ -68,9 +67,19 @@
 .sec-view div label {
     position: absolute;
     top: 22px;
+    left: 0;
     transition: all .4s ease, top .2s ease, transform .4s ease;
     transform-origin: 0;
-    color: #313131;
+    color: #5d5d5d;
+}
+
+.sec-view div .star {
+    display: inline-block;
+    position: absolute;
+    top: 29px;
+    left: -10px;
+    font-size: 14px;
+    color: #ff454f;
 }
 
 .sec-view div label.select-value {
@@ -138,37 +147,8 @@
 /*CHECKBOX*/
 
 .sec-view div input[type=checkbox] {
-    display: inline-block;
-    -webkit-appearance: none;
-    outline: 0;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    position: absolute;
-    top: 5px;
-    vertical-align: top;
-    cursor: pointer;
-    float: left;
-}
-
-.sec-view div input[type=checkbox] {
     width: 16px;
     height: 17px;
-    left: 4px;
-    background-color: white;
-    border: solid #54b3ad 1px;
-}
-
-.sec-view div input[type=checkbox]:not(:checked) {
-    background-image: url("");
-    border: solid #d0d0d0 1px;
-}
-
-.sec-view div input[type=checkbox]:checked {
-    background-image: url("../../../../css/images/Check.png");
-    background-position: 60% 36%;
-    background-size: 96%;
-    background-color: #54b3ad;
 }
 
 .sec-view div label.checkboxText {
@@ -178,7 +158,7 @@
     text-indent: 22px;
     top: -2px;
     width: 100%;
-    font-size: 0.8em;
+    font-size: 13px;
     transform: scale(1)
 }
 
@@ -209,8 +189,8 @@
 
 .sec-sender .sec-sender-a.invalid,
 .sec-sender .sec-sender-a.invalid:hover {
-    color: #b2b2b2;
-    border: solid 2px #d1d1d1;
+    color: #b2b2b2 !important;
+    border: solid 2px #d1d1d1 !important;
     cursor: default;
     background-color: white ;
 }

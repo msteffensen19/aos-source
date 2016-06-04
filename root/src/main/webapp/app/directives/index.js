@@ -5,6 +5,7 @@
 
 define([
     './e-sec-plus-minus',
+    './info-demo',
     './a-sec-src',
     './a-sec-back-img',
     './validateInput',
@@ -25,7 +26,8 @@ define([
     './icon-user-svg',
     './icon-search-svg',
     './icon-home-svg',
-    './virtualFooter',
+        './virtualFooter',
+
 ],
 
 function() {});

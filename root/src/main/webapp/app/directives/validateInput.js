@@ -1,4 +1,3 @@
-
 /**
  * Created by correnti on 19/05/2016.
  */
@@ -16,8 +15,7 @@ define(['./module'], function (directives) {
         return {
             restrict: 'E',
             require: 'secForm',
-            scope: {
-            },
+            scope: {},
             controller: [function () {
 
                 this.models = [];
@@ -28,14 +26,14 @@ define(['./module'], function (directives) {
 
                 this.updateState = function (id, valid) {
                     var validForm = true;
-                    for(var i = 0; i < this.models.length; i++){
+                    for (var i = 0; i < this.models.length; i++) {
                         var model = this.models[i];
-                        if(model.id == id){
+                        if (model.id == id) {
                             model.valid = valid;
                         }
                         validForm = !validForm ? false : model.valid;
                     }
-                    for(var i = 0; i < this.senders.length; i++){
+                    for (var i = 0; i < this.senders.length; i++) {
                         this.senders[i].formIsValid(validForm);
                     }
                 };
@@ -137,6 +135,7 @@ define(['./module'], function (directives) {
 
             //sec-select-options
             //a-show
+            //a-star
 
             //secModel: '=',
             //secRequire: '=',
@@ -196,7 +195,7 @@ define(['./module'], function (directives) {
                 var ctrl;
                 var form;
 
-                s.compareTo;
+                this.compareTo;
                 s.validations = [];
 
                 this.getListValidations = function () {
@@ -206,7 +205,7 @@ define(['./module'], function (directives) {
                         if (validation.info && validation.info != "") {
                             li += "<li><a>" + validation.info + " </a></li>"
                         }
-                        else{
+                        else {
                             li += "<li style='display: block; position: absolute; height: 0'><a></a></li>"
                         }
                     }
@@ -215,18 +214,18 @@ define(['./module'], function (directives) {
 
 
                 this.setCompareTo = function (_compareTo) {
-                    s.compareTo = _compareTo;
+                    this.compareTo = _compareTo;
                 };
 
 
                 this.pushValidation = function (validation, key) {
 
-                    if(validation.error){
+                    if (validation.error) {
                         validation.key = key;
                         s.validations.push(validation);
                     }
-                    else if(validation.regexes){
-                        for(var regexIndex = 0; regexIndex < validation.regexes.length; regexIndex++){
+                    else if (validation.regexes) {
+                        for (var regexIndex = 0; regexIndex < validation.regexes.length; regexIndex++) {
                             var regexformat = validation.regexes[regexIndex];
                             regexformat.key = key;
                             s.validations.push(regexformat);
@@ -240,10 +239,9 @@ define(['./module'], function (directives) {
                         if (val.trim() == "") {
                             return;
                         }
-                        //s.compareTo.val(val)
+                        this.compareTo.val(val)
+                        this.change($(input).val());
                         this.blur($(input).val());
-
-                        //this.change($(input).val());
                     }
                     firstLoader = false;
                 };
@@ -291,6 +289,9 @@ define(['./module'], function (directives) {
                                     $(label).addClass(animated);
                                 }
                             }
+                            else{
+                                valid = s.validations.length == 0;
+                            }
                             ctrl.getSelectlist().fadeOut();
                             return;
                         }
@@ -300,6 +301,7 @@ define(['./module'], function (directives) {
                                     ul.find('li').slideDown()
                                 }
                             }
+                            valid = getValidation(false);
                         }
                         else {
                             if (!$(label).hasClass(animated)) {
@@ -313,7 +315,17 @@ define(['./module'], function (directives) {
                     }
                 };
 
-                function checkSelectValidations(val){
+                function checkSelectValidations(val) {
+
+                    if(typeof val == "object")
+                    {
+                        for (var _property in val) {
+                            if (val.hasOwnProperty(_property)) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
                     return val != "" && val != null && val != undefined;
                 }
 
@@ -324,7 +336,7 @@ define(['./module'], function (directives) {
                     if (val.trim() == "") {
                         label.removeClass(animated);
                     }
-                    var valid = getValidation();
+                    var valid = getValidation(true);
                     if (isFieldValid) {
                         isFieldValid({valid: valid});
                     }
@@ -377,7 +389,7 @@ define(['./module'], function (directives) {
                         valid = checkCheckboxValidations();
                     }
                     else if (isSelectedDesign()) {
-                        valid = checkSelectValidations();
+                        valid = s.validations.length == 0 ? true : checkSelectValidations();
                     }
                     else {
                         valid = checkViewValidations();
@@ -395,46 +407,6 @@ define(['./module'], function (directives) {
                     });
                 }
 
-
-                function getValidation() {
-                    var validation = null;
-                    try {
-                        for (var i = 0; i < s.validations.length; i++) {
-                            validation = s.validations[i];
-                            switch (validation.key) {
-                                case Keys.secRequired:
-                                    if (s.secModel.trim() == '') {
-                                        return setInvalidTextToShow(validation.error);
-                                    }
-                                    break;
-                                case Keys.secMinLength:
-                                    if (s.secModel.length < validation.min && (s.secModel + "").length != 0) {
-                                        return setInvalidTextToShow(validation.error);
-                                    }
-                                    break;
-                                case Keys.secMaxLength:
-                                    if (s.secModel.length > validation.max) {
-                                        return setInvalidTextToShow(validation.error);
-                                    }
-                                    break;
-                                case Keys.secPattern:
-                                    if (!(new RegExp(validation.regex).test(s.secModel))) { // && (input.val()+"").length != 0
-                                        return setInvalidTextToShow(validation.error);
-                                    }
-                                    break;
-                                case Keys.secCompareTo:
-                                    if (s.compareTo.val() != s.secModel && s.compareTo.val() != "") { // && input.val() != ""
-                                        return setInvalidTextToShow(validation.error);
-                                    }
-                                    break;
-                            }
-                        }
-                        setNormalHint();
-                        return true;
-                    } catch (e) {
-                        throwInvalidObjectFormat(validation);
-                    }
-                }
 
 
                 function updateTextCheckboxValidations(valid) {
@@ -455,6 +427,58 @@ define(['./module'], function (directives) {
                     return s.secModel == true;
                 }
 
+                function getValidation(changeHint) {
+                    var validation = null;
+                    try {
+                        for (var i = 0; i < s.validations.length; i++) {
+                            validation = s.validations[i];
+                            switch (validation.key) {
+                                case Keys.secRequired:
+                                    if (s.secModel.trim() == '') {
+                                        if(changeHint){
+                                            return setInvalidTextToShow(validation.error);
+                                        }
+                                        return false;
+                                    }
+                                    break;
+                                case Keys.secMinLength:
+                                    if (s.secModel.length < validation.min && (s.secModel + "").length != 0) {
+                                        if(changeHint){
+                                            return setInvalidTextToShow(validation.error);
+                                        }
+                                        return false;
+                                    }
+                                    break;
+                                case Keys.secMaxLength:
+                                    if (s.secModel.length > validation.max) {
+                                        if(changeHint){
+                                            return setInvalidTextToShow(validation.error);
+                                        }
+                                        return false;
+                                    }
+                                    break;
+                                case Keys.secPattern:
+                                    if (!(new RegExp(validation.regex).test(s.secModel))) { // && (input.val()+"").length != 0
+                                        if(changeHint){
+                                            return setInvalidTextToShow(validation.error);
+                                        }
+                                        return false;
+                                    }
+                                    break;
+                                case Keys.secCompareTo:
+                                    if (ctrl.compareTo.val() != s.secModel && ctrl.compareTo.val() != "") { // && input.val() != ""
+                                        return setInvalidTextToShow(validation.error);
+                                    }
+                                    break;
+                            }
+                        }
+                        setNormalHint();
+                        return true;
+                    } catch (e) {
+                        throwInvalidObjectFormat(validation);
+                    }
+                }
+
                 function checkViewValidations() {
                     var validation = null;
                     var validInput = true;
@@ -464,7 +488,7 @@ define(['./module'], function (directives) {
                             switch (validation.key) {
                                 case Keys.secRequired:
                                     if (s.secModel.trim() == '') {
-                                        showValidation(i)
+                                        showValidation(i);
                                         validInput = false;
                                     }
                                     else {
@@ -473,16 +497,16 @@ define(['./module'], function (directives) {
                                     break;
                                 case Keys.secMinLength:
                                     if (s.secModel.length < validation.min && (s.secModel + "").length != 0) {
-                                        showValidation(i)
+                                        showValidation(i);
                                         validInput = false;
                                     }
                                     else {
-                                        hideValidation(i)
+                                        hideValidation(i);
                                     }
                                     break;
                                 case Keys.secMaxLength:
                                     if (s.secModel.length > validation.max) {
-                                        showValidation(i)
+                                        showValidation(i);
                                         validInput = false;
                                     }
                                     else {
@@ -491,20 +515,20 @@ define(['./module'], function (directives) {
                                     break;
                                 case Keys.secPattern:
                                     if (!(new RegExp(validation.regex).test(s.secModel))) { // && (input.val()+"").length != 0
-                                        showValidation(i)
+                                        showValidation(i);
                                         validInput = false;
                                     }
                                     else {
-                                        hideValidation(i)
+                                        hideValidation(i);
                                     }
                                     break;
                                 case Keys.secCompareTo:
-                                    if (s.compareTo.val() != s.secModel && s.compareTo.val() != "") { // && input.val() != ""
-                                        showValidation(i)
+                                    if (ctrl.compareTo.val() != s.secModel && ctrl.compareTo.val() != "") { // && input.val() != ""
+                                        showValidation(i);
                                         validInput = false;
                                     }
                                     else {
-                                        hideValidation(i)
+                                        hideValidation(i);
                                     }
                                     break;
                             }
@@ -527,15 +551,15 @@ define(['./module'], function (directives) {
                 }
 
                 function setNormalHint() {
-                    input.removeClass(invalid)
-                    label.removeClass(invalid)
+                    input.removeClass(invalid);
+                    label.removeClass(invalid);
                     label.text(hint)
                 }
 
                 function setInvalidTextToShow(error) {
                     label.text(error);
                     label.addClass(invalid);
-                    input.addClass(invalid)
+                    input.addClass(invalid);
                     return false;
                 }
 
@@ -564,9 +588,13 @@ define(['./module'], function (directives) {
 
                     if (s.secRequire) {
                         if (a.aDontChange == "true") {
-                            s.secRequire.dontChange = true;
+                            var temp = JSON.parse(s.secRequire);
+                            temp.dontChange = true
+                            ctrl.pushValidation(temp, Keys.secRequired);
                         }
-                        ctrl.pushValidation(JSON.parse(s.secRequire), Keys.secRequired);
+                        else{
+                            ctrl.pushValidation(JSON.parse(s.secRequire), Keys.secRequired);
+                        }
                     }
                     if (s.secMinLength) {
                         ctrl.pushValidation(JSON.parse(s.secMinLength), Keys.secMinLength);
@@ -587,7 +615,9 @@ define(['./module'], function (directives) {
                             s.$watch('secSelectOptions', function (n, o) {
                                 ctrl.fillSelect(n);
                             }, true);
-                            label.css("cursor", "pointer");
+                            label.css({
+                                "cursor": "pointer",
+                            });
                             input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
                             input.find(".select-value").on({
                                 click: function () {
@@ -599,8 +629,8 @@ define(['./module'], function (directives) {
                             input = $("<input type='" + type + "' data-ng-model='secModel' />");
 
                             if (type == Types.checkbox) {
-                                label.text(s.secRequire.info);
-                                label.addClass("checkboxText " + animated);
+                                label.text(JSON.parse(s.secRequire).info);
+                                label.addClass("checkboxText roboto-light" + animated);
                                 div.css({
                                     "padding-top": "1px",
                                     "height": "auto",
@@ -610,6 +640,12 @@ define(['./module'], function (directives) {
                             break;
                     }
 
+                    if(a.aStar == "true" || s.secRequire) {
+                        if (type != Types.checkbox) {
+                            var star = $("<span class='star'>*</span>")
+                            div.append(star);
+                        }
+                    }
                     div.append(input);
                     div.append(label);
 
@@ -618,12 +654,12 @@ define(['./module'], function (directives) {
 
                     if (s.secCompareTo) {
                         s.$watch('sModelCompareTo', function (n, o) {
-                            ctrl.modelCompareToChange(n);
+                            if(input.val() !="") {
+                                ctrl.modelCompareToChange(n);
+                            }
                         }, true);
                         ctrl.pushValidation(JSON.parse(s.secCompareTo), Keys.secCompareTo);
-                        //var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='sModelCompareTo' />")
-                        //var compareTo = $("<input type='" + type + "' data-ng-model='sModelCompareTo' />")
-                        var compareTo = s.sModelCompareTo;
+                        var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='sModelCompareTo' />")
                         $compile(compareTo)(s);
                         ctrl.setCompareTo(compareTo);
                         e.append(compareTo);
