@@ -178,6 +178,7 @@ define(['./module'], function (controllers) {
                     $cookie.remove('lastlogin');
                     $rootScope.userCookie = undefined;
                     $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+
                     productsCartService.loadCartProducts().then(function (cart) {
                         $scope.cart = cart;
                         $scope.checkCart();

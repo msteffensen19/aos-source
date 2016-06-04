@@ -468,12 +468,16 @@ a {
     text-decoration: none;
 }
 
-/*
 .invalid{
     color: #FF454F !important;
     font-weight: 400 !important;
     font-size: 13px !important;
+    margin: 20px auto;
+    display: inline-block;
 }
+
+
+/*
 
 .sec-validate-invalid , .sec-validate-invalid:hover{
     color: #b2b2b2 !important;

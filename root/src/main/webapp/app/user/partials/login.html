@@ -1,10 +1,7 @@
-
-
-
 <div class="PopUp">
     <div>
 
-        <div class="loader" >
+        <div class="loader">
             <div>
                 <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -40,9 +37,9 @@
             </div>
         </div>
 
-        <div class="closePopUpBtn" ></div>
+        <div class="closePopUpBtn"></div>
 
-        <div class="login" ng-controller="userController" >
+        <div class="login" ng-controller="userController">
 
             <img src="../../css/images/logo.png">
 
@@ -51,55 +48,52 @@
                 {{message.text}}
             </label>
 
-            <sec-validate >
+            <sec-form>
 
 
-                <sec-input sec-placeholder="{{'User_name' | translate}}"
-                           sec-required="{{'User_name' | translate}} {{'field_is_required' | translate}}"
-                           sec-min-length="5"
-                           sec-max-length="15"
-                           no-red-star="true"
-                           sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
-                           pattern-error-attr="{{ 'letters_number_symbols_only' | translate }}"
-                           model-attr="loginUser.loginUser"
-                           do-not-show-info="true"
-                           id-attr="smollLoginUsername">
-                </sec-input>
-
-                <!-- sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})" pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}" -->
-                <sec-input sec-placeholder="{{'Password' | translate}}"
-                           sec-required="{{'Password' | translate}} {{'field_is_required' | translate}}"
-                           sec-min-length="4"
-                           no-red-star="true"
-                           input-type-attr="password"
-                           model-attr="loginUser.loginPassword"
-                           do-not-show-info="true"
-                           id-attr="smollLoginPassword">
-                </sec-input>
+                <!--sec-min-length="mainCtrl.getMin(5)"-->
+                <!--sec-max-length="mainCtrl.getMax(15)"-->
+                <!--sec-pattern="mainCtrl.getPattern('Username')"-->
+                <sec-view a-hint="{{'User_name' | translate}}"
+                          a-do-not-show-info="true"
+                          a-star="false"
+                          sec-model="loginUser.loginUser"
+                          sec-require="mainCtrl.getRequire('User_name')">
+                </sec-view>
 
 
-                <sec-input sec-placeholder="{{'Email' | translate}}" ng-if="config.emailAddressInLogin"
-                           sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
-                           sec-email
-                           no-red-star="true"
-                           input-type-attr="email"
-                           model-attr="loginUser.email"
-                           do-not-show-info="true"
-                           id-attr="smollLoginEmail">
-                </sec-input>
+                <!--sec-min-length="mainCtrl.getMin(4)"-->
+                <!--sec-max-length="mainCtrl.getMax(12)"-->
+                <!--sec-pattern="mainCtrl.getPattern('Password')"-->
+                <sec-view a-hint="{{'Password' | translate}}"
+                          a-do-not-show-info="true"
+                          a-star="false"
+                          a-type="password"
+                          sec-model="loginUser.loginPassword"
+                          sec-require="mainCtrl.getRequire('Password')">
+                </sec-view>
+
+                <!--sec-require="mainCtrl.getRequire('Email')"-->
+                <!--sec-pattern="mainCtrl.getPattern('Email')"-->
+                <sec-view a-hint="{{'Email' | translate}}"
+                          a-do-not-show-info="true"
+                          a-star="false"
+                          ng-show="config.emailAddressInLogin"
+                          sec-disable-validation="!config.emailAddressInLogin"
+                          sec-model="loginUser.email">
+                </sec-view>
+
 
                 <div class="left option " style="top: 20px">
-                    <input type="checkbox" ng-model="rememberMe" >
+                    <input type="checkbox" ng-model="rememberMe">
                     <span translate="REMEMBER_ME"></span>
                 </div>
 
-                <button class="sing-in"
-                        a-sec-validate-invalid
-                        sec-submit-attr="signIn(loginUser, rememberMe)">
-                    {{'SIGN_IN' | translate}}
-                </button>
+                <sec-sender class="roboto-medium" a-value="{{'SIGN_IN' | translate}}"
+                            sec-send="signIn(loginUser, rememberMe)"></sec-sender>
 
-            </sec-validate>
+
+            </sec-form>
 
             <label class="forgot-Passwowd" translate="FORGOT_PASSWORD"
                    data-ng-click="forgotPassword()"></label>

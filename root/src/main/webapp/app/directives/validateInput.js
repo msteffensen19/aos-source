@@ -178,6 +178,7 @@ define(['./module'], function (directives) {
                 secMaxLength: '=',
                 secPattern: '=',
                 secSelectOptions: '=',
+                secDisableValidation: '=',
 
                 secCompareTo: '=',
                 sModelCompareTo: '=',
@@ -194,6 +195,8 @@ define(['./module'], function (directives) {
                 var ul;
                 var ctrl;
                 var form;
+                var doNotShowInfo = false;
+                var disableValidation = false;
 
                 this.compareTo;
                 s.validations = [];
@@ -215,6 +218,16 @@ define(['./module'], function (directives) {
 
                 this.setCompareTo = function (_compareTo) {
                     this.compareTo = _compareTo;
+                };
+
+
+                this.setDoNotShowInfo = function (_doNotShowInfo) {
+                    doNotShowInfo = _doNotShowInfo;
+                };
+
+                this.setDisableValidation = function (_disableValidation) {
+                    disableValidation = _disableValidation == undefined ? false : _disableValidation;
+                    this.change(input.val());
                 };
 
 
@@ -240,8 +253,8 @@ define(['./module'], function (directives) {
                             return;
                         }
                         this.compareTo.val(val)
-                        this.change($(input).val());
-                        this.blur($(input).val());
+                        this.change(input.val());
+                        this.blur(input.val());
                     }
                     firstLoader = false;
                 };
@@ -277,6 +290,11 @@ define(['./module'], function (directives) {
                     }
                     var valid;
                     try {
+                        if(disableValidation){
+                            valid = true;
+                            return;
+                        }
+
                         if (isCheckboxDesign()) {
                             valid = checkCheckboxValidations();
                             updateTextCheckboxValidations(valid);
@@ -289,7 +307,7 @@ define(['./module'], function (directives) {
                                     $(label).addClass(animated);
                                 }
                             }
-                            else{
+                            else {
                                 valid = s.validations.length == 0;
                             }
                             ctrl.getSelectlist().fadeOut();
@@ -297,9 +315,12 @@ define(['./module'], function (directives) {
                         }
                         else if (val.trim() == "") {
                             if (s.validations.length > 0) {
-                                if (s.secModel.trim() == '' && input.hasClass(in_focus)) {
+                                if (s.secModel.trim() == '' && input.hasClass(in_focus) && !doNotShowInfo) {
                                     ul.find('li').slideDown()
                                 }
+                            }
+                            if(!input.hasClass(in_focus) && label.hasClass(animated)){
+                                label.removeClass(animated)
                             }
                             valid = getValidation(false);
                         }
@@ -317,8 +338,7 @@ define(['./module'], function (directives) {
 
                 function checkSelectValidations(val) {
 
-                    if(typeof val == "object")
-                    {
+                    if (typeof val == "object") {
                         for (var _property in val) {
                             if (val.hasOwnProperty(_property)) {
                                 return true;
@@ -383,16 +403,20 @@ define(['./module'], function (directives) {
                     ctrl = this;
                     form = _form;
 
-
                     var valid;
-                    if (isCheckboxDesign()) {
-                        valid = checkCheckboxValidations();
+                    if(disableValidation){
+                        valid = true;
                     }
-                    else if (isSelectedDesign()) {
-                        valid = s.validations.length == 0 ? true : checkSelectValidations();
-                    }
-                    else {
-                        valid = checkViewValidations();
+                    else{
+                        if (isCheckboxDesign()) {
+                            valid = checkCheckboxValidations();
+                        }
+                        else if (isSelectedDesign()) {
+                            valid = s.validations.length == 0 ? true : checkSelectValidations();
+                        }
+                        else {
+                            valid = checkViewValidations();
+                        }
                     }
                     form.notifyWatcher(id, valid);
 
@@ -406,7 +430,6 @@ define(['./module'], function (directives) {
                         },
                     });
                 }
-
 
 
                 function updateTextCheckboxValidations(valid) {
@@ -435,7 +458,7 @@ define(['./module'], function (directives) {
                             switch (validation.key) {
                                 case Keys.secRequired:
                                     if (s.secModel.trim() == '') {
-                                        if(changeHint){
+                                        if (changeHint) {
                                             return setInvalidTextToShow(validation.error);
                                         }
                                         return false;
@@ -443,7 +466,7 @@ define(['./module'], function (directives) {
                                     break;
                                 case Keys.secMinLength:
                                     if (s.secModel.length < validation.min && (s.secModel + "").length != 0) {
-                                        if(changeHint){
+                                        if (changeHint) {
                                             return setInvalidTextToShow(validation.error);
                                         }
                                         return false;
@@ -451,7 +474,7 @@ define(['./module'], function (directives) {
                                     break;
                                 case Keys.secMaxLength:
                                     if (s.secModel.length > validation.max) {
-                                        if(changeHint){
+                                        if (changeHint) {
                                             return setInvalidTextToShow(validation.error);
                                         }
                                         return false;
@@ -459,7 +482,7 @@ define(['./module'], function (directives) {
                                     break;
                                 case Keys.secPattern:
                                     if (!(new RegExp(validation.regex).test(s.secModel))) { // && (input.val()+"").length != 0
-                                        if(changeHint){
+                                        if (changeHint) {
                                             return setInvalidTextToShow(validation.error);
                                         }
                                         return false;
@@ -545,7 +568,7 @@ define(['./module'], function (directives) {
                 }
 
                 function showValidation(index) {
-                    if (input.hasClass(in_focus)) {
+                    if (input.hasClass(in_focus) && !doNotShowInfo) {
                         ul.find("li:nth-child(" + (index + 1) + ")").slideDown();
                     }
                 }
@@ -592,7 +615,7 @@ define(['./module'], function (directives) {
                             temp.dontChange = true
                             ctrl.pushValidation(temp, Keys.secRequired);
                         }
-                        else{
+                        else {
                             ctrl.pushValidation(JSON.parse(s.secRequire), Keys.secRequired);
                         }
                     }
@@ -605,6 +628,13 @@ define(['./module'], function (directives) {
                     if (s.secPattern) {
                         ctrl.pushValidation(JSON.parse(s.secPattern), Keys.secPattern);
                     }
+                    if (a.aDoNotShowInfo == 'true') {
+                        ctrl.setDoNotShowInfo(true);
+                    }
+
+                    s.$watch('secDisableValidation ', function (n, o) {
+                        ctrl.setDisableValidation(n);
+                    }, true);
 
                     var div = $("<div class='inputContainer'></div>");
                     var type = a.aType || "text"
@@ -640,8 +670,8 @@ define(['./module'], function (directives) {
                             break;
                     }
 
-                    if(a.aStar == "true" || s.secRequire) {
-                        if (type != Types.checkbox) {
+                    if (s.secRequire) {
+                        if (type != Types.checkbox && a.aStar != "false") {
                             var star = $("<span class='star'>*</span>")
                             div.append(star);
                         }
@@ -654,7 +684,7 @@ define(['./module'], function (directives) {
 
                     if (s.secCompareTo) {
                         s.$watch('sModelCompareTo', function (n, o) {
-                            if(input.val() !="") {
+                            if (input.val() != "") {
                                 ctrl.modelCompareToChange(n);
                             }
                         }, true);

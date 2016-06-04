@@ -3,38 +3,39 @@
 <div class="noUserSection">
     <label class="roboto-medium" translate="Already_have_an_account" ></label>
 
-    <sec-validate >
+    <sec-form>
 
-        <sec-input
-                sec-required="{{'User_name' | translate}} {{'field is required' | translate}}"
-                sec-placeholder="{{'User_name' | translate}}"
-                sec-min-length="5"
-                sec-max-length="15"
-                sec-pattern="^[A-Za-z0-9_.-]{0,999}$"
-                pattern-error-attr="{{ 'letters_number_symbols_only' | translate }}"
-                model-attr="orderPaymenLogin.loginUser"
-                id-attr="orderPaymenLogin_username" >
-        </sec-input>
+
+        <sec-view a-hint="{{'User_name' | translate}}"
+                  a-star="false"
+                  sec-model="orderPaymenLogin.loginUser"
+                  sec-require="mainCtrl.getRequire('User_name')"
+                  sec-min-length="mainCtrl.getMin(5)"
+                  sec-max-length="mainCtrl.getMax(15)"
+                  sec-pattern="mainCtrl.getPattern('Username')">
+        </sec-view>
 
         <!--sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})" pattern-error-attr="Use_up_to_12_characters_Include_at_least_one_letter_and_one_number"-->
-        <sec-input
-                sec-required="{{'Password' | translate}} {{'field is required' | translate}}"
-                sec-placeholder="{{'Password' | translate}}"
-                sec-min-length="4"
-                input-type-attr="password"
-                model-attr="orderPaymenLogin.loginPassword"
-                id-attr="orderPaymenLogin_password">
-        </sec-input>
 
-        <sec-input
-                ng-if="config.emailAddressInLogin"
-                sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
-                sec-email
-                sec-placeholder="{{'Email' | translate}}"
-                input-type-attr="email"
-                model-attr="orderPaymenLogin.email"
-                id-attr="orderPaymenLogin_email">
-        </sec-input>
+        <sec-view a-hint="{{'Password' | translate}}"
+                  a-star="false"
+                  a-type="password"
+                  sec-model="orderPaymenLogin.loginPassword"
+                  sec-require="mainCtrl.getRequire('Password')"
+                  sec-min-length="mainCtrl.getMin(4)"
+                  sec-max-length="mainCtrl.getMax(12)"
+                  sec-pattern="mainCtrl.getPattern('Password')">
+        </sec-view>
+
+
+        <sec-view a-hint="{{'Email' | translate}}"
+                  a-star="false"
+                  ng-show="config.emailAddressInLogin"
+                  sec-model="orderPaymenLogin.email"
+                  sec-disable-validation="!config.emailAddressInLogin"
+                  sec-require="mainCtrl.getRequire('Email')"
+                  sec-pattern="mainCtrl.getPattern('Email')">
+        </sec-view>
 
         <label translate="Forgot_your_password"
                class="roboto-regular"
@@ -43,18 +44,20 @@
 
         <br />
 
+        <sec-sender class="roboto-medium" a-value="{{'LOGIN' | translate}}"
+                    sec-send="orderPaymenLogin_signIn()"></sec-sender>
 
-        <button sec-submit-attr="orderPaymenLogin_signIn()"
-        class="a-button roboto-medium"
-        a-sec-validate-invalid >
-            {{'LOGIN' | translate}}
-        </button>
+        <!--<button sec-submit-attr="orderPaymenLogin_signIn()"-->
+        <!--class="a-button roboto-medium"-->
+        <!--a-sec-validate-invalid >-->
+            <!--{{'LOGIN' | translate}}-->
+        <!--</button>-->
         <br />
 
 
         <label ng-class="{ invalid : rsMessage._class == 'invalid' }" > {{ rsMessage.text }}</label>
 
-    </sec-validate>
+    </sec-form>
 </div>
 <div id="newClient" class="noUserSection .noUserLogin">
     <div class="cover">

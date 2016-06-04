@@ -70,19 +70,9 @@
     margin-top: 33px;
 }
 
-#orderPayment .noUserSection .a-button{
-    display: inline-block;
-    box-sizing: border-box;
+#orderPayment .sec-sender .sec-sender-a {
     width: 138px;
-    border-width: 2px;
-    text-align: center;
     margin-top: 16px;
-}
-
-#orderPayment #newClient > a.a-button{
-    position: absolute;
-    bottom: 0;
-    margin: 0 27px;
 }
 
 #orderPayment #newClient p {
