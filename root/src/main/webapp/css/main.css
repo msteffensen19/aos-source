@@ -400,14 +400,15 @@ footer .splitter{
     background-color: #ededed;
     padding: 7px;
     font-size: 18px;
-    border-bottom: none;
+    border: none;
     color: black;
+
 }
 
 #mobileSearch .img {
     position: absolute;
-    top: 11px;
-    right: 10px;
+    top: 7px;
+    right: 8px;
     cursor: pointer;
 }
 

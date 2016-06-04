@@ -86,6 +86,7 @@
     height: 31px;
     border-bottom: 1px solid #CECCCC;
     cursor: pointer;
+    font-size: 14px !important;
 }
 
 .sec-view div label.select-value:before {

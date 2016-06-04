@@ -167,7 +167,7 @@ function wellcome() {
 
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
         $(".PopUp").fadeOut(100);
-        $("body").css("overflow", "scroll")
+        $("body").css("overflow-y", "scroll")
         $(".login").css("opacity", "1");
     });
 }

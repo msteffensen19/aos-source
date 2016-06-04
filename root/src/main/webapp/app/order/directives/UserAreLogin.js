@@ -15,8 +15,8 @@ define(['./module'], function (directives) {
                 pre: function(s){
                     s.userDetailsEditMode = false;
                     s.invalidUser = true;
-                    s.validSecValidate = function(invalid){
-                        s.invalidUser = s.userDetailsEditMode = invalid;
+                    s.validSecValidate = function(valid){
+                        s.invalidUser = s.userDetailsEditMode = !valid;
                     }
                 },
                 post: function(s){

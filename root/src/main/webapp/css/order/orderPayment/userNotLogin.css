@@ -62,7 +62,7 @@
 }
 
 #orderPayment .noUserSection .cover div.noEmail{
-    height: 156px;
+    height: 170px;
 }
 
 #orderPayment .noUserSection .cover a{
@@ -163,6 +163,7 @@
 
     #orderPayment  > div > h5 {
         padding-bottom: 36px;
+        padding-top: 26px;
     }
 }
 

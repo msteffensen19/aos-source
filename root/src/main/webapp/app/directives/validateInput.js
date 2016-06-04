@@ -15,7 +15,9 @@ define(['./module'], function (directives) {
         return {
             restrict: 'E',
             require: 'secForm',
-            scope: {},
+            scope: {
+                secGetFormValidationWhenReady : "&",
+            },
             controller: [function () {
 
                 this.models = [];
@@ -38,12 +40,26 @@ define(['./module'], function (directives) {
                     }
                 };
 
+                this.formIsValid = function(){
+                    for (var i = 0; i < this.models.length; i++) {
+                        var model = this.models[i];
+                        if (model.valid == false){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
                 this.notifyWatcher = function (id, valid) {
                     this.models.push({
                         id: id,
                         valid: valid,
                     });
                 };
+
+                this.getFormValidationWhenReady = function(getFormValidationWhenReady){
+                    getFormValidationWhenReady(this.formIsValid())
+                }
 
             }],
             link: {
@@ -52,6 +68,9 @@ define(['./module'], function (directives) {
                 },
                 post: function (s, e, a, ctrl) {
                     ctrl.updateState(-1, null);
+                    if(s.secGetFormValidationWhenReady){
+                        ctrl.getFormValidationWhenReady(s.secGetFormValidationWhenReady);
+                    }
                 }
             }
         }
@@ -128,6 +147,7 @@ define(['./module'], function (directives) {
             "}\n" +
             "\nYou object is: " + JSON.stringify(obj) + "\n\n\n\n";
 
+            //get-form-validation-when-ready
             //a-hint: pass this text has a text ,
 
             //"   a-type: 'add this param if you wont to display a different control:', \n" +
@@ -260,13 +280,17 @@ define(['./module'], function (directives) {
                 };
 
                 this.fillSelect = function (arr) {
-                    var selectList = ctrl.getSelectlist();
-                    selectList.empty();
-                    for (var i = 0; i < arr.length; i++) {
-                        var item = arr[i];
-                        var span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'>" + item.name + "</span>");
-                        $compile(span)(s);
-                        selectList.append(span);
+                    if (arr) {
+                        var selectList = ctrl.getSelectlist();
+                        selectList.empty();
+                        for (var i = 0; i < arr.length; i++) {
+                            var item = arr[i];
+                            var span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
+                                " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseleave='selectItemMouseOut()'>"
+                                + item.name + "</span>");
+                            $compile(span)(s);
+                            selectList.append(span);
+                        }
                     }
                 };
 
@@ -281,7 +305,24 @@ define(['./module'], function (directives) {
                     else {
                         s.secModel = validation;
                     }
-                }
+                };
+
+                s.selectItemMouseIn = function () {
+                    if (_____selectItemMouseOut) {
+                        $timeout.cancel(_____selectItemMouseOut);
+                    }
+                };
+
+                var _____selectItemMouseOut;
+                s.selectItemMouseOut = function () {
+                    var selectList = ctrl.getSelectlist();
+                    if (selectList.css("display") != "none") {
+                        _____selectItemMouseOut = $timeout(function () {
+                            ctrl.getSelectlist().fadeOut();
+                        }, 1200);
+                    }
+                };
+
 
                 this.change = function (val) {
 
@@ -290,7 +331,7 @@ define(['./module'], function (directives) {
                     }
                     var valid;
                     try {
-                        if(disableValidation){
+                        if (disableValidation) {
                             valid = true;
                             return;
                         }
@@ -319,7 +360,7 @@ define(['./module'], function (directives) {
                                     ul.find('li').slideDown()
                                 }
                             }
-                            if(!input.hasClass(in_focus) && label.hasClass(animated)){
+                            if (!input.hasClass(in_focus) && label.hasClass(animated)) {
                                 label.removeClass(animated)
                             }
                             valid = getValidation(false);
@@ -404,10 +445,10 @@ define(['./module'], function (directives) {
                     form = _form;
 
                     var valid;
-                    if(disableValidation){
+                    if (disableValidation) {
                         valid = true;
                     }
-                    else{
+                    else {
                         if (isCheckboxDesign()) {
                             valid = checkCheckboxValidations();
                         }
