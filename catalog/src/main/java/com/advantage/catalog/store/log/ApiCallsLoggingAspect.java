@@ -34,13 +34,15 @@ public class ApiCallsLoggingAspect {
             String builder = joinPoint.getSignature().getName() +
                     " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
-            logger.info(builder);
+            //TODO-EVG log test
+            logger.info("EVG AOP LOG:" + builder);
         }
     }
 
     private void logApiRequest(HttpServletRequest request) {
         Logger logger = getLoggerFactory("HttpRequest");
-        logger.info(getLoggingRequest(request));
+        //TODO-EVG log test
+        logger.info("EVG AOP LOG:" + getLoggingRequest(request));
     }
 
     private Logger getLoggerFactory(String loggerName) {

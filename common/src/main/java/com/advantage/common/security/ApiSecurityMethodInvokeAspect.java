@@ -1,12 +1,11 @@
 package com.advantage.common.security;
 
-import com.advantage.common.enums.AccountType;
 import com.advantage.common.dto.ErrorResponseDto;
+import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.authorization.AuthorizationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @Aspect
 public class ApiSecurityMethodInvokeAspect {
-
-    public ParameterNameDiscoverer discoverer;
 
     @Around("execution(* *(..)) && @annotation(com.advantage.common.security.AuthorizeAsAdmin)")
     public ResponseEntity authorizeAsAdmin(ProceedingJoinPoint joinPoint) throws Throwable {

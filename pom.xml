@@ -137,9 +137,10 @@
             <!--shared resources-->
             <resource>
                 <directory>${project.build.directory}/generated-resources</directory>
-                <excludes>
-                    <exclude>*.properties</exclude>
-                </excludes>
+                <includes>
+                    <include>log4j.properties</include>
+                    <include>ver.txt</include>
+                </includes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
@@ -149,6 +150,9 @@
                 <includes>
                     <include>*.properties</include>
                 </includes>
+                <excludes>
+                    <exclude>log4j.properties</exclude>
+                </excludes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>

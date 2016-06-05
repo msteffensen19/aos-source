@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,11 +51,8 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
-//    private static final Logger log = LoggerFactory.getLogger(this.);
+    private static Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
-//    protected CatalogController(){
-//        logger= LoggerFactory.
-//    }
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");

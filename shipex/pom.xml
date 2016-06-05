@@ -104,6 +104,20 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <includes>
+                    <include>log4j.properties</include>
+                    <include>ver.txt</include>
+                </includes>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>

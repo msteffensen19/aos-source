@@ -2,6 +2,8 @@ package com.advantage.catalog.store.config;
 
 import com.advantage.common.Constants;
 import com.advantage.common.security.SecurityTools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +27,11 @@ public class SwaggerConfiguration {
     @Autowired
     Environment env;
 
+    protected Logger logger = LoggerFactory.getLogger("SwaggerConfiguration");
+
     @Bean
     public Docket api() {
+        logger.info("EVG Swagger Configuration");
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -39,7 +44,6 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         String apiInfoDescription = null;
-
         try {
             apiInfoDescription = String.format("Git Branch = %s<br/>Last commit revision = %s<br/>Last build time = %s<br/>Build on machine %s",
                     env.getProperty("mvn.scmBranch"), env.getProperty("mvn.commit.revision"), env.getProperty("mvn.buildTime"), env.getProperty("mvn.buildComputerName"));
