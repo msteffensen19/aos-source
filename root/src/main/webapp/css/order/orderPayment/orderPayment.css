@@ -3,9 +3,7 @@
     max-width: 1180px;
     font-size: 0;
     margin:100px auto;
-    padding: 0;
-    padding-top:65px;
-    padding-bottom:0px
+    padding:65px 0 100px 0;
 }
 
 #orderPayment > div{
@@ -180,10 +178,13 @@
 @media screen and (max-width: 980px){
 
     #orderPayment .blueLink{
-        padding: 30px 0;
+        /*padding: 30px 0;*/
         display: block;
     }
 
+    #orderPayment .marginBottom{
+        margin-bottom: 90px;
+    }
 
     #orderPayment > div:nth-child(1)
     {
@@ -225,12 +226,14 @@
 @media screen and (max-width: 768px) {
 
     #orderPayment{
-        margin: 0px auto;
+        margin: 70px auto;
         padding-top: 0px;
     }
+
     #orderPayment > #userCart{
         margin-top: 20px;
     }
+
     #orderPayment .noUserSection .cover{
         margin: 16px auto;
     }

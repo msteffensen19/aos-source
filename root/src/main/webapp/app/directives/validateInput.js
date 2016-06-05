@@ -9,41 +9,49 @@
 
 define(['./module'], function (directives) {
     'use strict';
-    directives.directive('secForm', [function () {
+    directives.directive('secForm', ["$timeout", function ($timeout) {
 
         var invalid = "invalid";
         return {
             restrict: 'E',
             require: 'secForm',
             scope: {
-                secGetFormValidationWhenReady : "&",
+                secGetFormValidationWhenReady: "&",
             },
+            controllerAs: "secFormCtrl",
             controller: [function () {
 
+                var ctrl;
+                var toLateToCheck = false;
+                this.getFormValidationWhenReady;
                 this.models = [];
                 this.senders = [];
-                this.setCtrl = function (ctrl) {
+                this.setButtonCtrl = function (ctrl) {
                     this.senders.push(ctrl);
                 }
 
-                this.updateState = function (id, valid) {
+                this.updateState = function (id, valid, owner) {
                     var validForm = true;
                     for (var i = 0; i < this.models.length; i++) {
                         var model = this.models[i];
                         if (model.id == id) {
                             model.valid = valid;
+                            model.owner = owner;
                         }
                         validForm = !validForm ? false : model.valid;
                     }
                     for (var i = 0; i < this.senders.length; i++) {
                         this.senders[i].formIsValid(validForm);
                     }
+                    if (!toLateToCheck && this.getFormValidationWhenReady) {
+                        this.getFormValidationWhenReady({valid: validForm})
+                    }
                 };
 
-                this.formIsValid = function(){
+                this.formIsValid = function () {
                     for (var i = 0; i < this.models.length; i++) {
                         var model = this.models[i];
-                        if (model.valid == false){
+                        if (model.valid == false) {
                             return false;
                         }
                     }
@@ -57,19 +65,31 @@ define(['./module'], function (directives) {
                     });
                 };
 
-                this.getFormValidationWhenReady = function(getFormValidationWhenReady){
-                    getFormValidationWhenReady(this.formIsValid())
+                this.setFormValidationWhenReady = function (_getFormValidationWhenReady) {
+                    if (_getFormValidationWhenReady) {
+                        this.getFormValidationWhenReady = _getFormValidationWhenReady
+                    }
+                    //getFormValidationWhenReady({valid: ctrl.formIsValid()})
+                };
+
+                this.setCtrl = function (_ctrl) {
+                    ctrl = _ctrl;
+                }
+
+                this.setToLateToCheck = function () {
+                    toLateToCheck = true;
                 }
 
             }],
             link: {
-                pre: function (s, e) {
+                pre: function (s, e, a, ctrl) {
                     e.addClass("secForm");
+                    ctrl.setCtrl(ctrl);
                 },
                 post: function (s, e, a, ctrl) {
-                    ctrl.updateState(-1, null);
-                    if(s.secGetFormValidationWhenReady){
-                        ctrl.getFormValidationWhenReady(s.secGetFormValidationWhenReady);
+                    ctrl.updateState(-1, null, null);
+                    if (s.secGetFormValidationWhenReady) {
+                        ctrl.setFormValidationWhenReady(s.secGetFormValidationWhenReady);
                     }
                 }
             }
@@ -121,7 +141,7 @@ define(['./module'], function (directives) {
                     e.append(button);
 
                     ctrls[0].setButton(button);
-                    ctrls[1].setCtrl(ctrls[0]);
+                    ctrls[1].setButtonCtrl(ctrls[0]);
                 },
                 post: function (s, e, a, ctrl) {
                 }
@@ -143,7 +163,7 @@ define(['./module'], function (directives) {
             "   min: 'add this param if you use secMinLength directive', \n" +
             "   max: 'add this param if you use secMaxLength directive', \n" +
             "   regex: 'add this param if you use secPattern directive', \n" +
-            "   model: 'add this param if you use secCompareTo directive, model have to pass sModelCompareTo model to compare', \n" +
+            "   model: 'add this param if you use secCompareTo directive, model have to pass secModelCompareTo model to compare', \n" +
             "}\n" +
             "\nYou object is: " + JSON.stringify(obj) + "\n\n\n\n";
 
@@ -164,7 +184,7 @@ define(['./module'], function (directives) {
             //secPattern: '=',
             //
             //secCompareTo: '=',
-            //sModelCompareTo: '=',
+            //secModelCompareTo: '=',
             //
             //sec-send: '&',
         }
@@ -199,9 +219,10 @@ define(['./module'], function (directives) {
                 secPattern: '=',
                 secSelectOptions: '=',
                 secDisableValidation: '=',
+                secCardNumber: "=",
 
                 secCompareTo: '=',
-                sModelCompareTo: '=',
+                secModelCompareTo: '=',
 
                 secIsValid: '&',
             },
@@ -217,6 +238,7 @@ define(['./module'], function (directives) {
                 var form;
                 var doNotShowInfo = false;
                 var disableValidation = false;
+                var isCardNumber = false;
 
                 this.compareTo;
                 s.validations = [];
@@ -244,6 +266,11 @@ define(['./module'], function (directives) {
                 this.setDoNotShowInfo = function (_doNotShowInfo) {
                     doNotShowInfo = _doNotShowInfo;
                 };
+
+                this.setCardNumberFourDigits = function (_CardNumberFourDigits) {
+                    isCardNumber = _CardNumberFourDigits;
+                };
+
 
                 this.setDisableValidation = function (_disableValidation) {
                     disableValidation = _disableValidation == undefined ? false : _disableValidation;
@@ -279,15 +306,23 @@ define(['./module'], function (directives) {
                     firstLoader = false;
                 };
 
-                this.fillSelect = function (arr) {
+                this.fillSelect = function (arr, name) {
                     if (arr) {
                         var selectList = ctrl.getSelectlist();
                         selectList.empty();
                         for (var i = 0; i < arr.length; i++) {
                             var item = arr[i];
-                            var span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
-                                " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseleave='selectItemMouseOut()'>"
-                                + item.name + "</span>");
+                            var span;
+                            if(name){
+                                span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
+                                    " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseleave='selectItemMouseOut()'>"
+                                    + item[name] + "</span>");
+                            }
+                            else{
+                                span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
+                                    " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseout='selectItemMouseOut()'>"
+                                    + item + "</span>");
+                            }
                             $compile(span)(s);
                             selectList.append(span);
                         }
@@ -303,7 +338,12 @@ define(['./module'], function (directives) {
                         }, 200)
                     }
                     else {
-                        s.secModel = validation;
+                        if(s.secModel == validation){
+                            ctrl.getSelectlist().fadeOut();
+                        }
+                        else{
+                            s.secModel = validation;
+                        }
                     }
                 };
 
@@ -329,6 +369,10 @@ define(['./module'], function (directives) {
                     if (val == undefined) {
                         return;
                     }
+                    if (s.secModel != undefined) {
+                        val = s.secModel;
+                    }
+
                     var valid;
                     try {
                         if (disableValidation) {
@@ -360,20 +404,26 @@ define(['./module'], function (directives) {
                                     ul.find('li').slideDown()
                                 }
                             }
-                            if (!input.hasClass(in_focus) && label.hasClass(animated)) {
+                            if (!input.hasClass(in_focus) && label.hasClass(animated) && s.secModel == "") {
                                 label.removeClass(animated)
+                                if (isCardNumber) {
+                                    removeCardNumberFourDigits()
+                                }
                             }
                             valid = getValidation(false);
                         }
                         else {
                             if (!$(label).hasClass(animated)) {
                                 $(label).addClass(animated);
+                                if (isCardNumber) {
+                                    addCardNumberFourDigits()
+                                }
                             }
                             valid = checkViewValidations();
                         }
 
                     } finally {
-                        form.updateState(id, valid);
+                        form.updateState(id, valid, hint);
                     }
                 };
 
@@ -396,6 +446,9 @@ define(['./module'], function (directives) {
                     }
                     if (val.trim() == "") {
                         label.removeClass(animated);
+                        if (isCardNumber) {
+                            removeCardNumberFourDigits()
+                        }
                     }
                     var valid = getValidation(true);
                     if (isFieldValid) {
@@ -409,10 +462,22 @@ define(['./module'], function (directives) {
                 this.focus = function () {
                     label.addClass(animated);
                     input.addClass(in_focus);
+                    if (isCardNumber) {
+                        addCardNumberFourDigits()
+                    }
                     this.change(s.secModel);
                     setNormalHint();
                 };
 
+                function addCardNumberFourDigits() {
+                    input.parent().addClass('card-number-four-digits');
+                    input.addClass('card-number-four-digits');
+                }
+
+                function removeCardNumberFourDigits() {
+                    input.parent().removeClass('card-number-four-digits');
+                    input.removeClass('card-number-four-digits');
+                }
 
                 this.getSelectlist = function () {
                     return input.find(".selectList");
@@ -420,6 +485,8 @@ define(['./module'], function (directives) {
 
 
                 s.labelClicked = function () {
+                    form.setToLateToCheck();
+
                     if (isSelectedDesign()) {
                         ctrl.getSelectlist().fadeToggle();
                         return;
@@ -433,6 +500,17 @@ define(['./module'], function (directives) {
                         ctrl.focus();
                     }
                 };
+
+
+                s.labelOut = function () {
+                    _____selectItemMouseOut = $timeout(function () {
+                        var list = ctrl.getSelectlist()
+                        if(list.css("display") != "none"){
+                            list.fadeOut();
+                        }
+                    }, 3000);
+                };
+
 
                 this.setItems = function (_input, _label, _ul, _form, _id) {
 
@@ -467,6 +545,7 @@ define(['./module'], function (directives) {
                             ctrl.blur(s.secModel);
                         },
                         focus: function () {
+                            form.setToLateToCheck();
                             ctrl.focus();
                         },
                     });
@@ -534,6 +613,16 @@ define(['./module'], function (directives) {
                                         return setInvalidTextToShow(validation.error);
                                     }
                                     break;
+                                case Keys.secCardNumber:
+                                    //if (!(s.secModel.length == validation.exactly - 4 && (input.val() - 0) == input.val() &&
+                                    //input.val().indexOf('-') == -1 &&  input.val().indexOf('+') == -1)) {
+                                    if (!(new RegExp(validation.regex).test(s.secModel) && s.secModel.length == validation.exactly - 4)) {
+                                        if (changeHint) {
+                                            return setInvalidTextToShow(validation.error);
+                                        }
+                                        return false;
+                                    }
+                                    break;
                             }
                         }
                         setNormalHint();
@@ -595,6 +684,15 @@ define(['./module'], function (directives) {
                                         hideValidation(i);
                                     }
                                     break;
+                                case Keys.secCardNumber:
+                                    if (!(new RegExp(validation.regex).test(s.secModel) && s.secModel.length == validation.exactly - 4)) {
+                                        showValidation(i);
+                                        validInput = false;
+                                    }
+                                    else {
+                                        hideValidation(i);
+                                    }
+                                    break;
                             }
                         }
                         return validInput;
@@ -631,11 +729,9 @@ define(['./module'], function (directives) {
                     return input.find("." + select_value).length > 0;
                 }
 
-
                 function isCheckboxDesign() {
                     return input.attr("type") == Types.checkbox;
                 }
-
 
             }],
 
@@ -672,6 +768,10 @@ define(['./module'], function (directives) {
                     if (a.aDoNotShowInfo == 'true') {
                         ctrl.setDoNotShowInfo(true);
                     }
+                    if (s.secCardNumber) {
+                        ctrl.setCardNumberFourDigits(true);
+                        ctrl.pushValidation(JSON.parse(s.secCardNumber), Keys.secCardNumber);
+                    }
 
                     s.$watch('secDisableValidation ', function (n, o) {
                         ctrl.setDisableValidation(n);
@@ -680,16 +780,25 @@ define(['./module'], function (directives) {
                     var div = $("<div class='inputContainer'></div>");
                     var type = a.aType || "text"
                     var input;
-                    var label = $("<label data-ng-click='labelClicked()'>" + a.aHint + "</label>");
+                    var label = $("<label data-ng-click='labelClicked()' data-ng-mouseout='labelOut()'>" + a.aHint + "</label>");
+                    var name;
+                    if(a.aShow){
+                        name = a.aShow;
+                    }
                     switch (type) {
                         case Types.select:
                             s.$watch('secSelectOptions', function (n, o) {
-                                ctrl.fillSelect(n);
+                                ctrl.fillSelect(n, name);
                             }, true);
                             label.css({
                                 "cursor": "pointer",
                             });
-                            input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
+                            if(a.aShow){
+                                input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
+                            }
+                            else{
+                                input = $("<div><label class='select-value' > {{secModel}}</label><div class='selectList'></div></div>");
+                            }
                             input.find(".select-value").on({
                                 click: function () {
                                     ctrl.getSelectlist().fadeToggle(150);
@@ -697,8 +806,8 @@ define(['./module'], function (directives) {
                             });
                             break;
                         default:
-                            input = $("<input type='" + type + "' data-ng-model='secModel' />");
 
+                            input = $("<input type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
                                 label.addClass("checkboxText roboto-light" + animated);
@@ -724,13 +833,13 @@ define(['./module'], function (directives) {
                     e.append(div);
 
                     if (s.secCompareTo) {
-                        s.$watch('sModelCompareTo', function (n, o) {
+                        s.$watch('secModelCompareTo', function (n, o) {
                             if (input.val() != "") {
                                 ctrl.modelCompareToChange(n);
                             }
                         }, true);
                         ctrl.pushValidation(JSON.parse(s.secCompareTo), Keys.secCompareTo);
-                        var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='sModelCompareTo' />")
+                        var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='secModelCompareTo' />")
                         $compile(compareTo)(s);
                         ctrl.setCompareTo(compareTo);
                         e.append(compareTo);
@@ -751,506 +860,12 @@ define(['./module'], function (directives) {
 
 });
 
+
 //
 //
 ////define(['./module'], function (directives) {
 ////    'use strict';
 ////    directives
-////        .directive('secSubmitAttr', function () {
-////            return {
-////                restrict: 'A',
-////                scope: {
-////                    submit: '&secSubmitAttr'
-////                },
-////                require: '^secValidate',
-////                link: function (s, e, a, ctrl) {
-////                    e.bind('click', function () {
-////                        if (!ctrl.getInvalidItems() && !e.hasClass("sec-validate-invalid")) {
-////                            ctrl.initializeStartingValues()
-////                            s.submit();
-////                        }
-////                    });
-////                }
-////            }
-////        })
-////        .directive('aSecValidateInvalid', function ($rootScope, $timeout) {
-////            return {
-////                restrict: 'A',
-////                require: ['^secValidate'],
-////                priority: 0,
-////                link: function (s, e, a, ctrls) {
-////                    ctrls[0].setElement(e)
-////                }
-////            }
-////        })
-////        .directive('secValidate', ['$templateCache', '$timeout', function ($templateCache, $timeout) {
-////            return {
-////                restrict: 'E',
-////                require: 'secValidate',
-////                scope: {
-////                    invokeWhenReady: '&'
-////                },
-////                controller: ['$scope', '$rootScope', function (s, $rootScope) {
-////
-////                    this.addId = function (id) {
-////                        this.id = id;
-////                    }
-////
-////                    s.startingValues = [];
-////                    this.setStartingValue = function (id, value) {
-////                        s.startingValues["secInput_" + id] = {
-////                            startingValue: value,
-////                            changed: false,
-////                        };
-////                    }
-////
-////                    this.initializeStartingValues = function () {
-////                        for (var key in s.startingValues) {
-////                            s.startingValues[key] = {
-////                                startingValue: $("#" + key).val(),
-////                                changed: false,
-////                            };
-////                        }
-////                        return false;
-////                    }
-////
-////                    this.getInputsWasChangedBoolean = function () {
-////                        for (var key in s.startingValues) {
-////                            if (s.startingValues[key].changed) {
-////                                return true;
-////                            }
-////                        }
-////                        return false;
-////                    }
-////
-////                    this.updateStartingValueChanged = function (input) {
-////                        var obj = s.startingValues[input.attr("id")];
-////                        if (obj) {
-////                            s.startingValues[input.attr("id")].changed = obj.startingValue != input.val();
-////                        }
-////                    }
-////
-////                    this.invokeOutFunctionWhenSecValidateReady = function (outFunction) {
-////                        var invalid = this.getInvalidItems();
-////                        outFunction({invalid: invalid});
-////                    }
-////
-////                    var element = null;
-////                    this.setElement = function (e) {
-////                        element = e;
-////                    }
-////
-////                    s.invaliditemslengthUpdate = function (n) {
-////                        if (n != undefined) {
-////                            if (n > 0 /*|| !args.inputsWasChanged*/) {
-////                                element.addClass("sec-validate-invalid");
-////                            }
-////                            else {
-////                                element.removeClass("sec-validate-invalid");
-////                            }
-////                        }
-////                    };
-////                    s.invalidItems = [];
-////
-////                    this.getInvalidItems = function () {
-////                        if (s.invaliditemslengthUpdate != null) {
-////                            s.invaliditemslengthUpdate(s.invalidItems.length);
-////                        }
-////                        return s.invalidItems.length > 0;
-////                    }
-////
-////                    this.getInvalidItemsCount = function () {
-////                        return s.invalidItems.length;
-////                    }
-////
-////                    this.addInvalidField = function (invalidInput) {
-////                        if (searchIndexOfInput(invalidInput) == -1) {
-////                            s.invalidItems.push(invalidInput);
-////                        }
-////                    }
-////
-////                    this.shiftInvalidField = function (invalidInput) {
-////
-////                        var find = searchIndexOfInput(invalidInput);
-////                        if (find != -1) {
-////                            s.invalidItems.splice(find, 1);
-////                        }
-////                    }
-////
-////                    function searchIndexOfInput(invalidInput) {
-////
-////                        for (var i = 0; i < s.invalidItems.length; i++) {
-////                            if (s.invalidItems[i] == invalidInput) {
-////                                return i;
-////                            }
-////                        }
-////                        return -1;
-////                    }
-////
-////
-////                }],
-////                link: function (s, e, a, ctrl) {
-////                    e.addClass('sec-validate');
-////                    if (a.idAttr) {
-////                        e.attr('id', a.idAttr);
-////                        ctrl.addId(a.idAttr);
-////                    }
-////
-////                    if (s.invokeWhenReady) {
-////                        $timeout(function () {
-////                            ctrl.invokeOutFunctionWhenSecValidateReady(s.invokeWhenReady);
-////                        }, 1000);
-////                    }
-////
-////                }
-////            }
-////        }])
-////
-////        .controller("secInputCtrl", ['$scope', function (s) {
-////
-////            var labelStartPossition;
-////            var labelStartfont;
-////            var labelStartColor;
-////
-////            var ctrlFather;
-////
-////            s.warnings = [];
-////            s.noRedStar = false;
-////            s.id;
-////            s.textToShow = {
-////                text: "",
-////                valid: true
-////            };
-////
-////            //this.isBlockingMessage = function(){
-////            //    return s.doNotShowInfo;
-////            //}
-////
-////            s.inputKeyup = function (id) {
-////                var input = $('#secInput_' + id);
-////                ctrlFather.updateStartingValueChanged(input);
-////                var invalid = checkValidInput(s.warnings, input, 'keyup');
-////                if (invalid) {
-////                    ctrlFather.addInvalidField(id);
-////                }
-////                else {
-////                    ctrlFather.shiftInvalidField(id);
-////                }
-////                if (s.invaliditemslengthUpdate + "" != "undefined") {
-////                    s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
-////                }
-////            }
-////
-////            this.inputFocus = function () {
-////                s.inputFocus(s.id);
-////            }
-////
-////            s.inputFocus = function (id, speed) {
-////
-////                var input = $('#secInput_' + id);
-////                s.textToShow = {
-////                    text: s.placeHolder,
-////                    valid: true,
-////                };
-////
-////                checkValidInput(s.warnings, input, 'keyup');
-////                var lab = input.prev();
-////                labelStartPossition = labelStartPossition || lab.css('top');
-////                labelStartfont = labelStartfont || lab.css('font-size');
-////                labelStartColor = labelStartColor || lab.css('color');
-////
-////                var animStyle = {
-////                    'top': '-9px',
-////                    'font-size': '12px',
-////                    'color': '#828282'
-////                };
-////                if (speed == 0) {
-////                    input.prev().css(animStyle);
-////                }
-////                else {
-////                    input.prev().animate(animStyle, speed || 300, 'linear');
-////                }
-////                input.siblings(".validate-info").show(200);
-////            }
-////
-////            s.inputBlur = function (id, justTestThisField_do_not_active_her_Field) {
-////
-////                var input = $('#secInput_' + id);
-////                if (input.val() == undefined) {
-////                    return;
-////                }
-////
-////                if (input.val().length == 0) {
-////                    input.prev().animate({
-////                        'top': labelStartPossition,
-////                        'font-size': labelStartfont,
-////                        'color': labelStartColor
-////                    }, 300, 'linear');
-////                }
-////                var invalid = checkValidInput(s.warnings, input, 'blur', justTestThisField_do_not_active_her_Field);
-////                if (invalid) {
-////                    ctrlFather.addInvalidField(id);
-////                }
-////                else {
-////                    ctrlFather.shiftInvalidField(id);
-////                }
-////
-////                if (s.invaliditemslengthUpdate + "" != "undefined") {
-////                    s.invaliditemslengthUpdate(ctrlFather.getInvalidItemsCount());
-////                }
-////                input.siblings(".validate-info").hide(200);
-////            }
-////
-////            s.validateLabelClicked = function (id) {
-////                $('#secInput_' + id).focus();
-////            }
-////
-////            s.doNotShowInfo = false;
-////            this.setDoNotShowInfo = function (b) {
-////                s.doNotShowInfo = b;
-////            }
-////
-////            this.setCtrlFather = function (_ctrlFather) {
-////                ctrlFather = _ctrlFather;
-////            }
-////
-////            this.addWarningInfo = function (warningInfo) {
-////                //s.doNotShowInfo = this.isBlockingMessage();
-////                s.warnings.push(warningInfo);
-////                ctrlFather.addInvalidField(s.id);
-////            }
-////
-////            this.setPlaceHolder = function (placeHolder) {
-////                s.placeHolder = placeHolder;
-////                s.textToShow = {
-////                    text: placeHolder,
-////                    valid: true,
-////                    key: ''
-////                };
-////            }
-////
-////            this.setId = function (id) {
-////                s.id = id;
-////            };
-////
-////            this.enableNoRedStar = function () {
-////                s.noRedStar = true;
-////            }
-////
-////            this.setInputType = function (inputType) {
-////                s.inputType = inputType;
-////            }
-////
-////            function setTextToShow(warn, justTestThisField_do_not_active_her_Field) {
-////                warn.show = true;
-////                if (justTestThisField_do_not_active_her_Field) {
-////                    return;
-////                }
-////                s.textToShow = {
-////                    text: warn.warning,
-////                    valid: false
-////                };
-////            }
-////
-////            function checkValidInput(warnings, input, event, justTestThisField_do_not_active_her_Field) {
-////
-////                var invalidToReturn = false;
-////                try {
-////
-////                    for (var i in s.warnings) {
-////                        var warn = s.warnings[i];
-////
-////                        if (s.textToShow.valid) {
-////                            switch (warn.key) {
-////                                case 'secRequired':
-////                                    var _invalid = (input.val() == '');
-////                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-////                                    if (event == 'keyup') {
-////                                        warn.show = _invalid;
-////                                        if (!invalidToReturn) {
-////                                            ctrlFather.getInvalidItems()
-////                                        }
-////                                    }
-////                                    else if (invalidToReturn) {
-////                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-////                                    }
-////                                    break;
-////                                case 'secOnlyNumbers':
-////                                    var _invalid = !((input.val() - 0) == input.val() &&
-////                                    input.val().indexOf('-') == -1 && input.val().indexOf('+') == -1);
-////                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-////                                    if (event == 'keyup') {
-////                                        warn.show = _invalid;
-////                                        if (!invalidToReturn) {
-////                                            ctrlFather.getInvalidItems()
-////                                        }
-////                                    }
-////                                    else if (invalidToReturn) {
-////                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-////                                    }
-////                                    break;
-////                                case 'secMinLength':
-////                                    var _invalid = input.val().length < warn.min && (input.val() + "").length != 0;
-////                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-////                                    if (event == 'keyup') {
-////                                        warn.show = _invalid;
-////                                        if (!invalidToReturn) {
-////                                            ctrlFather.getInvalidItems()
-////                                        }
-////                                    }
-////                                    else if (invalidToReturn) {
-////                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-////                                    }
-////                                    break;
-////                                case 'secMaxLength':
-////                                    var _invalid = input.val().length > warn.max;
-////                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-////                                    if (event == 'keyup') {
-////                                        warn.show = _invalid;
-////                                        if (!invalidToReturn) {
-////                                            ctrlFather.getInvalidItems()
-////                                        }
-////                                    }
-////                                    else if (invalidToReturn) {
-////                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-////                                    }
-////                                    break;
-////                                case 'secPattern':
-////                                    var _invalid = !(new RegExp(warn.regex).test(input.val())) && (input.val() + "").length != 0;
-////                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-////                                    if (event == 'keyup') {
-////                                        warn.show = _invalid;
-////                                        if (!invalidToReturn) {
-////                                            ctrlFather.getInvalidItems()
-////                                        }
-////                                    }
-////                                    else if (invalidToReturn) {
-////                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-////                                    }
-////                                    break;
-////                                case 'secCompareTo':
-////                                    var comparedInput = $('#secInput_' + warn.compareId);
-////                                    var _invalid = (comparedInput.val() != input.val() && comparedInput.val() != "" && input.val() != "");
-////                                    invalidToReturn = invalidToReturn ? invalidToReturn : _invalid;
-////                                    if (event == 'keyup') {
-////                                        warn.show = _invalid;
-////                                        if (!invalidToReturn) {
-////                                            ctrlFather.getInvalidItems()
-////                                        }
-////                                    }
-////                                    else if (invalidToReturn) {
-////                                        setTextToShow(warn, justTestThisField_do_not_active_her_Field)
-////                                    }
-////                                    break;
-////                                default:
-////                                    throw warn.key + " key is not defined in checkValidInput(warnings) method (directive <validate-input></validate-input>)";
-////                            }
-////                        }
-////                    }
-////                    return invalidToReturn;
-////                }
-////                catch (err) {
-////                    console.log(err);
-////                    return false;
-////                }
-////            }
-////        }
-////        ])
-////        //.directive('secInput', ['$templateCache', '$timeout', '$rootScope', function ($templateCache, $timeout, $rootScope) {
-////        //    return {
-////        //        restrict: 'E',
-////        //        replace: true,
-////        //        transclude: true,
-////        //        require: ['secInput', '^secValidate'],
-////        //        scope: {
-////        //            modelAttr: '=',
-////        //            idAttr: '@',
-////        //            secChange: '&',
-////        //        },
-////        //        template: $templateCache.get('app/partials/secInput.html'),
-////        //        controller: 'secInputCtrl',
-////        //        link: {
-////        //            pre: function (s, e, a, ctrls) {
-////        //
-////        //                var me = ctrls[0];
-////        //                e.addClass('validate-directive');
-////        //
-////        //                if (!a.idAttr) {
-////        //                    throw "id attribute  in directive <secInput></secInput> is must! "
-////        //                }
-////        //
-////        //                if (a.noRedStar) {
-////        //                    me.enableNoRedStar();
-////        //                }
-////        //                if (a.selectTag) {
-////        //
-////        //                    e.bind('click', function () {
-////        //                        var checkbox = $($(this).find("input[type=checkbox]"))
-////        //                        if (checkbox.length > 0) {
-////        //                            s.$apply(function () {
-////        //                                if (checkbox[0].checked) {
-////        //                                    ctrls[1].shiftInvalidField(a.idAttr);
-////        //                                    $(this).find(".validateInvalid").fadeOut()
-////        //                                }
-////        //                                else {
-////        //                                    ctrls[1].addInvalidField(a.idAttr);
-////        //                                    $(this).find(".validateInvalid").fadeIn();
-////        //                                }
-////        //                                ctrls[1].getInvalidItems();
-////        //
-////        //                                if (s.invaliditemslengthUpdate + "" != "undefined") {
-////        //                                    s.invaliditemslengthUpdate(ctrls[1].getInvalidItemsCount());
-////        //                                }
-////        //                            });
-////        //                        }
-////        //                    });
-////        //
-////        //                    e.bind('change', function () {
-////        //                        var select = $($(this).find("select"))
-////        //
-////        //                        if (a.secSiblings != undefined) {
-////        //                            s.inputFocus(a.secSiblings);
-////        //                        }
-////        //                        if (a.secChange != undefined) {
-////        //                            s.secChange();
-////        //                        }
-////        //                        if (select.length > 0) {
-////        //                            s.$apply(function () {
-////        //                                ctrls[1].shiftInvalidField(a.idAttr);
-////        //                                s.inputFocus(s.id);
-////        //                            });
-////        //                        }
-////        //                    })
-////        //                }
-////        //                me.setCtrlFather(ctrls[1]);
-////        //                me.setInputType(a.inputTypeAttr || 'text')
-////        //                me.setId(a.idAttr, s.modelAttr)
-////        //
-////        //                s.$watch('modelAttr', function () {
-////        //                    me.inputFocus();
-////        //                });
-////        //
-////        //                if (a.doNotShowInfo == "true") {
-////        //                    me.setDoNotShowInfo(true);
-////        //                }
-////        //                ctrls[1].setStartingValue(a.idAttr, s.modelAttr);
-////        //            },
-////        //            post: function (s) {
-////        //                $timeout(function () {
-////        //                    if (s.modelAttr != '' && s.modelAttr != undefined) {
-////        //                        s.inputFocus(s.id, 0);
-////        //                    }
-////        //                }, 500)
-////        //                $timeout(function () {
-////        //                    s.inputBlur(s.id, true);
-////        //                }, 1000)
-////        //                $timeout(function () {
-////        //                    s.inputKeyup(s.id);
-////        //                }, 2000)
-////        //            }
-////        //        }
-////        //    }
-////        //}])
 ////        .directive('secTextarea', ['$templateCache', '$timeout', '$rootScope', function ($templateCache, $timeout, $rootScope) {
 ////            return {
 ////                restrict: 'E',
@@ -1298,22 +913,6 @@ define(['./module'], function (directives) {
 ////            }
 ////        }])
 ////
-////        //.directive('secRequired', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        priority: 0,
-////        //        require: 'secInput',
-////        //        link: function (s, e, a, ctrl) {
-////        //            var warning = a.secRequired || 'This field is required'
-////        //            ctrl.addWarningInfo({
-////        //                key: 'secRequired',
-////        //                warning: warning,
-////        //                info: '',
-////        //                show: false
-////        //            })
-////        //        }
-////        //    }
-////        //})
 ////        .directive('secTRequired', function () {
 ////            return {
 ////                restrict: 'A',
@@ -1349,127 +948,6 @@ define(['./module'], function (directives) {
 ////                }
 ////            }
 ////        })
-////        //.directive('secMinLength', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        require: 'secInput',
-////        //        priority: 40,
-////        //        link: function (s, e, a, ctrl) {
-////        //            var min = a.secMinLength - 0;
-////        //            if (!a.idAttr) {
-////        //                throw "if secMinLength is used in directive <secInput></secInput>, value is must! "
-////        //            }
-////        //            if (!((min - 0) == min && ('' + min).trim().length > 0) || min < 0) {
-////        //                throw "Invalid value in attribute secMinLength, the value in directive " +
-////        //                "<secInput></secInput> must be a positive number! "
-////        //            }
-////        //            var warning = 'Use ' + min + ' characters or longer'
-////        //            ctrl.addWarningInfo({
-////        //                key: 'secMinLength',
-////        //                warning: warning,
-////        //                info: warning,
-////        //                min: min,
-////        //                show: false
-////        //            })
-////        //        }
-////        //    }
-////        //})
-////        //.directive('secMaxLength', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        priority: 50,
-////        //        require: 'secInput',
-////        //        link: function (s, e, a, ctrl) {
-////        //            var max = a.secMaxLength - 0;
-////        //            if (!a.idAttr) {
-////        //                throw "if secMaxLength is used in directive <secInput></secInput>, value is must! "
-////        //            }
-////        //            if (!((max - 0) == max && ('' + max).trim().length > 0) || max < 0) {
-////        //                throw "Invalid value in attribute secMaxLength, the value in directive " +
-////        //                "<secInput></secInput> must be a positive number! "
-////        //            }
-////        //            var warning = 'Use up to ' + max + ' characters'
-////        //            ctrl.addWarningInfo({
-////        //                key: 'secMaxLength',
-////        //                warning: warning,
-////        //                info: warning,
-////        //                show: false,
-////        //                max: max,
-////        //            })
-////        //        }
-////        //    }
-////        //})
-////        //.directive('secPattern', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        priority: 100,
-////        //        require: 'secInput',
-////        //        link: function (s, e, a, ctrl) {
-////        //
-////        //            if (!a.patternErrorAttr) {
-////        //                throw "if secPattern is used in directive <secInput></secInput>, pattern-error-attr attribute is must! "
-////        //            }
-////        //            ctrl.addWarningInfo({
-////        //                key: 'secPattern',
-////        //                warning: a.patternErrorAttr,
-////        //                info: a.patternErrorAttr,
-////        //                show: false,
-////        //                regex: a.secPattern,
-////        //            })
-////        //        }
-////        //    }
-////        //})
-////        //.directive('secEmail', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        require: 'secInput',
-////        //        link: function (s, e, a, ctrl) {
-////        //            ctrl.addWarningInfo({
-////        //                key: 'secPattern',
-////        //                warning: "Your email address isn’t formatted correctly",
-////        //                info: "Your email address isn’t formatted correctly",
-////        //                show: false,
-////        //                regex: a.secEmail || "^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
-////        //            })
-////        //            //"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
-////        //            //"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
-////        //        }
-////        //    }
-////        //})
-////        //.directive('secCompareTo', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        require: 'secInput',
-////        //        link: function (s, e, a, ctrl) {
-////        //            if (!a.idAttr) {
-////        //                throw "if secCompareTo is used in directive <secInput></secInput>, id-attr is must! "
-////        //            }
-////        //            if (!a.secCompareTo) {
-////        //                throw "if sec-compare-to is used in directive <secInput></secInput>, must to be a comparable id! "
-////        //            }
-////        //            if (!a.compareToName) {
-////        //                throw "if sec-compare-to is used in directive <secInput></secInput>, must to be compare-to-name attribute! "
-////        //            }
-////        //            var warning = 'Same as ' + a.compareToName;
-////        //            ctrl.addWarningInfo({
-////        //                key: 'secCompareTo',
-////        //                warning: warning,
-////        //                info: warning,
-////        //                show: true,
-////        //                compareId: a.secCompareTo,
-////        //            })
-////        //        }
-////        //    }
-////        //})
-////        //.directive('secPlaceholder', function () {
-////        //    return {
-////        //        restrict: 'A',
-////        //        require: 'secInput',
-////        //        link: function (s, e, a, ctrl) {
-////        //            ctrl.setPlaceHolder(a.secPlaceholder)
-////        //        }
-////        //    }
-////        //})
 ////        .directive('secTPlaceholder', function () {
 ////            return {
 ////                restrict: 'A',

@@ -50,8 +50,10 @@ define(['./module'], function (controllers) {
                         }
                         s.signIn(user, false)
                         $timeout(function () {
-                            $state.go('default')
-                        }, 5000)
+                            if(document.location.hash == "#/register"){
+                                $state.go('default')
+                            }
+                        }, 8000)
                     }
                     else {
                         $timeout(function () {

@@ -386,6 +386,15 @@ define(['./module'], function (controllers) {
                 });
             }
 
+            this.getCardNumber = function (exactlyNum) {
+                return JSON.stringify({
+                    error: $filter("translate")('Invalid_Card_number'),
+                    info: "- " + $filter("translate")("Use_exactly") + " " + exactlyNum + " " + $filter("translate")('numbers'),
+                    exactly: exactlyNum,
+                    regex: "^[0-9]*$"
+                });
+            };
+
             this.getPattern = function (data) {
 
                 if (typeof data === 'string') {
@@ -410,6 +419,11 @@ define(['./module'], function (controllers) {
                             data = [
                                 ['letters_number_symbols_only', 'letters_number_symbols_only',
                                     '^[A-Za-z0-9_.-]{0,999}$']];
+                            break;
+                        case 'CCV_Number':
+                            data = [
+                                ['Invalid_CCV_number', 'Valid_CCV_number_required', '^[0-9]{3,3}$']];
+                            break;
                         default:
                             throw "type of pattern not match (this.getPattern('" +data+ "');"
                     }

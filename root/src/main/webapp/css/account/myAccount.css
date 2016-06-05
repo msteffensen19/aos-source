@@ -220,6 +220,8 @@
 
 #paymentMethod .option span{
     font-weight: 400;
+    margin: 30px 0;
+    display: block;
 }
 
 #paymentMethod .option.blocked:before{

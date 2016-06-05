@@ -19,8 +19,7 @@
     "jquery-color-animation": "~1.6.0",
     "ngAutocomplete": "~1.0.0",
     "angular-breadcrumb": "~0.4.1",
-    "SVG-Loaders": "svg-loaders#~1.0.2",
-    "ngCordova": "~0.1.26-alpha"
+    "SVG-Loaders": "svg-loaders#~1.0.2"
   },
   "resolutions": {
     "angular": "~1.4.7"

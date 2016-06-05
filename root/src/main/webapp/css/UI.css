@@ -456,8 +456,8 @@ button:hover {
 }
 
 .a-button:hover {
-    color: white;
-    background-color: #2a2a2a;
+    color: white !important;
+    background-color: #2a2a2a !important;
 }
 
 .a-link:hover {
@@ -468,24 +468,22 @@ a {
     text-decoration: none;
 }
 
-.invalid{
+.invalid:not(input){
     color: #FF454F !important;
+    /*font-weight: 400 !important;*/
+    /*font-size: 13px !important;*/
+    /*margin: 20px auto;*/
+    /*display: inline-block;*/
+}
+
+.smollMargin {
     font-weight: 400 !important;
     font-size: 13px !important;
-    margin: 20px auto;
-    display: inline-block;
+    margin-bottom: 20px;
 }
 
 
-/*
 
-.sec-validate-invalid , .sec-validate-invalid:hover{
-    color: #b2b2b2 !important;
-    border: solid 2px #d1d1d1 !important;
-    cursor: default;
-    background-color: white !important;
-}
-*/
 .buttonDisable, .buttonDisable:hover {
     color: #b2b2b2 !important;
     border: solid 2px #d1d1d1 !important;

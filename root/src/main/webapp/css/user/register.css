@@ -31,7 +31,9 @@
     vertical-align: top;
 }
 
-#registerPage .spliter .sec-view div label.select-value {
+#registerPage .spliter .sec-view div label.select-value,
+#registerPage .spliter .sec-view div.selectList
+{
     width: 82%;
 }
 
@@ -155,9 +157,6 @@
 /* Register Success seccion */
 
 @media screen and (max-width: 1200px) {
-    #formCover > div span {
-        width: 40%;
-    }
 
     #registerPage .spliter {
         width: 100%;
@@ -190,7 +189,8 @@
         padding-right: 40px;
     }
 
-    #registerPage .spliter .sec-view div label.select-value {
+    #registerPage .spliter .sec-view div label.select-value,
+    #registerPage .spliter .sec-view div.selectList {
         width: 91%;
     }
 
@@ -247,7 +247,8 @@
     }
 
     #registerPage .spliter .sec-view,
-    #registerPage .spliter .sec-view div label.select-value {
+    #registerPage .spliter .sec-view div label.select-value,
+    #registerPage .spliter .sec-view div.selectList {
         width: 100%;
     }
 

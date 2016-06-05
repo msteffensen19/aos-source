@@ -30,7 +30,6 @@
                                           sec-pattern="mainCtrl.getPattern('Username')">
                                 </sec-view>
 
-
                                 <sec-view a-hint="{{'Email' | translate}}"
                                           sec-model="model.email"
                                           sec-require="mainCtrl.getRequire('Email')"
@@ -54,7 +53,7 @@
                                           sec-model="model.confirm_password"
                                           sec-require="mainCtrl.getRequire('Confirm_password')"
                                           sec-compare-to="mainCtrl.getCompare('Password', model.password)"
-                                          s-model-compare-to="model.password">
+                                          sec-model-compare-to="model.password">
                                 </sec-view>
 
                             </div>
@@ -151,7 +150,7 @@
                 <sec-sender class="roboto-medium" a-value="{{'REGISTER' | translate}}"
                             sec-send="register()"></sec-sender>
 
-                <label class="{{registerAnswer.class}} center block " data-ng-show="!registerSuccess">
+                <label class="{{registerAnswer.class}} center block smollMargin" data-ng-show="!registerSuccess">
                     {{registerAnswer.message}}
                 </label>
 

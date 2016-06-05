@@ -98,6 +98,7 @@ var english = {
     'CHECKOUT': 'CHECKOUT',
     'TOTAL': 'TOTAL',
     'Items': 'Items',
+    'Item': 'Item',
     'ITEMS': 'ITEMS',
     'ITEM': 'ITEM',
     'Color': 'Color:',
@@ -218,7 +219,11 @@ var english = {
     'field': 'field',
 
     'required': 'required',
-
+    'numbers' : 'numbers',
+    'Use_exactly' : 'Use exactly',
+    'Year': 'Year',
+    'Month': 'Month',
+    'Valid_CCV_number_required': 'Valid CCV number required'
 
 };
 

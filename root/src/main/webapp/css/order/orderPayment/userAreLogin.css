@@ -1,12 +1,4 @@
 
-#userAreLoginPage .smollInput .validate-directive:nth-child(odd) {
-    /*background-color: red;*/
-}
-
-#userAreLoginPage .sec-validate.smollInput .inputtext {
-    width: 90%;
-}
-
 #detailslink {
     width: 100%;
     text-align: center;
@@ -85,34 +77,27 @@
 #userSection .sec-sender {
     float: right;
 }
-/*#userDetailsEditMode .sec-view{*/
-/*display: block;*/
-/*}*/
-
-/*#userDetailsEditMode .sec-view{*/
-/*width: 90%;*/
-/*}*/
 
 /*#userDetailsEditMode .sec-validate .a-button {*/
-    /*margin-top: 18px;*/
-    /*padding: 10px 48px;*/
+/*margin-top: 18px;*/
+/*padding: 10px 48px;*/
 /*}*/
 
 /*#userDetailsEditMode .sec-validate .a-link {*/
-    /*margin: 0 48px;*/
-    /*margin-top: 18px;*/
-    /*padding: 10px 0 4px 0;*/
-    /*color: #313131;*/
-    /*font-weight: 600;*/
-    /*transition: .3s all ease;*/
+/*margin: 0 48px;*/
+/*margin-top: 18px;*/
+/*padding: 10px 0 4px 0;*/
+/*color: #313131;*/
+/*font-weight: 600;*/
+/*transition: .3s all ease;*/
 /*}*/
 
 /*#userDetailsEditMode .sec-validate .a-link:hover {*/
-    /*margin: 0 48px;*/
-    /*margin-top: 18px;*/
-    /*padding: 10px 0 4px 0;*/
-    /*color: #54b3ad;*/
-    /*font-weight: 900;*/
+/*margin: 0 48px;*/
+/*margin-top: 18px;*/
+/*padding: 10px 0 4px 0;*/
+/*color: #54b3ad;*/
+/*font-weight: 900;*/
 /*}*/
 
 #userDetailsEditMode h6 {
@@ -123,9 +108,9 @@
 }
 
 /*#userDetailsEditMode .smollInput .validate-directive {*/
-    /*width: 49.5%;*/
-    /*margin: 14px 0;*/
-    /*display: inline-block;*/
+/*width: 49.5%;*/
+/*margin: 14px 0;*/
+/*display: inline-block;*/
 /*}*/
 
 .blueLink a {
@@ -138,8 +123,16 @@
 .blueLink .float-button {
     float: right;
     font-size: 12px;
+    color: #313131;
+}
+
+.blueLink .float-button.linkToPress {
     padding: 9px 43px;
     margin: 17px 20px;
+}
+
+.blueLink .float-button.linkToPress:hover {
+    color: #54b3ad;
 }
 
 .blueLink .float-button img {
@@ -241,6 +234,15 @@
     font-size: 15px;
 }
 
+.float_right {
+    float: right;
+}
+
+#paymentMethod .sec-view {
+    width: 50%;
+}
+
+/*
 #paymentMethod .sec-validate {
     padding-top: 20px;
     display: block;
@@ -258,6 +260,7 @@
     width: 48%;
     display: inline-block;
 }
+*/
 
 #paymentMethod .grayCheckbox {
     color: #828282;
@@ -288,7 +291,6 @@
 
 .paymentMethods .selected.imgRadioButton:before {
     box-shadow: 0 0 0 5px white inset, 0 0 0 15px #54b3ad inset;
-
 }
 
 #paymentMethod .option {
@@ -318,10 +320,22 @@
 }
 
 #paymentMethod .payment_date {
-    width: 48%;
+    width: 50%;
     display: inline-block;
-    margin-top: 22px;
+    white-space: nowrap;
 }
+
+.expiration_date_title{
+    display: block;
+    margin-top: 10px;
+}
+
+#paymentMethod .payment_date .sec-view{
+    width: 33% !important;
+    display: inline-block;
+    margin-right: 10%;
+}
+
 
 #paymentMethod .payment_date > label {
     font-size: 14px;
@@ -329,18 +343,18 @@
     display: block;
 }
 
-#paymentMethod .payment_date .validate-directive {
-    width: 44%;
-    white-space: nowrap;
-    display: inline-block;
-}
+/*#paymentMethod .payment_date .validate-directive {*/
+/*width: 44%;*/
+/*white-space: nowrap;*/
+/*display: inline-block;*/
+/*}*/
 
 /* END USER DETAILS SECCION   */
 
-.Card_Number_4Digits .inputtext {
-    position: relative;
-    text-indent: 32px;
-}
+/*.Card_Number_4Digits .inputtext {*/
+/*position: relative;*/
+/*text-indent: 32px;*/
+/*}*/
 
 .Card_Number_4Digits .validate-label {
     z-index: 10;
@@ -360,10 +374,55 @@
     display: block;
 }
 
+
+#paymentMethod .spliter {
+    white-space: nowrap;
+}
+
+#paymentMethod .spliter .sec-view {
+    width: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    padding-right: 25%;
+}
+
+#paymentMethod .spliter .sec-view div label.select-value {
+    width: 90%;
+}
+
+#paymentMethod .sec-sender {
+    float: right;
+}
+
+
+@media screen and (max-width: 1100px) {
+
+
+    #paymentMethod .spliter .sec-view {
+        padding-right: 45px;
+    }
+
+    #paymentMethod .spliter .sec-view div label.select-value {
+        width: 70%;
+    }
+
+    #paymentMethod .payment_date .sec-view{
+        width: 44% !important;
+        margin-right: 0px;
+    }
+
+
+
+}
+
 @media screen and (max-width: 768px) {
 
     #userSection .nextBtn {
         margin-top: 40px;
+    }
+    #paymentMethod .masterCreditSeccion{
+        width: 100%;
     }
 }
 
@@ -384,9 +443,39 @@
     #userSection .spliter .sec-view div label.select-value {
         width: 100%;
     }
+
+
+    #paymentMethod .spliter {
+        white-space: normal;
+    }
+
+    #paymentMethod .spliter .sec-view {
+        padding-right: 0px;
+    }
+
+    #paymentMethod .spliter .sec-view,
+    #paymentMethod .spliter .sec-view div label.select-value {
+        width: 100%;
+    }
+
+    #paymentMethod .payment_date .sec-view{
+        width: 100% !important;
+        margin-right: 0px;
+    }
+
+    #paymentMethod .payment_date .sec-view:nth-child(odd){
+        width: 90% !important;
+        margin-right: 10%;
+    }
+
+    #paymentMethod .payment_date .sec-view:nth-child(even){
+        width: 90% !important;
+        margin-left: 10%;
+    }
 }
 
 @media screen and (max-width: 480px) {
+
     #userDetails > div {
         width: 100%;
     }
@@ -416,37 +505,29 @@
         width: 50% !important;
     }
 
-    #userDetailsEditMode .smollInput .validate-directive {
-        width: 100%;
-    }
+    /*#userDetailsEditMode .smollInput .validate-directive {*/
+    /*width: 100%;*/
+    /*}*/
+    /*#userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext,*/
+    /*#userDetailsEditMode .sec-validate .inputtext {*/
+    /*width: 90%;*/
+    /*}*/
+    /*#userDetailsEditMode .smollInput .validate-directive {*/
+    /*margin: 14px 13px;*/
+    /*}*/
+    /*#paymentMethod .sec-validate .inputtext {*/
+    /*width: 90% !important;*/
+    /*}*/
+    /*#paymentMethod .validate-directive {*/
+    /*margin: 14px 16px;*/
+    /*}*/
+    /*#paymentMethod .smollInput .validate-directive {*/
+    /*width: 93% !important;*/
+    /*}*/
 
-    #userDetailsEditMode .sec-validate .validate-directive:nth-child(odd) .inputtext,
-    #userDetailsEditMode .sec-validate .inputtext {
-        width: 90%;
-    }
 
-    #userDetailsEditMode .smollInput .validate-directive {
-        margin: 14px 13px;
-    }
-
-    #paymentMethod .sec-validate .inputtext {
-        width: 90% !important;
-    }
-
-    #paymentMethod .validate-directive {
-        margin: 14px 16px;
-    }
-
-    #paymentMethod .smollInput .validate-directive {
-        width: 93% !important;
-    }
-
-    #paymentMethod .payment_date {
-        width: 100% !important;
-    }
-
-    #paymentMethod .payment_date .validate-directive {
-        width: 35% !important;
-    }
+    /*#paymentMethod .payment_date .validate-directive {*/
+    /*width: 35% !important;*/
+    /*}*/
 }
 

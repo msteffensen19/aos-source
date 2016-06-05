@@ -38,8 +38,9 @@
 }
 
 .sec-view div .selectList {
-    position: relative;
-    top: 28px;
+    float: right;
+    position: absolute;
+    top: 52px;
     height: 161px;
     width: 100%;
     border: solid 1px rgb(213, 213, 213);
@@ -120,6 +121,22 @@
     border: none;
     border-bottom: 1px solid #CECCCC;
     transition: border-bottom .4s ease;
+}
+
+.sec-view div.card-number-four-digits {
+    position: relative;
+    padding-left:3px;
+}
+
+.sec-view div.card-number-four-digits:before{
+    display: inline-block;
+    position: absolute;
+    content:"4886";
+    bottom: 10px;
+}
+
+.sec-view div input.card-number-four-digits{
+    text-indent:30px;
 }
 
 .sec-view div input.invalid {
