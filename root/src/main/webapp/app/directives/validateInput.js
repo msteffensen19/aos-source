@@ -313,12 +313,12 @@ define(['./module'], function (directives) {
                         for (var i = 0; i < arr.length; i++) {
                             var item = arr[i];
                             var span;
-                            if(name){
+                            if (name) {
                                 span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
                                     " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseleave='selectItemMouseOut()'>"
                                     + item[name] + "</span>");
                             }
-                            else{
+                            else {
                                 span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
                                     " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseout='selectItemMouseOut()'>"
                                     + item + "</span>");
@@ -338,10 +338,10 @@ define(['./module'], function (directives) {
                         }, 200)
                     }
                     else {
-                        if(s.secModel == validation){
+                        if (s.secModel == validation) {
                             ctrl.getSelectlist().fadeOut();
                         }
-                        else{
+                        else {
                             s.secModel = validation;
                         }
                     }
@@ -505,7 +505,7 @@ define(['./module'], function (directives) {
                 s.labelOut = function () {
                     _____selectItemMouseOut = $timeout(function () {
                         var list = ctrl.getSelectlist()
-                        if(list.css("display") != "none"){
+                        if (list.css("display") != "none") {
                             list.fadeOut();
                         }
                     }, 3000);
@@ -601,7 +601,7 @@ define(['./module'], function (directives) {
                                     }
                                     break;
                                 case Keys.secPattern:
-                                    if (!(new RegExp(validation.regex).test(s.secModel))) { // && (input.val()+"").length != 0
+                                    if (!(new RegExp(validation.regex).test(s.secModel)) && (input.val()).length != 0) {
                                         if (changeHint) {
                                             return setInvalidTextToShow(validation.error);
                                         }
@@ -667,7 +667,7 @@ define(['./module'], function (directives) {
                                     }
                                     break;
                                 case Keys.secPattern:
-                                    if (!(new RegExp(validation.regex).test(s.secModel))) { // && (input.val()+"").length != 0
+                                    if (!(new RegExp(validation.regex).test(s.secModel)) && (input.val()).length != 0) {
                                         showValidation(i);
                                         validInput = false;
                                     }
@@ -676,7 +676,7 @@ define(['./module'], function (directives) {
                                     }
                                     break;
                                 case Keys.secCompareTo:
-                                    if (ctrl.compareTo.val() != s.secModel && ctrl.compareTo.val() != "") { // && input.val() != ""
+                                    if (ctrl.compareTo.val() != s.secModel && ctrl.compareTo.val() != "") {
                                         showValidation(i);
                                         validInput = false;
                                     }
@@ -782,7 +782,7 @@ define(['./module'], function (directives) {
                     var input;
                     var label = $("<label data-ng-click='labelClicked()' data-ng-mouseout='labelOut()'>" + a.aHint + "</label>");
                     var name;
-                    if(a.aShow){
+                    if (a.aShow) {
                         name = a.aShow;
                     }
                     switch (type) {
@@ -793,10 +793,10 @@ define(['./module'], function (directives) {
                             label.css({
                                 "cursor": "pointer",
                             });
-                            if(a.aShow){
+                            if (a.aShow) {
                                 input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
                             }
-                            else{
+                            else {
                                 input = $("<div><label class='select-value' > {{secModel}}</label><div class='selectList'></div></div>");
                             }
                             input.find(".select-value").on({

@@ -343,19 +343,6 @@
     display: block;
 }
 
-/*#paymentMethod .payment_date .validate-directive {*/
-/*width: 44%;*/
-/*white-space: nowrap;*/
-/*display: inline-block;*/
-/*}*/
-
-/* END USER DETAILS SECCION   */
-
-/*.Card_Number_4Digits .inputtext {*/
-/*position: relative;*/
-/*text-indent: 32px;*/
-/*}*/
-
 .Card_Number_4Digits .validate-label {
     z-index: 10;
 }
@@ -421,9 +408,11 @@
     #userSection .nextBtn {
         margin-top: 40px;
     }
+    #paymentMethod .sec-view,
     #paymentMethod .masterCreditSeccion{
         width: 100%;
     }
+
 }
 
 @media screen and (max-width: 550px) {

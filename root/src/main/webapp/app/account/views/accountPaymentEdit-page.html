@@ -6,19 +6,15 @@
 <section>
     <article>
         <div id="accountCover">
+
             <h3 class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
 
             <div class="maxWidth">
 
                 <div id="infoDemo">
-                    <div class="notice">
-                        <h4 translate="NOTICE"></h4>
-
-                        <p class="roboto-light" translate="This_is_a_demo"></p>
-
-                        <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
-                    </div>
+                    <info-demo a-title="{{'NOTICE' | translate }}" a-lines="{{mainCtrl.getNoticeInfo()}}"></info-demo>
                 </div>
+
 
                 <div id="form">
 
@@ -45,29 +41,25 @@
 
                             <div ng-show="imgRadioButton == 1">
 
-                                <sec-validate>
+                                <sec-form>
 
-                                    <sec-input
-                                            sec-required
-                                            sec-placeholder="{{ 'SafePay_User_name' | translate }}"
-                                            sec-min-length="5"
-                                            sec-max-length="15"
-                                            sec-pattern="^[A-Za-z0-9_.-]{5,15}$"
-                                            pattern-error-attr="{{ 'letters_number_symbols_only' | translate }}"
-                                            model-attr="savePay.username"
-                                            id-attr="savePay_UserName">
-                                    </sec-input>
 
-                                    <sec-input
-                                            sec-required
-                                            sec-placeholder="{{ 'SafePay_Password' | translate }}"
-                                            sec-min-length="4"
-                                            sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                                            pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
-                                            input-type-attr="password"
-                                            model-attr="savePay.password"
-                                            id-attr="savePay_password">
-                                    </sec-input>
+                                    <sec-view a-hint="{{'SafePay_User_name' | translate}}"
+                                              sec-model="savePay.username"
+                                              sec-require="mainCtrl.getRequire('SafePay_User_name')"
+                                              sec-min-length="mainCtrl.getMin(5)"
+                                              sec-max-length="mainCtrl.getMax(15)"
+                                              sec-pattern="mainCtrl.getPattern('Username')">
+                                    </sec-view>
+
+                                    <sec-view a-hint="{{'SafePay_Password' | translate}}"
+                                              a-type="password"
+                                              sec-model="savePay.password"
+                                              sec-require="mainCtrl.getRequire('SafePay_User_name')"
+                                              sec-min-length="mainCtrl.getMin(4)"
+                                              sec-max-length="mainCtrl.getMax(12)"
+                                              sec-pattern="mainCtrl.getPattern('Password')">
+                                    </sec-view>
 
                                     <div class="option marginTop " data-ng-class="{ blocked : savePayBlocked }">
                                         <input ng-model="preferredPayment_SafePay" type="checkbox" class="ng-pristine ng-untouched ng-valid">
@@ -75,15 +67,11 @@
                                     </div>
 
                                     <div class="blueLink">
-                                        <label>
-                                            <button sec-submit-attr="saveSafePay()" a-sec-validate-invalid
-                                                    class="roboto-medium sec-validate-invalid accountDetailsBtn">
-                                                {{'SAVE' | translate}}
-                                            </button>
-                                        </label>
+                                            <sec-sender class="roboto-medium" a-value="{{'SAVE' | translate}}"
+                                                        sec-send="saveSafePay()"></sec-sender>
                                     </div>
 
-                                </sec-validate>
+                                </sec-form>
 
                             </div>
 
@@ -94,75 +82,68 @@
 
                             <div ng-show="imgRadioButton == 2 ">
 
-                                <sec-validate class="smollInput">
+                                <sec-form>
 
-                                    <sec-input sec-required card-number-four-digits
-                                               sec-placeholder="{{ 'Card_number' | translate }}"
-                                               sec-pattern="^[0-9]{12,12}$"
-                                               pattern-error-attr="{{ 'Invalid_Card_number' | translate }}"
-                                               model-attr="card.number"
-                                               id-attr="Card_Number">
-                                    </sec-input>
+                                    <div class="spliter">
 
-                                    <sec-input sec-required class="creditCard"
-                                               sec-placeholder="{{ 'CCV_Number' | translate }}"
-                                               sec-pattern="^[0-9]{3,3}$"
-                                               pattern-error-attr="{{ 'Invalid_CCV_number' | translate }}"
-                                               model-attr="card.cvv"
-                                               id-attr="Card_cvv">
-                                    </sec-input>
+                                        <sec-view a-hint="{{'Card_number' | translate}}"
+                                                  sec-model="card.number"
+                                                  sec-require="mainCtrl.getRequire('Card_number')"
+                                                  sec-card-number="mainCtrl.getCardNumber(16)">
+                                        </sec-view>
 
-                                    <div class="payment_date">
 
-                                        <label class="roboto-regular">{{'Expiration_Date' | translate}}</label>
+                                        <sec-view a-hint="{{'CCV_Number' | translate}}" class="creditCard"
+                                                  sec-model="card.cvv"
+                                                  sec-require="mainCtrl.getRequire('CCV_Number')"
+                                                  sec-pattern="mainCtrl.getPattern('CCV_Number')">
+                                        </sec-view>
 
-                                        <sec-input sec-required
-                                                   model-attr="card.expirationDate.month"
-                                                   input-type-attr="transclude" id-attr="Card_date"
-                                                   sec-placeholder="{{ 'MM' | translate }}" select-tag="true">
-                                            <a class="must">*</a>
-                                            <select class="inputtext"
-                                                    ng-model="card.expirationDate.month"
-                                                    ng-options="num for num in ['01','02','03','04','05','06','07','08','09', '10', '11', '12']">
-                                            </select>
-                                        </sec-input>
+                                    </div>
+                                    <label class="roboto-regular expiration_date_title">{{'Expiration_Date' | translate}}</label>
+                                    <div class="spliter">
 
-                                        <sec-input sec-required input-type-attr="transclude"
-                                                   id-attr="Card_year"
-                                                   model-attr="card.expirationDate.year"
-                                                   sec-placeholder="{{ 'YY' | translate }}" select-tag="true">
-                                            <a class="must">*</a>
-                                            <select class="inputtext"
-                                                    ng-model="card.expirationDate.year"
-                                                    ng-options="year for year in years">
-                                            </select>
-                                        </sec-input>
+                                        <div class="payment_date">
+
+
+                                            <sec-view a-hint="{{ 'MM' | translate }}"
+                                                      a-type="select"
+                                                      a-do-not-show-info="true"
+                                                      sec-require="mainCtrl.getRequire('Month')"
+                                                      sec-model="card.expirationDate.month"
+                                                      sec-select-options="['01','02','03','04','05','06','07','08','09', '10', '11', '12']">
+                                            </sec-view>
+
+                                            <sec-view a-hint="{{ 'YY' | translate }}"
+                                                      a-type="select"
+                                                      a-do-not-show-info="true"
+                                                      sec-require="mainCtrl.getRequire('Year')"
+                                                      sec-model="card.expirationDate.year"
+                                                      sec-select-options="years">
+                                            </sec-view>
+
+                                        </div>
+
+
+                                        <sec-view a-hint="{{ 'Cartholder_Name' | translate }}"
+                                                  sec-require="mainCtrl.getRequire('Cartholder_Name')"
+                                                  sec-model="card.name">
+                                        </sec-view>
 
                                     </div>
 
-                                    <sec-input sec-required
-                                               sec-placeholder="{{ 'Cartholder_Name' | translate }}"
-                                               model-attr="card.name"
-                                               id-attr="Card_name">
-                                    </sec-input>
-
-                                    <div class="option marginTop" data-ng-class="{ blocked : savePayBlocked }">
-                                        <input ng-model="preferredPayment_MasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
-                                        <span class="roboto-light ng-binding"> {{ 'Set_MasterCredit_as_Preferred_payment' | translate }} </span>
+                                    <div class="option marginTop">
+                                        <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                                        <span class="roboto-light ng-binding"> {{ 'Save_changes_in_profile_for_future_use' | translate }} </span>
                                     </div>
 
+                                    <div class="blueLink">
 
-                                    <div class="blueLink" >
-                                        <label>
-                                            <button sec-submit-attr="saveMasterCredit()"
-                                                   class="roboto-medium sec-validate-invalid accountDetailsBtn"
-                                                   a-sec-validate-invalid >
-                                            {{'SAVE' | translate}}
-                                            </button>
-                                        </label>
+                                            <sec-sender class="roboto-medium" a-value="{{'SAVE' | translate}}"
+                                                        sec-send="saveMasterCredit()"></sec-sender>
                                     </div>
 
-                                </sec-validate>
+                                </sec-form>
 
                             </div>
 

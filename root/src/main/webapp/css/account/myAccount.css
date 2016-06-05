@@ -145,7 +145,7 @@
     padding: 0 13px;
 }
 
-#accountCover .link {
+#registerCover .link {
     display: inline-block;
     color: #54b3ad;
     font-size: 14px;
@@ -154,14 +154,8 @@
     cursor: pointer;
 }
 
-#form .accountDetailsBtn{
-    width: 137px !important;
-    height: 34px !important;
-    margin: 20px 0;
-}
-
-#form .accountDetailsBtn.withMargin{
-    margin: 0 58px !important;
+#form .accountDetailsBtn .sec-sender-a{
+     margin: 20px auto;
 }
 
 
@@ -172,17 +166,12 @@
 
 /*//// accountDetails PAGE ///*/
 
-#accountCover .maxWidth{
-    max-width: 1150px;
-    margin: 0 auto;
-    padding-right: 50px;
-    margin-top: 130px;
-}
 
 .changePassword{
     display: none;
     position: relative;
     margin: 0;
+    white-space: normal;
 }
 
 .changePassword .validate-directive{
@@ -209,20 +198,23 @@
     display: block;
 }
 
-#form .Card_Number_4Digits .inputtext {
-    text-indent: 37px;
-    top: 1px;
+#accountCover .maxWidth {
+    max-width: 950px;
+    margin: 100px auto;
+    padding: 40px;
 }
 
 #accountCover #paymentMethod .blueLink {
     display: inline-block;
+    float: right;
 }
 
 #paymentMethod .option span{
+    margin-top: 30px;
     font-weight: 400;
-    margin: 30px 0;
     display: block;
 }
+
 
 #paymentMethod .option.blocked:before{
     content: "";
@@ -234,43 +226,36 @@
     z-index: 10;
 }
 
+#accountCover .paymentMethods {
+    margin-bottom: 20px;
+}
+
+#accountCover #paymentMethod .spliter .sec-view{
+    padding-right: 10%;
+}
+
+#accountCover #paymentMethod .sec-sender .sec-sender-a{
+    width: 134px;
+}
+
+
+
 /*//// END accountPaymentEdit PAGE ///*/
-
-
-
-
-
-@media screen and (max-width: 940px)
-{
-    /*#accountCover .maxWidth{*/
-        /*padding: 15px 50px;*/
-    /*}*/
-
-    #accountCover .maxWidth{
-        margin-top: 0;
-        padding: 0 !important;
-    }
-
-    #accountCover #form{
-        padding: 0 20px;
-    }
-
-}
-
-
-
-@media screen and (max-width: 780px) {
-    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
-        width: 25%;
-    }
-}
 
 
 
 @media screen and (max-width: 768px)
 {
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
+        width: 25%;
+    }
+
     #myAccountContainer{
         padding-top: 0px !important;
+    }
+
+    #accountCover .maxWidth {
+        margin: 0px auto;
     }
 
 }
@@ -382,6 +367,10 @@
     #infoDemo > div{
         width: 185px;
         margin: 34px auto;
+    }
+
+    #accountCover .maxWidth{
+        padding: 0 20px;
     }
 }
 

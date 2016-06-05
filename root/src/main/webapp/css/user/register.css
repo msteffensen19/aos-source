@@ -269,9 +269,9 @@
 
 @media screen and (max-width: 480px) {
 
-    #accountCover .maxWidth {
-        padding: 15px 0px !important;
-    }
+    /*#accountCover .maxWidth {*/
+        /*padding: 15px 0px !important;*/
+    /*}*/
 
     #registerPage .sec-sender .sec-sender-a {
         width: 100%;
