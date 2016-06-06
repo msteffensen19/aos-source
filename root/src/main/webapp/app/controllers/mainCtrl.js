@@ -380,7 +380,7 @@ define(['./module'], function (controllers) {
             this.getCompare = function (name, model) {
                 var nameAfterTranslate = $filter("translate")(name);
                 return JSON.stringify({
-                    error: $filter("translate")('This_field_not_match_with') + " " + nameAfterTranslate + " " + $filter("translate")('field'),
+                    error: nameAfterTranslate + $filter("translate")('This_field_not_match_with'),
                     info: "- " + $filter("translate")("Same_as") + " " + nameAfterTranslate,
                     model: model,
                 });
@@ -405,7 +405,7 @@ define(['./module'], function (controllers) {
                                     '^[A-Za-z0-9_.-]{0,999}$']];
                             break;
                         case 'Email':
-                            data = [['email_no_formatted_correctly', 'valid_email_required',
+                            data = [['email_no_formatted_correctly', '',
                                 '^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,100})$']];
                             break;
                         case 'Password':
@@ -430,24 +430,25 @@ define(['./module'], function (controllers) {
                 }
                 var arr = [];
                 for (var i = 0; i < data.length; i++) {
+                    var info = $filter("translate")(data[i][1]);
                     arr.push({
                         error: $filter("translate")(data[i][0]),
-                        info: "- " + $filter("translate")(data[i][1]),
+                        info: info != '' ? "- " + info : '',
                         regex: data[i][2],
                     });
                 }
                 return JSON.stringify({
                     regexes: arr
                 });
-            }
+            };
 
             this.getMin = function (min) {
                 return JSON.stringify({
-                    error: $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character"),
-                    info: "- " + $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character"),
+                    error: $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character_or_longer"),
+                    info: "- " + $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character_or_longer"),
                     min: min
                 });
-            }
+            };
 
 
             this.getMax = function (max) {
@@ -456,21 +457,21 @@ define(['./module'], function (controllers) {
                     info: "- " + $filter("translate")("Use_maximum") + " " + max + " " + $filter("translate")("character"),
                     max: max
                 });
-            }
+            };
 
             this.getAgreeAgreementRequire = function(){
                 return JSON.stringify({
                     error: ' You must agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice. ',
                     info: 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
                 });
-            }
+            };
 
             this.getNoticeInfo = function(){
                 return JSON.stringify([
                     $filter("translate")("This_is_a_demo"),
                     $filter("translate")("Please_enter_a_fake_data"),
                 ]);
-            }
+            };
 
 
         }]);

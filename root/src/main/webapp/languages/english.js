@@ -195,13 +195,18 @@ var english = {
 
 
 
-    'register_faild': 'Registration failed. Try again later.',
-    'login_faild': 'Login failed. Try again later.',
+
+
+
+
+    'register_faild': 'Registration failed. Please try again.',
+    'login_faild': 'Login failed. Please try again later.',
 
     'email_no_formatted_correctly': 'Your email address isn\'t formatted correctly',
-    'valid_email_required': 'A valid email required',
+    'valid_email_required': '',
 
-    'Use_up_of': 'Use up of',
+    'Use_up_of': 'Use ',
+    'character_or_longer' :'character or longer',
     'Use_maximum': 'Use maximum',
 
     'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number': 'Use between 4-12 characters, including at least one upper case letter, one lower case letter, and one number.',
@@ -214,8 +219,8 @@ var english = {
     'one_lower_letter_required': 'One lower letter required',
     'one_number_required': 'One number required',
 
-    'Same_as': 'Same as ',
-    'This_field_not_match_with': 'This field not match with',
+    'Same_as': 'Same as',
+    'This_field_not_match_with': 's do not match',
     'field': 'field',
 
     'required': 'required',
