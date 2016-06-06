@@ -360,6 +360,10 @@ label.shop_now:after{
 
 /* CONTACT */
 
+#supportCover .sec-view div label.select-value{
+    border-bottom: solid 1px white ;
+}
+
 #supportCover .sec-view div label.select-value:before{
     border-top: solid 4px white ;
 }
