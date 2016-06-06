@@ -461,8 +461,8 @@ define(['./module'], function (controllers) {
 
             this.getAgreeAgreementRequire = function(){
                 return JSON.stringify({
-                    error: ' You must agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice. ',
-                    info: 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
+                    error: $filter("translate")("AgreeAgreementRequire"),
+                    info: $filter("translate")("AgreeAgreementRequire"),
                 });
             };
 

@@ -847,7 +847,8 @@ define(['./module'], function (directives) {
                             input = $("<input type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
-                                label.addClass("checkboxText roboto-light" + animated);
+                                label.css({"display": "block"});
+                                label.addClass("checkboxText roboto-light " + animated);
                                 div.css({
                                     "padding-top": "1px",
                                     "height": "auto",
