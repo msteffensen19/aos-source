@@ -369,6 +369,12 @@ label.shop_now:after{
 }
 
 
+#supportCover .sec-view.textarea div .star {
+    top: 14px;
+}
+
+
+
 #supportCover .sec-view div textarea {
     border: 1px solid white;
     background-color: #54b3ad;

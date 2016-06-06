@@ -194,31 +194,17 @@
                             <div class="smollPadding">
                                 <label>{{'Subject' | translate }}</label>
 
-                                <sec-view a-type="textarea"
+                                <sec-view class="textarea" a-type="textarea"
                                           sec-model="supportModel.subject"
                                           sec-require="mainCtrl.getRequire('Email')">
                                 </sec-view>
-
-                                <sec-textarea model-attr=""
-                                              sec-t-required="null"
-                                              id-attr="Subject">
-                                </sec-textarea>
 
                                 <sec-sender a-value="{{'SEND' | translate}}" sec-send="sendSupportEmail()"></sec-sender>
 
                             </div>
                         </div>
 
-                        <div class="buttonCover">
-
-                            <!--<button sec-submit-attr=""-->
-                                    <!--class="roboto-medium sec-validate-invalid"-->
-                                    <!--a-sec-validate-invalid>-->
-                                <!--{{'' | translate}}-->
-                            <!--</button>-->
-                        </div>
                         <label class="{{registerAnswer.class}} invalid center"> {{registerAnswer.message}} </label>
-
 
                     </sec-form>
                 </div>
