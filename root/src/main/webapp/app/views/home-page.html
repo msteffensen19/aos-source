@@ -10,7 +10,8 @@
         <div class="container ">
 
             <div class="rowSection">
-                <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)" class="SpeaakersImg categoryCell"
+                <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)"
+                     class="SpeaakersImg categoryCell"
                      a-sec-back-img="{{categories[3].managedImageId}}">
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName | uppercase}}</span>
@@ -19,7 +20,7 @@
                 </div>
                 <div id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
                      a-sec-back-img="{{categories[2].managedImageId}}" class="categoryCell">
-                    <div  class="shop_now_slider">
+                    <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[2].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
@@ -31,7 +32,7 @@
             <div class="rowSection">
                 <div ng-click="redirect('/category/' + categories[0].categoryId)" class="laptopImg categoryCell"
                      a-sec-back-img="{{categories[0].managedImageId}}">
-                    <div  class="shop_now_slider">
+                    <div class="shop_now_slider">
                         <span class="shop_now roboto-bold"> {{::categories[0].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
                     </div>
@@ -158,64 +159,68 @@
 
                     <h1 class="roboto-bold contact_us" translate="CONTACT_US"></h1>
 
-                    <sec-validate>
+                    <sec-form>
 
                         <div class="splitter">
 
                             <div class="inputMargin">
-                            <!--sec-siblings="Product"-->
-                            <sec-input sec-placeholder="{{'Category' | translate }}"
-                                       id-attr="Category"
-                                       input-type-attr="transclude"
-                                       select-tag="true">
-                                <select class="inputtext" ng-change="categoryChange()"
-                                        ng-model="supportModel.category"
-                                        ng-options="category.categoryName for category in categories track by category.categoryId">
-                                </select>
-                            </sec-input>
+
+                                <sec-view a-hint="Category"
+                                          a-type="select"
+                                          a-show="categoryName"
+                                          sec-select-options="categories"
+                                          sec-model="categories.category"
+                                          sec-select-change="categoryChange(value)">
+                                </sec-view>
 
 
-                            <sec-input sec-placeholder="{{'Product' | translate }}"
-                                       id-attr="Product"
-                                       input-type-attr="transclude"
-                                       select-tag="true">
-                                <select class="inputtext"
-                                        ng-model="supportModel.product" ng-change="productChange()"
-                                        ng-options="p.productName for p in products">
-                                </select>
-                            </sec-input>
+                                <sec-view a-hint="Product"
+                                          a-type="select"
+                                          a-show="productName"
+                                          sec-model="supportModel.product"
+                                          sec-select-options="products"
+                                          sec-select-change="productChange(value)">
+                                </sec-view>
 
 
-                            <sec-input sec-placeholder="{{'Email' | translate}}"
-                                       sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
-                                       model-attr="supportModel.email"
-                                       id-attr="text">
-                            </sec-input>
+                                <sec-view a-hint="{{'Email' | translate}}"
+                                          sec-model="supportModel.email"
+                                          sec-require="mainCtrl.getRequire('Email')">
+                                </sec-view>
 
                             </div>
                         </div>
                         <div class="splitter">
                             <div class="smollPadding">
-                            <label>{{'Subject' | translate }}</label>
-                            <sec-textarea model-attr="supportModel.subject"
-                                          sec-t-required="null"
-                                          id-attr="Subject">
-                            </sec-textarea>
+                                <label>{{'Subject' | translate }}</label>
 
-                                </div>
+                                <sec-view a-type="textarea"
+                                          sec-model="supportModel.subject"
+                                          sec-require="mainCtrl.getRequire('Email')">
+                                </sec-view>
+
+                                <sec-textarea model-attr=""
+                                              sec-t-required="null"
+                                              id-attr="Subject">
+                                </sec-textarea>
+
+                                <sec-sender a-value="{{'SEND' | translate}}" sec-send="sendSupportEmail()"></sec-sender>
+
+                            </div>
                         </div>
 
                         <div class="buttonCover">
-                            <button sec-submit-attr="sendSupportEmail()"
-                                    class="roboto-medium sec-validate-invalid"
-                                    a-sec-validate-invalid >
-                                {{'SEND' | translate}}
-                            </button>
+
+                            <!--<button sec-submit-attr=""-->
+                                    <!--class="roboto-medium sec-validate-invalid"-->
+                                    <!--a-sec-validate-invalid>-->
+                                <!--{{'' | translate}}-->
+                            <!--</button>-->
                         </div>
                         <label class="{{registerAnswer.class}} invalid center"> {{registerAnswer.message}} </label>
 
 
-                    </sec-validate>
+                    </sec-form>
                 </div>
             </div>
         </div>

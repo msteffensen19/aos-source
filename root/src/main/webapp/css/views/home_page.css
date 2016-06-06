@@ -298,18 +298,6 @@ label.shop_now:after{
     background-color: #2a2a2a !important;
 }
 
-/*
-
-
-.categoryData button:hover {
-}
-
-.slider-length div:nth-child(2) .container button:hover{
-    background-color: transparent !important;
-    border: solid 2px black !important;
-    color: black;
-}
-*/
 .slider-steps {
     position: absolute !important;
     bottom: 10px;
@@ -370,25 +358,46 @@ label.shop_now:after{
 /* end POPULAR ITEMS */
 
 
+/* CONTACT */
+
+#supportCover .sec-view div label.select-value:before{
+    border-top: solid 4px white ;
+}
 
 
+#supportCover .sec-view div textarea {
+    border: 1px solid white;
+    background-color: #54b3ad;
+    color:white;
+    padding: 5px 10px;
+}
 
 
+#supportCover .sec-sender {
+    margin-top: 20px;
+    float: right;
+}
+
+#supportCover .sec-sender .sec-sender-a {
+    padding: 10px 50px;
+    background-color: #54b3ad;
+    border: white 2px solid;
+    color: white;
+}
 
 
+#supportCover .sec-sender .sec-sender-a.invalid {
+    border: solid 2px #82c8c3 !important;
+    color: #82c8c3 !important;
+}
+
+#supportCover .sec-sender:hover .sec-sender-a:not(.invalid) {
+    background-color: white;
+    color: #54b3ad;
+}
 
 
-
-
-
-
-/*
-
-  background-color: rgba(210, 0, 0, 0.1);
-
-*/
-
-
+/* end CONTACT */
 
 
 

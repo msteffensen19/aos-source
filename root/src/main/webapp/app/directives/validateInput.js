@@ -199,6 +199,7 @@ define(['./module'], function (directives) {
 
         var Types = {
             text: "text",
+            textarea: "textarea",
             select: "select",
             checkbox: "checkbox"
         }
@@ -224,6 +225,7 @@ define(['./module'], function (directives) {
                 secCompareTo: '=',
                 secModelCompareTo: '=',
 
+                secSelectChange: '&',
                 secIsValid: '&',
             },
             controller: ["$scope", function (s) {
@@ -262,6 +264,10 @@ define(['./module'], function (directives) {
                     this.compareTo = _compareTo;
                 };
 
+                var secSelectChange;
+                this.setSecSelectChange = function (_secSelectChange) {
+                    secSelectChange = _secSelectChange;
+                };
 
                 this.setDoNotShowInfo = function (_doNotShowInfo) {
                     doNotShowInfo = _doNotShowInfo;
@@ -306,20 +312,22 @@ define(['./module'], function (directives) {
                     firstLoader = false;
                 };
 
+                var selectedList;
                 this.fillSelect = function (arr, name) {
                     if (arr) {
+                        selectedList = arr;
                         var selectList = ctrl.getSelectlist();
                         selectList.empty();
                         for (var i = 0; i < arr.length; i++) {
-                            var item = arr[i];
+                            var item = selectedList[i];
                             var span;
                             if (name) {
-                                span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
+                                span = $("<span data-ng-click='selectItemChangeModel(" + i + ")'" +
                                     " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseleave='selectItemMouseOut()'>"
                                     + item[name] + "</span>");
                             }
                             else {
-                                span = $("<span data-ng-click='selectItemChangeModel(" + JSON.stringify(item) + ")'" +
+                                span = $("<span data-ng-click='selectItemChangeModel(" + i + ")'" +
                                     " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseout='selectItemMouseOut()'>"
                                     + item + "</span>");
                             }
@@ -329,8 +337,9 @@ define(['./module'], function (directives) {
                     }
                 };
 
-                s.selectItemChangeModel = function (validation) {
+                s.selectItemChangeModel = function (index) {
 
+                    var validation = selectedList[index];
                     if (!label.hasClass(animated)) {
                         label.addClass(animated)
                         $timeout(function () {
@@ -344,6 +353,9 @@ define(['./module'], function (directives) {
                         else {
                             s.secModel = validation;
                         }
+                    }
+                    if (secSelectChange) {
+                        secSelectChange({value: validation});
                     }
                 };
 
@@ -366,7 +378,7 @@ define(['./module'], function (directives) {
 
                 this.change = function (val) {
 
-                    if (val == undefined) {
+                    if (val == undefined || s.secModel == undefined) {
                         return;
                     }
                     if (s.secModel != undefined) {
@@ -488,7 +500,10 @@ define(['./module'], function (directives) {
                     form.setToLateToCheck();
 
                     if (isSelectedDesign()) {
-                        ctrl.getSelectlist().fadeToggle();
+                        var selectedList = ctrl.getSelectlist();
+                        if (selectedList.children().length > 0) {
+                            selectedList.fadeToggle();
+                        }
                         return;
                     }
                     if (isCheckboxDesign()) {
@@ -635,71 +650,76 @@ define(['./module'], function (directives) {
                 function checkViewValidations() {
                     var validation = null;
                     var validInput = true;
-                    try {
-                        for (var i = 0; i < s.validations.length; i++) {
-                            validation = s.validations[i];
-                            switch (validation.key) {
-                                case Keys.secRequired:
-                                    if (s.secModel.trim() == '') {
-                                        showValidation(i);
-                                        validInput = false;
-                                    }
-                                    else {
-                                        hideValidation(i)
-                                    }
-                                    break;
-                                case Keys.secMinLength:
-                                    if (s.secModel.length < validation.min && (s.secModel + "").length != 0) {
-                                        showValidation(i);
-                                        validInput = false;
-                                    }
-                                    else {
-                                        hideValidation(i);
-                                    }
-                                    break;
-                                case Keys.secMaxLength:
-                                    if (s.secModel.length > validation.max) {
-                                        showValidation(i);
-                                        validInput = false;
-                                    }
-                                    else {
-                                        hideValidation(i)
-                                    }
-                                    break;
-                                case Keys.secPattern:
-                                    if (!(new RegExp(validation.regex).test(s.secModel)) && (input.val()).length != 0) {
-                                        showValidation(i);
-                                        validInput = false;
-                                    }
-                                    else {
-                                        hideValidation(i);
-                                    }
-                                    break;
-                                case Keys.secCompareTo:
-                                    if (ctrl.compareTo.val() != s.secModel && ctrl.compareTo.val() != "") {
-                                        showValidation(i);
-                                        validInput = false;
-                                    }
-                                    else {
-                                        hideValidation(i);
-                                    }
-                                    break;
-                                case Keys.secCardNumber:
-                                    if (!(new RegExp(validation.regex).test(s.secModel) && s.secModel.length == validation.exactly - 4)) {
-                                        showValidation(i);
-                                        validInput = false;
-                                    }
-                                    else {
-                                        hideValidation(i);
-                                    }
-                                    break;
-                            }
-                        }
-                        return validInput;
+                    if (s.secModel) {
 
-                    } catch (e) {
-                        throwInvalidObjectFormat(validation, e);
+                        try {
+                            for (var i = 0; i < s.validations.length; i++) {
+                                validation = s.validations[i];
+                                switch (validation.key) {
+                                    case Keys.secRequired:
+                                        if (s.secModel.trim() == '') {
+                                            showValidation(i);
+                                            validInput = false;
+                                        }
+                                        else {
+                                            hideValidation(i)
+                                        }
+                                        break;
+                                    case Keys.secMinLength:
+                                        if (s.secModel.length < validation.min && (s.secModel + "").length != 0) {
+                                            showValidation(i);
+                                            validInput = false;
+                                        }
+                                        else {
+                                            hideValidation(i);
+                                        }
+                                        break;
+                                    case Keys.secMaxLength:
+                                        if (s.secModel.length > validation.max) {
+                                            showValidation(i);
+                                            validInput = false;
+                                        }
+                                        else {
+                                            hideValidation(i)
+                                        }
+                                        break;
+                                    case Keys.secPattern:
+                                        if (!(new RegExp(validation.regex).test(s.secModel)) && (input.val()).length != 0) {
+                                            showValidation(i);
+                                            validInput = false;
+                                        }
+                                        else {
+                                            hideValidation(i);
+                                        }
+                                        break;
+                                    case Keys.secCompareTo:
+                                        if (ctrl.compareTo.val() != s.secModel && ctrl.compareTo.val() != "") {
+                                            showValidation(i);
+                                            validInput = false;
+                                        }
+                                        else {
+                                            hideValidation(i);
+                                        }
+                                        break;
+                                    case Keys.secCardNumber:
+                                        if (!(new RegExp(validation.regex).test(s.secModel) && s.secModel.length == validation.exactly - 4)) {
+                                            showValidation(i);
+                                            validInput = false;
+                                        }
+                                        else {
+                                            hideValidation(i);
+                                        }
+                                        break;
+                                }
+                            }
+
+
+                        } catch (e) {
+                            throwInvalidObjectFormat(validation, e);
+                        }
                     }
+                    return validInput;
+
                 }
 
                 function hideValidation(index) {
@@ -772,6 +792,9 @@ define(['./module'], function (directives) {
                         ctrl.setCardNumberFourDigits(true);
                         ctrl.pushValidation(JSON.parse(s.secCardNumber), Keys.secCardNumber);
                     }
+                    if (s.secSelectChange) {
+                        ctrl.setSecSelectChange(s.secSelectChange)
+                    }
 
                     s.$watch('secDisableValidation ', function (n, o) {
                         ctrl.setDisableValidation(n);
@@ -780,7 +803,11 @@ define(['./module'], function (directives) {
                     var div = $("<div class='inputContainer'></div>");
                     var type = a.aType || "text"
                     var input;
-                    var label = $("<label data-ng-click='labelClicked()' data-ng-mouseout='labelOut()'>" + a.aHint + "</label>");
+                    var hideLabel = "";
+                    if (!a.aHint) {
+                        hideLabel = "style='display:none'";
+                    }
+                    var label = $("<label " + hideLabel + " data-ng-click='labelClicked()' data-ng-mouseout='labelOut()'>" + a.aHint + "</label>");
                     var name;
                     if (a.aShow) {
                         name = a.aShow;
@@ -803,6 +830,16 @@ define(['./module'], function (directives) {
                                 click: function () {
                                     ctrl.getSelectlist().fadeToggle(150);
                                 }
+                            });
+                            break;
+                        case Types.textarea:
+                            input = $("<textarea data-ng-model='secModel' ></textarea>");
+                            label.text(JSON.parse(s.secRequire).info);
+                            label.addClass("checkboxText roboto-light" + animated);
+                            div.css({
+                                "padding-top": "10px",
+                                "height": "auto",
+                                "margin": "0px 0",
                             });
                             break;
                         default:

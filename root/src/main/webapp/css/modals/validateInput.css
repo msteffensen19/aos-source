@@ -41,12 +41,12 @@
     float: right;
     position: absolute;
     top: 52px;
-    height: 161px;
+    max-height: 161px;
     width: 100%;
     border: solid 1px rgb(213, 213, 213);
     overflow: hidden;
     overflow-y: scroll;
-    resize: vertical;
+    /*resize: vertical;*/
     display: none;
     cursor: pointer;
     z-index: 20;
@@ -121,6 +121,17 @@
     border: none;
     border-bottom: 1px solid #CECCCC;
     transition: border-bottom .4s ease;
+}
+
+.sec-view div textarea {
+    margin: 0;
+    outline: none;
+    cursor: text;
+    border: none;
+    border: 1px solid #CECCCC;
+    width: 100%;
+    height: 115px;
+    resize: none;
 }
 
 .sec-view div.card-number-four-digits {
