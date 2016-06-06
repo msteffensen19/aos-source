@@ -87,6 +87,7 @@
 
                                 <sec-view
                                         a-hint="{{ userSecondWsdl ? 'Phone_Number2' : 'Phone_Number' | translate }}"
+                                        sec-max-length="mainCtrl.getMax(20)"
                                         sec-model="accountDetails.mobilePhone">
                                 </sec-view>
 

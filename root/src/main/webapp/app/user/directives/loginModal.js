@@ -15,7 +15,7 @@ define(['./module'], function (directives) {
 
 
                     /* VARIABLES */
-                    //$scope.rememberMe = false;
+                    $scope.rememberMe = false;
                     //$scope.message = "";
                     $scope.message = {text: $filter('translate')('OR'), _class: ''};
                     $scope.config = null;

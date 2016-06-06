@@ -10,6 +10,12 @@ define(['./module'], function (controllers) {
         function ($scope, $q, productService, smoothScroll, userService, orderService,
                   $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
+            var ctrl = this;
+
+            var EnterInFocus = {
+                login : 'login',
+            }
+            var enterInFocus = "";
 
             //console.log(navigator.network)
             //var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -22,6 +28,21 @@ define(['./module'], function (controllers) {
             //    connection.addEventListener('typechange', updateConnectionStatus);
             //}
 
+
+            $(document).on({
+                keydown: function(event) {
+                    var code = event.keyCode || event.which;
+                    console.log(code);
+                    if (code === 13) {
+                        switch (enterInFocus){
+                            case EnterInFocus.login:
+                                $scope.signIn($scope.loginUser, ctrl.rememberMe);
+                                break;
+                        }
+                    }
+                }
+
+            });
 
             $scope.cart;
             $scope.autoCompleteValue = '';
@@ -151,6 +172,7 @@ define(['./module'], function (controllers) {
             /* User section */
 
             $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+            this.rememberMe = false;
 
             var _setUser = 0;
             $scope.setUser = function () {
@@ -221,6 +243,8 @@ define(['./module'], function (controllers) {
                     return;
                 }
 
+                enterInFocus = EnterInFocus.login;
+
                 Helper.mobileSectionClose();
                 $('#toolTipCart').css('display', 'none');
                 var windowsWidth = $(window).width();
@@ -241,6 +265,7 @@ define(['./module'], function (controllers) {
 
             $(".PopUp, .closePopUpBtn").click(function () {
 
+                enterInFocus = "";
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
                 }, 600, function () {
@@ -273,7 +298,7 @@ define(['./module'], function (controllers) {
 
             $scope.gotoElement = function (id) {
                 $("body, html").animate({
-                    scrollTop: ($("#" + id).offset().top - 60) + "px",
+                    scrollTop: ($("#" + id).offset().top - 65) + "px",
                 }, 1000)
             };
 

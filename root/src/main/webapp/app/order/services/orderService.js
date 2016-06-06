@@ -197,12 +197,6 @@ define(['./module'], function (services) {
 
                     productsCartService.getCart().then(function (cart) {
 
-                        /// plaster
-                        if((user.firstName + user.lastName).trim().length < 1){
-                            user.firstName = "no_name";
-                        }
-                        /// end plaster
-
                         var paramsToPass = {
                             "seaddress": {
                                 "addressLine1": user.address,
