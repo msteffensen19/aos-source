@@ -1,19 +1,31 @@
-package com.advantage.common.dto;
+package com.advantage.order.store.dto;
 
 /**
  * Author Moti Ostrovski on 24/05/2016.
  */
 public class OrderHistoryProductDto {
 
-    private Long productId;
+    private long productId;
     private String productName;
-    private int productColor;
-    private int productColorName;
+    private String productColor;
     private double pricePerItem;
     private int productQuantity;
     private long orderNumber;
 
-    public OrderHistoryProductDto(){}
+    public OrderHistoryProductDto(){
+        initFields();
+    }
+
+    public OrderHistoryProductDto(long productId, String productName, String productColor,
+         double pricePerItem, int productQuantity,long orderNumber) {
+        initFields();
+        this.productId = productId;
+        this.productName = productName;
+        this.productColor = productColor;
+        this.pricePerItem = pricePerItem;
+        this.productQuantity = productQuantity;
+        this.orderNumber = orderNumber;
+    }
 
     public Long getProductId() {
         return productId;
@@ -31,20 +43,12 @@ public class OrderHistoryProductDto {
         this.productName = productName;
     }
 
-    public int getProductColor() {
+    public String getProductColor() {
         return productColor;
     }
 
-    public void setProductColor(int productColor) {
+    public void setProductColor(String productColor) {
         this.productColor = productColor;
-    }
-
-    public int getProductColorName() {
-        return productColorName;
-    }
-
-    public void setProductColorName(int productColorName) {
-        this.productColorName = productColorName;
     }
 
     public double getPricePerItem() {
@@ -69,5 +73,15 @@ public class OrderHistoryProductDto {
 
     public void setOrderNumber(long orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    private void initFields()
+    {
+        productId = 0;
+        productName="";
+        productColor="";
+        pricePerItem=0.0;
+        productQuantity=0;
+        orderNumber=0;
     }
 }

@@ -4,12 +4,17 @@ import AccountServiceClient.*;
 import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
-import com.advantage.common.dto.OrdersHistoryDto;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
+import com.advantage.order.store.dao.OrderHistoryHeaderManagementRepository;
+import com.advantage.order.store.dao.OrderHistoryLineManagementRepository;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.dao.OrderManagementRepository;
+import com.advantage.order.store.model.OrderHeader;
+import com.advantage.order.store.model.OrderLines;
+import com.advantage.order.store.model.ShoppingCart;
+import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,6 +52,14 @@ public class OrderManagementService {
     @Autowired
     @Qualifier("orderManagementRepository")
     public OrderManagementRepository orderManagementRepository;
+
+    @Autowired
+    @Qualifier("orderHistoryHeaderManagementRepository")
+    public OrderHistoryHeaderManagementRepository orderHistoryHeaderManagementRepository;
+
+    @Autowired
+    @Qualifier("orderHistoryLineManagementRepository")
+    public OrderHistoryLineManagementRepository orderHistoryLineManagementRepository;
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -605,17 +618,61 @@ public class OrderManagementService {
     }
 
     //region get orders
-    public OrdersHistoryDto getAllOrders(){
-        //TODO Moti: complete return all orders history
-        return new OrdersHistoryDto();
+    /*
+    get orders history by userID or orderID
+    not set any value(userID =0, orderID=0 or not set in REST) => get all
+    currently order saved by unique orderID
+    if change to unique per user the option get by userID and orderID available
+     */
+    public  OrderHistoryCollectionDto getOrdersHistory(Long userId, Long orderId)
+    {
+        OrderHistoryCollectionDto orderHistoryCollectionDto = new OrderHistoryCollectionDto();
+        List<OrderHeader> orderHistoryHeaders=new ArrayList<OrderHeader>();
+        if((userId ==null || userId==0) && (orderId ==null || orderId==0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getAll();//getByUserId(accountId);
+        }
+        else if((userId ==null || userId==0) && (orderId !=null && orderId>0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderId(orderId);
+        }
+        else if((orderId ==null || orderId==0) && (userId !=null && userId>0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByUserId(userId);
+        }
+        else if((orderId !=null || orderId>0) && (userId !=null && userId>0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderIdAndUserId(orderId,userId);
+        }
+        if(orderHistoryHeaders.size()>0) {
+            try {
+
+                orderHistoryHeaders.forEach(order -> {
+                    OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+                    //get products by orderID
+                    List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
+//
+                    //set order fields
+                    orderHistoryDto.setOrderNumber(order.getOrderNumber());
+                    orderHistoryDto.setOrderTimestamp(order.getOrderTimestamp());
+                    orderHistoryDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
+                    orderHistoryDto.setPaymentMethod(order.getPaymentMethod());
+                    orderHistoryDto.setOrderTotalSum(order.getAmount());
+                    orderHistoryDto.setOrderShipingCost(order.getShippingCost());
+                    orderHistoryDto.setShippingAddress(order.getShippingAddress());
+                    //set user
+                    orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
+                    //set products
+                    orderLines.forEach(product -> {
+                        orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
+                                 product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
+                    });
+                    orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
+                });
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+        return orderHistoryCollectionDto;
     }
 
-    public  void getOrdersByAccountId(long accountId){
 
-    }
-
-    public  void getOrderByOrderId(long orderdId){
-
-    }
     //endregion get orders
 }

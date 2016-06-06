@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author Binyamin Regev on 23/05/2016
+ */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
 public class CatalogController {
@@ -46,9 +49,16 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
+//    private static final Logger log = LoggerFactory.getLogger(this.);
+
+//    protected CatalogController(){
+//        logger= LoggerFactory.
+//    }
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
-        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
     }
 
     //  region /products
@@ -65,7 +75,6 @@ public class CatalogController {
         Product product = productService.getProductById(id);
         if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         ProductDto dto = productService.getDtoByEntity(product);
-
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

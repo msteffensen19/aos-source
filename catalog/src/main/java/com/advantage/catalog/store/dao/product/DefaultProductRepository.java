@@ -21,6 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.CriteriaQuery;
+import org.hibernate.loader.criteria.CriteriaQueryTranslator;
+import org.hibernate.mapping.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -34,6 +37,10 @@ import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Component
 @Qualifier("productRepository")
@@ -218,8 +225,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         String hql = getSelectProductsByCategoryIdHql();
         Query query = entityManager.createQuery(hql);
         query.setParameter(Product.PARAM_CATEGORY_ID, categoryId);
-
-        return query.getResultList();
+        List<Product> products=query.getResultList();
+        return products;
     }
 
     @Override
@@ -241,7 +248,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                 .append(" AND P.")
                 .append(Product.FIELD_CATEGORY_ID)
                 .append(" = :")
-                .append(Product.PARAM_CATEGORY_ID);
+                .append(Product.PARAM_CATEGORY_ID)
+                .append(" ORDER BY P.productName"); //add by Moti
 
         return hql.toString();
     }
@@ -283,7 +291,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public List<Product> getAll() {
         List<Product> products = entityManager.createNamedQuery(Product.QUERY_GET_ALL, Product.class)
                 .getResultList();
-
+        products.forEach(product -> System.out.println(product.getProductName()));
         return products.isEmpty() ? null : products;
     }
 
@@ -311,7 +319,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "product id");
         String hql = JPAQueryHelper.getSelectActiveByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);
         Query query = entityManager.createQuery(hql);
-
         List<Product> productList = query.getResultList();
         return productList.size() != 0 ? productList.get(0) : null;
     }
@@ -457,7 +464,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                 ProductService productService = new ProductService();
 
                 for (ProductDto productDto : categoryDto.getProducts()) {
-                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category);
+                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
                     product.setManagedImageId(productDto.getImageUrl());
                     entityManager.persist(product);
 

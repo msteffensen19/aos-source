@@ -46,4 +46,21 @@ public enum ProductStatusEnum {
         return false;
     }
 
+    public static ProductStatusEnum getValueByPropertyName(String propertyName){
+        if(propertyName==null || propertyName.equals(""))
+            return ACTIVE;
+        switch (propertyName.toLowerCase()){
+            case "active":
+                return ACTIVE;
+            case "block":
+                return BLOCK;
+            case "outofstock":
+                return OUT_OF_STOCK;
+            default:
+                break;
+        }
+        return ACTIVE;
+    }
+
+
 }

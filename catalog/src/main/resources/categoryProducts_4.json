@@ -762,12 +762,12 @@
         ],
         "colors": [
           {
-            "inStock": 10,
+            "inStock": 0,
             "name": "BLACK",
             "code": "414141"
           },
           {
-            "inStock": 10,
+            "inStock": 0,
             "name": "Turquoise",
             "code": "55CDD5"
           }
@@ -785,7 +785,8 @@
             "attributeName": "WEIGHT",
             "attributeValue": "0.15 lb"
           }
-        ]
+        ],
+        "productStatus": "OutOfStock"
       },
 
       {
@@ -1114,10 +1115,10 @@
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4300",
         "images": [
-          "ABCDEF##4308",
-          "414141##4301",
+          "414141##4304",
+          "3683D1##4301",
           "3683D1##4300",
-          "545195##4304"
+          "DD3A5B##4308"
         ],
         "colors": [
           {
@@ -1131,9 +1132,9 @@
             "inStock": 10
           },
           {
-            "code": "545195",
-            "name": "PURPLE",
-            "inStock": 10
+            "code": "DD3A5B",
+            "name": "Red",
+            "inStock": 0
           }
         ],
         "attributes": [

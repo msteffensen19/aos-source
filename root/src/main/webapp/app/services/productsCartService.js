@@ -245,7 +245,6 @@ define(['./module'], function (services) {
                             var request = $http({
                                 method: "put",
                                 headers: {
-                                    "content-type": "application/json; charset=utf-8",
                                     "Authorization": "Bearer " + user.response.token,
                                 },
                                 async: false,
