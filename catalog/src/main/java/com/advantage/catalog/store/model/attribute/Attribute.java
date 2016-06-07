@@ -39,6 +39,9 @@ public class Attribute {
     @OneToMany(mappedBy = "primaryKey.attribute", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductAttributes> productAttributes = new HashSet<>();
 
+    public Attribute() {
+    }
+
     public Attribute(String name) {
         setName(name);
     }

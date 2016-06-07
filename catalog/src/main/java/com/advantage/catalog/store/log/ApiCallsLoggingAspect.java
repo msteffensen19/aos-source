@@ -1,12 +1,10 @@
 package com.advantage.catalog.store.log;
 
-import com.sun.deploy.net.HttpResponse;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +12,11 @@ import java.util.Map;
 
 @Aspect
 public class ApiCallsLoggingAspect {
+
+    private Logger logger;
     @Before("execution(* com.advantage.catalog.store.api.*.*(..))")
     public void logApiRequest(JoinPoint joinPoint) {
+        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = null;
         for (Object arg : args) {
@@ -30,8 +31,8 @@ public class ApiCallsLoggingAspect {
 
     @AfterReturning(value = "execution(* com.advantage.catalog.store.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
+        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         if (result != null) {
-            Logger logger = Logger.getLogger(HttpResponse.class);
             String builder = joinPoint.getSignature().getName() +
                     " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
@@ -41,7 +42,6 @@ public class ApiCallsLoggingAspect {
     }
 
     private void logApiRequest(HttpServletRequest request) {
-        Logger logger = Logger.getLogger(HttpRequest.class);
         //TODO-EVG log test
         logger.info("EVG AOP LOG:" + getLoggingRequest(request));
     }

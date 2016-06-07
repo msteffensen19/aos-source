@@ -30,9 +30,7 @@ public class AdvantageDaoCallsLoggingAspect {
         assert joinPoint != null;
 
         final Signature signature = joinPoint.getSignature();
-        final Class<?> cls = signature.getDeclaringType();
-        //final Logger logger = LoggerFactory.getLogger(cls);
-        final Logger logger = Logger.getLogger(AdvantageDaoCallsLoggingAspect.class);
+        final Logger logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         final String daoMethodName = signature.getName();
         final StringBuilder info;
 

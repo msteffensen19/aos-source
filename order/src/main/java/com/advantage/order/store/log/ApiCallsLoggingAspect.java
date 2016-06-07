@@ -1,6 +1,5 @@
 package com.advantage.order.store.log;
 
-import com.sun.deploy.net.HttpResponse;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -14,8 +13,11 @@ import java.util.Map;
 
 @Aspect
 public class ApiCallsLoggingAspect {
+    private Logger logger;
+
     @Before("execution(* com.advantage.order.store.api.*.*(..))")
     public void logApiRequest(JoinPoint joinPoint) {
+        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = null;
         for (Object arg : args) {
@@ -30,8 +32,8 @@ public class ApiCallsLoggingAspect {
 
     @AfterReturning(value = "execution(* com.advantage.order.store.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
+        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         if (result != null) {
-            Logger logger = Logger.getLogger(HttpResponse.class);
             String builder = joinPoint.getSignature().getName() +
                     " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
