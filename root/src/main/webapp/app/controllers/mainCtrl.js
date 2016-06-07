@@ -6,9 +6,9 @@ define(['./module'], function (controllers) {
 
     'use strict';
     controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService', 'orderService',
-        '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state', '$timeout',
-        function ($scope, $q, productService, smoothScroll, userService, orderService,
-                  $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
+        '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state', '$timeout', 'categoryService',
+        function ($scope, $q, productService, smoothScroll, userService, orderService, $location, $cookie, $rootScope,
+                  productsCartService, $filter, $state, $timeout, categoryService) {
 
             var ctrl = this;
 
@@ -17,6 +17,7 @@ define(['./module'], function (controllers) {
                 search: 'search',
             }
             var enterInFocus = "";
+
 
             //console.log(navigator.network)
             //var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -64,6 +65,10 @@ define(['./module'], function (controllers) {
                     }
                 });
             }
+
+            /* Get all products data */
+            categoryService.getAllData();
+            /*===========================  end Get all products data ============================*/
 
 
             /* Get configuration */
@@ -130,30 +135,34 @@ define(['./module'], function (controllers) {
 
                 if ($(window).width() < 480) {
                     $("#toast a").html(toastMessage);
-                    $("#toast").stop().fadeIn(500);
+                    $("#toast").stop().fadeIn(200);
                     setTimeout(function () {
-                        $("#toast").stop().fadeOut(1500);
+                        $("#toast").stop().fadeOut(600);
                     }, 1500)
                 }
 
-                $('#toolTipCart').delay(500).slideDown(function () {
+                $('#toolTipCart').delay(100).slideDown(function () {
                     $('#toolTipCart tbody').stop().animate({
                         scrollTop: 0 + 'px',
                     }, 500, function () {
                         Helper.____closeTooTipCart = setTimeout(function () {
                             $('#toolTipCart').stop().slideUp();
-                        }, 8000)
+                        }, 4000)
                     });
                 });
             }
 
+            var _____enterCart;
             $scope.enterCart = function () {
                 clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
-                $('#toolTipCart').stop().slideDown();
-                fixToolTipCartHeight();
+                _____enterCart = setTimeout(function(){
+                    $('#toolTipCart').stop().slideDown();
+                    fixToolTipCartHeight();
+                }, 500);
             }
 
             $scope.leaveCart = function () {
+                clearInterval(_____enterCart);
                 Helper.closeToolTipCart();
             }
 
@@ -287,7 +296,7 @@ define(['./module'], function (controllers) {
 
 
             function setEnterInFocusHandler() {
-                if (document.location.hash.indexOf("#/search") != -1){
+                if (document.location.hash.indexOf("#/search") != -1) {
                     enterInFocus = enterInFocus.search;
                 } else {
                     enterInFocus = "";
@@ -371,8 +380,8 @@ define(['./module'], function (controllers) {
 
             $rootScope.$on('$locationChangeStart', function (event, current, previous) {
                 //$("html, body").css({opacity: 0});
-                $(".waitBackground").css({opacity: 1, display: "block",});
-                $("div.loader").css({opacity: 1, display: "block",});
+                //$(".waitBackground").css({opacity: 1, display: "block",});
+                //$("div.loader").css({opacity: 1, display: "block",});
             });
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {

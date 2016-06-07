@@ -167,10 +167,12 @@
 
 .categoryRight ul li .soulOut span{
     position: relative;
-    top: 8px;
+    top: 14px;
     font-size: 12px;
     text-align: center;
     color: white;
+    display: block;
+    line-height: 1.2;
 }
 
 .categoryRight ul li .imgProduct {

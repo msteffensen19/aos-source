@@ -29,7 +29,6 @@ define(['./module'], function (services) {
 
             /* returned functions */
 
-
             function clearCart() {
                 var responce = $q.defer();
                 var user = $rootScope.userCookie;
@@ -320,24 +319,22 @@ define(['./module'], function (services) {
                     if (user.response.userId != -1) {
 
                         Helper.enableLoader();
-                        $timeout(function(){
-                            var request = $http({
-                                method: "post",
-                                headers: {
-                                    "Authorization": "Bearer " + user.response.token,
-                                },
-                                data: {},
-                                async: false,
-                                url: server.order.addProductToUser(user.response.userId,
-                                    product.productId, product.colors[0].code, quantity),
-                            });
-                            request.then(function (newCart) {
-                                Helper.disableLoader();
-                                Loger.Received(newCart);
-                                cart = newCart.data;
-                                response.resolve(cart);
-                            })
-                        }, Helper.defaultTimeLoaderToEnable);
+                        var request = $http({
+                            method: "post",
+                            headers: {
+                                "Authorization": "Bearer " + user.response.token,
+                            },
+                            data: {},
+                            async: false,
+                            url: server.order.addProductToUser(user.response.userId,
+                                product.productId, product.colors[0].code, quantity),
+                        });
+                        request.then(function (newCart) {
+                            Helper.disableLoader();
+                            Loger.Received(newCart);
+                            cart = newCart.data;
+                            response.resolve(cart);
+                        });
 
                         return response.promise;
                     }
@@ -389,30 +386,28 @@ define(['./module'], function (services) {
 
                 var cartToReplace = [];
 
-                for(var prodIndex = 0 ; prodIndex < cart.productsInCart.length; prodIndex++)
-                {
+                for (var prodIndex = 0; prodIndex < cart.productsInCart.length; prodIndex++) {
                     var product = cart.productsInCart[prodIndex];
-                    checkOutOfStockProduct(product, prodIndex).then(function(res){
+                    checkOutOfStockProduct(product, prodIndex).then(function (res) {
 
-                        if(res._prod != null) {
+                        if (res._prod != null) {
                             cartToReplace.push(res.real_prod);
                         }
 
-                        if(res._prodIndex == cart.productsInCart.length - 1){
+                        if (res._prodIndex == cart.productsInCart.length - 1) {
                             cart.productsInCart = cartToReplace;
                             updateCart(cart);
                             defer.resolve(cart);
                         }
                     });
                 }
-                if(cart.productsInCart.length == 0)
-                {
+                if (cart.productsInCart.length == 0) {
                     defer.resolve(cart);
                 }
                 return defer.promise;
             }
 
-            function checkOutOfStockProduct(product, prodIndex){
+            function checkOutOfStockProduct(product, prodIndex) {
 
                 var defer = $q.defer()
                 $http({
@@ -421,20 +416,19 @@ define(['./module'], function (services) {
                 }).success(function (res) {
                     Loger.Received(res);
                     defer.resolve(res.productStatus == 'OutOfStock' ?
-                    {real_prod : product, _prod : null, _prodIndex : prodIndex } :
-                    {real_prod : product, _prod : res, _prodIndex : prodIndex });
+                    {real_prod: product, _prod: null, _prodIndex: prodIndex} :
+                    {real_prod: product, _prod: res, _prodIndex: prodIndex});
                 }).error(function (_err) {
                     Loger.Received(_err);
                     console.log("checkOutOfStockProduct() rejected!  ====== " + _err)
                     console.log(_err)
-                    defer.resolve({real_prod : product, _prod : res, _prodIndex : prodIndex });
+                    defer.resolve({real_prod: product, _prod: res, _prodIndex: prodIndex});
                 });
                 return defer.promise;
 
             }
 
         }]);
-
 
 
 });

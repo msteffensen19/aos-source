@@ -11,16 +11,29 @@ Helper.____closeTooTipCart;
 Helper.____showPage;
 Helper.mobile_section_moved;
 
-Helper.defaultTimeLoaderToEnable = 200;
+Helper.defaultTimeLoaderToEnable = 1000;
+
+var enableLoaderActivate = false;
+var ____enableLoaderActivate;
 Helper.enableLoader = function () {
-    $("div.loader").css({display: "block"});
-    $("div.loader").stop().animate({opacity: 1}, 300);
+    if(enableLoaderActivate){
+        return;
+    }
+    enableLoaderActivate = true;
+    ____enableLoaderActivate = setTimeout(function () {
+        $("div.loader").css({display: "block"});
+        $("div.loader").stop().animate({opacity: 1}, 300);
+    }, Helper.defaultTimeLoaderToEnable);
 };
 
 Helper.disableLoader = function () {
-    $("div.loader").stop().animate({opacity: 0}, 300, function () {
-        $(this).css({display: "none"});
-    });
+    if(enableLoaderActivate){
+        clearTimeout(____enableLoaderActivate);
+        $("div.loader").stop().animate({opacity: 0}, 300, function () {
+            $(this).css({display: "none"});
+            enableLoaderActivate = false;
+        });
+    }
 };
 
 Helper.forAllPage = function () {
@@ -46,7 +59,7 @@ Helper.footerHandler = function () {
 
         setTimeout(function () {
             var paddingTop = $(window).width() > 480 ? 90 : 0;
-            if (document.location.hash == "#/" || document.location.hash == "#/orderPayment"){
+            if (document.location.hash == "#/" || document.location.hash == "#/orderPayment") {
                 paddingTop = 0;
                 $("footer").css({
                     "position": "static",

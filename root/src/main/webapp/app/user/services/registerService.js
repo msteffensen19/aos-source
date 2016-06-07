@@ -11,30 +11,36 @@ define(['./module'], function (services) {
                 getAllCountries: getAllCountries,
             });
 
+            var countries;
 
             function getAllCountries() {
 
                 var defer = $q.defer();
-                var params = server.account.getAllCountries();
+                if (countries) {
+                    defer.resolve(countries);
+                }
+                else {
+                    var params = server.account.getAllCountries();
 
-                mini_soap.post(params.path, params.method).
-                then(function (response) {
-                        Loger.Received(response);
-                        var countries = [];
-                        angular.forEach(response, function (country) {
-                            countries.push({
-                                id: country.ID,
-                                isoName: country.ISONAME,
-                                name: country.NAME,
-                                phonePrefix: country.PHONEPREFIX,
+                    mini_soap.post(params.path, params.method).
+                    then(function (response) {
+                            Loger.Received(response);
+                            countries = [];
+                            angular.forEach(response, function (country) {
+                                countries.push({
+                                    id: country.ID,
+                                    isoName: country.ISONAME,
+                                    name: country.NAME,
+                                    phonePrefix: country.PHONEPREFIX,
+                                });
                             });
+                            defer.resolve(countries);
+                        },
+                        function (response) {
+                            Loger.Received(response);
+                            defer.reject("Request failed! ");
                         });
-                        defer.resolve(countries);
-                    },
-                    function (response) {
-                        Loger.Received(response);
-                        defer.reject("Request failed! ");
-                    });
+                }
                 return defer.promise;
             }
 
@@ -61,29 +67,26 @@ define(['./module'], function (services) {
                 Loger.Params(expectToReceive, params.method);
 
                 Helper.enableLoader();
-                $timeout(function () {
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (res) {
+                mini_soap.post(params.path, params.method, expectToReceive).
+                then(function (res) {
 
-                            var response = {
-                                reason: res.REASON,
-                                success: Helper.parseBoolean(res.SUCCESS),
-                            }
-                            Helper.disableLoader();
-                            Loger.Received(response);
-                            defer.resolve(response);
-                        },
-                        function (res) {
-                            Loger.Received(res);
-                            var response = {
-                                reason: res.REASON ? res.REASON : "Request failed! ",
-                                success: res.SUCCESS ? Helper.parseBoolean(res.SUCCESS) : false,
-                            }
-                            Helper.disableLoader();
-                            defer.reject(response);
-                        });
-
-                }, Helper.defaultTimeLoaderToEnable);
+                        var response = {
+                            reason: res.REASON,
+                            success: Helper.parseBoolean(res.SUCCESS),
+                        }
+                        Helper.disableLoader();
+                        Loger.Received(response);
+                        defer.resolve(response);
+                    },
+                    function (res) {
+                        Loger.Received(res);
+                        var response = {
+                            reason: res.REASON ? res.REASON : "Request failed! ",
+                            success: res.SUCCESS ? Helper.parseBoolean(res.SUCCESS) : false,
+                        }
+                        Helper.disableLoader();
+                        defer.reject(response);
+                    });
 
                 return defer.promise;
             }

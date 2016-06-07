@@ -143,3 +143,12 @@ var l = function (a) {
 var t = function (a) {
     alert(a)
 }
+
+print = function(a){
+    console.log(" ");
+    console.log("  ");
+    console.log(a);
+    console.log("******************************");
+    console.log(" ");
+    console.log("  ");
+}
