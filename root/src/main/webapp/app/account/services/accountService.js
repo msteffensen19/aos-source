@@ -7,6 +7,7 @@ define(['./module'], function (services) {
     services.service('accountService', ['$rootScope', '$q', 'mini_soap', '$timeout',
 
         function ($rootScope, $q, mini_soap, $timeout) {
+
             return {
 
                 getAccountDetails: function () {

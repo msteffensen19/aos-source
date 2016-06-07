@@ -77,11 +77,13 @@ define(['./module'], function (services) {
                         };
                         for (var j = 0; j < data.products.length; j++) {
                             var product = allData[i].products[j];
-                            if (product.productName.indexOf(word) != -1) {
+                            if (product.productName.toLowerCase().indexOf(word.toLowerCase()) != -1) {
                                 category.products.push(product);
                             }
                         }
-                        arr.push(category);
+                        if(category.products.length > 0){
+                            arr.push(category);
+                        }
                     }
                     response.resolve(arr);
                 }
