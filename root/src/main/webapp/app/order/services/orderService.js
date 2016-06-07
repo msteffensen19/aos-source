@@ -20,7 +20,7 @@ define(['./module'], function (services) {
                 getShippingCost: getShippingCost,
                 SafePay: SafePay,
                 accountUpdate: accountUpdate,
-                userIsLogin: userIsLogin
+                userIsLogin: userIsLogin,
             });
 
             function userIsLogin() {
@@ -193,47 +193,52 @@ define(['./module'], function (services) {
                 //if((user.firstName + user.lastName).replace(/\s/g, "").length < 1){
                 //    defer.resolve(null);
                 //}
-                //else {
 
-                    productsCartService.getCart().then(function (cart) {
+                productsCartService.getCart().then(function (cart) {
 
-                        var paramsToPass = {
-                            "seaddress": {
-                                "addressLine1": user.address,
-                                "addressLine2": "",
-                                "city": user.cityName,
-                                "country": user.country,
-                                "postalCode": user.zipcode,
-                                "state": user.stateProvince
-                            },
-                            "secustomerName": user.firstName + " " + user.lastName,
-                            "secustomerPhone": user.phoneNumber,
-                            "senumberOfProducts": $filter('productsCartCount')(cart),
-                            "setransactionType": "SHIPPINGCOST"
-                        };
+                    /// plaster
+                    if ((user.firstName + user.lastName).trim().length < 1) {
+                        user.firstName = $rootScope.userCookie.name;
+                    }
+                    /// end plaster
 
-                        Loger.Params(paramsToPass, server.order.getShippingCost());
+                    var paramsToPass = {
+                        "seaddress": {
+                            "addressLine1": user.address,
+                            "addressLine2": "",
+                            "city": user.cityName,
+                            "country": user.country,
+                            "postalCode": user.zipcode,
+                            "state": user.stateProvince
+                        },
+                        "secustomerName": user.firstName + " " + user.lastName,
+                        "secustomerPhone": user.phoneNumber,
+                        "senumberOfProducts": $filter('productsCartCount')(cart),
+                        "setransactionType": "SHIPPINGCOST"
+                    };
 
-                        Helper.enableLoader();
-                        $timeout(function () {
-                            $http({
-                                method: "post",
-                                url: server.order.getShippingCost(),
-                                data: paramsToPass,
-                            }).
-                            then(function (shippingCost) {
+                    Loger.Params(paramsToPass, server.order.getShippingCost());
 
-                                Loger.Received(shippingCost);
-                                Helper.disableLoader();
-                                defer.resolve(shippingCost.data)
-                            }, function (err) {
-                                Loger.Received(err);
-                                Helper.disableLoader();
-                                defer.reject(JSON.stringify(err))
-                            })
-                        }, Helper.defaultTimeLoaderToEnable);
-                    })
-                //}
+                    Helper.enableLoader();
+                    $timeout(function () {
+                        $http({
+                            method: "post",
+                            url: server.order.getShippingCost(),
+                            data: paramsToPass,
+                        }).
+                        then(function (shippingCost) {
+
+                            Loger.Received(shippingCost);
+                            Helper.disableLoader();
+                            defer.resolve(shippingCost.data)
+                        }, function (err) {
+                            Loger.Received(err);
+                            Helper.disableLoader();
+                            defer.reject(JSON.stringify(err))
+                        })
+                    }, Helper.defaultTimeLoaderToEnable);
+                });
+
                 return defer.promise;
             }
         }]);

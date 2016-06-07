@@ -13,7 +13,8 @@ define(['./module'], function (controllers) {
             var ctrl = this;
 
             var EnterInFocus = {
-                login : 'login',
+                login: 'login',
+                search: 'search',
             }
             var enterInFocus = "";
 
@@ -30,18 +31,26 @@ define(['./module'], function (controllers) {
 
 
             $(document).on({
-                keydown: function(event) {
+                keydown: function (event) {
                     var code = event.keyCode || event.which;
-                    console.log(code);
+                    console.log("mainCtrl: " + code);
                     if (code === 13) {
-                        switch (enterInFocus){
+                        switch (enterInFocus) {
                             case EnterInFocus.login:
-                                $scope.signIn($scope.loginUser, ctrl.rememberMe);
+                                if ($scope.loginUser.loginPassword != "" && $scope.loginUser.loginUser != "") {
+                                    if ($scope.loginUser.email == "" && $scope.config.emailAddressInLogin) {
+                                    }
+                                    else {
+                                        $scope.signIn($scope.loginUser, ctrl.rememberMe);
+                                    }
+                                }
+                                break;
+                            case EnterInFocus.search:
+
                                 break;
                         }
                     }
                 }
-
             });
 
             $scope.cart;
@@ -265,7 +274,8 @@ define(['./module'], function (controllers) {
 
             $(".PopUp, .closePopUpBtn").click(function () {
 
-                enterInFocus = "";
+                setEnterInFocusHandler();
+
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
                 }, 600, function () {
@@ -274,6 +284,16 @@ define(['./module'], function (controllers) {
                     });
                 });
             });
+
+
+            function setEnterInFocusHandler() {
+                if (document.location.hash.indexOf("#/search") != -1){
+                    enterInFocus = enterInFocus.search;
+                } else {
+                    enterInFocus = "";
+                }
+            }
+
 
             $(".PopUp > div").click(function (e) {
                 e.stopPropagation();
@@ -450,7 +470,7 @@ define(['./module'], function (controllers) {
                                 ['Invalid_CCV_number', 'Valid_CCV_number_required', '^[0-9]{3,3}$']];
                             break;
                         default:
-                            throw "type of pattern not match (this.getPattern('" +data+ "');"
+                            throw "type of pattern not match (this.getPattern('" + data + "');"
                     }
                 }
                 var arr = [];
@@ -484,14 +504,14 @@ define(['./module'], function (controllers) {
                 });
             };
 
-            this.getAgreeAgreementRequire = function(){
+            this.getAgreeAgreementRequire = function () {
                 return JSON.stringify({
                     error: $filter("translate")("AgreeAgreementRequire"),
                     info: $filter("translate")("AgreeAgreementRequire"),
                 });
             };
 
-            this.getNoticeInfo = function(){
+            this.getNoticeInfo = function () {
                 return JSON.stringify([
                     $filter("translate")("This_is_a_demo"),
                     $filter("translate")("Please_enter_a_fake_data"),
