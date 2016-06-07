@@ -46,7 +46,7 @@ Helper.footerHandler = function () {
 
         setTimeout(function () {
             var paddingTop = $(window).width() > 480 ? 90 : 0;
-            if (document.location.hash == "#/") {
+            if (document.location.hash == "#/" || document.location.hash == "#/orderPayment"){
                 paddingTop = 0;
                 $("footer").css({
                     "position": "static",

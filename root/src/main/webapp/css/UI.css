@@ -1,5 +1,4 @@
 /*
-
 @font-face {
     font-family: 'MyWebFont';
     src: url('webfont.eot');                                        IE9 Compat Modes
@@ -72,13 +71,10 @@
 /*Tablet – 1024 x 768*/
 /*Smartphone – 480 x 320*/
 
-/*
------------------------- Start ------------------------
-*/
-
 * {
     font-family: 'localRobotoRegular';
 }
+
 
 .roboto-thin {
     font-family: "localRobotoThin";
@@ -111,16 +107,18 @@
     -webkit-user-select: none;
     user-select: none;
 }
-
+/*
 .a *{
     margin: 0;
     padding: 0;
 }
 
+
 html, body{
     margin: 0;
     padding: 0;
 }
+*/
 
 .waitBackground{
     position: fixed;
@@ -145,9 +143,9 @@ html, body{
 input, select, button, #follow img, .slider-steps span, #scrollToTop img{
     cursor: pointer;
 }
+/*!*button.roboto-medium,*!*/
 
-/*button.roboto-medium,*/
-
+/*
 button,
 input[type=submit].roboto-medium,
 input[type=reset].roboto-medium,
@@ -158,6 +156,7 @@ input[type=button].roboto-medium {
     -moz-border-radius:0 !important;
     border-radius:0 !important;
 }
+*/
 
 .fixed{
     position: fixed !important;
@@ -257,7 +256,7 @@ nav.pages *{
     display: block;
 }
 
-
+/*
 input[type="text"], input[type="password"], .inputtext {
     display: block;
     margin: 0;
@@ -300,16 +299,16 @@ input[type="password"]:-ms-input-placeholder,
     white-space: nowrap;
     top: 11px;
     position: absolute;
-    /*-webkit-transition: all 0s linear, top 0.8s cubic-bezier(.62,-0.14,.35,1.34);*/
-    /*transition:  all 0s linear, top 0.8s cubic-bezier(.62,-0.14,.35,1.34);*/
-    /*transition-delay: 0s !important; */
+    !*-webkit-transition: all 0s linear, top 0.8s cubic-bezier(.62,-0.14,.35,1.34);*!
+    !*transition:  all 0s linear, top 0.8s cubic-bezier(.62,-0.14,.35,1.34);*!
+    !*transition-delay: 0s !important; *!
     left:0;
     color: #CECCCC !important;
     background-color: transparent;
     font-size: 14px;
     cursor: text;
 }
-
+*/
 
 .center{
     text-align: center;
@@ -332,7 +331,12 @@ h3.roboto-regular{
     position: relative;
 }
 
-.option input[type=checkbox] {
+.option.marginTop {
+    margin-top: 10px;
+}
+
+
+input[type=checkbox] {
     display: inline-block;
     -webkit-appearance: none;
     outline: 0;
@@ -344,19 +348,19 @@ h3.roboto-regular{
     vertical-align: top;
 }
 
-.option input[type=checkbox] {
+input[type=checkbox] {
     width: 16px;
     height: 16px;
     background-color: white;
     border: solid #54b3ad 1px;
 }
 
-.option input[type=checkbox]:not(:checked) {
+input[type=checkbox]:not(:checked) {
     background-image: url("");
     border: solid #d0d0d0 1px;
 }
 
-.option input[type=checkbox]:checked {
+input[type=checkbox]:checked {
     background-image: url("images/Check.png");
     background-position: 60% 36%;
     background-size: 95%;
@@ -377,9 +381,11 @@ h3.roboto-regular{
 .word{
     display: inline-block;
 }
+
 .block{
     display: block;
 }
+
 .mini-title {
     position: absolute;
     top:45px;
@@ -403,7 +409,6 @@ h3.roboto-regular{
     padding: 7px;
     cursor: pointer;
 }
-
 
 .display{
     display: block;
@@ -451,8 +456,8 @@ button:hover {
 }
 
 .a-button:hover {
-    color: white;
-    background-color: #2a2a2a;
+    color: white !important;
+    background-color: #2a2a2a !important;
 }
 
 .a-link:hover {
@@ -463,18 +468,21 @@ a {
     text-decoration: none;
 }
 
-.invalid{
+.invalid:not(input){
     color: #FF454F !important;
-    font-weight: 400 !important;
-    font-size: 13px !important;
+    /*font-weight: 400 !important;*/
+    /*font-size: 13px !important;*/
+    /*margin: 20px auto;*/
+    /*display: inline-block;*/
 }
 
-.sec-validate-invalid , .sec-validate-invalid:hover{
-    color: #b2b2b2 !important;
-    border: solid 2px #d1d1d1 !important;
-    cursor: default;
-    background-color: white !important;
+.smollMargin {
+    font-weight: 400 !important;
+    font-size: 13px !important;
+    margin-bottom: 20px;
 }
+
+
 
 .buttonDisable, .buttonDisable:hover {
     color: #b2b2b2 !important;
@@ -505,7 +513,6 @@ a {
     z-index: 200;
     top: calc(50% - 10px);
     left: -10px;
-
 }
 
 .mobileTitle .mini-title:after {
@@ -520,6 +527,4 @@ a {
 
 }
 
-/*
------------------------- End ------------------------
-*/
+

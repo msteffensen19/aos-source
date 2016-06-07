@@ -31,19 +31,10 @@ define(['./module'], function (controllers) {
 
             s.register = function () {
 
-                if (!s.model.country.id) {
-                    for (var i = 0; i < s.countries.length; i++) {
-                        if(s.countries[i].id == 40){
-                            s.model.country = s.countries[i];
-                            break;
-                        }
-                    }
-                }
-
                 registerService.register(s.model).then(function (response) {
 
-                    s.registerAnswer.message = response.reason || $filter('translate')('register_faild'),
-                        s.registerAnswer.class = response.success ? 'valid' : 'invalid';
+                    s.registerAnswer.message = response.reason || $filter('translate')('register_faild');
+                    s.registerAnswer.class = response.success ? 'valid' : 'invalid';
 
                     if (response.success) {
                         $('body, html').animate({scrollTop: 0}, 10);
@@ -59,9 +50,25 @@ define(['./module'], function (controllers) {
                         }
                         s.signIn(user, false)
                         $timeout(function () {
-                            $state.go('default')
+                            if(document.location.hash == "#/register"){
+                                $state.go('default')
+                            }
+                        }, 8000)
+                    }
+                    else {
+                        $timeout(function () {
+                            s.registerAnswer.message = "";
+                            s.registerAnswer.class = "";
                         }, 5000)
                     }
+                }, function (err) {
+                    console.log(err);
+                    s.registerAnswer.message = $filter('translate')('register_faild');
+                    s.registerAnswer.class = 'invalid';
+                    $timeout(function () {
+                        s.registerAnswer.message = "";
+                        s.registerAnswer.class = "";
+                    }, 5000)
                 });
             }
 

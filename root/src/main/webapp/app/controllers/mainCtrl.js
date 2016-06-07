@@ -10,6 +10,13 @@ define(['./module'], function (controllers) {
         function ($scope, $q, productService, smoothScroll, userService, orderService,
                   $location, $cookie, $rootScope, productsCartService, $filter, $state, $timeout) {
 
+            var ctrl = this;
+
+            var EnterInFocus = {
+                login: 'login',
+                search: 'search',
+            }
+            var enterInFocus = "";
 
             //console.log(navigator.network)
             //var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -23,6 +30,28 @@ define(['./module'], function (controllers) {
             //}
 
 
+            $(document).on({
+                keydown: function (event) {
+                    var code = event.keyCode || event.which;
+                    console.log("mainCtrl: " + code);
+                    if (code === 13) {
+                        switch (enterInFocus) {
+                            case EnterInFocus.login:
+                                if ($scope.loginUser.loginPassword != "" && $scope.loginUser.loginUser != "") {
+                                    if ($scope.loginUser.email == "" && $scope.config.emailAddressInLogin) {
+                                    }
+                                    else {
+                                        $scope.signIn($scope.loginUser, ctrl.rememberMe);
+                                    }
+                                }
+                                break;
+                            case EnterInFocus.search:
+
+                                break;
+                        }
+                    }
+                }
+            });
 
             $scope.cart;
             $scope.autoCompleteValue = '';
@@ -152,6 +181,7 @@ define(['./module'], function (controllers) {
             /* User section */
 
             $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+            this.rememberMe = false;
 
             var _setUser = 0;
             $scope.setUser = function () {
@@ -179,6 +209,7 @@ define(['./module'], function (controllers) {
                     $cookie.remove('lastlogin');
                     $rootScope.userCookie = undefined;
                     $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+
                     productsCartService.loadCartProducts().then(function (cart) {
                         $scope.cart = cart;
                         $scope.checkCart();
@@ -200,15 +231,15 @@ define(['./module'], function (controllers) {
             }
 
             var ____loginInterval;
-            $scope.miniTitleIn = function(){
-                if(____loginInterval){
+            $scope.miniTitleIn = function () {
+                if (____loginInterval) {
                     $timeout.cancel(____loginInterval);
                 }
             }
 
-            $scope.miniTitleOut= function(miniTitleId){
-                if($("#" + miniTitleId).css('display') != 'none'){
-                    ____loginInterval = $timeout(function(){
+            $scope.miniTitleOut = function (miniTitleId) {
+                if ($("#" + miniTitleId).css('display') != 'none') {
+                    ____loginInterval = $timeout(function () {
                         $("#" + miniTitleId).fadeOut(300);
                     }, 2000);
                 }
@@ -220,6 +251,8 @@ define(['./module'], function (controllers) {
                     $("#" + miniTitleId).fadeToggle(300);
                     return;
                 }
+
+                enterInFocus = EnterInFocus.login;
 
                 Helper.mobileSectionClose();
                 $('#toolTipCart').css('display', 'none');
@@ -241,6 +274,8 @@ define(['./module'], function (controllers) {
 
             $(".PopUp, .closePopUpBtn").click(function () {
 
+                setEnterInFocusHandler();
+
                 $(".PopUp > div:nth-child(1)").animate({
                     "top": "-150%"
                 }, 600, function () {
@@ -249,6 +284,16 @@ define(['./module'], function (controllers) {
                     });
                 });
             });
+
+
+            function setEnterInFocusHandler() {
+                if (document.location.hash.indexOf("#/search") != -1){
+                    enterInFocus = enterInFocus.search;
+                } else {
+                    enterInFocus = "";
+                }
+            }
+
 
             $(".PopUp > div").click(function (e) {
                 e.stopPropagation();
@@ -273,7 +318,7 @@ define(['./module'], function (controllers) {
 
             $scope.gotoElement = function (id) {
                 $("body, html").animate({
-                    scrollTop: ($("#" + id).offset().top - 60) + "px",
+                    scrollTop: ($("#" + id).offset().top - 65) + "px",
                 }, 1000)
             };
 
@@ -300,7 +345,7 @@ define(['./module'], function (controllers) {
             var _____autoLogOut;
             $scope.refreshTimeOut = function () {
 
-                if($scope.config == null){
+                if ($scope.config == null) {
                     return;
                 }
                 if (orderService.userIsLogin()) {
@@ -324,11 +369,10 @@ define(['./module'], function (controllers) {
             });
 
 
-
             $rootScope.$on('$locationChangeStart', function (event, current, previous) {
                 //$("html, body").css({opacity: 0});
-                    $(".waitBackground").css({opacity: 1, display: "block",});
-                    $("div.loader").css({opacity: 1, display: "block", });
+                $(".waitBackground").css({opacity: 1, display: "block",});
+                $("div.loader").css({opacity: 1, display: "block",});
             });
 
             $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
@@ -366,9 +410,115 @@ define(['./module'], function (controllers) {
                 Helper.mobileSectionHandler();
             }
 
-            $scope.$on('$viewContentLoaded', function(event) {
+            $scope.$on('$viewContentLoaded', function (event) {
                 Helper.forAllPage();
             });
+
+
+            this.getRequire = function (nameRequire) {
+                return JSON.stringify({
+                    error: $filter("translate")(nameRequire) + " " + $filter("translate")("field_is_required"),
+                });
+            }
+
+
+            this.getCompare = function (name, model) {
+                var nameAfterTranslate = $filter("translate")(name);
+                return JSON.stringify({
+                    error: nameAfterTranslate + $filter("translate")('This_field_not_match_with'),
+                    info: "- " + $filter("translate")("Same_as") + " " + nameAfterTranslate,
+                    model: model,
+                });
+            }
+
+            this.getCardNumber = function (exactlyNum) {
+                return JSON.stringify({
+                    error: $filter("translate")('Invalid_Card_number'),
+                    info: "- " + $filter("translate")("Use_exactly") + " " + exactlyNum + " " + $filter("translate")('numbers'),
+                    exactly: exactlyNum,
+                    regex: "^[0-9]*$"
+                });
+            };
+
+            this.getPattern = function (data) {
+
+                if (typeof data === 'string') {
+                    switch (data) {
+                        case 'Username':
+                            data = [
+                                ['letters_number_symbols_only', 'letters_number_symbols_only',
+                                    '^[A-Za-z0-9_.-]{0,999}$']];
+                            break;
+                        case 'Email':
+                            data = [['email_no_formatted_correctly', '',
+                                '^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,100})$']];
+                            break;
+                        case 'Password':
+                            data = [
+                                ['one_lower_letter_required', 'Including_one_lower_letter', '(?=.*[a-z])'],
+                                ['one_upper_letter_required', 'Including_one_upper_letter', '(?=.*[A-Z])'],
+                                ['one_number_required', 'Including_one_number', '(?=.*[0-9])'],
+                            ];
+                            break;
+                        case 'Compare':
+                            data = [
+                                ['letters_number_symbols_only', 'letters_number_symbols_only',
+                                    '^[A-Za-z0-9_.-]{0,999}$']];
+                            break;
+                        case 'CCV_Number':
+                            data = [
+                                ['Invalid_CCV_number', 'Valid_CCV_number_required', '^[0-9]{3,3}$']];
+                            break;
+                        default:
+                            throw "type of pattern not match (this.getPattern('" + data + "');"
+                    }
+                }
+                var arr = [];
+                for (var i = 0; i < data.length; i++) {
+                    var info = $filter("translate")(data[i][1]);
+                    arr.push({
+                        error: $filter("translate")(data[i][0]),
+                        info: info != '' ? "- " + info : '',
+                        regex: data[i][2],
+                    });
+                }
+                return JSON.stringify({
+                    regexes: arr
+                });
+            };
+
+            this.getMin = function (min) {
+                return JSON.stringify({
+                    error: $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character_or_longer"),
+                    info: "- " + $filter("translate")("Use_up_of") + " " + min + " " + $filter("translate")("character_or_longer"),
+                    min: min
+                });
+            };
+
+
+            this.getMax = function (max) {
+                return JSON.stringify({
+                    error: $filter("translate")("Use_maximum") + " " + max + " " + $filter("translate")("character"),
+                    info: "- " + $filter("translate")("Use_maximum") + " " + max + " " + $filter("translate")("character"),
+                    max: max
+                });
+            };
+
+            this.getAgreeAgreementRequire = function () {
+                return JSON.stringify({
+                    error: $filter("translate")("AgreeAgreementRequire"),
+                    info: $filter("translate")("AgreeAgreementRequire"),
+                });
+            };
+
+            this.getNoticeInfo = function () {
+                return JSON.stringify([
+                    $filter("translate")("This_is_a_demo"),
+                    $filter("translate")("Please_enter_a_fake_data"),
+                ]);
+            };
+
+
         }]);
 });
 

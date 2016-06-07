@@ -130,36 +130,48 @@
     #supportCover .splitter{
         width: 100%;
     }
+
+    #supportCover .buttonCover {
+        padding: 20px 0px 0px 0px;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+    }
+
+    #supportCover .splitter > div{
+        margin: 0 26px;
+        text-align: left;
+    }
 }
 
 
 @media screen and (max-width: 600px) {
+
     #supportCover > div{
         margin: 0px;
     }
-    #supportCover .buttonCover
-    {
-        width: 90%;
-        margin: 0;
-        padding: 0;
-    }
+
     #supportCover button{
         width: 90%;
         margin-right: auto;
         margin-left: auto;
     }
+
     #supportCover .contact_us{
         padding: 20px calc(20px + 4%);
         padding-top: 50px;
     }
+
+
+    #supportCover .buttonCover {
+        width: 100%;
+    }
+
 }
 
 
 @media screen and (max-width: 480px) {
 
-    #supportCover .buttonCover {
-        width: 100%;
-    }
 }
 
 

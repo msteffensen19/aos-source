@@ -59,7 +59,8 @@ define(['./module'], function (controllers) {
                 : safePay != null ? 1
                 : masterCredit != null ? 2 : 1;
 
-            s.saveMasterCredit = function () {
+            s._saveMasterCredit = function () {
+
                 var response;
                 if (!alreadyHaveMasterCreditCart) {
                     response = accountService.addMasterCreditMethod(s.card)

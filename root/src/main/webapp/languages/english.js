@@ -15,7 +15,6 @@ var english = {
     'LOGIN': 'LOGIN',
     'LOGOUT': 'This is a paragraph.',
     'SPACIAL_OFFER': 'SPECIAL OFFER',
-    'SPECIAL_OFFER_ITEMS': 'SPECIAL OFFER ITEMS',
     'POPULAR_ITEMS': 'POPULAR ITEMS',
     'FOLLOW_US': 'FOLLOW US',
     'LEGALS_FOOTER': '© Advantage Inc, 2016.',
@@ -93,12 +92,13 @@ var english = {
     'User_Name_pattern': "3-15 characters (0-9, A-Z, a-z, '_, ., -', allowed)",
     'I_agree_to_the_Advantage_com_Agreement': 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
     'Must_agree_to_the_Advantage_com_Agreement': 'You must agree to the the Advantage.com Conditions of Use and Privacy Notice.',
-    'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number': 'Use between 4-12 characters, including at least one upper case letter, one lower case letter, and one number.',
-    'Use_letters_number_and_the_following_symbols_only': 'Use letters, numbers, and the following symbols only: .-_',
+
+    'letters_number_symbols_only': 'Use letters, numbers, and the following symbols only: .-_',
 
     'CHECKOUT': 'CHECKOUT',
     'TOTAL': 'TOTAL',
     'Items': 'Items',
+    'Item': 'Item',
     'ITEMS': 'ITEMS',
     'ITEM': 'ITEM',
     'Color': 'Color:',
@@ -154,10 +154,9 @@ var english = {
 
     'Date_Ordered': 'Date ordered',
     'Subtotal': 'Subtotal',
-    'field_is_required': 'Required field',
+    'field_is_required': 'field is required',
     'User_name': 'Username',
     'Confirm_password': 'Confirm password',
-    'register_faild': 'Registration failed. Try again later.',
     'Receiver_Details': 'Recipient details',
     'MY_ACCOUNT': 'MY ACCOUNT',
     'Account_Details': 'Account details',
@@ -189,9 +188,49 @@ var english = {
     'SEND': 'SEND',
     'Product_removed': 'Product removed',
     'USER': 'USER',
-    'SEARCH': 'SEARCH'
+    'SEARCH': 'SEARCH',
 
 
+
+
+
+
+
+
+
+
+    'register_faild': 'Registration failed. Please try again.',
+    'login_faild': 'Login failed. Please try again later.',
+
+    'email_no_formatted_correctly': 'Your email address isn\'t formatted correctly',
+    'valid_email_required': '',
+
+    'Use_up_of': 'Use ',
+    'character_or_longer' :'character or longer',
+    'Use_maximum': 'Use maximum',
+
+    'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number': 'Use between 4-12 characters, including at least one upper case letter, one lower case letter, and one number.',
+
+    'Including_one_upper_letter': 'Including at least one upper letter',
+    'Including_one_lower_letter': 'Including at least one lower letter',
+    'Including_one_number': 'Including at least one number',
+
+    'one_upper_letter_required': 'One upper letter required',
+    'one_lower_letter_required': 'One lower letter required',
+    'one_number_required': 'One number required',
+
+    'Same_as': 'Same as',
+    'This_field_not_match_with': 's do not match',
+    'field': 'field',
+
+    'required': 'required',
+    'numbers' : 'numbers',
+    'Use_exactly' : 'Use exactly',
+    'Year': 'Year',
+    'Month': 'Month',
+    'Valid_CCV_number_required': 'Valid CCV number required',
+
+    'AgreeAgreementRequire': 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
 };
 
 

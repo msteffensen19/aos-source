@@ -1,155 +1,158 @@
-
 <nav class="pages">
-    <a translate="HOME" href="#/" ></a>
-    <a translate="MY_ACCOUNT" href="#/myAccount" ></a>
-    <a class="select" translate="ACCOUNT_DETAILS">  </a>
+    <a translate="HOME" href="#/"></a>
+    <a translate="MY_ACCOUNT" href="#/myAccount"></a>
+    <a class="select" translate="ACCOUNT_DETAILS"> </a>
 </nav>
-<section>
+<section id="registerPage">
     <article>
-        <div id="accountCover">
-            <h3  class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
-            <div class="maxWidth" >
+        <h3 class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
+
+        <sec-form>
+
+            <div id="registerCover">
 
                 <div id="infoDemo">
-                    <div class="notice">
-                        <h4 translate="NOTICE" ></h4>
-                        <p class="roboto-light" translate="This_is_a_demo"></p>
-                        <p class="roboto-light" translate="Please_enter_a_fake_data"></p>
-                    </div>
+                    <info-demo a-title="{{'NOTICE' | translate }}" a-lines="{{mainCtrl.getNoticeInfo()}}"></info-demo>
                 </div>
 
                 <div id="form">
 
-                    <sec-validate>
-                        <div id="formCover">
+                    <div id="formCover">
 
-                            <div>
-                                <h3 translate="CONNECTION_DETAILS"></h3>
-                                <sec-input sec-placeholder="{{'Email' | translate}}"
-                                           sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
-                                           sec-email
-                                           no-red-star="true"
-                                           input-type-attr="email"
-                                           model-attr="accountDetails.email"
-                                           id-attr="email">
-                                </sec-input>
+                        <div>
+                            <h3 translate="CONNECTION_DETAILS"></h3>
+
+                            <div class="spliter">
+
+                                <sec-view a-hint="{{'Email' | translate}}"
+                                          sec-model="accountDetails.email"
+                                          sec-require="mainCtrl.getRequire('Email')"
+                                          sec-pattern="mainCtrl.getPattern('Email')">
+                                </sec-view>
+
                                 <br/>
-                                <a class="link" translate="Change_Password" data-ng-click="slideToggle('changePassword')"></a>
+
+                                <a class="link" translate="Change_Password"
+                                   data-ng-click="slideToggle('changePassword')"></a>
 
                                 <div class="changePassword">
 
-                                    <sec-input sec-placeholder="{{'Old_Password' | translate}}"
-                                               sec-min-length="4"
-                                               sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                                               pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
-                                               input-type-attr="password"
-                                               model-attr="passwords.old"
-                                               no-red-star="true"
-                                               id-attr="oldPassword">
-                                    </sec-input>
+                                    <sec-view a-hint="{{'Old_Password' | translate}}"
+                                              a-type="password"
+                                              sec-model="passwords.old"
+                                              sec-min-length="mainCtrl.getMin(4)"
+                                              sec-max-length="mainCtrl.getMax(12)"
+                                              sec-pattern="mainCtrl.getPattern('Password')">
+                                    </sec-view>
 
-                                    <sec-input sec-placeholder="{{'New_Password' | translate}}"
-                                               sec-min-length="4"
-                                               sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})"
-                                               pattern-error-attr="{{ 'Use_up_to_12_characters_Include_at_least_one_letter_and_one_number' | translate }}"
-                                               input-type-attr="password"
-                                               model-attr="passwords.new"
-                                               no-red-star="true"
-                                               id-attr="newPassword">
-                                    </sec-input>
+                                    <sec-view a-hint="{{'New_Password' | translate}}"
+                                              a-type="password"
+                                              sec-model="passwords.new"
+                                              sec-min-length="mainCtrl.getMin(4)"
+                                              sec-max-length="mainCtrl.getMax(12)"
+                                              sec-pattern="mainCtrl.getPattern('Password')">
+                                    </sec-view>
 
-                                    <sec-input sec-placeholder="{{'Confirm_New_password' | translate}}"
-                                               sec-compare-to="newPassword"
-                                               compare-to-name="{{'New_Password' | translate}}"
-                                               input-type-attr="password"
-                                               model-attr="passwords.confirm_new"
-                                               no-red-star="true"
-                                               id-attr="confirmOldPassword">
-                                    </sec-input>
+                                    <sec-view a-hint="{{'Confirm_New_password' | translate}}"
+                                              a-type="password"
+                                              sec-model="passwords.confirm_new"
+                                              sec-compare-to="mainCtrl.getCompare('Confirm_New_password', passwords.confirm_new)"
+                                              sec-model-compare-to="passwords.confirm_new">
+                                    </sec-view>
 
                                 </div>
-                            </div>
 
-                            <div>
-                                <h3 translate="PERSONAL_DETAILS"></h3>
-                                <sec-input sec-placeholder="{{'First_Name' | translate }}"
-                                           model-attr="accountDetails.firstName"
-                                           sec-min-length="3"
-                                           sec-max-length="30"
-                                           no-red-star="true"
-                                           id-attr="firstName">
-                                </sec-input>
-                                <sec-input sec-placeholder="{{'Last_Name' | translate }}"
-                                           sec-min-length="3"
-                                           sec-max-length="30"
-                                           no-red-star="true"
-                                           model-attr="accountDetails.lastName"
-                                           id-attr="lastName">
-                                </sec-input>
-                                <sec-input sec-placeholder='{{ userSecondWsdl ? "Phone_Number2" : "Phone_Number" | translate }}'
-                                           model-attr="accountDetails.mobilePhone"
-                                           id-attr="phoneNumber">
-                                </sec-input>
-                            </div>
-
-                            <div>
-                                <h3 translate="ADDRESS"></h3>
-                                <sec-input sec-placeholder="{{'Country' | translate }}"
-                                           id-attr="country"
-                                           model-attr="accountDetails.countryId"
-                                           input-type-attr="transclude"
-                                           select-tag="true">
-                                    <select ng-model="country" ng-change="countryChange(country)"
-                                            class="inputtext"
-                                            ng-options="country.name for country in countries track by country.id">
-                                    </select>
-                                </sec-input>
-                                <sec-input sec-placeholder="{{'City' | translate }}"
-                                           model-attr="accountDetails.cityName"
-                                           sec-max-length="25"
-                                           no-red-star="true"
-                                           id-attr="city" >
-                                </sec-input>
-                                <sec-input sec-placeholder="{{'Address' | translate }}"
-                                           sec-max-length="50"
-                                           no-red-star="true"
-                                           model-attr="accountDetails.homeAddress"
-                                           id-attr="address" >
-                                </sec-input>
-                                <!--sec-only-numbers-->
-                                <sec-input sec-placeholder="{{'Postal_Code' | translate }}"
-                                           sec-max-length="10"
-                                           no-red-star="true"
-                                           model-attr="accountDetails.zipcode"
-                                           id-attr="postalCode" >
-                                </sec-input>
-                                <sec-input sec-placeholder="{{'State__Province__Region' | translate }}"
-                                           model-attr="accountDetails.stateProvince"
-                                           sec-max-length="10"
-                                           no-red-star="true"
-                                           id-attr="state" >
-                                </sec-input>
-                            </div>
-
-                            <div class="dirRight">
-
-                                <button sec-submit-attr="saveAccountDetails()"
-                                       class="roboto-medium sec-validate-invalid accountDetailsBtn withMargin"
-                                       a-sec-validate-invalid >
-                                    {{'SAVE' | translate}}
-                                </button>
-
-                            </div>
-
-                            <div>
-                                <label class="{{accountDetailsAnswer.class}} center noPadding" > {{ accountDetailsAnswer.message }} </label>
                             </div>
                         </div>
 
-                    </sec-validate>
+                        <div>
+                            <h3 translate="PERSONAL_DETAILS"></h3>
+
+                            <div class="spliter">
+
+                                <sec-view a-hint="{{'First_Name' | translate}}"
+                                          sec-model="accountDetails.firstName"
+                                          sec-min-length="mainCtrl.getMin(2)"
+                                          sec-max-length="mainCtrl.getMax(30)">
+                                </sec-view>
+
+                                <sec-view a-hint="{{'Last_Name' | translate}}"
+                                          sec-model="accountDetails.lastName"
+                                          sec-min-length="mainCtrl.getMin(2)"
+                                          sec-max-length="mainCtrl.getMax(30)">
+                                </sec-view>
+
+                            </div>
+                            <div class="spliter">
+
+                                <sec-view
+                                        a-hint="{{ userSecondWsdl ? 'Phone_Number2' : 'Phone_Number' | translate }}"
+                                        sec-max-length="mainCtrl.getMax(20)"
+                                        sec-model="accountDetails.mobilePhone">
+                                </sec-view>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <h3 translate="ADDRESS"></h3>
+
+                        <div class="spliter">
+
+                            <sec-view a-hint="Country"
+                                      a-type="select"
+                                      a-show="name"
+                                      sec-model="country"
+                                      sec-select-options="countries">
+                            </sec-view>
+
+
+                            <sec-view a-hint="{{'City' | translate}}"
+                                      sec-model="accountDetails.cityName"
+                                      sec-max-length="mainCtrl.getMax(25)">
+                            </sec-view>
+
+                        </div>
+                        <div class="spliter">
+
+                            <sec-view a-hint="{{'Address' | translate}}"
+                                      sec-model="accountDetails.homeAddress"
+                                      sec-max-length="mainCtrl.getMax(50)">
+                            </sec-view>
+
+
+                            <sec-view a-hint="{{'Postal_Code' | translate}}"
+                                      sec-model="accountDetails.zipcode"
+                                      sec-max-length="mainCtrl.getMax(10)">
+                            </sec-view>
+
+                        </div>
+                        <div class="spliter">
+
+                            <sec-view a-hint="{{'State__Province__Region' | translate}}"
+                                      sec-model="accountDetails.stateProvince"
+                                      sec-max-length="mainCtrl.getMax(10)">
+                            </sec-view>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
+
+            <div class="center">
+
+                <sec-sender class="roboto-medium accountDetailsBtn" a-value="{{'SAVE' | translate}}"
+                            sec-send="saveAccountDetails()"></sec-sender>
+                <br>
+                <label class="{{accountDetailsAnswer.class}} noPadding">
+                    {{ accountDetailsAnswer.message }} </label>
+            </div>
+
+        </sec-form>
     </article>
 </section>
 

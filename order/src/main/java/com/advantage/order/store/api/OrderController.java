@@ -101,7 +101,6 @@ public class OrderController{
             HttpServletRequest request) {
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
-
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
@@ -456,21 +455,53 @@ public class OrderController{
         }
     }
 
-    /*@RequestMapping(value = "/order/history", method = RequestMethod.GET)
-    @ApiOperation(value = "Get all order history")
-    public ResponseEntity<OrderHistoryCollectionDto> getAllOrderHistory(
-                                                               HttpServletRequest request) {
-        OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getAllOrderHistory();
-            return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
-        }*/
 
-    @RequestMapping(value = "/orders/history/{user_id}/{order_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by userID or/and orderId")
     public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
-                                                                                @RequestParam(value = "orderId", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
+                                                                                @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
         OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
         return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/carts/{userId}/orders/{orderId}", method = RequestMethod.POST)
+    @ApiOperation(value = "Add old order to shopping cart")
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    public ResponseEntity<ShoppingCartResponse> addOldOrderToCart(@PathVariable("userId") Long userId,
+                                                                    @PathVariable("orderId") Long orderId,
+                                                                HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        ShoppingCartResponseDto userCartResponseDto;
+        if (userId != null &&  (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId)))!=null) {
+            httpStatus = HttpStatus.OK;
+            //get order by userID and orderID
+            OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
+            if(orderHistoryCollectionDto!=null && orderHistoryCollectionDto.getOrderHistoryCollection().size()>0 ) {
+                orderHistoryCollectionDto.getOrderHistoryCollection().forEach(
+                        order-> {
+                            order.getProducts().forEach(product ->{
+                                long id = product.getProductId();
+                                String productColor = String.valueOf(product.getProductColor());
+                                int quantity = product.getProductQuantity();
+                                shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
+                            });
+                        });
+            }
+        }
+        else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
+        }
+
+        return new ResponseEntity<>(shoppingCartResponse, httpStatus);
+    }
 
 }

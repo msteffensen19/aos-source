@@ -2,7 +2,7 @@
 #orderPaymentSuccess {
 
     display: block;
-    margin:100px auto;
+    margin:130px auto;
     padding-top:30px;
     text-align: center;
 }
@@ -20,7 +20,7 @@
     padding: 10px;
     font-size: 15px;
     color: white;
-    /*display: block;*/
+    display: block;
     font-weight: 300;
     position: relative;
 }
@@ -162,7 +162,7 @@
     }
 
     #orderPaymentSuccess {
-        margin:0px auto;
+        margin:140px auto;
     }
 
 }
@@ -173,12 +173,18 @@
 @media screen and (max-width: 768px) {
 
     #orderPaymentSuccess {
-        padding-top:0px;
-        padding-bottom:30px;
+        /*padding-top:0px;*/
+        /*padding-bottom:30px;*/
     }
+
     #orderPaymentSuccess > h2 span:before{
         top:17px;
     }
+
+    #orderPaymentSuccess {
+        margin:0px auto;
+    }
+
 }
 
 

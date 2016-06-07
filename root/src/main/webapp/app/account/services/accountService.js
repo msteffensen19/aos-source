@@ -315,7 +315,9 @@ define(['./module'], function (services) {
 
                 updateMasterCreditMethod: function (card) {
 
+                    var accountId = $rootScope.userCookie.response.userId;
                     var expectToReceive = {
+                        userId: accountId,
                         cardNumber: "4886" + card.number,
                         expirationDate: card.expirationDate.month + card.expirationDate.year,
                         cvvNumber: card.cvv,

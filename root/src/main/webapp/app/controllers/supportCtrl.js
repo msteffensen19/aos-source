@@ -4,25 +4,53 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('supportCtrl', ['$scope', 'supportService', 'paramsToResorve', 'categoryService',
+    controllers.controller('supportCtrl', ['$scope', 'registerService',
 
-        function (s, supportService, paramsToResorve, categoryService) {
+        function (s, registerService) {
 
             s.hola_mundo = "hola_mundohola_mundohola_mundohola_mundo"
 
-            s.model  = "s@s.sec";
-            s.model7 = "t@y.sec";
-            s.model8 = "e@e.sec";
-            s.model9 = "r@r.sec";
+            //s.model = "";
+            s.model2 = "t@y.sec";
+            s.model3 = "e@e.sec";
+            s.model4 = "r@r.sec";
 
-            s.isValid = function (valid) {
-                console.log(valid);
+            s.model30 = null;
+
+            s.isSended = function (sended) {
+                alert(sended);
             }
+
+            //s.isSended = function (valid) {
+            //    console.log(valid);
+            //}
+
+            //ng-options="country.name for country in countries track by country.id"
+
+
+            s.countries;
+            registerService.getAllCountries().then(function (countries) {
+                s.countries = countries;
+            });
+
+            s.sec_select_order = {
+                showBy : 'name',
+            }
+
+            //option.name for option in data.availableOptions track by option.id
+
+
 
             s.require = {
-                error: 'this field is required',
+                error: 'this field is required ',
                 info: '- this field have to have value',
             }
+
+            s.checkboxRequire = {
+                error: ' You must agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice. ',
+                info: 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
+            }
+
 
             s.minLength = {
                 error: 'Use up of 4 character',

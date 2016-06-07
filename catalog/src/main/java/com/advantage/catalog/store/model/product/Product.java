@@ -14,7 +14,8 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Product.QUERY_GET_ALL,
-                query = "select p from Product p where UPPER(active) = 'Y'"
+                query = "select p from Product p where UPPER(active) = 'Y' order by p.productName"
+
         ),
         @NamedQuery(
                 name = Product.PRODUCT_FILTER_BY_NAME,

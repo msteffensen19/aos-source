@@ -43,7 +43,8 @@ define(['./module'], function (controllers) {
 
             s.products;
 
-            s.categoryChange = function () {
+            s.categoryChange = function (category) {
+                s.supportModel.category = category;
                 categoryService.getCategoryById(s.supportModel.category.categoryId).
                 then(function (category) {
                     s.products = category.products;
@@ -51,8 +52,8 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            s.productChange = function () {
-
+            s.productChange = function (product) {
+                s.supportModel.product = product;
             }
 
             var _____continueShopping;

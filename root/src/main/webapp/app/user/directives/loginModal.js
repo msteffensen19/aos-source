@@ -15,7 +15,7 @@ define(['./module'], function (directives) {
 
 
                     /* VARIABLES */
-                    //$scope.rememberMe = false;
+                    $scope.rememberMe = false;
                     //$scope.message = "";
                     $scope.message = {text: $filter('translate')('OR'), _class: ''};
                     $scope.config = null;
@@ -107,6 +107,8 @@ define(['./module'], function (directives) {
                                 $scope.setErrorMessage(response.reason);
                             }
                             return user;
+                        }, function(){
+                            $scope.setErrorMessage($filter('translate')('login_faild'));
                         });
                     }
                     /*=============================== end Sign in ===============================*/
@@ -165,7 +167,7 @@ function wellcome() {
 
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
         $(".PopUp").fadeOut(100);
-        $("body").css("overflow", "scroll")
+        $("body").css("overflow-y", "scroll")
         $(".login").css("opacity", "1");
     });
 }
