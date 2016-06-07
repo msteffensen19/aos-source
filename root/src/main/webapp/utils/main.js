@@ -85,7 +85,7 @@ Helper.scrollPageUp = function () {
 }
 
 Helper.parseBoolean = function (str) {
-    return str.toLowerCase() == 'true'
+    return str != undefined && str.toLowerCase() == 'true'
 }
 
 

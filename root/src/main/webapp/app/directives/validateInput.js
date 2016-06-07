@@ -17,6 +17,7 @@ define(['./module'], function (directives) {
             require: 'secForm',
             scope: {
                 secGetFormValidationWhenReady: "&",
+                secIsValidForm: "&",
             },
             controllerAs: "secFormCtrl",
             controller: [function () {
@@ -42,6 +43,9 @@ define(['./module'], function (directives) {
                     }
                     for (var i = 0; i < this.senders.length; i++) {
                         this.senders[i].formIsValid(validForm);
+                    }
+                    if(this.isValidForm){
+                        this.isValidForm({valid: validForm});
                     }
                     if (!toLateToCheck && this.getFormValidationWhenReady) {
                         this.getFormValidationWhenReady({valid: validForm})
@@ -69,11 +73,15 @@ define(['./module'], function (directives) {
                     if (_getFormValidationWhenReady) {
                         this.getFormValidationWhenReady = _getFormValidationWhenReady
                     }
-                    //getFormValidationWhenReady({valid: ctrl.formIsValid()})
                 };
 
                 this.setCtrl = function (_ctrl) {
                     ctrl = _ctrl;
+                }
+
+                this.isValidForm;
+                this.setIsValidForm = function (_isValidForm) {
+                    this.isValidForm = _isValidForm;
                 }
 
                 this.setToLateToCheck = function () {
@@ -85,6 +93,9 @@ define(['./module'], function (directives) {
                 pre: function (s, e, a, ctrl) {
                     e.addClass("secForm");
                     ctrl.setCtrl(ctrl);
+                    if(s.secIsValidForm){
+                        ctrl.setIsValidForm(s.secIsValidForm);
+                    }
                 },
                 post: function (s, e, a, ctrl) {
                     ctrl.updateState(-1, null, null);

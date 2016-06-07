@@ -72,8 +72,13 @@ define(['./module'], function (controllers) {
                 });
             }
 
+            s.validForm  = false;
+            s.isValidForm = function(valid){
+                s.validForm  = valid;
+            }
+
             $(document).on("keydown", function (event) {
-                if (event.keyCode == 13) {
+                if (event.keyCode == 13 && s.validForm) {
                     s.register();
                     return false;
                 }
