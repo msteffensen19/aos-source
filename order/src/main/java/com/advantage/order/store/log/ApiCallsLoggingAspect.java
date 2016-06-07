@@ -1,11 +1,12 @@
 package com.advantage.order.store.log;
 
+import com.sun.deploy.net.HttpResponse;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class ApiCallsLoggingAspect {
     @AfterReturning(value = "execution(* com.advantage.order.store.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
         if (result != null) {
-            Logger logger = getLoggerFactory("HttpResponse");
+            Logger logger = Logger.getLogger(HttpResponse.class);
             String builder = joinPoint.getSignature().getName() +
                     " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
@@ -39,13 +40,10 @@ public class ApiCallsLoggingAspect {
     }
 
     private void logApiRequest(HttpServletRequest request) {
-        Logger logger = getLoggerFactory("HttpRequest");
+        Logger logger = Logger.getLogger(HttpRequest.class);
         logger.info(getLoggingRequest(request));
     }
 
-    private Logger getLoggerFactory(String loggerName) {
-        return LoggerFactory.getLogger(loggerName);
-    }
 
     private String getLoggingRequest(HttpServletRequest request) {
         StringBuilder builder = new StringBuilder(request.getServletPath());

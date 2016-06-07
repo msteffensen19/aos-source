@@ -2,8 +2,7 @@ package com.advantage.catalog.store.config;
 
 import com.advantage.common.Constants;
 import com.advantage.common.security.SecurityTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +26,7 @@ public class SwaggerConfiguration {
     @Autowired
     Environment env;
 
-    protected Logger logger = LoggerFactory.getLogger("SwaggerConfiguration");
+    protected Logger logger = Logger.getLogger("SwaggerConfiguration");
 
     @Bean
     public Docket api() {

@@ -1,14 +1,12 @@
 package com.advantage.catalog.store.log;
 
+import com.advantage.catalog.util.ArgumentValidationHelper;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.advantage.catalog.util.ArgumentValidationHelper;
 
 /**
  * An aspect class for logging data access object methods calls.
@@ -34,7 +32,7 @@ public class AdvantageDaoCallsLoggingAspect {
         final Signature signature = joinPoint.getSignature();
         final Class<?> cls = signature.getDeclaringType();
         //final Logger logger = LoggerFactory.getLogger(cls);
-        final Logger logger = LoggerFactory.getLogger(AdvantageDaoCallsLoggingAspect.class);
+        final Logger logger = Logger.getLogger(AdvantageDaoCallsLoggingAspect.class);
         final String daoMethodName = signature.getName();
         final StringBuilder info;
 
