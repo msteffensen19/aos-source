@@ -113,9 +113,7 @@ define(['./module'], function (controllers) {
 
             $scope.addProduct = function (product, quantity, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
-                console.log("addProduct enter")
                 productsCartService.addProduct(product, quantity).then(function (cart) {
-                    console.log("addProduct back")
                     $scope.cart = cart;
                     animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();

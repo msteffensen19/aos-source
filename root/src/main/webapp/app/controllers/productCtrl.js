@@ -21,7 +21,7 @@ define(['./module'], function (controllers) {
 
             s.getFirstImageUrl = function () {
                 var array = $filter("getAllImagesByColor")(s.product.images, s.colorSelected);
-                if(array.length > 0){
+                if (array.length > 0) {
                     s.imageUrl = array[0];
                 }
             }
@@ -49,14 +49,28 @@ define(['./module'], function (controllers) {
                 if (disable) {
                     return;
                 }
+
                 var productToAdd = angular.copy(s.product);
                 productToAdd.colors = [s.colorSelected];
+
                 if (s.pageState == 'edit') {
                     s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity, resolveParams_selectedColor, $filter("translate")("toast_Product_Added_Successfully"));
                     $state.go('shoppingCart');
                 }
                 else {
-                    s.$parent.addProduct(productToAdd, s.quantity, $filter("translate")("toast_Product_Added_Successfully"));
+                    var quantity = s.quantity;
+                    for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
+                        var prod = s.$parent.cart.productsInCart[i];
+                        if (prod.productId == productToAdd.productId) {
+                            if (prod.quantity + quantity > 999) {
+                                quantity = 999 - prod.quantity;
+                                alert("This product have only " + quantity + " items in stock");
+                            }
+                        }
+                    }
+                    if (quantity > 0) {
+                        s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
+                    }
                 }
             }
 

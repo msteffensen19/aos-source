@@ -241,6 +241,7 @@
 }
 
 
+
 .categoryLeft .filterCount span {
     display: none;
 }
@@ -344,6 +345,11 @@
 
     .cell.categoryLeft, .cell.categoryRight{
         display: block;
+    }
+
+    .option > #slider {
+        width: 100% !important;
+        margin: 6px auto;
     }
 
     .cell.categoryLeft{

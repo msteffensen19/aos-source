@@ -315,6 +315,7 @@ define(['./module'], function (services) {
 
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
+
                 if (user && user.response) {
                     if (user.response.userId != -1) {
 
