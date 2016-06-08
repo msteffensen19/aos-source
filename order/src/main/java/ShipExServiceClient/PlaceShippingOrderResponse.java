@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -55,11 +55,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Gets the value of the seTransactionType property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSETransactionType() {
         return seTransactionType;
@@ -67,11 +67,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Sets the value of the seTransactionType property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSETransactionType(String value) {
         this.seTransactionType = value;
@@ -79,11 +79,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Gets the value of the code property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getCode() {
         return code;
@@ -91,11 +91,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Sets the value of the code property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setCode(String value) {
         this.code = value;
@@ -103,11 +103,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Gets the value of the reason property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getReason() {
         return reason;
@@ -115,11 +115,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Sets the value of the reason property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setReason(String value) {
         this.reason = value;
@@ -127,11 +127,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Gets the value of the transactionReference property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getTransactionReference() {
         return transactionReference;
@@ -139,11 +139,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Sets the value of the transactionReference property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setTransactionReference(String value) {
         this.transactionReference = value;
@@ -151,11 +151,11 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Gets the value of the transactionDate property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getTransactionDate() {
         return transactionDate;
@@ -163,14 +163,24 @@ public class PlaceShippingOrderResponse {
 
     /**
      * Sets the value of the transactionDate property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setTransactionDate(String value) {
         this.transactionDate = value;
     }
 
+    @Override
+    public String toString() {
+        return "PlaceShippingOrderResponse{" +
+                "seTransactionType='" + seTransactionType + '\'' +
+                ", code='" + code + '\'' +
+                ", reason='" + reason + '\'' +
+                ", transactionReference='" + transactionReference + '\'' +
+                ", transactionDate='" + transactionDate + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,7 @@
 package com.advantage.order.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Binyamin Regev on 06/01/2016.
  */
@@ -88,4 +90,16 @@ public class OrderPurchaseResponse {
         this.trackingNumber = trackingNumber;
     }
 
+    @Override
+    @JsonIgnore
+    public String toString() {
+        return "OrderPurchaseResponse{" +
+                "success=" + success +
+                ", code='" + code + '\'' +
+                ", reason='" + reason + '\'' +
+                ", orderNumber=" + orderNumber +
+                ", paymentConfirmationNumber=" + paymentConfirmationNumber +
+                ", trackingNumber=" + trackingNumber +
+                '}';
+    }
 }

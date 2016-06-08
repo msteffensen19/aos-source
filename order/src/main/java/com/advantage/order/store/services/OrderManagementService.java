@@ -297,13 +297,18 @@ public class OrderManagementService {
                 purchaseResponse.setReason(MESSAGE_ORDER_COMPLETED_SUCCESSFULLY);
                 purchaseResponse.setOrderNumber(orderNumber);
                 purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
-
+                if (logger.isInfoEnabled()) {
+                    logger.info(orderResponse.toString());
+                    logger.info(purchaseResponse);
+                }
             } else {
                 purchaseResponse.setSuccess(false);
                 purchaseResponse.setCode(orderResponse.getCode());
                 purchaseResponse.setReason(orderResponse.getReason());
                 purchaseResponse.setOrderNumber(orderNumber);
                 purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
+                logger.warn(orderResponse.toString());
+                logger.warn(purchaseResponse);
             }
         }
 
@@ -347,7 +352,6 @@ public class OrderManagementService {
                         -999999.99,                     //  Price-per-item
                         cartProduct.getQuantity()));
             }
-
         }
 
         return purchasedProducts;
@@ -434,9 +438,9 @@ public class OrderManagementService {
             conn.disconnect();
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error(masterCreditResponse, e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(masterCreditResponse, e);
         }
 
         return masterCreditResponse;
@@ -658,13 +662,24 @@ public class OrderManagementService {
                     orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
                 });
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.error(orderHistoryCollectionDto, e);
                 return null;
             }
         }
         return orderHistoryCollectionDto;
     }
 
-
     //endregion get orders
+
+    @Override
+    public String toString() {
+        return "OrderManagementService{" +
+                "totalAmount=" + totalAmount +
+                ", orderManagementRepository=" + orderManagementRepository +
+                ", orderHistoryHeaderManagementRepository=" + orderHistoryHeaderManagementRepository +
+                ", orderHistoryLineManagementRepository=" + orderHistoryLineManagementRepository +
+                ", shoppingCartRepository=" + shoppingCartRepository +
+                ", shoppingCartService=" + shoppingCartService +
+                '}';
+    }
 }
