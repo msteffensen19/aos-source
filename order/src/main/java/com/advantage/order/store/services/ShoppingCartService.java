@@ -1,12 +1,12 @@
 package com.advantage.order.store.services;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
+
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.ProductDto;
-import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.ShoppingCartDto;
 import com.advantage.order.store.dto.ShoppingCartResponse;
@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class ShoppingCartService {
 
     private static final String CATALOG_PRODUCT = "products/";
     private static final String DEMO_APP_CONFIG_BY_PARAMETER_NAME = "DemoAppConfig/parameters/";    //  Show_error_500_in_update_cart
-//    private static final Logger LOGGER = Logger.getLogger(ShoppingCartService.class);
+    private static final Logger logger = Logger.getLogger(ShoppingCartService.class);
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -144,7 +145,7 @@ public class ShoppingCartService {
             String stringResponse = httpGet(getDemoAppConfigByParameterName);
             System.out.println("stringResponse = \"" + stringResponse + "\"");
 
-            if (! stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
+            if (!stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 demoAppConfigParameter = getConfigParameterValueFromJsonObjectString(stringResponse);
                 if (demoAppConfigParameter != null) {
                     parameterValue = demoAppConfigParameter.getParameterValue();
@@ -168,12 +169,12 @@ public class ShoppingCartService {
      */
     public ShoppingCartResponse updateProductInCart(long userId, Long productId, String hexColor, String hexColorNew, int quantity) {
 
-        if (((! ValidationHelper.isValidColorHexNumber(hexColor)) ||
-                (! ValidationHelper.isValidColorHexNumber(hexColorNew)) ||
+        if (((!ValidationHelper.isValidColorHexNumber(hexColor)) ||
+                (!ValidationHelper.isValidColorHexNumber(hexColorNew)) ||
                 (hexColor.equalsIgnoreCase(hexColorNew))) && (quantity < 0)) {
             return new ShoppingCartResponse(false,
-                                            "Error: Bad request, Nothing to do",
-                                            productId);
+                    "Error: Bad request, Nothing to do",
+                    productId);
         }
 
         ShoppingCartResponse shoppingCartResponse = null;
@@ -274,6 +275,7 @@ public class ShoppingCartService {
      * Verify the quantity of each product in user cart exists in stock. If quantity
      * in user cart is greater than the quantity in stock than add the product with
      * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
+     *
      * @param userId               Unique user identity.
      * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in user cart to verify quantities.
      * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
@@ -441,6 +443,7 @@ public class ShoppingCartService {
 
     /**
      * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
+     *
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
@@ -467,14 +470,17 @@ public class ShoppingCartService {
                             colorAttrib.getName().toUpperCase(),
                             colorAttrib.getInStock());
 
-                    System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + dto.getProductId());
-                    System.out.println("   product name = " + dto.getProductName());
-                    System.out.println("   price per item = " + dto.getPrice());
-                    System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                    System.out.println("   ColorAttrubute.Code (hex) = \'" + colorAttrib.getCode().toUpperCase() + "\'");
-                    System.out.println("   ColorAttrubute.Color (name) = \"" + colorAttrib.getName().toUpperCase() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + colorAttrib.getInStock());
+                    if (logger.isDebugEnabled()) {
+                        StringBuilder sb = new StringBuilder("Received Product information: ");
+                        sb.append("\n   product id = ").append(dto.getProductId());
+                        sb.append("\n   product name = ").append(dto.getProductName());
+                        sb.append("\n   price per item = ").append(dto.getPrice());
+                        sb.append("\n   managedImageId = \"").append(dto.getImageUrl()).append("\"");
+                        sb.append("\n   ColorAttrubute.Code (hex) = \'").append(colorAttrib.getCode().toUpperCase()).append("\'");
+                        sb.append("\n   ColorAttrubute.Color (name) = \"").append(colorAttrib.getName().toUpperCase()).append("\"");
+                        sb.append("\n   ColorAttrubute.inStock = ").append(colorAttrib.getInStock());
+                        logger.debug(sb);
+                    }
                 } else {
                     //  Product with specific color NOT FOUND in Product table in CATALOG schema
                     cartProduct = setNotFoundCartProduct(productId);
