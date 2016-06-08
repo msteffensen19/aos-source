@@ -4,54 +4,57 @@
 }
 
 #supportCover .inputMargin .validate-directive {
-     margin: 18px 0;
+    margin: 18px 0;
 }
 
-#supportCover > div{
+#supportCover > div {
     width: 70%;
     margin: 0 auto;
     text-align: center;
 }
 
-#supportCover .contact_us{
+#supportCover .contact_us {
     font-size: 35px;
     text-align: left;
     padding: 50px calc(20px + 4%);
     padding-bottom: 20px;
-    color:white;
+    color: white;
     letter-spacing: 2px;
 }
 
-#supportCover .splitter{
+#supportCover .splitter {
     width: 49%;
     font-size: 0;
     display: inline-block;
     vertical-align: top;
 }
 
-#supportCover .splitter label{
+#supportCover .splitter label {
     font-size: 14px;
     color: #FFFFFF !important;
 }
 
-#supportCover .splitter > div{
+#supportCover .splitter > div {
     margin: 0 50px;
     text-align: left;
 }
 
-#supportCover .splitter > div.smollPadding{
+#supportCover .splitter > div.smollPadding {
     padding-top: 20px;
 }
 
+#supportCover .splitter .sec-view div .star {
+    color: white;
+}
 
-#supportCover input[type=text], #supportCover input[type="password"], #supportCover .inputtext{
+#supportCover input[type=text], #supportCover input[type="password"], #supportCover .inputtext {
     width: 100%;
     background-color: #54b3ad;
     border-bottom: 1px solid #ffffff;
     color: #FFFFFF;
 }
 
-#supportCover textarea.inputtext{
+#supportCover textarea.inputtext {
     height: 135px;
     padding: 10px 5px;
     border: 1px solid #ffffff;
@@ -59,18 +62,17 @@
     resize: none;
 }
 
-#supportCover option{
+#supportCover option {
     background-color: white;
     color: #313131;
     font-size: 12px;
 }
 
-
-#supportCover select{
+#supportCover select {
     cursor: pointer;
 }
 
-#supportCover select>option:hover{
+#supportCover select > option:hover {
     background: #F4F4F2 !important;
 }
 
@@ -79,7 +81,7 @@
     padding: 0 26px;
 }
 
-#supportCover button{
+#supportCover button {
     font-size: 14px;
     margin: 10px 32px;
     padding: 8px 46px;
@@ -89,7 +91,7 @@
     border: solid 2px white;
 }
 
-#supportCover .sec-validate-invalid, .sec-validate-invalid:hover{
+#supportCover .sec-validate-invalid, .sec-validate-invalid:hover {
     color: #82c8c3 !important;
     background-color: #54b3ad !important;
     border: solid 2px #82c8c3 !important;;
@@ -99,12 +101,12 @@
     border-bottom: solid white 1px !important;
 }
 
-#supportCover button:hover{
+#supportCover button:hover {
     color: #54b3ad;
     background-color: white;
 }
 
-#supportCover label.center{
+#supportCover label.center {
     display: block;
     padding: 10px 0;
 }
@@ -118,8 +120,7 @@
 
 @media screen and (max-width: 768px) {
 
-
-    #separator{
+    #separator {
         height: 0px;
     }
 
@@ -127,7 +128,7 @@
         margin-top: 0px;
     }
 
-    #supportCover .splitter{
+    #supportCover .splitter {
         width: 100%;
     }
 
@@ -138,37 +139,34 @@
         margin: 0;
     }
 
-    #supportCover .splitter > div{
+    #supportCover .splitter > div {
         margin: 0 26px;
         text-align: left;
     }
 }
 
-
 @media screen and (max-width: 600px) {
 
-    #supportCover > div{
+    #supportCover > div {
         margin: 0px;
     }
 
-    #supportCover button{
+    #supportCover button {
         width: 90%;
         margin-right: auto;
         margin-left: auto;
     }
 
-    #supportCover .contact_us{
+    #supportCover .contact_us {
         padding: 20px calc(20px + 4%);
         padding-top: 50px;
     }
-
 
     #supportCover .buttonCover {
         width: 100%;
     }
 
 }
-
 
 @media screen and (max-width: 480px) {
 
