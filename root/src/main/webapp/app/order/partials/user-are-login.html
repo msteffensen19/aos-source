@@ -290,7 +290,8 @@
                                       a-do-not-show-info="true"
                                       sec-require="mainCtrl.getRequire('Month')"
                                       sec-model="card.expirationDate.month"
-                                      sec-select-options="['01','02','03','04','05','06','07','08','09', '10', '11', '12']">
+                                      sec-select-options="month"
+                            >
                             </sec-view>
 
                             <sec-view a-hint="{{ 'YY' | translate }}"
@@ -298,8 +299,10 @@
                                       a-do-not-show-info="true"
                                       sec-require="mainCtrl.getRequire('Year')"
                                       sec-model="card.expirationDate.year"
+                                      sec-select-change="calculateMonths(value)"
                                       sec-select-options="years">
                             </sec-view>
+                            <!--sec-value-change=""-->
 
                         </div>
 

@@ -117,6 +117,21 @@ Helper.getRandom = function (length) {
     return ranVal;
 }
 
+Helper.getMonthInYearForMasterCredit = function (year, months) {
+    var date = new Date();
+    if (date.getFullYear() == year) {
+        var new_array = [];
+        for (var i = date.getMonth() + 1; i <= 12; i++) {
+            new_array.push(i < 10 ? "0" + i : i + "");
+        }
+        return new_array;
+    }
+    if (months.length != 12) {
+        return ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    }
+    return null;
+}
+
 Helper.checkPagePossitions = function () {
 
     if ($('.pages').length > 0) {

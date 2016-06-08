@@ -34,7 +34,6 @@ define(['./module'], function (controllers) {
             $(document).on({
                 keydown: function (event) {
                     var code = event.keyCode || event.which;
-                    console.log("mainCtrl: " + code);
                     if (code === 13) {
                         switch (enterInFocus) {
                             case EnterInFocus.login:

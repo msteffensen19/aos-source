@@ -44,7 +44,7 @@ define(['./module'], function (directives) {
                     for (var i = 0; i < this.senders.length; i++) {
                         this.senders[i].formIsValid(validForm);
                     }
-                    if(this.isValidForm){
+                    if (this.isValidForm) {
                         this.isValidForm({valid: validForm});
                     }
                     if (!toLateToCheck && this.getFormValidationWhenReady) {
@@ -93,7 +93,7 @@ define(['./module'], function (directives) {
                 pre: function (s, e, a, ctrl) {
                     e.addClass("secForm");
                     ctrl.setCtrl(ctrl);
-                    if(s.secIsValidForm){
+                    if (s.secIsValidForm) {
                         ctrl.setIsValidForm(s.secIsValidForm);
                     }
                 },
@@ -236,8 +236,8 @@ define(['./module'], function (directives) {
                 secCompareTo: '=',
                 secModelCompareTo: '=',
 
-                secSelectChange: '&',
                 secIsValid: '&',
+                secSelectChange: '&',
             },
             controller: ["$scope", function (s) {
 
@@ -326,6 +326,7 @@ define(['./module'], function (directives) {
                 var selectedList;
                 this.fillSelect = function (arr, name) {
                     if (arr) {
+                        var found = false;
                         selectedList = arr;
                         var selectList = ctrl.getSelectlist();
                         selectList.empty();
@@ -342,11 +343,19 @@ define(['./module'], function (directives) {
                                     " data-ng-mouseenter='selectItemMouseIn()' data-ng-mouseout='selectItemMouseOut()'>"
                                     + item + "</span>");
                             }
+                            if (s.secModel) {
+                                if (s.secModel + "" == item + "") {
+                                    found = true;
+                                }
+                            }
                             $compile(span)(s);
                             selectList.append(span);
                         }
+                        if (!found && s.secModel) {
+                            s.secModel = arr[0];
+                        }
                     }
-                };
+                }
 
                 s.selectItemChangeModel = function (index) {
 
@@ -806,6 +815,12 @@ define(['./module'], function (directives) {
                     if (s.secSelectChange) {
                         ctrl.setSecSelectChange(s.secSelectChange)
                     }
+                    /*
+                     if (s.secValueChange) {
+                     ctrl.secValueChange(s.secValueChange)
+                     }
+                     */
+
 
                     s.$watch('secDisableValidation ', function (n, o) {
                         ctrl.setDisableValidation(n);
@@ -901,11 +916,13 @@ define(['./module'], function (directives) {
                     ctrl.setItems(input, label, ul, _form, s.$id);
 
                 }
-            },
+            }
+            ,
             post: function (s, e, a, ctrl) {
             }
         }
-    }]);
+    }
+    ]);
 
 });
 
