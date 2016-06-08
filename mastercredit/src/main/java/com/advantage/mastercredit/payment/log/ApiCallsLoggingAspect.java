@@ -14,7 +14,7 @@ import java.util.Map;
 public class ApiCallsLoggingAspect {
     private Logger logger;
 
-    @Before("execution(* com.advantage.mastercredit.store.api.*.*(..))")
+    @Before("execution(* com.advantage.mastercredit.payment.api.*.*(..))")
     public void logApiRequest(JoinPoint joinPoint) {
         logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         Object[] args = joinPoint.getArgs();
@@ -29,7 +29,7 @@ public class ApiCallsLoggingAspect {
         if (request != null) logApiRequest(request);
     }
 
-    @AfterReturning(value = "execution(* com.advantage.mastercredit.store.api.*.*(..))", returning = "result")
+    @AfterReturning(value = "execution(* com.advantage.mastercredit.payment.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
         logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         String builder = joinPoint.getSignature().getName() +
