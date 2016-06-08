@@ -235,8 +235,8 @@
 }
 
 .option > #slider {
-    width: 100% !important;
-    margin: 6px auto;
+    width: 95% !important;
+    margin: 6px 0;
     margin-bottom:-6px;
 }
 

@@ -229,6 +229,7 @@ define(['./module'], function (directives) {
 
                     slider = document.getElementById('slider');
                     var step = s.maxPriceToFilter - s.minPriceToFilter;
+                    step = step < 100 ? 5 : 100;
                     noUiSlider.create(slider, {
                         start: [s.minPriceToFilter, s.maxPriceToFilter],
                         connect: true,
@@ -237,16 +238,17 @@ define(['./module'], function (directives) {
                             'max': s.maxPriceToFilter,
                         },
                         step: 1, //step < 100 ? 100 : Math.round(step / 100) - 1,
-                        margin: step < 100 ? 5 : 100,  //Math.round(step / 100) - 1,
+                        margin: step,  //Math.round(step / 100) - 1,
                     });
                     slider.noUiSlider.start = s.minPriceToFilter;
                     slider.noUiSlider.end = s.maxPriceToFilter;
+
                     slider.noUiSlider.on('update', function( values, handle ) {
                         s.$applyAsync(function(){
                             if (handle == '0') {
-                                s.minPriceToFilter = values[handle];
+                                s.minPriceToFilter = parseInt(values[handle]) + (step + 2) >= s.maxPriceToFilter ? s.maxPriceToFilter  : values[handle];
                             } else {
-                                s.maxPriceToFilter = values[handle];
+                                s.maxPriceToFilter = parseInt(values[handle]) - (step + 2) <= s.minPriceToFilter ? s.minPriceToFilter  : values[handle];
                             }
                             s.showClear =
                                 Object.keys(s.productsInclude).length > 0 ||
