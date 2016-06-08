@@ -6,7 +6,9 @@
 
     <div id="input" data-ng-click="$event.stopPropagation()">
         <div id="search">
-            <div icon-search-svg data-ng-click="openSearchProducts()"></div>
+            <a title="{{ 'SEARCH' | translate }}">
+                <div icon-search-svg data-ng-click="openSearchProducts()" ></div>
+            </a>
             <!--<img src="css/images/Search.jpg" alt="user" data-ng-click="openSearchProducts()">-->
             <!--<div icon-magnifying-glass data-ng-click="openSearchProducts()"></div>-->
             <div class="autoCompleteCover">
