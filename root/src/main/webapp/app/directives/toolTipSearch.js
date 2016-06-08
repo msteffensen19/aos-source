@@ -29,14 +29,7 @@ define(['./module'], function (directives) {
                             }
                             productService.getProductsBySearch(lastRequest, 10).then(function (result) {
                                 s.autoCompleteResult = result;
-                                checkCategoryPagePresent();
                             });
-                        }
-
-                        function checkCategoryPagePresent() {
-                            if ($location.path().indexOf('/search') != -1) {
-                                s.goToCategoryPage();
-                            }
                         }
 
                         s.goToCategoryPage = function () {
@@ -95,8 +88,7 @@ define(['./module'], function (directives) {
                         }
 
                         s.closeSearchSection = function () {
-
-                            if (!s.allowClosing || $location.path().indexOf('/search') != -1) {
+                            if (!s.allowClosing /*|| $location.path().indexOf('/search') != -1*/) {
                                 return;
                             }
                             s.closeSearchForce();
