@@ -2,6 +2,7 @@ package com.advantage.mastercredit.payment.dto;
 
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.enums.TransactionTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -83,4 +84,15 @@ public class MasterCreditResponse {
         this.transactionDate = transactionDate;
     }
 
+    @Override
+    @JsonIgnore
+    public String toString() {
+        return "MasterCreditResponse{" +
+                "transactionType='" + transactionType + '\'' +
+                ", responseCode='" + responseCode + '\'' +
+                ", responseReason='" + responseReason + '\'' +
+                ", referenceNumber=" + referenceNumber +
+                ", transactionDate='" + transactionDate + '\'' +
+                '}';
+    }
 }

@@ -7,6 +7,7 @@ import com.advantage.common.enums.TransactionTypeEnum;
 import com.advantage.mastercredit.util.StringHelper;
 import com.advantage.mastercredit.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MasterCreditService {
 
     private static AtomicLong masterCreditRefNumber;
+
+    private Logger logger = Logger.getLogger(MasterCreditService.class);
 
     public MasterCreditService() {
 
@@ -165,7 +168,7 @@ public class MasterCreditService {
             isValid = false;
         }
         else {
-            System.out.println(masterCreditDto.getValue() + " : true");
+            logger.debug("masterCreditDto.getValue=" + masterCreditDto.getValue() + " : true");
         }
 
         if (masterCreditDto.getCurrency() == null) {
@@ -190,7 +193,7 @@ public class MasterCreditService {
                 responseStatus.setResponseReason("Payment rejected");
                 responseStatus.setReferenceNumber(0);
             } else {
-                System.out.println("Payment Approved");
+                logger.info("Payment Approved");
                 responseStatus.setResponseCode(ResponseEnum.APPROVED.getStringCode());
                 responseStatus.setResponseReason(ResponseEnum.APPROVED.getStringCode());
                 responseStatus.setReferenceNumber(this.referenceNumberNextValue());
