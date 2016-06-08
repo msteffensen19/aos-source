@@ -64,7 +64,6 @@ define(['./module'], function (controllers) {
                         if (prod.productId == productToAdd.productId) {
                             if (prod.quantity + quantity > 999) {
                                 quantity = 999 - prod.quantity;
-                                alert("This product have only " + quantity + " items in stock");
                             }
                         }
                     }
