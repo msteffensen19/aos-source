@@ -416,13 +416,11 @@ public class OrderManagementService {
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
             StringBuilder sb = new StringBuilder();
-            if (logger.isDebugEnabled()) {
-                String output;
-                logger.debug("Output from Server...");
-                while ((output = br.readLine()) != null) {
-                    sb.append(output);
-                    logger.debug(output);
-                }
+            String output;
+            logger.debug("Output from Server...");
+            while ((output = br.readLine()) != null) {
+                sb.append(output);
+                logger.debug(output);
             }
 
             Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
