@@ -39,21 +39,22 @@ define(['./module'], function (controllers) {
                     if (response.success) {
                         $('body, html').animate({scrollTop: 0}, 10);
                         s.WellcomeName = s.model.firstName.replace(/\s/g, "").length > 0 ? s.model.firstName :
-                            s.model.lastName.replace(/\s/g, "").length > 0 ? s.model.lastName :
-                                s.model.username;
+                            s.model.lastName.replace(/\s/g, "").length > 0 ? s.model.lastName : s.model.username;
                         s.registerSuccess = true;
 
                         var user = {
                             email: s.model.email,
                             loginPassword: s.model.password,
                             loginUser: s.model.username,
-                        }
-                        s.signIn(user, false)
+                        };
+
+                        s.signIn(user, false);
                         $timeout(function () {
                             if(document.location.hash == "#/register"){
                                 $state.go('default')
                             }
-                        }, 8000)
+                        }, 8000);
+
                     }
                     else {
                         $timeout(function () {
