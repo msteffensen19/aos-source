@@ -2,9 +2,8 @@ package com.advantage.order.store.config;
 
 import com.advantage.common.Constants;
 import com.advantage.common.SystemParameters;
+import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -22,7 +21,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class JpaConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(JpaConfiguration.class);
+    private static final Logger log = Logger.getLogger(JpaConfiguration.class);
 
     private static final String ENV_HIBERNATE_DIALECT = "hibernate.dialect";
     private static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";

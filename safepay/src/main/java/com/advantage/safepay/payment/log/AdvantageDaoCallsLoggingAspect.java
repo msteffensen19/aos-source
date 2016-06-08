@@ -1,13 +1,12 @@
 package com.advantage.safepay.payment.log;
 
 import com.advantage.safepay.util.ArgumentValidationHelper;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An aspect class for logging data access object methods calls.
@@ -35,7 +34,7 @@ public class AdvantageDaoCallsLoggingAspect {
 
         final Signature signature = joinPoint.getSignature();
         final Class<?> cls = signature.getDeclaringType();
-        final Logger logger = LoggerFactory.getLogger(cls);
+        final Logger logger = Logger.getLogger(cls);
         final String daoMethodName = signature.getName();
         final StringBuilder info;
 

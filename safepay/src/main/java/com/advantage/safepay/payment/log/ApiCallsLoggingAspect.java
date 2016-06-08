@@ -1,11 +1,10 @@
 package com.advantage.safepay.payment.log;
 
+import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +12,12 @@ import java.util.Map;
 
 @Aspect
 public class ApiCallsLoggingAspect {
+    private Logger logger;
+
     @Before("execution(* com.advantage.mastercredit.store.api.*.*(..))")
     public void logApiRequest(JoinPoint joinPoint) {
+        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
+
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = null;
         for (Object arg : args) {
@@ -29,7 +32,7 @@ public class ApiCallsLoggingAspect {
 
     @AfterReturning(value = "execution(* com.advantage.mastercredit.store.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
-        Logger logger = getLoggerFactory("HttpResponse");
+        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
         String builder = joinPoint.getSignature().getName() +
                 " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
@@ -37,12 +40,7 @@ public class ApiCallsLoggingAspect {
     }
 
     private void logApiRequest(HttpServletRequest request) {
-        Logger logger = getLoggerFactory("HttpRequest");
         logger.info(getLoggingRequest(request));
-    }
-
-    private Logger getLoggerFactory(String loggerName) {
-        return LoggerFactory.getLogger(loggerName);
     }
 
     private String getLoggingRequest(HttpServletRequest request) {

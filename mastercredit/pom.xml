@@ -21,10 +21,17 @@
                     <include>*.properties</include>
                 </includes>
                 <excludes>
-                    <exclude>
-                        internal_config_for_env.properties
-                    </exclude>
+                    <exclude>internal_config_for_env.properties</exclude>
+                    <exclude>log4j.properties</exclude>
                 </excludes>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <includes>
+                    <include>log4j.properties</include>
+                </includes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>

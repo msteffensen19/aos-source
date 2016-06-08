@@ -213,6 +213,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -225,9 +230,10 @@
             </resource>
             <resource>
                 <directory>${project.build.directory}/generated-resources</directory>
-                <excludes>
-                    <exclude>*.properties</exclude>
-                </excludes>
+                <includes>
+                    <include>log4j.properties</include>
+                    <include>ver.txt</include>
+                </includes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
@@ -237,6 +243,9 @@
                 <includes>
                     <include>*.properties</include>
                 </includes>
+                <excludes>
+                    <exclude>log4j.properties</exclude>
+                </excludes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
@@ -280,8 +289,7 @@
                             </goals>
                             <phase>generate-resources</phase>
                             <configuration>
-                                <outputDirectory>${project.build.directory}/generated-resources
-                                </outputDirectory>
+                                <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
                                 <includeArtifactIds>shared_resources</includeArtifactIds>
                                 <includeGroupIds>${project.groupId}</includeGroupIds>
                                 <excludeTransitive>true</excludeTransitive>
