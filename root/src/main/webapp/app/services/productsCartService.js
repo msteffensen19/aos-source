@@ -274,7 +274,7 @@ define(['./module'], function (services) {
                                         if (product.productId == _productInCart.productId) {
                                             if (_productInCart.color.code == color.code) {
                                                 finded = true;
-                                                _productInCart.quantity += quantity;
+                                                _productInCart.quantity = _productInCart.quantity + quantity > 999 ? 999 : _productInCart.quantity + quantity;
                                                 break;
                                             }
                                         }

@@ -54,14 +54,14 @@ define(['./module'], function (controllers) {
                 productToAdd.colors = [s.colorSelected];
 
                 if (s.pageState == 'edit') {
-                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity, resolveParams_selectedColor, $filter("translate")("toast_Product_Added_Successfully"));
+                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity, resolveParams_selectedColor, $filter("translate")("toast_Product_Updated_Successfully"));
                     $state.go('shoppingCart');
                 }
                 else {
                     var quantity = s.quantity;
                     for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
                         var prod = s.$parent.cart.productsInCart[i];
-                        if (prod.productId == productToAdd.productId) {
+                        if (prod.productId == productToAdd.productId && prod.color.code == s.colorSelected.code) {
                             if (prod.quantity + quantity > 999) {
                                 quantity = 999 - prod.quantity;
                             }
@@ -71,18 +71,17 @@ define(['./module'], function (controllers) {
                         s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
                     }
                 }
-            }
+            };
 
             s.changeImage = function (img) {
                 s.imageUrl = img;
-            }
+            };
 
             s.setColor = function (color) {
                 s.imageUrl = s.product.imageUrl;
                 s.colorSelected = color;
                 s.getFirstImageUrl();
-            }
-
+            };
 
             Helper.forAllPage();
 
