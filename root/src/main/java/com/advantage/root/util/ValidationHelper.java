@@ -1,6 +1,7 @@
 package com.advantage.root.util;
 
 import com.advantage.common.Constants;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -60,6 +61,8 @@ public class ValidationHelper {
 
     private static Pattern pattern;
 
+    private static Logger logger = Logger.getLogger(ValidationHelper.class);
+
     public ValidationHelper() {
     }
 
@@ -99,7 +102,7 @@ public class ValidationHelper {
         Pattern pattern = Pattern.compile(regExp);
 
         final boolean isValid = pattern.matcher(string).matches();
-        System.out.println(string + " : " + isValid);
+        logger.debug(string + " : " + isValid);
 
         return isValid;
     }

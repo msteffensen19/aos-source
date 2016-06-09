@@ -1,20 +1,24 @@
 package com.advantage.catalog.store.services;
 
+import com.advantage.catalog.store.dao.category.CategoryRepository;
+import com.advantage.catalog.store.model.attribute.Attribute;
+import com.advantage.catalog.store.model.category.Category;
+import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
+import com.advantage.catalog.store.model.product.Product;
+import com.advantage.catalog.util.ArgumentValidationHelper;
+import com.advantage.common.dto.CategoriesDto;
+import com.advantage.common.dto.CategoryAttributeFilterResponse;
+import com.advantage.common.dto.CategoryAttributeShowInFilter;
+import com.advantage.common.dto.CategoryDto;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import com.advantage.catalog.store.dao.category.CategoryRepository;
-import com.advantage.catalog.store.model.attribute.Attribute;
-import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
-import com.advantage.common.dto.*;
-import com.advantage.catalog.store.model.category.Category;
-import com.advantage.catalog.store.model.product.Product;
-import com.advantage.catalog.util.ArgumentValidationHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoryService {
@@ -27,9 +31,11 @@ public class CategoryService {
     private ProductService productService;
     @Autowired
     DealService dealService;
+
+    private static final Logger logger = Logger.getLogger(CategoryService.class);
+
     @Transactional
     public Category createCategory(final String name, final String managedImageId) {
-
         return categoryRepository.createCategory(name, managedImageId);
     }
 
@@ -46,9 +52,6 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public CategoryAttributeFilterResponse getAllCategoryAttributesFilter() {
-
-        System.out.println("CategoryService.getAllCategoryAttributesFilter");
-
         //  region Get and display categories list
         List<Category> categories = this.getAllCategories();
         ArgumentValidationHelper.validateCollectionArgumentIsNotNullAndNotEmpty(categories, "categories list");
@@ -60,10 +63,13 @@ public class CategoryService {
                     }
                 });
 
-        for (int i = 0; i < categories.size(); i++) {
-            System.out.println("categories(" + i + "): category .id=" + categories.get(i).getCategoryId() + " - .name=\'" + categories.get(i).getCategoryName() + "\'");
+        if (logger.isInfoEnabled()) {
+            StringBuilder sb = new StringBuilder("\n");
+            for (int i = 0; i < categories.size(); i++) {
+                sb.append(String.format("\tcategories(%d): category.id=%d - name='%s'\n", i, categories.get(i).getCategoryId(), categories.get(i).getCategoryName()));
+            }
+            logger.info(sb);
         }
-        System.out.println("");
         //  endregion
 
         //  region Get and display attributes list
@@ -74,14 +80,17 @@ public class CategoryService {
         Collections.sort(attributes,
                 new Comparator<Attribute>() {
                     public int compare(Attribute attribute1, Attribute attribute2) {
-                        return (int)(attribute1.getId() - attribute2.getId());
+                        return (int) (attribute1.getId() - attribute2.getId());
                     }
                 });
 
-        for (int i = 0; i < attributes.size(); i++) {
-            System.out.println("attributes(" + i + "): attribute .id=" + attributes.get(i).getId() + " - .name=\'" + attributes.get(i).getName() + "\'");
+        if (logger.isInfoEnabled()) {
+            StringBuilder sb = new StringBuilder("\n");
+            for (int i = 0; i < attributes.size(); i++) {
+                sb.append(String.format("\tattributes(%d): attribute.id=%d - name='%s'\n", i, attributes.get(i).getId(), attributes.get(i).getName()));
+            }
+            logger.info(sb);
         }
-        System.out.println("");
         //  endregion
 
         List<CategoryAttributeFilter> categoriesAttributes = categoryRepository.getAllCategoryAttributeFilter();
