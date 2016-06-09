@@ -114,6 +114,7 @@
 
 .categoryLeft .option .fill span{
     color:#828282;
+    cursor: pointer;
 }
 
 
@@ -149,6 +150,12 @@
     transform: scale(1.1);
     transition: all 0.5s ease;
 }
+
+.categoryRight ul li p a.productName{
+    display: block;
+    min-height: 42px;
+}
+
 
 .categoryRight ul li:hover{
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
@@ -239,8 +246,9 @@
     margin: 6px 0;
     margin-bottom:-6px;
 }
-
-
+.option .noUi-horizontal .noUi-handle {
+    cursor: pointer;
+}
 
 .categoryLeft .filterCount span {
     display: none;

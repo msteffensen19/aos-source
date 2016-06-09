@@ -407,7 +407,13 @@ input[type=checkbox]:checked {
     font-size: 12px;
     text-decoration: none;
     padding: 7px;
+    width: 100%;
+    box-sizing: border-box;
     cursor: pointer;
+}
+
+.mini-title .option:hover{
+    background-color: #f9f9f9;
 }
 
 .display{

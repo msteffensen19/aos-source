@@ -239,6 +239,10 @@
     cursor:pointer;
 }
 
+#shoppingCart .smollCell > span a.remove:hover{
+    color: #54b3ad
+}
+
 #shoppingCart > div.bigEmptyCart{
     padding: 30px;
 }
