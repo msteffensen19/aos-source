@@ -77,7 +77,7 @@
                             <div class="fill iconCss" >
                                 <input type="checkbox" ng-model="item.selected"
                                        ng-click="includeProducts(attrVal, attrib.name)">
-                                <span class="roboto-regular" data-ng-click="item.selected = !item.selected">{{::attrVal}}</span>
+                                <span class="roboto-regular" data-ng-click="item.selected = !item.selected; includeProducts(attrVal, attrib.name)">{{::attrVal}}</span>
                             </div>
                         </div>
                     </div>

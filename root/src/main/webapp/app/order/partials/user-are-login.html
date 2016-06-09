@@ -48,7 +48,7 @@
 
             <!-- EDIT USER DETAILS SECTION-->
 
-            <sec-form sec-get-form-validation-when-ready="validSecValidate(valid)">
+            <sec-form sec-disable-until-some-change="true" sec-get-form-validation-when-ready="validSecValidate(valid)">
 
                 <h6 translate="Receiver_Details" class="roboto-bold"></h6>
 
@@ -177,7 +177,7 @@
                         translate }}</p>
                 </div>
 
-                <sec-form>
+                <sec-form >
 
                     <sec-view a-hint="{{'SafePay_User_name' | translate}}"
                               sec-model="savePay.username"

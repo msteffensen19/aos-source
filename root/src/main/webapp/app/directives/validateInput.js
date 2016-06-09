@@ -82,11 +82,18 @@ define(['./module'], function (directives) {
                 this.isValidForm;
                 this.setIsValidForm = function (_isValidForm) {
                     this.isValidForm = _isValidForm;
-                }
+                };
 
                 this.setToLateToCheck = function () {
                     toLateToCheck = true;
-                }
+                };
+
+                this.setDisableUntilSomeChange = function () {
+                    for (var i = 0; i < this.senders.length; i++) {
+                        this.senders[i].setDisableUntilSomeChange();
+                    }
+                };
+
 
             }],
             link: {
@@ -101,6 +108,9 @@ define(['./module'], function (directives) {
                     ctrl.updateState(-1, null, null);
                     if (s.secGetFormValidationWhenReady) {
                         ctrl.setFormValidationWhenReady(s.secGetFormValidationWhenReady);
+                    }
+                    if (a.secDisableUntilSomeChange == 'true') {
+                        ctrl.setDisableUntilSomeChange();
                     }
                 }
             }
@@ -121,6 +131,7 @@ define(['./module'], function (directives) {
             controller: ["$scope", function (s) {
 
                 var button;
+                var allowToChangeInvalidClass = true;
                 this.setButton = function (_button) {
                     button = _button;
                 };
@@ -135,12 +146,18 @@ define(['./module'], function (directives) {
 
                 this.formIsValid = function (valid) {
 
-                    if (valid) {
-                        button.removeClass(invalid);
+                    if (allowToChangeInvalidClass) {
+                        if (valid) {
+                            button.removeClass(invalid);
+                        }
+                        else {
+                            button.addClass(invalid);
+                        }
                     }
-                    else {
-                        button.addClass(invalid);
-                    }
+                };
+
+                this.setDisableUntilSomeChange = function () {
+                    button.addClass(invalid);
                 };
 
             }],
