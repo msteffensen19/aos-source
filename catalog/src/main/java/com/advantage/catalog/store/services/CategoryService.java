@@ -64,9 +64,9 @@ public class CategoryService {
                 });
 
         if (logger.isInfoEnabled()) {
-            StringBuilder sb = new StringBuilder("\n");
+            StringBuilder sb = new StringBuilder("");
             for (int i = 0; i < categories.size(); i++) {
-                sb.append(String.format("\tcategories(%d): category.id=%d - name='%s'\n", i, categories.get(i).getCategoryId(), categories.get(i).getCategoryName()));
+                sb.append(String.format("categories(%d): category.id=%d - name='%s'\n", i, categories.get(i).getCategoryId(), categories.get(i).getCategoryName()));
             }
             logger.info(sb);
         }
@@ -85,9 +85,9 @@ public class CategoryService {
                 });
 
         if (logger.isInfoEnabled()) {
-            StringBuilder sb = new StringBuilder("\n");
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < attributes.size(); i++) {
-                sb.append(String.format("\tattributes(%d): attribute.id=%d - name='%s'\n", i, attributes.get(i).getId(), attributes.get(i).getName()));
+                sb.append(String.format("attributes(%d): attribute.id=%d - name='%s'\n", i, attributes.get(i).getId(), attributes.get(i).getName()));
             }
             logger.info(sb);
         }

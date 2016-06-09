@@ -15,9 +15,13 @@ import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.JsonHelper;
+import com.google.common.net.HttpHeaders;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -217,7 +221,6 @@ public class OrderManagementService {
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
 
-
             if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(safePayResponse.getReferenceNumber());
                 purchaseResponse.setPaymentConfirmationNumber(safePayResponse.getReferenceNumber());
@@ -297,13 +300,18 @@ public class OrderManagementService {
                 purchaseResponse.setReason(MESSAGE_ORDER_COMPLETED_SUCCESSFULLY);
                 purchaseResponse.setOrderNumber(orderNumber);
                 purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
-
+                if (logger.isInfoEnabled()) {
+                    logger.info(orderResponse.toString());
+                    logger.info(purchaseResponse);
+                }
             } else {
                 purchaseResponse.setSuccess(false);
                 purchaseResponse.setCode(orderResponse.getCode());
                 purchaseResponse.setReason(orderResponse.getReason());
                 purchaseResponse.setOrderNumber(orderNumber);
                 purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
+                logger.warn(orderResponse.toString());
+                logger.warn(purchaseResponse);
             }
         }
 
@@ -347,7 +355,6 @@ public class OrderManagementService {
                         -999999.99,                     //  Price-per-item
                         cartProduct.getQuantity()));
             }
-
         }
 
         return purchasedProducts;
@@ -386,12 +393,19 @@ public class OrderManagementService {
 
         try {
             urlPayment = new URL(Url_resources.getUrlMasterCredit(), "payments/payment");
-
+            logger.info("urlPayment=" + urlPayment.toString());
             HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
-
+            if (logger.isTraceEnabled()) {
+                try {
+                    Object connectedStatus = FieldUtils.readField(conn, "connected", true);
+                    logger.trace("HttpURLConnection.connected=" + connectedStatus);
+                } catch (Throwable e) {
+                    logger.warn("Geting \"connected\" field by reflection for HttpURLConnection failed", e);
+                }
+            }
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestMethod(HttpMethod.POST.name());
+            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
             String input = "{" + "\"MCCVVNumber\":" + masterCreditRequest.getCvvNumber() + "," +
                     "\"MCCardNumber\":\"" + masterCreditRequest.getCardNumber() + "\"," +
@@ -404,13 +418,15 @@ public class OrderManagementService {
                     "\"MCTransactionDate\": \"" + masterCreditRequest.getTransactionDate() + "\"," +
                     "\"MCTransactionType\": \"" + masterCreditRequest.getTransactionType() + "\"" +
                     "}";
-
+            logger.debug(input);
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
+                RuntimeException e = new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
+                logger.fatal(conn.getResponseCode(), e);
+                throw e;
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -434,9 +450,9 @@ public class OrderManagementService {
             conn.disconnect();
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.fatal(masterCreditResponse, e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.fatal(masterCreditResponse, e);
         }
 
         return masterCreditResponse;
@@ -658,13 +674,24 @@ public class OrderManagementService {
                     orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
                 });
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.error(orderHistoryCollectionDto, e);
                 return null;
             }
         }
         return orderHistoryCollectionDto;
     }
 
-
     //endregion get orders
+
+    @Override
+    public String toString() {
+        return "OrderManagementService{" +
+                "totalAmount=" + totalAmount +
+                ", orderManagementRepository=" + orderManagementRepository +
+                ", orderHistoryHeaderManagementRepository=" + orderHistoryHeaderManagementRepository +
+                ", orderHistoryLineManagementRepository=" + orderHistoryLineManagementRepository +
+                ", shoppingCartRepository=" + shoppingCartRepository +
+                ", shoppingCartService=" + shoppingCartService +
+                '}';
+    }
 }
