@@ -15,9 +15,13 @@ import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.JsonHelper;
+import com.google.common.net.HttpHeaders;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -217,7 +221,6 @@ public class OrderManagementService {
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
 
-
             if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(safePayResponse.getReferenceNumber());
                 purchaseResponse.setPaymentConfirmationNumber(safePayResponse.getReferenceNumber());
@@ -390,12 +393,19 @@ public class OrderManagementService {
 
         try {
             urlPayment = new URL(Url_resources.getUrlMasterCredit(), "payments/payment");
-
+            logger.info("urlPayment=" + urlPayment.toString());
             HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
-
+            if (logger.isTraceEnabled()) {
+                try {
+                    Object connectedStatus = FieldUtils.readField(conn, "connected", true);
+                    logger.trace("HttpURLConnection.connected=" + connectedStatus);
+                } catch (Throwable e) {
+                    logger.warn("Geting \"connected\" field by reflection for HttpURLConnection failed", e);
+                }
+            }
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestMethod(HttpMethod.POST.name());
+            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
             String input = "{" + "\"MCCVVNumber\":" + masterCreditRequest.getCvvNumber() + "," +
                     "\"MCCardNumber\":\"" + masterCreditRequest.getCardNumber() + "\"," +
@@ -408,13 +418,15 @@ public class OrderManagementService {
                     "\"MCTransactionDate\": \"" + masterCreditRequest.getTransactionDate() + "\"," +
                     "\"MCTransactionType\": \"" + masterCreditRequest.getTransactionType() + "\"" +
                     "}";
-
+            logger.debug(input);
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
+                RuntimeException e = new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
+                logger.fatal(conn.getResponseCode(), e);
+                throw e;
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -438,9 +450,9 @@ public class OrderManagementService {
             conn.disconnect();
 
         } catch (MalformedURLException e) {
-            logger.error(masterCreditResponse, e);
+            logger.fatal(masterCreditResponse, e);
         } catch (IOException e) {
-            logger.error(masterCreditResponse, e);
+            logger.fatal(masterCreditResponse, e);
         }
 
         return masterCreditResponse;
