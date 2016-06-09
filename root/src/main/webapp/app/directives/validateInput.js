@@ -94,6 +94,12 @@ define(['./module'], function (directives) {
                     }
                 };
 
+                this.changeAllowToChangeInvalidClass = function(){
+                    for (var i = 0; i < this.senders.length; i++) {
+                        this.senders[i].changeAllowToChangeInvalidClass();
+                    }
+                };
+
 
             }],
             link: {
@@ -156,7 +162,12 @@ define(['./module'], function (directives) {
                     }
                 };
 
+                this.changeAllowToChangeInvalidClass = function(){
+                    allowToChangeInvalidClass = true;
+                };
+
                 this.setDisableUntilSomeChange = function () {
+                    allowToChangeInvalidClass = false;
                     button.addClass(invalid);
                 };
 
@@ -599,6 +610,9 @@ define(['./module'], function (directives) {
                         focus: function () {
                             form.setToLateToCheck();
                             ctrl.focus();
+                        },
+                        keydown: function () {
+                            form.changeAllowToChangeInvalidClass();
                         },
                     });
                 }

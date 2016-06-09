@@ -41,7 +41,7 @@
 
                             <div ng-show="imgRadioButton == 1">
 
-                                <sec-form>
+                                <sec-form sec-disable-until-some-change="true">
 
 
                                     <sec-view a-hint="{{'SafePay_User_name' | translate}}"
@@ -61,9 +61,9 @@
                                               sec-pattern="mainCtrl.getPattern('Password')">
                                     </sec-view>
 
-                                    <div class="option marginTop " data-ng-class="{ blocked : savePayBlocked }">
+                                    <div class="option marginTop">
                                         <input ng-model="preferredPayment_SafePay" type="checkbox" class="ng-pristine ng-untouched ng-valid">
-                                        <span class="roboto-light ng-binding"> {{ 'Set_SafePay_as_Preferred_payment' | translate }} </span>
+                                        <span class="roboto-light ng-binding" data-ng-click="preferredPayment_SafePay = !preferredPayment_SafePay"> {{ 'Set_SafePay_as_Preferred_payment' | translate }} </span>
                                     </div>
 
                                     <div class="blueLink">
@@ -82,7 +82,7 @@
 
                             <div ng-show="imgRadioButton == 2 ">
 
-                                <sec-form>
+                                <sec-form sec-disable-until-some-change="true">
 
                                     <div class="spliter">
 
@@ -134,7 +134,7 @@
 
                                     <div class="option marginTop">
                                         <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
-                                        <span class="roboto-light ng-binding"> {{ 'Set_MasterCredit_as_Preferred_payment' | translate }} </span>
+                                        <span class="roboto-light ng-binding" data-ng-click="saveMasterCredit = !saveMasterCredit"> {{ 'Set_MasterCredit_as_Preferred_payment' | translate }} </span>
                                     </div>
 
                                     <div class="blueLink">
