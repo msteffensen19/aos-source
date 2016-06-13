@@ -22,6 +22,7 @@ define(['./module'], function (directives) {
                     var minValue = 1;
                     var num = 1;
                     var readyToCheck = true;
+                    var ctrl = this;
                     s.numAttr = parseInt(s.numAttr);
 
                     this.setNewNum = function(_num){
@@ -67,16 +68,21 @@ define(['./module'], function (directives) {
                         return true;
                     }
 
-                    this.updateNumber = function(){
+                    this.updateNumber = function(allowEmpty){
                         readyToCheck = true;
                         s.updateProductAttr()
-                        s.checkDisables()
+                        s.checkDisables(allowEmpty)
                     }
 
                     function checkNumber(){
+
+                        if((s.numAttr + "").length == 0){
+                            return true;
+                        }
+
                         var isNumber = (s.numAttr - 0) == s.numAttr && (''+s.numAttr).trim().length > 0;
-                        if(!isNumber){
-                            s.numAttr = parseInt(num);
+
+                        if(!isNumber || (s.numAttr + "").length == (ctrl.getMaxValue() + "").length){
                             return false;
                         }
                         if(s.numAttr > maxValue || s.numAttr < minValue ){
@@ -102,9 +108,14 @@ define(['./module'], function (directives) {
                         s.numAttr = maxValue;
                         $(e).find('.plus').addClass('disableBtn')
                     }
-                    s.checkDisables = function(){
+
+                    s.checkDisables = function(allowEmpty){
                         if (s.numAttr <= minValue) {
-                            s.numAttr = parseInt(minValue);
+                            if(s.numAttr == "" && allowEmpty){
+                            }
+                            else{
+                                s.numAttr = parseInt(minValue);
+                            }
                             $(e).find('.minus').addClass('disableBtn')
                             $(e).find('.plus').removeClass('disableBtn')
                         }
@@ -155,11 +166,7 @@ define(['./module'], function (directives) {
 
                         if(event.keyCode >= 48 && event.keyCode <= 57 ||
                             event.keyCode >= 96 && event.keyCode <= 105){
-                            if((s.numAttr + "").length == (ctrl.getMaxValue() + "").length){
-                                s.numAttr =  ctrl.getMinValue() - 1;
-                                var key = event.keyCode;
-                                ctrl.setNewNum(String.fromCharCode((96 <= key && key <= 105) ? key-48 : key))
-                            }
+
                             if(!ctrl.saveNumber()) {
                                 event.preventDefault();
                                 return false;
@@ -170,9 +177,15 @@ define(['./module'], function (directives) {
                         return false;
                     });
 
-                    e.on('keyup', function () {
+                    //e.on('keyup', function () {
+                    //    s.$apply(function(){
+                    //        ctrl.updateNumber(true);
+                    //    })
+                    //});
+
+                    e.on('blur', function () {
                         s.$apply(function(){
-                            ctrl.updateNumber();
+                            ctrl.updateNumber(false);
                         })
                     });
                 }
