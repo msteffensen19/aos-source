@@ -17,6 +17,28 @@ import java.util.List;
 public class StringHelper {
 
     /**
+     * Convert a {@code date} given as {@link String} in {@code dateFormat} to {@link Date}.
+     *
+     * @param stringDate {@link String} containing valid date, e.g. "26.03.2011", "1969-06-02", "12/22/1983", etc.
+     * @param dateFormat Valid {@link SimpleDateFormat}, e.g. "dd/MM/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", etc.
+     * @return received date as {@code Java} {@link Date}.
+     */
+    public static Date convertStringToDate(String stringDate, String dateFormat) {
+        Date date = null;
+
+        if (ValidationHelper.isValidDate(stringDate)) {
+            try {
+                date = new SimpleDateFormat(dateFormat).parse(stringDate);
+            } catch (ParseException e) {
+                //e.printStackTrace();
+                date = null;
+            }
+        }
+
+        return date;
+    }
+
+    /**
      * Receives {@link String} containing words and capitalize the first
      * letter of each word, while making all other lettes lower case.
      *
