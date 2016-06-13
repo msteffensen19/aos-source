@@ -7,16 +7,17 @@
 define(['./module'], function (directives) {
     'use strict';
     directives
-        .directive('eSecPlusMinus', ['$templateCache', function($templateCache){
-            return{
+        .directive('eSecPlusMinus', ['$templateCache', function ($templateCache) {
+            return {
                 restrict: 'E',
                 template: $templateCache.get('app/partials/e-sec-plus-minus.html'),
                 scope: {
                     numAttr: '=',
                     updateProductAttr: '&',
-                    aDisable: '='
+                    aDisable: '=',
+                    maxValue: '=',
                 },
-                controller: ['$scope', function(s){
+                controller: ['$scope', function (s) {
 
                     var maxValue = 999;
                     var minValue = 1;
@@ -25,20 +26,34 @@ define(['./module'], function (directives) {
                     var ctrl = this;
                     s.numAttr = parseInt(s.numAttr);
 
-                    this.setNewNum = function(_num){
+                    this.setNewNum = function (_num) {
                         num = parseInt(_num);
                     }
 
-                    this.getMaxValue = function(){
+                    this.incrementNumAttr = function () {
+                        if (s.numAttr > minValue) {
+                            s.numAttr--;
+                        }
+                    };
+
+                    this.decrementNumAttr = function () {
+                        s.numAttr++;
+                    };
+
+                    this.getMaxValue = function () {
                         return maxValue;
                     }
 
-                    this.getMinValue = function(){
+                    this.setMaxValue = function (_maxValue) {
+                        maxValue = _maxValue;
+                    }
+
+                    this.getMinValue = function () {
                         return minValue;
                     }
 
-                    s.incrementValue = function(){
-                        s.$apply(function(){
+                    s.incrementValue = function () {
+                        s.$apply(function () {
                             var newVal = s.numAttr + 1
                             num = s.numAttr = parseInt(newVal);
                         });
@@ -47,8 +62,8 @@ define(['./module'], function (directives) {
                         return s.numAttr >= maxValue;
                     }
 
-                    s.decrementValue = function(){
-                        s.$apply(function(){
+                    s.decrementValue = function () {
+                        s.$apply(function () {
                             var newVal = s.numAttr - 1
                             num = s.numAttr = parseInt(newVal);
                             s.updateProductAttr()
@@ -56,48 +71,55 @@ define(['./module'], function (directives) {
                         return s.numAttr <= minValue;
                     }
 
-                    this.saveNumber  = function($event){
+                    this.saveNumber = function ($event) {
 
-                        if(!checkNumber($event))
-                        { return false; }
+                        if (!checkNumber($event)) {
+                            return false;
+                        }
 
-                        if(readyToCheck) {
+                        if (readyToCheck) {
                             readyToCheck = false;
                             num = s.numAttr;
                         }
                         return true;
                     }
 
-                    this.updateNumber = function(allowEmpty){
+                    this.updateNumber = function (allowEmpty) {
                         readyToCheck = true;
                         s.updateProductAttr()
                         s.checkDisables(allowEmpty)
                     }
 
-                    function checkNumber(){
+                    function checkNumber() {
 
-                        if((s.numAttr + "").length == 0){
+                        if ((s.numAttr + "").length == 0) {
                             return true;
                         }
 
-                        var isNumber = (s.numAttr - 0) == s.numAttr && (''+s.numAttr).trim().length > 0;
+                        var isNumber = (s.numAttr - 0) == s.numAttr && ('' + s.numAttr).trim().length > 0;
 
-                        if(!isNumber || (s.numAttr + "").length == (ctrl.getMaxValue() + "").length){
+                        if (!isNumber /*|| (s.numAttr + "").length == (ctrl.getMaxValue() + "").length*/) {
                             return false;
                         }
-                        if(s.numAttr > maxValue || s.numAttr < minValue ){
+                        if (s.numAttr > maxValue || s.numAttr < minValue) {
                             s.numAttr = parseInt(num);
                             return false;
                         }
                         return true;
                     }
                 }],
-                link: function(s, e, a, ctrl) {
+                link: function (s, e, a, ctrl) {
 
                     e.addClass("sec-plus-minus")
-                    if(s.aDisable){
+                    if (s.aDisable) {
                         e.addClass("sec-plus-minus-disable")
                     }
+
+                    if (s.maxValue) {
+                        ctrl.setMaxValue(s.maxValue);
+                    }
+
+
                     var minValue = ctrl.getMinValue();
                     var maxValue = ctrl.getMaxValue();
                     if (s.numAttr <= minValue) {
@@ -109,11 +131,11 @@ define(['./module'], function (directives) {
                         $(e).find('.plus').addClass('disableBtn')
                     }
 
-                    s.checkDisables = function(allowEmpty){
+                    s.checkDisables = function (allowEmpty) {
                         if (s.numAttr <= minValue) {
-                            if(s.numAttr == "" && allowEmpty){
+                            if (s.numAttr == "" && allowEmpty) {
                             }
-                            else{
+                            else {
                                 s.numAttr = parseInt(minValue);
                             }
                             $(e).find('.minus').addClass('disableBtn')
@@ -128,83 +150,70 @@ define(['./module'], function (directives) {
                             $(e).find('.plus').addClass('disableBtn')
                             $(e).find('.minus').removeClass('disableBtn')
                         }
-                        else{
+                        else {
                             $(e).find('.plus').removeClass('disableBtn')
                         }
-                        if((s.numAttr - 0) == s.numAttr && (''+s.numAttr).trim().length > 0){
+                        if ((s.numAttr - 0) == s.numAttr && ('' + s.numAttr).trim().length > 0) {
                             s.numAttr = parseInt(s.numAttr);
                         }
                     }
+
+
                 }
             }
         }])
-        .directive('numbersOnly', function(){
-            return{
+        .directive('numbersOnly', function () {
+            return {
                 restrict: 'A',
                 require: '^eSecPlusMinus',
-                scope: {
-                },
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
 
-                    e.on('click',function ($event){
+                    e.on('click', function ($event) {
                             this.select();
                         }
                     );
 
-                    e.on('keydown', function (event) {
-
-                        switch (event.keyCode){
-                            case 8: // back space
-                            case 37: // left
-                            case 39: // rigth
-                            case 38: // down
-                            case 40: // up
-                            case 123: // f12
-                            case 13: // enter
-                                return true;
-                        }
-
-                        if(event.keyCode >= 48 && event.keyCode <= 57 ||
-                            event.keyCode >= 96 && event.keyCode <= 105){
-
-                            if(!ctrl.saveNumber()) {
-                                event.preventDefault();
-                                return false;
-                            }
-                            return true;
-                        }
-                        event.preventDefault();
-                        return false;
+                    s.$watch('numAttr', function () {
+                        ctrl.updateNumber(true);
                     });
 
-                    //e.on('keyup', function () {
-                    //    s.$apply(function(){
-                    //        ctrl.updateNumber(true);
-                    //    })
-                    //});
+                    e.on('keydown', function ($event) {
+                        s.$apply(function () {
+                            switch ($event.keyCode) {
+                                case 38:
+                                    ctrl.incrementNumAttr();
+                                    $event.preventDefault();
+                                    break;
+                                case 40:
+                                    ctrl.decrementNumAttr();
+                                    $event.preventDefault();
+                                    break;
+                            }
+                        });
+                    });
 
                     e.on('blur', function () {
-                        s.$apply(function(){
+                        s.$apply(function () {
                             ctrl.updateNumber(false);
                         })
                     });
                 }
             }
         })
-        .directive('incrementValueAttr', function(){
-            return{
+        .directive('incrementValueAttr', function () {
+            return {
                 restrict: 'A',
                 require: '^eSecPlusMinus',
-                link: function(s, e, a, ctrl){
+                link: function (s, e, a, ctrl) {
 
                     e.on('click', function () {
 
-                        if(a.incrementValueAttr == "+"){
+                        if (a.incrementValueAttr == "+") {
 
-                            if(e.hasClass("disableBtn")){
+                            if (e.hasClass("disableBtn")) {
                                 return;
                             }
-                            if(s.incrementValue()){
+                            if (s.incrementValue()) {
                                 e.addClass("disableBtn")
                                 return;
                             }
@@ -212,12 +221,12 @@ define(['./module'], function (directives) {
                             e.removeClass("disableBtn")
 
                         }
-                        if(a.incrementValueAttr == "-"){
+                        if (a.incrementValueAttr == "-") {
 
-                            if(e.hasClass("disableBtn")){
+                            if (e.hasClass("disableBtn")) {
                                 return;
                             }
-                            if(s.decrementValue()){
+                            if (s.decrementValue()) {
                                 e.addClass("disableBtn")
                                 return;
                             }
@@ -229,8 +238,6 @@ define(['./module'], function (directives) {
             }
         })
     ;
-
-
 
 
 });

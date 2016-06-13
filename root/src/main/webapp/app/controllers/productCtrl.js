@@ -62,8 +62,8 @@ define(['./module'], function (controllers) {
                     for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
                         var prod = s.$parent.cart.productsInCart[i];
                         if (prod.productId == productToAdd.productId && prod.color.code == s.colorSelected.code) {
-                            if (prod.quantity + quantity > 999) {
-                                quantity = 999 - prod.quantity;
+                            if (prod.quantity + quantity > s.product.colors[0].inStock) {
+                                quantity = s.product.colors[0].inStock - prod.quantity;
                             }
                         }
                     }
