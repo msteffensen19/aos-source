@@ -395,6 +395,7 @@ public class OrderManagementService {
             urlPayment = new URL(Url_resources.getUrlMasterCredit(), "payments/payment");
             logger.info("urlPayment=" + urlPayment.toString());
             HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
+
             if (logger.isTraceEnabled()) {
                 try {
                     Object connectedStatus = FieldUtils.readField(conn, "connected", true);
@@ -403,6 +404,28 @@ public class OrderManagementService {
                     logger.warn("Geting \"connected\" field by reflection for HttpURLConnection failed", e);
                 }
             }
+
+            //region WORK AROUND (encapsulation breaking - REMOVE all region)
+            try {
+                boolean connected = (Boolean) FieldUtils.readField(conn, "connected", true);
+                if (connected) {
+                    conn = null;
+                    conn = (HttpURLConnection) urlPayment.openConnection();
+                    if (logger.isTraceEnabled()) {
+                        try {
+                            Object connectedStatus = FieldUtils.readField(conn, "connected", true);
+                            logger.trace("After WORK AROUND HttpURLConnection.connected=" + connectedStatus);
+                        } catch (Throwable e) {
+                            logger.warn("After WORK AROUND \"connected\" field by reflection for HttpURLConnection failed", e);
+                        }
+                    }
+                }
+            } catch (Throwable e) {
+                logger.warn("WORK AROUND: Geting \"connected\" field by reflection for HttpURLConnection failed", e);
+            }
+            //endregion
+
+
             conn.setDoOutput(true);
             conn.setRequestMethod(HttpMethod.POST.name());
             conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
