@@ -192,9 +192,10 @@
                         </div>
                         <div class="splitter">
                             <div class="smollPadding">
-                                <label>{{'Subject' | translate }}</label>
+                                <label class="Subject"><span class="star">*</span> {{'Subject' | translate }}</label>
 
                                 <sec-view class="textarea" a-type="textarea"
+                                          a-star="false"
                                           sec-model="supportModel.subject"
                                           sec-require="mainCtrl.getRequire('Email')">
                                 </sec-view>

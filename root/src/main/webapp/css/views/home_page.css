@@ -369,8 +369,14 @@ label.shop_now:after{
 }
 
 
-#supportCover .sec-view.textarea div .star {
-    top: 14px;
+#supportCover label.Subject {
+    position: relative;
+}
+
+#supportCover label.Subject .star {
+    position: absolute;
+    left: -10px;
+    top: 2px;
 }
 
 
