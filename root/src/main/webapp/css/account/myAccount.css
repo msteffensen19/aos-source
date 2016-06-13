@@ -108,8 +108,8 @@
 }
 
 #myAccountContainer .cube .notPromotionCheckbox {
-    margin-top: 6px;
-    margin-bottom: 60px;
+    margin-top: 37px;
+    margin-bottom: 6px;
 }
 
 #myAccountContainer .cube .categoriesBox p{
@@ -136,13 +136,23 @@
 }
 
 #myAccountContainer .cube .categoriesBox .categoriesCheckboxes{
-    width: calc(100% - 112px);
-    padding: 12px 17px;
+    width: 100%;
+    padding: 0px 0px;
+    margin: 0;
+    white-space: nowrap;
 }
 
 #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
     display: inline-block;
-    padding: 0 13px;
+    margin: 10px 13px;
+    white-space: nowrap;
+}
+
+#myAccountContainer .cube .categoriesBox .categoriesCheckboxes .Categories{
+    padding: 15px 13px;
+    display: inline-block;
+    border-right: solid 1px #454545;
+    color: #454545;
 }
 
 #registerCover .link {
@@ -248,7 +258,8 @@
 @media screen and (max-width: 768px)
 {
     #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
-        width: 25%;
+        width: 27%;
+        white-space: normal;
     }
 
     #myAccountContainer{
@@ -259,47 +270,63 @@
         margin: 0px auto;
     }
 
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes{
+        white-space: normal;
+    }
+
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .Categories{
+        padding: 15px 13px;
+        display: inline-block;
+        border-right: none 1px #454545;
+        border-bottom: solid 1px #454545;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
 }
 
 
 @media screen and (max-width: 600px) {
+
     #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
         width: 40%;
-        margin: 15px 0;
     }
 
-    #myAccountContainer .cube input[type=checkbox]{
-        transform: scale(2.5);
-    }
+       /*
 
-    #myAccountContainer .cube .option span{
-        padding-left: 42px;
-    }
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{*/
+    /*width: 27%;*/
+    /*white-space: normal;*/
+    /*}*/
 
-    #accountCover #formCover > div{
-        margin: 0 0 26px 0;
-    }
+    /*#myAccountContainer{*/
+    /*padding-top: 0px !important;*/
+    /*}*/
 
-    #accountCover .link{
-        padding-top: 2px;
-    }
+    /*#accountCover .maxWidth {*/
+    /*margin: 0px auto;*/
+    /*}*/
 
-    #accountCover  .changePassword .validate-directive{
-        margin: 18px 0;
-    }
+    /*#myAccountContainer .cube .categoriesBox .categoriesCheckboxes{*/
+    /*white-space: normal;*/
+    /*}*/
 
-    #accountCover #formCover > div h3
-    {
-        margin: 20px 0 13px 0;
-    }
-
-    #myAccountContainer .cube .notPromotionCheckbox {
-        margin: 20px 30px;
-    }
+    /*#myAccountContainer .cube .categoriesBox .categoriesCheckboxes .Categories{*/
+    /*padding: 15px 13px;*/
+    /*display: inline-block;*/
+    /*border-right: none 1px #454545;*/
+    /*border-bottom: solid 1px #454545;*/
+    /*box-sizing: border-box;*/
+    /*width: 100%;*/
+    /*}*/
 }
 
 @media screen and (max-width: 480px)
 {
+
+    #myAccountContainer .cube .categoriesBox .categoriesCheckboxes .option{
+        width: 100%;
+    }
 
     #accountCover #form .accountDetailsBtn.withMargin{
         margin: 0 !important;
@@ -350,7 +377,6 @@
     }
 
     #myAccountContainer .cube .option span{
-        font-size: 12px;
         color: #020202;
         font-size: 14px;
         font-weight: 400;
@@ -380,7 +406,6 @@
     #myAccountContainer .cube .paymentBox .mastercart{
         padding: 15px 0px;
         padding-right: 0;
-        display: none;
     }
 
 }
