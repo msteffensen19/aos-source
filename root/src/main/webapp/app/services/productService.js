@@ -63,9 +63,13 @@ define(['./module'], function (services) {
 
             function getProductsBySearch(word, quantity) {
 
+                if(!word){
+                    word = "";
+                }
+
                 var allData = categoryService.getExistingData();
                 var response = $q.defer();
-                if (allData) {
+                if (allData && false) {
                     var arr = [];
                     for (var i = 0; i < allData.length; i++) {
                         var data = allData[i];
