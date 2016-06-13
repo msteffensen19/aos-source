@@ -900,7 +900,6 @@ define(['./module'], function (directives) {
                             });
                             break;
                         default:
-
                             input = $("<input type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
