@@ -69,7 +69,7 @@ define(['./module'], function (services) {
 
                 var allData = categoryService.getExistingData();
                 var response = $q.defer();
-                if (allData && false) {
+                if (allData) {
                     var arr = [];
                     for (var i = 0; i < allData.length; i++) {
                         var data = allData[i];
