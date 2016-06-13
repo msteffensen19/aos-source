@@ -30,10 +30,10 @@
                 <figure>
                     <img alt="" id="mainImg" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
                 </figure>
-                <div id="coverImages" ng-show="(product.images | getAllImagesByColor: colorSelected).length > 1">
+                <div id="coverImages" ng-show="imagesArray.length > 1">
                     <div id="lengthAllImages">
                         <div class="imageAlias" data-ng-click="changeImage(img)"
-                             data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
+                             data-ng-repeat="img in imagesArray">
                             <img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">
                         </div>
                     </div>

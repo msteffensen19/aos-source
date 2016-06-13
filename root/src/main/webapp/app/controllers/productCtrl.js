@@ -20,10 +20,10 @@ define(['./module'], function (controllers) {
             s.imageUrl = angular.copy(s.product.imageUrl);
 
             s.getFirstImageUrl = function () {
-                var array = $filter("getAllImagesByColor")(s.product.images, s.colorSelected);
-                if (array.length > 0) {
-                    s.imageUrl = array[0];
-                }
+                s.imagesArray = $filter("getAllImagesByColor")(s.product.images, s.colorSelected, s.product.imageUrl);
+                s.imagesArray.push(s.product.imageUrl);
+                s.imageUrl = s.imagesArray[0];
+                return s.imagesArray;
             }
 
             s.product_attributes = Helper.sortAttributesByName(s.product.attributes);
