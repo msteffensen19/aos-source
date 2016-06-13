@@ -268,19 +268,19 @@ define(['./module'], function (services) {
                                     productInCart.quantity = quantity;
                                 }
                                 else {
-                                    var finded = false;
+                                    var founded = false;
                                     for (var _index in cart.productsInCart) {
                                         var _productInCart = cart.productsInCart[_index];
                                         if (product.productId == _productInCart.productId) {
                                             if (_productInCart.color.code == color.code) {
-                                                finded = true;
+                                                founded = true;
                                                 var instock = product.colors[0].inStock;
                                                 _productInCart.quantity = _productInCart.quantity + quantity >  instock ? instock : _productInCart.quantity + quantity;
                                                 break;
                                             }
                                         }
                                     }
-                                    if (finded) {
+                                    if (founded) {
                                         cart.productsInCart.splice(productIndex, 1);
                                     }
                                     else {
