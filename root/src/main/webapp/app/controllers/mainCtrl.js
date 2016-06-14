@@ -150,17 +150,35 @@ define(['./module'], function (controllers) {
             }
 
             var _____enterCart;
+            var enterInCart = false;
             $scope.enterCart = function () {
-                clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
-                _____enterCart = setTimeout(function(){
+                //clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
+                enterInCart = true;
+                _____enterCart = setTimeout(function () {
                     $('#toolTipCart').stop().slideDown();
                     fixToolTipCartHeight();
                 }, 500);
             }
 
             $scope.leaveCart = function () {
+                enterInCart = false;
                 clearInterval(_____enterCart);
-                Helper.closeToolTipCart();
+                closeToolTipCart();
+            }
+
+
+            function closeToolTipCart() {
+
+                var toolTipCart = $('#toolTipCart');
+                if (toolTipCart.length > 0) {
+                    setTimeout(function(){
+                        if(!enterInCart){
+                            toolTipCart.stop().slideUp(function () {
+                                $('#toolTipCart tbody').animate({scrollTop: 0,}, 500);
+                            });
+                        }
+                    }, 800);
+                }
             }
 
             function fixToolTipCartHeight() {
@@ -525,8 +543,11 @@ define(['./module'], function (controllers) {
             };
 
 
-        }]);
-});
+        }
+    ])
+    ;
+})
+;
 
 
 
