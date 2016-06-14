@@ -16,6 +16,15 @@
 </head>
 
 <body data-ng-controller="mainCtrl as mainCtrl" data-ng-cloak>
+<div id="team" data-ng-click="mainCtrl.closeImgTeam()">
+    <div class="container">
+        <div class="img">
+            <div id="teamIdToAnimate" class="animated">
+                <img src="../../css/images/Advantage_online_shopping_team.jpg" alt="team">
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="waitBackground">
     <div>
@@ -108,11 +117,13 @@
 <!-- end mobile slider -->
 
 
+
+
 <!-- navegation -->
 
 <header ng-show="welcome" data-ng-cloak>
     <nav>
-        <ul class="roboto-light desktop-handler">
+        <ul class="roboto-light desktop-handler" >
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
                 <a class="img" href="#/shoppingCart">
                     <div icon-cart-svg></div>
@@ -127,12 +138,12 @@
             <li>
                 <a class="img" data-ng-click="login('loginMiniTitle')"
                    data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
-                   data-ng-mouseleave="miniTitleOut('loginMiniTitle')" >
+                   data-ng-mouseleave="miniTitleOut('loginMiniTitle')">
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
                         {{userCookie.name}}
                     </span>
 
-                    <div icon-user-svg ></div>
+                    <div icon-user-svg></div>
                     <div class="mini-title" id="loginMiniTitle">
                         <label class="option roboto-medium" translate="My_account" ng-click="accountSection()"></label>
                         <label class="option roboto-medium" translate="Sign_out" ng-click="signOut($event)"></label>
@@ -141,21 +152,23 @@
             </li>
             <li>
                 <a class="img">
-                    <search tool-tip-search ></search>
+                    <search tool-tip-search></search>
                 </a>
             </li>
             <li class="nav-li-Links">
                 <a ng-click="gotoElement('contact_us')" class="menu navLinks roboto-regular" translate="CONTACT_US"></a>
             </li>
             <li class="nav-li-Links">
-                <a class="menu navLinks roboto-regular" ng-click="gotoElement('popular_items')" translate="POPULAR_ITEMS"></a>
+                <a class="menu navLinks roboto-regular" ng-click="gotoElement('popular_items')"
+                   translate="POPULAR_ITEMS"></a>
             </li>
             <li class="nav-li-Links">
                 <a class="menu navLinks roboto-regular" ng-click="gotoElement('special_offer_items')"
                    translate="SPACIAL_OFFER"></a>
             </li>
             <li class="nav-li-Links">
-                <a class="menu navLinks roboto-regular" ng-click="gotoElement('our_products')" translate="OUR_PRODUCTS"></a>
+                <a class="menu navLinks roboto-regular" ng-click="gotoElement('our_products')"
+                   translate="OUR_PRODUCTS"></a>
             </li>
 
         </ul>

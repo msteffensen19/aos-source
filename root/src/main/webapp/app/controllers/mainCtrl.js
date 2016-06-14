@@ -542,12 +542,21 @@ define(['./module'], function (controllers) {
                 ]);
             };
 
-
+            this.closeImgTeam = function(){
+                $("#teamIdToAnimate").addClass("hinge");
+                setTimeout(function(){
+                    $("#team").fadeOut(1000);
+                    setTimeout(function(){
+                        $("#teamIdToAnimate").removeClass("hinge");
+                        $("#teamIdToAnimate").css({
+                            display: "none"
+                        });
+                    }, 1000)
+                }, 2500)
+            }
         }
-    ])
-    ;
-})
-;
+    ]);
+});
 
 
 
