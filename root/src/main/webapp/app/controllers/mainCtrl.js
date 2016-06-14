@@ -152,7 +152,7 @@ define(['./module'], function (controllers) {
             var _____enterCart;
             var enterInCart = false;
             $scope.enterCart = function () {
-                //clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
+                clearInterval(Helper.____closeTooTipCart); // defined in categoryTypeProductsDrtv -> addProduct
                 enterInCart = true;
                 _____enterCart = setTimeout(function () {
                     $('#toolTipCart').stop().slideDown();

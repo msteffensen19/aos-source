@@ -49,7 +49,8 @@ define(['./module'], function (controllers) {
 
                         s.signIn(user, false);
                         if(document.location.hash == "#/register"){
-                            $state.go('default')
+                            window.history.back();
+                            //$state.go('default')
                         }
 
                     }
