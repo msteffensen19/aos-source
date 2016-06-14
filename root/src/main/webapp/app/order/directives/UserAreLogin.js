@@ -40,8 +40,6 @@ define(['./module'], function (directives) {
                             s.countries = countries;
                         });
 
-                        //s.cardNumber
-
                         s.backToMainShippingDetails = function () {
                             if (s.invalidUser) {
                                 return;
@@ -92,6 +90,7 @@ define(['./module'], function (directives) {
 
 
                         var safePayBussy = false;
+                        var tempPass;
 
                         function safePay(TransPaymentMethod, accountNumber) {
 
@@ -99,6 +98,13 @@ define(['./module'], function (directives) {
                                 return;
                             }
                             safePayBussy = true;
+
+                            if (s.savePay && s.savePay.password.length == 12) {
+                                if (s.$parent.secretPassword.indexOf(s.savePay.password) != -1) {
+                                    tempPass = s.savePay.password;
+                                    s.savePay.password = s.$parent.secretPassword;
+                                }
+                            }
                             orderService.SafePay(s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
                                 .then(function (res) {
 
@@ -116,12 +122,17 @@ define(['./module'], function (directives) {
                                         }
                                         safePayBussy = false;
                                         s.paymentEnd = false;
+
                                     }, function (err) {
                                         console.log(err);
                                         safePayBussy = false;
                                         s.paymentEnd = false;
                                     }
                                 );
+
+                            if (tempPass) {
+                                s.savePay.password = tempPass;
+                            }
                         }
 
 
@@ -135,7 +146,7 @@ define(['./module'], function (directives) {
                                 }
                             }
                             var TransPaymentMethod = "SafePay";
-                            var accountNumber = 843200971;
+                            var accountNumber = "843200971";
                             safePay(TransPaymentMethod, accountNumber);
 
                         }
@@ -151,7 +162,7 @@ define(['./module'], function (directives) {
                                 }
                             }
                             var TransPaymentMethod = "MasterCredit";
-                            var accountNumber = 112987298763;
+                            var accountNumber = "112987298763";
                             safePay(TransPaymentMethod, accountNumber);
                         }
 
