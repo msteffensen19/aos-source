@@ -8,12 +8,15 @@ import com.advantage.accountsoap.dto.address.*;
 import com.advantage.accountsoap.dto.payment.*;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.services.*;
+import com.advantage.common.Constants;
+import com.advantage.root.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.Date;
 import java.util.List;
 
 @Endpoint
@@ -121,7 +124,19 @@ public class AccountserviceEndpoint {
             //  Set SessionID to Response Entity
             //response.getHeader().
             response.setSessionId(session.getAccountId());*/
-            response.setSessionId("session_id");
+            //response.setSessionId("session_id");
+            Date date = new Date();
+            String stringDate = StringHelper.convertDateToString(date, "yyyy.MM.dd.hh.mm.ss");
+
+            StringBuilder sessionId = new StringBuilder(Long.toHexString(date.getTime()))
+                    .append(Constants.AT_SIGN)
+                    .append(StringHelper.convertDateToStringHexadecimal(date))
+                    .append(Constants.POWER)
+                    .append("i")
+                    .append(Constants.MODULU)
+                    .append(response.getUserId());
+
+            response.setSessionId(sessionId.toString());
 
             return new AccountLoginResponse(response);
         } else {
