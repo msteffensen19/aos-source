@@ -87,6 +87,7 @@
                                     <div class="spliter">
 
                                         <sec-view a-hint="{{'Card_number' | translate}}"
+                                                  a-secret-field="true"
                                                   sec-model="card.number"
                                                   sec-require="mainCtrl.getRequire('Card_number')"
                                                   sec-card-number="mainCtrl.getCardNumber(16)">
@@ -94,6 +95,7 @@
 
 
                                         <sec-view a-hint="{{'CCV_Number' | translate}}" class="creditCard"
+                                                  a-secret-field="true"
                                                   sec-model="card.cvv"
                                                   sec-require="mainCtrl.getRequire('CCV_Number')"
                                                   sec-pattern="mainCtrl.getPattern('CCV_Number')">
