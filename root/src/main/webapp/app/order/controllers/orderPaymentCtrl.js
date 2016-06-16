@@ -64,13 +64,14 @@ define(['./module'], function (controllers) {
 
             var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
                 resolveParams.paymentPreferences.safePay : null;
+            s.secretPassword = "****";
             if(safePay != null){
                 s.savePay.username = safePay.safepayUsername;
-                //s.savePay.password = safePay.safepayPassword;
+                s.secretPassword = safePay.safepayPassword;
+                s.savePay.password = s.secretPassword.substring(0, 12);
             }
             s.saveSafePay = true;
             s.saveMasterCredit = true;
-
 
             s.agree_Agreement = true;
 

@@ -30,10 +30,10 @@
                 <figure>
                     <img alt="" id="mainImg" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
                 </figure>
-                <div id="coverImages" ng-show="(product.images | getAllImagesByColor: colorSelected).length > 1">
+                <div id="coverImages" ng-show="imagesArray.length > 1">
                     <div id="lengthAllImages">
                         <div class="imageAlias" data-ng-click="changeImage(img)"
-                             data-ng-repeat="img in product.images | getAllImagesByColor: colorSelected">
+                             data-ng-repeat="img in imagesArray">
                             <img alt="" data-ng-src="/catalog/fetchImage?image_id={{img | getImageId}}">
                         </div>
                     </div>
@@ -68,9 +68,8 @@
                     </div>
                     <div class="smoolMargin">
                         <label class="Quantity roboto-light" translate="Quantity:"></label>
-                        <e-sec-plus-minus num-attr="quantity"
+                        <e-sec-plus-minus num-attr="quantity" max-value="product.colors[0].inStock"
                                           a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>
-                        <!--<select ng-model="quantity" ng-options="item for item in quantityOptions" ></select>-->
                     </div>
                     <div class="fixedBtn">
                         <button class="roboto-medium"

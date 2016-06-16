@@ -99,15 +99,6 @@ Helper.UpdatePageFixed = function () {
     Helper.checkPagePossitions()
 };
 
-Helper.closeToolTipCart = function () {
-
-    var toolTipCart = $('#toolTipCart');
-    if (toolTipCart.length > 0) {
-        toolTipCart.stop().slideUp(function () {
-            $('#toolTipCart tbody').animate({scrollTop: 0,}, 500);
-        });
-    }
-}
 
 Helper.getRandom = function (length) {
     var ranVal = '';

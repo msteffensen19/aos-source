@@ -2,18 +2,24 @@ package com.advantage.common;
 
 public class Constants {
 
-    public static final char TAB = '\t';
-    public static final char COMMA = ',';
-    public static final char SPACE = ' ';
-    public static final String DOUBLE_SPACES = "  ";
-    public static final String TRIPLE_SPACES = "   ";
-    public static final String NEW_LINE = "\n\r";
 
-    public static final String NOT_FOUND = "NOT FOUND";
+    public static final char AT_SIGN    = '@';
+    public static final char COMMA      = ',';
+    public static final char DOT        = '.';
+    public static final char MODULU     = '%';
+    public static final char POWER      = '^';
+    public static final char SPACE      = ' ';
+    public static final char TAB        = '\t';
+    public static final char UNDERSCORE = '_';
+
+    public static final String DOUBLE_SPACES    = "  ";
+    public static final String EMPTY_STRING     = "";
+    public static final String TRIPLE_SPACES    = "   ";
+    public static final String NEW_LINE         = "\n\r";
+    public static final String NOT_FOUND        = "NOT FOUND";
 
     public static final String URI_API = "/api";
 
-    //
     public static final String FILE_PROPERTIES_INTERNAL = "classpath:properties/internal_config_for_env.properties";
     public static final String FILE_PROPERTIES_EXTERNAL = "classpath:properties/services.properties";
     public static final String FILE_PROPERTIES_GLOBAL = "classpath:properties/global.properties";

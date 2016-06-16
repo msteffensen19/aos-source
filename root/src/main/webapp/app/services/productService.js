@@ -63,6 +63,10 @@ define(['./module'], function (services) {
 
             function getProductsBySearch(word, quantity) {
 
+                if(!word){
+                    word = "";
+                }
+
                 var allData = categoryService.getExistingData();
                 var response = $q.defer();
                 if (allData) {

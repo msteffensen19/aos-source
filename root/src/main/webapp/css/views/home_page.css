@@ -369,8 +369,14 @@ label.shop_now:after{
 }
 
 
-#supportCover .sec-view.textarea div .star {
-    top: 14px;
+#supportCover label.Subject {
+    position: relative;
+}
+
+#supportCover label.Subject .star {
+    position: absolute;
+    left: -12px;
+    top: 2px;
 }
 
 
@@ -378,7 +384,7 @@ label.shop_now:after{
     border: 1px solid white;
     background-color: #54b3ad;
     color:white;
-    padding: 5px 10px;
+    padding: 8px 10px;
 }
 
 

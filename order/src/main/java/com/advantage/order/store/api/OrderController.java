@@ -120,7 +120,6 @@ public class OrderController{
     @ApiResponses(value = {
             @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
-
     public ResponseEntity<ShoppingCartResponseDto> updateProductInCart(@PathVariable("userId") Long userId,
                                                                        @PathVariable("productId") Long productId,
                                                                        @PathVariable("color") String hexColor,

@@ -52,20 +52,33 @@ public class WebSocketServerEndpoint {
     private Set<String> categories = new HashSet<String>();
 
     private static String supportTeam[] = {
+            "Adi",
             "Alex",
+            "Bar",
             "Ben",
             "Daniel",
             "David",
+            "Dom",
             "Efi",
+            "Goofy",
+            "Halo",
             "Irina",
             "Jana",
             "Jordan",
             "Julia",
             "Maria",
-            "Sarah",
+            "Mars",
+            "Miki",
+            "Mercury",
+            "Shay",
+            "Shir",
             "Sofia",
+            "Summer",
             "Sveta",
-            "Tatiana"
+            "Tobi",
+            "Venus",
+            "Yam",
+            "Zoe"
     };
 
     /**

@@ -20,10 +20,10 @@ define(['./module'], function (controllers) {
             s.imageUrl = angular.copy(s.product.imageUrl);
 
             s.getFirstImageUrl = function () {
-                var array = $filter("getAllImagesByColor")(s.product.images, s.colorSelected);
-                if (array.length > 0) {
-                    s.imageUrl = array[0];
-                }
+                s.imagesArray = $filter("getAllImagesByColor")(s.product.images, s.colorSelected, s.product.imageUrl);
+                s.imagesArray.push(s.product.imageUrl);
+                s.imageUrl = s.imagesArray[0];
+                return s.imagesArray;
             }
 
             s.product_attributes = Helper.sortAttributesByName(s.product.attributes);
@@ -62,8 +62,8 @@ define(['./module'], function (controllers) {
                     for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
                         var prod = s.$parent.cart.productsInCart[i];
                         if (prod.productId == productToAdd.productId && prod.color.code == s.colorSelected.code) {
-                            if (prod.quantity + quantity > 999) {
-                                quantity = 999 - prod.quantity;
+                            if (prod.quantity + quantity > s.product.colors[0].inStock) {
+                                quantity = s.product.colors[0].inStock - prod.quantity;
                             }
                         }
                     }
