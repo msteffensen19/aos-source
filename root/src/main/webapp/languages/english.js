@@ -231,6 +231,9 @@ var english = {
     'Valid_CCV_number_required': 'Valid CCV number required',
 
     'AgreeAgreementRequire': 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
+
+
+    'CHAT_WITH_US': 'CHAT WITH US'
 };
 
 

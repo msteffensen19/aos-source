@@ -340,10 +340,16 @@ define(['./module'], function (controllers) {
             }
 
 
+            setTimeout(function(){
+                $scope.gotoElement("contact_us")
+            }, 1500)
             $scope.gotoElement = function (id) {
-                $("body, html").animate({
-                    scrollTop: ($("#" + id).offset().top - 65) + "px",
-                }, 1000)
+                var element = $("#" + id);
+                if(element.length > 0){
+                    $("body, html").animate({
+                        scrollTop: (element.offset().top - 65) + "px",
+                    }, 1000)
+                }
             };
 
             $scope.checkCart = function () {

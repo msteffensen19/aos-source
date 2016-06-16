@@ -156,6 +156,18 @@
 
                 <div>
 
+                    <div class="chat" data-ng-click="openChat()">
+
+                        <div>
+                            <img src="../../css/images/chat_logo.png" alt="chat logo" />
+                            <label class="roboto-bold" translate="CHAT_WITH_US"></label>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div>
+
                     <h1 class="roboto-bold contact_us" translate="CONTACT_US"></h1>
 
                     <sec-form>
@@ -189,8 +201,8 @@
 
                             </div>
                         </div>
-                        <div class="splitter">
-                            <div class="smollPadding">
+                        <div class="splitter" >
+                            <div class="smollPadding  margin-right">
                                 <label class="Subject"><span class="star">*</span> {{'Subject' | translate }}</label>
 
                                 <sec-view class="textarea" a-type="textarea"
