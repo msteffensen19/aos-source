@@ -16,11 +16,10 @@
                         var webSocket;
                         var serverKey = sessionStorage.getItem("serverKey");
                         sessionStorage.removeItem("serverKey");
-//                    if (serverKey == null) {
-//                        window.close();
-//                    }
-//                    webSocket = new WebSocket("ws://"+serverKey+"/websocketserverendpoint")
-                        webSocket = new WebSocket("ws://localhost:8080/catalog/websocketserverendpoint")
+                        if (serverKey == null) {
+                            window.close();
+                        }
+                        webSocket = new WebSocket("ws://" + serverKey + "/websocketserverendpoint");
 
                         var chat = $("#chat #chatBody");
                         chat.children().remove();
@@ -45,7 +44,7 @@
                         };
 
                         webSocket.onclose = function () {
-                            addAssistantMessage("Server disconnect...", 10);
+                            addAssistantMessage("Server disconnected...", 10);
                         };
 
                         webSocket.onerror = function (message) {
@@ -56,6 +55,10 @@
                         var textbox = $("#textMessage");
                         var chatBussy = false;
                         input.click(function () {
+                            inputClicked();
+                        });
+
+                        function inputClicked(){
                             var value = textbox.val();
                             if (value == "") {
                                 return;
@@ -71,15 +74,22 @@
                             } else {
                                 webSocket.close();
                             }
-                        });
+                        }
 
-                        textbox.keyup(function () {
-                            if (textbox.val() == "" || webSocket.readyState != 1) {
-                                input.addClass("disable")
-                            }
-                            else {
-                                input.removeClass("disable")
-                            }
+                        textbox.on({
+                            keyup: function () {
+                                if (textbox.val() == "" || webSocket.readyState != 1) {
+                                    input.addClass("disable")
+                                }
+                                else {
+                                    input.removeClass("disable")
+                                }
+                            },keydown: function (event) {
+                                if(event.keyCode == 13){
+                                    inputClicked();
+                                }
+                            },
+
                         });
 
                         function addMessageToParagraph(ballon, str) {
@@ -147,9 +157,7 @@
                         function animatePageToEnd() {
                             chat.parent().stop().animate({
                                 scrollTop: $("#chat > div").height() + "px",
-                            }, 500, function () {
-                                input.removeClass("disable")
-                            });
+                            }, 500);
                         }
 
                         function addDate() {
