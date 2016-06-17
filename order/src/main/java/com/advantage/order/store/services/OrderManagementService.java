@@ -6,6 +6,7 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
+import com.advantage.common.utils.LoggerUtils;
 import com.advantage.order.store.dao.OrderHistoryHeaderManagementRepository;
 import com.advantage.order.store.dao.OrderHistoryLineManagementRepository;
 import com.advantage.order.store.dao.OrderManagementRepository;
@@ -29,11 +30,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * @author Binyamin Regev on 07/01/2016.
@@ -401,7 +405,7 @@ public class OrderManagementService {
                     Object connectedStatus = FieldUtils.readField(conn, "connected", true);
                     logger.trace("HttpURLConnection.connected=" + connectedStatus);
                 } catch (Throwable e) {
-                    logger.warn("Geting \"connected\" field by reflection for HttpURLConnection failed", e);
+                    logger.warn("Read \"connected\" field by reflection for HttpURLConnection failed", e);
                 }
             }
 
@@ -421,10 +425,9 @@ public class OrderManagementService {
                     }
                 }
             } catch (Throwable e) {
-                logger.warn("WORK AROUND: Geting \"connected\" field by reflection for HttpURLConnection failed", e);
+                logger.warn("WORK AROUND: Read \"connected\" field by reflection for HttpURLConnection failed", e);
             }
             //endregion
-
 
             conn.setDoOutput(true);
             conn.setRequestMethod(HttpMethod.POST.name());
@@ -448,12 +451,15 @@ public class OrderManagementService {
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
                 RuntimeException e = new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
-                logger.fatal(conn.getResponseCode(), e);
+                if (logger.isDebugEnabled()) {
+                    logger.fatal(conn.getResponseCode(), e);
+                } else {
+                    logger.fatal(LoggerUtils.getMinThrowableDescription(conn.getResponseCode(), e));
+                }
                 throw e;
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
             StringBuilder sb = new StringBuilder();
             String output;
             logger.debug("Output from Server...");
@@ -471,11 +477,18 @@ public class OrderManagementService {
             masterCreditResponse.setTransactionDate((String) jsonMap.get("TransactionDate"));
 
             conn.disconnect();
-
         } catch (MalformedURLException e) {
-            logger.fatal(masterCreditResponse, e);
+            if (logger.isDebugEnabled()) {
+                logger.fatal(masterCreditResponse, e);
+            } else {
+                logger.fatal(LoggerUtils.getMinThrowableDescription(masterCreditResponse, e));
+            }
         } catch (IOException e) {
-            logger.fatal(masterCreditResponse, e);
+            if (logger.isDebugEnabled()) {
+                logger.fatal(masterCreditResponse, e);
+            } else {
+                logger.fatal(LoggerUtils.getMinThrowableDescription(masterCreditResponse, e));
+            }
         }
 
         return masterCreditResponse;
@@ -498,8 +511,8 @@ public class OrderManagementService {
             HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
 
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestMethod(HttpMethod.POST.name());
+            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
             //  region SafePay PAYMENT request
             String input = "{" +
@@ -543,7 +556,6 @@ public class OrderManagementService {
             safePayResponse.setTransactionDate((String) jsonMap.get("TransactionDate"));
 
             conn.disconnect();
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -579,19 +591,19 @@ public class OrderManagementService {
             orderResponse = shipExPort.placeShippingOrder(orderRequest);
 
             if (!orderResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
-                System.out.println("Shipping Express: placeShippingOrder() --> Response returned \'" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
+                logger.info("Response returned \'" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> Response returned '" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
             } else if (orderResponse.getTransactionDate().isEmpty()) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
             } else if (orderResponse.getTransactionReference().isEmpty()) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
             } else if (orderResponse.getTransactionReference().length() != 10) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
             } else if (!orderResponse.getSETransactionType().equalsIgnoreCase(orderRequest.getSETransactionType())) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
             }
         }
@@ -716,5 +728,14 @@ public class OrderManagementService {
                 ", shoppingCartRepository=" + shoppingCartRepository +
                 ", shoppingCartService=" + shoppingCartService +
                 '}';
+    }
+
+    private static void tmpLogAllObject(HttpURLConnection conn) {
+        List<Field> allFieldsList = FieldUtils.getAllFieldsList(conn.getClass());
+        List<Field> staticFields = allFieldsList.stream().filter(tempField -> (tempField.getModifiers() & Modifier.STATIC) == Modifier.STATIC).collect(Collectors.toList());
+        List<Field> nonStaticFields = allFieldsList.stream().filter(tempField -> (tempField.getModifiers() & Modifier.STATIC) != Modifier.STATIC).collect(Collectors.toList());
+        StringBuilder sb = new StringBuilder();
+        //staticFields.stream().forEach(temp);
+        //TODO-EVG continue
     }
 }
