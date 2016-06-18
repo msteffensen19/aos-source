@@ -1,6 +1,7 @@
 package com.advantage.order.store.config;
 
 import com.advantage.common.Url_resources;
+import org.apache.log4j.Logger;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -14,6 +15,8 @@ import javax.servlet.ServletRegistration;
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
+        Logger logger = Logger.getLogger(this.getClass());
+        logger.info("Order service start");
         return new Class[]{
                 AppConfiguration.class,
                 DataSourceConfiguration.class,

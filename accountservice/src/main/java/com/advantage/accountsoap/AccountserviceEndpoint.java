@@ -10,6 +10,7 @@ import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.services.*;
 import com.advantage.common.Constants;
 import com.advantage.root.util.StringHelper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -37,6 +38,11 @@ public class AccountserviceEndpoint {
 
     @Autowired
     private AccountConfigurationService accountConfigurationService;
+
+    public AccountserviceEndpoint() {
+        Logger logger = Logger.getLogger(AccountserviceEndpoint.class);
+        logger.info("Account service start");
+    }
     //  endregion
 
     //region Account
