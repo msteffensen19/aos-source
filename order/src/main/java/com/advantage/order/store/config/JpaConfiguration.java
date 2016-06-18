@@ -47,12 +47,15 @@ public class JpaConfiguration {
         Properties extraProperties = new Properties();
 //        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
 //        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
+        //extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, "create-drop");
+        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, env.getProperty(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME));
         extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("order.hibernate.db.hbm2ddlAuto")));
+
         if (log.isDebugEnabled()) {
-            log.debug(" hibernate.dialect @" + env.getProperty(ENV_HIBERNATE_DIALECT));
+            log.debug(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME + " @" + env.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
         }
-        if (env.getProperty(ENV_HIBERNATE_DIALECT) != null) {
-            extraProperties.put(ENV_HIBERNATE_DIALECT, env.getProperty(ENV_HIBERNATE_DIALECT));
+        if (env.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME) != null) {
+            extraProperties.put(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME, env.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
         }
         return extraProperties;
     }

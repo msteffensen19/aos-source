@@ -94,8 +94,8 @@ public class PropertiesFilesTests {
 //                "hibernate.format_sql",
 //                "hibernate.show_sql",
 //                "hibernate.hbm2ddl.auto",
-                "hibernate.dialect",
-                "hibernate.db.driver_classname",
+                Constants.ENV_HIBERNATE_DIALECT_PARAMNAME,
+                Constants.ENV_HIBERNATE_DB_DRIVER_CLASSNAME_PARAMNAME,
 
                 "db.url.prefix",
                 "db.url.query"
@@ -117,9 +117,7 @@ public class PropertiesFilesTests {
     private void validatePropertiesAreNaturalNumber(String[] properties) throws Exception {
         for (String propertyName : properties) {
             String propertyValue = environment.getProperty(propertyName);
-            try {
-                long tmp = Long.parseLong(propertyValue);
-            } catch (NumberFormatException e) {
+            if (!propertyValue.matches("^\\d+$")) {
                 throw new Exception("The property \"" + propertyName + "\" have value \"" + propertyValue + "\" and isn't natural number");
             }
         }

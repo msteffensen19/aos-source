@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.common.SystemParameters;
+import com.advantage.common.Constants;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,20 +27,23 @@ public class JpaConfig {
 //    @Value("${db.password}")
 //    private String DB_PASSWORD;
 
-    @Value("${hibernate.dialect}")
-    private String HIBERNATE_DIALECT;
+    //    @Value("${hibernate.dialect}")
+    @Value("${" + Constants.ENV_HIBERNATE_DIALECT_PARAMNAME + "}")
+    private String HIBERNATE_DIALECT_VALUE;
 
-    @Value("${hibernate.show_sql}")
-    private String HIBERNATE_SHOW_SQL;
+    //    @Value("${hibernate.show_sql}")
+    @Value("${" + Constants.ENV_HIBERNATE_SHOW_SQL_PARAMNAME + "}")
+    private String HIBERNATE_SHOW_SQL_VALUE;
+
+    //    @Value("${hibernate.hbm2ddl.auto}")
+    @Value("${" + Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME + "}")
+    private String HIBERNATE_HBM2DDL_AUTO_VALUE;
 
     @Value("${account.hibernate.db.hbm2ddlAuto}")
     private String hibernate_db_hbm2ddlAuto;
 
-//    @Value("${hibernate.hbm2ddl.auto}")
-//    private String HIBERNATE_HBM2DDL_AUTO;
-
 //    @Value("${entitymanager.packagesToScan}")
-//    private String ENTITYMANAGER_PACKAGES_TO_SCAN;
+//    private String ENTITYMANAGER_PACKAGES_TO_SCAN_VALUE;
 
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -53,9 +57,9 @@ public class JpaConfig {
 
     private Properties jpaProperties() {
         Properties extraProperties = new Properties();
-        extraProperties.put("hibernate.hbm2ddl.auto", SystemParameters.getHibernateHbm2ddlAuto(hibernate_db_hbm2ddlAuto));
+        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, SystemParameters.getHibernateHbm2ddlAuto(hibernate_db_hbm2ddlAuto));
 
-        extraProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
+        extraProperties.put(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME, HIBERNATE_DIALECT_VALUE);
 
         return extraProperties;
     }

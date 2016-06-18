@@ -25,13 +25,8 @@
                 <artifactId>properties-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- Run only tests whose name end with "Test" -->
-                    <includes>
-                        <include>**/*Tests.java</include>
-                    </includes>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
         @PropertySource(Constants.FILE_PROPERTIES_GLOBAL),
         @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
         @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
+        @PropertySource(Constants.FILE_PROPERTIES_LIQUIBASE_AND_HIBERNATE),
         @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
         @PropertySource(Constants.FILE_PROPERTIES_VER_TXT)
 })

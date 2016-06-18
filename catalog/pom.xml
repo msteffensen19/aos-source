@@ -11,57 +11,168 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <dependencies>
-        <!-- WebSocket -->
-        <dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <!--shared resources-->
-        <dependency>
-            <groupId>com.advantage.online.store</groupId>
-            <artifactId>shared_resources</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <classifier>resources</classifier>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
-            <groupId>com.advantage.online.store</groupId>
-            <artifactId>root</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <classifier>classes</classifier>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.advantage.online.store</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
 
-    </dependencies>
     <profiles>
         <profile>
-            <id>development</id>
+            <id>A_1_1_apply_lb_dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>A_2_create_diff_changelogs_dev</id>
+            <properties>
+                <plugin.liquibase.referenceUrl>
+                    hibernate:spring:com.advantage.catalog.store.model?dialect=org.hibernate.dialect.PostgreSQLDialect
+                </plugin.liquibase.referenceUrl>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>B_prof_exec_mvn_plg_dev</id>
             <build>
                 <pluginManagement>
                     <plugins>
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>sql-maven-plugin</artifactId>
-                            <configuration>
-                                <!--suppress MavenModelInspection -->
-                                <url>
-                                    ${db.url.prefix}://${catalog.hibernate.db.url.host}:${catalog.hibernate.db.url.port}/postgres
-                                </url>
-                                <!--suppress MavenModelInspection -->
-                                <username>${catalog.hibernate.db.login}</username>
-                                <!--suppress MavenModelInspection -->
-                                <password>${catalog.hibernate.db.password}</password>
-                                <sqlCommand>create database "${catalog.hibernate.db.name}"</sqlCommand>
-                            </configuration>
+                            <artifactId>exec-maven-plugin</artifactId>
+                            <version>1.2.1</version>
+                            <executions>
+                                <execution>
+                                    <id>1_evg_create_changelog_db_structure</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>java</goal>
+                                    </goals>
+                                    <configuration combine.children="override">
+                                        <mainClass>liquibase.integration.commandline.Main</mainClass>
+                                        <includePluginDependencies>true</includePluginDependencies>
+                                        <arguments>
+                                            <argument>--driver=${hibernate.db.driver_classname}</argument>
+                                            <!--<argument>-->
+                                            <!-- ORIGINAL by Asaf -changeLogFile=src/main/resources/db/db-data-${timestamp}.changelog.xml-->
+                                            <!--</argument>-->
+
+                                            <!--<argument>&lt;!&ndash;by EvgF&ndash;&gt;-->
+                                            <!--&#45;&#45;changeLogFile=src/main/resources/db/db.changelog.${timestamp}.xml-->
+                                            <!--</argument>-->
+                                            <!-- TODO-EVG change-->
+                                            <argument><!--by EvgF-->
+                                                --changeLogFile=${project.basedir}/src/main/resources/db/db.changelog.${maven.build.timestamp}.xml
+                                            </argument>
+                                            <!--suppress MavenModelInspection -->
+                                            <!--<argument>-->
+                                            <!--&#45;&#45;url=${db.url.prefix}://${hibernate.db.url.host}:${hibernate.db.url.port}/postgres-->
+                                            <!--</argument>-->
+                                            <argument>--url=${db.url.prefix}://localhost:5432/postgres</argument>
+                                            <!--suppress MavenModelInspection -->
+                                            <!--<argument>&#45;&#45;username=${hibernate.db.login}</argument>-->
+                                            <argument>--username=postgres</argument>
+                                            <!--suppress MavenModelInspection -->
+                                            <!--<argument>&#45;&#45;password=${hibernate.db.password}</argument>-->
+                                            <argument>--password=admin</argument>
+                                            <argument>
+                                                --diffTypes=${liquibase.diffTypes}
+                                            </argument>
+                                            <argument>--logLevel=debug</argument>
+                                            <argument>generateChangeLog</argument>
+                                        </arguments>
+                                    </configuration>
+                                </execution>
+                                <!--<execution>-->
+                                <!--<id>2_evg_create_changelog_db_data</id>-->
+                                <!--<phase>process-resources</phase>-->
+                                <!--<goals>-->
+                                <!--<goal>java</goal>-->
+                                <!--</goals>-->
+                                <!--<configuration>-->
+                                <!--<mainClass>liquibase.integration.commandline.Main</mainClass>-->
+                                <!--<includePluginDependencies>true</includePluginDependencies>-->
+                                <!--<arguments>-->
+                                <!--<argument>&#45;&#45;driver=org.postgresql.Driver</argument>-->
+                                <!--&lt;!&ndash;<argument>&ndash;&gt;-->
+                                <!--&lt;!&ndash; ORIGINAL by Asaf -changeLogFile=src/main/resources/db/db-data-${timestamp}.changelog.xml&ndash;&gt;-->
+                                <!--&lt;!&ndash;</argument>&ndash;&gt;-->
+
+                                <!--<argument>&lt;!&ndash;by EvgF&ndash;&gt;-->
+                                <!--&#45;&#45;changeLogFile=src/main/resources/db/db.changelog.${timestamp}.xml-->
+                                <!--</argument>-->
+
+                                <!--<argument>&#45;&#45;url=${jdbc.url}</argument>-->
+                                <!--<argument>&#45;&#45;username=${jdbc.username}</argument>-->
+                                <!--<argument>&#45;&#45;password=${jdbc.password}</argument>-->
+                                <!--<argument>&#45;&#45;diffTypes=data</argument>-->
+                                <!--<argument>&#45;&#45;logLevel=debug</argument>-->
+                                <!--<argument>generateChangeLog</argument>-->
+                                <!--</arguments>-->
+                                <!--</configuration>-->
+                                <!--</execution>-->
+
+                            </executions>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.postgresql</groupId>
+                                    <artifactId>postgresql</artifactId>
+                                    <version>${postgres.driver.version}</version>
+                                </dependency>
+                            </dependencies>
                         </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>production</id>
+            <build>
+                <plugins>
+                    <!--prod plugins vvv-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                    </plugin>
+                    <!--prod plugins ^^^-->
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>development</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!--<plugin>-->
+                        <!--<groupId>org.codehaus.mojo</groupId>-->
+                        <!--<artifactId>sql-maven-plugin</artifactId>-->
+                        <!--<configuration>-->
+                        <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                        <!--<url>-->
+                        <!--${db.url.prefix}://${catalog.hibernate.db.url.host}:${catalog.hibernate.db.url.port}/postgres-->
+                        <!--</url>-->
+                        <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                        <!--<username>${catalog.hibernate.db.login}</username>-->
+                        <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+                        <!--<password>${catalog.hibernate.db.password}</password>-->
+                        <!--<sqlCommand>create database "${catalog.hibernate.db.name}"</sqlCommand>-->
+                        <!--</configuration>-->
+                        <!--</plugin>-->
                     </plugins>
                 </pluginManagement>
                 <plugins>
@@ -86,14 +197,63 @@
                         </configuration>
                     </plugin>
                     <!--run sql-->
+                    <!--<plugin>-->
+                    <!--<groupId>org.codehaus.mojo</groupId>-->
+                    <!--<artifactId>sql-maven-plugin</artifactId>-->
+                    <!--</plugin>-->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>sql-maven-plugin</artifactId>
+                        <artifactId>exec-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
+    <properties>
+
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- WebSocket -->
+            <dependency>
+                <groupId>javax.websocket</groupId>
+                <artifactId>javax.websocket-api</artifactId>
+                <version>1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.advantage.online.store</groupId>
+                <artifactId>common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <!-- WebSocket -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+        </dependency>
+        <!--shared resources-->
+        <dependency>
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>shared_resources</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>resources</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>root</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>classes</classifier>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.advantage.online.store</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <finalName>catalog</finalName>
         <plugins>
@@ -104,21 +264,16 @@
             </plugin>
             <!--read properties from zip-->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- Run only tests whose name end with "Test" -->
-                    <includes>
-                        <include>**/*Tests.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -75,51 +75,6 @@
                                 </webResources>
                             </configuration>
                         </plugin>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>exec-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>exec-npm-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>npm.cmd</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-bower-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>bower</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-grunt</id>
-                                    <phase>process-resources</phase>
-                                    <configuration>
-                                        <executable>grunt</executable>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
                     </plugins>
                 </pluginManagement>
             </build>
@@ -132,6 +87,7 @@
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>exec-maven-plugin</artifactId>
+                            <inherited>false</inherited>
                             <executions>
                                 <execution>
                                     <id>exec-npm-install</id>
@@ -246,13 +202,8 @@
                 <artifactId>properties-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- Run only tests whose name end with "Test" -->
-                    <includes>
-                        <include>**/*Tests.java</include>
-                    </includes>
-                </configuration>
             </plugin>
             <plugin><!-- Build WAR with classes - for sharing with other WARs-->
                 <artifactId>maven-war-plugin</artifactId>
