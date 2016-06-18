@@ -4,6 +4,7 @@ package com.advantage.common.security;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.*;
 import io.jsonwebtoken.*;
+import org.apache.log4j.Logger;
 
 import java.util.Map;
 
@@ -24,6 +25,8 @@ public class TokenJWT extends Token {
         //compressionCodec = SecurityTools.getCompressionCodec();
         convertSignatureAlgorithm();
     }
+
+    private static final Logger logger = Logger.getLogger(TokenJWT.class);
 
     public TokenJWT(long appUserId, String loginName, AccountType accountType) {
         this();
@@ -50,7 +53,9 @@ public class TokenJWT extends Token {
         try {
             parser = Jwts.parser();
             if (!parser.isSigned(base64Token)) {
-                throw new TokenUnsignedException("Token is unsigned");
+                TokenUnsignedException e = new TokenUnsignedException("Token is unsigned");
+                logger.error("Token is unsigned", e);
+                throw e;
             }
             parser.setSigningKey(key);
             parser.requireIssuer(issuer);
@@ -59,12 +64,16 @@ public class TokenJWT extends Token {
             JwsHeader jwsHeader = claimsJws.getHeader();
 
             if (!jwsHeader.getType().equals(Header.JWT_TYPE)) {
-                throw new WrongTokenTypeException("Wrong token type");
+                WrongTokenTypeException e = new WrongTokenTypeException("Wrong token type");
+                logger.error("Wrong token type", e);
+                throw e;
             }
             if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
-                throw new SignatureAlgorithmException(String.format("The token signed by %s algorithm, but must be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName));
+                String m = String.format("The token signed by %s algorithm, but must be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName);
+                SignatureAlgorithmException e = new SignatureAlgorithmException(m);
+                logger.error(m, e);
+                throw e;
             }
-
         } catch (ClaimJwtException | RequiredTypeException e) {
             throw new VerificationTokenException(e.getMessage());
         } catch (SignatureException e) {
