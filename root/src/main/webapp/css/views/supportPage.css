@@ -1,6 +1,13 @@
-#supportCover {
+
+#contact_us{
     background-color: #54b3ad;
-    padding-bottom: 30px;
+}
+
+#supportCover {
+    padding: 30px 0;
+    margin: 0 auto;
+    display: table;
+    width: 1366px;
 }
 
 #supportCover .inputMargin .validate-directive {
@@ -8,15 +15,55 @@
 }
 
 #supportCover > div {
-    width: 70%;
+
+    width: 75%;
     margin: 0 auto;
     text-align: center;
+    vertical-align: top;
+    display: table-cell;
 }
+
+#supportCover > div:first-child {
+    width: 25%;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+
+
+}
+
+#supportCover > div:first-child .chat{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    height: 256px;
+    background-color: #4aa29c;
+    margin: 0 50px 0 auto;
+    text-align: center;
+    display: table;
+    cursor: pointer;
+}
+
+#supportCover > div:first-child .chat div{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#supportCover > div:first-child .chat div label{
+
+    display: block;
+    color: white;
+    padding: 10px 40px;
+    cursor: pointer;
+}
+
 
 #supportCover .contact_us {
     font-size: 35px;
     text-align: left;
-    padding: 50px calc(20px + 4%);
+    padding: 30px calc(20px + 4%);
     padding-bottom: 20px;
     color: white;
     letter-spacing: 2px;
@@ -28,6 +75,7 @@
     display: inline-block;
     vertical-align: top;
 }
+
 
 #supportCover .splitter label {
     font-size: 14px;
@@ -41,6 +89,10 @@
 
 #supportCover .splitter > div.smollPadding {
     padding-top: 20px;
+}
+
+#supportCover .splitter > div.smollPadding.margin-right{
+    margin-right: 118px;
 }
 
 #supportCover .splitter .sec-view div .star {
@@ -110,6 +162,26 @@
     display: block;
     padding: 10px 0;
 }
+
+
+@media screen and (max-width: 1368px) {
+
+    #supportCover {
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 1150px) {
+    #supportCover > div:first-child .chat{
+        margin: 0 10px 0 auto;
+    }
+    #supportCover .splitter > div.smollPadding.margin-right{
+        margin-right: 30px;
+    }
+}
+
+
 
 @media screen and (max-width: 1000px) {
 
