@@ -30,7 +30,7 @@ public class WebSocketServerEndpoint {
     private static String REPLY_INTERESTING_IS_THAT_REALLY_YOUR_NAME = "Interesting! %s, Is that really your name? ";
     private static String REPLY_SO_PLEASE_ENTER_YOUR_NAME = "So please enter your name, start with 'my name is' ";
     private static String REPLY_COOL_NAME_ARE_YOU_INTERESTED_IN_SPECIFIC_CATEGORY = "Cool Name %s, are you interested in a specific category of products? ";
-    private static String REPLY_EXCUSE_ME_DO_YOU_UNDERSTAND_ENGLISH = "Excuse me, do you undersand English? ";
+    private static String REPLY_EXCUSE_ME_DO_YOU_UNDERSTAND_ENGLISH = "Excuse me, do you understand English? ";
     private static String REPLY_OK_ARE_YOU_INTERESTED_IN_SPECIFIC_CATEGORY_OF_PRODUCT = "Ok %s, are you interested in a specific category of products? ";
     private static String REPLY_GOOD_WHICH_CATEGORY = "Good, which category? ";
     private static String REPLY_ARE_YOU_INTERESTED_IN_SPECIFIC_PRODUCT_IN_THAT_CATEGORY = "Great. %s, are you interested in a specific product from %s category? ";

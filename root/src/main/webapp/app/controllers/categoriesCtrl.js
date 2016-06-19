@@ -158,5 +158,17 @@ define(['./module'], function (controllers) {
                 }
             });
 
+            s.openChat = function(){
+                var path = server.catalog.getKey().replace("http://", "").replace("/api/v1", "");
+                sessionStorage.setItem("serverKey", path);
+
+                window.open("http://localhost:8080/chat.html", "Advantage Online Shopping Chat Windows",
+                    "width=650px, height=450px, top=300px, left=300px, scrollbars=no, resizable=no, " +
+                    "directories=no, titlebar=no, toolbar=no, location=no, status=no, menubar=0,");
+
+            }
+
+
+
         }]);
 });
