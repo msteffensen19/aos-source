@@ -129,6 +129,17 @@
             </build>
         </profile>
         <profile>
+            <id>C_hib_mvn_plg_dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>hibernate3-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>development</id>
             <build>
                 <plugins>
