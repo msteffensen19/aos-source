@@ -154,26 +154,41 @@
                             <version>3.5.1</version>
                             <executions>
                                 <execution>
-                                    <id>generate-db-diff</id>
+                                    <id>p_A_2_generate-db-diff</id>
                                     <phase>process-test-resources</phase>
                                     <goals>
                                         <goal>diff</goal>
                                     </goals>
                                     <configuration>
-                                        <changeLogFile>src/main/resources/${liquibase.file.changelog}</changeLogFile>
-                                        <diffChangeLogFile>src/main/resources/db/db.changelog.${timestamp}.xml
-                                        </diffChangeLogFile>
-                                        <referenceUrl>
-                                            ${plugin.liquibase.referenceUrl}
-                                        </referenceUrl>
-                                        <!--<diffTypes>tables,columns,views,primaryKeys,indexes,foreignKeys,sequences,-->
-                                        <!--<diffTypes>tables,columns,views,primaryKeys,indexes,foreignKeys-->
-                                        <diffTypes>${liquibase.diffTypes}
-                                        </diffTypes>
+                                        <!--suppress MavenModelInspection -->
                                         <driver>${hibernate.db.driver_classname}</driver>
+                                        <!--suppress MavenModelInspection -->
                                         <url>${db.url.prefix}://localhost:5432/postgres</url>
                                         <username>postgres</username>
                                         <password>admin</password>
+                                        <!--[INFO]     use empty password: false-->
+                                        <!--[INFO]     properties file: null-->
+                                        <!--[INFO]     properties file will override? false-->
+                                        <!--[INFO]     prompt on non-local database? true-->
+                                        <!--[INFO]     clear checksums? false-->
+                                        <!--suppress MavenModelInspection -->
+                                        <changeLogFile>src/main/resources/${liquibase.file.changelog}</changeLogFile>
+                                        <!--[INFO]     context(s): null-->
+                                        <!--[INFO]     label(s): null-->
+                                        <!--[INFO]     referenceDriver: null-->
+                                        <!--suppress MavenModelInspection -->
+                                        <referenceUrl>${plugin.liquibase.referenceUrl}</referenceUrl>
+                                        <!--[INFO]     referenceUsername: null-->
+                                        <!--[INFO]     referencePassword: null-->
+                                        <!--[INFO]     referenceDefaultSchema: null-->
+                                        <diffChangeLogFile>
+                                            src/main/resources/db/db.changelog.${maven.build.timestamp}.xml
+                                        </diffChangeLogFile>
+                                        <!--Not logged v-->
+                                        <!--suppress MavenModelInspection -->
+                                        <diffTypes>${liquibase.diffTypes}</diffTypes>
+                                        <!--<diffTypes>tables,columns,views,primaryKeys,indexes,foreignKeys,sequences,-->
+                                        <!--<diffTypes>tables,columns,views,primaryKeys,indexes,foreignKeys-->
                                         <logging>debug</logging>
                                         <verbose>true</verbose>
                                     </configuration>
@@ -245,7 +260,8 @@
                         <plugin>
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
-                            <version>3.4.2</version>
+                            <!--<version>3.4.2</version>-->
+                            <version>3.5.1</version>
                             <executions>
                                 <execution>
                                     <id>mark-db-up-to-date</id>
@@ -254,8 +270,11 @@
                                         <goal>changelogSync</goal>
                                     </goals>
                                     <configuration>
+                                        <!--suppress MavenModelInspection -->
                                         <changeLogFile>src/main/resources/${liquibase.file.changelog}</changeLogFile>
+                                        <!--suppress MavenModelInspection -->
                                         <driver>${hibernate.db.driver_classname}</driver>
+                                        <!--suppress MavenModelInspection -->
                                         <url>${db.url.prefix}://localhost:5432/postgres</url>
                                         <username>postgres</username>
                                         <password>admin</password>
@@ -1220,10 +1239,6 @@
             <artifactId>cors-filter</artifactId>
             <version>2.5</version>
             <!--<version>1.3.2</version>-->
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
         </dependency>
     </dependencies>
 
