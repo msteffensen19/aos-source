@@ -15,7 +15,9 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected Class<?>[] getRootConfigClasses() {
         Logger logger = Logger.getLogger(this.getClass());
-        logger.info("Catalog service start");
+        logger.info(" *********************************** \n" +
+                " ****** Catalog service start ****** \n" +
+                " *********************************** ");
         return new Class[]{
                 AppConfiguration.class,
                 DataSourceConfiguration.class,

@@ -41,7 +41,9 @@ public class AccountserviceEndpoint {
 
     public AccountserviceEndpoint() {
         Logger logger = Logger.getLogger(AccountserviceEndpoint.class);
-        logger.info("Account service start");
+        logger.info(" *********************************** \n" +
+                " ****** Account service start ****** \n" +
+                " *********************************** ");
     }
     //  endregion
 

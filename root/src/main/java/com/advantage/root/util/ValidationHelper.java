@@ -1,7 +1,9 @@
 package com.advantage.root.util;
 
 import com.advantage.common.Constants;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
@@ -19,8 +21,8 @@ public class ValidationHelper {
     private static final String COLOR_HEX_PATTERN = "^#([A-Fa-f0-9]{1,6})$";
 
     /**
-     *  RegEx to match a full-name with optional characters: ".'-". <br/>
-     *  e.g. James T. Kirk, Walter O'Brian, Bat-Sheva
+     * RegEx to match a full-name with optional characters: ".'-". <br/>
+     * e.g. James T. Kirk, Walter O'Brian, Bat-Sheva
      */
     private static final String FULL_NAME_PATTERN = "^[\\p{L} .'-]+$";
 
@@ -61,7 +63,7 @@ public class ValidationHelper {
 
     private static Pattern pattern;
 
-    private static Logger logger = Logger.getLogger(ValidationHelper.class);
+    private static final Logger logger = Logger.getLogger(ValidationHelper.class);
 
     public ValidationHelper() {
     }
@@ -100,19 +102,30 @@ public class ValidationHelper {
 
     private static boolean isValidByRegExpPattern(String regExp, String string) {
         Pattern pattern = Pattern.compile(regExp);
-
         final boolean isValid = pattern.matcher(string).matches();
-        logger.debug(string + " : " + isValid);
 
+        if (logger.isDebugEnabled()) {
+            Priority level;
+            String m;
+            if (isValid) {
+                level = Level.DEBUG;
+                m = "match";
+            } else {
+                level = Level.WARN;
+                m = "not match";
+            }
+            logger.log(level, string + " " + m + " to pattern " + regExp);
+        }
         return isValid;
     }
+
     /**
      * Check that {@code stringDate} is a valid date format, either EUROPEAN, AMERICAN or SCANDINAVIAN.
      */
     public static boolean isValidDate(final String stringDate) {
         SimpleDateFormat dateFormat;
 
-        System.out.println("date to check: \'" + stringDate +"\'");
+        logger.debug("date to check: \'" + stringDate + "\'");
 
         if (Pattern.compile(AMERICAN_DATE_PATTERN).matcher(stringDate).matches()) {
             dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -129,11 +142,11 @@ public class ValidationHelper {
         try {
             dateFormat.parse(stringDate.trim());
         } catch (ParseException pe) {
-            System.out.println(stringDate + " : false");
+            logger.error(stringDate + " : false");
             return false;
         }
 
-        System.out.println(stringDate + " : true");
+        logger.debug(stringDate + " : true");
         return true;
     }
 
@@ -176,7 +189,7 @@ public class ValidationHelper {
      * Validate currency code. For now only <i>USD</i> is a valid currency code.
      */
     public static boolean isValidCurrency(final String currency) {
-        return isValidByRegExpPattern(CURRENCY_PATTERN,currency);
+        return isValidByRegExpPattern(CURRENCY_PATTERN, currency);
     }
 
     public static boolean isValidColorHexNumber(final String hexColor) {
@@ -191,8 +204,7 @@ public class ValidationHelper {
         return isValid;
     }
 
-    public static boolean isNumeric(final String str)
-    {
+    public static boolean isNumeric(final String str) {
         return str.matches(NUMERIC_PATTERN);
     }
 
