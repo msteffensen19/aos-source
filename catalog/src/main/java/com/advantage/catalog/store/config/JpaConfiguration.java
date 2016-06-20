@@ -52,14 +52,10 @@ public class JpaConfiguration {
         Properties jpaProperties = new Properties();
         jpaProperties.put(Constants.ENV_HIBERNATE_FORMAT_SQL_PARAMNAME, environment.getProperty(Constants.ENV_HIBERNATE_FORMAT_SQL_PARAMNAME));
         jpaProperties.put(Constants.ENV_HIBERNATE_SHOW_SQL_PARAMNAME, environment.getProperty(Constants.ENV_HIBERNATE_SHOW_SQL_PARAMNAME));
-        jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty("catalog.hibernate.db.hbm2ddlAuto")));//jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, ENV_HIBERNATE_HBM2DDL_AUTO_VALUE);
+        String hbm2ddlMode = SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty("catalog.hibernate.db.hbm2ddlAuto"));
+        jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, hbm2ddlMode);//jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, ENV_HIBERNATE_HBM2DDL_AUTO_VALUE);
+        log.trace("JPA properties put: " + Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME + "=" + hbm2ddlMode);
 
-        String hbm2ddlMode = environment.getProperty(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME);
-
-        Properties extraProperties = new Properties();
-//        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
-//        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
-        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty("catalog.hibernate.db.hbm2ddlAuto")));
         if (log.isDebugEnabled()) {
             log.debug(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME + " @" + environment.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
         }
