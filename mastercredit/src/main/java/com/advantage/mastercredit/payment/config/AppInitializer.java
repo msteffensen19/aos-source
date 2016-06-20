@@ -15,7 +15,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected Class<?>[] getRootConfigClasses() {
         Logger logger = Logger.getLogger(this.getClass());
-        logger.info("MasterCredit service start");
+        logger.info(" ****** MasterCredit service start ****** ");
         return new Class[]{
                 AppConfiguration.class
                 , AppSecurityConfig.class
