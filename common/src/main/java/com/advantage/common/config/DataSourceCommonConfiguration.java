@@ -40,7 +40,7 @@ public abstract class DataSourceCommonConfiguration {
             sb.append(logParam(environment, "liquibase.dropFirst"));
             sb.append(logParam(environment, "hibernate.format_sql"));
             sb.append(logParam(environment, "hibernate.show_sql"));
-            logger.trace(sb.toString());
+            logger.debug(sb.toString());
         }
         SpringLiquibase liquibase = new SpringLiquibase();
         try {
@@ -48,12 +48,12 @@ public abstract class DataSourceCommonConfiguration {
             //liquibase.setDropFirst();
             liquibase.setDataSource(dataSource);
             liquibase.setIgnoreClasspathPrefix(true);
-            logger.trace("liquibase.setIgnoreClasspathPrefix(true)");
+            logger.debug("liquibase.setIgnoreClasspathPrefix(true)");
             liquibase.setChangeLog("classpath:" + environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
             liquibase.setDropFirst(Boolean.parseBoolean(environment.getProperty("liquibase.dropFirst")));
-            logger.trace(dataSource);
+            logger.debug(dataSource);
 
-            if (logger.isTraceEnabled()) {
+            if (logger.isDebugEnabled()) {
                 String databaseProductName = liquibase.getDatabaseProductName();
                 boolean dropFirst = liquibase.isDropFirst();
                 //liquibase.afterPropertiesSet();
@@ -68,21 +68,21 @@ public abstract class DataSourceCommonConfiguration {
                 sb.append("liquibase.dropFirst = ").append(dropFirst).append(System.lineSeparator());
                 sb.append("Set changelog file = classpath:").append(environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME)).append(System.lineSeparator());
                 sb.append("liquibase.databaseProductName = ").append(databaseProductName).append(System.lineSeparator());
+                sb.append("liquibase.getDataSource().getConnection().getCatalog() = ").append(catalog).append(System.lineSeparator());
                 sb.append("liquibase.tag = ").append(tag).append(System.lineSeparator());
                 sb.append("liquibase.contexts = ").append(contexts == null ? "null" : contexts).append(System.lineSeparator());
                 sb.append("liquibase.beanName = ").append(beanName).append(System.lineSeparator());
                 sb.append("liquibase.labels = ").append(labels).append(System.lineSeparator());
                 sb.append("liquibase.defaultSchema = ").append(defaultSchema).append(System.lineSeparator());
-                sb.append("liquibase.getDataSource().getConnection().getCatalog() = ").append(catalog).append(System.lineSeparator());
-                logger.trace(sb.toString());
+                logger.debug(sb.toString());
 
             }
         } catch (SQLException e) {
-            logger.debug(e);
+            logger.error(e);
         } catch (DatabaseException e) {
-            logger.debug(e);
+            logger.error(e);
         } catch (LiquibaseException e) {
-            logger.debug(e);
+            logger.error(e);
         }
         return liquibase;
     }

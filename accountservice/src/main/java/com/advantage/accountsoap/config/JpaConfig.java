@@ -40,7 +40,7 @@ public class JpaConfig {
 
     //    @Value("${hibernate.hbm2ddl.auto}")
 //    @Value("${" + Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME + "}")
-    @Value("account.hibernate.db.hbm2ddlAuto")
+    @Value("${account.hibernate.db.hbm2ddlAuto}")
     private String HIBERNATE_HBM2DDL_AUTO_VALUE;
 
 //    @Value("${entitymanager.packagesToScan}")
@@ -79,5 +79,15 @@ public class JpaConfig {
         tm.setEntityManagerFactory(entityManagerFactory().getObject());
 
         return tm;
+    }
+
+    @Override
+    public String toString() {
+        return "JpaConfig{" +
+                "dataSource=" + dataSource +
+                ", HIBERNATE_DIALECT_VALUE='" + HIBERNATE_DIALECT_VALUE + '\'' +
+                ", HIBERNATE_SHOW_SQL_VALUE='" + HIBERNATE_SHOW_SQL_VALUE + '\'' +
+                ", HIBERNATE_HBM2DDL_AUTO_VALUE='" + HIBERNATE_HBM2DDL_AUTO_VALUE + '\'' +
+                '}';
     }
 }

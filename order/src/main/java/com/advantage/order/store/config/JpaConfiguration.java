@@ -28,7 +28,7 @@ public class JpaConfiguration {
     private static final String ENV_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
 
     @Inject
-    private Environment env;
+    private Environment environment;
 
     @Inject
     private DataSource dataSource;
@@ -44,20 +44,20 @@ public class JpaConfiguration {
     }
 
     private Properties jpaProperties() {
-        Properties extraProperties = new Properties();
-//        extraProperties.put(ENV_HIBERNATE_FORMAT_SQL, env.getProperty(ENV_HIBERNATE_FORMAT_SQL));
-//        extraProperties.put(ENV_HIBERNATE_SHOW_SQL, env.getProperty(ENV_HIBERNATE_SHOW_SQL));
-        //extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, "create-drop");
-        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, env.getProperty(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME));
-        extraProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("order.hibernate.db.hbm2ddlAuto")));
+        Properties jpaProperties = new Properties();
+        jpaProperties.put(Constants.ENV_HIBERNATE_FORMAT_SQL_PARAMNAME, environment.getProperty(Constants.ENV_HIBERNATE_FORMAT_SQL_PARAMNAME));
+        jpaProperties.put(Constants.ENV_HIBERNATE_SHOW_SQL_PARAMNAME, environment.getProperty(Constants.ENV_HIBERNATE_SHOW_SQL_PARAMNAME));
+        String hbm2ddlMode = SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty("order.hibernate.db.hbm2ddlAuto"));
+        jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, hbm2ddlMode);//jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, ENV_HIBERNATE_HBM2DDL_AUTO_VALUE);
+        log.trace("JPA properties put: " + Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME + "=" + hbm2ddlMode);
 
         if (log.isDebugEnabled()) {
-            log.debug(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME + " @" + env.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
+            log.debug(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME + " @" + environment.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
         }
-        if (env.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME) != null) {
-            extraProperties.put(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME, env.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
+        if (environment.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME) != null) {
+            jpaProperties.put(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME, environment.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
         }
-        return extraProperties;
+        return jpaProperties;
     }
 
     @Bean(name = "transactionManager")

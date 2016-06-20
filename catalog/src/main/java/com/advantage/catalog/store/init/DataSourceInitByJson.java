@@ -66,29 +66,29 @@ public class DataSourceInitByJson {
             SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
 
             Session session = sessionFactory.openSession();
-            logger.debug("Open session");
+            logger.trace("Open session");
             Transaction transaction = session.beginTransaction();
-            logger.debug("session.beginTransaction()");
+            logger.trace("session.beginTransaction()");
 
             final Category category1 = new Category("LAPTOPS", "1235");
             session.persist(category1);
-            logger.debug("Category 1 persist success");
+            logger.trace("Category 1 persist success");
 
             final Category category2 = new Category("HEADPHONES", "1234");
             session.persist(category2);
-            logger.debug("Category 2 persist success");
+            logger.trace("Category 2 persist success");
 
             final Category category3 = new Category("TABLETS", "1236");
             session.persist(category3);
-            logger.debug("Category 3 persist success");
+            logger.trace("Category 3 persist success");
 
             final Category category4 = new Category("SPEAKERS", "1237");
             session.persist(category4);
-            logger.debug("Category 4 persist success");
+            logger.trace("Category 4 persist success");
 
             final Category category5 = new Category("MICE", "1238");
             session.persist(category5);
-            logger.debug("Category 5 persist success");
+            logger.trace("Category 5 persist success");
 
 //        final Category category6 = new Category("BAGS & CASES", "1239");
 //        session.persist(category6);
@@ -103,14 +103,14 @@ public class DataSourceInitByJson {
             Attribute attribute = new Attribute();
             attribute.setName(attrib);
             session.persist(attribute);
-            logger.debug("Attribute " + attrib + " persist success");
+            logger.trace("Attribute " + attrib + " persist success");
             defAttributes.put(attrib.toUpperCase(), attribute);
         }
         transaction.commit();
 
         for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
             session.save(entry.getValue());
-            logger.debug("Session save success");
+            logger.trace("Session save success");
         }
 
             //for categories-attributes show filter
@@ -125,14 +125,14 @@ public class DataSourceInitByJson {
             CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
 
             transaction = session.beginTransaction();
-            logger.debug("session.beginTransaction()");
+            logger.trace("session.beginTransaction()");
 
             for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
                 session.persist(categoryAttributeFilter);
             }
 
             transaction.commit();
-            logger.info("Transaction commit successful");
+            logger.debug("Transaction commit successful");
 
             //  Initializr Category Products
             filePath = new ClassPathResource("categoryProducts_4.json");
@@ -144,7 +144,7 @@ public class DataSourceInitByJson {
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
             CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
             transaction = session.beginTransaction();
-            logger.debug("session.beginTransaction()");
+            logger.trace("session.beginTransaction()");
             Map<Long, Product> productMap = new HashMap<>();
             for (CategoryDto categoryDto : categoryDtos) {
                 Category category = categoryRepository.get(categoryDto.getCategoryId());
@@ -154,7 +154,7 @@ public class DataSourceInitByJson {
                     Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
                     product.setManagedImageId(productDto.getImageUrl());
                     session.persist(product);
-                    logger.debug("Product persist success");
+                    logger.trace("Product persist success");
                     //load attributes
                     for (AttributeItem attributeItem : productDto.getAttributes()) {
                         ProductAttributes attributes = new ProductAttributes();
@@ -164,7 +164,7 @@ public class DataSourceInitByJson {
                         attributes.setAttributeValue(attributeItem.getAttributeValue());
 
                         session.save(attributes);
-                        logger.debug("Session save success");
+                        logger.trace("Session save success");
                     }
 
                     if (productDto.getImages().size() == 0) {
@@ -191,12 +191,12 @@ public class DataSourceInitByJson {
 
             }
             transaction.commit();
-            logger.info("Transaction commit successful");
+            logger.debug("Transaction commit successful");
             //  Added by Binyamin Regev for Android and iOs mobile devices
             transaction = session.beginTransaction();
             session.persist(new LastUpdate("Data", new Date().getTime()));
             transaction.commit();
-            logger.info("Transaction commit successful");
+            logger.debug("Transaction commit successful");
         }
     }
 

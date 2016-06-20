@@ -75,8 +75,6 @@ public class Constants {
     @Deprecated
     public static final String ENV_HIBERNATE_DIALECT = "hibernate.dialect";
     public static final String ENV_HIBERNATE_DIALECT_PARAMNAME = "hibernate.dialect";
-    @Deprecated
-    public static final String ENV_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
     public static final String ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME = "hibernate.hbm2ddl.auto";
     @Deprecated
     public static final String ENV_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
