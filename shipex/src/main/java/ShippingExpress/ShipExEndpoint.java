@@ -21,7 +21,9 @@ public class ShipExEndpoint {
     private ShippingExpressService shippingService;
 
     public ShipExEndpoint() {
-        logger.info(" ****** ShipEx service start ****** ");
+        logger.info(" ********************************** \n" +
+                " ****** ShipEx service start ****** \n" +
+                " ********************************** ");
     }
 
     @Autowired
