@@ -4,8 +4,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+import static com.advantage.catalog.store.model.product.ColorAttribute.PARAM_COLOR_CODE;
+
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = ColorAttribute.QUERY_GET_ALL,
+                //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' order by p.productName"
+                query = "select p from Product p where UPPER(active) = 'Y' order by p.productName"
+
+        ),
+        @NamedQuery(
+                name = ColorAttribute.QUERY_GET_BY_PRODUCT_AND_COLOR_CODE,
+                query = "select ca from ColorAttribute ca where product = :" + ColorAttribute.PARAM_PRODUCT_ID +
+                        " and UPPER(code) = :" + ColorAttribute.PARAM_COLOR_CODE
+        )
+})
 public class ColorAttribute {
+
+    public static final String QUERY_GET_ALL = "colorAttribute.getAll";
+    public static final String QUERY_GET_BY_PRODUCT_AND_COLOR_CODE = "colorAttribute.getByProductIdAndColorCode";
+
+    public static final String PARAM_ID = "PARAM_COLOR_ATTRIBUTE_ID";
+    public static final String PARAM_PRODUCT_ID = "PARAM_PRODUCT_ID";
+    public static final String PARAM_COLOR_CODE = "PARAM_COLOR_CODE";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

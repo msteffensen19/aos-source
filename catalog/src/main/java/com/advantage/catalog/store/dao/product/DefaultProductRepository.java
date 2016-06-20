@@ -103,6 +103,43 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         return colorAttributes;
     }
 
+    public List<ColorAttribute> getColorAttributeByProductIdAndColorCode(Long productId, String hexColor) {
+        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
+
+        Session session = sessionFactory.openSession();
+
+        Transaction transaction = session.beginTransaction();
+
+        StringBuilder sqlQuery = new StringBuilder("SELECT ca.code, ca.name, ca.instock ")
+                .append("from colorattribute ca ")
+                .append("where ca.product_id")
+                .append(" = ")
+                .append(productId.longValue())
+                .append(" and ca.code")
+                .append(" = ")
+                .append("'").append(hexColor).append("'");
+
+        org.hibernate.Query query = session.createSQLQuery(sqlQuery.toString());
+        List resultSet =  session.createSQLQuery(sqlQuery.toString()).list();
+
+        List<ColorAttribute> colorAttributeList = new ArrayList<>();
+
+        for(Object object : resultSet) {
+            System.out.println(object);
+
+            Object[] row = (Object[]) object;
+
+            ColorAttribute colorAttribute = new ColorAttribute((String)row[1], (String)row[0], ((Long)row[2]).intValue());
+
+            colorAttributeList.add(colorAttribute);
+        }
+
+        transaction.commit();
+        session.close();
+
+        return colorAttributeList.size() != 0 ? colorAttributeList : null;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Product update(ProductDto dto, long id) {

@@ -2,6 +2,7 @@ package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
+import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
@@ -227,6 +228,13 @@ public class CatalogController {
         ProductResponseDto responseStatus = productService.deleteProduct(productId);
 
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<ColorAttributeDto>> getColorAttributeByProductIdAndColorCode(Long productId, String hexColor) {
+
+        List<ColorAttributeDto> colorAttributesDto  = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
+
+        return new ResponseEntity<>(colorAttributesDto, HttpStatus.OK);
     }
 
     //  endregion
