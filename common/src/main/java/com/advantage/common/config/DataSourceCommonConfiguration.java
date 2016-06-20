@@ -29,14 +29,6 @@ public abstract class DataSourceCommonConfiguration {
         this.propertyPrefix = propertyPrefix;
     }
 
-    private String logParam(Environment environment, String s) {
-        if (environment == null) {
-            return "Environment is null\n";
-        } else {
-            return s + " = " + (environment.getProperty(s) == null ? "null" : environment.getProperty(s)) + System.lineSeparator();
-        }
-    }
-
     @Bean
     public DataSource dataSource() {
         logger.debug("Start DataSource Bean");
@@ -71,11 +63,11 @@ public abstract class DataSourceCommonConfiguration {
             DataSource dataSource = dataSource();
             //liquibase.setDropFirst();
             liquibase.setDataSource(dataSource);
-            liquibase.setChangeLog("classpath:" + environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
             liquibase.setIgnoreClasspathPrefix(true);
+            logger.trace("liquibase.setIgnoreClasspathPrefix(true)");
+            liquibase.setChangeLog("classpath:" + environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
             liquibase.setDropFirst(Boolean.parseBoolean(environment.getProperty("liquibase.dropFirst")));
             logger.trace(dataSource);
-            logger.trace("liquibase.setIgnoreClasspathPrefix(true)");
 
             if (logger.isTraceEnabled()) {
                 String databaseProductName = liquibase.getDatabaseProductName();
@@ -88,15 +80,17 @@ public abstract class DataSourceCommonConfiguration {
                 String defaultSchema = liquibase.getDefaultSchema();
                 String catalog = liquibase.getDataSource().getConnection().getCatalog();
 
-                logger.trace("liquibase.dropFirst = " + dropFirst);
-                logger.trace("Set changelog file = " + "classpath:" + environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
-                logger.trace("liquibase.databaseProductName = " + databaseProductName);
-                logger.trace("liquibase.tag = " + tag);
-                logger.trace("liquibase.contexts = " + contexts == null ? "null" : contexts);
-                logger.trace("liquibase.beanName = " + beanName);
-                logger.trace("liquibase.labels = " + labels);
-                logger.trace("liquibase.defaultSchema = " + defaultSchema);
-                logger.trace("liquibase.getDataSource().getConnection().getCatalog() = " + catalog);
+                StringBuilder sb = new StringBuilder("SpringLiquibase object");
+                sb.append("liquibase.dropFirst = ").append(dropFirst);
+                sb.append("Set changelog file = classpath:").append(environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
+                sb.append("liquibase.databaseProductName = ").append(databaseProductName);
+                sb.append("liquibase.tag = ").append(tag);
+                sb.append("liquibase.contexts = ").append(contexts == null ? "null" : contexts);
+                sb.append("liquibase.beanName = ").append(beanName);
+                sb.append("liquibase.labels = ").append(labels);
+                sb.append("liquibase.defaultSchema = ").append(defaultSchema);
+                sb.append("liquibase.getDataSource().getConnection().getCatalog() = ").append(catalog);
+                logger.trace(sb.toString());
 
             }
         } catch (SQLException e) {
@@ -110,7 +104,7 @@ public abstract class DataSourceCommonConfiguration {
     }
 
     private String compileLog() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("Read properties");
         sb.append(logParam(environment, "liquibase.properties.description"));
         sb.append(logParam(environment, "liquibase.file.changelog"));
         sb.append(logParam(environment, "liquibase.diffTypes"));
@@ -119,5 +113,13 @@ public abstract class DataSourceCommonConfiguration {
         sb.append(logParam(environment, "hibernate.show_sql"));
         sb.append(logParam(environment, "hibernate.hbm2ddl.auto"));
         return sb.toString();
+    }
+
+    private static String logParam(Environment environment, String s) {
+        if (environment == null) {
+            return "Environment is null\n";
+        } else {
+            return s + " = " + (environment.getProperty(s) == null ? "null" : environment.getProperty(s)) + System.lineSeparator();
+        }
     }
 }
