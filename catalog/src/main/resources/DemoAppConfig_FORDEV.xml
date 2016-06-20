@@ -26,7 +26,6 @@
     <Slow_Page datatype="enum:[Yes,No]" description="*** NEED TO UPDATE*** No=(Default) Do not; Yes=show more than 40 seconds difference between WiFi and 3G in optimization report" tools="NV;StormRunner">No</Slow_Page>
     <!-- No=(Default) Do not; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End) -->
     <Different_price_in_UI_and_API datatype="enum:[Yes,No]" description="Multiply each product price by 2, No=(Default) Do nothing; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End)" tools="LeanFT;UFT">No</Different_price_in_UI_and_API>
-
     <!-- "SLA: Add delay in add to cart response time (seconds)": 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time -->
     <SLA_Add_Delay_In_Add_To_Cart_Response_Time datatype="string" description="Create a delay in DB call, *** NEED TO UPDATE WHICH DB CALL ***. 0=(Default) Disabled, any other positive number = the number of seconds to add as a delay in response time. UI and API." tools="LoadRunner;StormRunner">0</SLA_Add_Delay_In_Add_To_Cart_Response_Time>
     <!-- This parameter is enabled only if "SLA: Add delay in add to cart response time (seconds)" is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20. -->
@@ -34,12 +33,10 @@
     <!-- *********************************************************************************************** -->
     <!-- feature="1510" -->
     <user_second_wsdl datatype="enum:[Yes,No]" description="Whether to use the second WSDL in user registration page. Parameter values: NO=(Default) Don't use, Yes = Use the second WSDL request to register new user." tools="UFT">No</user_second_wsdl>
-
     <!-- No = (Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
     <Error_500_in_update_cart datatype="enum:[Yes,No]" description="No=(Default) Do Not Show; or Yes=Show HTTP error code 500 when trying to update cart." tools="">No</Error_500_in_update_cart>
-
     <!-- Feature 1539 -->
-
+    <Allow_SQL_Injection_Error_in_Login_Password datatype="enum:[Yes,No]" description="No=(Default) Do Not inject; or Yes=Inject SQL error in Login/Password." tools="">No</Allow_SQL_Injection_Error_in_Login_Password>
     <!-- Feature 1296 for mobile -->
 
     <!-- SSL ? -->
