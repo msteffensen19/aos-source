@@ -30,7 +30,6 @@
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
         <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<slf4j.version>1.7.13</slf4j.version>-->
         <log4j.version>1.2.17</log4j.version>
         <querydsl.version>3.6.0</querydsl.version>
@@ -41,11 +40,25 @@
         <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
         <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
         <hibernate.version>4.3.9.Final</hibernate.version>
+        <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
         <!--<hibernate.version>5.1.0.Final</hibernate.version>-->
         <jackson.version>2.4.5</jackson.version>
         <modelmapper.version>0.7.3</modelmapper.version>
         <springfox.version>2.0.3</springfox.version>
         <postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>
+        <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
+        <plugin.maven.compiler.version>3.3</plugin.maven.compiler.version>
+        <plugin.maven.war.version>2.6</plugin.maven.war.version>
+        <plugin.sql.version>1.5</plugin.sql.version>
+        <plugin.properties.version>1.0.0</plugin.properties.version>
+        <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
+        <plugin.maven.resources.version>2.7</plugin.maven.resources.version>
+        <maven.filtering.version>3.1.0</maven.filtering.version>
+        <javax.servlet.version>3.1.0</javax.servlet.version>
+        <javax.inject.version>1</javax.inject.version>
+        <liquibase.version>3.4.1</liquibase.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
         <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
     </properties>
@@ -417,7 +430,7 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-war-plugin</artifactId>
-                            <version>2.6</version>
+                            <version>${plugin.maven.war.version}</version>
                             <configuration>
                                 <warSourceExcludes>node_modules/**</warSourceExcludes>
                                 <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -426,7 +439,7 @@
                         <!--<plugin>-->
                         <!--<groupId>org.apache.maven.plugins</groupId>-->
                         <!--<artifactId>maven-assembly-plugin</artifactId>-->
-                        <!--<version>2.6</version>-->
+                        <!--<version>${plugin.maven.assembly.version}</version>-->
                         <!--</plugin>-->
                     </plugins>
                 </pluginManagement>
@@ -451,7 +464,7 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-war-plugin</artifactId>
-                            <version>2.6</version>
+                            <version>${plugin.maven.war.version}</version>
                             <configuration>
                                 <failOnMissingWebXml>false</failOnMissingWebXml>
                             </configuration>
@@ -549,15 +562,15 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>${plugin.maven.assembly.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.3</version>
+                    <version>${plugin.maven.compiler.version}</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
                     </configuration>
                 </plugin>
                 <!--<plugin>-->
@@ -573,7 +586,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sql-maven-plugin</artifactId>
-                    <version>1.5</version>
+                    <version>${plugin.sql.version}</version>
                     <dependencies>
                         <!-- specify the dependent jdbc driver here -->
                         <dependency>
@@ -584,7 +597,7 @@
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>3.1.0</version>
+                            <version>${maven.filtering.version}</version>
                         </dependency>
                     </dependencies>
                     <configuration>
@@ -627,7 +640,7 @@
                     <!-- Provide access to .properties files for use it by maven-->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>properties-maven-plugin</artifactId>
-                    <version>1.0.0</version>
+                    <version>${plugin.properties.version}</version>
                     <executions>
                         <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
                         <execution>
@@ -678,7 +691,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>${plugin.buildnumber.version}</version>
                     <executions>
                         <execution>
                             <phase>validate</phase>
@@ -718,7 +731,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.7</version>
+                    <version>${plugin.maven.resources.version}</version>
                     <executions>
                         <execution>
                             <id>copy-shared-resources-into-webapp</id>
@@ -862,13 +875,13 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
+                <version>${javax.servlet.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
-                <version>1</version>
+                <version>${javax.inject.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -940,7 +953,7 @@
             <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>
                 <artifactId>hibernate-jpa-2.1-api</artifactId>
-                <version>1.0.0.Final</version>
+                <version>${hibernate.jpa.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
