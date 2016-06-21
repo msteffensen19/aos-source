@@ -540,8 +540,7 @@
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
         <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.13</slf4j.version>
+        <!--<slf4j.version>1.7.13</slf4j.version>-->
         <log4j.version>1.2.17</log4j.version>
         <querydsl.version>3.6.0</querydsl.version>
         <spring-framework-version>4.1.6.RELEASE</spring-framework-version>
@@ -550,22 +549,40 @@
         <spring-session.version>1.0.0.RELEASE</spring-session.version>
         <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
         <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
-        <hibernate.version>4.3.9.Final</hibernate.version>
         <!--<hibernate.version>5.1.0.Final</hibernate.version>-->
+        <hibernate.version>4.3.9.Final</hibernate.version>
+        <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+        <liquibase.version>3.5.1</liquibase.version>
+        <liquibase.hibernate4.version>3.5</liquibase.hibernate4.version>
+        <liquibase.postgres.version>3.0</liquibase.postgres.version>
         <jackson.version>2.4.5</jackson.version>
         <modelmapper.version>0.7.3</modelmapper.version>
         <springfox.version>2.0.3</springfox.version>
         <postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>
+        <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
+        <plugin.maven.compiler.version>3.3</plugin.maven.compiler.version>
+        <plugin.maven.war.version>2.6</plugin.maven.war.version>
+        <plugin.sql.version>1.5</plugin.sql.version>
+        <plugin.properties.version>1.0.0</plugin.properties.version>
+        <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
+        <plugin.maven.resources.version>2.7</plugin.maven.resources.version>
+        <plugin.hibernate3.version>3.0</plugin.hibernate3.version>
+        <maven.filtering.version>3.1.0</maven.filtering.version>
+        <javax.servlet.version>3.1.0</javax.servlet.version>
+        <javax.inject.version>1</javax.inject.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
         <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
     </properties>
+
     <dependencyManagement>
         <dependencies>
             <!-- LIQUIBASE-->
             <dependency>
                 <groupId>org.liquibase.ext</groupId>
                 <artifactId>liquibase-hibernate4</artifactId>
-                <version>3.5</version>
+                <version>${liquibase.hibernate4.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.hibernate.javax.persistence</groupId>
@@ -581,24 +598,24 @@
             <dependency>
                 <groupId>org.liquibase.ext</groupId>
                 <artifactId>liquibase-postgresql</artifactId>
-                <version>3.0</version>
+                <version>${liquibase.postgres.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.5.1</version>
+                <version>${liquibase.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>${liquibase.version}</version>
             </dependency>
             <!--sql-->
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <!--<scope>runtime</scope>-->
-                <version>9.3-1100-jdbc41</version>
+                <version>${postgres.driver.version}</version>
             </dependency>
 
             <dependency>
@@ -636,19 +653,19 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <dependency><!--TODO-EVG Move to root after tests-->
+        <dependency>
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-hibernate4</artifactId>
         </dependency>
-        <!--<dependency>&lt;!&ndash;TODO-EVG Move to root after tests&ndash;&gt;-->
+        <!--<dependency>-->
         <!--<groupId>org.liquibase.ext</groupId>-->
         <!--<artifactId>liquibase-hibernate4.2</artifactId>-->
         <!--</dependency>-->
-        <dependency><!--TODO-EVG Move to root after tests-->
+        <dependency>
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-postgresql</artifactId>
         </dependency>
-        <dependency><!--TODO-EVG Move to root after tests-->
+        <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
         </dependency>
@@ -717,7 +734,7 @@
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>1</version>
+            <version>${javax.inject.version}</version>
         </dependency>
 
         <!--soap-->
@@ -803,7 +820,7 @@
                     <!-- Provide access to .properties files for use it by maven-->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>properties-maven-plugin</artifactId>
-                    <version>1.0.0</version>
+                    <version>${plugin.properties.version}</version>
                     <executions>
                         <!-- Associate the read-project-properties goal with the process-resources phase, to read the properties file. -->
                         <execution>
@@ -848,7 +865,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.7</version>
+                    <version>${plugin.maven.resources.version}</version>
                     <configuration>
                         <delimiters>
                             <delimiter>${*}</delimiter>

@@ -39,9 +39,12 @@
         <spring-session.version>1.0.0.RELEASE</spring-session.version>
         <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
         <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
+        <!--<hibernate.version>5.1.0.Final</hibernate.version>-->
         <hibernate.version>4.3.9.Final</hibernate.version>
         <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
-        <!--<hibernate.version>5.1.0.Final</hibernate.version>-->
+        <liquibase.version>3.5.1</liquibase.version>
+        <liquibase.hibernate4.version>3.5</liquibase.hibernate4.version>
+        <liquibase.postgres.version>3.0</liquibase.postgres.version>
         <jackson.version>2.4.5</jackson.version>
         <modelmapper.version>0.7.3</modelmapper.version>
         <springfox.version>2.0.3</springfox.version>
@@ -53,10 +56,10 @@
         <plugin.properties.version>1.0.0</plugin.properties.version>
         <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
         <plugin.maven.resources.version>2.7</plugin.maven.resources.version>
+        <plugin.hibernate3.version>3.0</plugin.hibernate3.version>
         <maven.filtering.version>3.1.0</maven.filtering.version>
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <javax.inject.version>1</javax.inject.version>
-        <liquibase.version>3.4.1</liquibase.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
@@ -69,10 +72,10 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <plugin><!--Generate Changelog -->
+                        <plugin>
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
-                            <version>3.5.1</version>
+                            <version>${liquibase.version}</version>
                             <executions>
                                 <execution>
                                     <id>generate-db-prev</id>
@@ -81,8 +84,11 @@
                                         <goal>update</goal>
                                     </goals>
                                     <configuration>
+                                        <!--suppress MavenModelInspection -->
                                         <dropFirst>${liquibase.dropFirst}</dropFirst>
+                                        <!--suppress MavenModelInspection -->
                                         <changeLogFile>src/main/resources/${liquibase.file.changelog}</changeLogFile>
+                                        <!--suppress MavenModelInspection -->
                                         <driver>${hibernate.db.driver_classname}</driver>
                                         <!--suppress MavenModelInspection -->
                                         <!--<url>${db.url.prefix}://${hibernate.db.url.host}:${hibernate.db.url.port}/postgres</url>-->
@@ -164,7 +170,7 @@
                             <!--Generate Changelog -->
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
-                            <version>3.5.1</version>
+                            <version>${liquibase.version}</version>
                             <executions>
                                 <execution>
                                     <id>p_A_2_generate-db-diff</id>
@@ -216,7 +222,7 @@
                                 <dependency>
                                     <groupId>org.liquibase.ext</groupId>
                                     <artifactId>liquibase-hibernate4</artifactId>
-                                    <version>3.5</version>
+                                    <version>${liquibase.hibernate4.version}</version>
                                 </dependency>
                                 <!--<dependency>-->
                                 <!--<groupId>org.hibernate.javax.persistence</groupId>-->
@@ -274,7 +280,7 @@
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
                             <!--<version>3.4.2</version>-->
-                            <version>3.5.1</version>
+                            <version>${liquibase.version}</version>
                             <executions>
                                 <execution>
                                     <id>mark-db-up-to-date</id>
@@ -305,7 +311,7 @@
                                 <dependency>
                                     <groupId>org.liquibase.ext</groupId>
                                     <artifactId>liquibase-hibernate4</artifactId>
-                                    <version>3.5</version>
+                                    <version>${liquibase.hibernate4.version}</version>
                                 </dependency>
                                 <!--<dependency>-->
                                 <!--<groupId>org.hibernate.javax.persistence</groupId>-->
@@ -361,7 +367,7 @@
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>hibernate3-maven-plugin</artifactId>
-                            <version>3.0</version>
+                            <version>${plugin.hibernate3.version}</version>
                             <configuration>
                                 <hibernatetool>
                                     <annotationconfiguration propertyfile="target/classes/jdbc.properties"/>
@@ -798,7 +804,7 @@
             <dependency>
                 <groupId>org.liquibase.ext</groupId>
                 <artifactId>liquibase-hibernate4</artifactId>
-                <version>3.5</version>
+                <version>${liquibase.hibernate4.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.hibernate.javax.persistence</groupId>
@@ -814,17 +820,17 @@
             <dependency>
                 <groupId>org.liquibase.ext</groupId>
                 <artifactId>liquibase-postgresql</artifactId>
-                <version>3.0</version>
+                <version>${liquibase.postgres.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.5.1</version>
+                <version>${liquibase.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>${liquibase.version}</version>
             </dependency>
             <!--SPRING-->
             <dependency>
