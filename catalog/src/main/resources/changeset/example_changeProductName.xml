@@ -12,5 +12,4 @@
             <column name="DESCRIPTION" type="VARCHAR(255)" />
         </createTable>
     </changeSet>
-    <include file="changeset/changeProductName.xml"/>
 </databaseChangeLog>
