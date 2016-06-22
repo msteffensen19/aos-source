@@ -11,22 +11,27 @@ import static com.advantage.catalog.store.model.product.ColorAttribute.PARAM_COL
         @NamedQuery(
                 name = ColorAttribute.QUERY_GET_ALL,
                 //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' order by p.productName"
-                query = "select p from Product p where UPPER(active) = 'Y' order by p.productName"
-
+                query = "select ca from ColorAttribute ca order by ca.product, ca.code"
         ),
         @NamedQuery(
                 name = ColorAttribute.QUERY_GET_BY_PRODUCT_AND_COLOR_CODE,
-                query = "select ca from ColorAttribute ca where product = :" + ColorAttribute.PARAM_PRODUCT_ID +
+                query = "select ca from ColorAttribute ca where ca.product = :" + ColorAttribute.PARAM_PRODUCT_ID +
                         " and UPPER(code) = :" + ColorAttribute.PARAM_COLOR_CODE
+//        ),
+//        @NamedQuery(
+//                name = ColorAttribute.QUERY_GET_BY_PRODUCTS,
+//                query = "select ca from ColorAttribute ca where product in :" + ColorAttribute.PARAM_PRODUCTS_IDS + ColorAttribute.PARAM_COLOR_CODE
         )
 })
 public class ColorAttribute {
 
     public static final String QUERY_GET_ALL = "colorAttribute.getAll";
+    public static final String QUERY_GET_BY_PRODUCTS = "colorAttribute.getByProductId";
     public static final String QUERY_GET_BY_PRODUCT_AND_COLOR_CODE = "colorAttribute.getByProductIdAndColorCode";
 
     public static final String PARAM_ID = "PARAM_COLOR_ATTRIBUTE_ID";
     public static final String PARAM_PRODUCT_ID = "PARAM_PRODUCT_ID";
+    public static final String PARAM_PRODUCTS_IDS = "PARAM_PRODUCTS_IDS";
     public static final String PARAM_COLOR_CODE = "PARAM_COLOR_CODE";
 
     @Id

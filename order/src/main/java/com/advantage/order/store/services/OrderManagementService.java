@@ -75,7 +75,9 @@ public class OrderManagementService {
     @Qualifier("shoppingCartRepository")
     public ShoppingCartRepository shoppingCartRepository;
 
-    private ShoppingCartService shoppingCartService = new ShoppingCartService();
+    @Autowired
+    private ShoppingCartService shoppingCartService;
+    //private ShoppingCartService shoppingCartService = new ShoppingCartService();
 
     public OrderManagementService() {
 
@@ -162,7 +164,6 @@ public class OrderManagementService {
         totalAmount = 0.0;
 
         long orderNumber = 0;
-        long paymentRefNumber = 0;
 
         OrderPurchaseResponse purchaseResponse = new OrderPurchaseResponse();
 

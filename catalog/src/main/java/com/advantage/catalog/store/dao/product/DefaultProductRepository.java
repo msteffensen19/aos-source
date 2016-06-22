@@ -129,7 +129,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
             Object[] row = (Object[]) object;
 
-            ColorAttribute colorAttribute = new ColorAttribute((String)row[1], (String)row[0], ((Long)row[2]).intValue());
+            ColorAttribute colorAttribute = new ColorAttribute((String)row[1], (String)row[0], ((Integer)row[2]).intValue());
 
             colorAttributeList.add(colorAttribute);
         }
@@ -566,12 +566,10 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
      */
     @Override
     public LastUpdate getLastUpdateByName(final String name) {
-//        List<LastUpdate> lastUpdates = entityManager.createNamedQuery(LastUpdate.QUERY_LAST_UPDATE_BY_NAME, LastUpdate.class)
-//                .setParameter("luname", "%" + name.toUpperCase() + "%")
-//                .getResultList();
 
-        List<LastUpdate> lastUpdates = entityManager.createQuery("SELECT u FROM LastUpdate u WHERE u.lastUpdateName = '" + name + "'", LastUpdate.class)
+        List<LastUpdate> lastUpdates = entityManager.createQuery("SELECT u FROM LastUpdate u WHERE UPPER(u.lastUpdateName) = '" + name.toUpperCase() + "'", LastUpdate.class)
                 .getResultList();
+
         return lastUpdates.isEmpty() ? null : lastUpdates.get(0);
     }
 

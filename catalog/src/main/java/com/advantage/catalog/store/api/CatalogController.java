@@ -10,6 +10,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
+import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -230,7 +231,11 @@ public class CatalogController {
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<ColorAttributeDto>> getColorAttributeByProductIdAndColorCode(Long productId, String hexColor) {
+    @ApiOperation(value = "Get color-attribute by product-id and color-code")
+    @RequestMapping(value = "/products/{product_id}/color/{color_code}", method = RequestMethod.GET)
+    public ResponseEntity<List<ColorAttributeDto>> getColorAttributeByProductIdAndColorCode(@PathVariable("product_id") Long productId,
+                                                                                            @PathVariable("color_code") String hexColor,
+                                                                                            HttpServletRequest request) {
 
         List<ColorAttributeDto> colorAttributesDto  = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
 
