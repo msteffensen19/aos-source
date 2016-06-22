@@ -136,13 +136,11 @@ public class StringHelper {
     public static Date convertStringToDate(final String stringDate, final String dateFormat) {
         Date date = null;
 
-        if (ValidationHelper.isValidDate(stringDate)) {
-            try {
-                date = new SimpleDateFormat(dateFormat).parse(stringDate);
-            } catch (ParseException e) {
-                //e.printStackTrace();
-                date = null;
-            }
+        try {
+            date = new SimpleDateFormat(dateFormat).parse(stringDate);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+            date = null;
         }
 
         return date;

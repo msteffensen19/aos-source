@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,6 +36,8 @@ public class AdvantageTestContextConfiguration {
     @Autowired
     private Environment environment;
 
+    private static final Logger logger = Logger.getLogger(AdvantageTestContextConfiguration.class);
+
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory,
                                                          DriverManagerDataSource dataSource) {
@@ -62,7 +65,9 @@ public class AdvantageTestContextConfiguration {
         entityManagerFactoryBean.setPackagesToScan(new String[]{"com.advantage.catalog.store.model", "com.advantage.catalog.store.user.model"});
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-
+        if (logger.isTraceEnabled()) {
+            logger.trace("LocalContainerEntityManagerFactoryBean.jpaVendorAdapter.persistenceProviderRootPackage = " + entityManagerFactoryBean.getJpaVendorAdapter().getPersistenceProviderRootPackage());
+        }
         Map<String, Object> jpaProperties = new HashMap<String, Object>();
         jpaProperties.put("hibernate.hbm2ddl.auto", "create");
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
