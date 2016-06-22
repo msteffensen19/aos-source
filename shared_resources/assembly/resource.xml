@@ -21,10 +21,5 @@
             <filtered>true</filtered>
             <outputDirectory></outputDirectory>
         </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/resources/${lb_hb.properties.path}</directory>
-            <filtered>true</filtered>
-            <outputDirectory></outputDirectory>
-        </fileSet>
     </fileSets>
 </assembly>

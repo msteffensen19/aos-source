@@ -15,48 +15,6 @@
     </parent>
     <profiles>
         <profile>
-            <id>lb010_create_new_database</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb010_create_new_database</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>lb020_create_new_structure_changelog</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb020_create_new_structure_changelog</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>lb030_create_new_data_changelog</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb030_create_new_data_changelog</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>lb040_update_structure_changelog</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb040_update_structure_changelog</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>lb050_update_data_changelog</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb050_update_data_changelog</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>lb060_apply_structure_changelog</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb060_apply_structure_changelog</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>lb070_apply_data_changelog</id>
-            <properties>
-                <lb_hb.properties.path>lb/lb070_apply_data_changelog</lb_hb.properties.path>
-            </properties>
-        </profile>
-        <profile>
             <id>production</id>
             <properties>
                 <resources.source.path>prod</resources.source.path>

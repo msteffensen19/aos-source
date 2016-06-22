@@ -26,7 +26,6 @@ public class Constants {
     public static final String FILE_PROPERTIES_DEMO_APP = "classpath:/DemoApp.properties";
     public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
     public static final String FILE_DEMO_APP_CONFIG_XML = "classpath:/DemoAppConfig.xml";
-    public static final String FILE_PROPERTIES_LIQUIBASE_AND_HIBERNATE = "classpath:properties/lb_hib.properties";
 
     public final static String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
     public final static String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";

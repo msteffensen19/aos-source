@@ -20,8 +20,7 @@
     <!--</createTable>-->
     <!--</changeSet>-->
 
-    <include file="db/db.main-init.changelog.xml"></include>
     <include file="db/db.main-update.changelog.xml"></include>
-    <include file="db/db.example.changelog.sql"></include>
+    <include file="db/db.changelog.sql"></include>
 
 </databaseChangeLog>
