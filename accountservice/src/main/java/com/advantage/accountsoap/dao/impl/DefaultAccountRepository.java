@@ -309,7 +309,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
         }
 
-        //  TODO - Benny - No longer in AccountCounfiguration
         //if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.equalsIgnoreCase("Yes")) {
         //    if ((email == null) || (email.length() == 0)) {
         //        return new AccountStatusResponse(false, Account.MESSAGE_INVALID_EMAIL_ADDRESS, -1);
@@ -355,7 +354,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
         }
 
-        //  TODO - Benny - No longer in AccountCounfiguration
         //  Check/Verify email address only if it is CONFIGURED to be shown in LOGIN
         //if (AccountConfiguration.EMAIL_ADDRESS_IN_LOGIN.toUpperCase().equalsIgnoreCase("Yes")) {
         //    if ((!email.isEmpty()) && (email.trim().length() > 0)) {
