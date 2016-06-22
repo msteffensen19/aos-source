@@ -13,7 +13,11 @@ import java.util.List;
  * Helpful {@link String} methods.
  * @author Binyamin Regev on 21/12/2015.
  */
-public class StringHelper {
+public abstract class StringHelper {
+
+    public StringHelper() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Receives {@link String} containing words and capitalize the first

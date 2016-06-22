@@ -6,7 +6,6 @@ package com.advantage.root.util;
 public abstract class JPAQueryHelper {
 
     private JPAQueryHelper() {
-
         throw new UnsupportedOperationException();
     }
 

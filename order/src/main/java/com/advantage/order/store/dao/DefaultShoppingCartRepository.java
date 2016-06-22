@@ -95,6 +95,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(shoppingCart.getColor(), "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(shoppingCart.getQuantity(), "quantity");
 
+
         if (shoppingCart.getLastUpdate() == 0) {
             shoppingCart.setLastUpdate(new Date().getTime());
         }

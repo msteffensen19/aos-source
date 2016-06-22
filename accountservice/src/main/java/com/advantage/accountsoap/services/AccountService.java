@@ -237,6 +237,8 @@ public class AccountService {
                     response = new AccountStatusResponse(false, HttpStatus.UNAUTHORIZED.getReasonPhrase(), -2);
                 }
             }
+            //  TODO DevOps - PlaceHolder Feature 1788
+            //  region PlaceHolder Feature 1789
             else {
                 //  Registered user and current user are the same
                 String compareToPassword = new AccountPassword(currentUserLogin, oldPassword)
@@ -250,6 +252,8 @@ public class AccountService {
                     response = new AccountStatusResponse(false, HttpStatus.FORBIDDEN.getReasonPhrase(), -1);
                 }
             }
+            //  endregion
+
         } catch (VerificationTokenException e) {
             e.printStackTrace();
         } catch (WrongTokenTypeException e) {
@@ -281,7 +285,7 @@ public class AccountService {
      */
     @Transactional
     public AccountStatusResponse resetPassword(long accountId, String newPassword, String base64Token) {
-        //  TODO Benny - Add the argument to XSD file.
+
         Account account = accountRepository.get(accountId);
 
         AccountStatusResponse response = new AccountStatusResponse(false, "", -1);
