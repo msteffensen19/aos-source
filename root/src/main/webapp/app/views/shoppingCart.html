@@ -66,8 +66,9 @@
                         <label class="roboto-light mobileViewer">
                             {{'QUANTITY' | translate}}:
                         </label>
-                        <e-sec-plus-minus num-attr="product.quantity"
-                                          update-product-attr="saveCart()"></e-sec-plus-minus>
+                        <label>{{product.quantity}}</label>
+                        <!--<e-sec-plus-minus num-attr="product.quantity"-->
+                                          <!--update-product-attr="saveCart()"></e-sec-plus-minus>-->
                     </td>
                     <td class="smollCell">
                         <label class="roboto-light mobileViewer">
@@ -94,7 +95,10 @@
                         <label>{{'PAYMENT_OPTIONS' | translate}}: </label>
                         <ul>
                             <li>
-                                <img src="../../css/images/Shipex.png">
+                                <img src="../../css/images/Master_credit.png">
+                            </li>
+                            <li style="width: 80px">
+                                <img src="../../css/images/SafePay.png">
                             </li>
                         </ul>
                     </td>

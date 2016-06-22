@@ -23,6 +23,15 @@ define(['./module'], function (controllers) {
                 s.years.push((now.getFullYear() + i) + "");
             }
 
+            s.month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+            s.calculateMonths = function (value) {
+                var arr = Helper.getMonthInYearForMasterCredit(value, s.month);
+                if (arr != null) {
+                    s.month = arr;
+                }
+            }
+
+
             s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
             s.savePay = { username : '', password : '' }
 
@@ -59,7 +68,8 @@ define(['./module'], function (controllers) {
                 : safePay != null ? 1
                 : masterCredit != null ? 2 : 1;
 
-            s.saveMasterCredit = function () {
+            s._saveMasterCredit = function () {
+
                 var response;
                 if (!alreadyHaveMasterCreditCart) {
                     response = accountService.addMasterCreditMethod(s.card)

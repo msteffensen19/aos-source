@@ -36,7 +36,7 @@
             <tr>
                 <td colspan="2">
                     <span class="roboto-medium">{{'TOTAL' | translate}}
-                        <label class="roboto-regular">({{cart | productsCartCount}} {{'Items' | translate}})</label>
+                        <label class="roboto-regular">({{cart | productsCartCount}} {{ (cart | productsCartCount) > 1 ? 'Items' : 'Item' | translate}})</label>
                     </span>
                 </td>
                 <td>

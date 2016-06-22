@@ -25,8 +25,8 @@
             </div>
             <div id="userCart" data-ng-show="(cart | productsCartCount) > 0" >
                 <h5 translate="ORDER_SUMMARY" class="roboto-regular"></h5>
-                <span class="itemsCount roboto-medium">
-                    {{ cart | productsCartCount }} {{ 'ITEMS' | translate }}
+                <span class="itemsCount roboto-medium" >
+                    {{ cart | productsCartCount }} {{ (cart | productsCartCount) > 1 ? 'ITEMS' : 'ITEM' | translate }}
                 </span>
                 <div class="penetrationInCart">
                     <span class="roboto-regular" > {{ 'PRODUCT' | translate }} </span>
@@ -47,6 +47,15 @@
                     </label>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
 
         </div>
         <div ng-show="paymentEnd" >

@@ -43,7 +43,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
-public class OrderController {
+public class OrderController{
 
     @Autowired
     private ShoppingCartService shoppingCartService;
@@ -56,6 +56,14 @@ public class OrderController {
     private static final String DemoAppConfig = "DemoAppConfig/parameters/";
     private static final String ParameterName ="Repeat_ShipEx_call";
     /*  =========================================================================================================   */
+
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+    }
+
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
     @AuthorizeAsUser
@@ -93,7 +101,6 @@ public class OrderController {
             HttpServletRequest request) {
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
-
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
@@ -113,7 +120,6 @@ public class OrderController {
     @ApiResponses(value = {
             @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
-
     public ResponseEntity<ShoppingCartResponseDto> updateProductInCart(@PathVariable("userId") Long userId,
                                                                        @PathVariable("productId") Long productId,
                                                                        @PathVariable("color") String hexColor,
@@ -124,8 +130,7 @@ public class OrderController {
 
         if (((ValidationHelper.isValidColorHexNumber(hexColor)) &&
                 (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
-                (! hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0))
-        {
+                (!hexColor.equalsIgnoreCase(hexColorNew))) || (quantity > 0)) {
             shoppingCartResponse = shoppingCartService.updateProductInCart(Long.valueOf(userId), productId, hexColor, hexColorNew, quantity);
         } else {
             httpStatus = HttpStatus.BAD_REQUEST;
@@ -335,8 +340,7 @@ public class OrderController {
     }
 
     //return count of return ShipExCall
-    private int checkRepeatShipExCall()
-    {
+    private int checkRepeatShipExCall() {
         int repeat=0;
         URL DemoAppConfigPrefixUrl;
         URL parameterByNameUrl = null;
@@ -365,8 +369,7 @@ public class OrderController {
             System.out.println("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ");
             e.printStackTrace();
             return repeat;
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println("convert Repeat_ShipEx_call value to int throws IOException: ");
             e.printStackTrace();
             return repeat;
@@ -449,6 +452,55 @@ public class OrderController {
             // TODO-Benny return error code suitable to the error
             return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
         }
+    }
+
+
+    @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
+    @ApiOperation(value = "Get orders history by userID or/and orderId")
+    public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
+                                                                                @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
+        OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
+        return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/carts/{userId}/orders/{orderId}", method = RequestMethod.POST)
+    @ApiOperation(value = "Add old order to shopping cart")
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    public ResponseEntity<ShoppingCartResponse> addOldOrderToCart(@PathVariable("userId") Long userId,
+                                                                    @PathVariable("orderId") Long orderId,
+                                                                HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        ShoppingCartResponseDto userCartResponseDto;
+        if (userId != null &&  (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId)))!=null) {
+            httpStatus = HttpStatus.OK;
+            //get order by userID and orderID
+            OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
+            if(orderHistoryCollectionDto!=null && orderHistoryCollectionDto.getOrderHistoryCollection().size()>0 ) {
+                orderHistoryCollectionDto.getOrderHistoryCollection().forEach(
+                        order-> {
+                            order.getProducts().forEach(product ->{
+                                long id = product.getProductId();
+                                String productColor = String.valueOf(product.getProductColor());
+                                int quantity = product.getProductQuantity();
+                                shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
+                            });
+                        });
+            }
+        }
+        else {
+            httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
+
+            shoppingCartResponse.setSuccess(false);
+            shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
+            shoppingCartResponse.setId(-1);
+        }
+
+        return new ResponseEntity<>(shoppingCartResponse, httpStatus);
     }
 
 }

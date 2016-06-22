@@ -63,7 +63,7 @@ public class ArgumentValidationHelper {
     }
 
     private static boolean customerNameValidation(String customerName) {
-        return customerName != null && customerName.length() <= 30 && customerName.length() >= 2;
+        return ((customerName == null) || ((customerName.length() >= 3) && (customerName != null) && (customerName.length() <= 30)));
     }
 
     /**
@@ -73,6 +73,7 @@ public class ArgumentValidationHelper {
      */
     private static boolean phoneNumberValidation(String phone) {
         //return Pattern.compile(PHONE_PATTERN).matcher(phone).matches() || phone.isEmpty();
+        //return phone == null || phone.length() <= 10;
         return true;
     }
 

@@ -1,4 +1,4 @@
-[{"id": 13,
+[{"id": 16,
   "productName": "HP ELITEPAD 1000 G2 TABLET",
   "price": 550,
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -11,7 +11,7 @@
     {"attributeName" : "PROCESSOR", "attributeValue" : "intel(R) Core(TM) i5-6300HQ"},
     {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
     {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
-  ]},{"id": 3,
+  ]},{"id": 10,
   "productName": "HP EliteBook Folio",
   "price": 550,
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -25,7 +25,7 @@
     {"attributeName" : "DISPLAY", "attributeValue" : "15.6-inch diagonal HD BrightView WLED-backlit Display (1366x768)"},
     {"attributeName" : "MEMORY", "attributeValue" : "16GB DDR3 - 2 DIMM"}
   ]},
-  {"id": 18,
+  {"id": 21,
     "productName": "HP ROAR PLUS WIRELESS SPEAKER",
     "price": 550,
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",

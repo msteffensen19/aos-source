@@ -1,7 +1,9 @@
+@import "../app/SECORRENTI/sec-input/css/sec-input-validation.css";
 
+
+@import "../utils/noUiSlider.8.2.1/nouislider.css";
 
 @import "UI.css";
-@import "../utils/noUiSlider.8.2.1/nouislider.css";
 @import "animation.css";
 
 @import "icons/cart.css";
@@ -23,6 +25,7 @@
 
 @import "modals/popUp.css";
 @import "modals/e-sec-plus-minus.css";
+@import "modals/info-demo.css";
 @import "modals/validateInput.css";
 
 @import "user/login.css";
@@ -36,6 +39,7 @@
 
 @import "account/myAccount.css";
 
+
 #png {
     position: absolute;
     z-index: 90000;
@@ -47,7 +51,6 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Roboto';
     outline: none;
 }
 
@@ -397,14 +400,15 @@ footer .splitter{
     background-color: #ededed;
     padding: 7px;
     font-size: 18px;
-    border-bottom: none;
+    border: none;
     color: black;
+
 }
 
 #mobileSearch .img {
     position: absolute;
-    top: 11px;
-    right: 10px;
+    top: 7px;
+    right: 8px;
     cursor: pointer;
 }
 
@@ -441,13 +445,161 @@ footer .splitter{
     display: block;
 }
 
-@media screen and (max-width: 1220px) {
 
-    #searchSection .searchPopUp > div .product{
-        padding: 24px 17px;
-        height: 166px;
+
+#team {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+}
+
+#team .container{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#team .img{
+    margin-left: auto;
+    margin-right: auto;
+    width: 65%;
+}
+
+#team .img img{
+    width: 100%;
+    border-radius: 2px;
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 80px rgba(255, 255, 255, 0.9), 0 30px 70px rgba(0, 0, 0, 0.9)
+}
+
+
+#teamIdToAnimate{
+    display: none;
+}
+
+.animated {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+}
+
+.animated.zoomInDown {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1.8s;
+    animation-duration: 1.8s;
+}
+
+@keyframes hinge {
+
+    0% {
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
     }
 
+    20% {
+        -webkit-transform: rotate3d(0, 0, 1, 80deg);
+        transform: rotate3d(0, 0, 1, 80deg);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    40%{
+        -webkit-transform: rotate3d(0, 0, 1, 35deg);
+        transform: rotate3d(0, 0, 1, 35deg);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        opacity: 1;
+    }
+
+    60% {
+        -webkit-transform: rotate3d(0, 0, 1, 70deg);
+        transform: rotate3d(0, 0, 1, 70deg);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+
+    80% {
+        -webkit-transform: rotate3d(0, 0, 1, 60deg);
+        transform: rotate3d(0, 0, 1, 60deg);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        opacity: 1;
+    }
+
+    to {
+        /*-webkit-transform: translate3d(0, 700px, 0);*/
+        -webkit-transform: translate3d(-400px, 1200px, 0);
+        transform: translate3d(-400px, 1200px, 0);
+        opacity: 0;
+    }
+}
+
+.hinge {
+    -webkit-animation-name: hinge;
+    animation-name: hinge;
+}
+
+
+@-webkit-keyframes zoomInDown {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.1, .1, .1) translate3d(0, -5000px, 0);
+        transform: scale3d(.1, .1, .1) translate3d(0, -5000px, 0);
+        -webkit-animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+        animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: scale3d(.475, .475, .475) translate3d(0, 60px, 0);
+        transform: scale3d(.475, .475, .475) translate3d(0, 60px, 0);
+        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+        animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+    }
+}
+
+@keyframes zoomInDown {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.1, .1, .1) translate3d(0, -1000px, 0);
+        transform: scale3d(.1, .1, .1) translate3d(0, -1000px, 0);
+        -webkit-animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+        animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: scale3d(.475, .475, .475) translate3d(0, 60px, 0);
+        transform: scale3d(.475, .475, .475) translate3d(0, 60px, 0);
+        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+        animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+    }
+}
+
+.zoomInDown {
+    -webkit-animation-name: zoomInDown;
+    animation-name: zoomInDown;
+}
+
+
+
+
+@media screen and (max-width: 1220px) {
 
     nav ul li > a:not(.img){
         padding:15px 12px;
@@ -455,7 +607,7 @@ footer .splitter{
 
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1150px) {
 
     .nav-li-Links{
         display: none;
@@ -478,7 +630,7 @@ footer .splitter{
 @media screen and (max-width: 768px) {
 
 
-    /*!* For all Pages *!*/
+    /* For all Pages */
 
     h3.roboto-regular{
         font-size: 26px;
@@ -659,9 +811,3 @@ footer .splitter{
 
 }
 
-
-
-
-/*@media screen and (max-width: 450px)*/
-/*{*/
-/*}*/

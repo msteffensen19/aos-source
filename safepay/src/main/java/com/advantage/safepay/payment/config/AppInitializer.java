@@ -1,5 +1,6 @@
 package com.advantage.safepay.payment.config;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -13,16 +14,15 @@ import javax.servlet.ServletRegistration;
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
+        Logger logger = Logger.getLogger(this.getClass());
+        logger.info(" *********************************** \n" +
+                " ****** SafePay service start ****** \n" +
+                " *********************************** ");
+
         return new Class[]{
                 AppConfiguration.class
-                //Binyamin - creating MasterCredit - , DataSourceConfiguration.class
                 , AppSecurityConfig.class
-                //Binyamin - creating MasterCredit - , JpaConfiguration.class
-                //Binyamin - creating MasterCredit - , DataJpaConfiguration.class
                 , JacksonObjectMapperConfiguration.class
-                //EVG Split - , AppUserConfiguration.class
-                //EVG Split - , AdvantageAspects.class
-                //Binyamin - creating MasterCredit - , ImageManagementConfiguration.class
         };
     }
 

@@ -31,50 +31,17 @@
 
 .or{
     display: block;
-    padding-bottom: 3%;
 }
 
-.PopUp span.animPlaceholderUp{
-    padding-bottom: 0;
+.login .sec-sender {
     width: 100%;
 }
 
-.PopUp span.animPlaceholderUp span{
-    padding: 0;
-}
-
-
-.login input[type="password"],
-.PopUp input[type=text]{
-    /*border-bottom: 1px solid #CECCCC;*/
-    /*border-top: 1px solid #CECCCC;*/
-}
-
-
-.login input[type="text"]:first-child{
-    /*border-top: 1px solid #CECCCC;*/
-}
-
-.login input[type="password"].bottomLine {
-    border: none;
-}
-
-.login .sing-in{
-    width: 100%;
-    background-color: transparent;
-    border: 2px solid #000000;
-    font-weight: bolder;
+.login .sec-sender .sec-sender-a
+{
     font-size: 17px;
-    opacity: 0.8;
     margin: 36px 0 5px 0;
     padding: 12px 0;
-    cursor: pointer;
-}
-
-.login .sing-in:hover{
-    background-color: black;
-    border: 2px solid white;
-    color: white;
 }
 
 .forgot-Passwowd{
@@ -82,47 +49,29 @@
     opacity: .5;
     cursor: pointer;
     padding: 8px 0;
+    text-align: center;
 }
 
 .create-new-account{
     cursor: pointer;
+    text-align: center;
 }
 
 .login{
     position: relative;
 }
 
-.login #response{
-    color:red;
+.login .invalid{
+    color:#ff454f;
 }
-
-.login #message {
-    position: absolute;
-    top: 43%;
-    left: 0;
-    right: 0;
-    font-size: 28px;
-    white-space: nowrap;
-    color: lime;
-    opacity: 0;
-    transform: scale(2);
-    text-shadow: -1px 1px 0 rgba(100, 100, 100, 0.5),
-    -1px -1px 0 rgba(100, 100, 100, 0.5), 0 0 4px black;
-}
-
 
 @media screen and (max-width: 600px) {
 
     .PopUp > div:nth-child(1){
         margin-top: 10%;
-        width: 80%;
         padding: 20px 38px;
     }
 
-    .facebook {
-        background-image: none;
-        background-position: 21px center;
-    }
 
     .PopUp img{
         display: none;
@@ -133,6 +82,14 @@
 @media screen and (max-width: 480px) {
 
 
+    .PopUp > div:nth-child(1){
+        width: 80%;
+    }
+
+    .facebook {
+        background-image: none;
+        background-position: 21px center;
+    }
 }
 
 

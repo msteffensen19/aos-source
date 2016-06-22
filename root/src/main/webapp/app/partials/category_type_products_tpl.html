@@ -74,10 +74,10 @@
 
                     <div class="option">
                         <div ng-repeat="attrVal in attrib.values">
-                            <div class="fill">
+                            <div class="fill iconCss" >
                                 <input type="checkbox" ng-model="item.selected"
                                        ng-click="includeProducts(attrVal, attrib.name)">
-                                <span class="roboto-regular">{{attrVal}}</span>
+                                <span class="roboto-regular" data-ng-click="item.selected = !item.selected; includeProducts(attrVal, attrib.name)">{{::attrVal}}</span>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                      data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } "
                      data-ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
 
-                <p><a>{{product.productName}}</a></p>
+                <p><a class="productName">{{product.productName}}</a></p>
 
                 <p><a class="productPrice">{{product.price | currency:"$"}} </a></p>
             </li>

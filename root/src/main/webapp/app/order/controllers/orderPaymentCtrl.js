@@ -37,10 +37,6 @@ define(['./module'], function (controllers) {
             s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
             s.savePay = { username : '', password : '' }
 
-            //s.masterCredit = resolveParams.paymentPreferences.masterCredit;
-            //s.safePay = resolveParams.paymentPreferences.safePay;
-
-            l(resolveParams)
             var masterCredit = resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit ?
                 resolveParams.paymentPreferences.masterCredit : null;
 
@@ -60,8 +56,7 @@ define(['./module'], function (controllers) {
 
             function splitCartNumber(cartNum){
                 var arr = [];
-                for (var i  = 0; i < cartNum.length && i + 3 < cartNum.length; i+=4)
-                {
+                for (var i  = 0; i < cartNum.length && i + 3 < cartNum.length; i+=4) {
                     arr.push(cartNum.substring(i, i + 4));
                 }
                 return arr;
@@ -69,32 +64,15 @@ define(['./module'], function (controllers) {
 
             var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
                 resolveParams.paymentPreferences.safePay : null;
+            s.secretPassword = "****";
             if(safePay != null){
                 s.savePay.username = safePay.safepayUsername;
-                //s.savePay.password = safePay.safepayPassword;
+                s.secretPassword = safePay.safepayPassword;
+                s.savePay.password = s.secretPassword.substring(0, 12);
             }
             s.saveSafePay = true;
             s.saveMasterCredit = true;
 
-
-
-
-            /*
-            s.card = {
-                number : '',
-                cvv : '',
-                expirationDate : {
-                    month : '',
-                    year : ''
-                },
-                name: '',
-            }
-
-            s.savePay = {
-                username : '',
-                password : ''
-            }
-*/
             s.agree_Agreement = true;
 
             s.shipping = resolveParams.shippingCost;

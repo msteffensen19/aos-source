@@ -9,12 +9,14 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
+import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * @author Binyamin Regev on 23/05/2016
+ */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
 public class CatalogController {
@@ -46,10 +47,21 @@ public class CatalogController {
     @Autowired
     private ContactSupportService contactSupportService;
 
+    private static final Logger logger = Logger.getLogger(CatalogController.class);
+
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+    }
+
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
-        return new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        return productCollectionDtoResponseEntity;
+
     }
 
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
@@ -58,7 +70,6 @@ public class CatalogController {
         Product product = productService.getProductById(id);
         if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         ProductDto dto = productService.getDtoByEntity(product);
-
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -69,7 +80,7 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto product,
-                                                               HttpServletRequest request) {
+                                                            HttpServletRequest request) {
         if (product == null) {
             return new ResponseEntity<>(new ProductResponseDto(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
         }
@@ -87,8 +98,8 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/images", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProductWithImage(@RequestParam("product") String product,
-                                                                        @RequestParam("file") MultipartFile file,
-                                                                        HttpServletRequest request) {
+                                                                     @RequestParam("file") MultipartFile file,
+                                                                     HttpServletRequest request) {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
                 JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
@@ -128,8 +139,8 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.PUT)
     public ResponseEntity<ProductResponseDto> updateProduct(@RequestBody ProductDto product,
-                                                               @PathVariable("product_id") Long id,
-                                                               HttpServletRequest request) {
+                                                            @PathVariable("product_id") Long id,
+                                                            HttpServletRequest request) {
         ProductResponseDto responseStatus = productService.updateProduct(product, id);
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
@@ -150,25 +161,24 @@ public class CatalogController {
         4. return response.
          */
         //  TODO-Moti to change code, return success / failure, etc.
-        HttpStatus httpStatus= HttpStatus.PRECONDITION_FAILED;
-        ProductResponseDto responseStatus=null;
+        HttpStatus httpStatus = HttpStatus.PRECONDITION_FAILED;
+        ProductResponseDto responseStatus = null;
         //productID to move to speakers category = 13
-        long productID=13;
+        long productID = 13;
         //speakers category =4
-        long categoryID =4;
+        long categoryID = 4;
         DemoAppConfigParameter parameter = demoAppConfigService.getDemoAppConfigParametersByName("Add_wrong_product_to_speakers_category");
-        if(parameter.getParameterValue().equalsIgnoreCase("yes")){
-            Product product =  productService.getProductById(productID);
+        if (parameter.getParameterValue().equalsIgnoreCase("yes")) {
+            Product product = productService.getProductById(productID);
             ProductDto dto = productService.getDtoByEntity(product);
             dto.setCategoryId(categoryID);
-            responseStatus = productService.updateProduct(dto,productID);
+            responseStatus = productService.updateProduct(dto, productID);
 
-            httpStatus= responseStatus.isSuccess()? httpStatus=HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        }
-        else{
-            httpStatus=HttpStatus.PRECONDITION_FAILED;
+            httpStatus = responseStatus.isSuccess() ? httpStatus = HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        } else {
+            httpStatus = HttpStatus.PRECONDITION_FAILED;
             String responceReason = "Configuration parameter is not ready";
-            responseStatus=new ProductResponseDto(false,productID,responceReason);
+            responseStatus = new ProductResponseDto(false, productID, responceReason);
         }
         return new ResponseEntity<>(responseStatus, httpStatus);
     }
@@ -221,16 +231,24 @@ public class CatalogController {
 
     //  endregion
 
-    //  region /last update
+    //  region /LastUpdate
 
     @RequestMapping(value = "/catalog/LastUpdate/timestamp", method = RequestMethod.GET)
-    @ApiOperation(value = "Get Current Timestamp")
-    public ResponseEntity<Long> getTimestamp() {
-        return new ResponseEntity<>(new Date().getTime(), HttpStatus.OK);
+    @ApiOperation(value = "Get Timestamp (0 = Current Timestamp)")
+    public ResponseEntity<Long> getTimestamp(@RequestParam(value = "timestamp", defaultValue = "0", required = false) String timestamp,
+                                             @RequestParam(value = "date_format", defaultValue = "0", required = false) String dateFormat,
+                                             HttpServletRequest request) {
+
+        if ((timestamp == null) || (!timestamp.isEmpty()) || (Long.valueOf(timestamp).intValue() == 0)) {
+            return new ResponseEntity<>(Calendar.getInstance().getTime().getTime(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(StringHelper.convertStringToDate(timestamp, dateFormat).getTime(), HttpStatus.OK);
     }
 
     /**
      * Valid values: case insensitive. "ALL" or valid Last-Update Name.
+     *
      * @return {@link LastUpdate}.
      */
     @RequestMapping(value = "/catalog/LastUpdate/{what_to_get}", method = RequestMethod.GET)
@@ -261,7 +279,8 @@ public class CatalogController {
         }
 
         if (timestamp <= 0) {
-            timestamp = new Date().getTime();
+            Calendar calendar = Calendar.getInstance();
+            timestamp = calendar.getTime().getTime();;
         }
 
         LastUpdate lastUpdate = productService.createLastUpdate(lastUpdateName, timestamp);
@@ -269,12 +288,29 @@ public class CatalogController {
         return new ResponseEntity<>(lastUpdate, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/catalog/LastUpdate/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/catalog/LastUpdate/update/last_update_id/{last_update_id}/last_update_name/{last_update_name}", method = RequestMethod.PUT)
     @ApiOperation(value = "FOR DEV: Update Timestamp of an existing Last-Update")
-    public ResponseEntity<LastUpdate> updateLastUpdate(LastUpdate lastUpdateDto, long id) {
+    public ResponseEntity<LastUpdate> updateLastUpdate(@PathVariable("last_update_id") Long lastUpdateId,
+                                                       @PathVariable("last_update_name") String lastUpdateName,
+                                                       @RequestParam(value = "timestamp", defaultValue = "0", required = false) String timestamp,
+                                                       @RequestParam(value = "date_format", defaultValue = "0", required = false) String dateFormat,
+                                                       HttpServletRequest request) {
+
         HttpStatus httpStatus = HttpStatus.OK;
 
-        LastUpdate lastUpdate = productService.updateLastUpdate(lastUpdateDto, id);
+        if ((dateFormat == null) || (!dateFormat.isEmpty())) {
+            dateFormat = "yyyy.MM.dd.HH.mm.ss";
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        //long timeStamp = calendar.getTime().getTime();
+
+        if ((timestamp == null) || (!timestamp.isEmpty()) || (Long.valueOf(timestamp).intValue() == 0)) {
+            timestamp = StringHelper.convertDateToString(calendar.getTime(), dateFormat);
+        }
+
+        LastUpdate lastUpdate = productService.updateLastUpdate(new LastUpdate(lastUpdateName, StringHelper.convertStringToDate(timestamp, dateFormat).getTime()), lastUpdateId.longValue());
         if (lastUpdate == null) {
             httpStatus = HttpStatus.BAD_REQUEST;
         }
@@ -348,7 +384,7 @@ public class CatalogController {
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/images", method = RequestMethod.POST)
     public ResponseEntity<ImageUrlResponseDto> imageUpload(@RequestParam("file") MultipartFile file,
-                                                              HttpServletRequest request) {
+                                                           HttpServletRequest request) {
         if (!file.isEmpty()) {
             ImageUrlResponseDto responseStatus = productService.fileUpload(file);
             return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
@@ -443,8 +479,8 @@ public class CatalogController {
     @RequestMapping(value = "/DemoAppConfig/update/parameters", method = RequestMethod.PUT)
     @ApiOperation(value = "Update DemoAppConfig all parameters values")
     public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameters(@RequestBody DemoAppConfigParametersDto parameters,
-                                                                                    final HttpServletRequest request,
-                                                                                    final HttpServletResponse response) {
+                                                                                     final HttpServletRequest request,
+                                                                                     final HttpServletResponse response) {
 
         DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParametersValues(parameters);
 
@@ -477,7 +513,7 @@ public class CatalogController {
         HttpStatus httpStatus = HttpStatus.OK;
 
         CatalogResponse response = productService.dbRestoreFactorySettings();
-        if (! response.isSuccess()) {
+        if (!response.isSuccess()) {
             httpStatus = HttpStatus.BAD_REQUEST;
 
             return new ResponseEntity<>(response, httpStatus);
@@ -487,4 +523,12 @@ public class CatalogController {
     }
     //  endregion
 
+    /*// region Order History
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public ResponseEntity<ProductCollectionDto> getAllOrders(HttpServletRequest request) {
+        ResponseEntity<ProductCollectionDto> order = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        return productCollectionDtoResponseEntity;
+
+    }
+    //endregion*/
 }

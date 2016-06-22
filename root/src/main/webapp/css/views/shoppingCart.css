@@ -98,9 +98,14 @@
     display: inline-block;
 }
 
+#shoppingCart tfoot .icons ul{
+    margin: 0 3px;
+}
+
 #shoppingCart tfoot .icons img{
     position: relative;
-    top:1px;
+    top:-6px;
+    margin: 0 6px;
 }
 
 #shoppingCart tfoot .icons > label{
@@ -114,6 +119,7 @@
     width: 50px;
     height: 20px;
     vertical-align: top;
+    margin: 0 6px;
 }
 
 #shoppingCart tfoot ul li:nth-child(3){
@@ -231,6 +237,10 @@
     display: inline-block;
     padding: 10px 0;
     cursor:pointer;
+}
+
+#shoppingCart .smollCell > span a.remove:hover{
+    color: #54b3ad
 }
 
 #shoppingCart > div.bigEmptyCart{

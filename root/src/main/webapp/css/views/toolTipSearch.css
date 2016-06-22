@@ -41,8 +41,13 @@
     width: 100%;
     font-size: 16px;
     color: #2a2a2a;
-    padding-left: 11px;
-    padding: 4px 0;
+    padding: 7px 11px 7px 0;
+    margin: 0;
+    outline: none;
+    cursor: text;
+    border: none;
+    border-bottom: 1px solid #CECCCC;
+    display: block;
 }
 
 #searchSection .autoCompleteCover ::-webkit-input-placeholder{
@@ -122,11 +127,10 @@
 
 #searchSection .searchPopUp > div .product{
     width: 33.333%;
-    height: 220px;
     display: inline-block;
     vertical-align: top;
     box-sizing: border-box;
-    padding: 24px 30px;
+    padding: 17px 10px;
     text-align: center;
     cursor: pointer;
     text-decoration: none;
@@ -137,13 +141,14 @@
     box-sizing: border-box;
     display: block;
     margin: 0 auto;
+    margin-bottom: 15px;
 }
 
 #searchSection .searchPopUp > div .product p {
-    font-size: 13px;
+    font-size: 11px;
     color: #2a2a2a;
     margin: 4px 10px;
-    height: 32px;
+    height: 33px;
     overflow: hidden;
 
 }
@@ -167,23 +172,4 @@
 /*end searchSection */
 
 
-@media screen and (max-width: 1200px){
 
-    #searchSection .searchPopUp > div .product{
-        height: 180px;
-    }
-}
-
-
-@media screen and (max-width: 1020px){
-
-    #searchSection .searchPopUp > div .product{
-        width: 50%;
-        padding: 24px 0;
-    }
-
-    #searchSection .searchPopUp .viewAll  {
-        bottom: 20px;
-        top:inherit;
-    }
-}

@@ -204,8 +204,15 @@ var server = {
         getKey: function () {
             return catalogKey;
         },
+
         getPopularProducts: function () {
             var paramToReturn = "app/tempFiles/popularProducts.json";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        },
+
+        getAllData: function () {
+            var paramToReturn = catalogKey + "/categories/all_data";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },

@@ -25,6 +25,29 @@
                 <pluginManagement>
                     <plugins>
                         <plugin>
+                            <groupId>com.soebes.maven.plugins</groupId>
+                            <artifactId>echo-maven-plugin</artifactId>
+                            <version>0.2</version>
+                            <executions>
+                                <execution>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>echo</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <echos>
+                                    <echo>#########</echo>
+                                    <!--suppress MavenModelInspection -->
+                                    <echo>buildNumber=${buildNumber}</echo>
+                                    <!--suppress MavenModelInspection -->
+                                    <echo>Branch = ${scmBranch}</echo>
+                                    <echo>resource.delimiter=${resource.delimiter}</echo>
+                                </echos>
+                            </configuration>
+                        </plugin>
+                        <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>sql-maven-plugin</artifactId>
                             <version>1.5</version>
@@ -76,6 +99,10 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.soebes.maven.plugins</groupId>
+                        <artifactId>echo-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
@@ -213,6 +240,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -225,9 +257,10 @@
             </resource>
             <resource>
                 <directory>${project.build.directory}/generated-resources</directory>
-                <excludes>
-                    <exclude>*.properties</exclude>
-                </excludes>
+                <includes>
+                    <include>log4j.properties</include>
+                    <include>ver.txt</include>
+                </includes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
@@ -237,6 +270,9 @@
                 <includes>
                     <include>*.properties</include>
                 </includes>
+                <excludes>
+                    <exclude>log4j.properties</exclude>
+                </excludes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
@@ -280,8 +316,7 @@
                             </goals>
                             <phase>generate-resources</phase>
                             <configuration>
-                                <outputDirectory>${project.build.directory}/generated-resources
-                                </outputDirectory>
+                                <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
                                 <includeArtifactIds>shared_resources</includeArtifactIds>
                                 <includeGroupIds>${project.groupId}</includeGroupIds>
                                 <excludeTransitive>true</excludeTransitive>
@@ -294,6 +329,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.7</version>
+                    <configuration>
+                        <delimiters>
+                            <delimiter>${*}</delimiter>
+                        </delimiters>
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                    </configuration>
                     <executions>
                         <execution>
                             <configuration>

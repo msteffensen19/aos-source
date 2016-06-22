@@ -77,7 +77,7 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
 
     @Override
     public PaymentPreferences get(long userId) {
-        ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "payment preferences user-id");
+        //ArgumentValidationHelper.validateLongArgumentIsPositive(userId, "payment preferences user-id");
 
         PaymentPreferences paymentPreferences = this.find(userId, PaymentMethodEnum.MASTER_CREDIT.getCode());
 

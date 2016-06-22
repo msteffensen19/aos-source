@@ -14,10 +14,13 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Product.QUERY_GET_ALL,
-                query = "select p from Product p where UPPER(active) = 'Y'"
+                //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' order by p.productName"
+                query = "select p from Product p where UPPER(active) = 'Y' order by p.productName"
+
         ),
         @NamedQuery(
                 name = Product.PRODUCT_FILTER_BY_NAME,
+                //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' and UPPER(p.productName) like :pname"
                 query = "select p from Product p where UPPER(active) = 'Y' and UPPER(p.productName) like :pname"
         )
 })
@@ -82,13 +85,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, int price) {
-        this.productName = name;
-        this.description = description;
-        this.price = price;
-        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
-        this.active = 'Y';
-    }
+
 
     public Product(String name, String description, double price, Category category) {
         this.productName = name;
@@ -104,7 +101,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.category = category;
-        this.productStatus= ProductStatusEnum.ACTIVE.getStringCode();
+        this.productStatus= ProductStatusEnum.getValueByPropertyName(productStatus).getStringCode();
         this.active = 'Y';
     }
 

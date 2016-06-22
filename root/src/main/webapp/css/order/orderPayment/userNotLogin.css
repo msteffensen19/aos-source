@@ -1,4 +1,5 @@
 
+
 #orderPayment  > div > div{
     vertical-align: top;
     padding: 0 30px
@@ -61,7 +62,7 @@
 }
 
 #orderPayment .noUserSection .cover div.noEmail{
-    height: 156px;
+    height: 170px;
 }
 
 #orderPayment .noUserSection .cover a{
@@ -69,19 +70,9 @@
     margin-top: 33px;
 }
 
-#orderPayment .noUserSection .a-button{
-    display: inline-block;
-    box-sizing: border-box;
+#orderPayment .sec-sender .sec-sender-a {
     width: 138px;
-    border-width: 2px;
-    text-align: center;
     margin-top: 16px;
-}
-
-#orderPayment #newClient > a.a-button{
-    position: absolute;
-    bottom: 0;
-    margin: 0 27px;
 }
 
 #orderPayment #newClient p {
@@ -172,6 +163,7 @@
 
     #orderPayment  > div > h5 {
         padding-bottom: 36px;
+        padding-top: 26px;
     }
 }
 

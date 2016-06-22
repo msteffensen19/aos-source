@@ -3,23 +3,32 @@
      data-ng-mouseenter="allowClosing = false"
      data-ng-mouseleave="allowClosingLeave()"
      data-ng-click="closeSearchSection()">
+
     <div id="input" data-ng-click="$event.stopPropagation()">
         <div id="search">
-            <div icon-search-svg data-ng-click="openSearchProducts()"></div>
+            <a title="{{ 'SEARCH' | translate }}">
+                <div icon-search-svg data-ng-click="openSearchProducts()" ></div>
+            </a>
             <!--<img src="css/images/Search.jpg" alt="user" data-ng-click="openSearchProducts()">-->
             <!--<div icon-magnifying-glass data-ng-click="openSearchProducts()"></div>-->
             <div class="autoCompleteCover">
                 <input id="autoComplete" type="text" class="roboto-regular"
-                       placeholder="{{'Search' | translate }} Advantage.com"
+                       placeholder="{{'Search' | translate }} AdvantageOnlineShopping.com"
                        data-ng-keypress="checkEnterKey($event)"
                        data-ng-model="autoCompleteValue"
                        data-ng-keyup="runAutocomplete()"
                        data-ng-blur="closeSearchSection()">
-                <div icon-x data-ng-click="closeSearchForce()" ></div>
+
+                <div data-ng-click="closeSearchForce()"  style="position: absolute; right: 0; top:0" >
+                    <img src="../../css/images/closeDark.png" style="width:20px; height:20px; padding: 12px 0" >
+                </div>
 
             </div>
         </div>
     </div>
+
+
+
 
     <div id="output" data-ng-show="autoCompleteResult.length > 0" >
         <div class="searchPopUp" data-ng-click="$event.stopPropagation()" >

@@ -15,13 +15,20 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class ShipExEndpoint {
-    final static Logger logger = Logger.getLogger("ShipEx");
+    final static Logger logger = Logger.getLogger(ShipExEndpoint.class);
     public static final String TRANSACTION_TYPE_SHIPPING_COST = "SHIPPINGCOST";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
     private ShippingExpressService shippingService;
 
+    public ShipExEndpoint() {
+        logger.info(" ********************************** \n" +
+                " ****** ShipEx service start ****** \n" +
+                " ********************************** ");
+    }
+
     @Autowired
     public ShipExEndpoint(ShippingExpressService shippingService) {
+        this();
         this.shippingService = shippingService;
     }
 

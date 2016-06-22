@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * Helpful {@link String} methods.
- *
  * @author Binyamin Regev on 21/12/2015.
  */
 public class StringHelper {
@@ -105,7 +104,7 @@ public class StringHelper {
      * @param arrayToSearch
      * @return
      */
-    public static boolean isContains(String stringToFind, List<String> arrayToSearch) {
+    public static boolean isContains(final String stringToFind, List<String> arrayToSearch) {
         for (String test : arrayToSearch) {
             if (test.equals(stringToFind)) {
                 return true;
@@ -123,8 +122,52 @@ public class StringHelper {
      * @return Date as java {@link java.util.Date}.
      * @throws ParseException
      */
-    public static Date toDate(String stringDate, String dateFormat) throws ParseException {
+    public static Date toDate(final String stringDate, final String dateFormat) throws ParseException {
         return new SimpleDateFormat(dateFormat).parse(stringDate);
+    }
+
+    /**
+     * Convert a {@code date} given as {@link String} in {@code dateFormat} to {@link Date}.
+     *
+     * @param stringDate {@link String} containing valid date, e.g. "26.03.2011", "1969-06-02", "12/22/1983", etc.
+     * @param dateFormat Valid {@link SimpleDateFormat}, e.g. "dd/MM/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", etc.
+     * @return received date as {@code Java} {@link Date}.
+     */
+    public static Date convertStringToDate(final String stringDate, final String dateFormat) {
+        Date date = null;
+
+        try {
+            date = new SimpleDateFormat(dateFormat).parse(stringDate);
+        } catch (ParseException e) {
+            //e.printStackTrace();
+            date = null;
+        }
+
+        return date;
+    }
+
+    /**
+     *
+     * @param date date to return as string-date with by date-format.
+     * @param dateFormat Date-format by which to format the data argument. <br/>
+     *                   For example: &quot;yyyy.MM.dd.hh.mm.ss&quot;
+     * @return {@link String} containing {@link Date} formatted by {@link SimpleDateFormat}.
+     */
+    public static String convertDateToString(final Date date, final String dateFormat) {
+        return new SimpleDateFormat(dateFormat).format(date);
+    }
+
+    public static String convertDateToStringHexadecimal(final Date date) {
+        String stringDate = StringHelper.convertDateToString(date, "yyyy.MM.dd.HH.mm.ss");
+
+        StringBuilder hexDate = new StringBuilder(Integer.toHexString((Integer.valueOf(stringDate.substring(0,4))).intValue()).toUpperCase())
+                .append(Integer.toHexString((Integer.valueOf(stringDate.substring(5,7))).intValue()).toUpperCase())
+                .append(Integer.toHexString((Integer.valueOf(stringDate.substring(8,10))).intValue()).toUpperCase())
+                .append(Integer.toHexString((Integer.valueOf(stringDate.substring(11,13))).intValue()).toUpperCase())
+                .append(Integer.toHexString((Integer.valueOf(stringDate.substring(14,16))).intValue()).toUpperCase())
+                .append(Integer.toHexString((Integer.valueOf(stringDate.substring(17,19))).intValue()).toUpperCase());
+
+        return hexDate.toString();
     }
 
 }

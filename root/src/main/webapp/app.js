@@ -35,10 +35,11 @@ define([
     './app/user/directives/index',
     './app/order/directives/index',
     './app/account/directives/index',
+    './app/SECORRENTI/sec-input/index',
 
     './app/templates/module',
 
-], function(angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig, accountConfig) {
+], function (angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig, accountConfig) {
 
     return angular.module('aos', [
 
@@ -79,68 +80,75 @@ define([
 
     config(accountConfig).
 
+    run(function ($rootScope, $state, ipCookie, $http) {
 
-    run(function ($rootScope, $state, ipCookie, resHandleService) {
+        //$http.defaults.headers.get = { 'Content-Type': "application/json", }
 
-            var pcBlocked = ipCookie("pcBlocked");
-            if(pcBlocked)
-            {
-                if(new Date().getTime() > pcBlocked) {
-                    ipCookie.remove("pcBlocked");
-                }
-                else{
-                    $state.go('404');
-                }
+        var pcBlocked = ipCookie("pcBlocked");
+        if (pcBlocked) {
+            if (new Date().getTime() > pcBlocked) {
+                ipCookie.remove("pcBlocked");
             }
-
-            $rootScope.userCookieLastEntry = ipCookie('lastlogin');
-            if($rootScope.userCookieLastEntry)
-            {
-                var cookie = ipCookie($rootScope.userCookieLastEntry);
-                if(cookie)
-                {
-                    $rootScope.userCookie = cookie;
-                }
+            else {
+                $state.go('404');
             }
+        }
 
-            $rootScope.$on('$stateChangeError', function(a, b, c, d) {
-                console.log(a);
-                console.log(b);
-                console.log(c);
-                console.log(d);
-                //$state.go('404');
-            });
+        $rootScope.userCookieLastEntry = ipCookie('lastlogin');
+        if ($rootScope.userCookieLastEntry) {
+            var cookie = ipCookie($rootScope.userCookieLastEntry);
+            if (cookie) {
+                $rootScope.userCookie = cookie;
+            }
+        }
 
-            $rootScope.breadcrumb = [{
-                name: "Home Page",
-                path: "/",
-            }];
-
-            $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-                //var requireLogin = toState.data.requireLogin;
-                //var showWelcome = toState.data.showWelcome;
-                //var underConstruction = toState.data.underConstruction;
-
-                /*
-                showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
-                underConstruction != 'undefined' && underConstruction ?
-                    $(document.body).addClass('under-construction') :
-                    $(document.body).removeClass('under-construction');
-
-                if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
-                    event.preventDefault();
-                    // get me a login modal!
-                }
-                */
-            });
+        $rootScope.$on('$stateChangeError', function (a, b, c, d) {
+            console.log(a);
+            console.log(b);
+            console.log(c);
+            console.log(d);
+            //$state.go('404');
         });
+
+        $rootScope.breadcrumb = [{
+            name: "Home Page",
+            path: "/",
+        }];
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+            //var requireLogin = toState.data.requireLogin;
+            //var showWelcome = toState.data.showWelcome;
+            //var underConstruction = toState.data.underConstruction;
+
+            /*
+             showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
+             underConstruction != 'undefined' && underConstruction ?
+             $(document.body).addClass('under-construction') :
+             $(document.body).removeClass('under-construction');
+
+             if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+             event.preventDefault();
+             // get me a login modal!
+             }
+             */
+        });
+    });
 
 });
 
-var l = function(a){
+var l = function (a) {
     console.log(a)
 }
 
-var t = function(a){
+var t = function (a) {
     alert(a)
+}
+
+print = function(a){
+    console.log(" ");
+    console.log("  ");
+    console.log(a);
+    console.log("******************************");
+    console.log(" ");
+    console.log("  ");
 }

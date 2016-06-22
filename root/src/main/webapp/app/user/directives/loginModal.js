@@ -15,7 +15,7 @@ define(['./module'], function (directives) {
 
 
                     /* VARIABLES */
-                    //$scope.rememberMe = false;
+                    $scope.rememberMe = false;
                     //$scope.message = "";
                     $scope.message = {text: $filter('translate')('OR'), _class: ''};
                     $scope.config = null;
@@ -26,9 +26,12 @@ define(['./module'], function (directives) {
                         _____errorMessage = $timeout(function () {
                             $scope.message.text = $filter('translate')('OR');
                             $scope.message._class = "";
+                            $rootScope.rsMessage.text = "";
+                            $rootScope.rsMessage._class = "";
                         }, 2000);
                         $timeout(function () {
                             $scope.message = { text: reason, _class: "invalid" }
+                            $rootScope.rsMessage = { text: reason, _class: "invalid" }
                         }, 0);
                     }
 
@@ -43,12 +46,6 @@ define(['./module'], function (directives) {
                             var date = new Date();
                             var millisecondsLess = userBlocked.dateUntil - new Date(date.getTime() - new Date(rest)).getTime();
 
-                            console.log("");
-                            console.log("Seconds to unblock user");
-                            console.log((millisecondsLess / 1000) + (" seconds"));
-                            console.log("=================================");
-                            console.log("");
-
                             $scope.setErrorMessage(userBlocked.reason);
                             if (millisecondsLess < 0) {
                                 $cookie.remove(user.loginUser);
@@ -57,8 +54,6 @@ define(['./module'], function (directives) {
                                 return user;
                             }
                         }
-
-
 
                         userService.login(user).then(function (response) {
 
@@ -112,6 +107,8 @@ define(['./module'], function (directives) {
                                 $scope.setErrorMessage(response.reason);
                             }
                             return user;
+                        }, function(){
+                            $scope.setErrorMessage($filter('translate')('login_faild'));
                         });
                     }
                     /*=============================== end Sign in ===============================*/
@@ -147,14 +144,14 @@ define(['./module'], function (directives) {
 
 
                     $scope.forgotPassword = function () {
-                        console.log("forgotPassword");
-                        $location.path('404');
+                        console.log("forgotPassword not done yet!");
+                        //$location.path('404');
                     }
 
 
                     $scope.singWithFacebook = function (user) {
-                        console.log("singWithFacebook");
-                        $location.path('404');
+                        console.log("singWithFacebook not done yet!");
+                        //$location.path('404');
                     }
 
                 }
@@ -170,7 +167,7 @@ function wellcome() {
 
         $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
         $(".PopUp").fadeOut(100);
-        $("body").css("overflow", "scroll")
+        $("body").css("overflow-y", "scroll")
         $(".login").css("opacity", "1");
     });
 }

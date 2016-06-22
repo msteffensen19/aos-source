@@ -6,12 +6,23 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
+import com.advantage.common.utils.LoggerUtils;
+import com.advantage.order.store.dao.OrderHistoryHeaderManagementRepository;
+import com.advantage.order.store.dao.OrderHistoryLineManagementRepository;
+import com.advantage.order.store.dao.OrderManagementRepository;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
-import com.advantage.order.store.dao.OrderManagementRepository;
+import com.advantage.order.store.model.OrderHeader;
+import com.advantage.order.store.model.OrderLines;
+import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.JsonHelper;
+import com.google.common.net.HttpHeaders;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +30,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * @author Binyamin Regev on 07/01/2016.
@@ -43,9 +57,19 @@ public class OrderManagementService {
     private static AtomicLong orderNumber;
     private double totalAmount = 0.0;
 
+    private Logger logger = Logger.getLogger(OrderManagementService.class);
+
     @Autowired
     @Qualifier("orderManagementRepository")
     public OrderManagementRepository orderManagementRepository;
+
+    @Autowired
+    @Qualifier("orderHistoryHeaderManagementRepository")
+    public OrderHistoryHeaderManagementRepository orderHistoryHeaderManagementRepository;
+
+    @Autowired
+    @Qualifier("orderHistoryLineManagementRepository")
+    public OrderHistoryLineManagementRepository orderHistoryLineManagementRepository;
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -87,23 +111,21 @@ public class OrderManagementService {
 
         costResponse = shipExPort.shippingCost(costRequest);
 
-        if (! costResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
-            System.out.println("Shipping Express: getShippingCost() --> Response returned \'" + costResponse.getCode() + "\', Reason: \'" + costResponse.getReason() + "\'");
+        if (!costResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
+            if (logger.isInfoEnabled()) {
+                logger.info("Response returned \'" + costResponse.getCode() + "\', Reason: \'" + costResponse.getReason() + "\'");
+            }
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> Response returned \'" + costResponse.getCode() + "\', Reason: \'" + costResponse.getReason() + "\'");
-        }
-        else if (costResponse.getAmount().isEmpty()) {
-            System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT);
+        } else if (costResponse.getAmount().isEmpty()) {
+            logger.info(ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT);
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_EMPTY_AMOUNT);
-        }
-        else if (costResponse.getCurrency().isEmpty()) {
-            System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
+        } else if (costResponse.getCurrency().isEmpty()) {
+            logger.info(ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_CURRENCY_IS_EMPTY);
-        }
-        else if (! costResponse.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType())) {
-            System.out.println("Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+        } else if (!costResponse.getSETransactionType().equalsIgnoreCase(costRequest.getSETransactionType())) {
+            logger.info(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
             costResponse = generateShippingCostResponseError(costRequest.getSETransactionType(), "Shipping Express: getShippingCost() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
-        }
-        else {
+        } else {
             costResponse.setReason(ResponseEnum.OK.getStringCode());
         }
 
@@ -126,7 +148,7 @@ public class OrderManagementService {
     /**
      * Do the order purchase process.
      * Evgeny: CHILL!!! This is just for me!!!!!!!
-     *
+     * <p>
      * (V)  Step #1: Get products info
      * (V)  Step #2: Generate OrderNumber.
      * (V)  Step #3: Do payment (MasterCredit or SafePay) - send REST POST request, receive Payment confirmation number.
@@ -136,6 +158,8 @@ public class OrderManagementService {
      */
     @Transactional
     public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest purchaseRequest) {
+        //Moti Ostrovski: reset total Amount before new purchase
+        totalAmount = 0.0;
 
         long orderNumber = 0;
         long paymentRefNumber = 0;
@@ -151,7 +175,7 @@ public class OrderManagementService {
         Collections.sort(purchasedProducts,
                 new Comparator<OrderPurchasedProductInformation>() {
                     public int compare(OrderPurchasedProductInformation product1, OrderPurchasedProductInformation product2) {
-                        return (int)(product1.getProductId() - product2.getProductId());
+                        return (int) (product1.getProductId() - product2.getProductId());
                     }
                 });
 
@@ -188,8 +212,7 @@ public class OrderManagementService {
                 purchaseResponse.setPaymentConfirmationNumber(masterCreditResponse.getReferenceNumber());
                 purchaseResponse.setTrackingNumber(0L);
             }
-        }
-        else if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.SAFE_PAY.getName())) {
+        } else if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.SAFE_PAY.getName())) {
             SafePayRequest safePayRequest = new SafePayRequest(
                     paymentInfo.getTransactionType(),
                     paymentInfo.getUsername(),
@@ -201,7 +224,6 @@ public class OrderManagementService {
                     paymentInfo.getCurrency());
 
             SafePayResponse safePayResponse = payWithSafePay(safePayRequest);
-
 
             if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
                 paymentInfo.setReferenceNumber(safePayResponse.getReferenceNumber());
@@ -255,8 +277,7 @@ public class OrderManagementService {
 
                     productId = purchasedProduct.getProductId();
 
-                }
-                else {
+                } else {
                     int index = products.getProduct().size() - 1;
                     products.getProduct().get(index).setProductQuantity(products.getProduct().get(index).getProductQuantity() + purchasedProduct.getQuantity());
                 }
@@ -283,13 +304,18 @@ public class OrderManagementService {
                 purchaseResponse.setReason(MESSAGE_ORDER_COMPLETED_SUCCESSFULLY);
                 purchaseResponse.setOrderNumber(orderNumber);
                 purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
-
+                if (logger.isInfoEnabled()) {
+                    logger.info(orderResponse.toString());
+                    logger.info(purchaseResponse);
+                }
             } else {
                 purchaseResponse.setSuccess(false);
                 purchaseResponse.setCode(orderResponse.getCode());
                 purchaseResponse.setReason(orderResponse.getReason());
                 purchaseResponse.setOrderNumber(orderNumber);
                 purchaseResponse.setTrackingNumber(Long.valueOf(orderResponse.getTransactionReference()));
+                logger.warn(orderResponse.toString());
+                logger.warn(purchaseResponse);
             }
         }
 
@@ -297,8 +323,8 @@ public class OrderManagementService {
     }
 
     /**
-     *  For each purchased product:
-     *      Retrieve product-name, product-color-name and price-per-item.
+     * For each purchased product:
+     * Retrieve product-name, product-color-name and price-per-item.
      */
     private List<OrderPurchasedProductInformation> getPurchasedProductsInformation(long userId,
                                                                                    List<ShoppingCartDto> cartProducts) {
@@ -310,10 +336,10 @@ public class OrderManagementService {
             //        shoppingCartRepository.getCartProductDetails(cartProduct.getProductId(),
             //                                                    cartProduct.getHexColor().toUpperCase());
             ShoppingCartResponseDto.CartProduct product = shoppingCartService.getCartProductDetails(cartProduct.getProductId(),
-                                                                                                    cartProduct.getHexColor()
-                                                                                                                .toUpperCase());
+                    cartProduct.getHexColor()
+                            .toUpperCase());
 
-            if (! product.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
+            if (!product.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                 /*  Add a product to user shopping cart response class  */
                 purchasedProducts.add(new OrderPurchasedProductInformation(cartProduct.getProductId(),
                         product.getProductName(),
@@ -333,7 +359,6 @@ public class OrderManagementService {
                         -999999.99,                     //  Price-per-item
                         cartProduct.getQuantity()));
             }
-
         }
 
         return purchasedProducts;
@@ -349,18 +374,19 @@ public class OrderManagementService {
     /**
      * Send REST POST request to pay for order using <b>MasterCredit</b> service.
      * Request JSON:
-     *  {
-     *  "MCCVVNumber": 0,
-     *  "MCCardNumber": 0,
-     *  "MCCustomerName": "string",
-     *  "MCCustomerPhone": "string",
-     *  "MCExpirationDate": "string",
-     *  "MCRecevingAmount.Value": 0,
-     *  "MCRecevingCard.AccountNumber": 0,
-     *  "MCRecevingCard.Currency": "string",
-     *  "MCTransactionDate": "string",
-     *  "MCTransactionType": "string"
-     *  }
+     * {
+     * "MCCVVNumber": 0,
+     * "MCCardNumber": 0,
+     * "MCCustomerName": "string",
+     * "MCCustomerPhone": "string",
+     * "MCExpirationDate": "string",
+     * "MCRecevingAmount.Value": 0,
+     * "MCRecevingCard.AccountNumber": 0,
+     * "MCRecevingCard.Currency": "string",
+     * "MCTransactionDate": "string",
+     * "MCTransactionType": "string"
+     * }
+     *
      * @param masterCreditRequest
      * @return
      */
@@ -371,12 +397,41 @@ public class OrderManagementService {
 
         try {
             urlPayment = new URL(Url_resources.getUrlMasterCredit(), "payments/payment");
-
+            logger.info("urlPayment=" + urlPayment.toString());
             HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
 
+            if (logger.isTraceEnabled()) {
+                try {
+                    Object connectedStatus = FieldUtils.readField(conn, "connected", true);
+                    logger.trace("HttpURLConnection.connected=" + connectedStatus);
+                } catch (Throwable e) {
+                    logger.warn("Read \"connected\" field by reflection for HttpURLConnection failed", e);
+                }
+            }
+
+            //region WORK AROUND (encapsulation breaking - REMOVE all region)
+            try {
+                boolean connected = (Boolean) FieldUtils.readField(conn, "connected", true);
+                if (connected) {
+                    conn = null;
+                    conn = (HttpURLConnection) urlPayment.openConnection();
+                    if (logger.isTraceEnabled()) {
+                        try {
+                            Object connectedStatus = FieldUtils.readField(conn, "connected", true);
+                            logger.trace("After WORK AROUND HttpURLConnection.connected=" + connectedStatus);
+                        } catch (Throwable e) {
+                            logger.warn("After WORK AROUND \"connected\" field by reflection for HttpURLConnection failed", e);
+                        }
+                    }
+                }
+            } catch (Throwable e) {
+                logger.warn("WORK AROUND: Read \"connected\" field by reflection for HttpURLConnection failed", e);
+            }
+            //endregion
+
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestMethod(HttpMethod.POST.name());
+            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
             String input = "{" + "\"MCCVVNumber\":" + masterCreditRequest.getCvvNumber() + "," +
                     "\"MCCardNumber\":\"" + masterCreditRequest.getCardNumber() + "\"," +
@@ -389,25 +444,28 @@ public class OrderManagementService {
                     "\"MCTransactionDate\": \"" + masterCreditRequest.getTransactionDate() + "\"," +
                     "\"MCTransactionType\": \"" + masterCreditRequest.getTransactionType() + "\"" +
                     "}";
-
+            logger.debug(input);
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
+                RuntimeException e = new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
+                if (logger.isDebugEnabled()) {
+                    logger.fatal(conn.getResponseCode(), e);
+                } else {
+                    logger.fatal(LoggerUtils.getMinThrowableDescription(conn.getResponseCode(), e));
+                }
+                throw e;
             }
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
-
-            String output;
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder sb = new StringBuilder();
-
-            System.out.println("Output from Server...");
+            String output;
+            logger.debug("Output from Server...");
             while ((output = br.readLine()) != null) {
                 sb.append(output);
-                System.out.println(output);
+                logger.debug(output);
             }
 
             Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
@@ -419,11 +477,18 @@ public class OrderManagementService {
             masterCreditResponse.setTransactionDate((String) jsonMap.get("TransactionDate"));
 
             conn.disconnect();
-
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            if (logger.isDebugEnabled()) {
+                logger.fatal(masterCreditResponse, e);
+            } else {
+                logger.fatal(LoggerUtils.getMinThrowableDescription(masterCreditResponse, e));
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            if (logger.isDebugEnabled()) {
+                logger.fatal(masterCreditResponse, e);
+            } else {
+                logger.fatal(LoggerUtils.getMinThrowableDescription(masterCreditResponse, e));
+            }
         }
 
         return masterCreditResponse;
@@ -431,6 +496,7 @@ public class OrderManagementService {
 
     /**
      * Send REST POST request to pay for order using <b>SafePay</b> service.
+     *
      * @param safePayRequest
      * @return
      */
@@ -445,8 +511,8 @@ public class OrderManagementService {
             HttpURLConnection conn = (HttpURLConnection) urlPayment.openConnection();
 
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestMethod(HttpMethod.POST.name());
+            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
             //  region SafePay PAYMENT request
             String input = "{" +
@@ -490,7 +556,6 @@ public class OrderManagementService {
             safePayResponse.setTransactionDate((String) jsonMap.get("TransactionDate"));
 
             conn.disconnect();
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -502,6 +567,7 @@ public class OrderManagementService {
 
     /**
      * Send SOAP request for ShipEx tracking number and receive it in response.
+     *
      * @param orderRequest Shipping Express request for tracking number.
      * @return Shipping Express Tracking Number in {@link PlaceShippingOrderResponse}.
      */
@@ -524,24 +590,20 @@ public class OrderManagementService {
 
             orderResponse = shipExPort.placeShippingOrder(orderRequest);
 
-            if (! orderResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
-                System.out.println("Shipping Express: placeShippingOrder() --> Response returned \'" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
+            if (!orderResponse.getCode().equalsIgnoreCase(ResponseEnum.OK.getStringCode())) {
+                logger.info("Response returned \'" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> Response returned '" + orderResponse.getCode() + "\', Reason: \'" + orderResponse.getReason() + "\'");
-            }
-            else if (orderResponse.getTransactionDate().isEmpty()) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
+            } else if (orderResponse.getTransactionDate().isEmpty()) {
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY);
-            }
-            else if (orderResponse.getTransactionReference().isEmpty()) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
+            } else if (orderResponse.getTransactionReference().isEmpty()) {
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY);
-            }
-            else if (orderResponse.getTransactionReference().length() != 10) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
+            } else if (orderResponse.getTransactionReference().length() != 10) {
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH);
-            }
-            else if (! orderResponse.getSETransactionType().equalsIgnoreCase(orderRequest.getSETransactionType())) {
-                System.out.println("Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
+            } else if (!orderResponse.getSETransactionType().equalsIgnoreCase(orderRequest.getSETransactionType())) {
+                logger.warn(ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
                 orderResponse = generatePlaceShippingOrderResponseError(orderRequest.getSETransactionType(), "Shipping Express: placeShippingOrder() --> " + ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_TYPE_MISMATCH);
             }
         }
@@ -550,6 +612,7 @@ public class OrderManagementService {
 
     /**
      * Update tracking number in {@code OrderHeder} entity.
+     *
      * @param userId
      * @param orderNumber
      * @param shippingTrackingNumber
@@ -599,5 +662,80 @@ public class OrderManagementService {
         DemoAppConfigGetParametersByToolResponse response = accountServicePort.demoAppConfigGetParametersByTool(request);
 
         return response;
+    }
+
+    //region get orders
+    /*
+    get orders history by userID or orderID
+    not set any value(userID =0, orderID=0 or not set in REST) => get all
+    currently order saved by unique orderID
+    if change to unique per user the option get by userID and orderID available
+     */
+    public OrderHistoryCollectionDto getOrdersHistory(Long userId, Long orderId) {
+        OrderHistoryCollectionDto orderHistoryCollectionDto = new OrderHistoryCollectionDto();
+        List<OrderHeader> orderHistoryHeaders = new ArrayList<OrderHeader>();
+        if ((userId == null || userId == 0) && (orderId == null || orderId == 0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getAll();//getByUserId(accountId);
+        } else if ((userId == null || userId == 0) && (orderId != null && orderId > 0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderId(orderId);
+        } else if ((orderId == null || orderId == 0) && (userId != null && userId > 0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByUserId(userId);
+        } else if ((orderId != null || orderId > 0) && (userId != null && userId > 0)) {
+            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderIdAndUserId(orderId, userId);
+        }
+        if (orderHistoryHeaders.size() > 0) {
+            try {
+
+                orderHistoryHeaders.forEach(order -> {
+                    OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+                    //get products by orderID
+                    List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
+//
+                    //set order fields
+                    orderHistoryDto.setOrderNumber(order.getOrderNumber());
+                    orderHistoryDto.setOrderTimestamp(order.getOrderTimestamp());
+                    orderHistoryDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
+                    orderHistoryDto.setPaymentMethod(order.getPaymentMethod());
+                    orderHistoryDto.setOrderTotalSum(order.getAmount());
+                    orderHistoryDto.setOrderShipingCost(order.getShippingCost());
+                    orderHistoryDto.setShippingAddress(order.getShippingAddress());
+                    //set user
+                    orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
+                    //set products
+                    orderLines.forEach(product -> {
+                        orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
+                                product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
+                    });
+                    orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
+                });
+            } catch (Exception e) {
+                logger.error(orderHistoryCollectionDto, e);
+                return null;
+            }
+        }
+        return orderHistoryCollectionDto;
+    }
+
+    //endregion get orders
+
+    @Override
+    public String toString() {
+        return "OrderManagementService{" +
+                "totalAmount=" + totalAmount +
+                ", orderManagementRepository=" + orderManagementRepository +
+                ", orderHistoryHeaderManagementRepository=" + orderHistoryHeaderManagementRepository +
+                ", orderHistoryLineManagementRepository=" + orderHistoryLineManagementRepository +
+                ", shoppingCartRepository=" + shoppingCartRepository +
+                ", shoppingCartService=" + shoppingCartService +
+                '}';
+    }
+
+    private static void tmpLogAllObject(HttpURLConnection conn) {
+        List<Field> allFieldsList = FieldUtils.getAllFieldsList(conn.getClass());
+        List<Field> staticFields = allFieldsList.stream().filter(tempField -> (tempField.getModifiers() & Modifier.STATIC) == Modifier.STATIC).collect(Collectors.toList());
+        List<Field> nonStaticFields = allFieldsList.stream().filter(tempField -> (tempField.getModifiers() & Modifier.STATIC) != Modifier.STATIC).collect(Collectors.toList());
+        StringBuilder sb = new StringBuilder();
+        //staticFields.stream().forEach(temp);
+        //TODO-EVG continue
     }
 }

@@ -10,8 +10,32 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <build>
         <finalName>MasterCredit</finalName>
+        <resources>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+                <excludes>
+                    <exclude>internal_config_for_env.properties</exclude>
+                    <exclude>log4j.properties</exclude>
+                </excludes>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+                <includes>
+                    <include>log4j.properties</include>
+                </includes>
+                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>

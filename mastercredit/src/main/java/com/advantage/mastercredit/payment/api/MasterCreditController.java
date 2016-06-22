@@ -1,10 +1,11 @@
 package com.advantage.mastercredit.payment.api;
 
+import com.advantage.common.Constants;
+import com.advantage.common.enums.ResponseEnum;
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
-import com.advantage.common.enums.ResponseEnum;
 import com.advantage.mastercredit.payment.services.MasterCreditService;
-import com.advantage.common.Constants;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = Constants.URI_API + "/v1")
 public class MasterCreditController {
 
+    private Logger logger = Logger.getLogger(MasterCreditController.class);
+
     @Autowired
     private MasterCreditService masterCreditService;
+
+    @ModelAttribute
+    public void setResponseHeaderForAllRequests(HttpServletResponse response) {
+//        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-control", "no-store");
+    }
 
     /**
      * @param masterCreditDto
@@ -34,7 +44,10 @@ public class MasterCreditController {
                                                           HttpServletRequest request,
                                                           HttpServletResponse response) {
 
-        System.out.println("MasterCreditController.doPayment");
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("The request is:\n");
+//            logger.debug(request.toString());
+//        }
         MasterCreditResponse masterCreditResponse = masterCreditService.doPayment(masterCreditDto);
         //response.setHeader("sessionId", request.getSession().getId());
         //
@@ -49,15 +62,20 @@ public class MasterCreditController {
         //    appUserResponseStatus.setSessionId(session.getId());
         //}
 
+        HttpStatus status;
         if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
-            System.out.println("MasterCreditController.doPayment - HttpStatus.OK");
-            //return new ResponseEntity<>(masterCreditResponse, HttpStatus.OK);
-            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CREATED);
+            status = HttpStatus.CREATED;
         } else {
-            System.out.println("MasterCreditController.doPayment - HttpStatus.CONFLICT");
-            return new ResponseEntity<>(masterCreditResponse, HttpStatus.CONFLICT);
+            status = HttpStatus.CONFLICT;
         }
+        ResponseEntity<MasterCreditResponse> result = new ResponseEntity<>(masterCreditResponse, status);
 
+        if (logger.isDebugEnabled()) {
+            logger.debug(result.toString());
+        } else {
+            logger.info("Status=" + status);
+        }
+        return result;
     }
 
 //    /**

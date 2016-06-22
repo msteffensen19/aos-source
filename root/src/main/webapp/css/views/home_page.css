@@ -52,29 +52,58 @@
     background-position: top center;
 }
 
-.rowSection > div.twoRows span{
+.categoryCell {
+    overflow: hidden;
+}
+
+.categoryCell:hover .shop_now_slider {
+    bottom: 0px;
+}
+
+.categoryCell:hover .shop_now_slider .shop_now{
+    padding: 26px 28px 26px 28px;
+}
+
+.categoryCell.laptopImg:hover .shop_now_slider .shop_now{
+    color:#2a2a2a;
+}
+
+.rowSection > div.twoRows span, .categoryCell.laptopImg span{
     color:white;
 }
 
+.shop_now_slider {
+
+    transition: all ease 0.6s;
+    position: absolute;
+    bottom: -62px;
+    left: 0;
+    width: 100%;
+
+}
 
 .shop_now{
+    transition: all ease 0.6s;
     color: #2a2a2a;
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     display: block;
-    font-size: 22px;
-    padding: 0 0 46px 28px;
+    /*font-size: 22px;*/
+    /*padding: 0 0 46px 28px;*/
     font-weight: bold;
     cursor: pointer;
+
+    padding: 26px 28px 65px 28px;
+    font-size: 22px;
 }
 
 
 .shop_nowSub{
     color: #54b3ad;
-    position: absolute;
+    position: relative;
     bottom: 24px;
-    left: 26px;
+    left: 28px;
     white-space: nowrap;
     font-size: 17px;
     background-image: url("../../css/images/arrow_right.png");
@@ -199,12 +228,6 @@ label.shop_now:after{
     right: 0;
 }
 
-.slider  div.transition {
-    -webkit-transition: right 2s cubic-bezier(.51,.06,.05,.07);
-    transition: right 2s cubic-bezier(.51,.06,.05,.07);
-    transition-delay:0.5s;
-}
-
 .slider  div.slider-length > div.imgSection {
     display: inline-block;
     width: 100%;
@@ -230,6 +253,12 @@ label.shop_now:after{
     text-align: center;
 }
 
+.slider  div.transition {
+    /*-webkit-transition: right 2s cubic-bezier(.65,.01,1,.45);*/
+    transition: right 1.5s cubic-bezier(.65,.01,.8,.48);
+    transition-delay:0.2s;
+}
+
 .slider .container h2{
     font-size: 50px;
     text-align: center;
@@ -237,7 +266,7 @@ label.shop_now:after{
     margin-bottom: 41px;
     color: white;
     position: relative;
-    animation-duration: 2s;
+    animation-duration: 1.6s;
 }
 
 .slider .container button{
@@ -246,7 +275,7 @@ label.shop_now:after{
     padding: 16px 40px;
     font-size: 29px;
     position: relative;
-    animation-duration: 2.3s;
+    animation-duration: 2s;
 }
 
 .slider-length div .container button:hover {
@@ -269,18 +298,6 @@ label.shop_now:after{
     background-color: #2a2a2a !important;
 }
 
-/*
-
-
-.categoryData button:hover {
-}
-
-.slider-length div:nth-child(2) .container button:hover{
-    background-color: transparent !important;
-    border: solid 2px black !important;
-    color: black;
-}
-*/
 .slider-steps {
     position: absolute !important;
     bottom: 10px;
@@ -341,25 +358,61 @@ label.shop_now:after{
 /* end POPULAR ITEMS */
 
 
+/* CONTACT */
+
+#supportCover .sec-view div label.select-value{
+    border-bottom: solid 1px white ;
+}
+
+#supportCover .sec-view div label.select-value:before{
+    border-top: solid 4px white ;
+}
 
 
+#supportCover label.Subject {
+    position: relative;
+}
+
+#supportCover label.Subject .star {
+    position: absolute;
+    left: -12px;
+    top: 2px;
+}
 
 
+#supportCover .sec-view div textarea {
+    border: 1px solid white;
+    background-color: #54b3ad;
+    color:white;
+    padding: 8px 10px;
+}
 
 
+#supportCover .sec-sender {
+    margin-top: 20px;
+    float: right;
+}
+
+#supportCover .sec-sender .sec-sender-a {
+    padding: 10px 50px;
+    background-color: #54b3ad;
+    border: white 2px solid;
+    color: white;
+}
 
 
+#supportCover .sec-sender .sec-sender-a.invalid {
+    border: solid 2px #82c8c3 !important;
+    color: #82c8c3 !important;
+}
+
+#supportCover .sec-sender:hover .sec-sender-a:not(.invalid) {
+    background-color: white;
+    color: #54b3ad;
+}
 
 
-
-
-/*
-
-  background-color: rgba(210, 0, 0, 0.1);
-
-*/
-
-
+/* end CONTACT */
 
 
 
@@ -378,7 +431,7 @@ label.shop_now:after{
 
     .slider .container h2{
         font-size: 44px;
-        margin-top: 12%;
+        margin-top: 10%;
     }
 
     .slider .container button{
@@ -414,7 +467,13 @@ label.shop_now:after{
 
     .shop_now{
         font-size: 16px;
-        padding: 0 0 32px 18px;
+        padding: 0 0 56px 18px;
+    }
+
+
+    .categoryCell:hover .shop_now_slider .shop_now{
+        font-size: 20px;
+        padding: 0 0 20px 18px;
     }
 
     .shop_nowSub{
@@ -561,7 +620,7 @@ label.shop_now:after{
         padding-top: 73%;
     }
 
-    .rowSection > div.twoRows span {
+    .rowSection > div.twoRows span{
         color: #2a2a2a;
     }
 

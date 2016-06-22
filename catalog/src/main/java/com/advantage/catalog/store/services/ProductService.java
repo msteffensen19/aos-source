@@ -12,7 +12,6 @@ import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.product.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
-import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.enums.ProductStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -94,9 +92,8 @@ public class ProductService {
         product.setColors(getColorAttributes(dto.getColors(), product));
         product.setImages(getImageAttribute(dto.getImages(), product));
 
-        //set product status
-        product.setProductStatus(ProductStatusEnum.ACTIVE.getStringCode());
-        return new ProductResponseDto(true, product.getId(), "Product was created successful");
+        ProductResponseDto productResponseDto = new ProductResponseDto(true, product.getId(), "Product was created successful");
+        return productResponseDto;
     }
 
     @Transactional(rollbackFor = Exception.class)

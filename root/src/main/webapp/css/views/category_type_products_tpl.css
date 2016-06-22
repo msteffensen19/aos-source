@@ -1,6 +1,3 @@
-*{
-    font-family: 'Roboto';
-}
 
 .categoryLeft{
     width: 184px;
@@ -117,6 +114,7 @@
 
 .categoryLeft .option .fill span{
     color:#828282;
+    cursor: pointer;
 }
 
 
@@ -141,14 +139,25 @@
 .categoryRight ul li {
     text-align: center;
     display: inline-block;
-    width: 300px;
-    padding: 10px;
-    margin: 10px;
+    width: 250px;
+    padding: 20px 30px;
+    margin: 20px;
     box-sizing: border-box;
-    transition: box-shadow 0.3s ease;
     cursor: pointer;
     vertical-align: top;
     position: relative;
+    transform: scale(1.1);
+    transition: all 0.5s ease;
+}
+
+.categoryRight ul li p a.productName{
+    display: block;
+    min-height: 42px;
+}
+
+
+.categoryRight ul li:hover{
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .categoryRight ul li .soulOut{
@@ -164,14 +173,16 @@
 
 .categoryRight ul li .soulOut span{
     position: relative;
-    top: 8px;
+    top: 14px;
     font-size: 12px;
     text-align: center;
     color: white;
+    display: block;
+    line-height: 1.2;
 }
 
 .categoryRight ul li .imgProduct {
-    width: 90%;
+    width: 100%;
     position: relative;
 }
 
@@ -187,6 +198,7 @@
     white-space: nowrap;
     opacity: 0;
     float: right;
+    padding: 0 1px;
 }
 
 .categoryRight ul li:hover .AddToCard{
@@ -229,11 +241,13 @@
 }
 
 .option > #slider {
-    width: 100% !important;
-    margin: 6px auto;
+    width: 95% !important;
+    margin: 6px 0;
     margin-bottom:-6px;
 }
-
+.option .noUi-horizontal .noUi-handle {
+    cursor: pointer;
+}
 
 .categoryLeft .filterCount span {
     display: none;
@@ -281,20 +295,26 @@
 
 @media screen and (max-width: 1550px) {
     .categoryRight ul li {
-        width: 23%;
+        width: 21%;
     }
 }
 
 
 @media screen and (max-width: 1250px) {
     .categoryRight ul li{
-        width: 31.1%;
+        width: 29%;
     }
 }
 
 @media screen and (max-width: 1180px) {
     .categoryRight ul li {
-        width: 46.1%;
+        width: 27%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .categoryRight ul li {
+        width: 43%;
     }
 }
 
@@ -308,6 +328,15 @@
         font-size: 17px;
         margin: 120px 0;
     }
+
+
+
+    .categoryRight ul li {
+        width: 80%;
+        /*padding: 0;*/
+        margin: 20px;
+    }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -323,6 +352,11 @@
 
     .cell.categoryLeft, .cell.categoryRight{
         display: block;
+    }
+
+    .option > #slider {
+        width: 100% !important;
+        margin: 6px auto;
     }
 
     .cell.categoryLeft{
@@ -397,10 +431,12 @@
         opacity: 0;
     }
 
-
     .categoryRight ul li {
-        width: 80%;
-        padding: 0;
-        margin: 0px auto;
+        margin: 30px auto;
+        padding: 20px 40px;
     }
+
+    .categoryRight ul li .imgProduct{
+    }
+
 }

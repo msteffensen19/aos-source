@@ -1,5 +1,6 @@
 package com.advantage.catalog.store.config;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -13,6 +14,10 @@ import javax.servlet.ServletRegistration;
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
+        Logger logger = Logger.getLogger(this.getClass());
+        logger.info(" *********************************** \n" +
+                " ****** Catalog service start ****** \n" +
+                " *********************************** ");
         return new Class[]{
                 AppConfiguration.class,
                 DataSourceConfiguration.class,
@@ -20,8 +25,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 JpaConfiguration.class,
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
-                //EVG Split AppUserConfiguration.class,
-                //EVG Split AdvantageAspects.class,
                 ImageManagementConfiguration.class
                 //,SwaggerConfiguration.class //Because in this class added @Inject Environment
         };

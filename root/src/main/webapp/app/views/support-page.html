@@ -1,10 +1,154 @@
+<style>
+    section {
+        max-width: 800px;
+        height: 800px;
+        padding: 50px;
+        border: solid #dcfef7;
+        margin: 0 auto;
+    }
+</style>
+
+
+<section>
+    <article>
+
+        <sec-form>
+
+            <!--a-type="password"-->
+
+            </sec-view>
+
+
+            <sec-view
+                    a-hint="Username"
+                    a-type="select"
+                    a-show="name"
+                    sec-require="require"
+                    sec-model="model"
+                    sec-select-options="countries"
+            >
+            </sec-view>
+
+
+            <sec-view
+                    a-hint="First name"
+                    sec-model="model2"
+
+                    sec-is-field-valid="isFieldValid(valid)"
+                    sec-require="require"
+                    sec-min-length="minLength"
+                    sec-max-length="maxLength"
+                    sec-pattern="email"
+            >
+            </sec-view>
+
+
+            <!--a-dont-change="true"-->
+            <sec-view
+                    a-type="checkbox"
+                    sec-require="checkboxRequire"
+                    sec-model="model30"
+            ></sec-view>
+
+            <sec-sender a-value="SEND" sec-send="isSended(param)"></sec-sender>
+
+            <sec-sender a-value="Lock" sec-send="isSended(param)"></sec-sender>
+
+
+        </sec-form>
+
+        <!--<sec-input-validation-->
+        <!--a-hint="Second Username"-->
+        <!--sec-model="model2"-->
+        <!--sec-require="require"-->
+        <!--sec-compare-to="compareTo"-->
+        <!--s-model-compare-to="model"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+
+        <!--<sec-input-validation-->
+        <!--a-hint="Username"-->
+        <!--sec-model="model7"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+
+        <!--<sec-input-validation-->
+        <!--a-hint="Username"-->
+        <!--sec-model="model8"-->
+        <!--sec-is-field-valid="isFieldValid(valid)"-->
+        <!--sec-require="require"-->
+        <!--sec-min-length="minLength"-->
+        <!--sec-max-length="maxLength"-->
+        <!--sec-pattern="email"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+        <!--<sec-input-validation-->
+        <!--a-hint="Username"-->
+        <!--sec-model="model9"-->
+        <!--sec-is-field-valid="isFieldValid(valid)"-->
+        <!--sec-require="require"-->
+        <!--sec-min-length="minLength"-->
+        <!--sec-max-length="maxLength"-->
+        <!--sec-pattern="email"-->
+        <!--&gt;-->
+        <!--</sec-input-validation>-->
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <input type="text" data-ng-model="model2">
+
+    </article>
+</section>
+
+
+<!--
+<a class="must" ng-show="warnings.length > 0 && !noRedStar">*</a>
+
+<label class="validate-label"
+       ng-class="{ validateInvalid : !textToShow.valid}"
+       ng-click="validateLabelClicked(id)">
+    {{textToShow.text}}
+</label>
+
+<input type="{{inputType}}" name="{{id}}" autocapitalize="off"
+       autocomplete="off" autocorrect="off" class="inputtext"
+       data-ng-class="{ validateInvalid : !textToShow.valid }"
+       data-ng-hide="inputType == 'transclude'"
+       data-ng-model="modelAttr"
+       data-ng-focus="inputFocus(id)"
+       data-ng-blur="inputBlur(id)"
+       data-ng-keyup="inputKeyup(id)"
+       id="secInput_{{id}}"/>
+
+<div ng-transclude data-ng-show="inputType == 'transclude'"></div>
+
+<div class="validate-info" ng-show="warnings.length > 0 && !doNotShowInfo">
+    <ul>
+        <li data-ng-repeat="info in warnings" data-ng-show="info.info != '' && info.show">
+            <a>{{ info.info }}</a>
+        </li>
+    </ul>
+</div>
+-->
+
+
+<!--
 <nav class="pages">
     <a translate="HOME" href="#/"></a>
     <a class="select" translate="SUPPORT"> </a>
 </nav>
+
+
 <section>
     <article>
-        <!--<div data-ng-hide="supportSuccess">
+        <div data-ng-hide="supportSuccess">
             <h3 class="roboto-regular sticky fixedImportant fixed" translate="SUPPORT"></h3>
 
 
@@ -71,7 +215,7 @@
                 <a class="a-button" href="/"> {{ 'CONTINUE_SHOPPING' | translate}} </a>
             </div>
         </div>
--->
+
     </article>
 </section>
 
@@ -79,7 +223,7 @@
 <social-media-drtv></social-media-drtv>
 
 
-
+        -->
 
 
 

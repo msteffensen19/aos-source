@@ -1,12 +1,12 @@
 package com.advantage.order.store.services;
 
 //import com.advantage.order.store.order.dto.OrderPurchaseRequest;
+
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.ColorAttributeDto;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.ProductDto;
-import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.ShoppingCartDto;
 import com.advantage.order.store.dto.ShoppingCartResponse;
@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
-import org.apache.log4j.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,7 @@ public class ShoppingCartService {
 
     private static final String CATALOG_PRODUCT = "products/";
     private static final String DEMO_APP_CONFIG_BY_PARAMETER_NAME = "DemoAppConfig/parameters/";    //  Show_error_500_in_update_cart
-    private static final Logger LOGGER = Logger.getLogger(ShoppingCartService.class);
+    private static final Logger logger = Logger.getLogger(ShoppingCartService.class);
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -126,34 +126,37 @@ public class ShoppingCartService {
     }
 
     private String getDemoAppConfigParameterValue(String parameterName) {
-        URL productsPrefixUrl;
-        URL getDemoAppConfigByParameterName = null;
-
+        URL productsPrefixUrl = null;
         try {
             productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), DEMO_APP_CONFIG_BY_PARAMETER_NAME);
-            getDemoAppConfigByParameterName = new URL(productsPrefixUrl, parameterName);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error(productsPrefixUrl, e);
         }
 
-        System.out.println("stringURL=\"" + getDemoAppConfigByParameterName.toString() + "\"");
+        URL getDemoAppConfigByParameterName = null;
+        try {
+            getDemoAppConfigByParameterName = new URL(productsPrefixUrl, parameterName);
+        } catch (MalformedURLException e) {
+            logger.error(getDemoAppConfigByParameterName, e);
+        }
+
+        if (logger.isInfoEnabled()) {
+            logger.info("stringURL=\"" + getDemoAppConfigByParameterName.toString() + "\"");
+        }
 
         DemoAppConfigParameter demoAppConfigParameter = null;
         String parameterValue = null;
 
         try {
             String stringResponse = httpGet(getDemoAppConfigByParameterName);
-            System.out.println("stringResponse = \"" + stringResponse + "\"");
-
-            if (! stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
+            if (!stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 demoAppConfigParameter = getConfigParameterValueFromJsonObjectString(stringResponse);
                 if (demoAppConfigParameter != null) {
                     parameterValue = demoAppConfigParameter.getParameterValue();
                 }
             }
         } catch (IOException e) {
-            System.out.println("Calling httpGet(\"" + getDemoAppConfigByParameterName.toString() + "\") throws IOException: ");
-            e.printStackTrace();
+            logger.error("Calling httpGet(\"" + getDemoAppConfigByParameterName.toString() + "\") throws IOException: ", e);
         }
 
         return parameterValue;
@@ -169,12 +172,12 @@ public class ShoppingCartService {
      */
     public ShoppingCartResponse updateProductInCart(long userId, Long productId, String hexColor, String hexColorNew, int quantity) {
 
-        if (((! ValidationHelper.isValidColorHexNumber(hexColor)) ||
-                (! ValidationHelper.isValidColorHexNumber(hexColorNew)) ||
+        if (((!ValidationHelper.isValidColorHexNumber(hexColor)) ||
+                (!ValidationHelper.isValidColorHexNumber(hexColorNew)) ||
                 (hexColor.equalsIgnoreCase(hexColorNew))) && (quantity < 0)) {
             return new ShoppingCartResponse(false,
-                                            "Error: Bad request, Nothing to do",
-                                            productId);
+                    "Error: Bad request, Nothing to do",
+                    productId);
         }
 
         ShoppingCartResponse shoppingCartResponse = null;
@@ -182,10 +185,11 @@ public class ShoppingCartService {
         //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
 
         String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
-        LOGGER.info("Updating product " + productId + " in cart.");
-        LOGGER.info("Updating product details with color: " + ((hexColorNew.equals("-1"))? ColorPalletEnum.getColorByCode(hexColor).toString().toLowerCase() : ColorPalletEnum.getColorByCode(hexColorNew).toString().toLowerCase()) + " and quantity: " + quantity + ".");
-        LOGGER.info("Verifying that updated product is available at vendor shop.");
-        if (parameterValue.equalsIgnoreCase("No")) {
+//        LOGGER.info("Updating product " + productId + " in cart.");
+//        LOGGER.info("Updating product details with color: " + ((hexColorNew.equals("-1"))? ColorPalletEnum.getColorByCode(hexColor).toString().toLowerCase() : ColorPalletEnum.getColorByCode(hexColorNew).toString().toLowerCase()) + " and quantity: " + quantity + ".");
+//        LOGGER.info("Verifying that updated product is available at vendor shop.");
+//        if (parameterValue.equalsIgnoreCase("No")) {
+        if ((parameterValue == null) || (parameterValue.equalsIgnoreCase("No"))) {
 
             int color = ShoppingCart.convertHexColorToInt(hexColor);
 
@@ -234,12 +238,10 @@ public class ShoppingCartService {
                 shoppingCartResponse.setId(productId);
             }
         } else if (parameterValue.equalsIgnoreCase("Yes")) {
-			//simulate error 500
-            RuntimeException re = new RuntimeException("Failed to update product in cart.");            
-            LOGGER.error("Internal Server Error. Failed to update product in cart.", re);
-            throw re;
+//			//simulate error 500
+            logger.error("A problem occurred while updating cart.");
+            throw new RuntimeException("A problem occurred while updating cart.");
         }
-
 
         return shoppingCartResponse;
     }
@@ -274,6 +276,7 @@ public class ShoppingCartService {
      * Verify the quantity of each product in user cart exists in stock. If quantity
      * in user cart is greater than the quantity in stock than add the product with
      * the quantity in stock to {@link ShoppingCartResponseDto} {@code Response} JSON. <br/>
+     *
      * @param userId               Unique user identity.
      * @param shoppingCartProducts {@link List} of {@link ShoppingCartDto} products in user cart to verify quantities.
      * @return {@code null} when all quantities of the products in the user cart <b>are equal or Less than</b> the quantities in
@@ -282,9 +285,7 @@ public class ShoppingCartService {
      */
     @Transactional
     public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
-        System.out.println("ShoppingCartService -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
-
-        System.out.println("DefaultShoppingCartRepository -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
+        logger.info("ShoppingCartService -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
 
         /*
         //  Verify userId belongs to a registered user by calling "Account Service"
@@ -315,7 +316,7 @@ public class ShoppingCartService {
                 } else {
                     //  Unlikely to occur, since we already got the product details and compare its
                     //  quantity in stock to the same product in cart. But, still need to be covered.
-                    System.out.println("Product \"" + cartProductDto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
+                    logger.warn("Product \"" + cartProductDto.getProductName() + "\" exists in table and in user " + userId + " cart, but cannot be found using primary-key.");
                 }
 
                 responseDto.addCartProduct(cartProductDto.getProductId(),
@@ -335,23 +336,24 @@ public class ShoppingCartService {
     }
 
     public ProductDto getProductDtoDetails(Long productId) {
-        URL productsPrefixUrl;
+        URL productsPrefixUrl = null;
         URL productByIdUrl = null;
         try {
             productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), CATALOG_PRODUCT);
-            productByIdUrl = new URL(productsPrefixUrl, String.valueOf(productId));
+            logger.debug("productsPrefixUrl=" + productsPrefixUrl.toString());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error(productsPrefixUrl, e);
+        }
+        try {
+            productByIdUrl = new URL(productsPrefixUrl, String.valueOf(productId));
+            logger.debug("productByIdUrl=" + productByIdUrl.toString());
+        } catch (MalformedURLException e) {
+            logger.error(productByIdUrl, e);
         }
 
-        System.out.println("stringURL=\"" + productByIdUrl.toString() + "\"");
-
         ProductDto dto = null;
-
         try {
             String stringResponse = httpGet(productByIdUrl);
-            System.out.println("stringResponse = \"" + stringResponse + "\"");
-
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
                 dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
@@ -359,8 +361,7 @@ public class ShoppingCartService {
                 dto = getProductDtofromJsonObjectString(stringResponse);
             }
         } catch (IOException e) {
-            System.out.println("Calling httpGet(\"" + productByIdUrl.toString() + "\") throws IOException: ");
-            e.printStackTrace();
+            logger.error("Calling httpGet(" + productByIdUrl.toString() + ") throws IOException: ", e);
         }
 
         return dto;
@@ -378,7 +379,6 @@ public class ShoppingCartService {
     }
 
     public ShoppingCartResponseDto getCartProductsDetails(long userId, List<ShoppingCart> shoppingCarts) {
-
         /*
         //  Verify userId belongs to a registered user by calling "Account Service"
         //  REST API GET REQUEST using URI
@@ -441,6 +441,7 @@ public class ShoppingCartService {
 
     /**
      * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
+     *
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
@@ -467,14 +468,17 @@ public class ShoppingCartService {
                             colorAttrib.getName().toUpperCase(),
                             colorAttrib.getInStock());
 
-                    System.out.println("Received Product information: ");
-                    System.out.println("   product id = " + dto.getProductId());
-                    System.out.println("   product name = " + dto.getProductName());
-                    System.out.println("   price per item = " + dto.getPrice());
-                    System.out.println("   managedImageId = \"" + dto.getImageUrl() + "\"");
-                    System.out.println("   ColorAttrubute.Code (hex) = \'" + colorAttrib.getCode().toUpperCase() + "\'");
-                    System.out.println("   ColorAttrubute.Color (name) = \"" + colorAttrib.getName().toUpperCase() + "\"");
-                    System.out.println("   ColorAttrubute.inStock = " + colorAttrib.getInStock());
+                    if (logger.isDebugEnabled()) {
+                        StringBuilder sb = new StringBuilder("Received Product information: ");
+                        sb.append("\n   product id = ").append(dto.getProductId());
+                        sb.append("\n   product name = ").append(dto.getProductName());
+                        sb.append("\n   price per item = ").append(dto.getPrice());
+                        sb.append("\n   managedImageId = \"").append(dto.getImageUrl()).append("\"");
+                        sb.append("\n   ColorAttrubute.Code (hex) = \'").append(colorAttrib.getCode().toUpperCase()).append("\'");
+                        sb.append("\n   ColorAttrubute.Color (name) = \"").append(colorAttrib.getName().toUpperCase()).append("\"");
+                        sb.append("\n   ColorAttrubute.inStock = ").append(colorAttrib.getInStock());
+                        logger.debug(sb);
+                    }
                 } else {
                     //  Product with specific color NOT FOUND in Product table in CATALOG schema
                     cartProduct = setNotFoundCartProduct(productId);
@@ -502,6 +506,8 @@ public class ShoppingCartService {
                     returnColor = color;
                 }
             }
+        } else {
+            logger.warn("Colors list is empty");
         }
 
         return returnColor;
@@ -509,7 +515,6 @@ public class ShoppingCartService {
 
     public static String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
         int responseCode = conn.getResponseCode();
 
         String returnValue;
@@ -527,37 +532,32 @@ public class ShoppingCartService {
 
                 bufferedReader.close();
                 returnValue = sb.toString();
+                logger.debug(returnValue);
                 break;
             }
             case HttpStatus.SC_CONFLICT:
                 //  Product not found
                 returnValue = "Not found";
+                logger.warn("Product not found");
                 break;
-
             default:
-                System.out.println("httpGet -> responseCode=" + responseCode);
-                throw new IOException(conn.getResponseMessage());
+                IOException e = new IOException(conn.getResponseMessage());
+                logger.error("httpGet -> responseCode=" + responseCode, e);
+                throw e;
         }
-
         conn.disconnect();
-
         return returnValue;
     }
 
     private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
-
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
-
         return dto;
     }
 
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
-        return new ShoppingCartResponseDto()
-                .createCartProduct(productId, Constants.NOT_FOUND, -999999.99, 0, Constants.NOT_FOUND, false);
+        return new ShoppingCartResponseDto().createCartProduct(productId, Constants.NOT_FOUND, -999999.99, 0, Constants.NOT_FOUND, false);
     }
 
     public boolean isProductExists(Long productId, String hexColor) {
@@ -576,5 +576,11 @@ public class ShoppingCartService {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "ShoppingCartService{" +
+                "shoppingCartRepository=" + shoppingCartRepository +
+                '}';
+    }
 }
 

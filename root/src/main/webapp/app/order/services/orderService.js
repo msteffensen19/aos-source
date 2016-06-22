@@ -20,7 +20,7 @@ define(['./module'], function (services) {
                 getShippingCost: getShippingCost,
                 SafePay: SafePay,
                 accountUpdate: accountUpdate,
-                userIsLogin: userIsLogin
+                userIsLogin: userIsLogin,
             });
 
             function userIsLogin() {
@@ -70,30 +70,26 @@ define(['./module'], function (services) {
                     },
                     "purchasedProducts": purchasedProducts,
                 }
-
                 Loger.Params(paramsToPass, server.order.safePay(user.id));
-
                 Helper.enableLoader();
-                $timeout(function () {
-                    $http({
-                        method: "post",
-                        url: server.order.safePay(user.id),
-                        data: paramsToPass,
-                        headers: {
-                            "content-type": "application/json",
-                            "Authorization": "Bearer " + $rootScope.userCookie.response.token,
-                        },
-                    }).
-                    then(function (res) {
-                        Helper.disableLoader();
-                        Loger.Received(res);
-                        defer.resolve(res.data)
-                    }, function (err) {
-                        Helper.disableLoader();
-                        Loger.Received(err);
-                        defer.reject("probl.")
-                    })
-                }, Helper.defaultTimeLoaderToEnable);
+                $http({
+                    method: "post",
+                    url: server.order.safePay(user.id),
+                    data: paramsToPass,
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": "Bearer " + $rootScope.userCookie.response.token,
+                    },
+                }).
+                then(function (res) {
+                    Helper.disableLoader();
+                    Loger.Received(res);
+                    defer.resolve(res.data)
+                }, function (err) {
+                    Helper.disableLoader();
+                    Loger.Received(err);
+                    defer.reject(JSON.stringify(err))
+                })
                 return defer.promise;
             }
 
@@ -120,23 +116,21 @@ define(['./module'], function (services) {
                 var params = server.order.accountUpdate();
 
                 Helper.enableLoader();
-                $timeout(function () {
-                    mini_soap.post(params.path, params.method, paramsToPass).
-                    then(function (res) {
-                            Loger.Received(res);
-                            Helper.disableLoader();
-                            defer.resolve({
-                                success: res.SUCCESS,
-                                userId: res.USERID,
-                                reason: res.REASON,
-                            });
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
+                mini_soap.post(params.path, params.method, paramsToPass).
+                then(function (res) {
+                        Loger.Received(res);
+                        Helper.disableLoader();
+                        defer.resolve({
+                            success: res.SUCCESS,
+                            userId: res.USERID,
+                            reason: res.REASON,
                         });
-                }, Helper.defaultTimeLoaderToEnable);
+                    },
+                    function (response) {
+                        Loger.Received(response);
+                        Helper.disableLoader();
+                        defer.reject("Request failed! ");
+                    });
 
                 return defer.promise;
             }
@@ -149,36 +143,34 @@ define(['./module'], function (services) {
 
                     var params = server.account.getAccountById();
                     Helper.enableLoader();
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, {
-                                accountId: user.response.userId
-                            })
-                            .then(function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    var user = {
-                                        "id": response.ID,
-                                        "lastName": response.LASTNAME,
-                                        "firstName": response.FIRSTNAME,
-                                        "loginName": response.LOGINNAME,
-                                        "countryId": response.COUNTRYID,
-                                        "country": response.COUNTRYISONAME,
-                                        "stateProvince": response.STATEPROVINCE,
-                                        "cityName": response.CITYNAME,
-                                        "address": response.ADDRESS,
-                                        "zipcode": response.ZIPCODE,
-                                        "phoneNumber": response.PHONENUMBER,
-                                        "email": response.EMAIL,
-                                        "allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
-                                    }
-                                    defer.resolve(user);
-                                },
-                                function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    defer.reject("Request failed! (getAccountById)");
-                                });
-                    }, Helper.defaultTimeLoaderToEnable);
+                    mini_soap.post(params.path, params.method, {
+                            accountId: user.response.userId
+                        })
+                        .then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                var user = {
+                                    "id": response.ID,
+                                    "lastName": response.LASTNAME,
+                                    "firstName": response.FIRSTNAME,
+                                    "loginName": response.LOGINNAME,
+                                    "countryId": response.COUNTRYID,
+                                    "country": response.COUNTRYISONAME,
+                                    "stateProvince": response.STATEPROVINCE,
+                                    "cityName": response.CITYNAME,
+                                    "address": response.ADDRESS,
+                                    "zipcode": response.ZIPCODE,
+                                    "phoneNumber": response.PHONENUMBER,
+                                    "email": response.EMAIL,
+                                    "allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
+                                }
+                                defer.resolve(user);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! (getAccountById)");
+                            });
                 }
                 else {
                     defer.resolve(null);
@@ -190,49 +182,53 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
 
-                if((user.firstName + user.lastName).replace(/\s/g, "").length < 1){
-                    defer.resolve(null);
-                }
-                else {
+                //if((user.firstName + user.lastName).replace(/\s/g, "").length < 1){
+                //    defer.resolve(null);
+                //}
 
-                    productsCartService.getCart().then(function (cart) {
+                productsCartService.getCart().then(function (cart) {
 
-                        var paramsToPass = {
-                            "seaddress": {
-                                "addressLine1": user.address,
-                                "addressLine2": "",
-                                "city": user.cityName,
-                                "country": user.country,
-                                "postalCode": user.zipcode,
-                                "state": user.stateProvince
-                            },
-                            "secustomerName": user.firstName + " " + user.lastName,
-                            "secustomerPhone": user.phoneNumber,
-                            "senumberOfProducts": $filter('productsCartCount')(cart),
-                            "setransactionType": "SHIPPINGCOST"
-                        };
+                    /// plaster
+                    if ((user.firstName + user.lastName).trim().length < 1) {
+                        user.firstName = $rootScope.userCookie.name;
+                    }
+                    /// end plaster
 
-                        Loger.Params(paramsToPass, server.order.getShippingCost());
+                    var paramsToPass = {
+                        "seaddress": {
+                            "addressLine1": user.address,
+                            "addressLine2": "",
+                            "city": user.cityName,
+                            "country": user.country,
+                            "postalCode": user.zipcode,
+                            "state": user.stateProvince
+                        },
+                        "secustomerName": user.firstName + " " + user.lastName,
+                        "secustomerPhone": user.phoneNumber,
+                        "senumberOfProducts": $filter('productsCartCount')(cart),
+                        "setransactionType": "SHIPPINGCOST"
+                    };
 
-                        Helper.enableLoader();
-                        $timeout(function () {
-                            $http({
-                                method: "post",
-                                url: server.order.getShippingCost(),
-                                data: paramsToPass
-                            }).
-                            then(function (shippingCost) {
-                                Loger.Received(shippingCost);
-                                Helper.disableLoader();
-                                defer.resolve(shippingCost.data)
-                            }, function (err) {
-                                Loger.Received(err);
-                                Helper.disableLoader();
-                                defer.reject("probl.")
-                            })
-                        }, Helper.defaultTimeLoaderToEnable);
+                    Loger.Params(paramsToPass, server.order.getShippingCost());
+
+                    Helper.enableLoader();
+                    $http({
+                        method: "post",
+                        url: server.order.getShippingCost(),
+                        data: paramsToPass,
+                    }).
+                    then(function (shippingCost) {
+
+                        Loger.Received(shippingCost);
+                        Helper.disableLoader();
+                        defer.resolve(shippingCost.data)
+                    }, function (err) {
+                        Loger.Received(err);
+                        Helper.disableLoader();
+                        defer.reject(JSON.stringify(err))
                     })
-                }
+                });
+
                 return defer.promise;
             }
         }]);

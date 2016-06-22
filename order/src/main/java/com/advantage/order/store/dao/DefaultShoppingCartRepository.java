@@ -301,4 +301,12 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
     public ShoppingCart get(Long entityId) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "DefaultShoppingCartRepository{" +
+                "shoppingCartResponse=" + shoppingCartResponse +
+                ", failureMessage='" + failureMessage + '\'' +
+                '}';
+    }
 }

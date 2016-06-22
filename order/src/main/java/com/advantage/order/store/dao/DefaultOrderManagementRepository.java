@@ -56,16 +56,16 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
 
         ArgumentValidationHelper.validateNumberArgumentIsPositive(orderShippingInformation.getNumberOfProducts(), "number of products");
         ArgumentValidationHelper.validateDoubleArgumentIsPositive(orderShippingInformation.getShippingCost(), "shipping cost");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getAddress(), "shipping address");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCity(), "shipping city");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getPostalCode(), "shipping postal code");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getState(), "shipping state");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCountryCode(), "shipping address");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getAddress(), "shipping address");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCity(), "shipping city");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getPostalCode(), "shipping postal code");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getState(), "shipping state");
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderShippingInformation.getCountryCode(), "shipping country");
 
         this.validatePaymentMethod(orderPaymentInformation.getPaymentMethod(), "payment method");
         this.validateTransactionType(StringHelper.toInitCap(orderPaymentInformation.getTransactionType()), "transaction type");
         ArgumentValidationHelper.validateLongArgumentIsPositive(orderPaymentInformation.getReferenceNumber(), "payment confirmation number");
-        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCustomerPhone(), "customer phone");
+        //ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCustomerPhone(), "customer phone");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getTransactionDate(), "transaction date");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getAccountNumber(), "account number");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(orderPaymentInformation.getCurrency(), "currency");

@@ -21,11 +21,22 @@ import javax.persistence.*;
                 "where " + OrderHeader.FIELD_USER_ID + " = :" + OrderHeader.PARAM_USER_ID +
                 " AND " + OrderHeader.FIELD_ORDER_NUMBER + " = :" + OrderHeader.PARAM_ORDER_NUMBER
         )
+        , @NamedQuery(
+        name = OrderHeader.QUERY_GET_All_ORDERS_HISTORY,
+        query = "select o from OrderHeader o "
+        )
+        , @NamedQuery(
+        name = OrderHeader.QUERY_GET_ORDER_BY_ORDER,
+        query = "select o from OrderHeader o " +
+                "where " + OrderHeader.FIELD_ORDER_NUMBER + " = :" + OrderHeader.PARAM_ORDER_NUMBER
+)
 })
 public class OrderHeader {
 
     public static final String QUERY_GET_ORDERS_BY_USER_ID = "orderHeader.getOrdersByUserId";
+    public static final String QUERY_GET_All_ORDERS_HISTORY = "orderHeader.getAllOrdersHistory";
     public static final String QUERY_GET_ORDER_BY_PK_COLUMNS = "orderHeader.getOrderByPkColumns";
+    public static final String QUERY_GET_ORDER_BY_ORDER = "orderHeader.getOrderByOrderID";
 
     public static final String FIELD_USER_ID = "user_id";
     public static final String FIELD_ORDER_NUMBER = "order_number";
@@ -34,6 +45,7 @@ public class OrderHeader {
 
     public static final String PARAM_USER_ID = "PARAM_USER_ID";
     public static final String PARAM_ORDER_NUMBER = "PARAM_ORDER_NUMBER";
+
 
     @Id
     @Column(name = FIELD_USER_ID)

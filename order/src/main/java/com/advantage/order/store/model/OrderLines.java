@@ -29,6 +29,14 @@ import javax.persistence.*;
                 " and " + OrderLines.FIELD_PRODUCT_ID + " = :" + OrderLines.PARAM_PRODUCT_ID +
                 " and " + OrderLines.FIELD_PRODUCT_COLOR + " = :" + OrderLines.PARAM_PRODUCT_COLOR
         )
+        , @NamedQuery(
+        name = OrderLines.QUERY_GET_ORDER_LINES_BY_ORDER,
+        //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(p.productName) like :pname"
+        query = "select o from OrderLines o " +
+                "where " + OrderLines.FIELD_ORDER_NUMBER + " = :onum"
+        /*query = "select o from OrderLines o " +
+                "where " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER*/
+)
 })
 public class OrderLines {
 
@@ -38,6 +46,9 @@ public class OrderLines {
     public static final String QUERY_GET_ORDER_LINES_BY_ORDER_PK = "OrderLines.getOrderLinesByOrderPK";
     /* Get all order lines of a specific product by product-id and product-color made by specific user-id   */
     public static final String QUERY_GET_ORDERS_LINES_BY_PRODUCT_PK = "OrderLines.getOrdersLinesByProductId";
+
+    /* Get all order lines of a specific order order-number  */
+    public static final String QUERY_GET_ORDER_LINES_BY_ORDER = "OrderLines.getOrderLinesByOrder";
 
     public static final String FIELD_USER_ID = "user_id";
     public static final String FIELD_ORDER_NUMBER = "order_number";

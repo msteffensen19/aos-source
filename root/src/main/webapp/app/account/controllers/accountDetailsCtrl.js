@@ -20,6 +20,9 @@ define(['./module'], function (controllers) {
             s.accountDetailsAnswer = {message: '', class: 'invalid'}
             s.saveAccountDetails = function () {
 
+                s.accountDetails.countryId = s.country.id;
+                s.accountDetails.countryIsoName = s.country.isoName;
+                s.accountDetails.countryName = s.country.name;
                 accountService.changeUserPassword(s.accountDetails.id, s.passwords)
                     .then(function (changeUserPasswordRes) {
                         if (changeUserPasswordRes && changeUserPasswordRes.SUCCESS == 'true') {
@@ -64,12 +67,6 @@ define(['./module'], function (controllers) {
                 new: '',
                 old: '',
                 confirm_new: '',
-            }
-
-            s.countryChange = function (country) {
-                s.accountDetails.countryId = country.id;
-                s.accountDetails.countryIsoName = country.isoName;
-                s.accountDetails.countryName = country.name;
             }
 
             s.slideToggle = function (id) {

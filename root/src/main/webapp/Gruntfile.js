@@ -37,13 +37,13 @@ module.exports = function (grunt) {
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/css',
                         ext: '.min.css'
-                    },{
+                    }, {
                         expand: true,
                         cwd: 'app/user/css',
                         src: ['*.css', '!*.min.css'],
                         dest: 'target/app/user/css',
                         ext: '.min.css'
-                    },{
+                    }, {
                         expand: true,
                         cwd: 'app/order/css',
                         src: ['*.css', '!*.min.css'],
@@ -58,7 +58,8 @@ module.exports = function (grunt) {
                 files: [
                     // includes files within path
                     {
-                        expand: true, src: ['css/fonts/*', 'css/images/*', '!css/*.css'],
+                        expand: true,
+                        src: ['css/fonts/*', 'css/images/*', '!css/*.css'],
                         dest: 'target',
                         filter: 'isFile'
                     },
@@ -75,7 +76,29 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
-                        src: ['index.html', 'app/tempFiles/popularProducts.json'],
+                        src: ['index.html',
+                            'app/tempFiles/popularProducts.json',
+                            'css/fonts/roboto_thin_macroman/Roboto-Thin-webfont.eot',
+                            'css/fonts/roboto_thin_macroman/Roboto-Thin-webfont.svg',
+                            'css/fonts/roboto_thin_macroman/Roboto-Thin-webfont.ttf',
+                            'css/fonts/roboto_thin_macroman/Roboto-Thin-webfont.woff',
+                            'css/fonts/roboto_light_macroman/Roboto-Light-webfont.eot',
+                            'css/fonts/roboto_light_macroman/Roboto-Light-webfont.svg',
+                            'css/fonts/roboto_light_macroman/Roboto-Light-webfont.ttf',
+                            'css/fonts/roboto_light_macroman/Roboto-Light-webfont.woff',
+                            'css/fonts/roboto_regular_macroman/Roboto-Regular-webfont.eot',
+                            'css/fonts/roboto_regular_macroman/Roboto-Regular-webfont.svg',
+                            'css/fonts/roboto_regular_macroman/Roboto-Regular-webfont.ttf',
+                            'css/fonts/roboto_regular_macroman/Roboto-Regular-webfont.woff',
+                            'css/fonts/roboto_medium_macroman/Roboto-Medium-webfont.eot',
+                            'css/fonts/roboto_medium_macroman/Roboto-Medium-webfont.svg',
+                            'css/fonts/roboto_medium_macroman/Roboto-Medium-webfont.ttf',
+                            'css/fonts/roboto_medium_macroman/Roboto-Medium-webfont.woff',
+                            'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.eot',
+                            'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg',
+                            'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf',
+                            'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff',
+                        ],
                         dest: 'target',
                         filter: 'isFile'
                     },
@@ -127,7 +150,7 @@ module.exports = function (grunt) {
         watch: {
             scripts: {
                 files: ['app/**/*.html'],
-                tasks: ['ngTemplatesBuild'],
+                tasks: ['ngTemplatesBuild', 'ngt'],
                 options: {
                     spawn: false
                 }
@@ -139,6 +162,10 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['clean', 'ngtemplates', 'requirejs', 'copy', 'regex-replace', 'usemin', 'cssmin']);
     grunt.registerTask('dev', ['clean', 'ngtemplates']);
     grunt.registerTask('ngTemplatesBuild', ['ngtemplates']);
+    grunt.registerTask('ngt', ['ngtemplates']);
     grunt.registerTask('useminTest', ['copy', 'regex-replace', 'usemin']);
 
 };
+
+
+//'app/SECORRENTI/sec-input/views/sec-input-validation.html',

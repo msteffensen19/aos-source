@@ -117,6 +117,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             if (ValidationHelper.isValidPassword(password)) {
                 if (validatePhoneNumberAndEmail(phoneNumber, email)) {
                     if (getAppUserByLogin(loginName) == null) {
+
+                        //Moti Ostrovski: if not set countryID or equals 0=> set country USA
+                        countryId = countryId==0 ? 40: countryId;
                         Country country = countryRepository.get(countryId);
                         Account account = null;
                         try {
@@ -133,8 +136,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                         return account;
                     } else {
                         //  User with this login already exists
-                        this.failureMessage = "User with this login already exists";
-                        accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, -1);
+                        this.failureMessage = "User name already exists";
+                        accountStatusResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_NAME_ALREAY_EXISTS, -1);
                         return null;
 
                     }
@@ -171,6 +174,16 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         Account account = get(accountId);
 
+        //Moti add validation fields
+        ArgumentValidationHelper.lastFirstNameValidation(lastName);
+        ArgumentValidationHelper.lastFirstNameValidation(firstName);
+        ArgumentValidationHelper.sityValidation(cityName);
+        ArgumentValidationHelper.stateValidation(stateProvince);
+        ArgumentValidationHelper.addressValidation(address);
+        ArgumentValidationHelper.zipCodeValidation(zipcode);
+
+
+
         if (account == null) {
             return new AccountStatusResponse(false, "Invalid login user-name", -1);
         }
@@ -181,6 +194,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     account.getId());
         }
 
+        //Moti Ostrovski: if not set countryID or equals 0=> set country USA
+        countryId = countryId==0 ? 40: countryId;
         Country country = countryRepository.get(countryId);
 
         account.setAccountType(accountType);
@@ -207,6 +222,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                                         String password, Long countryId, String phoneNumber, String stateProvince,
                                         String cityName, String address, String zipcode, String email,
                                         boolean allowOffersPromotion) {
+        //Moti add validation fields
+        ArgumentValidationHelper.lastFirstNameValidation(lastName);
+        ArgumentValidationHelper.lastFirstNameValidation(firstName);
+        ArgumentValidationHelper.sityValidation(cityName);
+        ArgumentValidationHelper.stateValidation(stateProvince);
+        ArgumentValidationHelper.addressValidation(address);
+        ArgumentValidationHelper.zipCodeValidation(zipcode);
         Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber,
                 stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
