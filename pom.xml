@@ -48,7 +48,8 @@
         <jackson.version>2.4.5</jackson.version>
         <modelmapper.version>0.7.3</modelmapper.version>
         <springfox.version>2.0.3</springfox.version>
-        <postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>
+        <!--<postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>-->
+        <postgres.driver.version>9.4.1208</postgres.driver.version>
         <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
         <plugin.maven.compiler.version>3.3</plugin.maven.compiler.version>
         <plugin.maven.war.version>2.6</plugin.maven.war.version>
@@ -471,11 +472,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--<dependency>-->
-            <!--<groupId>org.liquibase.ext</groupId>-->
-            <!--<artifactId>liquibase-hibernate4.2</artifactId>-->
-            <!--<version>3.5</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.liquibase.ext</groupId>
                 <artifactId>liquibase-postgresql</artifactId>
@@ -753,10 +749,6 @@
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-hibernate4</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.liquibase.ext</groupId>-->
-        <!--<artifactId>liquibase-hibernate4.2</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-postgresql</artifactId>
