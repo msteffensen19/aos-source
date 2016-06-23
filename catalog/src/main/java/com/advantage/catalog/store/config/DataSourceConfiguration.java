@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.config;
 
 import com.advantage.catalog.store.init.DataSourceInitByJson;
+import com.advantage.common.SystemParameters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +19,6 @@ public class DataSourceConfiguration extends com.advantage.common.config.DataSou
 
     @Bean(initMethod = "init")
     public DataSourceInitByJson init() {
-
         return new DataSourceInitByJson();
     }
 

@@ -1,6 +1,8 @@
 package com.advantage.common.config;
 
 import com.advantage.common.Constants;
+import com.advantage.common.SystemParameters;
+import com.advantage.common.utils.LoggerUtils;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
@@ -22,69 +24,76 @@ public abstract class DataSourceCommonConfiguration {
     private Logger logger;
 
     @Autowired
-    private Environment environment;
+    protected Environment environment;
 
     public DataSourceCommonConfiguration(String propertyPrefix) {
         logger = Logger.getLogger(DataSourceCommonConfiguration.class);
         this.propertyPrefix = propertyPrefix;
     }
 
-    @Bean //TODO-EVG apply changelog
+    @Bean//Apply changelog
     public SpringLiquibase liquibase() {
-        logger.debug("Start LIQUIBASE Bean");
-        if (logger.isTraceEnabled()) {
-            StringBuilder sb = new StringBuilder("Read properties").append(System.lineSeparator());
-            sb.append(logParam(environment, "liquibase.properties.description"));
-            sb.append(logParam(environment, "liquibase.file.changelog"));
-            sb.append(logParam(environment, "liquibase.diffTypes"));
-            sb.append(logParam(environment, "liquibase.dropFirst"));
-            sb.append(logParam(environment, "hibernate.format_sql"));
-            sb.append(logParam(environment, "hibernate.show_sql"));
-            logger.debug(sb.toString());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Start LIQUIBASE Bean");
+            logger.debug(LoggerUtils.logEnvParam(environment, propertyPrefix + "hibernate.db.hbm2ddlAuto"));
         }
-        SpringLiquibase liquibase = new SpringLiquibase();
-        try {
-            DataSource dataSource = dataSource();
-            //liquibase.setDropFirst();
-            liquibase.setDataSource(dataSource);
-            liquibase.setIgnoreClasspathPrefix(true);
-            logger.debug("liquibase.setIgnoreClasspathPrefix(true)");
-            liquibase.setChangeLog("classpath:" + environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
-            liquibase.setDropFirst(Boolean.parseBoolean(environment.getProperty("liquibase.dropFirst")));
-            logger.debug(dataSource);
-
-            if (logger.isDebugEnabled()) {
-                String databaseProductName = liquibase.getDatabaseProductName();
-                boolean dropFirst = liquibase.isDropFirst();
-                //liquibase.afterPropertiesSet();
-                String tag = liquibase.getTag();
-                String contexts = liquibase.getContexts();
-                String beanName = liquibase.getBeanName();
-                String labels = liquibase.getLabels();
-                String defaultSchema = liquibase.getDefaultSchema();
-                String catalog = liquibase.getDataSource().getConnection().getCatalog();
-
-                StringBuilder sb = new StringBuilder("SpringLiquibase object").append(System.lineSeparator());
-                sb.append("liquibase.dropFirst = ").append(dropFirst).append(System.lineSeparator());
-                sb.append("Set changelog file = classpath:").append(environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME)).append(System.lineSeparator());
-                sb.append("liquibase.databaseProductName = ").append(databaseProductName).append(System.lineSeparator());
-                sb.append("liquibase.getDataSource().getConnection().getCatalog() = ").append(catalog).append(System.lineSeparator());
-                sb.append("liquibase.tag = ").append(tag).append(System.lineSeparator());
-                sb.append("liquibase.contexts = ").append(contexts == null ? "null" : contexts).append(System.lineSeparator());
-                sb.append("liquibase.beanName = ").append(beanName).append(System.lineSeparator());
-                sb.append("liquibase.labels = ").append(labels).append(System.lineSeparator());
-                sb.append("liquibase.defaultSchema = ").append(defaultSchema).append(System.lineSeparator());
+        if (SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty(propertyPrefix + "hibernate.db.hbm2ddlAuto")).equals("validate")) {
+            logger.debug("Run LIQUIBASE Bean");
+            if (logger.isTraceEnabled()) {
+                StringBuilder sb = new StringBuilder("Read properties").append(System.lineSeparator());
+                sb.append(LoggerUtils.logEnvParam(environment, "liquibase.properties.description"));
+                sb.append(LoggerUtils.logEnvParam(environment, "liquibase.file.changelog"));
+//            sb.append(logEnvParam(environment, "liquibase.diffTypes"));
+                sb.append(LoggerUtils.logEnvParam(environment, "liquibase.dropFirst"));
+                sb.append(LoggerUtils.logEnvParam(environment, "hibernate.format_sql"));
+                sb.append(LoggerUtils.logEnvParam(environment, "hibernate.show_sql"));
                 logger.debug(sb.toString());
-
             }
-        } catch (SQLException e) {
-            logger.error(e);
-        } catch (DatabaseException e) {
-            logger.error(e);
-        } catch (LiquibaseException e) {
-            logger.error(e);
+            SpringLiquibase liquibase = new SpringLiquibase();
+            try {
+                DataSource dataSource = dataSource();
+                //liquibase.setDropFirst();
+                liquibase.setDataSource(dataSource);
+                liquibase.setIgnoreClasspathPrefix(true);
+                logger.debug("liquibase.setIgnoreClasspathPrefix(true)");
+                liquibase.setChangeLog("classpath:" + environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME));
+                liquibase.setDropFirst(Boolean.parseBoolean(environment.getProperty("liquibase.dropFirst")));
+                logger.debug(dataSource);
+
+                if (logger.isDebugEnabled()) {
+                    String databaseProductName = liquibase.getDatabaseProductName();
+                    boolean dropFirst = liquibase.isDropFirst();
+                    //liquibase.afterPropertiesSet();
+                    String tag = liquibase.getTag();
+                    String contexts = liquibase.getContexts();
+                    String beanName = liquibase.getBeanName();
+                    String labels = liquibase.getLabels();
+                    String defaultSchema = liquibase.getDefaultSchema();
+                    String catalog = liquibase.getDataSource().getConnection().getCatalog();
+
+                    StringBuilder sb = new StringBuilder("SpringLiquibase object").append(System.lineSeparator());
+                    sb.append("liquibase.dropFirst = ").append(dropFirst).append(System.lineSeparator());
+                    sb.append("Set changelog file = classpath:").append(environment.getProperty(Constants.ENV_LIQUIBASE_FILE_CHANGELOG_PARAMNAME)).append(System.lineSeparator());
+                    sb.append("liquibase.databaseProductName = ").append(databaseProductName).append(System.lineSeparator());
+                    sb.append("liquibase.getDataSource().getConnection().getCatalog() = ").append(catalog).append(System.lineSeparator());
+                    sb.append("liquibase.tag = ").append(tag).append(System.lineSeparator());
+                    sb.append("liquibase.contexts = ").append(contexts == null ? "null" : contexts).append(System.lineSeparator());
+                    sb.append("liquibase.beanName = ").append(beanName).append(System.lineSeparator());
+                    sb.append("liquibase.labels = ").append(labels).append(System.lineSeparator());
+                    sb.append("liquibase.defaultSchema = ").append(defaultSchema).append(System.lineSeparator());
+                    logger.debug(sb.toString());
+
+                }
+            } catch (SQLException e) {
+                logger.error(e);
+            } catch (DatabaseException e) {
+                logger.error(e);
+            } catch (LiquibaseException e) {
+                logger.error(e);
+            }
+            return liquibase;
         }
-        return liquibase;
+        return null;
     }
 
     @Bean
@@ -110,11 +119,4 @@ public abstract class DataSourceCommonConfiguration {
         return dataSource;
     }
 
-    private static String logParam(Environment environment, String s) {
-        if (environment == null) {
-            return "Environment is null\n";
-        } else {
-            return s + " = " + (environment.getProperty(s) == null ? "null" : environment.getProperty(s)) + System.lineSeparator();
-        }
-    }
 }
