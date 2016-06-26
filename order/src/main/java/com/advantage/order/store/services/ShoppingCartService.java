@@ -13,6 +13,7 @@ import com.advantage.order.store.dto.ShoppingCartResponse;
 import com.advantage.order.store.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.root.util.RestApiHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -148,7 +149,7 @@ public class ShoppingCartService {
         String parameterValue = null;
 
         try {
-            String stringResponse = httpGet(getDemoAppConfigByParameterName);
+            String stringResponse = RestApiHelper.httpGet(getDemoAppConfigByParameterName);
             if (!stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 demoAppConfigParameter = getConfigParameterValueFromJsonObjectString(stringResponse);
                 if (demoAppConfigParameter != null) {
@@ -287,14 +288,6 @@ public class ShoppingCartService {
     public ShoppingCartResponseDto verifyProductsQuantitiesInUserCart(long userId, List<ShoppingCartDto> shoppingCartProducts) {
         logger.info("ShoppingCartService -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
 
-        /*
-        //  Verify userId belongs to a registered user by calling "Account Service"
-        //  REST API GET REQUEST using URI
-        if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-            return null;
-        }
-         */
         ShoppingCartResponseDto responseDto = new ShoppingCartResponseDto(userId);
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
@@ -353,7 +346,7 @@ public class ShoppingCartService {
 
         ProductDto dto = null;
         try {
-            String stringResponse = httpGet(productByIdUrl);
+            String stringResponse = RestApiHelper.httpGet(productByIdUrl);
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
                 dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
@@ -513,41 +506,41 @@ public class ShoppingCartService {
         return returnColor;
     }
 
-    public static String httpGet(URL url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        int responseCode = conn.getResponseCode();
-
-        String returnValue;
-        switch (responseCode) {
-            case HttpStatus.SC_OK: {
-                // Buffer the result into a string
-                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(inputStream);
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-                returnValue = sb.toString();
-                logger.debug(returnValue);
-                break;
-            }
-            case HttpStatus.SC_CONFLICT:
-                //  Product not found
-                returnValue = "Not found";
-                logger.warn("Product not found");
-                break;
-            default:
-                IOException e = new IOException(conn.getResponseMessage());
-                logger.error("httpGet -> responseCode=" + responseCode, e);
-                throw e;
-        }
-        conn.disconnect();
-        return returnValue;
-    }
+//    public static String httpGet(URL url) throws IOException {
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//        int responseCode = conn.getResponseCode();
+//
+//        String returnValue;
+//        switch (responseCode) {
+//            case HttpStatus.SC_OK: {
+//                // Buffer the result into a string
+//                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+//                BufferedReader bufferedReader = new BufferedReader(inputStream);
+//                StringBuilder sb = new StringBuilder();
+//                String line;
+//
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    sb.append(line);
+//                }
+//
+//                bufferedReader.close();
+//                returnValue = sb.toString();
+//                logger.debug(returnValue);
+//                break;
+//            }
+//            case HttpStatus.SC_CONFLICT:
+//                //  Product not found
+//                returnValue = "Not found";
+//                logger.warn("Product not found");
+//                break;
+//            default:
+//                IOException e = new IOException(conn.getResponseMessage());
+//                logger.error("httpGet -> responseCode=" + responseCode, e);
+//                throw e;
+//        }
+//        conn.disconnect();
+//        return returnValue;
+//    }
 
     private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);

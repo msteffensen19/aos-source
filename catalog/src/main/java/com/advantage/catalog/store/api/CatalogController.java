@@ -2,6 +2,7 @@ package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
+import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
@@ -9,6 +10,8 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
+import com.advantage.common.security.AuthorizeAsUser;
+import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -25,10 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 /**
  * @author Binyamin Regev on 23/05/2016
@@ -231,14 +231,32 @@ public class CatalogController {
         return new ResponseEntity<>(responseStatus, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get color-attribute by product-id and color-code")
+    @RequestMapping(value = "/products/{product_id}/color/{color_code}", method = RequestMethod.GET)
+    public ResponseEntity<List<ColorAttributeDto>> getColorAttributeByProductIdAndColorCode(@PathVariable("product_id") Long productId,
+                                                                                            @PathVariable("color_code") String hexColor,
+                                                                                            HttpServletRequest request) {
+
+        List<ColorAttributeDto> colorAttributesDto  = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
+
+        return new ResponseEntity<>(colorAttributesDto, HttpStatus.OK);
+    }
+
     //  endregion
 
-    //  region /last update
+    //  region /LastUpdate
 
     @RequestMapping(value = "/catalog/LastUpdate/timestamp", method = RequestMethod.GET)
-    @ApiOperation(value = "Get Current Timestamp")
-    public ResponseEntity<Long> getTimestamp() {
-        return new ResponseEntity<>(new Date().getTime(), HttpStatus.OK);
+    @ApiOperation(value = "Get Timestamp (0 = Current Timestamp)")
+    public ResponseEntity<Long> getTimestamp(@RequestParam(value = "timestamp", defaultValue = "0", required = false) String timestamp,
+                                             @RequestParam(value = "date_format", defaultValue = "0", required = false) String dateFormat,
+                                             HttpServletRequest request) {
+
+        if ((timestamp == null) || (!timestamp.isEmpty()) || (Long.valueOf(timestamp).intValue() == 0)) {
+            return new ResponseEntity<>(Calendar.getInstance().getTime().getTime(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(StringHelper.convertStringToDate(timestamp, dateFormat).getTime(), HttpStatus.OK);
     }
 
     /**
@@ -274,7 +292,8 @@ public class CatalogController {
         }
 
         if (timestamp <= 0) {
-            timestamp = new Date().getTime();
+            Calendar calendar = Calendar.getInstance();
+            timestamp = calendar.getTime().getTime();;
         }
 
         LastUpdate lastUpdate = productService.createLastUpdate(lastUpdateName, timestamp);
@@ -282,12 +301,29 @@ public class CatalogController {
         return new ResponseEntity<>(lastUpdate, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/catalog/LastUpdate/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/catalog/LastUpdate/update/last_update_id/{last_update_id}/last_update_name/{last_update_name}", method = RequestMethod.PUT)
     @ApiOperation(value = "FOR DEV: Update Timestamp of an existing Last-Update")
-    public ResponseEntity<LastUpdate> updateLastUpdate(LastUpdate lastUpdateDto, long id) {
+    public ResponseEntity<LastUpdate> updateLastUpdate(@PathVariable("last_update_id") Long lastUpdateId,
+                                                       @PathVariable("last_update_name") String lastUpdateName,
+                                                       @RequestParam(value = "timestamp", defaultValue = "0", required = false) String timestamp,
+                                                       @RequestParam(value = "date_format", defaultValue = "0", required = false) String dateFormat,
+                                                       HttpServletRequest request) {
+
         HttpStatus httpStatus = HttpStatus.OK;
 
-        LastUpdate lastUpdate = productService.updateLastUpdate(lastUpdateDto, id);
+        if ((dateFormat == null) || (!dateFormat.isEmpty())) {
+            dateFormat = "yyyy.MM.dd.HH.mm.ss";
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        //long timeStamp = calendar.getTime().getTime();
+
+        if ((timestamp == null) || (!timestamp.isEmpty()) || (Long.valueOf(timestamp).intValue() == 0)) {
+            timestamp = StringHelper.convertDateToString(calendar.getTime(), dateFormat);
+        }
+
+        LastUpdate lastUpdate = productService.updateLastUpdate(new LastUpdate(lastUpdateName, StringHelper.convertStringToDate(timestamp, dateFormat).getTime()), lastUpdateId.longValue());
         if (lastUpdate == null) {
             httpStatus = HttpStatus.BAD_REQUEST;
         }

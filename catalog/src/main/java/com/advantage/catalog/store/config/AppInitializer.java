@@ -15,8 +15,9 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected Class<?>[] getRootConfigClasses() {
         Logger logger = Logger.getLogger(this.getClass());
-        //TODO-EVG Log test
-        logger.error("ERR EVG AppInitializer getRootConfigClasses");
+        logger.info(" *********************************** \n" +
+                " ****** Catalog service start ****** \n" +
+                " *********************************** ");
         return new Class[]{
                 AppConfiguration.class,
                 DataSourceConfiguration.class,
@@ -24,8 +25,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 JpaConfiguration.class,
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
-                //EVG Split AppUserConfiguration.class,
-                //EVG Split AdvantageAspects.class,
                 ImageManagementConfiguration.class
                 //,SwaggerConfiguration.class //Because in this class added @Inject Environment
         };

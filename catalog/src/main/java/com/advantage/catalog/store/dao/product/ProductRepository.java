@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
+import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.common.dto.CatalogResponse;
@@ -70,6 +71,8 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      * @return {@link List} collection of Products
      */
     List<Product> filterByName(String pattern);
+
+    List<ColorAttribute> getColorAttributeByProductIdAndColorCode(Long productId, String hexColor);
 
     CatalogResponse dbRestoreFactorySettings();
 

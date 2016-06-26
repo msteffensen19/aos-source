@@ -1,7 +1,5 @@
 package com.advantage.order.store.api;
 
-//import com.advantage.order.store.order.dto.OrderPurchaseRequest;
-
 import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
@@ -12,6 +10,7 @@ import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
 import com.advantage.order.store.services.ShoppingCartService;
+import com.advantage.root.util.RestApiHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -25,10 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -354,7 +350,7 @@ public class OrderController{
         DemoAppConfigParameter parameter = null;
 
         try {
-            String stringResponse = httpGet(parameterByNameUrl);
+            String stringResponse = RestApiHelper.httpGet(parameterByNameUrl);
             System.out.println("stringResponse = \"" + stringResponse + "\"");
 
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
@@ -390,44 +386,43 @@ public class OrderController{
         return parameter;
     }
 
-    //get serialized DemoAppConfig parameter from REST
-    private  String httpGet(URL url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        int responseCode = conn.getResponseCode();
-
-        String returnValue;
-        switch (responseCode) {
-            case org.apache.http.HttpStatus.SC_OK: {
-                // Buffer the result into a string
-                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(inputStream);
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-                returnValue = sb.toString();
-                break;
-            }
-            case org.apache.http.HttpStatus.SC_CONFLICT:
-                //  Product not found
-                returnValue = "Not found";
-                break;
-
-            default:
-                System.out.println("httpGet -> responseCode=" + responseCode);
-                throw new IOException(conn.getResponseMessage());
-        }
-
-        conn.disconnect();
-
-        return returnValue;
-    }
-
+//    //get serialized DemoAppConfig parameter from REST
+//    private  String httpGet(URL url) throws IOException {
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//
+//        int responseCode = conn.getResponseCode();
+//
+//        String returnValue;
+//        switch (responseCode) {
+//            case org.apache.http.HttpStatus.SC_OK: {
+//                // Buffer the result into a string
+//                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+//                BufferedReader bufferedReader = new BufferedReader(inputStream);
+//                StringBuilder sb = new StringBuilder();
+//                String line;
+//
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    sb.append(line);
+//                }
+//
+//                bufferedReader.close();
+//                returnValue = sb.toString();
+//                break;
+//            }
+//            case org.apache.http.HttpStatus.SC_CONFLICT:
+//                //  Product not found
+//                returnValue = "Not found";
+//                break;
+//
+//            default:
+//                System.out.println("httpGet -> responseCode=" + responseCode);
+//                throw new IOException(conn.getResponseMessage());
+//        }
+//
+//        conn.disconnect();
+//
+//        return returnValue;
+//    }
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)

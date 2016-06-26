@@ -14,11 +14,13 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Product.QUERY_GET_ALL,
+                //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' order by p.productName"
                 query = "select p from Product p where UPPER(active) = 'Y' order by p.productName"
 
         ),
         @NamedQuery(
                 name = Product.PRODUCT_FILTER_BY_NAME,
+                //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' and UPPER(p.productName) like :pname"
                 query = "select p from Product p where UPPER(active) = 'Y' and UPPER(p.productName) like :pname"
         )
 })
