@@ -25,13 +25,17 @@ define(['./module'], function (services) {
                         loginUser: user.response.userId,
                         base64Token: "Bearer " + user.response.token,
                     }
+
+                    Helper.enableLoader();
                     Loger.Params(expectToReceive, params.method);
                     mini_soap.post(params.path, params.method, expectToReceive).
                     then(function (response) {
+                            Helper.disableLoader();
                             Loger.Received(response);
                             defer.resolve(response);
                         },
                         function (response) {
+                            Helper.disableLoader();
                             Loger.Received(response);
                             defer.reject("Request failed! ");
                         });

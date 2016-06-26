@@ -11,7 +11,7 @@ Helper.____closeTooTipCart;
 Helper.____showPage;
 Helper.mobile_section_moved;
 
-Helper.defaultTimeLoaderToEnable = 1000;
+Helper.defaultTimeLoaderToEnable = 500;
 
 var enableLoaderActivate = false;
 var ____enableLoaderActivate;
@@ -22,7 +22,7 @@ Helper.enableLoader = function () {
     enableLoaderActivate = true;
     ____enableLoaderActivate = setTimeout(function () {
         $("div.loader").css({display: "block"});
-        $("div.loader").stop().animate({opacity: 1}, 300);
+        $("div.loader").stop().animate({opacity: 1}, 100);
     }, Helper.defaultTimeLoaderToEnable);
 };
 
