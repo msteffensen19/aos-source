@@ -18,7 +18,6 @@ define(['./module'], function (directives) {
                     $scope.rememberMe = false;
                     //$scope.message = "";
                     $scope.message = {text: $filter('translate')('OR'), _class: ''};
-                    $scope.config = null;
                     var _____errorMessage;
 
                     $scope.setErrorMessage = function(reason) {
@@ -92,7 +91,7 @@ define(['./module'], function (directives) {
                                 if (response.reason.toLowerCase().indexOf('blocked') != -1) {
 
                                     userService.getConfiguration().then(function(conf){
-                                        var now = new Date();
+                                       var now = new Date();
                                         userBlocked = {
                                             dateFrom: now.getTime(),
                                             dateUntil: now.getTime() + (conf.loginBlockingIntervalInSeconds * 1000),
@@ -144,13 +143,13 @@ define(['./module'], function (directives) {
 
 
                     $scope.forgotPassword = function () {
-                        console.log("forgotPassword not done yet!");
+                        console.log("forgot Password not done yet!");
                         //$location.path('404');
                     }
 
 
                     $scope.singWithFacebook = function (user) {
-                        console.log("singWithFacebook not done yet!");
+                        console.log("Sing With Facebook not done yet!");
                         //$location.path('404');
                     }
 

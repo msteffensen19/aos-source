@@ -78,8 +78,8 @@
                 <sec-view a-hint="{{'Email' | translate}}"
                           a-do-not-show-info="true"
                           a-star="false"
-                          ng-show="config.emailAddressInLogin"
-                          sec-disable-validation="!config.emailAddressInLogin"
+                          ng-show="mainCtrl.config.emailAddressInLogin"
+                          sec-disable-validation="!mainCtrl.config.emailAddressInLogin"
                           sec-model="loginUser.email">
                 </sec-view>
 

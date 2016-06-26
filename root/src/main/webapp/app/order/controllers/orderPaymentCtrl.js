@@ -10,6 +10,7 @@ define(['./module'], function (controllers) {
         function (s, rs, resolveParams, orderService, cartService, $filter, $location) {
 
 
+
            if(resolveParams.user == null){
                 $location.path('login')
                 return;

@@ -219,6 +219,10 @@
         display: block;
     }
 
+    #supportCover > div:first-child{
+        width: auto;
+        display: inherit;
+    }
 }
 
 @media screen and (max-width: 600px) {

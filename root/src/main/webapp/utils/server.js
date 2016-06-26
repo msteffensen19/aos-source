@@ -274,9 +274,9 @@ var server = {
             return paramToReturn;
         },
 
-        getEmailConfiguration: function () {
+        getConfigurations : function () {
 
-            var paramToReturn = catalogKey + "/DemoAppConfig/parameters/Email_address_in_login";
+            var paramToReturn = catalogKey + "/DemoAppConfig/parameters/by_tool/ALL";
             Loger.Calling(paramToReturn);
             return paramToReturn;
         },
