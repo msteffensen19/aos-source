@@ -95,7 +95,7 @@ var english = {
 
     'letters_number_symbols_only': 'Use letters, numbers, and the following symbols only: .-_',
 
-    'CHECKOUT': 'CHECKOUT',
+    'PAY': 'PAY',
     'TOTAL': 'TOTAL',
     'Items': 'Items',
     'Item': 'Item',
