@@ -28,8 +28,6 @@
     margin: 0 auto;
     text-align: center;
     vertical-align: middle;
-
-
 }
 
 #supportCover > div:first-child .chat{
@@ -214,6 +212,16 @@
     #supportCover .splitter > div {
         margin: 0 26px;
         text-align: left;
+    }
+
+    #supportCover > div {
+        width: 100%;
+        display: block;
+    }
+
+    #supportCover > div:first-child{
+        width: auto;
+        display: inherit;
     }
 }
 

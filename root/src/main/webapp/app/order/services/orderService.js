@@ -28,7 +28,7 @@ define(['./module'], function (services) {
                 return user && user.response && user.response.userId != -1;
             }
 
-            function SafePay(user, savePay, card, shipping, cart, accountNumber, TransPaymentMethod) {
+            function SafePay(user, savePay, card, shipping, cart, accountNumber, TransPaymentMethod, cartIncrement) {
                 var defer = $q.defer();
 
                 var purchasedProducts = [];

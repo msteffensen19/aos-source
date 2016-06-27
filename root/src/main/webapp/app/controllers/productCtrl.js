@@ -4,9 +4,9 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter', '$rootScope',
 
-        function (s, resolveParams, $state, $filter) {
+        function (s, resolveParams, $state, $filter, $rootScope) {
 
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
@@ -59,16 +59,25 @@ define(['./module'], function (controllers) {
                 }
                 else {
                     var quantity = s.quantity;
-                    for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
-                        var prod = s.$parent.cart.productsInCart[i];
-                        if (prod.productId == productToAdd.productId && prod.color.code == s.colorSelected.code) {
-                            if (prod.quantity + quantity > s.product.colors[0].inStock) {
-                                quantity = s.product.colors[0].inStock - prod.quantity;
+
+                    var user = $rootScope.userCookie;
+                    if (!(user && user.response && user.response.userId != -1)) {
+                        for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
+                            var prod = s.$parent.cart.productsInCart[i];
+                            if (prod.productId == productToAdd.productId && prod.color.code == s.colorSelected.code) {
+                                if (prod.quantity + quantity > s.product.colors[0].inStock) {
+                                    quantity = s.product.colors[0].inStock - prod.quantity;
+                                }
                             }
                         }
                     }
                     if (quantity > 0) {
-                        s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
+                        var request = s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
+                        request.then(function (res) {
+                            console.log(" ======== ===== ===== ==== === res (add product) === ==== ===== ====== ")
+                            console.log(res)
+                            console.log(" ======== ===== ===== ==== === res (add product) === ==== ===== ====== ")
+                        });
                     }
                 }
             };

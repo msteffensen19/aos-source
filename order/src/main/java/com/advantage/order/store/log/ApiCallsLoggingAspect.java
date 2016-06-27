@@ -42,7 +42,6 @@ public class ApiCallsLoggingAspect {
     }
 
     private void logApiRequest(HttpServletRequest request) {
-        Logger logger = Logger.getLogger(HttpRequest.class);
         logger.info(getLoggingRequest(request));
     }
 

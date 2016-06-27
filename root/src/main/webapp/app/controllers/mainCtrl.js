@@ -11,6 +11,7 @@ define(['./module'], function (controllers) {
                   productsCartService, $filter, $state, $timeout, categoryService) {
 
             var ctrl = this;
+            ctrl.config = {};
 
             var EnterInFocus = {
                 login: 'login',
@@ -38,7 +39,7 @@ define(['./module'], function (controllers) {
                         switch (enterInFocus) {
                             case EnterInFocus.login:
                                 if ($scope.loginUser.loginPassword != "" && $scope.loginUser.loginUser != "") {
-                                    if ($scope.loginUser.email == "" && $scope.config.emailAddressInLogin) {
+                                    if ($scope.loginUser.email == "" && ctrl.config.emailAddressInLogin) {
                                     }
                                     else {
                                         $scope.signIn($scope.loginUser, ctrl.rememberMe);
@@ -72,7 +73,7 @@ define(['./module'], function (controllers) {
 
             /* Get configuration */
             userService.getConfiguration().then(function (response) {
-                $scope.config = response;
+                ctrl.config = response;
                 $scope.refreshTimeOut();
             });
             /*===========================  end Get configuration ============================*/
@@ -112,11 +113,14 @@ define(['./module'], function (controllers) {
 
             $scope.addProduct = function (product, quantity, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
+                var defer = $q.defer()
                 productsCartService.addProduct(product, quantity).then(function (cart) {
                     $scope.cart = cart;
                     animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();
+                    defer.resolve(cart);
                 });
+                return defer.promise;
             }
 
             $scope.updateProduct = function (product, color, quantity, oldColor, toastMessage) {
@@ -340,9 +344,10 @@ define(['./module'], function (controllers) {
             }
 
 
-            setTimeout(function(){
-                $scope.gotoElement("contact_us")
-            }, 1500)
+            //setTimeout(function(){
+            //    $scope.gotoElement("contact_us")
+            //}, 1500)
+
             $scope.gotoElement = function (id) {
                 var element = $("#" + id);
                 if(element.length > 0){
@@ -375,7 +380,7 @@ define(['./module'], function (controllers) {
             var _____autoLogOut;
             $scope.refreshTimeOut = function () {
 
-                if ($scope.config == null) {
+                if (ctrl.config == null) {
                     return;
                 }
                 if (orderService.userIsLogin()) {
@@ -383,8 +388,8 @@ define(['./module'], function (controllers) {
                     $timeout.cancel(_____autoLogOut);
                     _____autoLogOut = $timeout(function () {
                         $scope.signOut()
-                    }, $scope.config.userLoginTimeOut == 0 ? (60 * 60000)
-                        : ($scope.config.userLoginTimeOut * 60000));
+                    }, ctrl.config.userLoginTimeOut == 0 ? (60 * 60000)
+                        : (ctrl.config.userLoginTimeOut * 60000));
 
                 }
             }

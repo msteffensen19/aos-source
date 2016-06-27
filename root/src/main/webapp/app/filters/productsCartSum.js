@@ -4,7 +4,7 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.filter('productsCartSum', function(){
+    controllers.filter('productsCartSum', ["userService", function(userService){
         return function(cart, plus) {
             var count = 0;
             var increment = plus || 0;
@@ -13,9 +13,10 @@ define(['./module'], function (controllers) {
                     count += (product.price * product.quantity);
                 })
             }
-            return parseFloat(increment) + count;
+            var cartIncrement = userService.getCartIncrement();
+            return parseFloat(increment) + count + cartIncrement;
         };
-    }).
+    }]).
     filter('secCatWord', function(){
         return function(text, maxLength) {
             if(text.length > maxLength){

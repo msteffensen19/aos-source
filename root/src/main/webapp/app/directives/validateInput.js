@@ -311,12 +311,21 @@ define(['./module'], function (directives) {
                 var secretField;
                 this.setSecretField = function () {
                     secretField = true;
-                    input.attr("type", "password");
+                    if(s.secModel.length == 12) {
+                        input.parent().addClass('card-number-four-star');
+                        input.val("********" + s.secModel.substring(8));
+                    }
+                    if(s.secModel.length == 3) {
+                        input.val("***");
+                    }
+                    //input.attr("type", "password");
                 };
+
                 this.removeSecretField = function () {
                     if(secretField){
+                        input.parent().removeClass('card-number-four-star');
                         secretField = false;
-                        input.attr("type", "text");
+                        //input.attr("type", "text");
                         s.secModel = "";
                     }
                 };
@@ -958,6 +967,7 @@ define(['./module'], function (directives) {
                 },
 
                 post: function (s, e, a, ctrls) {
+
                     if (a.aSecretField == "true") {
                         $timeout(function () {
                             ctrls[0].setSecretField()

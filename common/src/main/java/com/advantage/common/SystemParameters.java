@@ -1,5 +1,9 @@
 package com.advantage.common;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
+
 /**
  * Created by Evgeney Fiskin on May-2016.
  */
@@ -7,9 +11,12 @@ public class SystemParameters {
 
     public static String getHibernateHbm2ddlAuto(String hbm2ddlAutoMode) {
         String result;
+        Logger logger = Logger.getLogger("hodor");
         if (hbm2ddlAutoMode == null || hbm2ddlAutoMode.isEmpty()) {
             result = "validate";
+            logger.warn("Argument is " + (hbm2ddlAutoMode == null ? "null" : "empty") + ", result=" + result);
         } else {
+            Priority level = Level.DEBUG;
             switch (hbm2ddlAutoMode.toLowerCase()) {
                 case "create":
                     result = "create";
@@ -22,11 +29,12 @@ public class SystemParameters {
                     break;
                 case "validate":
                 default:
+                    level = Level.WARN;
                     result = "validate";
                     break;
             }
+            logger.log(level, "Argument = " + hbm2ddlAutoMode + ", result=" + result);
         }
-        System.out.println(Constants.ENV_HIBERNATE_HBM2DDL_AUTO + "=" + result + " (from property file)");
         return result;
     }
 
@@ -52,7 +60,7 @@ public class SystemParameters {
                     break;
             }
         }
-        System.out.println(Constants.ENV_HIBERNATE_HBM2DDL_AUTO + "=" + result);
+        System.out.println(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME + "=" + result);
         return result;
     }
 }

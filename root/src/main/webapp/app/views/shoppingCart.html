@@ -104,12 +104,12 @@
                     </td>
                     <td colspan="2">
                         <span class="roboto-light">{{'TOTAL' + ': ' | translate}}</span>
-                        <span class="roboto-medium">{{cart | productsCartSum | currency:'$'}}</span>
+                        <span class="roboto-medium">{{cart | productsCartSum:shippingCost | currency:'$'}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <button class="roboto-medium" data-ng-click="checkout()">{{'CHECKOUT' | translate}}</button>
+                        <button class="roboto-medium" data-ng-click="checkout()">{{'PAY' | translate}} {{ cart | productsCartSum:shippingCost | currency:'$' }}</button>
                     </td>
                 </tr>
                 </tfoot>

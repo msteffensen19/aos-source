@@ -74,6 +74,11 @@ html, body{
     border-bottom: 52px solid white;
 }
 
+#chat > #chatBody{
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 #chat .chat-date{
     font-size: 12px;
     color: #828282;
