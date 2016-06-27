@@ -89,23 +89,30 @@ public class OrderController{
     @ApiResponses(value = {
             @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
-    public ResponseEntity<ShoppingCartResponseDto> addProductToCart(
-            @PathVariable("userId") Long userId,
-            @PathVariable("productId") Long productId,
-            @PathVariable("color") String hexColor,
-            @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
-            HttpServletRequest request) {
+    public ResponseEntity<ShoppingCartResponseDto> addProductToCart(@PathVariable("userId") Long userId,
+                                                                    @PathVariable("productId") Long productId,
+                                                                    @PathVariable("color") String hexColor,
+                                                                    @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
+                                                                    HttpServletRequest request) {
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
+
+        HttpStatus httpStatus;
+
         if (userCartResponseDto == null) {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+            httpStatus = HttpStatus.NOT_FOUND;    //  404 = Resource not found
         } else {
             //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.CREATED);
+            httpStatus = HttpStatus.CREATED;
+
+            if (!shoppingCartResponse.getReason().isEmpty()) {
+                userCartResponseDto.setMessage(shoppingCartResponse.getReason());
+            }
         }
 
+        return new ResponseEntity<>(userCartResponseDto, httpStatus);
     }
 
     /*  =========================================================================================================   */

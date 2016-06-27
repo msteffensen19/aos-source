@@ -359,20 +359,21 @@ public class ProductService {
         return colorAttributes;
     }
 
-    public List<ColorAttributeDto> getColorAttributeByProductIdAndColorCode(Long productId, String hexColor) {
+    public ColorAttributeDto getColorAttributeByProductIdAndColorCode(Long productId, String hexColor) {
         ArgumentValidationHelper.validateArgumentIsNotNull(productId, "product id");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(hexColor, "color hex RGB value");
 
         List<ColorAttribute> colorAttributes = productRepository.getColorAttributeByProductIdAndColorCode(productId, hexColor);
-        List<ColorAttributeDto> colorAttributesDto = new ArrayList<>();
+        ColorAttributeDto colorAttributeDto = new ColorAttributeDto(colorAttributes.get(0).getCode(),
+                colorAttributes.get(0).getName(), colorAttributes.get(0).getInStock());
 
-        for (ColorAttribute colorAttribute : colorAttributes) {
-            ColorAttributeDto colorAttributeDto = new ColorAttributeDto(colorAttribute.getCode(),
-                    colorAttribute.getName(), colorAttribute.getInStock());
-            colorAttributesDto.add(colorAttributeDto);
-        }
+        //for (ColorAttribute colorAttribute : colorAttributes) {
+        //    ColorAttributeDto colorAttribDto = new ColorAttributeDto(colorAttribute.getCode(),
+        //            colorAttribute.getName(), colorAttribute.getInStock());
+        //    colorAttributesDto.add(colorAttribDto);
+        //}
 
-        return colorAttributesDto;
+        return colorAttributeDto;
     }
 
     /**

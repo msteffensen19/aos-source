@@ -196,7 +196,8 @@ public class ShoppingCartResponseDto {
 
     /*  public class ShoppingCartResponseDto - properties   */
     private long userId;
-    List<CartProduct> productsInCart = new ArrayList<>();
+    private String message;
+    private List<CartProduct> productsInCart = new ArrayList<>();
 
     /* public class ShoppingCartResponseDto - Constructors  */
     public ShoppingCartResponseDto() {  }
@@ -208,6 +209,12 @@ public class ShoppingCartResponseDto {
     public ShoppingCartResponseDto(long userId, List<CartProduct> productsInCart) {
         this.userId = userId;
         this.productsInCart = productsInCart;
+    }
+
+    public ShoppingCartResponseDto(long userId, List<CartProduct> productsInCart, String message) {
+        this.userId = userId;
+        this.productsInCart = productsInCart;
+        this.message = message;
     }
 
     /*  public class ShoppingCartResponseDto - Getters and Setters  */
@@ -230,6 +237,14 @@ public class ShoppingCartResponseDto {
 
     public void setProductsInCart(List<CartProduct> productsInCart) {
         this.productsInCart = productsInCart;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock) {

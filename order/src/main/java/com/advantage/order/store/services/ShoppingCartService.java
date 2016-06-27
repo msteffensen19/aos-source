@@ -98,11 +98,7 @@ public class ShoppingCartService {
                 if (totalQuantity > dto.getInStock()) {
                     totalQuantity = dto.getInStock();
 
-                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK);
-                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
-                } else {
-                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY);
-                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
+                    shoppingCartResponse.setReason(String.format(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK, String.valueOf(dto.getInStock())));
                 }
 
                 shoppingCartRepository.update(userId, productId, color, totalQuantity);

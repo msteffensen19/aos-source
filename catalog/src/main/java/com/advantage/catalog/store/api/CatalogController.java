@@ -233,11 +233,11 @@ public class CatalogController {
 
     @ApiOperation(value = "Get color-attribute by product-id and color-code")
     @RequestMapping(value = "/products/{product_id}/color/{color_code}", method = RequestMethod.GET)
-    public ResponseEntity<List<ColorAttributeDto>> getColorAttributeByProductIdAndColorCode(@PathVariable("product_id") Long productId,
-                                                                                            @PathVariable("color_code") String hexColor,
-                                                                                            HttpServletRequest request) {
+    public ResponseEntity<ColorAttributeDto> getColorAttributeByProductIdAndColorCode(@PathVariable("product_id") Long productId,
+                                                                                      @PathVariable("color_code") String hexColor,
+                                                                                      HttpServletRequest request) {
 
-        List<ColorAttributeDto> colorAttributesDto  = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
+        ColorAttributeDto colorAttributesDto  = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
 
         return new ResponseEntity<>(colorAttributesDto, HttpStatus.OK);
     }
