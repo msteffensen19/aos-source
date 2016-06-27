@@ -97,7 +97,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
 
 
         if (shoppingCart.getLastUpdate() == 0) {
-            shoppingCart.setLastUpdate(new Date().getTime());
+            shoppingCart.setLastUpdate(Calendar.getInstance().getTime().getTime());
         }
 
         entityManager.persist(shoppingCart);
@@ -122,7 +122,7 @@ public class DefaultShoppingCartRepository extends AbstractRepository implements
         if (shoppingCart != null) {
             //  Product with color was found in user cart
             shoppingCart.setQuantity(quantity);     //  Set argument quantity as product quantity in user cart
-            shoppingCart.setLastUpdate(new Date().getTime());
+            shoppingCart.setLastUpdate(Calendar.getInstance().getTime().getTime());
 
             entityManager.persist(shoppingCart);    //  Update changes
 

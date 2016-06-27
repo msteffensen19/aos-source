@@ -44,7 +44,9 @@ public class ShoppingCart {
     public static final String MESSAGE_SHOPPING_CART_IS_EMPTY = "User\'s shopping cart is empty.";
     public static final String MESSAGE_SHOPPING_CART_UPDATED_SUCCESSFULLY = "Shopping cart and all products updated successfully.";
     public static final String MESSAGE_USER_SHOPPING_CART_WAS_CLEARED = "User shopping cart was emptied.";
-    public static final String MESSAGE_REPLACE_USER_CART_FAILED = "Replace of user cart failed";
+    public static final String MESSAGE_REPLACE_USER_CART_FAILED = "Replace of user cart failed.";
+    public static final String MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK = "Oops! We only have %s in stock. We updated your order accordingly";
+    public static final String MESSAGE_WE_UPDATED_YOUR_CART_BASED_ON_THE_ITEMS_IN_STOCK = "We updated your cart based on the items in stock";
 
     public static final String QUERY_GET_CARTS_BY_USER_ID = "shoppingCart.getCartsByUserId";
     public static final String QUERY_GET_CART_BY_PK_COLUMNS = "shoppingCart.getCartsByPkColumns";

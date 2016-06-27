@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,7 @@ import java.util.List;
 public class ShoppingCartService {
 
     private static final String CATALOG_PRODUCT = "products/";
+    private static final String CATALOG_PRODUCT_COLOR_ATTRIBUTE = "%s/color/%s";
     private static final String DEMO_APP_CONFIG_BY_PARAMETER_NAME = "DemoAppConfig/parameters/";    //  Show_error_500_in_update_cart
     private static final Logger logger = Logger.getLogger(ShoppingCartService.class);
 
@@ -82,27 +84,48 @@ public class ShoppingCartService {
             return null;
         }
          */
-        ShoppingCartResponse shoppingCartResponse = null;
+        ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(false, "Initial values", 0);
 
         if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
 
             ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, color);
 
             //  Check if there is this ShoppingCart already exists
+            ColorAttributeDto dto = getColorAttributeByProductIdAndColorCode(productId, color);
             if (shoppingCart != null) {
 
                 int totalQuantity = shoppingCart.getQuantity() + quantity;
+                if (totalQuantity > dto.getInStock()) {
+                    totalQuantity = dto.getInStock();
+
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK);
+                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
+                } else {
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY);
+                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
+                }
 
                 shoppingCartRepository.update(userId, productId, color, totalQuantity);
 
-                shoppingCartResponse = new ShoppingCartResponse(true,
-                        ShoppingCart.MESSAGE_QUANTITY_OF_PRODUCT_IN_SHOPPING_CART_WAS_UPDATED_SUCCESSFULLY,
-                        shoppingCart.getProductId());
+                shoppingCartResponse.setSuccess(true);
+                shoppingCartResponse.setId(shoppingCart.getProductId());
 
             } else {
                 //  New ShoppingCart
-                shoppingCart = new ShoppingCart(userId, new Date().getTime(), productId, color, quantity);
+                if (quantity > dto.getInStock()) {
+                    quantity = dto.getInStock();
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK);
+                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
+                } else {
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY);
+                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
+                }
+                shoppingCart = new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, quantity);
                 shoppingCartRepository.add(shoppingCart);
+
+                shoppingCartResponse.setSuccess(true);
+                shoppingCartResponse.setId(shoppingCart.getProductId());
+
                 shoppingCartResponse = new ShoppingCartResponse(true,
                         ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
                         shoppingCart.getProductId());
@@ -124,6 +147,48 @@ public class ShoppingCartService {
         DemoAppConfigParameter demoAppConfigParameter = objectMapper.readValue(jsonObjectString, DemoAppConfigParameter.class);
 
         return demoAppConfigParameter;
+    }
+
+    private ColorAttributeDto getColorAttributeByProductIdAndColorCode(Long productId, int colorCode) {
+        ArgumentValidationHelper.validateLongArgumentIsPositive(productId.longValue(), "product id");
+        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(colorCode, "color RGB hexadecimal value");
+
+        String hexColor = ShoppingCart.convertIntColorToHex(colorCode);
+
+        //  Create a URL for Catalog service -> products
+        URL productsPrefixUrl = null;
+        try {
+            productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), CATALOG_PRODUCT);
+        } catch (MalformedURLException e) {
+            logger.error(productsPrefixUrl, e);
+        }
+
+        //  Create a URL with product-id and color RGB Hexadecimal value
+        URL getColorAttributeByProdctIdAndColorCode = null;
+        try {
+            getColorAttributeByProdctIdAndColorCode = new URL(productsPrefixUrl, String.format(CATALOG_PRODUCT_COLOR_ATTRIBUTE, String.valueOf(productId), hexColor));
+        } catch (MalformedURLException e) {
+            logger.error(getColorAttributeByProdctIdAndColorCode, e);
+        }
+
+        if (logger.isInfoEnabled()) {
+            logger.info("stringURL=\"" + getColorAttributeByProdctIdAndColorCode.toString() + "\"");
+        }
+
+        ColorAttributeDto dto = null;
+        try {
+            String stringResponse = RestApiHelper.httpGet(getColorAttributeByProdctIdAndColorCode);
+            if (!stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
+                dto = getColorAttributeDtofromJsonObjectString(stringResponse);
+            } else {
+                //  Product not found (409)
+                dto = new ColorAttributeDto(hexColor, Constants.NOT_FOUND, -1);
+            }
+        } catch (IOException e) {
+            logger.error("Calling httpGet(" + getColorAttributeByProdctIdAndColorCode.toString() + ") throws IOException: ", e);
+        }
+
+        return dto;
     }
 
     private String getDemoAppConfigParameterValue(String parameterName) {
@@ -248,7 +313,25 @@ public class ShoppingCartService {
     }
 
     public ShoppingCartResponse replaceUserCart(long userId, List<ShoppingCartDto> shoppingCarts) {
-        return shoppingCartRepository.replace(userId, shoppingCarts);
+        ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(true, "", 0);
+
+        for (ShoppingCartDto shoppingCartDto : shoppingCarts) {
+            int color = ShoppingCart.convertHexColorToInt(shoppingCartDto.getHexColor());
+            ColorAttributeDto dto = getColorAttributeByProductIdAndColorCode(shoppingCartDto.getProductId().longValue(), color);
+
+            if (shoppingCartDto.getQuantity() > dto.getInStock()) {
+                shoppingCartDto.setQuantity(dto.getInStock());
+                if (shoppingCartResponse.getReason().isEmpty()) {
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_CART_BASED_ON_THE_ITEMS_IN_STOCK);
+                }
+            }
+        }
+        ShoppingCartResponse response = shoppingCartRepository.replace(userId, shoppingCarts);
+
+        //  Database update successful?
+        if (!response.isSuccess()) { shoppingCartResponse = response; }
+
+        return shoppingCartResponse;
     }
 
     /**
@@ -546,6 +629,13 @@ public class ShoppingCartService {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         ProductDto dto = objectMapper.readValue(jsonObjectString, ProductDto.class);
+        return dto;
+    }
+
+    private static ColorAttributeDto getColorAttributeDtofromJsonObjectString(String jsonObjectString) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        ColorAttributeDto dto = objectMapper.readValue(jsonObjectString, ColorAttributeDto.class);
         return dto;
     }
 
