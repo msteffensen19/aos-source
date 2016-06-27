@@ -153,7 +153,7 @@ public class ShoppingCartService {
         ArgumentValidationHelper.validateLongArgumentIsPositive(productId.longValue(), "product id");
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(colorCode, "color RGB hexadecimal value");
 
-        String hexColor = ShoppingCart.convertIntColorToHex(colorCode);
+        String hexColor = ShoppingCart.convertIntColorToHex(colorCode).toUpperCase();
 
         //  Create a URL for Catalog service -> products
         URL productsPrefixUrl = null;
