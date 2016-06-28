@@ -66,27 +66,29 @@ define(['./module'], function (services) {
                 var params = server.account.register();
                 Loger.Params(expectToReceive, params.method);
 
-                Helper.enableLoader();
-                mini_soap.post(params.path, params.method, expectToReceive).
-                then(function (res) {
+                Helper.enableLoader(10);
+                $timeout(function () {
+                    mini_soap.post(params.path, params.method, expectToReceive).
+                    then(function (res) {
 
-                        var response = {
-                            reason: res.REASON,
-                            success: Helper.parseBoolean(res.SUCCESS),
-                        }
-                        Helper.disableLoader();
-                        Loger.Received(response);
-                        defer.resolve(response);
-                    },
-                    function (res) {
-                        Loger.Received(res);
-                        var response = {
-                            reason: res.REASON ? res.REASON : "Request failed! ",
-                            success: res.SUCCESS ? Helper.parseBoolean(res.SUCCESS) : false,
-                        }
-                        Helper.disableLoader();
-                        defer.reject(response);
-                    });
+                            var response = {
+                                reason: res.REASON,
+                                success: Helper.parseBoolean(res.SUCCESS),
+                            }
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response);
+                        },
+                        function (res) {
+                            Loger.Received(res);
+                            var response = {
+                                reason: res.REASON ? res.REASON : "Request failed! ",
+                                success: res.SUCCESS ? Helper.parseBoolean(res.SUCCESS) : false,
+                            }
+                            Helper.disableLoader();
+                            defer.reject(response);
+                        });
+                }, 500);
 
                 return defer.promise;
             }

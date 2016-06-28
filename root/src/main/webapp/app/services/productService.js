@@ -3,8 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('productService', ['$http', '$q', 'resHandleService', '$timeout', 'categoryService',
-        function ($http, $q, responseService, $timeout, categoryService) {
+    services.service('productService', ['$http', '$q', 'resHandleService', '$timeout', 'categoryService', 'userService',
+        function ($http, $q, responseService, $timeout, categoryService, userService) {
             // Return public API.
             return ({
                 getProducts: getProducts,
@@ -50,6 +50,8 @@ define(['./module'], function (services) {
                     request.then(function (res) {
                             Helper.disableLoader();
                             Loger.Received(res);
+                            var duplicateProductPrice = userService.getDuplicateProductPrice();
+                            res.data.price *= duplicateProductPrice;
                             response.resolve(res.data);
                         },
                         function (res) {
@@ -100,6 +102,12 @@ define(['./module'], function (services) {
                     request.then(function (res) {
                             Helper.disableLoader();
                             Loger.Received(res);
+                            var duplicateProductPrice = userService.getDuplicateProductPrice();
+                            for(var index= 0 ; index < res.data.length; index++){
+                                for(var index2= 0 ; index2 < res.data[index].products.length; index2++){
+                                    res.data[index].products[index2].price *= duplicateProductPrice;
+                                }
+                            }
                             response.resolve(res.data);
                         },
                         function (res) {

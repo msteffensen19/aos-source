@@ -3,8 +3,8 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('categoryService', ['$http', '$q', '$timeout',
-        'resHandleService', function ($http, $q, $timeout) {
+    services.service('categoryService', ['$http', '$q', 'userService',
+        'resHandleService', function ($http, $q, userService) {
 
             var allData;
             var categories;
@@ -31,8 +31,14 @@ define(['./module'], function (services) {
                     method: "get",
                     url: server.catalog.getAllData()
                 }).success(function (res) {
-                    allData = res;
                     Loger.Received(res)
+                    var duplicateProductPrice = userService.getDuplicateProductPrice();
+                    for(var index1= 0 ; index1 < res.length; index1++){
+                        for(var index2= 0 ; index2 < res[index1].products.length; index2++){
+                            res[index1].products[index2].price *= duplicateProductPrice;
+                        }
+                    }
+                    allData = res;
                     response.resolve(allData);
                 }).error(function (err) {
                     alert('An error occurred, please try again')
@@ -56,6 +62,12 @@ define(['./module'], function (services) {
                     }).success(function (res) {
                         Helper.disableLoader();
                         Loger.Received(res)
+                        var duplicateProductPrice = userService.getDuplicateProductPrice();
+                        for(var index1= 0 ; index1 < res.length; index1++){
+                            for(var index2= 0 ; index2 < res[index1].products.length; index2++){
+                                res[index1].products[index2].price *= duplicateProductPrice;
+                            }
+                        }
                         categories = res;
                         defer.resolve(res)
                     }).error(function (err) {
@@ -94,6 +106,10 @@ define(['./module'], function (services) {
                             print("category return from server");
                             Helper.disableLoader();
                             Loger.Received(res)
+                            var duplicateProductPrice = userService.getDuplicateProductPrice();
+                            for(var index= 0 ; index < res.products.length; index++){
+                                res.products[index].price *= duplicateProductPrice;
+                            }
                             defer.resolve(res)
                         }).error(function (err) {
                             Helper.disableLoader();
@@ -122,6 +138,10 @@ define(['./module'], function (services) {
                         Helper.disableLoader();
                         Loger.Received(res)
                         print("popularProducts return from server");
+                        var duplicateProductPrice = userService.getDuplicateProductPrice();
+                        for(var index= 0 ; index < res.length; index++){
+                            res[index].price *= duplicateProductPrice;
+                        }
                         popularProducts = res;
                         defer.resolve(res)
                     }).error(function (err) {

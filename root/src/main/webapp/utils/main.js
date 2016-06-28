@@ -11,11 +11,12 @@ Helper.____closeTooTipCart;
 Helper.____showPage;
 Helper.mobile_section_moved;
 
-Helper.defaultTimeLoaderToEnable = 500;
+Helper.defaultTimeLoaderToEnable = 1000;
 
 var enableLoaderActivate = false;
 var ____enableLoaderActivate;
-Helper.enableLoader = function () {
+
+Helper.enableLoader = function (time) {
     if(enableLoaderActivate){
         return;
     }
@@ -23,7 +24,7 @@ Helper.enableLoader = function () {
     ____enableLoaderActivate = setTimeout(function () {
         $("div.loader").css({display: "block"});
         $("div.loader").stop().animate({opacity: 1}, 100);
-    }, Helper.defaultTimeLoaderToEnable);
+    }, time || Helper.defaultTimeLoaderToEnable);
 };
 
 Helper.disableLoader = function () {

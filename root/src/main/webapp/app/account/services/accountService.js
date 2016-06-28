@@ -16,40 +16,43 @@ define(['./module'], function (services) {
                     var params = server.account.getAccountById_new();
                     var user = $rootScope.userCookie;
 
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, {
-                            accountId: user.response.userId
-                        })
-                        .then(function (response) {
-                                var user = {
-                                    "id": response.ID,
-                                    "lastName": response.LASTNAME,
-                                    "firstName": response.FIRSTNAME,
-                                    "loginName": response.LOGINNAME,
-                                    "countryId": response.COUNTRYID,
-                                    "countryName": response.COUNTRYNAME,
-                                    "countryIsoName": response.COUNTRYISONAME,
-                                    "stateProvince": response.STATEPROVINCE,
-                                    "cityName": response.CITYNAME,
-                                    "homeAddress": response.HOMEADDRESS,
-                                    "zipcode": response.ZIPCODE,
-                                    "mobilePhone": response.MOBILEPHONE,
-                                    "email": response.EMAIL,
-                                    defaultPaymentMethodId: response.DEFAULTPAYMENTMETHODID,
-                                    allowOffersPromotion: response.ALLOWOFFERSPROMOTION == "true",
-                                    internalUnsuccessfulLoginAttempts: response.INTERNALUNSUCCESSFULLOGINATTEMPTS,
-                                    internalUserBlockedFromLoginUntil: response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
-                                    internalLastSuccesssulLogin: response.INTERNALLASTSUCCESSSULLOGIN,
-                                }
-                                Helper.disableLoader();
-                                Loger.Received(user);
-                                defer.resolve(user);
-                            },
-                            function (response) {
-                                Helper.disableLoader();
-                                Loger.Received(response);
-                                defer.reject("Request failed! (getAccountDetails)");
-                            });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+
+                        mini_soap.post(params.path, params.method, {
+                                accountId: user.response.userId
+                            })
+                            .then(function (response) {
+                                    var user = {
+                                        "id": response.ID,
+                                        "lastName": response.LASTNAME,
+                                        "firstName": response.FIRSTNAME,
+                                        "loginName": response.LOGINNAME,
+                                        "countryId": response.COUNTRYID,
+                                        "countryName": response.COUNTRYNAME,
+                                        "countryIsoName": response.COUNTRYISONAME,
+                                        "stateProvince": response.STATEPROVINCE,
+                                        "cityName": response.CITYNAME,
+                                        "homeAddress": response.HOMEADDRESS,
+                                        "zipcode": response.ZIPCODE,
+                                        "mobilePhone": response.MOBILEPHONE,
+                                        "email": response.EMAIL,
+                                        defaultPaymentMethodId: response.DEFAULTPAYMENTMETHODID,
+                                        allowOffersPromotion: response.ALLOWOFFERSPROMOTION == "true",
+                                        internalUnsuccessfulLoginAttempts: response.INTERNALUNSUCCESSFULLOGINATTEMPTS,
+                                        internalUserBlockedFromLoginUntil: response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
+                                        internalLastSuccesssulLogin: response.INTERNALLASTSUCCESSSULLOGIN,
+                                    }
+                                    Helper.disableLoader();
+                                    Loger.Received(user);
+                                    defer.resolve(user);
+                                },
+                                function (response) {
+                                    Helper.disableLoader();
+                                    Loger.Received(response);
+                                    defer.reject("Request failed! (getAccountDetails)");
+                                });
+                    }, 500);
 
                     return defer.promise;
                 },
@@ -59,33 +62,34 @@ define(['./module'], function (services) {
                     var defer = $q.defer();
                     var params = server.account.getAddressesByAccountId();
                     var user = $rootScope.userCookie;
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, {
-                            accountId: user.response.userId
-                        })
-                        .then(function (response) {
-                                var shippingDetails = null;
-                                if (response.ID) {
-                                    shippingDetails = {
-                                        "id": response.ID,
-                                        "address_line1": response.ADDRESS_LINE1,
-                                        "address_line2": response.ADDRESS_LINE2,
-                                        "country": response.COUNTRY,
-                                        "postalCode": response.POSTALCODE,
-                                        "state": response.STATE,
-                                        "userId": response.USERID,
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, {
+                                accountId: user.response.userId
+                            })
+                            .then(function (response) {
+                                    var shippingDetails = null;
+                                    if (response.ID) {
+                                        shippingDetails = {
+                                            "id": response.ID,
+                                            "address_line1": response.ADDRESS_LINE1,
+                                            "address_line2": response.ADDRESS_LINE2,
+                                            "country": response.COUNTRY,
+                                            "postalCode": response.POSTALCODE,
+                                            "state": response.STATE,
+                                            "userId": response.USERID,
+                                        }
                                     }
-                                }
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(shippingDetails);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! (getAccountDetails)");
-                            });
-
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    defer.resolve(shippingDetails);
+                                },
+                                function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    defer.reject("Request failed! (getAccountDetails)");
+                                });
+                    }, 500)
                     return defer.promise;
                 },
 
@@ -95,54 +99,57 @@ define(['./module'], function (services) {
                     var params = server.account.getAccountPaymentPreferences();
                     var user = $rootScope.userCookie;
 
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, {
-                            accountId: user.response.userId
-                        })
-                        .then(function (response) {
-                                var masterCredit = null;
-                                var safePay = null;
-                                var MCard;
-                                var SPay;
-                                if (response.PAYMENTMETHOD + "" == "20") {
-                                    MCard = response;
-                                }
-                                if (response.PAYMENTMETHOD + "" == "10") {
-                                    SPay = response;
-                                }
-                                if (response.length && response.length == 2) {
-                                    MCard = response[0].PAYMENTMETHOD + "" == "20" ? response[0] :
-                                        response[1].PAYMENTMETHOD + "" == "20" ? response[1] : null;
-                                    SPay = response[0].PAYMENTMETHOD + "" == "10" ? response[0] :
-                                        response[1].PAYMENTMETHOD + "" == "10" ? response[1] : null;
-                                }
-                                if (MCard != null) {
-                                    masterCredit = {
-                                        "id": MCard.PREFERENCEID,
-                                        "cardNumber": MCard.CARDNUMBER,
-                                        "cvvNumber": MCard.CVVNUMBER,
-                                        "expirationDate": MCard.EXPIRATIONDATE,
-                                        "paymentMethod": MCard.PAYMENTMETHOD,
-                                        "customername": MCard.CUSTOMERNAME
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+
+                        mini_soap.post(params.path, params.method, {
+                                accountId: user.response.userId
+                            })
+                            .then(function (response) {
+                                    var masterCredit = null;
+                                    var safePay = null;
+                                    var MCard;
+                                    var SPay;
+                                    if (response.PAYMENTMETHOD + "" == "20") {
+                                        MCard = response;
                                     }
-                                }
-                                if (SPay != null) {
-                                    safePay = {
-                                        "id": SPay.PREFERENCEID,
-                                        "safepayUsername": SPay.SAFEPAYUSERNAME,
-                                        "paymentMethod": SPay.PAYMENTMETHOD,
-                                        "safepayPassword": SPay.SAFEPAYPASSWORD,
+                                    if (response.PAYMENTMETHOD + "" == "10") {
+                                        SPay = response;
                                     }
-                                }
-                                Helper.disableLoader();
-                                Loger.Received({masterCredit: masterCredit, safePay: safePay});
-                                defer.resolve({masterCredit: masterCredit, safePay: safePay});
-                            },
-                            function (response) {
-                                Helper.disableLoader();
-                                Loger.Received(response);
-                                defer.reject("Request failed! (getAccountDetails)");
-                            });
+                                    if (response.length && response.length == 2) {
+                                        MCard = response[0].PAYMENTMETHOD + "" == "20" ? response[0] :
+                                            response[1].PAYMENTMETHOD + "" == "20" ? response[1] : null;
+                                        SPay = response[0].PAYMENTMETHOD + "" == "10" ? response[0] :
+                                            response[1].PAYMENTMETHOD + "" == "10" ? response[1] : null;
+                                    }
+                                    if (MCard != null) {
+                                        masterCredit = {
+                                            "id": MCard.PREFERENCEID,
+                                            "cardNumber": MCard.CARDNUMBER,
+                                            "cvvNumber": MCard.CVVNUMBER,
+                                            "expirationDate": MCard.EXPIRATIONDATE,
+                                            "paymentMethod": MCard.PAYMENTMETHOD,
+                                            "customername": MCard.CUSTOMERNAME
+                                        }
+                                    }
+                                    if (SPay != null) {
+                                        safePay = {
+                                            "id": SPay.PREFERENCEID,
+                                            "safepayUsername": SPay.SAFEPAYUSERNAME,
+                                            "paymentMethod": SPay.PAYMENTMETHOD,
+                                            "safepayPassword": SPay.SAFEPAYPASSWORD,
+                                        }
+                                    }
+                                    Helper.disableLoader();
+                                    Loger.Received({masterCredit: masterCredit, safePay: safePay});
+                                    defer.resolve({masterCredit: masterCredit, safePay: safePay});
+                                },
+                                function (response) {
+                                    Helper.disableLoader();
+                                    Loger.Received(response);
+                                    defer.reject("Request failed! (getAccountDetails)");
+                                });
+                    }, 500);
 
                     return defer.promise;
                 },
@@ -154,7 +161,6 @@ define(['./module'], function (services) {
                         defer.resolve({SUCCESS: 'true'});
                     }
                     else {
-                        Helper.enableLoader();
                         var expectToReceive = {
                             accountId: accountId,
                             newPassword: passwords.new,
@@ -162,24 +168,26 @@ define(['./module'], function (services) {
                             base64Token: $rootScope.userCookie.response.token,
                         }
                         var params = server.account.changePassword();
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed!");
-                            });
+                        Helper.enableLoader(10);
+                        $timeout(function () {
+                            mini_soap.post(params.path, params.method, expectToReceive).
+                            then(function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    defer.resolve(response);
+                                },
+                                function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    defer.reject("Request failed!");
+                                });
+                        }, 500);
                     }
                     return defer.promise;
                 },
 
                 accountUpdate: function (accountDetails) {
                     var defer = $q.defer();
-                    Helper.enableLoader();
                     var expectToReceive = {
                         lastName: accountDetails.lastName,
                         firstName: accountDetails.firstName,
@@ -197,17 +205,20 @@ define(['./module'], function (services) {
                     var params = server.account.accountUpdate();
                     Loger.Params(expectToReceive, params.method);
 
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
+                    }, 500);
                     return defer.promise;
                 },
 
@@ -227,18 +238,21 @@ define(['./module'], function (services) {
                     var params = server.account.addMasterCreditMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
+                    }, 500);
+
                     return defer.promise;
                 },
 
@@ -255,18 +269,20 @@ define(['./module'], function (services) {
                     var params = server.account.addSafePayMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
+                    }, 500);
                     return defer.promise;
                 },
 
@@ -284,18 +300,21 @@ define(['./module'], function (services) {
                     var params = server.account.updateSafePayMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
+                    }, 500)
+
                     return defer.promise;
                 },
 
@@ -312,21 +331,24 @@ define(['./module'], function (services) {
                     }
 
                     var defer = $q.defer();
-                    Helper.enableLoader();
                     var params = server.account.updateMasterCreditMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
+                    }, 500);
+
                     return defer.promise;
                 },
 
@@ -343,18 +365,19 @@ define(['./module'], function (services) {
                     Loger.Params(expectToReceive, params.method);
 
                     Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (response) {
-
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, expectToReceive).
+                        then(function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.resolve(response);
+                            },
+                            function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            });
+                    }, 500)
 
                     return defer.promise;
                 }

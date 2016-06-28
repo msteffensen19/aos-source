@@ -115,23 +115,24 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
                 var params = server.order.accountUpdate();
 
-                Helper.enableLoader();
-                mini_soap.post(params.path, params.method, paramsToPass).
-                then(function (res) {
-                        Loger.Received(res);
-                        Helper.disableLoader();
-                        defer.resolve({
-                            success: res.SUCCESS,
-                            userId: res.USERID,
-                            reason: res.REASON,
+                Helper.enableLoader(10);
+                $timeout(function () {
+                    mini_soap.post(params.path, params.method, paramsToPass).
+                    then(function (res) {
+                            Loger.Received(res);
+                            Helper.disableLoader();
+                            defer.resolve({
+                                success: res.SUCCESS,
+                                userId: res.USERID,
+                                reason: res.REASON,
+                            });
+                        },
+                        function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
                         });
-                    },
-                    function (response) {
-                        Loger.Received(response);
-                        Helper.disableLoader();
-                        defer.reject("Request failed! ");
-                    });
-
+                }, 500);
                 return defer.promise;
             }
 
@@ -142,35 +143,37 @@ define(['./module'], function (services) {
                 if (user && user.response && user.response.userId != -1) {
 
                     var params = server.account.getAccountById();
-                    Helper.enableLoader();
-                    mini_soap.post(params.path, params.method, {
-                            accountId: user.response.userId
-                        })
-                        .then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                var user = {
-                                    "id": response.ID,
-                                    "lastName": response.LASTNAME,
-                                    "firstName": response.FIRSTNAME,
-                                    "loginName": response.LOGINNAME,
-                                    "countryId": response.COUNTRYID,
-                                    "country": response.COUNTRYISONAME,
-                                    "stateProvince": response.STATEPROVINCE,
-                                    "cityName": response.CITYNAME,
-                                    "address": response.ADDRESS,
-                                    "zipcode": response.ZIPCODE,
-                                    "phoneNumber": response.PHONENUMBER,
-                                    "email": response.EMAIL,
-                                    "allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
-                                }
-                                defer.resolve(user);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! (getAccountById)");
-                            });
+                    Helper.enableLoader(10);
+                    $timeout(function () {
+                        mini_soap.post(params.path, params.method, {
+                                accountId: user.response.userId
+                            })
+                            .then(function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    var user = {
+                                        "id": response.ID,
+                                        "lastName": response.LASTNAME,
+                                        "firstName": response.FIRSTNAME,
+                                        "loginName": response.LOGINNAME,
+                                        "countryId": response.COUNTRYID,
+                                        "country": response.COUNTRYISONAME,
+                                        "stateProvince": response.STATEPROVINCE,
+                                        "cityName": response.CITYNAME,
+                                        "address": response.ADDRESS,
+                                        "zipcode": response.ZIPCODE,
+                                        "phoneNumber": response.PHONENUMBER,
+                                        "email": response.EMAIL,
+                                        "allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
+                                    }
+                                    defer.resolve(user);
+                                },
+                                function (response) {
+                                    Loger.Received(response);
+                                    Helper.disableLoader();
+                                    defer.reject("Request failed! (getAccountById)");
+                                });
+                    }, 500)
                 }
                 else {
                     defer.resolve(null);
