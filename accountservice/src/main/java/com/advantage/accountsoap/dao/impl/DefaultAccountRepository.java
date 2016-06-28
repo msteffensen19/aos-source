@@ -342,13 +342,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         if ((!loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
             AccountPassword accountPassword = new AccountPassword(loginUser, loginPassword);
-            try {
-                if (account.getPassword().compareTo(accountPassword.getEncryptedPassword()) != 0) {
-                    account = addUnsuccessfulLoginAttempt(account);
-                    return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (account.getPassword().compareTo(accountPassword.getEncryptedPassword()) != 0) {
+                account = addUnsuccessfulLoginAttempt(account);
+                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
             }
         } else {
             //  password is empty
@@ -550,15 +546,11 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, "Invalid password", -1);
         }
         Account account = get(accountId);
-        if (account == null) return new AccountStatusResponse(false, "Account not found", -1);
-
-        try {
-            account.setPassword(newPassword);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (account == null) {
+            return new AccountStatusResponse(false, "Account not found", -1);
         }
+        account.setPassword(newPassword);
         entityManager.persist(account);
-
         return new AccountStatusResponse(true, "Successfully", accountId);
     }
 

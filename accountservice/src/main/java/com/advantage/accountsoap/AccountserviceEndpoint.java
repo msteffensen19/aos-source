@@ -242,7 +242,7 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
     @ResponsePayload
-    public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+    public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) throws TokenException {
         //Token's validation already implemented in accountService.changePassword;
         AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getOldPassword(), request.getNewPassword(), request.getBase64Token());
         return new ChangePasswordResponse(response);
@@ -252,7 +252,7 @@ public class AccountserviceEndpoint {
     @ResponsePayload
     public AccountDeleteResponse accountDelete(@RequestPayload AccountDeleteRequest request) throws TokenException {
         authorizeAsAdmin(request);
-        AccountStatusResponse response = accountService.accountDelete(request.getAccountId(), request.getBase64Token());
+        AccountStatusResponse response = accountService.accountDelete(request.getAccountId());
         return new AccountDeleteResponse(response);
     }
 
@@ -428,8 +428,6 @@ public class AccountserviceEndpoint {
 //            throw new IllegalArgumentException("Token is empty or null");
 //        }
 //        logger.debug("Token: " + requestToken);
-//        //  Remove "Bearer " or "Basic " prefix in the base64Token
-//        requestToken = requestToken.substring(requestToken.indexOf(' ') + 1);
 //        Token token = new TokenJWT(requestToken);
 //
 //        if (token.getAccountType().equals(AccountType.ADMIN)) {
@@ -452,8 +450,6 @@ public class AccountserviceEndpoint {
 //            throw new IllegalArgumentException("Token is empty or null");
 //        }
 //        logger.debug("Token: " + requestToken);
-//        //  Remove "Bearer " or "Basic " prefix in the base64Token
-//        requestToken = requestToken.substring(requestToken.indexOf(' ') + 1);
 //        Token token = new TokenJWT(requestToken);
 //
 //        long accountId = token.getUserId();

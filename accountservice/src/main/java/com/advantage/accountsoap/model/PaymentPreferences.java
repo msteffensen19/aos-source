@@ -157,7 +157,7 @@ public class PaymentPreferences {
         return this.safePayPassword;
     }
 
-    public void setSafePayPassword(String safePayPassword) throws Exception {
+    public void setSafePayPassword(String safePayPassword) {
         AccountPassword accountPassword = new AccountPassword(getSafePayUsername(), safePayPassword);
         this.safePayPassword = accountPassword.getEncryptedPassword();
     }

@@ -220,7 +220,7 @@ public class Account {
         return password;
     }
 
-    public void setPassword(String password) throws Exception {
+    public void setPassword(String password) {
         AccountPassword accountPassword = new AccountPassword(getLoginName(), password);
         this.password = accountPassword.getEncryptedPassword();
     }
