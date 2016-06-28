@@ -21,7 +21,6 @@ public class Url_resources {
     private static URL urlPrefixMasterCredit;
     private static URL urlPrefixOrder;
     private static URL urlPrefixSafePay;
-    //private static URL urlPrefixService;
 
     private static URL urlPrefixSoapAccount;
     private static URL urlPrefixSoapShipEx;
@@ -95,37 +94,6 @@ public class Url_resources {
 
     }
 
-    //TODO-EVG change to properties
-    @Deprecated
-    public static String getUrlPrefixCatalog() {
-        return Constants.URI_SERVER_CATALOG;
-    }
-
-    @Deprecated
-    public static String getUrlPrefixAccount() {
-        return Constants.URI_SERVER_ACCOUNT;
-    }
-
-    @Deprecated
-    public static String getUrlPrefixOrder() {
-        return Constants.URI_SERVER_ORDER;
-    }
-
-    @Deprecated
-    public static String getUrlPrefixMasterCredit() {
-        return "";
-    }
-
-    @Deprecated
-    public static String getUrlPrefixSafePay() {
-        return "";
-    }
-
-    @Deprecated
-    public static String getUrlPrefixShipEx() {
-        return Constants.URI_SERVER_SHIP_EX;
-    }
-
     public static URL getUrlSoapAccount() { return urlPrefixSoapAccount; }
 
     public static URL getUrlCatalog() {
@@ -142,27 +110,8 @@ public class Url_resources {
 
     public static URL getUrlSafePay() { return urlPrefixSafePay; }
 
-//    public static URL getUrlService() {
-//        return urlPrefixService;
-//    }
-
     public static URL getUrlSoapShipEx() { return urlPrefixSoapShipEx; }
 
-    @Deprecated
-    private URL getUrlPrefix(String serviceName) {
-        URL url = null;
-        try {
-            String scheme = Constants.URI_SCHEMA;
-            String host = environment.getProperty(serviceName + ".service.url.host");
-            int port = Integer.parseInt(environment.getProperty(serviceName + ".service.url.port"));
-            String suffix = '/' + environment.getProperty(serviceName + ".service.url.suffix") + "/";
-            url = new URL(scheme, host, port, suffix);
-        } catch (Throwable e) {
-            System.err.println("Config file wrong");
-            e.printStackTrace();
-        }
-        return url;
-    }
 
 //    @Ignore
 //    @Test
