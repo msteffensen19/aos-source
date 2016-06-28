@@ -18,6 +18,10 @@ define(['./module'], function (services) {
                 return appConfiguration && appConfiguration.cartIncrement ? appConfiguration.cartIncrement : 0;
             }
 
+            function getDuplicateProductPrice(){
+                return appConfiguration && appConfiguration.duplicateProductPrice ? appConfiguration.duplicateProductPrice : 1;
+            }
+
             function singOut() {
 
                 var defer = $q.defer();
@@ -85,6 +89,10 @@ define(['./module'], function (services) {
                                         if(!config.cartIncrement || config.cartIncrement < 0){
                                             config.cartIncrement = 0;
                                         }
+                                        break;
+                                    case "Different_price_in_UI_and_API":
+                                        config.duplicateProductPrice = res.data.parameters[i].parameterValue &&
+                                            res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
                                         break;
                                 }
                             }

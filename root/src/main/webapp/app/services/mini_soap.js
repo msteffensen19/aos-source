@@ -15,7 +15,7 @@ define(['./module'], function (services) {
         }
 
 
-        function post(url, action, params) {
+        function post(url, action, params, async) {
 
             var soapParams = new SOAPClientParameters();
             for (var param in params) {
@@ -251,7 +251,7 @@ define(['./module'], function (services) {
                     deferred.reject("An error has occurred.");
                 }
             }
-            SOAPClient.invoke(url, action, soapParams, false, soapCallback);
+            SOAPClient.invoke(url, action, soapParams, true, soapCallback);
             return deferred.promise;
 
 
