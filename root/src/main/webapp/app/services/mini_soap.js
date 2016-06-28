@@ -240,6 +240,7 @@ define(['./module'], function (services) {
                     default:
                         break; // throw new Error(500, "SOAPClientParameters: type '" + typeof(o) + "' is not supported");
                 }
+
                 return s;
             }
 
