@@ -70,7 +70,6 @@ public class SecurityTools {
     }
 
     public static boolean isAuthorized(String authorizationHeader, AccountType... expectedAccountTypes) throws AuthorizationException {
-
         if (authorizationHeader == null || authorizationHeader.trim().isEmpty()) {
             throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
@@ -89,7 +88,6 @@ public class SecurityTools {
                     }
                 }
                 throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ")");
-
             }
         }
     }
@@ -108,7 +106,7 @@ public class SecurityTools {
                 AccountType actualAccountType = token.getAccountType();
                 long actualUserId = token.getUserId();
                 if (actualUserId != expectedUserId) {
-                    throw new VerificationTokenException("Wrong user Id (" + actualUserId + "), but the request is for user (" + expectedUserId + ")");
+                    throw new VerificationTokenException("You authenticated with user Id (" + actualUserId + "), but request is for user (" + expectedUserId + ")");
                 }
                 for (AccountType at : expectedAccountTypes) {
                     if (at.equals(actualAccountType)) {

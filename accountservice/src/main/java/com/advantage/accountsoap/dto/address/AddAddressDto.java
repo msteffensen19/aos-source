@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.address;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -92,4 +93,15 @@ public class AddAddressDto {
         this.postalCode = postalCode;
     }
 
+    @Override
+    public String toString() {
+        return "AddAddressDto{" +
+                "addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", state='" + state + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                '}';
+    }
 }

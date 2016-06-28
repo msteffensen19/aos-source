@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -47,4 +48,12 @@ public class AccountResetPasswordRequest {
         this.base64Token = base64Token;
     }
 
+    @Override
+    public String toString() {
+        return "AccountResetPasswordRequest{" +
+                "accountId=" + accountId +
+                ", newPassword='" + newPassword + '\'' +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
+    }
 }

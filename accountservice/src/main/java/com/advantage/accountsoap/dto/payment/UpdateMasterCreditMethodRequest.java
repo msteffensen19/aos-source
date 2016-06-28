@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.dto.payment;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -11,10 +12,11 @@ import javax.xml.bind.annotation.*;
         "expirationDate",
         "cvvNumber",
         "customerName",
-        "referenceId"
+        "referenceId",
+        "base64Token"
 })
 @XmlRootElement(name = "UpdateMasterCreditMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class UpdateMasterCreditMethodRequest {
+public class UpdateMasterCreditMethodRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long userId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -27,6 +29,8 @@ public class UpdateMasterCreditMethodRequest {
     private String customerName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long referenceId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String base64Token;
 
     public UpdateMasterCreditMethodRequest() {
     }
@@ -40,10 +44,12 @@ public class UpdateMasterCreditMethodRequest {
         this.referenceId = referenceId;
     }
 
+    @Deprecated
     public long getUserId() {
         return this.userId;
     }
 
+    @Deprecated
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -86,5 +92,28 @@ public class UpdateMasterCreditMethodRequest {
 
     public void setReferenceId(long referenceId) {
         this.referenceId = referenceId;
+    }
+
+    @Override
+    public long getAccountId() {
+        return userId;
+    }
+
+    @Override
+    public String getBase64Token() {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateMasterCreditMethodRequest{" +
+                "userId=" + userId +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvvNumber='" + cvvNumber + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", referenceId=" + referenceId +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

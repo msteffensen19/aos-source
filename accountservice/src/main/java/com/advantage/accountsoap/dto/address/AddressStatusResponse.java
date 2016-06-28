@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.address;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -40,5 +41,13 @@ public class AddressStatusResponse {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressStatusResponse{" +
+                "success=" + success +
+                ", reason='" + reason + '\'' +
+                '}';
     }
 }

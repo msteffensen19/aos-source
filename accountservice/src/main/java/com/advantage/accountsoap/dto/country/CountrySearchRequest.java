@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.country;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -30,5 +31,13 @@ public class CountrySearchRequest {
 
     public void setStartOfName(String startOfName) {
         this.startOfName = startOfName;
+    }
+
+    @Override
+    public String toString() {
+        return "CountrySearchRequest{" +
+                "internationalPhonePrefix=" + internationalPhonePrefix +
+                ", startOfName='" + startOfName + '\'' +
+                '}';
     }
 }

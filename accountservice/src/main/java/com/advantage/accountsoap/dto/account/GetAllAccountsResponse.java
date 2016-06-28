@@ -1,6 +1,8 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.account.internal.AccountDto;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -27,5 +29,12 @@ public class GetAllAccountsResponse {
 
     public void setAccount(List<AccountDto> account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "GetAllAccountsResponse{" +
+                "account=" + account +
+                '}';
     }
 }

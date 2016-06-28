@@ -30,4 +30,11 @@ public class DeletePaymentPreferenceResponse {
     public void setResponse(AccountStatusResponse response) {
         this.response = response;
     }
+
+    @Override
+    public String toString() {
+        return "DeletePaymentPreferenceResponse{" +
+                "response=" + response +
+                '}';
+    }
 }

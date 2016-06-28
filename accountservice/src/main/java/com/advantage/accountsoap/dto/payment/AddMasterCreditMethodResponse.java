@@ -29,4 +29,11 @@ public class AddMasterCreditMethodResponse {
     public void setResponse(PaymentPreferencesStatusResponse response) {
         this.response = response;
     }
+
+    @Override
+    public String toString() {
+        return "AddMasterCreditMethodResponse{" +
+                "response=" + response +
+                '}';
+    }
 }

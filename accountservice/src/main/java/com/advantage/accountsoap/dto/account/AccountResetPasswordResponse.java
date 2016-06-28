@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -31,5 +32,12 @@ public class AccountResetPasswordResponse {
 
     public void setResponse(AccountStatusResponse response) {
         this.response = response;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountResetPasswordResponse{" +
+                "response=" + response +
+                '}';
     }
 }

@@ -1,7 +1,7 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
-import com.advantage.accountsoap.dto.account.AccountDto;
+import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Account;

@@ -1,14 +1,22 @@
 package com.advantage.accountsoap;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
-import com.advantage.accountsoap.dto.account.PaymentMethodUpdateResponse;
+import com.advantage.accountsoap.dto.IAdminRequest;
+import com.advantage.accountsoap.dto.IUserRequest;
 import com.advantage.accountsoap.dto.account.*;
-import com.advantage.accountsoap.dto.country.*;
+import com.advantage.accountsoap.dto.account.internal.AccountDto;
+import com.advantage.accountsoap.dto.account.internal.AccountDtoNew;
 import com.advantage.accountsoap.dto.address.*;
+import com.advantage.accountsoap.dto.country.*;
 import com.advantage.accountsoap.dto.payment.*;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.services.*;
 import com.advantage.common.Constants;
+import com.advantage.common.enums.AccountType;
+import com.advantage.common.exceptions.token.TokenException;
+import com.advantage.common.exceptions.token.VerificationTokenException;
+import com.advantage.common.security.Token;
+import com.advantage.common.security.TokenJWT;
 import com.advantage.root.util.StringHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +47,23 @@ public class AccountserviceEndpoint {
     @Autowired
     private AccountConfigurationService accountConfigurationService;
 
+    private static final Logger logger = Logger.getLogger(AccountserviceEndpoint.class);
+
     public AccountserviceEndpoint() {
-        Logger logger = Logger.getLogger(AccountserviceEndpoint.class);
         logger.info(" *********************************** \n" +
                 " ****** Account service start ****** \n" +
                 " *********************************** ");
     }
-    //  endregion
 
+    //  endregion
     //region Account
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
-    public GetAllAccountsResponse getAllAccounts() {
+    public GetAllAccountsResponse getAllAccounts(@RequestPayload GetAllAccountsRequest request) throws TokenException {
+        authorizeAsAdmin(request);
+        if (logger.isDebugEnabled()) {
+            logger.debug(request == null ? "Request is null" : request.toString());
+        }
         List<AccountDto> appUsers = accountService.getAllAppUsersDto();
         GetAllAccountsResponse getAllAccountsResponse = new GetAllAccountsResponse();
         getAllAccountsResponse.setAccount(appUsers);
@@ -58,12 +71,14 @@ public class AccountserviceEndpoint {
         return getAllAccountsResponse;
     }
 
-
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
-    public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountId) {
-        Account account = accountService.getById(accountId.getId());
-        if (account == null) return null;
+    public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountRequest) throws TokenException {
+        authorizeAsUser(accountRequest);
+        Account account = accountService.getById(accountRequest.getAccountId());
+        if (account == null) {
+            return null;
+        }
         AccountDto dto = new AccountDto(account.getId(),
                 account.getLastName(),
                 account.getFirstName(),
@@ -88,8 +103,9 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdNewRequest")
     @ResponsePayload
-    public GetAccountByIdNewResponse getAccount(@RequestPayload GetAccountByIdNewRequest accountId) {
-        Account account = accountService.getById(accountId.getId());
+    public GetAccountByIdNewResponse getAccount(@RequestPayload GetAccountByIdNewRequest accountByIdRequest) throws TokenException {
+        authorizeAsUser(accountByIdRequest);
+        Account account = accountService.getById(accountByIdRequest.getAccountId());
         if (account == null) return null;
         AccountDtoNew dto = new AccountDtoNew(account.getId(),
                 account.getLastName(),
@@ -106,11 +122,13 @@ public class AccountserviceEndpoint {
                 account.getPhoneNumber(),
                 account.getEmail(),
                 account.getDefaultPaymentMethodId(),
-                account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                account.isAllowOffersPromotion(),
+                account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin());
 
-        return new GetAccountByIdNewResponse(dto);
+        GetAccountByIdNewResponse getAccountByIdNewResponse = new GetAccountByIdNewResponse(dto);
+        return getAccountByIdNewResponse;
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLoginRequest")
@@ -125,7 +143,7 @@ public class AccountserviceEndpoint {
         if (response.isSuccess()) {
             //TODO-ALEX set session
             /*HttpSession session = request.getSession();
-            session.setAttribute(Constants.UserSession.TOKEN, response.getToken());
+            session.setAttribute(Constants.UserSession.TOKEN, response.getBase64Token());
             session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());
             session.setAttribute(Constants.UserSession.IS_SUCCESS, response.isSuccess());
 
@@ -152,19 +170,19 @@ public class AccountserviceEndpoint {
         }
     }
 
+
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLogoutRequest")
     @ResponsePayload
-    public AccountLogoutResponse doLogout(@RequestPayload AccountLogoutRequest account) {
-        //todo set header
+    public AccountLogoutResponse doLogout(@RequestPayload AccountLogoutRequest request) throws TokenException {
+        authorizeAsUser(request);
+        AccountStatusResponse response = accountService.doLogout(request.getStrAccountId(),
+                request.getBase64Token());
 
-        AccountStatusResponse response = accountService.doLogout(account.getLoginUser(),
-                account.getBase64Token());
-
-        if (response.isSuccess()) {
-            //TODO-ALEX set session
+        //if (response.isSuccess()) {
+        //TODO-ALEX set session
             /*
             HttpSession session = request.getSession();
-            session.setAttribute(Constants.UserSession.TOKEN, response.getToken());
+            session.setAttribute(Constants.UserSession.TOKEN, response.getBase64Token());
             session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());
             session.setAttribute(Constants.UserSession.IS_SUCCESS, response.isSuccess());
 
@@ -173,10 +191,12 @@ public class AccountserviceEndpoint {
             response.setSessionId(session.getAccountId());
             response.setSessionId("session_id");
             */
-            return new AccountLogoutResponse(response);
-        } else {
-            return new AccountLogoutResponse(response);
-        }
+//                return new AccountLogoutResponse(response);
+//            } else {
+//                return new AccountLogoutResponse(response);
+//            }
+        return new AccountLogoutResponse(response);
+
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountCreateRequest")
@@ -202,39 +222,41 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
-    public AccountUpdateResponse updateAccount(@RequestPayload AccountUpdateRequest account) {
+    public AccountUpdateResponse updateAccount(@RequestPayload AccountUpdateRequest request) throws TokenException {
+        authorizeAsUser(request);
         AccountStatusResponse response = accountService.updateAccount(
-                account.getAccountId(),
-                account.getAccountType(),
-                account.getLastName(),
-                account.getFirstName(),
-                account.getCountry(),
-                account.getPhoneNumber(),
-                account.getStateProvince(),
-                account.getCityName(),
-                account.getAddress(),
-                account.getZipcode(),
-                account.getEmail(),
-                account.isAllowOffersPromotion());
-
+                request.getAccountId(),
+                request.getAccountType(),
+                request.getLastName(),
+                request.getFirstName(),
+                request.getCountry(),
+                request.getPhoneNumber(),
+                request.getStateProvince(),
+                request.getCityName(),
+                request.getAddress(),
+                request.getZipcode(),
+                request.getEmail(),
+                request.isAllowOffersPromotion());
         return new AccountUpdateResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "ChangePasswordRequest")
     @ResponsePayload
     public ChangePasswordResponse changePassword(@RequestPayload ChangePasswordRequest request) {
+        //Token's validation already implemented in accountService.changePassword;
         AccountStatusResponse response = accountService.changePassword(request.getAccountId(), request.getOldPassword(), request.getNewPassword(), request.getBase64Token());
         return new ChangePasswordResponse(response);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountDeleteRequest")
     @ResponsePayload
-    public AccountDeleteResponse accountDelete(@RequestPayload AccountDeleteRequest request) {
+    public AccountDeleteResponse accountDelete(@RequestPayload AccountDeleteRequest request) throws TokenException {
+        authorizeAsAdmin(request);
         AccountStatusResponse response = accountService.accountDelete(request.getAccountId(), request.getBase64Token());
         return new AccountDeleteResponse(response);
     }
-    //endregion
 
+    //endregion
     //region Countries
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
     @ResponsePayload
@@ -247,10 +269,11 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountryCreateRequest")
     @ResponsePayload
-    public CountryCreateResponse createCountry(@RequestPayload CountryCreateRequest country) {
-        CountryStatusResponse response = countryService.create(country.getName(),
-                country.getIsoName(),
-                country.getPhonePrefix());
+    public CountryCreateResponse createCountry(@RequestPayload CountryCreateRequest request) throws TokenException {
+        authorizeAsAdmin(request);
+        CountryStatusResponse response = countryService.create(request.getName(),
+                request.getIsoName(),
+                request.getPhonePrefix());
 
         return new CountryCreateResponse(response);
     }
@@ -274,14 +297,18 @@ public class AccountserviceEndpoint {
             return new CountrySearchResponse(countries);
         }
     }
-    //endregion
 
+    //endregion
     //region Address
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
     @ResponsePayload
-    public GetAddressesByAccountIdResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest accountId) {
+    public GetAddressesByAccountIdResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest request) throws TokenException {
+        authorizeAsUser(request);
+        if (logger.isTraceEnabled()) {
+            logger.trace(request == null ? "Request is null" : request.toString());
+        }
         GetAddressesByAccountIdResponse response = new GetAddressesByAccountIdResponse();
-        List<AddressDto> addresses = addressService.getByAccountId(accountId.getId());
+        List<AddressDto> addresses = addressService.getByAccountId(request.getAccountId());
         response.setShippingAddress(addresses);
 
         return response;
@@ -289,35 +316,28 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddAddressesRequest")
     @ResponsePayload
-    public AddAddressesResponse addAddress(@RequestPayload AddAddressesRequest address) {
-        AddressStatusResponse response = addressService.add(address.getAccountId(), address.getAddresses());
-
+    public AddAddressesResponse addAddress(@RequestPayload AddAddressesRequest request) throws TokenException {
+        authorizeAsUser(request);
+        AddressStatusResponse response = addressService.add(request.getAccountId(), request.getAddresses());
         return new AddAddressesResponse(response);
     }
 
-
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddressUpdateRequest")
     @ResponsePayload
-    public AddressUpdateResponse updateAddress(@RequestPayload AddressUpdateRequest address) {
-        AddressStatusResponse response = addressService.update(address.getAddress());
+    public AddressUpdateResponse updateAddress(@RequestPayload AddressUpdateRequest request) throws TokenException {
+        authorizeAsUser(request);
+        AddressStatusResponse response = addressService.update(request.getAddress());
 
         return new AddressUpdateResponse(response);
     }
     //endregion
 
-    //  region Payment details
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
-    @ResponsePayload
-    public PaymentMethodUpdateResponse updateDefaultPaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) {
-        AccountStatusResponse response = accountService.updateDefaultPaymentMethod(request.getAccountId(), request.getPaymentMethod());
-
-        return new PaymentMethodUpdateResponse(response);
-    }
-
+    //region Payment
     //  region MasterCredit
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddMasterCreditMethodRequest")
     @ResponsePayload
-    public AddMasterCreditMethodResponse addMasterCreditMethod(@RequestPayload AddMasterCreditMethodRequest request) {
+    public AddMasterCreditMethodResponse addMasterCreditMethod(@RequestPayload AddMasterCreditMethodRequest request) throws TokenException {
+        authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.addMasterCreditMethod(request.getCardNumber(),
                 request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getAccountId());
 
@@ -326,18 +346,20 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateMasterCreditMethodRequest")
     @ResponsePayload
-    public UpdateMasterCreditMethodResponse updateMasterCreditMethod(@RequestPayload UpdateMasterCreditMethodRequest request) {
+    public UpdateMasterCreditMethodResponse updateMasterCreditMethod(@RequestPayload UpdateMasterCreditMethodRequest request) throws TokenException {
+        authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateMasterCreditMethod(request.getUserId(),
                 request.getCardNumber(), request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getReferenceId());
 
         return new UpdateMasterCreditMethodResponse(response);
     }
-    //  endregion
 
+    //endregion
     //  region SafePay
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddSafePayMethodRequest")
     @ResponsePayload
-    public AddSafePayMethodResponse addSafePayMethod(@RequestPayload AddSafePayMethodRequest request) {
+    public AddSafePayMethodResponse addSafePayMethod(@RequestPayload AddSafePayMethodRequest request) throws TokenException {
+        authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.addSafePayMethod(request.getAccountId(),
                 request.getSafePayUsername(),
                 request.getSafePayPassword());
@@ -347,36 +369,45 @@ public class AccountserviceEndpoint {
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
     @ResponsePayload
-    public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) {
+    public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) throws TokenException {
+        authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getUserId(),
                 request.getSafePayUsername(),
                 request.getSafePayPassword());
 
         return new UpdateSafePayMethodResponse(response);
     }
-    //  endregion
+    //endregion
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
+    @ResponsePayload
+    public PaymentMethodUpdateResponse updateDefaultPaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) throws TokenException {
+        authorizeAsUser(request);
+        AccountStatusResponse response = accountService.updateDefaultPaymentMethod(request.getAccountId(), request.getPaymentMethod());
+
+        return new PaymentMethodUpdateResponse(response);
+    }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountPaymentPreferencesRequest")
     @ResponsePayload
-    public GetAccountPaymentPreferencesResponse getAccountPaymentPreferences(@RequestPayload GetAccountPaymentPreferencesRequest request) {
+    public GetAccountPaymentPreferencesResponse getAccountPaymentPreferences(@RequestPayload GetAccountPaymentPreferencesRequest request) throws TokenException {
+        authorizeAsUser(request);
         GetAccountPaymentPreferencesResponse response = new GetAccountPaymentPreferencesResponse();
-
         List<PaymentPreferencesDto> prefs = accountService.getPaymentPreferences(request.getAccountId());
-
         response.setPreferences(prefs);
-
         return response;
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
     @ResponsePayload
-    public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) {
+    public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) throws TokenException {
+        authorizeAsUser(request);
         AccountStatusResponse response = accountService.removePaymentPreferences(request.getAccountId(), request.getId());
 
         return new DeletePaymentPreferenceResponse(response);
     }
-    //endregion
 
+    //endregion
     //region Configuration
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountConfigurationRequest")
     @ResponsePayload
@@ -386,15 +417,53 @@ public class AccountserviceEndpoint {
     }
     //endregion
 
-    /*
-    protected HttpServletRequest getHttpServletRequest() {
-        TransportContext ctx = TransportContextHolder.getTransportContext();
-        return ( null != ctx ) ? ((HttpServletConnection) ctx.getConnection()).getHttpServletRequest() : null;
+    private void authorizeAsAdmin(IAdminRequest request) throws TokenException {
+//        if (request == null) {
+//            logger.error("Request is null");
+//            throw new IllegalArgumentException("Request is null");
+//        }
+//        String requestToken = request.getBase64Token();
+//        if (requestToken == null || requestToken.isEmpty()) {
+//            logger.error("Token is empty or null");
+//            throw new IllegalArgumentException("Token is empty or null");
+//        }
+//        logger.debug("Token: " + requestToken);
+//        //  Remove "Bearer " or "Basic " prefix in the base64Token
+//        requestToken = requestToken.substring(requestToken.indexOf(' ') + 1);
+//        Token token = new TokenJWT(requestToken);
+//
+//        if (token.getAccountType().equals(AccountType.ADMIN)) {
+//            String message = "Wrong account type (" + token.getAccountType().toString() + ")";
+//            logger.error(message);
+//            throw new VerificationTokenException(message);
+//        }
     }
 
-    protected String getHttpHeaderValue( final String headerName ) {
-        HttpServletRequest httpServletRequest = getHttpServletRequest();
-        return ( null != httpServletRequest ) ? httpServletRequest.getHeader( headerName ) : null;
+    private void authorizeAsUser(IUserRequest request) throws TokenException {
+//        if (request == null) {
+//            logger.error("Request is null");
+//            throw new IllegalArgumentException("Request is null");
+//        }
+//
+//        long requestAccountId = request.getAccountId();
+//        String requestToken = request.getBase64Token();
+//        if (requestToken == null || requestToken.isEmpty()) {
+//            logger.error("Token is empty or null");
+//            throw new IllegalArgumentException("Token is empty or null");
+//        }
+//        logger.debug("Token: " + requestToken);
+//        //  Remove "Bearer " or "Basic " prefix in the base64Token
+//        requestToken = requestToken.substring(requestToken.indexOf(' ') + 1);
+//        Token token = new TokenJWT(requestToken);
+//
+//        long accountId = token.getUserId();
+//        if (accountId != requestAccountId) {
+//            String message = "Account id in request = " + requestAccountId + ", but account id in token = " + accountId;
+//            logger.error(message);
+//            throw new TokenException(message);
+//        }
+//        String message = "Request authorized for user " + requestAccountId + " successful";
+//        logger.debug(message);
     }
-    */
+
 }

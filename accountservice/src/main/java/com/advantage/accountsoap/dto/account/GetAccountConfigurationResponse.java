@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -94,5 +95,17 @@ public class GetAccountConfigurationResponse {
 
     public void setAllowUserConfiguration(boolean allowUserConfiguration) {
         this.allowUserConfiguration = allowUserConfiguration;
+    }
+
+    @Override
+    public String toString() {
+        return "GetAccountConfigurationResponse{" +
+                "numberOfFailedLoginAttemptsBeforeBlocking=" + numberOfFailedLoginAttemptsBeforeBlocking +
+                ", loginBlockingIntervalInSeconds=" + loginBlockingIntervalInSeconds +
+                ", productInStockDefaultValue=" + productInStockDefaultValue +
+                ", userSecondWsdl=" + userSecondWsdl +
+                ", userLoginTimeout=" + userLoginTimeout +
+                ", allowUserConfiguration=" + allowUserConfiguration +
+                '}';
     }
 }

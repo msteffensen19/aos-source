@@ -29,4 +29,11 @@ public class UpdateSafePayMethodResponse {
     public void setResponse(PaymentPreferencesStatusResponse response) {
         this.response = response;
     }
+
+    @Override
+    public String toString() {
+        return "UpdateSafePayMethodResponse{" +
+                "response=" + response +
+                '}';
+    }
 }

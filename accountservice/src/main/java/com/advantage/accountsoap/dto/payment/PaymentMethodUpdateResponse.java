@@ -1,6 +1,7 @@
-package com.advantage.accountsoap.dto.account;
+package com.advantage.accountsoap.dto.payment;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 
 import javax.xml.bind.annotation.*;
 
@@ -28,5 +29,12 @@ public class PaymentMethodUpdateResponse {
 
     public void setResponse(AccountStatusResponse response) {
         this.response = response;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentMethodUpdateResponse{" +
+                "response=" + response +
+                '}';
     }
 }

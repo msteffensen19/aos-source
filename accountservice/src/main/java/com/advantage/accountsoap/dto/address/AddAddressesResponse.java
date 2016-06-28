@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.address;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
@@ -29,5 +30,12 @@ public class AddAddressesResponse {
 
     public void setResponse(AddressStatusResponse response) {
         this.response = response;
+    }
+
+    @Override
+    public String toString() {
+        return "AddAddressesResponse{" +
+                "response=" + response +
+                '}';
     }
 }

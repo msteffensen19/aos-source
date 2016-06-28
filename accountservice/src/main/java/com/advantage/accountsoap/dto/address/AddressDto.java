@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.address;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -113,5 +114,19 @@ public class AddressDto {
 
     public void setAccountId(long accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressDto{" +
+                "id=" + id +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", state='" + state + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", accountId=" + accountId +
+                '}';
     }
 }

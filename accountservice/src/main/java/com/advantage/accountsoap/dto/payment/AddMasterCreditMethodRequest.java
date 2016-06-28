@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.dto.payment;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -10,10 +11,11 @@ import javax.xml.bind.annotation.*;
         "expirationDate",
         "cvvNumber",
         "customerName",
-        "accountId"
+        "accountId",
+        "base64Token"
 })
 @XmlRootElement(name = "AddMasterCreditMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AddMasterCreditMethodRequest {
+public class AddMasterCreditMethodRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String cardNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -24,6 +26,8 @@ public class AddMasterCreditMethodRequest {
     private String customerName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long accountId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String base64Token;
 
     public AddMasterCreditMethodRequest() {
     }
@@ -68,11 +72,29 @@ public class AddMasterCreditMethodRequest {
         this.customerName = customerName;
     }
 
+    @Override
     public long getAccountId() {
         return accountId;
     }
 
     public void setAccountId(long accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public String getBase64Token() {
+        return base64Token;
+    }
+
+    @Override
+    public String toString() {
+        return "AddMasterCreditMethodRequest{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvvNumber='" + cvvNumber + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", accountId=" + accountId +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

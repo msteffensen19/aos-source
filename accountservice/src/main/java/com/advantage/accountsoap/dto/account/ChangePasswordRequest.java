@@ -1,7 +1,8 @@
 package com.advantage.accountsoap.dto.account;
-
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import javax.xml.bind.annotation.*;
         "base64Token"
 })
 @XmlRootElement(name = "ChangePasswordRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class ChangePasswordRequest {
+public class ChangePasswordRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -23,6 +24,7 @@ public class ChangePasswordRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String base64Token;
 
+    @Override
     public long getAccountId() {
         return accountId;
     }
@@ -47,11 +49,22 @@ public class ChangePasswordRequest {
         this.newPassword = newPassword;
     }
 
+    @Override
     public String getBase64Token() {
         return base64Token;
     }
 
     public void setBase64Token(String base64Token) {
         this.base64Token = base64Token;
+    }
+
+    @Override
+    public String toString() {
+        return "ChangePasswordRequest{" +
+                "accountId=" + accountId +
+                ", oldPassword='" + oldPassword + '\'' +
+                ", newPassword='" + newPassword + '\'' +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

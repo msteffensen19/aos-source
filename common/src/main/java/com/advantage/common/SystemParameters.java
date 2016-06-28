@@ -28,6 +28,8 @@ public class SystemParameters {
                     result = "update";
                     break;
                 case "validate":
+                    result = "validate";
+                    break;
                 default:
                     level = Level.WARN;
                     result = "validate";

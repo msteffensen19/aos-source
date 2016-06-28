@@ -6,6 +6,7 @@ import com.advantage.common.exceptions.authorization.AuthorizationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,7 +25,8 @@ public class ApiSecurityMethodInvokeAspect {
     public ResponseEntity authorizeAsAdmin(ProceedingJoinPoint joinPoint) throws Throwable {
         ResponseEntity response;
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+//        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         try {
             SecurityTools.isAuthorized(authorizationHeader, AccountType.ADMIN);
             response = (ResponseEntity) joinPoint.proceed();
@@ -40,7 +42,8 @@ public class ApiSecurityMethodInvokeAspect {
         ResponseEntity response;
 
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+//        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         try {
             //SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER);
             SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER, AccountType.ADMIN);

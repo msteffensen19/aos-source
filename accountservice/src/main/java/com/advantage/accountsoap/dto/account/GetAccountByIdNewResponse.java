@@ -1,6 +1,8 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.account.internal.AccountDtoNew;
 
 import javax.xml.bind.annotation.*;
 
@@ -28,5 +30,12 @@ public class GetAccountByIdNewResponse {
 
     public void setAccount(AccountDtoNew account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "GetAccountByIdNewResponse{" +
+                "account=" + account +
+                '}';
     }
 }
