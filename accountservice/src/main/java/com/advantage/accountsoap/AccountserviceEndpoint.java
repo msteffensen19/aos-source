@@ -251,7 +251,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountDeleteRequest")
     @ResponsePayload
     public AccountDeleteResponse accountDelete(@RequestPayload AccountDeleteRequest request) throws TokenException {
-        authorizeAsAdmin(request);
+        //TODO Change to  authorizeAsAdmin(request) after the clients will implement filling filed base64Token in SOAP
+        temp_authorizeAsAdmin(request);
         AccountStatusResponse response = accountService.accountDelete(request.getAccountId());
         return new AccountDeleteResponse(response);
     }
@@ -418,25 +419,31 @@ public class AccountserviceEndpoint {
     //endregion
 
     private void authorizeAsAdmin(IAdminRequest request) throws TokenException {
-//        if (request == null) {
-//            logger.error("Request is null");
-//            throw new IllegalArgumentException("Request is null");
-//        }
-//        String requestToken = request.getBase64Token();
-//        if (requestToken == null || requestToken.isEmpty()) {
-//            logger.error("Token is empty or null");
-//            throw new IllegalArgumentException("Token is empty or null");
-//        }
-//        logger.debug("Token: " + requestToken);
-//        Token token = new TokenJWT(requestToken);
-//
-//        if (token.getAccountType().equals(AccountType.ADMIN)) {
-//            String message = "Wrong account type (" + token.getAccountType().toString() + ")";
-//            logger.error(message);
-//            throw new VerificationTokenException(message);
-//        }
+        //temp_authorizeAsAdmin(request);
     }
 
+    //TODO Change to  authorizeAsAdmin(request) after the clients will implement filling filed base64Token in SOAP
+    private void temp_authorizeAsAdmin(IAdminRequest request) throws TokenException {
+        if (request == null) {
+            logger.error("Request is null");
+            throw new IllegalArgumentException("Request is null");
+        }
+        String requestToken = request.getBase64Token();
+        if (requestToken == null || requestToken.isEmpty()) {
+            logger.error("Token is empty or null");
+            throw new IllegalArgumentException("Token is empty or null");
+        }
+        logger.debug("Token: " + requestToken);
+        Token token = new TokenJWT(requestToken);
+
+        if (token.getAccountType().equals(AccountType.ADMIN)) {
+            String message = "Wrong account type (" + token.getAccountType().toString() + ")";
+            logger.error(message);
+            throw new VerificationTokenException(message);
+        }
+    }
+
+    //TODO Enable after the clients will implement filling filed base64Token in SOAP
     private void authorizeAsUser(IUserRequest request) throws TokenException {
 //        if (request == null) {
 //            logger.error("Request is null");
