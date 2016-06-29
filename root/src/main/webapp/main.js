@@ -2,43 +2,46 @@
  * Created by kubany on 10/12/2015.
  */
 require.config({
-    "waitSeconds" : 600,
+    "waitSeconds": 600,
     paths: {
 
-        'jquery' : 'vendor/jquery/dist/jquery.min',
-        'jquery-bez' : 'vendor/jquery-bez/jquery.bez.min',
-        'jquery.animate-colors' : 'vendor/jquery-color-animation/jquery.animate-colors-min',
+        'jquery': 'vendor/jquery/dist/jquery.min',
+        'jquery-bez': 'vendor/jquery-bez/jquery.bez.min',
+        'jquery.animate-colors': 'vendor/jquery-color-animation/jquery.animate-colors-min',
 
 
         'angular': 'vendor/angular/angular.min',
         'angular-cookie': 'vendor/angular-cookie/angular-cookie.min',
         'angular-translate': 'vendor/angular-translate/angular-translate.min',
         "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
-        'angularAnimate' : 'vendor/angular-animate/angular-animate.min',
-        'angularAutocomplete' : 'vendor/ngAutocomplete/src/ngAutocomplete',
-        'ncy-angular-breadcrumb' : 'vendor/angular-breadcrumb/release/angular-breadcrumb.min',
+        'angularAnimate': 'vendor/angular-animate/angular-animate.min',
+        'angularAutocomplete': 'vendor/ngAutocomplete/src/ngAutocomplete',
+        'ncy-angular-breadcrumb': 'vendor/angular-breadcrumb/release/angular-breadcrumb.min',
 
 
-        'bootstrap' : 'vendor/bootstrap/dist/js/bootstrap.min',
-        'ui-bootstrap' : 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+        'bootstrap': 'vendor/bootstrap/dist/js/bootstrap.min',
+        'ui-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
 
 
-        'jPushMenu' : 'utils/jPushMenu',
-        'mainScript' : 'utils/main',
-        'accordion' : 'utils/accordion',
-        'server' : 'utils/server',
-        'nouislider' : 'utils/noUiSlider.8.2.1/nouislider',
-        'wrongDirection' : 'utils/wrongDirection',
-        'UserCookie' : 'utils/Models/UserCookie',
-        'slider' : 'utils/slider',
+        'jPushMenu': 'utils/jPushMenu',
+        'mainScript': 'utils/main',
+        'accordion': 'utils/accordion',
+        'server': 'utils/server',
+        'nouislider': 'utils/noUiSlider.8.2.1/nouislider',
+        'wrongDirection': 'utils/wrongDirection',
+        'UserCookie': 'utils/Models/UserCookie',
+        'slider': 'utils/slider',
+        'jquery-soap': 'utils/jquery.soap',
 
-        'englishLanguage' : 'languages/english',
+        'englishLanguage': 'languages/english',
 
 
     },
     shim: {
-        'angular' : {
-            'exports' : 'angular'
+
+
+        'angular': {
+            'exports': 'angular'
         },
         'app': {
             deps: ['angular']
@@ -49,24 +52,23 @@ require.config({
         'angular-translate': {
             deps: ['angular']
         },
-        'ncy-angular-breadcrumb' : {
+        'ncy-angular-breadcrumb': {
             deps: ['angular']
         },
-        'nouislider' : {
-
-        },
-        'englishLanguage' : {
-
-        },
-        'angularAutocomplete' : {
+        'nouislider': {},
+        'englishLanguage': {},
+        'angularAutocomplete': {
             deps: ['angular']
         },
         'ui-bootstrap': ['angular'],
         'angularAnimate': ['angular'],
-        'jquery-bez' : {
+        'jquery-bez': {
             deps: ['jquery']
         },
-        'jquery.animate-colors' : {
+        'jquery-soap': {
+            'deps': ['jquery']
+        },
+        'jquery.animate-colors': {
             deps: ['jquery']
         },
         'bootstrap': {
@@ -87,7 +89,7 @@ require.config({
         'wrongDirection': {
             deps: ['jquery']
         },
-        'uiRouter':{
+        'uiRouter': {
             deps: ['angular']
         }
     }
@@ -96,24 +98,13 @@ require.config({
 window.name = "NG_DEFER_BOOTSTRAP!";
 
 require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
-        'jquery', 'jquery-bez', 'jquery.animate-colors','jPushMenu','mainScript', 'server',
+        'jquery', 'jquery-bez', 'jquery.animate-colors', 'jPushMenu', 'mainScript', 'server',
         'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
-        'angularAnimate','ui-bootstrap'
-    ], function(angular, app)
-    {
-        function loadServerPropertiesBeforeRunTheApp(){
-            if(server.fileReady()) {
-                angular.element().ready(function() {
-                    angular.bootstrap(document, ['aos']);
-                    angular.resumeBootstrap();
-                });
-            }
-            else{
-                setTimeout(loadServerPropertiesBeforeRunTheApp, 1000)
-            }
-        }
-        loadServerPropertiesBeforeRunTheApp();
+        'angularAnimate', 'ui-bootstrap', 'jquery-soap'
+    ], function (angular, app) {
+            angular.bootstrap(document, ['aos']);
+            angular.resumeBootstrap();
     }
 );
 

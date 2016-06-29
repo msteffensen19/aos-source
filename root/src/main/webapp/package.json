@@ -21,6 +21,7 @@
     "grunt-piece-modulejs": "~0.1.3",
     "grunt-regex-replace": "^0.2.6",
     "grunt-usemin": "~3.1.1",
+    "jquery.soap": "^1.6.7",
     "load-grunt-tasks": "~0.1.0"
   }
 }

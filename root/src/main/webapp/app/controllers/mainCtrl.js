@@ -12,6 +12,9 @@ define(['./module'], function (controllers) {
 
             var ctrl = this;
             ctrl.config = {};
+            $scope.cart;
+            $scope.autoCompleteValue = '';
+            $scope.autoCompleteResult = {};
 
             var EnterInFocus = {
                 login: 'login',
@@ -20,43 +23,58 @@ define(['./module'], function (controllers) {
             var enterInFocus = "";
 
 
-            //console.log(navigator.network)
-            //var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            ////var type = connection.type;
-            //
-            //function updateConnectionStatus() {
-            //    alert("Connection type is change from " + type + " to " + connection.type);
-            //}
-            //if(connection){
-            //    connection.addEventListener('typechange', updateConnectionStatus);
-            //}
+            categoryService.loadServer().then(function(){
 
-
-            $(document).on({
-                keydown: function (event) {
-                    var code = event.keyCode || event.which;
-                    if (code === 13) {
-                        switch (enterInFocus) {
-                            case EnterInFocus.login:
-                                if ($scope.loginUser.loginPassword != "" && $scope.loginUser.loginUser != "") {
-                                    if ($scope.loginUser.email == "" && ctrl.config.emailAddressInLogin) {
+                $(document).on({
+                    keydown: function (event) {
+                        var code = event.keyCode || event.which;
+                        if (code === 13) {
+                            switch (enterInFocus) {
+                                case EnterInFocus.login:
+                                    if ($scope.loginUser.loginPassword != "" && $scope.loginUser.loginUser != "") {
+                                        if ($scope.loginUser.email == "" && ctrl.config.emailAddressInLogin) {
+                                        }
+                                        else {
+                                            $scope.signIn($scope.loginUser, ctrl.rememberMe);
+                                        }
                                     }
-                                    else {
-                                        $scope.signIn($scope.loginUser, ctrl.rememberMe);
-                                    }
-                                }
-                                break;
-                            case EnterInFocus.search:
+                                    break;
+                                case EnterInFocus.search:
 
-                                break;
+                                    break;
+                            }
                         }
                     }
-                }
+                });
+
+                /* Get all products data */
+                categoryService.getAllData();
+                /*===========================  end Get all products data ============================*/
+
+
+                /* Get configuration */
+                userService.getConfiguration().then(function (response) {
+                    ctrl.config = response;
+                    $scope.refreshTimeOut();
+                });
+                /*===========================  end Get configuration ============================*/
+
+                /* loading Cart section  */
+
+                productsCartService.loadCartProducts().then(function (cart) {
+                    $scope.cart = cart;
+                    $timeout(function () {
+                        productsCartService.checkOutOfStockProductsInCart().then(function (_cart) {
+                            $scope.cart = cart;
+                        });
+                    })
+                });
+                /* end loading Cart section  */
+
+
             });
 
-            $scope.cart;
-            $scope.autoCompleteValue = '';
-            $scope.autoCompleteResult = {};
+
 
             $scope.go_up = function () {
                 $('body, html').animate({scrollTop: 0}, 10, function () {
@@ -66,29 +84,9 @@ define(['./module'], function (controllers) {
                 });
             }
 
-            /* Get all products data */
-            categoryService.getAllData();
-            /*===========================  end Get all products data ============================*/
-
-
-            /* Get configuration */
-            userService.getConfiguration().then(function (response) {
-                ctrl.config = response;
-                $scope.refreshTimeOut();
-            });
-            /*===========================  end Get configuration ============================*/
 
 
             /* Cart section  */
-
-            productsCartService.loadCartProducts().then(function (cart) {
-                $scope.cart = cart;
-                $timeout(function () {
-                    productsCartService.checkOutOfStockProductsInCart().then(function (_cart) {
-                        $scope.cart = cart;
-                    });
-                })
-            });
 
             $scope.removeProduct = function (index, event) {
 
