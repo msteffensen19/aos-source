@@ -70,6 +70,7 @@ public class Url_resources {
         } catch (Throwable e) {
             logger.fatal("Wrong properties file", e);
         }
+        logger.debug("URL = " + url.toString());
         return url;
     }
 
@@ -89,7 +90,7 @@ public class Url_resources {
         } catch (Throwable e) {
             logger.fatal("Wrong properties file", e);
         }
-
+        logger.debug("URL = " + urlWithWsdl.toString());
         return urlWithWsdl;
 
     }
