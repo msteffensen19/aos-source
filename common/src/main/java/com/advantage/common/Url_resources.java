@@ -4,6 +4,7 @@ package com.advantage.common;
  * @author Evgeney Fiskin on 31-12-2015.
  */
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -25,6 +26,7 @@ public class Url_resources {
     private static URL urlPrefixSoapAccount;
     private static URL urlPrefixSoapShipEx;
 
+    private static final Logger logger = Logger.getLogger(Url_resources.class);
     @Inject
     private Environment environment;
 
@@ -40,15 +42,17 @@ public class Url_resources {
         urlPrefixSoapAccount = generateUrlSoapPrefix("Account");
         urlPrefixSoapShipEx = generateUrlSoapPrefix("ShipEx");
 
-        System.out.println("Url_resources: ");
-        System.out.println("   Catalog=\'" + getUrlCatalog() + "\'");
-        System.out.println("   MasterCredit=\'" + getUrlMasterCredit() + "\'");
-        System.out.println("   Order=\'" + getUrlOrder() + "\'");
-        System.out.println("   SafePay=\'" + getUrlSafePay() + "\'");
-        //System.out.println("   Service=\'" + getUrlService() + "\'");
-        System.out.println("   Account (SOAP)=\'" + getUrlSoapAccount() + "\'");
-        System.out.println("   ShipEx (SOAP)=\'" + getUrlSoapShipEx() + "\'");
 
+        if (logger.isInfoEnabled()) {
+            StringBuilder sb = new StringBuilder("Url_resources: ").append(System.lineSeparator());
+            sb.append("   Catalog=\'" + getUrlCatalog() + "\'").append(System.lineSeparator());
+            sb.append("   MasterCredit=\'" + getUrlMasterCredit() + "\'").append(System.lineSeparator());
+            sb.append("   Order=\'" + getUrlOrder() + "\'").append(System.lineSeparator());
+            sb.append("   SafePay=\'" + getUrlSafePay() + "\'").append(System.lineSeparator());
+            sb.append("   Account (SOAP)=\'" + getUrlSoapAccount() + "\'").append(System.lineSeparator());
+            sb.append("   ShipEx (SOAP)=\'" + getUrlSoapShipEx() + "\'");
+            logger.info(sb.toString());
+        }
         return 1;
     }
 
@@ -56,20 +60,17 @@ public class Url_resources {
         URL url = null;
 
         try {
-            String scheme = Constants.URI_SCHEMA;
+            String schema = Constants.URI_SCHEMA;
             String host = environment.getProperty(serviceName.toLowerCase() + ".service.url.host");
             int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".service.url.port"));
             String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".service.url.suffix") + "/";
 
-            url = new URL(scheme, host, port, suffix);
+            url = new URL(schema, host, port, suffix);
 
         } catch (Throwable e) {
-            System.err.println("Config file wrong");
-            e.printStackTrace();
+            logger.fatal("Wrong properties file", e);
         }
-
         return url;
-
     }
 
     public URL generateUrlSoapPrefix(String serviceName) {
@@ -86,8 +87,7 @@ public class Url_resources {
             urlWithWsdl = new URL(new URL(schema, host, port, suffix), suffix + wsdl);
 
         } catch (Throwable e) {
-            System.err.println("Config file wrong");
-            e.printStackTrace();
+            logger.fatal("Wrong properties file", e);
         }
 
         return urlWithWsdl;
