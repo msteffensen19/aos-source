@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.account.GetAccountConfigurationResponse;
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -14,12 +15,11 @@ import java.util.List;
  */
 @Configuration
 public class AccountConfiguration {
-    private final String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
-    private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
-    private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
-    private final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
-    private final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
-    private final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
+    private static final String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
+    private static final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
+    private static final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
+    private static final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
+    private static final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
 
     @Inject
     private Environment env;
@@ -46,7 +46,7 @@ public class AccountConfiguration {
         this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserSecondWsdlValue(ENV_USER_SECOND_WSDL_VALUE);
         this.setUserLoginTimeout(ENV_USER_LOGIN_TIMEOUT);
-        this.setAllowUserConfiguration(ENV_ALLOW_USER_CONFIGURATION);
+        this.setAllowUserConfiguration(Constants.ENV_ALLOW_USER_CONFIGURATION);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_SECONDS=" + this.getLoginBlockingIntervalInSeconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());

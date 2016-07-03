@@ -1,8 +1,10 @@
 package com.advantage.order_test.online.store.util;
 
+import com.advantage.order.store.config.AppUserConfiguration;
 import com.advantage.root.util.ValidationHelper;
 import com.advantage.order_test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.order_test.online.store.dao.GenericRepositoryTests;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +15,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Binyamin Regev on 22/11/2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AdvantageTestContextConfiguration.class})
+@ContextConfiguration(classes = {AdvantageTestContextConfiguration.class, AppUserConfiguration.class})
 public class ValidationHelperTests extends GenericRepositoryTests {
+
+    private static final Logger logger = Logger.getLogger(ValidationHelperTests.class);
 
     @Test
     public void testIsValidPhoneNumber() {
+        logger.trace("@Test");
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("054 123 4567"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("(054) 1234567"));
         Assert.assertEquals(true, ValidationHelper.isValidPhoneNumber("(054) 123 4567"));
@@ -36,6 +41,7 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidEmail() {
+        logger.trace("@Test");
         Assert.assertEquals(true, ValidationHelper.isValidEmail("a@b.com"));
         Assert.assertEquals(true, ValidationHelper.isValidEmail("user2015@hpe.com"));
         Assert.assertEquals(true, ValidationHelper.isValidEmail("pmoi@gov.il"));
@@ -51,6 +57,7 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidLogin() {
+        logger.trace("@Test");
         Assert.assertEquals(true, ValidationHelper.isValidLogin("user2015"));
         Assert.assertEquals(true, ValidationHelper.isValidLogin("kingdavid"));
         Assert.assertEquals(true, ValidationHelper.isValidLogin("king.david"));
@@ -72,6 +79,7 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidPassword() {
+        logger.trace("@Test");
         //Assert.assertEquals(true, ValidationHelper.);
         //  Valid Password. 5-10 characters long, containing digits, UPPER and lower case letters
         Assert.assertEquals(true, ValidationHelper.isValidPassword("davidK7"));
@@ -99,6 +107,7 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidTime24h() {
+        logger.trace("@Test");
         Assert.assertEquals(true, ValidationHelper.isValidTime24h("00:00:00"));
         Assert.assertEquals(true, ValidationHelper.isValidTime24h("02:34:56"));
         Assert.assertEquals(true, ValidationHelper.isValidTime24h("12:34:56"));
@@ -114,7 +123,7 @@ public class ValidationHelperTests extends GenericRepositoryTests {
      */
     @Test
     public void testIsValidDate() {
-
+        logger.trace("@Test");
         //  European Date Format
         Assert.assertEquals(true, ValidationHelper.isValidDate("29.02.2012"));
         Assert.assertEquals(false, ValidationHelper.isValidDate("29.02.2013"));
