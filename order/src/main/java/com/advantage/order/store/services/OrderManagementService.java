@@ -1,6 +1,5 @@
 package com.advantage.order.store.services;
 
-import AccountServiceClient.*;
 import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
@@ -635,35 +634,35 @@ public class OrderManagementService {
         return orderResponse;
     }
 
-    public DemoAppConfigGetAllParametersResponse getAllDemoAppConfigParameters() {
-
-        URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
-
-        AccountServicePortService accountServicePostService = new AccountServicePortService(urlWsdlLocation);
-
-        AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
-
-        DemoAppConfigGetAllParametersRequest request = new DemoAppConfigGetAllParametersRequest();
-
-        DemoAppConfigGetAllParametersResponse response = accountServicePort.demoAppConfigGetAllParameters(request);
-
-        return response;
-    }
-
-    public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(String toolName) {
-
-        URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
-
-        AccountServicePortService accountServicePostService = new AccountServicePortService(urlWsdlLocation);
-
-        AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
-
-        DemoAppConfigGetParametersByToolRequest request = new DemoAppConfigGetParametersByToolRequest();
-        request.setToolName(toolName);
-        DemoAppConfigGetParametersByToolResponse response = accountServicePort.demoAppConfigGetParametersByTool(request);
-
-        return response;
-    }
+//    public DemoAppConfigGetAllParametersResponse getAllDemoAppConfigParameters() {
+//
+//        URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
+//
+//        AccountServicePortService accountServicePostService = new AccountServicePortService(urlWsdlLocation);
+//
+//        AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
+//
+//        DemoAppConfigGetAllParametersRequest request = new DemoAppConfigGetAllParametersRequest();
+//
+//        DemoAppConfigGetAllParametersResponse response = accountServicePort.demoAppConfigGetAllParameters(request);
+//
+//        return response;
+//    }
+//
+//    public DemoAppConfigGetParametersByToolResponse getDemoAppConfigParametersByTool(String toolName) {
+//
+//        URL urlWsdlLocation = Url_resources.getUrlSoapAccount();
+//
+//        AccountServicePortService accountServicePostService = new AccountServicePortService(urlWsdlLocation);
+//
+//        AccountServicePort accountServicePort = accountServicePostService.getAccountServicePortSoap11();
+//
+//        DemoAppConfigGetParametersByToolRequest request = new DemoAppConfigGetParametersByToolRequest();
+//        request.setToolName(toolName);
+//        DemoAppConfigGetParametersByToolResponse response = accountServicePort.demoAppConfigGetParametersByTool(request);
+//
+//        return response;
+//    }
 
     //region get orders
     /*

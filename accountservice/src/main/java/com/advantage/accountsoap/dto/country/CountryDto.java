@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.country;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -64,5 +65,15 @@ public class CountryDto {
 
     public void setPhonePrefix(int phonePrefix) {
         this.phonePrefix = phonePrefix;
+    }
+
+    @Override
+    public String toString() {
+        return "CountryDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isoName='" + isoName + '\'' +
+                ", phonePrefix=" + phonePrefix +
+                '}';
     }
 }

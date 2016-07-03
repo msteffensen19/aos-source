@@ -23,4 +23,11 @@ public class GetAccountPaymentPreferencesResponse {
     public void setPreferences(List<PaymentPreferencesDto> preference) {
         this.preference = preference;
     }
+
+    @Override
+    public String toString() {
+        return "GetAccountPaymentPreferencesResponse{" +
+                "preference=" + preference +
+                '}';
+    }
 }

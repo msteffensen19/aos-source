@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -151,5 +152,24 @@ public class AccountCreateRequest {
 
     public void setAllowOffersPromotion(boolean allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountCreateRequest{" +
+                "lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", countryId=" + countryId +
+                ", stateProvince='" + stateProvince + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", address='" + address + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", accountType=" + accountType +
+                ", allowOffersPromotion=" + allowOffersPromotion +
+                '}';
     }
 }

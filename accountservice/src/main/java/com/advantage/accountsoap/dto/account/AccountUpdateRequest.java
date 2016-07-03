@@ -1,6 +1,8 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -17,10 +19,11 @@ import javax.xml.bind.annotation.*;
         "phoneNumber",
         "email",
         "accountType",
-        "allowOffersPromotion"
+        "allowOffersPromotion",
+        "base64Token"
 })
 @XmlRootElement(name = "AccountUpdateRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AccountUpdateRequest {
+public class AccountUpdateRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String lastName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -45,6 +48,8 @@ public class AccountUpdateRequest {
     protected Integer accountType;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected boolean allowOffersPromotion;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    protected String base64Token;
 
     public String getLastName() {
         return lastName;
@@ -140,5 +145,29 @@ public class AccountUpdateRequest {
 
     public void setAllowOffersPromotion(boolean allowOffersPromotion) {
         this.allowOffersPromotion = allowOffersPromotion;
+    }
+
+    @Override
+    public String getBase64Token() {
+        return base64Token;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountUpdateRequest{" +
+                "lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", accountId=" + accountId +
+                ", countryId=" + countryId +
+                ", stateProvince='" + stateProvince + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", address='" + address + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", accountType=" + accountType +
+                ", allowOffersPromotion=" + allowOffersPromotion +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

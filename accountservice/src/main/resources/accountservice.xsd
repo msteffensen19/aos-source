@@ -145,14 +145,16 @@
 
     <xs:element name="GetAllAccountsRequest">
         <xs:complexType>
-            <xs:sequence/>
+            <xs:sequence>
+                <xs:element name="base64Token" type="xs:string"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="GetCountriesRequest">
-            <xs:complexType>
-                <xs:sequence/>
-            </xs:complexType>
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
     </xs:element>
 
     <xs:element name="GetAccountConfigurationRequest">
@@ -163,10 +165,10 @@
 
     <xs:complexType name="CountryDto">
         <xs:sequence>
-            <xs:element name="id" type="xs:long" />
-            <xs:element name="name" type="xs:string" />
-            <xs:element name="isoName" type="xs:string" />
-            <xs:element name="phonePrefix" type="xs:int" />
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="isoName" type="xs:string"/>
+            <xs:element name="phonePrefix" type="xs:int"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -190,6 +192,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -198,6 +201,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -205,7 +209,7 @@
     <xs:element name="GetAccountByIdNewResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="AccountResponse" type="tns:AccountDtoNew" />
+                <xs:element name="AccountResponse" type="tns:AccountDtoNew"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -214,6 +218,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -221,35 +226,35 @@
     <xs:element name="GetAccountByIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="AccountResponse" type="tns:AccountDto" />
+                <xs:element name="AccountResponse" type="tns:AccountDto"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="GetAddressesByAccountIdResponse">
-    <xs:complexType>
-        <xs:sequence>
-            <xs:element name="ShippingAddress" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ShippingAddress" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
     </xs:element>
 
     <xs:element name="AccountCreateRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="lastName" type="xs:string" />
-                <xs:element name="firstName" type="xs:string" />
-                <xs:element name="loginName" type="xs:string" />
-                <xs:element name="countryId" type="xs:long" />
-                <xs:element name="stateProvince" type="xs:string" />
-                <xs:element name="cityName" type="xs:string" />
-                <xs:element name="address" type="xs:string" />
-                <xs:element name="zipcode" type="xs:string" />
-                <xs:element name="phoneNumber" type="xs:string" />
-                <xs:element name="email" type="xs:string" />
-                <xs:element name="password" type="xs:string" />
-                <xs:element name="accountType" type="xs:int" />
-                <xs:element name="allowOffersPromotion" type="xs:boolean" />
+                <xs:element name="lastName" type="xs:string"/>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="loginName" type="xs:string"/>
+                <xs:element name="countryId" type="xs:long"/>
+                <xs:element name="stateProvince" type="xs:string"/>
+                <xs:element name="cityName" type="xs:string"/>
+                <xs:element name="address" type="xs:string"/>
+                <xs:element name="zipcode" type="xs:string"/>
+                <xs:element name="phoneNumber" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+                <xs:element name="accountType" type="xs:int"/>
+                <xs:element name="allowOffersPromotion" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -320,6 +325,7 @@
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="accountType" type="xs:int"/>
                 <xs:element name="allowOffersPromotion" type="xs:boolean"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -330,6 +336,7 @@
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="isoName" type="xs:string"/>
                 <xs:element name="phonePrefix" type="xs:string"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -391,6 +398,7 @@
             <xs:sequence>
                 <xs:element name="accountId" type="xs:long"/>
                 <xs:element name="paymentMethod" type="xs:int"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -408,6 +416,7 @@
             <xs:sequence>
                 <xs:element name="address" type="tns:AddAddressDto" form="qualified" maxOccurs="unbounded"/>
                 <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -432,6 +441,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="address" type="tns:UpdateAddressDto"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -453,6 +463,7 @@
                 <xs:element name="accountId" type="xs:long"/>
                 <xs:element name="safePayUsername" type="xs:string"/>
                 <xs:element name="safePayPassword" type="xs:string"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -468,11 +479,12 @@
     <xs:element name="AddMasterCreditMethodRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name = "cardNumber" type="xs:string" />
-                <xs:element name = "expirationDate" type="xs:string" />
-                <xs:element name = "cvvNumber" type="xs:string" />
-                <xs:element name = "customerName" type="xs:string" />
-                <xs:element name = "accountId" type="xs:long" />
+                <xs:element name="cardNumber" type="xs:string"/>
+                <xs:element name="expirationDate" type="xs:string"/>
+                <xs:element name="cvvNumber" type="xs:string"/>
+                <xs:element name="customerName" type="xs:string"/>
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -492,6 +504,7 @@
                 <xs:element name="safePayUsername" type="xs:string"/>
                 <xs:element name="safePayPassword" type="xs:string"/>
                 <xs:element name="referenceId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -516,11 +529,12 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:long"/>
-                <xs:element name = "cardNumber" type="xs:string" />
-                <xs:element name = "expirationDate" type="xs:string" />
-                <xs:element name = "cvvNumber" type="xs:string" />
-                <xs:element name = "customerName" type="xs:string" />
-                <xs:element name = "referenceId" type="xs:long" />
+                <xs:element name="cardNumber" type="xs:string"/>
+                <xs:element name="expirationDate" type="xs:string"/>
+                <xs:element name="cvvNumber" type="xs:string"/>
+                <xs:element name="customerName" type="xs:string"/>
+                <xs:element name="referenceId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -543,21 +557,22 @@
 
     <xs:complexType name="PaymentPreferencesDto">
         <xs:sequence>
-            <xs:element name= "paymentMethod" type="xs:int" />
-            <xs:element name= "cardNumber" type="xs:string" />
-            <xs:element name= "expirationDate" type="xs:string" />
-            <xs:element name= "cvvNumber" type="xs:string" />
-            <xs:element name= "safePayUsername" type="xs:string" />
-            <xs:element name= "safePayPassword" type="xs:string" />
-            <xs:element name= "customerName" type="xs:string" />
-            <xs:element name= "preferenceId" type="xs:long" />
+            <xs:element name="paymentMethod" type="xs:int"/>
+            <xs:element name="cardNumber" type="xs:string"/>
+            <xs:element name="expirationDate" type="xs:string"/>
+            <xs:element name="cvvNumber" type="xs:string"/>
+            <xs:element name="safePayUsername" type="xs:string"/>
+            <xs:element name="safePayPassword" type="xs:string"/>
+            <xs:element name="customerName" type="xs:string"/>
+            <xs:element name="preferenceId" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:element name="GetAccountPaymentPreferencesRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name = "accountId" type="xs:long" />
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -565,7 +580,7 @@
     <xs:element name="GetAccountPaymentPreferencesResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name = "PaymentPreferences" type="tns:PaymentPreferencesDto" />
+                <xs:element name="PaymentPreferences" type="tns:PaymentPreferencesDto"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -573,8 +588,9 @@
     <xs:element name="DeletePaymentPreferenceRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name = "id" type="xs:long" />
-                <xs:element name = "accountId" type="xs:long" />
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="accountId" type="xs:long"/>
+                <xs:element name="base64Token" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

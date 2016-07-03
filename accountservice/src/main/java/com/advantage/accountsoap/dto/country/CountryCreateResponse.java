@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.country;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -28,5 +29,12 @@ public class CountryCreateResponse {
 
     public void setResponse(CountryStatusResponse response) {
         this.response = response;
+    }
+
+    @Override
+    public String toString() {
+        return "CountryCreateResponse{" +
+                "response=" + response +
+                '}';
     }
 }

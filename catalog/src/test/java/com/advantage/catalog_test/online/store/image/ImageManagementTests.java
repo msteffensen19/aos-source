@@ -100,7 +100,6 @@ public class ImageManagementTests {
      * @see ImageManagementAccess
      * @see ManagedImage
      */
-    //TODO-EVG unignore after testIsFileExists will work in Linux
     @Test(expected = NullPointerException.class)
     public void testImageExistsById() throws IOException {
         XmlManagedImage.doResize = false;

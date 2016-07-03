@@ -1,9 +1,11 @@
 package com.advantage.accountsoap.dto.address;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
 import javax.xml.bind.annotation.*;
 import java.util.List;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "",
@@ -29,5 +31,12 @@ public class GetAddressesByAccountIdResponse {
 
     public void setShippingAddress(List<AddressDto> shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "GetAddressesByAccountIdResponse{" +
+                "shippingAddress=" + shippingAddress +
+                '}';
     }
 }

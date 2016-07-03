@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 
@@ -122,5 +123,16 @@ public class AccountStatusResponse {
      */
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountStatusResponse{" +
+                "success=" + success +
+                ", userId=" + userId +
+                ", reason='" + reason + '\'' +
+                ", token='" + token + '\'' +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
     }
 }

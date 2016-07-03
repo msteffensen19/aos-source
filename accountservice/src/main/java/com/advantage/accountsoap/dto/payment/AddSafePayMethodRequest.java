@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.dto.payment;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -8,16 +9,19 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "accountId",
         "safePayUsername",
-        "safePayPassword"
+        "safePayPassword",
+        "base64Token"
 })
 @XmlRootElement(name = "AddSafePayMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AddSafePayMethodRequest {
+public class AddSafePayMethodRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String safePayUsername;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String safePayPassword;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String base64Token;
 
     public AddSafePayMethodRequest() {
     }
@@ -28,6 +32,7 @@ public class AddSafePayMethodRequest {
         this.safePayPassword = safePayPassword;
     }
 
+    @Override
     public long getAccountId() {
         return accountId;
     }
@@ -50,5 +55,20 @@ public class AddSafePayMethodRequest {
 
     public void setSafePayPassword(String safePayPassword) {
         this.safePayPassword = safePayPassword;
+    }
+
+    @Override
+    public String getBase64Token() {
+        return base64Token;
+    }
+
+    @Override
+    public String toString() {
+        return "AddSafePayMethodRequest{" +
+                "accountId=" + accountId +
+                ", safePayUsername='" + safePayUsername + '\'' +
+                ", safePayPassword='" + safePayPassword + '\'' +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,9 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IAdminRequest;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -13,7 +16,7 @@ import javax.xml.bind.annotation.*;
         "base64Token"
 })
 @XmlRootElement(name = "AccountDeleteRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AccountDeleteRequest {
+public class AccountDeleteRequest implements IAdminRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -33,5 +36,13 @@ public class AccountDeleteRequest {
 
     public void setBase64Token(String base64Token) {
         this.base64Token = base64Token;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountDeleteRequest{" +
+                "accountId=" + accountId +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

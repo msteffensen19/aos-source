@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Created by dalie on 11/29/2015.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.METHOD})
 public @interface AuthorizeAsUser {
     String value() default "";
 }

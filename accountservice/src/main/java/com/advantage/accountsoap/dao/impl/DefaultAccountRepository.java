@@ -17,6 +17,7 @@ import com.advantage.common.enums.AccountType;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
 import com.advantage.root.util.ValidationHelper;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -39,6 +40,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     private AccountStatusResponse accountStatusResponse;
     private String failureMessage;
+    private static final Logger logger = Logger.getLogger(DefaultAccountRepository.class);
+
     @Autowired
     CountryRepository countryRepository;
 
@@ -119,7 +122,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     if (getAppUserByLogin(loginName) == null) {
 
                         //Moti Ostrovski: if not set countryID or equals 0=> set country USA
-                        countryId = countryId==0 ? 40: countryId;
+                        countryId = countryId == 0 ? 40 : countryId;
                         Country country = countryRepository.get(countryId);
                         Account account = null;
                         try {
@@ -183,7 +186,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         ArgumentValidationHelper.zipCodeValidation(zipcode);
 
 
-
         if (account == null) {
             return new AccountStatusResponse(false, "Invalid login user-name", -1);
         }
@@ -195,7 +197,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         }
 
         //Moti Ostrovski: if not set countryID or equals 0=> set country USA
-        countryId = countryId==0 ? 40: countryId;
+        countryId = countryId == 0 ? 40 : countryId;
         Country country = countryRepository.get(countryId);
 
         account.setAccountType(accountType);
@@ -340,13 +342,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         if ((!loginPassword.isEmpty()) && (loginPassword.trim().length() > 0)) {
             AccountPassword accountPassword = new AccountPassword(loginUser, loginPassword);
-            try {
-                if (account.getPassword().compareTo(accountPassword.getEncryptedPassword()) != 0) {
-                    account = addUnsuccessfulLoginAttempt(account);
-                    return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (account.getPassword().compareTo(accountPassword.getEncryptedPassword()) != 0) {
+                account = addUnsuccessfulLoginAttempt(account);
+                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGIN_FAILED, account.getId());
             }
         } else {
             //  password is empty
@@ -391,38 +389,48 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * Currently there's nothing to do in BACK-END for Logout.
      */
     @Override
-    public AccountStatusResponse doLogout(String loginName, String base64Token) {
+    public AccountStatusResponse doLogout(String accountId, String base64Token) {
         //  Check arguments: Not NULL and Not BLANK
-        if (loginName.isEmpty()) {
-            return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+
+        AccountStatusResponse accountStatusFailResponse = new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+
+        if (accountId.isEmpty()) {
+            logger.warn("accountId is empty");
+            return accountStatusFailResponse;
+        } else {
+            logger.debug("accountId=" + accountId);
         }
 
         Account account = null;
-        if (base64Token != null) {
-            if (base64Token.isEmpty()) {
-                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
-            }
+        if (base64Token == null || base64Token.isEmpty()) {
+            logger.error("Token is empty: " + System.lineSeparator() + accountStatusFailResponse.toString());
+            return accountStatusFailResponse;
+        } else {
+            logger.debug("Token = " + base64Token);
 
             //  Try to get user details by login user-name
-            //Account account = getAppUserByLogin(loginName);
-            account = get(Long.valueOf(loginName));
-
+            //Account account = getAppUserByLogin(accountId);
+            account = get(Long.valueOf(accountId));
             if (account == null) {
-                //  user login not found
-                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+                logger.warn("User login not found: " + System.lineSeparator() + accountStatusFailResponse.toString());
+                return accountStatusFailResponse;
             }
+            logger.info("Account " + accountId + " was found");
 
             //  Remove "Bearer " or "Basic " prefix in the base64Token
             String receivedToken = base64Token.substring(base64Token.indexOf(' ') + 1);
 
             Token token = getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType()));
-            if (! token.generateToken().equals(receivedToken)) {
-                return new AccountStatusResponse(false, Account.MESSAGE_USER_LOGOUT_FAILED, -1);
+            if (!token.generateToken().equals(receivedToken)) {
+                logger.error("Wrong token: " + System.lineSeparator() + accountStatusFailResponse.toString());
+                return accountStatusFailResponse;
             }
         }
 
         //  Return: Successful logout attempt, no need to create JWT Token
-        return new AccountStatusResponse(true, "Logout Successful", account.getId());
+        AccountStatusResponse accountStatusSuccessResponse = new AccountStatusResponse(true, "Logout Successful", account.getId());
+        logger.info("Successful logout attempt for " + accountId + System.lineSeparator() + accountStatusSuccessResponse.toString());
+        return accountStatusSuccessResponse;
     }
 
     private boolean validatePhoneNumberAndEmail(final String phoneNumber, final String email) {
@@ -482,11 +490,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         return account;
     }
 
-    /**
-     * Produce a random {@link UUID} string as {@code TokenKey}.
-     *
-     * @return Random {@link UUID} string.
-     */
     private Token getToken(long accountId, String loginName, AccountType accountType) {
         return new TokenJWT(accountId, loginName, accountType);
     }
@@ -543,15 +546,11 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             return new AccountStatusResponse(false, "Invalid password", -1);
         }
         Account account = get(accountId);
-        if (account == null) return new AccountStatusResponse(false, "Account not found", -1);
-
-        try {
-            account.setPassword(newPassword);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (account == null) {
+            return new AccountStatusResponse(false, "Account not found", -1);
         }
+        account.setPassword(newPassword);
         entityManager.persist(account);
-
         return new AccountStatusResponse(true, "Successfully", accountId);
     }
 
@@ -586,8 +585,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         AccountStatusResponse accountStatusResponse;
         if (result == 1) {
             accountStatusResponse = new AccountStatusResponse(true, "Successfully", accountId);
-        }
-        else {
+        } else {
             accountStatusResponse = new AccountStatusResponse(false, "Payment preferences not deleted", accountId);
         }
 
@@ -632,16 +630,16 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             }
 
             if (countryRepository.getAll().size() == TOTAL_COUNTRIES_COUNT) {
-                sb.append("Country").append(Constants.COMMA).append(Constants.SPACE) ;
+                sb.append("Country").append(Constants.COMMA).append(Constants.SPACE);
                 System.out.println("Database Restore Factory Settings successful - table 'country'");
             } else {
-                sb.append("Table 'Country' - FAILED").append(Constants.COMMA).append(Constants.SPACE) ;
+                sb.append("Table 'Country' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
                 System.out.println("Database Restore Factory Settings - table 'country' - FAILED");
                 return new AccountStatusResponse(false, "Database Restore Factory Settings - table 'country'", -1);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            sb.append("Table 'Country' - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE) ;
+            sb.append("Table 'Country' - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE);
             System.out.println("Database Restore Factory Settings - table 'country' - FAILED with Exception");
             return new AccountStatusResponse(false, "Database Restore Factory Settings - table 'country' FAILED with Exception", -1);
         }
@@ -678,7 +676,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             }
         } catch (Exception e) {
             e.printStackTrace();
-            sb.append("Table 'Account' - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE) ;
+            sb.append("Table 'Account' - FAILED with Exception").append(Constants.COMMA).append(Constants.SPACE);
             System.out.println("Database Restore Factory Settings - table 'account' - FAILED with Exception");
             return new AccountStatusResponse(false, "Restore factory settings FAILED - ACCOUNT table", -1);
         }

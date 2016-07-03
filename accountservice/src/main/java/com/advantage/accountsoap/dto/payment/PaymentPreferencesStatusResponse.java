@@ -76,4 +76,13 @@ public class PaymentPreferencesStatusResponse {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentPreferencesStatusResponse{" +
+                "success=" + success +
+                ", id=" + id +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
 }

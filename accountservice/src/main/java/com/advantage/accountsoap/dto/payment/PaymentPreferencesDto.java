@@ -115,4 +115,18 @@ public class PaymentPreferencesDto {
     public void setPreferenceId(long preferenceId) {
         this.preferenceId = preferenceId;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentPreferencesDto{" +
+                "paymentMethod=" + paymentMethod +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvvNumber='" + cvvNumber + '\'' +
+                ", safePayUsername='" + safePayUsername + '\'' +
+                ", safePayPassword='" + safePayPassword + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", preferenceId=" + preferenceId +
+                '}';
+    }
 }

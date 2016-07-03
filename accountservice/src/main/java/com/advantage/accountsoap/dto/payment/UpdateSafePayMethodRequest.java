@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.dto.payment;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.IUserRequest;
 
 import javax.xml.bind.annotation.*;
 
@@ -9,10 +10,11 @@ import javax.xml.bind.annotation.*;
         "userId",
         "safePayUsername",
         "safePayPassword",
-        "referenceId"
+        "referenceId",
+        "base64Token"
 })
 @XmlRootElement(name = "UpdateSafePayMethodRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class UpdateSafePayMethodRequest {
+public class UpdateSafePayMethodRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long userId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -21,6 +23,8 @@ public class UpdateSafePayMethodRequest {
     private String safePayPassword;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long referenceId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String base64Token;
 
     public UpdateSafePayMethodRequest() {
     }
@@ -38,10 +42,12 @@ public class UpdateSafePayMethodRequest {
         this.referenceId = referenceId;
     }
 
+    @Deprecated
     public long getUserId() {
         return this.userId;
     }
 
+    @Deprecated
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -68,5 +74,26 @@ public class UpdateSafePayMethodRequest {
 
     public void setReferenceId(long referenceId) {
         this.referenceId = referenceId;
+    }
+
+    @Override
+    public long getAccountId() {
+        return userId;
+    }
+
+    @Override
+    public String getBase64Token() {
+        return base64Token;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSafePayMethodRequest{" +
+                "userId=" + userId +
+                ", safePayUsername='" + safePayUsername + '\'' +
+                ", safePayPassword='" + safePayPassword + '\'' +
+                ", referenceId=" + referenceId +
+                ", base64Token='" + base64Token + '\'' +
+                '}';
     }
 }

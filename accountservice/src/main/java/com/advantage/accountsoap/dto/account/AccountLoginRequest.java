@@ -1,4 +1,5 @@
 package com.advantage.accountsoap.dto.account;
+//Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.model.Account;
@@ -14,6 +15,7 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "AccountLoginRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountLoginRequest {
+    //Actually this field is AccountId as a string
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginUser;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -51,5 +53,14 @@ public class AccountLoginRequest {
         this.setLoginUser(account.getLoginName());
         this.setEmail(account.getEmail());
         this.setLoginPassword(account.getPassword());
+    }
+
+    @Override
+    public String toString() {
+        return "AccountLoginRequest{" +
+                "loginUser='" + loginUser + '\'' +
+                ", email='" + email + '\'' +
+                ", loginPassword='" + loginPassword + '\'' +
+                '}';
     }
 }
