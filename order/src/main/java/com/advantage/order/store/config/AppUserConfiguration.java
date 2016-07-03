@@ -22,8 +22,8 @@ public class AppUserConfiguration {
     public Environment environment;
 
     private static final Logger logger = Logger.getLogger(AppUserConfiguration.class);
-    private static boolean allowUserConfiguration;
-    private static AppUserConfiguration instance;
+    private boolean allowUserConfiguration;
+
 
 //      //  Class that is called must have a method "public void init() throws Exception"
 //    @Bean(initMethod = "init")
@@ -31,23 +31,17 @@ public class AppUserConfiguration {
 //        return new AppUserConfig();
 //    }
 
-    //    @Bean(initMethod = "init")
-//    @Bean
-//    public AppUserConfiguration getAppUserConfiguration() {
-//        allowUserConfiguration = _isAllowUserConfig();
-//        logger.debug("allowUserConfiguration = "+ _isAllowUserConfig());
-//        return this;   //  Successful
-//    }
-    public static AppUserConfiguration getInstance() {
-        if (instance == null) {
-            logger.trace("Create new instance");
-            instance = new AppUserConfiguration();
-            allowUserConfiguration = instance._isAllowUserConfig();
-        }
-        return instance;
+    @Bean(initMethod = "init")
+    public AppUserConfiguration init() {
+        logger.debug("@Bean(initMethod = \"init\")");
+        AppUserConfiguration configuration = new AppUserConfiguration();
+        configuration.allowUserConfiguration = _isAllowUserConfig();
+        logger.debug("allowUserConfiguration = " + configuration.allowUserConfiguration );
+        return configuration;   //  Successful
     }
 
-    private AppUserConfiguration() {
+    public AppUserConfiguration() {
+        logger.debug("Constructor, objectId="+((Object)this).toString());
     }
 
     public boolean isAllowUserConfiguration() {
