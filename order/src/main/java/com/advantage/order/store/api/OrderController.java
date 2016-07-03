@@ -6,6 +6,7 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.security.AuthorizeAsUser;
+import com.advantage.order.store.config.AppUserConfiguration;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,10 +49,14 @@ public class OrderController{
     @Autowired
     private OrderManagementService orderManagementService;
 
+    @Autowired
+    private AppUserConfiguration appUserConfiguration;
+
     private ShoppingCartResponse shoppingCartResponse;
 
     private static final String DemoAppConfig = "DemoAppConfig/parameters/";
     private static final String ParameterName ="Repeat_ShipEx_call";
+    private static final Logger logger = Logger.getLogger(OrderController.class);
     /*  =========================================================================================================   */
 
     @ModelAttribute
@@ -58,6 +64,7 @@ public class OrderController{
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
+        logger.trace("appUserConfiguration.isAllowUserConfiguration()=" + appUserConfiguration.isAllowUserConfiguration());
     }
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)

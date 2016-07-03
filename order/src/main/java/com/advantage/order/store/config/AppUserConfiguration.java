@@ -24,6 +24,7 @@ public class AppUserConfiguration {
     private static final Logger logger = Logger.getLogger(AppUserConfiguration.class);
     private boolean allowUserConfiguration;
 
+    private static AppUserConfiguration instance;
 
 //      //  Class that is called must have a method "public void init() throws Exception"
 //    @Bean(initMethod = "init")
@@ -33,15 +34,23 @@ public class AppUserConfiguration {
 
     @Bean(initMethod = "init")
     public AppUserConfiguration init() {
-        logger.debug("@Bean(initMethod = \"init\")");
-        AppUserConfiguration configuration = new AppUserConfiguration();
-        configuration.allowUserConfiguration = _isAllowUserConfig();
-        logger.debug("allowUserConfiguration = " + configuration.allowUserConfiguration );
-        return configuration;   //  Successful
+        logger.trace("@Bean(initMethod = \"init\")");
+        return getInstance();
+    }
+
+    public AppUserConfiguration getInstance() {
+        if (instance == null) {
+            instance = new AppUserConfiguration();
+            instance.allowUserConfiguration = _isAllowUserConfig();
+            logger.debug("allowUserConfiguration = " + instance.allowUserConfiguration);
+        }
+        return instance;
     }
 
     public AppUserConfiguration() {
-        logger.debug("Constructor, objectId="+((Object)this).toString());
+        if (logger.isTraceEnabled()) {
+            logger.trace("Constructor, objectId=" + ((Object) this).toString());
+        }
     }
 
     public boolean isAllowUserConfiguration() {
