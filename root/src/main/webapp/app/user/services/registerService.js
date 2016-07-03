@@ -3,8 +3,7 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.service('registerService', ['mini_soap', '$http', '$q', 'resHandleService', '$timeout',
-        function (mini_soap, $http, $q, responseService, $timeout) {
+    services.service('registerService', ['$http', '$q', function ($http, $q) {
             // Return public API.
             return ({
                 register: register,
@@ -22,24 +21,26 @@ define(['./module'], function (services) {
                 else {
                     var params = server.account.getAllCountries();
 
-                    mini_soap.post(params.path, params.method).
-                    then(function (response) {
+                    $.soap({
+                        url: params.path ,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: {},
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            countries = response.Country;
+                            Helper.disableLoader();
                             Loger.Received(response);
-                            countries = [];
-                            angular.forEach(response, function (country) {
-                                countries.push({
-                                    id: country.ID,
-                                    isoName: country.ISONAME,
-                                    name: country.NAME,
-                                    phonePrefix: country.PHONEPREFIX,
-                                });
-                            });
                             defer.resolve(countries);
                         },
-                        function (response) {
+                        error: function (response) {
                             Loger.Received(response);
+                            Helper.disableLoader();
                             defer.reject("Request failed! ");
-                        });
+                        },
+                        enableLogging: true
+                    });
                 }
                 return defer.promise;
             }
@@ -51,7 +52,7 @@ define(['./module'], function (services) {
                     "address": model.address,
                     "allowOffersPromotion": model.offers_promotion ? 'Y' : 'N',
                     "cityName": model.city,
-                    "countryId": model.country.id || 40,
+                    "countryId": model.country && model.country.id ? model.country.id : 40,
                     "email": model.email,
                     "firstName": model.firstName,
                     "lastName": model.lastName,
@@ -67,28 +68,26 @@ define(['./module'], function (services) {
                 Loger.Params(expectToReceive, params.method);
 
                 Helper.enableLoader(10);
-                $timeout(function () {
-                    mini_soap.post(params.path, params.method, expectToReceive).
-                    then(function (res) {
 
-                            var response = {
-                                reason: res.REASON,
-                                success: Helper.parseBoolean(res.SUCCESS),
-                            }
-                            Helper.disableLoader();
-                            Loger.Received(response);
-                            defer.resolve(response);
-                        },
-                        function (res) {
-                            Loger.Received(res);
-                            var response = {
-                                reason: res.REASON ? res.REASON : "Request failed! ",
-                                success: res.SUCCESS ? Helper.parseBoolean(res.SUCCESS) : false,
-                            }
-                            Helper.disableLoader();
-                            defer.reject(response);
-                        });
-                }, 500);
+                $.soap({
+                    url: params.path ,
+                    method: params.method,
+                    namespaceURL: server.namespaceURL,
+                    SOAPAction: server.namespaceURL + params.method,
+                    data: expectToReceive,
+                    success: function (soapResponse) {
+                        var response = soapResponse.toJSON(params.response);
+                        Helper.disableLoader();
+                        Loger.Received(response);
+                        defer.resolve(response.StatusMessage);
+                    },
+                    error: function (response) {
+                        Loger.Received(response);
+                        Helper.disableLoader();
+                        defer.reject("Request failed! ");
+                    },
+                    enableLogging: true
+                });
 
                 return defer.promise;
             }

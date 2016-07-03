@@ -16,7 +16,7 @@ Helper.defaultTimeLoaderToEnable = 1000;
 var enableLoaderActivate = false;
 var ____enableLoaderActivate;
 
-Helper.enableLoader = function (time) {
+Helper.enableLoader = function () {
     if(enableLoaderActivate){
         return;
     }
@@ -24,7 +24,7 @@ Helper.enableLoader = function (time) {
     ____enableLoaderActivate = setTimeout(function () {
         $("div.loader").css({display: "block"});
         $("div.loader").stop().animate({opacity: 1}, 100);
-    }, time || Helper.defaultTimeLoaderToEnable);
+    }, Helper.defaultTimeLoaderToEnable);
 };
 
 Helper.disableLoader = function () {

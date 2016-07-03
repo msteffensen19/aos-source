@@ -25,14 +25,14 @@ define(['./module'], function (controllers) {
                 s.accountDetails.countryName = s.country.name;
                 accountService.changeUserPassword(s.accountDetails.id, s.passwords)
                     .then(function (changeUserPasswordRes) {
-                        if (changeUserPasswordRes && changeUserPasswordRes.SUCCESS == 'true') {
+                        if (changeUserPasswordRes && changeUserPasswordRes.success) {
                             accountService.accountUpdate(s.accountDetails).then(function (response) {
-                                if (response && response.REASON) {
+                                if (response && response.reason) {
                                     s.accountDetailsAnswer = {
-                                        message: response.REASON,
-                                        class: response.SUCCESS == 'true' ? 'valid' : 'invalid'
+                                        message: response.reason,
+                                        class: response.success ? 'valid' : 'invalid'
                                     }
-                                    if (response.SUCCESS == 'true') {
+                                    if (response.success) {
                                         $location.path('myAccount');
                                     }
                                     else {
@@ -46,8 +46,11 @@ define(['./module'], function (controllers) {
                         else {
                             s.accountDetailsAnswer = {
                                 class: 'invalid',
-                                message: changeUserPasswordRes.REASON,
+                                message: changeUserPasswordRes.reason,
                             }
+                            $timeout(function () {
+                                s.accountDetailsAnswer = {message: '', class: 'invalid'}
+                            }, 4000);
                         }
                     });
             }

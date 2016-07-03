@@ -17,42 +17,31 @@ define(['./module'], function (services) {
                     var user = $rootScope.userCookie;
 
                     Helper.enableLoader(10);
-                    $timeout(function () {
 
-                        mini_soap.post(params.path, params.method, {
-                                accountId: user.response.userId
-                            })
-                            .then(function (response) {
-                                    var user = {
-                                        "id": response.ID,
-                                        "lastName": response.LASTNAME,
-                                        "firstName": response.FIRSTNAME,
-                                        "loginName": response.LOGINNAME,
-                                        "countryId": response.COUNTRYID,
-                                        "countryName": response.COUNTRYNAME,
-                                        "countryIsoName": response.COUNTRYISONAME,
-                                        "stateProvince": response.STATEPROVINCE,
-                                        "cityName": response.CITYNAME,
-                                        "homeAddress": response.HOMEADDRESS,
-                                        "zipcode": response.ZIPCODE,
-                                        "mobilePhone": response.MOBILEPHONE,
-                                        "email": response.EMAIL,
-                                        defaultPaymentMethodId: response.DEFAULTPAYMENTMETHODID,
-                                        allowOffersPromotion: response.ALLOWOFFERSPROMOTION == "true",
-                                        internalUnsuccessfulLoginAttempts: response.INTERNALUNSUCCESSFULLOGINATTEMPTS,
-                                        internalUserBlockedFromLoginUntil: response.INTERNALUSERBLOCKEDFROMLOGINUNTIL,
-                                        internalLastSuccesssulLogin: response.INTERNALLASTSUCCESSSULLOGIN,
-                                    }
-                                    Helper.disableLoader();
-                                    Loger.Received(user);
-                                    defer.resolve(user);
-                                },
-                                function (response) {
-                                    Helper.disableLoader();
-                                    Loger.Received(response);
-                                    defer.reject("Request failed! (getAccountDetails)");
-                                });
-                    }, 500);
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: {
+                            accountId: user.response.userId
+                        },
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            if(response && response.AccountResponse && response.AccountResponse.mobilePhone){
+                                response.AccountResponse.mobilePhone = response.AccountResponse.mobilePhone + ""; //warning: this field can be a integer, must be converted to string/
+                            }
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.AccountResponse);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! (getAccountDetails)");
+                        },
+                        enableLogging: true
+                    });
 
                     return defer.promise;
                 },
@@ -63,33 +52,29 @@ define(['./module'], function (services) {
                     var params = server.account.getAddressesByAccountId();
                     var user = $rootScope.userCookie;
                     Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, {
-                                accountId: user.response.userId
-                            })
-                            .then(function (response) {
-                                    var shippingDetails = null;
-                                    if (response.ID) {
-                                        shippingDetails = {
-                                            "id": response.ID,
-                                            "address_line1": response.ADDRESS_LINE1,
-                                            "address_line2": response.ADDRESS_LINE2,
-                                            "country": response.COUNTRY,
-                                            "postalCode": response.POSTALCODE,
-                                            "state": response.STATE,
-                                            "userId": response.USERID,
-                                        }
-                                    }
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    defer.resolve(shippingDetails);
-                                },
-                                function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    defer.reject("Request failed! (getAccountDetails)");
-                                });
-                    }, 500)
+
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: {
+                            accountId: user.response.userId
+                        },
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! (getShippingDetails)");
+                        },
+                        enableLogging: true
+                    });
+
                     return defer.promise;
                 },
 
@@ -100,56 +85,70 @@ define(['./module'], function (services) {
                     var user = $rootScope.userCookie;
 
                     Helper.enableLoader(10);
-                    $timeout(function () {
 
-                        mini_soap.post(params.path, params.method, {
-                                accountId: user.response.userId
-                            })
-                            .then(function (response) {
-                                    var masterCredit = null;
-                                    var safePay = null;
-                                    var MCard;
-                                    var SPay;
-                                    if (response.PAYMENTMETHOD + "" == "20") {
-                                        MCard = response;
+
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: {
+                            accountId: user.response.userId
+                        },
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+
+                            var masterCredit = null;
+                            var safePay = null;
+                            var MCard;
+                            var SPay;
+                            if (response != null) {
+
+                                if(response.preference){
+                                    response = response.preference;
+                                }
+                                if (response.paymentMethod + "" == "20") {
+                                    MCard = response;
+                                }
+                                if (response.paymentMethod + "" == "10") {
+                                    SPay = response;
+                                }
+                                if (response.length && response.length == 2) {
+                                    MCard = response[0].paymentMethod + "" == "20" ? response[0] :
+                                        response[1].paymentMethod + "" == "20" ? response[1] : null;
+                                    SPay = response[0].paymentMethod + "" == "10" ? response[0] :
+                                        response[1].paymentMethod + "" == "10" ? response[1] : null;
+                                }
+                                if (MCard != null) {
+                                    masterCredit = {
+                                        "id": MCard.preferenceId,
+                                        "cardNumber": MCard.cardNumber,
+                                        "cvvNumber": MCard.cvvNumber,
+                                        "expirationDate": MCard.expirationDate,
+                                        "paymentMethod": MCard.paymentMethod,
+                                        "customername": MCard.customerName
                                     }
-                                    if (response.PAYMENTMETHOD + "" == "10") {
-                                        SPay = response;
+                                }
+                                if (SPay != null) {
+                                    safePay = {
+                                        "id": SPay.preferenceId,
+                                        "safepayUsername": SPay.safePayUsername,
+                                        "paymentMethod": SPay.paymentMethod,
+                                        "safepayPassword": SPay.safePayPassword,
                                     }
-                                    if (response.length && response.length == 2) {
-                                        MCard = response[0].PAYMENTMETHOD + "" == "20" ? response[0] :
-                                            response[1].PAYMENTMETHOD + "" == "20" ? response[1] : null;
-                                        SPay = response[0].PAYMENTMETHOD + "" == "10" ? response[0] :
-                                            response[1].PAYMENTMETHOD + "" == "10" ? response[1] : null;
-                                    }
-                                    if (MCard != null) {
-                                        masterCredit = {
-                                            "id": MCard.PREFERENCEID,
-                                            "cardNumber": MCard.CARDNUMBER,
-                                            "cvvNumber": MCard.CVVNUMBER,
-                                            "expirationDate": MCard.EXPIRATIONDATE,
-                                            "paymentMethod": MCard.PAYMENTMETHOD,
-                                            "customername": MCard.CUSTOMERNAME
-                                        }
-                                    }
-                                    if (SPay != null) {
-                                        safePay = {
-                                            "id": SPay.PREFERENCEID,
-                                            "safepayUsername": SPay.SAFEPAYUSERNAME,
-                                            "paymentMethod": SPay.PAYMENTMETHOD,
-                                            "safepayPassword": SPay.SAFEPAYPASSWORD,
-                                        }
-                                    }
-                                    Helper.disableLoader();
-                                    Loger.Received({masterCredit: masterCredit, safePay: safePay});
-                                    defer.resolve({masterCredit: masterCredit, safePay: safePay});
-                                },
-                                function (response) {
-                                    Helper.disableLoader();
-                                    Loger.Received(response);
-                                    defer.reject("Request failed! (getAccountDetails)");
-                                });
-                    }, 500);
+                                }
+                            }
+                            Helper.disableLoader();
+                            Loger.Received({masterCredit: masterCredit, safePay: safePay});
+                            defer.resolve({masterCredit: masterCredit, safePay: safePay});
+                        },
+                        error: function (response) {
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.reject("Request failed! (getAccountPaymentPreferences)");
+                        },
+                        enableLogging: true
+                    });
 
                     return defer.promise;
                 },
@@ -158,7 +157,7 @@ define(['./module'], function (services) {
 
                     var defer = $q.defer();
                     if (passwords.new == '' || passwords.old == '' || passwords.confirm_new == '') {
-                        defer.resolve({SUCCESS: 'true'});
+                        defer.resolve({success: 'true'});
                     }
                     else {
                         var expectToReceive = {
@@ -168,20 +167,27 @@ define(['./module'], function (services) {
                             base64Token: $rootScope.userCookie.response.token,
                         }
                         var params = server.account.changePassword();
-                        Helper.enableLoader(10);
-                        $timeout(function () {
-                            mini_soap.post(params.path, params.method, expectToReceive).
-                            then(function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    defer.resolve(response);
-                                },
-                                function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    defer.reject("Request failed!");
-                                });
-                        }, 500);
+                        Helper.enableLoader();
+
+                        $.soap({
+                            url: params.path,
+                            method: params.method,
+                            namespaceURL: server.namespaceURL,
+                            SOAPAction: server.namespaceURL + params.method,
+                            data: expectToReceive,
+                            success: function (soapResponse) {
+                                var response = soapResponse.toJSON(params.response);
+                                Helper.disableLoader();
+                                Loger.Received(response);
+                                defer.resolve(response.StatusMessage);
+                            },
+                            error: function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            },
+                            enableLogging: true
+                        });
                     }
                     return defer.promise;
                 },
@@ -205,20 +211,28 @@ define(['./module'], function (services) {
                     var params = server.account.accountUpdate();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500);
+                    Helper.enableLoader();
+
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
+
                     return defer.promise;
                 },
 
@@ -238,20 +252,40 @@ define(['./module'], function (services) {
                     var params = server.account.addMasterCreditMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500);
+                    Helper.enableLoader();
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
+
+                    //$timeout(function () {
+                    //    mini_soap.post(params.path, params.method, expectToReceive).
+                    //    then(function (response) {
+                    //            Loger.Received(response);
+                    //            Helper.disableLoader();
+                    //            defer.resolve(response);
+                    //        },
+                    //        function (response) {
+                    //            Loger.Received(response);
+                    //            Helper.disableLoader();
+                    //            defer.reject("Request failed! ");
+                    //        });
+                    //}, 500);
 
                     return defer.promise;
                 },
@@ -269,20 +303,26 @@ define(['./module'], function (services) {
                     var params = server.account.addSafePayMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500);
+                    Helper.enableLoader();
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
                     return defer.promise;
                 },
 
@@ -300,20 +340,26 @@ define(['./module'], function (services) {
                     var params = server.account.updateSafePayMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500)
+                    Helper.enableLoader();
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
 
                     return defer.promise;
                 },
@@ -334,20 +380,39 @@ define(['./module'], function (services) {
                     var params = server.account.updateMasterCreditMethod();
                     Loger.Params(expectToReceive, params.method);
 
-                    Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500);
+                    Helper.enableLoader();
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
+                    //$timeout(function () {
+                    //    mini_soap.post(params.path, params.method, expectToReceive).
+                    //    then(function (response) {
+                    //            Loger.Received(response);
+                    //            Helper.disableLoader();
+                    //            defer.resolve(response);
+                    //        },
+                    //        function (response) {
+                    //            Loger.Received(response);
+                    //            Helper.disableLoader();
+                    //            defer.reject("Request failed! ");
+                    //        });
+                    //}, 500);
 
                     return defer.promise;
                 },

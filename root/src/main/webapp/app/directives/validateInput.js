@@ -364,7 +364,7 @@ define(['./module'], function (directives) {
                 var firstLoader = true;
                 this.modelCompareToChange = function (val) {
                     if (!firstLoader) {
-                        if (val.trim() == "") {
+                        if ((val+"").trim() == "") {
                             return;
                         }
                         this.compareTo.val(val)
@@ -480,9 +480,9 @@ define(['./module'], function (directives) {
                             ctrl.getSelectlist().fadeOut();
                             return;
                         }
-                        else if (val.trim() == "") {
+                        else if ((val+"").trim() == "") {
                             if (s.validations.length > 0) {
-                                if (s.secModel.trim() == '' && input.hasClass(in_focus) && !doNotShowInfo) {
+                                if ((s.secModel+"").trim() == '' && input.hasClass(in_focus) && !doNotShowInfo) {
                                     ul.find('li').slideDown()
                                 }
                             }
@@ -524,10 +524,10 @@ define(['./module'], function (directives) {
                 }
 
                 this.blur = function (val) {
-                    if (val == undefined || val.trim() == undefined) {
+                    if (val == undefined || (val+"").trim() == "undefined") {
                         return;
                     }
-                    if (val.trim() == "") {
+                    if ((val+"").trim() == "") {
                         label.removeClass(animated);
                         if (isCardNumber) {
                             removeCardNumberFourDigits()
@@ -666,7 +666,7 @@ define(['./module'], function (directives) {
                             validation = s.validations[i];
                             switch (validation.key) {
                                 case Keys.secRequired:
-                                    if (s.secModel.trim() == '') {
+                                    if ((s.secModel+"").trim() == '') {
                                         if (changeHint) {
                                             return setInvalidTextToShow(validation.error);
                                         }
@@ -731,7 +731,7 @@ define(['./module'], function (directives) {
                                 validation = s.validations[i];
                                 switch (validation.key) {
                                     case Keys.secRequired:
-                                        if (s.secModel.trim() == '') {
+                                        if ((s.secModel+"").trim() == '') {
                                             showValidation(i);
                                             validInput = false;
                                         }

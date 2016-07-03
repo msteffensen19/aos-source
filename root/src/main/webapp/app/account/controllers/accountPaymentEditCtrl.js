@@ -100,7 +100,7 @@ define(['./module'], function (controllers) {
                 }
                 response.then(function (response) {
 
-                    if(s.preferredPayment_SafePay && response && response.REASON && response.SUCCESS == 'true'){
+                    if(s.preferredPayment_SafePay && response && response.reason && response.success){
                         accountService.updatePrefferedPaymentMethod(10).then(function(res){
                             setMessage(res);
                         });
@@ -113,12 +113,12 @@ define(['./module'], function (controllers) {
 
             function setMessage(response){
 
-                if (response && response.REASON) {
+                if (response && response.reason) {
                     s.accountDetailsAnswer = {
-                        message: response.REASON,
-                        class: response.SUCCESS == 'true' ? 'valid' : 'invalid'
+                        message: response.reason,
+                        class: response.success ? 'valid' : 'invalid'
                     }
-                    if (response.SUCCESS == 'true') {
+                    if (response.success) {
                         $location.path('myAccount');
                     }
                     else {

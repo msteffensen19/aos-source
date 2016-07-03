@@ -3,9 +3,9 @@
  */
 define(['./module'], function (services) {
     'use strict';
-    services.factory('userService', ['$rootScope', '$q', '$http', "resHandleService", "mini_soap", '$timeout',
+    services.factory('userService', ['$rootScope', '$q', '$http',
 
-        function ($rootScope, $q, $http, responseService, mini_soap, $timeout) {
+        function ($rootScope, $q, $http) {
 
             return ({
                 login: login,
@@ -20,8 +20,7 @@ define(['./module'], function (services) {
             }
 
             function getDuplicateProductPrice() {
-                return 100;
-                //return appConfiguration && appConfiguration.duplicateProductPrice ? appConfiguration.duplicateProductPrice : 1;
+                return appConfiguration && appConfiguration.duplicateProductPrice ? appConfiguration.duplicateProductPrice : 1;
             }
 
             function singOut() {
@@ -30,27 +29,34 @@ define(['./module'], function (services) {
                 var user = $rootScope.userCookie;
                 if (user && user.response && user.response.userId != -1) {
 
-                    var params = server.account.accountLogout();
+                    var paramsToSend = server.account.accountLogout();
                     var expectToReceive = {
                         loginUser: user.response.userId,
                         base64Token: "Bearer " + user.response.token,
                     }
 
-                    Helper.enableLoader(10);
-                    Loger.Params(expectToReceive, params.method);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Helper.disableLoader();
-                                Loger.Received(response);
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Helper.disableLoader();
-                                Loger.Received(response);
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500)
+                    Helper.enableLoader();
+
+                    Loger.Params(expectToReceive, paramsToSend.method);
+                    $.soap({
+                        url: paramsToSend.path,
+                        method: paramsToSend.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + paramsToSend.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(paramsToSend.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
 
                 }
                 else {
@@ -71,90 +77,68 @@ define(['./module'], function (services) {
                     defer.resolve(appConfiguration);
                 }
                 else {
+                    Helper.enableLoader();
+                    $http({
+                        method: "get",
+                        url: server.catalog.getConfigurations(),
+                    }).
+                    then(function (res) {
+                        Loger.Received(res);
 
-                    var paramsToSend = server.catalog.getAccountConfiguration();
+                        if (res && res.data && res.data.parameters) {
+                            for (var i = 0; i < res.data.parameters.length; i++) {
+                                switch (res.data.parameters[i].parameterName) {
+                                    case "Email_address_in_login":
+                                        config.emailAddressInLogin = res.data.parameters[i].parameterValue &&
+                                            res.data.parameters[i].parameterValue.toLowerCase() == "yes";
+                                        break;
+                                    case "Sum_to_add_to_cart_calculation":
+                                        config.cartIncrement = res.data.parameters[i].parameterValue || "0";
+                                        config.cartIncrement = parseInt(config.cartIncrement);
+                                        if (!config.cartIncrement || config.cartIncrement < 0) {
+                                            config.cartIncrement = 0;
+                                        }
+                                        break;
+                                    case "Different_price_in_UI_and_API":
+                                        config.duplicateProductPrice = res.data.parameters[i].parameterValue &&
+                                        res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
+                                        break;
+                                }
+                            }
+                        }
 
-                    $.soap({
-                        url: paramsToSend.path ,
-                        method: paramsToSend.method,
-                        namespaceURL: server.namespaceURL,
-                        SOAPAction: server.namespaceURL + paramsToSend.method,
-                        data: {
-                        },
-                        success: function (soapResponse) {
-                            var v = soapResponse.toJSON("GetAccountConfigurationResponse");
-                            var v2 = 0;
-                            v2++;
-                            v2++;
-                            v2++;
-                        },
-                        error: function (soapResponse) {
-                            console.log(soapResponse)
-                        },
-                        enableLogging: true
-                    });
+                        var paramsToSend = server.catalog.getAccountConfiguration();
+                        $.soap({
+                            url: paramsToSend.path,
+                            method: paramsToSend.method,
+                            namespaceURL: server.namespaceURL,
+                            SOAPAction: server.namespaceURL + paramsToSend.method,
+                            data: {},
+                            success: function (soapResponse) {
+                                var json = soapResponse.toJSON(paramsToSend.response);
+                                config.allowUserConfiguration = json.allowUserConfiguration;
+                                config.loginBlockingIntervalInSeconds = json.loginBlockingIntervalInSeconds;
+                                config.numberOfFailedLoginAttemptsBeforeBlocking = json.numberOfFailedLoginAttemptsBeforeBlocking;
+                                config.productInStockDefaultValue = json.productInStockDefaultValue;
+                                config.userLoginTimeOut = json.userLoginTimeout;
+                                config.userSecondWSDL = json.userSecondWsdl;
+                                appConfiguration = config;
+                                Helper.disableLoader();
+                                defer.resolve(config);
+                            },
+                            error: function (response) {
+                                Loger.Received(response);
+                                Helper.disableLoader();
+                                defer.reject("Request failed! ");
+                            },
+                            enableLogging: true
+                        });
 
-
-                    //
-                    //Helper.enableLoader(10);
-                    //$timeout(function () {
-                    //
-                    //    $http({
-                    //        method: "get",
-                    //        url: server.catalog.getConfigurations(),
-                    //    }).
-                    //    then(function (res) {
-                    //        Loger.Received(res);
-                    //
-                    //        if (res && res.data && res.data.parameters) {
-                    //            for (var i = 0; i < res.data.parameters.length; i++) {
-                    //                switch (res.data.parameters[i].parameterName) {
-                    //                    case "Email_address_in_login":
-                    //                        config.emailAddressInLogin = res.data.parameters[i].parameterValue &&
-                    //                            res.data.parameters[i].parameterValue.toLowerCase() == "yes";
-                    //                        break;
-                    //                    case "Sum_to_add_to_cart_calculation":
-                    //                        config.cartIncrement = res.data.parameters[i].parameterValue || "0";
-                    //                        config.cartIncrement = parseInt(config.cartIncrement);
-                    //                        if (!config.cartIncrement || config.cartIncrement < 0) {
-                    //                            config.cartIncrement = 0;
-                    //                        }
-                    //                        break;
-                    //                    case "Different_price_in_UI_and_API":
-                    //                        config.duplicateProductPrice = res.data.parameters[i].parameterValue &&
-                    //                        res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
-                    //                        break;
-                    //                }
-                    //            }
-                    //        }
-                    //
-                    //        var params = server.catalog.getAccountConfiguration();
-                    //        mini_soap.post(params.path, params.method).
-                    //        then(function (response) {
-                    //                Loger.Received(response);
-                    //                config.allowUserConfiguration = response.ALLOWUSERCONFIGURATION.toLowerCase() == "true";
-                    //                config.loginBlockingIntervalInSeconds = parseInt(response.LOGINBLOCKINGINTERVALINSECONDS);
-                    //                config.numberOfFailedLoginAttemptsBeforeBlocking = parseInt(response.NUMBEROFFAILEDLOGINATTEMPTSBEFOREBLOCKING);
-                    //                config.productInStockDefaultValue = parseInt(response.PRODUCTINSTOCKDEFAULTVALUE);
-                    //                config.userLoginTimeOut = parseInt(response.USERLOGINTIMEOUT);
-                    //                config.userSecondWSDL = response.USERSECONDWSDL.toLowerCase() == "true";
-                    //                appConfiguration = config;
-                    //                Helper.disableLoader();
-                    //                defer.resolve(config);
-                    //            },
-                    //            function (response) {
-                    //                Loger.Received(response);
-                    //                Helper.disableLoader();
-                    //                defer.reject("Request failed! ");
-                    //            });
-                    //
-                    //    }, function (err) {
-                    //        Helper.disableLoader();
-                    //        Loger.Received(err);
-                    //        defer.reject("probl.")
-                    //    })
-                    //
-                    //}, 500)
+                    }, function (err) {
+                        Helper.disableLoader();
+                        Loger.Received(err);
+                        defer.reject("probl.")
+                    })
 
                 }
                 return defer.promise;
@@ -164,28 +148,29 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
                 var params = server.account.login();
-                Helper.enableLoader(10);
-                $timeout(function () {
-                    mini_soap.post(params.path, params.method, user).
-                    then(function (res) {
 
-                            var response = {
-                                userId: parseInt(res.USERID),
-                                reason: res.REASON,
-                                success: res.SUCCESS == "true",
-                                token: res.TOKEN
-                            }
+                Helper.enableLoader();
 
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.resolve(response);
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
-                }, 500);
+                Loger.Params(user, params.method);
+                $.soap({
+                    url: params.path,
+                    method: params.method,
+                    namespaceURL: server.namespaceURL,
+                    SOAPAction: server.namespaceURL + params.method,
+                    data: user,
+                    success: function (soapResponse) {
+                        var response = soapResponse.toJSON(params.response);
+                        Helper.disableLoader();
+                        Loger.Received(response);
+                        defer.resolve(response.StatusMessage);
+                    },
+                    error: function (response) {
+                        Loger.Received(response);
+                        Helper.disableLoader();
+                        defer.reject("Request failed! ");
+                    },
+                    enableLogging: true
+                });
 
                 return defer.promise;
             }

@@ -16,14 +16,15 @@ define(['./module'], function (controllers) {
             $scope.autoCompleteValue = '';
             $scope.autoCompleteResult = {};
 
+
             var EnterInFocus = {
                 login: 'login',
                 search: 'search',
             }
             var enterInFocus = "";
 
+            categoryService.loadServer().then(function () {
 
-            categoryService.loadServer().then(function(){
 
                 $(document).on({
                     keydown: function (event) {
@@ -72,19 +73,264 @@ define(['./module'], function (controllers) {
                 /* end loading Cart section  */
 
 
+                $scope.go_up = function () {
+                    $('body, html').animate({scrollTop: 0}, 10, function () {
+                        if ($(".autoCompleteCover").width() < 100) {
+                            $("nav .navLinks").css("display", "block");
+                        }
+                    });
+                }
+
+
+                /* User section */
+
+
+                $scope.login = function (miniTitleId) {
+
+                    if ($rootScope.userCookie) {
+                        $("#" + miniTitleId).fadeToggle(300);
+                        return;
+                    }
+
+                    enterInFocus = EnterInFocus.login;
+
+                    Helper.mobileSectionClose();
+                    $('#toolTipCart').css('display', 'none');
+                    var windowsWidth = $(window).width();
+                    var top = "5%";
+                    if (windowsWidth < 480) {
+                        top = "0";
+                    }
+                    else if (windowsWidth < 700) {
+                        top = "18%";
+                    }
+
+                    $(".PopUp").fadeIn(100, function () {
+                        $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
+                        $("body").css({"left": "0px",})
+                    });
+
+                }
+
+                $(".PopUp, .closePopUpBtn").click(function () {
+
+                    setEnterInFocusHandler();
+
+                    $(".PopUp > div:nth-child(1)").animate({
+                        "top": "-150%"
+                    }, 600, function () {
+                        $(".PopUp").fadeOut(100, function () {
+                            $("body").css("overflow-y", "scroll");
+                        });
+                    });
+                });
+
+
+                function setEnterInFocusHandler() {
+                    if (document.location.hash.indexOf("#/search") != -1) {
+                        enterInFocus = enterInFocus.search;
+                    } else {
+                        enterInFocus = "";
+                    }
+                }
+
+
+                $(".PopUp > div").click(function (e) {
+                    e.stopPropagation();
+                });
+
+                /* END User section */
+
+
+                /* Application helper section */
+
+
+                $scope.redirect = function (path) {
+                    Helper.mobileSectionClose();
+                    $location.path(path);
+                }
+
+                $scope.mobileRedirect = function (path) {
+                    Helper.mobileSectionClose();
+                    $state.go(path)
+                }
+
+
+                //setTimeout(function(){
+                //    $scope.gotoElement("contact_us")
+                //}, 1500)
+
+                $scope.gotoElement = function (id) {
+                    var element = $("#" + id);
+                    if (element.length > 0) {
+                        $("body, html").animate({
+                            scrollTop: (element.offset().top - 65) + "px",
+                        }, 1000)
+                    }
+                };
+
+
+                var _____autoLogOut;
+                $scope.refreshTimeOut = function () {
+
+                    if (ctrl.config == null) {
+                        return;
+                    }
+                    if (JSON.stringify(ctrl.config) == JSON.stringify({})) {
+                        return;
+                    }
+
+                    if (orderService.userIsLogin()) {
+
+                        $timeout.cancel(_____autoLogOut);
+                        _____autoLogOut = $timeout(function () {
+                            $scope.signOut()
+                        }, ctrl.config.userLoginTimeOut == 0 ? (60 * 60000)
+                            : (ctrl.config.userLoginTimeOut * 60000));
+
+                    }
+                }
+
+                /* END Application helper section */
+
+
+                $rootScope.$on('clearCartEvent', function (event, args) {
+                    productsCartService.clearCart().then(function (cart) {
+                        $scope.cart = cart;
+                    });
+                });
+
+
+                $rootScope.$on('$locationChangeStart', function (event, current, previous) {
+                    //$("html, body").css({opacity: 0});
+                    //$(".waitBackground").css({opacity: 1, display: "block",});
+                    //$("div.loader").css({opacity: 1, display: "block",});
+                });
+
+                $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
+
+                    $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
+                    $scope.showCategoryHeader = $location.path().indexOf('/search') <= -1;
+
+                    //$("#searchSection #output").css("opacity", $location.path().indexOf('/search') == -1 ? 1 : 0);
+
+                    Helper.UpdatePageFixed();
+
+                    if ($location.path().indexOf('/search') == -1 && $scope.closeSearchForce + "" != "undefined") {
+                        $scope.closeSearchForce();
+                    }
+                    Helper.mobileSectionClose();
+
+                    $timeout(function () {
+                        if ($location.path() == '/') {
+                            if ($(".autoCompleteCover").width() < 100) {
+                                $("nav .navLinks").css("display", "block");
+                            }
+                        }
+                        else {
+                            $("nav .navLinks").css("display", "none");
+                        }
+                    }, 1050);
+                    $scope.refreshTimeOut();
+                    $scope.miniTitleOut();
+                });
+
+                $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
+                Helper.mobile_section_moved = $("#mobile-section").width();
+
+                $scope.openMobileSection = function () {
+                    Helper.mobileSectionHandler();
+                }
+
+                $scope.$on('$viewContentLoaded', function (event) {
+                    Helper.forAllPage();
+                });
+
             });
 
+            $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+            this.rememberMe = false;
 
+            $scope.checkCart = function () {
 
-            $scope.go_up = function () {
-                $('body, html').animate({scrollTop: 0}, 10, function () {
-                    if ($(".autoCompleteCover").width() < 100) {
-                        $("nav .navLinks").css("display", "block");
+                if ($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0) {
+                    switch ($location.$$path) {
+                        case '/login':
+                        case '/orderPayment':
+                            $state.go("default");
+                            break;
                     }
-                });
+                }
+            }
+
+            $scope.checkLogin = function () {
+                var user = $rootScope.userCookie;
+                if (!(user && user.response && user.response.userId != -1 && user.response.token)) {
+                    $state.go("default");
+                }
             }
 
 
+            var _setUser = 0;
+            $scope.setUser = function () {
+                if (_setUser > 0) {
+                    $scope.signIn({email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}, true);
+                }
+                _setUser++;
+                setTimeout(function () {
+                    _setUser = 0;
+                }, 1000);
+            }
+
+
+            $scope.accountSection = function () {
+                $state.go('myAccount');
+            }
+
+            $scope.signOut = function (even) {
+
+                if (even) {
+                    even.stopPropagation();
+                }
+                userService.singOut().then(function () {
+                    $cookie.remove('lastlogin');
+                    $rootScope.userCookie = undefined;
+                    $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+
+                    productsCartService.loadCartProducts().then(function (cart) {
+                        $scope.cart = cart;
+                        $scope.checkCart();
+                    });
+                    $(".mini-title").css("display", "none");
+                });
+            }
+
+            $scope.miniTitleIn = function (miniTitleId) {
+                if ($rootScope.userCookie) {
+                    $("#" + miniTitleId).stop().delay(500).fadeIn(300);
+                }
+            }
+
+            $scope.miniTitleOut = function (miniTitleId) {
+                if ($rootScope.userCookie) {
+                    $("#" + miniTitleId).stop().delay(500).fadeOut(300);
+                }
+            }
+
+            var ____loginInterval;
+            $scope.miniTitleIn = function () {
+                if (____loginInterval) {
+                    $timeout.cancel(____loginInterval);
+                }
+            }
+
+            $scope.miniTitleOut = function (miniTitleId) {
+                if ($("#" + miniTitleId).css('display') != 'none') {
+                    ____loginInterval = $timeout(function () {
+                        $("#" + miniTitleId).fadeOut(300);
+                    }, 2000);
+                }
+            }
 
             /* Cart section  */
 
@@ -173,8 +419,8 @@ define(['./module'], function (controllers) {
 
                 var toolTipCart = $('#toolTipCart');
                 if (toolTipCart.length > 0) {
-                    setTimeout(function(){
-                        if(!enterInCart){
+                    setTimeout(function () {
+                        if (!enterInCart) {
                             toolTipCart.stop().slideUp(function () {
                                 $('#toolTipCart tbody').animate({scrollTop: 0,}, 500);
                             });
@@ -202,250 +448,6 @@ define(['./module'], function (controllers) {
             }
 
             /* END Cart section */
-
-
-            /* User section */
-
-            $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
-            this.rememberMe = false;
-
-            var _setUser = 0;
-            $scope.setUser = function () {
-                if (_setUser > 0) {
-                    $scope.signIn({email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}, true);
-                }
-                _setUser++;
-                setTimeout(function () {
-                    _setUser = 0;
-                }, 1000);
-            }
-
-
-            $scope.accountSection = function () {
-                $state.go('myAccount');
-            }
-
-            $scope.signOut = function (even) {
-
-                if (even) {
-                    even.stopPropagation();
-                }
-                userService.singOut().then(function () {
-
-                    $cookie.remove('lastlogin');
-                    $rootScope.userCookie = undefined;
-                    $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
-
-                    productsCartService.loadCartProducts().then(function (cart) {
-                        $scope.cart = cart;
-                        $scope.checkCart();
-                    });
-                    $(".mini-title").css("display", "none");
-                });
-            }
-
-            $scope.miniTitleIn = function (miniTitleId) {
-                if ($rootScope.userCookie) {
-                    $("#" + miniTitleId).stop().delay(500).fadeIn(300);
-                }
-            }
-
-            $scope.miniTitleOut = function (miniTitleId) {
-                if ($rootScope.userCookie) {
-                    $("#" + miniTitleId).stop().delay(500).fadeOut(300);
-                }
-            }
-
-            var ____loginInterval;
-            $scope.miniTitleIn = function () {
-                if (____loginInterval) {
-                    $timeout.cancel(____loginInterval);
-                }
-            }
-
-            $scope.miniTitleOut = function (miniTitleId) {
-                if ($("#" + miniTitleId).css('display') != 'none') {
-                    ____loginInterval = $timeout(function () {
-                        $("#" + miniTitleId).fadeOut(300);
-                    }, 2000);
-                }
-            }
-
-            $scope.login = function (miniTitleId) {
-
-                if ($rootScope.userCookie) {
-                    $("#" + miniTitleId).fadeToggle(300);
-                    return;
-                }
-
-                enterInFocus = EnterInFocus.login;
-
-                Helper.mobileSectionClose();
-                $('#toolTipCart').css('display', 'none');
-                var windowsWidth = $(window).width();
-                var top = "5%";
-                if (windowsWidth < 480) {
-                    top = "0";
-                }
-                else if (windowsWidth < 700) {
-                    top = "18%";
-                }
-
-                $(".PopUp").fadeIn(100, function () {
-                    $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
-                    $("body").css({"left": "0px",})
-                });
-
-            }
-
-            $(".PopUp, .closePopUpBtn").click(function () {
-
-                setEnterInFocusHandler();
-
-                $(".PopUp > div:nth-child(1)").animate({
-                    "top": "-150%"
-                }, 600, function () {
-                    $(".PopUp").fadeOut(100, function () {
-                        $("body").css("overflow-y", "scroll");
-                    });
-                });
-            });
-
-
-            function setEnterInFocusHandler() {
-                if (document.location.hash.indexOf("#/search") != -1) {
-                    enterInFocus = enterInFocus.search;
-                } else {
-                    enterInFocus = "";
-                }
-            }
-
-
-            $(".PopUp > div").click(function (e) {
-                e.stopPropagation();
-            });
-
-            /* END User section */
-
-
-            /* Application helper section */
-
-
-            $scope.redirect = function (path) {
-                Helper.mobileSectionClose();
-                $location.path(path);
-            }
-
-            $scope.mobileRedirect = function (path) {
-                Helper.mobileSectionClose();
-                $state.go(path)
-            }
-
-
-            //setTimeout(function(){
-            //    $scope.gotoElement("contact_us")
-            //}, 1500)
-
-            $scope.gotoElement = function (id) {
-                var element = $("#" + id);
-                if(element.length > 0){
-                    $("body, html").animate({
-                        scrollTop: (element.offset().top - 65) + "px",
-                    }, 1000)
-                }
-            };
-
-            $scope.checkCart = function () {
-
-                if ($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0) {
-                    switch ($location.$$path) {
-                        case '/login':
-                        case '/orderPayment':
-                            $state.go("default");
-                            break;
-                    }
-                }
-            }
-
-            $scope.checkLogin = function () {
-                var user = $rootScope.userCookie;
-                if (!(user && user.response && user.response.userId != -1 && user.response.token)) {
-                    $state.go("default");
-                }
-            }
-
-
-            var _____autoLogOut;
-            $scope.refreshTimeOut = function () {
-
-                if (ctrl.config == null) {
-                    return;
-                }
-                if (orderService.userIsLogin()) {
-
-                    $timeout.cancel(_____autoLogOut);
-                    _____autoLogOut = $timeout(function () {
-                        $scope.signOut()
-                    }, ctrl.config.userLoginTimeOut == 0 ? (60 * 60000)
-                        : (ctrl.config.userLoginTimeOut * 60000));
-
-                }
-            }
-
-            /* END Application helper section */
-
-
-            $rootScope.$on('clearCartEvent', function (event, args) {
-                productsCartService.clearCart().then(function (cart) {
-                    $scope.cart = cart;
-                });
-            });
-
-
-            $rootScope.$on('$locationChangeStart', function (event, current, previous) {
-                //$("html, body").css({opacity: 0});
-                //$(".waitBackground").css({opacity: 1, display: "block",});
-                //$("div.loader").css({opacity: 1, display: "block",});
-            });
-
-            $rootScope.$on('$locationChangeSuccess', function (event, current, previous) {
-
-                $scope.welcome = $location.path().indexOf('/welcome') <= -1 && $location.path().indexOf('/404') <= -1;
-                $scope.showCategoryHeader = $location.path().indexOf('/search') <= -1;
-
-                //$("#searchSection #output").css("opacity", $location.path().indexOf('/search') == -1 ? 1 : 0);
-
-                Helper.UpdatePageFixed();
-
-                if ($location.path().indexOf('/search') == -1 && $scope.closeSearchForce + "" != "undefined") {
-                    $scope.closeSearchForce();
-                }
-                Helper.mobileSectionClose();
-
-                $timeout(function () {
-                    if ($location.path() == '/') {
-                        if ($(".autoCompleteCover").width() < 100) {
-                            $("nav .navLinks").css("display", "block");
-                        }
-                    }
-                    else {
-                        $("nav .navLinks").css("display", "none");
-                    }
-                }, 1050);
-                $scope.refreshTimeOut();
-                $scope.miniTitleOut();
-            });
-
-            $("#mobile-section").css("left", "-" + $("#mobile-section").css("width"));
-            Helper.mobile_section_moved = $("#mobile-section").width();
-
-            $scope.openMobileSection = function () {
-                Helper.mobileSectionHandler();
-            }
-
-            $scope.$on('$viewContentLoaded', function (event) {
-                Helper.forAllPage();
-            });
 
 
             this.getRequire = function (nameRequire) {
@@ -551,11 +553,11 @@ define(['./module'], function (controllers) {
                 ]);
             };
 
-            this.closeImgTeam = function(){
+            this.closeImgTeam = function () {
                 $("#teamIdToAnimate").addClass("hinge");
-                setTimeout(function(){
+                setTimeout(function () {
                     $("#team").fadeOut(1000);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#teamIdToAnimate").removeClass("hinge");
                         $("#teamIdToAnimate").css({
                             display: "none"

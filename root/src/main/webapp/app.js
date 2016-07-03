@@ -80,58 +80,59 @@ define([
 
     config(accountConfig).
 
-    run(function ($rootScope, $state, ipCookie, $http) {
+    run(function ($rootScope, $state, ipCookie) {
 
-        //$http.defaults.headers.get = { 'Content-Type': "application/json", }
 
-        var pcBlocked = ipCookie("pcBlocked");
-        if (pcBlocked) {
-            if (new Date().getTime() > pcBlocked) {
-                ipCookie.remove("pcBlocked");
+            //$http.defaults.headers.get = { 'Content-Type': "application/json", }
+
+            var pcBlocked = ipCookie("pcBlocked");
+            if (pcBlocked) {
+                if (new Date().getTime() > pcBlocked) {
+                    ipCookie.remove("pcBlocked");
+                }
+                else {
+                    $state.go('404');
+                }
             }
-            else {
-                $state.go('404');
+
+            $rootScope.userCookieLastEntry = ipCookie('lastlogin');
+            if ($rootScope.userCookieLastEntry) {
+                var cookie = ipCookie($rootScope.userCookieLastEntry);
+                if (cookie) {
+                    $rootScope.userCookie = cookie;
+                }
             }
-        }
 
-        $rootScope.userCookieLastEntry = ipCookie('lastlogin');
-        if ($rootScope.userCookieLastEntry) {
-            var cookie = ipCookie($rootScope.userCookieLastEntry);
-            if (cookie) {
-                $rootScope.userCookie = cookie;
-            }
-        }
+            $rootScope.$on('$stateChangeError', function (a, b, c, d) {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(d);
+                //$state.go('404');
+            });
 
-        $rootScope.$on('$stateChangeError', function (a, b, c, d) {
-            console.log(a);
-            console.log(b);
-            console.log(c);
-            console.log(d);
-            //$state.go('404');
-        });
+            $rootScope.breadcrumb = [{
+                name: "Home Page",
+                path: "/",
+            }];
 
-        $rootScope.breadcrumb = [{
-            name: "Home Page",
-            path: "/",
-        }];
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+                //var requireLogin = toState.data.requireLogin;
+                //var showWelcome = toState.data.showWelcome;
+                //var underConstruction = toState.data.underConstruction;
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-            //var requireLogin = toState.data.requireLogin;
-            //var showWelcome = toState.data.showWelcome;
-            //var underConstruction = toState.data.underConstruction;
+                /*
+                 showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
+                 underConstruction != 'undefined' && underConstruction ?
+                 $(document.body).addClass('under-construction') :
+                 $(document.body).removeClass('under-construction');
 
-            /*
-             showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
-             underConstruction != 'undefined' && underConstruction ?
-             $(document.body).addClass('under-construction') :
-             $(document.body).removeClass('under-construction');
-
-             if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
-             event.preventDefault();
-             // get me a login modal!
-             }
-             */
-        });
+                 if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+                 event.preventDefault();
+                 // get me a login modal!
+                 }
+                 */
+            });
     });
 
 });
@@ -144,7 +145,7 @@ var t = function (a) {
     alert(a)
 }
 
-print = function(a){
+print = function (a) {
     console.log(" ");
     console.log("  ");
     console.log(a);

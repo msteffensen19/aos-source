@@ -744,6 +744,7 @@
     }
 
     var jsonResult;
+    var jsonString;
     function xml2jsonImpl(xml, rootNode) {
 
         for (var i = 0; i < xml.childNodes.length; i++) {
@@ -752,60 +753,112 @@
 
                 if (!(node.attributes.length === 0 && node.childElementCount === 0)) {
                     xml2jsonImpl(node, rootNode);
+                    if(jsonResult){
+                        break;
+                    }
                 }
 
                 var name = node.nodeName;
                 if (name.toLowerCase() != (node.prefix + ":" + rootNode).toLowerCase()) {
                     continue;
                 }
-
-                var searchNodes = node.childNodes;
-                var jsonString = "";
-                for (var j = 0; j < searchNodes.length; j++) {
-
-                    node = searchNodes[j];
-
-                    if (jsonString != "") {
-                        jsonString += ", "
-                    }
-
-                    var textContent = node.textContent;
-                    if (textContent.toLowerCase() == "true" ||
-                        textContent.toLowerCase() == "false"){
-
-                    }
-                    else if(new RegExp('^[0-9]+$').test(textContent.toLowerCase())) {
-                        if (textContent >= Number.MAX_VALUE) {
-                            textContent = "\"" + textContent + "\""
-                        }
-                    }
-                    else {
-                        textContent = "\"" + textContent + "\""
-                    }
-
-                    jsonString += "\"" + node.localName + "\":" + textContent;
-
-                    //if (result.hasOwnProperty(name)) {
-                    //    // For repeating elements, cast/promote the node to array
-                    //    var val = result[name];
-                    //    if (!Array.isArray(val)) {
-                    //        val = [val];
-                    //        result[name] = val;
-                    //    }
-                    //    val.push(child);
-                    //} else {
-                    //    result[name] = child;
-                    //}
+                found = true;
+                jsonString = ""
+                if(node.childNodes && node.childNodes.length > 0){
+                    buildJson(node.childNodes);
                 }
-
                 jsonResult = JSON.parse("{" + jsonString+ "}");
             }
         }
     }
 
-    function xml2json(xml, rootNode) {
-        var n;
 
+    function getObjectJson(htmlNodes) {
+        var temp = "";
+        for (var i = 0; i < htmlNodes.childNodes.length; i++) {
+            var node = htmlNodes.childNodes[i];
+            if (temp != "") {
+                temp += ", "
+            }
+            temp += appendToJsonString(node);
+        }
+        return "{" + temp + "}"
+    }
+
+    function appendToJsonString(node){
+
+        var textContent = getType(node.textContent);
+        return "\"" + node.localName + "\":" + textContent;
+
+    }
+
+    function getType(textContent){
+        if(!textContent){
+            return "\"\"";
+        }
+        if (textContent.toLowerCase() == "true" ||
+            textContent.toLowerCase() == "false") {
+        }
+        else if (new RegExp('^[0-9]{0,10}$').test(textContent.toLowerCase())
+            && textContent[0] + "" != "0") {
+        }
+        else {
+            textContent = "\"" + textContent + "\""
+        }
+        return textContent;
+    }
+
+    function buildJson(searchNodes){
+
+        for (var j = 0; j < searchNodes.length; j++) {
+
+            var node = searchNodes[j];
+            var valueIsObject;
+
+            if (!(node.attributes.length === 0 && node.childElementCount === 0)) {
+                valueIsObject = getObjectJson(searchNodes[j]);
+            }
+
+            if (jsonString != "") {
+                jsonString += ", "
+            }
+
+            if(valueIsObject){
+                if(searchNodes.length > 1){
+                    if(jsonString.indexOf("[") == -1){
+                        jsonString += "\"" + node.localName + "\":["
+                    }
+                    jsonString += valueIsObject;
+                    if(j + 1 >= searchNodes.length){
+                        jsonString += "]";
+                    }
+                }
+                else{
+                    jsonString += "\"" + node.localName + "\":" + valueIsObject;
+                }
+            }
+            else {
+                var textContent = getType(node.textContent);
+                jsonString += "\"" + node.localName + "\":" + textContent;
+            }
+
+            //if (result.hasOwnProperty(name)) {
+            //    // For repeating elements, cast/promote the node to array
+            //    var val = result[name];
+            //    if (!Array.isArray(val)) {
+            //        val = [val];
+            //        result[name] = val;
+            //    }
+            //    val.push(child);
+            //} else {
+            //    result[name] = child;
+            //}
+        }
+    }
+
+
+    function xml2json(xml, rootNode) {
+        jsonResult = null;
         if (!xml) {
             return xml;
         }
@@ -819,7 +872,16 @@
         } else {
             xml2jsonImpl(xml, rootNode);
         }
-        return jsonResult;
+
+        return isEmptyObj(jsonResult);
+    }
+
+    function isEmptyObj(obj) {
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
+                return obj;
+        }
+        return true && JSON.stringify(obj) === JSON.stringify({}) ? null : obj;
     }
 
     if (typeof jQuery !== 'undefined') {

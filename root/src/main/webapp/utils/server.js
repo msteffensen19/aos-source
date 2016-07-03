@@ -227,7 +227,8 @@ var server = {
 
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'GetAccountConfigurationRequest'
+                method: 'GetAccountConfigurationRequest',
+                response: "GetAccountConfigurationResponse",
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -301,7 +302,8 @@ var server = {
         accountUpdate: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'AccountUpdateRequest'
+                method: 'AccountUpdateRequest',
+                response: 'AccountUpdateResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -315,7 +317,8 @@ var server = {
         getAllCountries: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'GetCountriesRequest'
+                method: 'GetCountriesRequest',
+                response: 'GetCountriesResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -325,7 +328,8 @@ var server = {
         register: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'AccountCreateRequest'
+                method: 'AccountCreateRequest',
+                response: 'AccountCreateResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -335,7 +339,8 @@ var server = {
         login: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'AccountLoginRequest'
+                method: 'AccountLoginRequest',
+                response: 'AccountLoginResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -345,7 +350,8 @@ var server = {
         getAccountById: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'GetAccountByIdRequest'
+                method: 'GetAccountByIdRequest',
+                response: 'GetAccountByIdResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -355,7 +361,8 @@ var server = {
         getAccountById_new: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'GetAccountByIdNewRequest'
+                method: 'GetAccountByIdNewRequest',
+                response: 'GetAccountByIdNewResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -365,7 +372,8 @@ var server = {
         getAccountPaymentPreferences: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'GetAccountPaymentPreferencesRequest'
+                method: 'GetAccountPaymentPreferencesRequest',
+                response: 'PaymentPreferences'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -375,7 +383,8 @@ var server = {
         getAddressesByAccountId: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'GetAddressesByAccountIdRequest'
+                method: 'GetAddressesByAccountIdRequest',
+                response: 'GetAddressesByAccountIdResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -385,7 +394,8 @@ var server = {
         accountUpdate: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'AccountUpdateRequest'
+                method: 'AccountUpdateRequest',
+                response: 'AccountUpdateResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -395,7 +405,8 @@ var server = {
         updateMasterCreditMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'UpdateMasterCreditMethodRequest'
+                method: 'UpdateMasterCreditMethodRequest',
+                response: 'PaymentPreferencesStatusResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -405,7 +416,8 @@ var server = {
         addMasterCreditMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'AddMasterCreditMethodRequest'
+                method: 'AddMasterCreditMethodRequest',
+                response: 'PaymentPreferencesStatusResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -415,7 +427,8 @@ var server = {
         updateSafePayMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'UpdateSafePayMethodRequest'
+                method: 'UpdateSafePayMethodRequest',
+                response: 'AddSafepayMethodResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -425,7 +438,8 @@ var server = {
         addSafePayMethod: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'AddSafePayMethodRequest'
+                method: 'AddSafePayMethodRequest',
+                response: 'PaymentPreferencesStatusResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -435,7 +449,8 @@ var server = {
         changePassword: function () {
             var wsdlToReturn = {
                 path: wsdlPath,
-                method: 'ChangePasswordRequest'
+                method: 'ChangePasswordRequest',
+                response: 'ChangePasswordResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -446,6 +461,7 @@ var server = {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AccountLogoutRequest',
+                response: 'AccountLogoutResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -456,6 +472,7 @@ var server = {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'PaymentMethodUpdateRequest',
+                response: 'PaymentMethodUpdateResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
