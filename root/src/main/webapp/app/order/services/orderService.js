@@ -11,9 +11,9 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('orderService', ['$rootScope', '$q', 'mini_soap', '$http', '$filter', 'productsCartService', '$timeout',
+    services.service('orderService', ['$rootScope', '$q', '$http', '$filter', 'productsCartService',
 
-        function ($rootScope, $q, mini_soap, $http, $filter, productsCartService, $timeout) {
+        function ($rootScope, $q, $http, $filter, productsCartService) {
 
             return ({
                 getAccountById: getAccountById,
@@ -115,24 +115,28 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
                 var params = server.order.accountUpdate();
 
-                Helper.enableLoader(10);
-                $timeout(function () {
-                    mini_soap.post(params.path, params.method, paramsToPass).
-                    then(function (res) {
-                            Loger.Received(res);
-                            Helper.disableLoader();
-                            defer.resolve({
-                                success: res.SUCCESS,
-                                userId: res.USERID,
-                                reason: res.REASON,
-                            });
-                        },
-                        function (response) {
-                            Loger.Received(response);
-                            Helper.disableLoader();
-                            defer.reject("Request failed! ");
-                        });
-                }, 500);
+                Helper.enableLoader();
+
+                $.soap({
+                    url: params.path,
+                    method: params.method,
+                    namespaceURL: server.namespaceURL,
+                    SOAPAction: server.namespaceURL + params.method,
+                    data: paramsToPass,
+                    success: function (soapResponse) {
+                        var response = soapResponse.toJSON(params.response);
+                        Helper.disableLoader();
+                        Loger.Received(response);
+                        defer.resolve(response.AccountResponse);
+                    },
+                    error: function (response) {
+                        Loger.Received(response);
+                        Helper.disableLoader();
+                        defer.reject("Request failed! ");
+                    },
+                    enableLogging: true
+                });
+
                 return defer.promise;
             }
 
@@ -143,37 +147,30 @@ define(['./module'], function (services) {
                 if (user && user.response && user.response.userId != -1) {
 
                     var params = server.account.getAccountById();
-                    Helper.enableLoader(10);
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, {
-                                accountId: user.response.userId
-                            })
-                            .then(function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    var user = {
-                                        "id": response.ID,
-                                        "lastName": response.LASTNAME,
-                                        "firstName": response.FIRSTNAME,
-                                        "loginName": response.LOGINNAME,
-                                        "countryId": response.COUNTRYID,
-                                        "country": response.COUNTRYISONAME,
-                                        "stateProvince": response.STATEPROVINCE,
-                                        "cityName": response.CITYNAME,
-                                        "address": response.ADDRESS,
-                                        "zipcode": response.ZIPCODE,
-                                        "phoneNumber": response.PHONENUMBER,
-                                        "email": response.EMAIL,
-                                        "allowOffersPromotion": response.ALLOWOFFERSPROMOTION,
-                                    }
-                                    defer.resolve(user);
-                                },
-                                function (response) {
-                                    Loger.Received(response);
-                                    Helper.disableLoader();
-                                    defer.reject("Request failed! (getAccountById)");
-                                });
-                    }, 500)
+                    Helper.enableLoader();
+
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: { accountId: user.response.userId },
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            if(response && response.AccountResponse){
+                                response.AccountResponse.country = response.AccountResponse.countryIsoName;
+                            }
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.AccountResponse);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
                 }
                 else {
                     defer.resolve(null);

@@ -4,9 +4,9 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('accountService', ['$rootScope', '$q', 'mini_soap', '$timeout',
+    services.service('accountService', ['$rootScope', '$q',
 
-        function ($rootScope, $q, mini_soap, $timeout) {
+        function ($rootScope, $q) {
 
             return {
 
@@ -16,7 +16,7 @@ define(['./module'], function (services) {
                     var params = server.account.getAccountById_new();
                     var user = $rootScope.userCookie;
 
-                    Helper.enableLoader(10);
+                    Helper.enableLoader();
 
                     $.soap({
                         url: params.path,
@@ -273,20 +273,6 @@ define(['./module'], function (services) {
                         enableLogging: true
                     });
 
-                    //$timeout(function () {
-                    //    mini_soap.post(params.path, params.method, expectToReceive).
-                    //    then(function (response) {
-                    //            Loger.Received(response);
-                    //            Helper.disableLoader();
-                    //            defer.resolve(response);
-                    //        },
-                    //        function (response) {
-                    //            Loger.Received(response);
-                    //            Helper.disableLoader();
-                    //            defer.reject("Request failed! ");
-                    //        });
-                    //}, 500);
-
                     return defer.promise;
                 },
 
@@ -400,19 +386,6 @@ define(['./module'], function (services) {
                         },
                         enableLogging: true
                     });
-                    //$timeout(function () {
-                    //    mini_soap.post(params.path, params.method, expectToReceive).
-                    //    then(function (response) {
-                    //            Loger.Received(response);
-                    //            Helper.disableLoader();
-                    //            defer.resolve(response);
-                    //        },
-                    //        function (response) {
-                    //            Loger.Received(response);
-                    //            Helper.disableLoader();
-                    //            defer.reject("Request failed! ");
-                    //        });
-                    //}, 500);
 
                     return defer.promise;
                 },
@@ -430,19 +403,26 @@ define(['./module'], function (services) {
                     Loger.Params(expectToReceive, params.method);
 
                     Helper.enableLoader();
-                    $timeout(function () {
-                        mini_soap.post(params.path, params.method, expectToReceive).
-                        then(function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.resolve(response);
-                            },
-                            function (response) {
-                                Loger.Received(response);
-                                Helper.disableLoader();
-                                defer.reject("Request failed! ");
-                            });
-                    }, 500)
+
+                    $.soap({
+                        url: params.path,
+                        method: params.method,
+                        namespaceURL: server.namespaceURL,
+                        SOAPAction: server.namespaceURL + params.method,
+                        data: expectToReceive,
+                        success: function (soapResponse) {
+                            var response = soapResponse.toJSON(params.response);
+                            Helper.disableLoader();
+                            Loger.Received(response);
+                            defer.resolve(response.StatusMessage);
+                        },
+                        error: function (response) {
+                            Loger.Received(response);
+                            Helper.disableLoader();
+                            defer.reject("Request failed! ");
+                        },
+                        enableLogging: true
+                    });
 
                     return defer.promise;
                 }

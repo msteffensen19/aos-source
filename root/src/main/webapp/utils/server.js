@@ -406,7 +406,7 @@ var server = {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'UpdateMasterCreditMethodRequest',
-                response: 'PaymentPreferencesStatusResponse'
+                response: 'UpdateMasterCreditMethodResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -428,7 +428,7 @@ var server = {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'UpdateSafePayMethodRequest',
-                response: 'AddSafepayMethodResponse'
+                response: 'UpdateSafePayMethodResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
@@ -439,7 +439,7 @@ var server = {
             var wsdlToReturn = {
                 path: wsdlPath,
                 method: 'AddSafePayMethodRequest',
-                response: 'PaymentPreferencesStatusResponse'
+                response: 'AddSafePayMethodResponse'
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
