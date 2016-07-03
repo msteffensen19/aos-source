@@ -215,6 +215,9 @@ define(['./module'], function (services) {
                                 services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
                             });
 
+                            server.setKey("http://" + services_properties['catalog_service_url_host'] + ":" +
+                                services_properties['catalog_service_url_port'] + "/");
+
                             server.setCatalogKey("http://" + services_properties['catalog_service_url_host'] + ":" +
                                 services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'] + "/");
 

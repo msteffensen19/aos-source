@@ -59,14 +59,14 @@ define(['./module'], function (controllers) {
             var _____continueShopping;
             s.sendSupportEmail = function () {
 
-                if(s.supportModel.subject.trim().toLowerCase() == "who are you"){
+                if (s.supportModel.subject.trim().toLowerCase() == "who are you") {
                     $("#team").fadeIn(500).css("display", "table");
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#teamIdToAnimate").css({
                             display: "block"
                         });
                         $("#teamIdToAnimate").addClass("zoomInDown");
-                        setTimeout(function(){
+                        setTimeout(function () {
                             $("#teamIdToAnimate").removeClass("zoomInDown");
                         }, 3000);
                     }, 300);
@@ -112,7 +112,7 @@ define(['./module'], function (controllers) {
             s.continueShopping = function () {
                 if (_____continueShopping) {
                     s.supportSuccess = false;
-                    s.registerAnswer = { class: "", message: "" }
+                    s.registerAnswer = {class: "", message: ""}
                     $timeout.cancel(_____continueShopping)
                 }
                 s.go_up();
@@ -158,16 +158,14 @@ define(['./module'], function (controllers) {
                 }
             });
 
-            s.openChat = function(){
+            s.openChat = function () {
                 var path = server.catalog.getKey().replace("http://", "").replace("/api/v1", "");
                 sessionStorage.setItem("serverKey", path);
 
-                window.open("http://localhost:8080/chat.html", "Advantage Online Shopping Chat Windows",
+                window.open("http://" + window.location.host + "/chat.html", "Advantage Online Shopping Chat Windows",
                     "width=650px, height=450px, top=300px, left=300px, scrollbars=no, resizable=no, " +
                     "directories=no, titlebar=no, toolbar=no, location=no, status=no, menubar=0,");
-
             }
-
 
 
         }]);

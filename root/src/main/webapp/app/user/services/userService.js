@@ -57,7 +57,6 @@ define(['./module'], function (services) {
                         },
                         enableLogging: true
                     });
-
                 }
                 else {
                     defer.resolve("no user");

@@ -105,10 +105,16 @@ var services_properties = []
 //var accountKey = "http://localhost:8080/account";
 //var serviceKey = "http://localhost:8080/service";
 //var wsdlPath = 'http://localhost:8080/accountservice';
-var catalogKey = orderKey = /*accountKey =*//* serviceKey =*/ wsdlPath = "undefined";
+var catalogKey = serverKey = orderKey = wsdlPath = "undefined";  /*accountKey =*//* serviceKey =*/
 
 var server = {
     namespaceURL: 'com.advantage.online.store.accountservice',
+    getKey: function () {
+        return serverKey;
+    },
+    setKey: function (_serverKey) {
+        serverKey = _serverKey;
+    },
     setCatalogKey: function (_catalogKey) {
         catalogKey = _catalogKey;
     },

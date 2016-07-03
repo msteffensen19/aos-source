@@ -66,7 +66,7 @@ define(['./module'], function (controllers) {
                     $scope.cart = cart;
                     $timeout(function () {
                         productsCartService.checkOutOfStockProductsInCart().then(function (_cart) {
-                            $scope.cart = cart;
+                            $scope.cart = _cart;
                         });
                     })
                 });
