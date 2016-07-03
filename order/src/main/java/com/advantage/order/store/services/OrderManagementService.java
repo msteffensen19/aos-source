@@ -59,8 +59,8 @@ public class OrderManagementService {
 
     private Logger logger = Logger.getLogger(OrderManagementService.class);
 
-    @Autowired
-    private AppUserConfiguration auc;
+//    @Autowired
+//    private AppUserConfiguration auc;
 
     @Autowired
     @Qualifier("orderManagementRepository")
@@ -96,12 +96,12 @@ public class OrderManagementService {
         result *= Math.pow(10, power);
 
         orderNumber = new AtomicLong(result);
-
-        if (auc == null) {
-            logger.fatal("@Autowired AppUserConfiguration is null");
-        }
-        boolean allowUserConfiguration = auc.isAllowUserConfiguration();
-        logger.trace("EVG allowUserConfiguration = " + allowUserConfiguration);
+//
+//        if (auc == null) {
+//            logger.fatal("@Autowired AppUserConfiguration is null");
+//        }
+//        boolean allowUserConfiguration = auc.isAllowUserConfiguration();
+//        logger.trace("EVG allowUserConfiguration = " + allowUserConfiguration);
     }
 
     public ShippingCostResponse getShippingCostFromShipEx(ShippingCostRequest costRequest) {
@@ -142,7 +142,6 @@ public class OrderManagementService {
 
         return costResponse;
     }
-
 
     private ShippingCostResponse generateShippingCostResponseError(String transactionType, String errorText) {
 
