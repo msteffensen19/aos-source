@@ -64,24 +64,19 @@ public class DemoAppConfigService {
                         .append("\"] without attributes as an argument");
                 throw new IllegalArgumentException(sb.toString());
             }
-
             Node nodeAttr = attr.getNamedItem(attributeName);
             if (nodeAttr == null) {
                 continue;
             }
-
             String nodeAttrName = nodeAttr.getTextContent();
             if (nodeAttrName.isEmpty()) {
                 continue;
             }
-
             if (!(";" + nodeAttrName + ";").contains(";" + attributeValue + ";")) {
                 System.out.println(attributeValue + " was found in attrinbute \"" + attributeName + "\" of node \"" + nodeName + "\"");
             }
-
             return node;
         }
-
         return null;
     }
 
@@ -91,7 +86,7 @@ public class DemoAppConfigService {
      * @return
      */
     public Node findParameterByName(Document doc, String parameterName) {
-        System.out.println("findParameterByName(\"" + parameterName + "\") - Begin");
+        logger.trace("findParameterByName(\"" + parameterName + "\") - Begin");
 
         NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList != null) {
@@ -108,18 +103,16 @@ public class DemoAppConfigService {
                     Node nodeAttr2 = attr.getNamedItem(ATTRIBUTE_DATA_TYPE_TAG_NAME);
                     String attributeDataTypeValue = nodeAttr2.getTextContent();
 
-                    System.out.println("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
-                    //System.out.println("newValue(\"" + parameterName + "\") - End");
-                    System.out.println("findParameterByName(\"" + parameterName + "\") - End");
-                    System.out.println("");
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "=\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    }
+                    logger.trace("findParameterByName(\"" + parameterName + "\") - End" + System.lineSeparator());
                     return node;
                 }
             }
         }
 
-        System.out.println("findParameterByName(\"" + parameterName + "\") - return Null");
-        System.out.println("");
-
+        logger.warn("findParameterByName(\"" + parameterName + "\") - return Null" + System.lineSeparator());
         return null;
     }
 
@@ -338,7 +331,7 @@ public class DemoAppConfigService {
 //        if ((node.getNodeName().equals("#comment")) || (node.getNodeName().equals("#text"))) {
 //            continue;
 //        }
-        logger.debug("Return null");
+        logger.warn("Return null");
         return null;
     }
 
