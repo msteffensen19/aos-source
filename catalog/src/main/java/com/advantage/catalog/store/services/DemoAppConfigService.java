@@ -7,6 +7,7 @@ import com.advantage.common.dto.DemoAppConfigParametersDto;
 import com.advantage.common.dto.DemoAppConfigStatusResponse;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.xml.XmlHelper;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 
@@ -22,7 +23,6 @@ import java.util.List;
 public class DemoAppConfigService {
     //  region Class CONSTANTS
     public static final String DEMO_APP_CONFIG_XML_FILE_NAME = "DemoAppConfig.xml";
-
     public static final String ROOT_ELEMENT_NAME = "Parameters";
     public static final String ATTRIBUTE_TOOLS_TAG_NAME = "tools";
     public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
@@ -31,6 +31,7 @@ public class DemoAppConfigService {
 
     //  region Class Properties
     private File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
+    private static final Logger logger = Logger.getLogger(DemoAppConfigService.class);
     private Document doc;
 
     private Node parameters;        //  Root Element
@@ -184,7 +185,7 @@ public class DemoAppConfigService {
      * @return
      */
     public List<DemoAppConfigParameter> getAllDemoAppConfigParameters() {
-        System.out.println("getAllDemoAppConfigParameters() - Begin");
+        logger.trace("getAllDemoAppConfigParameters() - Begin");
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
@@ -220,12 +221,12 @@ public class DemoAppConfigService {
             //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
             parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, node.getTextContent()));
 
-            System.out.println("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+            if (logger.isDebugEnabled()) {
+                logger.debug("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+            }
         }
 
-        System.out.println("getAllDemoAppConfigParameters() - End");
-        System.out.println("");
-
+        logger.trace("getAllDemoAppConfigParameters() - End" + System.lineSeparator());
         return parameters;
     }
 
@@ -240,11 +241,11 @@ public class DemoAppConfigService {
     public List<DemoAppConfigParameter> getDemoAppConfigParametersByTool(String toolsNames) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(toolsNames, "tools names");
 
-        System.out.println("getDemoAppConfigParametersByTool(\"" + toolsNames + "\") - Begin");
+        logger.trace("getDemoAppConfigParametersByTool(\"" + toolsNames + "\") - Begin");
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
+        logger.debug("Document URL\"" + doc.getDocumentURI() + "\"");
 
         NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
@@ -256,7 +257,7 @@ public class DemoAppConfigService {
         String[] tools = toolsNames.split(";");
         //List<String> toolsList = Arrays.asList(tools);
 
-        HashSet<DemoAppConfigParameter> parameters = new HashSet<DemoAppConfigParameter>();
+        HashSet<DemoAppConfigParameter> parameters = new HashSet<>();
         for (String tool : tools) {
             for (int i = 0; i < nodesList.getLength(); i++) {
                 Node node = nodesList.item(i);
@@ -278,22 +279,23 @@ public class DemoAppConfigService {
 
                 if (tool.trim().equalsIgnoreCase("ALL")) {
                     parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
-                    System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
-
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                    }
                 }
                 else if (attributeToolsValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
                     if (! parameters.contains(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()))) {
                         //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
                         parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, node.getTextContent()));
-                        System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                        }
                     }
                 }
             }
         }
 
-        System.out.println("getDemoAppConfigParametersByTool(\"" + toolsNames + "\") - End");
-        System.out.println("");
-
+        logger.trace("getDemoAppConfigParametersByTool(\"" + toolsNames + "\") - End" + System.lineSeparator());
         return new ArrayList<DemoAppConfigParameter>(parameters);
     }
 
@@ -305,11 +307,11 @@ public class DemoAppConfigService {
     public DemoAppConfigParameter getDemoAppConfigParametersByName(String parameterName) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(parameterName, "parameter name");
 
-        System.out.println("getDemoAppConfigParametersByName(\"" + parameterName + "\") - Begin");
+        logger.trace("getDemoAppConfigParametersByName(\"" + parameterName + "\") - Begin");
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
+        logger.info("Document URL\"" + doc.getDocumentURI() + "\"");
 
         Node node = findParameterByName(doc, parameterName);
         if (node != null) {
@@ -325,18 +327,18 @@ public class DemoAppConfigService {
             Node nodeAttrDescription = attr.getNamedItem(ATTRIBUTE_DESCRIPTION_TAG_NAME);
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
-            System.out.println("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+            }
 
-            System.out.println("getDemoAppConfigParametersByName(\"" + parameterName + "\") - End");
-            System.out.println("");
-
+            logger.trace("getDemoAppConfigParametersByName(\"" + parameterName + "\") - End" + System.lineSeparator());
             return new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, node.getTextContent());
         }
 
 //        if ((node.getNodeName().equals("#comment")) || (node.getNodeName().equals("#text"))) {
 //            continue;
 //        }
-
+        logger.debug("Return null");
         return null;
     }
 
