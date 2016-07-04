@@ -8,7 +8,8 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "accountId", "base64Token"
+        "accountId",
+        "base64Token"
 })
 @XmlRootElement(name = "GetAccountByIdNewRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetAccountByIdNewRequest implements IUserRequest {
