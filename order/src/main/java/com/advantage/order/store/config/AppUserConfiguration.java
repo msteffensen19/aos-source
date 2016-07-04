@@ -3,22 +3,17 @@ package com.advantage.order.store.config;
 import CatalogRestServiceClient.CatalogClient;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
-import com.advantage.order.store.dto.CatalogConfigurationDelayResponse;
-import com.advantage.order.store.dto.SafePayResponse;
 import com.advantage.root.util.JsonHelper;
-import com.google.common.net.HttpHeaders;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -67,51 +62,45 @@ public class AppUserConfiguration {
             instance.delayCartResponse = getFromCatalogDelayCartResponse();
             logger.debug("delayCartResponse = " + instance.delayCartResponse);
             if (delayCartResponse > 0) {
-//                instance.numberOfSessionsToAddTheDelay = getFromCatalogNumberOfSessions();
-                instance.numberOfSessionsToAddTheDelay = 123;
+                instance.numberOfSessionsToAddTheDelay = getFromCatalogNumberOfSessions();
             } else {
                 instance.numberOfSessionsToAddTheDelay = 0;
             }
             logger.debug("numberOfSessionsToAddTheDelay = " + instance.numberOfSessionsToAddTheDelay);
-
         }
         return instance;
     }
 
     private int getFromCatalogDelayCartResponse() {
-        String delay = null;
-
-        URL urlConfigDelay = null;
-
-//        CatalogConfigurationDelayResponse catalogConfigurationDelayResponse = new CatalogConfigurationDelayResponse();
-
+        String requestPart = "SLA_Add_Delay_In_Add_To_Cart_Response_Time";
+        String delay = getCatalogConfigParameter(requestPart);
         try {
-            urlConfigDelay = new URL(Url_resources.getUrlCatalog(), "DemoAppConfig/parameters/SLA_Add_Delay_In_Add_To_Cart_Response_Time");
-            logger.debug("urlConfigDelay = " + urlConfigDelay);
-            HttpURLConnection conn = (HttpURLConnection) urlConfigDelay.openConnection();
-            if (logger.isTraceEnabled()) {
-                logger.trace(conn.getRequestMethod());
-            }
-//            conn.setDoOutput(true);
-//            if (logger.isTraceEnabled()){
-//                logger.trace(conn.getRequestMethod());
-//            }
+            return Integer.parseInt(delay);
+        } catch (NumberFormatException e) {
+            logger.warn(delay + " is not a number");
+            return 0;
+        }
+    }
+
+    private int getFromCatalogNumberOfSessions() {
+        String requestPart = "SLA_Number_Of_Sessions_To_Add_The_Delay";
+        String numberOfSessions = getCatalogConfigParameter(requestPart);
+        try {
+            return Integer.parseInt(numberOfSessions);
+        } catch (NumberFormatException e) {
+            logger.warn(numberOfSessions + " is not a number");
+            return 0;
+        }
+    }
+
+    private String getCatalogConfigParameter(String requestPart) {
+        String value = null;
+        URL urlConfig = null;
+        try {
+            urlConfig = new URL(Url_resources.getUrlCatalog(), "DemoAppConfig/parameters/" + requestPart);
+            logger.debug("urlConfig = " + urlConfig);
+            HttpURLConnection conn = (HttpURLConnection) urlConfig.openConnection();
             conn.setRequestMethod(HttpMethod.GET.name());
-            if (logger.isTraceEnabled()) {
-                logger.trace("After set method before flush. " + conn.getRequestMethod());
-            }
-//            conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-//            if (logger.isTraceEnabled()){
-//                logger.trace(conn.getRequestMethod());
-//            }
-//            OutputStream os = conn.getOutputStream();
-//            if (logger.isTraceEnabled()){
-//                logger.trace("After get output stream. "+conn.getRequestMethod());
-//            }
-//            os.flush();
-//            if (logger.isTraceEnabled()){
-//                logger.trace(conn.getRequestMethod());
-//            }
             int responseCode = conn.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 String message = "Failed : HTTP error code : " + responseCode;
@@ -123,41 +112,29 @@ public class AppUserConfiguration {
             String output;
             StringBuilder sb = new StringBuilder();
 
-            System.out.println("Output from Server .... \n");
+            logger.info("Output from Server .... " + System.lineSeparator());
             while ((output = br.readLine()) != null) {
                 sb.append(output);
-                System.out.println(output);
+                logger.trace(output);
             }
+            conn.disconnect();
+            logger.debug("Disconnected");
 
             Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
-
-//            catalogConfigurationDelayResponse.setParameterName((String) jsonMap.get("parameterName"));
-//            catalogConfigurationDelayResponse.setDatatype((String) jsonMap.get("datatype"));
-//            catalogConfigurationDelayResponse.setDescription((String) jsonMap.get("description"));
-//            catalogConfigurationDelayResponse.setAttributeTools((String) jsonMap.get("attributeTools"));
-//            catalogConfigurationDelayResponse.setParameterValue((String) jsonMap.get("parameterValue"));
-            delay = ((String) jsonMap.get("parameterValue"));
-
-            conn.disconnect();
+            value = ((String) jsonMap.get("parameterValue"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.fatal(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.fatal(e);
         }
-        if (delay == null) {
-            logger.fatal("delay is null");
-            return 0;
-        } else if (delay.isEmpty()) {
-            logger.fatal("delay is empty");
-            return 0;
-        } else {
-            try {
-                return Integer.parseInt(delay);
-            } catch (NumberFormatException e) {
-                logger.fatal(delay + " is not a number");
-                return 0;
-            }
+        if (value == null) {
+            logger.warn("Value is null");
+            value = "0";
+        } else if (value.isEmpty()) {
+            logger.warn("Value is empty");
+            value = "0";
         }
+        return value;
     }
 
     public AppUserConfiguration() {
