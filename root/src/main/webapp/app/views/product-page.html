@@ -75,10 +75,11 @@
                         <button class="roboto-medium"
                                 data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
                                 translate="ADD_TO_CART"
-                                data-ng-click="addToCart(product.productStatus == 'OutOfStock')"> {{
-                            pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}
+                                data-ng-click="addToCart(product.productStatus == 'OutOfStock')">
+                            {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}
                         </button>
                     </div>
+                    <label data-ng-class="message._class" class="invalid"> {{message.text}}</label>
                 </div>
             </div>
         </div>

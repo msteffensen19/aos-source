@@ -86,9 +86,14 @@ define(['./module'], function (services) {
 
                         if (res && res.data && res.data.parameters) {
                             for (var i = 0; i < res.data.parameters.length; i++) {
+
                                 switch (res.data.parameters[i].parameterName) {
                                     case "Email_address_in_login":
                                         config.emailAddressInLogin = res.data.parameters[i].parameterValue &&
+                                            res.data.parameters[i].parameterValue.toLowerCase() == "yes";
+                                        break;
+                                    case "Slow_Page":
+                                        config.slowPage = res.data.parameters[i].parameterValue &&
                                             res.data.parameters[i].parameterValue.toLowerCase() == "yes";
                                         break;
                                     case "Sum_to_add_to_cart_calculation":

@@ -4,14 +4,14 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter', '$rootScope',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter', '$rootScope', '$timeout',
 
-        function (s, resolveParams, $state, $filter, $rootScope) {
+        function (s, resolveParams, $state, $filter, $rootScope, $timeout) {
 
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
 
-            s.message = null;
+            s.message = {};
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
@@ -74,13 +74,23 @@ define(['./module'], function (controllers) {
                     if (quantity > 0) {
                         var request = s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
                         request.then(function (res) {
-                            console.log(" ======== ===== ===== ==== === res (add product) === ==== ===== ====== ")
-                            console.log(res)
-                            console.log(" ======== ===== ===== ==== === res (add product) === ==== ===== ====== ")
+
+                            if(res.message){
+                                s.message.text = res.message; //s._class = res.success ? "valid" : "invalid";
+                                if(_____productAdded){
+                                    $timeout.cancel(_____productAdded);
+                                }
+                                _____productAdded = $timeout(function(){
+                                    s.message.text = "";
+                                    s.message._class = "";
+                                }, 4000);
+                            }
                         });
                     }
                 }
             };
+            var _____productAdded;
+
 
             s.changeImage = function (img) {
                 s.imageUrl = img;
