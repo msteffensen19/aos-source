@@ -8,7 +8,8 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "address"
+        "address",
+        "base64Token"
 })
 @XmlRootElement(name = "AddressUpdateRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AddressUpdateRequest implements IUserRequest {

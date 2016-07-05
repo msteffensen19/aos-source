@@ -14,7 +14,8 @@ import javax.xml.bind.annotation.*;
                 "productInStockDefaultValue",
                 "userSecondWsdl",
                 "userLoginTimeout",
-                "allowUserConfiguration"
+                "allowUserConfiguration",
+                "maxConcurrentSessions"
         })
 @XmlRootElement(name = "GetAccountConfigurationResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetAccountConfigurationResponse {
@@ -30,6 +31,8 @@ public class GetAccountConfigurationResponse {
     private int userLoginTimeout;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean allowUserConfiguration;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private int maxConcurrentSessions;
 
     public GetAccountConfigurationResponse() {
     }
@@ -39,7 +42,8 @@ public class GetAccountConfigurationResponse {
                                            int productInStockDefaultValue,
                                            boolean userSecondWsdl,
                                            int userLoginTimeout,
-                                           boolean allowUserConfiguration) {
+                                           boolean allowUserConfiguration,
+                                           int maxConcurrentSessions) {
 
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInSeconds = loginBlockingIntervalInMilliSeconds;
@@ -47,6 +51,7 @@ public class GetAccountConfigurationResponse {
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
         this.allowUserConfiguration = allowUserConfiguration;
+        this.maxConcurrentSessions = maxConcurrentSessions;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -97,6 +102,14 @@ public class GetAccountConfigurationResponse {
         this.allowUserConfiguration = allowUserConfiguration;
     }
 
+    public int getMaxConcurrentSessions() {
+        return maxConcurrentSessions;
+    }
+
+    public void setMaxConcurrentSessions(int maxConcurrentSessions) {
+        this.maxConcurrentSessions = maxConcurrentSessions;
+    }
+
     @Override
     public String toString() {
         return "GetAccountConfigurationResponse{" +
@@ -106,6 +119,7 @@ public class GetAccountConfigurationResponse {
                 ", userSecondWsdl=" + userSecondWsdl +
                 ", userLoginTimeout=" + userLoginTimeout +
                 ", allowUserConfiguration=" + allowUserConfiguration +
+                ", maxConcurrentSessions=" + maxConcurrentSessions +
                 '}';
     }
 }

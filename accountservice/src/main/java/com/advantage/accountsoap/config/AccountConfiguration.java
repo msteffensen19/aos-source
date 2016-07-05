@@ -20,6 +20,8 @@ public class AccountConfiguration {
     private final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
     private final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
     private final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
+    private final String ENV_MAX_CONCURRENT_SESSIONS = "Max.Concurrent.Sessions";
+
 
     @Inject
     private Environment env;
@@ -32,6 +34,7 @@ public class AccountConfiguration {
     public static String USER_SECOND_WSDL_VALUE;
     public static int USER_LOGIN_TIMEOUT;
     public static String ALLOW_USER_CONFIGURATION;
+    public static int MAX_CONCURRENT_SESSIONS;
 
     //  //  Class that is called must have a method "public void init() throws Exception"
     //@Bean(initMethod = "init")
@@ -47,6 +50,7 @@ public class AccountConfiguration {
         this.setUserSecondWsdlValue(ENV_USER_SECOND_WSDL_VALUE);
         this.setUserLoginTimeout(ENV_USER_LOGIN_TIMEOUT);
         this.setAllowUserConfiguration(ENV_ALLOW_USER_CONFIGURATION);
+        this.setMaxConcurrentSessions(ENV_MAX_CONCURRENT_SESSIONS);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_SECONDS=" + this.getLoginBlockingIntervalInSeconds());
         System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
@@ -54,6 +58,7 @@ public class AccountConfiguration {
         System.out.println("Configuration: USER_SECOND_WSDL_VALUE=\"" + this.getUserSecondWsdlValue() + "\"");
         System.out.println("Configuration: USER_LOGIN_TIMEOUT=\"" + this.getUserLoginTimeout() + "\"");
         System.out.println("Configuration: ALLOW_USER_CONFIGURATION=\"" + this.getAllowUserConfiguration() + "\"");
+        System.out.println("Configuration: MAX_CONCURRENT_SESSIONS=\"" + this.getMaxConcurrentSessions() + "\"");
 
         return 1;   //  Successful
     }
@@ -97,12 +102,16 @@ public class AccountConfiguration {
         this.PRODUCT_IN_STOCK_DEFAULT_VALUE = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
+    public String getUserSecondWsdlValue() {
+        return this.USER_SECOND_WSDL_VALUE;
+    }
+
     public void setUserSecondWsdlValue(String parameterKey) {
         this.USER_SECOND_WSDL_VALUE = env.getProperty(parameterKey);
     }
 
-    public String getUserSecondWsdlValue() {
-        return this.USER_SECOND_WSDL_VALUE;
+    public int getUserLoginTimeout() {
+        return this.USER_LOGIN_TIMEOUT;
     }
 
     /**
@@ -113,16 +122,21 @@ public class AccountConfiguration {
         this.USER_LOGIN_TIMEOUT = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
-    public int getUserLoginTimeout() {
-        return this.USER_LOGIN_TIMEOUT;
+    public String getAllowUserConfiguration() {
+        return this.ALLOW_USER_CONFIGURATION;
     }
 
     public void setAllowUserConfiguration(final String parameterKey) {
         this.ALLOW_USER_CONFIGURATION = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
     }
 
-    public String getAllowUserConfiguration() {
-        return this.ALLOW_USER_CONFIGURATION;
+    public int getMaxConcurrentSessions() {
+        return MAX_CONCURRENT_SESSIONS;
+    }
+
+    public void setMaxConcurrentSessions(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        this.MAX_CONCURRENT_SESSIONS = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
     public List<String> getAllAccountParameters() {
@@ -134,6 +148,7 @@ public class AccountConfiguration {
         parameters.add("string,USER_SECOND_WSDL_VALUE," + USER_SECOND_WSDL_VALUE);
         parameters.add("int,USER_LOGIN_TIMEOUT," + USER_LOGIN_TIMEOUT);
         parameters.add("string,ALLOW_USER_CONFIGURATION," + ALLOW_USER_CONFIGURATION);
+        parameters.add("int,MAX_CONCURRENT_SESSIONS," + MAX_CONCURRENT_SESSIONS);
 
         return parameters;
     }
@@ -147,6 +162,7 @@ public class AccountConfiguration {
         getAccountConfigurationResponse.setUserSecondWsdl(this.getUserSecondWsdlValue().equalsIgnoreCase("yes"));
         getAccountConfigurationResponse.setUserLoginTimeout(this.getUserLoginTimeout());
         getAccountConfigurationResponse.setAllowUserConfiguration(this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
+        getAccountConfigurationResponse.setMaxConcurrentSessions(this.getMaxConcurrentSessions());
 
         return getAccountConfigurationResponse;
     }
