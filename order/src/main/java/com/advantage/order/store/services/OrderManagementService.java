@@ -6,7 +6,6 @@ import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.utils.LoggerUtils;
-import com.advantage.order.store.config.AppUserConfiguration;
 import com.advantage.order.store.dao.OrderHistoryHeaderManagementRepository;
 import com.advantage.order.store.dao.OrderHistoryLineManagementRepository;
 import com.advantage.order.store.dao.OrderManagementRepository;
@@ -57,10 +56,7 @@ public class OrderManagementService {
     private static AtomicLong orderNumber;
     private double totalAmount = 0.0;
 
-    private Logger logger = Logger.getLogger(OrderManagementService.class);
-
-//    @Autowired
-//    private AppUserConfiguration auc;
+    private static final Logger logger = Logger.getLogger(OrderManagementService.class);
 
     @Autowired
     @Qualifier("orderManagementRepository")
@@ -96,12 +92,6 @@ public class OrderManagementService {
         result *= Math.pow(10, power);
 
         orderNumber = new AtomicLong(result);
-//
-//        if (auc == null) {
-//            logger.fatal("@Autowired AppUserConfiguration is null");
-//        }
-//        boolean allowUserConfiguration = auc.isAllowUserConfiguration();
-//        logger.trace("EVG allowUserConfiguration = " + allowUserConfiguration);
     }
 
     public ShippingCostResponse getShippingCostFromShipEx(ShippingCostRequest costRequest) {

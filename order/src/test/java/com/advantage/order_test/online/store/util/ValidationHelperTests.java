@@ -1,6 +1,5 @@
 package com.advantage.order_test.online.store.util;
 
-import com.advantage.order.store.config.AppUserConfiguration;
 import com.advantage.root.util.ValidationHelper;
 import com.advantage.order_test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.order_test.online.store.dao.GenericRepositoryTests;
@@ -15,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Binyamin Regev on 22/11/2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AdvantageTestContextConfiguration.class, AppUserConfiguration.class})
+@ContextConfiguration(classes = {AdvantageTestContextConfiguration.class})
 public class ValidationHelperTests extends GenericRepositoryTests {
 
     private static final Logger logger = Logger.getLogger(ValidationHelperTests.class);
