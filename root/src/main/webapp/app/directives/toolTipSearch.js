@@ -63,6 +63,7 @@ define(['./module'], function (directives) {
                         }
 
                         s.closeSearchForce = function () {
+
                             $('#searchSection .autoCompleteCover .iconCss.iconX').fadeOut(300);
                             setTimeout(function () {
                                 $('#searchSection .autoCompleteCover')
