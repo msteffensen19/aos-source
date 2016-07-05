@@ -139,6 +139,18 @@ define(['./module'], function (services) {
                                 }
                             }
                             Helper.disableLoader();
+
+                            if(masterCredit){
+                                var month = parseInt(masterCredit.expirationDate.substring(0, 2));
+                                var year = parseInt(masterCredit.expirationDate.substring(2));
+                                var date = new Date();
+                                if(date.getFullYear() == year){
+                                    if(date.getMonth() + 1 > month){
+                                        masterCredit.expirationDate = (month < 10 ? "0" + month : month) + year;
+                                    }
+                                }
+                            }
+
                             Loger.Received({masterCredit: masterCredit, safePay: safePay});
                             defer.resolve({masterCredit: masterCredit, safePay: safePay});
                         },

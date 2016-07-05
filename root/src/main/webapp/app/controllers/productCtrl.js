@@ -54,8 +54,23 @@ define(['./module'], function (controllers) {
                 productToAdd.colors = [s.colorSelected];
 
                 if (s.pageState == 'edit') {
-                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity, resolveParams_selectedColor, $filter("translate")("toast_Product_Updated_Successfully"));
-                    $state.go('shoppingCart');
+                    s.$parent.updateProduct(productToAdd, s.colorSelected, s.quantity, resolveParams_selectedColor,
+                        $filter("translate")("toast_Product_Updated_Successfully")).then(function(res){
+                        if(res.message){
+                            s.message.text = res.message; //s._class = res.success ? "valid" : "invalid";
+                            if(_____productAdded){
+                                $timeout.cancel(_____productAdded);
+                            }
+                            _____productAdded = $timeout(function(){
+                                s.message.text = "";
+                                s.message._class = "";
+                                $state.go('shoppingCart');
+                            }, 2000);
+                        }
+                        else{
+                            $state.go('shoppingCart');
+                        }
+                    });
                 }
                 else {
                     var quantity = s.quantity;
@@ -74,7 +89,6 @@ define(['./module'], function (controllers) {
                     if (quantity > 0) {
                         var request = s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
                         request.then(function (res) {
-
                             if(res.message){
                                 s.message.text = res.message; //s._class = res.success ? "valid" : "invalid";
                                 if(_____productAdded){

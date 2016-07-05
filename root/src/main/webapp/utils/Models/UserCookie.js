@@ -20,8 +20,9 @@ userCookie.getKey = function(lastUser){
             if(lastUser.response)
             {
                   return "userCookie" +
-                      lastUser.response.userId +
-                      lastUser.response.sessionId;
+                      lastUser.response.userId
+                        + lastUser.response.token;
+                  //+ lastUser.response.sessionId;
             }
       }
       return "guestCookie";
