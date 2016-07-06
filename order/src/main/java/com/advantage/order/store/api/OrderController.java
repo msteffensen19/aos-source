@@ -62,10 +62,10 @@ public class OrderController{
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        AppUserConfiguration appUserConfiguration = AppUserConfiguration.readConfiguration();
+        //   AppUserConfiguration appUserConfiguration = AppUserConfiguration.readConfiguration();
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
-        logger.trace("appUserConfiguration.isAllowUserConfiguration()=" + appUserConfiguration.isAllowUserConfiguration());
+        // logger.trace("appUserConfiguration.isAllowUserConfiguration()=" + appUserConfiguration.isAllowUserConfiguration());
     }
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
