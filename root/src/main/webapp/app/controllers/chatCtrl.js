@@ -4,5 +4,4 @@
 
 angular.module("advantageDemo", []).controller("chatCtrl", function(){
 
-alert();
 });

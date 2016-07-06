@@ -11,7 +11,7 @@
             <div class="rowSection">
                 <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)"
                      class="SpeaakersImg categoryCell"
-                     a-sec-back-img="{{categories[3].managedImageId}}">
+                     a-sec-back-img="{{categories[3].managedImageId}}" a-slow-page="{{ mainCtrl.config.slowPage }}" >
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>

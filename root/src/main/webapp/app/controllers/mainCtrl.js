@@ -368,11 +368,14 @@ define(['./module'], function (controllers) {
             }
 
             $scope.updateProduct = function (product, color, quantity, oldColor, toastMessage) {
+                var defer = $q.defer()
                 productsCartService.updateProduct(product, color, quantity, oldColor)
                     .then(function (cart) {
                         $scope.cart = cart;
                         animateToolTipCart(toastMessage);
+                        defer.resolve(cart);
                     });
+                return defer.promise;
             }
 
             function animateToolTipCart(toastMessage) {

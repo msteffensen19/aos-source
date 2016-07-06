@@ -83,7 +83,8 @@ define(['./module'], function (services) {
                         };
                         for (var j = 0; j < data.products.length; j++) {
                             var product = allData[i].products[j];
-                            if (product.productName.toLowerCase().indexOf(word.toLowerCase()) != -1) {
+                            if (product.productName.toLowerCase().indexOf(word.toLowerCase()) != -1
+                            || data.categoryName.toLowerCase() == word.toLowerCase()) {
                                 category.products.push(product);
                             }
                         }

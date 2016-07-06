@@ -59,7 +59,9 @@ define(['./module'], function (controllers) {
             var _____continueShopping;
             s.sendSupportEmail = function () {
 
-                if (s.supportModel.subject.trim().toLowerCase() == "who are you") {
+                if (s.supportModel.subject.trim().toLowerCase() == "who are you" ||
+                    s.supportModel.subject.trim().toLowerCase() == "who are you?") {
+
                     $("#team").fadeIn(500).css("display", "table");
                     setTimeout(function () {
                         $("#teamIdToAnimate").css({

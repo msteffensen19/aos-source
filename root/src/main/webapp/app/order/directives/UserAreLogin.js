@@ -81,6 +81,15 @@ define(['./module'], function (directives) {
                         }
 
                         s.month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+                        if (now.getFullYear() == s.card.expirationDate.year) {
+                            var currentMonth = now.getMonth() + 1;
+                            s.month = [];
+                            for(var i = currentMonth; i <= 12; i++){
+                                s.month.push((i < 10 ? "0" + i : "" + i))
+                            }
+                        }
+
+
                         s.calculateMonths = function (value) {
                             var arr = Helper.getMonthInYearForMasterCredit(value, s.month);
                             if (arr != null) {
@@ -172,11 +181,12 @@ define(['./module'], function (directives) {
 
                         s.shippingDetails_next = function () {
                             s.firstTag = false;
+                            s.showMasterCart = s.noCards || (s.card && s.card.cartExpired);
                         }
 
                         s.imgRadioButtonClicked = function (num) {
                             s.imgRadioButton = num;
-                            s.showMasterCart = s.noCards;
+                            s.showMasterCart = s.noCards || (s.card && s.card.cartExpired);
                         }
 
                         s.paymentMethod_edit = function () {
