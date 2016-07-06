@@ -32,15 +32,15 @@ define(['./module'], function (controllers) {
             }
 
 
-            s.card = { number: '', cvv: '', expirationDate: { month: '', year: '' }, name: '' }
-            s.savePay = { username : '', password : '' }
+            s.card = {number: '', cvv: '', expirationDate: {month: '', year: ''}, name: ''}
+            s.savePay = {username: '', password: ''}
 
             var alreadyHaveMasterCreditCart = false;
             var alreadyHaveSafePayCart = false;
             var masterCredit = resolveParams.paymentPreferences && resolveParams.paymentPreferences.masterCredit ?
                 resolveParams.paymentPreferences.masterCredit : null;
 
-            if(masterCredit != null){
+            if (masterCredit != null) {
                 s.card = {
                     number: masterCredit.cardNumber.substring(4),
                     cvv: masterCredit.cvvNumber,
@@ -51,10 +51,20 @@ define(['./module'], function (controllers) {
                     name: masterCredit.customername,
                 }
                 alreadyHaveMasterCreditCart = true;
+
+                var date = new Date();
+                if (date.getFullYear() == s.card.expirationDate.year) {
+                    var currentMonth = date.getMonth() + 1;
+                    s.month = [];
+                    for (var i = currentMonth; i <= 12; i++) {
+                        s.month.push((i < 10 ? "0" + i : "" + i))
+                    }
+                }
             }
+
             var safePay = resolveParams.paymentPreferences && resolveParams.paymentPreferences.safePay ?
                 resolveParams.paymentPreferences.safePay : null;
-            if(safePay != null){
+            if (safePay != null) {
                 s.savePay.username = safePay.safepayUsername;
                 //s.savePay.password = safePay.safepayPassword;
                 alreadyHaveSafePayCart = true;
@@ -79,12 +89,12 @@ define(['./module'], function (controllers) {
                 }
                 response.then(function (response) {
 
-                    if(s.preferredPayment_MasterCredit && response && response.REASON && response.SUCCESS == 'true'){
-                        accountService.updatePrefferedPaymentMethod(20).then(function(res){
+                    if (s.preferredPayment_MasterCredit && response && response.REASON && response.SUCCESS == 'true') {
+                        accountService.updatePrefferedPaymentMethod(20).then(function (res) {
                             setMessage(res);
                         });
                     }
-                    else{
+                    else {
                         setMessage(response);
                     }
                 });
@@ -100,18 +110,18 @@ define(['./module'], function (controllers) {
                 }
                 response.then(function (response) {
 
-                    if(s.preferredPayment_SafePay && response && response.reason && response.success){
-                        accountService.updatePrefferedPaymentMethod(10).then(function(res){
+                    if (s.preferredPayment_SafePay && response && response.reason && response.success) {
+                        accountService.updatePrefferedPaymentMethod(10).then(function (res) {
                             setMessage(res);
                         });
                     }
-                    else{
+                    else {
                         setMessage(response);
                     }
                 });
             }
 
-            function setMessage(response){
+            function setMessage(response) {
 
                 if (response && response.reason) {
                     s.accountDetailsAnswer = {

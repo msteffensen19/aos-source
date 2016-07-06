@@ -11,7 +11,7 @@ userCookie.fillParams = function(name, email, response){
 //    this.sessionId = sessionId;
 //    this.id = id;
 //    this.token = "Bearer " + token;
-}
+};
 
 userCookie.getKey = function(lastUser){
 
@@ -26,5 +26,5 @@ userCookie.getKey = function(lastUser){
             }
       }
       return "guestCookie";
-}
+};
 

@@ -232,7 +232,7 @@ var english = {
 
     'AgreeAgreementRequire': 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
 
-
+    'ExpirationCart' : 'Expiration date has passed. Try another card',
     'CHAT_WITH_US': 'CHAT WITH US'
 };
 

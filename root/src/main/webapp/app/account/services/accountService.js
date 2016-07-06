@@ -4,9 +4,9 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('accountService', ['$rootScope', '$q',
+    services.service('accountService', ['$rootScope', '$q', '$filter',
 
-        function ($rootScope, $q) {
+        function ($rootScope, $q, $filter) {
 
             return {
 
@@ -28,7 +28,7 @@ define(['./module'], function (services) {
                         },
                         success: function (soapResponse) {
                             var response = soapResponse.toJSON(params.response);
-                            if(response && response.AccountResponse && response.AccountResponse.mobilePhone){
+                            if (response && response.AccountResponse && response.AccountResponse.mobilePhone) {
                                 response.AccountResponse.mobilePhone = response.AccountResponse.mobilePhone + ""; //warning: this field can be a integer, must be converted to string/
                             }
                             Helper.disableLoader();
@@ -51,7 +51,7 @@ define(['./module'], function (services) {
                     var defer = $q.defer();
                     var params = server.account.getAddressesByAccountId();
                     var user = $rootScope.userCookie;
-                    Helper.enableLoader(10);
+                    Helper.enableLoader();
 
                     $.soap({
                         url: params.path,
@@ -86,7 +86,6 @@ define(['./module'], function (services) {
 
                     Helper.enableLoader(10);
 
-
                     $.soap({
                         url: params.path,
                         method: params.method,
@@ -104,7 +103,7 @@ define(['./module'], function (services) {
                             var SPay;
                             if (response != null) {
 
-                                if(response.preference){
+                                if (response.preference) {
                                     response = response.preference;
                                 }
                                 if (response.paymentMethod + "" == "20") {
@@ -140,17 +139,21 @@ define(['./module'], function (services) {
                             }
                             Helper.disableLoader();
 
-                            if(masterCredit){
+                            if (masterCredit) {
                                 var month = parseInt(masterCredit.expirationDate.substring(0, 2));
                                 var year = parseInt(masterCredit.expirationDate.substring(2));
                                 var date = new Date();
-                                if(date.getFullYear() == year){
-                                    if(date.getMonth() + 1 > month){
-                                        masterCredit.expirationDate = (month < 10 ? "0" + month : month) + year;
+                                if (date.getFullYear() == year) {
+                                    var currentMonth = date.getMonth() + 1;
+                                    if (currentMonth > month) {
+                                        if (currentMonth > month) {
+                                            alert($filter('translate')('ExpirationCart'));
+                                            masterCredit.cartExpired = true;
+                                        }
+                                        masterCredit.expirationDate = (currentMonth < 10 ? "0" + currentMonth : currentMonth) + "" + year;
                                     }
                                 }
                             }
-
                             Loger.Received({masterCredit: masterCredit, safePay: safePay});
                             defer.resolve({masterCredit: masterCredit, safePay: safePay});
                         },
