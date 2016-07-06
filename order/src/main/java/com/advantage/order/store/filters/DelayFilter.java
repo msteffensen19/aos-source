@@ -1,5 +1,7 @@
 package com.advantage.order.store.filters;
 
+import com.advantage.order.store.config.AppUserConfiguration;
+import com.advantage.order.store.config.AppUserConfigurationDynamic;
 import com.advantage.order.store.listener.SessionCounterListener;
 import org.apache.log4j.Logger;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,7 +28,7 @@ public class DelayFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        requestLogger.debug("SessionCounterListener.getActiveSessionsByRequestListener() = " + SessionCounterListener.getActiveSessionsByRequestListener());
+        requestLogger.info("SessionCounterListener.getActiveSessionsByRequestListener() = " + SessionCounterListener.getActiveSessionsByRequestListener());
         sessionLogger.debug("SessionCounterListener.getActiveSessionsBySessionListener() = " + SessionCounterListener.getActiveSessionsBySessionListener());
         ServletContext servletContext = this.getServletContext();
         String contextPath = servletContext.getContextPath();
@@ -90,7 +92,9 @@ public class DelayFilter extends OncePerRequestFilter {
         } catch (InterruptedException e) {
             logger.error(e);
         }
-
+        AppUserConfigurationDynamic appUserConfigurationDynamic = new AppUserConfigurationDynamic();
+        logger.debug("appUserConfigurationDynamic[" + ((Object) appUserConfigurationDynamic).toString() + "].getDelayCartResponse() = " + appUserConfigurationDynamic.getDelayCartResponse());
+        logger.debug("appUserConfigurationDynamic[" + ((Object) appUserConfigurationDynamic).toString() + "].getNumberOfSessionsToAddTheDelay() = " + appUserConfigurationDynamic.getNumberOfSessionsToAddTheDelay());
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

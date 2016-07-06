@@ -39,25 +39,23 @@ public class AppUserConfigurationDynamic {
         if (logger.isTraceEnabled()) {
             logger.trace("Constructor, objectId=" + ((Object) this).toString());
         }
+        readConfiguration();
     }
 
-    public static AppUserConfigurationDynamic readConfiguration() {
-        AppUserConfigurationDynamic result = new AppUserConfigurationDynamic();
-
-        if (/*allowUserConfiguration*/true) {
-            result.delayCartResponse = result.getFromCatalogDelayCartResponse();
-            if (result.delayCartResponse > 0) {
-                result.numberOfSessionsToAddTheDelay = result.getFromCatalogNumberOfSessions();
+    private void readConfiguration() {
+        if (AppUserConfiguration.isAllowUserConfiguration()) {
+            delayCartResponse = getFromCatalogDelayCartResponse();
+            if (delayCartResponse > 0) {
+                numberOfSessionsToAddTheDelay = getFromCatalogNumberOfSessions();
             } else {
-                result.numberOfSessionsToAddTheDelay = 0;
+                numberOfSessionsToAddTheDelay = 0;
             }
         } else {
-            result.delayCartResponse = 0;
-            result.numberOfSessionsToAddTheDelay = 0;
+            delayCartResponse = 0;
+            numberOfSessionsToAddTheDelay = 0;
         }
-        logger.debug("delayCartResponse = " + result.delayCartResponse);
-        logger.debug("numberOfSessionsToAddTheDelay = " + result.numberOfSessionsToAddTheDelay);
-        return result;
+        logger.debug("delayCartResponse = " + delayCartResponse);
+        logger.debug("numberOfSessionsToAddTheDelay = " + numberOfSessionsToAddTheDelay);
     }
 
     private int getFromCatalogDelayCartResponse() {

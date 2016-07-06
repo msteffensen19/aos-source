@@ -30,6 +30,7 @@ public class AppUserConfiguration {
     private static boolean allowUserConfiguration;
     private static boolean isFirstRead = true;
 
+    //Call by AppInitializer
     protected AppUserConfiguration() {
         if (logger.isTraceEnabled()) {
             logger.trace("Constructor, objectId=" + ((Object) this).toString());
@@ -41,9 +42,10 @@ public class AppUserConfiguration {
         }
     }
 
+    //Call by @Autowired field?
     //  Class that is called must have a method "public void init() throws Exception"
     @Bean(initMethod = "init")
-    protected AppUserConfiguration init() {
+    public AppUserConfiguration init() {
         if (environment == null) {
             logger.fatal("!!!!!!!!!!! @Autowired Environment is null");
         } else {
@@ -55,7 +57,7 @@ public class AppUserConfiguration {
         return this;
     }
 
-    public boolean isAllowUserConfiguration() {
+    public static boolean isAllowUserConfiguration() {
 //        if (isFirstRead) {
 //            allowUserConfiguration = isAllowUserConfig();
 //            isFirstRead = false;
