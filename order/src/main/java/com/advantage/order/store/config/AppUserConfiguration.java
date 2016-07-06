@@ -30,19 +30,29 @@ public class AppUserConfiguration {
     private static boolean allowUserConfiguration;
     private static boolean isFirstRead = true;
 
-    //  Class that is called must have a method "public void init() throws Exception"
-    @Bean(initMethod = "init")
-    public AppUserConfiguration init() {
-        logger.trace("@Bean(initMethod = \"init\")");
-        AppUserConfiguration result = new AppUserConfiguration();
-        result.isAllowUserConfig();
-        return result;
-    }
-
-    public AppUserConfiguration() {
+    protected AppUserConfiguration() {
         if (logger.isTraceEnabled()) {
             logger.trace("Constructor, objectId=" + ((Object) this).toString());
         }
+        if (environment == null) {
+            logger.fatal("!!!!!!!!!!! @Autowired Environment is null");
+        } else {
+            logger.trace("!!!!!!!!!!! @Autowired Environment is not null");
+        }
+    }
+
+    //  Class that is called must have a method "public void init() throws Exception"
+    @Bean(initMethod = "init")
+    protected AppUserConfiguration init() {
+        if (environment == null) {
+            logger.fatal("!!!!!!!!!!! @Autowired Environment is null");
+        } else {
+            logger.trace("!!!!!!!!!!! @Autowired Environment is not null");
+        }
+        logger.trace("@Bean(initMethod = \"init\")");
+        //AppUserConfiguration result = new AppUserConfiguration();
+        isAllowUserConfig();
+        return this;
     }
 
     public boolean isAllowUserConfiguration() {
@@ -54,8 +64,7 @@ public class AppUserConfiguration {
         return allowUserConfiguration;
     }
 
-    private boolean isAllowUserConfig() {
-        boolean result = false;
+    private void isAllowUserConfig() {
         if (environment == null) {
             logger.fatal("!!!!!!!!!!! @Autowired Environment is null");
         }
@@ -64,12 +73,11 @@ public class AppUserConfiguration {
             logger.debug("Parameter " + Constants.ENV_ALLOW_USER_CONFIGURATION + " = " + (property == null ? "null" : property));
         }
         if (property == null || property.isEmpty()) {
-            result = false;
+            allowUserConfiguration = false;
         }
         if (property.toLowerCase().equals("yes")) {
-            result = true;
+            allowUserConfiguration = true;
         }
         logger.debug("First run: allowUserConfiguration = " + allowUserConfiguration);
-        return result;
     }
 }

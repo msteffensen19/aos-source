@@ -49,8 +49,8 @@ public class OrderController{
     @Autowired
     private OrderManagementService orderManagementService;
 
-//    @Autowired
-    // private AppUserConfiguration appUserConfiguration;
+    @Autowired
+    private AppUserConfiguration appUserConfiguration;
 
     private ShoppingCartResponse shoppingCartResponse;
 

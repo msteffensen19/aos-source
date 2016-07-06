@@ -17,7 +17,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-@Component
 public class AppUserConfigurationDynamic {
 
     private static final Logger logger = Logger.getLogger(AppUserConfigurationDynamic.class);
