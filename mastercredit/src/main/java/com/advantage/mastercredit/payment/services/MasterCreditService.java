@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.advantage.root.util.StringHelper.convertStringToDate;
+
 /**
  * <b>MasterCredit</b> MOCK server service. <br/>
  * The {@link MasterCreditResponse#referenceNumber} is set from {@code static}
@@ -90,15 +92,49 @@ public class MasterCreditService {
 
         if (isValid) {
             /*  Expiration Date */
-            sb = new StringBuilder("01.")
-                    .append(masterCreditDto.getExpirationDate().substring(0, 2))
+            switch (masterCreditDto.getExpirationDate().substring(0, 2)) {
+                case "01":
+                case "03":
+                case "05":
+                case "07":
+                case "08":
+                case "10":
+                case "12":
+                    sb = new StringBuilder("31.");
+                    break;
+                case "04":
+                case "06":
+                case "09":
+                case "11":
+                    sb = new StringBuilder("30.");
+                    break;
+                default:
+                    //  "02" is left - "28." or "29."
+                    if (Integer.valueOf(masterCreditDto.getExpirationDate().substring(2, 6))%4 == 0) {
+                        sb = new StringBuilder("29.");
+                    } else {
+                        sb = new StringBuilder("28.");
+                    }
+            }
+
+            sb.append(masterCreditDto.getExpirationDate().substring(0, 2))
                     .append('.')
                     .append(masterCreditDto.getExpirationDate().substring(2, 6));
-            if (!ValidationHelper.isValidDate(sb.toString())) {
+
+            Date expirationDate = StringHelper.convertStringToDate(sb.toString(), "dd.mm.yyyy");
+
+            if (expirationDate.before(new Date())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("Wrong field value. Field \'expiration date\' value=" + masterCreditDto.getExpirationDate());
+                responseStatus.setResponseReason("MasterCredit card has expired. \'expiration date\' " + masterCreditDto.getExpirationDate() + " has passed");
                 responseStatus.setReferenceNumber(0);
                 isValid = false;
+            } else {
+                if (!ValidationHelper.isValidDate(sb.toString())) {
+                    responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
+                    responseStatus.setResponseReason("Wrong field value. Field \'expiration date\' value=" + masterCreditDto.getExpirationDate());
+                    responseStatus.setReferenceNumber(0);
+                    isValid = false;
+                }
             }
         }
 
@@ -187,7 +223,7 @@ public class MasterCreditService {
                 IF TransactionDate > Today Then Transaction REJECTED (Payment Failed)
                 IF TransactionDate <= Today Then Transaction APPROVED (Payment Successful)
              */
-            Date date = StringHelper.convertStringToDate(sb.toString(), "dd.MM.yyyy");
+            Date date = convertStringToDate(sb.toString(), "dd.MM.yyyy");
             if (date.getTime() > new Date().getTime()) {
                 responseStatus.setResponseCode(ResponseEnum.REJECTED.getStringCode());
                 responseStatus.setResponseReason("Payment rejected");
