@@ -2,7 +2,7 @@
 
 
     <div id="detailslink">
-        <label class="roboto-regular" ng-class="{ selected : firstTag }">1. {{ 'SHIPPING_DETAILS' | translate }}</label>
+        <label class="roboto-regular" ng-class="{ selected : firstTag }">1. {{ mainCtrl.config.spellingMistakes ? 'SHIPING_DETAILS' : 'SHIPPING_DETAILS' | translate}} </label>
         <label class="roboto-regular" ng-class="{ selected : !firstTag }">2. {{ 'PAYMENT_METHOD' | translate }}</label>
     </div>
 
@@ -50,7 +50,7 @@
 
             <sec-form sec-get-form-validation-when-ready="validSecValidate(valid)">
 
-                <h6 translate="Receiver_Details" class="roboto-bold"></h6>
+                <h6 class="roboto-bold"> {{ mainCtrl.config.spellingMistakes ? 'Reciever_Details' : 'Receiver_Details' | translate}} </h6>
 
                 <div class="spliter">
 
@@ -90,7 +90,7 @@
                               sec-select-options="countries">
                     </sec-view>
 
-                    <sec-view a-hint="{{'City' | translate}}"
+                    <sec-view a-hint="{{ mainCtrl.config.spellingMistakes ? 'Ciity' : 'City' | translate}}"
                               sec-model="user.cityName"
                               sec-max-length="mainCtrl.getMax(25)">
                     </sec-view>

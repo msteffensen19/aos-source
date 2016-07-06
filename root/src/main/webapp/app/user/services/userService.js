@@ -96,6 +96,10 @@ define(['./module'], function (services) {
                                         config.slowPage = res.data.parameters[i].parameterValue &&
                                             res.data.parameters[i].parameterValue.toLowerCase() == "yes";
                                         break;
+                                    case "Spelling_mistakes_in_order_payment_page":
+                                        config.spellingMistakes = res.data.parameters[i].parameterValue &&
+                                            res.data.parameters[i].parameterValue.toLowerCase() == "yes";
+                                        break;
                                     case "Sum_to_add_to_cart_calculation":
                                         config.cartIncrement = res.data.parameters[i].parameterValue || "0";
                                         config.cartIncrement = parseInt(config.cartIncrement);

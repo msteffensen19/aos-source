@@ -67,7 +67,6 @@ var english = {
     'Last_Name': 'Last Name',
     'Phone_Number': 'Phone Number',
     'Country': 'Country',
-    'City': 'City',
     'Address': 'Address',
     'Postal_Code': 'Postal Code',
     'State__Province__Region': 'State / Province / Region',
@@ -123,11 +122,8 @@ var english = {
     'Forgot_your_password': 'Forgot your password?',
     'New_client': 'New user?',
     'Create_your_account_easily': 'Create your account to track your order',
-    'ORDER_SUMMARY': 'ORDER SUMMARY',
-    'Order_Summary': 'Order Summary',
     'SHIPPING': 'SHIPPING',
     'shipping': 'shipping',
-    'SHIPPING_DETAILS': 'SHIPPING DETAILS',
     'PAYMENT_METHOD': 'PAYMENT METHOD',
     'SHIPPING_BY': 'SHIPPING BY',
     'Edit_shipping_Details': 'Edit shipping details',
@@ -157,10 +153,9 @@ var english = {
     'field_is_required': 'field is required',
     'User_name': 'Username',
     'Confirm_password': 'Confirm password',
-    'Receiver_Details': 'Recipient details',
     'MY_ACCOUNT': 'MY ACCOUNT',
     'Account_Details': 'Account details',
-    'Shipping_Details': 'Shipping details',
+
     'Preferred_payment_method': 'Preferred payment method',
     'Preferred_payment_method2': 'Payment method',
     'Notify_me_about_Promotions': 'Notify me about promotions',
@@ -233,7 +228,32 @@ var english = {
     'AgreeAgreementRequire': 'I agree to the www.AdvantageOnlineShopping.com Conditions of Use and Privacy Notice',
 
     'ExpirationCart' : 'Expiration date has passed. Try another card',
-    'CHAT_WITH_US': 'CHAT WITH US'
+    'CHAT_WITH_US': 'CHAT WITH US',
+
+
+
+    'SHIPPING_DETAILS': 'SHIPPING DETAILS',
+    'SHIPING_DETAILS': 'SHIPING DETAILS',
+
+    'Shipping_Details': 'Shipping details',
+    'Shiping_Details': 'Shiping details',
+
+    'Receiver_Details': 'Recipient details',
+    'Reciever_Details': 'Recipeint Details',
+
+    'City': 'City',
+    'Ciity': 'Ciity',
+
+
+    'ORDER_SUMMARY': 'ORDER SUMMARY',
+    'Order_Summary': 'Order Summary',
+
+    'ORDERR_SUMMARY': 'ORDERR SUMMARY',
+    'Orderr_Summary': 'Orderr Summary',
+
+
+
+
 };
 
 
