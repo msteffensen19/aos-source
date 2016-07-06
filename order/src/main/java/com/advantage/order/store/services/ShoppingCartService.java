@@ -1,7 +1,5 @@
 package com.advantage.order.store.services;
 
-//import com.advantage.order.store.order.dto.OrderPurchaseRequest;
-
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.ColorAttributeDto;
@@ -19,21 +17,16 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,11 +40,14 @@ public class ShoppingCartService {
     private static final String DEMO_APP_CONFIG_BY_PARAMETER_NAME = "DemoAppConfig/parameters/";    //  Show_error_500_in_update_cart
     private static final Logger logger = Logger.getLogger(ShoppingCartService.class);
 
+    ShoppingCartResponse shoppingCartResponse;
+
     @Autowired
     @Qualifier("shoppingCartRepository")
     public ShoppingCartRepository shoppingCartRepository;
 
     /**
+     *
      * @param userId
      * @return
      */
@@ -60,6 +56,7 @@ public class ShoppingCartService {
     }
 
     /**
+     *
      * @param userId
      * @param productId
      * @param stringColor
@@ -77,14 +74,7 @@ public class ShoppingCartService {
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(color, "color decimal RGB value");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(quantity, "quantity");
 
-        /*
-        //  Use API to verify userId belongs to a registered user by calling "Account Service"
-        if (!isRegisteredUserExists(userId)) {
-            shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_INVALID_USER_ID, -1);
-            return null;
-        }
-         */
-        ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(false, "Initial values", 0);
+        shoppingCartResponse = new ShoppingCartResponse(false, "Initial values", 0);
 
         if (isProductExists(productId, ShoppingCart.convertIntColorToHex(color))) {
 
@@ -111,10 +101,8 @@ public class ShoppingCartService {
                 if (quantity > dto.getInStock()) {
                     quantity = dto.getInStock();
                     shoppingCartResponse.setReason(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK);
-                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
                 } else {
                     shoppingCartResponse.setReason(ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY);
-                    //shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_ORDER_ACCORDINGLY);
                 }
                 shoppingCart = new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, quantity);
                 shoppingCartRepository.add(shoppingCart);
@@ -135,6 +123,12 @@ public class ShoppingCartService {
         return shoppingCartResponse;
     }
 
+    /**
+     *
+     * @param jsonObjectString
+     * @return
+     * @throws IOException
+     */
     private DemoAppConfigParameter getConfigParameterValueFromJsonObjectString(String jsonObjectString) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
@@ -145,6 +139,12 @@ public class ShoppingCartService {
         return demoAppConfigParameter;
     }
 
+    /**
+     *
+     * @param productId
+     * @param colorCode
+     * @return
+     */
     private ColorAttributeDto getColorAttributeByProductIdAndColorCode(Long productId, int colorCode) {
         ArgumentValidationHelper.validateLongArgumentIsPositive(productId.longValue(), "product id");
         ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(colorCode, "color RGB hexadecimal value");
@@ -187,6 +187,11 @@ public class ShoppingCartService {
         return dto;
     }
 
+    /**
+     *
+     * @param parameterName
+     * @return
+     */
     private String getDemoAppConfigParameterValue(String parameterName) {
         URL productsPrefixUrl = null;
         try {
@@ -230,7 +235,6 @@ public class ShoppingCartService {
         1           BLUE        4
 
         Action: { productId=1, color=BLUE, newColor=YELLOW, Quantity=1 }
-
      */
     public ShoppingCartResponse updateProductInCart(long userId, Long productId, String hexColor, String hexColorNew, int quantity) {
 
@@ -242,11 +246,9 @@ public class ShoppingCartService {
                     productId);
         }
 
-        ShoppingCartResponse shoppingCartResponse = null;
-
         //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
-
         String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
+
 //        LOGGER.info("Updating product " + productId + " in cart.");
 //        LOGGER.info("Updating product details with color: " + ((hexColorNew.equals("-1"))? ColorPalletEnum.getColorByCode(hexColor).toString().toLowerCase() : ColorPalletEnum.getColorByCode(hexColorNew).toString().toLowerCase()) + " and quantity: " + quantity + ".");
 //        LOGGER.info("Verifying that updated product is available at vendor shop.");
@@ -255,52 +257,69 @@ public class ShoppingCartService {
 
             int color = ShoppingCart.convertHexColorToInt(hexColor);
 
-            /*  Update QUANTITY of product in user cart */
-            if (quantity > 0) {
-                /* Update product quantity in cart  */
-                System.out.println("ShoppingCartService.update(" + userId + ", " + productId + ", " + color + ", " + quantity + ")");
-                shoppingCartResponse = shoppingCartRepository.update(userId, productId, color, quantity);
-            }
-
             /*  Update COLOR CHANGE of product in user cart */
             if ((ValidationHelper.isValidColorHexNumber(hexColor)) &&
                     (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
                     (!hexColor.equalsIgnoreCase(hexColorNew))) {
+                /*  *****************************************
+                    Color has changed for the product in cart
+                    *****************************************   */
 
-                /*  Try to find a product with the same productId and new color in the user's cart  */
+                /*  Find a product with productId and new color in the user's cart  */
+                int totalQuantity = 0;
                 int newColor = ShoppingCart.convertHexColorToInt(hexColorNew);
                 ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, newColor);
 
                 if (shoppingCart != null) {
                     /*
                         There's already a product with the new color:
-                        1. Delete product with previous color, but save its quantity.
+                        1. Delete product with previous color, it's quantity is the parameter to the method.
                         2. Add quantity of product with previous color to product with new color.
                      */
                     int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
                     shoppingCartResponse = shoppingCartRepository.getShoppingCartResponse();
                     if (shoppingCartResponse.isSuccess()) {
-                        int totalQuantity = shoppingCart.getQuantity() + quantity;
-                        shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
+                        totalQuantity = shoppingCart.getQuantity();
                     } else {
                         shoppingCartResponse.setReason("Error: failed to change product's color");
                     }
+
+                    //  Add updated quantity to total
+                    totalQuantity += quantity;
+
+                    totalQuantity = validateProductInCartQuantityVsInStock(productId, newColor, totalQuantity);
+                    shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
+
                 } else {
                     /*
-                        Unlikely to occur, but need to cover it:
+                        product with productId and hexColorNew doesn't exists in the cart yet:
                         Add a new product with the new color to user cart
                      */
+                    quantity = validateProductInCartQuantityVsInStock(productId, newColor, quantity);
                     shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
                     shoppingCartRepository.add(new ShoppingCart(userId, productId, newColor, quantity));
                 }
             } else {
-                //  Nothing to update - Bad Request
-                shoppingCartResponse.setSuccess(false);
-                shoppingCartResponse.setReason("Error: Bad request. Product's color was not changed");
-                shoppingCartResponse.setId(productId);
+                /*  Update QUANTITY of product in user cart - No change in product's color  */
+                if (quantity > 0) {
+
+                    quantity = validateProductInCartQuantityVsInStock(productId, color, quantity);
+
+                    /* Update product quantity in cart  */
+                    System.out.println("ShoppingCartService.update(" + userId + ", " + productId + ", " + color + ", " + quantity + ")");
+                    //shoppingCartResponse = shoppingCartRepository.update(userId, productId, color, quantity);
+                    shoppingCartRepository.update(userId, productId, color, quantity);
+
+                } else {
+                    //  Nothing to update - Bad Request
+                    shoppingCartResponse.setSuccess(false);
+                    shoppingCartResponse.setReason("Error: Bad request. Product's color was not changed");
+                    shoppingCartResponse.setId(productId);
+                }
             }
+
         } else if (parameterValue.equalsIgnoreCase("Yes")) {
-//			//simulate error 500
+			//  Simulate error 500
             logger.error("A problem occurred while updating cart.");
             throw new RuntimeException("A problem occurred while updating cart.");
         }
@@ -308,6 +327,12 @@ public class ShoppingCartService {
         return shoppingCartResponse;
     }
 
+    /**
+     *
+     * @param userId
+     * @param shoppingCarts
+     * @return
+     */
     public ShoppingCartResponse replaceUserCart(long userId, List<ShoppingCartDto> shoppingCarts) {
         ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse(true, "", 0);
 
@@ -331,6 +356,7 @@ public class ShoppingCartService {
     }
 
     /**
+     *
      * @param userId
      * @param productId
      * @param stringColor
@@ -344,6 +370,7 @@ public class ShoppingCartService {
     }
 
     /**
+     *
      * @param userId
      * @return
      */
@@ -407,6 +434,11 @@ public class ShoppingCartService {
 
     }
 
+    /**
+     *
+     * @param productId
+     * @return
+     */
     public ProductDto getProductDtoDetails(Long productId) {
         URL productsPrefixUrl = null;
         URL productByIdUrl = null;
@@ -439,6 +471,11 @@ public class ShoppingCartService {
         return dto;
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     public ShoppingCartResponseDto getUserShoppingCart(long userId) {
         List<ShoppingCart> shoppingCarts = shoppingCartRepository.getShoppingCartProductsByUserId(userId);
 
@@ -450,6 +487,12 @@ public class ShoppingCartService {
         return shoppingCartResponse;
     }
 
+    /**
+     *
+     * @param userId
+     * @param shoppingCarts
+     * @return
+     */
     public ShoppingCartResponseDto getCartProductsDetails(long userId, List<ShoppingCart> shoppingCarts) {
         /*
         //  Verify userId belongs to a registered user by calling "Account Service"
@@ -567,6 +610,12 @@ public class ShoppingCartService {
         return cartProduct;
     }
 
+    /**
+     *
+     * @param hexColor
+     * @param colors
+     * @return
+     */
     public ColorAttributeDto getProductColorAttribute(String hexColor, List<ColorAttributeDto> colors) {
         ColorAttributeDto returnColor = null;
 
@@ -585,42 +634,12 @@ public class ShoppingCartService {
         return returnColor;
     }
 
-//    public static String httpGet(URL url) throws IOException {
-//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//        int responseCode = conn.getResponseCode();
-//
-//        String returnValue;
-//        switch (responseCode) {
-//            case HttpStatus.SC_OK: {
-//                // Buffer the result into a string
-//                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-//                BufferedReader bufferedReader = new BufferedReader(inputStream);
-//                StringBuilder sb = new StringBuilder();
-//                String line;
-//
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                bufferedReader.close();
-//                returnValue = sb.toString();
-//                logger.debug(returnValue);
-//                break;
-//            }
-//            case HttpStatus.SC_CONFLICT:
-//                //  Product not found
-//                returnValue = "Not found";
-//                logger.warn("Product not found");
-//                break;
-//            default:
-//                IOException e = new IOException(conn.getResponseMessage());
-//                logger.error("httpGet -> responseCode=" + responseCode, e);
-//                throw e;
-//        }
-//        conn.disconnect();
-//        return returnValue;
-//    }
-
+    /**
+     *
+     * @param jsonObjectString
+     * @return
+     * @throws IOException
+     */
     private static ProductDto getProductDtofromJsonObjectString(String jsonObjectString) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -628,6 +647,12 @@ public class ShoppingCartService {
         return dto;
     }
 
+    /**
+     *
+     * @param jsonObjectString
+     * @return
+     * @throws IOException
+     */
     private static ColorAttributeDto getColorAttributeDtofromJsonObjectString(String jsonObjectString) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -635,10 +660,52 @@ public class ShoppingCartService {
         return dto;
     }
 
+    /**
+     *
+     * @param productId
+     * @param color
+     * @param quantity
+     * @return
+     */
+    private int validateProductInCartQuantityVsInStock(Long productId, int color, int quantity) {
+        ColorAttributeDto dto = getColorAttributeByProductIdAndColorCode(productId, color);
+
+        if (dto != null) {
+            if (quantity > dto.getInStock()) {
+                quantity = dto.getInStock();
+                shoppingCartResponse.setReason(String.format(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK, String.valueOf(dto.getInStock())));
+            } else {
+                shoppingCartResponse.setReason("");
+            }
+
+            shoppingCartResponse.setSuccess(true);
+            shoppingCartResponse.setId(productId);
+
+        } else {
+            shoppingCartResponse.setSuccess(false); //  product not found in catalog
+            shoppingCartResponse.setId(productId);
+
+            shoppingCartResponse.setReason("Error: Product with id=" + productId + " and color-code=\"" + ShoppingCart.convertIntColorToHex(color) + "\" (" + color + ") was not found in catalog");
+        }
+
+        return quantity;
+    }
+
+    /**
+     *
+     * @param productId
+     * @return
+     */
     public ShoppingCartResponseDto.CartProduct setNotFoundCartProduct(Long productId) {
         return new ShoppingCartResponseDto().createCartProduct(productId, Constants.NOT_FOUND, -999999.99, 0, Constants.NOT_FOUND, false);
     }
 
+    /**
+     *
+     * @param productId
+     * @param hexColor
+     * @return
+     */
     public boolean isProductExists(Long productId, String hexColor) {
         boolean result = false;
 
@@ -655,6 +722,10 @@ public class ShoppingCartService {
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "ShoppingCartService{" +
