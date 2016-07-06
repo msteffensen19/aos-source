@@ -1,13 +1,10 @@
 package com.advantage.order.store.config;
 
-import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
+import com.advantage.order.store.listener.SessionCounterListener;
 import com.advantage.root.util.JsonHelper;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,9 +14,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-public class AppUserConfigurationDynamic {
+public class DynamicConfiguration {
 
-    private static final Logger logger = Logger.getLogger(AppUserConfigurationDynamic.class);
+    private static final Logger logger = Logger.getLogger(DynamicConfiguration.class);
 
     // "SLA: Add delay in add to cart response time (seconds)":
     // 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time
@@ -35,7 +32,7 @@ public class AppUserConfigurationDynamic {
 //        return new AppUserConfig();
 //    }
 
-    public AppUserConfigurationDynamic() {
+    public DynamicConfiguration() {
         if (logger.isTraceEnabled()) {
             logger.trace("Constructor, objectId=" + ((Object) this).toString());
         }
@@ -130,5 +127,21 @@ public class AppUserConfigurationDynamic {
 
     public int getDelayCartResponse() {
         return delayCartResponse;
+    }
+
+    public int getDelay() {
+        //DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
+        int delayCartResponse = getDelayCartResponse();
+        int numberOfSessionsToAddTheDelay = getNumberOfSessionsToAddTheDelay();
+        int activeOrderRequests = SessionCounterListener.getActiveSessionsByRequestListener();
+        int result = 0;
+        logger.debug("REAL delayCartResponse = " + delayCartResponse);
+        logger.debug("REAL numberOfSessionsToAddTheDelay = " + numberOfSessionsToAddTheDelay);
+        logger.debug("REAL activeOrderRequests = " + activeOrderRequests);
+
+        if (activeOrderRequests >= numberOfSessionsToAddTheDelay) {
+            result = delayCartResponse;
+        }
+        return result;
     }
 }

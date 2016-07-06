@@ -14,17 +14,20 @@ import java.util.Enumeration;
 
 public class SessionCounterListener implements ServletRequestListener, HttpSessionListener {
     private static int activeSessionsByRequestListener = 0;
+    @Deprecated
     private static int activeSessionsBySessionListener = 0;
     private static final Logger requestLogger = Logger.getLogger("RequestLogger");
+    @Deprecated
     private static final Logger sessionLogger = Logger.getLogger("SessionLogger");
 
     public static int getActiveSessionsByRequestListener() {
-        requestLogger.debug("Call static getActiveSessionsByRequestListener");
+        requestLogger.trace("Call static getActiveSessionsByRequestListener");
         return activeSessionsByRequestListener;
     }
 
+    @Deprecated
     public static int getActiveSessionsBySessionListener() {
-        sessionLogger.debug("Call static getActiveSessionsByRequestListener");
+        sessionLogger.trace("Call static getActiveSessionsByRequestListener");
         return activeSessionsBySessionListener;
     }
 
@@ -49,8 +52,8 @@ public class SessionCounterListener implements ServletRequestListener, HttpSessi
         }
         activeSessionsByRequestListener++;
 
-        if (requestLogger.isDebugEnabled()) {
-            requestLogger.debug("activeSessionsByRequestListener = " + activeSessionsByRequestListener);
+        if (requestLogger.isInfoEnabled()) {
+            requestLogger.info("activeSessionsByRequestListener = " + activeSessionsByRequestListener);
         }
     }
 
@@ -60,12 +63,13 @@ public class SessionCounterListener implements ServletRequestListener, HttpSessi
         if (activeSessionsByRequestListener > 0) {
             activeSessionsByRequestListener--;
         }
-        if (requestLogger.isDebugEnabled()) {
-            requestLogger.debug("activeSessionsByRequestListener = " + activeSessionsByRequestListener);
+        if (requestLogger.isInfoEnabled()) {
+            requestLogger.info("activeSessionsByRequestListener = " + activeSessionsByRequestListener);
         }
     }
 
     @Override
+    @Deprecated
     public void sessionCreated(HttpSessionEvent se) {
         boolean isNewSession = se.getSession().isNew();
         sessionLogger.debug("Session new = " + isNewSession);
@@ -79,6 +83,7 @@ public class SessionCounterListener implements ServletRequestListener, HttpSessi
     }
 
     @Override
+    @Deprecated
     public void sessionDestroyed(HttpSessionEvent se) {
         if (activeSessionsBySessionListener > 0) {
             activeSessionsBySessionListener--;

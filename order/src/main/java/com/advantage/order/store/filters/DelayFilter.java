@@ -1,7 +1,6 @@
 package com.advantage.order.store.filters;
 
-import com.advantage.order.store.config.AppUserConfiguration;
-import com.advantage.order.store.config.AppUserConfigurationDynamic;
+import com.advantage.order.store.config.DynamicConfiguration;
 import com.advantage.order.store.listener.SessionCounterListener;
 import org.apache.log4j.Logger;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -81,20 +80,19 @@ public class DelayFilter extends OncePerRequestFilter {
         }
         //servletContext.setAttribute("CURRENT_SESSIONS",);
 
-        if (logger.isTraceEnabled() || loggerDev.isDebugEnabled()) {
-            logger.trace("Start sleep: thread " + Thread.currentThread().getId());
-            loggerDev.trace("Start sleep: thread " + Thread.currentThread().getId());
-        }
-        try {
-            Thread.sleep(3000);
-            logger.trace("End sleep: thread " + Thread.currentThread().getId());
-            loggerDev.trace("End sleep: thread " + Thread.currentThread().getId());
-        } catch (InterruptedException e) {
-            logger.error(e);
-        }
-        AppUserConfigurationDynamic appUserConfigurationDynamic = new AppUserConfigurationDynamic();
-        logger.debug("appUserConfigurationDynamic[" + ((Object) appUserConfigurationDynamic).toString() + "].getDelayCartResponse() = " + appUserConfigurationDynamic.getDelayCartResponse());
-        logger.debug("appUserConfigurationDynamic[" + ((Object) appUserConfigurationDynamic).toString() + "].getNumberOfSessionsToAddTheDelay() = " + appUserConfigurationDynamic.getNumberOfSessionsToAddTheDelay());
+//        if (logger.isTraceEnabled() || loggerDev.isDebugEnabled()) {
+//            logger.trace("Start sleep: thread " + Thread.currentThread().getId());
+//            loggerDev.trace("Start sleep: thread " + Thread.currentThread().getId());
+//        }
+//        try {
+//            Thread.sleep(60000);
+//            logger.trace("End sleep: thread " + Thread.currentThread().getId());
+//            loggerDev.trace("End sleep: thread " + Thread.currentThread().getId());
+//        } catch (InterruptedException e) {
+//            logger.error(e);
+//        }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
+
 }
