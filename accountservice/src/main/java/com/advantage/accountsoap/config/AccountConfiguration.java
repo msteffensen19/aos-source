@@ -150,6 +150,8 @@ public class AccountConfiguration {
         getAccountConfigurationResponse.setAllowUserConfiguration(this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
         getAccountConfigurationResponse.setMaxConcurrentSessions(this.getMaxConcurrentSessions());
 
+        getAccountConfigurationResponse.setUserSecondWsdl(false);   //  MOVED to user-level
+
         return getAccountConfigurationResponse;
     }
 }
