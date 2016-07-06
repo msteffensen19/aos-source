@@ -13,9 +13,10 @@ import javax.servlet.ServletRegistration;
  * @author Assaf Kubany on 11/10/2015.
  */
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+    private static final Logger logger = Logger.getLogger(AppInitializer.class);
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        Logger logger = Logger.getLogger(this.getClass());
         logger.info(" ********************************* \n" +
                 " ****** Order service start ****** \n" +
                 " ********************************* ");
@@ -28,6 +29,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 JacksonObjectMapperConfiguration.class,
                 Url_resources.class,
                 AdvantageAspects.class
+                , AppUserConfiguration.class
         };
     }
 

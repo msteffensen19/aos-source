@@ -49,8 +49,8 @@ public class OrderController{
     @Autowired
     private OrderManagementService orderManagementService;
 
-    @Autowired
-    private AppUserConfiguration appUserConfiguration;
+//    @Autowired
+    // private AppUserConfiguration appUserConfiguration;
 
     private ShoppingCartResponse shoppingCartResponse;
 
@@ -62,6 +62,7 @@ public class OrderController{
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        AppUserConfiguration appUserConfiguration = AppUserConfiguration.readConfiguration();
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
         logger.trace("appUserConfiguration.isAllowUserConfiguration()=" + appUserConfiguration.isAllowUserConfiguration());

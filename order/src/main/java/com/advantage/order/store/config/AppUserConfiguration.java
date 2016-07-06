@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+@Component
 public class AppUserConfiguration {
 
     private static final Logger logger = Logger.getLogger(AppUserConfiguration.class);
@@ -24,6 +26,7 @@ public class AppUserConfiguration {
     @Autowired
     private Environment environment;
 
+    private static boolean isFirstRead = true;
     private static boolean allowUserConfiguration;
     // "SLA: Add delay in add to cart response time (seconds)":
     // 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time
@@ -43,22 +46,29 @@ public class AppUserConfiguration {
         if (logger.isTraceEnabled()) {
             logger.trace("Constructor, objectId=" + ((Object) this).toString());
         }
-        init();
     }
 
-    private void init() {
-        allowUserConfiguration = isAllowUserConfig();
+    public static AppUserConfiguration readConfiguration() {
+        AppUserConfiguration result = new AppUserConfiguration();
         logger.debug("allowUserConfiguration = " + allowUserConfiguration);
-        if (allowUserConfiguration) {
-            delayCartResponse = getFromCatalogDelayCartResponse();
-            if (delayCartResponse > 0) {
-                numberOfSessionsToAddTheDelay = getFromCatalogNumberOfSessions();
-            } else {
-                numberOfSessionsToAddTheDelay = 0;
-            }
+        if (isFirstRead) {
+            allowUserConfiguration = result.isAllowUserConfig();
+            isFirstRead = false;
         }
-        logger.debug("delayCartResponse = " + delayCartResponse);
-        logger.debug("numberOfSessionsToAddTheDelay = " + numberOfSessionsToAddTheDelay);
+        if (allowUserConfiguration) {
+            result.delayCartResponse = result.getFromCatalogDelayCartResponse();
+            if (result.delayCartResponse > 0) {
+                result.numberOfSessionsToAddTheDelay = result.getFromCatalogNumberOfSessions();
+            } else {
+                result.numberOfSessionsToAddTheDelay = 0;
+            }
+        } else {
+            result.delayCartResponse = 0;
+            result.numberOfSessionsToAddTheDelay = 0;
+        }
+        logger.debug("delayCartResponse = " + result.delayCartResponse);
+        logger.debug("numberOfSessionsToAddTheDelay = " + result.numberOfSessionsToAddTheDelay);
+        return result;
     }
 
     private int getFromCatalogDelayCartResponse() {
@@ -128,25 +138,30 @@ public class AppUserConfiguration {
     }
 
     public boolean isAllowUserConfiguration() {
+        if (isFirstRead) {
+            allowUserConfiguration = isAllowUserConfig();
+            isFirstRead = false;
+        }
         return allowUserConfiguration;
     }
 
     private boolean isAllowUserConfig() {
+        boolean result = false;
         if (environment == null) {
-            logger.fatal("@Autowired Environment is null");
+            logger.fatal("!!!!!!!!!!! @Autowired Environment is null");
         }
         String property = environment.getProperty(Constants.ENV_ALLOW_USER_CONFIGURATION);
         if (logger.isDebugEnabled()) {
             logger.debug("Parameter " + Constants.ENV_ALLOW_USER_CONFIGURATION + " = " + (property == null ? "null" : property));
         }
         if (property == null || property.isEmpty()) {
-            return false;
+            result = false;
         }
         if (property.toLowerCase().equals("yes")) {
-            return true;
-        } else {
-            return false;
+            result = true;
         }
+        logger.debug("First run: allowUserConfiguration = " + allowUserConfiguration);
+        return result;
     }
 
     public int getNumberOfSessionsToAddTheDelay() {

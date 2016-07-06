@@ -1,10 +1,10 @@
 package com.advantage.order.store.filters;
 
+import com.advantage.order.store.listener.SessionCounterListener;
 import org.apache.log4j.Logger;
-import org.springframework.jmx.support.ObjectNameManager;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.management.MBeanServer;
+import javax.management.*;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,12 +20,41 @@ import java.util.Enumeration;
 public class DelayFilter extends OncePerRequestFilter {
 
     private final static Logger logger = Logger.getLogger(DelayFilter.class);
+    private final static Logger loggerDev = Logger.getLogger("dev");
+    private static final Logger requestLogger = Logger.getLogger("RequestLogger");
+    private static final Logger sessionLogger = Logger.getLogger("SessionLogger");
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        requestLogger.debug("SessionCounterListener.getActiveSessionsByRequestListener() = " + SessionCounterListener.getActiveSessionsByRequestListener());
+        sessionLogger.debug("SessionCounterListener.getActiveSessionsBySessionListener() = " + SessionCounterListener.getActiveSessionsBySessionListener());
         ServletContext servletContext = this.getServletContext();
         String contextPath = servletContext.getContextPath();
         MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+
+        try {
+            ObjectName objectName = new ObjectName("Catalina:type=Manager,context=" + contextPath + ",host=localhost");
+            logger.trace("objectName.getKeyPropertyListString() = " + objectName.getKeyPropertyListString());
+            MBeanInfo mBeanInfo = platformMBeanServer.getMBeanInfo(objectName);
+            logger.trace("platformMBeanServer.getMBeanInfo(objectName).getDescription() = " + mBeanInfo.getDescription());
+            int activeSessions = (int) platformMBeanServer.getAttribute(objectName, "activeSessions");
+            logger.debug("platformMBeanServer.getAttribute(objectName,\"activeSessions\") = " + activeSessions);
+            loggerDev.debug("platformMBeanServer.getAttribute(objectName,\"activeSessions\") = " + activeSessions);
+
+            int ererer = 434;
+        } catch (MalformedObjectNameException e) {
+            logger.fatal(e);
+        } catch (AttributeNotFoundException e) {
+            logger.fatal(e);
+        } catch (InstanceNotFoundException e) {
+            logger.fatal(e);
+        } catch (ReflectionException e) {
+            logger.fatal(e);
+        } catch (MBeanException e) {
+            logger.fatal(e);
+        } catch (IntrospectionException e) {
+            logger.fatal(e);
+        }
 
         if (logger.isTraceEnabled()) {
             String[] domains = platformMBeanServer.getDomains();
@@ -49,6 +78,18 @@ public class DelayFilter extends OncePerRequestFilter {
             logger.trace(sb.toString());
         }
         //servletContext.setAttribute("CURRENT_SESSIONS",);
+
+        if (logger.isTraceEnabled() || loggerDev.isDebugEnabled()) {
+            logger.trace("Start sleep: thread " + Thread.currentThread().getId());
+            loggerDev.trace("Start sleep: thread " + Thread.currentThread().getId());
+        }
+        try {
+            Thread.sleep(3000);
+            logger.trace("End sleep: thread " + Thread.currentThread().getId());
+            loggerDev.trace("End sleep: thread " + Thread.currentThread().getId());
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
