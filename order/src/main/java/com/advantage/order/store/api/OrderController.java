@@ -118,6 +118,7 @@ public class OrderController {
 
             if (!shoppingCartResponse.getReason().isEmpty()) {
                 userCartResponseDto.setMessage(shoppingCartResponse.getReason());
+                httpStatus = HttpStatus.OK;
             }
         }
         DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
