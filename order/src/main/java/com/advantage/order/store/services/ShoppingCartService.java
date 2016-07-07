@@ -81,40 +81,23 @@ public class ShoppingCartService {
             ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, color);
 
             //  Check if there is this ShoppingCart already exists
-            ColorAttributeDto dto = getColorAttributeByProductIdAndColorCode(productId, color);
+            int totalQuantity = 0;
             if (shoppingCart != null) {
-
-                int totalQuantity = shoppingCart.getQuantity() + quantity;
-                if (totalQuantity > dto.getInStock()) {
-                    totalQuantity = dto.getInStock();
-
-                    shoppingCartResponse.setReason(String.format(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK, String.valueOf(dto.getInStock())));
-                }
-
-                shoppingCartRepository.update(userId, productId, color, totalQuantity);
-
-                shoppingCartResponse.setSuccess(true);
-                shoppingCartResponse.setId(shoppingCart.getProductId());
-
+                totalQuantity = shoppingCart.getQuantity() + quantity;
             } else {
-                //  New ShoppingCart
-                if (quantity > dto.getInStock()) {
-                    quantity = dto.getInStock();
-                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK);
-                } else {
-                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY);
-                }
-                shoppingCart = new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, quantity);
-                shoppingCartRepository.add(shoppingCart);
-
-                shoppingCartResponse.setSuccess(true);
-                shoppingCartResponse.setId(shoppingCart.getProductId());
-
-                shoppingCartResponse = new ShoppingCartResponse(true,
-                        ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
-                        shoppingCart.getProductId());
+                totalQuantity = quantity;
             }
+
+            totalQuantity = validateProductInCartQuantityVsInStock(productId, color, totalQuantity);
+
+            if (shoppingCart != null) {
+                shoppingCartRepository.update(userId, productId, color, totalQuantity);
+            } else {
+                shoppingCartRepository.add(new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, totalQuantity));
+            }
+
         } else {
+            //  Most unlikely, but need to cover this case as well
             shoppingCartResponse = new ShoppingCartResponse(false,
                     ShoppingCart.MESSAGE_PRODUCT_NOT_FOUND_IN_CATALOG,
                     productId);
