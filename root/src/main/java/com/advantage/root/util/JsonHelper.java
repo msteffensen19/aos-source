@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,9 +14,10 @@ import java.util.Map;
  * @author Binyamin Regev on 10/01/2016.
  */
 public class JsonHelper {
+    private static final Logger logger = Logger.getLogger(JsonHelper.class);
 
     public static Map<String, Object> jsonStringToMap(String jsonString) {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new HashMap<>();
 
         /*
         //  =================================================
@@ -30,20 +32,18 @@ public class JsonHelper {
 
         //DynamicDataSet data = new DynamicDataSet(jsonString);
         try {
-
             ObjectMapper mapper = new ObjectMapper();
 
             // convert JSON string to Map
             jsonMap = mapper.readValue(jsonString, new TypeReference<Map<String, Object>>(){});
-
-            System.out.println(jsonMap);
+            logger.info(jsonMap);
 
         } catch (JsonGenerationException e) {
-            e.printStackTrace();
+            logger.fatal(e);
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            logger.fatal(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.fatal(e);
         }
 
         /*
@@ -60,7 +60,6 @@ public class JsonHelper {
         long refNumber = Long.valueOf(String.valueOf(jsonMap.get("MCRefNumber")));
         String transactionDate = (String) jsonMap.get("TransactionDate");
          */
-
         return jsonMap;
     }
 }

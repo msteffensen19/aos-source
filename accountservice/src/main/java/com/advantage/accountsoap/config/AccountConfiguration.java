@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.account.GetAccountConfigurationResponse;
+import com.advantage.common.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -18,7 +19,7 @@ public class AccountConfiguration {
     private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
     private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
     private final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
-    private final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
+
     private final String ENV_MAX_CONCURRENT_SESSIONS = "Max.Concurrent.Sessions";
 
 
@@ -46,7 +47,7 @@ public class AccountConfiguration {
         this.setLoginBlockingIntervalInSeconds(ENV_USER_LOGIN_BLOCKING);
         this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserLoginTimeout(ENV_USER_LOGIN_TIMEOUT);
-        this.setAllowUserConfiguration(ENV_ALLOW_USER_CONFIGURATION);
+        this.setAllowUserConfiguration(Constants.ENV_ALLOW_USER_CONFIGURATION);
         this.setMaxConcurrentSessions(ENV_MAX_CONCURRENT_SESSIONS);
 
         System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_SECONDS=" + this.getLoginBlockingIntervalInSeconds());

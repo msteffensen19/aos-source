@@ -6,6 +6,8 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.security.AuthorizeAsUser;
+import com.advantage.order.store.config.AppUserConfiguration;
+import com.advantage.order.store.config.DynamicConfiguration;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +42,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = Constants.URI_API + "/v1")
-public class OrderController{
+public class OrderController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
@@ -47,17 +50,23 @@ public class OrderController{
     @Autowired
     private OrderManagementService orderManagementService;
 
+    @Autowired
+    private AppUserConfiguration appUserConfiguration;
+
     private ShoppingCartResponse shoppingCartResponse;
 
     private static final String DemoAppConfig = "DemoAppConfig/parameters/";
-    private static final String ParameterName ="Repeat_ShipEx_call";
+    private static final String ParameterName = "Repeat_ShipEx_call";
+    private static final Logger logger = Logger.getLogger(OrderController.class);
     /*  =========================================================================================================   */
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        //   AppUserConfiguration appUserConfiguration = AppUserConfiguration.readConfiguration();
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
+        // logger.trace("appUserConfiguration.isAllowUserConfiguration()=" + appUserConfiguration.isAllowUserConfiguration());
     }
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
@@ -111,6 +120,18 @@ public class OrderController{
                 userCartResponseDto.setMessage(shoppingCartResponse.getReason());
             }
         }
+        DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
+        int delay = dynamicConfiguration.getDelay() * 1000;
+
+        if (logger.isTraceEnabled()) {
+            logger.trace("Start sleep: thread " + Thread.currentThread().getId());
+        }
+        try {
+            Thread.sleep(delay);
+            logger.trace("End sleep: thread " + Thread.currentThread().getId());
+        } catch (InterruptedException e) {
+            logger.error(e);
+        }
 
         return new ResponseEntity<>(userCartResponseDto, httpStatus);
     }
@@ -126,7 +147,7 @@ public class OrderController{
     public ResponseEntity<ShoppingCartResponseDto> updateProductInCart(@PathVariable("userId") Long userId,
                                                                        @PathVariable("productId") Long productId,
                                                                        @PathVariable("color") String hexColor,
-																	   @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
+                                                                       @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
                                                                        @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
                                                                        HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
@@ -314,12 +335,12 @@ public class OrderController{
         costRequest.setSETransactionType(Constants.TRANSACTION_TYPE_SHIPPING_COST);
         */
 
-        int repeat= checkRepeatShipExCall();
-        repeat= repeat>0 ? repeat : 1;
-        ShippingCostResponse costResponse =null; //orderManagementService.getShippingCostFromShipEx(costRequest);
+        int repeat = checkRepeatShipExCall();
+        repeat = repeat > 0 ? repeat : 1;
+        ShippingCostResponse costResponse = null; //orderManagementService.getShippingCostFromShipEx(costRequest);
 
         do {
-            costResponse =orderManagementService.getShippingCostFromShipEx(costRequest);
+            costResponse = orderManagementService.getShippingCostFromShipEx(costRequest);
             switch (costResponse.getReason()) {
                 case OrderManagementService.ERROR_SHIPEX_GET_SHIPPING_COST_REQUEST_IS_EMPTY:
                     httpStatus = HttpStatus.BAD_REQUEST;
@@ -338,13 +359,13 @@ public class OrderController{
             }
 
         }
-        while (--repeat>0);
+        while (--repeat > 0);
         return new ResponseEntity<>(costResponse, httpStatus);
     }
 
     //return count of return ShipExCall
     private int checkRepeatShipExCall() {
-        int repeat=0;
+        int repeat = 0;
         URL DemoAppConfigPrefixUrl;
         URL parameterByNameUrl = null;
         try {
@@ -362,11 +383,11 @@ public class OrderController{
 
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  tool not found (409)
-                return repeat=0;
+                return repeat = 0;
             } else {
                 parameter = getDemoAppConfigParameterfromJsonObjectString(stringResponse);
-                if(parameter!=null)
-                    return repeat= Integer.parseInt(parameter.getParameterValue());
+                if (parameter != null)
+                    return repeat = Integer.parseInt(parameter.getParameterValue());
             }
         } catch (IOException e) {
             System.out.println("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ");
@@ -382,7 +403,7 @@ public class OrderController{
     }
 
     //Convert JSON object to DemoAppConfig Parameter
-    private  DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
+    private DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
@@ -460,8 +481,8 @@ public class OrderController{
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by userID or/and orderId")
     public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
-                                                                                @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
-        OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
+                                                                      @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
+        OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
         return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
     }
 
@@ -474,18 +495,18 @@ public class OrderController{
             @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<ShoppingCartResponse> addOldOrderToCart(@PathVariable("userId") Long userId,
-                                                                    @PathVariable("orderId") Long orderId,
-                                                                HttpServletRequest request) {
+                                                                  @PathVariable("orderId") Long orderId,
+                                                                  HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.OK;
         ShoppingCartResponseDto userCartResponseDto;
-        if (userId != null &&  (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId)))!=null) {
+        if (userId != null && (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId))) != null) {
             httpStatus = HttpStatus.OK;
             //get order by userID and orderID
-            OrderHistoryCollectionDto orderHistoryCollectionDto=orderManagementService.getOrdersHistory(userId,orderId);
-            if(orderHistoryCollectionDto!=null && orderHistoryCollectionDto.getOrderHistoryCollection().size()>0 ) {
+            OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
+            if (orderHistoryCollectionDto != null && orderHistoryCollectionDto.getOrderHistoryCollection().size() > 0) {
                 orderHistoryCollectionDto.getOrderHistoryCollection().forEach(
-                        order-> {
-                            order.getProducts().forEach(product ->{
+                        order -> {
+                            order.getProducts().forEach(product -> {
                                 long id = product.getProductId();
                                 String productColor = String.valueOf(product.getProductColor());
                                 int quantity = product.getProductQuantity();
@@ -493,8 +514,7 @@ public class OrderController{
                             });
                         });
             }
-        }
-        else {
+        } else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
 
             shoppingCartResponse.setSuccess(false);
