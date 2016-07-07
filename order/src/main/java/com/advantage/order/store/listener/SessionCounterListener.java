@@ -11,24 +11,15 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionEvent;
 import java.util.Enumeration;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class SessionCounterListener implements ServletRequestListener, HttpSessionListener {
-    private static int activeSessionsByRequestListener = 0;
-    @Deprecated
-    private static int activeSessionsBySessionListener = 0;
-    private static final Logger requestLogger = Logger.getLogger("RequestLogger");
-    @Deprecated
-    private static final Logger sessionLogger = Logger.getLogger("SessionLogger");
+public class SessionCounterListener implements ServletRequestListener {
+    private static AtomicInteger activeSessionsByRequestListener = new AtomicInteger(0);
+    private static final Logger requestLogger = Logger.getLogger("RequestListener");
 
     public static int getActiveSessionsByRequestListener() {
         requestLogger.trace("Call static getActiveSessionsByRequestListener");
-        return activeSessionsByRequestListener;
-    }
-
-    @Deprecated
-    public static int getActiveSessionsBySessionListener() {
-        sessionLogger.trace("Call static getActiveSessionsByRequestListener");
-        return activeSessionsBySessionListener;
+        return activeSessionsByRequestListener.get();
     }
 
     @Override
@@ -50,7 +41,7 @@ public class SessionCounterListener implements ServletRequestListener, HttpSessi
 
             requestLogger.debug(sb.toString());
         }
-        activeSessionsByRequestListener++;
+        activeSessionsByRequestListener.incrementAndGet();
 
         if (requestLogger.isInfoEnabled()) {
             requestLogger.info("activeSessionsByRequestListener = " + activeSessionsByRequestListener);
@@ -60,38 +51,12 @@ public class SessionCounterListener implements ServletRequestListener, HttpSessi
     @Override
     public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
         requestLogger.trace("requestDestroyed");
-        if (activeSessionsByRequestListener > 0) {
-            activeSessionsByRequestListener--;
+        if (activeSessionsByRequestListener.get() > 0) {
+            activeSessionsByRequestListener.decrementAndGet();
         }
         if (requestLogger.isInfoEnabled()) {
             requestLogger.info("activeSessionsByRequestListener = " + activeSessionsByRequestListener);
         }
     }
 
-    @Override
-    @Deprecated
-    public void sessionCreated(HttpSessionEvent se) {
-        boolean isNewSession = se.getSession().isNew();
-        sessionLogger.debug("Session new = " + isNewSession);
-        activeSessionsBySessionListener++;
-        if (sessionLogger.isDebugEnabled()) {
-            String sessionId = se.getSession().getId();
-            sessionLogger.debug("HttpSessionId = " + sessionId);
-            sessionLogger.debug("activeSessionsBySessionListener = " + activeSessionsBySessionListener);
-        }
-
-    }
-
-    @Override
-    @Deprecated
-    public void sessionDestroyed(HttpSessionEvent se) {
-        if (activeSessionsBySessionListener > 0) {
-            activeSessionsBySessionListener--;
-        }
-        if (sessionLogger.isDebugEnabled()) {
-            String sessionId = se.getSession().getId();
-            sessionLogger.debug("HttpSessionId = " + sessionId);
-            sessionLogger.debug("activeSessionsBySessionListener = " + activeSessionsBySessionListener);
-        }
-    }
 }
