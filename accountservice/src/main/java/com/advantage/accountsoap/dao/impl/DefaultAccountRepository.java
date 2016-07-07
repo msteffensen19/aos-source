@@ -460,10 +460,10 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         //  Check the number of unsuccessful login attempts, block user if reached the limit
         //if (accountsoap.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
-        if (account.getInternalUnsuccessfulLoginAttempts() == AccountConfiguration.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING) {
+        if (account.getInternalUnsuccessfulLoginAttempts() == AccountConfiguration.getNumberOfLoginAttemptsBeforeBlocking()) {
 
             //  Update Account class with timestamp when user can attempt login again according to configuration interval
-            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp((AccountConfiguration.LOGIN_BLOCKING_INTERVAL_IN_SECONDS * 1000)));
+            account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp((AccountConfiguration.getLoginBlockingIntervalInSeconds() * 1000)));
         }
 
         //  Update data changes made for application user into application users table
