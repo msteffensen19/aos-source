@@ -1,6 +1,8 @@
 package com.advantage.order.store.config;
 
+import accountservice.store.online.advantage.com.*;
 import com.advantage.common.Constants;
+import com.advantage.common.Url_resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,8 @@ public class AppUserConfiguration {
     private static boolean allowUserConfiguration;
     private static boolean isFirstRead = true;
 
+    private GetAccountConfigurationResponse getAccountConfigurationResponse;
+
     //Call by AppInitializer
     protected AppUserConfiguration() {
         if (logger.isTraceEnabled()) {
@@ -28,6 +32,7 @@ public class AppUserConfiguration {
         } else {
             logger.trace("!!!!!!!!!!! @Autowired Environment is not null");
         }
+
     }
 
     //  Class that is called must have a method "public void init() throws Exception"
@@ -40,6 +45,17 @@ public class AppUserConfiguration {
         }
         logger.trace("@Bean(initMethod = \"init\")");
         isAllowUserConfig();
+
+        AccountServicePortService accountServicePortService = new AccountServicePortService(Url_resources.getUrlSoapAccount());
+        AccountServicePort accountServicePortSoap11 = accountServicePortService.getAccountServicePortSoap11();
+        getAccountConfigurationResponse = accountServicePortSoap11.getAccountConfiguration(new GetAccountConfigurationRequest());
+
+        if (getAccountConfigurationResponse == null) {
+            logger.fatal("!!!!!!!!!!! getAccountConfigurationResponse is null");
+        } else {
+            boolean allowUserConfiguration = getAccountConfigurationResponse.isAllowUserConfiguration();
+            logger.info("EVG getAccountConfigurationResponse = " + allowUserConfiguration);
+        }
         return this;
     }
 
