@@ -87,13 +87,13 @@ public class ShoppingCartService {
                 int totalQuantity = shoppingCart.getQuantity() + quantity;
                 if (totalQuantity > dto.getInStock()) {
                     totalQuantity = dto.getInStock();
-
                     shoppingCartResponse.setReason(String.format(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK, String.valueOf(dto.getInStock())));
+                    shoppingCartResponse.setSuccess(false);
+                } else {
+                    shoppingCartResponse.setSuccess(true);
                 }
 
                 shoppingCartRepository.update(userId, productId, color, totalQuantity);
-
-                shoppingCartResponse.setSuccess(true);
                 shoppingCartResponse.setId(shoppingCart.getProductId());
 
             } else {
@@ -101,18 +101,17 @@ public class ShoppingCartService {
                 if (quantity > dto.getInStock()) {
                     quantity = dto.getInStock();
                     shoppingCartResponse.setReason(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK);
+                    shoppingCartResponse.setSuccess(false);
                 } else {
                     shoppingCartResponse.setReason(ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY);
+                    shoppingCartResponse.setSuccess(true);
                 }
                 shoppingCart = new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, quantity);
                 shoppingCartRepository.add(shoppingCart);
-
-                shoppingCartResponse.setSuccess(true);
                 shoppingCartResponse.setId(shoppingCart.getProductId());
-
-                shoppingCartResponse = new ShoppingCartResponse(true,
-                        ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
-                        shoppingCart.getProductId());
+//                shoppingCartResponse = new ShoppingCartResponse(true,
+//                        ShoppingCart.MESSAGE_NEW_PRODUCT_UPDATED_SUCCESSFULLY,
+//                        shoppingCart.getProductId());
             }
         } else {
             shoppingCartResponse = new ShoppingCartResponse(false,
@@ -674,11 +673,12 @@ public class ShoppingCartService {
             if (quantity > dto.getInStock()) {
                 quantity = dto.getInStock();
                 shoppingCartResponse.setReason(String.format(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK, String.valueOf(dto.getInStock())));
+                shoppingCartResponse.setSuccess(false);
             } else {
                 shoppingCartResponse.setReason("");
+                shoppingCartResponse.setSuccess(true);
             }
 
-            shoppingCartResponse.setSuccess(true);
             shoppingCartResponse.setId(productId);
 
         } else {

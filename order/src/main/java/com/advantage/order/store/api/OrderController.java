@@ -51,7 +51,7 @@ public class OrderController {
 
     private ShoppingCartResponse shoppingCartResponse;
 
-    private static final String DemoAppConfig = "DemoAppConfig/parameters/";
+    private static final String demoAppConfig = "DemoAppConfig/parameters/";
     private static final String ParameterName = "Repeat_ShipEx_call";
     private static final Logger logger = Logger.getLogger(OrderController.class);
     /*  =========================================================================================================   */
@@ -108,21 +108,21 @@ public class OrderController {
             httpStatus = HttpStatus.NOT_FOUND;    //  404 = Resource not found
         } else {
             //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-            httpStatus = HttpStatus.CREATED;
+
+            httpStatus = shoppingCartResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.OK;
 
             if (!shoppingCartResponse.getReason().isEmpty()) {
                 userCartResponseDto.setMessage(shoppingCartResponse.getReason());
-                httpStatus = HttpStatus.OK;
             }
         }
         DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
-        int delay = dynamicConfiguration.getDelay() * 1000;
+        int delayForResponse = dynamicConfiguration.getDelay() * 1000;
 
         if (logger.isTraceEnabled()) {
             logger.trace("Start sleep: thread " + Thread.currentThread().getId());
         }
         try {
-            Thread.sleep(delay);
+            Thread.sleep(delayForResponse);
             logger.trace("End sleep: thread " + Thread.currentThread().getId());
         } catch (InterruptedException e) {
             logger.error(e);
@@ -199,14 +199,11 @@ public class OrderController {
             } else {
                 //  Replace user cart failed
                 httpStatus = HttpStatus.NOT_IMPLEMENTED;
-
-                shoppingCartResponse.setSuccess(false);
                 shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
                 shoppingCartResponse.setId(-1);
             }
         } else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
-
             shoppingCartResponse.setSuccess(false);
             shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
             shoppingCartResponse.setId(-1);
@@ -285,10 +282,7 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@PathVariable("userId") long userId,
                                                                                       @RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                                       HttpServletRequest request) {
-        System.out.println("OrderController -> verifyProductsQuantitiesInUserCart(): userId=" + userId);
-        ShoppingCartResponseDto responseDto = shoppingCartService.verifyProductsQuantitiesInUserCart(userId, shoopingCartProducts);
-        /*return new ResponseEntity<>(responseDto, HttpStatus.OK);*/
-
+        logger.debug("userId = " + userId);
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
@@ -361,36 +355,38 @@ public class OrderController {
     //return count of return ShipExCall
     private int checkRepeatShipExCall() {
         int repeat = 0;
-        URL DemoAppConfigPrefixUrl;
+        URL demoAppConfigPrefixUrl = null;
         URL parameterByNameUrl = null;
         try {
-            DemoAppConfigPrefixUrl = new URL(Url_resources.getUrlCatalog(), DemoAppConfig);
-            parameterByNameUrl = new URL(DemoAppConfigPrefixUrl, String.valueOf(ParameterName));
+            demoAppConfigPrefixUrl = new URL(Url_resources.getUrlCatalog(), demoAppConfig);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("Wrong URL for demoAppConfigPrefixUrl", e);
+        }
+        try {
+            parameterByNameUrl = new URL(demoAppConfigPrefixUrl, String.valueOf(ParameterName));
+        } catch (MalformedURLException e) {
+            logger.error("Wrong URL for parameterByNameUrl", e);
         }
 
         DemoAppConfigParameter parameter = null;
 
         try {
             String stringResponse = RestApiHelper.httpGet(parameterByNameUrl);
-            System.out.println("stringResponse = \"" + stringResponse + "\"");
+            logger.debug("stringResponse = \"" + stringResponse + "\"");
 
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  tool not found (409)
-                return repeat = 0;
+                return 0;
             } else {
-                parameter = getDemoAppConfigParameterfromJsonObjectString(stringResponse);
+                parameter = getDemoAppConfigParameterFromJsonObjectString(stringResponse);
                 if (parameter != null)
-                    return repeat = Integer.parseInt(parameter.getParameterValue());
+                    return Integer.parseInt(parameter.getParameterValue());
             }
         } catch (IOException e) {
-            System.out.println("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ");
-            e.printStackTrace();
+            logger.error("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ", e);
             return repeat;
         } catch (NullPointerException e) {
-            System.out.println("convert Repeat_ShipEx_call value to int throws IOException: ");
-            e.printStackTrace();
+            logger.error("convert Repeat_ShipEx_call value to int throws NullPointerException: ", e);
             return repeat;
         }
 
@@ -398,7 +394,7 @@ public class OrderController {
     }
 
     //Convert JSON object to DemoAppConfig Parameter
-    private DemoAppConfigParameter getDemoAppConfigParameterfromJsonObjectString(String jsonObjectString) throws IOException {
+    private DemoAppConfigParameter getDemoAppConfigParameterFromJsonObjectString(String jsonObjectString) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
@@ -460,7 +456,7 @@ public class OrderController {
                                                             @RequestBody OrderPurchaseRequest purchaseRequest,
                                                             HttpServletRequest request) {
 
-        System.out.println("OrderController -> doPurchase(): userId=" + userId);
+        logger.debug("userId = " + userId);
 
         OrderPurchaseResponse purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
 
@@ -478,7 +474,7 @@ public class OrderController {
     public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
                                                                       @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
         OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
-        return new ResponseEntity<OrderHistoryCollectionDto>(orderHistoryCollectionDto, HttpStatus.OK);
+        return new ResponseEntity<>(orderHistoryCollectionDto, HttpStatus.OK);
     }
 
 
@@ -492,9 +488,8 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponse> addOldOrderToCart(@PathVariable("userId") Long userId,
                                                                   @PathVariable("orderId") Long orderId,
                                                                   HttpServletRequest request) {
-        HttpStatus httpStatus = HttpStatus.OK;
-        ShoppingCartResponseDto userCartResponseDto;
-        if (userId != null && (userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId))) != null) {
+        HttpStatus httpStatus;
+        if (userId != null && (shoppingCartService.getUserShoppingCart(Long.valueOf(userId))) != null) {
             httpStatus = HttpStatus.OK;
             //get order by userID and orderID
             OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
@@ -502,9 +497,6 @@ public class OrderController {
                 orderHistoryCollectionDto.getOrderHistoryCollection().forEach(
                         order -> {
                             order.getProducts().forEach(product -> {
-                                long id = product.getProductId();
-                                String productColor = String.valueOf(product.getProductColor());
-                                int quantity = product.getProductQuantity();
                                 shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
                             });
                         });
