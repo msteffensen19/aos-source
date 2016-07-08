@@ -6,7 +6,6 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.security.AuthorizeAsUser;
-import com.advantage.order.store.config.AppUserConfiguration;
 import com.advantage.order.store.config.DynamicConfiguration;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
@@ -50,9 +49,6 @@ public class OrderController {
     @Autowired
     private OrderManagementService orderManagementService;
 
-    @Autowired
-    private AppUserConfiguration appUserConfiguration;
-
     private ShoppingCartResponse shoppingCartResponse;
 
     private static final String DemoAppConfig = "DemoAppConfig/parameters/";
@@ -63,10 +59,8 @@ public class OrderController {
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        //   AppUserConfiguration appUserConfiguration = AppUserConfiguration.readConfiguration();
         response.setHeader("Expires", "0");
         response.setHeader("Cache-control", "no-store");
-        // logger.trace("appUserConfiguration.isAllowUserConfiguration()=" + appUserConfiguration.isAllowUserConfiguration());
     }
 
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)

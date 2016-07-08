@@ -58,7 +58,7 @@ public class DynamicConfiguration {
     }
 
     private void readConfiguration() {
-        if (AppUserConfiguration.isAllowUserConfiguration()) {
+        if (DemoAppConfiguration.isAllowUserConfiguration()) {
             delayCartResponse = getFromCatalogDelayCartResponse();
             if (delayCartResponse > 0) {
                 numberOfSessionsToAddTheDelay = getFromCatalogNumberOfSessions();
