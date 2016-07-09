@@ -66,6 +66,7 @@
                                     ${project.basedir}/assembly/resource.xml
                                 </descriptor>
                             </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
                 </executions>
