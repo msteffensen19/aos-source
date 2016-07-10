@@ -94,6 +94,7 @@ public class ShoppingCartService {
                 shoppingCartRepository.update(userId, productId, color, totalQuantity);
             } else {
                 shoppingCartRepository.add(new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, totalQuantity));
+                shoppingCartResponse.setId(shoppingCart.getProductId());
             }
 
         } else {
@@ -657,11 +658,12 @@ public class ShoppingCartService {
             if (quantity > dto.getInStock()) {
                 quantity = dto.getInStock();
                 shoppingCartResponse.setReason(String.format(ShoppingCart.MESSAGE_OOPS_WE_ONLY_HAVE_X_IN_STOCK, String.valueOf(dto.getInStock())));
+                shoppingCartResponse.setSuccess(false);
             } else {
                 shoppingCartResponse.setReason("");
+                shoppingCartResponse.setSuccess(true);
             }
 
-            shoppingCartResponse.setSuccess(true);
             shoppingCartResponse.setId(productId);
 
         } else {
