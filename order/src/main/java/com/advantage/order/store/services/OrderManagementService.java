@@ -56,7 +56,7 @@ public class OrderManagementService {
     private static AtomicLong orderNumber;
     private double totalAmount = 0.0;
 
-    private Logger logger = Logger.getLogger(OrderManagementService.class);
+    private static final Logger logger = Logger.getLogger(OrderManagementService.class);
 
     @Autowired
     @Qualifier("orderManagementRepository")
@@ -132,7 +132,6 @@ public class OrderManagementService {
 
         return costResponse;
     }
-
 
     private ShippingCostResponse generateShippingCostResponseError(String transactionType, String errorText) {
 

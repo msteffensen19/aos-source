@@ -27,7 +27,7 @@ public abstract class DataSourceCommonConfiguration {
     protected Environment environment;
 
     public DataSourceCommonConfiguration(String propertyPrefix) {
-        logger = Logger.getLogger(DataSourceCommonConfiguration.class);
+        logger = Logger.getLogger(DataSourceCommonConfiguration.super.getClass());
         this.propertyPrefix = propertyPrefix;
     }
 
