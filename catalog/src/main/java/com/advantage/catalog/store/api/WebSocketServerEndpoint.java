@@ -40,7 +40,7 @@ public class WebSocketServerEndpoint {
     private static String REPLY_ARE_YOU_INTERESTED_IN_CATEGORY_IN_GENERAL = "%s, are you interested in category %s in general?";
     private static String REPLY_ARE_EXCELLENT_CHOICE_GREAT_PRODUCT_HOW_CAN_I_HELP = "Excellent choice %s, great product. Please, leave your phone number or email and a professional representative will contact you.";
     private static String REPLY_PLEASE_LEAVE_ME_PHONE_NUMBER_OR_EMAIL = "Please %s, leave me you phone number or e-mail and a specialized support person will contact you. ";
-    private static String REPLY_THANK_YOU_FOR_CONTACTING_HPE_SUPPORT = "Thank you for contacting HPE support %s, have a wonderful ";
+    private static String REPLY_THANK_YOU_FOR_CONTACTING_ADVANTAGE_SUPPORT = "Thank you for contacting Advantage support %s, have a wonderful ";
     private static String REPLY_SORRY_YOU_NEED_TO_ANSWER_THE_QUESTION = "I'm sorry %s, you need to answer the question.";
 
     private static int replyNumber = 0;
@@ -207,7 +207,7 @@ public class WebSocketServerEndpoint {
 			 * hour > 17 and <= 21 == Evening
 			 */
                 int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-                StringBuilder sb = new StringBuilder(REPLY_THANK_YOU_FOR_CONTACTING_HPE_SUPPORT);
+                StringBuilder sb = new StringBuilder(REPLY_THANK_YOU_FOR_CONTACTING_ADVANTAGE_SUPPORT);
                 if ((hour >= 0) && (hour <=  3)) {
                     sb.append("night");
                 } else if ((hour >  3) && (hour <= 15)) {
