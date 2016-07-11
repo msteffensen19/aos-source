@@ -100,14 +100,14 @@ define([], function () {
                 controller: 'searchCtrl',
                 resolve: {
                     category: function (categoryService, productService, $stateParams, $q, $filter) {
-                        var defer =  $q.defer();
+                        var defer = $q.defer();
                         productService.getProductsBySearch($stateParams.viewAll, -1).then(function (result) {
                             var categoriesFilter = $filter("getCategoriesInArray")([], result, $stateParams.id)
                             var paramsToReturn = {
                                 searchResult: result,
                                 viewAll: true,
                                 categoryId: 1,
-                                searchKey: $stateParams.viewAll ,
+                                searchKey: $stateParams.viewAll,
                                 categoriesFilter: categoriesFilter,
                                 attributes: [],
                             }
@@ -126,14 +126,17 @@ define([], function () {
                         var defer = $q.defer();
                         productService.getProductById($stateParams.id).then(function (product) {
                             categoryService.getCategoryById(product.categoryId).then(function (category) {
-                                var paramsToReturn = {
-                                    selectedColor: $stateParams.color,
-                                    quantity: $stateParams.quantity,
-                                    pageState: $stateParams.pageState,
-                                    categoryName: category.categoryName,
-                                    product: product,
-                                }
-                                defer.resolve(paramsToReturn)
+                                categoryService.haveInternet(product.categoryId).then(function (haveInternet) {
+                                    var paramsToReturn = {
+                                        selectedColor: $stateParams.color,
+                                        quantity: $stateParams.quantity,
+                                        pageState: $stateParams.pageState,
+                                        categoryName: category.categoryName,
+                                        product: product,
+                                        haveInternet: haveInternet
+                                    }
+                                    defer.resolve(paramsToReturn)
+                                });
                             });
                         });
                         return defer.promise;

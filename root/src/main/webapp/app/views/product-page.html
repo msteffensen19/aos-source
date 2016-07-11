@@ -87,6 +87,20 @@
     </article>
     <!--data-ng-class="{ topSpace : product.images.length > 1 }"-->
     <div id="separator"></div>
+
+
+
+    <article ng-if="showVideo" class="max-width" data-ng-switch="haveInternet" >
+        <div data-ng-switch-when="true" >
+            <iframe check-height="560X315" src="https://www.youtube.com/embed/GW93cz-3MRU" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div data-ng-switch-default >
+            <video controls>
+                <source src="../../css/videos/productVideo.mp4">
+            </video>
+        </div>
+    </article>
+
     <article class="max-width " >
         <h2 class="roboto-regular product_specifications" translate="PRODUCT_SPECIFICATIONS"></h2>
 

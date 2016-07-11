@@ -4,7 +4,8 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter', '$rootScope', '$timeout',
+    controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter',
+        '$rootScope', '$timeout',
 
         function (s, resolveParams, $state, $filter, $rootScope, $timeout) {
 
@@ -15,8 +16,9 @@ define(['./module'], function (controllers) {
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
+            s.haveInternet = resolveParams.haveInternet;
 
-
+            s.showVideo = s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16;
             s.imageUrl = angular.copy(s.product.imageUrl);
 
             s.getFirstImageUrl = function () {

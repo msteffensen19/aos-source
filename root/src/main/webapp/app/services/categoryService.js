@@ -17,8 +17,22 @@ define(['./module'], function (services) {
                 getCategoryById: getCategoryById,
                 getPopularProducts: getPopularProducts,
                 getExistingData: getExistingData,
+                haveInternet: haveInternet,
             }
 
+            function haveInternet() {
+
+                var response = $q.defer();
+                $http({
+                    method: "get",
+                    url: "https://www.youtube.com/watch?v=GW93cz-3MRU&feature=youtu.be"
+                }).success(function () {
+                    response.resolve(true);
+                }).error(function () {
+                    response.resolve(false);
+                });
+                return response.promise;
+            }
 
             function getExistingData() {
                 if (!allData) {

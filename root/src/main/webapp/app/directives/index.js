@@ -26,8 +26,9 @@ define([
     './icon-user-svg',
     './icon-search-svg',
     './icon-home-svg',
-        './virtualFooter',
+    './virtualFooter',
+    './check-height',
 
-],
+], function() {});
 
-function() {});
+

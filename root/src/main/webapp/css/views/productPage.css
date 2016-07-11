@@ -212,6 +212,11 @@
 
 }
 
+.max-width video, .max-width iframe {
+    width: 100%;
+    margin: 20px 0;
+}
+
 .product_specifications {
     font-size: 23px;
     color: #2a2a2a;
