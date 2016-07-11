@@ -88,26 +88,26 @@ define(['./module'], function (services) {
                             for (var i = 0; i < res.data.parameters.length; i++) {
 
                                 switch (res.data.parameters[i].parameterName) {
-                                    case "Email_address_in_login":
+                                    case "Email_in_login":
                                         config.emailAddressInLogin = res.data.parameters[i].parameterValue &&
                                             res.data.parameters[i].parameterValue.toLowerCase() == "yes";
                                         break;
-                                    case "Slow_Page":
+                                    case "Show_slow_pages":
                                         config.slowPage = res.data.parameters[i].parameterValue &&
                                             res.data.parameters[i].parameterValue.toLowerCase() == "yes";
                                         break;
-                                    case "Spelling_mistakes_in_order_payment_page":
+                                    case "Typos_on_order_payment":
                                         config.spellingMistakes = res.data.parameters[i].parameterValue &&
                                             res.data.parameters[i].parameterValue.toLowerCase() == "yes";
                                         break;
-                                    case "Sum_to_add_to_cart_calculation":
+                                    case "Sum_added_to_cart":
                                         config.cartIncrement = res.data.parameters[i].parameterValue || "0";
                                         config.cartIncrement = parseInt(config.cartIncrement);
                                         if (!config.cartIncrement || config.cartIncrement < 0) {
                                             config.cartIncrement = 0;
                                         }
                                         break;
-                                    case "Different_price_in_UI_and_API":
+                                    case "Price_diffs_UI_vs_API":
                                         config.duplicateProductPrice = res.data.parameters[i].parameterValue &&
                                         res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
                                         break;
