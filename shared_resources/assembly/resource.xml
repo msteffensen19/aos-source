@@ -18,8 +18,20 @@
         </fileSet>
         <fileSet>
             <directory>${project.basedir}/resources/${resources.source.path}</directory>
+            <excludes>
+                <exclude>log4j.properties</exclude>
+            </excludes>
             <filtered>true</filtered>
             <outputDirectory></outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/resources/${resources.source.path}</directory>
+            <includes>
+                <include>log4j.properties</include>
+            </includes>
+            <filtered>false</filtered>
+            <outputDirectory></outputDirectory>
+        </fileSet>
+
     </fileSets>
 </assembly>

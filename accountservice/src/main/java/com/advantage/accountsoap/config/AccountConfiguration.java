@@ -1,40 +1,32 @@
 package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.account.GetAccountConfigurationResponse;
+import com.advantage.common.Constants;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Application User configuration class
  */
 @Configuration
 public class AccountConfiguration {
-    private final String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
-    private final String ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING = "number.of.login.tries.before.blocking";
-    private final String ENV_PRODUCT_INSTOCK_DEFAULT_VALUE = "product.inStock.default.value";
-    private final String ENV_USER_SECOND_WSDL_VALUE = "user.second.wsdl";
-    private final String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
-    private final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
-    private final String ENV_MAX_CONCURRENT_SESSIONS = "Max.Concurrent.Sessions";
-
 
     @Inject
     private Environment env;
 
+    private static final Logger logger = Logger.getLogger(AccountConfiguration.class);
     //private AppUserConfig appUserConfig = new AppUserConfig();
 
-    public static int NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING;  //numberOfFailedLoginAttemptsBeforeBlocking
-    public static long LOGIN_BLOCKING_INTERVAL_IN_SECONDS;              //loginBlockingIntervalInSeconds
-    public static int PRODUCT_IN_STOCK_DEFAULT_VALUE;
-    public static String USER_SECOND_WSDL_VALUE;
-    public static int USER_LOGIN_TIMEOUT;
-    public static String ALLOW_USER_CONFIGURATION;
-    public static int MAX_CONCURRENT_SESSIONS;
+    private static int numberOfFailedLoginAttemptsBeforeBlocking;  //numberOfFailedLoginAttemptsBeforeBlocking
+    private static long loginBlockingIntervalInSeconds;              //loginBlockingIntervalInSeconds
+    private static int productInStockDefaultValue;
+    private static int userLoginTimeout;
+    private static String allowUserConfiguration;
+    private static int maxConcurrentSessions;
 
     //  //  Class that is called must have a method "public void init() throws Exception"
     //@Bean(initMethod = "init")
@@ -44,21 +36,19 @@ public class AccountConfiguration {
 
     @Bean
     public int getAppUserConfiguration() {
-        this.setNumberOfLoginAttemptsBeforeBlocking(ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING);
-        this.setLoginBlockingIntervalInSeconds(ENV_USER_LOGIN_BLOCKING);
-        this.setProductInStockDefaultValue(ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
-        this.setUserSecondWsdlValue(ENV_USER_SECOND_WSDL_VALUE);
-        this.setUserLoginTimeout(ENV_USER_LOGIN_TIMEOUT);
-        this.setAllowUserConfiguration(ENV_ALLOW_USER_CONFIGURATION);
-        this.setMaxConcurrentSessions(ENV_MAX_CONCURRENT_SESSIONS);
+        this.setNumberOfLoginAttemptsBeforeBlocking(Constants.ENV_NUMBER_OF_LOGIN_TRIES_BEFORE_BLOCKING);
+        this.setLoginBlockingIntervalInSeconds(Constants.ENV_USER_LOGIN_BLOCKING);
+        this.setProductInStockDefaultValue(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
+        this.setUserLoginTimeout(Constants.ENV_USER_LOGIN_TIMEOUT);
+        this.setAllowUserConfiguration(Constants.ENV_ALLOW_USER_CONFIGURATION);
+        this.setMaxConcurrentSessions(Constants.ENV_MAX_CONCURRENT_SESSIONS);
 
-        System.out.println("Configuration: LOGIN_BLOCKING_INTERVAL_IN_SECONDS=" + this.getLoginBlockingIntervalInSeconds());
-        System.out.println("Configuration: NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING=" + this.getNumberOfLoginAttemptsBeforeBlocking());
-        System.out.println("Configuration: PRODUCT_IN_STOCK_DEFAULT_VALUE=\"" + this.getProductInStockDefaultValue() + "\"");
-        System.out.println("Configuration: USER_SECOND_WSDL_VALUE=\"" + this.getUserSecondWsdlValue() + "\"");
-        System.out.println("Configuration: USER_LOGIN_TIMEOUT=\"" + this.getUserLoginTimeout() + "\"");
-        System.out.println("Configuration: ALLOW_USER_CONFIGURATION=\"" + this.getAllowUserConfiguration() + "\"");
-        System.out.println("Configuration: MAX_CONCURRENT_SESSIONS=\"" + this.getMaxConcurrentSessions() + "\"");
+        logger.debug("Configuration: loginBlockingIntervalInSeconds=" + this.getLoginBlockingIntervalInSeconds() + System.lineSeparator());
+        logger.debug("Configuration: numberOfFailedLoginAttemptsBeforeBlocking=" + this.getNumberOfLoginAttemptsBeforeBlocking() + System.lineSeparator());
+        logger.debug("Configuration: productInStockDefaultValue=\"" + this.getProductInStockDefaultValue() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: userLoginTimeout=\"" + this.getUserLoginTimeout() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: allowUserConfiguration=\"" + this.getAllowUserConfiguration() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: maxConcurrentSessions=\"" + this.getMaxConcurrentSessions() + "\"" + System.lineSeparator());
 
         return 1;   //  Successful
     }
@@ -69,13 +59,13 @@ public class AccountConfiguration {
      *
      * @return Number of unsuccessful login attempts.
      */
-    public int getNumberOfLoginAttemptsBeforeBlocking() {
-        return this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING;
+    public static int getNumberOfLoginAttemptsBeforeBlocking() {
+        return numberOfFailedLoginAttemptsBeforeBlocking;
     }
 
     private void setNumberOfLoginAttemptsBeforeBlocking(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        this.NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
+        numberOfFailedLoginAttemptsBeforeBlocking = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
     /**
@@ -84,34 +74,26 @@ public class AccountConfiguration {
      *
      * @return How much time the user is blocked from attempting login again?
      */
-    public long getLoginBlockingIntervalInSeconds() {
-        return this.LOGIN_BLOCKING_INTERVAL_IN_SECONDS;
+    public static long getLoginBlockingIntervalInSeconds() {
+        return loginBlockingIntervalInSeconds;
     }
 
     private void setLoginBlockingIntervalInSeconds(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        this.LOGIN_BLOCKING_INTERVAL_IN_SECONDS = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
+        loginBlockingIntervalInSeconds = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
-    public int getProductInStockDefaultValue() {
-        return this.PRODUCT_IN_STOCK_DEFAULT_VALUE;
+    public static int getProductInStockDefaultValue() {
+        return productInStockDefaultValue;
     }
 
     private void setProductInStockDefaultValue(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        this.PRODUCT_IN_STOCK_DEFAULT_VALUE = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
+        productInStockDefaultValue = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
-    public String getUserSecondWsdlValue() {
-        return this.USER_SECOND_WSDL_VALUE;
-    }
-
-    public void setUserSecondWsdlValue(String parameterKey) {
-        this.USER_SECOND_WSDL_VALUE = env.getProperty(parameterKey);
-    }
-
-    public int getUserLoginTimeout() {
-        return this.USER_LOGIN_TIMEOUT;
+    public static int getUserLoginTimeout() {
+        return userLoginTimeout;
     }
 
     /**
@@ -119,38 +101,24 @@ public class AccountConfiguration {
      */
     public void setUserLoginTimeout(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        this.USER_LOGIN_TIMEOUT = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
+        userLoginTimeout = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
-    public String getAllowUserConfiguration() {
-        return this.ALLOW_USER_CONFIGURATION;
+    public static String getAllowUserConfiguration() {
+        return allowUserConfiguration;
     }
 
     public void setAllowUserConfiguration(final String parameterKey) {
-        this.ALLOW_USER_CONFIGURATION = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
+        allowUserConfiguration = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
     }
 
-    public int getMaxConcurrentSessions() {
-        return MAX_CONCURRENT_SESSIONS;
+    public static int getMaxConcurrentSessions() {
+        return maxConcurrentSessions;
     }
 
     public void setMaxConcurrentSessions(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        this.MAX_CONCURRENT_SESSIONS = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
-    }
-
-    public List<String> getAllAccountParameters() {
-        List<String> parameters = new ArrayList<>();
-
-        parameters.add("long,LOGIN_BLOCKING_INTERVAL_IN_SECONDS," + LOGIN_BLOCKING_INTERVAL_IN_SECONDS);
-        parameters.add("int,NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING," + NUMBER_OF_FAILED_LOGIN_ATTEMPTS_BEFORE_BLOCKING);
-        parameters.add("int,PRODUCT_IN_STOCK_DEFAULT_VALUE," + PRODUCT_IN_STOCK_DEFAULT_VALUE);
-        parameters.add("string,USER_SECOND_WSDL_VALUE," + USER_SECOND_WSDL_VALUE);
-        parameters.add("int,USER_LOGIN_TIMEOUT," + USER_LOGIN_TIMEOUT);
-        parameters.add("string,ALLOW_USER_CONFIGURATION," + ALLOW_USER_CONFIGURATION);
-        parameters.add("int,MAX_CONCURRENT_SESSIONS," + MAX_CONCURRENT_SESSIONS);
-
-        return parameters;
+        maxConcurrentSessions = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
     }
 
     public GetAccountConfigurationResponse getAllConfigurationParameters() {
@@ -159,10 +127,11 @@ public class AccountConfiguration {
         getAccountConfigurationResponse.setNumberOfFailedLoginAttemptsBeforeBlocking(this.getNumberOfLoginAttemptsBeforeBlocking());
         getAccountConfigurationResponse.setLoginBlockingIntervalInSeconds(this.getLoginBlockingIntervalInSeconds());
         getAccountConfigurationResponse.setProductInStockDefaultValue(this.getProductInStockDefaultValue());
-        getAccountConfigurationResponse.setUserSecondWsdl(this.getUserSecondWsdlValue().equalsIgnoreCase("yes"));
         getAccountConfigurationResponse.setUserLoginTimeout(this.getUserLoginTimeout());
         getAccountConfigurationResponse.setAllowUserConfiguration(this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
         getAccountConfigurationResponse.setMaxConcurrentSessions(this.getMaxConcurrentSessions());
+
+        getAccountConfigurationResponse.setUserSecondWsdl(false);   //  MOVED to user-level
 
         return getAccountConfigurationResponse;
     }

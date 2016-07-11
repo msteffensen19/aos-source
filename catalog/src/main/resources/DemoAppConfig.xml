@@ -4,44 +4,99 @@
         User level configuration.
         Managed by Admin-User in ADM Demo .NET administration application
     -->
-    <!-- No = (Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
+    <!-- Original Name = "Email_address_in_login" ; Corrected Name = "Email_in_login" -->
     <Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not; or Yes = e-mail address is mandatory in create-user and show it in login/sign-in page. With this feature (2 screens with one difference to show a change ), BPT shows that if there is one change in one page, if it was defined as a component, the user can change this component only, and not touch all tests like in UFT." tools="BPT">No</Email_address_in_login>
-    <!-- 0 = (Default) Disabled, any other positive number is the number of repeat calls to ShipEx -->
+    <Email_in_login datatype="enum:[Yes,No]" description="Determines whether a mandatory Email field is added to the login screen. Use this parameter to demonstrate that in BPT, a single component can be modified without updating other tests. Default = No. Yes = Add the Email Address field." tools="BPT"></Email_in_login>
+
+    <!-- Original Name = "Repeat_ShipEx_call" ; Corrected Name = "ShipEx_repeat_calls" -->
     <Repeat_ShipEx_call datatype="string" description="Perform the same call to ShipEx multiple times (place shipping order - from Order service to ShipEx). Parameter values: 0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx. The goal of this capability is to find multiple calls to the same methods usually done by multiple developers causing inefficient application." tools="LoadRunner;SV;StormRunner">0</Repeat_ShipEx_call>
-    <!-- No=(Default) Disabled; Yes = Move product-id = 13 from Headphones category to Speakers category -->
+    <ShipEx_repeat_calls datatype="string" description="Defines the number of times to repeat a call to ShipEx. Use this parameter to find unneccesary multiple calls to the same methods, and affects performance. Default = 0 (no repeat calling). " tools="LoadRunner;SV;StormRunner">0</ShipEx_repeat_calls>
+
+    <!-- Original Name = "Add_wrong_product_to_speakers_category" ; Corrected Name = "Add_product_to_incorrect_category" -->
     <Add_wrong_product_to_speakers_category datatype="enum:[Yes,No]" description="No=(Default) Disabled; Yes = Move product-id=13 from Headphones category to Speakers category. UI and API. " tools="LeanFT;UFT">No</Add_wrong_product_to_speakers_category>
-    <!-- 0 = Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution -->
+    <Add_product_to_incorrect_category datatype="enum:[Yes,No]" description="Defines whether to move a Headphones item (product-id=13) from the Headphones category to the Speakers category. Use this parameter to demonstrate an error in GUI or API testing. Default = No (category is not changed). Yes = Modify the product category." tools="LeanFT;UFT">No</Add_product_to_incorrect_category>
+
+    <!-- Original Name = "Slow_DB_call" ; Corrected Name = "DB_call_delay" -->
     <Slow_DB_call datatype="string" description="Create a stored procedure that retrieves the list of countries (in user registration) from the database and use it instead of the exiting Hibernate and Spring frameworks (for this action only). insert a delay in the procedure. Parameter values: 0=(Default) Disabled, any other positive number is the number of seconds to delay the Stored Procedure execution." tools="LoadRunner;StormRunner">0</Slow_DB_call>
+    <DB_call_delay datatype="string" description="Defines the number of seconds to delay the retrieval of countries during user registration. Default = 0 (no delay). Possible values = Any positive integer." tools="LoadRunner;StormRunner">0</DB_call_delay>
+
+    <!-- *********************************************************************************************** -->
+    <!-- *********************************************************************************************** -->
     <!-- *********************************************************************************************** -->
     <!-- feature 1510 -->
+    <!-- Original Name = "user_second_wsdl" ; Corrected Name = "User_alternate_WSDL" -->
     <user_second_wsdl datatype="enum:[Yes,No]" description="Whether to use the second WSDL in user registration page. Parameter values: NO=(Default) Don't use, Yes = Use the second WSDL request to register new user." tools="UFT">No</user_second_wsdl>
+    <User_alternate_WSDL datatype="enum:[Yes,No]" description="Determines whether to modify the field names on the user registration page. (Preferred payment method > Favorite payment; Phone > Mobile phone) Use this parameter to demonstrate API testing. Default = No. Yes = Use the second WSDL request to register a new user" tools="UFT">No</User_alternate_WSDL>
+
     <!-- No = (Default) Do Not, or Yes=e-mail address is mandatory in create-user and shown it in login/sign-in page -->
+    <!-- Original Name = "Error_500_in_update_cart" ; Corrected Name = "Error_500" -->
     <Error_500_in_update_cart datatype="enum:[Yes,No]" description="No=(Default) Do Not Show; or Yes=Show HTTP error code 500 when trying to update cart." tools="">No</Error_500_in_update_cart>
+    <Error_500 datatype="enum:[Yes,No]" description="Determines whether to show an HTTP error code 500 when trying to update the cart. Default = No. Yes = Show error" tools="">No</Error_500>
+
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
+    <!-- feature 1542 -->
+    <!-- Original Name = "Sum_to_add_to_cart_calculation" ; Corrected Name = "Sum_added_to_cart" -->
     <Sum_to_add_to_cart_calculation datatype="string" description="0=(Default) Disabled; any other number is the sum to add to cart calculation when the user is logged in. UI only, Web and mobiles." tools="LeanFT;UFT">0</Sum_to_add_to_cart_calculation>
+    <Sum_added_to_cart datatype="string" description="Defines a sum to be added to each cart calculation. The sum is updated in to both the Web and Mobile UI (no API). A user must be logged in to enable this change. Default = 0 (no sum added)" tools="LeanFT;UFT">0</Sum_added_to_cart>
+
     <!-- 0 = (Default) Disabled, any other positive number is the amount of memory leak in MegaBytes -->
-    <Generate_memory_leak datatype="string" description="Generates a memory leak in retrieve of user orders history, 0=(Default) Disabled; any other positive number multiply by 1k per user." tools="LoadRunner;StormRunner">0</Generate_memory_leak>
+    <!-- Original Name = "Generate_memory_leak" ; Corrected Name = "User_alternate_WSDL" -->
+    <!-- feature 1779 -->
+    <Generate_memory_leak datatype="string" description="Defines the amount of memory leak in megabytes while retrieving the order history. The memory leak is visible in both the UI and the API. Default = 0 (no leak at all). Positive Integer = Number, multiplied by 1000. For example 1 = 1000 megabyte memory leak." tools="LoadRunner;StormRunner">0</Generate_memory_leak>
+
     <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
+    <!-- Original Name = "Spelling_mistakes_in_order_payment_page" ; Corrected Name = "Typos_on_order_payment" -->
+    <!-- feature 1544 -->
     <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="In order payment page change 'SHIPPING DETAILS' to 'SHIPING DETAILS', 'Receiver Details' to 'Reciever Details', 'City' to 'Ciity', 'ORDER SUMMARY' to 'ORDERR SUMMARY'. Parameter values: No=(Default) Do nothing; Yes=make spelling mistakes in order payment page. Web and mobile." tools="Sprinter">No</Spelling_mistakes_in_order_payment_page>
-    <!-- (-1) = (Default) Disabled, any other number is the number of concurrentSessions -->
-    <Max_concurrent_sessions datatype="string" description="(-1)=(Default) 1K; any other number is the number of concurrentSessions." tools="LoadRunner;NV;StormRunner">-1</Max_concurrent_sessions>
+    <Typos_on_order_payment datatype="enum:[Yes,No]" description="Determines whether spelling errors appear on the ORDER PAYMENT page. Default = No. Yes = The following spelling errors are shown: - SHIPING DETAILS. - Recipeint Details (Web only). - Ciity. - ORDERR SUMMARY (Web only)" tools="Sprinter">No</Typos_on_order_payment>
+
+    <!-- *********************************************************************************************** -->
+
     <!-- No = (Default) Do not, or Yes=Mix places of pictures in home page -->
+    <!-- Original Name = "Mix_pictures_in_home_page" ; Corrected Name = "Misplace_pictures_on_Android" -->
+    <!-- feature 1551 -->
     <Mix_pictures_in_home_page datatype="enum:[Yes,No]" description="No=(Default) Do nothing; Yes=Mix places of pictures in home page. Android Only (to show different pages in each device)." tools="LeanFT;MobileCenter;UFT">No</Mix_pictures_in_home_page>
-    <!-- No=(Default) Do not; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End) -->
-    <Different_price_in_UI_and_API datatype="enum:[Yes,No]" description="Multiply each product price by 2, No=(Default) Do nothing; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End)" tools="LeanFT;UFT">No</Different_price_in_UI_and_API>
+    <Misplace_pictures_on_Android datatype="enum:[Yes,No]" description="Determines whether pictures are placed differently on the home page when viewed on an Android  device. Use this parameter to demonstrate how the application may function differently on different mobile OSs. Default = No. Yes = Pictures are placed differently on Android devices." tools="LeanFT;MobileCenter;UFT">No</Misplace_pictures_on_Android>
+
     <!-- "SLA: Add delay in add to cart response time (seconds)": 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time -->
+    <!-- Original Name = "SLA_Add_Delay_In_Add_To_Cart_Response_Time" ; Corrected Name = "SLA_add_delay_time" -->
+    <!-- feature 1270 -->
     <SLA_Add_Delay_In_Add_To_Cart_Response_Time datatype="string" description="Create a delay in DB call, *** NEED TO UPDATE WHICH DB CALL ***. 0=(Default) Disabled, any other positive number = the number of seconds to add as a delay in response time. UI and API." tools="LoadRunner;StormRunner">0</SLA_Add_Delay_In_Add_To_Cart_Response_Time>
+    <SLA_add_delay_time datatype="string" description="Defines the number of seconds to add as a delay in response time when adding an item to cart. Default = 0 (no delay). If you modify this value, also modify the SLA_add_delay_sessions parameter." tools="LoadRunner;StormRunner">0</SLA_add_delay_time>
+
     <!-- This parameter is enabled only if "SLA: Add delay in add to cart response time (seconds)" is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20. -->
+    <!-- Original Name = "SLA_Number_Of_Sessions_To_Add_The_Delay" ; Corrected Name = "SLA_add_delay_sessions" -->
+    <!-- feature 1270 -->
     <SLA_Number_Of_Sessions_To_Add_The_Delay datatype="string" description="This parameter is enabled only if 'SLA_Add_Delay_In_Add_To_Cart_Response_Time' is greater than zero. The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down. Valid values: 0-n, default=20" tools="LoadRunner;StormRunner">20</SLA_Number_Of_Sessions_To_Add_The_Delay>
+    <SLA_add_delay_sessions datatype="string" description="Defines a number of concurrent Add to Cart sessions at which a delay is added to the Add to Cart response. Enabled only when SLA_add_delay_in_cart is set to a number greater than 0. Default = 20. Valid values = 0-n. The system starts adding a delay if the number of sessions is greater than the defined value. It will stop the delay if the number of sessions is decreased to less than the defined value. If you modify this value, also modify the SLA_add_delay_time parameter." tools="LoadRunner;StormRunner">20</SLA_add_delay_sessions>
+
     <!-- No=(Default) Do not, or Yes=show more than 40 seconds difference between WiFi and 3G in optimization report -->
+    <!-- Original Name = "Slow_Page" ; Corrected Name = "Show_slow_pages" -->
+    <!-- feature 1141 -->
     <Slow_Page datatype="enum:[Yes,No]" description="*** NEED TO UPDATE*** No=(Default) Do not; Yes=show more than 40 seconds difference between WiFi and 3G in optimization report" tools="NV;StormRunner">No</Slow_Page>
+    <Show_slow_pages datatype="enum:[Yes,No]" description="Determines whether to report any difference of 40 seconds or more between loading on WiFi or 3G. Default = No (do not show differences). Yes = Show differences in optimization report." tools="NV;StormRunner">No</Show_slow_pages>
+
+    <!-- No=(Default) Do not; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End) -->
+    <!-- Original Name = "Different_price_in_UI_and_API" ; Corrected Name = "Price_diffs_UI_vs_API" -->
+    <!-- feature 1541 -->
+    <Different_price_in_UI_and_API datatype="enum:[Yes,No]" description="Multiply each product price by 2, No=(Default) Do nothing; Yes=Front End takes the product price and doubles it (multiply the product price by 2) to show a difference in product price in API (DB, Web Back End) and UI (Front End)" tools="LeanFT;UFT">No</Different_price_in_UI_and_API>
+    <Price_diffs_UI_vs_API datatype="enum:[Yes,No]" description="Creates a difference in the prices shown in the UI and the prices used in the API. Default = No. Yes = Price is doubled in the UI only, for both desktop and mobile, across the entire app." tools="LeanFT;UFT">No</Price_diffs_UI_vs_API>
+
+    <!-- Original Name = "Allow_SQL_Injection_Error_in_Login_Password" ; Corrected Name = "Allow_Error_in_Login" -->
     <!-- Feature 1539 -->
-    <Allow_SQL_Injection_Error_in_Login_Password datatype="enum:[Yes,No]" description="No=(Default) Do Not inject; or Yes=Inject SQL error in Login/Password." tools="">No</Allow_SQL_Injection_Error_in_Login_Password>
+    <Allow_SQL_Injection_Error_in_Login_Password datatype="enum:[Yes,No]" description="No=(Default) Do Not inject; or Yes=Inject SQL error in Login/Password." tools="Fortify">No</Allow_SQL_Injection_Error_in_Login_Password>
+    <Allow_Error_in_Login datatype="enum:[Yes,No]" description="Determines whether an invalid passwords are allowed. These would trigger an error in a test, indicating a security gap in the product. Default = No. Yes = Invalid passwords allowed, such as an empty password, or ‘1’=’1’" tools="Fortify">No</Allow_Error_in_Login>
+
     <!-- Feature 1788 for DevOps process -->
-    <Implement_DevOps_Process datatype="enum:[Yes,No,Implemented]" description="No=(Default) Do Not inject; or Yes=Allow to implement the DevOps process; Implemented=Work with the implemented DevOps process." tools="">No</Implement_DevOps_Process>
-    <!-- Feature 1296 for mobile -->
+    <Implement_DevOps_Process datatype="enum:[Yes,No,Implemented]" description="Enables password changes from mobile, in addition to desktop. Use this parameter to demonstrate the end-to-end DevOps process. Default = No (Password changes are allowed from desktop only). Yes = Add support for password changes from mobile." tools="">No</Implement_DevOps_Process>
+
+    <!-- feature 1551 - Moved to "DemoApp.properties" in Accountservice -->
+    <!--
+    <Max_concurrent_sessions datatype="string" description="(-1)=(Default) 1K; any other number is the number of concurrentSessions." tools="LoadRunner;NV;StormRunner">-1</Max_concurrent_sessions>
+    -->
 
     <!-- SSL ? -->
+    <!-- Not implementing at the moment -->
 
 </Parameters>
 

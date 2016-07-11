@@ -86,8 +86,10 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         Set<ColorAttribute> colorAttributes = new HashSet<>();
 
         for (ColorAttributeDto s : colors) {
-            if (!(s.getInStock() > 0))
-                s.setInStock(Integer.parseInt(environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE)));
+            if (!(s.getInStock() > 0)) {
+                String stringInt = environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE) == null ? "0" : environment.getProperty(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
+                s.setInStock(Integer.parseInt(stringInt));
+            }
             Optional<ColorAttribute> attribute =
                     colorAttributes.stream().filter(x -> x.getName().equalsIgnoreCase(s.getName())).findFirst();
             if (attribute.isPresent() && attribute.get().getInStock() != s.getInStock()) {
