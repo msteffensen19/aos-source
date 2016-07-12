@@ -15,7 +15,7 @@ import java.util.Base64;
  * Created by Evgeney Fiskin on 02-01-2016.
  */
 public class SecurityTools {
-    private static final String ISSUER = "www.adwantageonlineshopping.com";
+    private static final String ISSUER = "www.advantageonlineshopping.com";
     private static final String BASE64_CRYPTO_KEY = "0KHQvtGA0L7QuiDRgtGL0YHRj9GHINC+0LHQtdC30YzRj9C9INCyINC20L7Qv9GDINGB0YPQvdGD0LvQuCDQsdCw0L3QsNC9IMKpINChLiDQm9GD0LrRjNGP0L3QtdC90LrQvi4=";
 
     private static final String signatureAlgorithmName = "HmacSHA256";
@@ -30,7 +30,7 @@ public class SecurityTools {
             "</ul>}" +
             "<br/>{" +
             "<ul style=\"list-style-type:none;margin: 0 0 0 0;\">" +
-            "<li>\"iss\": \"www.adwantageonlineshopping.com\",</li>" +
+            "<li>\"iss\": \"www.advantageonlineshopping.com\",</li>" +
             "<li>  \"userId\": [user id],</li>" +
             "<li>  \"sub\": \"[user name]\",</li>" +
             "<li>  \"role\": \"USER\" / \"ADMIN\"</li>" +
