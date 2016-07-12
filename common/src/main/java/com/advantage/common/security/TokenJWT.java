@@ -74,6 +74,7 @@ public class TokenJWT extends Token {
                 logger.error(m, e);
                 throw e;
             }
+
         } catch (ClaimJwtException | RequiredTypeException e) {
             throw new VerificationTokenException(e.getMessage());
         } catch (SignatureException e) {
@@ -94,7 +95,7 @@ public class TokenJWT extends Token {
     public long getUserId() throws ContentTokenException {
         long result = 0;
         Object o = "null";
-        ;
+
         try {
             o = tokenClaims.get(USER_ID_FIELD_NAME);
             if (o == null) {
