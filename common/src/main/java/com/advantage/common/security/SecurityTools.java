@@ -19,6 +19,7 @@ public class SecurityTools {
     private static final String BASE64_CRYPTO_KEY = "0KHQvtGA0L7QuiDRgtGL0YHRj9GHINC+0LHQtdC30YzRj9C9INCyINC20L7Qv9GDINGB0YPQvdGD0LvQuCDQsdCw0L3QsNC9IMKpINChLiDQm9GD0LrRjNGP0L3QtdC90LrQvi4=";
 
     private static final String signatureAlgorithmName = "HmacSHA256";
+    //    private static final String signatureAlgorithmName = "HmacSHA512";
     private static final CompressionCodec compressionCodec = null;
     //public static final CompressionCodec compressionCodec = new GzipCompressionCodec();
     private static final Key key = decodeBase64Key(BASE64_CRYPTO_KEY);
