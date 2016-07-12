@@ -436,7 +436,7 @@ public class AccountserviceEndpoint {
         logger.debug("Token: " + requestToken);
         Token token = new TokenJWT(requestToken);
 
-        if (token.getAccountType().equals(AccountType.ADMIN)) {
+        if (!token.getAccountType().equals(AccountType.ADMIN)) {
             String message = "Wrong account type (" + token.getAccountType().toString() + ")";
             logger.error(message);
             throw new VerificationTokenException(message);
