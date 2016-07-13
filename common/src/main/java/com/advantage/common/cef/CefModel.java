@@ -1,11 +1,15 @@
 package com.advantage.common.cef;
 
 import com.advantage.common.exceptions.token.ContentTokenException;
+import com.advantage.common.exceptions.token.TokenException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
+import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +27,10 @@ public class CefModel {
     private String deviceEventClassId;
     private String name;
     private int severity;
+
     private String app = "HTTP";
     private String destinationServiceName; //Service than requested by current service (accountservice, catalog,order,ShipEx,SafePay etc)
-    private String outcome;
+    private HttpStatus reason;
     private String request;
     private String requestContext;
     private String requestCookies;
@@ -35,27 +40,25 @@ public class CefModel {
     private String src;
     private Long suid;
 
-    /**
-     * @param deviceProduct
-     * @param deviceVersion
-     */
-    public void setServiceValues(String deviceProduct, String deviceVersion) {
-        this.deviceProduct = deviceProduct;
+
+    public CefModel(String destinationServiceName, String deviceVersion) {
+        this.destinationServiceName = destinationServiceName;
         this.deviceVersion = deviceVersion;
     }
 
-    public void setEventValues(String deviceEventClassId, String name, int severity) {
+    public void setEventRequiredParameters(String deviceEventClassId, String name, int severity) {
         this.deviceEventClassId = deviceEventClassId;
         this.name = name;
         this.severity = severity;
     }
 
-    public void setDestinationServiceName(String destinationServiceName) {
-        this.destinationServiceName = destinationServiceName;
-    }
-
-    public void setOutcome(String outcome) {
-        this.outcome = outcome;
+    private static String parseUserAgent(String userAgent) {
+        if (userAgent == null || userAgent.isEmpty()) {
+            return userAgent;
+        } else {
+            UserAgent _userAgent = UserAgent.parseUserAgentString(userAgent);
+            return _userAgent.getOperatingSystem().getName() + "-" + _userAgent.getBrowser().getName() + " client";
+        }
     }
 
     public void setRequestData(HttpServletRequest httpServletRequest) {
@@ -64,19 +67,33 @@ public class CefModel {
         requestContext = httpServletRequest.getHeader(HttpHeaders.REFERER);
         requestCookies = convertCookiesToString(httpServletRequest.getCookies());
         requestClientApplication = httpServletRequest.getHeader(HttpHeaders.USER_AGENT);
+
+        deviceProduct = parseUserAgent(requestClientApplication);
+
         requestMethod = httpServletRequest.getMethod();
         spt = httpServletRequest.getRemotePort();
         src = httpServletRequest.getRemoteAddr();
 
+        try {
+            Token token = SecurityTools.getTokenFromAuthorizationHeader(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
+            suid = token.getUserId();
+        } catch (TokenException e) {
+            suid = null;
+        }
+
     }
 
     public void setUserId(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
-        Token token = new TokenJWT(base64Token);
+        Token token = TokenJWT.parseToken(base64Token);
         setUserId(token);
     }
 
-    public void setUserId(Token token) throws ContentTokenException {
+    public void setUserId(Token token) {
         suid = token.getUserId();
+    }
+
+    public void setStatusCode(HttpStatus statusCode) {
+        reason = statusCode;
     }
 
     private String convertCookiesToString(Cookie[] cookies) {
@@ -84,7 +101,7 @@ public class CefModel {
         if (cookies != null && cookies.length > 0) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < cookies.length; i++) {
-                sb.append(cookies[i].toString());
+                sb.append(cookies[i].getName()).append('=').append(cookies[i].getValue());
                 if (i < cookies.length - 1) {
                     sb.append(";");
                 }
@@ -94,13 +111,13 @@ public class CefModel {
         return result;
     }
 
-    private String convertEnumerationToString(Enumeration<String> referers) {
+    private String convertEnumerationToString(Enumeration<String> strings) {
         String result = null;
-        if (referers != null && referers.hasMoreElements()) {
+        if (strings != null && strings.hasMoreElements()) {
             StringBuilder sb = new StringBuilder();
-            while (referers.hasMoreElements()) {
-                sb.append(referers.nextElement());
-                if (referers.hasMoreElements()) {
+            while (strings.hasMoreElements()) {
+                sb.append(strings.nextElement());
+                if (strings.hasMoreElements()) {
                     sb.append(";");
                 }
             }
@@ -123,7 +140,8 @@ public class CefModel {
         StringBuilder sb = new StringBuilder(cefHeader);
         sb.append(convertToExtensionPair("app", app));
         sb.append(convertToExtensionPair("destinationServiceName", destinationServiceName));
-        sb.append(convertToExtensionPair("outcome", outcome));
+        sb.append("outcome").append('=').append(reason.is2xxSuccessful() ? "success" : "failure").append(' ');
+        sb.append("reason").append('=').append(reason.value()).append(' ');
         sb.append(convertToExtensionPair("request", request));
         sb.append(convertToExtensionPair("requestContext", requestContext));
         sb.append(convertToExtensionPair("requestCookies", requestCookies));
@@ -143,7 +161,6 @@ public class CefModel {
         } else {
             return new StringBuilder();
         }
-
     }
 
     private StringBuilder convertToExtensionPair(String cefExtensionKey, String cefExtensionValue) {
@@ -156,11 +173,11 @@ public class CefModel {
         }
     }
 
-    private String escapeExtensionValueSigns(String value) {
-        return value.replace("\\", "\\\\").replace("=", "\\=");
+    private String escapeHeaderValueSigns(String value) {
+        return value.replace(" ", "").replace("\\", "\\\\").replace("|", "\\|");
     }
 
-    private String escapeHeaderValueSigns(String value) {
-        return value.replace("\\", "\\\\").replace("|", "\\|");
+    private String escapeExtensionValueSigns(String value) {
+        return value.replace("\\", "\\\\").replace("=", "\\=");
     }
 }

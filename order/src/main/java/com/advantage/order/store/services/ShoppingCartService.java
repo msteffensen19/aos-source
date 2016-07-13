@@ -440,8 +440,9 @@ public class ShoppingCartService {
         }
 
         ProductDto dto = null;
+        String stringResponse = null;
         try {
-            String stringResponse = RestApiHelper.httpGet(productByIdUrl);
+            stringResponse = RestApiHelper.httpGet(productByIdUrl);
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
                 dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
@@ -449,6 +450,8 @@ public class ShoppingCartService {
                 dto = getProductDtofromJsonObjectString(stringResponse);
             }
         } catch (IOException e) {
+            logger.debug("stringResponse = " + stringResponse);
+            logger.debug("dto = " + dto);
             logger.error("Calling httpGet(" + productByIdUrl.toString() + ") throws IOException: ", e);
         }
 

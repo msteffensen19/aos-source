@@ -44,7 +44,7 @@ public class ApiCallsLoggingAspect {
     }
 
     private String getLoggingRequest(HttpServletRequest request) {
-        StringBuilder builder = new StringBuilder(request.getServletPath());
+        StringBuilder builder = new StringBuilder("Parameters for request: " + request.getServletPath());
         Map<String, String[]> params = request.getParameterMap();
         if (!params.isEmpty()) builder.append("?");
         for (Map.Entry<String, String[]> entry : params.entrySet()) {

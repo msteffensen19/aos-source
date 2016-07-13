@@ -2,15 +2,14 @@ package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
-import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
+import com.advantage.common.cef.CefModel;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
-import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -50,6 +49,7 @@ public class CatalogController {
     private ContactSupportService contactSupportService;
 
     private static final Logger logger = Logger.getLogger(CatalogController.class);
+    private static final Logger cefLogger = Logger.getLogger("CEF");
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
@@ -61,7 +61,12 @@ public class CatalogController {
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
+        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
+        cef.setEventRequiredParameters(String.valueOf("/products".hashCode()), "Get products", 5);
+        cef.setRequestData(request);
         ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
+        cef.setStatusCode(HttpStatus.OK);
+        cefLogger.trace(cef.cefFomatMessage());
         return productCollectionDtoResponseEntity;
 
     }
@@ -69,9 +74,14 @@ public class CatalogController {
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
     public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id,
                                                      HttpServletRequest request) {
+        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
+        cef.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Get spec product", 5);
+        cef.setRequestData(request);
         Product product = productService.getProductById(id);
         if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         ProductDto dto = productService.getDtoByEntity(product);
+        cef.setStatusCode(HttpStatus.OK);
+        cefLogger.trace(cef.cefFomatMessage());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

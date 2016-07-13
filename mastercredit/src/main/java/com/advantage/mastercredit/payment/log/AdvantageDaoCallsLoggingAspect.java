@@ -49,6 +49,6 @@ public class AdvantageDaoCallsLoggingAspect {
         info.append(" DAO call: ");
         info.append(daoMethodName);
         final String infoString = info.toString();
-        logger.info(infoString);
+        logger.trace(infoString);
     }
 }
