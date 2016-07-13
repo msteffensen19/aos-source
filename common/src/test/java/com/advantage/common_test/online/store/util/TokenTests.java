@@ -35,7 +35,7 @@ public class TokenTests {
     @Test
     public void testParserToken() throws Exception {
         //Token token = new TokenJWT(token512);
-        Token token = TokenJWT.convertToToken(token256);
+        Token token = TokenJWT.parseToken(token256);
         Assert.assertEquals(USER_ID, token.getUserId());
         Assert.assertEquals(LOGIN_NAME, token.getLoginName());
         Assert.assertEquals(ROLE, token.getAccountType());
@@ -45,7 +45,7 @@ public class TokenTests {
 
     @Test(expected = SignatureAlgorithmException.class)
     public void testNegative256ParserToken() throws Exception {
-        Token token = TokenJWT.convertToToken(token512);
+        Token token = TokenJWT.parseToken(token512);
         //Token token = new TokenJWT(token256);
     }
 }

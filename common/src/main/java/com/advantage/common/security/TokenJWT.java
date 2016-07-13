@@ -1,6 +1,5 @@
 package com.advantage.common.security;
 
-
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.*;
 import io.jsonwebtoken.*;
@@ -13,14 +12,18 @@ import java.util.Map;
  */
 public class TokenJWT extends Token {
 
+    private static final Logger logger = Logger.getLogger(TokenJWT.class);
+
     private Claims tokenClaims;
     private Header tokenHeader;
     private JwtBuilder builder;
-    private JwtParser parser;
-    //private CompressionCodec compressionCodec;
     private SignatureAlgorithm signatureAlgorithm;
+    //private CompressionCodec compressionCodec;
 
-    private static final Logger logger = Logger.getLogger(TokenJWT.class);
+    private JwtParser parser;
+    private long userId;
+    private String userName;
+    private AccountType accountType;
 
     private TokenJWT() {
         super();
@@ -30,6 +33,11 @@ public class TokenJWT extends Token {
 
     public static TokenJWT createToken(long appUserId, String loginName, AccountType accountType) {
         TokenJWT result = new TokenJWT();
+
+        result.userId = appUserId;
+        result.userName = loginName;
+        result.accountType = accountType;
+
         result.builder = Jwts.builder();
         result.tokenHeader = Jwts.header();
         result.tokenHeader.setType(Header.JWT_TYPE);
@@ -49,7 +57,7 @@ public class TokenJWT extends Token {
         return result;
     }
 
-    public static TokenJWT convertToToken(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
+    public static TokenJWT parseToken(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
         TokenJWT result = new TokenJWT();
         try {
             result.parser = Jwts.parser();
@@ -70,12 +78,15 @@ public class TokenJWT extends Token {
                 throw e;
             }
             if (!jwsHeader.getAlgorithm().equals(result.signatureAlgorithm.name())) {
-                String m = String.format("The token signed by %s algorithm, but must be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName);
+                String m = String.format("The token signed by %s algorithm, but must be signed with %s (%s)",
+                        jwsHeader.getAlgorithm(), result.signatureAlgorithm.name(), result.signatureAlgorithmJdkName);
                 SignatureAlgorithmException e = new SignatureAlgorithmException(m);
                 logger.error(m, e);
                 throw e;
             }
-
+            result.extractUserId();
+            result.extractLoginName();
+            result.extractAccountType();
         } catch (ClaimJwtException | RequiredTypeException e) {
             throw new VerificationTokenException(e.getMessage());
         } catch (SignatureException e) {
@@ -86,15 +97,14 @@ public class TokenJWT extends Token {
         return result;
     }
 
-    @Override
-    public AccountType getAccountType() {
+    private void extractAccountType() {
         String role = (String) tokenClaims.get(ROLE_FIELD_NAME);
         AccountType result = AccountType.valueOf(role);
-        return result;
+        this.accountType = result;
     }
 
-    @Override
-    public long getUserId() {
+
+    private void extractUserId() throws ContentTokenException {
         long result = 0;
         Object o = "null";
 
@@ -108,18 +118,16 @@ public class TokenJWT extends Token {
         } catch (ClassCastException | NumberFormatException e) {
             throw new ContentTokenException("User id have wrong number: " + o.toString());
         }
-        return result;
+        this.userId = result;
     }
+
 
 //    @Override
-//    public String getEmail() {
-//        return (String) tokenClaims.get("email");
-//    }
 
-    @Override
-    public String getLoginName() {
-        return (String) tokenClaims.getSubject();
+    private void extractLoginName() {
+        this.userName = (String) tokenClaims.getSubject();
     }
+
 
     @Override
     public String generateToken() {
@@ -149,6 +157,24 @@ public class TokenJWT extends Token {
             }
         }
         throw new SignatureException("io.jsonwebtoken: Unknown signature algorithm:" + signatureAlgorithmJdkName);
+    }
+
+    //    }
+//        return (String) tokenClaims.get("email");
+//    public String getEmail() {
+    @Override
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    @Override
+    public long getUserId() {
+        return userId;
+    }
+
+    @Override
+    public String getLoginName() {
+        return userName;
     }
 
 }

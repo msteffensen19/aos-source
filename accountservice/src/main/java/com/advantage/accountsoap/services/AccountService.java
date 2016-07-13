@@ -182,7 +182,7 @@ public class AccountService {
 
         Account account = accountRepository.get(accountId);
         AccountStatusResponse response;
-        TokenJWT tokenJWT = TokenJWT.convertToToken(base64Token);
+        TokenJWT tokenJWT = TokenJWT.parseToken(base64Token);
 
         //  Get current user details from Token
         long currentUserId = tokenJWT.getUserId();
@@ -244,7 +244,7 @@ public class AccountService {
     public AccountStatusResponse resetPassword(long accountId, String newPassword, String base64Token) throws TokenException {
         Account account = accountRepository.get(accountId);
         AccountStatusResponse response = new AccountStatusResponse(false, "", -1);
-        TokenJWT tokenJWT = TokenJWT.convertToToken(base64Token);
+        TokenJWT tokenJWT = TokenJWT.parseToken(base64Token);
 
         //  Get current user details from Token
         long currentUserId = tokenJWT.getUserId();
