@@ -39,10 +39,8 @@ public class AdvantageDaoCallsLoggingAspect {
         final StringBuilder info;
 
         if (before) {
-
             info = new StringBuilder("Before");
         } else {
-
             info = new StringBuilder("After");
         }
 

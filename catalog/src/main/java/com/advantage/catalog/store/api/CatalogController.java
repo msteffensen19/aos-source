@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
 /**
  * @author Binyamin Regev on 23/05/2016
  */
@@ -74,15 +75,21 @@ public class CatalogController {
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
     public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id,
                                                      HttpServletRequest request) {
+        ResponseEntity result;
         CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
         cef.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Get spec product", 5);
         cef.setRequestData(request);
         Product product = productService.getProductById(id);
-        if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        ProductDto dto = productService.getDtoByEntity(product);
-        cef.setStatusCode(HttpStatus.OK);
+        if (product == null) {
+            result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            cef.setStatusCode(HttpStatus.NOT_FOUND);
+        } else {
+            ProductDto dto = productService.getDtoByEntity(product);
+            result = new ResponseEntity<>(dto, HttpStatus.OK);
+            cef.setStatusCode(HttpStatus.OK);
+        }
         cefLogger.trace(cef.cefFomatMessage());
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return result;
     }
 
     @AuthorizeAsAdmin
@@ -247,7 +254,7 @@ public class CatalogController {
                                                                                       @PathVariable("color_code") String hexColor,
                                                                                       HttpServletRequest request) {
 
-        ColorAttributeDto colorAttributesDto  = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
+        ColorAttributeDto colorAttributesDto = productService.getColorAttributeByProductIdAndColorCode(productId, hexColor);
 
         return new ResponseEntity<>(colorAttributesDto, HttpStatus.OK);
     }
@@ -303,7 +310,8 @@ public class CatalogController {
 
         if (timestamp <= 0) {
             Calendar calendar = Calendar.getInstance();
-            timestamp = calendar.getTime().getTime();;
+            timestamp = calendar.getTime().getTime();
+            ;
         }
 
         LastUpdate lastUpdate = productService.createLastUpdate(lastUpdateName, timestamp);

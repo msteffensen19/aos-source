@@ -76,11 +76,10 @@ public class CefModel {
 
         try {
             Token token = SecurityTools.getTokenFromAuthorizationHeader(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
-            suid = token.getUserId();
+            suid = (token != null) ? token.getUserId() : null;
         } catch (TokenException e) {
             suid = null;
         }
-
     }
 
     public void setUserId(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
@@ -125,7 +124,6 @@ public class CefModel {
         }
         return result;
     }
-
 
     public String cefFomatMessage() {
         String cefHeader = String.format("CEF:%d|%s|%s|%s|%s|%s|%d|",
@@ -174,7 +172,7 @@ public class CefModel {
     }
 
     private String escapeHeaderValueSigns(String value) {
-        return value.replace(" ", "").replace("\\", "\\\\").replace("|", "\\|");
+        return value.replace("\\", "\\\\").replace("|", "\\|");
     }
 
     private String escapeExtensionValueSigns(String value) {

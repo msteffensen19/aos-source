@@ -142,6 +142,9 @@ public class SecurityTools {
     }
 
     public static Token getTokenFromAuthorizationHeader(String authorizationHeader) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
+        if (authorizationHeader == null || authorizationHeader.isEmpty()) {
+            return null;
+        }
         String stringToken = authorizationHeader.substring(AUTHORIZATION_HEADER_PREFIX.length()).trim();
         return TokenJWT.parseToken(stringToken);
     }
