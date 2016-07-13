@@ -11,9 +11,16 @@
             <directory>${project.basedir}/resources</directory>
             <includes>
                 <include>*.properties</include>
-                <include>ver.txt</include>
             </includes>
             <filtered>true</filtered>
+            <outputDirectory></outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/resources</directory>
+            <includes>
+                <include>ver.txt</include>
+            </includes>
+            <filtered>false</filtered>
             <outputDirectory></outputDirectory>
         </fileSet>
         <fileSet>

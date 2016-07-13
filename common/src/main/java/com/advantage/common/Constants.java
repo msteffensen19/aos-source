@@ -1,8 +1,6 @@
 package com.advantage.common;
 
 public class Constants {
-
-
     public static final char AT_SIGN    = '@';
     public static final char COMMA      = ',';
     public static final char DOT        = '.';
@@ -60,7 +58,6 @@ public class Constants {
     public static final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
     public final static String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
     public final static String ENV_MAX_CONCURRENT_SESSIONS = "Max.Concurrent.Sessions";
-
 
     public static class UserSession {
         public static final String TOKEN = "token";
