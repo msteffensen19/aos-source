@@ -109,6 +109,11 @@ var catalogKey = serverKey = orderKey = wsdlPath = "undefined";  /*accountKey =*
 
 var server = {
     namespaceURL: 'com.advantage.online.store.accountservice',
+
+    haveInternet: function () {
+        return serverKey.indexOf("localhost");
+    },
+
     getKey: function () {
         return serverKey;
     },

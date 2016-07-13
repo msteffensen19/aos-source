@@ -491,7 +491,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     }
 
     private Token getToken(long accountId, String loginName, AccountType accountType) {
-        return new TokenJWT(accountId, loginName, accountType);
+        return TokenJWT.createToken(accountId, loginName, accountType);
     }
 
     @Override

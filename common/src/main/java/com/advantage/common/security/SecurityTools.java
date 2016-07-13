@@ -15,10 +15,11 @@ import java.util.Base64;
  * Created by Evgeney Fiskin on 02-01-2016.
  */
 public class SecurityTools {
-    private static final String ISSUER = "www.adwantageonlineshopping.com";
+    private static final String ISSUER = "www.advantageonlineshopping.com";
     private static final String BASE64_CRYPTO_KEY = "0KHQvtGA0L7QuiDRgtGL0YHRj9GHINC+0LHQtdC30YzRj9C9INCyINC20L7Qv9GDINGB0YPQvdGD0LvQuCDQsdCw0L3QsNC9IMKpINChLiDQm9GD0LrRjNGP0L3QtdC90LrQvi4=";
 
     private static final String signatureAlgorithmName = "HmacSHA256";
+    //    private static final String signatureAlgorithmName = "HmacSHA512";
     private static final CompressionCodec compressionCodec = null;
     //public static final CompressionCodec compressionCodec = new GzipCompressionCodec();
     private static final Key key = decodeBase64Key(BASE64_CRYPTO_KEY);
@@ -30,7 +31,7 @@ public class SecurityTools {
             "</ul>}" +
             "<br/>{" +
             "<ul style=\"list-style-type:none;margin: 0 0 0 0;\">" +
-            "<li>\"iss\": \"www.adwantageonlineshopping.com\",</li>" +
+            "<li>\"iss\": \"www.advantageonlineshopping.com\",</li>" +
             "<li>  \"userId\": [user id],</li>" +
             "<li>  \"sub\": \"[user name]\",</li>" +
             "<li>  \"role\": \"USER\" / \"ADMIN\"</li>" +
@@ -80,7 +81,7 @@ public class SecurityTools {
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
 
-                Token token = new TokenJWT(stringToken);
+                Token token = TokenJWT.parseToken(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 for (AccountType at : expectedAccountTypes) {
                     if (at.equals(actualAccountType)) {
@@ -102,7 +103,7 @@ public class SecurityTools {
                 throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-                Token token = new TokenJWT(stringToken);
+                Token token = TokenJWT.parseToken(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 long actualUserId = token.getUserId();
                 if (actualUserId != expectedUserId) {
@@ -129,7 +130,7 @@ public class SecurityTools {
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
 
-                Token token = new TokenJWT(stringToken);
+                Token token = TokenJWT.parseToken(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 String actualUserName = token.getLoginName();
                 if (!actualUserName.equals(expectedUserName)) {

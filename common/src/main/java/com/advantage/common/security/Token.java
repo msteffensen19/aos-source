@@ -25,7 +25,7 @@ public abstract class Token {
 
     public abstract AccountType getAccountType();
 
-    public abstract long getUserId() throws ContentTokenException;
+    public abstract long getUserId();
 
     //public abstract String getEmail();
 

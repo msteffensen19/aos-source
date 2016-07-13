@@ -434,9 +434,9 @@ public class AccountserviceEndpoint {
             throw new IllegalArgumentException("Token is empty or null");
         }
         logger.debug("Token: " + requestToken);
-        Token token = new TokenJWT(requestToken);
+        Token token = TokenJWT.parseToken(requestToken);
 
-        if (token.getAccountType().equals(AccountType.ADMIN)) {
+        if (!token.getAccountType().equals(AccountType.ADMIN)) {
             String message = "Wrong account type (" + token.getAccountType().toString() + ")";
             logger.error(message);
             throw new VerificationTokenException(message);
