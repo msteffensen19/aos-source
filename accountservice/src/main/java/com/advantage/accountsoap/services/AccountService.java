@@ -1,8 +1,8 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
-import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
+import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
@@ -20,7 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class AccountService {
@@ -146,9 +148,6 @@ public class AccountService {
             response.setUserId(account.getId());
             logger.warn("Account " + account.getId() + " delete failed");
         }
-
-        //  Not ADMIN-USER - UNAUTHORIZED!
-        response = new AccountStatusResponse(false, HttpStatus.UNAUTHORIZED.getReasonPhrase(), account.getId());
         return response;
     }
 
