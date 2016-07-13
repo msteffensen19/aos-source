@@ -1,7 +1,7 @@
 package com.advantage.order.store.config;
 
 import com.advantage.common.Url_resources;
-import com.advantage.order.store.listener.SessionCounterListener;
+import com.advantage.order.store.listener.SessionCounterServletRequestListener;
 import com.advantage.root.util.JsonHelper;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpMethod;
@@ -41,7 +41,7 @@ public class DynamicConfiguration {
 
     public int getDelay() {
         //DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
-        int activeOrderRequests = SessionCounterListener.getActiveSessionsByRequestListener();
+        int activeOrderRequests = SessionCounterServletRequestListener.getActiveSessionsByRequestListener();
         int result = DEFAULT_DELAY;
 
         if (logger.isDebugEnabled()) {

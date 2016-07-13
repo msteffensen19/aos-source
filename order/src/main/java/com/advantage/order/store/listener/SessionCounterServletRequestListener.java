@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSessionEvent;
 import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SessionCounterListener implements ServletRequestListener {
+public class SessionCounterServletRequestListener implements ServletRequestListener {
     private static AtomicInteger activeSessionsByRequestListener = new AtomicInteger(0);
     private static final Logger requestLogger = Logger.getLogger("RequestListener");
 
