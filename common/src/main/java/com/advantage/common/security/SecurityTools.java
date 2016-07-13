@@ -2,7 +2,9 @@ package com.advantage.common.security;
 
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.authorization.AuthorizationException;
+import com.advantage.common.exceptions.token.ContentTokenException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
+import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import io.jsonwebtoken.CompressionCodec;
 import org.springframework.http.HttpStatus;
 
@@ -36,6 +38,7 @@ public class SecurityTools {
             "<li>  \"sub\": \"[user name]\",</li>" +
             "<li>  \"role\": \"USER\" / \"ADMIN\"</li>" +
             "</ul>}";
+    public static final String AUTHORIZATION_HEADER_PREFIX = "Bearer";
 
     public static String getSignatureAlgorithmName() {
         return signatureAlgorithmName;
@@ -75,13 +78,10 @@ public class SecurityTools {
             throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
             // remove schema from token
-            String authorizationSchema = "Bearer";
-            if (authorizationHeader.indexOf(authorizationSchema) == -1) {
+            if (authorizationHeader.indexOf(AUTHORIZATION_HEADER_PREFIX) == -1) {
                 throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
-                String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-
-                Token token = TokenJWT.parseToken(stringToken);
+                Token token = getTokenFromAuthorizationHeader(authorizationHeader);
                 AccountType actualAccountType = token.getAccountType();
                 for (AccountType at : expectedAccountTypes) {
                     if (at.equals(actualAccountType)) {
@@ -98,12 +98,10 @@ public class SecurityTools {
             throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
             // remove schema from token
-            String authorizationSchema = "Bearer";
-            if (authorizationHeader.indexOf(authorizationSchema) == -1) {
+            if (authorizationHeader.indexOf(AUTHORIZATION_HEADER_PREFIX) == -1) {
                 throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
-                String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-                Token token = TokenJWT.parseToken(stringToken);
+                Token token = getTokenFromAuthorizationHeader(authorizationHeader);
                 AccountType actualAccountType = token.getAccountType();
                 long actualUserId = token.getUserId();
                 if (actualUserId != expectedUserId) {
@@ -124,13 +122,10 @@ public class SecurityTools {
             throw new AuthorizationException("Authorization header is missing", HttpStatus.UNAUTHORIZED);
         } else {
             // remove schema from token
-            String authorizationSchema = "Bearer";
-            if (authorizationHeader.indexOf(authorizationSchema) == -1) {
+            if (authorizationHeader.indexOf(AUTHORIZATION_HEADER_PREFIX) == -1) {
                 throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
-                String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-
-                Token token = TokenJWT.parseToken(stringToken);
+                Token token = getTokenFromAuthorizationHeader(authorizationHeader);
                 AccountType actualAccountType = token.getAccountType();
                 String actualUserName = token.getLoginName();
                 if (!actualUserName.equals(expectedUserName)) {
@@ -144,5 +139,10 @@ public class SecurityTools {
                 throw new VerificationTokenException("Wrong account type (" + actualAccountType.toString() + ")");
             }
         }
+    }
+
+    public static Token getTokenFromAuthorizationHeader(String authorizationHeader) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
+        String stringToken = authorizationHeader.substring(AUTHORIZATION_HEADER_PREFIX.length()).trim();
+        return TokenJWT.parseToken(stringToken);
     }
 }
