@@ -19,10 +19,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.env.Environment;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +50,8 @@ public class CatalogController {
     private DemoAppConfigService demoAppConfigService;
     @Autowired
     private ContactSupportService contactSupportService;
+    @Autowired
+    private Environment environment;
 
     private static final Logger logger = Logger.getLogger(CatalogController.class);
     private static final Logger cefLogger = Logger.getLogger("CEF");
@@ -55,14 +59,18 @@ public class CatalogController {
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
 //        response.setHeader(com.google.common.net.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        response.setHeader("Expires", "0");
-        response.setHeader("Cache-control", "no-store");
+        response.setHeader(HttpHeaders.EXPIRES, "0");
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-store");
     }
 
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
-        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
+        String c = environment.getProperty("mvn.project.build.finalName");
+        String v = environment.getProperty("mvn.project.version");
+
+//        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
+        CefModel cef = new CefModel(c, v);
         cef.setEventRequiredParameters(String.valueOf("/products".hashCode()), "Get products", 5);
         cef.setRequestData(request);
         ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
