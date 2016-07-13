@@ -94,7 +94,7 @@ public class ShoppingCartService {
                 shoppingCartRepository.update(userId, productId, color, totalQuantity);
             } else {
                 shoppingCartRepository.add(new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, totalQuantity));
-                shoppingCartResponse.setId(shoppingCart.getProductId());
+                shoppingCartResponse.setId(productId);
             }
 
         } else {
@@ -549,45 +549,56 @@ public class ShoppingCartService {
         ProductDto dto = this.getProductDtoDetails(productId);
 
         ShoppingCartResponseDto.CartProduct cartProduct;
-        if (dto.getProductName() != null) {
-            if (!dto.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
 
-                ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
+        if (dto != null) {
+            if (dto.getProductName() != null) {
+                if (!dto.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
 
-                if (colorAttrib != null) {
-                    cartProduct = new ShoppingCartResponseDto()
-                            .createCartProduct(dto.getProductId(),
-                                    dto.getProductName(),
-                                    dto.getPrice(),
-                                    0,
-                                    dto.getImageUrl(),
-                                    true);
+                    ColorAttributeDto colorAttrib = getProductColorAttribute(hexColor.toUpperCase(), dto.getColors());
 
-                    cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
-                            colorAttrib.getName().toUpperCase(),
-                            colorAttrib.getInStock());
+                    if (colorAttrib != null) {
+                        cartProduct = new ShoppingCartResponseDto()
+                                .createCartProduct(dto.getProductId(),
+                                        dto.getProductName(),
+                                        dto.getPrice(),
+                                        0,
+                                        dto.getImageUrl(),
+                                        true);
 
-                    if (logger.isDebugEnabled()) {
-                        StringBuilder sb = new StringBuilder("Received Product information: ");
-                        sb.append("\n   product id = ").append(dto.getProductId());
-                        sb.append("\n   product name = ").append(dto.getProductName());
-                        sb.append("\n   price per item = ").append(dto.getPrice());
-                        sb.append("\n   managedImageId = \"").append(dto.getImageUrl()).append("\"");
-                        sb.append("\n   ColorAttrubute.Code (hex) = \'").append(colorAttrib.getCode().toUpperCase()).append("\'");
-                        sb.append("\n   ColorAttrubute.Color (name) = \"").append(colorAttrib.getName().toUpperCase()).append("\"");
-                        sb.append("\n   ColorAttrubute.inStock = ").append(colorAttrib.getInStock());
-                        logger.debug(sb);
+                        cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
+                                colorAttrib.getName().toUpperCase(),
+                                colorAttrib.getInStock());
+
+                        if (logger.isDebugEnabled()) {
+                            StringBuilder sb = new StringBuilder("Received Product information: ");
+                            sb.append("\n   product id = ").append(dto.getProductId());
+                            sb.append("\n   product name = ").append(dto.getProductName());
+                            sb.append("\n   price per item = ").append(dto.getPrice());
+                            sb.append("\n   managedImageId = \"").append(dto.getImageUrl()).append("\"");
+                            sb.append("\n   ColorAttrubute.Code (hex) = \'").append(colorAttrib.getCode().toUpperCase()).append("\'");
+                            sb.append("\n   ColorAttrubute.Color (name) = \"").append(colorAttrib.getName().toUpperCase()).append("\"");
+                            sb.append("\n   ColorAttrubute.inStock = ").append(colorAttrib.getInStock());
+                            logger.debug(sb);
+                        }
+                    } else {
+                        //  Product with specific color NOT FOUND in Product table in CATALOG schema
+                        cartProduct = setNotFoundCartProduct(productId);
                     }
                 } else {
-                    //  Product with specific color NOT FOUND in Product table in CATALOG schema
+                    //  Product with this productId not found in Product table in CATALOG schema (409)
                     cartProduct = setNotFoundCartProduct(productId);
                 }
             } else {
-                //  Product with this productId not found in Product table in CATALOG schema (409)
-                cartProduct = setNotFoundCartProduct(productId);
+                //  dto.getProductName() == null
+                cartProduct = null;
             }
         } else {
-            //  dto.getProductName() == null
+            // (dto == null)
+            if (logger.isDebugEnabled()) {
+                StringBuilder sb = new StringBuilder("ShoppingCartResponseDto.CartProduct is NULL.");
+                logger.debug(sb);
+            }
+
             cartProduct = null;
         }
 
