@@ -81,7 +81,7 @@ public class SecurityTools {
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
 
-                Token token = new TokenJWT(stringToken);
+                Token token = TokenJWT.convertToToken(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 for (AccountType at : expectedAccountTypes) {
                     if (at.equals(actualAccountType)) {
@@ -103,7 +103,7 @@ public class SecurityTools {
                 throw new AuthorizationException("Authorization header is wrong", HttpStatus.UNAUTHORIZED);
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
-                Token token = new TokenJWT(stringToken);
+                Token token = TokenJWT.convertToToken(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 long actualUserId = token.getUserId();
                 if (actualUserId != expectedUserId) {
@@ -130,7 +130,7 @@ public class SecurityTools {
             } else {
                 String stringToken = authorizationHeader.substring(authorizationSchema.length()).trim();
 
-                Token token = new TokenJWT(stringToken);
+                Token token = TokenJWT.convertToToken(stringToken);
                 AccountType actualAccountType = token.getAccountType();
                 String actualUserName = token.getLoginName();
                 if (!actualUserName.equals(expectedUserName)) {

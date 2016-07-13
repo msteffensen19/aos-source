@@ -20,47 +20,48 @@ public class TokenJWT extends Token {
     //private CompressionCodec compressionCodec;
     private SignatureAlgorithm signatureAlgorithm;
 
+    private static final Logger logger = Logger.getLogger(TokenJWT.class);
+
     private TokenJWT() {
         super();
         //compressionCodec = SecurityTools.getCompressionCodec();
         convertSignatureAlgorithm();
     }
 
-    private static final Logger logger = Logger.getLogger(TokenJWT.class);
-
-    public TokenJWT(long appUserId, String loginName, AccountType accountType) {
-        this();
-        builder = Jwts.builder();
-        tokenHeader = Jwts.header();
-        tokenHeader.setType(Header.JWT_TYPE);
-        tokenClaims = Jwts.claims();
-        tokenClaims.setIssuer(issuer);
+    public static TokenJWT createToken(long appUserId, String loginName, AccountType accountType) {
+        TokenJWT result = new TokenJWT();
+        result.builder = Jwts.builder();
+        result.tokenHeader = Jwts.header();
+        result.tokenHeader.setType(Header.JWT_TYPE);
+        result.tokenClaims = Jwts.claims();
+        result.tokenClaims.setIssuer(result.issuer);
         //tokenClaims.setIssuedAt(new Date());
-        tokenClaims.put(USER_ID_FIELD_NAME, appUserId);
+        result.tokenClaims.put(USER_ID_FIELD_NAME, appUserId);
         if (loginName != null && !loginName.isEmpty()) {
-            tokenClaims.setSubject(loginName);
+            result.tokenClaims.setSubject(loginName);
         }
-        tokenClaims.put(ROLE_FIELD_NAME, accountType);
+        result.tokenClaims.put(ROLE_FIELD_NAME, accountType);
 //        if (email != null && !email.isEmpty()) {
 //            tokenClaims.put("email", email);
 //        }
-        builder.setHeader((Map<String, Object>) tokenHeader);
-        builder.setClaims(tokenClaims);
+        result.builder.setHeader((Map<String, Object>) result.tokenHeader);
+        result.builder.setClaims(result.tokenClaims);
+        return result;
     }
 
-    public TokenJWT(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
-        this();
+    public static TokenJWT convertToToken(String base64Token) throws VerificationTokenException, WrongTokenTypeException, ContentTokenException {
+        TokenJWT result = new TokenJWT();
         try {
-            parser = Jwts.parser();
-            if (!parser.isSigned(base64Token)) {
+            result.parser = Jwts.parser();
+            if (!result.parser.isSigned(base64Token)) {
                 TokenUnsignedException e = new TokenUnsignedException("Token is unsigned");
                 logger.error("Token is unsigned", e);
                 throw e;
             }
-            parser.setSigningKey(key);
-            parser.requireIssuer(issuer);
-            Jws<Claims> claimsJws = parser.parseClaimsJws(base64Token);
-            tokenClaims = claimsJws.getBody();
+            result.parser.setSigningKey(result.key);
+            result.parser.requireIssuer(result.issuer);
+            Jws<Claims> claimsJws = result.parser.parseClaimsJws(base64Token);
+            result.tokenClaims = claimsJws.getBody();
             JwsHeader jwsHeader = claimsJws.getHeader();
 
             if (!jwsHeader.getType().equals(Header.JWT_TYPE)) {
@@ -68,7 +69,7 @@ public class TokenJWT extends Token {
                 logger.error("Wrong token type", e);
                 throw e;
             }
-            if (!jwsHeader.getAlgorithm().equals(signatureAlgorithm.name())) {
+            if (!jwsHeader.getAlgorithm().equals(result.signatureAlgorithm.name())) {
                 String m = String.format("The token signed by %s algorithm, but must be signed with %s (%s)", jwsHeader.getAlgorithm(), signatureAlgorithm.name(), signatureAlgorithmJdkName);
                 SignatureAlgorithmException e = new SignatureAlgorithmException(m);
                 logger.error(m, e);
@@ -82,6 +83,7 @@ public class TokenJWT extends Token {
         } catch (MalformedJwtException | CompressionException | UnsupportedJwtException e) {
             throw new ContentTokenException(e.getMessage());
         }
+        return result;
     }
 
     @Override
@@ -92,7 +94,7 @@ public class TokenJWT extends Token {
     }
 
     @Override
-    public long getUserId() throws ContentTokenException {
+    public long getUserId() {
         long result = 0;
         Object o = "null";
 
