@@ -27,6 +27,7 @@ public class DemoAppConfigService {
     public static final String ATTRIBUTE_TOOLS_TAG_NAME = "tools";
     public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
     public static final String ATTRIBUTE_DESCRIPTION_TAG_NAME = "description";
+    public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "loationInAdvantage";
     //  endregion
 
     //  region Class Properties
@@ -211,8 +212,11 @@ public class DemoAppConfigService {
             Node nodeAttrDescription = attr.getNamedItem(ATTRIBUTE_DESCRIPTION_TAG_NAME);
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
+            Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
+            String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+
             //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
-            parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, node.getTextContent()));
+            parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
 
             if (logger.isDebugEnabled()) {
                 logger.debug("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
@@ -270,16 +274,19 @@ public class DemoAppConfigService {
                 Node nodeAttrDescription = attr.getNamedItem(ATTRIBUTE_DESCRIPTION_TAG_NAME);
                 String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
+                Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
+                String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+
                 if (tool.trim().equalsIgnoreCase("ALL")) {
-                    parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
+                    parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
                     if (logger.isDebugEnabled()) {
                         logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
                     }
                 }
                 else if (attributeToolsValue.trim().toUpperCase().contains(tool.trim().toUpperCase())) {
-                    if (! parameters.contains(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()))) {
+                    if (! parameters.contains(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()))) {
                         //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
-                        parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, node.getTextContent()));
+                        parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
                         if (logger.isDebugEnabled()) {
                             logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
                         }
@@ -320,12 +327,15 @@ public class DemoAppConfigService {
             Node nodeAttrDescription = attr.getNamedItem(ATTRIBUTE_DESCRIPTION_TAG_NAME);
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
+            Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
+            String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+
             if (logger.isDebugEnabled()) {
-                logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
+                logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\" locationInAdvantage=\"" + attributeLocationInAdvantageValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
             }
 
             logger.trace("getDemoAppConfigParametersByName(\"" + parameterName + "\") - End" + System.lineSeparator());
-            return new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, node.getTextContent());
+            return new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent());
         }
 
 //        if ((node.getNodeName().equals("#comment")) || (node.getNodeName().equals("#text"))) {
@@ -419,21 +429,22 @@ public class DemoAppConfigService {
      * Restore DemoAppConfig.xml file to all default values.
      */
     public DemoAppConfigStatusResponse restoreFactorySettingsDemoAppConfig() {
-        this.updateParameterValue("Email_address_in_login", "No");
+        this.updateParameterValue("Email_in_login", "No");
+        this.updateParameterValue("ShipEx_repeat_calls", "0");
+        this.updateParameterValue("Add_product_to_incorrect_category", "No");
+        this.updateParameterValue("DB_call_delay", "0");
+        this.updateParameterValue("User_alternate_WSDL", "No");
+        this.updateParameterValue("Error_500", "No");
+        this.updateParameterValue("Sum_added_to_cart", "0");
         this.updateParameterValue("Generate_memory_leak", "0");
-        this.updateParameterValue("Repeat_ShipEx_call", "0");
-        this.updateParameterValue("Sum_to_add_to_cart_calculation", "0");
-        this.updateParameterValue("Add_wrong_product_to_speakers_category", "No");
-        this.updateParameterValue("Spelling_mistakes_in_order_payment_page", "No");
-        this.updateParameterValue("Max_concurrent_sessions", "-1");
-        this.updateParameterValue("Mix_pictures_in_home_page", "No");
-        this.updateParameterValue("Slow_DB_call", "0");
-        this.updateParameterValue("Slow_Page", "No");
-        this.updateParameterValue("Different_price_in_UI_and_API", "No");
-        this.updateParameterValue("SLA_Add_Delay_In_Add_To_Cart_Response_Time", "0");
-        this.updateParameterValue("SLA_Number_Of_Sessions_To_Add_The_Delay", "20");
-        this.updateParameterValue("user_second_wsdl", "No");
-        this.updateParameterValue("Error_500_in_update_cart", "No");
+        this.updateParameterValue("Typos_on_order_payment", "No");
+        this.updateParameterValue("Misplace_pictures_on_Android", "No");
+        this.updateParameterValue("SLA_add_delay_time", "0");
+        this.updateParameterValue("SLA_add_delay_sessions", "20");
+        this.updateParameterValue("Show_slow_pages", "No");
+        this.updateParameterValue("Price_diffs_UI_vs_API", "No");
+        this.updateParameterValue("Allow_Error_in_Login", "No");
+        this.updateParameterValue("Implement_DevOps_Process", "No");
 
         return new DemoAppConfigStatusResponse(true, "\"DemoAppConfig.xml\" restore factory settings successful");
     }

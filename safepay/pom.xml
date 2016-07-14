@@ -29,6 +29,7 @@
             <resource>
                 <directory>${project.build.directory}/generated-resources</directory>
                 <includes>
+                    <include>ver.txt</include>
                     <include>log4j.properties</include>
                 </includes>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->

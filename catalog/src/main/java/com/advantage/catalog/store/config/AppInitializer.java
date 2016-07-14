@@ -25,7 +25,8 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 JpaConfiguration.class,
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
-                ImageManagementConfiguration.class
+                ImageManagementConfiguration.class,
+                AdvantageAspects.class
                 //,SwaggerConfiguration.class //Because in this class added @Inject Environment
         };
     }

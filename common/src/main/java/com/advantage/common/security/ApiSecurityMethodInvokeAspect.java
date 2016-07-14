@@ -3,6 +3,7 @@ package com.advantage.common.security;
 import com.advantage.common.dto.ErrorResponseDto;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.authorization.AuthorizationException;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class ApiSecurityMethodInvokeAspect {
 
+    private static final Logger logger = Logger.getLogger("SecurityRequestsLogger");
+
     @Around("execution(* *(..)) && @annotation(com.advantage.common.security.AuthorizeAsAdmin)")
     public ResponseEntity authorizeAsAdmin(ProceedingJoinPoint joinPoint) throws Throwable {
         ResponseEntity response;
@@ -29,8 +32,10 @@ public class ApiSecurityMethodInvokeAspect {
         String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         try {
             SecurityTools.isAuthorized(authorizationHeader, AccountType.ADMIN);
+            logger.debug("Authorization for request " + httpServletRequest.getMethod() + " " + httpServletRequest.getRequestURI() + " success");
             response = (ResponseEntity) joinPoint.proceed();
         } catch (AuthorizationException e) {
+            logger.warn("Authorization for request " + httpServletRequest.getMethod() + " " + httpServletRequest.getRequestURI() + " failed", e);
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(false, e.getMessage());
             response = new ResponseEntity(errorResponseDto, e.getHttpStatus());
         }
@@ -47,8 +52,10 @@ public class ApiSecurityMethodInvokeAspect {
         try {
             //SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER);
             SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER, AccountType.ADMIN);
+            logger.debug("Authorization for request " + httpServletRequest.getMethod() + " " + httpServletRequest.getRequestURI() + " success");
             response = (ResponseEntity) joinPoint.proceed();
         } catch (AuthorizationException e) {
+            logger.warn("Authorization for request " + httpServletRequest.getMethod() + " " + httpServletRequest.getRequestURI() + " failed", e);
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(false, e.getMessage());
             response = new ResponseEntity(errorResponseDto, e.getHttpStatus());
         }
