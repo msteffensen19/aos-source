@@ -55,6 +55,9 @@ public class CefModel {
     private static String parseUserAgent(String userAgent) {
         if (userAgent == null || userAgent.isEmpty()) {
             return userAgent;
+        } else if (userAgent.contains("Advantage")) {
+            String[] splitedUserAgent = userAgent.split("/");
+            return splitedUserAgent[splitedUserAgent.length - 1] + " service";
         } else {
             UserAgent _userAgent = UserAgent.parseUserAgentString(userAgent);
             return _userAgent.getOperatingSystem().getName() + "-" + _userAgent.getBrowser().getName() + " client";

@@ -19,12 +19,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.env.Environment;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,16 +66,21 @@ public class CatalogController {
     //  region /products
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
-        String c = environment.getProperty("mvn.project.build.finalName");
-        String v = environment.getProperty("mvn.project.version");
+
+        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/products".hashCode()), "Get products", 5);
+        }
+//        String c = environment.getProperty("mvn.project.build.finalName");
+//        String v = environment.getProperty("mvn.project.version");
 
 //        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
-        CefModel cef = new CefModel(c, v);
-        cef.setEventRequiredParameters(String.valueOf("/products".hashCode()), "Get products", 5);
-        cef.setRequestData(request);
+//        CefModel cef = new CefModel(c, v);
+//        cef.setRequestData(request);
         ResponseEntity<ProductCollectionDto> productCollectionDtoResponseEntity = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
-        cef.setStatusCode(HttpStatus.OK);
-        cefLogger.trace(cef.cefFomatMessage());
+//        cef.setStatusCode(HttpStatus.OK);
+//        cefLogger.trace(cef.cefFomatMessage());
         return productCollectionDtoResponseEntity;
 
     }
@@ -84,19 +89,26 @@ public class CatalogController {
     public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id,
                                                      HttpServletRequest request) {
         ResponseEntity result;
-        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
-        cef.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Get spec product", 5);
-        cef.setRequestData(request);
+        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Get spec product", 5);
+        }
+
+//        CefModel cef = new CefModel("catalog", "1.0.-SNAPSHOT");
+//        cef.setRequestData(request);
+
+//        cef.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Get spec product", 5);
         Product product = productService.getProductById(id);
         if (product == null) {
             result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            cef.setStatusCode(HttpStatus.NOT_FOUND);
+//            cef.setStatusCode(HttpStatus.NOT_FOUND);
         } else {
             ProductDto dto = productService.getDtoByEntity(product);
             result = new ResponseEntity<>(dto, HttpStatus.OK);
-            cef.setStatusCode(HttpStatus.OK);
+//            cef.setStatusCode(HttpStatus.OK);
         }
-        cefLogger.trace(cef.cefFomatMessage());
+//        cefLogger.trace(cef.cefFomatMessage());
         return result;
     }
 

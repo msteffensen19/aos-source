@@ -1,0 +1,64 @@
+package com.advantage.catalog.store.filter;
+
+import com.advantage.common.cef.CefModel;
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * Created by fiskine on 7/14/2016.
+ */
+public class CefFilter implements Filter {
+
+    private static final Logger cefLogger = Logger.getLogger("CEF");
+    private static final Logger logger = Logger.getLogger(CefFilter.class);
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        logger.trace("Start\nInit parametr EVG = " + filterConfig.getInitParameter("EVG"));
+
+    }
+
+    @Override
+    //TODO-EVG check and refactor flow
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if (cefLogger.isInfoEnabled()) {
+            CefModel cefData = new CefModel("catalog", "HC-1.0.-SNAPSHOT");
+            logger.trace("Start");
+            boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
+            HttpServletRequest httpServletRequest = null;
+            if (isRequestIsHttpRequest) {
+                httpServletRequest = (HttpServletRequest) servletRequest;
+                cefData.setRequestData(httpServletRequest);
+                servletRequest.setAttribute("cefData", cefData);
+
+                logger.trace("Before chain doFilter: cefDataId=" + cefData.toString());
+                filterChain.doFilter(httpServletRequest, servletResponse);
+                logger.trace("After chain doFilter: cefDataId=" + cefData.toString());
+
+                HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+                cefData.setStatusCode(HttpStatus.valueOf(httpServletResponse.getStatus()));
+
+                try {
+                    cefLogger.info(cefData.cefFomatMessage());
+                } catch (Exception e) {
+                    logger.error("UPS for cefData = " + cefData.toString());
+                }
+            } else {
+                logger.fatal("Its not a HTTPRequest");
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        logger.trace("Start");
+    }
+}
