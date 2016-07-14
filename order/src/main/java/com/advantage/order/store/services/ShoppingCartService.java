@@ -157,7 +157,7 @@ public class ShoppingCartService {
 
         ColorAttributeDto dto = null;
         try {
-            String stringResponse = RestApiHelper.httpGet(getColorAttributeByProdctIdAndColorCode);
+            String stringResponse = RestApiHelper.httpGet(getColorAttributeByProdctIdAndColorCode, "order");
             if (!stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 dto = getColorAttributeDtofromJsonObjectString(stringResponse);
             } else {
@@ -199,7 +199,7 @@ public class ShoppingCartService {
         String parameterValue = null;
 
         try {
-            String stringResponse = RestApiHelper.httpGet(getDemoAppConfigByParameterName);
+            String stringResponse = RestApiHelper.httpGet(getDemoAppConfigByParameterName, "order");
             if (!stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 demoAppConfigParameter = getConfigParameterValueFromJsonObjectString(stringResponse);
                 if (demoAppConfigParameter != null) {
@@ -442,7 +442,7 @@ public class ShoppingCartService {
         ProductDto dto = null;
         String stringResponse = null;
         try {
-            stringResponse = RestApiHelper.httpGet(productByIdUrl);
+            stringResponse = RestApiHelper.httpGet(productByIdUrl, "order");
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
                 dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
