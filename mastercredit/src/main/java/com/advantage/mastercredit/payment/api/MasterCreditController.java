@@ -1,6 +1,7 @@
 package com.advantage.mastercredit.payment.api;
 
 import com.advantage.common.Constants;
+import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
@@ -43,24 +44,16 @@ public class MasterCreditController {
     public ResponseEntity<MasterCreditResponse> doPayment(@RequestBody MasterCreditDto masterCreditDto,
                                                           HttpServletRequest request,
                                                           HttpServletResponse response) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/payments/payment".hashCode()),
+                    "Do payment", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("The request is:\n");
-//            logger.debug(request.toString());
-//        }
         MasterCreditResponse masterCreditResponse = masterCreditService.doPayment(masterCreditDto);
-        //response.setHeader("sessionId", request.getSession().getId());
-        //
-        //if (appUserResponseStatus.isSuccess()) {
-        //    HttpSession session = request.getSession();
-        //    session.setAttribute(Constants_mc.UserSession.TOKEN, appUserResponseStatus.getToken());
-        //    session.setAttribute(Constants_mc.UserSession.USER_ID, appUserResponseStatus.getUserId());
-        //    session.setAttribute(Constants_mc.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
-        //
-        //    //  Set SessionID to Response Entity
-        //    //response.getHeader().
-        //    appUserResponseStatus.setSessionId(session.getId());
-        //}
 
         HttpStatus status;
         if (masterCreditResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {

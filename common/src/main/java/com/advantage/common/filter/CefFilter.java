@@ -46,10 +46,14 @@ public class CefFilter implements Filter {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
                 cefData.setRequestData(httpServletRequest);
                 servletRequest.setAttribute("cefData", cefData);
-
-                logger.trace("Before chain doFilter: cefDataId=" + cefData.toString());
+                switch (serviceName) {
+                    case "root":
+                        cefData.setEventRequiredParameters("123", "Read Web application file", 5);
+                        break;
+                }
+                logger.trace("Before chain doFilter: " + cefData.toString());
                 filterChain.doFilter(httpServletRequest, servletResponse);
-                logger.trace("After chain doFilter: cefDataId=" + cefData.toString());
+                logger.trace("After chain doFilter: " + cefData.toString());
 
                 HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
                 cefData.setStatusCode(HttpStatus.valueOf(httpServletResponse.getStatus()));

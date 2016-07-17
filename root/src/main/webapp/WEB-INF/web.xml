@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app>
+    <filter>
+        <filter-name>CEF</filter-name>
+        <filter-class>com.advantage.common.filter.CefFilter</filter-class>
+        <init-param>
+            <param-name>cef.service.name</param-name>
+            <param-value>root</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CEF</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

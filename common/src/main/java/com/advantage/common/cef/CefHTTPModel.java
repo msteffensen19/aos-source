@@ -24,14 +24,16 @@ import java.util.Enumeration;
  */
 
 public class CefHttpModel {
+    private static SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
+
     private static int version = 0;
     private static String deviceVendor = "Advantage";
     private String deviceProduct;//Current service (account, order, SafePay etc)
     private String deviceVersion;
     private String deviceEventClassId;
     private String name;
-    private int severity;
 
+    private int severity;
     private String app = "HTTP";
     private String destinationServiceName; //Service than requested by current service (accountservice, catalog,order,ShipEx,SafePay etc)
     private Date end;
@@ -45,7 +47,6 @@ public class CefHttpModel {
     private String src;
     private Date start;
     private Long suid;
-    private SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
 
 
     public CefHttpModel(String destinationServiceName, String deviceVersion) {
@@ -197,5 +198,29 @@ public class CefHttpModel {
 
     private String escapeExtensionValueSigns(String value) {
         return value.replace("\\", "\\\\").replace("=", "\\=");
+    }
+
+    @Override
+    public String toString() {
+        return "CefHttpModel{" +
+                "deviceProduct='" + deviceProduct + '\'' +
+                ", deviceVersion='" + deviceVersion + '\'' +
+                ", deviceEventClassId='" + deviceEventClassId + '\'' +
+                ", name='" + name + '\'' +
+                ", severity=" + severity +
+                ", app='" + app + '\'' +
+                ", destinationServiceName='" + destinationServiceName + '\'' +
+                ", end=" + end +
+                ", reason=" + reason +
+                ", request='" + request + '\'' +
+                ", requestContext='" + requestContext + '\'' +
+                ", requestCookies='" + requestCookies + '\'' +
+                ", requestClientApplication='" + requestClientApplication + '\'' +
+                ", requestMethod='" + requestMethod + '\'' +
+                ", spt=" + spt +
+                ", src='" + src + '\'' +
+                ", start=" + start +
+                ", suid=" + suid +
+                '}';
     }
 }
