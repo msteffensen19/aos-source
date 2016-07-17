@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * Created by fiskine on 7/14/2016.
@@ -19,8 +20,17 @@ public class CefFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        logger.trace("Start\nInit parametr EVG = " + filterConfig.getInitParameter("EVG"));
+        logger.trace("Start " + filterConfig.getFilterName() + " Init");
+        if (logger.isDebugEnabled()) {
 
+            StringBuffer sb = new StringBuffer("\tFilter ").append(filterConfig.getFilterName()).append(" config init parameters:").append(System.lineSeparator());
+            Enumeration<String> initParameterNames = filterConfig.getInitParameterNames();
+            while (initParameterNames.hasMoreElements()) {
+                String initParameterName = initParameterNames.nextElement();
+                sb.append("\t\t").append(initParameterName).append(" = ").append(filterConfig.getInitParameter(initParameterName)).append(System.lineSeparator());
+            }
+            logger.debug(sb.toString());
+        }
     }
 
     @Override
