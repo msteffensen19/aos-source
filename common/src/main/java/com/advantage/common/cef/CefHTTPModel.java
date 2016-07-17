@@ -13,13 +13,15 @@ import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
 /**
  * Created by fiskine on 7/12/2016.
  */
 
-public class CefModel {
+public class CefHttpModel {
     private static int version = 0;
     private static String deviceVendor = "Advantage";
     private String deviceProduct;//Current service (account, order, SafePay etc)
@@ -30,6 +32,7 @@ public class CefModel {
 
     private String app = "HTTP";
     private String destinationServiceName; //Service than requested by current service (accountservice, catalog,order,ShipEx,SafePay etc)
+    private Date end;
     private HttpStatus reason;
     private String request;
     private String requestContext;
@@ -38,10 +41,13 @@ public class CefModel {
     private String requestMethod;
     private Integer spt;
     private String src;
+    private Date start;
     private Long suid;
+    private SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
 
 
-    public CefModel(String destinationServiceName, String deviceVersion) {
+    public CefHttpModel(String destinationServiceName, String deviceVersion) {
+        start = new Date();
         this.destinationServiceName = destinationServiceName;
         this.deviceVersion = deviceVersion;
     }
@@ -128,7 +134,14 @@ public class CefModel {
         return result;
     }
 
+    public void setStopEventTime() {
+        this.end = new Date();
+    }
+
     public String cefFomatMessage() {
+        if (end == null) {
+            setStopEventTime();
+        }
         String cefHeader = String.format("CEF:%d|%s|%s|%s|%s|%s|%d|",
                 version,
                 escapeHeaderValueSigns(deviceVendor),
@@ -139,6 +152,8 @@ public class CefModel {
                 severity);
 
         StringBuilder sb = new StringBuilder(cefHeader);
+        sb.append("start").append('=').append(dateFormatForStartAndEnd.format(start)).append(' ');
+        sb.append("end").append('=').append(dateFormatForStartAndEnd.format(end)).append(' ');
         sb.append(convertToExtensionPair("app", app));
         sb.append(convertToExtensionPair("destinationServiceName", destinationServiceName));
         sb.append("outcome").append('=').append(reason.is2xxSuccessful() ? "success" : "failure").append(' ');

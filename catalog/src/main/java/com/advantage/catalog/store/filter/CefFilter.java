@@ -1,6 +1,6 @@
 package com.advantage.catalog.store.filter;
 
-import com.advantage.common.cef.CefModel;
+import com.advantage.common.cef.CefHttpModel;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 
@@ -37,7 +37,7 @@ public class CefFilter implements Filter {
     //TODO-EVG check and refactor flow
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (cefLogger.isInfoEnabled()) {
-            CefModel cefData = new CefModel("catalog", "HC-1.0.-SNAPSHOT");
+            CefHttpModel cefData = new CefHttpModel("catalog", "HC-1.0.-SNAPSHOT");
             logger.trace("Start");
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             HttpServletRequest httpServletRequest = null;

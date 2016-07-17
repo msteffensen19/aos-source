@@ -7,7 +7,7 @@ import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
-import com.advantage.common.cef.CefModel;
+import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
 import com.advantage.root.util.StringHelper;
@@ -67,7 +67,7 @@ public class CatalogController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     @ApiOperation(value = "Get all products info")
     public ResponseEntity<ProductCollectionDto> getAllProducts(HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products".hashCode()), "Get all products info", 5);
@@ -84,7 +84,7 @@ public class CatalogController {
     @ApiOperation(value = "Get product info")
     public ResponseEntity<ProductDto> getProductById(@PathVariable("product_id") Long id,
                                                      HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Get product info", 5);
@@ -113,7 +113,7 @@ public class CatalogController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto product,
                                                             HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products".hashCode()), "Create new product", 5);
@@ -141,7 +141,7 @@ public class CatalogController {
     public ResponseEntity<ProductResponseDto> createProductWithImage(@RequestParam("product") String product,
                                                                      @RequestParam("file") MultipartFile file,
                                                                      HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/images".hashCode()), "Create product with image", 5);
@@ -191,7 +191,7 @@ public class CatalogController {
     public ResponseEntity<ProductResponseDto> updateProduct(@RequestBody ProductDto product,
                                                             @PathVariable("product_id") Long id,
                                                             HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Update product details", 5);
@@ -212,7 +212,7 @@ public class CatalogController {
     @RequestMapping(value = "/products/to_speakers", method = RequestMethod.PUT)
     public ResponseEntity<ProductResponseDto> updateProductCategoryToSpeakers(HttpServletRequest request,
                                                                               HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/to_speakers".hashCode()), "Change Category of product id=13 to Speakers", 5);
@@ -255,7 +255,7 @@ public class CatalogController {
     public ResponseEntity<List<CategoryDto>> searchProductByName(@RequestParam("name") String name,
                                                                  @RequestParam(value = "quantityPerEachCategory", defaultValue = "-1", required = false) Integer quantity,
                                                                  HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/search".hashCode()), "Search product by Name", 5);
@@ -298,7 +298,7 @@ public class CatalogController {
     @RequestMapping(value = "/products/{product_id}", method = RequestMethod.DELETE)
     public ResponseEntity<ProductResponseDto> deleteProduct(@PathVariable("product_id") Long productId,
                                                             HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/{product_id}".hashCode()), "Delete product from catalog", 5);
@@ -317,7 +317,7 @@ public class CatalogController {
     public ResponseEntity<ColorAttributeDto> getColorAttributeByProductIdAndColorCode(@PathVariable("product_id") Long productId,
                                                                                       @PathVariable("color_code") String hexColor,
                                                                                       HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/products/{product_id}/color/{color_code}".hashCode()), "Get color-attribute by product-id and color-code", 5);
@@ -339,7 +339,7 @@ public class CatalogController {
     public ResponseEntity<Long> getTimestamp(@RequestParam(value = "timestamp", defaultValue = "0", required = false) String timestamp,
                                              @RequestParam(value = "date_format", defaultValue = "0", required = false) String dateFormat,
                                              HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/catalog/LastUpdate/timestamp".hashCode()), "Convert or get current", 5);
@@ -362,7 +362,7 @@ public class CatalogController {
     @RequestMapping(value = "/catalog/LastUpdate/{what_to_get}", method = RequestMethod.GET)
     @ApiOperation(value = "Get Last-Update by ID, By Name or ALL")
     public ResponseEntity<List<LastUpdate>> getLastUpdates(@PathVariable("what_to_get") String whatToGet, HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/catalog/LastUpdate/{what_to_get}".hashCode()), "Get Last-Update by ID, By Name or ALL", 5);
@@ -389,7 +389,7 @@ public class CatalogController {
     public ResponseEntity<LastUpdate> createLastUpdate(@PathVariable("last_update_name") String lastUpdateName,
                                                        @RequestParam(value = "timestamp", defaultValue = "0", required = false) long timestamp,
                                                        HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/catalog/LastUpdate/create/{last_update_name}".hashCode()), "FOR DEV: Create new Last-Update and set its Timestamp", 0);
@@ -420,7 +420,7 @@ public class CatalogController {
                                                        @RequestParam(value = "timestamp", defaultValue = "0", required = false) String timestamp,
                                                        @RequestParam(value = "date_format", defaultValue = "0", required = false) String dateFormat,
                                                        HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/catalog/LastUpdate/update/last_update_id/{last_update_id}/last_update_name/{last_update_name}".hashCode()),
@@ -456,7 +456,7 @@ public class CatalogController {
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ApiOperation(value = "Get all categories with product's short details")
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/categories".hashCode()),
@@ -474,7 +474,7 @@ public class CatalogController {
     @ApiOperation(value = "Get deal and products full details for this category")
     public ResponseEntity<CategoryDto> getCategoryData(@PathVariable("category_id") String id,
                                                        HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/categories/{category_id}/products".hashCode()),
@@ -493,7 +493,7 @@ public class CatalogController {
     @ApiOperation(value = "Get all categories with product's full details")
     public ResponseEntity<List<CategoriesDto>> getCategoryDtoData(HttpServletRequest request,
                                                                   HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/categories/all_data".hashCode()),
@@ -510,7 +510,7 @@ public class CatalogController {
     @RequestMapping(value = "/attributes/colors_pallet", method = RequestMethod.GET)
     @ApiOperation(value = "Get all colors codes")
     public ResponseEntity<Map<String, String>> getColorPallet(HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/attributes/colors_pallet".hashCode()),
@@ -536,7 +536,7 @@ public class CatalogController {
     @RequestMapping(value = "/categories/attributes", method = RequestMethod.GET)
     @ApiOperation(value = "Get all categories attributes")
     public ResponseEntity<CategoryAttributeFilterResponse> getAllCategoriesAttributes(HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/categories/attributes".hashCode()),
@@ -567,7 +567,7 @@ public class CatalogController {
     @ApiOperation(value = "Upload image")
     public ResponseEntity<ImageUrlResponseDto> imageUpload(@RequestParam("file") MultipartFile file,
                                                            HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/images".hashCode()),
@@ -592,7 +592,7 @@ public class CatalogController {
     @ApiOperation(value = "Get all deals")
     public ResponseEntity<List<Deal>> getAllDeals(final HttpServletRequest request,
                                                   final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/deals".hashCode()),
@@ -614,7 +614,7 @@ public class CatalogController {
     public ResponseEntity<List<Deal>> getDealOfTheDay(@RequestParam(value = "dealOfTheDay", defaultValue = "false") boolean search,
                                                       final HttpServletRequest request,
                                                       final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/deals/search".hashCode()),
@@ -643,7 +643,7 @@ public class CatalogController {
     public ResponseEntity<DemoAppConfigResponse> getDemoAppConfigParametersByTools(@PathVariable("tools_names") String toolsNames,
                                                                                    final HttpServletRequest request,
                                                                                    final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/parameters/by_tool/{tools_names}".hashCode()),
@@ -667,7 +667,7 @@ public class CatalogController {
     public ResponseEntity<DemoAppConfigParameter> getDemoAppConfigParameterByName(@PathVariable("parameter_name") String parameterName,
                                                                                   final HttpServletRequest request,
                                                                                   final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/parameters/{parameter_name}".hashCode()),
@@ -685,7 +685,7 @@ public class CatalogController {
     @ApiOperation(value = "Restore parameters default values")
     public ResponseEntity<DemoAppConfigStatusResponse> restoreFactorySettings(final HttpServletRequest request,
                                                                               final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/Restore_Factory_Settings".hashCode()),
@@ -705,7 +705,7 @@ public class CatalogController {
                                                                                     @PathVariable("new_value") String parameterValue,
                                                                                     final HttpServletRequest request,
                                                                                     final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/update/parameter/{name}/value/{new_value}".hashCode()),
@@ -725,7 +725,7 @@ public class CatalogController {
     public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameters(@RequestBody DemoAppConfigParametersDto parameters,
                                                                                      final HttpServletRequest request,
                                                                                      final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/update/parameters".hashCode()),
@@ -746,7 +746,7 @@ public class CatalogController {
     public ResponseEntity<ContactUsResponse> supportSendMail(@RequestBody ContactUsMailRequest contactUsRequest,
                                                              final HttpServletRequest request,
                                                              final HttpServletResponse response) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/support/contact_us/email".hashCode()),
@@ -770,7 +770,7 @@ public class CatalogController {
     @RequestMapping(value = "/catalog/Restore_db_factory_settings", method = RequestMethod.GET)
     @ApiOperation(value = "Restore Database factory settings")
     public ResponseEntity<CatalogResponse> dbRestoreFactorySettings(HttpServletRequest request) {
-        CefModel cefData = (CefModel) request.getAttribute("cefData");
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
             cefData.setEventRequiredParameters(String.valueOf("/catalog/Restore_db_factory_settings".hashCode()),
