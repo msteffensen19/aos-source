@@ -19,6 +19,7 @@ public class CefFilter implements Filter {
     private static final Logger logger = Logger.getLogger(CefFilter.class);
 
     private String serviceName;
+    private boolean formatStartEnd = false;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -33,6 +34,11 @@ public class CefFilter implements Filter {
             logger.debug(sb.toString());
         }
         serviceName = filterConfig.getInitParameter("cef.service.name");
+        String initParamStartendformat = filterConfig.getInitParameter("cef.filter.startendformat");
+        logger.debug("initParamStartendformat = " + initParamStartendformat);
+        if (initParamStartendformat != null && initParamStartendformat.trim().toLowerCase().equals("true")) {
+            formatStartEnd = true;
+        }
         logger.debug("serviceName = " + serviceName);
     }
 
@@ -43,6 +49,7 @@ public class CefFilter implements Filter {
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             if (isRequestIsHttpRequest) {
                 CefHttpModel cefData = new CefHttpModel(serviceName, "1.0-SNAPSHOT TemporaryHardCoded");
+                cefData.setNeedTimeFormat(formatStartEnd);
                 HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
                 cefData.setRequestData(httpServletRequest);
                 servletRequest.setAttribute("cefData", cefData);

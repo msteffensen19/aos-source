@@ -25,6 +25,7 @@ import java.util.Enumeration;
 
 public class CefHttpModel {
     private static SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
+    private boolean needTimeFormat;
 
     private static int version = 0;
     private static String deviceVendor = "Advantage";
@@ -47,7 +48,6 @@ public class CefHttpModel {
     private String src;
     private Date start;
     private Long suid;
-
 
     public CefHttpModel(String destinationServiceName, String deviceVersion) {
         start = new Date();
@@ -155,8 +155,8 @@ public class CefHttpModel {
                 severity);
 
         StringBuilder sb = new StringBuilder(cefHeader);
-        sb.append("start").append('=').append(dateFormatForStartAndEnd.format(start)).append(' ');
-        sb.append("end").append('=').append(dateFormatForStartAndEnd.format(end)).append(' ');
+        sb.append("start").append('=').append(needTimeFormat ? dateFormatForStartAndEnd.format(start) : start.getTime()).append(' ');
+        sb.append("end").append('=').append(needTimeFormat ? dateFormatForStartAndEnd.format(end) : end.getTime()).append(' ');
         sb.append(convertToExtensionPair("app", app));
         sb.append(convertToExtensionPair("destinationServiceName", destinationServiceName));
         sb.append("outcome").append('=').append(reason.is2xxSuccessful() ? "success" : "failure").append(' ');
@@ -203,14 +203,16 @@ public class CefHttpModel {
     @Override
     public String toString() {
         return "CefHttpModel{" +
-                "deviceProduct='" + deviceProduct + '\'' +
+                "start=" + start +
+                ", end=" + end +
+                ", needTimeFormat=" + needTimeFormat +
+                ", deviceProduct='" + deviceProduct + '\'' +
                 ", deviceVersion='" + deviceVersion + '\'' +
                 ", deviceEventClassId='" + deviceEventClassId + '\'' +
                 ", name='" + name + '\'' +
                 ", severity=" + severity +
                 ", app='" + app + '\'' +
                 ", destinationServiceName='" + destinationServiceName + '\'' +
-                ", end=" + end +
                 ", reason=" + reason +
                 ", request='" + request + '\'' +
                 ", requestContext='" + requestContext + '\'' +
@@ -219,8 +221,11 @@ public class CefHttpModel {
                 ", requestMethod='" + requestMethod + '\'' +
                 ", spt=" + spt +
                 ", src='" + src + '\'' +
-                ", start=" + start +
                 ", suid=" + suid +
                 '}';
+    }
+
+    public void setNeedTimeFormat(boolean needTimeFormat) {
+        this.needTimeFormat = needTimeFormat;
     }
 }
