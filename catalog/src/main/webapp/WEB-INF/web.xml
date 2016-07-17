@@ -80,10 +80,9 @@
 
         <!--If true = start and end value extended CEF values will be format to MMMM dd yyyy HH:mm:ss, otherwise (default) - unixtime milliseconds-->
         <init-param>
-            <param-name>cef.filter.startendformat</param-name>
+            <param-name>cef.filter.format_start_end_fields</param-name>
             <param-value>true</param-value>
         </init-param>
-
     </filter>
 
     <filter-mapping>

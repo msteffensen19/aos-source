@@ -34,7 +34,7 @@ public class CefFilter implements Filter {
             logger.debug(sb.toString());
         }
         serviceName = filterConfig.getInitParameter("cef.service.name");
-        String initParamStartendformat = filterConfig.getInitParameter("cef.filter.startendformat");
+        String initParamStartendformat = filterConfig.getInitParameter("  cef.filter.format_start_end_fields");
         logger.debug("initParamStartendformat = " + initParamStartendformat);
         if (initParamStartendformat != null && initParamStartendformat.trim().toLowerCase().equals("true")) {
             formatStartEnd = true;
