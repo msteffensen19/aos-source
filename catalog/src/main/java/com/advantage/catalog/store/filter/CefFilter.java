@@ -18,6 +18,8 @@ public class CefFilter implements Filter {
     private static final Logger cefLogger = Logger.getLogger("CEF");
     private static final Logger logger = Logger.getLogger(CefFilter.class);
 
+    private String serviceName;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.trace("Start " + filterConfig.getFilterName() + "(Object id = " + this.toString() + ") Init");
@@ -30,6 +32,8 @@ public class CefFilter implements Filter {
             }
             logger.debug(sb.toString());
         }
+        serviceName = filterConfig.getInitParameter("cef.service.name");
+        logger.debug("serviceName = " + serviceName);
     }
 
     @Override
@@ -38,7 +42,7 @@ public class CefFilter implements Filter {
             logger.trace("Start");
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             if (isRequestIsHttpRequest) {
-                CefHttpModel cefData = new CefHttpModel("catalog", "1.0-SNAPSHOT TemporaryHardCoded");
+                CefHttpModel cefData = new CefHttpModel(serviceName, "1.0-SNAPSHOT TemporaryHardCoded");
                 HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
                 cefData.setRequestData(httpServletRequest);
                 servletRequest.setAttribute("cefData", cefData);

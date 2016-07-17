@@ -74,8 +74,8 @@
         <filter-name>CEF</filter-name>
         <filter-class>com.advantage.catalog.store.filter.CefFilter</filter-class>
         <init-param>
-            <param-name>EVG</param-name>
-            <param-value>hodor</param-value>
+            <param-name>cef.service.name</param-name>
+            <param-value>catalog</param-value>
         </init-param>
     </filter>
 
