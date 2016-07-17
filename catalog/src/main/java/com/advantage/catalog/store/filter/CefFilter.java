@@ -20,7 +20,7 @@ public class CefFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        logger.trace("Start " + filterConfig.getFilterName() + " Init");
+        logger.trace("Start " + filterConfig.getFilterName() + "(Object id = " + this.toString() + ") Init");
         if (logger.isDebugEnabled()) {
             StringBuffer sb = new StringBuffer("\tFilter ").append(filterConfig.getFilterName()).append(" config init parameters:").append(System.lineSeparator());
             Enumeration<String> initParameterNames = filterConfig.getInitParameterNames();
@@ -38,7 +38,7 @@ public class CefFilter implements Filter {
             logger.trace("Start");
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             if (isRequestIsHttpRequest) {
-                CefHttpModel cefData = new CefHttpModel("catalog", "HC-1.0.-SNAPSHOT");
+                CefHttpModel cefData = new CefHttpModel("catalog", "1.0-SNAPSHOT TemporaryHardCoded");
                 HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
                 cefData.setRequestData(httpServletRequest);
                 servletRequest.setAttribute("cefData", cefData);
@@ -66,6 +66,6 @@ public class CefFilter implements Filter {
 
     @Override
     public void destroy() {
-        logger.trace("CefFilter destroy");
+        logger.trace("CefFilter destroy (Object id = " + this.toString() + ")");
     }
 }
