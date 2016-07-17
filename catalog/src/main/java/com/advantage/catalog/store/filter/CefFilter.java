@@ -22,7 +22,6 @@ public class CefFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.trace("Start " + filterConfig.getFilterName() + " Init");
         if (logger.isDebugEnabled()) {
-
             StringBuffer sb = new StringBuffer("\tFilter ").append(filterConfig.getFilterName()).append(" config init parameters:").append(System.lineSeparator());
             Enumeration<String> initParameterNames = filterConfig.getInitParameterNames();
             while (initParameterNames.hasMoreElements()) {
@@ -34,15 +33,13 @@ public class CefFilter implements Filter {
     }
 
     @Override
-    //TODO-EVG check and refactor flow
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (cefLogger.isInfoEnabled()) {
-            CefHttpModel cefData = new CefHttpModel("catalog", "HC-1.0.-SNAPSHOT");
             logger.trace("Start");
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
-            HttpServletRequest httpServletRequest = null;
             if (isRequestIsHttpRequest) {
-                httpServletRequest = (HttpServletRequest) servletRequest;
+                CefHttpModel cefData = new CefHttpModel("catalog", "HC-1.0.-SNAPSHOT");
+                HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
                 cefData.setRequestData(httpServletRequest);
                 servletRequest.setAttribute("cefData", cefData);
 
@@ -56,7 +53,7 @@ public class CefFilter implements Filter {
                 try {
                     cefLogger.info(cefData.cefFomatMessage());
                 } catch (Exception e) {
-                    logger.error("UPS for cefData = " + cefData.toString());
+                    logger.error("Incorrect cefData " + cefData.toString());
                 }
             } else {
                 logger.fatal("Its not a HTTPRequest");
@@ -69,6 +66,6 @@ public class CefFilter implements Filter {
 
     @Override
     public void destroy() {
-        logger.trace("Start");
+        logger.trace("CefFilter destroy");
     }
 }
