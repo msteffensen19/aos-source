@@ -39,16 +39,14 @@ public class AdvantageDaoCallsLoggingAspect {
         final StringBuilder info;
 
         if (before) {
-
             info = new StringBuilder("Before");
         } else {
-
             info = new StringBuilder("After");
         }
 
         info.append(" DAO call: ");
         info.append(daoMethodName);
         final String infoString = info.toString();
-        logger.info(infoString);
+        logger.trace(infoString);
     }
 }

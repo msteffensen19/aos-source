@@ -15,11 +15,11 @@ import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.JsonHelper;
-import com.google.common.net.HttpHeaders;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -430,6 +430,7 @@ public class OrderManagementService {
             conn.setDoOutput(true);
             conn.setRequestMethod(HttpMethod.POST.name());
             conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            conn.setRequestProperty(HttpHeaders.USER_AGENT, "AdvantageService/order");
 
             String input = "{" + "\"MCCVVNumber\":" + masterCreditRequest.getCvvNumber() + "," +
                     "\"MCCardNumber\":\"" + masterCreditRequest.getCardNumber() + "\"," +
@@ -459,12 +460,13 @@ public class OrderManagementService {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder sb = new StringBuilder();
+            StringBuffer sbLog = new StringBuffer("Output from Server...").append(System.lineSeparator());
             String output;
-            logger.debug("Output from Server...");
             while ((output = br.readLine()) != null) {
                 sb.append(output);
-                logger.debug(output);
+                sbLog.append("\t").append(output).append(System.lineSeparator());
             }
+            logger.debug(sbLog.toString());
 
             Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
 
@@ -511,6 +513,7 @@ public class OrderManagementService {
             conn.setDoOutput(true);
             conn.setRequestMethod(HttpMethod.POST.name());
             conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            conn.setRequestProperty(HttpHeaders.USER_AGENT, "AdvantageService/order");
 
             //  region SafePay PAYMENT request
             String input = "{" +
@@ -538,12 +541,12 @@ public class OrderManagementService {
 
             String output;
             StringBuilder sb = new StringBuilder();
-
-            System.out.println("Output from Server .... \n");
+            StringBuffer sbLog = new StringBuffer("Output from Server ....").append(System.lineSeparator());
             while ((output = br.readLine()) != null) {
                 sb.append(output);
-                System.out.println(output);
+                sbLog.append("\t").append(output).append(System.lineSeparator());
             }
+            logger.debug(sbLog.toString());
 
             Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
 

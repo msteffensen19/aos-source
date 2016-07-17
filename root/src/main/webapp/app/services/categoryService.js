@@ -25,7 +25,7 @@ define(['./module'], function (services) {
                 var response = $q.defer();
                 $http({
                     method: "get",
-                    url: "https://www.youtube.com/watch?v=GW93cz-3MRU&feature=youtu.be"
+                    url: "http://www.advantageonlineshopping.com/catalog/api/v1/catalog/LastUpdate/timestamp"
                 }).success(function () {
                     response.resolve(true);
                 }).error(function () {

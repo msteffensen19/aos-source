@@ -42,7 +42,6 @@ public class AdvantageDaoCallsLoggingAspect {
 
         info.append(daoMethodName);
         final String infoString = info.toString();
-        //TODO-EVG Test logger
-        logger.info("EVG AOP LOG:" + infoString);
+        logger.trace("AOP LOG:" + infoString);
     }
 }

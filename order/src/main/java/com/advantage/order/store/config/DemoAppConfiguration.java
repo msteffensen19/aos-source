@@ -7,6 +7,13 @@ import accountservice.store.online.advantage.com.GetAccountConfigurationResponse
 import com.advantage.common.Url_resources;
 import org.apache.log4j.Logger;
 
+import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.ws.Dispatch;
+import javax.xml.ws.Service;
+import javax.xml.ws.handler.MessageContext;
+import java.util.*;
+
 public class DemoAppConfiguration {
     private static final Logger logger = Logger.getLogger(DemoAppConfiguration.class);
     private static boolean isFirstRead = true;
@@ -21,6 +28,16 @@ public class DemoAppConfiguration {
         if (isFirstRead) {
             AccountServicePortService accountServicePortService = new AccountServicePortService(Url_resources.getUrlSoapAccount());
             AccountServicePort accountServicePortSoap11 = accountServicePortService.getAccountServicePortSoap11();
+
+            Dispatch<SOAPMessage> disp = accountServicePortService.createDispatch(
+                    accountServicePortService.getServiceName(),
+                    SOAPMessage.class,
+                    Service.Mode.MESSAGE
+            );
+            Map<String, List<String>> requestHeaders = new HashMap<>();
+            requestHeaders.put("Auth-User", Collections.singletonList("BILL_GATES"));
+            disp.getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, requestHeaders);
+
             GetAccountConfigurationResponse getAccountConfigurationResponse = accountServicePortSoap11.getAccountConfiguration(new GetAccountConfigurationRequest());
             if (getAccountConfigurationResponse == null) {
                 logger.fatal("Can't get AccountConfiguration - getAccountConfigurationResponse is null");

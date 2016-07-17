@@ -62,7 +62,7 @@
 
     <listener>
         <listener-class>
-            com.advantage.order.store.listener.SessionCounterListener
+            com.advantage.order.store.listener.SessionCounterServletRequestListener
         </listener-class>
     </listener>
 

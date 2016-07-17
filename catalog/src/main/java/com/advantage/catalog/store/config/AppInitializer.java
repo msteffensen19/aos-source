@@ -1,5 +1,6 @@
 package com.advantage.catalog.store.config;
 
+import com.advantage.catalog.store.filter.CefFilter;
 import org.apache.log4j.Logger;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -7,6 +8,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
+import java.util.Properties;
 
 /**
  * Created by kubany on 10/11/2015.
@@ -18,6 +20,12 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         logger.info(" *********************************** \n" +
                 " ****** Catalog service start ****** \n" +
                 " *********************************** ");
+        if (logger.isDebugEnabled()) {
+            Properties properties = System.getProperties();
+            StringBuffer sb = new StringBuffer("Catalog service System properties").append(System.lineSeparator());
+            properties.stringPropertyNames().stream().sorted().forEach(tempPropertyName -> sb.append("\t" + tempPropertyName).append(" = '").append(properties.getProperty(tempPropertyName)).append("'").append(System.lineSeparator()));
+            logger.debug(sb.toString());
+        }
         return new Class[]{
                 AppConfiguration.class,
                 DataSourceConfiguration.class,
@@ -35,7 +43,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected Class<?>[] getServletConfigClasses() {
         return new Class[]{
                 WebConfiguration.class, //
-//            SwaggerConfig.class //
         };
     }
 

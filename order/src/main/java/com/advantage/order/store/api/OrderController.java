@@ -380,7 +380,7 @@ public class OrderController {
         DemoAppConfigParameter parameter = null;
 
         try {
-            String stringResponse = RestApiHelper.httpGet(parameterByNameUrl);
+            String stringResponse = RestApiHelper.httpGet(parameterByNameUrl, "order");
             logger.debug("stringResponse = \"" + stringResponse + "\"");
 
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
