@@ -1,6 +1,5 @@
 package com.advantage.catalog.store.config;
 
-import com.advantage.catalog.store.filter.CefFilter;
 import org.apache.log4j.Logger;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;

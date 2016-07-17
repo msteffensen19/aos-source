@@ -1,4 +1,4 @@
-package com.advantage.catalog.store.filter;
+package com.advantage.common.filter;
 
 import com.advantage.common.cef.CefHttpModel;
 import org.apache.log4j.Logger;
