@@ -72,6 +72,10 @@ public interface ProductRepository extends DefaultCRUDOperations<Product> {
      */
     List<Product> filterByName(String pattern);
 
+    List<Product> filterByCategoryId(Long categoryId, int quantity);
+
+    List<Product> filterByCategoryId(Long categoryId);
+
     List<ColorAttribute> getColorAttributeByProductIdAndColorCode(Long productId, String hexColor);
 
     CatalogResponse dbRestoreFactorySettings();

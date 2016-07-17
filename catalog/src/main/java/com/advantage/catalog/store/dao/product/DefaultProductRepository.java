@@ -358,6 +358,25 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     }
 
     @Override
+    public List<Product> filterByCategoryId(Long categoryId, int quantity) {
+        List<Product> products = entityManager.createNamedQuery(Product.PRODUCT_FILTER_BY_CATEGORY_ID, Product.class)
+                .setParameter(Product.PARAM_CATEGORY_ID, categoryId)
+                .setMaxResults(MAX_NUM_OF_PRODUCTS)
+                .getResultList();
+
+        return products.isEmpty() ? null : products;
+    }
+
+    @Override
+    public List<Product> filterByCategoryId(Long categoryId) {
+        List<Product> products = entityManager.createNamedQuery(Product.PRODUCT_FILTER_BY_CATEGORY_ID, Product.class)
+                .setParameter(Product.PARAM_CATEGORY_ID, categoryId)
+                .getResultList();
+
+        return products.isEmpty() ? null : products;
+    }
+
+    @Override
     public Product get(Long entityId) {
         ArgumentValidationHelper.validateArgumentIsNotNull(entityId, "product id");
         String hql = JPAQueryHelper.getSelectActiveByPkFieldQuery(Product.class, Product.FIELD_ID, entityId);

@@ -108,13 +108,13 @@ public class OrderController {
             httpStatus = HttpStatus.NOT_FOUND;    //  404 = Resource not found
         } else {
             //return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
-
             httpStatus = shoppingCartResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.OK;
 
             if (!shoppingCartResponse.getReason().isEmpty()) {
                 userCartResponseDto.setMessage(shoppingCartResponse.getReason());
             }
         }
+
         DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
         int delayForResponse = dynamicConfiguration.getDelay() * 1000;
 
@@ -156,18 +156,26 @@ public class OrderController {
         }
 
         /*
-            http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/Show_error_500_in_update_cart
+            http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/Error_500
          */
+        ShoppingCartResponseDto userCartResponseDto;
         if (shoppingCartResponse.getId() == 500) {
+            userCartResponseDto = null;
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        } else {
+            userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
+            if (userCartResponseDto == null) {
+                httpStatus = HttpStatus.NOT_FOUND;    //  404 = Resource not found
+            } else {
+                httpStatus = shoppingCartResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.OK;
+
+                if (!shoppingCartResponse.getReason().isEmpty()) {
+                    userCartResponseDto.setMessage(shoppingCartResponse.getReason());
+                }
+            }
         }
 
-        ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
-        if (userCartResponseDto == null) {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
-        } else {
-            return new ResponseEntity<>(userCartResponseDto, httpStatus);
-        }
+        return new ResponseEntity<>(userCartResponseDto, httpStatus);
     }
 
     /*  =========================================================================================================   */
@@ -195,6 +203,7 @@ public class OrderController {
                     shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
                 } else {
                     httpStatus = HttpStatus.OK;
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_CART_BASED_ON_THE_ITEMS_IN_STOCK);
                 }
             } else {
                 //  Replace user cart failed

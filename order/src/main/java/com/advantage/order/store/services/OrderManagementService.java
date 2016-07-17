@@ -335,8 +335,7 @@ public class OrderManagementService {
             //        shoppingCartRepository.getCartProductDetails(cartProduct.getProductId(),
             //                                                    cartProduct.getHexColor().toUpperCase());
             ShoppingCartResponseDto.CartProduct product = shoppingCartService.getCartProductDetails(cartProduct.getProductId(),
-                    cartProduct.getHexColor()
-                            .toUpperCase());
+                    cartProduct.getHexColor().toUpperCase(), cartProduct.getQuantity());
 
             if (!product.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                 /*  Add a product to user shopping cart response class  */

@@ -41,6 +41,7 @@ public class ShoppingCartService {
     private static final Logger logger = Logger.getLogger(ShoppingCartService.class);
 
     ShoppingCartResponse shoppingCartResponse;
+    ShoppingCartResponseDto shoppingCartResponseDto;
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -324,13 +325,17 @@ public class ShoppingCartService {
             int color = ShoppingCart.convertHexColorToInt(shoppingCartDto.getHexColor());
             ColorAttributeDto dto = getColorAttributeByProductIdAndColorCode(shoppingCartDto.getProductId().longValue(), color);
 
-            if (shoppingCartDto.getQuantity() > dto.getInStock()) {
-                shoppingCartDto.setQuantity(dto.getInStock());
+            int quantity = validateProductInCartQuantityVsInStock(shoppingCartDto.getProductId(), color, shoppingCartDto.getQuantity());
+            if (quantity != shoppingCartDto.getQuantity()){
+                shoppingCartResponse.setSuccess(true);  //  Has to be TRUE for OrderController
+                shoppingCartDto.setQuantity(quantity);
+
                 if (shoppingCartResponse.getReason().isEmpty()) {
                     shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_CART_BASED_ON_THE_ITEMS_IN_STOCK);
                 }
             }
         }
+
         ShoppingCartResponse response = shoppingCartRepository.replace(userId, shoppingCarts);
 
         //  Database update successful?
@@ -382,7 +387,7 @@ public class ShoppingCartService {
 
         for (ShoppingCartDto cartProduct : shoppingCartProducts) {
 
-            ShoppingCartResponseDto.CartProduct cartProductDto = getCartProductDetails(cartProduct.getProductId(), cartProduct.getHexColor());
+            ShoppingCartResponseDto.CartProduct cartProductDto = getCartProductDetails(cartProduct.getProductId(), cartProduct.getHexColor(), cartProduct.getQuantity());
 
             if (cartProduct.getQuantity() > cartProductDto.getColor().getInStock()) {
 
@@ -498,7 +503,8 @@ public class ShoppingCartService {
                     //ProductDto dto = getCartProductDetails(cart.getProductId(),
                     //                                        ShoppingCart.convertIntColorToHex(cart.getColor()));
                     ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
-                            ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase());
+                            ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase(),
+                            cart.getQuantity());
 
                     if (cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                         userCart.addCartProduct(cartProduct.getProductId(),
@@ -539,12 +545,15 @@ public class ShoppingCartService {
 
 
     /**
-     * Get a single {@code Product} details using <b>REST API</b> {@code GET} request.
-     *
+     * Get details of a single {@code Product} from catalog database schema using <b>REST API</b> <i><b>GET</b></i> request.
+     * The method also validates the <i>quantity</i> of the product and color, by comaring it with the value of
+     * the product color <i>In Stock</i> property value. <br/>
+     * The returned cart product (of class {@link ShoppingCartResponseDto.CartProduct}) hold the correct
+     * quantity for purchase.
      * @param productId Idetity of the product to get details.
      * @return {@link ProductDto} containing the JSON with requsted product details.
      */
-    public ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor) {
+    public ShoppingCartResponseDto.CartProduct getCartProductDetails(Long productId, String hexColor, int quantity) {
 
         ProductDto dto = this.getProductDtoDetails(productId);
 
@@ -565,9 +574,13 @@ public class ShoppingCartService {
                                         dto.getImageUrl(),
                                         true);
 
+                        if (quantity > colorAttrib.getInStock()) {
+                            quantity = colorAttrib.getInStock();
+                        }
+
                         cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
                                 colorAttrib.getName().toUpperCase(),
-                                colorAttrib.getInStock());
+                                quantity);
 
                         if (logger.isDebugEnabled()) {
                             StringBuilder sb = new StringBuilder("Received Product information: ");
