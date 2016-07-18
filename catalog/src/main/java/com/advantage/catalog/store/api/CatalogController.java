@@ -681,6 +681,11 @@ public class CatalogController {
         return new ResponseEntity<>(parameter, (parameter != null ? HttpStatus.OK : HttpStatus.NOT_FOUND));
     }
 
+    @AuthorizeAsAdmin
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @RequestMapping(value = "/DemoAppConfig/Restore_Factory_Settings", method = RequestMethod.GET)
     @ApiOperation(value = "Restore parameters default values")
     public ResponseEntity<DemoAppConfigStatusResponse> restoreFactorySettings(final HttpServletRequest request,

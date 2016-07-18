@@ -1,10 +1,12 @@
 package com.advantage.safepay.payment.api;
 
 import com.advantage.common.Constants;
+import com.advantage.common.cef.CefHttpModel;
 import com.advantage.safepay.payment.dto.ResponseEnum;
 import com.advantage.safepay.payment.dto.SafePayDto;
 import com.advantage.safepay.payment.dto.SafePayResponse;
 import com.advantage.safepay.payment.services.SafePayService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ public class SafePayController {
     @Autowired
     private SafePayService safePayService;
 
+    private static final Logger logger = Logger.getLogger(SafePayController.class);
+
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {
         response.setHeader("Expires", "0");
@@ -39,27 +43,22 @@ public class SafePayController {
     public ResponseEntity<SafePayResponse> doPayment(@RequestBody SafePayDto safePayDto,
                                                      HttpServletRequest request,
                                                      HttpServletResponse response) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/payments/payment".hashCode()),
+                    "Do payment", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         SafePayResponse safePayResponse = safePayService.doPayment(safePayDto);
-        //response.setHeader("sessionId", request.getSession().getId());
-        //
-        //if (appUserResponseStatus.isSuccess()) {
-        //    HttpSession session = request.getSession();
-        //    session.setAttribute(Constants.UserSession.TOKEN, appUserResponseStatus.getToken());
-        //    session.setAttribute(Constants.UserSession.USER_ID, appUserResponseStatus.getUserId());
-        //    session.setAttribute(Constants.UserSession.IS_SUCCESS, appUserResponseStatus.isSuccess());
-        //
-        //    //  Set SessionID to Response Entity
-        //    //response.getHeader().
-        //    appUserResponseStatus.setSessionId(session.getId());
-        //}
 
         if (safePayResponse.getResponseCode().equalsIgnoreCase(ResponseEnum.APPROVED.getStringCode())) {
             return new ResponseEntity<>(safePayResponse, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(safePayResponse, HttpStatus.CONFLICT);
         }
-
     }
 
 //    /**

@@ -4,6 +4,7 @@ import ShipExServiceClient.ShippingCostRequest;
 import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
+import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.config.DynamicConfiguration;
@@ -73,6 +74,14 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> getUserCart(@PathVariable("userId") Long userId,
                                                                HttpServletRequest request,
                                                                HttpServletResponse response) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}".hashCode()),
+                    "Get user shopping cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
 
@@ -97,6 +106,14 @@ public class OrderController {
                                                                     @PathVariable("color") String hexColor,
                                                                     @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
                                                                     HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}/product/{productId}/color/{color}".hashCode()),
+                    "Add product to shopping cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
@@ -145,6 +162,15 @@ public class OrderController {
                                                                        @RequestParam(value = "quantity", defaultValue = "-1", required = false) int quantity,
                                                                        @RequestParam(value = "new_color", defaultValue = "-1", required = false) String hexColorNew,
                                                                        HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}/product/{productId}/color/{color}".hashCode()),
+                    "Update Cart-Product quantity and/or color", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
         HttpStatus httpStatus = HttpStatus.OK;
 
         if (((ValidationHelper.isValidColorHexNumber(hexColor)) &&
@@ -178,7 +204,6 @@ public class OrderController {
         return new ResponseEntity<>(userCartResponseDto, httpStatus);
     }
 
-    /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "Replace user shopping cart")
     @AuthorizeAsUser
@@ -189,6 +214,15 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponse> replaceUserCart(@PathVariable("userId") Long userId,
                                                                 @RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                 HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}".hashCode()),
+                    "Replace user shopping cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
         HttpStatus httpStatus = HttpStatus.OK;
 
         if (userId != null) {
@@ -221,7 +255,6 @@ public class OrderController {
         return new ResponseEntity<>(shoppingCartResponse, httpStatus);
     }
 
-    /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Remove a product from user shopping cart")
     @AuthorizeAsUser
@@ -233,6 +266,14 @@ public class OrderController {
                                                                              @PathVariable("productId") Long productId,
                                                                              @PathVariable("color") String hexColor,
                                                                              HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}/product/{productId}/color/{color}".hashCode()),
+                    "Remove a product from user shopping cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         shoppingCartResponse = shoppingCartService.removeProductFromUserCart(userId, productId, hexColor);
 
@@ -245,7 +286,6 @@ public class OrderController {
         }
     }
 
-    /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Clear user shopping cart")
     @AuthorizeAsUser
@@ -253,7 +293,15 @@ public class OrderController {
     @ApiResponses(value = {
             @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
-    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId) {
+    public ResponseEntity<ShoppingCartResponseDto> clearUserCart(@PathVariable("userId") Long userId, HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}".hashCode()),
+                    "Clear user shopping cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         if (userId != null) {
             shoppingCartResponse = shoppingCartService.clearUserCart(Long.valueOf(userId));
@@ -291,6 +339,15 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponseDto> verifyProductsQuantitiesInUserCart(@PathVariable("userId") long userId,
                                                                                       @RequestBody List<ShoppingCartDto> shoopingCartProducts,
                                                                                       HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}/quantity".hashCode()),
+                    "Verify and update products quantities in user cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
         logger.debug("userId = " + userId);
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
@@ -314,6 +371,14 @@ public class OrderController {
     public ResponseEntity<ShippingCostResponse> getShippingCostFromShipEx(@RequestBody ShippingCostRequest costRequest,
                                                                           HttpServletRequest request,
                                                                           HttpServletResponse response) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/shippingcost".hashCode()),
+                    "Order shipping cost", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         HttpStatus httpStatus = HttpStatus.OK;
 
@@ -452,7 +517,6 @@ public class OrderController {
 //        return returnValue;
 //    }
 
-    /*  =========================================================================================================   */
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "Purchase new order")
     @AuthorizeAsUser
@@ -464,6 +528,14 @@ public class OrderController {
     public ResponseEntity<OrderPurchaseResponse> doPurchase(@PathVariable("userId") long userId,
                                                             @RequestBody OrderPurchaseRequest purchaseRequest,
                                                             HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/orders/users/{userId}".hashCode()),
+                    "Purchase new order", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         logger.debug("userId = " + userId);
 
@@ -481,7 +553,17 @@ public class OrderController {
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by userID or/and orderId")
     public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
-                                                                      @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId, HttpServletRequest request) {
+                                                                      @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId,
+                                                                      HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/orders/history".hashCode()),
+                    "Get orders history by userID or/and orderId", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
         OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
         return new ResponseEntity<>(orderHistoryCollectionDto, HttpStatus.OK);
     }
@@ -497,6 +579,15 @@ public class OrderController {
     public ResponseEntity<ShoppingCartResponse> addOldOrderToCart(@PathVariable("userId") Long userId,
                                                                   @PathVariable("orderId") Long orderId,
                                                                   HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/carts/{userId}/orders/{orderId}".hashCode()),
+                    "Add old order to shopping cart", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
         HttpStatus httpStatus;
         if (userId != null && (shoppingCartService.getUserShoppingCart(Long.valueOf(userId))) != null) {
             httpStatus = HttpStatus.OK;
@@ -508,7 +599,8 @@ public class OrderController {
                             order.getProducts().forEach(product -> {
                                 shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
                             });
-                        });
+                        }
+                );
             }
         } else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found

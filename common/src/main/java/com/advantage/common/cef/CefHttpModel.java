@@ -19,16 +19,21 @@ import java.util.Enumeration;
 
 /**
  * Created by fiskine on 12/07/2016.
+ * According to HPE Security ArcSight Common Event Format, v.23
+ * https://www.protect724.hpe.com/docs/DOC-1072
  */
 public class CefHttpModel {
+    private static SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
+    private boolean needTimeFormat;
+
     private static int version = 0;
     private static String deviceVendor = "Advantage";
     private String deviceProduct;//Current service (account, order, SafePay etc)
     private String deviceVersion;
     private String deviceEventClassId;
     private String name;
-    private int severity;
 
+    private int severity;
     private String app = "HTTP";
     private String destinationServiceName; //Service than requested by current service (accountservice, catalog,order,ShipEx,SafePay etc)
     private Date end;
@@ -42,8 +47,6 @@ public class CefHttpModel {
     private String src;
     private Date start;
     private Long suid;
-    private SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
-
 
     public CefHttpModel(String destinationServiceName, String deviceVersion) {
         start = new Date();
@@ -151,8 +154,8 @@ public class CefHttpModel {
                 severity);
 
         StringBuilder sb = new StringBuilder(cefHeader);
-        sb.append("start").append('=').append(dateFormatForStartAndEnd.format(start)).append(' ');
-        sb.append("end").append('=').append(dateFormatForStartAndEnd.format(end)).append(' ');
+        sb.append("start").append('=').append(needTimeFormat ? dateFormatForStartAndEnd.format(start) : start.getTime()).append(' ');
+        sb.append("end").append('=').append(needTimeFormat ? dateFormatForStartAndEnd.format(end) : end.getTime()).append(' ');
         sb.append(convertToExtensionPair("app", app));
         sb.append(convertToExtensionPair("destinationServiceName", destinationServiceName));
         sb.append("outcome").append('=').append(reason.is2xxSuccessful() ? "success" : "failure").append(' ');
@@ -194,5 +197,34 @@ public class CefHttpModel {
 
     private String escapeExtensionValueSigns(String value) {
         return value.replace("\\", "\\\\").replace("=", "\\=");
+    }
+
+    @Override
+    public String toString() {
+        return "CefHttpModel{" +
+                "start=" + start +
+                ", end=" + end +
+                ", needTimeFormat=" + needTimeFormat +
+                ", deviceProduct='" + deviceProduct + '\'' +
+                ", deviceVersion='" + deviceVersion + '\'' +
+                ", deviceEventClassId='" + deviceEventClassId + '\'' +
+                ", name='" + name + '\'' +
+                ", severity=" + severity +
+                ", app='" + app + '\'' +
+                ", destinationServiceName='" + destinationServiceName + '\'' +
+                ", reason=" + reason +
+                ", request='" + request + '\'' +
+                ", requestContext='" + requestContext + '\'' +
+                ", requestCookies='" + requestCookies + '\'' +
+                ", requestClientApplication='" + requestClientApplication + '\'' +
+                ", requestMethod='" + requestMethod + '\'' +
+                ", spt=" + spt +
+                ", src='" + src + '\'' +
+                ", suid=" + suid +
+                '}';
+    }
+
+    public void setNeedTimeFormat(boolean needTimeFormat) {
+        this.needTimeFormat = needTimeFormat;
     }
 }
