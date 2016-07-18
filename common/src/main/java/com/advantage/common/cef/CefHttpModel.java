@@ -18,11 +18,10 @@ import java.util.Date;
 import java.util.Enumeration;
 
 /**
- * Created by fiskine on 7/12/2016.
+ * Created by fiskine on 12/07/2016.
  * According to HPE Security ArcSight Common Event Format, v.23
  * https://www.protect724.hpe.com/docs/DOC-1072
  */
-
 public class CefHttpModel {
     private static SimpleDateFormat dateFormatForStartAndEnd = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
     private boolean needTimeFormat;

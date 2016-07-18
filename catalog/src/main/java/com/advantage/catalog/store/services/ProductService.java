@@ -43,11 +43,33 @@ public class ProductService {
     }
 
     public List<Product> filterByName(String pattern, int quantity) {
-        return quantity > 0 ? productRepository.filterByName(pattern, quantity) : filterByName(pattern);
+        List<Category> categories = categoryService.getAllCategories();
+        Long categoryId = -1L;
+        for (Category category : categories) {
+            if (category.getCategoryName().equalsIgnoreCase(pattern)) {
+                categoryId = category.getCategoryId();
+                break;
+            }
+        }
+        List<Product> products = new ArrayList<Product>();
+        if (categoryId.longValue() >= 0) {
+            products = productRepository.filterByCategoryId(categoryId, quantity);
+        } else {
+            products = quantity > 0 ? productRepository.filterByName(pattern, quantity) : filterByName(pattern);
+        }
+        return products;
     }
 
     public List<Product> filterByName(String pattern) {
         return productRepository.filterByName(pattern);
+    }
+
+    public List<Product> filterByCategoryId(Long categoryId, int quantity) {
+        return quantity > 0 ? productRepository.filterByCategoryId(categoryId, quantity) : filterByCategoryId(categoryId);
+    }
+
+    public List<Product> filterByCategoryId(Long categoryId) {
+        return productRepository.filterByCategoryId(categoryId);
     }
 
     public List<Product> getCategoryProducts(final Long categoryId) {

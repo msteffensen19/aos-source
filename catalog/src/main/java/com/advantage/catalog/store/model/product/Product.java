@@ -22,6 +22,11 @@ import java.util.Set;
                 name = Product.PRODUCT_FILTER_BY_NAME,
                 //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' and UPPER(p.productName) like :pname"
                 query = "select p from Product p where UPPER(active) = 'Y' and UPPER(p.productName) like :pname"
+        ),
+        @NamedQuery(
+                name = Product.PRODUCT_FILTER_BY_CATEGORY_ID,
+                //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(productstatus) <> 'BLOCK' and UPPER(p.productName) like :pname"
+                query = "select p from Product p where UPPER(active) = 'Y' and p.category.categoryId = :" + Product.PARAM_CATEGORY_ID
         )
 })
 @NamedStoredProcedureQuery(
@@ -42,6 +47,7 @@ public class Product {
     public static final String PARAM_ID = "PARAM_PRODUCT_ID";
     public static final String PARAM_CATEGORY_ID = "PARAM_PRODUCT_CATEGORY_ID";
     public static final String PRODUCT_FILTER_BY_NAME = "product.FilterByName";
+    public static final String PRODUCT_FILTER_BY_CATEGORY_ID = "product.FilterByCategoryId";
     public static final String GETFILTEREDPRODUCTS = "getfilteredproducts";
     public static final String PROCEDURE_PROD = "procedure_prod";
     public static final String PRODUCT_STATUS = "product_status";
