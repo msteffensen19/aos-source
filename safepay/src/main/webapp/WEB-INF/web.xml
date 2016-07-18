@@ -76,7 +76,7 @@
         <filter-class>com.advantage.common.filter.CefFilter</filter-class>
         <init-param>
             <param-name>cef.service.name</param-name>
-            <param-value>catalog</param-value>
+            <param-value>SafePay</param-value>
         </init-param>
         <!--If true = start and end value extended CEF values will be format to MMMM dd yyyy HH:mm:ss, otherwise (default) - unixtime milliseconds-->
         <init-param>
