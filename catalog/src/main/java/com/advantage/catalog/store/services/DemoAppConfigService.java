@@ -213,7 +213,7 @@ public class DemoAppConfigService {
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
             Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
-            String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+            String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
             //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
             parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
@@ -275,7 +275,7 @@ public class DemoAppConfigService {
                 String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
                 Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
-                String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+                String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
                 if (tool.trim().equalsIgnoreCase("ALL")) {
                     parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
@@ -328,7 +328,7 @@ public class DemoAppConfigService {
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
             Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
-            String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+            String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
             if (logger.isDebugEnabled()) {
                 logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\" locationInAdvantage=\"" + attributeLocationInAdvantageValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
