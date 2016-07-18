@@ -18,9 +18,8 @@ import java.util.Date;
 import java.util.Enumeration;
 
 /**
- * Created by fiskine on 7/12/2016.
+ * Created by fiskine on 12/07/2016.
  */
-
 public class CefHttpModel {
     private static int version = 0;
     private static String deviceVendor = "Advantage";
