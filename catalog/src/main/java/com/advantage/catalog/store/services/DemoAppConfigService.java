@@ -49,14 +49,16 @@ public class DemoAppConfigService {
             StringBuilder sb = new StringBuilder("Could not accept a node [\"")
                     .append(nodeName)
                     .append("\"] with an empty list of nodes as an argument");
-            throw new IllegalArgumentException(sb.toString());
+            IllegalArgumentException e = new IllegalArgumentException(sb.toString());
+            logger.fatal(e);
+            throw e;
         }
 
         NodeList nodesList = doc.getElementsByTagName(nodeName);
 
         for (int i = 0; i < nodesList.getLength(); i++) {
             Node node = doc.getElementsByTagName(nodeName).item(i);
-            System.out.println("parameters name=\"" + node.getNodeName() + "\"");
+            logger.debug("parameters name=\"" + node.getNodeName() + "\"");
 
             NamedNodeMap attr = node.getAttributes();
             if (attr.getLength() == 0) {
@@ -74,10 +76,11 @@ public class DemoAppConfigService {
                 continue;
             }
             if (!(";" + nodeAttrName + ";").contains(";" + attributeValue + ";")) {
-                System.out.println(attributeValue + " was found in attrinbute \"" + attributeName + "\" of node \"" + nodeName + "\"");
+                logger.debug(attributeValue + " was found in attrinbute \"" + attributeName + "\" of node \"" + nodeName + "\"");
             }
             return node;
         }
+        logger.debug("return null");
         return null;
     }
 
@@ -315,7 +318,6 @@ public class DemoAppConfigService {
 
         Node node = findParameterByName(doc, parameterName);
         if (node != null) {
-
             NamedNodeMap attr = node.getAttributes();
 
             Node nodeAttrTools = attr.getNamedItem(ATTRIBUTE_TOOLS_TAG_NAME);
