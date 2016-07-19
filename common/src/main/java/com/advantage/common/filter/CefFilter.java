@@ -34,10 +34,13 @@ public class CefFilter implements Filter {
             logger.debug(sb.toString());
         }
         serviceName = filterConfig.getInitParameter("cef.service.name");
-        logger.debug("serviceName (web.xml initParam) = " + serviceName);
+        if (serviceName == null) {
+            logger.fatal("serviceName (web.xml initParam 'cef.service.name') is null");
+        }
+        logger.debug("serviceName (web.xml initParam 'cef.service.name') = " + serviceName);
 
         String initParamStartendformat = filterConfig.getInitParameter("cef.filter.format_start_end_fields");
-        logger.debug("initParamStartendformat (web.xml initParam) = " + initParamStartendformat);
+        logger.debug("initParamStartendformat (web.xml initParam 'cef.filter.format_start_end_fields') = " + initParamStartendformat);
         if (initParamStartendformat != null && initParamStartendformat.trim().toLowerCase().equals("true")) {
             formatStartEnd = true;
         }
@@ -45,6 +48,16 @@ public class CefFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if (servletRequest == null) {
+            logger.fatal(serviceName + ": ServletRequest is null");
+        }
+        if (servletResponse == null) {
+            logger.fatal(serviceName + ": ServletResponse is null");
+        }
+        if (filterChain == null) {
+            logger.fatal(serviceName + ": FilterChain is null");
+        }
+
         if (cefLogger.isInfoEnabled()) {
             logger.trace("Start: " + serviceName);
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
