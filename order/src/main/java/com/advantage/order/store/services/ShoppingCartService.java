@@ -509,17 +509,7 @@ public class ShoppingCartService {
                             ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase(),
                             cart.getQuantity());
 
-                    if (cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
-                        userCart.addCartProduct(cartProduct.getProductId(),
-                                cartProduct.getProductName(),   //  "NOT FOUND"
-                                cartProduct.getPrice(),         //  -999999.99
-                                cartProduct.getQuantity(),      //  0
-                                cartProduct.getImageUrl(),      //  "NOT FOUND"
-                                "000000",
-                                "BLACK",
-                                0,
-                                false); //  isExists = false
-                    } else {
+                    if (!cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                         /*  Add a product to user shopping cart response class  */
                         userCart.addCartProduct(cartProduct.getProductId(),
                                 cartProduct.getProductName(),
@@ -529,6 +519,17 @@ public class ShoppingCartService {
                                 cartProduct.getColor().getCode(),
                                 cartProduct.getColor().getName(),
                                 cartProduct.getColor().getInStock());
+                    } else {
+//                        /*  Product in cart not found in catalog database schema    */
+//                        userCart.addCartProduct(cartProduct.getProductId(),
+//                                cartProduct.getProductName(),   //  "NOT FOUND"
+//                                cartProduct.getPrice(),         //  -999999.99
+//                                cartProduct.getQuantity(),      //  0
+//                                cartProduct.getImageUrl(),      //  "NOT FOUND"
+//                                "000000",
+//                                "BLACK",
+//                                0,
+//                                false); //  isExists = false
                     }
                 }
             }

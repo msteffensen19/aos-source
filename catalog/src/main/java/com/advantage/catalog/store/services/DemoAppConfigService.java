@@ -27,7 +27,7 @@ public class DemoAppConfigService {
     public static final String ATTRIBUTE_TOOLS_TAG_NAME = "tools";
     public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
     public static final String ATTRIBUTE_DESCRIPTION_TAG_NAME = "description";
-    public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "loationInAdvantage";
+    public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "locationInAdvantage";
     //  endregion
 
     //  region Class Properties
@@ -49,14 +49,16 @@ public class DemoAppConfigService {
             StringBuilder sb = new StringBuilder("Could not accept a node [\"")
                     .append(nodeName)
                     .append("\"] with an empty list of nodes as an argument");
-            throw new IllegalArgumentException(sb.toString());
+            IllegalArgumentException e = new IllegalArgumentException(sb.toString());
+            logger.fatal(e);
+            throw e;
         }
 
         NodeList nodesList = doc.getElementsByTagName(nodeName);
 
         for (int i = 0; i < nodesList.getLength(); i++) {
             Node node = doc.getElementsByTagName(nodeName).item(i);
-            System.out.println("parameters name=\"" + node.getNodeName() + "\"");
+            logger.debug("parameters name=\"" + node.getNodeName() + "\"");
 
             NamedNodeMap attr = node.getAttributes();
             if (attr.getLength() == 0) {
@@ -74,10 +76,11 @@ public class DemoAppConfigService {
                 continue;
             }
             if (!(";" + nodeAttrName + ";").contains(";" + attributeValue + ";")) {
-                System.out.println(attributeValue + " was found in attrinbute \"" + attributeName + "\" of node \"" + nodeName + "\"");
+                logger.debug(attributeValue + " was found in attrinbute \"" + attributeName + "\" of node \"" + nodeName + "\"");
             }
             return node;
         }
+        logger.debug("return null");
         return null;
     }
 
@@ -213,7 +216,7 @@ public class DemoAppConfigService {
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
             Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
-            String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+            String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
             //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
             parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
@@ -275,7 +278,7 @@ public class DemoAppConfigService {
                 String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
                 Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
-                String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+                String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
                 if (tool.trim().equalsIgnoreCase("ALL")) {
                     parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
@@ -315,7 +318,6 @@ public class DemoAppConfigService {
 
         Node node = findParameterByName(doc, parameterName);
         if (node != null) {
-
             NamedNodeMap attr = node.getAttributes();
 
             Node nodeAttrTools = attr.getNamedItem(ATTRIBUTE_TOOLS_TAG_NAME);
@@ -328,7 +330,7 @@ public class DemoAppConfigService {
             String attributeDescriptionValue = nodeAttrDescription.getTextContent();
 
             Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
-            String attributeLocationInAdvantageValue = nodeAttrDescription.getTextContent();
+            String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
             if (logger.isDebugEnabled()) {
                 logger.debug("Found <" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\" locationInAdvantage=\"" + attributeLocationInAdvantageValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");

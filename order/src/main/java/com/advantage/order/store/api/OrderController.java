@@ -19,7 +19,9 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -116,6 +118,9 @@ public class OrderController {
         }
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
+        if (shoppingCartResponse == null) {
+            logger.fatal(String.format("shoppingCartResponse = shoppingCartService.addProductToCart(%d, %d, %s, %d) is NULL", userId, productId, hexColor, quantity));
+        }
         /*return new ResponseEntity<>(shoppingCartResponse, HttpStatus.OK);*/
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
 
@@ -222,36 +227,46 @@ public class OrderController {
         } else {
             logger.warn("cefData is null");
         }
-
-        HttpStatus httpStatus = HttpStatus.OK;
-
+        HttpStatus httpStatus;
+        Priority logPriority;
         if (userId != null) {
             shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
-
-            if (shoppingCartResponse.isSuccess()) {
-                ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
-
-                if (userCartResponseDto == null) {
-                    //  Unlikely scenario - update of user cart successful and get user cart failed
-                    httpStatus = HttpStatus.NOT_FOUND;
-                    shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
-                } else {
-                    httpStatus = HttpStatus.OK;
-                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_CART_BASED_ON_THE_ITEMS_IN_STOCK);
-                }
-            } else {
-                //  Replace user cart failed
-                httpStatus = HttpStatus.NOT_IMPLEMENTED;
-                shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
+            if (shoppingCartResponse == null) {
+                shoppingCartResponse.setSuccess(false);
+                shoppingCartResponse.setReason("shoppingCartResponse = shoppingCartService.replaceUserCart(" + userId + "), shoopingCartProducts) is NULL ");
                 shoppingCartResponse.setId(-1);
+                httpStatus = HttpStatus.NO_CONTENT;
+                logPriority = Level.ERROR;
+            } else {
+                if (shoppingCartResponse.isSuccess()) {
+                    ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
+
+                    if (userCartResponseDto == null) {
+                        //  Unlikely scenario - update of user cart successful and get user cart failed
+                        httpStatus = HttpStatus.NOT_FOUND;
+                        shoppingCartResponse = new ShoppingCartResponse(false, ShoppingCart.MESSAGE_SHOPPING_CART_IS_EMPTY, -1);
+                        logPriority = Level.WARN;
+                    } else {
+                        httpStatus = HttpStatus.OK;
+                        shoppingCartResponse.setReason(ShoppingCart.MESSAGE_WE_UPDATED_YOUR_CART_BASED_ON_THE_ITEMS_IN_STOCK);
+                        logPriority = Level.INFO;
+                    }
+                } else {
+                    //  Replace user cart failed
+                    httpStatus = HttpStatus.NOT_IMPLEMENTED;
+                    shoppingCartResponse.setReason(ShoppingCart.MESSAGE_REPLACE_USER_CART_FAILED);
+                    shoppingCartResponse.setId(-1);
+                    logPriority = Level.WARN;
+                }
             }
         } else {
             httpStatus = HttpStatus.NOT_FOUND;  //  Resource (registered user_id) not found
             shoppingCartResponse.setSuccess(false);
             shoppingCartResponse.setReason(ShoppingCart.MESSAGE_INVALID_USER_ID);
             shoppingCartResponse.setId(-1);
+            logPriority = Level.WARN;
         }
-
+        logger.log(logPriority, shoppingCartResponse.toString());
         return new ResponseEntity<>(shoppingCartResponse, httpStatus);
     }
 
@@ -351,6 +366,7 @@ public class OrderController {
         logger.debug("userId = " + userId);
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
         if (userCartResponseDto == null) {
+            logger.warn("User cart nou found");
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
             return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);

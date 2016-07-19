@@ -17,8 +17,8 @@ import java.util.Map;
 public class DynamicConfiguration {
 
     private static final Logger logger = Logger.getLogger(DynamicConfiguration.class);
-    private static final String XML_SLA_NUMBER_OF_SESSIONS_TO_ADD_THE_DELAY = "SLA_Number_Of_Sessions_To_Add_The_Delay";
-    private static final String XML_SLA_ADD_DELAY_IN_ADD_TO_CART_RESPONSE_TIME = "SLA_Add_Delay_In_Add_To_Cart_Response_Time";
+    private static final String XML_SLA_ADD_DELAY_SESSIONS = "SLA_add_delay_sessions";
+    private static final String XML_SLA_ADD_DELAY_TIME = "SLA_add_delay_time";
     private static final int DEFAULT_DELAY = 0;
     private static final int DEFAULT_NUMBER_OF_SESSIONS = 20;
 
@@ -74,7 +74,7 @@ public class DynamicConfiguration {
     }
 
     private int getFromCatalogDelayCartResponse() {
-        String delay = getCatalogConfigParameter(XML_SLA_ADD_DELAY_IN_ADD_TO_CART_RESPONSE_TIME);
+        String delay = getCatalogConfigParameter(XML_SLA_ADD_DELAY_TIME);
         if (delay == null) {
             return DEFAULT_DELAY;
         }
@@ -87,7 +87,7 @@ public class DynamicConfiguration {
     }
 
     private int getFromCatalogNumberOfSessions() {
-        String numberOfSessions = getCatalogConfigParameter(XML_SLA_NUMBER_OF_SESSIONS_TO_ADD_THE_DELAY);
+        String numberOfSessions = getCatalogConfigParameter(XML_SLA_ADD_DELAY_SESSIONS);
         if (numberOfSessions == null) {
             return DEFAULT_NUMBER_OF_SESSIONS;
         }

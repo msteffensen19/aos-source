@@ -18,7 +18,7 @@ public class CefFilter implements Filter {
     private static final Logger cefLogger = Logger.getLogger("CEF");
     private static final Logger logger = Logger.getLogger(CefFilter.class);
 
-    private String serviceName;
+    protected String serviceName;
     private boolean formatStartEnd = false;
 
     @Override
@@ -34,18 +34,19 @@ public class CefFilter implements Filter {
             logger.debug(sb.toString());
         }
         serviceName = filterConfig.getInitParameter("cef.service.name");
+        logger.debug("serviceName (web.xml initParam) = " + serviceName);
+
         String initParamStartendformat = filterConfig.getInitParameter("cef.filter.format_start_end_fields");
-        logger.debug("initParamStartendformat = " + initParamStartendformat);
+        logger.debug("initParamStartendformat (web.xml initParam) = " + initParamStartendformat);
         if (initParamStartendformat != null && initParamStartendformat.trim().toLowerCase().equals("true")) {
             formatStartEnd = true;
         }
-        logger.debug("serviceName = " + serviceName);
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (cefLogger.isInfoEnabled()) {
-            logger.trace("Start");
+            logger.trace("Start: " + serviceName);
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             if (isRequestIsHttpRequest) {
                 CefHttpModel cefData = new CefHttpModel(serviceName, "1.0-SNAPSHOT TemporaryHardCoded");
@@ -58,9 +59,9 @@ public class CefFilter implements Filter {
                         cefData.setEventRequiredParameters("123", "Read Web application file", 5);
                         break;
                 }
-                logger.trace("Before chain doFilter: " + cefData.toString());
+                logger.trace("Before chain doFilter(" + serviceName + "): " + cefData.toString());
                 filterChain.doFilter(httpServletRequest, servletResponse);
-                logger.trace("After chain doFilter: " + cefData.toString());
+                logger.trace("After chain doFilter(" + serviceName + "): " + cefData.toString());
 
                 HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
                 cefData.setStatusCode(HttpStatus.valueOf(httpServletResponse.getStatus()));
@@ -68,10 +69,10 @@ public class CefFilter implements Filter {
                 try {
                     cefLogger.info(cefData.cefFomatMessage());
                 } catch (Exception e) {
-                    logger.error("Incorrect cefData " + cefData.toString());
+                    logger.error(serviceName + " Incorrect cefData " + cefData.toString());
                 }
             } else {
-                logger.fatal("Its not a HTTPRequest");
+                logger.fatal("CEF filter for " + serviceName + " Its not a HTTPRequest");
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         } else {
@@ -81,6 +82,6 @@ public class CefFilter implements Filter {
 
     @Override
     public void destroy() {
-        logger.trace("CefFilter destroy (Object id = " + this.toString() + ")");
+        logger.trace("CefFilter " + serviceName + " destroy (Object id = " + this.toString() + ")");
     }
 }
