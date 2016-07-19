@@ -24,23 +24,23 @@ define([], function () {
                     then(function (user) {
                         if (user) {
 
-                            accountService.getAccountDetails().then(
-                                function (accountDetails) {
+                                accountService.getAccountDetails().then(
+                                    function (accountDetails) {
 
-                                    orderService.getShippingCost(user).
-                                    then(function (shippingCost) {
+                                        orderService.getShippingCost(user).
+                                        then(function (shippingCost) {
 
-                                        accountService.getAccountPaymentPreferences().
-                                        then(function (paymentPreferences) {
-                                            defer.resolve({
-                                                paymentPreferences: paymentPreferences,
-                                                shippingCost: shippingCost,
-                                                user: user,
-                                                accountDetails: accountDetails,
+                                            accountService.getAccountPaymentPreferences().
+                                            then(function (paymentPreferences) {
+                                                defer.resolve({
+                                                    paymentPreferences: paymentPreferences,
+                                                    shippingCost: shippingCost,
+                                                    user: user,
+                                                    accountDetails: accountDetails,
+                                                });
                                             });
                                         });
                                     });
-                                });
                         }
                         else {
                             defer.resolve({

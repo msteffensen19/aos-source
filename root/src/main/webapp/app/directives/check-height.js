@@ -10,20 +10,24 @@ define(['./module'], function (directives) {
                 ctrl.setElement = function (_element, _dimensions) {
                     element = _element;
                     dimensions = _dimensions.split("X");
-                    updateSizes();
+                    ctrl.updateSizes();
                 }
 
-                angular.element($window).bind("resize", function () {
-                    updateSizes();
-                });
+                ctrl.updateSizes = function (){
+                    console.log("element")
+                    console.log(element)
+                    console.log("element")
 
-                function updateSizes() {
-                    var height = element.width() / dimensions[0] * dimensions[1];
-                    element.height(height);
+                    var height = $(element).width() / dimensions[0] * dimensions[1];
+                    $(element).height(height);
                 }
             },
             link: function (s, e, a, ctrl) {
                 ctrl.setElement(e, a.checkHeight);
+                angular.element($window).bind("resize", function () {
+                    ctrl.updateSizes();
+                });
+                ctrl.updateSizes();
             }
         }
     }]);

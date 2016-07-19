@@ -27,7 +27,7 @@ public class DemoAppConfigService {
     public static final String ATTRIBUTE_TOOLS_TAG_NAME = "tools";
     public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
     public static final String ATTRIBUTE_DESCRIPTION_TAG_NAME = "description";
-    public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "loationInAdvantage";
+    public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "locationInAdvantage";
     //  endregion
 
     //  region Class Properties

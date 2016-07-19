@@ -23,7 +23,6 @@ define(['./module'], function (controllers) {
 
             s.getFirstImageUrl = function () {
                 s.imagesArray = $filter("getAllImagesByColor")(s.product.images, s.colorSelected, s.product.imageUrl);
-                s.imagesArray.push(s.product.imageUrl);
                 s.imageUrl = s.imagesArray[0];
                 return s.imagesArray;
             }
