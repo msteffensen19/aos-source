@@ -170,6 +170,11 @@
                 <version>2.7</version>
                 <executions>
                     <execution>
+                        <id>copy-shared-resources-into-webapp</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
                         <configuration>
                             <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
                             <resources>
@@ -187,12 +192,27 @@
                                 </resource>
                             </resources>
                         </configuration>
-                        <id>copy-shared-resources-into-webapp</id>
+                    </execution>
+                    <execution>
+                        <id>copy-log4j_properties-into-classes</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/generated-resources</directory>
+                                    <filtering>true</filtering>
+                                    <includes combine.self="override">
+                                        <include>/log4j.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
                     </execution>
+
                 </executions>
 
             </plugin>
