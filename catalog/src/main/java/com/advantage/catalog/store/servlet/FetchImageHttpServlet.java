@@ -14,8 +14,10 @@ import com.advantage.catalog.store.image.ImageManagementAccess;
 import com.advantage.catalog.store.image.ManagedImage;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.IOHelper;
+import com.advantage.common.cef.CefHttpModel;
 import org.apache.commons.lang3.StringUtils;
 
+import org.apache.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 
 @SuppressWarnings("serial")
@@ -26,6 +28,7 @@ public class FetchImageHttpServlet extends HttpServlet {
     public static final String REQUEST_PARAM_IMAGE_ID = "image_id";
 
     private ImageManagement imageManagement;
+    private static final Logger logger = Logger.getLogger(FetchImageHttpServlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -47,6 +50,15 @@ public class FetchImageHttpServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse res)
             throws ServletException, IOException {
+
+        CefHttpModel cefData = (CefHttpModel) req.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/catalog/fetchImage".hashCode()),
+                    "Get image", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
 
         ArgumentValidationHelper.validateArgumentIsNotNull(req, "HTTP servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(res, "HTTP servlet response");
