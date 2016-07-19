@@ -89,7 +89,7 @@ define(['./module'], function (controllers) {
                 }
                 response.then(function (response) {
 
-                    if (s.preferredPayment_MasterCredit && response && response.REASON && response.SUCCESS == 'true') {
+                    if (s.preferredPayment_MasterCredit && response && response.reason && response.success) {
                         accountService.updatePrefferedPaymentMethod(20).then(function (res) {
                             setMessage(res);
                         });
