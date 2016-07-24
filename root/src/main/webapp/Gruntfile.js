@@ -102,6 +102,11 @@ module.exports = function (grunt) {
                         dest: 'target',
                         filter: 'isFile'
                     },
+                    {
+                        expand: true,
+                        src: ['css/videos/*',],
+                        dest: 'target',
+                    },
 
                 ]
             }
