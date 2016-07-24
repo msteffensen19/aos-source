@@ -33,9 +33,10 @@
                                 <br/>
 
                                 <a class="link" translate="Change_Password"
-                                   data-ng-click="slideToggle('changePassword')"></a>
+                                   data-ng-click="slideToggle('changePassword')"
+                                   ng-show="mainCtrl.config.showChangePassword"></a>
 
-                                <div class="changePassword">
+                                <div class="changePassword" ng-show="mainCtrl.config.showChangePassword">
 
                                     <sec-view a-hint="{{'Old_Password' | translate}}"
                                               a-type="password"
@@ -155,6 +156,7 @@
         </sec-form>
     </article>
 </section>
+{{mainCtrl.config | json}}
 
 
 <social-media-drtv></social-media-drtv>

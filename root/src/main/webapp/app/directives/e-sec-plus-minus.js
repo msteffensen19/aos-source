@@ -157,8 +157,6 @@ define(['./module'], function (directives) {
                             s.numAttr = parseInt(s.numAttr);
                         }
                     }
-
-
                 }
             }
         }])

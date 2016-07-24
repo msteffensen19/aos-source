@@ -84,6 +84,7 @@ define(['./module'], function (services) {
                     then(function (res) {
                         Loger.Received(res);
 
+                        config.showChangePassword = true;
                         if (res && res.data && res.data.parameters) {
                             for (var i = 0; i < res.data.parameters.length; i++) {
 
@@ -94,6 +95,10 @@ define(['./module'], function (services) {
                                         break;
                                     case "Show_slow_pages":
                                         config.slowPage = res.data.parameters[i].parameterValue &&
+                                            res.data.parameters[i].parameterValue.toLowerCase() == "yes";
+                                        break;
+                                    case "Implement_DevOps_Process":
+                                        config.showChangePassword = res.data.parameters[i].parameterValue &&
                                             res.data.parameters[i].parameterValue.toLowerCase() == "yes";
                                         break;
                                     case "Typos_on_order_payment":
