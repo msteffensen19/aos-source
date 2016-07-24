@@ -66,6 +66,7 @@ public class OrderController {
         response.setHeader("Cache-control", "no-store");
     }
 
+    //  region Shopping Cart
     @RequestMapping(value = "/carts/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user shopping cart")
     @AuthorizeAsUser
@@ -374,6 +375,9 @@ public class OrderController {
         }
     }
 
+    //  endregion
+
+    //  region ShipEx (Shipping Express)
     /**
      * At fisrt develop it as {@code POST} request, because it needs a <i>body</i>. <br/>
      * In the future, it will be changed to {@code GET} request, after sending a
@@ -484,6 +488,8 @@ public class OrderController {
         return repeat;
     }
 
+    //  endregion
+
     //Convert JSON object to DemoAppConfig Parameter
     private DemoAppConfigParameter getDemoAppConfigParameterFromJsonObjectString(String jsonObjectString) throws IOException {
 
@@ -534,6 +540,7 @@ public class OrderController {
 //        return returnValue;
 //    }
 
+    //  region Purchase Order
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "Purchase new order")
     @AuthorizeAsUser
@@ -567,11 +574,14 @@ public class OrderController {
     }
 
 
+    //  endregion
+
+    //  region Order History
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by userID or/and orderId")
-    public ResponseEntity<OrderHistoryCollectionDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
-                                                                      @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId,
-                                                                      HttpServletRequest request) {
+    public ResponseEntity<OrderHistoryResponseDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
+                                                                    @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId,
+                                                                    HttpServletRequest request) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
@@ -581,8 +591,8 @@ public class OrderController {
             logger.warn("cefData is null");
         }
 
-        OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
-        return new ResponseEntity<>(orderHistoryCollectionDto, HttpStatus.OK);
+        OrderHistoryResponseDto orderHistoryResponseDto = orderManagementService.getOrdersHistory(userId, orderId);
+        return new ResponseEntity<>(orderHistoryResponseDto, HttpStatus.OK);
     }
 
 
@@ -609,9 +619,9 @@ public class OrderController {
         if (userId != null && (shoppingCartService.getUserShoppingCart(Long.valueOf(userId))) != null) {
             httpStatus = HttpStatus.OK;
             //get order by userID and orderID
-            OrderHistoryCollectionDto orderHistoryCollectionDto = orderManagementService.getOrdersHistory(userId, orderId);
-            if (orderHistoryCollectionDto != null && orderHistoryCollectionDto.getOrderHistoryCollection().size() > 0) {
-                orderHistoryCollectionDto.getOrderHistoryCollection().forEach(
+            OrderHistoryResponseDto orderHistoryResponseDto = orderManagementService.getOrdersHistory(userId, orderId);
+            if (orderHistoryResponseDto != null && orderHistoryResponseDto.getOrdersHistory().size() > 0) {
+                orderHistoryResponseDto.getOrdersHistory().forEach(
                         order -> {
                             order.getProducts().forEach(product -> {
                                 shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
@@ -630,4 +640,5 @@ public class OrderController {
         return new ResponseEntity<>(shoppingCartResponse, httpStatus);
     }
 
+    //  endregion
 }

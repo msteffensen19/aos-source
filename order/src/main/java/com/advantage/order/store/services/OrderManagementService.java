@@ -672,8 +672,8 @@ public class OrderManagementService {
     currently order saved by unique orderID
     if change to unique per user the option get by userID and orderID available
      */
-    public OrderHistoryCollectionDto getOrdersHistory(Long userId, Long orderId) {
-        OrderHistoryCollectionDto orderHistoryCollectionDto = new OrderHistoryCollectionDto();
+    public OrderHistoryResponseDto getOrdersHistory(Long userId, Long orderId) {
+        OrderHistoryResponseDto orderHistoryResponseDto = new OrderHistoryResponseDto();
         List<OrderHeader> orderHistoryHeaders = new ArrayList<OrderHeader>();
         if ((userId == null || userId == 0) && (orderId == null || orderId == 0)) {
             orderHistoryHeaders = orderHistoryHeaderManagementRepository.getAll();//getByUserId(accountId);
@@ -707,14 +707,14 @@ public class OrderManagementService {
                         orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
                                 product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
                     });
-                    orderHistoryCollectionDto.addOrderHistoryDto(orderHistoryDto);
+                    orderHistoryResponseDto.addOrderHistoryDto(orderHistoryDto);
                 });
             } catch (Exception e) {
-                logger.error(orderHistoryCollectionDto, e);
+                logger.error(orderHistoryResponseDto, e);
                 return null;
             }
         }
-        return orderHistoryCollectionDto;
+        return orderHistoryResponseDto;
     }
 
     //endregion get orders
