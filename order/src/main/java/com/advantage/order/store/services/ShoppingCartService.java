@@ -231,6 +231,8 @@ public class ShoppingCartService {
                     productId);
         }
 
+        shoppingCartResponse = new ShoppingCartResponse(false, "shoppingCartResponse", -1);
+
         //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
         String parameterValue = this.getDemoAppConfigParameterValue("Error_500_in_update_cart");
 
@@ -509,27 +511,29 @@ public class ShoppingCartService {
                             ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase(),
                             cart.getQuantity());
 
-                    if (!cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
-                        /*  Add a product to user shopping cart response class  */
-                        userCart.addCartProduct(cartProduct.getProductId(),
-                                cartProduct.getProductName(),
-                                cartProduct.getPrice(),
-                                cart.getQuantity(),
-                                cartProduct.getImageUrl(),
-                                cartProduct.getColor().getCode(),
-                                cartProduct.getColor().getName(),
-                                cartProduct.getColor().getInStock());
-                    } else {
-//                        /*  Product in cart not found in catalog database schema    */
-//                        userCart.addCartProduct(cartProduct.getProductId(),
-//                                cartProduct.getProductName(),   //  "NOT FOUND"
-//                                cartProduct.getPrice(),         //  -999999.99
-//                                cartProduct.getQuantity(),      //  0
-//                                cartProduct.getImageUrl(),      //  "NOT FOUND"
-//                                "000000",
-//                                "BLACK",
-//                                0,
-//                                false); //  isExists = false
+                    if (cartProduct != null) {
+                        if (!cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
+                            /*  Add a product to user shopping cart response class  */
+                            userCart.addCartProduct(cartProduct.getProductId(),
+                                    cartProduct.getProductName(),
+                                    cartProduct.getPrice(),
+                                    cart.getQuantity(),
+                                    cartProduct.getImageUrl(),
+                                    cartProduct.getColor().getCode(),
+                                    cartProduct.getColor().getName(),
+                                    cartProduct.getColor().getInStock());
+                        } else {
+//                          /*  Product in cart not found in catalog database schema    */
+//                          userCart.addCartProduct(cartProduct.getProductId(),
+//                                  cartProduct.getProductName(),   //  "NOT FOUND"
+//                                  cartProduct.getPrice(),         //  -999999.99
+//                                  cartProduct.getQuantity(),      //  0
+//                                  cartProduct.getImageUrl(),      //  "NOT FOUND"
+//                                  "000000",
+//                                  "BLACK",
+//                                  0,
+//                                  false); //  isExists = false
+                        }
                     }
                 }
             }
@@ -680,6 +684,8 @@ public class ShoppingCartService {
      * @return
      */
     private int validateProductInCartQuantityVsInStock(Long productId, int color, int quantity) {
+
+        shoppingCartResponse = new ShoppingCartResponse(false, "shoppingCartResponse", -1);
         ColorAttributeDto dto = getColorAttributeByProductIdAndColorCode(productId, color);
 
         if (dto != null) {
