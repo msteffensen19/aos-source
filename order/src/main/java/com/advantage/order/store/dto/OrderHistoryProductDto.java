@@ -1,7 +1,7 @@
 package com.advantage.order.store.dto;
 
 /**
- * Author Moti Ostrovski on 24/05/2016.
+ * @author Moti Ostrovski on 24/05/2016.
  */
 public class OrderHistoryProductDto {
 

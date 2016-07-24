@@ -3,12 +3,12 @@ package com.advantage.order.store.dto;
 import java.util.List;
 
 /**
- * Author Ostrovski Moti on 26/05/2016.
+ * @author Ostrovski Moti on 26/05/2016.
  */
 public class OrdersHistoryDto {
     private List<OrderHistoryDto> ordersHistory;
 
-    //region constructor
+    //region constructors
     public OrdersHistoryDto(){}
 
     public OrdersHistoryDto(List<OrderHistoryDto> ordersHistory) {

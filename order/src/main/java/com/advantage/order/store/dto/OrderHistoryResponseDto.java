@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author ostrovsm on 30/05/2016.
+ * @author ostrovsm on 30/05/2016.
  */
 public class OrderHistoryResponseDto {
 

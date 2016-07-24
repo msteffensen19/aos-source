@@ -490,6 +490,7 @@ public class OrderController {
 
     //  endregion
 
+    //  region DemoAppConfigParameters
     //Convert JSON object to DemoAppConfig Parameter
     private DemoAppConfigParameter getDemoAppConfigParameterFromJsonObjectString(String jsonObjectString) throws IOException {
 
@@ -502,43 +503,44 @@ public class OrderController {
         return parameter;
     }
 
-//    //get serialized DemoAppConfig parameter from REST
-//    private  String httpGet(URL url) throws IOException {
-//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//
-//        int responseCode = conn.getResponseCode();
-//
-//        String returnValue;
-//        switch (responseCode) {
-//            case org.apache.http.HttpStatus.SC_OK: {
-//                // Buffer the result into a string
-//                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-//                BufferedReader bufferedReader = new BufferedReader(inputStream);
-//                StringBuilder sb = new StringBuilder();
-//                String line;
-//
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                bufferedReader.close();
-//                returnValue = sb.toString();
-//                break;
-//            }
-//            case org.apache.http.HttpStatus.SC_CONFLICT:
-//                //  Product not found
-//                returnValue = "Not found";
-//                break;
-//
-//            default:
-//                System.out.println("httpGet -> responseCode=" + responseCode);
-//                throw new IOException(conn.getResponseMessage());
-//        }
-//
-//        conn.disconnect();
-//
-//        return returnValue;
-//    }
+    //    //get serialized DemoAppConfig parameter from REST
+    //    private  String httpGet(URL url) throws IOException {
+    //        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    //
+    //        int responseCode = conn.getResponseCode();
+    //
+    //        String returnValue;
+    //        switch (responseCode) {
+    //            case org.apache.http.HttpStatus.SC_OK: {
+    //                // Buffer the result into a string
+    //                InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
+    //                BufferedReader bufferedReader = new BufferedReader(inputStream);
+    //                StringBuilder sb = new StringBuilder();
+    //                String line;
+    //
+    //                while ((line = bufferedReader.readLine()) != null) {
+    //                    sb.append(line);
+    //                }
+    //
+    //                bufferedReader.close();
+    //                returnValue = sb.toString();
+    //                break;
+    //            }
+    //            case org.apache.http.HttpStatus.SC_CONFLICT:
+    //                //  Product not found
+    //                returnValue = "Not found";
+    //                break;
+    //
+    //            default:
+    //                System.out.println("httpGet -> responseCode=" + responseCode);
+    //                throw new IOException(conn.getResponseMessage());
+    //        }
+    //
+    //        conn.disconnect();
+    //
+    //        return returnValue;
+    //    }
+    //  endregion
 
     //  region Purchase Order
     @RequestMapping(value = "/orders/users/{userId}", method = RequestMethod.POST)
@@ -578,7 +580,7 @@ public class OrderController {
 
     //  region Order History
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
-    @ApiOperation(value = "Get orders history by userID or/and orderId")
+    @ApiOperation(value = "Get orders history by user-id and/or order-id")
     public ResponseEntity<OrderHistoryResponseDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
                                                                     @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId,
                                                                     HttpServletRequest request) {
