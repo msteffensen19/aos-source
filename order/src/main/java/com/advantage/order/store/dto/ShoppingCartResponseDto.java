@@ -198,6 +198,7 @@ public class ShoppingCartResponseDto {
     private long userId;
     private String message;
     private List<CartProduct> productsInCart = new ArrayList<>();
+    private String exceptionText;
 
     /* public class ShoppingCartResponseDto - Constructors  */
     public ShoppingCartResponseDto() {  }
@@ -245,6 +246,14 @@ public class ShoppingCartResponseDto {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getExceptionText() {
+        return exceptionText;
+    }
+
+    public void setExceptionText(String exceptionText) {
+        this.exceptionText = exceptionText;
     }
 
     public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock) {
