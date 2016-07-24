@@ -62,7 +62,7 @@ public class CefFilter implements Filter {
             logger.trace("Start: " + serviceName);
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             if (isRequestIsHttpRequest) {
-                CefHttpModel cefData = new CefHttpModel(serviceName, "1.0-SNAPSHOT TemporaryHardCoded");
+                CefHttpModel cefData = new CefHttpModel(serviceName, getArtifactVersion());
                 cefData.setNeedTimeFormat(formatStartEnd);
                 HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
                 cefData.setRequestData(httpServletRequest);
@@ -91,6 +91,11 @@ public class CefFilter implements Filter {
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
+    }
+
+    private String getArtifactVersion() {
+        //TODO Change to get artifact version from current artifact
+        return "1.0";
     }
 
     @Override
