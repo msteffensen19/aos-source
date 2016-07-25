@@ -1,39 +1,37 @@
 package com.advantage.order.store.dto;
 
-import com.advantage.order.store.model.OrderLines;
-
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Binyamin Regev on on 24/07/2016.
  */
-public class OrderHistoryLinesDto {
+public class HistoryOrderLinesDto {
 
     private long userId;
     private long orderNumber;
     private long orderTimestamp;
     private Date orderDate;
     private double totalPrice;
-    private List<OrderLineDto> orderLines;
+    private List<HistoryOrderLineDto> orderLines;
 
 
-    public OrderHistoryLinesDto() {
+    public HistoryOrderLinesDto() {
     }
 
-    public OrderHistoryLinesDto(long userId, long orderNumber, long orderTimestamp) {
+    public HistoryOrderLinesDto(long userId, long orderNumber, long orderTimestamp) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
     }
 
-    public OrderHistoryLinesDto(long userId, long orderNumber, Date orderDate) {
+    public HistoryOrderLinesDto(long userId, long orderNumber, Date orderDate) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
     }
 
-    public OrderHistoryLinesDto(long userId, long orderNumber, long orderTimestamp, double totalPrice, List<OrderLineDto> orderLines) {
+    public HistoryOrderLinesDto(long userId, long orderNumber, long orderTimestamp, double totalPrice, List<HistoryOrderLineDto> orderLines) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
@@ -41,7 +39,7 @@ public class OrderHistoryLinesDto {
         this.orderLines = orderLines;
     }
 
-    public OrderHistoryLinesDto(long userId, long orderNumber, Date orderDate, double totalPrice, List<OrderLineDto> orderLines) {
+    public HistoryOrderLinesDto(long userId, long orderNumber, Date orderDate, double totalPrice, List<HistoryOrderLineDto> orderLines) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
@@ -49,7 +47,7 @@ public class OrderHistoryLinesDto {
         this.orderLines = orderLines;
     }
 
-    public OrderHistoryLinesDto(long userId, long orderNumber, long orderTimestamp, Date orderDate, double totalPrice, List<OrderLineDto> orderLines) {
+    public HistoryOrderLinesDto(long userId, long orderNumber, long orderTimestamp, Date orderDate, double totalPrice, List<HistoryOrderLineDto> orderLines) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
@@ -98,21 +96,21 @@ public class OrderHistoryLinesDto {
         this.totalPrice = totalPrice;
     }
 
-    public List<OrderLineDto> getOrderLines() {
+    public List<HistoryOrderLineDto> getOrderLines() {
         return orderLines;
     }
 
-    public void setOrderLines(List<OrderLineDto> orderLines) {
+    public void setOrderLines(List<HistoryOrderLineDto> orderLines) {
         this.orderLines = orderLines;
     }
 
-    public void addOrderLine(OrderLineDto orderLine) {
+    public void addOrderLine(HistoryOrderLineDto orderLine) {
         totalPrice += (orderLine.getPricePerItem() * orderLine.getQuantity());
         orderLines.add(orderLine);
     }
 
     public void addOrderLine(long userId, long orderNumber, Long productId, String productName, int productColor, double pricePerItem, int quantity) {
-        addOrderLine(new OrderLineDto(userId,
+        addOrderLine(new HistoryOrderLineDto(userId,
                 orderNumber,
                 productId,
                 productName,
@@ -121,7 +119,7 @@ public class OrderHistoryLinesDto {
                 quantity));
     }
 
-    public void removeOrderLine(OrderLineDto orderLine) {
+    public void removeOrderLine(HistoryOrderLineDto orderLine) {
         totalPrice -= (orderLine.getPricePerItem() * orderLine.getQuantity());
         orderLines.remove(orderLine);
     }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Moti Ostrovski on 24/05/2016.
  */
-public class OrderHistoryHeaderDto {
+public class HistoryOrderHeaderDto {
 
     private long orderNumber;
     private long orderTimestamp;
@@ -15,18 +15,18 @@ public class OrderHistoryHeaderDto {
     private double orderTotalSum;
     private double orderShipingCost;
     private String shippingAddress;
-    private OrderHistoryAccountDto customer;
-    private List<OrderHistoryProductDto> products;
+    private HistoryOrderAccountDto customer;
+    private List<HistoryOrderProductDto> products;
 
 
-    public OrderHistoryHeaderDto(){
+    public HistoryOrderHeaderDto(){
         initFields();
-        products = new ArrayList<OrderHistoryProductDto>() {};
+        products = new ArrayList<HistoryOrderProductDto>() {};
     }
 
-    public OrderHistoryHeaderDto(long orderNumber, long orderTimestamp, double shippingTrackingNumber,
+    public HistoryOrderHeaderDto(long orderNumber, long orderTimestamp, double shippingTrackingNumber,
                                  String paymentMethod, double orderTotalSum, double orderShipingCost,
-                                 String shippingAddress, OrderHistoryAccountDto customer) {
+                                 String shippingAddress, HistoryOrderAccountDto customer) {
         initFields();
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
@@ -36,14 +36,14 @@ public class OrderHistoryHeaderDto {
         this.orderShipingCost = orderShipingCost;
         this.shippingAddress = shippingAddress;
         this.customer = customer;
-        products = new ArrayList<OrderHistoryProductDto>() {};
+        products = new ArrayList<HistoryOrderProductDto>() {};
     }
 
-    public OrderHistoryHeaderDto(long orderNumber, long orderTimestamp,
+    public HistoryOrderHeaderDto(long orderNumber, long orderTimestamp,
                                  double shippingTrackingNumber, String paymentMethod,
                                  double orderTotalSum, double orderShipingCost,
-                                 String shippingAddress, OrderHistoryAccountDto customer,
-                                 List<OrderHistoryProductDto> products) {
+                                 String shippingAddress, HistoryOrderAccountDto customer,
+                                 List<HistoryOrderProductDto> products) {
         initFields();
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
@@ -113,23 +113,23 @@ public class OrderHistoryHeaderDto {
         this.shippingAddress = shippingAddress;
     }
 
-    public OrderHistoryAccountDto getCustomer() {
+    public HistoryOrderAccountDto getCustomer() {
         return customer;
     }
 
-    public void setCustomer(OrderHistoryAccountDto customer) {
+    public void setCustomer(HistoryOrderAccountDto customer) {
         this.customer = customer;
     }
 
-    public List<OrderHistoryProductDto> getProducts() {
+    public List<HistoryOrderProductDto> getProducts() {
         return products;
     }
 
-    public void setProducts(List<OrderHistoryProductDto> products) {
+    public void setProducts(List<HistoryOrderProductDto> products) {
         this.products = products;
     }
 
-    public void addOrderHistoryProductDto(OrderHistoryProductDto product){
+    public void addOrderHistoryProductDto(HistoryOrderProductDto product){
         this.products.add(product);
     }
 
@@ -141,8 +141,8 @@ public class OrderHistoryHeaderDto {
         orderTotalSum=0.0;
         orderShipingCost=0.0;
         shippingAddress="";
-        customer=new OrderHistoryAccountDto();
-        products = products==null ? new ArrayList<OrderHistoryProductDto>() {} : products;
+        customer=new HistoryOrderAccountDto();
+        products = products==null ? new ArrayList<HistoryOrderProductDto>() {} : products;
         products.clear();
     }
 

@@ -581,7 +581,7 @@ public class OrderController {
     //  region Order History
     @RequestMapping(value = "/orders/history", method = RequestMethod.GET)
     @ApiOperation(value = "Get orders history by user-id and/or order-id")
-    public ResponseEntity<OrderHistoryResponseDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
+    public ResponseEntity<HistoryOrderResponseDto> getOrdersHistory(@RequestParam(value = "user_id", defaultValue = "0", required = false) Long userId,
                                                                     @RequestParam(value = "order_id", defaultValue = "0", required = false) Long orderId,
                                                                     HttpServletRequest request) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
@@ -593,8 +593,8 @@ public class OrderController {
             logger.warn("cefData is null");
         }
 
-        OrderHistoryResponseDto orderHistoryResponseDto = orderManagementService.getOrdersHistory(userId, orderId);
-        return new ResponseEntity<>(orderHistoryResponseDto, HttpStatus.OK);
+        HistoryOrderResponseDto historyOrderResponseDto = orderManagementService.getOrdersHistory(userId, orderId);
+        return new ResponseEntity<>(historyOrderResponseDto, HttpStatus.OK);
     }
 
 
@@ -621,9 +621,9 @@ public class OrderController {
         if (userId != null && (shoppingCartService.getUserShoppingCart(Long.valueOf(userId))) != null) {
             httpStatus = HttpStatus.OK;
             //get order by userID and orderID
-            OrderHistoryResponseDto orderHistoryResponseDto = orderManagementService.getOrdersHistory(userId, orderId);
-            if (orderHistoryResponseDto != null && orderHistoryResponseDto.getOrdersHistory().size() > 0) {
-                orderHistoryResponseDto.getOrdersHistory().forEach(
+            HistoryOrderResponseDto historyOrderResponseDto = orderManagementService.getOrdersHistory(userId, orderId);
+            if (historyOrderResponseDto != null && historyOrderResponseDto.getOrdersHistory().size() > 0) {
+                historyOrderResponseDto.getOrdersHistory().forEach(
                         order -> {
                             order.getProducts().forEach(product -> {
                                 shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());

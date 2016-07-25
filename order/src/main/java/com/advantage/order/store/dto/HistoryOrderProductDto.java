@@ -3,7 +3,7 @@ package com.advantage.order.store.dto;
 /**
  * @author Moti Ostrovski on 24/05/2016.
  */
-public class OrderHistoryProductDto {
+public class HistoryOrderProductDto {
 
     private long productId;
     private String productName;
@@ -12,12 +12,12 @@ public class OrderHistoryProductDto {
     private int productQuantity;
     private long orderNumber;
 
-    public OrderHistoryProductDto(){
+    public HistoryOrderProductDto(){
         initFields();
     }
 
-    public OrderHistoryProductDto(long productId, String productName, String productColor,
-         double pricePerItem, int productQuantity,long orderNumber) {
+    public HistoryOrderProductDto(long productId, String productName, String productColor,
+                                  double pricePerItem, int productQuantity, long orderNumber) {
         initFields();
         this.productId = productId;
         this.productName = productName;

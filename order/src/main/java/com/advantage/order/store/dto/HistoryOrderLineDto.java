@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Single line in order history.
  * @author Binyamin Regev on on 25/07/2016.
  */
-public class OrderLineDto {
+public class HistoryOrderLineDto {
 
     @JsonProperty("UserId")
     private long userId;
@@ -27,10 +27,10 @@ public class OrderLineDto {
     @JsonProperty("Quantity")
     private int quantity;               //  From ShoppingCart table in ORDER schema
 
-    public OrderLineDto() {
+    public HistoryOrderLineDto() {
     }
 
-    public OrderLineDto(long userId, long orderNumber, Long productId, String productName, int productColor, double pricePerItem, int quantity) {
+    public HistoryOrderLineDto(long userId, long orderNumber, Long productId, String productName, int productColor, double pricePerItem, int quantity) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.productId = productId;
@@ -41,7 +41,7 @@ public class OrderLineDto {
         this.quantity = quantity;
     }
 
-    public OrderLineDto(long userId, long orderNumber, Long productId, String productName, int productColor, String productColorName, double pricePerItem, int quantity) {
+    public HistoryOrderLineDto(long userId, long orderNumber, Long productId, String productName, int productColor, String productColorName, double pricePerItem, int quantity) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.productId = productId;

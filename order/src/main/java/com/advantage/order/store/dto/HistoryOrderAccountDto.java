@@ -3,7 +3,7 @@ package com.advantage.order.store.dto;
 /**
  * Author ostrovsm on 24/05/2016.
  */
-public class OrderHistoryAccountDto {
+public class HistoryOrderAccountDto {
 
     private long userId;
     private String loginName;
@@ -11,9 +11,9 @@ public class OrderHistoryAccountDto {
     private String lastName;
     private String phone;
 
-    public OrderHistoryAccountDto(){}
+    public HistoryOrderAccountDto(){}
 
-    public OrderHistoryAccountDto(long userId, String loginName, String phone) {
+    public HistoryOrderAccountDto(long userId, String loginName, String phone) {
         this.userId = userId;
         this.loginName = loginName;
         this.phone = phone;

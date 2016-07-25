@@ -672,8 +672,8 @@ public class OrderManagementService {
     currently order saved by unique orderID
     if change to unique per user the option get by userID and orderID available
      */
-    public OrderHistoryResponseDto getOrdersHistory(Long userId, Long orderId) {
-        OrderHistoryResponseDto orderHistoryResponseDto = new OrderHistoryResponseDto();
+    public HistoryOrderResponseDto getOrdersHistory(Long userId, Long orderId) {
+        HistoryOrderResponseDto historyOrderResponseDto = new HistoryOrderResponseDto();
         List<OrderHeader> orderHistoryHeaders = new ArrayList<OrderHeader>();
         if ((userId == null || userId == 0) && (orderId == null || orderId == 0)) {
             orderHistoryHeaders = historyOrderHeaderRepository.getAll();//getByUserId(accountId);
@@ -688,33 +688,33 @@ public class OrderManagementService {
             try {
 
                 orderHistoryHeaders.forEach(order -> {
-                    OrderHistoryHeaderDto orderHistoryHeaderDto = new OrderHistoryHeaderDto();
+                    HistoryOrderHeaderDto historyOrderHeaderDto = new HistoryOrderHeaderDto();
                     //get products by orderID
                     List<OrderLines> orderLines = historyOrderLineRepository.getHistoryOrderLinesByOrderId(order.getOrderNumber());
 //
                     //set order fields
-                    orderHistoryHeaderDto.setOrderNumber(order.getOrderNumber());
-                    orderHistoryHeaderDto.setOrderTimestamp(order.getOrderTimestamp());
-                    orderHistoryHeaderDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
-                    orderHistoryHeaderDto.setPaymentMethod(order.getPaymentMethod());
-                    orderHistoryHeaderDto.setOrderTotalSum(order.getAmount());
-                    orderHistoryHeaderDto.setOrderShipingCost(order.getShippingCost());
-                    orderHistoryHeaderDto.setShippingAddress(order.getShippingAddress());
+                    historyOrderHeaderDto.setOrderNumber(order.getOrderNumber());
+                    historyOrderHeaderDto.setOrderTimestamp(order.getOrderTimestamp());
+                    historyOrderHeaderDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
+                    historyOrderHeaderDto.setPaymentMethod(order.getPaymentMethod());
+                    historyOrderHeaderDto.setOrderTotalSum(order.getAmount());
+                    historyOrderHeaderDto.setOrderShipingCost(order.getShippingCost());
+                    historyOrderHeaderDto.setShippingAddress(order.getShippingAddress());
                     //set user
-                    orderHistoryHeaderDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
+                    historyOrderHeaderDto.setCustomer(new HistoryOrderAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
                     //set products
                     orderLines.forEach(product -> {
-                        orderHistoryHeaderDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
+                        historyOrderHeaderDto.addOrderHistoryProductDto(new HistoryOrderProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
                                 product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
                     });
-                    orderHistoryResponseDto.addOrderHistoryDto(orderHistoryHeaderDto);
+                    historyOrderResponseDto.addOrderHistoryDto(historyOrderHeaderDto);
                 });
             } catch (Exception e) {
-                logger.error(orderHistoryResponseDto, e);
+                logger.error(historyOrderResponseDto, e);
                 return null;
             }
         }
-        return orderHistoryResponseDto;
+        return historyOrderResponseDto;
     }
 
     //endregion get orders
