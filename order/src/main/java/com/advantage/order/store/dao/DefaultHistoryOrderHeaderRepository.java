@@ -48,4 +48,24 @@ public class DefaultHistoryOrderHeaderRepository extends AbstractRepository impl
                 .getResultList();
         return orderHeaders;
     }
+
+    @Override
+    public List<OrderHeader> getAllOrdersLines() {
+        return null;
+    }
+
+    @Override
+    public List<OrderHeader> getOrdersLinesByUserId(long userId) {
+        return null;
+    }
+
+    @Override
+    public List<OrderHeader> getOrdersLinesByOrderId(long orderId) {
+        return null;
+    }
+
+    @Override
+    public List<OrderHeader> getOrdersLinesByOrderIdAndUserId(long orderId, long userId) {
+        return null;
+    }
 }

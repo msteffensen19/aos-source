@@ -14,6 +14,7 @@ import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
+import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
@@ -568,7 +569,6 @@ public class OrderManagementService {
 
     /**
      * Send SOAP request for ShipEx tracking number and receive it in response.
-     *
      * @param orderRequest Shipping Express request for tracking number.
      * @return Shipping Express Tracking Number in {@link PlaceShippingOrderResponse}.
      */
@@ -665,7 +665,7 @@ public class OrderManagementService {
 //        return response;
 //    }
 
-    //region get orders
+    //  region History Orders
     /*
     get orders history by userID or orderID
     not set any value(userID =0, orderID=0 or not set in REST) => get all
@@ -673,15 +673,20 @@ public class OrderManagementService {
     if change to unique per user the option get by userID and orderID available
      */
     public HistoryOrderResponseDto getOrdersHistory(Long userId, Long orderId) {
+
+        ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(userId, "user id");
+        ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(orderId, "order id");
+
         HistoryOrderResponseDto historyOrderResponseDto = new HistoryOrderResponseDto();
         List<OrderHeader> orderHistoryHeaders = new ArrayList<OrderHeader>();
-        if ((userId == null || userId == 0) && (orderId == null || orderId == 0)) {
-            orderHistoryHeaders = historyOrderHeaderRepository.getAll();//getByUserId(accountId);
-        } else if ((userId == null || userId == 0) && (orderId != null && orderId > 0)) {
+
+        if ((userId == 0) && (orderId == 0)) {
+            orderHistoryHeaders = historyOrderHeaderRepository.getAll();
+        } else if ((userId == 0) && (orderId > 0)) {
             orderHistoryHeaders = historyOrderHeaderRepository.getOrdersHeaderByOrderId(orderId);
-        } else if ((orderId == null || orderId == 0) && (userId != null && userId > 0)) {
+        } else if ((orderId == 0) && (userId > 0)) {
             orderHistoryHeaders = historyOrderHeaderRepository.getOrdersHeaderByUserId(userId);
-        } else if ((orderId != null || orderId > 0) && (userId != null && userId > 0)) {
+        } else if ((orderId > 0) && (userId > 0)) {
             orderHistoryHeaders = historyOrderHeaderRepository.getOrdersHeaderByOrderIdAndUserId(orderId, userId);
         }
         if (orderHistoryHeaders.size() > 0) {
@@ -691,7 +696,7 @@ public class OrderManagementService {
                     HistoryOrderHeaderDto historyOrderHeaderDto = new HistoryOrderHeaderDto();
                     //get products by orderID
                     List<OrderLines> orderLines = historyOrderLineRepository.getHistoryOrderLinesByOrderId(order.getOrderNumber());
-//
+
                     //set order fields
                     historyOrderHeaderDto.setOrderNumber(order.getOrderNumber());
                     historyOrderHeaderDto.setOrderTimestamp(order.getOrderTimestamp());
@@ -700,8 +705,10 @@ public class OrderManagementService {
                     historyOrderHeaderDto.setOrderTotalSum(order.getAmount());
                     historyOrderHeaderDto.setOrderShipingCost(order.getShippingCost());
                     historyOrderHeaderDto.setShippingAddress(order.getShippingAddress());
+
                     //set user
                     historyOrderHeaderDto.setCustomer(new HistoryOrderAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
+
                     //set products
                     orderLines.forEach(product -> {
                         historyOrderHeaderDto.addOrderHistoryProductDto(new HistoryOrderProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
@@ -717,7 +724,24 @@ public class OrderManagementService {
         return historyOrderResponseDto;
     }
 
-    //endregion get orders
+    public HistoryOrderLinesDto getHistoryOrdersLines(Long userId) {
+
+        ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(userId, "user id");
+
+        HistoryOrderLinesDto historyOrderLinesDto = new HistoryOrderLinesDto();
+        List<HistoryOrderLineDto> orderLines;
+
+        List<OrderLines> lines = new ArrayList<>();
+
+        if (userId == 0) {
+            lines = historyOrderLineRepository.getAll();
+        } else {
+            lines = historyOrderHeaderRepository.getOrdersLinesByUserId(userId);
+        }
+
+        return null;
+    }
+    //  endregion
 
     @Override
     public String toString() {
