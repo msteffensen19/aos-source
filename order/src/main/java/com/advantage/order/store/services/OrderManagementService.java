@@ -6,8 +6,8 @@ import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.utils.LoggerUtils;
-import com.advantage.order.store.dao.OrderHistoryHeaderManagementRepository;
-import com.advantage.order.store.dao.OrderHistoryLineManagementRepository;
+import com.advantage.order.store.dao.OrderHistoryHeaderRepository;
+import com.advantage.order.store.dao.OrderHistoryLineRepository;
 import com.advantage.order.store.dao.OrderManagementRepository;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
@@ -63,12 +63,12 @@ public class OrderManagementService {
     public OrderManagementRepository orderManagementRepository;
 
     @Autowired
-    @Qualifier("orderHistoryHeaderManagementRepository")
-    public OrderHistoryHeaderManagementRepository orderHistoryHeaderManagementRepository;
+    @Qualifier("orderHistoryHeaderRepository")
+    public OrderHistoryHeaderRepository orderHistoryHeaderRepository;
 
     @Autowired
-    @Qualifier("orderHistoryLineManagementRepository")
-    public OrderHistoryLineManagementRepository orderHistoryLineManagementRepository;
+    @Qualifier("orderHistoryLineRepository")
+    public OrderHistoryLineRepository orderHistoryLineRepository;
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -676,13 +676,13 @@ public class OrderManagementService {
         OrderHistoryResponseDto orderHistoryResponseDto = new OrderHistoryResponseDto();
         List<OrderHeader> orderHistoryHeaders = new ArrayList<OrderHeader>();
         if ((userId == null || userId == 0) && (orderId == null || orderId == 0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getAll();//getByUserId(accountId);
+            orderHistoryHeaders = orderHistoryHeaderRepository.getAll();//getByUserId(accountId);
         } else if ((userId == null || userId == 0) && (orderId != null && orderId > 0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderId(orderId);
+            orderHistoryHeaders = orderHistoryHeaderRepository.getOrdersHeaderByOrderId(orderId);
         } else if ((orderId == null || orderId == 0) && (userId != null && userId > 0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByUserId(userId);
+            orderHistoryHeaders = orderHistoryHeaderRepository.getOrdersHeaderByUserId(userId);
         } else if ((orderId != null || orderId > 0) && (userId != null && userId > 0)) {
-            orderHistoryHeaders = orderHistoryHeaderManagementRepository.getOrdersHeaderByOrderIdAndUserId(orderId, userId);
+            orderHistoryHeaders = orderHistoryHeaderRepository.getOrdersHeaderByOrderIdAndUserId(orderId, userId);
         }
         if (orderHistoryHeaders.size() > 0) {
             try {
@@ -690,7 +690,7 @@ public class OrderManagementService {
                 orderHistoryHeaders.forEach(order -> {
                     OrderHistoryHeaderDto orderHistoryHeaderDto = new OrderHistoryHeaderDto();
                     //get products by orderID
-                    List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
+                    List<OrderLines> orderLines = orderHistoryLineRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
 //
                     //set order fields
                     orderHistoryHeaderDto.setOrderNumber(order.getOrderNumber());
@@ -724,8 +724,8 @@ public class OrderManagementService {
         return "OrderManagementService{" +
                 "totalAmount=" + totalAmount +
                 ", orderManagementRepository=" + orderManagementRepository +
-                ", orderHistoryHeaderManagementRepository=" + orderHistoryHeaderManagementRepository +
-                ", orderHistoryLineManagementRepository=" + orderHistoryLineManagementRepository +
+                ", orderHistoryHeaderRepository=" + orderHistoryHeaderRepository +
+                ", orderHistoryLineRepository=" + orderHistoryLineRepository +
                 ", shoppingCartRepository=" + shoppingCartRepository +
                 ", shoppingCartService=" + shoppingCartService +
                 '}';

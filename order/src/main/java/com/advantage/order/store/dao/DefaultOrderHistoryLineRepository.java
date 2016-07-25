@@ -1,6 +1,5 @@
 package com.advantage.order.store.dao;
 
-import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import java.util.List;
 @Component
 @Qualifier("orderHistoryLineManagementRepository")
 @Repository
-public class DefaultOrderHistoryLineManagementRepository extends AbstractRepository implements OrderHistoryLineManagementRepository {
+public class DefaultOrderHistoryLineRepository extends AbstractRepository implements OrderHistoryLineRepository {
     @Override
     public List<OrderLines> getAllOrderLinesByOrderId (long orderId) {
         try {

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  *  @author Moti Ostrovski on 30/05/2016.
  */
-public interface OrderHistoryHeaderManagementRepository {
+public interface OrderHistoryHeaderRepository {
 
     List<OrderHeader> getAll();
 

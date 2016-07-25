@@ -2,20 +2,29 @@ package com.advantage.order.store.dto;
 
 import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.order.store.model.ShoppingCart;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * Single line in order history.
  * @author Binyamin Regev on on 25/07/2016.
  */
 public class OrderLineDto {
+
+    @JsonProperty("UserId")
     private long userId;
-
+    @JsonProperty("OrderNumber")
     private long orderNumber;
-
+    @JsonProperty("ProductID")
     private Long productId;             //  From Product table in CATALOG schema
+    @JsonProperty("ProductName")
     private String productName;         //  From Product table in CATALOG schema
+    @JsonProperty("ProductColorCode")
     private int productColor;           //  RGB decimal value
+    @JsonProperty("ProductColorName")
     private String productColorName;    //  Product Color Name
+    @JsonProperty("PricePerUnit")
     private double pricePerItem;        //  From Product table in CATALOG schema
+    @JsonProperty("Quantity")
     private int quantity;               //  From ShoppingCart table in ORDER schema
 
     public OrderLineDto() {
