@@ -10,17 +10,17 @@ import javax.persistence.*;
 @IdClass(OrderLinesPK.class)
 @NamedQueries({
         @NamedQuery(
-                name = OrderLines.QUERY_GET_ALL_ORDERS_LINES_BY_USER_ID,
+                name = OrderLines.QUERY_GET_ORDERS_LINES_BY_USER_ID,
                 query = "select o from OrderLines o" +
-                        " where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID
-                        //+ " order by o.order_number ASC, o.product_id ASC, o.product_color ASC"
+                        " where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID +
+                        " order by o.orderNumber ASC, o.productName ASC, o.productColorName ASC"
         )
         , @NamedQuery(
         name = OrderLines.QUERY_GET_ORDER_LINES_BY_ORDER_PK,
         query = "select o from OrderLines o " +
                 "where " + OrderLines.FIELD_USER_ID + " = :" + OrderLines.PARAM_USER_ID +
-                " and " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER
-                //+ " order by o.order_number ASC, o.product_id ASC, o.product_color ASC"
+                " and " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER +
+                " order by o.orderNumber ASC, o.productName ASC, o.productColorName ASC"
         )
         , @NamedQuery(
         name = OrderLines.QUERY_GET_ORDERS_LINES_BY_PRODUCT_PK,
@@ -31,17 +31,15 @@ import javax.persistence.*;
         )
         , @NamedQuery(
         name = OrderLines.QUERY_GET_ORDER_LINES_BY_ORDER,
-        //query = "select p from Product p where UPPER(active) = 'Y' and UPPER(p.productName) like :pname"
         query = "select o from OrderLines o " +
-                "where " + OrderLines.FIELD_ORDER_NUMBER + " = :onum"
-        /*query = "select o from OrderLines o " +
-                "where " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER*/
-)
+                "where " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER +
+                " order by o.orderNumber ASC, o.productName ASC, o.productColorName ASC"
+        )
 })
 public class OrderLines {
 
     /* Get all orders of registered user */
-    public static final String QUERY_GET_ALL_ORDERS_LINES_BY_USER_ID = "OrderLines.getAllOrdersLinesByUserId";
+    public static final String QUERY_GET_ORDERS_LINES_BY_USER_ID = "OrderLines.getOrdersLinesByUserId";
     /* Get all order lines of a specific order by user-id and order-number  */
     public static final String QUERY_GET_ORDER_LINES_BY_ORDER_PK = "OrderLines.getOrderLinesByOrderPK";
     /* Get all order lines of a specific product by product-id and product-color made by specific user-id   */

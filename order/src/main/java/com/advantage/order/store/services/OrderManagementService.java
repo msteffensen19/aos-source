@@ -6,8 +6,8 @@ import com.advantage.common.Url_resources;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.utils.LoggerUtils;
-import com.advantage.order.store.dao.OrderHistoryHeaderRepository;
-import com.advantage.order.store.dao.OrderHistoryLineRepository;
+import com.advantage.order.store.dao.HistoryOrderLineRepository;
+import com.advantage.order.store.dao.HistoryOrderHeaderRepository;
 import com.advantage.order.store.dao.OrderManagementRepository;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
@@ -63,12 +63,12 @@ public class OrderManagementService {
     public OrderManagementRepository orderManagementRepository;
 
     @Autowired
-    @Qualifier("orderHistoryHeaderRepository")
-    public OrderHistoryHeaderRepository orderHistoryHeaderRepository;
+    @Qualifier("historyOrderHeaderRepository")
+    public HistoryOrderHeaderRepository historyOrderHeaderRepository;
 
     @Autowired
-    @Qualifier("orderHistoryLineRepository")
-    public OrderHistoryLineRepository orderHistoryLineRepository;
+    @Qualifier("historyOrderLineRepository")
+    public HistoryOrderLineRepository historyOrderLineRepository;
 
     @Autowired
     @Qualifier("shoppingCartRepository")
@@ -676,13 +676,13 @@ public class OrderManagementService {
         OrderHistoryResponseDto orderHistoryResponseDto = new OrderHistoryResponseDto();
         List<OrderHeader> orderHistoryHeaders = new ArrayList<OrderHeader>();
         if ((userId == null || userId == 0) && (orderId == null || orderId == 0)) {
-            orderHistoryHeaders = orderHistoryHeaderRepository.getAll();//getByUserId(accountId);
+            orderHistoryHeaders = historyOrderHeaderRepository.getAll();//getByUserId(accountId);
         } else if ((userId == null || userId == 0) && (orderId != null && orderId > 0)) {
-            orderHistoryHeaders = orderHistoryHeaderRepository.getOrdersHeaderByOrderId(orderId);
+            orderHistoryHeaders = historyOrderHeaderRepository.getOrdersHeaderByOrderId(orderId);
         } else if ((orderId == null || orderId == 0) && (userId != null && userId > 0)) {
-            orderHistoryHeaders = orderHistoryHeaderRepository.getOrdersHeaderByUserId(userId);
+            orderHistoryHeaders = historyOrderHeaderRepository.getOrdersHeaderByUserId(userId);
         } else if ((orderId != null || orderId > 0) && (userId != null && userId > 0)) {
-            orderHistoryHeaders = orderHistoryHeaderRepository.getOrdersHeaderByOrderIdAndUserId(orderId, userId);
+            orderHistoryHeaders = historyOrderHeaderRepository.getOrdersHeaderByOrderIdAndUserId(orderId, userId);
         }
         if (orderHistoryHeaders.size() > 0) {
             try {
@@ -690,7 +690,7 @@ public class OrderManagementService {
                 orderHistoryHeaders.forEach(order -> {
                     OrderHistoryHeaderDto orderHistoryHeaderDto = new OrderHistoryHeaderDto();
                     //get products by orderID
-                    List<OrderLines> orderLines = orderHistoryLineRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
+                    List<OrderLines> orderLines = historyOrderLineRepository.getHistoryOrderLinesByOrderId(order.getOrderNumber());
 //
                     //set order fields
                     orderHistoryHeaderDto.setOrderNumber(order.getOrderNumber());
@@ -724,8 +724,8 @@ public class OrderManagementService {
         return "OrderManagementService{" +
                 "totalAmount=" + totalAmount +
                 ", orderManagementRepository=" + orderManagementRepository +
-                ", orderHistoryHeaderRepository=" + orderHistoryHeaderRepository +
-                ", orderHistoryLineRepository=" + orderHistoryLineRepository +
+                ", historyOrderHeaderRepository=" + historyOrderHeaderRepository +
+                ", historyOrderLineRepository=" + historyOrderLineRepository +
                 ", shoppingCartRepository=" + shoppingCartRepository +
                 ", shoppingCartService=" + shoppingCartService +
                 '}';

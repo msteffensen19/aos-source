@@ -11,9 +11,9 @@ import java.util.List;
  * @author Moti Ostrovski on 30/05/2016.
  */
 @Component
-@Qualifier("orderHistoryHeaderManagementRepository")
+@Qualifier("orderHistoryHeaderRepository")
 @Repository
-public class DefaultOrderHistoryHeaderRepository extends AbstractRepository implements OrderHistoryHeaderRepository {
+public class DefaultHistoryOrderHeaderRepository extends AbstractRepository implements HistoryOrderHeaderRepository {
 
     @Override
     public List<OrderHeader> getAll() {
