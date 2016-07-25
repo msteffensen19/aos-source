@@ -1,14 +1,18 @@
 package com.advantage.order.store.dao;
 
 import com.advantage.order.store.model.OrderHeader;
+import com.advantage.order.store.model.OrderLines;
+import com.advantage.root.util.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Moti Ostrovski on 30/05/2016.
+ * @author Binyamin Regev on 24/07/2016.
  */
 @Component
 @Qualifier("orderHistoryHeaderRepository")
@@ -49,23 +53,4 @@ public class DefaultHistoryOrderHeaderRepository extends AbstractRepository impl
         return orderHeaders;
     }
 
-    @Override
-    public List<OrderHeader> getAllOrdersLines() {
-        return null;
-    }
-
-    @Override
-    public List<OrderHeader> getOrdersLinesByUserId(long userId) {
-        return null;
-    }
-
-    @Override
-    public List<OrderHeader> getOrdersLinesByOrderId(long orderId) {
-        return null;
-    }
-
-    @Override
-    public List<OrderHeader> getOrdersLinesByOrderIdAndUserId(long orderId, long userId) {
-        return null;
-    }
 }

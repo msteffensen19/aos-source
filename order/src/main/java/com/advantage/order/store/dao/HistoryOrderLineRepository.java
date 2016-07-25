@@ -12,8 +12,11 @@ public interface HistoryOrderLineRepository {
 
     List<OrderLines> getAll();
 
-    List<OrderLines> getHistoryOrderLinesByOrderId(long orderId);
+    List<OrderLines> getHistoryOrdersLinesByOrderId(long orderId);
 
-    List<OrderLines> getHistoryOrderLinesByUserId(long userId);
+    List<OrderLines> getHistoryOrdersLinesByUserId(long userId);
+
+    List<OrderLines> getHistoryOrdersLinesByOrderIdAndUserId(long orderId,long userId);
+
 
 }
