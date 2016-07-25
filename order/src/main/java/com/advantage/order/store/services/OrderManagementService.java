@@ -688,26 +688,26 @@ public class OrderManagementService {
             try {
 
                 orderHistoryHeaders.forEach(order -> {
-                    OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+                    OrderHistoryHeaderDto orderHistoryHeaderDto = new OrderHistoryHeaderDto();
                     //get products by orderID
                     List<OrderLines> orderLines = orderHistoryLineManagementRepository.getAllOrderLinesByOrderId(order.getOrderNumber());
 //
                     //set order fields
-                    orderHistoryDto.setOrderNumber(order.getOrderNumber());
-                    orderHistoryDto.setOrderTimestamp(order.getOrderTimestamp());
-                    orderHistoryDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
-                    orderHistoryDto.setPaymentMethod(order.getPaymentMethod());
-                    orderHistoryDto.setOrderTotalSum(order.getAmount());
-                    orderHistoryDto.setOrderShipingCost(order.getShippingCost());
-                    orderHistoryDto.setShippingAddress(order.getShippingAddress());
+                    orderHistoryHeaderDto.setOrderNumber(order.getOrderNumber());
+                    orderHistoryHeaderDto.setOrderTimestamp(order.getOrderTimestamp());
+                    orderHistoryHeaderDto.setShippingTrackingNumber(order.getShippingTrackingNumber());
+                    orderHistoryHeaderDto.setPaymentMethod(order.getPaymentMethod());
+                    orderHistoryHeaderDto.setOrderTotalSum(order.getAmount());
+                    orderHistoryHeaderDto.setOrderShipingCost(order.getShippingCost());
+                    orderHistoryHeaderDto.setShippingAddress(order.getShippingAddress());
                     //set user
-                    orderHistoryDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
+                    orderHistoryHeaderDto.setCustomer(new OrderHistoryAccountDto(order.getUserId(), order.getCustomerName(), order.getCustomerPhone()));
                     //set products
                     orderLines.forEach(product -> {
-                        orderHistoryDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
+                        orderHistoryHeaderDto.addOrderHistoryProductDto(new OrderHistoryProductDto(product.getProductId(), product.getProductName(), ShoppingCart.convertIntColorToHex(product.getProductColor()),
                                 product.getPricePerItem(), product.getQuantity(), product.getOrderNumber()));
                     });
-                    orderHistoryResponseDto.addOrderHistoryDto(orderHistoryDto);
+                    orderHistoryResponseDto.addOrderHistoryDto(orderHistoryHeaderDto);
                 });
             } catch (Exception e) {
                 logger.error(orderHistoryResponseDto, e);

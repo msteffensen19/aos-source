@@ -9,18 +9,18 @@ import java.util.List;
 public class OrderHistoryResponseDto {
 
     private String message;
-    List<OrderHistoryDto> ordersHistory;
+    List<OrderHistoryHeaderDto> ordersHistory;
 
     public OrderHistoryResponseDto(){
-        ordersHistory = new ArrayList<OrderHistoryDto>(){};
+        ordersHistory = new ArrayList<OrderHistoryHeaderDto>(){};
     }
 
-    public List<OrderHistoryDto> getOrdersHistory() {
-        ordersHistory = ordersHistory ==null ? new ArrayList<OrderHistoryDto>(){}: ordersHistory;
+    public List<OrderHistoryHeaderDto> getOrdersHistory() {
+        ordersHistory = ordersHistory ==null ? new ArrayList<OrderHistoryHeaderDto>(){}: ordersHistory;
         return ordersHistory;
     }
 
-    public void setOrdersHistory(List<OrderHistoryDto> ordersHistory) {
+    public void setOrdersHistory(List<OrderHistoryHeaderDto> ordersHistory) {
         this.ordersHistory = ordersHistory;
     }
 
@@ -32,8 +32,8 @@ public class OrderHistoryResponseDto {
         this.message = message;
     }
 
-    public void addOrderHistoryDto(OrderHistoryDto orderHistoryDto){
-        ordersHistory = ordersHistory ==null ? new ArrayList<OrderHistoryDto>(){}: ordersHistory;
-        ordersHistory.add(orderHistoryDto);
+    public void addOrderHistoryDto(OrderHistoryHeaderDto orderHistoryHeaderDto){
+        ordersHistory = ordersHistory ==null ? new ArrayList<OrderHistoryHeaderDto>(){}: ordersHistory;
+        ordersHistory.add(orderHistoryHeaderDto);
     }
 }

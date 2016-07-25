@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Moti Ostrovski on 24/05/2016.
  */
-public class OrderHistoryDto {
+public class OrderHistoryHeaderDto {
 
     private long orderNumber;
     private long orderTimestamp;
@@ -19,14 +19,14 @@ public class OrderHistoryDto {
     private List<OrderHistoryProductDto> products;
 
 
-    public OrderHistoryDto(){
+    public OrderHistoryHeaderDto(){
         initFields();
         products = new ArrayList<OrderHistoryProductDto>() {};
     }
 
-    public OrderHistoryDto(long orderNumber, long orderTimestamp, double shippingTrackingNumber,
-                           String paymentMethod, double orderTotalSum, double orderShipingCost,
-                           String shippingAddress, OrderHistoryAccountDto customer) {
+    public OrderHistoryHeaderDto(long orderNumber, long orderTimestamp, double shippingTrackingNumber,
+                                 String paymentMethod, double orderTotalSum, double orderShipingCost,
+                                 String shippingAddress, OrderHistoryAccountDto customer) {
         initFields();
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
@@ -39,11 +39,11 @@ public class OrderHistoryDto {
         products = new ArrayList<OrderHistoryProductDto>() {};
     }
 
-    public OrderHistoryDto(long orderNumber, long orderTimestamp,
-                           double shippingTrackingNumber, String paymentMethod,
-                           double orderTotalSum, double orderShipingCost,
-                           String shippingAddress, OrderHistoryAccountDto customer,
-                           List<OrderHistoryProductDto> products) {
+    public OrderHistoryHeaderDto(long orderNumber, long orderTimestamp,
+                                 double shippingTrackingNumber, String paymentMethod,
+                                 double orderTotalSum, double orderShipingCost,
+                                 String shippingAddress, OrderHistoryAccountDto customer,
+                                 List<OrderHistoryProductDto> products) {
         initFields();
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;

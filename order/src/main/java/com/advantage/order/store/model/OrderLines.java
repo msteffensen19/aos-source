@@ -108,6 +108,17 @@ public class OrderLines {
         this.quantity = quantity;
     }
 
+    public OrderLines(long userId, long orderNumber, Long productId, String productName, int productColor, int productColorName, double pricePerItem, int quantity) {
+        this.userId = userId;
+        this.orderNumber = orderNumber;
+        this.productId = productId;
+        this.productName = productName;
+        this.productColor = productColor;
+        this.productColorName = productColorName;
+        this.pricePerItem = pricePerItem;
+        this.quantity = quantity;
+    }
+
     public long getUserId() {
         return userId;
     }

@@ -6,21 +6,21 @@ import java.util.List;
  * @author Ostrovski Moti on 26/05/2016.
  */
 public class OrdersHistoryDto {
-    private List<OrderHistoryDto> ordersHistory;
+    private List<OrderHistoryHeaderDto> ordersHistory;
 
     //region constructors
     public OrdersHistoryDto(){}
 
-    public OrdersHistoryDto(List<OrderHistoryDto> ordersHistory) {
+    public OrdersHistoryDto(List<OrderHistoryHeaderDto> ordersHistory) {
         this.ordersHistory = ordersHistory;
     }
     //endregion constructor
 
-    public List<OrderHistoryDto> getOrdersHistory() {
+    public List<OrderHistoryHeaderDto> getOrdersHistory() {
         return ordersHistory;
     }
 
-    public void setOrdersHistory(List<OrderHistoryDto> ordersHistory) {
+    public void setOrdersHistory(List<OrderHistoryHeaderDto> ordersHistory) {
         this.ordersHistory = ordersHistory;
     }
 }
