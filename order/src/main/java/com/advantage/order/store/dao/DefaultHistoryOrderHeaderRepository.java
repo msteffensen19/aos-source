@@ -1,13 +1,11 @@
 package com.advantage.order.store.dao;
 
 import com.advantage.order.store.model.OrderHeader;
-import com.advantage.order.store.model.OrderLines;
-import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.order.store.model.OrderHeaderPk;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +16,13 @@ import java.util.List;
 @Qualifier("orderHistoryHeaderRepository")
 @Repository
 public class DefaultHistoryOrderHeaderRepository extends AbstractRepository implements HistoryOrderHeaderRepository {
+
+    public OrderHeader find(long userId, long orderId) {
+        OrderHeaderPk orderHeaderPk = new OrderHeaderPk(userId, orderId);
+        OrderHeader orderHeader = entityManager.find(OrderHeader.class, orderHeaderPk);
+
+        return orderHeader;
+    }
 
     @Override
     public List<OrderHeader> getAll() {

@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "order_lines")
-@IdClass(OrderLinesPK.class)
+@IdClass(OrderLinesPk.class)
 @NamedQueries({
         @NamedQuery(
                 name = OrderLines.QUERY_GET_ORDERS_LINES_BY_USER_ID,

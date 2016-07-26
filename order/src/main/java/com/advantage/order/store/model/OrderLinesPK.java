@@ -8,15 +8,15 @@ import java.io.Serializable;
  * @author Binyamin Regev on 06/01/2016.
  * @see OrderLines
  */
-public class OrderLinesPK implements Serializable {
+public class OrderLinesPk implements Serializable {
     private long userId;
     private long orderNumber;
     private Long productId;
     private int productColor;
 
-    public OrderLinesPK() { }
+    public OrderLinesPk() { }
 
-    public OrderLinesPK(long userId, long orderNumber, Long productId, int productColor) {
+    public OrderLinesPk(long userId, long orderNumber, Long productId, int productColor) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.productId = productId;
@@ -60,7 +60,7 @@ public class OrderLinesPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderLinesPK that = (OrderLinesPK) o;
+        OrderLinesPk that = (OrderLinesPk) o;
 
         if (getUserId() != that.getUserId()) return false;
         if (getOrderNumber() != that.getOrderNumber()) return false;

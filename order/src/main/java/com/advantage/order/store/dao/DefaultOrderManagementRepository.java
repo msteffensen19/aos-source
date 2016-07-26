@@ -7,7 +7,7 @@ import com.advantage.order.store.dto.OrderPurchaseResponse;
 import com.advantage.order.store.dto.OrderPurchasedProductInformation;
 import com.advantage.order.store.dto.OrderShippingInformation;
 import com.advantage.order.store.model.OrderHeader;
-import com.advantage.order.store.model.OrderHeaderPK;
+import com.advantage.order.store.model.OrderHeaderPk;
 import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
@@ -134,7 +134,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
 
     @Override
     public void updateUserOrderTrackingNumber(long userId, long orderNumber, long shippingTrackingNumber) {
-        OrderHeaderPK orderHeaderPk = new OrderHeaderPK(userId, orderNumber);
+        OrderHeaderPk orderHeaderPk = new OrderHeaderPk(userId, orderNumber);
         OrderHeader orderHeader = entityManager.find(OrderHeader.class, orderHeaderPk);
 
         //  Check if there is this ShoppingCart already exists

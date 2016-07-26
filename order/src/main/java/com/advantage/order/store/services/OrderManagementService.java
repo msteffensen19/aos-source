@@ -16,6 +16,7 @@ import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
+import com.advantage.root.util.StringHelper;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -695,7 +696,7 @@ public class OrderManagementService {
                 orderHistoryHeaders.forEach(order -> {
                     HistoryOrderHeaderDto historyOrderHeaderDto = new HistoryOrderHeaderDto();
                     //get products by orderID
-                    List<OrderLines> orderLines = historyOrderLineRepository.getHistoryOrderLinesByOrderId(order.getOrderNumber());
+                    List<OrderLines> orderLines = historyOrderLineRepository.getHistoryOrdersLinesByUserId(order.getOrderNumber());
 
                     //set order fields
                     historyOrderHeaderDto.setOrderNumber(order.getOrderNumber());
@@ -728,18 +729,49 @@ public class OrderManagementService {
 
         ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(userId, "user id");
 
-        HistoryOrderLinesDto historyOrderLinesDto = new HistoryOrderLinesDto();
-        List<HistoryOrderLineDto> orderLines;
-
         List<OrderLines> lines = new ArrayList<>();
 
         if (userId == 0) {
             lines = historyOrderLineRepository.getAll();
         } else {
-            lines = historyOrderHeaderRepository.getOrdersLinesByUserId(userId);
+            lines = historyOrderLineRepository.getHistoryOrdersLinesByUserId(userId);
         }
 
-        return null;
+        if (lines.size() == 0) {
+            return new HistoryOrderLinesDto();
+        }
+
+        HistoryOrderLinesDto historyOrderLinesDto = new HistoryOrderLinesDto();
+        List<HistoryOrderLineDto> orderLines = new ArrayList<HistoryOrderLineDto>();
+
+        historyOrderLinesDto.setUserId(userId);
+        historyOrderLinesDto.setOrderNumber(lines.get(0).getOrderNumber());
+        historyOrderLinesDto.setOrderLines(new ArrayList<HistoryOrderLineDto>());
+
+        long orderNumber = 0L;
+        long orderTimestamp = -1L;
+        StringBuilder orderDate = new StringBuilder("01/01/1970");
+
+        for (OrderLines line: lines) {
+            if (orderNumber != line.getOrderNumber()) {
+                orderNumber = line.getOrderNumber();
+                OrderHeader orderHeader = historyOrderHeaderRepository.find(userId, orderNumber);
+
+                if (orderHeader != null) {
+                    orderTimestamp = orderHeader.getOrderTimestamp();
+                    orderDate = new StringBuilder(StringHelper.convertDateToString(new Date(), "dd-mmm-yyyy"));
+                }
+            }
+            historyOrderLinesDto.addOrderLine(
+                    line.getUserId(),
+                    line.getOrderNumber(),
+                    line.getProductId(),
+                    line.getProductName(),
+                    line.getProductColor(),
+                    line.getPricePerItem(),
+                    line.getQuantity());
+        }
+        return historyOrderLinesDto;
     }
     //  endregion
 

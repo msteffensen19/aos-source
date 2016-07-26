@@ -1,18 +1,29 @@
 package com.advantage.order.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Binyamin Regev on on 24/07/2016.
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class HistoryOrderLinesDto {
 
+    @JsonProperty("UserId")
     private long userId;
+    @JsonProperty("OrderNumber")
     private long orderNumber;
+    @JsonIgnore
     private long orderTimestamp;
+    @JsonProperty("OrderDate")
     private Date orderDate;
+    @JsonProperty("TotalOrderPrice")
     private double totalPrice;
+    @JsonProperty("OrderLines")
     private List<HistoryOrderLineDto> orderLines;
 
 

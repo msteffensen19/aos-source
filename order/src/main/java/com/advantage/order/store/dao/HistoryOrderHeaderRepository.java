@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface HistoryOrderHeaderRepository {
 
+    OrderHeader find(long userId, long orderId);
+
     List<OrderHeader> getAll();
 
     List<OrderHeader> getOrdersHeaderByUserId(long userId);

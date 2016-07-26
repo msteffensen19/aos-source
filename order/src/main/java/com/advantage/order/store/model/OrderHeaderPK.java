@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
  * @author Binyamin Regev on 07/01/2016.
  */
-public class OrderHeaderPK implements Serializable {
+public class OrderHeaderPk implements Serializable {
     private long userId;
     private long orderNumber;
 
-    public OrderHeaderPK() { }
+    public OrderHeaderPk() { }
 
-    public OrderHeaderPK(long userId, long orderNumber) {
+    public OrderHeaderPk(long userId, long orderNumber) {
         this.userId = userId;
         this.orderNumber = orderNumber;
     }
@@ -21,7 +21,7 @@ public class OrderHeaderPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderHeaderPK that = (OrderHeaderPK) o;
+        OrderHeaderPk that = (OrderHeaderPk) o;
 
         if (userId != that.userId) return false;
         return orderNumber == that.orderNumber;
