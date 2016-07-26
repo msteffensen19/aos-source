@@ -597,7 +597,6 @@ public class OrderController {
         return new ResponseEntity<>(historyOrderResponseDto, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/carts/{userId}/orders/{orderId}", method = RequestMethod.POST)
     @ApiOperation(value = "Add old order to shopping cart")
     @AuthorizeAsUser
@@ -640,6 +639,28 @@ public class OrderController {
         }
 
         return new ResponseEntity<>(shoppingCartResponse, httpStatus);
+    }
+
+
+    @RequestMapping(value = "/orders/history/lines/users/{userId}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get orders history of orders-lines for userID")
+    public ResponseEntity<HistoryOrderLinesDto> getHistoryOrdersLines(@PathVariable("userId") Long userId,
+                                                                      HttpServletRequest request) {
+
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/orders/history/lines/users/{userId}".hashCode()),
+                    "Get orders history of orders-lines for userID", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        HistoryOrderLinesDto historyOrderLinesDto = orderManagementService.getHistoryOrdersLines(userId);
+
+        return new ResponseEntity<>(historyOrderLinesDto, httpStatus);
     }
 
     //  endregion
