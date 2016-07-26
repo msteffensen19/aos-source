@@ -3,6 +3,7 @@ package com.advantage.order.store.services;
 import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
+import com.advantage.common.dto.ProductDto;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.utils.LoggerUtils;
@@ -760,31 +761,34 @@ public class OrderManagementService {
                 if (orderHeader != null) {
                     orderTimestamp = orderHeader.getOrderTimestamp();
 
-                    Date date = new Date(orderTimestamp);
-
-                    String shortDate = "DefaultFormatLocale (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(date);
-                    String mediumDate = "DefaultFormatLocale (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(date);
-                    String fullDate = "DefaultFormatLocale (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault()).format(date);
-
-                    shortDate = "DefaultFormatLocale (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.UK).format(date);
-                    mediumDate = "DefaultFormatLocale (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK).format(date);
-                    fullDate = "DefaultFormatLocale (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.UK).format(date);
-
-                    shortDate = "United Kingdom (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.UK).format(date);
-                    mediumDate = "United Kingdom (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK).format(date);
-                    fullDate = "United Kingdom (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.UK).format(date);
-
-                    shortDate = "United States (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.US).format(date);
-                    mediumDate = "United States (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US).format(date);
-                    fullDate = "United States (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.US).format(date);
-
-                    shortDate = "Japan (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.JAPAN).format(date);
-                    mediumDate = "Japan (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.JAPAN).format(date);
-                    fullDate = "Japan (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.JAPAN).format(date);
-
-                    shortDate = "Root (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.ROOT).format(date);
-                    mediumDate = "Root (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.ROOT).format(date);
-                    fullDate = "Root (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.ROOT).format(date);
+                    //Date date = new Date(orderTimestamp);
+                    //
+                    //String shortDate = "DefaultFormatLocale (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(date);
+                    //String mediumDate = "DefaultFormatLocale (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(date);
+                    //String longDate = "DefaultFormatLocale (LONG): " + DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(date);
+                    //String fullDate = "DefaultFormatLocale (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault()).format(date);
+                    //
+                    //shortDate = "United Kingdom (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.UK).format(date);
+                    //mediumDate = "United Kingdom (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK).format(date);
+                    //longDate = "United Kingdom (LONG): " + DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date);
+                    //fullDate = "United Kingdom (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.UK).format(date);
+                    //
+                    //shortDate = "United States (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.US).format(date);
+                    //mediumDate = "United States (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US).format(date);
+                    //longDate = "United States (LONG): " + DateFormat.getDateInstance(DateFormat.LONG, Locale.US).format(date);
+                    //fullDate = "United States (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.US).format(date);
+                    //
+                    //shortDate = "Japan (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.JAPAN).format(date);
+                    //mediumDate = "Japan (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.JAPAN).format(date);
+                    //longDate = "Japan (LONG): " + DateFormat.getDateInstance(DateFormat.LONG, Locale.JAPAN).format(date);
+                    //fullDate = "Japan (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.JAPAN).format(date);
+                }
+            }
+            ProductDto dto = shoppingCartService.getProductDtoDetails(line.getProductId());
+            String productImageUrl = "";
+            if (dto != null) {
+                if ((dto.getImageUrl() != null) && (!dto.getImageUrl().isEmpty())) {
+                    productImageUrl = dto.getImageUrl();
                 }
             }
             historyOrderLinesDto.addOrderLine(
@@ -792,6 +796,7 @@ public class OrderManagementService {
                     line.getOrderNumber(),
                     orderTimestamp,
                     line.getProductId(),
+                    productImageUrl,
                     line.getProductName(),
                     line.getProductColor(),
                     line.getPricePerItem(),

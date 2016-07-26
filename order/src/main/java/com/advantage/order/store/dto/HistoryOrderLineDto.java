@@ -24,10 +24,15 @@ public class HistoryOrderLineDto {
     private String orderDate;
     @JsonProperty("ProductID")
     private Long productId;             //  From Product table in CATALOG schema
+    @JsonProperty("ProductImageUrl")
+    private String productImageUrl;
     @JsonProperty("ProductName")
     private String productName;         //  From Product table in CATALOG schema
-    @JsonProperty("ProductColorCode")
+    //@JsonProperty("ProductColor")
+    @JsonIgnore
     private int productColor;           //  RGB decimal value
+    @JsonProperty("ProductColorCode")
+    private String productColorCode;           //  RGB decimal value
     @JsonProperty("ProductColorName")
     private String productColorName;    //  Product Color Name
     @JsonProperty("PricePerUnit")
@@ -38,40 +43,46 @@ public class HistoryOrderLineDto {
     public HistoryOrderLineDto() {
     }
 
-    public HistoryOrderLineDto(long userId, long orderNumber, long orderTimestamp, Long productId, String productName, int productColor, double pricePerItem, int quantity) {
+    public HistoryOrderLineDto(long userId, long orderNumber, long orderTimestamp, Long productId, String productImageUrl, String productName, int productColor, double pricePerItem, int quantity) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
         this.orderDate = StringHelper.convertDateToString(new Date(orderTimestamp), "dd/MM/yyyy");
         this.productId = productId;
+        this.productImageUrl = productImageUrl;
         this.productName = productName;
         this.productColor = productColor;
+        this.productColorCode = ShoppingCart.convertIntColorToHex(productColor).toUpperCase();
         this.productColorName = ColorPalletEnum.getColorByCode(ShoppingCart.convertIntColorToHex(productColor)).getColorName();
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
     }
 
-    public HistoryOrderLineDto(long userId, long orderNumber, long orderTimestamp, Long productId, String productName, int productColor, String productColorName, double pricePerItem, int quantity) {
+    public HistoryOrderLineDto(long userId, long orderNumber, long orderTimestamp, Long productId, String productImageUrl, String productName, int productColor, String productColorName, double pricePerItem, int quantity) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
-        this.orderDate = StringHelper.convertDateToString(new Date(orderTimestamp), "dd-mmm-yyyy");
+        this.orderDate = StringHelper.convertDateToString(new Date(orderTimestamp), "dd/MM/yyyy");
         this.productId = productId;
+        this.productImageUrl = productImageUrl;
         this.productName = productName;
         this.productColor = productColor;
+        this.productColorCode = ShoppingCart.convertIntColorToHex(productColor).toUpperCase();
         this.productColorName = productColorName;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
     }
 
-    public HistoryOrderLineDto(long userId, long orderNumber, long orderTimestamp, String orderDate, Long productId, String productName, int productColor, String productColorName, double pricePerItem, int quantity) {
+    public HistoryOrderLineDto(long userId, long orderNumber, long orderTimestamp, String orderDate, Long productId, String productImageUrl, String productName, int productColor, String productColorName, double pricePerItem, int quantity) {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
         this.orderDate = orderDate;
         this.productId = productId;
+        this.productImageUrl = productImageUrl;
         this.productName = productName;
         this.productColor = productColor;
+        this.productColorCode = ShoppingCart.convertIntColorToHex(productColor).toUpperCase();
         this.productColorName = productColorName;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
@@ -117,6 +128,14 @@ public class HistoryOrderLineDto {
         this.productId = productId;
     }
 
+    public String getProductImageUrl() {
+        return productImageUrl;
+    }
+
+    public void setProductImageUrl(String productImageUrl) {
+        this.productImageUrl = productImageUrl;
+    }
+
     public String getProductName() {
         return productName;
     }
@@ -131,6 +150,14 @@ public class HistoryOrderLineDto {
 
     public void setProductColor(int productColor) {
         this.productColor = productColor;
+    }
+
+    public String getProductColorCode() {
+        return productColorCode;
+    }
+
+    public void setProductColorCode(String productColorCode) {
+        this.productColorCode = productColorCode;
     }
 
     public String getProductColorName() {

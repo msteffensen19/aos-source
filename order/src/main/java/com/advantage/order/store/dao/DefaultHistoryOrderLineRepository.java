@@ -42,7 +42,7 @@ public class DefaultHistoryOrderLineRepository extends AbstractRepository implem
     /**
      * Get history of orders lines by user-id. <br/>
      * This retrieve includes demonstration of <b><i>Memory Leak</b></i> in
-     * {@link OrderManagementService} class.
+     * {@code OrderManagementService} class.
      * @param userId Unique identifier of user account, or 0 for all orders of all users.
      * @return {@link List} or {@link OrderLines}
      */

@@ -120,12 +120,13 @@ public class HistoryOrderLinesDto {
         orderLines.add(orderLine);
     }
 
-    public void addOrderLine(long userId, long orderNumber, long orderTimestamp, Long productId, String productName, int productColor, double pricePerItem, int quantity) {
+    public void addOrderLine(long userId, long orderNumber, long orderTimestamp, Long productId, String productImageUrl, String productName, int productColor, double pricePerItem, int quantity) {
         addOrderLine(new HistoryOrderLineDto(
                 userId,
                 orderNumber,
                 orderTimestamp,
                 productId,
+                productImageUrl,
                 productName,
                 productColor,
                 pricePerItem,
