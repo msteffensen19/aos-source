@@ -750,7 +750,6 @@ public class OrderManagementService {
 
         long orderNumber = 0L;
         long orderTimestamp = -1L;
-        StringBuilder orderDate = new StringBuilder("01/01/1970");
 
         for (OrderLines line: lines) {
             if (orderNumber != line.getOrderNumber()) {
@@ -759,12 +758,12 @@ public class OrderManagementService {
 
                 if (orderHeader != null) {
                     orderTimestamp = orderHeader.getOrderTimestamp();
-                    orderDate = new StringBuilder(StringHelper.convertDateToString(new Date(), "dd-mmm-yyyy"));
                 }
             }
             historyOrderLinesDto.addOrderLine(
                     line.getUserId(),
                     line.getOrderNumber(),
+                    orderTimestamp,
                     line.getProductId(),
                     line.getProductName(),
                     line.getProductColor(),
