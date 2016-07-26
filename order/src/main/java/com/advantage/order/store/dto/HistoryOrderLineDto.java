@@ -42,7 +42,7 @@ public class HistoryOrderLineDto {
         this.userId = userId;
         this.orderNumber = orderNumber;
         this.orderTimestamp = orderTimestamp;
-        this.orderDate = StringHelper.convertDateToString(new Date(orderTimestamp), "dd-mmm-yyyy");
+        this.orderDate = StringHelper.convertDateToString(new Date(orderTimestamp), "dd/MM/yyyy");
         this.productId = productId;
         this.productName = productName;
         this.productColor = productColor;

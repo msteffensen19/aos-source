@@ -36,6 +36,7 @@ import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -758,6 +759,32 @@ public class OrderManagementService {
 
                 if (orderHeader != null) {
                     orderTimestamp = orderHeader.getOrderTimestamp();
+
+                    Date date = new Date(orderTimestamp);
+
+                    String shortDate = "DefaultFormatLocale (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(date);
+                    String mediumDate = "DefaultFormatLocale (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(date);
+                    String fullDate = "DefaultFormatLocale (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault()).format(date);
+
+                    shortDate = "DefaultFormatLocale (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.UK).format(date);
+                    mediumDate = "DefaultFormatLocale (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK).format(date);
+                    fullDate = "DefaultFormatLocale (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.UK).format(date);
+
+                    shortDate = "United Kingdom (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.UK).format(date);
+                    mediumDate = "United Kingdom (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.UK).format(date);
+                    fullDate = "United Kingdom (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.UK).format(date);
+
+                    shortDate = "United States (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.US).format(date);
+                    mediumDate = "United States (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US).format(date);
+                    fullDate = "United States (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.US).format(date);
+
+                    shortDate = "Japan (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.JAPAN).format(date);
+                    mediumDate = "Japan (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.JAPAN).format(date);
+                    fullDate = "Japan (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.JAPAN).format(date);
+
+                    shortDate = "Root (SHORT): " + DateFormat.getDateInstance(DateFormat.SHORT, Locale.ROOT).format(date);
+                    mediumDate = "Root (MEDIUM): " + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.ROOT).format(date);
+                    fullDate = "Root (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.ROOT).format(date);
                 }
             }
             historyOrderLinesDto.addOrderLine(

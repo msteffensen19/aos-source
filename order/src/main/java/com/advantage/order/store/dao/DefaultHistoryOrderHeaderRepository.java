@@ -13,7 +13,7 @@ import java.util.List;
  * @author Binyamin Regev on 24/07/2016.
  */
 @Component
-@Qualifier("orderHistoryHeaderRepository")
+@Qualifier("historyOrderHeaderRepository")
 @Repository
 public class DefaultHistoryOrderHeaderRepository extends AbstractRepository implements HistoryOrderHeaderRepository {
 

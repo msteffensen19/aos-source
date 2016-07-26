@@ -17,10 +17,12 @@ import java.util.Map;
 
 @Configuration
 @ComponentScan({"com.advantage.order.store.services",
-        "com.advantage.order.store.dao"/*,
+        "com.advantage.order.store.dao",
+        "com.advantage.order.store.model",
+        "com.advantage.order_test.online.store.util"/*,
         "com.advantage.order.store.user.dao",
-        "com.advantage.order.store.user.model",
-        "com.advantage.order.store.init"*/})
+        "com.advantage.order.store.user.model"*/,
+        "com.advantage.order.store.init"})
 public class AdvantageTestContextConfiguration {
 
     @Autowired
