@@ -803,13 +803,14 @@ public class OrderManagementService {
 
         }
 
+        //  region Generate_memory_leak
         String stringValue = shoppingCartService.getDemoAppConfigParameterValue("Generate_memory_leak");
         if ((stringValue != null) && (!stringValue.isEmpty()) && (stringValue.equals("0"))) {
             Feature1779OrdersHistory ordersHistory = new Feature1779OrdersHistory(Integer.valueOf(stringValue).intValue());
 
             ordersHistory.generateMemoryLeak(Integer.valueOf(stringValue).intValue());
         }
-        //RestApiHelper
+        //  endregion
 
         return historyOrderLinesDto;
     }
