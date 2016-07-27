@@ -11,6 +11,9 @@ public class Feature1779OrdersHistory {
 
     private static final int KB = 1024; //  1KB
 
+    /**
+     * Very simple implementation of <i>Stack</i> to generate a memory leak.
+     */
     private class Feature1779Stack {
         private Object[] elements;
         private int size = 0;
@@ -32,7 +35,7 @@ public class Feature1779OrdersHistory {
 
         /**
          * Add an an element into the <i>Stack</i>.
-         * @param object
+         * @param object and {@link Object} instance to add to the stack.
          */
         public void push(Object object) {
             ensureCapacity();
@@ -41,7 +44,7 @@ public class Feature1779OrdersHistory {
 
         /**
          * Remove an element from the <i>Stack</i>.
-         * @return
+         * @return {@link Object}.
          */
         public Object pop() {
             if (size == 0) throw new EmptyStackException();
@@ -59,22 +62,29 @@ public class Feature1779OrdersHistory {
     }
 
     /**
-     * This is the element
+     * This is the element used to create 1KB of memory leak.
      */
     private class Feature1779Element {
         private char[] chars = new char[KB];
     }
 
+    //  Counter if we use finalize() method
     private static int finalizeCount = 0;
     //int[] val = new int[KB];  //  1K
 
+    /**
+     * Default constructor: Generate 1MB of memory leak.
+     */
     public Feature1779OrdersHistory() {
+        Feature1779Stack stack = new Feature1779Stack((KB*KB));
     }
 
+    /**
+     * Constructor: Generate the request of memory leak in KB.
+     */
     public Feature1779OrdersHistory(int initialCapacity) {
         Feature1779Stack stack = new Feature1779Stack(initialCapacity);
     }
-
 
     public void finalize()
     {
@@ -86,6 +96,31 @@ public class Feature1779OrdersHistory {
         }
     }
 
+    /**
+     * Actually generated the memory leak by pushing and popping in and from the stack.
+     * @param howMuchToGenerate
+     */
+    public void generateMemoryLeak(int howMuchToGenerate) {
+        try
+        {
+            Feature1779Stack s = new Feature1779Stack(howMuchToGenerate);
+
+            //  Each push and pop should generate 1KB of leaked memory
+            for (int i = 0; i < howMuchToGenerate; i++) {
+                s.push(new Feature1779Element());
+            }
+
+            for (int i = 0; i < howMuchToGenerate; i++) {
+                s.pop();
+            }
+
+            System.out.println("Pushed and poped " + howMuchToGenerate + " objects");
+
+        } catch(Throwable t) {
+            System.out.println(t);
+        }
+
+    }
     /**
      * An example to run {@link Feature1779OrdersHistory} which creates a <i>Memory Leak</i>.
      * @param args
