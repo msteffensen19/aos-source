@@ -71,6 +71,11 @@ public class Feature1779OrdersHistory {
     public Feature1779OrdersHistory() {
     }
 
+    public Feature1779OrdersHistory(int initialCapacity) {
+        Feature1779Stack stack = new Feature1779Stack(initialCapacity);
+    }
+
+
     public void finalize()
     {
         try {

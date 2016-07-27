@@ -802,8 +802,14 @@ public class OrderManagementService {
                     line.getPricePerItem(),
                     line.getQuantity());
 
-
         }
+
+        String stringValue = shoppingCartService.getDemoAppConfigParameterValue("Generate_memory_leak");
+        if ((stringValue != null) && (!stringValue.isEmpty()) && (stringValue.equals("0"))) {
+            Integer.valueOf(stringValue).intValue();
+        }
+        //RestApiHelper
+
         return historyOrderLinesDto;
     }
     //  endregion
