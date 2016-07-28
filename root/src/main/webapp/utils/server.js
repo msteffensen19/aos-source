@@ -304,7 +304,7 @@ var server = {
         ,
 
         safePay: function (userId) {
-            var paramToReturn = orderKey + "orders/users/" + userId;
+            var paramToReturn = orderKey + "orders/history/lines/users/" + userId;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         }
@@ -324,6 +324,13 @@ var server = {
     }
     ,
     account: {
+
+        getOrders: function (userId) {
+            var paramToReturn = orderKey + "orders/history/lines/users/" + userId;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        }
+        ,
 
         getAllCountries: function () {
             var wsdlToReturn = {

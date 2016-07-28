@@ -6,5 +6,6 @@
 define([
     './myAccountCtrl',
     './accountDetailsCtrl',
-    './accountPaymentEditCtrl'
+    './accountPaymentEditCtrl',
+    './myOrdersCtrl'
 ], function() {});

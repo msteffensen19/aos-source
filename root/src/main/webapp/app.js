@@ -103,11 +103,13 @@ define([
                 }
             }
 
-            $rootScope.$on('$stateChangeError', function (a, b, c, d) {
+            $rootScope.$on('$stateChangeError', function (a, b, c, d, e, f) {
                 console.log(a);
                 console.log(b);
                 console.log(c);
                 console.log(d);
+                console.log(e);
+                console.log(f);
                 //$state.go('404');
             });
 
