@@ -140,9 +140,9 @@ public class AccountserviceEndpoint {
     public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
         //todo set header
         int delayRequest = dynamicConfiguration.getDelayLength(loggedUsers + 1);
-
+        logger.debug("delayRequest = " + delayRequest + " sec.");
         try {
-            Thread.sleep(delayRequest);
+            Thread.sleep(delayRequest * 1000);
         } catch (InterruptedException e) {
             logger.fatal(e);
         }

@@ -176,7 +176,7 @@ public class DynamicConfiguration {
                 logger.trace(output);
             }
             conn.disconnect();
-            logger.debug("Disconnected");
+            logger.trace("Disconnected");
 
             Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
             value = ((String) jsonMap.get("parameterValue"));
