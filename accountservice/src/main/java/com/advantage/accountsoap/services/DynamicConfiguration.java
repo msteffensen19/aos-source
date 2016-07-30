@@ -19,17 +19,19 @@ import java.util.Map;
 
 @Service
 public class DynamicConfiguration {
+    private static final String XML_SLA_ADD_DELAY_SESSIONS_PARAMNAME = "SLA_add_delay_sessions";
+    private static final String XML_SLA_ADD_DELAY_TIME_PARAMNAME = "SLA_add_delay_time";
+    private static final String XML_MAX_CONCURRENT_USERS_PARAMNAME = "Max_Concurrent_Sessions";
+    private static final int DEFAULT_DELAY = 0;
+
+    private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY = 20;
+    private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT = 1000;
 
     private static final Logger logger = Logger.getLogger(DynamicConfiguration.class);
-    private static final String XML_SLA_ADD_DELAY_SESSIONS = "SLA_add_delay_sessions";
-    private static final String XML_SLA_ADD_DELAY_TIME = "SLA_add_delay_time";
-    private static final int DEFAULT_DELAY = 0;
-    private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY = 20;
-    private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT = 0;
 
     @Autowired
     @Qualifier("accountConfiguration")
-    public AccountConfiguration accountConfiguration;
+    private AccountConfiguration accountConfiguration;
 
 //    @Autowired
 //    private Environment env;
@@ -43,6 +45,7 @@ public class DynamicConfiguration {
     // Valid values: 0-n, default=20.
     //For LoadRunner and StormRunner
     private int numberOfSessionsToDelay;
+
     private int numberOfSessionsToReject;
 
     public DynamicConfiguration() {
@@ -95,12 +98,17 @@ public class DynamicConfiguration {
             numberOfSessionsToDelay = DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY;
             numberOfSessionsToReject = DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT;
         }
-        logger.debug("delayLength = " + delayLength);
-        logger.debug("numberOfSessionsToDelay = " + numberOfSessionsToDelay);
+        if (logger.isDebugEnabled()) {
+            StringBuffer sb = new StringBuffer();
+            sb.append("delayLength = ").append(delayLength).append(System.lineSeparator());
+            sb.append("numberOfSessionsToDelay = ").append(numberOfSessionsToDelay).append(System.lineSeparator());
+            sb.append("numberOfSessionsToReject = ").append(numberOfSessionsToReject);
+            logger.debug(sb.toString());
+        }
     }
 
     private int requestFromCatalogDelayCartResponse() {
-        String delay = getCatalogConfigParameter(XML_SLA_ADD_DELAY_TIME);
+        String delay = getCatalogConfigParameter(XML_SLA_ADD_DELAY_TIME_PARAMNAME);
         if (delay == null) {
             return DEFAULT_DELAY;
         }
@@ -113,11 +121,25 @@ public class DynamicConfiguration {
     }
 
     private int requestFromCatalogNumberOfSessionsToReject() {
-        return 5;
+        String maxUsers = getCatalogConfigParameter(XML_MAX_CONCURRENT_USERS_PARAMNAME);
+        if (maxUsers == null) {
+            return DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT;
+        }
+        try {
+            int i = Integer.parseInt(maxUsers);
+            if (i == -1) {
+                return DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT;
+            } else {
+                return i;
+            }
+        } catch (NumberFormatException e) {
+            logger.warn(maxUsers + " is not a number");
+            return DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT;
+        }
     }
 
     private int requestFromCatalogNumberOfSessionsToDelay() {
-        String numberOfSessions = getCatalogConfigParameter(XML_SLA_ADD_DELAY_SESSIONS);
+        String numberOfSessions = getCatalogConfigParameter(XML_SLA_ADD_DELAY_SESSIONS_PARAMNAME);
         if (numberOfSessions == null) {
             return DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY;
         }
