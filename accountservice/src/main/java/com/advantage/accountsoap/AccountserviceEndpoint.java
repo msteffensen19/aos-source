@@ -47,7 +47,11 @@ public class AccountserviceEndpoint {
     @Autowired
     private AccountConfigurationService accountConfigurationService;
 
+    @Autowired
+    private DynamicConfiguration dynamicConfiguration;
+
     private static final Logger logger = Logger.getLogger(AccountserviceEndpoint.class);
+    private int loggedUsers;
 
     public AccountserviceEndpoint() {
         logger.info(" *********************************** \n" +
@@ -135,38 +139,40 @@ public class AccountserviceEndpoint {
     @ResponsePayload
     public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
         //todo set header
+        int delayRequest = dynamicConfiguration.getDelayLength(loggedUsers + 1);
 
-        AccountStatusResponse response = accountService.doLogin(account.getLoginUser(),
-                account.getLoginPassword(),
-                account.getEmail());
+        try {
+            Thread.sleep(delayRequest);
+        } catch (InterruptedException e) {
+            logger.fatal(e);
+        }
 
-        if (response.isSuccess()) {
-            //TODO-ALEX set session
-            /*HttpSession session = request.getSession();
-            session.setAttribute(Constants.UserSession.TOKEN, response.getBase64Token());
-            session.setAttribute(Constants.UserSession.USER_ID, response.getUserId());
-            session.setAttribute(Constants.UserSession.IS_SUCCESS, response.isSuccess());
+        if (!dynamicConfiguration.needReject(loggedUsers + 1)) {
+            AccountStatusResponse response = accountService.doLogin(account.getLoginUser(),
+                    account.getLoginPassword(),
+                    account.getEmail());
 
-            //  Set SessionID to Response Entity
-            //response.getHeader().
-            response.setSessionId(session.getAccountId());*/
-            //response.setSessionId("session_id");
-            Date date = new Date();
-            String stringDate = StringHelper.convertDateToString(date, "yyyy.MM.dd.hh.mm.ss");
+            if (response.isSuccess()) {
+                Date date = new Date();
+                StringBuilder sessionId = new StringBuilder(Long.toHexString(date.getTime()))
+                        .append(Constants.AT_SIGN)
+                        .append(StringHelper.convertDateToStringHexadecimal(date))
+                        .append(Constants.POWER)
+                        .append("i")
+                        .append(Constants.MODULU)
+                        .append(response.getUserId());
 
-            StringBuilder sessionId = new StringBuilder(Long.toHexString(date.getTime()))
-                    .append(Constants.AT_SIGN)
-                    .append(StringHelper.convertDateToStringHexadecimal(date))
-                    .append(Constants.POWER)
-                    .append("i")
-                    .append(Constants.MODULU)
-                    .append(response.getUserId());
+                response.setSessionId(sessionId.toString());
+                loggedUsers++;
+                return new AccountLoginResponse(response);
+            } else {
+                return new AccountLoginResponse(response);
+            }
 
-            response.setSessionId(sessionId.toString());
-
-            return new AccountLoginResponse(response);
         } else {
-            return new AccountLoginResponse(response);
+            //TODO-EVG change message
+            logger.warn("Reject login request");
+            return new AccountLoginResponse(new AccountStatusResponse(false, "Maximum number logged users", -1));
         }
     }
 
@@ -195,6 +201,7 @@ public class AccountserviceEndpoint {
 //            } else {
 //                return new AccountLogoutResponse(response);
 //            }
+        loggedUsers = loggedUsers > 0 ? loggedUsers - 1 : 0;
         return new AccountLogoutResponse(response);
 
     }

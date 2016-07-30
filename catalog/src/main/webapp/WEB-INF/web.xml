@@ -99,11 +99,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <listener>
-        <listener-class>
-            com.advantage.catalog.store.listener.SessionCounterServletRequestListener
-        </listener-class>
-    </listener>
+    <!--<listener>-->
+    <!--<listener-class>-->
+    <!--com.advantage.catalog.store.listener.SessionCounterServletRequestListener-->
+    <!--</listener-class>-->
+    <!--</listener>-->
 
     <session-config>
         <session-timeout>60</session-timeout>

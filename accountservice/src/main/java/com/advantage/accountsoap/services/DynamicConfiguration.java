@@ -1,10 +1,13 @@
-package com.advantage.order.store.config;
+package com.advantage.accountsoap.services;
 
+import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.common.Url_resources;
-import com.advantage.order.store.listener.SessionCounterServletRequestListener;
 import com.advantage.root.util.JsonHelper;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,66 +17,89 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+@Service
 public class DynamicConfiguration {
 
     private static final Logger logger = Logger.getLogger(DynamicConfiguration.class);
     private static final String XML_SLA_ADD_DELAY_SESSIONS = "SLA_add_delay_sessions";
     private static final String XML_SLA_ADD_DELAY_TIME = "SLA_add_delay_time";
     private static final int DEFAULT_DELAY = 0;
-    private static final int DEFAULT_NUMBER_OF_SESSIONS = 20;
+    private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY = 20;
+    private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT = 0;
+
+    @Autowired
+    @Qualifier("accountConfiguration")
+    public AccountConfiguration accountConfiguration;
+
+//    @Autowired
+//    private Environment env;
 
     // "SLA: Add delay in add to log in response time (seconds)":
     // 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time
-    private int delayResponse;
+    private int delayLength;
 
     //This parameter is enabled only if "SLA: Add delay in add to cart response time (seconds)" is greater than zero.
     // The system will start adding the delay if the number of sessions will be higher than this value and will stop the delay when the number of sessions will go back down.
     // Valid values: 0-n, default=20.
     //For LoadRunner and StormRunner
-    private int numberOfSessionsToAddTheDelay;
+    private int numberOfSessionsToDelay;
+    private int numberOfSessionsToReject;
 
     public DynamicConfiguration() {
         if (logger.isTraceEnabled()) {
             logger.trace("Constructor, objectId=" + ((Object) this).toString());
         }
-        readConfiguration();
     }
 
-    public int getDelay() {
+    public int getDelayLength(int sessionsNumber) {
         //DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
-        int activeOrderRequests = SessionCounterServletRequestListener.getActiveSessionsByRequestListener();
+        readConfiguration();
         int result = DEFAULT_DELAY;
-
         if (logger.isDebugEnabled()) {
-            logger.debug("REAL delayResponse = " + delayResponse + " sec.");
-            logger.debug("REAL numberOfSessionsToAddTheDelay = " + numberOfSessionsToAddTheDelay);
-            logger.debug("REAL activeOrderRequests = " + activeOrderRequests);
+            logger.debug("REAL delayLength = " + delayLength + " sec.");
+            logger.debug("REAL numberOfSessionsToDelay = " + numberOfSessionsToDelay);
+            logger.debug("REAL sessionsNumber = " + sessionsNumber);
         }
+        if (sessionsNumber > numberOfSessionsToDelay) {
+            result = delayLength;
+        }
+        logger.info(String.format("Current %d users, max to delay is %d, the delay length is %d seconds.",
+                sessionsNumber, numberOfSessionsToDelay, result));
+        return result;
+    }
 
-        if (activeOrderRequests > numberOfSessionsToAddTheDelay) {
-            result = delayResponse;
+    public boolean needReject(int currentLogingUsersNumber) {
+        readConfiguration();
+        boolean result;
+        if (numberOfSessionsToReject == 0) {
+            result = false;
+        } else {
+            result = currentLogingUsersNumber > numberOfSessionsToReject;
         }
-        logger.info("REAL actualDelay = " + result + " sec.");
+        logger.info(String.format("Current logged %d users, max allow users = %d, so needReject = %b",
+                currentLogingUsersNumber, numberOfSessionsToReject, result));
         return result;
     }
 
     private void readConfiguration() {
-        if (DemoAppConfiguration.isAllowUserConfiguration()) {
-            delayResponse = getFromCatalogDelayCartResponse();
-            if (delayResponse > 0) {
-                numberOfSessionsToAddTheDelay = getFromCatalogNumberOfSessions();
+        if (accountConfiguration.getAllowUserConfiguration().equalsIgnoreCase("yes")) {
+            delayLength = requestFromCatalogDelayCartResponse();
+            if (delayLength > 0) {
+                numberOfSessionsToDelay = requestFromCatalogNumberOfSessionsToDelay();
             } else {
-                numberOfSessionsToAddTheDelay = 0;
+                numberOfSessionsToDelay = 0;
             }
+            numberOfSessionsToReject = requestFromCatalogNumberOfSessionsToReject();
         } else {
-            delayResponse = DEFAULT_DELAY;
-            numberOfSessionsToAddTheDelay = DEFAULT_NUMBER_OF_SESSIONS;
+            delayLength = DEFAULT_DELAY;
+            numberOfSessionsToDelay = DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY;
+            numberOfSessionsToReject = DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT;
         }
-        logger.debug("delayResponse = " + delayResponse);
-        logger.debug("numberOfSessionsToAddTheDelay = " + numberOfSessionsToAddTheDelay);
+        logger.debug("delayLength = " + delayLength);
+        logger.debug("numberOfSessionsToDelay = " + numberOfSessionsToDelay);
     }
 
-    private int getFromCatalogDelayCartResponse() {
+    private int requestFromCatalogDelayCartResponse() {
         String delay = getCatalogConfigParameter(XML_SLA_ADD_DELAY_TIME);
         if (delay == null) {
             return DEFAULT_DELAY;
@@ -86,16 +112,20 @@ public class DynamicConfiguration {
         }
     }
 
-    private int getFromCatalogNumberOfSessions() {
+    private int requestFromCatalogNumberOfSessionsToReject() {
+        return 5;
+    }
+
+    private int requestFromCatalogNumberOfSessionsToDelay() {
         String numberOfSessions = getCatalogConfigParameter(XML_SLA_ADD_DELAY_SESSIONS);
         if (numberOfSessions == null) {
-            return DEFAULT_NUMBER_OF_SESSIONS;
+            return DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY;
         }
         try {
             return Integer.parseInt(numberOfSessions);
         } catch (NumberFormatException e) {
             logger.warn(numberOfSessions + " is not a number");
-            return DEFAULT_NUMBER_OF_SESSIONS;
+            return DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY;
         }
     }
 
