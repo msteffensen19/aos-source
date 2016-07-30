@@ -202,6 +202,7 @@ public class AccountserviceEndpoint {
 //                return new AccountLogoutResponse(response);
 //            }
         loggedUsers = loggedUsers > 0 ? loggedUsers - 1 : 0;
+        logger.info("Current login users = " + loggedUsers);
         return new AccountLogoutResponse(response);
 
     }
