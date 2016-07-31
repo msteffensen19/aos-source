@@ -1,63 +1,69 @@
 
 .myOrderSection .cover{
-    margin: 0 auto;
+    margin: 50px auto;
     max-width: 1100px;
 }
 
-.myOrderSection .ordersTable{
-    display: table;
+.myOrderSection .cover table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.myOrderSection .cover table{
     width: 100%;
 }
 
-.myOrderSection .orderRow{
-    display: table-row;
-    vertical-align:middle;
+.myOrderSection tr:not(.innerTr) td {
+    border-top: 1px solid rgba(189, 189, 187, 1);
 }
 
-.myOrderSection .orderCell{
-    display: table-cell;
-    vertical-align:middle;
-    box-shadow: 0 1px 0 0 #d0d0d0;
-}
-
-.myOrderSection .orderCellX3{
-}
-
-.myOrderSection .productCell{
-    display: table-cell;
-    width: calc(100% / 3);
-}
-
-
-.myOrderSection .orderCell label{
+.myOrderSection .cover table label{
     display: block;
     color: #2a2a2a;
-    text-align: center;
     padding: 12px;
 }
 
-.myOrderSection .orderRow.title .orderCell label{
+.myOrderSection .cover table td.center{
+    text-align: center;
+}
+
+.myOrderSection .cover table th.right,
+.myOrderSection .cover table td.right{
+    text-align: right;
+}
+
+.myOrderSection .cover table th label{
     font-size: 11px;
 }
 
-.myOrderSection .orderRow.products .orderCell label{
+.myOrderSection .cover table img{
+    padding: 18px 10px;
+    display: inline-block;
+    width:100px;
+}
+
+.myOrderSection .cover table td label{
     font-size: 16px;
 }
 
-.myOrderSection .orderCell label.alignleft{
-    position: relative;
+.myOrderSection .cover table td.left{
     text-align: left;
     box-shadow: 0 0 1px 0 green inset;
 }
 
-.myOrderSection .orderCell label.alignleft img{
-    width: 80px;
+.myOrderSection .cover table td span{
+    vertical-align: top;
+    padding: 45px 10px;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .myOrderSection .elipse{
     width: 20px;
     height: 20px;
     border-radius: 20px;
+    display: block;
+    margin: 0 auto;
 }
 
 .myOrderSection {
