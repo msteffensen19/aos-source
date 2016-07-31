@@ -44,7 +44,7 @@
     <!-- Feature #1550  -->
     <!-- Values: (default) -1 = DISABLED, any other positive number = the actual number of concurrent sessions. -->
     <!-- When this parameter is DISABLED the number of concurrent sessions will be set to 1K. -->
-    <Max_Concurrent_Sessions datatype="string" description="Defines the maximum number of concurrent session above it to issue and error. If the parameter value is -1 (DISABLED) then number of concurrent sessions will be set to 1K." tools="LoadRunner;NV;StormRunner" locationInAdvantage="Order history">-1</Max_Concurrent_Sessions>
+    <Max_concurrent_users datatype="string" description="Defines the maximum number of concurrent users allowed. Any additional users are rejected with an error code 500. Default = 0 (no concurrent sessions allowed). Possible values = Any positive integer." tools="LoadRunner;StormRunner;NV" locationInAdvantage="Login response">0</Max_concurrent_users>
 
     <!-- No = (Default) Do not make OR Yes=make spelling mistakes in order payment page -->
     <!-- Original Name = "Spelling_mistakes_in_order_payment_page" ; Corrected Name = "Typos_on_order_payment" -->
