@@ -21,7 +21,7 @@ import java.util.Map;
 public class DynamicConfiguration {
     private static final String XML_SLA_ADD_DELAY_SESSIONS_PARAMNAME = "SLA_add_delay_sessions";
     private static final String XML_SLA_ADD_DELAY_TIME_PARAMNAME = "SLA_add_delay_time";
-    private static final String XML_MAX_CONCURRENT_USERS_PARAMNAME = "Max_Concurrent_Sessions";
+    private static final String XML_MAX_CONCURRENT_USERS_PARAMNAME = "Max_concurrent_users";
     private static final int DEFAULT_DELAY = 0;
 
     private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY = 20;
