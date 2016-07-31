@@ -74,6 +74,24 @@ define([], function () {
                     return defer.promise;
                 }
             }
+        }).
+        state('MyOrders', {
+            url: '/MyOrders',
+            templateUrl: 'app/account/views/MyOrders-page.html',
+            controller: 'myOrdersCtrl',
+            controllerAs: 'myOrdersCtrl',
+            resolve: {
+                resolveParams: function ($q, accountService) {
+                    var defer = $q.defer()
+                    accountService.getAccountOrder().then(
+                        function (orders) {
+                            defer.resolve({
+                                orders: orders,
+                            });
+                        });
+                    return defer.promise;
+                }
+            }
         });
     }
 

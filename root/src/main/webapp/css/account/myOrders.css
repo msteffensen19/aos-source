@@ -1,0 +1,110 @@
+
+.myOrderSection .cover{
+    margin: 50px auto;
+    max-width: 1100px;
+}
+
+.myOrderSection .cover table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.myOrderSection .cover table{
+    width: 100%;
+}
+
+.myOrderSection tr:not(.innerTr) td {
+    border-top: 1px solid rgba(189, 189, 187, 1);
+}
+
+.myOrderSection .cover table label{
+    display: block;
+    color: #2a2a2a;
+    padding: 12px;
+}
+
+.myOrderSection .cover table td.center{
+    text-align: center;
+}
+
+.myOrderSection .cover table th.right,
+.myOrderSection .cover table td.right{
+    text-align: right;
+}
+
+.myOrderSection .cover table th label{
+    font-size: 11px;
+}
+
+.myOrderSection .cover table img{
+    padding: 18px 10px;
+    display: inline-block;
+    width:100px;
+}
+
+.myOrderSection .cover table td label{
+    font-size: 16px;
+}
+
+.myOrderSection .cover table td.left{
+    text-align: left;
+    box-shadow: 0 0 1px 0 green inset;
+}
+
+.myOrderSection .cover table td span{
+    vertical-align: top;
+    padding: 45px 10px;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.myOrderSection .elipse{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+.myOrderSection {
+}
+
+
+
+@media screen and (max-width: 1250px) {
+
+    .myOrderSection .cover {
+        background-color: lime;
+    }
+
+}

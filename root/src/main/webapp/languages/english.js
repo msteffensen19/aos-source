@@ -230,6 +230,7 @@ var english = {
     'ExpirationCart' : 'Expiration date has passed. Try another card',
     'CHAT_WITH_US': 'CHAT WITH US',
 
+    'MY_ORDERS': 'MY ORDERS',
 
 
     'SHIPPING_DETAILS': 'SHIPPING DETAILS',
@@ -250,6 +251,12 @@ var english = {
 
     'ORDERR_SUMMARY': 'ORDERR SUMMARY',
     'Orderr_Summary': 'Orderr Summary',
+
+    'ORDER_NUMBER': 'ORDER NUMBER',
+    'ORDER_DATE': 'ORDER DATE',
+    'TOTAL_PRICE': 'TOTAL PRICE',
+
+    'COLOR': 'COLOR',
 
 
 
