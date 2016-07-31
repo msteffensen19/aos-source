@@ -7,7 +7,6 @@ import com.advantage.common.Url_resources;
 import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.security.AuthorizeAsUser;
-import com.advantage.order.store.config.DynamicConfiguration;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
@@ -137,20 +136,6 @@ public class OrderController {
                 userCartResponseDto.setMessage(shoppingCartResponse.getReason());
             }
         }
-
-        DynamicConfiguration dynamicConfiguration = new DynamicConfiguration();
-        int delayForResponse = dynamicConfiguration.getDelay() * 1000;
-
-        if (logger.isTraceEnabled()) {
-            logger.trace("Start sleep: thread " + Thread.currentThread().getId());
-        }
-        try {
-            Thread.sleep(delayForResponse);
-            logger.trace("End sleep: thread " + Thread.currentThread().getId());
-        } catch (InterruptedException e) {
-            logger.error(e);
-        }
-
         return new ResponseEntity<>(userCartResponseDto, httpStatus);
     }
 

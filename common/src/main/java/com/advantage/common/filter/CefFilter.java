@@ -59,7 +59,7 @@ public class CefFilter implements Filter {
         }
 
         if (cefLogger.isInfoEnabled()) {
-            logger.trace("Start: " + serviceName);
+            logger.trace("Start CEF filter for: " + serviceName);
             boolean isRequestIsHttpRequest = servletRequest instanceof HttpServletRequest;
             if (isRequestIsHttpRequest) {
                 CefHttpModel cefData = new CefHttpModel(serviceName, getArtifactVersion());

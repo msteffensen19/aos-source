@@ -11,7 +11,7 @@ public class SystemParameters {
 
     public static String getHibernateHbm2ddlAuto(String hbm2ddlAutoMode) {
         String result;
-        Logger logger = Logger.getLogger("hodor");
+        Logger logger = Logger.getLogger(SystemParameters.class);
         if (hbm2ddlAutoMode == null || hbm2ddlAutoMode.isEmpty()) {
             result = "validate";
             logger.warn("Argument is " + (hbm2ddlAutoMode == null ? "null" : "empty") + ", result=" + result);

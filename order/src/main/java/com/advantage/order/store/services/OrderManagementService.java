@@ -12,12 +12,12 @@ import com.advantage.order.store.dao.HistoryOrderHeaderRepository;
 import com.advantage.order.store.dao.OrderManagementRepository;
 import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
+import com.advantage.order.store.model.Feature1779OrdersHistory;
 import com.advantage.order.store.model.OrderHeader;
 import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
-import com.advantage.root.util.StringHelper;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,6 @@ import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -801,7 +800,18 @@ public class OrderManagementService {
                     line.getProductColor(),
                     line.getPricePerItem(),
                     line.getQuantity());
+
         }
+
+        //  region Generate_memory_leak
+        String stringValue = shoppingCartService.getDemoAppConfigParameterValue("Generate_memory_leak");
+        if ((stringValue != null) && (!stringValue.isEmpty()) && (stringValue.equals("0"))) {
+            Feature1779OrdersHistory ordersHistory = new Feature1779OrdersHistory(Integer.valueOf(stringValue).intValue());
+
+            ordersHistory.generateMemoryLeak(Integer.valueOf(stringValue).intValue());
+        }
+        //  endregion
+
         return historyOrderLinesDto;
     }
     //  endregion

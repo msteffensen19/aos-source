@@ -429,7 +429,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         //  Return: Successful logout attempt, no need to create JWT Token
         AccountStatusResponse accountStatusSuccessResponse = new AccountStatusResponse(true, "Logout Successful", account.getId());
-        logger.info("Successful logout attempt for " + accountId + System.lineSeparator() + accountStatusSuccessResponse.toString());
+        logger.info("Successful logout attempt for account id = " + accountId + System.lineSeparator() + accountStatusSuccessResponse.toString());
         return accountStatusSuccessResponse;
     }
 

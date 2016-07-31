@@ -177,7 +177,7 @@ public class ShoppingCartService {
      * @param parameterName
      * @return
      */
-    private String getDemoAppConfigParameterValue(String parameterName) {
+    String getDemoAppConfigParameterValue(String parameterName) {
         URL productsPrefixUrl = null;
         try {
             productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), DEMO_APP_CONFIG_BY_PARAMETER_NAME);
