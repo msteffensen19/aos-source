@@ -1,5 +1,5 @@
-            //  region PlaceHolder Feature 1789
             else {
+                //  region PlaceHolder Feature 1788
                 //  Registered user and current user are the same
                 String compareToPassword = new AccountPassword(currentUserLogin, oldPassword)
                         .getEncryptedPassword();
