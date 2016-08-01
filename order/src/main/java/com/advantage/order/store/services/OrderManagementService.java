@@ -18,6 +18,7 @@ import com.advantage.order.store.model.OrderLines;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
+import com.advantage.root.util.RestApiHelper;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -804,7 +805,7 @@ public class OrderManagementService {
         }
 
         //  region Generate_memory_leak
-        String stringValue = shoppingCartService.getDemoAppConfigParameterValue("Generate_memory_leak");
+        String stringValue = RestApiHelper.getDemoAppConfigParameterValue("Generate_memory_leak");
         if ((stringValue != null) && (!stringValue.isEmpty()) && (stringValue.equals("0"))) {
             Feature1779OrdersHistory ordersHistory = new Feature1779OrdersHistory(Integer.valueOf(stringValue).intValue());
 

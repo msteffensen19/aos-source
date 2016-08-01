@@ -1,15 +1,14 @@
-            //  region PlaceHolder Feature 1789
-            else {
-                //  Registered user and current user are the same
-                String compareToPassword = new AccountPassword(currentUserLogin, oldPassword)
-                        .getEncryptedPassword();
+                    //  TODO DevOps - PlaceHolder Feature 1788
+                    //  Registered user and current user are the same
+                    String encryptedPassword = new AccountPassword(currentUserLogin, oldPassword)
+                            .getEncryptedPassword();
 
-                if (account.getPassword().equals(compareToPassword)) {
-                    //  old password matches registered user password - OK to change password
-                    response = accountRepository.changePassword(accountId, newPassword);
-                } else {
-                    //  old Password does not match registered user password
-                    response = new AccountStatusResponse(false, HttpStatus.FORBIDDEN.getReasonPhrase(), -1);
-                }
-            }
-            //  endregion
+                    if (account.getPassword().equals(encryptedPassword)) {
+                        //  old password matches registered user password - OK to change password
+                        response = accountRepository.changePassword(accountId, newPassword);
+                    } else {
+                        //  old Password does not match registered user password
+                        String message = "Old Password does not match registered user password";
+                        logger.warn(message);
+                        response = new AccountStatusResponse(false, message, -1);
+                    }

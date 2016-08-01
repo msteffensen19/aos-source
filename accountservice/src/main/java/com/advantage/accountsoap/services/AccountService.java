@@ -13,6 +13,7 @@ import com.advantage.common.exceptions.token.TokenException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import com.advantage.common.security.TokenJWT;
+import com.advantage.root.util.RestApiHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,6 +21,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -180,7 +184,7 @@ public class AccountService {
     public AccountStatusResponse changePassword(long accountId, String oldPassword, String newPassword, String base64Token) throws TokenException {
 
         Account account = accountRepository.get(accountId);
-        AccountStatusResponse response;
+        AccountStatusResponse response = new AccountStatusResponse(false, "Initial", 0);
         TokenJWT tokenJWT = TokenJWT.parseToken(base64Token);
 
         //  Get current user details from Token
@@ -201,20 +205,10 @@ public class AccountService {
                 logger.error("Not the same user and current user is not ADMIN");
                 throw new VerificationTokenException("Not the same user and current user is not ADMIN");
             } else {
-                //  TODO DevOps - PlaceHolder Feature 1788
+                String parameterValue = RestApiHelper.getDemoAppConfigParameterValue("Implement_DevOps_Process");
                 //  region PlaceHolder Feature 1789
-                //  Registered user and current user are the same
-                String encryptedPassword = new AccountPassword(currentUserLogin, oldPassword)
-                        .getEncryptedPassword();
-
-                if (account.getPassword().equals(encryptedPassword)) {
-                    //  old password matches registered user password - OK to change password
-                    response = accountRepository.changePassword(accountId, newPassword);
-                } else {
-                    //  old Password does not match registered user password
-                    String message = "Old Password does not match registered user password";
-                    logger.warn(message);
-                    response = new AccountStatusResponse(false, message, -1);
+                if (parameterValue.equalsIgnoreCase("Yes")) {
+                    //  TODO DevOps - PlaceHolder Feature 1788
                 }
                 //endregion
             }
@@ -303,4 +297,5 @@ public class AccountService {
 
         return dtos;
     }
+
 }
