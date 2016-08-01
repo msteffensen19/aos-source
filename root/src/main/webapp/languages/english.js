@@ -260,7 +260,7 @@ var english = {
 
     'My_Orders': 'My Orders',
 
-
+    'No_orders': 'No orders'
 
 };
 

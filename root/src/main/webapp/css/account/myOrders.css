@@ -71,6 +71,16 @@
     display: none;
 }
 
+.myOrderSection .bigEmptyOrder {
+    font-size: 30px;
+    padding: 20px 12px;
+    margin-top: 180px;
+}
+
+.myOrderSection .bigEmptyOrder label{
+    display: block;
+}
+
 
 @media screen and (max-width: 1250px) {
 
@@ -152,9 +162,10 @@
         margin: 0 !important;
     }
 
-    .myOrderSection  div.orderDetails,
-    .myOrderSection  div.productList,
-    .myOrderSection  div.title {
+    .myOrderSection .bigEmptyOrder {
+        font-size: 30px;
+        padding: 20px 12px;
+        margin-top: 0px;
     }
 
 }
