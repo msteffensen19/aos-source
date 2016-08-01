@@ -12,63 +12,114 @@
 
             <div class="cover">
 
-            <table >
-                <tr>
-                    <th class="left">
-                        <label>{{ 'ORDER_NUMBER' | translate}}</label>
-                    </th>
-                    <th>
-                        <label>{{ 'ORDER_DATE' | translate}}</label>
-                    </th>
-                    <th>
-                        <label>{{ 'PRODUCT_NAME' | translate}}</label>
-                    </th>
-                    <th>
-                        <label>{{ 'COLOR' | translate}}</label>
-                    </th>
-                    <th>
-                        <label>{{ 'QUANTITY' | translate}}</label>
-                    </th>
-                    <th class="right">
-                        <label>{{ 'TOTAL_PRICE' | translate}}</label>
-                    </th>
-                </tr>
-                <tr data-ng-repeat-start="order in myOrdersCtrl.orders track by $index">
-                    <td rowspan="{{order.products.length}}">
-                        <label>{{order.orderNumber}}</label>
-                    </td>
-                    <td rowspan="{{order.products.length}}" class="center">
-                        <label >{{order.orderDate}}</label>
-                    </td>
-                    <td>
-                        <img data-ng-src="/catalog/fetchImage?image_id={{order.products[0].ProductImageUrl}}"/>
-                        <span>{{order.products[0].ProductName}}</span>
-                    </td>
-                    <td class="center">
-                        <div title="{{order.products[0].ProductColorName}}" class="elipse"
-                             data-ng-style="{'background-color' : '#' + order.products[0].ProductColorCode, 'border' : (order.products[0].ProductColorCode == 'FFFFFF' ? 'solid' : 'none' ) + ' 1px rgba(189, 189, 187, 1)'}"></div>
-                    </td>
-                    <td class="center">
-                        <label>{{order.products[0].Quantity}}</label>
-                    </td>
-                    <td rowspan="{{order.products.length}}" class="right">
-                        <label>{{ myOrdersCtrl.getTotalPrice(order.products) | currency: '$' }}</label>
-                    </td>
-                </tr>
-                <tr data-ng-repeat-end ng-if="$index > 0" class="innerTr" data-ng-repeat="product in order.products track by $index" >
-                    <td ng-if="$index > 0">
-                        <img data-ng-src="/catalog/fetchImage?image_id={{product.ProductImageUrl}}"/>
-                        <span>{{product.ProductName}}</span>
-                    </td>
-                    <td ng-if="$index > 0">
-                        <div title="{{product.ProductColorName}}" class="elipse"
-                             data-ng-style="{'background-color' : '#' + product.ProductColorCode}"></div>
-                    </td>
-                    <td ng-if="$index > 0" class="center">
-                        <label>{{product.Quantity}}</label>
-                    </td>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <th class="left">
+                            <label>{{ 'ORDER_NUMBER' | translate}}</label>
+                        </th>
+                        <th>
+                            <label>{{ 'ORDER_DATE' | translate}}</label>
+                        </th>
+                        <th>
+                            <label>{{ 'PRODUCT_NAME' | translate}}</label>
+                        </th>
+                        <th>
+                            <label>{{ 'COLOR' | translate}}</label>
+                        </th>
+                        <th>
+                            <label>{{ 'QUANTITY' | translate}}</label>
+                        </th>
+                        <th class="right">
+                            <label>{{ 'TOTAL_PRICE' | translate}}</label>
+                        </th>
+                    </tr>
+                    <tr data-ng-repeat-start="order in myOrdersCtrl.orders track by $index">
+                        <td rowspan="{{order.products.length}}">
+                            <label>{{order.orderNumber}}</label>
+                        </td>
+                        <td rowspan="{{order.products.length}}" class="center">
+                            <label>{{order.orderDate}}</label>
+                        </td>
+                        <td>
+                            <img data-ng-src="/catalog/fetchImage?image_id={{order.products[0].ProductImageUrl}}"/>
+                            <span>{{order.products[0].ProductName}}</span>
+                        </td>
+                        <td class="center">
+                            <div title="{{order.products[0].ProductColorName}}" class="elipse"
+                                 data-ng-style="{'background-color' : '#' + order.products[0].ProductColorCode, 'border' : (order.products[0].ProductColorCode == 'FFFFFF' ? 'solid' : 'none' ) + ' 1px rgba(189, 189, 187, 1)'}"></div>
+                        </td>
+                        <td class="center">
+                            <label>{{order.products[0].Quantity}}</label>
+                        </td>
+                        <td rowspan="{{order.products.length}}" class="right">
+                            <label>{{ myOrdersCtrl.getTotalPrice(order.products) | currency: '$' }}</label>
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat-end ng-if="$index > 0" class="innerTr"
+                        data-ng-repeat="product in order.products track by $index">
+                        <td ng-if="$index > 0">
+                            <img data-ng-src="/catalog/fetchImage?image_id={{product.ProductImageUrl}}"/>
+                            <span>{{product.ProductName}}</span>
+                        </td>
+                        <td ng-if="$index > 0">
+                            <div title="{{product.ProductColorName}}" class="elipse"
+                                 data-ng-style="{'background-color' : '#' + product.ProductColorCode}"></div>
+                        </td>
+                        <td ng-if="$index > 0" class="center">
+                            <label>{{product.Quantity}}</label>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="tabletsSection">
+
+                    <div class="title">
+                        <div>
+                            <label class="left">{{ 'ORDER_NUMBER' | translate}}</label>
+                        </div>
+                        <div>
+                            <label class="center">{{ 'ORDER_DATE' | translate}}</label>
+                        </div>
+                        <div>
+                            <label class="right">{{ 'TOTAL_PRICE' | translate}}</label>
+                        </div>
+                    </div>
+                    <div class="products" data-ng-repeat="order in myOrdersCtrl.orders track by $index">
+                        <div class="orderDetails">
+                            <div>
+                                <label class="left">{{order.orderNumber}}</label>
+                            </div>
+                            <div>
+                                <label class="center">{{order.orderDate}}</label>
+                            </div>
+                            <div>
+                                <label class="right">{{ myOrdersCtrl.getTotalPrice(order.products) | currency: '$'
+                                    }}</label>
+                            </div>
+                        </div>
+                        <div class="productList">
+
+                            <div data-ng-repeat="product in order.products track by $index">
+                                <img data-ng-src="/catalog/fetchImage?image_id={{product.ProductImageUrl}}"/>
+
+                                <div class="productName">
+                                    <span>{{product.ProductName}}</span>
+
+                                    <div>
+                                        <label>{{'QTY' | translate}} {{product.Quantity}}</label>
+                                        <label>{{'Color' | translate }}
+                                            <span>{{product.ProductColorName}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
         </div>

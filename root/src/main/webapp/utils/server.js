@@ -304,7 +304,8 @@ var server = {
         ,
 
         safePay: function (userId) {
-            var paramToReturn = orderKey + "orders/history/lines/users/" + userId;
+
+            var paramToReturn = orderKey + "orders/users/" + userId;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         }
