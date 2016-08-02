@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
@@ -556,12 +557,12 @@ public class ProductService {
             // Start the clock
             long start = System.currentTimeMillis();
 
-            Future<MostPopularCommentDto> userComment = (Future<MostPopularCommentDto>) new MostPopularCommentDto();
+            Future<MostPopularCommentDto> userComment = null;
 
             // Kick of multiple, asynchronous lookups
             for (int i = 0; i < PRODUCT_USER_COMMENTS_NUMBER; i++) {
                 userComment = mostPopularCommentService.findUserComment(i);
-                response.addUserComment((MostPopularCommentDto) userComment);
+                response.addUserComment(userComment.get());
             }
 
             // Wait until they are all done
@@ -580,7 +581,7 @@ public class ProductService {
                 System.out.println(userComments.get(i).getComment() + " - " + userComments.get(i).getScore());
             }
 
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e ) {
             response.setSuccess(false);
             response.setException(e);
             response.setReason(response.getUserComments().size() + " comments received.\n" + e.getLocalizedMessage() );
