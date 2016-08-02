@@ -548,7 +548,8 @@ public class ProductService {
                                                                    HttpServletResponse res) {
 
         //  10-millisecond pause between each check
-        final int MILLISECONDS_BETWEEN_CHECKS = 10;
+        //  TODO-Benny - Timeout should be 10sec. changed to 2s for Efi to implement Front-End
+        final int MILLISECONDS_BETWEEN_CHECKS = 2;  //  Timeout should be 10s
 
         MostPopularCommentsResponse response = new MostPopularCommentsResponse();
         List<MostPopularCommentDto> userComments = new ArrayList<MostPopularCommentDto>();
