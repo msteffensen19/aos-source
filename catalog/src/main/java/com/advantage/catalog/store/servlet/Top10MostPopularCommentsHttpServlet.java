@@ -1,7 +1,5 @@
 package com.advantage.catalog.store.servlet;
 
-import org.jboss.logging.annotations.Message;
-
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,6 +25,8 @@ public class Top10MostPopularCommentsHttpServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
 
         final AsyncContext asyncContext = request.startAsync(request, response);
 

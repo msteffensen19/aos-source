@@ -12,6 +12,7 @@ import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.product.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
+import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.enums.ProductStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class ProductService {
+
+    private static final int PRODUCT_USER_COMMENTS_NUMBER = 10;
 
     @Autowired
     public ProductRepository productRepository;
@@ -35,6 +41,8 @@ public class ProductService {
     CategoryService categoryService;
     @Autowired
     private AttributeService attributeService;
+    @Autowired
+    private MostPopularCommentService mostPopularCommentService;
     @Autowired
     private Environment environment;
 
@@ -531,6 +539,56 @@ public class ProductService {
         LastUpdate lastUpdate = productRepository.updateLastUpdate(lastUpdateDto, id);
 
         return lastUpdate;
+    }
+    //  endregion
+
+    //  region Most Popular Comments
+    public MostPopularCommentsResponse getTop10MostPopularComments(HttpServletRequest req,
+                                                                   HttpServletResponse res) {
+
+        //  10-millisecond pause between each check
+        final int MILLISECONDS_BETWEEN_CHECKS = 10;
+
+        MostPopularCommentsResponse response = new MostPopularCommentsResponse();
+        List<MostPopularCommentDto> userComments = new ArrayList<MostPopularCommentDto>();
+
+        try {
+            // Start the clock
+            long start = System.currentTimeMillis();
+
+            Future<MostPopularCommentDto> userComment = (Future<MostPopularCommentDto>) new MostPopularCommentDto();
+
+            // Kick of multiple, asynchronous lookups
+            for (int i = 0; i < PRODUCT_USER_COMMENTS_NUMBER; i++) {
+                userComment = mostPopularCommentService.findUserComment(i);
+                response.addUserComment((MostPopularCommentDto) userComment);
+            }
+
+            // Wait until they are all done
+            while (!userComment.isDone()) {
+                Thread.sleep(MILLISECONDS_BETWEEN_CHECKS);
+            }
+
+            // Print results, including elapsed time
+            System.out.println("Elapsed time: " + (System.currentTimeMillis() - start) + " milliseconds");
+
+            response.setSuccess(true);
+            response.setException(null);
+            response.setReason("Completed Successfully, " + response.getUserComments().size() + " comments received");
+
+            for (int i = 0; i < userComments.size(); i++) {
+                System.out.println(userComments.get(i).getComment() + " - " + userComments.get(i).getScore());
+            }
+
+        } catch (InterruptedException e) {
+            response.setSuccess(false);
+            response.setException(e);
+            response.setReason(response.getUserComments().size() + " comments received.\n" + e.getLocalizedMessage() );
+
+            e.printStackTrace();
+        }
+
+        return response;
     }
     //  endregion
 

@@ -796,12 +796,16 @@ public class CatalogController {
     }
     //  endregion
 
-    /*// region Order History
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    public ResponseEntity<ProductCollectionDto> getAllOrders(HttpServletRequest request) {
-        ResponseEntity<ProductCollectionDto> order = new ResponseEntity<>(productService.getProductCollectionDto(), HttpStatus.OK);
-        return productCollectionDtoResponseEntity;
+    //  region Most Popular Comments
+    @RequestMapping(value = "/MostPopularComments", method = RequestMethod.GET)
+    public ResponseEntity<MostPopularCommentsResponse> getAllOrders(HttpServletRequest request,
+                                                                    HttpServletResponse response) {
 
+        MostPopularCommentsResponse mostPopularCommentsResponse = productService.getTop10MostPopularComments(request, response);
+
+        HttpStatus httpStatus = mostPopularCommentsResponse.isSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
+
+        return new ResponseEntity<>(mostPopularCommentsResponse, httpStatus);
     }
-    //endregion*/
+    //endregion
 }
