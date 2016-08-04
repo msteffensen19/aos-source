@@ -16,10 +16,12 @@ Helper.defaultTimeLoaderToEnable = 1000;
 var enableLoaderActivate = false;
 var ____enableLoaderActivate;
 
-Helper.enableLoader = function () {
-    if(enableLoaderActivate){
+var timerDetector = 0;
+Helper.enableLoader = function (_timerDetector) {
+    if(enableLoaderActivate || timerDetector > 900){
         return;
     }
+    timerDetector = _timerDetector != undefined ? _timerDetector : 0;
     enableLoaderActivate = true;
     ____enableLoaderActivate = setTimeout(function () {
         $("div.loader").css({display: "block"});
@@ -27,7 +29,11 @@ Helper.enableLoader = function () {
     }, Helper.defaultTimeLoaderToEnable);
 };
 
-Helper.disableLoader = function () {
+Helper.disableLoader = function (_timerDetector) {
+    timerDetector = _timerDetector != undefined ? _timerDetector : timerDetector;
+    if(timerDetector == 999){
+        return;
+    }
     if(enableLoaderActivate){
         clearTimeout(____enableLoaderActivate);
         $("div.loader").stop().animate({opacity: 0}, 300, function () {

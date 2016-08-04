@@ -14,10 +14,6 @@ define(['./module'], function (directives) {
                 }
 
                 ctrl.updateSizes = function (){
-                    console.log("element")
-                    console.log(element)
-                    console.log("element")
-
                     var height = $(element).width() / dimensions[0] * dimensions[1];
                     $(element).height(height);
                 }

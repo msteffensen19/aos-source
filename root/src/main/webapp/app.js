@@ -118,23 +118,29 @@ define([
                 path: "/",
             }];
 
-            $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-                //var requireLogin = toState.data.requireLogin;
-                //var showWelcome = toState.data.showWelcome;
-                //var underConstruction = toState.data.underConstruction;
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+            //var requireLogin = toState.data.requireLogin;
+            //var showWelcome = toState.data.showWelcome;
+            //var underConstruction = toState.data.underConstruction;
 
-                /*
-                 showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
-                 underConstruction != 'undefined' && underConstruction ?
-                 $(document.body).addClass('under-construction') :
-                 $(document.body).removeClass('under-construction');
+            /*
+             showWelcome != 'undefined' && showWelcome ? $(document.body).addClass('welcome-page') : $(document.body).removeClass('welcome-page');
+             underConstruction != 'undefined' && underConstruction ?
+             $(document.body).addClass('under-construction') :
+             $(document.body).removeClass('under-construction');
 
-                 if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
-                 event.preventDefault();
-                 // get me a login modal!
-                 }
-                 */
-            });
+             if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+             event.preventDefault();
+             // get me a login modal!
+             }
+             */
+            //alert("start");
+            Helper.enableLoader(999);
+
+        });
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+            Helper.disableLoader(0);
+        });
     });
 
 });

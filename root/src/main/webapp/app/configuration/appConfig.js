@@ -125,18 +125,27 @@ define([], function () {
                     resolveParams: function (productService, categoryService, $stateParams, $q) {
                         var defer = $q.defer();
                         productService.getProductById($stateParams.id).then(function (product) {
-                            categoryService.getCategoryById(product.categoryId).then(function (category) {
-                                categoryService.haveInternet(product.categoryId).then(function (haveInternet) {
-                                    var paramsToReturn = {
-                                        selectedColor: $stateParams.color,
-                                        quantity: $stateParams.quantity,
-                                        pageState: $stateParams.pageState,
-                                        categoryName: category.categoryName,
-                                        product: product,
-                                        haveInternet: haveInternet
-                                    }
-                                    defer.resolve(paramsToReturn)
-                                });
+
+                            $q.all([categoryService.getCategoryById(product.categoryId),
+                                    categoryService.haveInternet(product.categoryId),
+                                    categoryService.getMostPopularComments(product.categoryId),
+                            ])
+                                .then(function (res) {
+
+                                var category = res[0];
+                                var haveInternet = res[1];
+                                var mostPopularComments = res[2];
+
+                                var paramsToReturn = {
+                                    selectedColor: $stateParams.color,
+                                    quantity: $stateParams.quantity,
+                                    pageState: $stateParams.pageState,
+                                    categoryName: category.categoryName,
+                                    product: product,
+                                    haveInternet: haveInternet,
+                                    mostPopularComments: mostPopularComments
+                                }
+                                defer.resolve(paramsToReturn)
                             });
                         });
                         return defer.promise;

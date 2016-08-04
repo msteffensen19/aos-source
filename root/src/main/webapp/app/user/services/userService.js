@@ -76,7 +76,7 @@ define(['./module'], function (services) {
                     defer.resolve(appConfiguration);
                 }
                 else {
-                    Helper.enableLoader();
+                    //Helper.enableLoader();
                     $http({
                         method: "get",
                         url: server.catalog.getConfigurations(),
@@ -136,7 +136,7 @@ define(['./module'], function (services) {
                                 config.userLoginTimeOut = json.userLoginTimeout;
                                 config.userSecondWSDL = json.userSecondWsdl;
                                 appConfiguration = config;
-                                Helper.disableLoader();
+                               // Helper.disableLoader();
                                 defer.resolve(config);
                             },
                             error: function (response) {

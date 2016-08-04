@@ -18,6 +18,7 @@ define(['./module'], function (services) {
                 getPopularProducts: getPopularProducts,
                 getExistingData: getExistingData,
                 haveInternet: haveInternet,
+                getMostPopularComments: getMostPopularComments,
             }
 
             function haveInternet() {
@@ -62,6 +63,59 @@ define(['./module'], function (services) {
                     response.reject('error in load cart (productCartService - loadCartProducts)');
                 });
                 return response.promise;
+            }
+
+            function getMostPopularComments(categoryId){
+
+                var response = $q.defer();
+                if(categoryId != 2){
+                    response.resolve([]);
+                }
+                var arr=[{"comment":"Great sound. It’s all about the bass.","score":9.3},{"comment":"Very comfortable headphones. Felt very light on the ears.","score":8.9},{"comment":"The noise cancelling feature worked great. I don’t even hear the bus on my commute home.","score":9.7},{"comment":"My ears sweated a lot when wearing the headphones. Next time I won’t wear them in the sauna.","score":7.6},{"comment":"The noise cancelling didn’t work that well. I could still hear my wife yelling at me.","score":3.8},{"comment":"I really wish they came in other colors. Hot pink would match much better with my shirt.","score":9.4},{"comment":"They didn’t fit great. I had to take off my bike helmet to get them on.","score":7.8},{"comment":"The cable wasn’t very long. I couldn’t get to the bathroom with the earphones plugged in to my stereo.","score":6.4},{"comment":"If they go on the ears, shouldn’t they be called earphones?","score":9.9},{"comment":"I don’t get it – is 20 hours how long it takes to recharge the batteries or how long they last?","score":7.1}];
+                angular.forEach(arr, function(itm, index){
+
+                    if(itm.score > 9.5){
+                        itm.title = "Excellent";
+                    }
+                    else if(itm.score > 8.5){
+                        itm.title = "Very good";
+                    }
+                    else if(itm.score > 7.5){
+                        itm.title = "Good";
+                    }
+                    else if(itm.score > 5.5){
+                        itm.title = "Average";
+                    }
+                    else if(itm.score > 4.5){
+                        itm.title = "Poor";
+                    }
+                    else if(itm.score > 2.5){
+                        itm.title = "Very poor";
+                    }
+                    else{
+                        itm.title = "Shameful";
+                    }
+                    itm.reviewsCount = itm.comment.length + itm.title.length;
+                    itm.name = "Tim Perry";
+                });
+
+                response.resolve(arr);
+                return response.promise;
+
+                //Helper.enableLoader();
+                //$http({
+                //    method: "get",
+                //    url: server.catalog.getMostPopularComments()
+                //}).success(function (res) {
+                //    Helper.disableLoader();
+                //    Loger.Received(res)
+                //    response.resolve(res.UserComments);
+                //}).error(function (err) {
+                //    alert('An error occurred, please try again')
+                //    Loger.Received(err);
+                //    response.reject('error in load cart (productCartService - loadCartProducts)');
+                //});
+                //return response.promise;
             }
 
             function getCategories() {
