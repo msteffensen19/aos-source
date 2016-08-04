@@ -12,7 +12,6 @@ import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.product.*;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.fs.FileSystemHelper;
-import com.advantage.common.Constants;
 import com.advantage.common.dto.*;
 import com.advantage.common.enums.ProductStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
