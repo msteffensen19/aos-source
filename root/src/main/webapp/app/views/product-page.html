@@ -27,6 +27,21 @@
 
         <div id="product_2">
             <div id="product-section" class="half">
+                <div class="reviews" ng-if="mostPopularComments.length > 0">
+                    <div class="rightArrow"><img src="../../css/images/review_right_disabled.png" /></div>
+                    <div class="reviewsCover">
+                        <div data-ng-repeat="comment in mostPopularComments track by $index">
+                            <label class="reviewsTitle">{{comment.title}}</label>
+                            <p class="reviewsCount">{{comment.reviewsCount}} {{ 'reviews'| translate}}</p>
+                            <p class="reviewsComment">{{comment.comment}}</p>
+                            <div class="reviewBottom">
+                                <img src="../../css/images/reviewUser.png"/>
+                                {{comment.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leftArrow"><img src="../../css/images/review_Left.png" /></div>
+                </div>
                 <figure>
                     <img alt="" id="mainImg" ng-src="/catalog/fetchImage?image_id={{imageUrl | getImageId}}">
                 </figure>

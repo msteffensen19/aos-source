@@ -11,6 +11,77 @@
     margin-top: 100px;
 }
 
+#product_2 .reviews{
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    /*background: rgba(244, 244, 242, 0.92);*/
+    background: lime;
+    font-size: 0;
+}
+
+#product_2 .reviews .reviewsCover{
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+#product_2 .reviews .reviewsCover > div{
+    margin: 20px;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: top;
+}
+
+#product_2 .reviews .rightArrow,
+#product_2 .reviews .leftArrow{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: table;
+    padding: 6px;
+}
+
+
+#product_2 .reviews .rightArrow{
+    right: 0;
+}
+
+#product_2 .reviews .leftArrow{
+    left:0;
+}
+
+#product_2 .reviews .reviewsTitle{
+    color: #2a2a2a;
+    font-size: 18px;
+}
+
+#product_2 .reviews .reviewsCount{
+    color: #828282;
+    font-size: 12px;
+}
+
+#product_2 .reviews .reviewsComment{
+    color: #828282;
+    font-size: 14px;
+}
+
+#product_2 .reviews .reviewBottom{
+    color: #2a2a2a;
+    font-size: 12px;
+    position: absolute;
+    bottom: 20px;
+}
+
+#product_2 .reviews > div{
+    font-size: 16px;
+}
+
+
+
+
 .half {
     display: table-cell;
     width: 50%;

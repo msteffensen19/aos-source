@@ -160,6 +160,13 @@ var server = {
         }
         ,
 
+        getMostPopularComments: function () {
+            var paramToReturn = catalogKey + "MostPopularComments";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        }
+        ,
+
         getCategories: function () {
             var paramToReturn = catalogKey + "categories";
             Loger.Calling(paramToReturn);

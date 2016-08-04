@@ -16,6 +16,10 @@ define(['./module'], function (controllers) {
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
+            s.mostPopularComments = resolveParams.mostPopularComments
+            console.log("s.product");
+            console.log(JSON.stringify(resolveParams.mostPopularComments));
+            console.log("s.product");
             s.haveInternet = resolveParams.haveInternet;
 
             s.showVideo = s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16;
