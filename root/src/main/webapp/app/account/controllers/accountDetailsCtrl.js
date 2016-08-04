@@ -30,7 +30,7 @@ define(['./module'], function (controllers) {
                                 if (response && response.reason) {
                                     s.accountDetailsAnswer = {
                                         message: response.reason,
-                                        class: response.success ? 'valid' : 'invalid'
+                                            class: response.success ? 'valid' : 'invalid'
                                     }
                                     if (response.success) {
                                         $location.path('myAccount');
