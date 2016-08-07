@@ -57,6 +57,9 @@ public class OrderManagementService {
     public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY = "Get ShipEx response failure, transaction reference is empty";
     public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH = "Get ShipEx response failure, invalid transaction reference length";
 
+    final String charset = "UTF-8";
+    final String contentType = "application/json";
+
     private static AtomicLong orderNumber;
     private double totalAmount = 0.0;
 
@@ -447,6 +450,7 @@ public class OrderManagementService {
                     "\"MCTransactionDate\": \"" + masterCreditRequest.getTransactionDate() + "\"," +
                     "\"MCTransactionType\": \"" + masterCreditRequest.getTransactionType() + "\"" +
                     "}";
+
             logger.debug(input);
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());

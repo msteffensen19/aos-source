@@ -85,6 +85,7 @@ public class DataSourceInitByCsv {
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Mercury", "Admin User", "Mercury", "Mercury", countryMap.get(10L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "mercury@hpe.com", true));
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "TestFirst", "TestLast", "test", "Test1", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "test@gmail.com", true));
+            session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Gilat", "Naor", "gilat", "gG123", countryMap.get(128L), "052-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "d0r1@gmail.com", true));
             transaction.commit();
         }
     }

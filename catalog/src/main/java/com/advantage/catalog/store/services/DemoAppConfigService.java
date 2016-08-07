@@ -314,7 +314,7 @@ public class DemoAppConfigService {
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        logger.info("Document URL\"" + doc.getDocumentURI() + "\"");
+        logger.warn("Document URL\"" + doc.getDocumentURI() + "\"");
 
         Node node = findParameterByName(doc, parameterName);
         if (node != null) {
@@ -353,18 +353,23 @@ public class DemoAppConfigService {
      * @param parameterNewValue   Tool's new parameters value.
      */
     public DemoAppConfigStatusResponse updateParameterValue(String parameterName, String parameterNewValue) {
-        //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
+
+        logger.trace("updateParameterValue(\"" + parameterName + "\", \"" + parameterNewValue + "\") - Begin");
+
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
-        System.out.println("newValue:" + parameterNewValue);
+        logger.warn("Document URL\"" + doc.getDocumentURI() + "\"");
+        logger.trace("newValue:" + parameterNewValue);
+
         Node nodeToUpdate = findParameterByName(doc, parameterName);
         if (nodeToUpdate != null) {
             nodeToUpdate.setTextContent(parameterNewValue);
             XmlHelper.writeXmlDocumentContent(doc, DEMO_APP_CONFIG_XML_FILE_NAME);
 
+            logger.trace("updateParameterValue(\"" + parameterName + "\", \"" + parameterNewValue + "\") - Ended: \"update successful\"");
             return new DemoAppConfigStatusResponse(true, "update successful");
         }
 
+        logger.trace("updateParameterValue(\"" + parameterName + "\", \"" + parameterNewValue + "\") - Ended with failure: \"update failed with error: [parameters name] not found\"");
         return new DemoAppConfigStatusResponse(false, "update failed with error: [parameters name] not found");
     }
 
@@ -375,7 +380,8 @@ public class DemoAppConfigService {
      */
     public DemoAppConfigStatusResponse updateParametersValues(DemoAppConfigParametersDto parameters) {
 
-        System.out.println("start update parameters");
+        logger.trace("updateParametersValues(...) - Begin: start update parameters");
+
         if(parameters != null) {
             String errorMessage = "";
             boolean result = true;
@@ -386,10 +392,12 @@ public class DemoAppConfigService {
             }
             DemoAppConfigStatusResponse demoAppConfigStatusResponse;
             demoAppConfigStatusResponse = result ? new DemoAppConfigStatusResponse(result, "update successful") : new DemoAppConfigStatusResponse(result, errorMessage);
-            System.out.println("end update parameters");
+
+            logger.trace("updateParametersValues(...) - Ended: end update parameters");
             return demoAppConfigStatusResponse;
         }
-        System.out.println("end update parameters");
+
+        logger.trace("updateParametersValues(...) - Ended: \"update failed with error: parameters is null\"");
         return new DemoAppConfigStatusResponse(false,"update failed with error: parameters is null");
 
     }
@@ -431,23 +439,57 @@ public class DemoAppConfigService {
      * Restore DemoAppConfig.xml file to all default values.
      */
     public DemoAppConfigStatusResponse restoreFactorySettingsDemoAppConfig() {
+        logger.trace("updateParametersValues(...) - Begin: start update parameters");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Email_in_login\"");
         this.updateParameterValue("Email_in_login", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"ShipEx_repeat_calls\"");
         this.updateParameterValue("ShipEx_repeat_calls", "0");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Add_product_to_incorrect_category\"");
         this.updateParameterValue("Add_product_to_incorrect_category", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"DB_call_delay\"");
         this.updateParameterValue("DB_call_delay", "0");
+
+        logger.warn("updateParametersValues(...) - Resetting \"User_alternate_WSDL\"");
         this.updateParameterValue("User_alternate_WSDL", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Error_500\"");
         this.updateParameterValue("Error_500", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Sum_added_to_cart\"");
         this.updateParameterValue("Sum_added_to_cart", "0");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Generate_memory_leak\"");
         this.updateParameterValue("Generate_memory_leak", "0");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Typos_on_order_payment\"");
         this.updateParameterValue("Typos_on_order_payment", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Misplace_pictures_on_Android\"");
         this.updateParameterValue("Misplace_pictures_on_Android", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"SLA_add_delay_time\"");
         this.updateParameterValue("SLA_add_delay_time", "0");
+
+        logger.warn("updateParametersValues(...) - Resetting \"SLA_add_delay_sessions\"");
         this.updateParameterValue("SLA_add_delay_sessions", "20");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Show_slow_pages\"");
         this.updateParameterValue("Show_slow_pages", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Price_diffs_UI_vs_API\"");
         this.updateParameterValue("Price_diffs_UI_vs_API", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Allow_Error_in_Login\"");
         this.updateParameterValue("Allow_Error_in_Login", "No");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Implement_DevOps_Process\"");
         this.updateParameterValue("Implement_DevOps_Process", "No");
 
+        logger.trace("restoreFactorySettingsDemoAppConfig() - \"DemoAppConfig.xml\" restore factory settings successful");
         return new DemoAppConfigStatusResponse(true, "\"DemoAppConfig.xml\" restore factory settings successful");
     }
 
