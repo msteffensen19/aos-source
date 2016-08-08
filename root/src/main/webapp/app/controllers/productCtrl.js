@@ -17,9 +17,7 @@ define(['./module'], function (controllers) {
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
             s.mostPopularComments = resolveParams.mostPopularComments
-            console.log("s.product");
-            console.log(JSON.stringify(resolveParams.mostPopularComments));
-            console.log("s.product");
+
             s.haveInternet = resolveParams.haveInternet;
 
             s.showVideo = s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16;
@@ -123,8 +121,60 @@ define(['./module'], function (controllers) {
 
             Helper.forAllPage();
 
+            console.log("resolveParams");
+            console.log(resolveParams);
+
+
+            s.nextReview = function(){
+                if(sliderIndex + 1 >= s.mostPopularComments.length){
+                    return;
+                }
+                sliderIndex++;
+                reviewGo();
+            };
+            s.previousReview = function(){
+                if(sliderIndex == 0){
+                    return;
+                }
+                sliderIndex--;
+                reviewGo();
+            };
+            function reviewGo(){
+                $timeout.cancel(slider_interval);
+                sliderHandler();
+            }
+            function reviewGotoNew(){
+                sliderIndex++;
+                sliderHandler();
+            }
+
+
+            var sliderIndex = 0;
+            var slider_interval;
+            reviewGo();
+            function sliderHandler(){
+
+                var left = sliderIndex < s.mostPopularComments.length ?
+                "-" + ($("#product_2 .reviews").width() * sliderIndex) : 0;
+
+                if(left == 0){ sliderIndex = 0; }
+
+                $("#product_2 .reviews .reviewsCover").css({ left: left + "px" });
+
+                $("#product_2 .reviews .rightArrow img").attr("src","../../css/images/review_right" +
+                    (sliderIndex + 1 < s.mostPopularComments.length ? "" : "_disabled") +".png")
+
+                $("#product_2 .reviews .leftArrow img").attr("src", "../../css/images/review_Left"
+                    + (sliderIndex == 0 ? "_disabled" : "") +".png")
+
+                slider_interval = $timeout(reviewGotoNew, 12000);
+            }
         }]);
 });
+
+
+
+
 
 /**
  * Created by correnti on 21/11/2015.

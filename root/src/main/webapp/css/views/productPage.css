@@ -13,24 +13,31 @@
 
 #product_2 .reviews{
     position: absolute;
-    width: 250px;
-    height: 250px;
-    /*background: rgba(244, 244, 242, 0.92);*/
-    background: lime;
+    width: 240px;
+    height: 230px;
+    background: rgba(244, 244, 242, 0.92);
+    /*background: lime;*/
     font-size: 0;
+    overflow: hidden;
 }
 
 #product_2 .reviews .reviewsCover{
     white-space: nowrap;
-    overflow: hidden;
+    position: relative;
+    height: 100%;
+    left: 0px;
+    transition: all ease .3s;
 }
 
 
 #product_2 .reviews .reviewsCover > div{
-    margin: 20px;
+    margin: 20px 25px;
     display: inline-block;
     white-space: normal;
     vertical-align: top;
+    text-align: left;
+    position: relative;
+    height: 210px;
 }
 
 #product_2 .reviews .rightArrow,
@@ -42,6 +49,8 @@
     margin-bottom: auto;
     display: table;
     padding: 6px;
+    cursor: pointer;
+    z-index: 2;
 }
 
 
@@ -51,6 +60,16 @@
 
 #product_2 .reviews .leftArrow{
     left:0;
+}
+
+#product_2 .reviews .score{
+    position: absolute;
+    right:-25px;
+    top:-20px;
+    background-color: #54b3ad;
+    font-size: 22px;
+    color: white;
+    padding: 10px;
 }
 
 #product_2 .reviews .reviewsTitle{
@@ -66,6 +85,7 @@
 #product_2 .reviews .reviewsComment{
     color: #828282;
     font-size: 14px;
+    margin-top: 15px;
 }
 
 #product_2 .reviews .reviewBottom{
@@ -73,6 +93,12 @@
     font-size: 12px;
     position: absolute;
     bottom: 20px;
+    width: 100%;
+}
+
+#product_2 .reviews .reviewBottom > img{
+    position: relative;
+    top:6px;
 }
 
 #product_2 .reviews > div{
