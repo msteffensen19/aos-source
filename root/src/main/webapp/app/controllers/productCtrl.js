@@ -167,7 +167,9 @@ define(['./module'], function (controllers) {
                 $("#product_2 .reviews .leftArrow img").attr("src", "../../css/images/review_Left"
                     + (sliderIndex == 0 ? "_disabled" : "") +".png")
 
-                slider_interval = $timeout(reviewGotoNew, 12000);
+                if(document.location.hash.indexOf("/product/") != -1){
+                    slider_interval = $timeout(reviewGotoNew, 12000);
+                }
             }
         }]);
 });
