@@ -40,6 +40,8 @@
 @import "account/myAccount.css";
 @import "account/myOrders.css";
 
+@import "chat/chat.css";
+
 
 #png {
     position: absolute;
