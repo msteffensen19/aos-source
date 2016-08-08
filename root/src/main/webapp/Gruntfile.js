@@ -98,6 +98,7 @@ module.exports = function (grunt) {
                             'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.svg',
                             'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.ttf',
                             'css/fonts/roboto_bold_macroman/Roboto-Bold-webfont.woff',
+                            'css/chat/chat.css',
                         ],
                         dest: 'target',
                         filter: 'isFile'
