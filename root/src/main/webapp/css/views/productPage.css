@@ -16,7 +16,6 @@
     width: 240px;
     height: 230px;
     background: rgba(244, 244, 242, 0.95);
-    /*background: lime;*/
     font-size: 0;
     overflow: hidden;
 }
@@ -198,28 +197,6 @@
 #product-section #mainImg {
     width: 100%;
 }
-
-/*
-#description h1{
-    font-size: 25px;
-    color: #2a2a2a;
-}
-*/
-
-/*#description h2{*/
-/*font-size: 23px;*/
-/*color: #2a2a2a;*/
-/*padding: 8px 0;*/
-/*}*/
-
-/*#description h2 span, #mobileDescription h2 span{*/
-/*color: white;*/
-/*font-size: 12px;*/
-/*background-color: #454545;*/
-/*padding: 3px 8px;*/
-/*margin: 0 2px;*/
-/*vertical-align: middle;*/
-/*}*/
 
 #Description h2 {
     font-size: 23px;
@@ -661,6 +638,12 @@
     .product_specifications {
         font-size: 18px;
     }
+
+
+    #product_2 .reviews{
+        display: none;
+    }
+
 
 }
 
