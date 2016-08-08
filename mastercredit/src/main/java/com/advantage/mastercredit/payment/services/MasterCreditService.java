@@ -121,7 +121,7 @@ public class MasterCreditService {
                     .append('.')
                     .append(masterCreditDto.getExpirationDate().substring(2, 6));
 
-            Date expirationDate = StringHelper.convertStringToDate(sb.toString(), "dd.mm.yyyy");
+            Date expirationDate = StringHelper.convertStringToDate(sb.toString(), "dd.MM.yyyy");
 
             if (expirationDate.before(new Date())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
