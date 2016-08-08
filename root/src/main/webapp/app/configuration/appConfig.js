@@ -155,10 +155,6 @@ define([], function () {
         state('404', {
             url: '/404',
             templateUrl: 'app/views/404.html',
-            //data: { data used to check fields in runners states ($stateChangeStart, $stateChangeError, ....)
-            //    underConstruction: true,  // this property will apply to all children of 'app'
-            //    breadcrumbName: "Home Page",
-            //}
         });
     }
 
@@ -167,25 +163,3 @@ define([], function () {
 
 });
 
-
-//$routeProvider.
-//    when('/AddNewOrder', {
-//        templateUrl: 'templates/add_order.html',
-//        controller: 'AddOrderController'
-//    }).
-//    when('/category/:id', {
-//        controller: 'categoryCtrl',
-//        templateUrl: './app/views/category-page.html',
-//    }).
-//    when('/', {
-//        controller: 'categoriesCtrl',
-//        templateUrl: 'app/views/home-page.html',
-//    }).
-//    when('/welcome', {
-//        templateUrl: 'app/views/welcome.html',
-//    }).
-//    otherwise({
-//        redirectTo: '/',
-//        controller: 'categoriesCtrl',
-//        templateUrl: './app/views/home-page.html',
-//    });
