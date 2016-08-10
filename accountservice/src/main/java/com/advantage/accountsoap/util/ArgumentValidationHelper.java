@@ -343,14 +343,14 @@ public abstract class ArgumentValidationHelper {
         return message.toString();
     }
 
-    public static void lastFirstNameValidation(String firstLastName) {
+    public static void validateFirstAndLastName(String firstLastName) {
         if(firstLastName != null && firstLastName.length()>0)
             if (!(firstLastName.length() > NAME_MIN_PATTERN) || firstLastName.length() > NAME_MAX_PATTERN) {
                 throw new IllegalArgumentException(STATUS_ERROR_NAME_VALUE);
             }
     }
 
-    public static void sityValidation(String sity) {
+    public static void validateCityName(String sity) {
         if(sity != null && sity.length()>0) {
             if (sity.length() > CITY_PATTERN) {
                 throw new IllegalArgumentException(STATUS_ERROR_CITY_VALUE);
@@ -358,7 +358,7 @@ public abstract class ArgumentValidationHelper {
         }
     }
 
-    public static void stateValidation(String state) {
+    public static void validateStateProvice(String state) {
         if(state != null && state.length()>0) {
             if (state.length()> STATE_PATTERN) {
                 throw new IllegalArgumentException(STATUS_ERROR_STATE_VALUE);
@@ -366,7 +366,7 @@ public abstract class ArgumentValidationHelper {
         }
     }
 
-    public static void addressValidation(String address) {
+    public static void validateAddress(String address) {
         if(address != null && address.length()>0) {
             if (address.length()> ADDRESS_LINE_PATTERN) {
                 throw new IllegalArgumentException(STATUS_ERROR_ADDRESS_LINE1);
@@ -374,7 +374,7 @@ public abstract class ArgumentValidationHelper {
         }
     }
 
-    public static void zipCodeValidation(String zipcode) {
+    public static void validatePostalCode(String zipcode) {
         if(zipcode != null && zipcode.length()>0) {
             if (zipcode.length()> POSTALCODE_PATTERN) {
                 throw new IllegalArgumentException(STATUS_ERROR_POSTAL_VALUE);

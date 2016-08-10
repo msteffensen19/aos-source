@@ -79,6 +79,15 @@ public class DefaultAddressRepository extends AbstractRepository implements Addr
     }
 
     @Override
+    public List<ShippingAddress> getByUserId(Long userId) {
+        List<ShippingAddress> addresses = entityManager.createNamedQuery(ShippingAddress.QUERY_GET_BY_USER_ID, ShippingAddress.class)
+                .setParameter(ShippingAddress.PARAM_USER_ID, userId)
+                .getResultList();
+
+        return addresses.isEmpty() ? null : addresses;
+    }
+
+        @Override
     public ShippingAddress update(ShippingAddress address) {
         entityManager.persist(address);
 

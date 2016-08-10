@@ -284,6 +284,16 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
     }
 
     @Override
+    public Country getCountryIsoNameById(final Long countryId) {
+        Country country = entityManager.createNamedQuery(Country.QUERY_GET_COUNTRY_BY_ID, Country.class)
+                .setParameter(Country.PARAM_COUNTRY_ID, countryId.longValue())
+                .setMaxResults(1)
+                .getSingleResult();
+
+        return country;
+    }
+
+    @Override
     public int delete(Country[] entities) {
         return 0;
     }

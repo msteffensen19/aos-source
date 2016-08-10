@@ -15,5 +15,7 @@ public interface AddressRepository extends DefaultCRUDOperations<ShippingAddress
 
     List<ShippingAddress> getByAccountId(Long accountId);
 
+    List<ShippingAddress> getByUserId(Long accountId);
+
     ShippingAddress update(ShippingAddress address);
 }

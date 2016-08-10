@@ -1,11 +1,14 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
+import com.advantage.accountsoap.dao.AddressRepository;
+import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
+import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.ContentTokenException;
@@ -14,6 +17,7 @@ import com.advantage.common.exceptions.token.VerificationTokenException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import com.advantage.common.security.TokenJWT;
 import com.advantage.root.util.RestApiHelper;
+import com.advantage.root.util.StringHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +38,14 @@ public class AccountService {
     @Qualifier("accountRepository")
     private AccountRepository accountRepository;
 
+//    @Autowired
+//    @Qualifier("countryRepository")
+//    private CountryRepository countryRepository;
+
+    @Autowired
+    @Qualifier("addressRepository")
+    private AddressRepository addressRepository;
+
     @Autowired
     private PaymentPreferencesService paymentPreferencesService;
 
@@ -41,7 +53,30 @@ public class AccountService {
 
     @Transactional
     public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion) {
-        return accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+
+        AccountStatusResponse accountStatusResponse = accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+
+        if (accountStatusResponse.isSuccess()) {
+            //  Add user-account address to Shipping address (CountryId can be default 40L = United States of America)
+            if ((!StringHelper.isNullOrEmpty(address)) ||
+                    (!StringHelper.isNullOrEmpty(cityName)) ||
+                    (!StringHelper.isNullOrEmpty(zipcode)) ||
+                    (countryId.intValue() > 0) ||
+                    (!StringHelper.isNullOrEmpty(stateProvince))) {
+
+                //  Update Shipping Address based on address in user-account
+                String addressLine1 = address.length() > 50 ? address.substring(0, 50) : address;
+                String addressLine2 = address.length() > 50 ? address.substring(50) : null;
+
+                //addressRepository.addAddress(accountStatusResponse.getUserId(), addressLine1, addressLine2, cityName, countryRepository.getCountryIsoNameById(countryId).getIsoName(), stateProvince, zipcode);
+                addressRepository.addAddress(accountStatusResponse.getUserId(), addressLine1, addressLine2, cityName, String.valueOf(countryId), stateProvince, zipcode);
+            } else {
+                //  No user-account address details entered (CountryId can be default 40L = United States of America)
+            }
+
+        }
+
+        return accountStatusResponse;
     }
 
     @Transactional(readOnly = true)
@@ -110,8 +145,32 @@ public class AccountService {
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
                                                Long countryId, String phoneNumber, String stateProvince, String cityName,
                                                String address, String zipcode, String email, boolean allowOffersPromotion) {
-        return accountRepository.updateAccount(accountId, accountType, lastName, firstName, countryId, phoneNumber,
+
+        AccountStatusResponse accountStatusResponse = accountRepository.updateAccount(accountId, accountType, lastName, firstName, countryId, phoneNumber,
                 stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+
+        if (accountStatusResponse.isSuccess()) {
+            //  Add user-account address to Shipping address
+            if ((!StringHelper.isNullOrEmpty(address)) ||
+                    (!StringHelper.isNullOrEmpty(cityName)) ||
+                    (!StringHelper.isNullOrEmpty(zipcode)) ||
+                    (!StringHelper.isNullOrEmpty(stateProvince))) {
+
+                //  Update Shipping Address based on address in user-account
+                String addressLine1 = address.length() > 50 ? address.substring(0, 50) : address;
+                String addressLine2 = address.length() > 50 ? address.substring(50) : null;
+
+                Account account = accountRepository.get(accountId);
+                if (account != null) {
+                    addressRepository.update(new ShippingAddress(addressLine1, addressLine2, account, cityName, String.valueOf(countryId), stateProvince, zipcode));
+                } else {
+                    //  Should be a "shipping address" update failure message?
+                }
+            }
+
+        }
+
+        return accountStatusResponse;
     }
 
     @Transactional

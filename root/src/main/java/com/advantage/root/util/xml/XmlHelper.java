@@ -70,18 +70,20 @@ public abstract class XmlHelper {
      */
     public static void writeXmlDocumentContent(Document doc, String xmlFileName) {
         try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
+            //TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            //Transformer transformer = transformerFactory.newTransformer();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
             DOMSource source = new DOMSource(doc);
 
             ClassPathResource filePath = new ClassPathResource(xmlFileName);
-            File xmlFile = filePath.getFile();
 
+            /*File xmlFile = filePath.getFile();*/
             /*xmlFile = new File(xmlFileName);*/
             /*StreamResult result = new StreamResult(xmlFile);  */
             StreamResult result = new StreamResult(new File(filePath.getURL().getFile()));
 
             transformer.transform(source, result);
+
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         } catch (TransformerException e) {

@@ -22,24 +22,23 @@ import java.util.Set;
         @NamedQuery(
                 name = Country.QUERY_GET_ALL,
                 query = "select c from Country c order by NAME"
+        ), @NamedQuery(
+                name = Country.QUERY_GET_BY_COUNTRY_NAME,
+                query = "select c from Country c where NAME = :" + Country.PARAM_COUNTRY_NAME
+        ), @NamedQuery(
+                name = Country.QUERY_GET_COUNTRIES_BY_ISO_NAME,
+                query = "select c from Country c where ISO_NAME = :" + Country.PARAM_ISO_NAME + " order by NAME"
+        ), @NamedQuery(
+                name = Country.QUERY_GET_COUNTRIES_BY_PHONE_PREFIX,
+                query = "select c from Country c where PHONE_PREFIX = :" + Country.PARAM_PHONE_PREFIX + " order by NAME"
+        ), @NamedQuery(
+                name = Country.QUERY_GET_COUNTRIES_BY_PARTIAL_NAME,
+                query = "select c from Country c where UPPER (NAME) like :" +
+                        Country.PARAM_COUNTRY_NAME + " order by NAME"
+        ), @NamedQuery(
+            name = Country.QUERY_GET_COUNTRY_BY_ID,
+            query = "select c from Country c where id = :" + Country.PARAM_COUNTRY_ID
         )
-        , @NamedQuery(
-        name = Country.QUERY_GET_BY_COUNTRY_NAME,
-        query = "select c from Country c where NAME = :" + Country.PARAM_COUNTRY_NAME
-)
-        , @NamedQuery(
-        name = Country.QUERY_GET_COUNTRIES_BY_ISO_NAME,
-        query = "select c from Country c where ISO_NAME = :" + Country.PARAM_ISO_NAME + " order by NAME"
-)
-        , @NamedQuery(
-        name = Country.QUERY_GET_COUNTRIES_BY_PHONE_PREFIX,
-        query = "select c from Country c where PHONE_PREFIX = :" + Country.PARAM_PHONE_PREFIX + " order by NAME"
-)
-        , @NamedQuery(
-        name = Country.QUERY_GET_COUNTRIES_BY_PARTIAL_NAME,
-        query = "select c from Country c where UPPER (NAME) like :" +
-                Country.PARAM_COUNTRY_NAME + " order by NAME"
-)
 })
 public class Country {
 
@@ -50,9 +49,11 @@ public class Country {
     public static final String QUERY_GET_COUNTRIES_BY_ISO_NAME = "country.getCountriesByIsoName";
     public static final String QUERY_GET_COUNTRIES_BY_PARTIAL_NAME = "country.getCountriesByPartialName";
     public static final String QUERY_GET_COUNTRIES_BY_PHONE_PREFIX = "country.getCountriesByPhonePrefix";
+    public static final String QUERY_GET_COUNTRY_BY_ID = "country.getCountryById";
 
 
     public static final String FIELD_ID = "COUNTRY_ID"; //  COUNTRY_ID
+    public static final String PARAM_COUNTRY_ID = "COUNTRY_ID"; //  COUNTRY_ID
 
     public static final String FIELD_NAME = "NAME";
     public static final String PARAM_COUNTRY_NAME = "PARAM_COUNTRY_COUNTRY_NAME";

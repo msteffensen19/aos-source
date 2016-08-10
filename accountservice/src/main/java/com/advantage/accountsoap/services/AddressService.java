@@ -2,10 +2,14 @@ package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.AddressRepository;
+import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.address.AddAddressDto;
 import com.advantage.accountsoap.dto.address.AddressDto;
 import com.advantage.accountsoap.dto.address.AddressStatusResponse;
+import com.advantage.accountsoap.model.Account;
+import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.ShippingAddress;
+import com.advantage.root.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -20,9 +24,15 @@ public class AddressService {
     @Autowired
     @Qualifier("addressRepository")
     private AddressRepository addressRepository;
+
     @Autowired
     @Qualifier("accountRepository")
     private AccountRepository accountRepository;
+
+    @Autowired
+    @Qualifier("countryRepository")
+    private CountryRepository countryRepository;
+
 
     @Transactional
     public AddressStatusResponse add(long accountId, Collection<AddAddressDto> addresses) {
@@ -30,7 +40,29 @@ public class AddressService {
             return new AddressStatusResponse(false, "Account not found");
         }
 
+        boolean updateUserAccountAddress = true;
         for (AddAddressDto address : addresses) {
+            //  region Update user-account address
+            if (updateUserAccountAddress) {
+                Account account = accountRepository.get(accountId);
+                if (account != null) {
+                    StringBuilder sb = new StringBuilder(address.getAddressLine1() != null ? address.getAddressLine1() : "")
+                            .append(address.getAddressLine2() != null ? address.getAddressLine2() : "");
+
+                    account.setAddress(sb.toString());
+
+                    account.setCountry(countryRepository.get(Long.valueOf(address.getCountry())) != null ? countryRepository.get(Long.valueOf(address.getCountry())) : new Country());
+                    account.setStateProvince(!StringHelper.isNullOrEmpty(address.getState()) ? address.getState() : "");
+                    account.setCityName(!StringHelper.isNullOrEmpty(address.getCity()) ? address.getCity() : "");
+                    account.setZipcode(!StringHelper.isNullOrEmpty(address.getPostalCode()) ? address.getPostalCode() : "");
+
+                    accountRepository.updateAppUser(account);
+                }
+
+                updateUserAccountAddress = false;
+            }
+            //  endregion
+
             addressRepository.addAddress(accountId,
                     address.getAddressLine1(),
                     address.getAddressLine2(),
@@ -73,6 +105,23 @@ public class AddressService {
         shippingAddress.setPostalCode(address.getPostalCode());
         shippingAddress.setState(address.getState());
         addressRepository.update(shippingAddress);
+
+        //  region Update user-account address
+        Account account = accountRepository.get(shippingAddress.getAccount().getId());
+        if (account != null) {
+            StringBuilder sb = new StringBuilder(address.getAddressLine1() != null ? address.getAddressLine1() : "")
+                    .append(address.getAddressLine2() != null ? address.getAddressLine2() : "");
+
+            account.setAddress(sb.toString());
+
+            account.setCountry(countryRepository.get(Long.valueOf(address.getCountry())) != null ? countryRepository.get(Long.valueOf(address.getCountry())) : new Country());
+            account.setStateProvince(!StringHelper.isNullOrEmpty(address.getState()) ? address.getState() : "");
+            account.setCityName(!StringHelper.isNullOrEmpty(address.getCity()) ? address.getCity() : "");
+            account.setZipcode(!StringHelper.isNullOrEmpty(address.getPostalCode()) ? address.getPostalCode() : "");
+
+            accountRepository.updateAppUser(account);
+        }
+        //  endregion
 
         return new AddressStatusResponse(true, "Successfully");
     }

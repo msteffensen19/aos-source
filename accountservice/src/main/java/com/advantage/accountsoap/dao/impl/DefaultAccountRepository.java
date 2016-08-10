@@ -3,6 +3,7 @@ package com.advantage.accountsoap.dao.impl;
 import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.dao.AbstractRepository;
 import com.advantage.accountsoap.dao.AccountRepository;
+import com.advantage.accountsoap.dao.AddressRepository;
 import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.model.Account;
@@ -16,6 +17,7 @@ import com.advantage.common.Constants;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
+import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -44,6 +46,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     @Autowired
     CountryRepository countryRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     /*  Default application user configuration values - Begin   */
     //  3 failed login attempts will cause the user to be blocked for INTERVAL milliseconds.
@@ -132,6 +137,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                         }
                         entityManager.persist(account);
 
+
                         //  New user created successfully.
                         this.failureMessage = "New user created successfully";
                         accountStatusResponse = new AccountStatusResponse(true, Account.MESSAGE_NEW_USER_CREATED_SUCCESSFULLY, account.getId());
@@ -178,12 +184,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         Account account = get(accountId);
 
         //Moti add validation fields
-        ArgumentValidationHelper.lastFirstNameValidation(lastName);
-        ArgumentValidationHelper.lastFirstNameValidation(firstName);
-        ArgumentValidationHelper.sityValidation(cityName);
-        ArgumentValidationHelper.stateValidation(stateProvince);
-        ArgumentValidationHelper.addressValidation(address);
-        ArgumentValidationHelper.zipCodeValidation(zipcode);
+        ArgumentValidationHelper.validateFirstAndLastName(lastName);
+        ArgumentValidationHelper.validateFirstAndLastName(firstName);
+        ArgumentValidationHelper.validateCityName(cityName);
+        ArgumentValidationHelper.validateStateProvice(stateProvince);
+        ArgumentValidationHelper.validateAddress(address);
+        ArgumentValidationHelper.validatePostalCode(zipcode);
 
 
         if (account == null) {
@@ -225,12 +231,12 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                                         String cityName, String address, String zipcode, String email,
                                         boolean allowOffersPromotion) {
         //Moti add validation fields
-        ArgumentValidationHelper.lastFirstNameValidation(lastName);
-        ArgumentValidationHelper.lastFirstNameValidation(firstName);
-        ArgumentValidationHelper.sityValidation(cityName);
-        ArgumentValidationHelper.stateValidation(stateProvince);
-        ArgumentValidationHelper.addressValidation(address);
-        ArgumentValidationHelper.zipCodeValidation(zipcode);
+        ArgumentValidationHelper.validateFirstAndLastName(lastName);
+        ArgumentValidationHelper.validateFirstAndLastName(firstName);
+        ArgumentValidationHelper.validateCityName(cityName);
+        ArgumentValidationHelper.validateStateProvice(stateProvince);
+        ArgumentValidationHelper.validateAddress(address);
+        ArgumentValidationHelper.validatePostalCode(zipcode);
         Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber,
                 stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 

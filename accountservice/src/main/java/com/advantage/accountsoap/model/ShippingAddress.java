@@ -7,16 +7,17 @@ import javax.persistence.*;
         @NamedQuery(
                 name = ShippingAddress.QUERY_GET_ALL,
                 query = "SELECT a FROM ShippingAddress a"
-        )/*,
+        ),
         @NamedQuery(
-                name = ShippingAddress.QUERY_GET_BY_ACCOUNT_ID,
-                query = "SELECT a FROM ShippingAddress a WHERE a.user_id =: " + Account.FIELD_ID
-        )*/
+                name = ShippingAddress.QUERY_GET_BY_USER_ID,
+                query = "SELECT sa FROM ShippingAddress sa WHERE sa.Account.id =: " + ShippingAddress.PARAM_USER_ID
+        )
 })
 public class ShippingAddress {
     public static final String QUERY_GET_ALL = "accountAddress.getAll";
-    public static final String FIELD_ID = "id";
-    public static final String QUERY_GET_BY_ACCOUNT_ID = "accountAddress.getByAccountId";
+    public static final String QUERY_GET_BY_USER_ID = "accountAddress.getByAccountId";
+    public static final String PARAM_USER_ID = "PARAM_USER_ID";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -30,7 +31,7 @@ public class ShippingAddress {
     @Column
     private String city;
     @Column
-    private String country;
+    private String country; //  Country ISO Name (2 characters)
     @Column
     private String state;
     @Column

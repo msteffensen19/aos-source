@@ -50,7 +50,7 @@
     <!-- Original Name = "Spelling_mistakes_in_order_payment_page" ; Corrected Name = "Typos_on_order_payment" -->
     <!-- feature 1544 -->
     <Spelling_mistakes_in_order_payment_page datatype="enum:[Yes,No]" description="In order payment page change 'SHIPPING DETAILS' to 'SHIPING DETAILS', 'Receiver Details' to 'Reciever Details', 'City' to 'Ciity', 'ORDER SUMMARY' to 'ORDERR SUMMARY'. Parameter values: No=(Default) Do nothing; Yes=make spelling mistakes in order payment page. Web and mobile." tools="Sprinter" locationInAdvantage="">No</Spelling_mistakes_in_order_payment_page>
-    <Typos_on_order_payment datatype="enum:[Yes,No]" description="Determines whether spelling errors appear on the ORDER PAYMENT page. Default = No. Yes = The following spelling errors are shown: - SHIPING DETAILS. - Recipeint Details (Web only). - Ciity. - ORDERR SUMMARY (Web only)" tools="Sprinter" locationInAdvantage="Order payment page">No</Typos_on_order_payment>
+    <Typos_on_order_payment datatype="enum:[Yes,No]" description="Determines whether spelling errors appear in the UI. Default = No. Yes = The following spelling errors are shown: - SHIPING DETAILS - Ciity - Recipeint Details (Web only) - ORDERR SUMMARY (Web only)" tools="Sprinter" locationInAdvantage="Web: ORDER PAYMENT page ; Mobile: SHIPPING DETAILS page">No</Typos_on_order_payment>
 
     <!-- No = (Default) Do not, or Yes=Mix places of pictures in home page -->
     <!-- Original Name = "Mix_pictures_in_home_page" ; Corrected Name = "Misplace_pictures_on_Android" -->

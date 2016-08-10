@@ -36,6 +36,8 @@ public interface CountryRepository extends DefaultCRUDOperations<Country> {
 
     List<Country> getCountriesByPhonePrefix(int phonePrefix);
 
+    Country getCountryIsoNameById(final Long countryId);
+
     @Procedure(name="getAllCountriesWithSleep", procedureName="get_all_countries_with_sleep")
     String getAllCountriesWithSleep(int seconds_to_sleep);
 }
