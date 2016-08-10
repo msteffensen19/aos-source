@@ -42,27 +42,6 @@ public class AddressService {
 
         boolean updateUserAccountAddress = true;
         for (AddAddressDto address : addresses) {
-            //  region Update user-account address
-            if (updateUserAccountAddress) {
-                Account account = accountRepository.get(accountId);
-                if (account != null) {
-                    StringBuilder sb = new StringBuilder(address.getAddressLine1() != null ? address.getAddressLine1() : "")
-                            .append(address.getAddressLine2() != null ? address.getAddressLine2() : "");
-
-                    account.setAddress(sb.toString());
-
-                    account.setCountry(countryRepository.get(Long.valueOf(address.getCountry())) != null ? countryRepository.get(Long.valueOf(address.getCountry())) : new Country());
-                    account.setStateProvince(!StringHelper.isNullOrEmpty(address.getState()) ? address.getState() : "");
-                    account.setCityName(!StringHelper.isNullOrEmpty(address.getCity()) ? address.getCity() : "");
-                    account.setZipcode(!StringHelper.isNullOrEmpty(address.getPostalCode()) ? address.getPostalCode() : "");
-
-                    accountRepository.updateAppUser(account);
-                }
-
-                updateUserAccountAddress = false;
-            }
-            //  endregion
-
             addressRepository.addAddress(accountId,
                     address.getAddressLine1(),
                     address.getAddressLine2(),
@@ -70,6 +49,23 @@ public class AddressService {
                     address.getCountry(),
                     address.getState(),
                     address.getPostalCode());
+
+            //  region Update user-account address
+            if (updateUserAccountAddress) {
+                StringBuilder sb = new StringBuilder(address.getAddressLine1() != null ? address.getAddressLine1() : "")
+                        .append(address.getAddressLine2() != null ? address.getAddressLine2() : "");
+
+                updateUserAccountAddress(accountId,
+                        sb.toString(),
+                        address.getCity(),
+                        address.getPostalCode(),
+                        address.getState(),
+                        countryRepository.get(Long.valueOf(address.getCountry())) != null ? countryRepository.get(Long.valueOf(address.getCountry())) : new Country());
+
+                updateUserAccountAddress = false;
+            }
+            //  endregion
+
         }
 
         return new AddressStatusResponse(true, "Successful");
@@ -93,6 +89,19 @@ public class AddressService {
         return fillDtos(addressRepository.getByAccountId(accountId));
     }
 
+    private void updateUserAccountAddress(long accountId, String address, String cityName, String zipcode, String stateProvince, Country country) {
+        Account account = accountRepository.get(accountId);
+        if (account != null) {
+            account.setAddress(!StringHelper.isNullOrEmpty(address) ? address : "");
+            account.setCityName(!StringHelper.isNullOrEmpty(cityName) ? cityName : "");
+            account.setZipcode(!StringHelper.isNullOrEmpty(zipcode) ? zipcode : "");
+            account.setStateProvince(!StringHelper.isNullOrEmpty(stateProvince) ? stateProvince : "");
+            account.setCountry(country);
+
+            accountRepository.updateAppUser(account);
+        }
+    }
+
     @Transactional
     public AddressStatusResponse update(AddressDto address) {
         ShippingAddress shippingAddress = addressRepository.get(address.getId());
@@ -107,20 +116,15 @@ public class AddressService {
         addressRepository.update(shippingAddress);
 
         //  region Update user-account address
-        Account account = accountRepository.get(shippingAddress.getAccount().getId());
-        if (account != null) {
-            StringBuilder sb = new StringBuilder(address.getAddressLine1() != null ? address.getAddressLine1() : "")
-                    .append(address.getAddressLine2() != null ? address.getAddressLine2() : "");
+        StringBuilder sb = new StringBuilder(address.getAddressLine1() != null ? address.getAddressLine1() : "")
+                .append(address.getAddressLine2() != null ? address.getAddressLine2() : "");
 
-            account.setAddress(sb.toString());
-
-            account.setCountry(countryRepository.get(Long.valueOf(address.getCountry())) != null ? countryRepository.get(Long.valueOf(address.getCountry())) : new Country());
-            account.setStateProvince(!StringHelper.isNullOrEmpty(address.getState()) ? address.getState() : "");
-            account.setCityName(!StringHelper.isNullOrEmpty(address.getCity()) ? address.getCity() : "");
-            account.setZipcode(!StringHelper.isNullOrEmpty(address.getPostalCode()) ? address.getPostalCode() : "");
-
-            accountRepository.updateAppUser(account);
-        }
+        updateUserAccountAddress(shippingAddress.getAccount().getId(),
+                sb.toString(),
+                address.getCity(),
+                address.getPostalCode(),
+                address.getState(),
+                !StringHelper.isNullOrEmpty(address.getCountry()) ? countryRepository.get(Long.valueOf(address.getCountry())) : countryRepository.get(40L));
         //  endregion
 
         return new AddressStatusResponse(true, "Successfully");
