@@ -95,7 +95,7 @@ define(['./module'], function (services) {
                     else{
                         itm.title = "Shameful";
                     }
-                    itm.reviewsCount = itm.comment.length + itm.title.length;
+                    itm.reviewsCount = (itm.comment.length + itm.title.length) * 2;
                     itm.name = "Tim Perry";
                 });
 

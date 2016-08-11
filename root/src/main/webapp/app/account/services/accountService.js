@@ -83,6 +83,10 @@ define(['./module'], function (services) {
                             var response = soapResponse.toJSON(params.response);
                             if (response && response.AccountResponse && response.AccountResponse.mobilePhone) {
                                 response.AccountResponse.mobilePhone = response.AccountResponse.mobilePhone + ""; //warning: this field can be a integer, must be converted to string/
+
+                                if(response.AccountResponse.stateProvince.length > 10){
+                                    response.AccountResponse.stateProvince = response.AccountResponse.stateProvince.substring(0, 10);
+                                }
                             }
                             Helper.disableLoader();
                             Loger.Received(response);
