@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.dao;
 
+import com.advantage.accountsoap.dto.address.AddressDto;
 import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.common.dao.DefaultCRUDOperations;
 
@@ -15,7 +16,7 @@ public interface AddressRepository extends DefaultCRUDOperations<ShippingAddress
 
     List<ShippingAddress> getByAccountId(Long accountId);
 
-    List<ShippingAddress> getByUserId(Long accountId);
+    List<AddressDto> getByUserId(Long accountId);
 
     ShippingAddress update(ShippingAddress address);
 }

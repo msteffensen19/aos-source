@@ -7,11 +7,12 @@ import javax.persistence.*;
         @NamedQuery(
                 name = ShippingAddress.QUERY_GET_ALL,
                 query = "SELECT a FROM ShippingAddress a"
-        ),
-        @NamedQuery(
-                name = ShippingAddress.QUERY_GET_BY_USER_ID,
-                query = "SELECT sa FROM ShippingAddress sa WHERE sa.Account.id =: " + ShippingAddress.PARAM_USER_ID
         )
+//        ,
+//        @NamedQuery(
+//                name = ShippingAddress.QUERY_GET_BY_USER_ID,
+//                query = "SELECT sa FROM ShippingAddress sa WHERE sa.Account.id =: " + ShippingAddress.PARAM_USER_ID
+//        )
 })
 public class ShippingAddress {
     public static final String QUERY_GET_ALL = "accountAddress.getAll";
