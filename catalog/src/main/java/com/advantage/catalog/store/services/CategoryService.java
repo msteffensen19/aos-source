@@ -12,6 +12,7 @@ import com.advantage.common.dto.CategoryAttributeShowInFilter;
 import com.advantage.common.dto.CategoryDto;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -180,4 +181,81 @@ public class CategoryService {
         return categoryAttributeFilter;
     }
 
+    //  region Network Virtualization (NV)
+    /**
+     * Return HTTP status code of 4xx series according to Network Virtualization requirements.
+     * @param httpStatusCode
+     * @return
+     */
+    public HttpStatus returnHttpStatusCode4xxForNetworkVirtualization(int httpStatusCode) {
+        HttpStatus httpStatus = null;
+
+        switch (httpStatusCode) {
+            case 400:
+                httpStatus = HttpStatus.BAD_REQUEST;
+            case 403:
+                httpStatus = HttpStatus.FORBIDDEN;
+            case 404:
+                httpStatus = HttpStatus.NOT_FOUND;
+            case 406:
+                httpStatus = HttpStatus.NOT_ACCEPTABLE;
+            case 408:
+                httpStatus = HttpStatus.REQUEST_TIMEOUT;
+            case 409:
+                httpStatus = HttpStatus.CONFLICT;
+            case 411:
+                httpStatus = HttpStatus.LENGTH_REQUIRED;
+            case 412:
+                httpStatus = HttpStatus.PRECONDITION_FAILED;
+            case 413:
+                httpStatus = HttpStatus.PAYLOAD_TOO_LARGE;
+            case 414:
+                httpStatus = HttpStatus.URI_TOO_LONG;
+            case 422:
+                httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
+            case 423:
+                httpStatus = HttpStatus.LOCKED;
+            case 424:
+                httpStatus = HttpStatus.FAILED_DEPENDENCY;
+            case 426:
+                httpStatus = HttpStatus.UPGRADE_REQUIRED;
+            case 429:
+                httpStatus = HttpStatus.TOO_MANY_REQUESTS;
+            default:
+                httpStatus = HttpStatus.BAD_REQUEST;
+        }
+        return httpStatus;
+    }
+
+    /**
+     * Return HTTP status code of 5xx series according to Network Virtualization requirements.
+     * @param httpStatusCode
+     * @return
+     */
+    public HttpStatus returnHttpStatusCode5xxForNetworkVirtualization(int httpStatusCode) {
+        HttpStatus httpStatus = null;
+
+        switch (httpStatusCode) {
+            case 500:
+                httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            case 501:
+                httpStatus = HttpStatus.NOT_IMPLEMENTED;
+            case 503:
+                httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
+            case 505:
+                httpStatus = HttpStatus.HTTP_VERSION_NOT_SUPPORTED;
+            case 507:
+                httpStatus = HttpStatus.INSUFFICIENT_STORAGE;
+            case 509:
+                httpStatus = HttpStatus.BANDWIDTH_LIMIT_EXCEEDED;
+            case 510:
+                httpStatus = HttpStatus.NOT_EXTENDED;
+            case 511:
+                httpStatus = HttpStatus.NETWORK_AUTHENTICATION_REQUIRED;
+            default:
+                httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return httpStatus;
+    }
+    //  endregion
 }

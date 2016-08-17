@@ -13,7 +13,7 @@ public class DatabaseConfig extends com.advantage.common.config.DataSourceCommon
 
 
     @Bean(initMethod = "init")
-    public DataSourceInitByCsv init() {
+    public DataSourceInitByCsv initData() {
         return new DataSourceInitByCsv();
     }
 

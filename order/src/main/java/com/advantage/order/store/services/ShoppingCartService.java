@@ -375,12 +375,15 @@ public class ShoppingCartService {
         URL productByIdUrl = null;
         try {
             productsPrefixUrl = new URL(Url_resources.getUrlCatalog(), CATALOG_PRODUCT);
+            logger.debug("Url_resources.getUrlCatalog()=" + Url_resources.getUrlCatalog().toString());
             logger.debug("productsPrefixUrl=" + productsPrefixUrl.toString());
         } catch (MalformedURLException e) {
             logger.error(productsPrefixUrl, e);
         }
+
         try {
             productByIdUrl = new URL(productsPrefixUrl, String.valueOf(productId));
+            logger.debug("productByIdUrl=" + productByIdUrl.toString());
             logger.debug("productByIdUrl=" + productByIdUrl.toString());
         } catch (MalformedURLException e) {
             logger.error(productByIdUrl, e);
@@ -390,6 +393,7 @@ public class ShoppingCartService {
         String stringResponse = null;
         try {
             stringResponse = RestApiHelper.httpGet(productByIdUrl, "order");
+            logger.debug("ProductDto productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)");
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  Product not found (409)
                 dto = new ProductDto(productId, -1L, Constants.NOT_FOUND, -999999.99, Constants.NOT_FOUND, Constants.NOT_FOUND, null, null, null);
@@ -669,14 +673,24 @@ public class ShoppingCartService {
         boolean result = false;
 
         ProductDto productDetails = getProductDtoDetails(productId);
-        if (!productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
-            List<ColorAttributeDto> colors = productDetails.getColors();
-            for (ColorAttributeDto color : colors) {
-                //  Better to compare integers than Strings - no problem with leading zeros
-                if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
-                    result = true;
+        if (productDetails != null) {
+            if (! productDetails.getProductName().isEmpty()) {
+                if (!productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
+                    List<ColorAttributeDto> colors = productDetails.getColors();
+                    for (ColorAttributeDto color : colors) {
+                        //  Better to compare integers than Strings - no problem with leading zeros
+                        if (ShoppingCart.convertHexColorToInt(color.getCode()) == ShoppingCart.convertHexColorToInt(hexColor)) {
+                            result = true;
+                        }
+                    }
+                } else {
+                    logger.debug("ProductDto productDetails.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)");
                 }
+            } else {
+                logger.error("ProductDto productDetails.getProductName() is empty");
             }
+        } else {
+            logger.error("ProductDto productDetails is NULL");
         }
         return result;
     }

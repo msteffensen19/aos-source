@@ -808,4 +808,34 @@ public class CatalogController {
         return new ResponseEntity<>(mostPopularCommentsResponse, httpStatus);
     }
     //endregion
+
+    //  region Network Virtualization - Return 4xx and 5xx HttpStatus Codes
+
+    /**
+     * Method returns an HTTP status code number sent in the request.
+     * @param httpStatusCode
+     * @param request {@link HttpServletRequest}
+     * @param response {@link HttpServletResponse}
+     * @return
+     */
+    @RequestMapping(value = "/products/code/{http_status_code}", method = RequestMethod.GET)
+    @ApiOperation(value = "Return requested HTTP status code for NV")
+    public ResponseEntity<String> returnHttpStatusForCodeNetworkVirtualization(@PathVariable("http_status_code") int httpStatusCode,
+                                                                            HttpServletRequest request,
+                                                                            HttpServletResponse response) {
+
+        HttpStatus httpStatus = null;
+
+        if ((httpStatusCode >= 400) && (httpStatusCode < 500)) {
+            httpStatus = categoryService.returnHttpStatusCode4xxForNetworkVirtualization(httpStatusCode);
+        } else if ((httpStatusCode >= 500) && (httpStatusCode < 600)) {
+            httpStatus = categoryService.returnHttpStatusCode5xxForNetworkVirtualization(httpStatusCode);
+        } else {
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(httpStatusCode + " " + httpStatus.getReasonPhrase(), httpStatus);
+    }
+    //  endregion
+
 }
