@@ -890,23 +890,61 @@ define(['./module'], function (directives) {
                     }
                     switch (type) {
                         case Types.select:
-                            s.$watch('secSelectOptions', function (n, o) {
-                                ctrl.fillSelect(n, name);
-                            }, true);
-                            label.css({
-                                "cursor": "pointer",
-                            });
-                            if (a.aShow) {
-                                input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
-                            }
-                            else {
-                                input = $("<div><label class='select-value' > {{secModel}}</label><div class='selectList'></div></div>");
-                            }
-                            input.find(".select-value").on({
-                                click: function () {
-                                    ctrl.getSelectlist().fadeToggle(150);
-                                }
-                            });
+                            //s.$watch('secSelectOptions', function (n, o) {
+                            //    ctrl.fillSelect(n, name);
+                            //}, true);
+                            //label.css({
+                            //    "cursor": "pointer",
+                            //});
+                            //if (a.aShow) {
+                            //    input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
+                            //}
+                            //else {
+                            //    input = $("<div><label class='select-value' > {{secModel}}</label><div class='selectList'></div></div>");
+                            //}
+                            //input.find(".select-value").on({
+                            //    click: function () {
+                            //        ctrl.getSelectlist().fadeToggle(150);
+                            //    }
+                            //});
+
+
+
+
+
+
+
+                            label.css("z-index", "-10");
+
+
+                            var dot = (a.aShow ? "." + a.aShow : "");
+
+                            //var format = "<select ng-model='secModel' ng-options='c as c" + dot
+                            //    + " for c in secSelectOptions track by $index'>";
+
+
+
+                            //var format = "<select ng-model='secModel'>"+
+                            //    "<option data-ng-repeat="+
+                            //    "'v in secSelectOptions track by $index' "+
+                            //    " ng-selected='v" +dot+ " == secModel" +dot+ "' " +
+                            //    " value='{{v}}' " +
+                            //    ">{{v" + dot + "}}</option></select>"
+
+
+                            var format = "<select ng-model='secModel'>"+
+                                "<option ng-repeat="+
+                                "'v in secSelectOptions track by $index' "+
+                                ">{{v" + dot + "}}</option></select>"
+
+                            input = $(format);
+                            input.css("background", "transparent");
+
+
+
+
+
+
                             break;
                         case Types.textarea:
                             input = $("<textarea data-ng-model='secModel' ></textarea>");
