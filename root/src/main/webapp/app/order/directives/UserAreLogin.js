@@ -94,6 +94,14 @@ define(['./module'], function (directives) {
                             var arr = Helper.getMonthInYearForMasterCredit(value, s.month);
                             if (arr != null) {
                                 s.month = arr;
+                                if(s.card && s.card.expirationDate && s.card.expirationDate.month) {
+                                    for (var i = 0; i < arr.length; i++) {
+                                        if (arr[i] == s.card.expirationDate.month) {
+                                            return;
+                                        }
+                                    }
+                                    s.card.expirationDate.month = arr[0];
+                                }
                             }
                         }
 

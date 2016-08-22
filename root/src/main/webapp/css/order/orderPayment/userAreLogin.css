@@ -331,9 +331,9 @@
 }
 
 #paymentMethod .payment_date .sec-view{
-    width: 33% !important;
+    /*width: 33% !important;*/
     display: inline-block;
-    margin-right: 10%;
+    /*margin-right: 10%;*/
 }
 
 

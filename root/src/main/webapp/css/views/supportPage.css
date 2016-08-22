@@ -120,6 +120,7 @@
 
 #supportCover select {
     cursor: pointer;
+    color:white;
 }
 
 #supportCover select > option:hover {
