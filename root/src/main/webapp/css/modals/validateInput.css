@@ -114,13 +114,19 @@
     color: #ff454f;
 }
 
-.sec-view div input {
+.sec-view div input, .sec-view div select {
     margin: 0;
     outline: none;
     cursor: text;
     border: none;
     border-bottom: 1px solid #CECCCC;
     transition: border-bottom .4s ease;
+}
+
+.sec-view div select{
+    width: 100%;
+    font-size: 14px;
+    padding: 2px 0;
 }
 
 .sec-view div textarea {

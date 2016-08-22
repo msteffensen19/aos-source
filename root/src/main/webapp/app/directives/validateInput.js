@@ -275,16 +275,16 @@ define(['./module'], function (directives) {
                 var isFieldValid;
                 var hint;
                 var ul;
-                var ctrl;
                 var form;
                 var doNotShowInfo = false;
                 var disableValidation = false;
                 var isCardNumber = false;
+                var ctrl = this;
 
-                this.compareTo;
+                ctrl.compareTo;
                 s.validations = [];
 
-                this.getListValidations = function () {
+                ctrl.getListValidations = function () {
                     var li = "";
                     for (var i = 0; i < s.validations.length; i++) {
                         var validation = s.validations[i];
@@ -299,17 +299,17 @@ define(['./module'], function (directives) {
                 };
 
 
-                this.setCompareTo = function (_compareTo) {
-                    this.compareTo = _compareTo;
+                ctrl.setCompareTo = function (_compareTo) {
+                    ctrl.compareTo = _compareTo;
                 };
 
                 var secSelectChange;
-                this.setSecSelectChange = function (_secSelectChange) {
+                ctrl.setSecSelectChange = function (_secSelectChange) {
                     secSelectChange = _secSelectChange;
                 };
 
                 var secretField;
-                this.setSecretField = function () {
+                ctrl.setSecretField = function () {
                     secretField = true;
                     if(s.secModel.length == 12) {
                         input.parent().addClass('card-number-four-star');
@@ -321,7 +321,7 @@ define(['./module'], function (directives) {
                     //input.attr("type", "password");
                 };
 
-                this.removeSecretField = function () {
+                ctrl.removeSecretField = function () {
                     if(secretField){
                         input.parent().removeClass('card-number-four-star');
                         secretField = false;
@@ -331,22 +331,22 @@ define(['./module'], function (directives) {
                 };
 
 
-                this.setDoNotShowInfo = function (_doNotShowInfo) {
+                ctrl.setDoNotShowInfo = function (_doNotShowInfo) {
                     doNotShowInfo = _doNotShowInfo;
                 };
 
-                this.setCardNumberFourDigits = function (_CardNumberFourDigits) {
+                ctrl.setCardNumberFourDigits = function (_CardNumberFourDigits) {
                     isCardNumber = _CardNumberFourDigits;
                 };
 
 
-                this.setDisableValidation = function (_disableValidation) {
+                ctrl.setDisableValidation = function (_disableValidation) {
                     disableValidation = _disableValidation == undefined ? false : _disableValidation;
-                    this.change(input.val());
+                    ctrl.change(input.val());
                 };
 
 
-                this.pushValidation = function (validation, key) {
+                ctrl.pushValidation = function (validation, key) {
 
                     if (validation.error) {
                         validation.key = key;
@@ -362,20 +362,20 @@ define(['./module'], function (directives) {
                 };
 
                 var firstLoader = true;
-                this.modelCompareToChange = function (val) {
+                ctrl.modelCompareToChange = function (val) {
                     if (!firstLoader) {
                         if ((val+"").trim() == "") {
                             return;
                         }
-                        this.compareTo.val(val)
-                        this.change(input.val());
-                        this.blur(input.val());
+                        ctrl.compareTo.val(val)
+                        ctrl.change(input.val());
+                        ctrl.blur(input.val());
                     }
                     firstLoader = false;
                 };
 
                 var selectedList;
-                this.fillSelect = function (arr, name) {
+                ctrl.fillSelect = function (arr, name) {
                     if (arr) {
                         var found = false;
                         selectedList = arr;
@@ -446,9 +446,12 @@ define(['./module'], function (directives) {
                     }
                 };
 
-                this.change = function (val) {
+                ctrl.change = function (val) {
 
                     if (val == undefined || s.secModel == undefined) {
+                        return;
+                    }
+                    if (typeof val == 'string' && typeof s.secModel == 'object') {
                         return;
                     }
                     if (s.secModel != undefined) {
@@ -477,7 +480,10 @@ define(['./module'], function (directives) {
                             else {
                                 valid = s.validations.length == 0;
                             }
-                            ctrl.getSelectlist().fadeOut();
+                            if (secSelectChange) {
+                                secSelectChange({value : val})
+                            }
+
                             return;
                         }
                         else if ((val+"").trim() == "") {
@@ -523,7 +529,7 @@ define(['./module'], function (directives) {
                     return val != "" && val != null && val != undefined;
                 }
 
-                this.blur = function (val) {
+                ctrl.blur = function (val) {
                     if (val == undefined || (val+"").trim() == "undefined") {
                         return;
                     }
@@ -542,13 +548,13 @@ define(['./module'], function (directives) {
                 };
 
 
-                this.focus = function () {
+                ctrl.focus = function () {
                     label.addClass(animated);
                     input.addClass(in_focus);
                     if (isCardNumber) {
                         addCardNumberFourDigits()
                     }
-                    this.change(s.secModel);
+                    ctrl.change(s.secModel);
                     setNormalHint();
                 };
 
@@ -562,7 +568,7 @@ define(['./module'], function (directives) {
                     input.removeClass('card-number-four-digits');
                 }
 
-                this.getSelectlist = function () {
+                ctrl.getSelectlist = function () {
                     return input.find(".selectList");
                 };
 
@@ -598,14 +604,13 @@ define(['./module'], function (directives) {
                 };
 
 
-                this.setItems = function (_input, _label, _ul, _form, _id) {
+                ctrl.setItems = function (_input, _label, _ul, _form, _id) {
 
                     id = _id;
                     input = _input;
                     label = _label;
                     ul = _ul;
                     hint = label.text();
-                    ctrl = this;
                     form = _form;
 
                     var valid;
@@ -628,9 +633,14 @@ define(['./module'], function (directives) {
 
                     input.on({
                         blur: function () {
-                            ctrl.blur(s.secModel);
+                            if (!isSelectedDesign()) {
+                                ctrl.blur(s.secModel);
+                            }
                         },
                         focus: function () {
+                            if (isSelectedDesign()) {
+                                form.changeAllowToChangeInvalidClass();
+                            }
                             form.setToLateToCheck();
                             ctrl.focus();
                         },
@@ -820,7 +830,7 @@ define(['./module'], function (directives) {
                 }
 
                 function isSelectedDesign() {
-                    return input.find("." + select_value).length > 0;
+                    return input.prop("tagName").toLowerCase() == "select"
                 }
 
                 function isCheckboxDesign() {
@@ -883,30 +893,20 @@ define(['./module'], function (directives) {
                     if (!a.aHint) {
                         hideLabel = "style='display:none'";
                     }
+
                     var label = $("<label " + hideLabel + " data-ng-click='labelClicked()' data-ng-mouseout='labelOut()'>" + a.aHint + "</label>");
-                    var name;
-                    if (a.aShow) {
-                        name = a.aShow;
-                    }
                     switch (type) {
                         case Types.select:
-                            s.$watch('secSelectOptions', function (n, o) {
-                                ctrl.fillSelect(n, name);
-                            }, true);
-                            label.css({
-                                "cursor": "pointer",
-                            });
-                            if (a.aShow) {
-                                input = $("<div><label class='select-value' > {{secModel['" + a.aShow + "']}}</label><div class='selectList'></div></div>");
-                            }
-                            else {
-                                input = $("<div><label class='select-value' > {{secModel}}</label><div class='selectList'></div></div>");
-                            }
-                            input.find(".select-value").on({
-                                click: function () {
-                                    ctrl.getSelectlist().fadeToggle(150);
-                                }
-                            });
+
+                            label.css("z-index", "-10");
+                            label.addClass("animated");
+                            var dot = (a.aShow ? "." + a.aShow : "");
+                            var format = "<select ng-model='secModel' ng-options='c as c" + dot
+                                + " for c in secSelectOptions' >";
+
+                            input = $(format);
+                            input.css("background", "transparent");
+
                             break;
                         case Types.textarea:
                             input = $("<textarea data-ng-model='secModel' ></textarea>");
@@ -939,6 +939,8 @@ define(['./module'], function (directives) {
                             div.append(star);
                         }
                     }
+                    $compile(input)(s);
+
                     div.append(input);
                     div.append(label);
 
