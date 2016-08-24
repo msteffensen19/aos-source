@@ -2,6 +2,7 @@
  * Created by correnti on 24/08/2016.
  */
 
+var iiiiiiiiiiiii = 0;
 
 function SourceMapper(src, nodePositions, fragments, inFile, sourceRoot) {
     this.generator = new SourceMapGenerator({ sourceRoot: sourceRoot });
