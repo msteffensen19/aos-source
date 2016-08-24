@@ -233,8 +233,15 @@
             </div>
         </div>
     </article>
-
+    <h1 >{{!mainCtrl.config.slowPage}}</h1>
+    <div data-ng-if="!mainCtrl.config.slowPage">
+        <script href="scripts/nv_files/angular-cookies-for-nv.js" type="text/javascript"></script>
+        <script href="scripts/nv_files/generate-sourcemap-for-nv.js" type="text/javascript"></script>
+        <script href="scripts/nv_files/route-for-nv.js" type="text/javascript"></script>
+        <script href="scripts/nv_files/SourceMapper-for-nv.js" type="text/javascript"></script>
+    </div>
 </section>
+
 
 
 <social-media-drtv></social-media-drtv>
