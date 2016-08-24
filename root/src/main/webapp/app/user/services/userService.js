@@ -13,6 +13,7 @@ define(['./module'], function (services) {
                 singOut: singOut,
                 getCartIncrement: getCartIncrement,
                 getDuplicateProductPrice: getDuplicateProductPrice,
+                nv_slowPage: nv_slowPage
             });
 
             function getCartIncrement() {
@@ -66,6 +67,10 @@ define(['./module'], function (services) {
 
 
             var appConfiguration;
+
+            function nv_slowPage(){
+                return appConfiguration.slowPage;
+            }
 
             function getConfiguration() {
 

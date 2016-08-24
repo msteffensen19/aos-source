@@ -5,8 +5,8 @@
 define(['./module'], function (services) {
     'use strict';
     services.service('productsCartService', ['$http', '$q', 'resHandleService', 'ipCookie',
-        '$rootScope', '$timeout',
-        function ($http, $q, responseService, $cookie, $rootScope, $timeout) {
+        '$rootScope',
+        function ($http, $q, responseService, $cookie, $rootScope) {
 
             var cart = null;
 

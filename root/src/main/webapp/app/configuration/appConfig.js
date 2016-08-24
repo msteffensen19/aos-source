@@ -27,12 +27,14 @@ define([], function () {
                         categoryService.getCategories().then(function (categories) {
                             dealService.getDealOfTheDay().then(function (deal) {
                                 categoryService.getPopularProducts().then(function (popularProducts) {
+                                    categoryService.nvHandler().then(function () {
                                     var paramsToReturn = {
                                         categories: categories,
                                         specialOffer: deal,
                                         popularProducts: popularProducts,
                                     }
                                     defer.resolve(paramsToReturn)
+                                    })
                                 })
                             });
                         });
