@@ -6,16 +6,14 @@ import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.ArgumentValidationHelper;
-import com.advantage.common.dto.CategoriesDto;
-import com.advantage.common.dto.CategoryAttributeFilterResponse;
-import com.advantage.common.dto.CategoryAttributeShowInFilter;
-import com.advantage.common.dto.CategoryDto;
+import com.advantage.common.dto.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -261,6 +259,10 @@ public class CategoryService {
                 httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return httpStatus;
+    }
+
+    public ProductSpecialOfferResponse getSpecialOfferProduct(HttpServletRequest request) {
+        return null;
     }
     //  endregion
 }

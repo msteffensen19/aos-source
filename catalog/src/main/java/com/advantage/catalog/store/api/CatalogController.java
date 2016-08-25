@@ -836,6 +836,25 @@ public class CatalogController {
 
         return new ResponseEntity<>(httpStatusCode + " " + httpStatus.getReasonPhrase(), httpStatus);
     }
+
+    /**
+     * Method returns an HTTP status code number sent in the request.
+     * @param request {@link HttpServletRequest}
+     * @param response {@link HttpServletResponse}
+     * @return
+     */
+    @RequestMapping(value = "/products/special_offer", method = RequestMethod.GET)
+    @ApiOperation(value = "Get the special offer product for NV")
+    public ResponseEntity<ProductSpecialOfferResponse> getSpecialOfferProduct(HttpServletRequest request,
+                                                                              HttpServletResponse response) {
+
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        ProductSpecialOfferResponse specialOfferProductResponse = categoryService.getSpecialOfferProduct(request);
+
+        return new ResponseEntity<>(specialOfferProductResponse, httpStatus);
+    }
+
     //  endregion
 
 }
