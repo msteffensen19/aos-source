@@ -22,8 +22,7 @@
 
                     <div id="paymentMethod" ng-hide="firstTag">
                         <div>
-                            <label class="Choose_payment roboto-medium">
-                                {{ 'Choose_payment_method_below' | translate }}
+                            <label class="Choose_payment roboto-medium" translate="Choose_payment_method_below">
                             </label>
 
                             <div class="paymentMethods">
@@ -102,7 +101,7 @@
                                         </sec-view>
 
                                     </div>
-                                    <label class="roboto-regular expiration_date_title">{{'Expiration_Date' | translate}}</label>
+                                    <label class="roboto-regular expiration_date_title" translate="Expiration_Date"></label>
                                     <div class="spliter">
 
                                         <div class="payment_date">
@@ -136,7 +135,8 @@
 
                                     <div class="option marginTop">
                                         <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
-                                        <span class="roboto-light ng-binding" data-ng-click="saveMasterCredit = !saveMasterCredit"> {{ 'Set_MasterCredit_as_Preferred_payment' | translate }} </span>
+                                        <span class="roboto-light ng-binding" data-ng-click="saveMasterCredit = !saveMasterCredit"
+                                              translate="Set_MasterCredit_as_Preferred_payment"></span>
                                     </div>
 
                                     <div class="blueLink">

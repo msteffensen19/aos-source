@@ -13,8 +13,8 @@
 
 #product_2 .reviews{
     position: absolute;
-    width: 240px;
-    height: 230px;
+    width: 225px;
+    height: 225px;
     background: rgba(244, 244, 242, 0.95);
     font-size: 0;
     overflow: hidden;

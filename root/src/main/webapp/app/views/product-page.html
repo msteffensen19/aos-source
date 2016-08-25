@@ -14,9 +14,7 @@
             <h1 class="roboto-regular"> {{::product.productName | uppercase}} </h1>
 
             <h2 class="roboto-thin"> {{::product.price | currency:'$'}}
-                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">
-                    {{ 'SOUL_OUT' | translate }}
-                </span>
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" translate="SOUL_OUT"></span>
             </h2>
         </div>
 
@@ -28,12 +26,10 @@
         <div id="product_2">
             <div id="product-section" class="half">
 
-
                 <div class="reviews" ng-if="mostPopularComments.length > 0">
                     <div class="rightArrow">
                         <img src="../../css/images/review_right.png" data-ng-click="nextReview()" />
                     </div>
-
                     <div class="reviewsCover">
                         <div data-ng-repeat="comment in mostPopularComments track by $index">
                             <p class="score roboto-regular">{{comment.score}}</p>
@@ -70,9 +66,7 @@
                 <h1 class="roboto-regular screen768"> {{::product.productName | uppercase}} </h1>
 
                 <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}
-                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'">
-                    {{ 'SOUL_OUT' | translate }}
-                </span>
+                <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" translate="SOUL_OUT"></span>
                 </h2>
 
                 <p class="roboto-light"> {{::product.description }} </p>
@@ -113,8 +107,6 @@
     </article>
     <!--data-ng-class="{ topSpace : product.images.length > 1 }"-->
     <div id="separator"></div>
-
-
 
     <article ng-if="showVideo" class="max-width" data-ng-switch="haveInternet" >
         <div data-ng-switch-when="true" >

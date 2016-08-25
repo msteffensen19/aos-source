@@ -13,7 +13,23 @@ define(['./module'], function (services) {
                 singOut: singOut,
                 getCartIncrement: getCartIncrement,
                 getDuplicateProductPrice: getDuplicateProductPrice,
+                nv_slowPage: nv_slowPage,
+                haveConfiguration: haveConfiguration
             });
+
+
+            function haveConfiguration(){
+                var defer = $q.defer();
+                if(appConfiguration && appConfiguration.slowPage){
+                    defer.resolve();
+                }
+                else{
+                    getConfiguration().then(function(){
+                        defer.resolve();
+                    });
+                }
+                return defer.promise;
+            }
 
             function getCartIncrement() {
                 return appConfiguration && appConfiguration.cartIncrement ? appConfiguration.cartIncrement : 0;
@@ -66,6 +82,10 @@ define(['./module'], function (services) {
 
 
             var appConfiguration;
+
+            function nv_slowPage(){
+                return appConfiguration.slowPage;
+            }
 
             function getConfiguration() {
 

@@ -76,6 +76,14 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
+                        src: [
+                            'scripts/nv_files/*'
+                        ],
+                        dest: 'target',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
                         src: ['index.html',
                             'app/tempFiles/popularProducts.json',
                             'css/fonts/roboto_thin_macroman/Roboto-Thin-webfont.eot',

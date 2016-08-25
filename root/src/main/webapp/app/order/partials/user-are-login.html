@@ -32,13 +32,12 @@
                 </div>
             </div>
             <div class="blueLink">
-                <a data-ng-click="userDetailsEditMode = true">{{ 'Edit_shipping_Details' | translate }}</a>
+                <a data-ng-click="userDetailsEditMode = true" translate="Edit_shipping_Details"></a>
                 <label class="float-button">{{ 'SHIPPING_BY' | translate }}:
                     <img src="css/images/Shipex.png" alt="ShipEx"/></label>
             </div>
             <div class="mobileBtnHandler">
-                <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75">
-                    {{ 'NEXT' | translate }}
+                <button data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75" translate="NEXT">
                 </button>
             </div>
         </div>
@@ -80,7 +79,6 @@
 
                 <h6 translate="Address" class="roboto-bold"></h6>
 
-
                 <div class="spliter">
                     <sec-view a-hint="Country"
                               sec-require="mainCtrl.getRequire('Country')"
@@ -120,7 +118,7 @@
 
                 <div class="option marginTop">
                     <input ng-model="agree_Agreement" type="checkbox"/>
-                    <span class="roboto-light">{{'Save_changes_in_profile_for_future_use' | translate }}</span>
+                    <span class="roboto-light" translate="Save_changes_in_profile_for_future_use"></span>
                 </div>
 
                 <div class="blueLink">
@@ -130,8 +128,7 @@
                     </sec-sender>
                     <a class="roboto-medium float-button a-link linkToPress"
                        data-ng-class="{ buttonDisable : invalidUser}"
-                       data-ng-click="backToMainShippingDetails()">
-                        {{'BACK' | translate}}
+                       data-ng-click="backToMainShippingDetails()" translate="BACK">
                     </a>
                 </div>
 
@@ -150,10 +147,8 @@
 
     <div id="paymentMethod" data-ng-hide="firstTag">
         <div>
-            <label class="Choose_payment roboto-medium">
-                {{ 'Choose_payment_method_below' | translate }}
+            <label class="Choose_payment roboto-medium" translate="Choose_payment_method_below">
             </label>
-
             <div class="paymentMethods">
                 <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1)"
                      data-ng-class="{ selected : imgRadioButton == 1 }">
@@ -197,16 +192,14 @@
 
                     <div class="option marginTop">
                         <input ng-model="saveSafePay" type="checkbox">
-                        <span class="roboto-light ng-binding"> {{ 'Save_changes_in_profile_for_future_use' | translate }} </span>
+                        <span class="roboto-light ng-binding" translate="Save_changes_in_profile_for_future_use"> </span>
                     </div>
 
                     <div class="blueLink margin15px">
-                        <a data-ng-click="firstTag = true">{{ 'Back_to_shipping_details' | translate }}</a>
+                        <a data-ng-click="firstTag = true" translate="Back_to_shipping_details"></a>
                         <label class="float_right">
-
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
                                         sec-send="payNow_SafePay()"></sec-sender>
-
                         </label>
                     </div>
 
@@ -227,17 +220,14 @@
                         <span data-ng-repeat="_4numbers in CardNumber track by $index">
                             {{ _4numbers | showLast4DigitsCard:$last:$index}}
                         </span>
-                        <label class="edit" data-ng-click="showMasterCart = !showMasterCart">
-                            {{'Edit' | translate}}
+                        <label class="edit" data-ng-click="showMasterCart = !showMasterCart" translate="Edit">
                         </label>
                     </div>
                 </div>
 
                 <div class="blueLink marginBottom">
-                    <a ng-click="Back_to_shipping_details()">{{ 'Back_to_shipping_details' | translate }}</a>
+                    <a ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                     <label>
-                        <!--<input class="roboto-medium float-button a-button" data-ng-click="payNow_manual()"-->
-                        <!--type="button" value="{{'PAY_NOW' | translate}}"/>-->
                         <button class="roboto-medium float-button a-button" data-ng-click="payNow_manual()">
                             {{'PAY_NOW' | translate}}
                         </button>
@@ -255,9 +245,7 @@
 
                 <div class="notice">
                     <h4 translate="Notice"></h4>
-
-                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }} {{ 'Please_enter_a_fake_data' |
-                        translate }}</p>
+                    <p class="roboto-light">{{ 'This_is_a_demo' | translate }} {{ 'Please_enter_a_fake_data' | translate }}</p>
                 </div>
 
                 <sec-form>
@@ -280,11 +268,10 @@
                         </sec-view>
 
                     </div>
-                    <label class="roboto-regular expiration_date_title">{{'Expiration_Date' | translate}}</label>
+                    <label class="roboto-regular expiration_date_title" translate="Expiration_Date"></label>
                     <div class="spliter">
 
                         <div class="payment_date">
-
 
                             <sec-view a-hint="{{ 'MM' | translate }}"
                                       a-type="select"
@@ -317,17 +304,14 @@
 
                     <div class="option marginTop">
                         <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
-                        <span class="roboto-light ng-binding"> {{ 'Save_changes_in_profile_for_future_use' | translate }} </span>
+                        <span class="roboto-light ng-binding" translate="Save_changes_in_profile_for_future_use"></span>
                     </div>
 
                     <div class="blueLink">
-                        <a ng-click="Back_to_shipping_details()">
-                            {{ 'Back_to_shipping_details' | translate }}</a>
+                        <a ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                         <label>
-
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
                                         sec-send="payNow_masterCredit()"></sec-sender>
-
                         </label>
                     </div>
 
@@ -340,14 +324,7 @@
         </div>
     </div>
 
-    <!-- END EDIT PAYMENT
-
-
-
-
-
-SECTION-->
-
+    <!-- END EDIT PAYMENT SECTION-->
 
 </div>
 

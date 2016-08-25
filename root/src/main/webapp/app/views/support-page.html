@@ -14,10 +14,8 @@
 
         <sec-form>
 
-            <!--a-type="password"-->
 
-            </sec-view>
-
+            <!--</sec-view>-->
 
             <sec-view
                     a-hint="Username"
@@ -43,7 +41,6 @@
             </sec-view>
 
 
-            <!--a-dont-change="true"-->
             <sec-view
                     a-type="checkbox"
                     sec-require="checkboxRequire"
@@ -57,44 +54,6 @@
 
         </sec-form>
 
-        <!--<sec-input-validation-->
-        <!--a-hint="Second Username"-->
-        <!--sec-model="model2"-->
-        <!--sec-require="require"-->
-        <!--sec-compare-to="compareTo"-->
-        <!--s-model-compare-to="model"-->
-        <!--&gt;-->
-        <!--</sec-input-validation>-->
-
-
-        <!--<sec-input-validation-->
-        <!--a-hint="Username"-->
-        <!--sec-model="model7"-->
-        <!--&gt;-->
-        <!--</sec-input-validation>-->
-
-
-        <!--<sec-input-validation-->
-        <!--a-hint="Username"-->
-        <!--sec-model="model8"-->
-        <!--sec-is-field-valid="isFieldValid(valid)"-->
-        <!--sec-require="require"-->
-        <!--sec-min-length="minLength"-->
-        <!--sec-max-length="maxLength"-->
-        <!--sec-pattern="email"-->
-        <!--&gt;-->
-        <!--</sec-input-validation>-->
-        <!--<sec-input-validation-->
-        <!--a-hint="Username"-->
-        <!--sec-model="model9"-->
-        <!--sec-is-field-valid="isFieldValid(valid)"-->
-        <!--sec-require="require"-->
-        <!--sec-min-length="minLength"-->
-        <!--sec-max-length="maxLength"-->
-        <!--sec-pattern="email"-->
-        <!--&gt;-->
-        <!--</sec-input-validation>-->
-
         <br/>
         <br/>
         <br/>
@@ -106,134 +65,6 @@
 
     </article>
 </section>
-
-
-<!--
-<a class="must" ng-show="warnings.length > 0 && !noRedStar">*</a>
-
-<label class="validate-label"
-       ng-class="{ validateInvalid : !textToShow.valid}"
-       ng-click="validateLabelClicked(id)">
-    {{textToShow.text}}
-</label>
-
-<input type="{{inputType}}" name="{{id}}" autocapitalize="off"
-       autocomplete="off" autocorrect="off" class="inputtext"
-       data-ng-class="{ validateInvalid : !textToShow.valid }"
-       data-ng-hide="inputType == 'transclude'"
-       data-ng-model="modelAttr"
-       data-ng-focus="inputFocus(id)"
-       data-ng-blur="inputBlur(id)"
-       data-ng-keyup="inputKeyup(id)"
-       id="secInput_{{id}}"/>
-
-<div ng-transclude data-ng-show="inputType == 'transclude'"></div>
-
-<div class="validate-info" ng-show="warnings.length > 0 && !doNotShowInfo">
-    <ul>
-        <li data-ng-repeat="info in warnings" data-ng-show="info.info != '' && info.show">
-            <a>{{ info.info }}</a>
-        </li>
-    </ul>
-</div>
--->
-
-
-<!--
-<nav class="pages">
-    <a translate="HOME" href="#/"></a>
-    <a class="select" translate="SUPPORT"> </a>
-</nav>
-
-
-<section>
-    <article>
-        <div data-ng-hide="supportSuccess">
-            <h3 class="roboto-regular sticky fixedImportant fixed" translate="SUPPORT"></h3>
-
-
-            <div id="supportCover">
-
-
-                <sec-validate>
-
-                    <sec-input sec-placeholder="{{'Category' | translate }}"
-                               id-attr="Category"
-                               sec-siblings="Product"
-                               input-type-attr="transclude"
-                               select-tag="true" >
-                        <select class="inputtext" ng-change="categoryChange()"
-                                ng-model="supportModel.category"
-                                ng-options="category.categoryName for category in categories track by category.categoryId">
-                        </select>
-                    </sec-input>
-
-
-                    <sec-input sec-placeholder="{{'Product' | translate }}"
-                               id-attr="Product"
-                               input-type-attr="transclude"
-                               select-tag="true" >
-                        <select class="inputtext"
-                                ng-model="supportModel.product" ng-change="productChange()"
-                                ng-options="p.productName for p in products" >
-                        </select>
-                    </sec-input>
-
-
-                    <sec-input sec-placeholder="{{'Email' | translate}}"
-                               sec-required="{{'Email' | translate}} {{'field_is_required' | translate}}"
-                               model-attr="supportModel.email"
-                               id-attr="text">
-                    </sec-input>
-
-
-                    <sec-textarea sec-t-placeholder="{{'Subject' | translate }}"
-                                  sec-t-required="{{'Subject' | translate}} {{'field_is_required' | translate}}"
-                                  model-attr="supportModel.subject"
-                                  id-attr="Subject">
-                    </sec-textarea>
-
-                    <div class="buttonCover">
-                        <button sec-submit-attr="sendSupportEmail()"
-                                class="roboto-medium sec-validate-invalid"
-                                a-sec-validate-invalid
-                        >{{'SEND' | translate}}</button>
-                    </div>
-
-                    <label class="{{registerAnswer.class}} invalid center"> {{registerAnswer.message}} </label>
-
-                </sec-validate>
-            </div>
-        </div>
-
-        <div id="registerSuccessCover" data-ng-show="supportSuccess">
-            <div class="center">
-                <p class="roboto-regular successMessage">
-                    {{ registerAnswer.message }}
-                </p>
-                <br/>
-                <a class="a-button" href="/"> {{ 'CONTINUE_SHOPPING' | translate}} </a>
-            </div>
-        </div>
-
-    </article>
-</section>
-
-
-<social-media-drtv></social-media-drtv>
-
-
-        -->
-
-
-
-
-
-
-
-
-
-
 
 
 

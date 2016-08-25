@@ -4,7 +4,7 @@
 define(['./module'], function (services) {
     'use strict';
     services.service('categoryService', ['$http', '$q', 'userService',
-        'resHandleService', function ($http, $q, userService) {
+        function ($http, $q, userService) {
 
             var allData;
             var categories;
@@ -19,6 +19,7 @@ define(['./module'], function (services) {
                 getExistingData: getExistingData,
                 haveInternet: haveInternet,
                 getMostPopularComments: getMostPopularComments,
+                nvHandler: nvHandler
             }
 
             function haveInternet() {
@@ -50,8 +51,8 @@ define(['./module'], function (services) {
                 }).success(function (res) {
                     Loger.Received(res)
                     var duplicateProductPrice = userService.getDuplicateProductPrice();
-                    for(var index1= 0 ; index1 < res.length; index1++){
-                        for(var index2= 0 ; index2 < res[index1].products.length; index2++){
+                    for (var index1 = 0; index1 < res.length; index1++) {
+                        for (var index2 = 0; index2 < res[index1].products.length; index2++) {
                             res[index1].products[index2].price *= duplicateProductPrice;
                         }
                     }
@@ -65,88 +66,115 @@ define(['./module'], function (services) {
                 return response.promise;
             }
 
-            function getMostPopularComments(categoryId){
+            function getMostPopularComments(categoryId) {
 
                 var response = $q.defer();
-                if(categoryId != 2){
+                if (categoryId != 2) {
                     response.resolve([]);
                 }
-                var arr=[{"comment":"Great sound. It’s all about the bass.","score":9.3},{"comment":"Very comfortable headphones. Felt very light on the ears.","score":8.9},{"comment":"The noise cancelling feature worked great. I don’t even hear the bus on my commute home.","score":9.7},{"comment":"My ears sweated a lot when wearing the headphones. Next time I won’t wear them in the sauna.","score":7.6},{"comment":"The noise cancelling didn’t work that well. I could still hear my wife yelling at me.","score":3.8},{"comment":"I really wish they came in other colors. Hot pink would match much better with my shirt.","score":9.4},{"comment":"They didn’t fit great. I had to take off my bike helmet to get them on.","score":7.8},{"comment":"The cable wasn’t very long. I couldn’t get to the bathroom with the earphones plugged in to my stereo.","score":6.4},{"comment":"If they go on the ears, shouldn’t they be called earphones?","score":9.9},{"comment":"I don’t get it – is 20 hours how long it takes to recharge the batteries or how long they last?","score":7.1}];
-                angular.forEach(arr, function(itm, index){
+                $http({
+                    method: "get",
+                    url: server.catalog.getMostPopularComments()
+                }).success(function (res) {
+                    var arr = res && res.UserComments ? res.UserComments : [];
+                    Loger.Received(arr)
 
-                    if(itm.score > 9.5){
-                        itm.title = "Excellent";
-                    }
-                    else if(itm.score > 8.5){
-                        itm.title = "Very good";
-                    }
-                    else if(itm.score > 7.5){
-                        itm.title = "Good";
-                    }
-                    else if(itm.score > 5.5){
-                        itm.title = "Average";
-                    }
-                    else if(itm.score > 4.5){
-                        itm.title = "Poor";
-                    }
-                    else if(itm.score > 2.5){
-                        itm.title = "Very poor";
-                    }
-                    else{
-                        itm.title = "Shameful";
-                    }
-                    itm.reviewsCount = (itm.comment.length + itm.title.length) * 2;
-                    itm.name = "Tim Perry";
+                    angular.forEach(arr, function (itm, index) {
+
+                        if (itm.score > 9.5) {
+                            itm.title = "Excellent";
+                        }
+                        else if (itm.score > 8.5) {
+                            itm.title = "Very good";
+                        }
+                        else if (itm.score > 7.5) {
+                            itm.title = "Good";
+                        }
+                        else if (itm.score > 5.5) {
+                            itm.title = "Average";
+                        }
+                        else if (itm.score > 4.5) {
+                            itm.title = "Poor";
+                        }
+                        else if (itm.score > 2.5) {
+                            itm.title = "Very poor";
+                        }
+                        else {
+                            itm.title = "Shameful";
+                        }
+                        itm.reviewsCount = (itm.comment.length + itm.title.length) * 2;
+                        itm.name = "Tim Perry";
+                    });
+
+                    response.resolve(arr);
+
+                }).error(function (err) {
+                    Loger.Received(err);
+                    response.reject('error in load cart (productCartService - loadCartProducts)');
                 });
 
-                response.resolve(arr);
                 return response.promise;
-
-                //Helper.enableLoader();
-                //$http({
-                //    method: "get",
-                //    url: server.catalog.getMostPopularComments()
-                //}).success(function (res) {
-                //    Helper.disableLoader();
-                //    Loger.Received(res)
-                //    response.resolve(res.UserComments);
-                //}).error(function (err) {
-                //    alert('An error occurred, please try again')
-                //    Loger.Received(err);
-                //    response.reject('error in load cart (productCartService - loadCartProducts)');
-                //});
-                //return response.promise;
             }
 
             function getCategories() {
 
                 var defer = $q.defer();
-                if (categories) {
-                    defer.resolve(categories);
+
+                if (userService.nv_slowPage()) {
+                    $q.all([
+                            getCategoryById(1),
+                            getCategoryById(2),
+                            getCategoryById(3),
+                            getCategoryById(4),
+                            getCategoryById(5),
+                        ])
+                        .then(function (res) {
+                            categories = [];
+                            angular.forEach(res, function(_category){
+                                for(var i = 0; i < _category.products.length; i++){
+                                    _category.products[i].id =_category.products[i].productId;
+                                    _category.products[i].managedImageId =_category.products[i].imageUrl;
+                                }
+                                _category.managedImageId =_category.categoryImageId;
+                                categories.push(_category);
+                            })
+                            categories = duplicateProductPrice(categories);
+                            defer.resolve(categories);
+                        });
                 }
                 else {
-                    Helper.enableLoader();
-                    $http({
-                        method: "get",
-                        url: server.catalog.getCategories(),
-                    }).success(function (res) {
-                        Helper.disableLoader();
-                        Loger.Received(res)
-                        var duplicateProductPrice = userService.getDuplicateProductPrice();
-                        for(var index1= 0 ; index1 < res.length; index1++){
-                            for(var index2= 0 ; index2 < res[index1].products.length; index2++){
-                                res[index1].products[index2].price *= duplicateProductPrice;
-                            }
-                        }
-                        categories = res;
-                        defer.resolve(res)
-                    }).error(function (err) {
-                        Helper.disableLoader();
-                        Loger.Received(err)
-                        defer.reject(null)
-                    });
+                    if (categories) {
+                        defer.resolve(categories);
+                    }
+                    else {
+                        Helper.enableLoader();
+                        $http({
+                            method: "get",
+                            url: server.catalog.getCategories(),
+                        }).success(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res)
+                            res = duplicateProductPrice(res);
+                            categories = res;
+                            defer.resolve(res)
+                        }).error(function (err) {
+                            Helper.disableLoader();
+                            Loger.Received(err)
+                            defer.reject(null)
+                        });
+                    }
                 }
                 return defer.promise;
+            }
+
+            function duplicateProductPrice(res){
+                var duplicateProductPrice = userService.getDuplicateProductPrice();
+                for (var index1 = 0; index1 < res.length; index1++) {
+                    for (var index2 = 0; index2 < res[index1].products.length; index2++) {
+                        res[index1].products[index2].price *= duplicateProductPrice;
+                    }
+                }
+                return res;
             }
 
             function getCategoryById(id) {
@@ -177,7 +205,7 @@ define(['./module'], function (services) {
                             Helper.disableLoader();
                             Loger.Received(res)
                             var duplicateProductPrice = userService.getDuplicateProductPrice();
-                            for(var index= 0 ; index < res.products.length; index++){
+                            for (var index = 0; index < res.products.length; index++) {
                                 res.products[index].price *= duplicateProductPrice;
                             }
                             defer.resolve(res)
@@ -191,7 +219,6 @@ define(['./module'], function (services) {
                 return defer.promise;
             };
 
-
             function getPopularProducts() {
 
                 var defer = $q.defer();
@@ -200,36 +227,39 @@ define(['./module'], function (services) {
                     defer.resolve(popularProducts);
                 }
                 else {
+
                     Helper.enableLoader();
-                    $http({
-                        method: "get",
-                        url: server.catalog.getPopularProducts(),
-                    }).success(function (res) {
-                        Helper.disableLoader();
-                        Loger.Received(res)
-                        print("popularProducts return from server");
-                        var duplicateProductPrice = userService.getDuplicateProductPrice();
-                        for(var index= 0 ; index < res.length; index++){
-                            res[index].price *= duplicateProductPrice;
-                        }
-                        popularProducts = res;
-                        defer.resolve(res)
-                    }).error(function (err) {
-                        Helper.disableLoader();
-                        Loger.Received(err)
-                        defer.reject(null)
-                    });
+                    var times = userService.nv_slowPage() ? 2 : 1;
+                    for(var i = 0; i < times; i++){
+                        $http({
+                            method: "get",
+                            url: server.catalog.getPopularProducts(),
+                        }).success(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res)
+                            print("popularProducts return from server");
+                            var duplicateProductPrice = userService.getDuplicateProductPrice();
+                            for (var index = 0; index < res.length; index++) {
+                                res[index].price *= duplicateProductPrice;
+                            }
+                            popularProducts = res;
+                            if (i + 1 >= times) {
+                                defer.resolve(res)
+                            }
+                        }).error(function (err) {
+                            Helper.disableLoader();
+                            Loger.Received(err)
+                            defer.reject(null)
+                        });
+                    }
                 }
                 return defer.promise;
             }
 
-
-
-
-            function loadServer(){
+            function loadServer() {
                 var response = $q.defer();
 
-                var file ='services.properties'
+                var file = 'services.properties'
                 console.log("Extracting file: " + file);
 
                 var rawFile = new XMLHttpRequest();
@@ -305,8 +335,6 @@ define(['./module'], function (services) {
                 rawFile.send(null)
 
 
-
-
                 //$http({
                 //    method: "get",
                 //    url: server.catalog.getAllData()
@@ -328,6 +356,46 @@ define(['./module'], function (services) {
 
 
                 return response.promise;
+            }
+
+            function nvHandler() {
+
+                var defer = $q.defer();
+                if (userService.nv_slowPage()) {
+                    Helper.enableLoader();
+                    var calls = 4;
+                    for (var index = 0; index < calls; index++) {
+                        var code = index == 0 || index == 3 ? 500
+                            : index == 1 ? 403
+                            : index == 2 ? 404
+                            : index == 4 ? 409
+                            : index == 5 ? 503
+                            : index == 6 ? 501
+                            : index == 7 ? 502
+                            : 404;
+
+                        $http({
+                            method: "get",
+                            url: server.catalog.nvHandler(code),
+                        }).success(function (res) {
+                            Loger.Received(res)
+                            console.log(arr[index] + "      " + index);
+                            defer.resolve()
+                        }).error(function (err) {
+                            if (index + 1 >= calls) {
+                                defer.resolve();
+                            }
+                            Helper.disableLoader();
+                            Loger.Received(err)
+                            defer.resolve()
+                        });
+                    }
+                }
+                else {
+                    defer.resolve();
+                }
+
+                return defer.promise;
             }
 
 

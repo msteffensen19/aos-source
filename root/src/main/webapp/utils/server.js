@@ -105,7 +105,8 @@ var services_properties = []
 //var accountKey = "http://localhost:8080/account";
 //var serviceKey = "http://localhost:8080/service";
 //var wsdlPath = 'http://localhost:8080/accountservice';
-var catalogKey = serverKey = orderKey = wsdlPath = "undefined";  /*accountKey =*//* serviceKey =*/
+var catalogKey = serverKey = orderKey = wsdlPath = "undefined";
+/*accountKey =*//* serviceKey =*/
 
 var server = {
     namespaceURL: 'com.advantage.online.store.accountservice',
@@ -146,6 +147,12 @@ var server = {
         }
         ,
 
+        nvHandler: function (code) {
+            var paramToReturn = catalogKey + "products/code/" + code;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        }
+        ,
         getPopularProducts: function () {
             var paramToReturn = "app/tempFiles/popularProducts.json";
             Loger.Calling(paramToReturn);
