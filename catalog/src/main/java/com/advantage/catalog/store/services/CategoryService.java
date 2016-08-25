@@ -260,9 +260,5 @@ public class CategoryService {
         }
         return httpStatus;
     }
-
-    public ProductSpecialOfferResponse getSpecialOfferProduct(HttpServletRequest request) {
-        return null;
-    }
     //  endregion
 }
