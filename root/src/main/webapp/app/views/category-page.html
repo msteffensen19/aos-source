@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 <section>
     <article ng-switch="noProducts">
 
@@ -27,12 +21,8 @@
                 <a class="select "> {{categoryName}} </a>
             </nav>
         </div>
-        <!--data-ng-show="categoryData.promotedProduct == null"-->
         <h3 class="categoryTitle roboto-regular sticky"
             data-ng-class="{ noPromotedProduct : viewAll }" >{{categoryName}}
-<!--
-            <a> {{([] | productsFilterForCategoriesProduct:searchResult:minPriceToFilter:maxPriceToFilter:productsInclude).length}} </a>
--->
         </h3>
         <div ng-class="{ noPromotedProductDiv : viewAll }">
             <div ng-switch-when="true">

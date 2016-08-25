@@ -15,22 +15,22 @@
                 <table>
                     <tr>
                         <th class="left">
-                            <label>{{ 'ORDER_NUMBER' | translate}}</label>
+                            <label translate="ORDER_NUMBER"></label>
                         </th>
                         <th>
-                            <label>{{ 'ORDER_DATE' | translate}}</label>
+                            <label translate="ORDER_DATE"></label>
                         </th>
                         <th>
-                            <label>{{ 'PRODUCT_NAME' | translate}}</label>
+                            <label translate="PRODUCT_NAME"></label>
                         </th>
                         <th>
-                            <label>{{ 'COLOR' | translate}}</label>
+                            <label translate="COLOR"></label>
                         </th>
                         <th>
-                            <label>{{ 'QUANTITY' | translate}}</label>
+                            <label translate="QUANTITY"></label>
                         </th>
                         <th class="right">
-                            <label>{{ 'TOTAL_PRICE' | translate}}</label>
+                            <label translate="TOTAL_PRICE"></label>
                         </th>
                     </tr>
                     <tr data-ng-repeat-start="order in myOrdersCtrl.orders track by $index">
@@ -75,13 +75,13 @@
 
                     <div class="title">
                         <div>
-                            <label class="left">{{ 'ORDER_NUMBER' | translate}}</label>
+                            <label class="left" translate="ORDER_NUMBER"></label>
                         </div>
                         <div>
-                            <label class="center">{{ 'ORDER_DATE' | translate}}</label>
+                            <label class="center" translate="ORDER_DATE"></label>
                         </div>
                         <div>
-                            <label class="right">{{ 'TOTAL_PRICE' | translate}}</label>
+                            <label class="right" translate="TOTAL_PRICE"></label>
                         </div>
                     </div>
                     <div class="products" data-ng-repeat="order in myOrdersCtrl.orders track by $index">

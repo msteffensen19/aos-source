@@ -14,14 +14,14 @@
                      a-sec-back-img="{{categories[3].managedImageId}}" a-slow-page="{{ mainCtrl.config.slowPage }}" >
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[3].categoryName | uppercase}}</span>
-                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                        <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
                      a-sec-back-img="{{categories[2].managedImageId}}" class="categoryCell">
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[2].categoryName | uppercase}}</span>
-                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                        <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div class="emptyCell">
@@ -33,21 +33,21 @@
                      a-sec-back-img="{{categories[0].managedImageId}}">
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold"> {{::categories[0].categoryName | uppercase}}</span>
-                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                        <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div ng-click="redirect('/category/' + categories[4].categoryId)" class="micesImg categoryCell"
                      a-sec-back-img="{{categories[4].managedImageId}}">
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[4].categoryName | uppercase}}</span>
-                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                        <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div ng-click="redirect('/category/' + categories[1].categoryId)" class="twoRows categoryCell"
                      a-sec-back-img="{{categories[1].managedImageId}}">
                     <div class="shop_now_slider">
                         <span class="shop_now roboto-bold">{{::categories[1].categoryName | uppercase}}</span>
-                        <label class="shop_nowSub roboto-regular">{{ 'Shop_Now' | translate }} </label>
+                        <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
             </div>
@@ -58,10 +58,7 @@
 
     <!-- SPACIAL OFFER -->
     <article id="special_offer_items">
-        <h3 class="roboto-regular center">
-            {{'SPACIAL_OFFER' | translate}}
-        </h3>
-
+        <h3 class="roboto-regular center" translate="SPACIAL_OFFER"></h3>
         <div>
             <div id="img-special-offer">
                 <figure>
@@ -76,7 +73,7 @@
 
                     <p> {{specialOffer[0].promotionSubHeader}} </p>
                     <a href="#/product/{{specialOffer[0].product.id}}">
-                        <button> {{ 'SEE_OFFER' | translate}}</button>
+                        <button translate="SEE_OFFER"></button>
                     </a>
                 </div>
             </div>
@@ -100,9 +97,7 @@
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button ng-click="redirect('/category/' + categories[img.categoryId].categoryId)">
-                            {{ 'EXPLORE_NOW' | translate }}
-                        </button>
+                        <button ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" translate="EXPLORE_NOW"></button>
                     </div>
                 </div>
                 <div class="imgSection">
@@ -112,9 +107,7 @@
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button ng-click="redirect('/category/' + categories[0].categoryId)" class="white">{{
-                            'EXPLORE_NOW' | translate}}
-                        </button>
+                        <button ng-click="redirect('/category/' + categories[0].categoryId)" class="white" translate="EXPLORE_NOW"></button>
                     </div>
                 </div>
             </div>
@@ -139,8 +132,9 @@
                     <img data-ng-src="{{product.imageUrl}}" alt="Special-offer">
                 </figure>
                 <p class="center productName roboto-medium">{{product.productName | uppercase}}</p>
-                <a href="#/product/{{product.id}}"><label class="shop_nowSub viewDetail "
-                                                          translate="View_details"></label></a>
+                <a href="#/product/{{product.id}}">
+                    <label class="shop_nowSub viewDetail" translate="View_details"></label>
+                </a>
             </div>
         </div>
     </article>
@@ -150,7 +144,6 @@
     <article id="contact_us">
 
         <div data-ng-hide="supportSuccess">
-
 
             <div id="supportCover">
 
@@ -225,11 +218,9 @@
 
         <div id="registerSuccessCover" data-ng-show="supportSuccess">
             <div class="center">
-                <p class="roboto-regular successMessage">
-                    {{ registerAnswer.message }}
-                </p>
+                <p class="roboto-regular successMessage">{{ registerAnswer.message }}</p>
                 <br/>
-                <a class="a-button" href="#/" ng-click="continueShopping()"> {{ 'CONTINUE_SHOPPING' | translate}} </a>
+                <a class="a-button" href="#/" ng-click="continueShopping()" > {{ 'CONTINUE_SHOPPING' | translate}} </a>
             </div>
         </div>
     </article>

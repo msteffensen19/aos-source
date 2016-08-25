@@ -3,7 +3,7 @@
         <label class="center items roboto-bold"> {{ 'ITEMS' | translate}}
             <span class="roboto-regular">(0)</span>
         </label>
-        <label class="center roboto-medium"> {{ 'Your_shopping_cart_is_empty' | translate}} </label>
+        <label class="center roboto-medium" translate="Your_shopping_cart_is_empty"></label>
     </div>
     <table ng-show="cart.productsInCart.length > 0"  >
         <tbody >
@@ -15,7 +15,6 @@
                     </a>
                 </td>
                 <td>
-
                     <a href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit">
                         <h3>{{ product.productName  | uppercase | secCatWord:30 }}</h3>
                         <label>{{'QTY' | translate}} {{product.quantity}}</label>
