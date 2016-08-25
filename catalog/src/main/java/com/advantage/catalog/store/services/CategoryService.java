@@ -191,36 +191,31 @@ public class CategoryService {
         HttpStatus httpStatus = null;
 
         switch (httpStatusCode) {
-            case 400:
+            case 40:
                 httpStatus = HttpStatus.BAD_REQUEST;
-            case 403:
-                httpStatus = HttpStatus.FORBIDDEN;
-            case 404:
-                httpStatus = HttpStatus.NOT_FOUND;
-            case 406:
-                httpStatus = HttpStatus.NOT_ACCEPTABLE;
-            case 408:
-                httpStatus = HttpStatus.REQUEST_TIMEOUT;
-            case 409:
-                httpStatus = HttpStatus.CONFLICT;
-            case 411:
-                httpStatus = HttpStatus.LENGTH_REQUIRED;
-            case 412:
-                httpStatus = HttpStatus.PRECONDITION_FAILED;
-            case 413:
-                httpStatus = HttpStatus.PAYLOAD_TOO_LARGE;
-            case 414:
+                break;
+            case 41:
+                //  414
                 httpStatus = HttpStatus.URI_TOO_LONG;
-            case 422:
-                httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
-            case 423:
+            case 42:
+                //  423
                 httpStatus = HttpStatus.LOCKED;
-            case 424:
-                httpStatus = HttpStatus.FAILED_DEPENDENCY;
-            case 426:
-                httpStatus = HttpStatus.UPGRADE_REQUIRED;
-            case 429:
-                httpStatus = HttpStatus.TOO_MANY_REQUESTS;
+                break;
+            case 43:
+                httpStatus = HttpStatus.FORBIDDEN;
+                break;
+            case 44:
+                httpStatus = HttpStatus.NOT_FOUND;
+                break;
+            case 46:
+                httpStatus = HttpStatus.NOT_ACCEPTABLE;
+                break;
+            case 48:
+                httpStatus = HttpStatus.REQUEST_TIMEOUT;
+                break;
+            case 49:
+                httpStatus = HttpStatus.CONFLICT;
+                break;
             default:
                 httpStatus = HttpStatus.BAD_REQUEST;
         }
@@ -236,22 +231,32 @@ public class CategoryService {
         HttpStatus httpStatus = null;
 
         switch (httpStatusCode) {
-            case 500:
+            case 50:
                 httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-            case 501:
+                break;
+            case 51:
                 httpStatus = HttpStatus.NOT_IMPLEMENTED;
-            case 503:
-                httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
-            case 505:
-                httpStatus = HttpStatus.HTTP_VERSION_NOT_SUPPORTED;
-            case 507:
-                httpStatus = HttpStatus.INSUFFICIENT_STORAGE;
-            case 509:
-                httpStatus = HttpStatus.BANDWIDTH_LIMIT_EXCEEDED;
-            case 510:
+                break;
+            case 52:
+                //  510
                 httpStatus = HttpStatus.NOT_EXTENDED;
-            case 511:
+                break;
+            case 53:
+                httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
+                break;
+            case 54:
+                //  511
                 httpStatus = HttpStatus.NETWORK_AUTHENTICATION_REQUIRED;
+                break;
+            case 55:
+                httpStatus = HttpStatus.HTTP_VERSION_NOT_SUPPORTED;
+                break;
+            case 57:
+                httpStatus = HttpStatus.INSUFFICIENT_STORAGE;
+                break;
+            case 59:
+                httpStatus = HttpStatus.BANDWIDTH_LIMIT_EXCEEDED;
+                break;
             default:
                 httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }

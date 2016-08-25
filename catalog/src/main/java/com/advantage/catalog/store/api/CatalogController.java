@@ -818,17 +818,17 @@ public class CatalogController {
      * @param response {@link HttpServletResponse}
      * @return
      */
-    @RequestMapping(value = "/products/code/{http_status_code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/products/id/{product_id}", method = RequestMethod.GET)
     @ApiOperation(value = "Return requested HTTP status code for NV")
-    public ResponseEntity<String> returnHttpStatusForCodeNetworkVirtualization(@PathVariable("http_status_code") int httpStatusCode,
+    public ResponseEntity<String> returnHttpStatusForCodeNetworkVirtualization(@PathVariable("product_id") int httpStatusCode,
                                                                             HttpServletRequest request,
                                                                             HttpServletResponse response) {
 
         HttpStatus httpStatus = null;
 
-        if ((httpStatusCode >= 400) && (httpStatusCode < 500)) {
+        if ((httpStatusCode >= 40) && (httpStatusCode < 50)) {
             httpStatus = categoryService.returnHttpStatusCode4xxForNetworkVirtualization(httpStatusCode);
-        } else if ((httpStatusCode >= 500) && (httpStatusCode < 600)) {
+        } else if ((httpStatusCode >= 50) && (httpStatusCode < 60)) {
             httpStatus = categoryService.returnHttpStatusCode5xxForNetworkVirtualization(httpStatusCode);
         } else {
             httpStatus = HttpStatus.OK;
