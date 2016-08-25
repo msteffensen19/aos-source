@@ -119,32 +119,62 @@ define(['./module'], function (services) {
             function getCategories() {
 
                 var defer = $q.defer();
-                if (categories) {
-                    defer.resolve(categories);
+
+                if (userService.nv_slowPage()) {
+                    $q.all([
+                            getCategoryById(1),
+                            getCategoryById(2),
+                            getCategoryById(3),
+                            getCategoryById(4),
+                            getCategoryById(5),
+                        ])
+                        .then(function (res) {
+                            categories = [];
+                            angular.forEach(res, function(_category){
+                                for(var i = 0; i < _category.products.length; i++){
+                                    _category.products[i].id =_category.products[i].productId;
+                                    _category.products[i].managedImageId =_category.products[i].imageUrl;
+                                }
+                                _category.managedImageId =_category.categoryImageId;
+                                categories.push(_category);
+                            })
+                            categories = duplicateProductPrice(categories);
+                            defer.resolve(categories);
+                        });
                 }
                 else {
-                    Helper.enableLoader();
-                    $http({
-                        method: "get",
-                        url: server.catalog.getCategories(),
-                    }).success(function (res) {
-                        Helper.disableLoader();
-                        Loger.Received(res)
-                        var duplicateProductPrice = userService.getDuplicateProductPrice();
-                        for (var index1 = 0; index1 < res.length; index1++) {
-                            for (var index2 = 0; index2 < res[index1].products.length; index2++) {
-                                res[index1].products[index2].price *= duplicateProductPrice;
-                            }
-                        }
-                        categories = res;
-                        defer.resolve(res)
-                    }).error(function (err) {
-                        Helper.disableLoader();
-                        Loger.Received(err)
-                        defer.reject(null)
-                    });
+                    if (categories) {
+                        defer.resolve(categories);
+                    }
+                    else {
+                        Helper.enableLoader();
+                        $http({
+                            method: "get",
+                            url: server.catalog.getCategories(),
+                        }).success(function (res) {
+                            Helper.disableLoader();
+                            Loger.Received(res)
+                            res = duplicateProductPrice(res);
+                            categories = res;
+                            defer.resolve(res)
+                        }).error(function (err) {
+                            Helper.disableLoader();
+                            Loger.Received(err)
+                            defer.reject(null)
+                        });
+                    }
                 }
                 return defer.promise;
+            }
+
+            function duplicateProductPrice(res){
+                var duplicateProductPrice = userService.getDuplicateProductPrice();
+                for (var index1 = 0; index1 < res.length; index1++) {
+                    for (var index2 = 0; index2 < res[index1].products.length; index2++) {
+                        res[index1].products[index2].price *= duplicateProductPrice;
+                    }
+                }
+                return res;
             }
 
             function getCategoryById(id) {

@@ -22,20 +22,23 @@ define([], function () {
                 controller: 'categoriesCtrl',
                 resolve: {
 
-                    resolveParams: function (categoryService, dealService, $q) {
+                    resolveParams: function (userService, categoryService, dealService, $q) {
                         var defer = $q.defer();
-                        categoryService.getCategories().then(function (categories) {
-                            dealService.getDealOfTheDay().then(function (deal) {
-                                categoryService.getPopularProducts().then(function (popularProducts) {
-                                    categoryService.nvHandler().then(function () {
-                                    var paramsToReturn = {
-                                        categories: categories,
-                                        specialOffer: deal,
-                                        popularProducts: popularProducts,
-                                    }
-                                    defer.resolve(paramsToReturn)
+
+                        userService.haveConfiguration().then(function(){
+                            categoryService.getCategories().then(function (categories) {
+                                dealService.getDealOfTheDay().then(function (deal) {
+                                    categoryService.getPopularProducts().then(function (popularProducts) {
+                                        categoryService.nvHandler().then(function () {
+                                            var paramsToReturn = {
+                                                categories: categories,
+                                                specialOffer: deal,
+                                                popularProducts: popularProducts,
+                                            }
+                                            defer.resolve(paramsToReturn)
+                                        })
                                     })
-                                })
+                                });
                             });
                         });
                         return defer.promise;
