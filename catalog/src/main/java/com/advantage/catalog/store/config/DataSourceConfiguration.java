@@ -18,7 +18,7 @@ public class DataSourceConfiguration extends com.advantage.common.config.DataSou
     //public static boolean hardReset = true;
 
     @Bean(initMethod = "init")
-    public DataSourceInitByJson init() {
+    public DataSourceInitByJson initData() {
         return new DataSourceInitByJson();
     }
 
