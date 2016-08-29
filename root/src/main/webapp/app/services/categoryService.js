@@ -120,7 +120,7 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
 
-                if (userService.nv_slowPage()) {
+                if (!userService.nv_slowPage()) {
                     $q.all([
                             getCategoryById(1),
                             getCategoryById(2),
@@ -365,14 +365,14 @@ define(['./module'], function (services) {
                     Helper.enableLoader();
                     var calls = 4;
                     for (var index = 0; index < calls; index++) {
-                        var code = index == 0 || index == 3 ? 500
-                            : index == 1 ? 403
-                            : index == 2 ? 404
-                            : index == 4 ? 409
-                            : index == 5 ? 503
-                            : index == 6 ? 501
-                            : index == 7 ? 502
-                            : 404;
+                        var code = index == 0 || index == 3 ? 50
+                            : index == 1 ? 43
+                            : index == 2 ? 44
+                            : index == 4 ? 49
+                            : index == 5 ? 53
+                            : index == 6 ? 51
+                            : index == 7 ? 52
+                            : 44;
 
                         $http({
                             method: "get",

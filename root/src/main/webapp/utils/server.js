@@ -148,11 +148,12 @@ var server = {
         ,
 
         nvHandler: function (code) {
-            var paramToReturn = catalogKey + "products/code/" + code;
+            var paramToReturn = catalogKey + "code/id/" + code;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         }
         ,
+
         getPopularProducts: function () {
             var paramToReturn = "app/tempFiles/popularProducts.json";
             Loger.Calling(paramToReturn);
