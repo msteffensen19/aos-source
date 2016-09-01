@@ -11,6 +11,7 @@ import com.advantage.accountsoap.dto.country.*;
 import com.advantage.accountsoap.dto.payment.*;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.services.*;
+import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.common.Constants;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.TokenException;
@@ -25,6 +26,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -100,9 +102,41 @@ public class AccountserviceEndpoint {
                 account.getDefaultPaymentMethodId(),
                 account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
-                account.getInternalLastSuccesssulLogin());
+                account.getInternalLastSuccesssulLogin(),
+                account.getPassword());
 
         return new GetAccountByIdResponse(dto);
+    }
+
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByLoginRequest")
+    @ResponsePayload
+    public GetAccountByLoginResponse getAccount(@RequestPayload GetAccountByLoginRequest accountRequest) throws TokenException {
+//        authorizeAsUser(accountRequest);
+        Account account = accountService.getAppUserByLogin(accountRequest.getUserName());
+        if (account == null) {
+            return null;
+        }
+        AccountDto dto = new AccountDto(account.getId(),
+                account.getLastName(),
+                account.getFirstName(),
+                account.getLoginName(),
+                account.getAccountType(),
+                account.getCountry().getId(),
+                account.getCountry().getName(),
+                account.getCountry().getIsoName(),
+                account.getStateProvince(),
+                account.getCityName(),
+                account.getAddress(),
+                account.getZipcode(),
+                account.getPhoneNumber(),
+                account.getEmail(),
+                account.getDefaultPaymentMethodId(),
+                account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
+                account.getInternalUserBlockedFromLoginUntil(),
+                account.getInternalLastSuccesssulLogin(),
+                account.getPassword());
+
+        return new GetAccountByLoginResponse(dto);
     }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdNewRequest")
@@ -163,6 +197,10 @@ public class AccountserviceEndpoint {
                         .append(response.getUserId());
 
                 response.setSessionId(sessionId.toString());
+                response.setT_Authorization(encode64(account.getLoginUser()+":"+account.getLoginPassword()));
+                response.setAccountType(accountService
+                                .getById(response.getUserId())
+                                .getAccountType());
                 loggedUsers++;
                 return new AccountLoginResponse(response);
             } else {
@@ -265,6 +303,12 @@ public class AccountserviceEndpoint {
         return new AccountDeleteResponse(response);
     }
 
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "EncodePasswordRequest")
+    @ResponsePayload
+    public EncodePasswordResponse encodePassword(@RequestPayload EncodePasswordRequest request) throws TokenException{
+        AccountPassword accountPassword = new AccountPassword(request.getUserName(), request.getPassword());
+        return new EncodePasswordResponse(accountPassword.getEncryptedPassword());
+    }
     //endregion
     //region Countries
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetCountriesRequest")
@@ -464,8 +508,11 @@ public class AccountserviceEndpoint {
 //            logger.error("Token is empty or null");
 //            throw new IllegalArgumentException("Token is empty or null");
 //        }
+//        System.out.println("********************"+requestToken);
+//        requestToken = requestToken.substring(requestToken.indexOf(" ")+1);
+//        System.out.println("********************"+requestToken);
 //        logger.debug("Token: " + requestToken);
-//        Token token = new TokenJWT(requestToken);
+//        Token token = TokenJWT.parseToken(requestToken);
 //
 //        long accountId = token.getUserId();
 //        if (accountId != requestAccountId) {
@@ -477,4 +524,9 @@ public class AccountserviceEndpoint {
 //        logger.debug(message);
     }
 
+    private String encode64(String source){
+        return Base64
+                .getEncoder()
+                .encodeToString(source.getBytes());
+    }
 }

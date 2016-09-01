@@ -124,7 +124,9 @@ public class AccountService {
                     account.getDefaultPaymentMethodId(),
                     account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                     account.getInternalUserBlockedFromLoginUntil(),
-                    account.getInternalLastSuccesssulLogin()));
+                    account.getInternalLastSuccesssulLogin(),
+                    account.getPassword()));
+
         }
 
         return dtos;

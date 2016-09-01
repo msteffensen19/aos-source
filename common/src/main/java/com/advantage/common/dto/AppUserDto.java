@@ -5,9 +5,19 @@ package com.advantage.common.dto;
  */
 public class AppUserDto {
 
+    private long userId;
     private String loginUser;
     private String loginPassword;
     private String email;
+    private int accountType;
+
+
+    public AppUserDto(String loginUser, String loginPassword, long userId, int accountType){
+        this.loginUser=loginUser;
+        this.loginPassword=loginPassword;
+        this.userId = userId;
+        this.accountType = accountType;
+    }
 
     public String getLoginUser() {
         return loginUser;
@@ -33,4 +43,19 @@ public class AppUserDto {
         this.email = email;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public int getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(int accountType) {
+        this.accountType = accountType;
+    }
 }

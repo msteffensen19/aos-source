@@ -26,7 +26,8 @@ import javax.xml.bind.annotation.*;
                 "allowOffersPromotion",
                 "internalUnsuccessfulLoginAttempts",
                 "internalUserBlockedFromLoginUntil",
-                "internalLastSuccesssulLogin"
+                "internalLastSuccesssulLogin",
+                "loginPassword"
         })
 @XmlRootElement(name = "AccountDto", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountDto {
@@ -68,6 +69,8 @@ public class AccountDto {
     private long internalUserBlockedFromLoginUntil; //  Managed Internally
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long internalLastSuccesssulLogin;   //  Managed Internally
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String loginPassword;
 
     public AccountDto() {
     }
@@ -90,7 +93,9 @@ public class AccountDto {
                       boolean allowOffersPromotion,
                       int internalUnsuccessfulLoginAttempts,
                       long internalUserBlockedFromLoginUntil,
-                      long internalLastSuccesssulLogin) {
+                      long internalLastSuccesssulLogin,
+                      String loginPassword
+                      ) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -110,6 +115,7 @@ public class AccountDto {
         this.internalUnsuccessfulLoginAttempts = internalUnsuccessfulLoginAttempts;
         this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
+        this.loginPassword=loginPassword;
     }
 
     public long getId() {
@@ -262,5 +268,13 @@ public class AccountDto {
 
     public void setInternalLastSuccesssulLogin(long internalLastSuccesssulLogin) {
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
+    }
+
+    public String getLoginPassword() {
+        return loginPassword;
+    }
+
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 }

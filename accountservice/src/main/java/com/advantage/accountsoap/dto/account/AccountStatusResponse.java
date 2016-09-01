@@ -2,9 +2,9 @@ package com.advantage.accountsoap.dto.account;
 //Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.common.enums.AccountType;
 
 import javax.xml.bind.annotation.*;
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "",
         namespace = WebServiceConfig.NAMESPACE_URI,
@@ -13,7 +13,9 @@ import javax.xml.bind.annotation.*;
                 "userId",
                 "reason",
                 "token",
-                "sessionId"
+                "sessionId",
+                "T_Authorization",
+                "accountType"
         })
 @XmlRootElement(name = "AccountStatusResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountStatusResponse {
@@ -27,6 +29,10 @@ public class AccountStatusResponse {
     private String token;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String sessionId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String T_Authorization;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private Integer accountType;
 
     public AccountStatusResponse() {
     }
@@ -133,6 +139,23 @@ public class AccountStatusResponse {
                 ", reason='" + reason + '\'' +
                 ", token='" + token + '\'' +
                 ", sessionId='" + sessionId + '\'' +
+                ", T_Authorization='" + T_Authorization +
+                ", role='" + accountType +
                 '}';
+    }
+
+    public Integer getAccountType(){
+        return  accountType;
+    }
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
+    }
+
+    public String getT_Authorization() {
+        return T_Authorization;
+    }
+
+    public void setT_Authorization(String t_Authorization) {
+        T_Authorization = t_Authorization;
     }
 }
