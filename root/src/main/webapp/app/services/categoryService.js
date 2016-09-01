@@ -72,6 +72,8 @@ define(['./module'], function (services) {
                 if (categoryId != 2) {
                     response.resolve([]);
                 }
+
+
                 $http({
                     method: "get",
                     url: server.catalog.getMostPopularComments()

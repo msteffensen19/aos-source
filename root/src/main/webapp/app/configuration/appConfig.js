@@ -133,13 +133,11 @@ define([], function () {
 
                             $q.all([categoryService.getCategoryById(product.categoryId),
                                     categoryService.haveInternet(product.categoryId),
-                                    categoryService.getMostPopularComments(product.categoryId),
                             ])
                                 .then(function (res) {
 
                                 var category = res[0];
                                 var haveInternet = res[1];
-                                var mostPopularComments = res[2];
 
                                 var paramsToReturn = {
                                     selectedColor: $stateParams.color,
@@ -148,7 +146,6 @@ define([], function () {
                                     categoryName: category.categoryName,
                                     product: product,
                                     haveInternet: haveInternet,
-                                    mostPopularComments: mostPopularComments
                                 }
                                 defer.resolve(paramsToReturn)
                             });

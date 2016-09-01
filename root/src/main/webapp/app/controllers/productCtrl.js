@@ -5,9 +5,9 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter',
-        '$rootScope', '$timeout',
+        '$rootScope', '$timeout', 'categoryService',
 
-        function (s, resolveParams, $state, $filter, $rootScope, $timeout) {
+        function (s, resolveParams, $state, $filter, $rootScope, $timeout, categoryService) {
 
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
@@ -16,7 +16,7 @@ define(['./module'], function (controllers) {
             s.quantity = resolveParams.quantity || 1;
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
-            s.mostPopularComments = resolveParams.mostPopularComments
+            s.mostPopularComments = [];
 
             s.haveInternet = resolveParams.haveInternet;
 
@@ -121,10 +121,6 @@ define(['./module'], function (controllers) {
 
             Helper.forAllPage();
 
-            console.log("resolveParams");
-            console.log(resolveParams);
-
-
             s.nextReview = function(){
                 if(sliderIndex + 1 >= s.mostPopularComments.length){
                     return;
@@ -132,6 +128,7 @@ define(['./module'], function (controllers) {
                 sliderIndex++;
                 reviewGo();
             };
+
             s.previousReview = function(){
                 if(sliderIndex == 0){
                     return;
@@ -139,10 +136,12 @@ define(['./module'], function (controllers) {
                 sliderIndex--;
                 reviewGo();
             };
+
             function reviewGo(){
                 $timeout.cancel(slider_interval);
                 sliderHandler();
             }
+
             function reviewGotoNew(){
                 sliderIndex++;
                 sliderHandler();
@@ -151,7 +150,7 @@ define(['./module'], function (controllers) {
 
             var sliderIndex = 0;
             var slider_interval;
-            reviewGo();
+
             function sliderHandler(){
 
                 var left = sliderIndex < s.mostPopularComments.length ?
@@ -171,41 +170,22 @@ define(['./module'], function (controllers) {
                     slider_interval = $timeout(reviewGotoNew, 12000);
                 }
             }
+
+            categoryService.getMostPopularComments(s.product.categoryId).then(function(res){
+                s.mostPopularComments = res;
+                reviewGo();
+            });
+
+
+
+
         }]);
+
+
+
+
+
 });
 
 
 
-
-
-/**
- * Created by correnti on 21/11/2015.
- */
-
-
-
-/*
- var img = $("#imgToBuy").clone();
- var imgPoss = $("#imgToBuy").offset();
- var mainCartPossition = $("#mainCart").offset();
-
- img.css({
- "position" : "absolute",
- "top": imgPoss.top + "px",
- "left": imgPoss.left + "px",
- "display" : "none",
- })
- img.appendTo("#product-image");
- img.fadeIn(1000, function(){
- img.animate({
- top : mainCartPossition.top + 5,
- left : mainCartPossition.left + 10,
- width: 10,
- height: 10,
- opacity: 0.3
- }, 1000, function(){
- img.remove();
- //$rootScope.user.cart.laptops.push($scope.product) = get user
- });
- })
- */
