@@ -236,7 +236,7 @@ define(['./module'], function (services) {
                             accountId: accountId,
                             newPassword: passwords.new,
                             oldPassword: passwords.old,
-                            base64Token: $rootScope.userCookie.response.token,
+                            base64Token: $rootScope.userCookie.response.t_authorization,
                         }
                         var params = server.account.changePassword();
                         Helper.enableLoader();

@@ -15,6 +15,7 @@ import com.advantage.accountsoap.util.JPAQueryHelper;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.enums.AccountType;
+import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
 import com.advantage.root.util.StringHelper;
@@ -426,10 +427,20 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
             //  Remove "Bearer " or "Basic " prefix in the base64Token
             String receivedToken = base64Token.substring(base64Token.indexOf(' ') + 1);
 
-            Token token = getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType()));
-            if (!token.generateToken().equals(receivedToken)) {
-                logger.error("Wrong token: " + System.lineSeparator() + accountStatusFailResponse.toString());
-                return accountStatusFailResponse;
+            if (SecurityTools.isBasic(base64Token)){
+                String[] loginPassword = SecurityTools.decodeBase64(receivedToken).split(":");
+                if(!loginPassword[0].equals(account.getLoginName()) ||
+                        !(new AccountPassword(loginPassword[0], loginPassword[1]))
+                                .getEncryptedPassword().equals(account.getPassword())){
+                    logger.error("Wrong token: " + System.lineSeparator() + accountStatusFailResponse.toString());
+                    return accountStatusFailResponse;
+                }
+            } else {
+                Token token = getToken(account.getId(), account.getLoginName(), AccountType.valueOfCode(account.getAccountType()));
+                if (!token.generateToken().equals(receivedToken)) {
+                    logger.error("Wrong token: " + System.lineSeparator() + accountStatusFailResponse.toString());
+                    return accountStatusFailResponse;
+                }
             }
         }
 
@@ -569,6 +580,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         return account.getPaymentPreferences();
     }
     */
+
     @Override
     public AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId) {
         //Account account = get(accountId);

@@ -32,7 +32,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -61,7 +61,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -93,7 +93,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -122,7 +122,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -139,7 +139,7 @@
         <xs:element name="reason" type="xs:string" form="qualified"/>
         <xs:element name="token" type="xs:string" form="qualified"/>
         <xs:element name="sessionId" type="xs:string" form="qualified"/>
-        <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+        <xs:element name="t_authorization" type="xs:string" form="qualified"/>
         <xs:element name="accountType" type="xs:int" form="qualified"/>
       </xs:sequence>
     </xs:complexType>
@@ -176,7 +176,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -309,7 +309,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -380,7 +380,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
@@ -394,6 +394,8 @@
       <xs:sequence>
         <xs:element name="userName" type="xs:string" form="qualified"/>
         <xs:element name="password" type="xs:string" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -654,7 +656,7 @@
               <xs:element name="reason" type="xs:string" form="qualified"/>
               <xs:element name="token" type="xs:string" form="qualified"/>
               <xs:element name="sessionId" type="xs:string" form="qualified"/>
-              <xs:element name="T_Authorization" type="xs:string" form="qualified"/>
+              <xs:element name="t_authorization" type="xs:string" form="qualified"/>
               <xs:element name="accountType" type="xs:int" form="qualified"/>
             </xs:sequence>
           </xs:complexType>

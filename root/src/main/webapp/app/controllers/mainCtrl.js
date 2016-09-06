@@ -265,7 +265,7 @@ define(['./module'], function (controllers) {
 
             $scope.checkLogin = function () {
                 var user = $rootScope.userCookie;
-                if (!(user && user.response && user.response.userId != -1 && user.response.token)) {
+                if (!(user && user.response && user.response.userId != -1 && user.response.t_authorization)) {
                     $state.go("default");
                 }
             }

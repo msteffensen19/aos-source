@@ -16,6 +16,7 @@ import com.advantage.common.Constants;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.TokenException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
+import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
 import com.advantage.root.util.StringHelper;
@@ -111,7 +112,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByLoginRequest")
     @ResponsePayload
     public GetAccountByLoginResponse getAccount(@RequestPayload GetAccountByLoginRequest accountRequest) throws TokenException {
-//        authorizeAsUser(accountRequest);
+        //authorizeAsUser(accountRequest);
         Account account = accountService.getAppUserByLogin(accountRequest.getUserName());
         if (account == null) {
             return null;
@@ -197,7 +198,7 @@ public class AccountserviceEndpoint {
                         .append(response.getUserId());
 
                 response.setSessionId(sessionId.toString());
-                response.setT_Authorization(encode64(account.getLoginUser()+":"+account.getLoginPassword()));
+                response.setT_authorization(encode64(account.getLoginUser()+":"+account.getLoginPassword()));
                 response.setAccountType(accountService
                                 .getById(response.getUserId())
                                 .getAccountType());
@@ -306,6 +307,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "EncodePasswordRequest")
     @ResponsePayload
     public EncodePasswordResponse encodePassword(@RequestPayload EncodePasswordRequest request) throws TokenException{
+        authorizeAsUser(request);
         AccountPassword accountPassword = new AccountPassword(request.getUserName(), request.getPassword());
         return new EncodePasswordResponse(accountPassword.getEncryptedPassword());
     }
@@ -428,6 +430,7 @@ public class AccountserviceEndpoint {
                 request.getSafePayUsername(),
                 request.getSafePayPassword());
 
+
         return new UpdateSafePayMethodResponse(response);
     }
     //endregion
@@ -497,31 +500,62 @@ public class AccountserviceEndpoint {
 
     //TODO Enable after the clients will implement filling filed base64Token in SOAP
     private void authorizeAsUser(IUserRequest request) throws TokenException {
-//        if (request == null) {
-//            logger.error("Request is null");
-//            throw new IllegalArgumentException("Request is null");
-//        }
-//
-//        long requestAccountId = request.getAccountId();
-//        String requestToken = request.getBase64Token();
-//        if (requestToken == null || requestToken.isEmpty()) {
-//            logger.error("Token is empty or null");
-//            throw new IllegalArgumentException("Token is empty or null");
-//        }
-//        System.out.println("********************"+requestToken);
-//        requestToken = requestToken.substring(requestToken.indexOf(" ")+1);
-//        System.out.println("********************"+requestToken);
-//        logger.debug("Token: " + requestToken);
-//        Token token = TokenJWT.parseToken(requestToken);
-//
-//        long accountId = token.getUserId();
-//        if (accountId != requestAccountId) {
-//            String message = "Account id in request = " + requestAccountId + ", but account id in token = " + accountId;
-//            logger.error(message);
-//            throw new TokenException(message);
-//        }
-//        String message = "Request authorized for user " + requestAccountId + " successful";
-//        logger.debug(message);
+        if (request == null) {
+            logger.error("Request is null");
+            throw new IllegalArgumentException("Request is null");
+        }
+        String requestToken = request.getBase64Token();
+        if (requestToken == null || requestToken.isEmpty()) {
+            logger.error("Token is empty or null");
+            throw new IllegalArgumentException("Token is empty or null");
+        }
+        boolean isBasic = SecurityTools.isBasic(requestToken);
+        requestToken = requestToken.substring(requestToken.indexOf(" ")+1);
+        logger.debug("Token: " + requestToken);
+        if (isBasic){
+            if (request instanceof GetAccountByLoginRequest){
+                authorizeWithBasic(((GetAccountByLoginRequest) request).getUserName(), requestToken);
+            } else {
+                authorizeWithBasic(request.getAccountId(), requestToken);
+            }
+        } else {
+            Token token = TokenJWT.parseToken(requestToken);
+            authorizeWithBearer(request.getAccountId(), token);
+        }
+    }
+
+    private void authorizeWithBasic(long requestAccountId, String requestToken) throws TokenException {
+        Account account = accountService.getById(requestAccountId);
+        verifyBasicToken(requestToken, account, ""+requestAccountId);
+    }
+
+    private void authorizeWithBasic(String appUserLogin, String requestToken) throws TokenException {
+        Account account = accountService.getAppUserByLogin(appUserLogin);
+        verifyBasicToken(requestToken, account, appUserLogin);
+    }
+
+    public void verifyBasicToken(String requestToken, Account account, String userIdMethod) throws TokenException {
+        String[] loginPassword = SecurityTools.decodeBase64(requestToken).split(":");
+        AccountPassword accountPassword = new AccountPassword(loginPassword[0], loginPassword[1]);
+        if (!loginPassword[0].equals(account.getLoginName()) || !account.getPassword().equals(accountPassword.getEncryptedPassword())){
+            String message = "User name or password is incorrect fot user " + userIdMethod;
+            logger.error(message);
+            throw new TokenException(message);
+        } else {
+            String message = "Request authorized for user " + userIdMethod + " successful";
+            logger.debug(message);
+        }
+    }
+
+    private void authorizeWithBearer(long requestAccountId, Token token) throws TokenException {
+        long accountId = token.getUserId();
+        if (accountId != requestAccountId) {
+            String message = "Account id in request = " + requestAccountId + ", but account id in token = " + accountId;
+            logger.error(message);
+            throw new TokenException(message);
+        }
+        String message = "Request authorized for user " + requestAccountId + " successful";
+        logger.debug(message);
     }
 
     private String encode64(String source){
@@ -529,4 +563,5 @@ public class AccountserviceEndpoint {
                 .getEncoder()
                 .encodeToString(source.getBytes());
     }
+
 }

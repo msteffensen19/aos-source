@@ -60,9 +60,13 @@ public class SecurityTools {
         return new SecretKeySpec(decodedKey, signatureAlgorithmName);
     }
 
-    private static String decodeBase64(String base64) {
+    public static String decodeBase64(String base64) {
         byte[] decodedKey = Base64.getDecoder().decode(base64);
         return new String(decodedKey, Charset.forName("UTF-8"));
+    }
+
+    public static String encodeBase64(String source){
+        return Base64.getEncoder().encodeToString(source.getBytes());
     }
 
     public static Key getKey() {
@@ -152,9 +156,9 @@ public class SecurityTools {
         try {
             String basicToken = getBasicTokenFromAuthorizationHeader(authorizationHeader);
             String[] loginPassword = basicToken.split(":");
-            actualUser = SoapApiHelper.getUserByLogin(loginPassword[0]);
+            actualUser = SoapApiHelper.getUserByLogin(loginPassword[0], authorizationHeader);
             if (!(loginPassword[0].equals(actualUser.getLoginUser())
-                    && SoapApiHelper.encodePassword(loginPassword[0], loginPassword[1])
+                    && SoapApiHelper.encodePassword(loginPassword[0], loginPassword[1], actualUser.getUserId(), "Basic "+encodeBase64(basicToken))
                     .equals(actualUser.getLoginPassword()))) {
                 throw new VerificationTokenException("Wrong authorization token");
             }

@@ -78,7 +78,7 @@ define(['./module'], function (services) {
                     data: paramsToPass,
                     headers: {
                         "content-type": "application/json",
-                        "Authorization": "Bearer " + $rootScope.userCookie.response.token,
+                        "Authorization": "Basic " + $rootScope.userCookie.response.t_authorization,
                     },
                 }).
                 then(function (res) {

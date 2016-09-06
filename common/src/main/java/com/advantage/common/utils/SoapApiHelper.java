@@ -12,7 +12,6 @@ import java.util.NoSuchElementException;
  * Created by dubilyer on 8/30/2016.
  */
 
-// TODO: 8/30/2016 Change auth after changing soap to basic
 public class SoapApiHelper {
     private final static String REQUEST_NAME_SPACE = "com";
     private final static String RESPONSE_NAME_SPACE = "ns2";
@@ -46,15 +45,15 @@ public class SoapApiHelper {
     }
 
     /**
-     * The method is to send a previously generated SOAPMessage
-     * @param request                               SOAPMessage
-     * @return                             SOAPMessage responce
+     * The method is to send a previously generated SOAPMessage. Attention! You
+     * should close soapConnection after using the method!
+     * @param request                                               SOAPMessage
+     * @return                                             SOAPMessage responce
      * @throws SOAPException
      */
     private static SOAPMessage sendSoapMessage(SOAPMessage request) throws SOAPException {
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         soapConnection = soapConnectionFactory.createConnection();
-        //soapConnection.close();
         return soapConnection.call(request, URL);
     }
 
@@ -86,24 +85,24 @@ public class SoapApiHelper {
         throw new NoSuchElementException("There's no parameter "+nodeName + "in response.");
     }
 
-    public static AppUserDto getUserById(long id) throws SOAPException {
-        HashMap<String, String> data = new HashMap<>();
-        data.put("accountId", "" + id);
-        data.put("base64Token", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR2YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjo5Nywic3ViIjoiZ3Vlc3QyIiwicm9sZSI6IlVTRVIifQ.eajlekjoDzAXdghjxAcSVqquHgWjMKUrflN0SewLo2A");
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByIdRequest", data));
-        NodeList root = getRoot(soapResponse, "AccountResponse");
-        String userName = getResponseValue("loginName", root);
-        String userPassword = getResponseValue("loginPassword", root);
-        int accountType = Integer.valueOf(getResponseValue("accountType", root));
-        long userId = Long.valueOf(getResponseValue("id", root));
-        soapConnection.close();
-        return new AppUserDto(userName, userPassword, userId, accountType);
-    }
+//    public static AppUserDto getUserById(long id) throws SOAPException {
+//        HashMap<String, String> data = new HashMap<>();
+//        data.put("accountId", "" + id);
+//        data.put("base64Token", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR2YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjo5Nywic3ViIjoiZ3Vlc3QyIiwicm9sZSI6IlVTRVIifQ.eajlekjoDzAXdghjxAcSVqquHgWjMKUrflN0SewLo2A");
+//        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByIdRequest", data));
+//        NodeList root = getRoot(soapResponse, "AccountResponse");
+//        String userName = getResponseValue("loginName", root);
+//        String userPassword = getResponseValue("loginPassword", root);
+//        int accountType = Integer.valueOf(getResponseValue("accountType", root));
+//        long userId = Long.valueOf(getResponseValue("id", root));
+//        soapConnection.close();
+//        return new AppUserDto(userName, userPassword, userId, accountType);
+//    }
 
-    public static AppUserDto getUserByLogin(String userName) throws SOAPException  {
+    public static AppUserDto getUserByLogin(String userName, String base64Token) throws SOAPException  {
         HashMap<String, String> data = new HashMap<>();
         data.put("userName", userName);
-        data.put("base64Token", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR2YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjo5Nywic3ViIjoiZ3Vlc3QyIiwicm9sZSI6IlVTRVIifQ.eajlekjoDzAXdghjxAcSVqquHgWjMKUrflN0SewLo2A");
+        data.put("base64Token", base64Token);
         SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByLoginRequest", data));
         NodeList root = getRoot(soapResponse, "AccountResponse");
         String userPassword = getResponseValue("loginPassword", root);
@@ -113,10 +112,12 @@ public class SoapApiHelper {
         return new AppUserDto(userName, userPassword, userId, accountType);
     }
 
-    public static String encodePassword(String userName, String password) throws SOAPException {
+    public static String encodePassword(String userName, String password, long userId, String base64Token) throws SOAPException {
         HashMap<String, String> data = new HashMap<>();
         data.put("userName", userName);
         data.put("password", password);
+        data.put("base64Token", base64Token);
+        data.put("accountId", Long.toString(userId));
         SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("EncodePasswordRequest", data));
         NodeList root = getRoot(soapResponse, "EncodePasswordResponse");
         String encodedPassword = getResponseValue("password", root);

@@ -48,7 +48,7 @@ define(['./module'], function (services) {
                     var paramsToSend = server.account.accountLogout();
                     var expectToReceive = {
                         loginUser: user.response.userId,
-                        base64Token: "Bearer " + user.response.token,
+                        base64Token: "Basic " + user.response.t_authorization,
                     }
 
                     Helper.enableLoader();

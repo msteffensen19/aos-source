@@ -87,17 +87,16 @@ public class CefHttpModel {
         spt = httpServletRequest.getRemotePort();
         src = httpServletRequest.getRemoteAddr();
         try {
-        if (SecurityTools.isBasic(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION))) {
+            String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+            if (SecurityTools.isBasic(authorizationHeader)) {
                 suid = SoapApiHelper.getUserByLogin(
                         SecurityTools
-                                .getBasicTokenFromAuthorizationHeader(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION))
-                                .split(":")[0])
+                                .getBasicTokenFromAuthorizationHeader(authorizationHeader)
+                                .split(":")[0], authorizationHeader)
                         .getUserId();
         } else {
                 Token token = SecurityTools.getTokenFromAuthorizationHeader(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
                 suid = (token != null) ? token.getUserId() : null;
-
-
         }
         } catch (TokenException | NullPointerException | SOAPException e) {
             suid = null;
