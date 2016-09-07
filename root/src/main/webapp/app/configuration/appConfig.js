@@ -122,6 +122,42 @@ define([], function () {
                     },
                 }
             })
+            //.state('product', {
+            //    url: '/product/:id?color&quantity&pageState',
+            //    templateUrl: 'app/views/product-page.html',
+            //    controller: 'productCtrl',
+            //    resolve: {
+            //        resolveParams: function (productService, categoryService, $stateParams, $q) {
+            //            var defer = $q.defer();
+            //            productService.getProductById($stateParams.id).then(function (product) {
+            //
+            //                $q.all([categoryService.getCategoryById(product.categoryId),
+            //                        categoryService.haveInternet(product.categoryId),
+            //                        categoryService.getMostPopularComments(product.categoryId),
+            //                ])
+            //                    .then(function (res) {
+            //
+            //                    var category = res[0];
+            //                    var haveInternet = res[1];
+            //                    var mostPopularComments = res[2];
+            //
+            //                    var paramsToReturn = {
+            //                        selectedColor: $stateParams.color,
+            //                        quantity: $stateParams.quantity,
+            //                        pageState: $stateParams.pageState,
+            //                        categoryName: category.categoryName,
+            //                        product: product,
+            //                        haveInternet: haveInternet,
+            //                        mostPopularComments: mostPopularComments
+            //                    }
+            //                    defer.resolve(paramsToReturn)
+            //                });
+            //            });
+            //            return defer.promise;
+            //        }
+            //    }
+            //}).
+
             .state('product', {
                 url: '/product/:id?color&quantity&pageState',
                 templateUrl: 'app/views/product-page.html',
@@ -133,25 +169,22 @@ define([], function () {
 
                             $q.all([categoryService.getCategoryById(product.categoryId),
                                     categoryService.haveInternet(product.categoryId),
-                                    categoryService.getMostPopularComments(product.categoryId),
-                            ])
+                                ])
                                 .then(function (res) {
 
-                                var category = res[0];
-                                var haveInternet = res[1];
-                                var mostPopularComments = res[2];
+                                    var category = res[0];
+                                    var haveInternet = res[1];
 
-                                var paramsToReturn = {
-                                    selectedColor: $stateParams.color,
-                                    quantity: $stateParams.quantity,
-                                    pageState: $stateParams.pageState,
-                                    categoryName: category.categoryName,
-                                    product: product,
-                                    haveInternet: haveInternet,
-                                    mostPopularComments: mostPopularComments
-                                }
-                                defer.resolve(paramsToReturn)
-                            });
+                                    var paramsToReturn = {
+                                        selectedColor: $stateParams.color,
+                                        quantity: $stateParams.quantity,
+                                        pageState: $stateParams.pageState,
+                                        categoryName: category.categoryName,
+                                        product: product,
+                                        haveInternet: haveInternet,
+                                    }
+                                    defer.resolve(paramsToReturn)
+                                });
                         });
                         return defer.promise;
                     }

@@ -534,15 +534,15 @@ public class AccountserviceEndpoint {
         verifyBasicToken(requestToken, account, appUserLogin);
     }
 
-    public void verifyBasicToken(String requestToken, Account account, String userIdMethod) throws TokenException {
+    public void verifyBasicToken(String requestToken, Account account, String userId) throws TokenException {
         String[] loginPassword = SecurityTools.decodeBase64(requestToken).split(":");
         AccountPassword accountPassword = new AccountPassword(loginPassword[0], loginPassword[1]);
         if (!loginPassword[0].equals(account.getLoginName()) || !account.getPassword().equals(accountPassword.getEncryptedPassword())){
-            String message = "User name or password is incorrect fot user " + userIdMethod;
+               String message = "User name or password is incorrect fot user " + userId;
             logger.error(message);
             throw new TokenException(message);
         } else {
-            String message = "Request authorized for user " + userIdMethod + " successful";
+            String message = "Request authorized for user " + userId + " successful";
             logger.debug(message);
         }
     }
