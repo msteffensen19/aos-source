@@ -120,7 +120,7 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
 
-                if (!userService.nv_slowPage()) {
+                if (userService.nv_slowPage()) {
                     $q.all([
                             getCategoryById(1),
                             getCategoryById(2),

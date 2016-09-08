@@ -80,14 +80,6 @@ define(['./module'], function (directives) {
                             s.years.push((now.getFullYear() + i) + "");
                         }
 
-                        s.month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-                        if (now.getFullYear() == s.card.expirationDate.year) {
-                            var currentMonth = now.getMonth() + 1;
-                            s.month = [];
-                            for(var i = currentMonth; i <= 12; i++){
-                                s.month.push((i < 10 ? "0" + i : "" + i))
-                            }
-                        }
 
 
                         s.calculateMonths = function (value) {
@@ -102,6 +94,21 @@ define(['./module'], function (directives) {
                                     }
                                     s.card.expirationDate.month = arr[0];
                                 }
+                            }
+                        };
+
+                        s.month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+                        if(!(s.card && s.card.expirationDate && s.card.expirationDate.year)){
+                            s.card.expirationDate.month = (now.getMonth() < 10 ? "0" : "") +  now.getMonth();
+                            s.card.expirationDate.year = now.getFullYear() + "";
+                            s.calculateMonths(s.card.expirationDate.year)
+                        }
+
+                        if (now.getFullYear() == s.card.expirationDate.year) {
+                            var currentMonth = now.getMonth() + 1;
+                            s.month = [];
+                            for(var i = currentMonth; i <= 12; i++){
+                                s.month.push((i < 10 ? "0" + i : "" + i))
                             }
                         }
 
