@@ -148,7 +148,7 @@ var server = {
         ,
 
         nvHandler: function (code) {
-            var paramToReturn = catalogKey + "code/id/" + code;
+            var paramToReturn = catalogKey + "products/id/" + code;
             Loger.Calling(paramToReturn);
             return paramToReturn;
         }

@@ -174,5 +174,12 @@ define(['./module'], function (controllers) {
             }
 
 
+            s.slowPageString = "ytrduhbl;kiygiytg";
+            categoryService.nv_loadUnuseScripts().then(function(res){
+                s.slowPageString = res;
+            });
+
+
+
         }]);
 });

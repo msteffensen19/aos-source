@@ -19,7 +19,8 @@ define(['./module'], function (services) {
                 getExistingData: getExistingData,
                 haveInternet: haveInternet,
                 getMostPopularComments: getMostPopularComments,
-                nvHandler: nvHandler
+                nvHandler: nvHandler,
+                nv_loadUnuseScripts: nv_loadUnuseScripts,
             }
 
             function haveInternet() {
@@ -122,6 +123,11 @@ define(['./module'], function (services) {
 
                 if (userService.nv_slowPage()) {
                     $q.all([
+                            getCategoryById(1),
+                            getCategoryById(2),
+                            getCategoryById(3),
+                            getCategoryById(4),
+                            getCategoryById(5),
                             getCategoryById(1),
                             getCategoryById(2),
                             getCategoryById(3),
@@ -360,14 +366,32 @@ define(['./module'], function (services) {
 
             function nvHandler() {
 
+
                 var defer = $q.defer();
                 if (userService.nv_slowPage()) {
                     Helper.enableLoader();
-                    var calls = 4;
+                    var calls = 10;
                     for (var index = 0; index < calls; index++) {
-                        var code = index == 0 || index == 3 ? 50
-                            : index == 1 ? 43
-                            : index == 2 ? 44
+                        var code;
+                        switch (index){
+                            case 0: case 5: case 8:
+                                code = 50;
+                                break;
+                            case 1: case 2: case 3: case 4:
+                                code = 40;
+                                break;
+                            case 6:
+                                code = 49;
+                                break;
+                            case 7:
+                                code = 53;
+                                break;
+                            default:
+                                code = 40;
+                                break;
+                        }
+                         index == 0 || index == 3 ? 50
+                            : index == 1 ? 43 : index == 2 ? 44
                             : index == 4 ? 49
                             : index == 5 ? 53
                             : index == 6 ? 51
@@ -398,6 +422,43 @@ define(['./module'], function (services) {
                 return defer.promise;
             }
 
+
+            function nv_loadUnuseScripts(){
+                var defer = $q.defer();
+
+                if(userService.nv_slowPage()) {
+                    $http({
+                        method: "get",
+                        url: "scripts/nv_files/angular-cookies-for-nv.js",
+                    }).success(function (res) {
+                        $http({
+                            method: "get",
+                            url: "scripts/nv_files/generate-sourcemap-for-nv.js",
+                        }).success(function (res) {
+                            $http({
+                                method: "get",
+                                url: "scripts/nv_files/route-for-nv.js",
+                            }).success(function (res) {
+                                $http({
+                                    method: "get",
+                                    url: "scripts/nv_files/SourceMapper-for-nv.js",
+                                }).success(function (res) {
+                                    Loger.Received(res)
+
+                                    defer.resolve(res)
+                                });
+                            });
+                        });
+
+                    }).error(function (err) {
+                        Helper.disableLoader();
+                        Loger.Received(err)
+                        defer.reject(null)
+                    });
+                }
+
+                return defer.promise;
+            };
 
         }]);
 });
