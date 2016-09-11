@@ -78,14 +78,13 @@ public class DataSourceInitByCsv {
             session.persist(new Account(AccountType.USER.getAccountTypeCode(), "King", "Solomon", "king.solomon", "SolomonK2", countryMap.get(128L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
             session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Queen", "Sheeba", "queen.sheeba", "SheebaQ1", countryMap.get(10L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "a@b.com", true));
 
-
             session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Fiskin", "Evgeney", "fizpok", "ASas12", countryMap.get(10L), "052-4898919", "Jerusalem1", "Jerusalem", "address", "9876543", "evgeney.fiskin@hpe.com", true));
 
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Regev", "Binyamin", "beni.regev", "Qe7uwt2v!", countryMap.get(128L), "054-7654321", "Jerusalem", "Jerusalem", "Holly Land", "9876543", "nakdimon@ben-guryon.com", false));
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Mercury", "Admin User", "Mercury", "Mercury", countryMap.get(10L), "077-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "mercury@hpe.com", true));
-            session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
-            session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "TestFirst", "TestLast", "test", "Test1", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "test@gmail.com", true));
-            session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Gilat", "Naor", "gilat", "gG123", countryMap.get(128L), "052-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "d0r1@gmail.com", true));
+            session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10L), "052-1234567", "Jerusalem1", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
+            session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "TestFirst", "TestLast", "test", "Test1", countryMap.get(10L), "052-1234567", "Jerusalem1", "Jerusalem", "address", "9876543", "test@gmail.com", true));
+            session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Gilat", "Naor", "gilat", "gG123", countryMap.get(128L), "052-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "d0r1@gmail.com", true));
             transaction.commit();
         }
     }
