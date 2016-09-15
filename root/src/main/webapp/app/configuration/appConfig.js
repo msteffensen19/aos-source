@@ -83,16 +83,35 @@ define([], function () {
                 templateUrl: 'app/views/category-page.html',
                 controller: 'categoryCtrl',
                 resolve: {
-                    category: function (categoryService, productService, $stateParams, $q) {
+                    category: function (categoryService, productService,
+                                        $stateParams, $q, userService) {
                         var defer = $q.defer();
                         categoryService.getCategoryById($stateParams.id).
                         then(function (category) {
-                            productService.getAllCategoriesAttributes().then(function (attributes) {
-                                defer.resolve({
-                                    attributes: attributes,
-                                    searchResult: [category],
-                                    categoryName: category.categoryName
-                                });
+                            productService.getAllCategoriesAttributes()
+                                .then(function (attributes) {
+
+                                    if(userService.nv_slowPage()){
+                                        categoryService.getCategories()
+                                            .then(function(){
+                                            categoryService.nv_loadUnuseScripts()
+                                                .then(function(){
+                                                    defer.resolve({
+                                                        attributes: attributes,
+                                                        searchResult: [category],
+                                                        categoryName: category.categoryName
+                                                    });
+                                                });
+                                        });
+                                    }
+                                    else{
+                                        defer.resolve({
+                                            attributes: attributes,
+                                            searchResult: [category],
+                                            categoryName: category.categoryName
+                                        });
+                                    }
+
                             });
                         });
                         return defer.promise;

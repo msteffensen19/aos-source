@@ -84,7 +84,7 @@ define(['./module'], function (services) {
             var appConfiguration;
 
             function nv_slowPage(){
-                return !appConfiguration.slowPage;
+                return appConfiguration.slowPage;
             }
 
             function getConfiguration() {
