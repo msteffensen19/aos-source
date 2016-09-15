@@ -370,48 +370,42 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
                 if (userService.nv_slowPage()) {
                     Helper.enableLoader();
-                    var calls = 10;
+                    var calls = 6;
                     for (var index = 0; index < calls; index++) {
                         var code;
                         switch (index){
-                            case 0: case 5: case 8:
+                            case 0:
                                 code = 50;
                                 break;
-                            case 1: case 2: case 3: case 4:
-                                code = 40;
+                            case 1: case 2:
+                                code = 44;
                                 break;
-                            case 6:
+                            case 3:
+                                code = 53;
+                                break;
+                            case 4:
                                 code = 49;
                                 break;
-                            case 7:
-                                code = 53;
+                            case 5:
+                                code = 40;
                                 break;
                             default:
                                 code = 40;
                                 break;
                         }
-                         index == 0 || index == 3 ? 50
-                            : index == 1 ? 43 : index == 2 ? 44
-                            : index == 4 ? 49
-                            : index == 5 ? 53
-                            : index == 6 ? 51
-                            : index == 7 ? 52
-                            : 44;
 
                         $http({
                             method: "get",
                             url: server.catalog.nvHandler(code),
                         }).success(function (res) {
                             Loger.Received(res)
-                            console.log(arr[index] + "      " + index);
                             defer.resolve()
                         }).error(function (err) {
+                            Loger.Received(err)
+                            //defer.resolve()
                             if (index + 1 >= calls) {
                                 defer.resolve();
                             }
-                            Helper.disableLoader();
-                            Loger.Received(err)
-                            defer.resolve()
                         });
                     }
                 }
@@ -430,21 +424,19 @@ define(['./module'], function (services) {
                     $http({
                         method: "get",
                         url: "scripts/nv_files/angular-cookies-for-nv.js",
-                    }).success(function (res) {
+                    }).success(function () {
                         $http({
                             method: "get",
                             url: "scripts/nv_files/generate-sourcemap-for-nv.js",
-                        }).success(function (res) {
+                        }).success(function () {
                             $http({
                                 method: "get",
                                 url: "scripts/nv_files/route-for-nv.js",
-                            }).success(function (res) {
+                            }).success(function () {
                                 $http({
                                     method: "get",
                                     url: "scripts/nv_files/SourceMapper-for-nv.js",
-                                }).success(function (res) {
-                                    Loger.Received(res)
-
+                                }).success(function () {
                                     defer.resolve(res)
                                 });
                             });
