@@ -5,7 +5,9 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('categoriesCtrl', ['$scope', 'categoryService',
         'dealService', '$location', 'resolveParams', 'supportService', '$timeout',
-        function (s, categoryService, dealService, $location, resolveParams, supportService, $timeout) {
+        'userService',
+        function (s, categoryService, dealService, $location, resolveParams,
+                  supportService, $timeout, userService) {
 
             for (var i = 0; i < resolveParams.categories.length; i++) {
                 var cate = [];
@@ -19,19 +21,26 @@ define(['./module'], function (controllers) {
             s.specialOffer = resolveParams.specialOffer;
             s.popularProducts = resolveParams.popularProducts;
 
+
+            var _nv = userService.nv_slowPage() ? "_nv" : "";
+            var imagesBanner = [
+                'Banner1' + _nv + '.jpg',
+                'Banner2' + _nv + '.jpg',
+                'Banner3' + _nv + '.jpg',
+            ];
             s.images = [
                 {
-                    imageName: 'Banner1.jpg',
+                    imageName: imagesBanner[0],
                     imageId: 0,
                     message: "ALL YOU WANT FROM A TABLET",
                     categoryId: 2},
                 {
-                    imageName: 'Banner2.jpg',
+                    imageName: imagesBanner[1],
                     imageId: 1,
                     message: "EXPLORE OUR LATEST <br />INNOVATIVE PRODUCTS",
                     categoryId: 3
                 },
-                {imageName: 'Banner3.jpg', imageId: 2, message: "START EXPLORING HP NOTEBOOKS", categoryId: 0}
+                {imageName: imagesBanner[2], imageId: 2, message: "START EXPLORING HP NOTEBOOKS", categoryId: 0}
             ];
 
             /* suport section */

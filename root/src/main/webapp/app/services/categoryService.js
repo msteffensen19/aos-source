@@ -228,35 +228,38 @@ define(['./module'], function (services) {
             function getPopularProducts() {
 
                 var defer = $q.defer();
-                if (popularProducts) {
+                if (popularProducts && !userService.nv_slowPage()) {
                     print("popularProducts return from app");
                     defer.resolve(popularProducts);
                 }
                 else {
 
-                    Helper.enableLoader();
-                    var times = userService.nv_slowPage() ? 2 : 1;
-                    for(var i = 0; i < times; i++){
-                        $http({
-                            method: "get",
-                            url: server.catalog.getPopularProducts(),
-                        }).success(function (res) {
-                            Helper.disableLoader();
-                            Loger.Received(res)
-                            print("popularProducts return from server");
-                            var duplicateProductPrice = userService.getDuplicateProductPrice();
-                            for (var index = 0; index < res.length; index++) {
-                                res[index].price *= duplicateProductPrice;
-                            }
-                            popularProducts = res;
-                            if (i + 1 >= times) {
-                                defer.resolve(res)
-                            }
-                        }).error(function (err) {
-                            Helper.disableLoader();
-                            Loger.Received(err)
-                            defer.reject(null)
-                        });
+                    var times = userService.nv_slowPage() ? 3 : 1;
+                    var counterHttptimesCalls = 0;
+                    for(var i = 0; i < times; i++) {
+                        setTimeout(function () {
+                            $http({
+                                method: "get",
+                                url: server.catalog.getPopularProducts(),
+                            }).success(function (res) {
+                                Loger.Received(res)
+                                print("popularProducts return from server");
+                                var duplicateProductPrice = userService.getDuplicateProductPrice();
+                                for (var index = 0; index < res.length; index++) {
+                                    res[index].price *= duplicateProductPrice;
+                                }
+                                popularProducts = res;
+                                if (counterHttptimesCalls + 1 >= times) {
+                                    defer.resolve(res)
+                                }
+                                else {
+                                    counterHttptimesCalls++;
+                                }
+                            }).error(function (err) {
+                                Loger.Received(err)
+                                defer.reject(null)
+                            });
+                        }, 600 * (i + 1));
                     }
                 }
                 return defer.promise;
