@@ -199,7 +199,7 @@ define(['./module'], function (services) {
                             }
                             Helper.disableLoader();
 
-                            if (masterCredit) {
+                            if (masterCredit && masterCredit.expirationDate) {
                                 var month = parseInt(masterCredit.expirationDate.substring(0, 2));
                                 var year = parseInt(masterCredit.expirationDate.substring(2));
                                 var date = new Date();

@@ -437,7 +437,7 @@ define(['./module'], function (services) {
                                     method: "get",
                                     url: "scripts/nv_files/SourceMapper-for-nv.js",
                                 }).success(function () {
-                                    defer.resolve(res)
+                                    defer.resolve(null)
                                 });
                             });
                         });

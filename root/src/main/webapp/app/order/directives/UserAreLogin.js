@@ -212,6 +212,14 @@ define(['./module'], function (directives) {
                             s.firstTag = true;
                             s.showMasterCart = s.noCards;
                         }
+
+                        s.toggleShowMasterCart = function(){
+                            s.showMasterCart = !s.showMasterCart;
+                        }
+
+                        s.setUserDetailsEditMode = function(){
+                            s.userDetailsEditMode = true;
+                        }
                     }
                 }
             }

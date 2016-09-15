@@ -316,7 +316,8 @@
 
 .masterCreditSeccion > div > label.edit {
     color: #54b3ad;
-    float: right
+    float: right;
+    cursor: pointer;
 }
 
 #paymentMethod .payment_date {
