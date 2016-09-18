@@ -81,7 +81,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
     public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountRequest) throws TokenException {
-        authorizeAsUser(accountRequest);
+        //authorizeAsUser(accountRequest);
         Account account = accountService.getById(accountRequest.getAccountId());
         if (account == null) {
             return null;
