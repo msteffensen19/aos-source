@@ -265,7 +265,7 @@ define(['./module'], function (controllers) {
 
             $scope.checkLogin = function () {
                 var user = $rootScope.userCookie;
-                if (!(user && user.response && user.response.userId != -1 && user.response.token)) {
+                if (!(user && user.response && user.response.userId != -1 && user.response.t_authorization)) {
                     $state.go("default");
                 }
             }
@@ -274,7 +274,7 @@ define(['./module'], function (controllers) {
             var _setUser = 0;
             $scope.setUser = function () {
                 if (_setUser > 0) {
-                    $scope.signIn({email: 'a@b.com', loginPassword: 'Itshak1', loginUser: 'avinu.itshak',}, true);
+                    $scope.signIn({email: "", loginPassword: "Aa123", loginUser: "sergio",}, true);
                 }
                 _setUser++;
                 setTimeout(function () {

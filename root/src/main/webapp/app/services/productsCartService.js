@@ -38,7 +38,7 @@ define(['./module'], function (services) {
                             method: "delete",
                             headers: {
                                 "content-type": "application/json; charset=utf-8",
-                                "Authorization": "Bearer " + user.response.token,
+                                "Authorization": "Basic " + user.response.t_authorization,
                             },
                             url: server.order.clearCart(user.response.userId)
                         }).success(function (res) {
@@ -73,7 +73,7 @@ define(['./module'], function (services) {
                             async: false,
                             headers: {
                                 "content-type": "application/json; charset=utf-8",
-                                "Authorization": "Bearer " + user.response.token,
+                                "Authorization": "Basic " + user.response.t_authorization,
                             },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
@@ -111,7 +111,7 @@ define(['./module'], function (services) {
                         url: server.order.removeProductToUser(user.response.userId, prod.productId, prod.color.code),
                         headers: {
                             "content-type": "application/json; charset=utf-8",
-                            "Authorization": "Bearer " + user.response.token,
+                            "Authorization": "Basic " + user.response.t_authorization,
                         }
                     });
                 }
@@ -133,7 +133,7 @@ define(['./module'], function (services) {
                             async: false,
                             headers: {
                                 "content-type": "application/json; charset=utf-8",
-                                "Authorization": "Bearer " + user.response.token,
+                                "Authorization": "Basic " + user.response.t_authorization,
                             },
                             url: server.order.loadCartProducts(user.response.userId)
                         }).success(function (res) {
@@ -215,7 +215,7 @@ define(['./module'], function (services) {
                                 method: "put",
                                 data: JSON.stringify(cartToReplace),
                                 headers: {
-                                    "Authorization": "Bearer " + user.response.token,
+                                    "Authorization": "Basic " + user.response.t_authorization,
                                 },
                                 url: server.order.updateUserCart(user.response.userId)
                             }).success(function (res) {
@@ -244,7 +244,7 @@ define(['./module'], function (services) {
                             var request = $http({
                                 method: "put",
                                 headers: {
-                                    "Authorization": "Bearer " + user.response.token,
+                                    "Authorization": "Basic " + user.response.t_authorization,
                                 },
                                 async: false,
                                 url: server.order.updateProductToUser(user.response.userId,
@@ -324,7 +324,7 @@ define(['./module'], function (services) {
                         var request = $http({
                             method: "post",
                             headers: {
-                                "Authorization": "Bearer " + user.response.token,
+                                "Authorization": "Basic " + user.response.t_authorization,
                             },
                             data: {},
                             async: false,

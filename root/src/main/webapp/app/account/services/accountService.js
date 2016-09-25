@@ -77,7 +77,8 @@ define(['./module'], function (services) {
                         namespaceURL: server.namespaceURL,
                         SOAPAction: server.namespaceURL + params.method,
                         data: {
-                            accountId: user.response.userId
+                            accountId: user.response.userId,
+                            base64Token: "Basic "+user.response.t_authorization
                         },
                         success: function (soapResponse) {
                             var response = soapResponse.toJSON(params.response);
@@ -116,7 +117,8 @@ define(['./module'], function (services) {
                         namespaceURL: server.namespaceURL,
                         SOAPAction: server.namespaceURL + params.method,
                         data: {
-                            accountId: user.response.userId
+                            accountId: user.response.userId,
+                            base64Token: "Basic "+user.response.t_authorization,
                         },
                         success: function (soapResponse) {
                             var response = soapResponse.toJSON(params.response);
@@ -149,7 +151,8 @@ define(['./module'], function (services) {
                         namespaceURL: server.namespaceURL,
                         SOAPAction: server.namespaceURL + params.method,
                         data: {
-                            accountId: user.response.userId
+                            accountId: user.response.userId,
+                            base64Token: "Basic "+$rootScope.userCookie.response.t_authorization,
                         },
                         success: function (soapResponse) {
                             var response = soapResponse.toJSON(params.response);
@@ -196,7 +199,7 @@ define(['./module'], function (services) {
                             }
                             Helper.disableLoader();
 
-                            if (masterCredit) {
+                            if (masterCredit && masterCredit.expirationDate) {
                                 var month = parseInt(masterCredit.expirationDate.substring(0, 2));
                                 var year = parseInt(masterCredit.expirationDate.substring(2));
                                 var date = new Date();
@@ -236,7 +239,7 @@ define(['./module'], function (services) {
                             accountId: accountId,
                             newPassword: passwords.new,
                             oldPassword: passwords.old,
-                            base64Token: $rootScope.userCookie.response.token,
+                            base64Token: "Basic "+$rootScope.userCookie.response.t_authorization,
                         }
                         var params = server.account.changePassword();
                         Helper.enableLoader();
@@ -279,6 +282,7 @@ define(['./module'], function (services) {
                         email: accountDetails.email,
                         accountType: 20,
                         allowOffersPromotion: accountDetails.allowOffersPromotion,
+                        base64Token: "Basic "+$rootScope.userCookie.response.t_authorization
                     }
                     var params = server.account.accountUpdate();
                     Loger.Params(expectToReceive, params.method);
@@ -319,6 +323,7 @@ define(['./module'], function (services) {
                         cvvNumber: card.cvv,
                         customerName: card.name,
                         accountId: user.response.userId,
+                        base64Token: "Basic "+user.response.t_authorization
                     }
 
                     var params = server.account.addMasterCreditMethod();
@@ -355,7 +360,8 @@ define(['./module'], function (services) {
                     var expectToReceive = {
                         safePayUsername: safePay.username,
                         accountId: user.response.userId,
-                        safePayPassword: safePay.password
+                        safePayPassword: safePay.password,
+                        base64Token: "Basic "+user.response.t_authorization
                     }
 
                     var params = server.account.addSafePayMethod();
@@ -392,6 +398,7 @@ define(['./module'], function (services) {
                         safePayUsername: safePay.username,
                         safePayPassword: safePay.password,
                         referenceId: "1234567890",
+                        base64Token: "Basic "+$rootScope.userCookie.response.t_authorization
                     }
 
                     var defer = $q.defer();
@@ -432,6 +439,7 @@ define(['./module'], function (services) {
                         cvvNumber: card.cvv,
                         customerName: card.name,
                         referenceId: "1234567890",
+                        base64Token: "Basic "+$rootScope.userCookie.response.t_authorization
                     }
 
                     var defer = $q.defer();
@@ -468,6 +476,7 @@ define(['./module'], function (services) {
                     var expectToReceive = {
                         accountId: user.response.userId,
                         paymentMethod: paymentMethod,
+                        base64Token: "Basic "+ user.response.t_authorization
                     }
 
                     var defer = $q.defer();

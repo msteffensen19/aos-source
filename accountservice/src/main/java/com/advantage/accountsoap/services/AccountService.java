@@ -15,6 +15,7 @@ import com.advantage.common.exceptions.token.ContentTokenException;
 import com.advantage.common.exceptions.token.TokenException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
+import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.TokenJWT;
 import com.advantage.root.util.RestApiHelper;
 import com.advantage.root.util.StringHelper;
@@ -124,7 +125,9 @@ public class AccountService {
                     account.getDefaultPaymentMethodId(),
                     account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                     account.getInternalUserBlockedFromLoginUntil(),
-                    account.getInternalLastSuccesssulLogin()));
+                    account.getInternalLastSuccesssulLogin(),
+                    account.getPassword()));
+
         }
 
         return dtos;
@@ -244,13 +247,26 @@ public class AccountService {
 
         Account account = accountRepository.get(accountId);
         AccountStatusResponse response = new AccountStatusResponse(false, "Initial", 0);
-        TokenJWT tokenJWT = TokenJWT.parseToken(base64Token);
-
-        //  Get current user details from Token
-        long currentUserId = tokenJWT.getUserId();
-        String currentUserLogin = tokenJWT.getLoginName();
-        AccountType currentUserAccountType = tokenJWT.getAccountType();
-
+        AccountType currentUserAccountType;
+        long currentUserId;
+        if (SecurityTools.isBasic(base64Token)) {
+            currentUserId = accountId;
+            currentUserAccountType = AccountType.valueOfCode(account.getAccountType());
+            String token = base64Token.substring(base64Token.indexOf(" ")+1);
+            String[] loginPassword = SecurityTools.decodeBase64(token).split(":");
+            System.out.println(loginPassword[0]+"*****************"+loginPassword[1]);
+            System.out.println((new AccountPassword(loginPassword[0], loginPassword[1])).getEncryptedPassword());
+            if(!loginPassword[0].equals(account.getLoginName())
+                    || !(new AccountPassword(loginPassword[0], loginPassword[1]))
+                    .getEncryptedPassword().equals(account.getPassword())){
+                throw new VerificationTokenException("Not the same user and current user is not ADMIN");
+            }
+        } else {
+            TokenJWT tokenJWT = TokenJWT.parseToken(base64Token);
+            //  Get current user details from Token
+            currentUserId = tokenJWT.getUserId();
+            currentUserAccountType = tokenJWT.getAccountType();
+        }
         if (currentUserAccountType.getAccountTypeCode() == AccountType.ADMIN.getAccountTypeCode()) {
             response = accountRepository.changePassword(accountId, newPassword);
         } else {

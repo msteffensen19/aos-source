@@ -101,7 +101,7 @@ public class UpdateMasterCreditMethodRequest implements IUserRequest {
 
     @Override
     public String getBase64Token() {
-        return null;
+        return base64Token;
     }
 
     @Override

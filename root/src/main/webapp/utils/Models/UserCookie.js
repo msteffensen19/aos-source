@@ -21,7 +21,7 @@ userCookie.getKey = function(lastUser){
             {
                   return "userCookie" +
                       lastUser.response.userId
-                        + lastUser.response.token;
+                        + lastUser.response.t_authorization;
                   //+ lastUser.response.sessionId;
             }
       }

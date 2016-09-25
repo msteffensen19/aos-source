@@ -32,7 +32,8 @@
                 </div>
             </div>
             <div class="blueLink">
-                <a data-ng-click="userDetailsEditMode = true" translate="Edit_shipping_Details"></a>
+                <a data-ng-click="setUserDetailsEditMode()"
+                   translate="Edit_shipping_Details"></a>
                 <label class="float-button">{{ 'SHIPPING_BY' | translate }}:
                     <img src="css/images/Shipex.png" alt="ShipEx"/></label>
             </div>
@@ -196,7 +197,8 @@
                     </div>
 
                     <div class="blueLink margin15px">
-                        <a data-ng-click="firstTag = true" translate="Back_to_shipping_details"></a>
+                        <a data-ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
+                        <!--<a data-ng-click="firstTag = true" translate="Back_to_shipping_details"></a>-->
                         <label class="float_right">
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
                                         sec-send="payNow_SafePay()"></sec-sender>
@@ -220,7 +222,7 @@
                         <span data-ng-repeat="_4numbers in CardNumber track by $index">
                             {{ _4numbers | showLast4DigitsCard:$last:$index}}
                         </span>
-                        <label class="edit" data-ng-click="showMasterCart = !showMasterCart" translate="Edit">
+                        <label class="edit " data-ng-click="toggleShowMasterCart()" translate="Edit">
                         </label>
                     </div>
                 </div>

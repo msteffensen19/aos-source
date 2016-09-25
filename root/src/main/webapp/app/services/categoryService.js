@@ -19,7 +19,8 @@ define(['./module'], function (services) {
                 getExistingData: getExistingData,
                 haveInternet: haveInternet,
                 getMostPopularComments: getMostPopularComments,
-                nvHandler: nvHandler
+                nvHandler: nvHandler,
+                nv_loadUnuseScripts: nv_loadUnuseScripts,
             }
 
             function haveInternet() {
@@ -122,8 +123,13 @@ define(['./module'], function (services) {
 
                 var defer = $q.defer();
 
-                if (!userService.nv_slowPage()) {
+                if (userService.nv_slowPage()) {
                     $q.all([
+                            getCategoryById(1),
+                            getCategoryById(2),
+                            getCategoryById(3),
+                            getCategoryById(4),
+                            getCategoryById(5),
                             getCategoryById(1),
                             getCategoryById(2),
                             getCategoryById(3),
@@ -224,35 +230,38 @@ define(['./module'], function (services) {
             function getPopularProducts() {
 
                 var defer = $q.defer();
-                if (popularProducts) {
+                if (popularProducts && !userService.nv_slowPage()) {
                     print("popularProducts return from app");
                     defer.resolve(popularProducts);
                 }
                 else {
 
-                    Helper.enableLoader();
-                    var times = userService.nv_slowPage() ? 2 : 1;
-                    for(var i = 0; i < times; i++){
-                        $http({
-                            method: "get",
-                            url: server.catalog.getPopularProducts(),
-                        }).success(function (res) {
-                            Helper.disableLoader();
-                            Loger.Received(res)
-                            print("popularProducts return from server");
-                            var duplicateProductPrice = userService.getDuplicateProductPrice();
-                            for (var index = 0; index < res.length; index++) {
-                                res[index].price *= duplicateProductPrice;
-                            }
-                            popularProducts = res;
-                            if (i + 1 >= times) {
-                                defer.resolve(res)
-                            }
-                        }).error(function (err) {
-                            Helper.disableLoader();
-                            Loger.Received(err)
-                            defer.reject(null)
-                        });
+                    var times = userService.nv_slowPage() ? 3 : 1;
+                    var counterHttptimesCalls = 0;
+                    for(var i = 0; i < times; i++) {
+                        setTimeout(function () {
+                            $http({
+                                method: "get",
+                                url: server.catalog.getPopularProducts(),
+                            }).success(function (res) {
+                                Loger.Received(res)
+                                print("popularProducts return from server");
+                                var duplicateProductPrice = userService.getDuplicateProductPrice();
+                                for (var index = 0; index < res.length; index++) {
+                                    res[index].price *= duplicateProductPrice;
+                                }
+                                popularProducts = res;
+                                if (counterHttptimesCalls + 1 >= times) {
+                                    defer.resolve(res)
+                                }
+                                else {
+                                    counterHttptimesCalls++;
+                                }
+                            }).error(function (err) {
+                                Loger.Received(err)
+                                defer.reject(null)
+                            });
+                        }, 600 * (i + 1));
                     }
                 }
                 return defer.promise;
@@ -362,34 +371,46 @@ define(['./module'], function (services) {
 
             function nvHandler() {
 
+
                 var defer = $q.defer();
                 if (userService.nv_slowPage()) {
                     Helper.enableLoader();
-                    var calls = 4;
+                    var calls = 6;
                     for (var index = 0; index < calls; index++) {
-                        var code = index == 0 || index == 3 ? 50
-                            : index == 1 ? 43
-                            : index == 2 ? 44
-                            : index == 4 ? 49
-                            : index == 5 ? 53
-                            : index == 6 ? 51
-                            : index == 7 ? 52
-                            : 44;
+                        var code;
+                        switch (index){
+                            case 0:
+                                code = 50;
+                                break;
+                            case 1: case 2:
+                                code = 44;
+                                break;
+                            case 3:
+                                code = 53;
+                                break;
+                            case 4:
+                                code = 49;
+                                break;
+                            case 5:
+                                code = 40;
+                                break;
+                            default:
+                                code = 40;
+                                break;
+                        }
 
                         $http({
                             method: "get",
                             url: server.catalog.nvHandler(code),
                         }).success(function (res) {
                             Loger.Received(res)
-                            console.log(arr[index] + "      " + index);
                             defer.resolve()
                         }).error(function (err) {
+                            Loger.Received(err)
+                            //defer.resolve()
                             if (index + 1 >= calls) {
                                 defer.resolve();
                             }
-                            Helper.disableLoader();
-                            Loger.Received(err)
-                            defer.resolve()
                         });
                     }
                 }
@@ -400,6 +421,41 @@ define(['./module'], function (services) {
                 return defer.promise;
             }
 
+
+            function nv_loadUnuseScripts(){
+                var defer = $q.defer();
+
+                if(userService.nv_slowPage()) {
+                    $http({
+                        method: "get",
+                        url: "scripts/nv_files/angular-cookies-for-nv.js",
+                    }).success(function () {
+                        $http({
+                            method: "get",
+                            url: "scripts/nv_files/generate-sourcemap-for-nv.js",
+                        }).success(function () {
+                            $http({
+                                method: "get",
+                                url: "scripts/nv_files/route-for-nv.js",
+                            }).success(function () {
+                                $http({
+                                    method: "get",
+                                    url: "scripts/nv_files/SourceMapper-for-nv.js",
+                                }).success(function () {
+                                    defer.resolve(null)
+                                });
+                            });
+                        });
+
+                    }).error(function (err) {
+                        Helper.disableLoader();
+                        Loger.Received(err)
+                        defer.reject(null)
+                    });
+                }
+
+                return defer.promise;
+            };
 
         }]);
 });

@@ -78,7 +78,7 @@ define(['./module'], function (services) {
                     data: paramsToPass,
                     headers: {
                         "content-type": "application/json",
-                        "Authorization": "Bearer " + $rootScope.userCookie.response.token,
+                        "Authorization": "Basic " + $rootScope.userCookie.response.t_authorization,
                     },
                 }).
                 then(function (res) {
@@ -154,7 +154,11 @@ define(['./module'], function (services) {
                         method: params.method,
                         namespaceURL: server.namespaceURL,
                         SOAPAction: server.namespaceURL + params.method,
-                        data: { accountId: user.response.userId },
+                        data:
+                            {
+                                accountId: user.response.userId,
+                                base64Token: "Basic "+user.response.t_authorization
+                            },
                         success: function (soapResponse) {
                             var response = soapResponse.toJSON(params.response);
                             if(response && response.AccountResponse){

@@ -7,12 +7,14 @@ import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
+import com.advantage.common.utils.SoapApiHelper;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.soap.SOAPException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -84,11 +86,19 @@ public class CefHttpModel {
         requestMethod = httpServletRequest.getMethod();
         spt = httpServletRequest.getRemotePort();
         src = httpServletRequest.getRemoteAddr();
-
         try {
-            Token token = SecurityTools.getTokenFromAuthorizationHeader(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
-            suid = (token != null) ? token.getUserId() : null;
-        } catch (TokenException e) {
+            String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+            if (SecurityTools.isBasic(authorizationHeader)) {
+                suid = SoapApiHelper.getUserByLogin(
+                        SecurityTools
+                                .getBasicTokenFromAuthorizationHeader(authorizationHeader)
+                                .split(":")[0], authorizationHeader)
+                        .getUserId();
+        } else {
+                Token token = SecurityTools.getTokenFromAuthorizationHeader(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION));
+                suid = (token != null) ? token.getUserId() : null;
+        }
+        } catch (TokenException | NullPointerException | SOAPException e) {
             suid = null;
         }
     }

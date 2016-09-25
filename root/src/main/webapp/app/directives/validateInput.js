@@ -902,7 +902,12 @@ define(['./module'], function (directives) {
                             label.addClass("animated");
                             var dot = (a.aShow ? "." + a.aShow : "");
                             var format = "<select ng-model='secModel' ng-options='c as c" + dot
-                                + " for c in secSelectOptions' >";
+                                + " for c in secSelectOptions' ></select>";
+
+                            //var dot = (a.aShow ? a.aShow : null);
+                            //var format = "<select ng-model='secModel'>" +
+                            //"<option ng-repeat='c in secSelectOptions' >{{ (dot ? c[dot] : c ) }}</option>" +
+                            //    "</select>";
 
                             input = $(format);
                             input.css("background", "transparent");
