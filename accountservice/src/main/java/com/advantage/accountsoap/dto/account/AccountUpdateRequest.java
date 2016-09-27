@@ -19,11 +19,10 @@ import javax.xml.bind.annotation.*;
         "phoneNumber",
         "email",
         "accountType",
-        "allowOffersPromotion",
-        "base64Token"
+        "allowOffersPromotion"
 })
 @XmlRootElement(name = "AccountUpdateRequest", namespace = WebServiceConfig.NAMESPACE_URI)
-public class AccountUpdateRequest implements IUserRequest {
+public class AccountUpdateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String lastName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -48,8 +47,6 @@ public class AccountUpdateRequest implements IUserRequest {
     protected Integer accountType;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected boolean allowOffersPromotion;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected String base64Token;
 
     public String getLastName() {
         return lastName;
@@ -148,11 +145,6 @@ public class AccountUpdateRequest implements IUserRequest {
     }
 
     @Override
-    public String getBase64Token() {
-        return base64Token;
-    }
-
-    @Override
     public String toString() {
         return "AccountUpdateRequest{" +
                 "lastName='" + lastName + '\'' +
@@ -167,7 +159,6 @@ public class AccountUpdateRequest implements IUserRequest {
                 ", email='" + email + '\'' +
                 ", accountType=" + accountType +
                 ", allowOffersPromotion=" + allowOffersPromotion +
-                ", base64Token='" + base64Token + '\'' +
                 '}';
     }
 }
