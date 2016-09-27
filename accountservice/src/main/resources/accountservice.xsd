@@ -1,606 +1,690 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="com.advantage.online.store.accountservice"
-           xmlns:sx="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="com.advantage.online.store.accountservice" elementFormDefault="qualified">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="com.advantage.online.store.accountservice" xmlns:tns="com.advantage.online.store.accountservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:complexType name="AccountStatusResponse">
-        <xs:sequence>
-            <xs:element name="success" type="xs:boolean"/>
-            <xs:element name="userId" type="xs:long"/>
-            <xs:element name="reason" type="xs:string"/>
-            <xs:element name="token" type="xs:string"/>
-            <xs:element name="sessionId" type="xs:string"/>
-        </xs:sequence>
+  <xs:element name="AccountCreateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="lastName" type="xs:string" form="qualified"/>
+        <xs:element name="firstName" type="xs:string" form="qualified"/>
+        <xs:element name="loginName" type="xs:string" form="qualified"/>
+        <xs:element name="countryId" type="xs:long" form="qualified"/>
+        <xs:element name="stateProvince" type="xs:string" form="qualified"/>
+        <xs:element name="cityName" type="xs:string" form="qualified"/>
+        <xs:element name="address" type="xs:string" form="qualified"/>
+        <xs:element name="zipcode" type="xs:string" form="qualified"/>
+        <xs:element name="phoneNumber" type="xs:string" form="qualified"/>
+        <xs:element name="email" type="xs:string" form="qualified"/>
+        <xs:element name="password" type="xs:string" form="qualified"/>
+        <xs:element name="accountType" type="xs:int" form="qualified"/>
+        <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="CountryStatusResponse">
-        <xs:sequence>
-            <xs:element name="reason" type="xs:string"/>
-            <xs:element name="success" type="xs:boolean"/>
-            <xs:element name="countryId" type="xs:long"/>
-        </xs:sequence>
+  <xs:element name="AccountCreateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="PaymentPreferencesStatusResponse">
-        <xs:sequence>
-            <xs:element name="reason" type="xs:string"/>
-            <xs:element name="success" type="xs:boolean"/>
-            <xs:element name="id" type="xs:long"/>
-        </xs:sequence>
+  <xs:element name="AccountDeleteRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="account"/>
-    <xs:complexType name="country"/>
-
-    <xs:complexType name="AddressStatusResponse">
-        <xs:sequence>
-            <xs:element name="reason" type="xs:string"/>
-            <xs:element name="success" type="xs:boolean"/>
-        </xs:sequence>
+  <xs:element name="AccountDeleteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:element name="GetAccountConfigurationResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int" form="qualified"/>
-                <xs:element name="loginBlockingIntervalInSeconds" type="xs:long" form="qualified"/>
-                <xs:element name="productInStockDefaultValue" type="xs:int" form="qualified"/>
-                <xs:element name="userSecondWsdl" type="xs:boolean" form="qualified"/>
-                <xs:element name="userLoginTimeout" type="xs:int" form="qualified"/>
-                <xs:element name="allowUserConfiguration" type="xs:boolean" form="qualified"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+  <xs:element name="AccountDto" nillable="true" type="xs:anyType"/>
 
-    <xs:complexType name="AccountDto">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
-            <xs:element name="lastName" type="xs:string"/>
-            <xs:element name="firstName" type="xs:string"/>
-            <xs:element name="loginName" type="xs:string"/>
-            <xs:element name="accountType" type="xs:int"/>
-            <xs:element name="countryId" type="xs:long"/>
-            <xs:element name="countryName" type="xs:string"/>
-            <xs:element name="countryIsoName" type="xs:string"/>
-            <xs:element name="stateProvince" type="xs:string"/>
-            <xs:element name="cityName" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
-            <xs:element name="zipcode" type="xs:string"/>
-            <xs:element name="phoneNumber" type="xs:string"/>
-            <xs:element name="email" type="xs:string"/>
-            <xs:element name="defaultPaymentMethodId" type="xs:long"/>
-            <xs:element name="allowOffersPromotion" type="xs:boolean"/>
-            <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int"/>
-            <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long"/>
-            <xs:element name="internalLastSuccesssulLogin" type="xs:long"/>
-        </xs:sequence>
+  <xs:element name="AccountLoginRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="loginUser" type="xs:string" form="qualified"/>
+        <xs:element name="email" type="xs:string" form="qualified"/>
+        <xs:element name="loginPassword" type="xs:string" form="qualified"/>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="AccountDtoNew">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
-            <xs:element name="lastName" type="xs:string"/>
-            <xs:element name="firstName" type="xs:string"/>
-            <xs:element name="loginName" type="xs:string"/>
-            <xs:element name="accountType" type="xs:int"/>
-            <xs:element name="countryId" type="xs:long"/>
-            <xs:element name="countryName" type="xs:string"/>
-            <xs:element name="countryIsoName" type="xs:string"/>
-            <xs:element name="stateProvince" type="xs:string"/>
-            <xs:element name="cityName" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
-            <xs:element name="zipcode" type="xs:string"/>
-            <xs:element name="phoneNumber" type="xs:string"/>
-            <xs:element name="email" type="xs:string"/>
-            <xs:element name="defaultPaymentMethodId" type="xs:long"/>
-            <xs:element name="allowOffersPromotion" type="xs:boolean"/>
-            <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int"/>
-            <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long"/>
-            <xs:element name="internalLastSuccesssulLogin" type="xs:long"/>
-        </xs:sequence>
+  <xs:element name="AccountLoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:element name="GetAllAccountsResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="account" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:complexType name="AddressDto">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long" form="qualified" nillable="true"/>
-            <xs:element name="addressLine1" type="xs:string" form="qualified"/>
-            <xs:element name="addressLine2" type="xs:string" form="qualified"/>
-            <xs:element name="city" type="xs:string" form="qualified"/>
-            <xs:element name="country" type="xs:string" form="qualified"/>
-            <xs:element name="state" type="xs:string" form="qualified"/>
-            <xs:element name="postalCode" type="xs:string" form="qualified"/>
-            <xs:element name="accountId" type="xs:long" form="qualified"/>
-        </xs:sequence>
+  <xs:element name="AccountLogoutRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="loginUser" type="xs:string" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="UpdateAddressDto">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long" form="qualified" nillable="true"/>
-            <xs:element name="addressLine1" type="xs:string" form="qualified"/>
-            <xs:element name="addressLine2" type="xs:string" form="qualified"/>
-            <xs:element name="city" type="xs:string" form="qualified"/>
-            <xs:element name="country" type="xs:string" form="qualified"/>
-            <xs:element name="state" type="xs:string" form="qualified"/>
-            <xs:element name="postalCode" type="xs:string" form="qualified"/>
-        </xs:sequence>
+  <xs:element name="AccountLogoutResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="AddAddressDto">
-        <xs:sequence>
-            <xs:element name="addressLine1" type="xs:string" form="qualified"/>
-            <xs:element name="addressLine2" type="xs:string" form="qualified"/>
-            <xs:element name="city" type="xs:string" form="qualified"/>
-            <xs:element name="country" type="xs:string" form="qualified"/>
-            <xs:element name="state" type="xs:string" form="qualified"/>
-            <xs:element name="postalCode" type="xs:string" form="qualified"/>
-        </xs:sequence>
+  <xs:element name="AccountStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="success" type="xs:boolean" form="qualified"/>
+        <xs:element name="userId" type="xs:long" form="qualified"/>
+        <xs:element name="reason" type="xs:string" form="qualified"/>
+        <xs:element name="token" type="xs:string" form="qualified"/>
+        <xs:element name="sessionId" type="xs:string" form="qualified"/>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:element name="GetAllAccountsRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetCountriesRequest">
-        <xs:complexType>
-            <xs:sequence/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAccountConfigurationRequest">
-        <xs:complexType>
-            <xs:sequence/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:complexType name="CountryDto">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="isoName" type="xs:string"/>
-            <xs:element name="phonePrefix" type="xs:int"/>
-        </xs:sequence>
+  <xs:element name="AccountUpdateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="lastName" type="xs:string" form="qualified"/>
+        <xs:element name="firstName" type="xs:string" form="qualified"/>
+        <xs:element name="countryId" type="xs:long" form="qualified"/>
+        <xs:element name="stateProvince" type="xs:string" form="qualified"/>
+        <xs:element name="cityName" type="xs:string" form="qualified"/>
+        <xs:element name="address" type="xs:string" form="qualified"/>
+        <xs:element name="zipcode" type="xs:string" form="qualified"/>
+        <xs:element name="phoneNumber" type="xs:string" form="qualified"/>
+        <xs:element name="email" type="xs:string" form="qualified"/>
+        <xs:element name="accountType" type="xs:int" form="qualified"/>
+        <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:element name="GetCountriesResponse">
-        <xs:complexType>
+  <xs:element name="AccountUpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
             <xs:sequence>
-                <xs:element name="Country" type="tns:CountryDto" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
             </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="CountrySearchResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Country" type="tns:CountryDto"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAddressesByAccountIdRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAccountByIdRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAccountByIdNewResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="AccountResponse" type="tns:AccountDtoNew"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAccountByIdNewRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAccountByIdResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="AccountResponse" type="tns:AccountDto"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAddressesByAccountIdResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="ShippingAddress" type="tns:AccountDto" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountCreateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="lastName" type="xs:string"/>
-                <xs:element name="firstName" type="xs:string"/>
-                <xs:element name="loginName" type="xs:string"/>
-                <xs:element name="countryId" type="xs:long"/>
-                <xs:element name="stateProvince" type="xs:string"/>
-                <xs:element name="cityName" type="xs:string"/>
-                <xs:element name="address" type="xs:string"/>
-                <xs:element name="zipcode" type="xs:string"/>
-                <xs:element name="phoneNumber" type="xs:string"/>
-                <xs:element name="email" type="xs:string"/>
-                <xs:element name="password" type="xs:string"/>
-                <xs:element name="accountType" type="xs:int"/>
-                <xs:element name="allowOffersPromotion" type="xs:boolean"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountCreateResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountDeleteRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long" form="qualified"/>
-                <xs:element name="base64Token" type="xs:string" form="qualified"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountDeleteResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" form="qualified">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="success" type="xs:boolean" form="qualified"/>
-                            <xs:element name="userId" type="xs:long" form="qualified"/>
-                            <xs:element name="reason" type="xs:string" form="qualified"/>
-                            <xs:element name="token" type="xs:string" form="qualified"/>
-                            <xs:element name="sessionId" type="xs:string" form="qualified"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountUpdateResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="ChangePasswordResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountUpdateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="lastName" type="xs:string"/>
-                <xs:element name="firstName" type="xs:string"/>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="countryId" type="xs:long"/>
-                <xs:element name="stateProvince" type="xs:string"/>
-                <xs:element name="cityName" type="xs:string"/>
-                <xs:element name="address" type="xs:string"/>
-                <xs:element name="zipcode" type="xs:string"/>
-                <xs:element name="phoneNumber" type="xs:string"/>
-                <xs:element name="email" type="xs:string"/>
-                <xs:element name="accountType" type="xs:int"/>
-                <xs:element name="allowOffersPromotion" type="xs:boolean"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="CountryCreateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="name" type="xs:string"/>
-                <xs:element name="isoName" type="xs:string"/>
-                <xs:element name="phonePrefix" type="xs:string"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="CountrySearchRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="internationalPhonePrefix" type="xs:int"/>
-                <xs:element name="startOfName" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="CountryCreateResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:CountryStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountLoginRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="loginUser" type="xs:string"/>
-                <xs:element name="email" type="xs:string"/>
-                <xs:element name="loginPassword" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountLoginResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountLogoutRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="loginUser" type="xs:string"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AccountLogoutResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="PaymentMethodUpdateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="paymentMethod" type="xs:int"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="PaymentMethodUpdateResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddAddressesRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="address" type="tns:AddAddressDto" form="qualified" maxOccurs="unbounded"/>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddAddressesResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AddressStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddressUpdateResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AddressStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddressUpdateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="address" type="tns:UpdateAddressDto"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="ChangePasswordRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="oldPassword" type="xs:string"/>
-                <xs:element name="newPassword" type="xs:string"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddSafePayMethodRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="safePayUsername" type="xs:string"/>
-                <xs:element name="safePayPassword" type="xs:string"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddSafePayMethodResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:PaymentPreferencesStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddMasterCreditMethodRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="cardNumber" type="xs:string"/>
-                <xs:element name="expirationDate" type="xs:string"/>
-                <xs:element name="cvvNumber" type="xs:string"/>
-                <xs:element name="customerName" type="xs:string"/>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="AddMasterCreditMethodResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:PaymentPreferencesStatusResponse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="UpdateSafePayMethodRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="userId" type="xs:long"/>
-                <xs:element name="safePayUsername" type="xs:string"/>
-                <xs:element name="safePayPassword" type="xs:string"/>
-                <xs:element name="referenceId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="UpdateSafePayMethodResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" form="qualified">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="success" type="xs:boolean" form="qualified"/>
-                            <xs:element name="id" type="xs:long" form="qualified"/>
-                            <xs:element name="reason" type="xs:string" form="qualified"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="UpdateMasterCreditMethodRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="userId" type="xs:long"/>
-                <xs:element name="cardNumber" type="xs:string"/>
-                <xs:element name="expirationDate" type="xs:string"/>
-                <xs:element name="cvvNumber" type="xs:string"/>
-                <xs:element name="customerName" type="xs:string"/>
-                <xs:element name="referenceId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="UpdateMasterCreditMethodResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="StatusMessage" form="qualified">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="success" type="xs:boolean" form="qualified"/>
-                            <xs:element name="id" type="xs:long" form="qualified"/>
-                            <xs:element name="reason" type="xs:string" form="qualified"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:complexType name="PaymentPreferencesDto">
-        <xs:sequence>
-            <xs:element name="paymentMethod" type="xs:int"/>
-            <xs:element name="cardNumber" type="xs:string"/>
-            <xs:element name="expirationDate" type="xs:string"/>
-            <xs:element name="cvvNumber" type="xs:string"/>
-            <xs:element name="safePayUsername" type="xs:string"/>
-            <xs:element name="safePayPassword" type="xs:string"/>
-            <xs:element name="customerName" type="xs:string"/>
-            <xs:element name="preferenceId" type="xs:long"/>
-        </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
     </xs:complexType>
+  </xs:element>
 
-    <xs:element name="GetAccountPaymentPreferencesRequest">
-        <xs:complexType>
+  <xs:element name="AddAddressesRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="address" form="qualified" maxOccurs="unbounded">
+          <xs:complexType>
             <xs:sequence>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
+              <xs:element name="addressLine1" type="xs:string" form="qualified"/>
+              <xs:element name="addressLine2" type="xs:string" form="qualified"/>
+              <xs:element name="city" type="xs:string" form="qualified"/>
+              <xs:element name="country" type="xs:string" form="qualified"/>
+              <xs:element name="state" type="xs:string" form="qualified"/>
+              <xs:element name="postalCode" type="xs:string" form="qualified"/>
             </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
-    <xs:element name="GetAccountPaymentPreferencesResponse">
-        <xs:complexType>
+  <xs:element name="AddMasterCreditMethodRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="cardNumber" type="xs:string" form="qualified"/>
+        <xs:element name="expirationDate" type="xs:string" form="qualified"/>
+        <xs:element name="cvvNumber" type="xs:string" form="qualified"/>
+        <xs:element name="customerName" type="xs:string" form="qualified"/>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AddSafePayMethodRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="safePayUsername" type="xs:string" form="qualified"/>
+        <xs:element name="safePayPassword" type="xs:string" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AddSafePayMethodResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
             <xs:sequence>
-                <xs:element name="PaymentPreferences" type="tns:PaymentPreferencesDto"/>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="id" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
             </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
-    <xs:element name="DeletePaymentPreferenceRequest">
-        <xs:complexType>
+  <xs:element name="Address" nillable="true" type="xs:anyType"/>
+
+  <xs:element name="AddressStatusResponse" nillable="true" type="xs:anyType"/>
+
+  <xs:element name="AddressUpdateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="address" form="qualified">
+          <xs:complexType>
             <xs:sequence>
-                <xs:element name="id" type="xs:long"/>
-                <xs:element name="accountId" type="xs:long"/>
-                <xs:element name="base64Token" type="xs:string"/>
+              <xs:element name="id" type="xs:long" form="qualified" nillable="true"/>
+              <xs:element name="addressLine1" type="xs:string" form="qualified"/>
+              <xs:element name="addressLine2" type="xs:string" form="qualified"/>
+              <xs:element name="city" type="xs:string" form="qualified"/>
+              <xs:element name="country" type="xs:string" form="qualified"/>
+              <xs:element name="state" type="xs:string" form="qualified"/>
+              <xs:element name="postalCode" type="xs:string" form="qualified"/>
+              <xs:element name="accountId" type="xs:long" form="qualified"/>
             </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
-    <xs:element name="DeletePaymentPreferenceResponse">
-        <xs:complexType>
+  <xs:element name="AddressUpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
             <xs:sequence>
-                <xs:element name="StatusMessage" type="tns:AccountStatusResponse"/>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
             </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
+  <xs:element name="ChangePasswordRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="oldPassword" type="xs:string" form="qualified"/>
+        <xs:element name="newPassword" type="xs:string" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ChangePasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Country">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:long" form="qualified"/>
+        <xs:element name="name" type="xs:string" form="qualified"/>
+        <xs:element name="isoName" type="xs:string" form="qualified"/>
+        <xs:element name="phonePrefix" type="xs:int" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CountryCreateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string" form="qualified"/>
+        <xs:element name="isoName" type="xs:string" form="qualified"/>
+        <xs:element name="phonePrefix" type="xs:int" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CountrySearchRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="internationalPhonePrefix" type="xs:int" form="qualified"/>
+        <xs:element name="startOfName" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CountrySearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Country" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CountryStatusResponse" nillable="true" type="xs:anyType"/>
+
+  <xs:element name="DeletePaymentPreferenceRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:long" form="qualified"/>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeletePaymentPreferenceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountByIdNewRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountByIdNewResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AccountResponse" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:long" form="qualified"/>
+              <xs:element name="lastName" type="xs:string" form="qualified"/>
+              <xs:element name="firstName" type="xs:string" form="qualified"/>
+              <xs:element name="loginName" type="xs:string" form="qualified"/>
+              <xs:element name="accountType" type="xs:int" form="qualified"/>
+              <xs:element name="countryId" type="xs:long" form="qualified"/>
+              <xs:element name="countryName" type="xs:string" form="qualified"/>
+              <xs:element name="countryIsoName" type="xs:string" form="qualified"/>
+              <xs:element name="stateProvince" type="xs:string" form="qualified"/>
+              <xs:element name="cityName" type="xs:string" form="qualified"/>
+              <xs:element name="homeAddress" type="xs:string" form="qualified"/>
+              <xs:element name="zipcode" type="xs:string" form="qualified"/>
+              <xs:element name="mobilePhone" type="xs:string" form="qualified"/>
+              <xs:element name="email" type="xs:string" form="qualified"/>
+              <xs:element name="defaultPaymentMethodId" type="xs:long" form="qualified"/>
+              <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
+              <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int" form="qualified"/>
+              <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long" form="qualified"/>
+              <xs:element name="internalLastSuccesssulLogin" type="xs:long" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountByIdRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AccountResponse" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:long" form="qualified"/>
+              <xs:element name="lastName" type="xs:string" form="qualified"/>
+              <xs:element name="firstName" type="xs:string" form="qualified"/>
+              <xs:element name="loginName" type="xs:string" form="qualified"/>
+              <xs:element name="accountType" type="xs:int" form="qualified"/>
+              <xs:element name="countryId" type="xs:long" form="qualified"/>
+              <xs:element name="countryName" type="xs:string" form="qualified"/>
+              <xs:element name="countryIsoName" type="xs:string" form="qualified"/>
+              <xs:element name="stateProvince" type="xs:string" form="qualified"/>
+              <xs:element name="cityName" type="xs:string" form="qualified"/>
+              <xs:element name="address" type="xs:string" form="qualified"/>
+              <xs:element name="zipcode" type="xs:string" form="qualified"/>
+              <xs:element name="phoneNumber" type="xs:string" form="qualified"/>
+              <xs:element name="email" type="xs:string" form="qualified"/>
+              <xs:element name="defaultPaymentMethodId" type="xs:long" form="qualified"/>
+              <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
+              <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int" form="qualified"/>
+              <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long" form="qualified"/>
+              <xs:element name="internalLastSuccesssulLogin" type="xs:long" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountConfigurationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="numberOfFailedLoginAttemptsBeforeBlocking" type="xs:int" form="qualified"/>
+        <xs:element name="loginBlockingIntervalInSeconds" type="xs:long" form="qualified"/>
+        <xs:element name="productInStockDefaultValue" type="xs:int" form="qualified"/>
+        <xs:element name="userSecondWsdl" type="xs:boolean" form="qualified"/>
+        <xs:element name="userLoginTimeout" type="xs:int" form="qualified"/>
+        <xs:element name="allowUserConfiguration" type="xs:boolean" form="qualified"/>
+        <xs:element name="maxConcurrentSessions" type="xs:int" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountPaymentPreferencesRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAddressesByAccountIdRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:int" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAddressesByAccountIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ShippingAddress" form="qualified" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:long" form="qualified" nillable="true"/>
+              <xs:element name="addressLine1" type="xs:string" form="qualified"/>
+              <xs:element name="addressLine2" type="xs:string" form="qualified"/>
+              <xs:element name="city" type="xs:string" form="qualified"/>
+              <xs:element name="country" type="xs:string" form="qualified"/>
+              <xs:element name="state" type="xs:string" form="qualified"/>
+              <xs:element name="postalCode" type="xs:string" form="qualified"/>
+              <xs:element name="accountId" type="xs:long" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAllAccountsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAllAccountsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="account" form="qualified" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:long" form="qualified"/>
+              <xs:element name="lastName" type="xs:string" form="qualified"/>
+              <xs:element name="firstName" type="xs:string" form="qualified"/>
+              <xs:element name="loginName" type="xs:string" form="qualified"/>
+              <xs:element name="accountType" type="xs:int" form="qualified"/>
+              <xs:element name="countryId" type="xs:long" form="qualified"/>
+              <xs:element name="countryName" type="xs:string" form="qualified"/>
+              <xs:element name="countryIsoName" type="xs:string" form="qualified"/>
+              <xs:element name="stateProvince" type="xs:string" form="qualified"/>
+              <xs:element name="cityName" type="xs:string" form="qualified"/>
+              <xs:element name="address" type="xs:string" form="qualified"/>
+              <xs:element name="zipcode" type="xs:string" form="qualified"/>
+              <xs:element name="phoneNumber" type="xs:string" form="qualified"/>
+              <xs:element name="email" type="xs:string" form="qualified"/>
+              <xs:element name="defaultPaymentMethodId" type="xs:long" form="qualified"/>
+              <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
+              <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int" form="qualified"/>
+              <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long" form="qualified"/>
+              <xs:element name="internalLastSuccesssulLogin" type="xs:long" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetCountriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Country" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PaymentMethodUpdateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accountId" type="xs:long" form="qualified"/>
+        <xs:element name="paymentMethod" type="xs:int" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PaymentMethodUpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="userId" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+              <xs:element name="token" type="xs:string" form="qualified"/>
+              <xs:element name="sessionId" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PaymentPreferences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="preference" form="qualified" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="paymentMethod" type="xs:int" form="qualified"/>
+              <xs:element name="cardNumber" type="xs:string" form="qualified"/>
+              <xs:element name="expirationDate" type="xs:string" form="qualified"/>
+              <xs:element name="cvvNumber" type="xs:string" form="qualified"/>
+              <xs:element name="safePayUsername" type="xs:string" form="qualified"/>
+              <xs:element name="safePayPassword" type="xs:string" form="qualified"/>
+              <xs:element name="customerName" type="xs:string" form="qualified"/>
+              <xs:element name="preferenceId" type="xs:long" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PaymentPreferencesDto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="paymentMethod" type="xs:int" form="qualified"/>
+        <xs:element name="cardNumber" type="xs:string" form="qualified"/>
+        <xs:element name="expirationDate" type="xs:string" form="qualified"/>
+        <xs:element name="cvvNumber" type="xs:string" form="qualified"/>
+        <xs:element name="safePayUsername" type="xs:string" form="qualified"/>
+        <xs:element name="safePayPassword" type="xs:string" form="qualified"/>
+        <xs:element name="customerName" type="xs:string" form="qualified"/>
+        <xs:element name="preferenceId" type="xs:long" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PaymentPreferencesStatusResponse" nillable="true" type="xs:anyType"/>
+
+  <xs:element name="UpdateMasterCreditMethodRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="userId" type="xs:long" form="qualified"/>
+        <xs:element name="cardNumber" type="xs:string" form="qualified"/>
+        <xs:element name="expirationDate" type="xs:string" form="qualified"/>
+        <xs:element name="cvvNumber" type="xs:string" form="qualified"/>
+        <xs:element name="customerName" type="xs:string" form="qualified"/>
+        <xs:element name="referenceId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UpdateMasterCreditMethodResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="id" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UpdateSafePayMethodRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="userId" type="xs:long" form="qualified"/>
+        <xs:element name="safePayUsername" type="xs:string" form="qualified"/>
+        <xs:element name="safePayPassword" type="xs:string" form="qualified"/>
+        <xs:element name="referenceId" type="xs:long" form="qualified"/>
+        <xs:element name="base64Token" type="xs:string" form="qualified"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UpdateSafePayMethodResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StatusMessage" form="qualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="success" type="xs:boolean" form="qualified"/>
+              <xs:element name="id" type="xs:long" form="qualified"/>
+              <xs:element name="reason" type="xs:string" form="qualified"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="CountryStatusResponse">
+    <xs:sequence>
+      <xs:element name="success" type="xs:boolean" form="qualified"/>
+      <xs:element name="countryId" type="xs:long" form="qualified"/>
+      <xs:element name="reason" type="xs:string" form="qualified"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
+
