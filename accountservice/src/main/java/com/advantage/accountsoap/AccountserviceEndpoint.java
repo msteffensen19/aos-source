@@ -379,7 +379,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
     @ResponsePayload
     public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) throws TokenException {
-        authorizeAsUser(request);
+        //authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getUserId(),
                 request.getSafePayUsername(),
                 request.getSafePayPassword());
