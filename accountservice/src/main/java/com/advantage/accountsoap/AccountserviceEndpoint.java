@@ -270,7 +270,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountUpdateRequest")
     @ResponsePayload
     public AccountUpdateResponse updateAccount(@RequestPayload AccountUpdateRequest request) throws TokenException {
-//        authorizeAsUser(request);
+        //authorizeAsUser(request);
         AccountStatusResponse response = accountService.updateAccount(
                 request.getAccountId(),
                 request.getAccountType(),
@@ -425,7 +425,7 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
     @ResponsePayload
     public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) throws TokenException {
-        authorizeAsUser(request);
+        //authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getUserId(),
                 request.getSafePayUsername(),
                 request.getSafePayPassword());
