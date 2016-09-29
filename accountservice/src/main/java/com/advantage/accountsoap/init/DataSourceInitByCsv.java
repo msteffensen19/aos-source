@@ -86,6 +86,11 @@ public class DataSourceInitByCsv {
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "TestFirst", "TestLast", "test", "Test1", countryMap.get(10L), "052-1234567", "Jerusalem Region", "Jerusalem", "address", "9876543", "test@gmail.com", true));
             session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Gilat", "Naor", "gilat", "gG123", countryMap.get(128L), "052-7654321", "Jerusalem Region", "Jerusalem", "address", "9876543", "d0r1@gmail.com", true));
+<<<<<<< Updated upstream
+=======
+            session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Regev", "Beni", "bbnnii", "bB123", countryMap.get(128L), "058-7654321", "Gush Dan", "Afula", "Ben Gorion 1973", "9876543", "b@ni.com", false));
+
+>>>>>>> Stashed changes
             transaction.commit();
         }
     }
