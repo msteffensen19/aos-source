@@ -14,8 +14,8 @@ import java.util.concurrent.Future;
 @Service
 public class MostPopularCommentService {
 
-    // Artificial delay of 10s for demonstration purposes
-    private static final long ASYNC_TIMEOUT = 10000L;    //
+    // Artificial delay in milliseconds: 500L = 0.5 sec ; 10000L = 10 sec, etc.
+    private static final long ASYNC_TIMEOUT = 500L;    //
 
     RestTemplate restTemplate = new RestTemplate();
 
