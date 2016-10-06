@@ -16,17 +16,12 @@
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1100",
         "images": [
-          "ABCDEF##1100",
+          "C3C3C3##1100",
           "3683D1##1102",
           "DD3A5B##1101",
           "DD3A5B##1103"
         ],
         "colors": [
-          {
-            "code": "414141",
-            "name": "BLACK",
-            "inStock": 10
-          },
           {
             "code": "3683D1",
             "name": "BLUE",
@@ -38,18 +33,8 @@
             "inStock": 10
           },
           {
-            "code": "545195",
-            "name": "PURPLE",
-            "inStock": 10
-          },
-          {
             "code": "DD3A5B",
             "name": "RED",
-            "inStock": 10
-          },
-          {
-            "code": "FFFFFF",
-            "name": "WHITE",
             "inStock": 10
           }
         ],
@@ -98,7 +83,8 @@
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1200",
         "images": [
-          "ABCDEF##1202",
+          "414141##1202",
+          "414141##1202",
           "3683D1##1201",
           "3683D1##1200",
           "DD3A5B##1203"
@@ -106,8 +92,18 @@
         "colors": [
           {
             "inStock": 10,
+            "name": "Black",
+            "code": "414141"
+          },
+          {
+            "inStock": 10,
             "name": "Blue",
             "code": "3683D1"
+          },
+          {
+            "inStock": 10,
+            "name": "Gray",
+            "code": "C3C3C3"
           },
           {
             "inStock": 10,
@@ -155,7 +151,7 @@
         ]
       },
       {
-        "productName": "HP Pavilion 15z Touch Laptop",
+3       "productName": "HP Pavilion 15z Touch Laptop",
         "price": 449.99,
         "description": "Redesigned with you in mind, the HP Pavilion keeps getting better. Our best-selling notebook is now more powerful so you can watch more, play more, and store more, all in style.",
         "imageUrl": "1300",
@@ -293,7 +289,7 @@
         ]
       },
       {
-        "productName": "HP Stream - 11-d020nr Laptop",
+5       "productName": "HP Stream - 11-d020nr Laptop",
         "price": 179.99,
         "description": "Work from a happy place with a stylish, affordable, Windows-based PC. Store your content in the cloud for easy access from anywhere you have internet.",
         "imageUrl": "1245",
@@ -411,7 +407,7 @@
         ]
       },
       {
-        "productName": "HP ENVY - 17t Touch Laptop",
+7       "productName": "HP ENVY - 17t Touch Laptop",
         "price": 849.99,
         "description": "We took our remarkable 360° convertible PC and enhanced it with premium features to give you ultimate flexibility and enviable looks.",
         "imageUrl": "1700",
@@ -468,7 +464,7 @@
         ]
       },
       {
-        "productName": "HP ZBook 17 G2 Mobile Workstation",
+8       "productName": "HP ZBook 17 G2 Mobile Workstation",
         "price": 1799,
         "description": "On the go creativity knows no limits on a vivid 17.3 inch diagonal HP ZBook 17 G2. Showcase your best work in the office or on the go and take advantage of HP’s most powerful processing, graphics, simple scalability, and blazing-fast connectivity to perform and collaborate at the speed of creativity.",
         "imageUrl": "1800",
@@ -530,7 +526,7 @@
         ]
       },
       {
-        "productName": "HP Chromebook 14 G1(ENERGY STAR)",
+9       "productName": "HP Chromebook 14 G1(ENERGY STAR)",
         "price": 299.99,
         "description": "This HP notebook is all about getting the perfect combination of design, reliability, and features. Style and productivity while keeping your wallet in mind - now that's something to get excited about.",
         "imageUrl": "1249",
@@ -638,7 +634,7 @@
         ]
       },
       {
-        "productName": "HP Pavilion x360 - 11t Touch Laptop",
+11      "productName": "HP Pavilion x360 - 11t Touch Laptop",
         "price": 319.99,
         "description": "There’s no limit to what this value-packed convertible PC can do. Easily convert from notebook to stand to tent to tablet mode. It’s an app-loving, friend-connecting, 360°-bending machine.",
         "imageUrl": "11100",
@@ -718,7 +714,7 @@
     },
     "products": [
       {
-        "productName": "HP H2310 In-ear Headset",
+12      "productName": "HP H2310 In-ear Headset",
         "price": 13.99,
         "description": "Enjoy an acoustic concert in your ears with HP’s In-Ear Headset H2310. Available in trend-setting design in four color options and compatible with most smartphones, MP3 players and tablets – including Android™ and Apple®. Easily switch from jamming to tunes to connecting with friends using the inline microphone. Quality craftsmanship, value priced, and awesome sound.",
         "imageUrl": "2100",
@@ -753,7 +749,7 @@
         ]
       },
       {
-        "productName": "Bose SoundLink Around-ear Wireless Headphones II",
+13      "productName": "Bose SoundLink Around-ear Wireless Headphones II",
         "price": 279.95,
         "description": "Wireless freedom meets best-in-class sound.",
         "imageUrl": "2100",
@@ -790,7 +786,7 @@
       },
 
       {
-        "productName": "Logitech USB Headset H390",
+14      "productName": "Logitech USB Headset H390",
         "price": 39.99,
         "description": "Features on this product will exceeded your expectations.",
         "imageUrl": "2100",
@@ -874,7 +870,7 @@
     },
     "products": [
       {
-        "productName": "HP ElitePad 1000 G2 Tablet",
+16      "productName": "HP ElitePad 1000 G2 Tablet",
         "price": 1009,
         "description": "More than a tablet—a total business solution. The elegant and sleek HP ElitePad 1000 G2 has the performance and flexibility to transform the way you work. Redefine productivity and stay light with the confidence of the leading manageability, security, and support you expect from HP.",
         "imageUrl": "3100",
@@ -920,7 +916,7 @@
         ]
       },
       {
-        "productName": "HP Elite x2 1011 G1 Tablet",
+17       "productName": "HP Elite x2 1011 G1 Tablet",
         "price": 1279,
         "description": "Ultrabook™[2] Power\nPower up for ultimate power with Windows 8.1,[1] 5th Gen Intel® Core™ M processors,[4] with optional vPro™[5] and long battery life provided by dual tablet and keyboard base batteries.",
         "imageUrl": "3200",
@@ -970,7 +966,7 @@
         ]
       },
       {
-        "productName": "HP Pro Tablet 608 G1",
+18      "productName": "HP Pro Tablet 608 G1",
         "price": 479,
         "description": "Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize nearly any business process. Choose from an expansive choice of accessories[2] for a customized experience.",
         "imageUrl": "3300",
@@ -1033,7 +1029,7 @@
     },
     "products": [
       {
-        "productName": "HP S9500 Bluetooth Wireless Speaker",
+19      "productName": "HP S9500 Bluetooth Wireless Speaker",
         "price": 200.00,
         "description": "Impress … everyone! Futuristic design with perforated steel formed into subtle angles. Requiring only minimal space, this speaker is the ideal complement to any setting.",
         "imageUrl": "4100",
@@ -1072,7 +1068,7 @@
         ]
       },
       {
-        "productName": "Bose Soundlink Bluetooth Speaker III",
+20      "productName": "Bose Soundlink Bluetooth Speaker III",
         "price": 269.99,
         "description": "Meet the speaker that brings your music and friends together-with a style that's all your own. The SoundLink® Bluetooth speaker III is our best-performing mobile Bluetooth speaker. It plays louder and longer than its popular predecessor, with advanced Bose® technologies that reproduce the fullness, clarity and depth of your music. And a colorful assortment of optional covers let you personalize your speaker.",
         "imageUrl": "4200",
@@ -1110,7 +1106,7 @@
         ]
       },
       {
-        "productName": "HP Roar Plus Wireless Speaker",
+21      "productName": "HP Roar Plus Wireless Speaker",
         "price": 169.99,
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4300",
@@ -1161,7 +1157,7 @@
         ]
       },
       {
-        "productName": "HP Roar Wireless Speaker",
+22      "productName": "HP Roar Wireless Speaker",
         "price": 84.99,
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4400",
@@ -1245,7 +1241,7 @@
         ]
       },
       {
-        "productName": "HP Roar Mini Wireless Speaker",
+24      "productName": "HP Roar Mini Wireless Speaker",
         "price": 44.99,
         "description": "Attention-getting design, color, and sound - the HP Roar Mini Wireless Speaker. Exceptional size-defying audio while streaming music and calls from a distinctively compact speaker.",
         "imageUrl": "4600",
@@ -1296,7 +1292,7 @@
         ]
       },
       {
-        "productName": "Bose SoundLink Wireless Speaker",
+25      "productName": "Bose SoundLink Wireless Speaker",
         "price": 129,
         "description": "If music is your motivation, wait until you hear the SoundLink® Color Bluetooth speaker. It plays your favorite tunes from your favorite Bluetooth device-out loud in clear, full audio-just about anywhere you want to go. It's small, durable and simple to use. And it comes in a spectrum of colors to match almost any style.",
         "imageUrl": "4700",
@@ -1402,7 +1398,7 @@
         ]
       },
       {
-        "productName": "HP Z3600 Wireless Mouse",
+27      "productName": "HP Z3600 Wireless Mouse",
         "price": 15.99,
         "description": "The tiny HP Wireless Mouse Z3600 provides stylish comfort and control for your mobile computing needs. With optical tracking, 3 button controls, and the freedom to connect up to 30ft (10m) away, this compact mouse provides oversized performance.",
         "imageUrl": "5200",
@@ -1453,7 +1449,7 @@
         ]
       },
       {
-        "productName": "HP Z3200 Wireless Mouse",
+28      "productName": "HP Z3200 Wireless Mouse",
         "price": 29.99,
         "description": "The HP Wireless Mouse Z3200 provides powerful Blue LED optical tracking. Its ambidextrous shape and familiar button controls are easy to use. Compact contoured control.",
         "imageUrl": "5300",
@@ -1593,7 +1589,7 @@
         ]
       },
       {
-        "productName": "Logitech G502 Proteus Core",
+31      "productName": "Logitech G502 Proteus Core",
         "price": 79.99,
         "description": "MAKE IT YOURS!\nProteus Core perfectly tuned by you.\nProteus Core allows you to change the weight, balance, and enables you to adapt to wherever you choose to play. Customize it to the way you game and make it yours!\n\nPERSONALLY-TUNED PERFORMANCE\nAdapts to your environment\nFine tune the optical sensor in Proteus Core to your playing surface for better accuracy, precision and responsiveness. A quick tuning process, and you are battle ready.",
         "imageUrl": "5600",
@@ -1631,7 +1627,7 @@
         ]
       },
       {
-        "productName": "Kensington Orbit 72337 Trackball with Scroll Ring",
+32      "productName": "Kensington Orbit 72337 Trackball with Scroll Ring",
         "price": 39.99,
         "description": "All-day comfort and scrolling come together in the Kensington Orbit Trackball with Scroll Ring. The scroll ring allows you to fly through web pages and documents. And all while delivering comfort and space savings no mouse can match.",
         "imageUrl": "5700",
@@ -1669,7 +1665,7 @@
         ]
       },
       {
-        "productName": "HP Z8000 Bluetooth Mouse",
+33      "productName": "HP Z8000 Bluetooth Mouse",
         "price": 50.99,
         "description": "The exquisite HP Z8000 Bluetooth Mouse is only 18mm (.7in) height, saves power with Bluetooth® Low Energy connectivity, and provides effortless capacitive touch control. The future is here.",
         "imageUrl": "5800",
@@ -1709,7 +1705,7 @@
         ]
       },
       {
-        "productName": "Microsoft Sculpt Touch Mouse",
+34      "productName": "Microsoft Sculpt Touch Mouse",
         "price": 49.99,
         "description": "Looking for a portable mouse that helps you get things done? Sculpt Touch Mouse saves time in long documents and works virtually anywhere, with no cables or transceivers to connect. And it's designed to fit comfortably in either hand.\nThe four-way touch scrolling pad on the Sculpt Touch Mouse lets you breeze up and down, left and right, and through windows and documents with just the swipe of your finger. While you scroll, you'll feel the nice surprise of tactile feedback. Sculpt Touch Mouse is also a powerful complement to Windows 8, navigating fluidly and intuitively around the Start Screen.\n",
         "imageUrl": "5900",
