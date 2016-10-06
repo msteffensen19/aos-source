@@ -918,15 +918,15 @@
         "imageUrl": "3100",
         "images": [
           "ABCDEF##3100",
-          "C3C3C3##3101",
-          "C3C3C3##3102",
-          "C3C3C3##3103"
+          "ABCDEF##3101",
+          "ABCDEF##3102",
+          "ABCDEF##3103"
         ],
         "colors": [
           {
             "inStock": 10,
             "name": "Blue",
-            "code": "3683D1"
+            "code": "414141"
           },
           {
             "inStock": 10,
@@ -1156,7 +1156,7 @@
           "414141##4304",
           "3683D1##4301",
           "3683D1##4300",
-          "C3C3C3##4308"
+          "545195##4308"
         ],
         "colors": [
           {
@@ -1170,8 +1170,8 @@
             "inStock": 10
           },
           {
-            "code": "C3C3C3",
-            "name": "Gray",
+            "code": "545195",
+            "name": "Purple",
             "inStock": 0
           }
         ],
@@ -1204,10 +1204,10 @@
         "description": "Showcase your music anywhere with the ease of wireless Bluetooth® connectivity.",
         "imageUrl": "4400",
         "images": [
-          "ABCDEF##4400",
-          "ABCDEF##4401",
-          "ABCDEF##4404",
-          "ABCDEF##4408"
+          "FFFFFF##4400",
+          "FFFFFF##4401",
+          "3683D1##4404",
+          "FCC23D##4408"
         ],
         "colors": [
           {
