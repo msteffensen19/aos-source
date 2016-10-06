@@ -791,12 +791,13 @@
         ]
       },
       {
-13      "productName": "Bose SoundLink Around-ear Wireless Headphones II",
+        "productName": "Bose SoundLink Around-ear Wireless Headphones II",
         "price": 279.95,
         "description": "Wireless freedom meets best-in-class sound.",
-        "imageUrl": "2100",
+        "imageUrl": "2300",
         "images": [
-          "ABCDEF##2100"
+          "ABCDEF##2300",
+          "ABCDEF##2301"
         ],
         "colors": [
           {
@@ -828,13 +829,12 @@
       },
 
       {
-14      "productName": "Logitech USB Headset H390",
+        "productName": "Logitech USB Headset H390",
         "price": 39.99,
         "description": "Features on this product will exceeded your expectations.",
-        "imageUrl": "2100",
+        "imageUrl": "2400",
         "images": [
-          "ABCDEF##2100",
-          "ABCDEF##2100"
+          "ABCDEF##2400"
         ],
         "colors": [
           {
