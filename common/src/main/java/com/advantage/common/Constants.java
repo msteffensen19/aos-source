@@ -20,10 +20,13 @@ public class Constants {
 
     public static final String FILE_PROPERTIES_INTERNAL = "classpath:properties/internal_config_for_env.properties";
     public static final String FILE_PROPERTIES_EXTERNAL = "classpath:properties/services.properties";
+    //public static final String FILE_PROPERTIES_EXTERNAL = "file://Z:/Tomcat 8.0 latest/webapps/ROOT/services.properties";
     public static final String FILE_PROPERTIES_GLOBAL = "classpath:properties/global.properties";
     public static final String FILE_PROPERTIES_DEMO_APP = "classpath:/DemoApp.properties";
     public static final String FILE_PROPERTIES_APP = "classpath:/app.properties";
     public static final String FILE_DEMO_APP_CONFIG_XML = "classpath:/DemoAppConfig.xml";
+
+    public final static String AOS_DEMO_APP_VERSION = "aos.demo.version";
 
     public final static String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
     public final static String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";

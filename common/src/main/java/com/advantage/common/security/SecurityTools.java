@@ -7,6 +7,7 @@ import com.advantage.common.exceptions.token.ContentTokenException;
 import com.advantage.common.exceptions.token.VerificationTokenException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import com.advantage.common.utils.SoapApiHelper;
+import com.google.common.base.Throwables;
 import org.springframework.http.HttpStatus;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -139,6 +140,7 @@ public class SecurityTools {
             return true;
         }
         throw new VerificationTokenException("Wrong account type (" + actualUser.getAccountType() + ")");
+        //throw new VerificationTokenException("Wrong account type (" + actualUser.getAccountType() + ") " + Throwables.getStackTraceAsString(e));
     }
 
     private static boolean verifyAccountType(AccountType[] expectedAccountTypes, AppUserDto actualUser) {
@@ -161,9 +163,11 @@ public class SecurityTools {
                     && SoapApiHelper.encodePassword(loginPassword[0], loginPassword[1], actualUser.getUserId(), "Basic "+encodeBase64(basicToken))
                     .equals(actualUser.getLoginPassword()))) {
                 throw new VerificationTokenException("Wrong authorization token");
+                //throw new VerificationTokenException("Wrong authorization token" + Throwables.getStackTraceAsString(e));
             }
         } catch (SOAPException e) {
-            throw new VerificationTokenException("Wrong authorization token");
+            //throw new VerificationTokenException("Wrong authorization token");
+            throw new VerificationTokenException("Some authentication error. " + Throwables.getStackTraceAsString(e));
         }
         return actualUser;
     }
@@ -174,6 +178,7 @@ public class SecurityTools {
         long actualUserId = token.getUserId();
         if (actualUserId != expectedUserId) {
             throw new VerificationTokenException("You authenticated with user Id (" + actualUserId + "), but request is for user (" + expectedUserId + ")");
+            //throw new VerificationTokenException("You authenticated with user Id (" + actualUserId + "), but request is for user (" + expectedUserId + ") " + Throwables.getStackTraceAsString(e));
         }
         for (AccountType at : expectedAccountTypes) {
             if (at.equals(actualAccountType)) {

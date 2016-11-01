@@ -43,7 +43,7 @@ public class Url_resources {
         urlPrefixSoapShipEx = generateUrlSoapPrefix("ShipEx");
 
 
-        if (logger.isInfoEnabled()) {
+        if (logger.isDebugEnabled()) {
             StringBuilder sb = new StringBuilder("Url_resources: ").append(System.lineSeparator());
             sb.append("   Catalog=\'" + getUrlCatalog() + "\'").append(System.lineSeparator());
             sb.append("   MasterCredit=\'" + getUrlMasterCredit() + "\'").append(System.lineSeparator());
@@ -62,7 +62,12 @@ public class Url_resources {
         try {
             String schema = Constants.URI_SCHEMA;
             String host = environment.getProperty(serviceName.toLowerCase() + ".service.url.host");
-            int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".service.url.port"));
+
+            String isAOSDomain = environment.getProperty("AOS.Domain.url.host");
+            int port = isAOSDomain != null && isAOSDomain.equalsIgnoreCase("Yes")
+                    ? 80
+                    : Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".service.url.port"));
+
             String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".service.url.suffix") + "/";
 
             url = new URL(schema, host, port, suffix);

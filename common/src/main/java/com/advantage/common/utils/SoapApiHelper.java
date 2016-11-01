@@ -1,9 +1,13 @@
 package com.advantage.common.utils;
 
+import com.advantage.common.Url_resources;
 import com.advantage.common.dto.AppUserDto;
+import org.apache.log4j.Logger;
 import org.w3c.dom.NodeList;
 
 import javax.xml.soap.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -13,10 +17,14 @@ import java.util.NoSuchElementException;
  */
 
 public class SoapApiHelper {
+
+    private static final Logger logger = Logger.getLogger(SoapApiHelper.class);
+
     private final static String REQUEST_NAME_SPACE = "com";
     private final static String RESPONSE_NAME_SPACE = "ns2";
     private final static String DESTINATION = "com.advantage.online.store.accountservice";
-    public final static String URL = "http://localhost:8080/accountservice/AccountLoginRequest";
+    //// TODO-Benny: Remove the line of code "public final static String URL..."
+    //public final static String URL = "http://localhost:8080/accountservice/AccountLoginRequest";
     private static SOAPConnection soapConnection;
 
     /**
@@ -52,9 +60,25 @@ public class SoapApiHelper {
      * @throws SOAPException
      */
     private static SOAPMessage sendSoapMessage(SOAPMessage request) throws SOAPException {
+        URL accountServiceUrl = null;
+        URL accountServicePrefixUrl = null;
+        try {
+            accountServiceUrl = Url_resources.getUrlSoapAccount();
+            logger.debug("accountServiceUrl=\"" + accountServiceUrl.toString() + "\"");
+            //accountServiceUrl="http://localhost:8080/accountservice/accountservice.wsdl"
+            System.out.println("accountServiceUrl=\"" + accountServiceUrl.toString() + "\"");
+
+            String urlString = accountServiceUrl.toString().replace("/accountservice.wsdl", "/AccountLoginRequest");
+            accountServicePrefixUrl = new URL(urlString);
+            logger.debug("accountServicePrefixUrl=\"" + accountServicePrefixUrl.toString() + "\"");
+            System.out.println("accountServicePrefixUrl=\"" + accountServicePrefixUrl + "\"");
+        } catch (MalformedURLException e) {
+            logger.error(accountServicePrefixUrl, e);
+        }
+
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         soapConnection = soapConnectionFactory.createConnection();
-        return soapConnection.call(request, URL);
+        return soapConnection.call(request, accountServicePrefixUrl);
     }
 
     /**

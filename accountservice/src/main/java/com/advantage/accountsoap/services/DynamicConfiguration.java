@@ -1,8 +1,10 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
+import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.root.util.JsonHelper;
+import com.google.common.base.Throwables;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -161,7 +163,8 @@ public class DynamicConfiguration {
             conn.setRequestMethod(HttpMethod.GET.name());
             int responseCode = conn.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
-                String message = "Failed connect to catalog service: HTTP error code : " + responseCode;
+                String message = "Failed connect to catalog service: HTTP error code : " + responseCode + Constants.DOUBLE_SPACES +
+                        "class com.advantage.accountsoap.services.DynamicConfiguration method getCatalogConfigParameter(String requestPart) line 164: urlConfig = " + urlConfig;
                 logger.fatal(message);
                 throw new RuntimeException(message);
             }
