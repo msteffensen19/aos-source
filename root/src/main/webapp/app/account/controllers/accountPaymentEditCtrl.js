@@ -41,11 +41,17 @@ define(['./module'], function (controllers) {
                 resolveParams.paymentPreferences.masterCredit : null;
 
             if (masterCredit != null) {
+                try {
+                    var m = masterCredit.expirationDate.substring(0, 2)
+                }
+                catch(err) {
+                    m = ( masterCredit.expirationDate += "").substring(0,2)
+                }
                 s.card = {
                     number: masterCredit.cardNumber.substring(4),
                     cvv: masterCredit.cvvNumber,
                     expirationDate: {
-                        month: masterCredit.expirationDate.substring(0, 2),
+                        month: m,
                         year: masterCredit.expirationDate.substring(2)
                     },
                     name: masterCredit.customername,

@@ -42,11 +42,18 @@ define(['./module'], function (controllers) {
 
             s.CardNumber = [];
             if (masterCredit != null) {
+                //noinspection JSAnnotator
+                try {
+                    var m = masterCredit.expirationDate.substring(0, 2)
+                }
+                catch(err) {
+                    m = ( masterCredit.expirationDate += "").substring(0,2)
+                }
                 s.card = {
                     number: masterCredit.cardNumber.substring(4),
                     cvv: masterCredit.cvvNumber,
                     expirationDate: {
-                        month: masterCredit.expirationDate.substring(0, 2),
+                        month: m,
                         year: masterCredit.expirationDate.substring(2)
                     },
                     cartExpired: masterCredit.cartExpired,
