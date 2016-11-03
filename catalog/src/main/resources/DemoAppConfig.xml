@@ -115,7 +115,7 @@
     <Tips_How_To_Use_Product_Video datatype="enum:[Tip]" description="ADM performance tools support HTML5 video streaming via: native browsers, plugins such as Adobe Flash, or standalone software.  To demonstrate this feature, browse to one of the following products and view the demo video:  - HP ROAR WIRELESS SPEAKER (Product ID: 22)  - BEATS STUDIO 2 OVER-EAR MATTE BLACK HEADPHONES (product ID: 15)  - HP ELITEPAD 1000 G2 TABLET (product ID: 16)" tools="LoadRunner" locationInAdvantage="Selected Products">Tip</Tips_How_To_Use_Product_Video>
 
     <!-- Feature 1643 - THIS IS FOR ALL CLIENTS -->
-    <Tips_Cart_Sum_To_Pay_Button datatype="enum:[Tip]" description="The button text always starts with Pay to allow for demonstrating regular expressions in object identification." tools="LeanFT;UFT" locationInAdvantage="cart sum to the pay button">Tip</Tips_Cart_Sum_To_Pay_Button>
+    <Tips_regular_expression datatype="enum:[Tip]" description="The button text always starts with Pay to allow for demonstrating regular expressions in object identification." tools="LeanFT;UFT" locationInAdvantage="Pay button in cart sum">Tip</Tips_regular_expression>
 
     <!-- Feature 1372 -->
     <Tips_correlation_example datatype="enum:[Tip]" description="To demonstrate correlation, make sure that you include a login step in your flow.  The correlation is implemented with the session ID." tools="LoadRunner" locationInAdvantage="Home Page">Tip</Tips_correlation_example>
