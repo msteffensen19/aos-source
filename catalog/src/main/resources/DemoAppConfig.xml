@@ -132,6 +132,6 @@
     <Tips_REST_API_Params_In_Request_Body datatype="enum:[Tip]" description="Send the REST API parameters in the request body. Example: http://www.advantageonlineshopping.com/MasterCredit/api/v1/payments/payment, body: { &quot;MCCVVNumber&quot;: 666, &quot;MCCardNumber&quot;: 6543210987654321, &quot;MCCustomerName&quot;: &quot;King David&quot;, &quot;MCCustomerPhone&quot;: &quot;+12025551969&quot;, &quot;MCExpirationDate&quot;: &quot;032017&quot;, &quot;MCRecevingAmount.Value&quot;: 2011.03, &quot;MCRecevingCard.AccountNumber&quot;: 112987298763, &quot;MCRecevingCard.Currency&quot;: &quot;USD&quot;, &quot;MCTransactionDate&quot;: &quot;02092016&quot;, &quot;MCTransactionType&quot;: &quot;PAYMENT&quot; }." tools="UFT" locationInAdvantage="catalog,MasterCredit,order,SafePay services">Tip</Tips_REST_API_Params_In_Request_Body>
 
     <!-- Feature 1207 -->
-    <Tips_DFE datatype="enum:[Tip]" description="Show the DFE in the snapshot (display only) by sending the login request and response encoded in Base-64." tools="LoadRunner" locationInAdvantage="Web Application Login">Tip</Tips_DFE>
+    <Tips_DFE datatype="enum:[Tip]" description="Show DFE in the snapshot (DFE type = display only)." tools="LoadRunner" locationInAdvantage="Web Application Login">Tip</Tips_DFE>
 
 </Parameters>
