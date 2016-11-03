@@ -124,38 +124,14 @@
     <Tips_async_example datatype="enum:[Tip]" description="ADM performance tools support asynchronous communication.  To demonstrate this feature, browse to any of the products in the HEADPHONES category, and record the comments (web only)." tools="LoadRunner" locationInAdvantage="">Tip</Tips_async_example>
 
     <!-- Feature 1273 -->
-    <Tips_Swagger_Interface_For_REST_APIs
-            datatype="enum:[Tip]"
-            description="To use Swagger interface for REST APIs change the URL to http://&lt;your-server&gt;:&lt;port&gt;/&lt;service&gt;/api/docs for example: http://www.advantageonlineshopping.com:80/catalog/api/docs.  &lt;service&gt; can be on of the following (case sensitive): catalog, order, MasterCredit or SafePay."
-            tools=""
-            locationInAdvantage="catalog,MasterCredit,order,SafePay services">
-        Tip
-    </Tips_Swagger_Interface_For_REST_APIs>
+    <Tips_Swagger_Interface_For_REST_APIs datatype="enum:[Tip]" description="To use Swagger interface for REST APIs change the URL to http://&lt;your-server&gt;:&lt;port&gt;/&lt;service&gt;/api/docs.  &lt;service&gt; can be on of the following (case sensitive): catalog, order, MasterCredit or SafePay.  For example: http://www.advantageonlineshopping.com:80/catalog/api/docs." tools="" locationInAdvantage="catalog,MasterCredit,order,SafePay services">Tip</Tips_Swagger_Interface_For_REST_APIs>
 
     <!-- Feature 1249 -->
-    <Tips_REST_API_Params_In_Request_URL
-            datatype="enum:[Tip]"
-            description="Sending REST API with parameters in request URL. Example: http://www.advantageonlineshopping.com/catalog/api/v1/products/1."
-            tools="UFT"
-            locationInAdvantage="catalog,MasterCredit,order,SafePay services">
-        Tip
-    </Tips_REST_API_Params_In_Request_URL>
+    <Tips_REST_API_Params_In_Request_URL datatype="enum:[Tip]" description="Send the REST API request and parameters in request URL. Example: http://www.advantageonlineshopping.com/catalog/api/v1/products/1." tools="UFT" locationInAdvantage="catalog,MasterCredit,order,SafePay services">Tip</Tips_REST_API_Params_In_Request_URL>
 
-    <Tips_REST_API_Params_In_Request_Body
-            datatype="enum:[Tip]"
-            description="Sending REST API with parameters in request body. Example: http://www.advantageonlineshopping.com/MasterCredit/api/v1/payments/payment, body: { &quot;MCCVVNumber&quot;: 666, &quot;MCCardNumber&quot;: 6543210987654321, &quot;MCCustomerName&quot;: &quot;King David&quot;, &quot;MCCustomerPhone&quot;: &quot;+12025551969&quot;, &quot;MCExpirationDate&quot;: &quot;032017&quot;, &quot;MCRecevingAmount.Value&quot;: 2011.03, &quot;MCRecevingCard.AccountNumber&quot;: 112987298763, &quot;MCRecevingCard.Currency&quot;: &quot;USD&quot;, &quot;MCTransactionDate&quot;: &quot;02092016&quot;, &quot;MCTransactionType&quot;: &quot;PAYMENT&quot; }."
-            tools="UFT"
-            locationInAdvantage="catalog,MasterCredit,order,SafePay services">
-        Tip
-    </Tips_REST_API_Params_In_Request_Body>
+    <Tips_REST_API_Params_In_Request_Body datatype="enum:[Tip]" description="Send the REST API parameters in the request body. Example: http://www.advantageonlineshopping.com/MasterCredit/api/v1/payments/payment, body: { &quot;MCCVVNumber&quot;: 666, &quot;MCCardNumber&quot;: 6543210987654321, &quot;MCCustomerName&quot;: &quot;King David&quot;, &quot;MCCustomerPhone&quot;: &quot;+12025551969&quot;, &quot;MCExpirationDate&quot;: &quot;032017&quot;, &quot;MCRecevingAmount.Value&quot;: 2011.03, &quot;MCRecevingCard.AccountNumber&quot;: 112987298763, &quot;MCRecevingCard.Currency&quot;: &quot;USD&quot;, &quot;MCTransactionDate&quot;: &quot;02092016&quot;, &quot;MCTransactionType&quot;: &quot;PAYMENT&quot; }." tools="UFT" locationInAdvantage="catalog,MasterCredit,order,SafePay services">Tip</Tips_REST_API_Params_In_Request_Body>
 
     <!-- Feature 1207 -->
-    <Tips_DFE
-            datatype="enum:[Tip]"
-            description="Sending login request and response in Base-64 encoded, instead of in plain text, to show DFE in snapshot (display only). "
-            tools="LoadRunner"
-            locationInAdvantage="Home Page">
-        Tip
-    </Tips_DFE>
+    <Tips_DFE datatype="enum:[Tip]" description="Show the DFE in the snapshot (display only) by sending the login request and response encoded in Base-64." tools="LoadRunner" locationInAdvantage="Web Application Login">Tip</Tips_DFE>
 
 </Parameters>
