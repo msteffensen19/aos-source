@@ -67,7 +67,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAllAccountsRequest")
     @ResponsePayload
     public GetAllAccountsResponse getAllAccounts(@RequestPayload GetAllAccountsRequest request) throws TokenException {
-        authorizeAsAdmin(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAllAccounts(GetAllAccountsRequest) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsAdmin(request);
         if (logger.isDebugEnabled()) {
             logger.debug(request == null ? "Request is null" : request.toString());
         }
@@ -81,6 +83,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdRequest")
     @ResponsePayload
     public GetAccountByIdResponse getAccount(@RequestPayload GetAccountByIdRequest accountRequest) throws TokenException {
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAccount(GetAccountByIdRequest) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
         //authorizeAsUser(accountRequest);
         Account account = accountService.getById(accountRequest.getAccountId());
         if (account == null) {
@@ -112,6 +116,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByLoginRequest")
     @ResponsePayload
     public GetAccountByLoginResponse getAccount(@RequestPayload GetAccountByLoginRequest accountRequest) throws TokenException {
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAccount(GetAccountByLoginRequest) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
         //authorizeAsUser(accountRequest);
         Account account = accountService.getAppUserByLogin(accountRequest.getUserName());
         if (account == null) {
@@ -143,7 +149,13 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountByIdNewRequest")
     @ResponsePayload
     public GetAccountByIdNewResponse getAccount(@RequestPayload GetAccountByIdNewRequest accountByIdRequest) throws TokenException {
-        authorizeAsUser(accountByIdRequest);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAccount(GetAccountByIdNewRequest) calling method authorizeAsUser(..)");
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAccount(GetAccountByIdNewRequest) GetAccountByIdNewRequest = { " +
+                "\"accountId\": " + accountByIdRequest.getAccountId() + ", " +
+                "\"base64Token\": \"" + ( accountByIdRequest.getBase64Token() != null ? accountByIdRequest.getBase64Token() : "null" ) + "\", " +
+                " }");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(accountByIdRequest);
         Account account = accountService.getById(accountByIdRequest.getAccountId());
         if (account == null) return null;
         AccountDtoNew dto = new AccountDtoNew(account.getId(),
@@ -219,7 +231,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountLogoutRequest")
     @ResponsePayload
     public AccountLogoutResponse doLogout(@RequestPayload AccountLogoutRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".doLogout(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         AccountStatusResponse response = accountService.doLogout(request.getStrAccountId(),
                 request.getBase64Token());
 
@@ -298,8 +312,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountDeleteRequest")
     @ResponsePayload
     public AccountDeleteResponse accountDelete(@RequestPayload AccountDeleteRequest request) throws TokenException {
-        //TODO Change to  authorizeAsAdmin(request) after the clients will implement filling filed base64Token in SOAP
-        temp_authorizeAsAdmin(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".accountDelete(..) is calling method authorizeAsUser(..)");
+        //TODO-Benny Change to  authorizeAsAdmin(request) after the clients will implement filling filed base64Token in SOAP
+        //temp_authorizeAsAdmin(request);
         AccountStatusResponse response = accountService.accountDelete(request.getAccountId());
         return new AccountDeleteResponse(response);
     }
@@ -307,7 +322,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "EncodePasswordRequest")
     @ResponsePayload
     public EncodePasswordResponse encodePassword(@RequestPayload EncodePasswordRequest request) throws TokenException{
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".encodePassword(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         AccountPassword accountPassword = new AccountPassword(request.getUserName(), request.getPassword());
         return new EncodePasswordResponse(accountPassword.getEncryptedPassword());
     }
@@ -325,7 +342,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "CountryCreateRequest")
     @ResponsePayload
     public CountryCreateResponse createCountry(@RequestPayload CountryCreateRequest request) throws TokenException {
-        authorizeAsAdmin(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".createCountry(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsAdmin(request);
         CountryStatusResponse response = countryService.create(request.getName(),
                 request.getIsoName(),
                 request.getPhonePrefix());
@@ -358,7 +377,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAddressesByAccountIdRequest")
     @ResponsePayload
     public GetAddressesByAccountIdResponse getAccountShippingAddress(@RequestPayload GetAddressesByAccountIdRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAccountShippingAddress(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         if (logger.isTraceEnabled()) {
             logger.trace(request == null ? "Request is null" : request.toString());
         }
@@ -372,7 +393,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddAddressesRequest")
     @ResponsePayload
     public AddAddressesResponse addAddress(@RequestPayload AddAddressesRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".addAddress(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         AddressStatusResponse response = addressService.add(request.getAccountId(), request.getAddresses());
         return new AddAddressesResponse(response);
     }
@@ -380,7 +403,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddressUpdateRequest")
     @ResponsePayload
     public AddressUpdateResponse updateAddress(@RequestPayload AddressUpdateRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".updateAddress(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         AddressStatusResponse response = addressService.update(request.getAddress());
 
         return new AddressUpdateResponse(response);
@@ -392,7 +417,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddMasterCreditMethodRequest")
     @ResponsePayload
     public AddMasterCreditMethodResponse addMasterCreditMethod(@RequestPayload AddMasterCreditMethodRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".addMasterCreditMethod(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.addMasterCreditMethod(request.getCardNumber(),
                 request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getAccountId());
 
@@ -402,7 +429,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateMasterCreditMethodRequest")
     @ResponsePayload
     public UpdateMasterCreditMethodResponse updateMasterCreditMethod(@RequestPayload UpdateMasterCreditMethodRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".updateMasterCreditMethod(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateMasterCreditMethod(request.getUserId(),
                 request.getCardNumber(), request.getExpirationDate(), request.getCvvNumber(), request.getCustomerName(), request.getReferenceId());
 
@@ -414,7 +443,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AddSafePayMethodRequest")
     @ResponsePayload
     public AddSafePayMethodResponse addSafePayMethod(@RequestPayload AddSafePayMethodRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".addSafePayMethod(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.addSafePayMethod(request.getAccountId(),
                 request.getSafePayUsername(),
                 request.getSafePayPassword());
@@ -425,6 +456,8 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "UpdateSafePayMethodRequest")
     @ResponsePayload
     public UpdateSafePayMethodResponse updateSafePayMethod(@RequestPayload UpdateSafePayMethodRequest request) throws TokenException {
+        logger.debug(AccountserviceEndpoint.class.getName() + ".updateSafePayMethod(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
         //authorizeAsUser(request);
         PaymentPreferencesStatusResponse response = paymentPreferencesService.updateSafePayMethod(request.getUserId(),
                 request.getSafePayUsername(),
@@ -438,7 +471,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "PaymentMethodUpdateRequest")
     @ResponsePayload
     public PaymentMethodUpdateResponse updateDefaultPaymentMethod(@RequestPayload PaymentMethodUpdateRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".updateDefaultPaymentMethod(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         AccountStatusResponse response = accountService.updateDefaultPaymentMethod(request.getAccountId(), request.getPaymentMethod());
 
         return new PaymentMethodUpdateResponse(response);
@@ -447,7 +482,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetAccountPaymentPreferencesRequest")
     @ResponsePayload
     public GetAccountPaymentPreferencesResponse getAccountPaymentPreferences(@RequestPayload GetAccountPaymentPreferencesRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".getAccountPaymentPreferences(..) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         GetAccountPaymentPreferencesResponse response = new GetAccountPaymentPreferencesResponse();
         List<PaymentPreferencesDto> prefs = accountService.getPaymentPreferences(request.getAccountId());
         response.setPreferences(prefs);
@@ -457,7 +494,9 @@ public class AccountserviceEndpoint {
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "DeletePaymentPreferenceRequest")
     @ResponsePayload
     public DeletePaymentPreferenceResponse deletePaymentPreference(@RequestPayload DeletePaymentPreferenceRequest request) throws TokenException {
-        authorizeAsUser(request);
+        logger.debug(AccountserviceEndpoint.class.getName() + ".deletePaymentPreference(DeletePaymentPreferenceRequest) is calling method authorizeAsUser(..)");
+        //  TODO-Benny: Verify that .NET and mobile version support this authorization
+        //authorizeAsUser(request);
         AccountStatusResponse response = accountService.removePaymentPreferences(request.getAccountId(), request.getId());
 
         return new DeletePaymentPreferenceResponse(response);
@@ -485,8 +524,8 @@ public class AccountserviceEndpoint {
         }
         String requestToken = request.getBase64Token();
         if (requestToken == null || requestToken.isEmpty()) {
-            logger.error("Token is empty or null");
-            throw new IllegalArgumentException("Token is empty or null");
+            logger.error("temp_authorizeAsAdmin request.getBase64Token() returned Token is empty or null");
+            throw new IllegalArgumentException("temp_authorizeAsAdmin: request.getBase64Token() returned Token is empty or null");
         }
         logger.debug("Token: " + requestToken);
         Token token = TokenJWT.parseToken(requestToken);
@@ -506,8 +545,8 @@ public class AccountserviceEndpoint {
         }
         String requestToken = request.getBase64Token();
         if (requestToken == null || requestToken.isEmpty()) {
-            logger.error("Token is empty or null");
-            throw new IllegalArgumentException("Token is empty or null");
+            logger.error("authorizeAsUser: request.getBase64Token() returned Token is empty or null");
+            throw new IllegalArgumentException("authorizeAsUser: request.getBase64Token() returned Token is empty or null");
         }
         boolean isBasic = SecurityTools.isBasic(requestToken);
         requestToken = requestToken.substring(requestToken.indexOf(" ")+1);
