@@ -168,7 +168,7 @@ public class DemoAppConfigService {
      */
     private NodeList getAllParametersNodeList(Document doc) {
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
-        //System.out.println("Document URL\"" + doc.getDocumentURI() + "\"");
+        //System.out.println("Document URL=\"" + doc.getDocumentURI() + "\"");
 
         Node rootElement = doc.getElementsByTagName(ROOT_ELEMENT_NAME).item(0);
 
@@ -189,6 +189,7 @@ public class DemoAppConfigService {
         if (doc == null) {
             return null;
         }
+        logger.debug(".getAllDemoAppConfigParameters() - Document URL=\"" + doc.getDocumentURI() + "\"");
 
         NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
@@ -245,7 +246,7 @@ public class DemoAppConfigService {
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        logger.debug("Document URL\"" + doc.getDocumentURI() + "\"");
+        logger.debug(".getDemoAppConfigParametersByTool(" + toolsNames + ") - Document URL=\"" + doc.getDocumentURI() + "\"");
 
         NodeList nodesList = this.getAllParametersNodeList(doc);
         if (nodesList == null) {
@@ -314,7 +315,7 @@ public class DemoAppConfigService {
 
         //File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        logger.warn("Document URL\"" + doc.getDocumentURI() + "\"");
+        logger.debug(".getDemoAppConfigParametersByName(" + parameterName + ") - Document URL=\"" + doc.getDocumentURI() + "\"");
 
         Node node = findParameterByName(doc, parameterName);
         if (node != null) {
@@ -357,8 +358,8 @@ public class DemoAppConfigService {
         logger.trace("updateParameterValue(\"" + parameterName + "\", \"" + parameterNewValue + "\") - Begin");
 
         Document doc = XmlHelper.getXmlDocument(DEMO_APP_CONFIG_XML_FILE_NAME);
-        logger.warn("Document URL\"" + doc.getDocumentURI() + "\"");
-        logger.trace("newValue:" + parameterNewValue);
+        logger.debug(" - Document URL=\"" + doc.getDocumentURI() + "\"");
+        logger.debug(" - newValue:" + parameterNewValue);
 
         Node nodeToUpdate = findParameterByName(doc, parameterName);
         if (nodeToUpdate != null) {

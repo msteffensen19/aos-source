@@ -157,8 +157,11 @@ public class DynamicConfiguration {
         String value = null;
         URL urlConfig;
         try {
+            logger.debug("Url_resources.getUrlCatalog()=\"" + Url_resources.getUrlCatalog().toString() + "\"");
+
             urlConfig = new URL(Url_resources.getUrlCatalog(), "DemoAppConfig/parameters/" + requestPart);
             logger.debug("urlConfig = " + urlConfig);
+
             HttpURLConnection conn = (HttpURLConnection) urlConfig.openConnection();
             conn.setRequestMethod(HttpMethod.GET.name());
             int responseCode = conn.getResponseCode();
