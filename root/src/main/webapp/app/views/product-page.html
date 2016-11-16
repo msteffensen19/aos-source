@@ -96,7 +96,12 @@
                                 data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
                                 translate="ADD_TO_CART"
                                 data-ng-click="addToCart(product.productStatus == 'OutOfStock')">
-                            {{ pageState == 'edit' ? 'UPDATE_CART' : 'ADD_TO_CART' | translate}}
+                            <div class="fixedBtn" data-ng-if="pageState != 'edit'">
+                                <span translate="ADD_TO_CART"></span>
+                            </div>
+                            <div class="fixedBtn" data-ng-if="pageState == 'edit'">
+                                <span translate="UPDATE_CART"></span>
+                            </div>
                         </button>
                     </div>
                     <label data-ng-class="message._class"> {{message.text}}</label>
