@@ -177,4 +177,39 @@ public abstract class StringHelper {
     public static boolean isNullOrEmpty(final String string) {
         return ((string == null) || (string.isEmpty()));
     }
+    public static boolean isInt(final String string) {
+        try {
+            int intValue = Integer.parseInt(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isLong(final String string) {
+        try {
+            long longValue = Long.parseLong(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isBoolean(final String string) {
+        try {
+            boolean booleanValue = Boolean.parseBoolean(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isDouble(final String string) {
+        try {
+            double doubleValue = Double.parseDouble(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

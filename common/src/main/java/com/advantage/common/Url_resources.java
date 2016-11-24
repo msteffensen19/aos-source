@@ -103,24 +103,18 @@ public class Url_resources {
     public static URL getUrlSoapAccount() { return urlPrefixSoapAccount; }
 
     public static URL getUrlCatalog() {
-        logger.debug(Url_resources.class.getName() + ".urlPrefixCatalog=\"" + urlPrefixCatalog.toString());
         return urlPrefixCatalog;
     }
 
     public static URL getUrlMasterCredit() {
-        logger.debug(Url_resources.class.getName() + ".urlPrefixMasterCredit=\"" + urlPrefixMasterCredit.toString());
         return urlPrefixMasterCredit;
     }
 
     public static URL getUrlOrder() {
-        logger.debug(Url_resources.class.getName() + ".urlPrefixOrder=\"" + urlPrefixOrder.toString());
         return urlPrefixOrder;
     }
 
-    public static URL getUrlSafePay() {
-        logger.debug(Url_resources.class.getName() + ".urlPrefixSafePay=\"" + urlPrefixSafePay.toString());
-        return urlPrefixSafePay;
-    }
+    public static URL getUrlSafePay() { return urlPrefixSafePay; }
 
     public static URL getUrlSoapShipEx() { return urlPrefixSoapShipEx; }
 
