@@ -1,12 +1,9 @@
 package ShippingExpress.model;
 
-import com.advantage.root.util.RestApiHelper;
-import com.advantage.root.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
-//import com.advantage.root.util.RestApiHelper;
 
 /**
  * @author Binyamin Regev Created on 26/03/2016.
@@ -48,12 +45,7 @@ public class DefaultShippingExpressRepository implements ShippingExpressReposito
      */
     @Override
     public int getFreeShippingOption() {
-        //return Integer.parseInt(env.getProperty(SHIPEX_FREE_SHIPPING_OPTION));
-        String stringValue = RestApiHelper.getDemoAppConfigParameterValue(SHIPEX_QUANTITY_ENTITLING_FREE_SHIPPING);
-        if ((stringValue != null) && (!stringValue.isEmpty()) && StringHelper.isInt(stringValue)) {
-            return Integer.parseInt(stringValue) >= 0 ? Integer.parseInt(stringValue) : 0;
-        }
-        return 0;
+        return Integer.parseInt(env.getProperty(SHIPEX_FREE_SHIPPING_OPTION));
     }
 
     @Override
