@@ -48,8 +48,6 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Autowired
     CountryRepository countryRepository;
 
-    @Autowired
-    private AddressRepository addressRepository;
 
     /*  Default application user configuration values - Begin   */
     //  3 failed login attempts will cause the user to be blocked for INTERVAL milliseconds.
@@ -703,10 +701,4 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         //return new AccountStatusResponse(true, "Restore factory settings ACCOUNT-SERVICE successful", 1);
         return new AccountStatusResponse(true, sb.toString(), 1);
     }
-
-    @Override
-    public AddressRepository getAddressRepository(){
-        return this.addressRepository;
-    }
-
 }

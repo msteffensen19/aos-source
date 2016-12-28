@@ -43,9 +43,9 @@ public class AccountService {
 //    @Qualifier("countryRepository")
 //    private CountryRepository countryRepository;
 
-//    @Autowired
-//    @Qualifier("addressRepository")
-    private AddressRepository addressRepository= accountRepository.getAddressRepository();
+    @Autowired
+    @Qualifier("addressRepository")
+    private AddressRepository addressRepository;
 
     @Autowired
     private PaymentPreferencesService paymentPreferencesService;
