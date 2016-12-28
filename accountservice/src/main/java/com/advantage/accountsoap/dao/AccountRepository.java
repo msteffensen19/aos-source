@@ -51,4 +51,6 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
     AccountStatusResponse removePaymentPreferences(long accountId, long preferenceId);
 
     AccountStatusResponse dbRestoreFactorySettings();
+
+    AddressRepository getAddressRepository();
 }

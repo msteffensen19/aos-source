@@ -703,4 +703,10 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         //return new AccountStatusResponse(true, "Restore factory settings ACCOUNT-SERVICE successful", 1);
         return new AccountStatusResponse(true, sb.toString(), 1);
     }
+
+    @Override
+    public AddressRepository getAddressRepository(){
+        return this.addressRepository;
+    }
+
 }
