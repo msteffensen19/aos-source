@@ -1,14 +1,14 @@
 package com.advantage.accountsoap.services;
 
+import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.PaymentPreferencesRepository;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.PaymentPreferences;
+import com.advantage.accountsoap.util.BeansManager;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PaymentPreferencesService {
-    @Autowired
-    @Qualifier("paymentPreferencesRepository")
+public class PaymentPreferencesService implements Injectable{
+//    @Autowired
+//    @Qualifier("paymentPreferencesRepository")
     public PaymentPreferencesRepository paymentPreferencesRepository;
 
     @Transactional
@@ -174,5 +174,10 @@ public class PaymentPreferencesService {
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.get(accountId);
 
         return (paymentPreferences != null);
+    }
+
+    @Override
+    public void inject(BeansManager beansManager) {
+        this.paymentPreferencesRepository = beansManager.getPaymentPreferencesRepository();
     }
 }
