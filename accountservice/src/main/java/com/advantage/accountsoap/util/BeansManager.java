@@ -2,6 +2,7 @@ package com.advantage.accountsoap.util;
 
 import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.PaymentPreferencesRepository;
+import com.advantage.accountsoap.services.PaymentPreferencesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -31,11 +32,23 @@ public class BeansManager {
     @Qualifier("paymentPreferencesRepository")
     public PaymentPreferencesRepository paymentPreferencesRepository;
 
+    @Autowired
+    @Qualifier("paymentPreferencesService")
+    public PaymentPreferencesService paymentPreferencesService;
+
     public PaymentPreferencesRepository getPaymentPreferencesRepository() {
         return paymentPreferencesRepository;
     }
 
     public void setPaymentPreferencesRepository(PaymentPreferencesRepository paymentPreferencesRepository) {
         this.paymentPreferencesRepository = paymentPreferencesRepository;
+    }
+
+    public PaymentPreferencesService getPaymentPreferencesService() {
+        return paymentPreferencesService;
+    }
+
+    public void setPaymentPreferencesService(PaymentPreferencesService paymentPreferencesService) {
+        this.paymentPreferencesService = paymentPreferencesService;
     }
 }
