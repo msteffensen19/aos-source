@@ -1,9 +1,7 @@
 package com.advantage.accountsoap.services;
 
-import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.AddressRepository;
-import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
@@ -37,7 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AccountService implements Injectable{
+public class AccountService implements Injectable {
     @Autowired
     @Qualifier("accountRepository")
     private AccountRepository accountRepository;
