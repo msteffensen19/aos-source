@@ -48,6 +48,9 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Autowired
     CountryRepository countryRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     /*  Default application user configuration values - Begin   */
     //  3 failed login attempts will cause the user to be blocked for INTERVAL milliseconds.
     public static final int ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT = 3;

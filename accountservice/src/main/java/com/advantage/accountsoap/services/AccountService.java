@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.services;
 
+import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.AddressRepository;
 import com.advantage.accountsoap.dao.CountryRepository;
@@ -47,7 +48,6 @@ public class AccountService implements Injectable{
 
     private AddressRepository addressRepository;
 
-    @Autowired
     private PaymentPreferencesService paymentPreferencesService;
 
     private static final Logger logger = Logger.getLogger(AccountService.class);
