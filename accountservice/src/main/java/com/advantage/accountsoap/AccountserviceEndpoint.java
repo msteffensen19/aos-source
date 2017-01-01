@@ -12,6 +12,8 @@ import com.advantage.accountsoap.dto.payment.*;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.services.*;
 import com.advantage.accountsoap.util.AccountPassword;
+import com.advantage.accountsoap.util.BeansManager;
+import com.advantage.accountsoap.util.Injectable;
 import com.advantage.common.Constants;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.TokenException;
@@ -32,16 +34,14 @@ import java.util.Date;
 import java.util.List;
 
 @Endpoint
-public class AccountserviceEndpoint {
+public class AccountserviceEndpoint implements Injectable{
 
     //  region Accountservice Services
-    @Autowired
     private AccountService accountService;
 
     @Autowired
     private CountryService countryService;
 
-    @Autowired
     private AddressService addressService;
 
     @Autowired
@@ -603,4 +603,9 @@ public class AccountserviceEndpoint {
                 .encodeToString(source.getBytes());
     }
 
+    @Override
+    public void inject(BeansManager beansManager) {
+        this.accountService = beansManager.getAccountService();
+        this.addressService = beansManager.getAddressService();
+    }
 }

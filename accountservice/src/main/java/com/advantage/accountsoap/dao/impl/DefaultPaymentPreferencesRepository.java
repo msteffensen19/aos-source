@@ -6,9 +6,12 @@ import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.model.PaymentPreferencesPK;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
+import com.advantage.accountsoap.util.BeansManager;
+import com.advantage.accountsoap.util.Injectable;
 import com.advantage.common.enums.PaymentMethodEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +21,9 @@ import java.util.List;
 @Component
 @Qualifier("paymentPreferencesRepository")
 @Repository
-public class DefaultPaymentPreferencesRepository extends AbstractRepository implements PaymentPreferencesRepository {
-    @Autowired
+@Lazy
+public class DefaultPaymentPreferencesRepository extends AbstractRepository implements PaymentPreferencesRepository, Injectable{
+
     AccountService accountService;
 
     /*
@@ -179,5 +183,10 @@ public class DefaultPaymentPreferencesRepository extends AbstractRepository impl
         entityManager.persist(paymentPreferences);
 
         return paymentPreferences;
+    }
+
+    @Override
+    public void inject(BeansManager beansManager) {
+        this.accountService = beansManager.getAccountService();
     }
 }

@@ -10,6 +10,8 @@ import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.accountsoap.util.AccountPassword;
+import com.advantage.accountsoap.util.BeansManager;
+import com.advantage.accountsoap.util.Injectable;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.ContentTokenException;
 import com.advantage.common.exceptions.token.TokenException;
@@ -34,7 +36,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AccountService {
+public class AccountService implements Injectable{
     @Autowired
     @Qualifier("accountRepository")
     private AccountRepository accountRepository;
@@ -43,8 +45,6 @@ public class AccountService {
 //    @Qualifier("countryRepository")
 //    private CountryRepository countryRepository;
 
-    @Autowired
-    @Qualifier("addressRepository")
     private AddressRepository addressRepository;
 
     @Autowired
@@ -373,4 +373,8 @@ public class AccountService {
         return dtos;
     }
 
+    @Override
+    public void inject(BeansManager beansManager) {
+        this.addressRepository = beansManager.getAddressRepository();
+    }
 }
