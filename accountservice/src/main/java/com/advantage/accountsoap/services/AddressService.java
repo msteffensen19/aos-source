@@ -9,8 +9,6 @@ import com.advantage.accountsoap.dto.address.AddressStatusResponse;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.ShippingAddress;
-import com.advantage.accountsoap.util.BeansManager;
-import com.advantage.accountsoap.util.Injectable;
 import com.advantage.root.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,8 +20,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class AddressService implements Injectable{
-
+public class AddressService {
+    @Autowired
+    @Qualifier("addressRepository")
     private AddressRepository addressRepository;
 
     @Autowired
@@ -147,10 +146,5 @@ public class AddressService implements Injectable{
         }
 
         return dtos;
-    }
-
-    @Override
-    public void inject(BeansManager beansManager) {
-        this.addressRepository = beansManager.getAddressRepository();
     }
 }

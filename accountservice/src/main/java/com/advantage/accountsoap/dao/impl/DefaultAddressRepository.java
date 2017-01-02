@@ -7,8 +7,6 @@ import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
-import com.advantage.accountsoap.util.BeansManager;
-import com.advantage.accountsoap.util.Injectable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -23,7 +21,8 @@ import java.util.List;
 @Component
 @Qualifier("addressRepository")
 @Repository
-public class DefaultAddressRepository extends AbstractRepository implements AddressRepository, Injectable {
+public class DefaultAddressRepository extends AbstractRepository implements AddressRepository {
+    @Autowired
     AccountService accountService;
 
     @Override
@@ -152,10 +151,5 @@ order by sa.id
         entityManager.persist(address);
 
         return address;
-    }
-
-    @Override
-    public void inject(BeansManager beansManager) {
-        this.accountService = beansManager.getAccountService();
     }
 }

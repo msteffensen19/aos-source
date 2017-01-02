@@ -2,6 +2,7 @@ package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.AddressRepository;
+import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
@@ -9,8 +10,6 @@ import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.accountsoap.util.AccountPassword;
-import com.advantage.accountsoap.util.BeansManager;
-import com.advantage.accountsoap.util.Injectable;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.ContentTokenException;
 import com.advantage.common.exceptions.token.TokenException;
@@ -35,7 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AccountService implements Injectable {
+public class AccountService {
     @Autowired
     @Qualifier("accountRepository")
     private AccountRepository accountRepository;
@@ -44,8 +43,11 @@ public class AccountService implements Injectable {
 //    @Qualifier("countryRepository")
 //    private CountryRepository countryRepository;
 
+    @Autowired
+    @Qualifier("addressRepository")
     private AddressRepository addressRepository;
 
+    @Autowired
     private PaymentPreferencesService paymentPreferencesService;
 
     private static final Logger logger = Logger.getLogger(AccountService.class);
@@ -371,8 +373,4 @@ public class AccountService implements Injectable {
         return dtos;
     }
 
-    @Override
-    public void inject(BeansManager beansManager) {
-        this.addressRepository = beansManager.getAddressRepository();
-    }
 }

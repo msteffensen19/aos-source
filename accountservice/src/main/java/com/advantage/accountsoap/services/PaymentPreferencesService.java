@@ -4,8 +4,6 @@ import com.advantage.accountsoap.dao.PaymentPreferencesRepository;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.PaymentPreferences;
-import com.advantage.accountsoap.util.BeansManager;
-import com.advantage.accountsoap.util.Injectable;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.ValidationHelper;
@@ -18,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PaymentPreferencesService{
+public class PaymentPreferencesService {
     @Autowired
     @Qualifier("paymentPreferencesRepository")
     public PaymentPreferencesRepository paymentPreferencesRepository;
