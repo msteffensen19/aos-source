@@ -1,5 +1,7 @@
 package com.advantage.accountsoap.services;
 
+import com.advantage.accountsoap.config.BeansManager;
+import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.CountryRepository;
 import com.advantage.accountsoap.dto.country.CountryDto;
 import com.advantage.accountsoap.dto.country.CountryStatusResponse;
@@ -14,11 +16,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class CountryService {
+public class CountryService implements Injectable{
 
-    @Autowired
-    @Qualifier("countryRepository")
     public CountryRepository countryRepository;
+
+    @Override
+    public void inject(BeansManager beansManager){
+        this.countryRepository = beansManager.getCountryRepository();
+    }
 
     @Transactional
     public CountryStatusResponse create(final String name, final int phonePrefix) {

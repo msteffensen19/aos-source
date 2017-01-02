@@ -1,5 +1,7 @@
 package com.advantage.accountsoap.services;
 
+import com.advantage.accountsoap.config.BeansManager;
+import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.PaymentPreferencesRepository;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
@@ -16,10 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PaymentPreferencesService {
-    @Autowired
-    @Qualifier("paymentPreferencesRepository")
+public class PaymentPreferencesService implements Injectable{
+//    @Autowired
+//    @Qualifier("paymentPreferencesRepository")
     public PaymentPreferencesRepository paymentPreferencesRepository;
+
+    @Override
+    public void inject(BeansManager beansManager){
+        this.paymentPreferencesRepository =  beansManager.getPaymentPreferencesRepository();
+    }
 
     @Transactional
     public PaymentPreferencesStatusResponse addSafePayMethod(long accountId, String safePayUsername, String safePayPassword) {

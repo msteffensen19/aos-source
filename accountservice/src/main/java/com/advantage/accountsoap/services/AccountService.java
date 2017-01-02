@@ -1,5 +1,7 @@
 package com.advantage.accountsoap.services;
 
+import com.advantage.accountsoap.config.BeansManager;
+import com.advantage.accountsoap.config.Injectable;
 import com.advantage.accountsoap.dao.AccountRepository;
 import com.advantage.accountsoap.dao.AddressRepository;
 import com.advantage.accountsoap.dao.CountryRepository;
@@ -34,18 +36,22 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AccountService {
-    @Autowired
-    @Qualifier("accountRepository")
+public class AccountService implements Injectable{
+
     private AccountRepository accountRepository;
 
 //    @Autowired
 //    @Qualifier("countryRepository")
 //    private CountryRepository countryRepository;
 
-    @Autowired
-    @Qualifier("addressRepository")
+
     private AddressRepository addressRepository;
+
+    @Override
+    public void inject(BeansManager beansManager){
+        this.accountRepository =  beansManager.getAccountRepository();
+        this.addressRepository = beansManager.getAddressRepository();
+    }
 
     @Autowired
     private PaymentPreferencesService paymentPreferencesService;
