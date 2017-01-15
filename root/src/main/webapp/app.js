@@ -153,7 +153,7 @@ var t = function (a) {
     alert(a)
 }
 
-print = function (a) {
+var print = function (a) {
     console.log(" ");
     console.log("  ");
     console.log(a);
