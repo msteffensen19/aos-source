@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION get_all_countries_with_sleep(p_sleep_for INTEGER)
+CREATE OR REPLACE FUNCTION get_all_countries_with_sleep(p_sleep_for INTEGER)
    RETURNS text AS $$
 DECLARE 
    countries 		TEXT 	DEFAULT '{ "countries": [ ';

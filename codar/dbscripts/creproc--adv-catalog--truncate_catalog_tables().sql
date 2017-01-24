@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION truncate_catalog_tables()
+CREATE OR REPLACE FUNCTION truncate_catalog_tables()
    RETURNS TEXT AS $$
 BEGIN
 
