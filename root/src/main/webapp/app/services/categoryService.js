@@ -28,7 +28,7 @@ define(['./module'], function (services) {
                 var response = $q.defer();
                 $http({
                     method: "get",
-                    url: "http://www.advantageonlineshopping.com/catalog/api/v1/catalog/LastUpdate/timestamp"
+                    url: server.getKey() + "catalog/api/v1/catalog/LastUpdate/timestamp"
                 }).success(function () {
                     response.resolve(true);
                 }).error(function () {
