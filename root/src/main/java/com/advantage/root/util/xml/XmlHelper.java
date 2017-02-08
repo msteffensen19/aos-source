@@ -13,6 +13,7 @@ import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.IOHelper;
 import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -39,7 +40,7 @@ public abstract class XmlHelper {
     public static Document getXmlDocument(final String xmlFilePath) {
 
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(xmlFilePath, "file path");
-
+        FileInputStream fileInputStream = null;
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -47,8 +48,10 @@ public abstract class XmlHelper {
             ClassPathResource filePath = new ClassPathResource(xmlFilePath);
             File xmlFile = filePath.getFile();
 
+            fileInputStream = new FileInputStream(xmlFile);
+            InputSource in = new InputSource(fileInputStream);
             //Document document = docBuilder.parse(xmlFilePath);
-            Document document = docBuilder.parse(filePath.getURL().getFile());
+            Document document = docBuilder.parse(in);
             document.getDocumentElement().normalize();
 
             return document;
@@ -59,7 +62,14 @@ public abstract class XmlHelper {
         } catch (SAXException sae) {
             sae.printStackTrace();
         }
+        finally {
+            if(fileInputStream != null)
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
 
+                }
+        }
         return null;
     }
 
@@ -80,7 +90,7 @@ public abstract class XmlHelper {
             /*File xmlFile = filePath.getFile();*/
             /*xmlFile = new File(xmlFileName);*/
             /*StreamResult result = new StreamResult(xmlFile);  */
-            StreamResult result = new StreamResult(new File(filePath.getURL().getFile()));
+            StreamResult result = new StreamResult(filePath.getFile());
 
             transformer.transform(source, result);
 
