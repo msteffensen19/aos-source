@@ -6,6 +6,8 @@ import com.advantage.common.Constants;
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.common.enums.AccountType;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -76,8 +78,13 @@ public class Account {
 //    public static final String PARAM_USER_LOGIN_BLOCKING = "PARAM_USER_LOGIN_BLOCKING";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = FIELD_ID)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AccountIdGenerator")
+    @GenericGenerator(name = "XyzIdGenerator",
+            strategy = "com.advantage.accountsoap.util.BigIntSequenceGenerator",
+            parameters = {
+                    @Parameter(name="sequence",value = "account_id_sequence")
+            })
     private long id;
 
     @Column(name = "LAST_NAME")
