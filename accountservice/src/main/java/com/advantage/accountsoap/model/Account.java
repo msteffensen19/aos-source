@@ -80,7 +80,7 @@ public class Account {
     @Id
     @Column(name = FIELD_ID)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AccountIdGenerator")
-    @GenericGenerator(name = "XyzIdGenerator",
+    @GenericGenerator(name = "AccountIdGenerator",
             strategy = "com.advantage.accountsoap.util.BigIntSequenceGenerator",
             parameters = {
                     @Parameter(name="sequence",value = "account_id_sequence")
