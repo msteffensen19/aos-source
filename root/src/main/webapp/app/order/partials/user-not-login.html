@@ -60,9 +60,10 @@
             <label class="roboto-medium" translate="New_client" ></label>
             <p translate="Create_your_account_easily"></p>
         </div>
-        <a href="#/register" class="a-button roboto-medium"
-           data-ng-class="{ buttonDisable : invalidItems.length > 0 }" translate="REGISTRATION">
-        </a>
+        <sec-form>
+            <sec-sender style="margin: 18px 28px;" class="roboto-medium" a-value="{{'REGISTRATION' | translate}}"
+                        sec-send="registrationRedirect()"></sec-sender>
+        </sec-form>
     </div>
 </div>
 </div>

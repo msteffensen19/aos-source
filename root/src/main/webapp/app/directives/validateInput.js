@@ -175,7 +175,7 @@ define(['./module'], function (directives) {
             link: {
                 pre: function (s, e, attr, ctrls) {
                     e.addClass("sec-sender");
-                    var button = $("<a class='sec-sender-a invalid' data-ng-click='senderCtrl.send()'>" + attr.aValue + "</a>")
+                    var button = $("<a class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</a>")
                     $compile(button)(s);
                     e.append(button);
 

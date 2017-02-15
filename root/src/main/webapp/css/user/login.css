@@ -55,6 +55,7 @@
 .create-new-account{
     cursor: pointer;
     text-align: center;
+    display: block;
 }
 
 .login{

@@ -5,8 +5,8 @@
 
 define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('userNotLoginCtrl', ['$scope', '$state',
-        function (s, $state) {
+    controllers.controller('userNotLoginCtrl', ['$scope', '$state', '$location',
+        function (s, $state, $location) {
 
             s.checkCart();
 
@@ -20,6 +20,10 @@ define(['./module'], function (controllers) {
 
             s.orderPaymenLogin_signIn = function(){
                 s.signIn(s.orderPaymenLogin, false);
+            }
+
+            s.registrationRedirect = function(){
+                $location.path('/register');
             }
 
             s.$watch("userCookie.response", function(user){
