@@ -22,6 +22,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,13 +88,19 @@ public class OrderController {
 
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
 
+
         if (userCartResponseDto == null) {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
+            return new ResponseEntity<>(userCartResponseDto, getSessionHeader(request), HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
-            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
+            return new ResponseEntity<>(userCartResponseDto, getSessionHeader(request), HttpStatus.OK);
         }
     }
 
+    private HttpHeaders getSessionHeader(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", "JSESSIONID=" + request.getSession(false).getId());
+        return headers;
+    }
 
     /*  =========================================================================================================   */
     @RequestMapping(value = "/carts/{userId}/product/{productId}/color/{color}", method = RequestMethod.POST)

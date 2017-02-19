@@ -85,7 +85,10 @@ public class OrderLines {
     private double pricePerItem;        //  From Product table in CATALOG schema
 
     @Column(name = "quantity")
-    private int quantity;               //  From ShoppingCart table in ORDER schema
+    private int quantity;//  From ShoppingCart table in ORDER schema
+
+    @Column(name = "product_image_url")
+    private String productImageUrl;
 
     public OrderLines() { }
 
@@ -115,6 +118,17 @@ public class OrderLines {
         this.productColorName = productColorName;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
+    }
+
+    public OrderLines(long userId, long orderNumber, Long productId, String productName, int productColor, double pricePerItem, int quantity, String productImageUrl) {
+        this.userId = userId;
+        this.orderNumber = orderNumber;
+        this.productId = productId;
+        this.productName = productName;
+        this.productColor = productColor;
+        this.pricePerItem = pricePerItem;
+        this.quantity = quantity;
+        this.productImageUrl = productImageUrl;
     }
 
     public long getUserId() {
@@ -184,6 +198,10 @@ public class OrderLines {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public String getProductImageUrl() {return productImageUrl;}
+
+    public void setProductImageUrl(String productImageUrl) {this.productImageUrl = productImageUrl;}
 
     @Override
     public boolean equals(Object o) {

@@ -25,15 +25,19 @@ public class OrderPurchasedProductInformation {
     @JsonProperty("PurchasedProduct.Quantity")
     private int quantity;
 
+    @JsonProperty("PurchasedProduct.ProductImageUrl")
+    private String productImageUrl;
+
     public OrderPurchasedProductInformation() { }
 
-    public OrderPurchasedProductInformation(Long productId, String productName, String hexColor, String colorName, double pricePerItem, int quantity) {
+    public OrderPurchasedProductInformation(Long productId, String productName, String hexColor, String colorName, double pricePerItem, int quantity, String productImageUrl) {
         this.productId = productId;
         this.productName = productName;
         this.hexColor = hexColor;
         this.colorName = colorName;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
+        this.productImageUrl = productImageUrl;
     }
 
     public Long getProductId() { return productId; }
@@ -64,6 +68,10 @@ public class OrderPurchasedProductInformation {
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
+    public String getProductImageUrl() {return productImageUrl;}
+
+    public void setProductImageUrl(String productImageUrl) {this.productImageUrl = productImageUrl;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +81,7 @@ public class OrderPurchasedProductInformation {
 
         if (Double.compare(that.getPricePerItem(), getPricePerItem()) != 0) return false;
         if (getQuantity() != that.getQuantity()) return false;
+        if (getProductImageUrl() != that.getProductImageUrl()) return false;
         if (!getProductId().equals(that.getProductId())) return false;
         return getProductName().equals(that.getProductName());
 

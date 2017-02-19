@@ -351,7 +351,8 @@ public class OrderManagementService {
                         product.getColor().getCode(),
                         product.getColor().getName(),
                         product.getPrice(),
-                        cartProduct.getQuantity()));
+                        cartProduct.getQuantity(),
+                        product.getImageUrl()));
 
                 totalAmount += product.getPrice() * cartProduct.getQuantity();
 
@@ -362,7 +363,8 @@ public class OrderManagementService {
                         "000000",
                         "BLACK",
                         -999999.99,                     //  Price-per-item
-                        cartProduct.getQuantity()));
+                        cartProduct.getQuantity(),
+                        ""));
             }
         }
 
@@ -788,19 +790,19 @@ public class OrderManagementService {
                     //fullDate = "Japan (FULL): " + DateFormat.getDateInstance(DateFormat.FULL, Locale.JAPAN).format(date);
                 }
             }
-            ProductDto dto = shoppingCartService.getProductDtoDetails(line.getProductId());
-            String productImageUrl = "";
-            if (dto != null) {
-                if ((dto.getImageUrl() != null) && (!dto.getImageUrl().isEmpty())) {
-                    productImageUrl = dto.getImageUrl();
-                }
-            }
+//            ProductDto dto = shoppingCartService.getProductDtoDetails(line.getProductId());
+//            String productImageUrl = "";
+//            if (dto != null) {
+//                if ((dto.getImageUrl() != null) && (!dto.getImageUrl().isEmpty())) {
+//                    productImageUrl = dto.getImageUrl();
+//                }
+//            }
             historyOrderLinesDto.addOrderLine(
                     line.getUserId(),
                     line.getOrderNumber(),
                     orderTimestamp,
                     line.getProductId(),
-                    productImageUrl,
+                    line.getProductImageUrl(),
                     line.getProductName(),
                     line.getProductColor(),
                     line.getPricePerItem(),
