@@ -131,3 +131,4 @@ local.properties
 .recommenders/
 /accountservice/.gitignore
 /shipex/.gitignore
+rebel.xml

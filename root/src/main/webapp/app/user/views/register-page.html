@@ -26,10 +26,11 @@
                                           sec-require="mainCtrl.getRequire('User_name')"
                                           sec-min-length="mainCtrl.getMin(5)"
                                           sec-max-length="mainCtrl.getMax(15)"
-                                          sec-pattern="mainCtrl.getPattern('Username')">
+                                          sec-pattern="mainCtrl.getPattern('Username')"
+                                          sec-name="userName">
                                 </sec-view>
 
-                                <sec-view a-hint="{{'Email' | translate}}"
+                                <sec-view sec-name="userEmail" a-hint="{{'Email' | translate}}"
                                           sec-model="model.email"
                                           sec-require="mainCtrl.getRequire('Email')"
                                           sec-pattern="mainCtrl.getPattern('Email')">
@@ -38,7 +39,7 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view a-hint="{{'Password' | translate}}"
+                                <sec-view sec-name="userPassword" a-hint="{{'Password' | translate}}"
                                           a-type="password"
                                           sec-model="model.password"
                                           sec-require="mainCtrl.getRequire('Password')"
@@ -47,7 +48,7 @@
                                           sec-pattern="mainCtrl.getPattern('Password')">
                                 </sec-view>
 
-                                <sec-view a-hint="{{'Confirm_password' | translate}}"
+                                <sec-view sec-name="userPassword" a-hint="{{'Confirm_password' | translate}}"
                                           a-type="password"
                                           sec-model="model.confirm_password"
                                           sec-require="mainCtrl.getRequire('Confirm_password')"
@@ -63,13 +64,13 @@
 
                             <div class="spliter">
 
-                                <sec-view a-hint="{{'First_Name' | translate}}"
+                                <sec-view sec-name="userFirstName" a-hint="{{'First_Name' | translate}}"
                                           sec-model="model.firstName"
                                           sec-min-length="mainCtrl.getMin(2)"
                                           sec-max-length="mainCtrl.getMax(30)">
                                 </sec-view>
 
-                                <sec-view a-hint="{{'Last_Name' | translate}}"
+                                <sec-view sec-name="userLastName" a-hint="{{'Last_Name' | translate}}"
                                           sec-model="model.lastName"
                                           sec-min-length="mainCtrl.getMin(2)"
                                           sec-max-length="mainCtrl.getMax(30)">
@@ -78,7 +79,7 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view a-hint="{{'Phone_Number' | translate}}"
+                                <sec-view sec-name="userPhone" a-hint="{{'Phone_Number' | translate}}"
                                           sec-max-length="mainCtrl.getMax(20)"
                                           sec-model="model.phoneNumber">
                                 </sec-view>
@@ -92,7 +93,8 @@
 
                             <div class="spliter">
 
-                                <sec-view a-hint="Country"
+                                <sec-view sec-name="userCountry"
+                                          a-hint="Country"
                                           a-type="select"
                                           a-show="name"
                                           sec-model="model.country"
@@ -100,7 +102,8 @@
                                 </sec-view>
 
 
-                                <sec-view a-hint="{{'City' | translate}}"
+                                <sec-view sec-name="userCity"
+                                          a-hint="{{'City' | translate}}"
                                           sec-model="model.city"
                                           sec-max-length="mainCtrl.getMax(25)">
                                 </sec-view>
@@ -108,13 +111,14 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view a-hint="{{'Address' | translate}}"
+                                <sec-view sec-name="userAdress" a-hint="{{'Address' | translate}}"
                                           sec-model="model.address"
                                           sec-max-length="mainCtrl.getMax(50)">
                                 </sec-view>
 
 
-                                <sec-view a-hint="{{'State__Province__Region' | translate}}"
+                                <sec-view sec-name="userState"
+                                          a-hint="{{'State__Province__Region' | translate}}"
                                           sec-model="model.state"
                                           sec-max-length="mainCtrl.getMax(10)">
                                 </sec-view>
@@ -122,7 +126,8 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view a-hint="{{'Postal_Code' | translate}}"
+                                <sec-view sec-name="userPostalCode"
+                                          a-hint="{{'Postal_Code' | translate}}"
                                           sec-model="model.postalCode"
                                           sec-max-length="mainCtrl.getMax(10)">
                                 </sec-view>
@@ -131,11 +136,12 @@
                         </div>
 
                         <div class="option marginTop">
-                            <input ng-model="model.offers_promotion" type="checkbox" autocomplete="off"/>
+                            <input name="allowOffersPromotion" ng-model="model.offers_promotion" type="checkbox" autocomplete="off"/>
                             <span class="roboto-light" translate="offers_promotion"></span>
                         </div>
 
                         <sec-view
+                                sec-name="registrationAgreement"
                                 a-dont-change="true"
                                 sec-model="agree_Agreement"
                                 a-type="checkbox"
@@ -148,14 +154,14 @@
             <div class="center">
 
                 <sec-sender class="roboto-medium" a-value="{{'REGISTER' | translate}}"
-                            sec-send="register()"></sec-sender>
+                            sec-send="register()" ></sec-sender>
 
                 <label class="{{registerAnswer.class}} center block smollMargin" data-ng-show="!registerSuccess">
                     {{registerAnswer.message}}
                 </label>
 
                 <label class="ALREADY_HAVE_AN_ACCOUNT roboto-medium" data-ng-show="!registerSuccess">
-                    <a translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()"></a>
+                    <a href="javascript:void(0)" role="link" translate="ALREADY_HAVE_AN_ACCOUNT" ng-click="login()"></a>
                 </label>
 
             </div>

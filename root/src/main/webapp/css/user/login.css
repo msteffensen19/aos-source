@@ -51,7 +51,9 @@
     padding: 8px 0;
     text-align: center;
 }
-
+.create-new-account, .forgot-Passwowd{
+    color: black;
+}
 .create-new-account{
     cursor: pointer;
     text-align: center;

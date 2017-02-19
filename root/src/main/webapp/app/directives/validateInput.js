@@ -175,7 +175,7 @@ define(['./module'], function (directives) {
             link: {
                 pre: function (s, e, attr, ctrls) {
                     e.addClass("sec-sender");
-                    var button = $("<a class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</a>")
+                    var button = $("<button type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</button>")
                     $compile(button)(s);
                     e.append(button);
 
@@ -844,6 +844,7 @@ define(['./module'], function (directives) {
                 pre: function (s, e, a, ctrls) {
 
                     var ctrl = ctrls[0];
+                    var inputTypeName = "";
                     e.addClass("sec-view");
 
                     s.$watch('secModel', function (n, o) {
@@ -880,6 +881,9 @@ define(['./module'], function (directives) {
                     if (s.secSelectChange) {
                         ctrl.setSecSelectChange(s.secSelectChange)
                     }
+                    if(a.secName){
+                        inputTypeName = a.secName;
+                    }
 
 
                     s.$watch('secDisableValidation ', function (n, o) {
@@ -901,7 +905,7 @@ define(['./module'], function (directives) {
                             label.css("z-index", "-10");
                             label.addClass("animated");
                             var dot = (a.aShow ? "." + a.aShow : "");
-                            var format = "<select ng-model='secModel' ng-options='c as c" + dot
+                            var format = "<select name='" + inputTypeName + "' name='" + inputTypeName + "' role='listbox' ng-model='secModel' ng-options='c as c" + dot
                                 + " for c in secSelectOptions' ></select>";
 
                             //var dot = (a.aShow ? a.aShow : null);
@@ -924,7 +928,7 @@ define(['./module'], function (directives) {
                             });
                             break;
                         default:
-                            input = $("<input type='" + type + "' data-ng-model='secModel' />");
+                            input = $("<input name='" + inputTypeName + "' type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
                                 label.css({"display": "block"});

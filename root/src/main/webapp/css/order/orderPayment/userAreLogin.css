@@ -272,6 +272,19 @@
     cursor: pointer;
 }
 
+.styled-radioButtons{
+
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    float:left;
+    margin-left: 15px;
+    vertical-align: top;
+    margin-top: 22px;
+
+}
+
+
 .paymentMethods .imgRadioButton > img {
     display: block;
     padding: 15px;
