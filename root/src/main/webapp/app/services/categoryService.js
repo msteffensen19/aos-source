@@ -325,7 +325,7 @@ define(['./module'], function (services) {
                             });
 
                             if(services_properties['single_machine_deployment'] === 'true'){
-                                var hostKey = 'localhost';
+                                var hostKey = window.location.hostname;
 
                                 server.setKey("http://" + hostKey + ":" +
                                     services_properties['catalog_service_url_port'] + "/");
