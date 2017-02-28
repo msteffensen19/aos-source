@@ -27,6 +27,7 @@ public class Constants {
     public static final String FILE_DEMO_APP_CONFIG_XML = "classpath:/DemoAppConfig.xml";
 
     public final static String AOS_DEMO_APP_VERSION = "aos.demo.version";
+    public final static String SINGLE_MACHINE_DEPLOYMENT = "single.machine.deployment";
 
     public final static String ENV_USER_LOGIN_BLOCKING = "user.login.blocking";
     public final static String ENV_ADD_EMAIL_FIELD_TO_LOGIN = "email.address.in.login";
