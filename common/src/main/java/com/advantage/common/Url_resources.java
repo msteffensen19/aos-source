@@ -92,7 +92,15 @@ public class Url_resources {
 
         try {
             String schema = Constants.URI_SCHEMA;
-            String host = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.host");
+            String host = "";
+
+            if(environment.getProperty(Constants.SINGLE_MACHINE_DEPLOYMENT).equals("true")){
+                host = "localhost";
+            }
+            else{
+                host = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.host");
+            }
+
             int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.port"));
             String suffix = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.suffix");
             String wsdl = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.wsdl");
