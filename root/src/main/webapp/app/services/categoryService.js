@@ -324,20 +324,39 @@ define(['./module'], function (services) {
                                 services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
                             });
 
-                            server.setKey("http://" + services_properties['catalog_service_url_host'] + ":" +
-                                services_properties['catalog_service_url_port'] + "/");
+                            if(services_properties['single_machine_deployment'] === 'true'){
+                                var hostKey = 'localhost';
 
-                            server.setCatalogKey("http://" + services_properties['catalog_service_url_host'] + ":" +
-                                services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'] + "/");
+                                server.setKey("http://" + hostKey + ":" +
+                                    services_properties['catalog_service_url_port'] + "/");
 
-                            server.setOrderKey("http://" + services_properties['order_service_url_host'] + ":" +
-                                services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'] + "/");
+                                server.setCatalogKey("http://" + hostKey + ":" +
+                                    services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'] + "/");
 
-                            server.setWsdlPath("http://" +
-                                services_properties['account_soapservice_url_host'] + ":" +
-                                services_properties['account_soapservice_url_port'] + "/" +
-                                services_properties['account_soapservice_url_suffix'] + "/");
+                                server.setOrderKey("http://" + hostKey + ":" +
+                                    services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'] + "/");
 
+                                server.setWsdlPath("http://" +
+                                    hostKey + ":" +
+                                    services_properties['account_soapservice_url_port'] + "/" +
+                                    services_properties['account_soapservice_url_suffix'] + "/");
+
+                            }
+                            else{
+                                server.setKey("http://" + services_properties['catalog_service_url_host'] + ":" +
+                                    services_properties['catalog_service_url_port'] + "/");
+
+                                server.setCatalogKey("http://" + services_properties['catalog_service_url_host'] + ":" +
+                                    services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'] + "/");
+
+                                server.setOrderKey("http://" + services_properties['order_service_url_host'] + ":" +
+                                    services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'] + "/");
+
+                                server.setWsdlPath("http://" +
+                                    services_properties['account_soapservice_url_host'] + ":" +
+                                    services_properties['account_soapservice_url_port'] + "/" +
+                                    services_properties['account_soapservice_url_suffix'] + "/");
+                            }
                             response.resolve("OK");
 
                         }
