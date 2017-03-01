@@ -6,6 +6,7 @@ import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.DemoAppConfigParameter;
+import com.advantage.common.dto.ErrorResponseDto;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -57,6 +59,7 @@ public class OrderController {
     private static final String demoAppConfig = "DemoAppConfig/parameters/";
     private static final String ParameterName = "Repeat_ShipEx_call";
     private static final Logger logger = Logger.getLogger(OrderController.class);
+    private HttpSession m_session;
     /*  =========================================================================================================   */
 
     @ModelAttribute
@@ -88,18 +91,25 @@ public class OrderController {
 
         ShoppingCartResponseDto userCartResponseDto = shoppingCartService.getUserShoppingCart(Long.valueOf(userId));
 
+        if(!manageOrderSession(request))
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.UNAUTHORIZED);
 
         if (userCartResponseDto == null) {
-            return new ResponseEntity<>(userCartResponseDto, getSessionHeader(request), HttpStatus.NOT_FOUND);    //  404 = Resource not found
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.NOT_FOUND);    //  404 = Resource not found
         } else {
-            return new ResponseEntity<>(userCartResponseDto, getSessionHeader(request), HttpStatus.OK);
+            if(this.m_session != null){
+                userCartResponseDto.setSessionId(this.m_session.getId());
+            }
+            return new ResponseEntity<>(userCartResponseDto, HttpStatus.OK);
         }
     }
 
-    private HttpHeaders getSessionHeader(HttpServletRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Cookie", "JSESSIONID=" + request.getSession(false).getId());
-        return headers;
+    private boolean manageOrderSession(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            this.m_session = request.getSession();
+        }
+        return true;
     }
 
     /*  =========================================================================================================   */
@@ -649,7 +659,6 @@ public class OrderController {
         }
 
         HttpStatus httpStatus = HttpStatus.OK;
-
         HistoryOrderLinesDto historyOrderLinesDto = orderManagementService.getHistoryOrdersLines(userId);
 
         return new ResponseEntity<>(historyOrderLinesDto, httpStatus);

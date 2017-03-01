@@ -199,6 +199,7 @@ public class ShoppingCartResponseDto {
     private String message;
     private List<CartProduct> productsInCart = new ArrayList<>();
     private String exceptionText;
+    private String sessionId;
 
     /* public class ShoppingCartResponseDto - Constructors  */
     public ShoppingCartResponseDto() {  }
@@ -264,5 +265,13 @@ public class ShoppingCartResponseDto {
     public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock, boolean exists) {
         CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock, exists);
         return this.getProductsInCart().add(cartProduct);
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

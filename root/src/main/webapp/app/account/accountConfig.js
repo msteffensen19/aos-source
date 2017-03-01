@@ -88,6 +88,8 @@ define([], function () {
                             defer.resolve({
                                 orders: orders,
                             });
+                        }, function (error) {
+                            defer.reject(error);
                         });
                     return defer.promise;
                 }

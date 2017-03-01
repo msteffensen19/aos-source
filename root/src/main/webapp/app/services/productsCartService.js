@@ -189,6 +189,9 @@ define(['./module'], function (services) {
 
                     cart.productsInCart = tempCart;
                     updateUserCart(cart);
+                    if(_cart.sessionId){
+                        $rootScope.orderSessionId = _cart.sessionId
+                    }
                     $cookie.remove("userCart");
                     defer.resolve(cart);
                 })
@@ -326,7 +329,7 @@ define(['./module'], function (services) {
                             headers: {
                                 "Authorization": "Basic " + user.response.t_authorization,
                             },
-                            data: {},
+                            data: {sessionId: $rootScope.orderSessionId},
                             async: false,
                             url: server.order.addProductToUser(user.response.userId,
                                 product.productId, product.colors[0].code, quantity),

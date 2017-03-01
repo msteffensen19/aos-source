@@ -84,7 +84,7 @@ define([
 
 
             //$http.defaults.headers.get = { 'Content-Type': "application/json", }
-
+            // $rootScope.expiredSession = false;
             var pcBlocked = ipCookie("pcBlocked");
             if (pcBlocked) {
                 if (new Date().getTime() > pcBlocked) {
@@ -110,6 +110,12 @@ define([
                 console.log(d);
                 console.log(e);
                 console.log(f);
+                Helper.disableLoader(0);
+
+                // if(f.status === 401 && b.name === 'MyOrders'){//session expired
+                //     $rootScope.expiredSession = true;
+                //
+                // }
                 //$state.go('404');
             });
 

@@ -17,7 +17,7 @@ define(['./module'], function (services) {
                     $http({
                         method: "get",
                         url: server.account.getOrders(user.response.userId),
-                        data: {},
+                        data: {'SessionId' : $rootScope.orderSessionId},
                     }).
                     then(function (res) {
 
@@ -58,7 +58,7 @@ define(['./module'], function (services) {
                     }, function (err) {
                         Loger.Received(err);
                         Helper.disableLoader();
-                        defer.reject(JSON.stringify(err))
+                        defer.reject(err)
                     })
                     return defer.promise;
                 },
