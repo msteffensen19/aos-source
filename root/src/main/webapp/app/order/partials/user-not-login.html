@@ -10,6 +10,7 @@
                   a-star="false"
                   sec-model="orderPaymenLogin.loginUser"
                   sec-require="mainCtrl.getRequire('User_name')"
+                  sec-disable-validation="true"
                   sec-min-length="mainCtrl.getMin(5)"
                   sec-max-length="mainCtrl.getMax(15)"
                   sec-pattern="mainCtrl.getPattern('Username')">
@@ -22,6 +23,7 @@
                   a-type="password"
                   sec-model="orderPaymenLogin.loginPassword"
                   sec-require="mainCtrl.getRequire('Password')"
+                  sec-disable-validation="true"
                   sec-min-length="mainCtrl.getMin(4)"
                   sec-max-length="mainCtrl.getMax(12)"
                   sec-pattern="mainCtrl.getPattern('Password')">
