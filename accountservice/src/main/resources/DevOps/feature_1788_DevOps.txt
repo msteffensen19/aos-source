@@ -1,6 +1,6 @@
-                    //  TODO DevOps - PlaceHolder Feature 1788
+                    //  TODO DevOps - PlaceHolder Feature 2055
                     //  Registered user and current user are the same
-                    String encryptedPassword = new AccountPassword(currentUserLogin, oldPassword)
+                    String encryptedPassword = new AccountPassword(account.getLoginName(), oldPassword)
                             .getEncryptedPassword();
 
                     if (account.getPassword().equals(encryptedPassword)) {
