@@ -41,9 +41,9 @@
                                     <sec-view a-hint="{{'Old_Password' | translate}}"
                                               a-type="password"
                                               sec-model="passwords.old"
+                                              sec-disable-validation="true"
                                               sec-min-length="mainCtrl.getMin(4)"
-                                              sec-max-length="mainCtrl.getMax(12)"
-                                              sec-pattern="mainCtrl.getPattern('Password')">
+                                              sec-max-length="mainCtrl.getMax(12)">
                                     </sec-view>
 
                                     <sec-view a-hint="{{'New_Password' | translate}}"
