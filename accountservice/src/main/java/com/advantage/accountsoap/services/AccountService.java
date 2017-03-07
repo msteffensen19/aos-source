@@ -290,6 +290,20 @@ public class AccountService implements Injectable{
                 //  region PlaceHolder Feature 1789
                 if (parameterValue.equalsIgnoreCase("Yes")) {
                     //  TODO DevOps - PlaceHolder Feature 2055
+                    //  Registered user and current user are the same
+
+                    /*String encryptedPassword = new AccountPassword(account.getLoginName(), oldPassword)
+                            .getEncryptedPassword();
+
+                    if (account.getPassword().equals(encryptedPassword)) {
+                        //  old password matches registered user password - OK to change password
+                        response = accountRepository.changePassword(accountId, newPassword);
+                    } else {
+                        //  old Password does not match registered user password
+                        String message = "Old Password does not match registered user password";
+                        logger.warn(message);
+                        response = new AccountStatusResponse(false, message, -1);
+                    }*/
                 }
                 //endregion
             }
