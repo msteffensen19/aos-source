@@ -173,7 +173,7 @@ function attachScriptToTest(cb) {
 function createOutputFile(cb) {
     console.log('createOutputFile - start');
     try {
-        fs.writeFile('./temp/srlTest.properties', "testId=" + srlData.test.id);
+        fs.writeFile('./temp/srlTest.properties', srlData.test.id);
     } catch (e) {
         return cb('createOutputFile: ' + e);
     }
