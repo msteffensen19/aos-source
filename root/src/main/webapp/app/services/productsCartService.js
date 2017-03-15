@@ -194,7 +194,9 @@ define(['./module'], function (services) {
                     }
                     $cookie.remove("userCart");
                     defer.resolve(cart);
-                })
+                }, function (error) {
+                    defer.reject(error);
+                    })
                 return defer.promise;
             }
 
@@ -328,8 +330,15 @@ define(['./module'], function (services) {
                             method: "post",
                             headers: {
                                 "Authorization": "Basic " + user.response.t_authorization,
+                                'Content-Type': 'application/x-www-form-urlencoded'
                             },
-                            data: {sessionId: $rootScope.orderSessionId},
+                            transformRequest: function(obj) {
+                                var str = [];
+                                for(var p in obj)
+                                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                return str.join("&");
+                            },
+                            data: {sessionId: $rootScope.orderSessionId,},
                             async: false,
                             url: server.order.addProductToUser(user.response.userId,
                                 product.productId, product.colors[0].code, quantity),

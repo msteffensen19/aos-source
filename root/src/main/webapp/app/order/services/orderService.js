@@ -210,7 +210,8 @@ define(['./module'], function (services) {
                         "secustomerName": user.firstName + " " + user.lastName,
                         "secustomerPhone": user.phoneNumber,
                         "senumberOfProducts": $filter('productsCartCount')(cart),
-                        "setransactionType": "SHIPPINGCOST"
+                        "setransactionType": "SHIPPINGCOST",
+                        "sessionId" : $rootScope.orderSessionId ? $rootScope.orderSessionId : null
                     };
 
                     Loger.Params(paramsToPass, server.order.getShippingCost());

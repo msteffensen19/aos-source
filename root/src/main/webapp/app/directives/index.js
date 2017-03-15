@@ -28,6 +28,7 @@ define([
     './icon-home-svg',
     './virtualFooter',
     './check-height',
+    './orderSearch',
 
 ], function() {});
 

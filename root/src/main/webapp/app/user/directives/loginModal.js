@@ -79,6 +79,17 @@ define(['./module'], function (directives) {
 
                                 productsCartService.joinCartProducts().then(function (cart) {
                                     $scope.cart = cart;
+                                },function (error) {
+                                    userService.singOut().then(function () {
+                                        $cookie.remove('lastlogin');
+                                        $rootScope.userCookie = undefined;
+                                        $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+
+                                        // productsCartService.loadCartProducts().then(function (cart) {
+                                        //     $scope.cart = cart;
+                                        // });
+                                        $(".mini-title").css("display", "none");
+                                    });
                                 });
 
                                 if ($location.path() == '/register') {

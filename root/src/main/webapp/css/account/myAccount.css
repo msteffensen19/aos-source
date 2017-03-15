@@ -1,11 +1,10 @@
 
 #myAccountContainer{
-    padding-top: 135px;
     margin: 0 50px;
 }
 
 .fixed + #myAccountContainer{
-    padding-top: 95px;
+    padding-top: 135px;
     margin: 0 50px;
 }
 

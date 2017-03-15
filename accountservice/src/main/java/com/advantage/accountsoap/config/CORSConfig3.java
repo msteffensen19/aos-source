@@ -8,6 +8,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
@@ -34,6 +35,11 @@ public class CORSConfig3 extends OncePerRequestFilter {
         response.setHeader("Cache-control", "no-store");
 
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//        if(!manageSession(request))
+//        {
+//            ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_FORBIDDEN);
+//            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: ");
+//        }
         if (request.getMethod().equals("OPTIONS")) {
             try {
                 //ogger.info("Method OPTIONS, Origin header=" + request.getHeader("Origin"));
@@ -47,4 +53,17 @@ public class CORSConfig3 extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
     }
+
+//    private boolean manageSession(HttpServletRequest request){
+//        HttpSession session = request.getSession();
+//        if(request.getRequestedSessionId() == null){//no session in the request
+//            session.setMaxInactiveInterval(10);
+//            return true;
+//        }
+//        else if(!request.getRequestedSessionId().equals(session.getId())){//session request isnt equal to the current session
+//            //session expired
+//            return false;
+//        }
+//        return true;
+//    }
 }

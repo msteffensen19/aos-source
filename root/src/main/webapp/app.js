@@ -103,15 +103,17 @@ define([
                 }
             }
 
-            $rootScope.$on('$stateChangeError', function (a, b, c, d, e, f) {
-                console.log(a);
-                console.log(b);
-                console.log(c);
-                console.log(d);
-                console.log(e);
-                console.log(f);
+            $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+                console.log(event);
+                console.log(toState);
+                console.log(toParams);
+                console.log(fromState);
+                console.log(fromParams);
+                console.log(error);
                 Helper.disableLoader(0);
 
+                if(toState.name == "MyOrders")
+                    $state.go("default");
                 // if(f.status === 401 && b.name === 'MyOrders'){//session expired
                 //     $rootScope.expiredSession = true;
                 //

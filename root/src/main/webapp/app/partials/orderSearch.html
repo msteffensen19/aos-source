@@ -1,0 +1,39 @@
+
+<div id="orderSearchSection"
+     data-ng-mouseenter="allowClosing = false"
+     data-ng-mouseleave="allowClosingLeave(true)"
+     data-ng-click="closeSearchSection($event)">
+
+    <div id="orderInput" data-ng-click="$event.stopPropagation($event)">
+        <div id="orderSearch">
+            <a title="{{ 'SEARCH' | translate }}">
+                <div icon-search-svg data-ng-click="openSearchOrders($event)" ></div>
+            </a>
+            <div class="autoCompleteCover">
+                <input id="orderAutoComplete" type="text" class="roboto-regular"
+                       placeholder="{{'SearchOrder' | translate }}"
+                       data-ng-model="autoCompleteValue"
+                       data-ng-keyup="runAutocomplete($event)"
+                       data-ng-blur="closeSearchSection($event)">
+
+                <div data-ng-click="closeSearchForce($event)"  style="position: absolute; right: 0; top:0" >
+                    <img src="../../css/images/closeDark.png" style="width:20px; height:20px; padding: 12px 0" >
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+

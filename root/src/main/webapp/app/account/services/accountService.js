@@ -17,7 +17,6 @@ define(['./module'], function (services) {
                     $http({
                         method: "get",
                         url: server.account.getOrders(user.response.userId),
-                        data: {'SessionId' : $rootScope.orderSessionId},
                     }).
                     then(function (res) {
 

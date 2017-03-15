@@ -1,0 +1,175 @@
+
+
+#orderSearchSection {
+    direction: ltr;
+    position: relative;
+    top:1px;
+    z-index: 1000;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#orderSearchSection #orderSearch > div{
+    display: inline-block;
+    white-space: nowrap;
+}
+
+#orderSearchSection .autoCompleteCover{
+    overflow: hidden;
+    width: 0px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    opacity: 0.5;
+    margin: 0;
+    top: -10px;
+}
+
+#orderSearchSection .autoCompleteCover .iconCss{
+    position: absolute;
+    right: 0;
+    top: 9px;
+    bottom: 0;
+    vertical-align: middle;
+    margin: 4px 0;
+    display: none;
+    cursor: pointer;
+
+}
+
+#orderSearchSection .autoCompleteCover input{
+    width: 100%;
+    font-size: 16px;
+    color: #2a2a2a;
+    padding: 7px 11px 7px 0;
+    margin: 0;
+    outline: none;
+    cursor: text;
+    border: none;
+    border-bottom: 1px solid #CECCCC;
+    display: block;
+}
+
+#orderSearchSection .autoCompleteCover ::-webkit-input-placeholder{
+    font-weight: 300;
+}
+
+#orderSearchSection .autoCompleteCover :-ms-input-placeholder{
+    font-weight: 300;
+}
+
+#orderSearchSection .autoCompleteCover :-moz-placeholder{
+    font-weight: 300;
+}
+
+#orderSearchSection .iconMagnifyingGlass{
+    cursor: pointer;
+}
+
+#orderSearchSection #output{
+    position: absolute;
+    background-color: rgba(246, 246, 246, 0.95);
+    width: 100%;
+    box-sizing: border-box;
+    top: 42px;
+}
+
+#orderSearchSection .searchPopUp > div.categories{
+    /*width: 160px;*/
+}
+
+
+#orderSearchSection #output .top6Products{
+    padding: 17px 20px;
+    background-color: rgba(255, 255, 255, 1);
+    width: calc(100% - 173px);
+}
+
+#orderSearchSection #output > div > div{
+    white-space: normal;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#orderSearchSection  div .animPlaceholderUp label{
+    color: #828282;
+    font-size: 16px;
+}
+
+#orderSearchSection .searchPopUp {
+    position: relative;
+}
+
+#orderSearchSection .searchPopUp > div h3{
+    font-size: 14px;
+    color:#2a2a2a;
+    padding: 6px 0;
+}
+
+#orderSearchSection .searchPopUp div.categories h3{
+    font-size: 14px;
+    color:#2a2a2a;
+    padding: 22px;
+    padding-bottom: 10px;
+}
+
+#orderSearchSection div.categories label{
+    font-size: 14px;
+    color:#2a2a2a;
+    padding: 5px 22px;
+    display: block;
+    cursor: pointer;
+}
+
+#orderSearchSection div.categories label:first-letter{
+    text-transform: uppercase;
+}
+
+#orderSearchSection .searchPopUp > div .product{
+    width: 33.333%;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    padding: 17px 10px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#orderSearchSection .searchPopUp > div .product img{
+    width: calc(100% - 10px);
+    box-sizing: border-box;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+#orderSearchSection .searchPopUp > div .product p {
+    font-size: 11px;
+    color: #2a2a2a;
+    margin: 4px 10px;
+    height: 33px;
+    overflow: hidden;
+
+}
+
+#orderSearchSection .searchPopUp .viewAll  {
+    position: absolute;
+    top:23px;
+    right:35px;
+    font-size: 13px;
+    color: #54b3ad;
+    cursor: pointer;
+}
+
+#orderSearchSection .searchPopUp > div .product span {
+    font-size: 14px;
+    display: block;
+    color: #54b3ad;
+}
+
+
+/*end orderSearchSection */
+
+
+

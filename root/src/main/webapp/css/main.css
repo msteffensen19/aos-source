@@ -19,6 +19,7 @@
 @import "views/productPage.css";
 @import "views/toolTipCart.css";
 @import "views/toolTipSearch.css";
+@import "views/orderSearch.css";
 @import "views/shoppingCart.css";
 @import "views/supportPage.css";
 @import "views/searchPage.css";
@@ -103,6 +104,9 @@ body{
     display: block;
 }
 
+.no-bottom-padding{
+    padding-bottom: 0px;
+}
 /* start mobile button */
 
 div.mobile-btn-handler {

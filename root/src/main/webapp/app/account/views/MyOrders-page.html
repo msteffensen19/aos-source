@@ -7,7 +7,9 @@
     <article>
 
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="MY_ORDERS"></h3>
-
+        <div class="img order-search-container">
+            <orders-search orders="myOrdersCtrl.orders"></orders-search>
+        </div>
         <div id="myAccountContainer" data-ng-show="myOrdersCtrl.orders.length > 0" class="myOrderSection">
 
             <div class="cover">
@@ -48,11 +50,14 @@
                             <div title="{{order.products[0].ProductColorName}}" class="elipse"
                                  data-ng-style="{'background-color' : '#' + order.products[0].ProductColorCode, 'border' : (order.products[0].ProductColorCode == 'FFFFFF' ? 'solid' : 'none' ) + ' 1px rgba(189, 189, 187, 1)'}"></div>
                         </td>
-                        <td class="center">
+                        <td class="center no-bottom-padding">
                             <label>{{order.products[0].Quantity}}</label>
                         </td>
                         <td rowspan="{{order.products.length}}" class="right">
                             <label>{{ myOrdersCtrl.getTotalPrice(order.products) | currency: '$' }}</label>
+                            <span class="actions remove-product" style="font-size: 12px;text-align: center;">
+                                <a class="remove red" data-ng-click="myOrdersCtrl.removeProductFromOrders($index)" translate="REMOVE"></a>
+                            </span>
                         </td>
                     </tr>
                     <tr data-ng-repeat-end ng-if="$index > 0" class="innerTr"

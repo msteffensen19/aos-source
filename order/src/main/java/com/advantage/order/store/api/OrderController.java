@@ -106,9 +106,17 @@ public class OrderController {
 
     private boolean manageOrderSession(HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        if(session == null){
+        if(request.getRequestedSessionId() == null && session == null){//no session in the request
             this.m_session = request.getSession();
+            return true;
         }
+        else if(session == null || (session != null && !request.getRequestedSessionId().equals(session.getId()))){//session request isnt equal to the current session
+            //session expired
+            request.getSession();//create a new one
+            return false;//return 401
+        }
+        else if(session != null && (request.getParameter("sessionId") != null && !request.getParameter("sessionId").equals("undefined")) && !request.getParameter("sessionId").equals(session.getId()))
+            return false;
         return true;
     }
 
@@ -132,6 +140,10 @@ public class OrderController {
                     "Add product to shopping cart", 5);
         } else {
             logger.warn("cefData is null");
+        }
+
+        if(!manageOrderSession(request)){
+            return new ResponseEntity<>(new ShoppingCartResponseDto(), HttpStatus.UNAUTHORIZED);
         }
 
         shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);

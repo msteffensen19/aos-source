@@ -105,6 +105,7 @@ var english = {
     'PAYMENT_OPTIONS': 'PAYMENT OPTIONS',
     'PRODUCT_NAME': 'PRODUCT NAME',
     'Search': 'Search',
+    'SearchOrder': 'Search by order number or product name',
     'CATEGORIES': 'CATEGORIES',
     'Categories': 'Categories',
     'Category': 'Category',
