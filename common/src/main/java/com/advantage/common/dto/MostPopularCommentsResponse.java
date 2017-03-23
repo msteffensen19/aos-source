@@ -84,7 +84,7 @@ public class MostPopularCommentsResponse {
         this.getUserComments().add(userComments);
     }
 
-    public void addUserComment(String comment, double score) {
-        addUserComment(new MostPopularCommentDto(comment, score));
+    public void addUserComment(String name, String comment, double score) {
+        addUserComment(new MostPopularCommentDto(name, comment, score));
     }
 }

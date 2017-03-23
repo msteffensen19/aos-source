@@ -48,37 +48,37 @@ public class MostPopularCommentService {
 
         switch (userCommentId) {
             case 0:
-                userComment = new MostPopularCommentDto("Great sound. It’s all about the bass.", 9.3);
+                userComment = new MostPopularCommentDto("Tim Perry", "Great sound. It’s all about the bass.", 9.3);
                 break;
             case 1:
-                userComment = new MostPopularCommentDto("Very comfortable headphones. Felt very light on the ears.", 8.9);
+                userComment = new MostPopularCommentDto("Toby Jackson", "Very comfortable headphones. Felt very light on the ears.", 8.9);
                 break;
             case 2:
-                userComment = new MostPopularCommentDto("The noise cancelling feature worked great. I don’t even hear the bus on my commute home.", 9.7);
+                userComment = new MostPopularCommentDto("Louis Burton", "The noise cancelling feature worked great. I don’t even hear the bus on my commute home.", 9.7);
                 break;
             case 3:
-                userComment = new MostPopularCommentDto("My ears sweated a lot when wearing the headphones. Next time I won’t wear them in the sauna.", 7.6);
+                userComment = new MostPopularCommentDto("Josue Bush", "My ears sweated a lot when wearing the headphones. Next time I won’t wear them in the sauna.", 7.6);
                 break;
             case 4:
-                userComment = new MostPopularCommentDto("The noise cancelling didn’t work that well. I could still hear my wife yelling at me.", 3.8);
+                userComment = new MostPopularCommentDto("Jerry Parsons", "The noise cancelling didn’t work that well. I could still hear my wife yelling at me.", 3.8);
                 break;
             case 5:
-                userComment = new MostPopularCommentDto("I really wish they came in other colors. Hot pink would match much better with my shirt.", 9.4);
+                userComment = new MostPopularCommentDto("Kamden Townsend", "I really wish they came in other colors. Hot pink would match much better with my shirt.", 9.4);
                 break;
             case 6:
-                userComment = new MostPopularCommentDto("They didn’t fit great. I had to take off my bike helmet to get them on.", 7.8);
+                userComment = new MostPopularCommentDto("John Turner", "They didn’t fit great. I had to take off my bike helmet to get them on.", 7.8);
                 break;
             case 7:
-                userComment = new MostPopularCommentDto("The cable wasn’t very long. I couldn’t get to the bathroom with the earphones plugged in to my stereo.", 6.4);
+                userComment = new MostPopularCommentDto("Samson Franco", "The cable wasn’t very long. I couldn’t get to the bathroom with the earphones plugged in to my stereo.", 6.4);
                 break;
             case 8:
-                userComment = new MostPopularCommentDto("If they go on the ears, shouldn’t they be called earphones?", 9.9);
+                userComment = new MostPopularCommentDto("Ali Kent", "If they go on the ears, shouldn’t they be called earphones?", 9.9);
                 break;
             case 9:
-                userComment = new MostPopularCommentDto("I don’t get it – is 20 hours how long it takes to recharge the batteries or how long they last?", 7.1);
+                userComment = new MostPopularCommentDto("Aiden Moore", "I don’t get it – is 20 hours how long it takes to recharge the batteries or how long they last?", 7.1);
                 break;
             default:
-                userComment = new MostPopularCommentDto("User comment not found", 0.0);
+                userComment = new MostPopularCommentDto("User not found", "User comment not found", 0.0);
         }
 
         return userComment;
