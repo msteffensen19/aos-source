@@ -154,7 +154,7 @@
             <!--NOTIFY ME ABOUT PROMOTIONS SECCION-->
             <div class="cube">
                 <div class="option notPromotionCheckbox">
-                    <input type="checkbox"
+                    <input name="notify_about_promotions" type="checkbox"
                            data-ng-model="accountDetails.allowOffersPromotion"
                            data-ng-click="allowOffersPromotionChanged()">
                     <span translate="Notify_me_about_Promotions"></span>
@@ -166,7 +166,7 @@
                             </h4>
                         </div>
                         <div class="option" data-ng-repeat="cat in categoriesPromotions track by $index">
-                            <input type="checkbox" data-ng-model="cat.categoryValue">
+                            <input name="category_{{ cat.categoryName.toLowerCase() }}" type="checkbox" data-ng-model="cat.categoryValue">
                             <span> {{ cat.categoryName }} </span>
                         </div>
                     </div>

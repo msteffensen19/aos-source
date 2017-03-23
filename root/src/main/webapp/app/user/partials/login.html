@@ -54,7 +54,8 @@
                           a-do-not-show-info="true"
                           a-star="false"
                           sec-model="loginUser.loginUser"
-                          sec-require="mainCtrl.getRequire('User_name')">
+                          sec-require="mainCtrl.getRequire('User_name')"
+                          sec-name="userNameTxtField">
                 </sec-view>
 
                 <sec-view a-hint="{{'Password' | translate}}"
@@ -63,6 +64,7 @@
                           a-type="password"
                           sec-model="loginUser.loginPassword"
                           sec-require="mainCtrl.getRequire('Password')">
+                          <!--sec-name="userPassTxtField"> in field background color appear yellow -->
                 </sec-view>
 
                 <sec-view a-hint="{{'Email' | translate}}"
@@ -71,11 +73,12 @@
                           ng-show="mainCtrl.config.emailAddressInLogin"
                           sec-disable-validation="!mainCtrl.config.emailAddressInLogin"
                           sec-model="loginUser.email">
+                          <!--sec-name="userEmailTxtField"> in field background color appear yellow -->
                 </sec-view>
 
 
                 <div class="left option " style="top: 20px">
-                    <input type="checkbox" ng-model="mainCtrl.rememberMe">
+                    <input name="remember_me" type="checkbox" ng-model="mainCtrl.rememberMe">
                     <span translate="REMEMBER_ME"></span>
                 </div>
 

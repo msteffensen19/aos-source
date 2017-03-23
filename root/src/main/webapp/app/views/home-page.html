@@ -73,7 +73,7 @@
 
                     <p> {{specialOffer[0].promotionSubHeader}} </p>
                     <a href="#/product/{{specialOffer[0].product.id}}">
-                        <button translate="SEE_OFFER"></button>
+                        <button name="see_offer" translate="SEE_OFFER"></button>
                     </a>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" translate="EXPLORE_NOW"></button>
+                        <button name="explore_now" ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" translate="EXPLORE_NOW"></button>
                     </div>
                 </div>
                 <div class="imgSection">
@@ -107,7 +107,7 @@
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button ng-click="redirect('/category/' + categories[0].categoryId)" class="white" translate="EXPLORE_NOW"></button>
+                        <button name="explore_now" ng-click="redirect('/category/' + categories[0].categoryId)" class="white" translate="EXPLORE_NOW"></button>
                     </div>
                 </div>
             </div>

@@ -61,7 +61,7 @@
                                     </sec-view>
 
                                     <div class="option marginTop">
-                                        <input ng-model="preferredPayment_SafePay" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                                        <input name="preferred_payment_safepay" ng-model="preferredPayment_SafePay" type="checkbox" class="ng-pristine ng-untouched ng-valid">
                                         <span class="roboto-light ng-binding" data-ng-click="preferredPayment_SafePay = !preferredPayment_SafePay"> {{ 'Set_SafePay_as_Preferred_payment' | translate }} </span>
                                     </div>
 
@@ -134,7 +134,7 @@
                                     </div>
 
                                     <div class="option marginTop">
-                                        <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                                        <input name="save_master_credit" ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
                                         <span class="roboto-light ng-binding" data-ng-click="saveMasterCredit = !saveMasterCredit"
                                               translate="Set_MasterCredit_as_Preferred_payment"></span>
                                     </div>

@@ -38,7 +38,7 @@
                     <img src="css/images/Shipex.png" alt="ShipEx"/></label>
             </div>
             <div class="mobileBtnHandler">
-                <button role="button" data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75" translate="NEXT">
+                <button name="next" role="button" data-ng-click="shippingDetails_next()" class="a-button nextBtn marginTop75" translate="NEXT">
                 </button>
             </div>
         </div>
@@ -118,7 +118,7 @@
                 </div>
 
                 <div class="option marginTop">
-                    <input ng-model="agree_Agreement" type="checkbox"/>
+                    <input name="agree_agreement" ng-model="agree_Agreement" type="checkbox"/>
                     <span class="roboto-light" translate="Save_changes_in_profile_for_future_use"></span>
                 </div>
 
@@ -196,7 +196,7 @@
                     </sec-view>
 
                     <div class="option marginTop">
-                        <input ng-model="saveSafePay" type="checkbox">
+                        <input name="save_safepay" ng-model="saveSafePay" type="checkbox">
                         <span class="roboto-light ng-binding" translate="Save_changes_in_profile_for_future_use"> </span>
                     </div>
 
@@ -234,7 +234,7 @@
                 <div class="blueLink marginBottom">
                     <a ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                     <label>
-                        <button class="roboto-medium float-button a-button" data-ng-click="payNow_manual()">
+                        <button name="pay_now" class="roboto-medium float-button a-button" data-ng-click="payNow_manual()">
                             {{'PAY_NOW' | translate}}
                         </button>
                     </label>
@@ -309,7 +309,7 @@
                     </div>
 
                     <div class="option marginTop">
-                        <input ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
+                        <input name="save_master_credit" ng-model="saveMasterCredit" type="checkbox" class="ng-pristine ng-untouched ng-valid">
                         <span class="roboto-light ng-binding" translate="Save_changes_in_profile_for_future_use"></span>
                     </div>
 
