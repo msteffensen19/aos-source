@@ -150,13 +150,15 @@
         <div>
             <label class="Choose_payment roboto-medium" translate="Choose_payment_method_below">
             </label>
-            <div class="paymentMethods">
-                <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1)"
+            <div class="paymentMethods" ng-init="checkedRadio = 1">
+                <div class="imgRadioButton" data-ng-click="imgRadioButtonClicked(1); checkedRadio = 1"
                      data-ng-class="{ selected : imgRadioButton == 1 }">
+                    <input type="radio" name="safepay" ng-checked="checkedRadio == 1" style="position:absolute; top:25px; left:24px; opacity:0">
                     <img src="css/images/SafePay.png" alt="Safepay"/>
                 </div>
-                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2"
-                     data-ng-class="{ selected : imgRadioButton == 2 }">
+                <div class="imgRadioButton" data-ng-click="imgRadioButton = 2; checkedRadio = 2"
+                data-ng-class="{ selected : imgRadioButton == 2 }">
+                    <input type="radio" name="masterCredit" ng-checked="checkedRadio == 2" style="position:absolute; top:25px; left:24px; opacity:0">
                     <img src="css/images/Master_credit.png" alt="Master credit"/>
                 </div>
                 <div>
@@ -165,7 +167,7 @@
                 </div>
             </div>
 
-            <!---------------------------- SAFEPAY SECCION ---------------------------->
+            <!---------------------------- SAFEPAY SECTION ---------------------------->
 
             <div ng-show="imgRadioButton == 1">
 
@@ -201,7 +203,7 @@
                     </div>
 
                     <div class="blueLink margin15px">
-                        <a data-ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
+                        <a href="javascript:void(0)" role="link" data-ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                         <!--<a data-ng-click="firstTag = true" translate="Back_to_shipping_details"></a>-->
                         <label class="float_right">
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
@@ -213,10 +215,10 @@
 
             </div>
 
-            <!-------------------------- END SAFEPAY SECCION -------------------------->
+            <!-------------------------- END SAFEPAY SECTION -------------------------->
 
 
-            <!-------------------------- MASTERCREDIT SECCION --------------------------->
+            <!-------------------------- MASTERCREDIT SECTION --------------------------->
 
             <div ng-show="imgRadioButton == 2 && !noCards && !showMasterCart">
 
@@ -232,7 +234,7 @@
                 </div>
 
                 <div class="blueLink marginBottom">
-                    <a ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
+                    <a href="javascript:void(0)" role="link" ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                     <label>
                         <button name="pay_now" class="roboto-medium float-button a-button" data-ng-click="payNow_manual()">
                             {{'PAY_NOW' | translate}}
@@ -242,10 +244,10 @@
 
             </div>
 
-            <!-------------------------- END MASTERCREDIT SECCION --------------------->
+            <!-------------------------- END MASTERCREDIT SECTION --------------------->
 
 
-            <!---------------------------- MANUAL PAYMENT SECCION ---------------------------->
+            <!---------------------------- MANUAL PAYMENT SECTION ---------------------------->
 
             <div ng-show="(imgRadioButton == 2) && (noCards || showMasterCart)">
 
@@ -314,7 +316,7 @@
                     </div>
 
                     <div class="blueLink">
-                        <a ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
+                        <a href="javascript:void(0)" role="link" ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                         <label>
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
                                         sec-send="payNow_masterCredit()"></sec-sender>
@@ -325,7 +327,7 @@
 
             </div>
 
-            <!---------------------------- END MANUAL PAYMENT SECCION ---------------------------->
+            <!---------------------------- END MANUAL PAYMENT SECTION ---------------------------->
 
         </div>
     </div>
