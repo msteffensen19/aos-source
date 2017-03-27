@@ -94,18 +94,19 @@
 <aside id="mobile-section" data-ng-cloak>
     <ul>
         <li data-ng-click="mobileRedirect('default')">
-            <a class="img">
+            <a href="javascript:void(0)" role="link" class="img">
                 <div icon-home-svg></div>
             </a>
         </li>
         <li data-ng-click="mobileRedirect('shoppingCart')">
-            <a class="img">
+            <a href="javascript:void(0)" role="link" class="img">
                 <div icon-cart-svg></div>
                 <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
             </a>
         </li>
         <li class="pointer" data-ng-click="login('loginMobileMiniTitle')">
-            <a class="img center">
+            <a href="javascript:void(0)" role="link" class="img center">
+                <p>some</p>
                 <div icon-user-svg></div>
                 <span data-ng-show="userCookie.response" class="hi-user">
                     {{userCookie.name}}
@@ -113,7 +114,7 @@
             </a>
         </li>
         <li data-ng-click="mobileRedirect('searchPage')">
-            <a class="img">
+            <a href="javascript:void(0)" role="link" class="img">
                 <div icon-search-svg></div>
             </a>
         </li>
@@ -125,13 +126,13 @@
 
 
 
-<!-- navegation -->
+<!-- navigation -->
 
 <header ng-show="welcome" data-ng-cloak>
     <nav>
         <ul class="roboto-light desktop-handler" >
             <li data-ng-mouseenter="enterCart()" data-ng-mouseleave="leaveCart()">
-                <a class="img" href="#/shoppingCart">
+                <a class="img" href="#/shoppingCart" role="link">
                     <div icon-cart-svg></div>
                     <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
                 </a>
@@ -142,7 +143,7 @@
                 </ul>
             </li>
             <li>
-                <a class="img" data-ng-click="login('loginMiniTitle')"
+                <a href="javascript:void(0)" role="link" class="img" data-ng-click="login('loginMiniTitle')"
                    data-ng-mouseenter="miniTitleIn('loginMiniTitle')"
                    data-ng-mouseleave="miniTitleOut('loginMiniTitle')">
                     <span data-ng-show="userCookie.response" class="hi-user containMiniTitle">
@@ -158,7 +159,7 @@
                 </a>
             </li>
             <li>
-                <a class="img">
+                <a href="javascript:void(0)" role="link" class="img">
                     <search tool-tip-search></search>
                 </a>
             </li>
@@ -180,7 +181,7 @@
 
         </ul>
         <div class="logo">
-            <a href="#/" ng-click="go_up()">
+            <a href="#/" role="link" ng-click="go_up()">
                 <!--<img src="css/images/logo.png"/>-->
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="45px" height="45px" viewBox="0 0 30 45" enable-background="new 0 0 45 45" xml:space="preserve">
@@ -200,7 +201,7 @@
     </nav>
 </header>
 
-<!-- end navegation " ng-show="cartCount != 0 -->
+<!-- end navigation " ng-show="cartCount != 0 -->
 
 <div class="uiview" ui-view></div>
 
