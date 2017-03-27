@@ -175,7 +175,7 @@ define(['./module'], function (directives) {
             link: {
                 pre: function (s, e, attr, ctrls) {
                     e.addClass("sec-sender");
-                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</button>")
+                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "_btn' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</button>")
                     $compile(button)(s);
                     e.append(button);
 
@@ -918,7 +918,7 @@ define(['./module'], function (directives) {
 
                             break;
                         case Types.textarea:
-                            input = $("<textarea name='subject' data-ng-model='secModel' ></textarea>");
+                            input = $("<textarea name='subject_textarea' data-ng-model='secModel' ></textarea>");
                             label.text(JSON.parse(s.secRequire).info);
                             label.addClass("checkboxText roboto-light" + animated);
                             div.css({

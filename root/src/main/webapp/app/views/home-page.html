@@ -78,13 +78,12 @@
 
                     <p> {{specialOffer[0].promotionSubHeader}} </p>
                     <a href="#/product/{{specialOffer[0].product.id}}">
-                        <button name="see_offer" translate="SEE_OFFER"></button>
+                        <button name="see_offer_btn" translate="SEE_OFFER"></button>
                     </a>
                 </div>
             </div>
         </div>
     </article>
-
     <!-- end SPACIAL OFFER -->
 
 
@@ -92,7 +91,7 @@
 
 
     <!-- slider -->
-    <article>
+    <article id="slider_explore_now">
         <div class="slider">
             <div class="slider-length transition">
                 <div ng-repeat="img in images" class="imgSection">
@@ -102,7 +101,7 @@
                     </div>
                     <div class="container">
                         <h2 ng-bind-html='img.message | trustHtml' class="roboto-light"></h2>
-                        <button name="explore_now" ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" translate="EXPLORE_NOW"></button>
+                        <button name="explore_now_btn" ng-click="redirect('/category/' + categories[img.categoryId].categoryId)" translate="EXPLORE_NOW"></button>
                     </div>
                 </div>
                 <div class="imgSection">
@@ -112,7 +111,7 @@
                     </div>
                     <div class="container">
                         <h2 class="roboto-light">{{images[0].message}}</h2>
-                        <button name="explore_now" ng-click="redirect('/category/' + categories[0].categoryId)" class="white" translate="EXPLORE_NOW"></button>
+                        <button name="explore_now_btn" ng-click="redirect('/category/' + categories[0].categoryId)" class="white" translate="EXPLORE_NOW"></button>
                     </div>
                 </div>
             </div>
@@ -132,11 +131,11 @@
         <h3 class="roboto-regular center" translate="POPULAR_ITEMS"></h3>
 
         <div class="grid-table center">
-            <div ng-repeat="product in popularProducts" ng-if="popularProducts.length > 0">
+            <div name="popular_item_{{product.id}}" ng-repeat="product in popularProducts" ng-if="popularProducts.length > 0">
                 <figure>
-                    <img data-ng-src="{{product.imageUrl}}" alt="Special-offer">
+                    <img name="popular_item_{{product.id}}_img" data-ng-src="{{product.imageUrl}}" alt="Special-offer">
                 </figure>
-                <p class="center productName roboto-medium">{{product.productName | uppercase}}</p>
+                <p name="popular_item_{{product.id}}_name" class="center productName roboto-medium">{{product.productName | uppercase}}</p>
                 <a href="#/product/{{product.id}}">
                     <label class="shop_nowSub viewDetail" translate="View_details"></label>
                 </a>
@@ -154,7 +153,7 @@
 
                 <div>
 
-                    <div class="chat" data-ng-click="openChat()">
+                    <div name="chat_with_us" class="chat" data-ng-click="openChat()">
 
                         <div>
                             <img src="../../css/images/chat_logo.png" alt="chat logo" />
