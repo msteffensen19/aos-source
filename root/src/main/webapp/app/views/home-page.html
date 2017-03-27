@@ -10,17 +10,19 @@
 
             <div class="rowSection">
                 <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)"
+                     role="link" href="javascript:void(0)"
                      class="SpeaakersImg categoryCell"
                      a-sec-back-img="{{categories[3].managedImageId}}" a-slow-page="{{ mainCtrl.config.slowPage }}" >
                     <div class="shop_now_slider">
-                        <span class="shop_now roboto-bold">{{::categories[3].categoryName | uppercase}}</span>
+                        <span class="shop_now roboto-bold" role="link" href="javascript:void(0)">{{::categories[3].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
+                     role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[2].managedImageId}}" class="categoryCell">
                     <div class="shop_now_slider">
-                        <span class="shop_now roboto-bold">{{::categories[2].categoryName | uppercase}}</span>
+                        <span class="shop_now roboto-bold" role="link" href="javascript:void(0)">{{::categories[2].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
@@ -30,23 +32,26 @@
 
             <div class="rowSection">
                 <div ng-click="redirect('/category/' + categories[0].categoryId)" class="laptopImg categoryCell"
+                     role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[0].managedImageId}}">
                     <div class="shop_now_slider">
-                        <span class="shop_now roboto-bold"> {{::categories[0].categoryName | uppercase}}</span>
+                        <span class="shop_now roboto-bold" role="link" href="javascript:void(0)"> {{::categories[0].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div ng-click="redirect('/category/' + categories[4].categoryId)" class="micesImg categoryCell"
+                     role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[4].managedImageId}}">
                     <div class="shop_now_slider">
-                        <span class="shop_now roboto-bold">{{::categories[4].categoryName | uppercase}}</span>
+                        <span class="shop_now roboto-bold" role="link" href="javascript:void(0)">{{::categories[4].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
                 <div ng-click="redirect('/category/' + categories[1].categoryId)" class="twoRows categoryCell"
+                     role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[1].managedImageId}}">
                     <div class="shop_now_slider">
-                        <span class="shop_now roboto-bold">{{::categories[1].categoryName | uppercase}}</span>
+                        <span class="shop_now roboto-bold" role="link" href="javascript:void(0)">{{::categories[1].categoryName | uppercase}}</span>
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
