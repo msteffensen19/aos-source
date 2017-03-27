@@ -516,6 +516,11 @@
             <name>nexus</name>
             <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>nexus-demo-app</id>
+            <name>nexus</name>
+            <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/</url>
+        </repository>
     </repositories>
     <distributionManagement>
         <repository>
