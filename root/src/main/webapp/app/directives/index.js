@@ -29,6 +29,7 @@ define([
     './virtualFooter',
     './check-height',
     './orderSearch',
+    './confirmation-modal-drtv',
 
 ], function() {});
 

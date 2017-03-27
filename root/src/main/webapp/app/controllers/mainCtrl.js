@@ -112,7 +112,7 @@ define(['./module'], function (controllers) {
 
                 }
 
-                $(".PopUp, .closePopUpBtn").click(function () {
+                $(".PopUp, .closeBtn.loginPopUpCloseBtn").click(function () {
 
                     setEnterInFocusHandler();
 

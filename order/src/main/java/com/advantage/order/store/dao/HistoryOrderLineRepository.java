@@ -18,5 +18,7 @@ public interface HistoryOrderLineRepository {
 
     List<OrderLines> getHistoryOrdersLinesByOrderIdAndUserId(long orderId,long userId);
 
+    List<OrderLines> removeOrder(long userId, long orderId);
+
 
 }

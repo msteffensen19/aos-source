@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +70,25 @@ public class DefaultHistoryOrderLineRepository extends AbstractRepository implem
 
         List<OrderLines> lines = new ArrayList<>();
         return null;
+    }
+
+    @Override
+    @Transactional
+    public List<OrderLines> removeOrder(long userId, long orderId){
+        ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(userId, "user id");
+        List<OrderLines> lines = new ArrayList<>();
+
+        try {
+            int index = entityManager.createNamedQuery(OrderLines.QUERY_DELETE_ORDERS_LINE_BY_ORDER_PK)
+                    .setParameter(OrderLines.PARAM_ORDER_NUMBER, orderId)
+                    .executeUpdate();
+            List<OrderLines> orderLines = entityManager.createNamedQuery(OrderLines.QUERY_GET_ORDERS_LINES_BY_USER_ID, OrderLines.class)
+                    .setParameter(OrderLines.PARAM_USER_ID, userId)
+                    .getResultList();
+            return orderLines;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

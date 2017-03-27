@@ -843,4 +843,52 @@ public class OrderManagementService {
         //staticFields.stream().forEach(temp);
         //TODO-EVG continue
     }
+
+    public HistoryOrderLinesDto removeOrder(Long userId, Long orderId){
+        ArgumentValidationHelper.validateLongArgumentIsPositiveOrZero(userId, "user id");
+        long orderNumber = 0L;
+        long orderTimestamp = -1L;
+
+        List<OrderLines> lines = new ArrayList<>();
+        HistoryOrderLinesDto historyOrderLinesDto = new HistoryOrderLinesDto();
+
+        if (userId == 0) {
+            lines = historyOrderLineRepository.getAll();
+        } else {
+            boolean b = historyOrderHeaderRepository.removeOrder(userId, orderId);
+            lines = historyOrderLineRepository.removeOrder(userId, orderId);
+        }
+
+        if (lines.size() == 0) {
+            return historyOrderLinesDto;
+        }
+
+        historyOrderLinesDto.setUserId(userId);
+        historyOrderLinesDto.setOrderNumber(lines.get(0).getOrderNumber());
+        historyOrderLinesDto.setOrderLines(new ArrayList<HistoryOrderLineDto>());
+
+        for (OrderLines line: lines) {
+            if (orderNumber != line.getOrderNumber()) {
+                orderNumber = line.getOrderNumber();
+                OrderHeader orderHeader = historyOrderHeaderRepository.find(userId, orderNumber);
+
+                if (orderHeader != null) {
+                    orderTimestamp = orderHeader.getOrderTimestamp();
+
+                    historyOrderLinesDto.addOrderLine(
+                            line.getUserId(),
+                            line.getOrderNumber(),
+                            orderTimestamp,
+                            line.getProductId(),
+                            line.getProductImageUrl(),
+                            line.getProductName(),
+                            line.getProductColor(),
+                            line.getPricePerItem(),
+                            line.getQuantity());
+
+                }
+            }
+        }
+        return historyOrderLinesDto;
+    }
 }

@@ -35,6 +35,11 @@ import javax.persistence.*;
                 "where " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER +
                 " order by o.orderNumber ASC, o.productName ASC, o.productColorName ASC"
         )
+        , @NamedQuery(
+        name = OrderLines.QUERY_DELETE_ORDERS_LINE_BY_ORDER_PK,
+        query = "delete from OrderLines o " +
+                "where " + OrderLines.FIELD_ORDER_NUMBER + " = :" + OrderLines.PARAM_ORDER_NUMBER
+        )
 })
 public class OrderLines {
 
@@ -47,6 +52,8 @@ public class OrderLines {
 
     /* Get all order lines of a specific order order-number  */
     public static final String QUERY_GET_ORDER_LINES_BY_ORDER = "OrderLines.getOrderLinesByOrder";
+
+    public static final String QUERY_DELETE_ORDERS_LINE_BY_ORDER_PK = "OrderLines.deleteOrder";
 
     public static final String FIELD_USER_ID = "user_id";
     public static final String FIELD_ORDER_NUMBER = "order_number";

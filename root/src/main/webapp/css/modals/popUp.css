@@ -44,11 +44,14 @@
     left:0;
 }
 
-.closePopUpBtn{
+.loginPopUpCloseBtn{
     position: absolute;
     background-color: white;
     top: 16px;
     right: 16px;
+}
+
+.closeBtn{
     height: 16px;
     width: 16px;
     background-image: url(../images/closeDark.png);

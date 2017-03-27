@@ -17,7 +17,7 @@ require.config({
         'angularAnimate': 'vendor/angular-animate/angular-animate.min',
         'angularAutocomplete': 'vendor/ngAutocomplete/src/ngAutocomplete',
         'ncy-angular-breadcrumb': 'vendor/angular-breadcrumb/release/angular-breadcrumb.min',
-
+        'underscore' : 'vendor/underscore/underscore-min',
 
         'bootstrap': 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -101,7 +101,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
         'jquery', 'jquery-bez', 'jquery.animate-colors', 'jPushMenu', 'mainScript', 'server',
         'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
-        'angularAnimate', 'ui-bootstrap', 'jquery-soap'
+        'angularAnimate', 'ui-bootstrap', 'jquery-soap', 'underscore',
     ], function (angular, app) {
             angular.bootstrap(document, ['aos']);
             angular.resumeBootstrap();

@@ -29,6 +29,11 @@ import javax.persistence.*;
         name = OrderHeader.QUERY_GET_ORDER_BY_ORDER,
         query = "select o from OrderHeader o " +
                 "where " + OrderHeader.FIELD_ORDER_NUMBER + " = :" + OrderHeader.PARAM_ORDER_NUMBER
+        )
+        , @NamedQuery(
+        name = OrderHeader.QUERY_DELETE_ORDER_BY_ORDER_PK,
+        query = "delete from OrderHeader o " +
+                "where " + OrderHeader.FIELD_ORDER_NUMBER + " = :" + OrderHeader.PARAM_ORDER_NUMBER
 )
 })
 public class OrderHeader {
@@ -37,6 +42,7 @@ public class OrderHeader {
     public static final String QUERY_GET_All_ORDERS_HISTORY = "orderHeader.getAllOrdersHistory";
     public static final String QUERY_GET_ORDER_BY_PK_COLUMNS = "orderHeader.getOrderByPkColumns";
     public static final String QUERY_GET_ORDER_BY_ORDER = "orderHeader.getOrderByOrderID";
+    public static final String QUERY_DELETE_ORDER_BY_ORDER_PK = "orderHeader.deleteOrder";
 
     public static final String FIELD_USER_ID = "user_id";
     public static final String FIELD_ORDER_NUMBER = "order_number";

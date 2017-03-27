@@ -334,8 +334,13 @@ var server = {
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
-        }
-        ,
+        },
+
+        deleteOrder: function(order, userId){
+            var paramToReturn = orderKey +  "orders/history/users/" + userId + "/" + order.orderNumber;
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        },
 
     }
     ,

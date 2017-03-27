@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -56,6 +57,15 @@ public class DefaultHistoryOrderHeaderRepository extends AbstractRepository impl
                 .setParameter(OrderHeader.PARAM_USER_ID, userId)
                 .getResultList();
         return orderHeaders;
+    }
+
+    @Override
+    @Transactional
+    public boolean removeOrder(long orderId,long userId){
+        int index = entityManager.createNamedQuery(OrderHeader.QUERY_DELETE_ORDER_BY_ORDER_PK)
+                .setParameter(OrderHeader.PARAM_ORDER_NUMBER,orderId)
+                .executeUpdate();
+        return index != 0;
     }
 
 }

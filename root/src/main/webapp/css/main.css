@@ -28,6 +28,7 @@
 @import "modals/e-sec-plus-minus.css";
 @import "modals/info-demo.css";
 @import "modals/validateInput.css";
+@import "modals/confirmation-modal.css";
 
 @import "user/login.css";
 @import "user/register.css";

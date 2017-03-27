@@ -21,6 +21,7 @@ define(['./module'], function (services) {
                 SafePay: SafePay,
                 accountUpdate: accountUpdate,
                 userIsLogin: userIsLogin,
+                removeOrder: removeOrder
             });
 
             function userIsLogin() {
@@ -233,6 +234,65 @@ define(['./module'], function (services) {
                         defer.reject(JSON.stringify(err))
                     })
                 });
+
+                return defer.promise;
+            }
+
+            function removeOrder(order){
+                var defer = $q.defer();
+
+                var user = $rootScope.userCookie;
+
+                Helper.enableLoader();
+                    $http({
+                        method: "delete",
+                        url: server.order.deleteOrder(order, user.response.userId),
+                        headers: {
+                            "content-type": "application/json",
+                            "Authorization": "Basic " + $rootScope.userCookie.response.t_authorization,
+                        },
+                    }).
+                    then(function (res) {
+
+                        var data = res.data;
+                        var ordersObj = [];
+                        angular.forEach(data.OrderLines, function(obj){
+
+                            if(ordersObj[obj.OrderNumber] == null){
+                                ordersObj[obj.OrderNumber] = {
+                                    "orderDate": obj.OrderDate,
+                                    "products": []
+                                };
+                            }
+                            ordersObj[obj.OrderNumber].products.push({
+                                "ProductImageUrl": obj.ProductImageUrl,
+                                "ProductName": obj.ProductName,
+                                "ProductColorCode": obj.ProductColorCode,
+                                "ProductColorName": obj.ProductColorName,
+                                "PricePerUnit": obj.PricePerUnit,
+                                "Quantity": obj.Quantity
+                            });
+                        });
+
+                        var orders = [];
+                        for(var index in Object.keys(ordersObj)){
+                            var name = Object.keys(ordersObj)[index];
+                            var order = {
+                                orderNumber: name,
+                                orderDate: ordersObj[name].orderDate,
+                                products: ordersObj[name].products
+                            }
+                            orders.push(order);
+                        }
+
+                        Loger.Received(orders);
+                        Helper.disableLoader();
+                        defer.resolve(orders)
+                    }, function (err) {
+                        Loger.Received(err);
+                        Helper.disableLoader();
+                        defer.reject(JSON.stringify(err))
+                    });
 
                 return defer.promise;
             }

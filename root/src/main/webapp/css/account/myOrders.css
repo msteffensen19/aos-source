@@ -1,6 +1,6 @@
 
 .myOrderSection .cover{
-    margin: 50px auto;
+    margin: 20px auto;
     max-width: 1100px;
 }
 
@@ -58,6 +58,16 @@
     display: inline-block;
     font-size: 16px;
 }
+.actions.remove-product:hover{
+    color: #54b3ad;
+}
+.actions.remove-product{
+    font-size: 9px!important;
+    padding: 0 12px!important;
+    display: block!important;
+    text-align: right!important;
+    cursor: pointer;
+}
 
 .myOrderSection .elipse{
     width: 20px;
@@ -80,7 +90,12 @@
 .myOrderSection .bigEmptyOrder label{
     display: block;
 }
-
+.order-search-container{
+    margin: 0 auto;
+    max-width: 1100px;
+    padding-top: 135px;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1250px) {
 

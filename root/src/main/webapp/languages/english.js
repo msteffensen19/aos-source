@@ -195,6 +195,7 @@ var english = {
 
 
 
+
     'register_faild': 'Registration failed. Please try again.',
     'login_faild': 'Login failed. Please try again later.',
 
@@ -262,8 +263,11 @@ var english = {
     'My_Orders': 'My Orders',
 
     'No_orders': 'No orders',
-    'reviews': 'reviews'
-
+    'reviews': 'reviews',
+    'ARE_U_SURE' : 'Are you sure you want to',
+    'CANCEL_YOUR_ORDER': 'cancel your order?',
+    'YES_CANCEL': 'YES, CANCEL',
+    'NO_KEEP_ORDER': 'NO, KEEP MY ORDER'
 };
 
 
