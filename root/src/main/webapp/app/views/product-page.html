@@ -92,7 +92,7 @@
                         <e-sec-plus-minus num-attr="quantity" a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>
                     </div>
                     <div class="fixedBtn">
-                        <button name="save_to_cart" class="roboto-medium"
+                        <button name="save_to_cart" class="roboto-medium" role="button"
                                 data-ng-class='{ disable : product.productStatus == "OutOfStock" } '
                                 translate="ADD_TO_CART"
                                 data-ng-click="addToCart(product.productStatus == 'OutOfStock')">
