@@ -2,9 +2,9 @@
 
     <h2> <span class="roboto-regular" translate="Thank_you_for_buying_with_Advantage"> </span> </h2>
 
-    <p class="roboto-regular"> {{ 'Yor_tracking_number_is' | translate }} {{ trackingNumber }}
+    <p class="roboto-regular"> {{ 'Yor_tracking_number_is' | translate }} <label id="trackingNumberLabel">{{ trackingNumber }}</label>
         <span class="separator">|</span>
-        {{ 'Your_order_number_is' | translate }} {{orderNumber}}
+        {{ 'Your_order_number_is' | translate }} <label id="orderNumberLabel">{{orderNumber}}</label>
     </p>
 
     <div>
