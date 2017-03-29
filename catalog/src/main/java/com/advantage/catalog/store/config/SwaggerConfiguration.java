@@ -1,7 +1,6 @@
 package com.advantage.catalog.store.config;
 
 import com.advantage.common.Constants;
-import com.advantage.common.security.SecurityTools;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +19,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @EnableSwagger2
-
 public class SwaggerConfiguration {
 
     @Autowired
@@ -52,7 +50,7 @@ public class SwaggerConfiguration {
         }
         ApiInfo apiInfo = new ApiInfo(
                 "Advantage - " + env.getProperty("mvn.project.build.finalName") + ".war REST API",
-                apiInfoDescription + "<hr/>" + SecurityTools.SWAGGER_NOTE,
+                apiInfoDescription,
                 env.getProperty("mvn.project.version"),
                 null,
                 null,
