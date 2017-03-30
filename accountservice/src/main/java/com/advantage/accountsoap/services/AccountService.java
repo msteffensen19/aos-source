@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class AccountService implements Injectable{
+public class AccountService implements Injectable {
 
     private AccountRepository accountRepository;
 
@@ -48,8 +48,8 @@ public class AccountService implements Injectable{
     private AddressRepository addressRepository;
 
     @Override
-    public void inject(BeansManager beansManager){
-        this.accountRepository =  beansManager.getAccountRepository();
+    public void inject(BeansManager beansManager) {
+        this.accountRepository = beansManager.getAccountRepository();
         this.addressRepository = beansManager.getAddressRepository();
     }
 
@@ -258,39 +258,36 @@ public class AccountService implements Injectable{
         if (SecurityTools.isBasic(base64Token)) {
             currentUserId = accountId;
             currentUserAccountType = AccountType.valueOfCode(account.getAccountType());
-            String token = base64Token.substring(base64Token.indexOf(" ")+1);
+            String token = base64Token.substring(base64Token.indexOf(" ") + 1);
             String[] loginPassword = SecurityTools.decodeBase64(token).split(":");
-            System.out.println(loginPassword[0]+"*****************"+loginPassword[1]);
+            System.out.println(loginPassword[0] + "*****************" + loginPassword[1]);
             System.out.println((new AccountPassword(loginPassword[0], loginPassword[1])).getEncryptedPassword());
-            if(!loginPassword[0].equals(account.getLoginName())
+            if (!loginPassword[0].equals(account.getLoginName())
                     || !(new AccountPassword(loginPassword[0], loginPassword[1]))
-                    .getEncryptedPassword().equals(account.getPassword())){
+                    .getEncryptedPassword().equals(account.getPassword())) {
                 throw new VerificationTokenException("Not the same user and current user is not ADMIN");
             }
         } else {
             TokenJWT tokenJWT = TokenJWT.parseToken(base64Token);
             //  Get current user details from Token
             currentUserId = tokenJWT.getUserId();
-            currentUserAccountType = tokenJWT.getAccountType();
         }
-        if (currentUserAccountType.getAccountTypeCode() == AccountType.ADMIN.getAccountTypeCode()) {
-            response = accountRepository.changePassword(accountId, newPassword);
+        response = accountRepository.changePassword(accountId, newPassword);
+        if ((oldPassword == null) || (oldPassword.isEmpty())) {
+            //  Reset-Password FAILED! Old Password is empty and current user is not ADMIN-USER
+            String message = "Old Password for user (" + currentUserId + ") is empty";
+            logger.warn(message);
+            response = new AccountStatusResponse(false, message, -1);
+        } else if (accountId != currentUserId) {
+            //  Not the same user and current user is not ADMIN
+            logger.error("Not the same user and current user is not ADMIN");
+            throw new VerificationTokenException("Not the same user and current user is not ADMIN");
         } else {
-            if ((oldPassword == null) || (oldPassword.isEmpty())) {
-                //  Reset-Password FAILED! Old Password is empty and current user is not ADMIN-USER
-                String message = "Old Password for user (" + currentUserId + ") is empty";
-                logger.warn(message);
-                response = new AccountStatusResponse(false, message, -1);
-            } else if (accountId != currentUserId) {
-                //  Not the same user and current user is not ADMIN
-                logger.error("Not the same user and current user is not ADMIN");
-                throw new VerificationTokenException("Not the same user and current user is not ADMIN");
-            } else {
-                String parameterValue = RestApiHelper.getDemoAppConfigParameterValue("Implement_DevOps_Process");
-                //  region PlaceHolder Feature 1789
-                if (parameterValue.equalsIgnoreCase("Yes")) {
-                    //  TODO DevOps - PlaceHolder Feature 2055
-                    //  Registered user and current user are the same
+            String parameterValue = RestApiHelper.getDemoAppConfigParameterValue("Implement_DevOps_Process");
+            //  region PlaceHolder Feature 1789
+            if (parameterValue.equalsIgnoreCase("Yes")) {
+                //  TODO DevOps - PlaceHolder Feature 2055
+                //  Registered user and current user are the same
 
                     /*String encryptedPassword = new AccountPassword(account.getLoginName(), oldPassword)
                             .getEncryptedPassword();
@@ -304,9 +301,8 @@ public class AccountService implements Injectable{
                         logger.warn(message);
                         response = new AccountStatusResponse(false, message, -1);
                     }*/
-                }
-                //endregion
             }
+            //endregion
         }
         return response;
     }
