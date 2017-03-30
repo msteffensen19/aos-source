@@ -89,7 +89,16 @@
 
     <!-- Feature 2055 for DevOps process -->
     <Implement_DevOps_Process datatype="enum:[Yes,No]" description="Enables password changes from mobile, in addition to desktop. Use this parameter to demonstrate the end-to-end DevOps process. Default = No (Password changes are allowed from desktop only). Yes = Add support for password changes from mobile." tools="" locationInAdvantage="Change password">Yes</Implement_DevOps_Process>
-    <Tips_Implement_DevOps_Process datatype="enum:[Tip]" description="Change password is enabled only when the configuration parameter Implement_DevOps_Process is set to Yes.  To demonstrate the DevOpps process in a lifecycle management product, do the following:  1. In the Admin UI, set the configuration parameter Implement_DevOps_Process  value to Yes.  2. In your product release add a user story to the Change password back end feature (backend only, the UI user stories are implemented already).  3. Demonstrate that you can view this new user story in ALI.  4. Implement the user story by adding pre-defined code from 'feature_2055_DevOps.txt' file located in '\DevOps' folder to the GIT files. You will see a place holder 'TODO DevOps - PlaceHolder Feature 1788' for this code.  Demonstrate the DevOps process and that you can now change password on both desktop and mobile." tools="" locationInAdvantage="Change password">Tip</Tips_Implement_DevOps_Process>
+    <Tips_Implement_DevOps_Process datatype="enum:[Tip]" description='To demonstrate the DevOpps process in a lifecycle management product, do the following: 
+ 
+1. In Octane, in your product release, add a user story to change an invalid user name or password text. 
+ 
+2. Demonstrate that you can view this new user story in your IDE. 
+ 
+3. Implement the user story by changing the MESSAGE_USER_LOGIN_FAILED error message in the following file: \adm-demo-app\accountservice\src\main\java\com\advantage\accountsoap\model\Account.java.
+ 
+For example, change it from "Invalid user name or password" to "Incorrect user name or password, please try again".
+4. Demonstrate the DevOps process and that you can now see the new error message on both desktop and mobile.' tools="" locationInAdvantage="Change password">Tip</Tips_Implement_DevOps_Process>
 
     <ShipEx_Free_Number_Of_Products datatype="string" description="The quantity of products in a single purchase that are entitled to free shipping. Default = 1." tools="" locationInAdvantage="Order Payment">1</ShipEx_Free_Number_Of_Products>
     <Tips_Mock_SOAP_ShipEx_Service datatype="enum:[Tip]" description="The shipping cost is determined by a table table in the 'shipex-mock-for-db.properties' configuration file, according to country.  Shipping costs to countries not defined in the table are determined based on the value for Other.  Free shipping can be provided when the number of items ordered is equal to or less than the value  of the 'ShipEx_Free_Number_Of_Products' configuration parameter (default = 1)." tools="" locationInAdvantage="Order Payment">Tip</Tips_Mock_SOAP_ShipEx_Service>
