@@ -60,7 +60,7 @@
 	</profile>
 	
 	<profile>
-	    <id>pack_wars_without_acountservices</id>
+	    <id>pack_wars_without_accountservices</id>
 		<build>
 			<finalName>res</finalName>
 			<plugins>
