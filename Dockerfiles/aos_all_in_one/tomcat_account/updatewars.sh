@@ -6,7 +6,7 @@ cd "./Temp"
 chmod 777 accountservice.war
 ls -l
 jar -xf accountservice.war
-sed -i 's/=validate/=create/g' "./WEB-INF/classes/properties/internal_config_for_env.properties"
+#sed -i 's/=validate/=create/g' "./WEB-INF/classes/properties/internal_config_for_env.properties"
 command1="sed -i 's/=localhost/=${HOST_IP}/g' ./WEB-INF/classes/properties/internal_config_for_env.properties"
 command2="sed -i 's/=5432/=${POSTGRES_PORT}/g' ./WEB-INF/classes/properties/internal_config_for_env.properties"
 command3="sed -i 's/account\.soapservice\.url\.port=8080/account\.soapservice\.url\.port=${ACCOUNT_PORT}/g' ./WEB-INF/classes/properties/services.properties"
