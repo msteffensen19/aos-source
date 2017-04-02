@@ -279,7 +279,7 @@ define(['./module'], function (services) {
                         zipcode: accountDetails.zipcode,
                         phoneNumber: accountDetails.mobilePhone,
                         email: accountDetails.email,
-                        accountType: 20,
+                        accountType: accountDetails.accountType,
                         allowOffersPromotion: accountDetails.allowOffersPromotion,
                         base64Token: "Basic "+$rootScope.userCookie.response.t_authorization
                     }

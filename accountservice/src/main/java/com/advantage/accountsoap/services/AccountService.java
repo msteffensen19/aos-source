@@ -282,10 +282,11 @@ public class AccountService implements Injectable {
             //  Not the same user and current user is not ADMIN
             logger.error("Not the same user and current user is not ADMIN");
             throw new VerificationTokenException("Not the same user and current user is not ADMIN");
-        } else {
-            String parameterValue = RestApiHelper.getDemoAppConfigParameterValue("Implement_DevOps_Process");
+        }
+//        else {
+//            String parameterValue = RestApiHelper.getDemoAppConfigParameterValue("Implement_DevOps_Process");
             //  region PlaceHolder Feature 1789
-            if (parameterValue.equalsIgnoreCase("Yes")) {
+//            if (parameterValue.equalsIgnoreCase("Yes")) {
                 //  TODO DevOps - PlaceHolder Feature 2055
                 //  Registered user and current user are the same
 
@@ -301,9 +302,9 @@ public class AccountService implements Injectable {
                         logger.warn(message);
                         response = new AccountStatusResponse(false, message, -1);
                     }*/
-            }
+//            }
             //endregion
-        }
+//        }
         return response;
     }
 
