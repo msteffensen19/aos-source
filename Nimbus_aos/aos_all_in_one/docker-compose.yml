@@ -1,7 +1,7 @@
 version: '3'
 services:
   postgresql:
-    image: hpsoftware/aos-postgres
+    image: performancetesting/aos-postgres
     ports:
     - "${POSTGRES_PORT}:5432"
     container_name: postgresql
@@ -9,7 +9,7 @@ services:
   tomcat_6:
     env_file:
     - .env
-    image: tomcat_all_compose
+    image: performancetesting/aos-main-app
     ports:
     - "${WARS_PORT}:8080"
     depends_on:
@@ -19,7 +19,7 @@ services:
   tomcat_account:
     env_file:
     - .env
-    image: tomcat_account_compose
+    image: performancetesting/aos-accountservice
     ports:
     - "${ACCOUNT_PORT}:8080"
     depends_on:
