@@ -18,7 +18,7 @@ public class HistoryOrderLineDto {
     private long userId;
     @JsonProperty("OrderNumber")
     private long orderNumber;
-    @JsonIgnore
+    @JsonProperty("orderTime")
     private long orderTimestamp;
     @JsonProperty("OrderDate")
     private String orderDate;

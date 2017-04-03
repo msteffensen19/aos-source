@@ -12,6 +12,7 @@ define(['./module'], function (directives) {
                 template: $templateCache.get('app/partials/orderSearch.html'),
                 controller: ['$scope', function (s) {
 
+                    s.autoCompleteValue = '';
                     s.categoryFilter = null;
                     s.categoryName = '';
                     s.allowClosing = true;

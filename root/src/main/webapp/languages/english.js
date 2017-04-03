@@ -256,6 +256,7 @@ var english = {
 
     'ORDER_NUMBER': 'ORDER NUMBER',
     'ORDER_DATE': 'ORDER DATE',
+    'ORDER_TIME': 'ORDER TIME',
     'TOTAL_PRICE': 'TOTAL PRICE',
 
     'COLOR': 'COLOR',
