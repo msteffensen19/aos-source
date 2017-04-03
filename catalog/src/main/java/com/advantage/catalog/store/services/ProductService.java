@@ -212,7 +212,18 @@ public class ProductService {
         Set<String> colors = new HashSet<>();
         for (Product product : products) {
             Set<ColorAttribute> set = product.getColors();
-            colors.addAll(set.stream().map(ColorAttribute::getCode).collect(Collectors.toList()));
+
+            for (Iterator<ColorAttribute> it = set.iterator(); it.hasNext(); ) {
+                ColorAttribute color = it.next();
+                if (color.getInStock() > 0) {
+                    colors.addAll(set.stream().map(ColorAttribute::getCode).collect(Collectors.toList()));
+                }
+//                System.out.println(f);
+//                if (f.equals(new ColorAttribute("Hello")))
+//                    System.out.println("foo found");
+            }
+
+//            colors.addAll(set.stream().map(ColorAttribute::getCode).collect(Collectors.toList()));
         }
 
         return colors;

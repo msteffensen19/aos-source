@@ -190,24 +190,6 @@ Helper.sortAttributesByName = function (attrs) {
 }
 
 Helper.sortArrayByColorName = function (colors) {
-    print("888888888888888 colors");
-    print(colors);
-
-    // var elements = [1, 5, 5, 3, 5, 2, 4];
-    // for(var i = elements.length -1; i >= 0 ; i--){
-    //     if(elements[i] == 5){
-    //         elements.splice(i, 1);
-    //     }
-    // }
-
-    for(var i = colors.length -1; i >= 0 ; i--){
-        if(colors[i].inStock == 0){
-            colors.splice(i, 1);
-        }
-    }
-
-    print(colors);
-
     return colors.sort(function (a, b) {
         return a.name == b.name ? 0 : a.name < b.name ? -1 : 1;
     });
