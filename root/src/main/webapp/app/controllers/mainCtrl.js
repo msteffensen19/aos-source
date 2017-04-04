@@ -363,6 +363,8 @@ define(['./module'], function (controllers) {
                     animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();
                     defer.resolve(cart);
+                }, function(err){
+                    defer.reject(err)
                 });
                 return defer.promise;
             }

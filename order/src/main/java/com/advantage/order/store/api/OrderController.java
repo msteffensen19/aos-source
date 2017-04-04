@@ -117,6 +117,7 @@ public class OrderController {
         }
         else if(session != null && (request.getParameter("sessionId") != null && !request.getParameter("sessionId").equals("undefined")) && !request.getParameter("sessionId").equals(session.getId()))
             return false;
+        this.m_session = request.getSession();
         return true;
     }
 

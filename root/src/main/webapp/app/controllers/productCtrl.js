@@ -313,6 +313,8 @@ define(['./module'], function (controllers) {
                                     s.message._class = "";
                                 }, 4000);
                             }
+                        }, function(err){
+
                         });
                     }
                 }

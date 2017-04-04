@@ -25,6 +25,7 @@
     display: block;
     padding: 3px 3px;
     font-size: 14px;
+    white-space: nowrap;
 }
 
 .sec-view div .selectList span {

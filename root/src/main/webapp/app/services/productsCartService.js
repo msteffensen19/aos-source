@@ -348,6 +348,10 @@ define(['./module'], function (services) {
                             Loger.Received(newCart);
                             cart = newCart.data;
                             response.resolve(cart);
+                        }, function (error) {
+                            Helper.disableLoader();
+                            Loger.Received(error);
+                            response.reject(error);
                         });
 
                         return response.promise;
