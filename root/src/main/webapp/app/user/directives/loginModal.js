@@ -27,7 +27,7 @@ define(['./module'], function (directives) {
                             $scope.message._class = "";
                             $rootScope.rsMessage.text = "";
                             $rootScope.rsMessage._class = "";
-                        }, 2000);
+                        }, 0);
                         $timeout(function () {
                             $scope.message = { text: reason, _class: "invalid" }
                             $rootScope.rsMessage = { text: reason, _class: "invalid" }
