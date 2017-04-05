@@ -27,7 +27,8 @@ define(['./module'], function (services) {
                             if(ordersObj[obj.OrderNumber] == null){
                                 ordersObj[obj.OrderNumber] = {
                                     "orderDate": obj.OrderDate,
-                                    "products": []
+                                    "products": [],
+                                    "orderTime": obj.orderTime
                                 };
                             }
                             ordersObj[obj.OrderNumber].products.push({
@@ -46,7 +47,8 @@ define(['./module'], function (services) {
                             var order = {
                                 orderNumber: name,
                                 orderDate: ordersObj[name].orderDate,
-                                products: ordersObj[name].products
+                                products: ordersObj[name].products,
+                                orderTime: new Date(ordersObj[name].orderTime).toLocaleTimeString()
                             }
                             orders.push(order);
                         }

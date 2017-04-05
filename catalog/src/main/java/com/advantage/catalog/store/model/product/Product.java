@@ -7,6 +7,7 @@ import com.advantage.common.enums.ProductStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -160,7 +161,14 @@ public class Product {
     }
 
     public Set<ColorAttribute> getColors() {
-        return colors;
+        Set<ColorAttribute> colorsWithoutEmpty = new HashSet<>();
+        for (Iterator<ColorAttribute> it = colors.iterator(); it.hasNext(); ) {
+            ColorAttribute color = it.next();
+            if (color.getInStock() > 0) {
+                colorsWithoutEmpty.add(color);
+            }
+        }
+        return colorsWithoutEmpty;
     }
 
     public void setColors(Set<ColorAttribute> colors) {

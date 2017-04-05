@@ -8,7 +8,7 @@
 
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="MY_ORDERS"></h3>
         <div class="img order-search-container">
-            <orders-search data-ng-show="myOrdersCtrl.orders.length > 0" orders="myOrdersCtrl.orders"></orders-search>
+            <orders-search data-ng-show="myOrdersCtrl.orders.length > 0 || autoCompleteValue != ''" orders="myOrdersCtrl.orders"></orders-search>
         </div>
         <div id="myAccountContainer" data-ng-show="myOrdersCtrl.orders.length > 0" class="myOrderSection">
 
@@ -21,6 +21,9 @@
                         </th>
                         <th>
                             <label translate="ORDER_DATE"></label>
+                        </th>
+                        <th>
+                            <label translate="ORDER_TIME"></label>
                         </th>
                         <th>
                             <label translate="PRODUCT_NAME"></label>
@@ -41,6 +44,9 @@
                         </td>
                         <td rowspan="{{order.products.length}}" class="center">
                             <label>{{order.orderDate}}</label>
+                        </td>
+                        <td rowspan="{{order.products.length}}" class="center">
+                            <label>{{order.orderTime}}</label>
                         </td>
                         <td>
                             <img data-ng-src="/catalog/fetchImage?image_id={{order.products[0].ProductImageUrl}}"/>

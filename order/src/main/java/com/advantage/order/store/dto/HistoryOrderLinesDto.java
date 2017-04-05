@@ -17,7 +17,7 @@ public class HistoryOrderLinesDto {
     private long userId;
     @JsonProperty("OrderNumber")
     private long orderNumber;
-    @JsonIgnore
+    @JsonProperty("OrderTime")
     private long orderTimestamp;
     @JsonProperty("OrderDate")
     private Date orderDate;
@@ -118,6 +118,7 @@ public class HistoryOrderLinesDto {
     public void addOrderLine(HistoryOrderLineDto orderLine) {
         totalPrice += (orderLine.getPricePerItem() * orderLine.getQuantity());
         orderLines.add(orderLine);
+        orderTimestamp = orderLine.getOrderTimestamp();
     }
 
     public void addOrderLine(long userId, long orderNumber, long orderTimestamp, Long productId, String productImageUrl, String productName, int productColor, double pricePerItem, int quantity) {
