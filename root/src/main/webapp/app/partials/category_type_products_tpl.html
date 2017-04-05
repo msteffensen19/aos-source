@@ -60,7 +60,25 @@
 
                 </li>
                 <!--- END Price filter Section -->
+                <!--- color filter Section -->
+                <li ng-if="productsColors.length > 0">
+                    <h4 href="javascript:void(0)" class="accordion roboto-regular arrowDown" id="accordionColor"
+                        ng-click="toggleColapse('accordionColor')" translate="COLOR" role="link"></h4>
 
+                    <div class="option">
+                        <div ng-repeat="color in productsColors" class="inline-block">
+                            <a title="{{color.name}}" class="productColor " id="productsColors{{color.code}}"
+                               ng-click="includeProducts(color, 'COLOR'); toggleColorSelectedClass(color.code)"
+                               ng-style=" color.code == 'FFFFFF' ?
+                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
+                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
+                                <!--- <label></label> -->
+                            </a>
+                        </div>
+                    </div>
+
+                </li>
+                <!--- END color filter Section -->
 
                 <!--- attributes filter Section -->
                 <li ng-repeat="attrib in attributesToShow">
@@ -81,27 +99,6 @@
                     </div>
                 </li>
                 <!--- END attributes filter Section -->
-
-
-                <!--- color filter Section -->
-                <li ng-if="productsColors.length > 0">
-                    <h4 href="javascript:void(0)" class="accordion roboto-regular arrowDown" id="accordionColor"
-                        ng-click="toggleColapse('accordionColor')" translate="COLOR" role="link"></h4>
-
-                    <div class="option">
-                        <div ng-repeat="color in productsColors" class="inline-block">
-                            <a title="{{color.name}}" class="productColor " id="productsColors{{color.code}}"
-                               ng-click="includeProducts(color, 'COLOR'); toggleColorSelectedClass(color.code)"
-                               ng-style=" color.code == 'FFFFFF' ?
-                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px #9d9d9d' } :
-                              {'backgroundColor': '#' + color.code, 'border': 'solid 1px transparent'}">
-                                <!--- <label></label> -->
-                            </a>
-                        </div>
-                    </div>
-
-                </li>
-                <!--- END color filter Section -->
             </ul>
         </div>
     </div>

@@ -169,6 +169,10 @@ define(['./module'], function (directives) {
                                 attributesToShow[attributesToShow.length - 1].values.push(attributes[name][index]);
                             }
                         }
+                        _.sortBy(attributesToShow, function(d){
+                            return d.name;
+                        })
+
                         return attributesToShow;
                     }
 
