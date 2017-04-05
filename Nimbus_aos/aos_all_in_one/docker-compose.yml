@@ -11,7 +11,7 @@ services:
     - .env
     image: performancetesting/aos-main-app
     ports:
-    - "${WARS_PORT}:8080"
+    - "${MAIN_PORT}:8080"
     depends_on:
     - "postgresql"
     container_name: tomcat_6
