@@ -11,7 +11,7 @@ command1="sed -i 's/=localhost/=${POSTGRES_IP}/g' ./WEB-INF/classes/properties/i
 command2="sed -i 's/=5432/=${POSTGRES_PORT}/g' ./WEB-INF/classes/properties/internal_config_for_env.properties"
 command3="sed -i 's/account\.soapservice\.url\.port=8080/account\.soapservice\.url\.port=${ACCOUNT_PORT}/g' ./WEB-INF/classes/properties/services.properties"
 command4="sed -i 's/=8080/=${WARS_PORT}/g' ./WEB-INF/classes/properties/services.properties"
-command5="sed -i 's/account\.soapservice\.url\.host=localhost/account\.soapservice\.url\.host=localhost=${ACCOUNT_IP}/g' ${path_to_services}"
+command5="sed -i 's/account\.soapservice\.url\.host=localhost/account\.soapservice\.url\.host=${ACCOUNT_IP}/g' ${path_to_services}"
 command6="sed -i 's/=localhost/=${MAIN_IP}/g' ./WEB-INF/classes/properties/services.properties"
 eval $command1
 eval $command2

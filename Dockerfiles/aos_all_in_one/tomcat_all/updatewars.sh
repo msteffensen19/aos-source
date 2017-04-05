@@ -17,7 +17,7 @@ if [ "$i" == "ROOT.war" ];then
   path_to_services="./services.properties"
 fi
 sed -i 's/\.\./\/opt/g' "./WEB-INF/classes/log4j.properties"
-command1="sed -i 's/account\.soapservice\.url\.host=localhost/account\.soapservice\.url\.host=localhost=${ACCOUNT_IP}/g' ${path_to_services}"
+command1="sed -i 's/account\.soapservice\.url\.host=localhost/account\.soapservice\.url\.host=${ACCOUNT_IP}/g' ${path_to_services}"
 command2="sed -i 's/=localhost/=${MAIN_IP}/g' ${path_to_services}"
 command3="sed -i 's/account\.soapservice\.url\.port=8080/account\.soapservice\.url\.port=${ACCOUNT_PORT}/g' ${path_to_services}"
 command4="sed -i 's/=8080/=${WARS_PORT}/g' ${path_to_services}"
