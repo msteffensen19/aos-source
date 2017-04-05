@@ -1,9 +1,9 @@
 #!/bin/bash
 . .env
-if [ "${PUBLIC_IP}" = "LOCAL"]; then
+if [ "${PUBLIC_IP}" = "LOCAL" ]; then
  interface=`route | grep -w "default" | awk '{print $8}'`
  ip=`ifconfig | grep -A1 ${interface} | awk -F":" '/inet addr/ {print $2}' | awk '{print $1}'`
-elif [ "${PUBLIC_IP}" = "AMAZON"]; then
+elif [ "${PUBLIC_IP}" = "AMAZON" ]; then
  ip=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
 else
  ip=${PUBLIC_IP}
