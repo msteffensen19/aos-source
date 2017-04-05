@@ -20,6 +20,7 @@ eval $command4
 eval $command5
 eval $command6
 sed -i 's/single\.machine\.deployment=true/single\.machine\.deployment=false/g' "./WEB-INF/classes/properties/services.properties"
+sed -i 's/\.\./\/opt/g' "./WEB-INF/classes/log4j.properties"
 rm -rf accountservice.war
 jar -cvf accountservice.war *
 mv accountservice.war ../
