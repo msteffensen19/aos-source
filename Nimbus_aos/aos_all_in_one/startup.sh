@@ -10,5 +10,5 @@ else
 fi
 command1="sed -i 's/HOST_IP_CALCULATED/$ip/g' .env"
 eval $command1
-docker-compose up -d
+docker-compose up --pull -d
 
