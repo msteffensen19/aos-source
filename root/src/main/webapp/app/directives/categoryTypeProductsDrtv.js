@@ -11,7 +11,7 @@ define(['./module'], function (directives) {
                 replace: 'true',
                 template: $templateCache.get('app/partials/category_type_products_tpl.html'),
                 scope: {
-                    paramsToPass: '=',
+                    paramsToPass: '='
                 },
                 link: function (s, element, attrs) {
 
@@ -35,15 +35,15 @@ define(['./module'], function (directives) {
                         }
                     }
 
-                    s.options = {start: [20, 70], range: {min: 0, max: 100}}
+                    s.options = {start: [20, 70], range: {min: 0, max: 100}};
 
                     s.toggleColorSelectedClass = function (code) {
                         $("#productsColors" + code).toggleClass('colorSelected');
-                    }
+                    };
 
                     s.toggleFilterSlide = function (id) {
                         $("#" + id).slideToggle();
-                    }
+                    };
 
 
                     s.includeProducts = function (attributeVal, attributesName) {
@@ -95,7 +95,7 @@ define(['./module'], function (directives) {
                     s.toggleColapse = function (id) {
                         $('#' + id).siblings('.option').slideToggle(300);
                         $('#' + id).toggleClass('arrowUp');
-                    }
+                    };
 
 
                     configSlider();
@@ -163,16 +163,25 @@ define(['./module'], function (directives) {
                             }
                             attributesToShow.push({
                                 name: name,
-                                values: [],
+                                values: []
                             });
                             for (var index in attributes[name]) {
                                 attributesToShow[attributesToShow.length - 1].values.push(attributes[name][index]);
                             }
                         }
-                        _.sortBy(attributesToShow, function(d){
-                            return d.name;
-                        })
 
+                        // _.sortBy(attributesToShow, function(d){
+                        //     return d.name;
+                        // })
+
+                        attributesToShow.sort(function (a, b) {
+                            if(a.name < b.name) return -1;
+                            if(a.name > b.name) return 1;
+                            return 0;
+                        });
+
+                        print("attributesToShow:");
+                        print(attributesToShow);
                         return attributesToShow;
                     }
 
