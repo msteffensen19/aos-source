@@ -170,18 +170,12 @@ define(['./module'], function (directives) {
                             }
                         }
 
-                        // _.sortBy(attributesToShow, function(d){
-                        //     return d.name;
-                        // })
-
                         attributesToShow.sort(function (a, b) {
                             if(a.name < b.name) return -1;
                             if(a.name > b.name) return 1;
                             return 0;
                         });
 
-                        print("attributesToShow:");
-                        print(attributesToShow);
                         return attributesToShow;
                     }
 
