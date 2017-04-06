@@ -906,7 +906,7 @@ define(['./module'], function (directives) {
                             label.addClass("animated");
                             var dot = (a.aShow ? "." + a.aShow : "");
                             var format = "<select name='" + inputTypeName + "' name='" + inputTypeName + "' role='listbox' ng-model='secModel' ng-options='c as c" + dot
-                                + " for c in secSelectOptions' ></select>";
+                                + " for c in secSelectOptions' ><option value='' selected='selected'></select>";
 
                             //var dot = (a.aShow ? a.aShow : null);
                             //var format = "<select ng-model='secModel'>" +

@@ -1,8 +1,8 @@
 FROM tomcat:8.0-jre8
 MAINTAINER Michal Edery
 
-ENV http_proxy="http://web-proxy.il.hpecorp.net:8080"
-ENV https_proxy="http://web-proxy.il.hpecorp.net:8080"
+ENV http_proxy="http://web-proxy.sdc.hpecorp.net:8080"
+ENV https_proxy="http://web-proxy.sdc.hpecorp.net:8080"
 
 RUN apt-get update && apt-get -y install openjdk-8-jdk
 
