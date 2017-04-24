@@ -115,7 +115,9 @@
 
     <article ng-if="showVideo" class="max-width" data-ng-switch="haveInternet" >
         <div data-ng-switch-when="true" >
-            <iframe check-height="560X315" src="https://www.youtube.com/embed/GW93cz-3MRU" frameborder="0" allowfullscreen></iframe>
+            <video controls>
+                <source src="../../css/videos/How_HPE_is_Moving_Beyond_with_Memory-Driven_Computing.mp4">
+            </video>
         </div>
         <div data-ng-switch-default >
             <video controls>
