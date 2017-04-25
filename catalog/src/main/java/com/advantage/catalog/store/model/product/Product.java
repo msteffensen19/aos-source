@@ -161,6 +161,8 @@ public class Product {
     }
 
     public Set<ColorAttribute> getColors() {
+        if (productStatus.equals("OutOfStock"))
+            return colors;
         Set<ColorAttribute> colorsWithoutEmpty = new HashSet<>();
         for (Iterator<ColorAttribute> it = colors.iterator(); it.hasNext(); ) {
             ColorAttribute color = it.next();
