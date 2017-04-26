@@ -29,7 +29,7 @@ services:
   jenkins:
     env_file:
     - .env
-    image: jenkins
+    image: performancetesting/aos-accountservice
     ports:
     - "50000:50000"
     - "${JENKINS_PORT}:8080"
