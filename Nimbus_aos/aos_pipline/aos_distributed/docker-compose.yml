@@ -31,7 +31,7 @@ services:
   jenkins:
    env_file:
    - .env	
-   image: performancetesting/aos-jenkins
+   image: performancetesting/aos-jenkins-pipline
    ports:
    - "JENKINS_PORT:8080"
    volumes:
