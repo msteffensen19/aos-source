@@ -2,11 +2,6 @@
  * Created by correnti on 19/05/2016.
  */
 
-
-/////**
-//// * Created by correnti on 27/12/2015.
-//// */
-
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('secForm', ["$timeout", function ($timeout) {
@@ -17,7 +12,7 @@ define(['./module'], function (directives) {
             require: 'secForm',
             scope: {
                 secGetFormValidationWhenReady: "&",
-                secIsValidForm: "&",
+                secIsValidForm: "&"
             },
             controllerAs: "secFormCtrl",
             controller: [function () {
@@ -29,7 +24,7 @@ define(['./module'], function (directives) {
                 this.senders = [];
                 this.setButtonCtrl = function (ctrl) {
                     this.senders.push(ctrl);
-                }
+                };
 
                 this.updateState = function (id, valid, owner) {
                     var validForm = true;
@@ -60,12 +55,12 @@ define(['./module'], function (directives) {
                         }
                     }
                     return true;
-                }
+                };
 
                 this.notifyWatcher = function (id, valid) {
                     this.models.push({
                         id: id,
-                        valid: valid,
+                        valid: valid
                     });
                 };
 
@@ -77,7 +72,7 @@ define(['./module'], function (directives) {
 
                 this.setCtrl = function (_ctrl) {
                     ctrl = _ctrl;
-                }
+                };
 
                 this.isValidForm;
                 this.setIsValidForm = function (_isValidForm) {
@@ -131,7 +126,7 @@ define(['./module'], function (directives) {
             restrict: 'E',
             require: ['secSender', '^secForm'],
             scope: {
-                secSend: '&',
+                secSend: '&'
             },
             controllerAs: "senderCtrl",
             controller: ["$scope", function (s) {
@@ -175,7 +170,7 @@ define(['./module'], function (directives) {
             link: {
                 pre: function (s, e, attr, ctrls) {
                     e.addClass("sec-sender");
-                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "_btn' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</button>")
+                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "_btn' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</button>");
                     $compile(button)(s);
                     e.append(button);
 
@@ -233,15 +228,15 @@ define(['./module'], function (directives) {
             secMinLength: 1,
             secMaxLength: 2,
             secPattern: 3,
-            secCompareTo: 4,
-        }
+            secCompareTo: 4
+        };
 
         var Types = {
             text: "text",
             textarea: "textarea",
             select: "select",
             checkbox: "checkbox"
-        }
+        };
 
         var invalid = "invalid";
         var animated = "animated";
@@ -265,7 +260,7 @@ define(['./module'], function (directives) {
                 secModelCompareTo: '=',
 
                 secIsValid: '&',
-                secSelectChange: '&',
+                secSelectChange: '&'
             },
             controller: ["$scope", function (s) {
 
@@ -367,7 +362,7 @@ define(['./module'], function (directives) {
                         if ((val+"").trim() == "") {
                             return;
                         }
-                        ctrl.compareTo.val(val)
+                        ctrl.compareTo.val(val);
                         ctrl.change(input.val());
                         ctrl.blur(input.val());
                     }
@@ -406,13 +401,13 @@ define(['./module'], function (directives) {
                             s.secModel = arr[0];
                         }
                     }
-                }
+                };
 
                 s.selectItemChangeModel = function (index) {
 
                     var validation = selectedList[index];
                     if (!label.hasClass(animated)) {
-                        label.addClass(animated)
+                        label.addClass(animated);
                         $timeout(function () {
                             s.secModel = validation;
                         }, 200)
@@ -493,7 +488,7 @@ define(['./module'], function (directives) {
                                 }
                             }
                             if (!input.hasClass(in_focus) && label.hasClass(animated) && s.secModel == "") {
-                                label.removeClass(animated)
+                                label.removeClass(animated);
                                 if (isCardNumber) {
                                     removeCardNumberFourDigits()
                                 }
@@ -596,7 +591,7 @@ define(['./module'], function (directives) {
 
                 s.labelOut = function () {
                     _____selectItemMouseOut = $timeout(function () {
-                        var list = ctrl.getSelectlist()
+                        var list = ctrl.getSelectlist();
                         if (list.css("display") != "none") {
                             list.fadeOut();
                         }
@@ -646,9 +641,9 @@ define(['./module'], function (directives) {
                         },
                         keydown: function () {
                             form.changeAllowToChangeInvalidClass();
-                        },
+                        }
                     });
-                }
+                };
 
 
                 function updateTextCheckboxValidations(valid) {
@@ -855,7 +850,7 @@ define(['./module'], function (directives) {
                     if (s.secRequire) {
                         if (a.aDontChange == "true") {
                             var temp = JSON.parse(s.secRequire);
-                            temp.dontChange = true
+                            temp.dontChange = true;
                             ctrl.pushValidation(temp, Keys.secRequired);
                         }
                         else {
@@ -891,7 +886,7 @@ define(['./module'], function (directives) {
                     }, true);
 
                     var div = $("<div class='inputContainer'></div>");
-                    var type = a.aType || "text"
+                    var type = a.aType || "text";
                     var input;
                     var hideLabel = "";
                     if (!a.aHint) {
@@ -905,7 +900,7 @@ define(['./module'], function (directives) {
                             label.css("z-index", "-10");
                             label.addClass("animated");
                             var dot = (a.aShow ? "." + a.aShow : "");
-                            var format = "<select name='" + inputTypeName + "' name='" + inputTypeName + "' role='listbox' ng-model='secModel' ng-options='c as c" + dot
+                            var format = "<select name='" + a.aHint.toLowerCase() + "Listbox' role='listbox' ng-model='secModel' ng-options='c as c" + dot
                                 + " for c in secSelectOptions' ><option value='' selected='selected'></select>";
 
                             //var dot = (a.aShow ? a.aShow : null);
@@ -924,11 +919,11 @@ define(['./module'], function (directives) {
                             div.css({
                                 "padding-top": "10px",
                                 "height": "auto",
-                                "margin": "0px 0",
+                                "margin": "0px 0"
                             });
                             break;
                         default:
-                            input = $("<input name='" + inputTypeName + "' type='" + type + "' data-ng-model='secModel' />");
+                            input = $("<input name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + "' type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
                                 label.css({"display": "block"});
@@ -936,7 +931,7 @@ define(['./module'], function (directives) {
                                 div.css({
                                     "padding-top": "1px",
                                     "height": "auto",
-                                    "margin": "8px 0",
+                                    "margin": "8px 0"
                                 });
                             }
                             break;
@@ -944,7 +939,7 @@ define(['./module'], function (directives) {
 
                     if (s.secRequire) {
                         if (type != Types.checkbox && a.aStar != "false") {
-                            var star = $("<span class='star'>*</span>")
+                            var star = $("<span class='star'>*</span>");
                             div.append(star);
                         }
                     }
@@ -963,7 +958,7 @@ define(['./module'], function (directives) {
                             }
                         }, true);
                         ctrl.pushValidation(JSON.parse(s.secCompareTo), Keys.secCompareTo);
-                        var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='secModelCompareTo' />")
+                        var compareTo = $("<input style='display: none' type='" + type + "' data-ng-model='secModelCompareTo' />");
                         $compile(compareTo)(s);
                         ctrl.setCompareTo(compareTo);
                         e.append(compareTo);

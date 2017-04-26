@@ -55,7 +55,7 @@
                           a-star="false"
                           sec-model="loginUser.loginUser"
                           sec-require="mainCtrl.getRequire('User_name')"
-                          sec-name="userNameTxtField">
+                          sec-name="username">
                 </sec-view>
 
                 <sec-view a-hint="{{'Password' | translate}}"
@@ -63,8 +63,8 @@
                           a-star="false"
                           a-type="password"
                           sec-model="loginUser.loginPassword"
-                          sec-require="mainCtrl.getRequire('Password')">
-                          <!--sec-name="userPassTxtField"> in field background color appear yellow -->
+                          sec-require="mainCtrl.getRequire('Password')"
+                          sec-name="password">
                 </sec-view>
 
                 <sec-view a-hint="{{'Email' | translate}}"
@@ -72,8 +72,8 @@
                           a-star="false"
                           ng-show="mainCtrl.config.emailAddressInLogin"
                           sec-disable-validation="!mainCtrl.config.emailAddressInLogin"
-                          sec-model="loginUser.email">
-                          <!--sec-name="userEmailTxtField"> in field background color appear yellow -->
+                          sec-model="loginUser.email"
+                          sec-name="email">
                 </sec-view>
 
 
@@ -97,27 +97,3 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
