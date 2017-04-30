@@ -76,7 +76,7 @@ public class PaymentPreferencesService implements Injectable{
                                 .append(expirationDate.substring(2, 6));
 
         System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
-        if(!ValidationHelper.isValidDate(sb.toString())) {
+        if(!ValidationHelper.isValidDate(ValidationHelper.getLastDayOfMonthDate(sb.toString()))) {
             return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_EXPIRATION_DATE_FORMAT, -1);
         }
 
@@ -135,7 +135,7 @@ public class PaymentPreferencesService implements Injectable{
                 .append(expirationDate.substring(2, 6));
 
         System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
-        if(!ValidationHelper.isValidDate(sb.toString())) {
+        if(!ValidationHelper.isValidDate(ValidationHelper.getLastDayOfMonthDate(sb.toString()))) {
             return new PaymentPreferencesStatusResponse(false, "updateMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_EXPIRATION_DATE_FORMAT, -1);
         }
         PaymentPreferences preferences = paymentPreferencesRepository.updateMasterCredit(cardNumber, expirationDate,

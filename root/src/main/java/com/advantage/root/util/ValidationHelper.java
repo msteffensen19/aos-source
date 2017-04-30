@@ -8,6 +8,8 @@ import org.apache.log4j.Priority;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -117,6 +119,34 @@ public class ValidationHelper {
             logger.log(level, string + " " + m + " to pattern " + regExp);
         }
         return isValid;
+    }
+
+    /**
+     * By stringDate returns string date with last day in this month
+     */
+    public static String getLastDayOfMonthDate(final String stringDate) {
+        SimpleDateFormat dateFormat = null;
+        if (Pattern.compile(AMERICAN_DATE_PATTERN).matcher(stringDate).matches()) {
+            dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        } else if (Pattern.compile(EUROPEAN_DATE_PATTERN).matcher(stringDate).matches()) {
+            dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        } else if (Pattern.compile(SCANDINAVIAN_DATE_PATTERN).matcher(stringDate).matches()) {
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        }
+
+        Date convertedDate = null;
+        try {
+            convertedDate = dateFormat.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(convertedDate);
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        String newDate = dateFormat.format(c.getTime());
+
+        return newDate;
     }
 
     /**
