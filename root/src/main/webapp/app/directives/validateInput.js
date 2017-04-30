@@ -923,6 +923,9 @@ define(['./module'], function (directives) {
                             });
                             break;
                         default:
+                            if (a.aHint == null) {
+                                a.aHint = "i_agree";
+                            }
                             input = $("<input name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + "' type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
