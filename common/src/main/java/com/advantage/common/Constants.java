@@ -62,6 +62,8 @@ public class Constants {
     public static final String ENV_ALLOW_USER_CONFIGURATION = "allow.user.configuration";
     public final static String ENV_USER_LOGIN_TIMEOUT = "user.login.timeout";
     public final static String ENV_MAX_CONCURRENT_SESSIONS = "Max.Concurrent.Sessions";
+    public final static String ENV_PRODUCTION_IP = "production.ip";
+    public final static String ENV_PRODUCTION_NAME = "production.name";
 
     public static class UserSession {
         public static final String TOKEN = "token";

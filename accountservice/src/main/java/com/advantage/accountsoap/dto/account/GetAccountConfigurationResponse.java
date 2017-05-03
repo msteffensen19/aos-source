@@ -15,8 +15,11 @@ import javax.xml.bind.annotation.*;
                 "userSecondWsdl",
                 "userLoginTimeout",
                 "allowUserConfiguration",
-                "maxConcurrentSessions"
+                "productionIp",
+                "productionName"
         })
+        //"maxConcurrentSessions",
+
 @XmlRootElement(name = "GetAccountConfigurationResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetAccountConfigurationResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -31,8 +34,12 @@ public class GetAccountConfigurationResponse {
     private int userLoginTimeout;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean allowUserConfiguration;
+    //@XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    //private int maxConcurrentSessions;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private int maxConcurrentSessions;
+    private String productionIp;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private String productionName;
 
     public GetAccountConfigurationResponse() {
     }
@@ -43,7 +50,8 @@ public class GetAccountConfigurationResponse {
                                            boolean userSecondWsdl,
                                            int userLoginTimeout,
                                            boolean allowUserConfiguration,
-                                           int maxConcurrentSessions) {
+                                           String productionIp,
+                                           String productionName) {
 
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInSeconds = loginBlockingIntervalInMilliSeconds;
@@ -51,7 +59,9 @@ public class GetAccountConfigurationResponse {
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
         this.allowUserConfiguration = allowUserConfiguration;
-        this.maxConcurrentSessions = maxConcurrentSessions;
+        //this.maxConcurrentSessions = maxConcurrentSessions;
+        this.productionIp = productionIp;
+        this.productionName = productionName;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -102,12 +112,28 @@ public class GetAccountConfigurationResponse {
         this.allowUserConfiguration = allowUserConfiguration;
     }
 
-    public int getMaxConcurrentSessions() {
+    /*public int getMaxConcurrentSessions() {
         return maxConcurrentSessions;
     }
 
     public void setMaxConcurrentSessions(int maxConcurrentSessions) {
         this.maxConcurrentSessions = maxConcurrentSessions;
+    }*/
+
+    public String getProductionIp() {
+        return this.productionIp;
+    }
+
+    public void setProductionIp(String productionIp) {
+        this.productionIp = productionIp;
+    }
+
+    public String getProductionName() {
+        return this.productionName;
+    }
+
+    public void setProductionName(String productionName) {
+        this.productionName = productionName;
     }
 
     @Override
@@ -119,7 +145,9 @@ public class GetAccountConfigurationResponse {
                 ", userSecondWsdl=" + userSecondWsdl +
                 ", userLoginTimeout=" + userLoginTimeout +
                 ", allowUserConfiguration=" + allowUserConfiguration +
-                ", maxConcurrentSessions=" + maxConcurrentSessions +
+                ", productionIp=" + productionIp +
+                ", productionName=" + productionName +
                 '}';
     }
+     //", maxConcurrentSessions=" + maxConcurrentSessions +
 }

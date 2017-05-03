@@ -27,7 +27,9 @@ public class AccountConfiguration {
     private static int productInStockDefaultValue;
     private static int userLoginTimeout;
     private static String allowUserConfiguration;
-    private static int maxConcurrentSessions;
+    //private static int maxConcurrentSessions;
+    private static String productionIp;
+    private static String productionName;
 
     //  //  Class that is called must have a method "public void init() throws Exception"
     //@Bean(initMethod = "init")
@@ -42,14 +44,18 @@ public class AccountConfiguration {
         this.setProductInStockDefaultValue(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserLoginTimeout(Constants.ENV_USER_LOGIN_TIMEOUT);
         this.setAllowUserConfiguration(Constants.ENV_ALLOW_USER_CONFIGURATION);
-        this.setMaxConcurrentSessions(Constants.ENV_MAX_CONCURRENT_SESSIONS);
+        //this.setMaxConcurrentSessions(Constants.ENV_MAX_CONCURRENT_SESSIONS);
+        this.setProductionIp(Constants.ENV_PRODUCTION_IP);
+        this.setProductionName(Constants.ENV_PRODUCTION_NAME);
 
         logger.debug("Configuration: loginBlockingIntervalInSeconds=" + this.getLoginBlockingIntervalInSeconds() + System.lineSeparator());
         logger.debug("Configuration: numberOfFailedLoginAttemptsBeforeBlocking=" + this.getNumberOfLoginAttemptsBeforeBlocking() + System.lineSeparator());
         logger.debug("Configuration: productInStockDefaultValue=\"" + this.getProductInStockDefaultValue() + "\"" + System.lineSeparator());
         logger.debug("Configuration: userLoginTimeout=\"" + this.getUserLoginTimeout() + "\"" + System.lineSeparator());
         logger.debug("Configuration: allowUserConfiguration=\"" + this.getAllowUserConfiguration() + "\"" + System.lineSeparator());
-        logger.debug("Configuration: maxConcurrentSessions=\"" + this.getMaxConcurrentSessions() + "\"" + System.lineSeparator());
+        //logger.debug("Configuration: maxConcurrentSessions=\"" + this.getMaxConcurrentSessions() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: productionIp=\"" + this.getProductionIp() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: productionName=\"" + this.getProductionName() + "\"" + System.lineSeparator());
 
         return 1;   //  Successful
     }
@@ -113,13 +119,31 @@ public class AccountConfiguration {
         allowUserConfiguration = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
     }
 
-    public static int getMaxConcurrentSessions() {
+    /*public static int getMaxConcurrentSessions() {
         return maxConcurrentSessions;
     }
 
     public void setMaxConcurrentSessions(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
         maxConcurrentSessions = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
+    }*/
+
+    public static String getProductionIp() {
+        return productionIp;
+    }
+
+    public void setProductionIp(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        productionIp = (parameterValue != null ? env.getProperty(parameterKey) : "null");
+    }
+
+    public static String getProductionName() {
+        return productionName;
+    }
+
+    public void setProductionName(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        productionName = (parameterValue != null ? env.getProperty(parameterKey) : "null");
     }
 
     public GetAccountConfigurationResponse getAllConfigurationParameters() {
@@ -130,9 +154,10 @@ public class AccountConfiguration {
         getAccountConfigurationResponse.setProductInStockDefaultValue(this.getProductInStockDefaultValue());
         getAccountConfigurationResponse.setUserLoginTimeout(this.getUserLoginTimeout());
         getAccountConfigurationResponse.setAllowUserConfiguration(this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
-        getAccountConfigurationResponse.setMaxConcurrentSessions(this.getMaxConcurrentSessions());
-
         getAccountConfigurationResponse.setUserSecondWsdl(false);   //  MOVED to user-level
+        //getAccountConfigurationResponse.setMaxConcurrentSessions(this.getMaxConcurrentSessions());
+        getAccountConfigurationResponse.setProductionIp(this.getProductionIp());
+        getAccountConfigurationResponse.setProductionName(this.getProductionName());
 
         return getAccountConfigurationResponse;
     }
