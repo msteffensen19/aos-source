@@ -3,7 +3,6 @@ package com.advantage.accountsoap.config;
 import com.advantage.accountsoap.dto.account.GetAccountConfigurationResponse;
 import com.advantage.common.Constants;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -27,7 +26,6 @@ public class AccountConfiguration {
     private static int productInStockDefaultValue;
     private static int userLoginTimeout;
     private static String allowUserConfiguration;
-    //private static int maxConcurrentSessions;
     private static String productionIp;
     private static String productionName;
 
@@ -44,7 +42,6 @@ public class AccountConfiguration {
         this.setProductInStockDefaultValue(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserLoginTimeout(Constants.ENV_USER_LOGIN_TIMEOUT);
         this.setAllowUserConfiguration(Constants.ENV_ALLOW_USER_CONFIGURATION);
-        //this.setMaxConcurrentSessions(Constants.ENV_MAX_CONCURRENT_SESSIONS);
         this.setProductionIp(Constants.ENV_PRODUCTION_IP);
         this.setProductionName(Constants.ENV_PRODUCTION_NAME);
 
@@ -53,7 +50,6 @@ public class AccountConfiguration {
         logger.debug("Configuration: productInStockDefaultValue=\"" + this.getProductInStockDefaultValue() + "\"" + System.lineSeparator());
         logger.debug("Configuration: userLoginTimeout=\"" + this.getUserLoginTimeout() + "\"" + System.lineSeparator());
         logger.debug("Configuration: allowUserConfiguration=\"" + this.getAllowUserConfiguration() + "\"" + System.lineSeparator());
-        //logger.debug("Configuration: maxConcurrentSessions=\"" + this.getMaxConcurrentSessions() + "\"" + System.lineSeparator());
         logger.debug("Configuration: productionIp=\"" + this.getProductionIp() + "\"" + System.lineSeparator());
         logger.debug("Configuration: productionName=\"" + this.getProductionName() + "\"" + System.lineSeparator());
 
@@ -119,15 +115,6 @@ public class AccountConfiguration {
         allowUserConfiguration = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
     }
 
-    /*public static int getMaxConcurrentSessions() {
-        return maxConcurrentSessions;
-    }
-
-    public void setMaxConcurrentSessions(final String parameterKey) {
-        String parameterValue = env.getProperty(parameterKey);
-        maxConcurrentSessions = (parameterValue != null ? Integer.valueOf(parameterValue) : 0);
-    }*/
-
     public static String getProductionIp() {
         return productionIp;
     }
@@ -155,7 +142,6 @@ public class AccountConfiguration {
         getAccountConfigurationResponse.setUserLoginTimeout(this.getUserLoginTimeout());
         getAccountConfigurationResponse.setAllowUserConfiguration(this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
         getAccountConfigurationResponse.setUserSecondWsdl(false);   //  MOVED to user-level
-        //getAccountConfigurationResponse.setMaxConcurrentSessions(this.getMaxConcurrentSessions());
         getAccountConfigurationResponse.setProductionIp(this.getProductionIp());
         getAccountConfigurationResponse.setProductionName(this.getProductionName());
 

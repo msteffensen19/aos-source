@@ -451,7 +451,8 @@
         <xs:element name="userSecondWsdl" type="xs:boolean" form="qualified"/>
         <xs:element name="userLoginTimeout" type="xs:int" form="qualified"/>
         <xs:element name="allowUserConfiguration" type="xs:boolean" form="qualified"/>
-        <xs:element name="maxConcurrentSessions" type="xs:int" form="qualified"/>
+        <xs:element name="productionIp" type="xs:string" form="qualified"/>
+        <xs:element name="productionName" type="xs:string" form="qualified"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

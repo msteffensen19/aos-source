@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.*;
                 "productionIp",
                 "productionName"
         })
-        //"maxConcurrentSessions",
 
 @XmlRootElement(name = "GetAccountConfigurationResponse", namespace = WebServiceConfig.NAMESPACE_URI)
 public class GetAccountConfigurationResponse {
@@ -34,8 +33,6 @@ public class GetAccountConfigurationResponse {
     private int userLoginTimeout;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean allowUserConfiguration;
-    //@XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    //private int maxConcurrentSessions;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String productionIp;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -59,7 +56,6 @@ public class GetAccountConfigurationResponse {
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
         this.allowUserConfiguration = allowUserConfiguration;
-        //this.maxConcurrentSessions = maxConcurrentSessions;
         this.productionIp = productionIp;
         this.productionName = productionName;
     }
@@ -112,14 +108,6 @@ public class GetAccountConfigurationResponse {
         this.allowUserConfiguration = allowUserConfiguration;
     }
 
-    /*public int getMaxConcurrentSessions() {
-        return maxConcurrentSessions;
-    }
-
-    public void setMaxConcurrentSessions(int maxConcurrentSessions) {
-        this.maxConcurrentSessions = maxConcurrentSessions;
-    }*/
-
     public String getProductionIp() {
         return this.productionIp;
     }
@@ -149,5 +137,4 @@ public class GetAccountConfigurationResponse {
                 ", productionName=" + productionName +
                 '}';
     }
-     //", maxConcurrentSessions=" + maxConcurrentSessions +
 }
