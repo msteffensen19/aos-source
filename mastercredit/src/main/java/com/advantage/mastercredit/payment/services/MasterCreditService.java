@@ -224,7 +224,7 @@ public class MasterCreditService {
                 IF TransactionDate <= Today Then Transaction APPROVED (Payment Successful)
              */
             Date date = convertStringToDate(sb.toString(), "dd.MM.yyyy");
-            if (date.getTime() > new Date().getTime()) {
+            if (date.getTime() >= new Date().getTime()) {
                 responseStatus.setResponseCode(ResponseEnum.REJECTED.getStringCode());
                 responseStatus.setResponseReason("Payment rejected");
                 responseStatus.setReferenceNumber(0);
