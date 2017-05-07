@@ -32,6 +32,7 @@ sed -i "s/POSTGRES_PORT/${POSTGRES_PORT}/g" docker-compose.yml
 sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
 sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
 sed -i "s/JENKINS_PORT/${JENKINS_PORT}/g" docker-compose.yml
+sed -i "s/TAG/${TAG}/g" docker-compose.yml
 
 # change host name
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | while read line; do command="sed -i '0,/HOST_NAME/{s/HOST_NAME/$line/}' docker-compose.yml"; echo $command; eval $command; done
