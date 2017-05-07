@@ -10,7 +10,14 @@ sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
 # change public ip
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | xargs docker inspect $1 | grep "Addr" | awk '{ gsub("\"",""); print $2}' | while read line; do command="sed -i '0,/PUBLIC_IP/{s/PUBLIC_IP/$line/}' .env"; echo $command; eval $command; done
 #ip of the host
-public_ip=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
+if [ "${PUBLIC_IP}" = "LOCAL" ]; then
+ interface=`route | grep -w "default" | awk '{print $8}'`
+ ip=`ifconfig | grep -A1 ${interface} | awk -F":" '/inet addr/ {print $2}' | awk '{print $1}'`
+elif [ "${PUBLIC_IP}" = "AMAZON" ]; then
+ ip=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
+else
+ ip=${PUBLIC_IP}
+fi
 command4="sed -i 's/PUBLIC_IP/${public_ip}/g' .env"
 eval $command4
 #host name of the host
