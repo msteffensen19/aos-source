@@ -110,7 +110,7 @@ public class OrderController {
             this.m_session = request.getSession();
             return true;
         }
-        else if(session == null || (session != null && !request.getRequestedSessionId().equals(session.getId()))){//session request isnt equal to the current session
+        else if(session != null && !request.getRequestedSessionId().equals(session.getId())){//session request isnt equal to the current session
             //session expired
             request.getSession();//create a new one
             return false;//return 401
