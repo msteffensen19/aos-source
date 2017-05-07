@@ -5,8 +5,9 @@
 workspace=`pwd`
 one_level_up_workspace="${workspace%/*}"
 two_levels_up_workspace="${one_level_up_workspace%/*}"
+three_levels_up_workspace="${two_levels_up_workspace%/*}"
 newstring=""
-IFS='/' read -r -a array <<< "${two_levels_up_workspace}"
+IFS='/' read -r -a array <<< "${three_levels_up_workspace}"
 for element in "${array[@]}"
 do
     echo "$element"
