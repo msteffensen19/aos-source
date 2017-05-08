@@ -146,13 +146,14 @@ define(['./module'], function (directives) {
                 };
 
                 this.formIsValid = function (valid) {
-
                     if (allowToChangeInvalidClass) {
                         if (valid) {
                             button.removeClass(invalid);
+                            button.removeAttr('disabled');
                         }
                         else {
                             button.addClass(invalid);
+                            button.prop("disabled", true);
                         }
                     }
                 };
@@ -164,13 +165,14 @@ define(['./module'], function (directives) {
                 this.setDisableUntilSomeChange = function () {
                     allowToChangeInvalidClass = false;
                     button.addClass(invalid);
+                    button.prop("disabled", true);
                 };
 
             }],
             link: {
                 pre: function (s, e, attr, ctrls) {
                     e.addClass("sec-sender");
-                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "_btn' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()' role=''>" + attr.aValue + "</button>");
+                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "_btn' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()'>" + attr.aValue + "</button>");
                     $compile(button)(s);
                     e.append(button);
 
