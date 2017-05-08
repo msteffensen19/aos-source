@@ -19,7 +19,7 @@ elif [ "${PUBLIC_IP}" = "AMAZON" ]; then
 else
  ip=${PUBLIC_IP}
 fi
-command4="sed -i 's/PUBLIC_IP_CALCULATED/${public_ip}/g' .env"
+command4="sed -i 's/PUBLIC_IP_CALCULATED/${ip}/g' .env"
 eval $command4
 #host name of the host
 host_name=`docker node ls | grep -w Leader | awk '{print $3}'`
