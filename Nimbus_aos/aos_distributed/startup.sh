@@ -9,7 +9,7 @@ sed -i "s/TAG/${TAG}/g" docker-compose.yml
 # change host name
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | while read line; do command="sed -i '0,/HOST_NAME/{s/HOST_NAME/$line/}' docker-compose.yml"; echo $command; eval $command; done
 # change public ip
- docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | xargs docker inspect $1 | grep "Addr" | awk '{ gsub("\"",""); print $2}' | while read line; do command="sed -i '0,/PUBLIC_IP/{s/PUBLIC_IP/$line/}' .env"; echo $command; eval $command; done
+ docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | xargs docker inspect $1 | grep "Addr" | awk '{ gsub("\"",""); print $2}' | while read line; do command="sed -i '0,/PUBLIC_IP_CALCULATED/{s/PUBLIC_IP_CALCULATED/$line/}' .env"; echo $command; eval $command; done
 #ip of the host
 if [ "${PUBLIC_IP}" = "LOCAL" ]; then
  interface=`route | grep -w "default" | awk '{print $8}'`
@@ -19,7 +19,7 @@ elif [ "${PUBLIC_IP}" = "AMAZON" ]; then
 else
  ip=${PUBLIC_IP}
 fi
-command4="sed -i 's/PUBLIC_IP/${public_ip}/g' .env"
+command4="sed -i 's/PUBLIC_IP_CALCULATED/${public_ip}/g' .env"
 eval $command4
 #host name of the host
 host_name=`docker node ls | grep -w Leader | awk '{print $3}'`
