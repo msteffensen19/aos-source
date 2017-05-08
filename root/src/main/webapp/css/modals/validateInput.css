@@ -203,7 +203,7 @@ input:-webkit-autofill {
     cursor: pointer;
     display: inline-block;
     position: relative;
-    text-indent: 22px;
+    margin-left: 22px;
     top: -2px;
     width: 100%;
     font-size: 13px;
