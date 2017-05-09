@@ -28,4 +28,5 @@ eval $command2
 echo echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/DEMOAPP-PIPLINE/build" > $workspace/.git/hooks/post-commit
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
+docker-compose pull
 docker-compose up -d
