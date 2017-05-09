@@ -12,6 +12,11 @@ command1="sed -i 's/HOST_IP_CALCULATED/$ip/g' .env"
 eval $command1
 . .env
 workspace=`pwd`
+
+docker_compose_path=$(echo "$workspace" | sed 's/\//\\\//g')
+command2="sed -i 's/DOCKER_COMPOSE_PATH_CALCULATED/${docker_compose_path}\//g' .env"
+eval $command2
+
 one_level_up_workspace="${workspace%/*}"
 two_levels_up_workspace="${one_level_up_workspace%/*}"
 three_levels_up_workspace="${two_levels_up_workspace%/*}"
