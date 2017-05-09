@@ -14,15 +14,8 @@ workspace=`pwd`
 one_level_up_workspace="${workspace%/*}"
 two_levels_up_workspace="${one_level_up_workspace%/*}"
 three_levels_up_workspace="${two_levels_up_workspace%/*}"
-newstring=""
-IFS='/' read -r -a array <<< "${three_levels_up_workspace}"
-for element in "${array[@]}"
-do
-    echo "$element"
-    newstring="$newstring$element\/"
-    echo "newstring=$newstring"
-done
-command2="sed -i 's/WORKSPACE/${newstring}accountservice/g' docker-compose.yml"
+three_levels_up_workspace=$(echo "$three_levels_up_workspace" | sed 's/\//\\\//g')
+command2="sed -i 's/WORKSPACE/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
 eval $command2
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker-compose up -d

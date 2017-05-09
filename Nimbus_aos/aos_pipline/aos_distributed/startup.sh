@@ -6,28 +6,13 @@ workspace=`pwd`
 one_level_up_workspace="${workspace%/*}"
 two_levels_up_workspace="${one_level_up_workspace%/*}"
 three_levels_up_workspace="${two_levels_up_workspace%/*}"
-newstring=""
-IFS='/' read -r -a array <<< "${three_levels_up_workspace}"
-for element in "${array[@]}"
-do
-    echo "$element"
-    newstring="$newstring$element\/"
-    echo "newstring=$newstring"
-done
-command1="sed -i 's/WORKSPACE/${newstring}accountservice/g' docker-compose.yml"
+three_levels_up_workspace=$(echo "$three_levels_up_workspace" | sed 's/\//\\\//g')
+command1="sed -i 's/WORKSPACE/${newstring}\/accountservice/g' docker-compose.yml"
 eval $command1
 
-newstring2=""
-IFS='/' read -r -a array2 <<< "${workspace}"
-for element2 in "${array2[@]}"
-do
-    echo "$element2"
-    newstring2="$newstring2$element2\/"
-    echo "newstring2=$newstring2"
-done
-command2="sed -i 's/WORKSPACE_PATH_CALCULATED/${newstring2}/g' .env"
+workspace=$(echo "$workspace" | sed 's/\//\\\//g')
+command2="sed -i 's/WORKSPACE_PATH_CALCULATED/${workspace}\//g' .env"
 eval $command2
-
 
 sed -i "s/POSTGRES_PORT/${POSTGRES_PORT}/g" docker-compose.yml
 sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
