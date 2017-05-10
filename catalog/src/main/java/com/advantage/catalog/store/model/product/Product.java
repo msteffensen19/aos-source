@@ -86,6 +86,9 @@ public class Product {
     @JsonIgnore
     private Set<ImageAttribute> images = new HashSet<>();
 
+    @Column(name = "managed_image_id_test")
+    private String managedImageIdTest;
+
     @JsonIgnore
     private char active;
 

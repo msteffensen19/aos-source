@@ -63,6 +63,7 @@ public class JpaConfig {
         String hibernateHbm2ddlAuto = SystemParameters.getHibernateHbm2ddlAuto(HIBERNATE_HBM2DDL_AUTO_VALUE);
         jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, hibernateHbm2ddlAuto);
         jpaProperties.put(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME, HIBERNATE_DIALECT_VALUE);
+        jpaProperties.put("logging.level.org.hibernate.tool.hbm2ddl", "DEBUG");
         if (logger.isTraceEnabled()) {
             StringBuilder sb = new StringBuilder("JPA properties put: ").append(System.lineSeparator());
             sb.append(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME).append("=").append(hibernateHbm2ddlAuto).append(System.lineSeparator());
