@@ -26,8 +26,9 @@ public class AccountConfiguration {
     private static int productInStockDefaultValue;
     private static int userLoginTimeout;
     private static String allowUserConfiguration;
-    private static String productionIp;
-    private static String productionName;
+    private static String productionHostIp;
+    private static String productionHostName;
+    private static String productionHostPortAccountservice;
 
     //  //  Class that is called must have a method "public void init() throws Exception"
     //@Bean(initMethod = "init")
@@ -42,16 +43,18 @@ public class AccountConfiguration {
         this.setProductInStockDefaultValue(Constants.ENV_PRODUCT_INSTOCK_DEFAULT_VALUE);
         this.setUserLoginTimeout(Constants.ENV_USER_LOGIN_TIMEOUT);
         this.setAllowUserConfiguration(Constants.ENV_ALLOW_USER_CONFIGURATION);
-        this.setProductionIp(Constants.ENV_PRODUCTION_IP);
-        this.setProductionName(Constants.ENV_PRODUCTION_NAME);
+        this.setProductionHostName(Constants.ENV_PRODUCTION_HOST_NAME);
+        this.setProductionHostPortAccountService(Constants.ENV_PRODUCTION_HOST_PORT_ACCOUNTSERVICE);
+        this.setProductionHostIp(Constants.ENV_PRODUCTION_HOST_IP);
 
         logger.debug("Configuration: loginBlockingIntervalInSeconds=" + this.getLoginBlockingIntervalInSeconds() + System.lineSeparator());
         logger.debug("Configuration: numberOfFailedLoginAttemptsBeforeBlocking=" + this.getNumberOfLoginAttemptsBeforeBlocking() + System.lineSeparator());
         logger.debug("Configuration: productInStockDefaultValue=\"" + this.getProductInStockDefaultValue() + "\"" + System.lineSeparator());
         logger.debug("Configuration: userLoginTimeout=\"" + this.getUserLoginTimeout() + "\"" + System.lineSeparator());
         logger.debug("Configuration: allowUserConfiguration=\"" + this.getAllowUserConfiguration() + "\"" + System.lineSeparator());
-        logger.debug("Configuration: productionIp=\"" + this.getProductionIp() + "\"" + System.lineSeparator());
-        logger.debug("Configuration: productionName=\"" + this.getProductionName() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: productionHostPortAccountservice=\"" + this.getProductionHostPortAccountservice() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: productionHostIp=\"" + this.getProductionHostIp() + "\"" + System.lineSeparator());
+        logger.debug("Configuration: productionHostName=\"" + this.getProductionHostName() + "\"" + System.lineSeparator());
 
         return 1;   //  Successful
     }
@@ -115,22 +118,31 @@ public class AccountConfiguration {
         allowUserConfiguration = (env.getProperty(parameterKey) != null ? env.getProperty(parameterKey) : "null");
     }
 
-    public static String getProductionIp() {
-        return productionIp;
+    public static String getProductionHostPortAccountservice() {
+        return productionHostPortAccountservice;
     }
 
-    public void setProductionIp(final String parameterKey) {
+    public void setProductionHostPortAccountService(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        productionIp = (parameterValue != null ? env.getProperty(parameterKey) : "null");
+        productionHostPortAccountservice = (parameterValue != null ? env.getProperty(parameterKey) : "null");
     }
 
-    public static String getProductionName() {
-        return productionName;
+    public static String getProductionHostIp() {
+        return productionHostIp;
     }
 
-    public void setProductionName(final String parameterKey) {
+    public void setProductionHostIp(final String parameterKey) {
         String parameterValue = env.getProperty(parameterKey);
-        productionName = (parameterValue != null ? env.getProperty(parameterKey) : "null");
+        productionHostIp = (parameterValue != null ? "http://" + env.getProperty(parameterKey) + ":" + productionHostPortAccountservice : "null");
+    }
+
+    public static String getProductionHostName() {
+        return productionHostName;
+    }
+
+    public void setProductionHostName(final String parameterKey) {
+        String parameterValue = env.getProperty(parameterKey);
+        productionHostName = (parameterValue != null ? "http://" + env.getProperty(parameterKey) : "null");
     }
 
     public GetAccountConfigurationResponse getAllConfigurationParameters() {
@@ -142,8 +154,8 @@ public class AccountConfiguration {
         getAccountConfigurationResponse.setUserLoginTimeout(this.getUserLoginTimeout());
         getAccountConfigurationResponse.setAllowUserConfiguration(this.getAllowUserConfiguration().equalsIgnoreCase("yes"));
         getAccountConfigurationResponse.setUserSecondWsdl(false);   //  MOVED to user-level
-        getAccountConfigurationResponse.setProductionIp(this.getProductionIp());
-        getAccountConfigurationResponse.setProductionName(this.getProductionName());
+        getAccountConfigurationResponse.setProductionHostIp(this.getProductionHostIp());
+        getAccountConfigurationResponse.setProductionHostName(this.getProductionHostName());
 
         return getAccountConfigurationResponse;
     }

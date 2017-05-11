@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.*;
                 "userSecondWsdl",
                 "userLoginTimeout",
                 "allowUserConfiguration",
-                "productionIp",
-                "productionName"
+                "productionHostIp",
+                "productionHostName"
         })
 
 @XmlRootElement(name = "GetAccountConfigurationResponse", namespace = WebServiceConfig.NAMESPACE_URI)
@@ -34,9 +34,9 @@ public class GetAccountConfigurationResponse {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private boolean allowUserConfiguration;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String productionIp;
+    private String productionHostIp;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String productionName;
+    private String productionHostName;
 
     public GetAccountConfigurationResponse() {
     }
@@ -47,8 +47,8 @@ public class GetAccountConfigurationResponse {
                                            boolean userSecondWsdl,
                                            int userLoginTimeout,
                                            boolean allowUserConfiguration,
-                                           String productionIp,
-                                           String productionName) {
+                                           String productionHostIp,
+                                           String productionHostName) {
 
         this.numberOfFailedLoginAttemptsBeforeBlocking = numberOfFailedLoginAttemptsBeforeBlocking;
         this.loginBlockingIntervalInSeconds = loginBlockingIntervalInMilliSeconds;
@@ -56,8 +56,8 @@ public class GetAccountConfigurationResponse {
         this.userSecondWsdl = userSecondWsdl;
         this.userLoginTimeout = userLoginTimeout;
         this.allowUserConfiguration = allowUserConfiguration;
-        this.productionIp = productionIp;
-        this.productionName = productionName;
+        this.productionHostIp = productionHostIp;
+        this.productionHostName = productionHostName;
     }
 
     public int getNumberOfFailedLoginAttemptsBeforeBlocking() {
@@ -108,20 +108,20 @@ public class GetAccountConfigurationResponse {
         this.allowUserConfiguration = allowUserConfiguration;
     }
 
-    public String getProductionIp() {
-        return this.productionIp;
+    public String getProductionHostIp() {
+        return this.productionHostIp;
     }
 
-    public void setProductionIp(String productionIp) {
-        this.productionIp = productionIp;
+    public void setProductionHostIp(String productionHostIp) {
+        this.productionHostIp = productionHostIp;
     }
 
-    public String getProductionName() {
-        return this.productionName;
+    public String getProductionHostName() {
+        return this.productionHostName;
     }
 
-    public void setProductionName(String productionName) {
-        this.productionName = productionName;
+    public void setProductionHostName(String productionHostName) {
+        this.productionHostName = productionHostName;
     }
 
     @Override
@@ -133,8 +133,8 @@ public class GetAccountConfigurationResponse {
                 ", userSecondWsdl=" + userSecondWsdl +
                 ", userLoginTimeout=" + userLoginTimeout +
                 ", allowUserConfiguration=" + allowUserConfiguration +
-                ", productionIp=" + productionIp +
-                ", productionName=" + productionName +
+                ", productionHostIp=" + productionHostIp +
+                ", productionHostName=" + productionHostName +
                 '}';
     }
 }
