@@ -50,7 +50,8 @@ public class JpaConfiguration {
         String hbm2ddlMode = SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty("order.hibernate.db.hbm2ddlAuto"));
         jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, hbm2ddlMode);//jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO, ENV_HIBERNATE_HBM2DDL_AUTO_VALUE);
         log.trace("JPA properties put: " + Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME + "=" + hbm2ddlMode);
-
+        jpaProperties.put("logging.level.org.hibernate.tool.hbm2ddl", "DEBUG");
+        jpaProperties.put("hibernate.show.sql", "true");
         if (log.isDebugEnabled()) {
             log.debug(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME + " @" + environment.getProperty(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME));
         }

@@ -64,6 +64,7 @@ public class JpaConfig {
         jpaProperties.put(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME, hibernateHbm2ddlAuto);
         jpaProperties.put(Constants.ENV_HIBERNATE_DIALECT_PARAMNAME, HIBERNATE_DIALECT_VALUE);
         jpaProperties.put("logging.level.org.hibernate.tool.hbm2ddl", "DEBUG");
+        jpaProperties.put("hibernate.show.sql", "true");
         if (logger.isTraceEnabled()) {
             StringBuilder sb = new StringBuilder("JPA properties put: ").append(System.lineSeparator());
             sb.append(Constants.ENV_HIBERNATE_HBM2DDL_AUTO_PARAMNAME).append("=").append(hibernateHbm2ddlAuto).append(System.lineSeparator());
