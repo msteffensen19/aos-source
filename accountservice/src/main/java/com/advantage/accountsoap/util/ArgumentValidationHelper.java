@@ -345,7 +345,7 @@ public abstract class ArgumentValidationHelper {
 
     public static void validateFirstAndLastName(String firstLastName) {
         if(firstLastName != null && firstLastName.length()>0)
-            if (!(firstLastName.length() > NAME_MIN_PATTERN) || firstLastName.length() > NAME_MAX_PATTERN) {
+            if (firstLastName.length() < NAME_MIN_PATTERN || firstLastName.length() > NAME_MAX_PATTERN) {
                 throw new IllegalArgumentException(STATUS_ERROR_NAME_VALUE);
             }
     }
