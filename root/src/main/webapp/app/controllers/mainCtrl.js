@@ -19,8 +19,8 @@ define(['./module'], function (controllers) {
 
             var EnterInFocus = {
                 login: 'login',
-                search: 'search',
-            }
+                search: 'search'
+            };
             var enterInFocus = "";
 
             categoryService.loadServer().then(function () {
@@ -79,7 +79,7 @@ define(['./module'], function (controllers) {
                             $("nav .navLinks").css("display", "block");
                         }
                     });
-                }
+                };
 
 
                 /* User section */
@@ -107,10 +107,10 @@ define(['./module'], function (controllers) {
 
                     $(".PopUp").fadeIn(100, function () {
                         $(".PopUp > div:nth-child(1)").animate({"top": top}, 600);
-                        $("body").css({"left": "0px",})
+                        $("body").css({"left": "0px"})
                     });
 
-                }
+                };
 
                 $(".PopUp, .closeBtn.loginPopUpCloseBtn").click(function () {
 
@@ -148,12 +148,12 @@ define(['./module'], function (controllers) {
                 $scope.redirect = function (path) {
                     Helper.mobileSectionClose();
                     $location.path(path);
-                }
+                };
 
                 $scope.mobileRedirect = function (path) {
                     Helper.mobileSectionClose();
                     $state.go(path)
-                }
+                };
 
 
                 //setTimeout(function(){
@@ -164,7 +164,7 @@ define(['./module'], function (controllers) {
                     var element = $("#" + id);
                     if (element.length > 0) {
                         $("body, html").animate({
-                            scrollTop: (element.offset().top - 65) + "px",
+                            scrollTop: (element.offset().top - 65) + "px"
                         }, 1000)
                     }
                 };
@@ -189,7 +189,7 @@ define(['./module'], function (controllers) {
                             : (ctrl.config.userLoginTimeOut * 60000));
 
                     }
-                }
+                };
 
                 /* END Application helper section */
 
@@ -240,7 +240,7 @@ define(['./module'], function (controllers) {
 
                 $scope.openMobileSection = function () {
                     Helper.mobileSectionHandler();
-                }
+                };
 
                 $scope.$on('$viewContentLoaded', function (event) {
                     Helper.forAllPage();
@@ -248,7 +248,7 @@ define(['./module'], function (controllers) {
 
             });
 
-            $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+            $scope.loginUser = {email: '', loginPassword: '', loginUser: ''};
             this.rememberMe = false;
 
             $scope.checkCart = function () {
@@ -256,36 +256,37 @@ define(['./module'], function (controllers) {
                 if ($scope.cart + "" == "undefined" || $scope.cart.productsInCart.length == 0) {
                     switch ($location.$$path) {
                         case '/login':
+                        case '/MyOrders':
                         case '/orderPayment':
                             $state.go("default");
                             break;
                     }
                 }
-            }
+            };
 
             $scope.checkLogin = function () {
                 var user = $rootScope.userCookie;
                 if (!(user && user.response && user.response.userId != -1 && user.response.t_authorization)) {
                     $state.go("default");
                 }
-            }
+            };
 
 
             var _setUser = 0;
             $scope.setUser = function () {
                 if (_setUser > 0) {
-                    $scope.signIn({email: "", loginPassword: "Aa123", loginUser: "sergio",}, true);
+                    $scope.signIn({email: "", loginPassword: "Aa123", loginUser: "sergio"}, true);
                 }
                 _setUser++;
                 setTimeout(function () {
                     _setUser = 0;
                 }, 1000);
-            }
+            };
 
 
             $scope.accountSection = function () {
                 $state.go('myAccount');
-            }
+            };
 
             $scope.signOut = function (even) {
 
@@ -295,7 +296,7 @@ define(['./module'], function (controllers) {
                 userService.singOut().then(function () {
                     $cookie.remove('lastlogin');
                     $rootScope.userCookie = undefined;
-                    $scope.loginUser = {email: '', loginPassword: '', loginUser: '',}
+                    $scope.loginUser = {email: '', loginPassword: '', loginUser: ''};
 
                     productsCartService.loadCartProducts().then(function (cart) {
                         $scope.cart = cart;
@@ -303,26 +304,26 @@ define(['./module'], function (controllers) {
                     });
                     $(".mini-title").css("display", "none");
                 });
-            }
+            };
 
             $scope.miniTitleIn = function (miniTitleId) {
                 if ($rootScope.userCookie) {
                     $("#" + miniTitleId).stop().delay(500).fadeIn(300);
                 }
-            }
+            };
 
             $scope.miniTitleOut = function (miniTitleId) {
                 if ($rootScope.userCookie) {
                     $("#" + miniTitleId).stop().delay(500).fadeOut(300);
                 }
-            }
+            };
 
             var ____loginInterval;
             $scope.miniTitleIn = function () {
                 if (____loginInterval) {
                     $timeout.cancel(____loginInterval);
                 }
-            }
+            };
 
             $scope.miniTitleOut = function (miniTitleId) {
                 if ($("#" + miniTitleId).css('display') != 'none') {
@@ -330,7 +331,7 @@ define(['./module'], function (controllers) {
                         $("#" + miniTitleId).fadeOut(300);
                     }, 2000);
                 }
-            }
+            };
 
             /* Cart section  */
 
@@ -353,11 +354,11 @@ define(['./module'], function (controllers) {
                     }
 
                 });
-            }
+            };
 
             $scope.addProduct = function (product, quantity, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
-                var defer = $q.defer()
+                var defer = $q.defer();
                 productsCartService.addProduct(product, quantity).then(function (cart) {
                     $scope.cart = cart;
                     animateToolTipCart(toastMessage);
@@ -367,10 +368,10 @@ define(['./module'], function (controllers) {
                     defer.reject(err)
                 });
                 return defer.promise;
-            }
+            };
 
             $scope.updateProduct = function (product, color, quantity, oldColor, toastMessage) {
-                var defer = $q.defer()
+                var defer = $q.defer();
                 productsCartService.updateProduct(product, color, quantity, oldColor)
                     .then(function (cart) {
                         $scope.cart = cart;
@@ -378,7 +379,7 @@ define(['./module'], function (controllers) {
                         defer.resolve(cart);
                     });
                 return defer.promise;
-            }
+            };
 
             function animateToolTipCart(toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
@@ -393,7 +394,7 @@ define(['./module'], function (controllers) {
 
                 $('#toolTipCart').delay(100).slideDown(function () {
                     $('#toolTipCart tbody').stop().animate({
-                        scrollTop: 0 + 'px',
+                        scrollTop: 0 + 'px'
                     }, 500, function () {
                         Helper.____closeTooTipCart = setTimeout(function () {
                             $('#toolTipCart').stop().slideUp();
@@ -411,13 +412,13 @@ define(['./module'], function (controllers) {
                     $('#toolTipCart').stop().slideDown();
                     fixToolTipCartHeight();
                 }, 500);
-            }
+            };
 
             $scope.leaveCart = function () {
                 enterInCart = false;
                 clearInterval(_____enterCart);
                 closeToolTipCart();
-            }
+            };
 
 
             function closeToolTipCart() {
@@ -427,7 +428,7 @@ define(['./module'], function (controllers) {
                     setTimeout(function () {
                         if (!enterInCart) {
                             toolTipCart.stop().slideUp(function () {
-                                $('#toolTipCart tbody').animate({scrollTop: 0,}, 500);
+                                $('#toolTipCart tbody').animate({scrollTop: 0}, 500);
                             });
                         }
                     }, 800);
@@ -457,9 +458,9 @@ define(['./module'], function (controllers) {
 
             this.getRequire = function (nameRequire) {
                 return JSON.stringify({
-                    error: $filter("translate")(nameRequire) + " " + $filter("translate")("field_is_required"),
+                    error: $filter("translate")(nameRequire) + " " + $filter("translate")("field_is_required")
                 });
-            }
+            };
 
 
             this.getCompare = function (name, model) {
@@ -467,9 +468,9 @@ define(['./module'], function (controllers) {
                 return JSON.stringify({
                     error: nameAfterTranslate + $filter("translate")('This_field_not_match_with'),
                     info: "- " + $filter("translate")("Same_as") + " " + nameAfterTranslate,
-                    model: model,
+                    model: model
                 });
-            }
+            };
 
             this.getCardNumber = function (exactlyNum) {
                 return JSON.stringify({
@@ -497,7 +498,7 @@ define(['./module'], function (controllers) {
                             data = [
                                 ['one_lower_letter_required', 'Including_one_lower_letter', '(?=.*[a-z])'],
                                 ['one_upper_letter_required', 'Including_one_upper_letter', '(?=.*[A-Z])'],
-                                ['one_number_required', 'Including_one_number', '(?=.*[0-9])'],
+                                ['one_number_required', 'Including_one_number', '(?=.*[0-9])']
                             ];
                             break;
                         case 'Compare':
@@ -519,7 +520,7 @@ define(['./module'], function (controllers) {
                     arr.push({
                         error: $filter("translate")(data[i][0]),
                         info: info != '' ? "- " + info : '',
-                        regex: data[i][2],
+                        regex: data[i][2]
                     });
                 }
                 return JSON.stringify({
@@ -547,14 +548,14 @@ define(['./module'], function (controllers) {
             this.getAgreeAgreementRequire = function () {
                 return JSON.stringify({
                     error: $filter("translate")("AgreeAgreementRequire"),
-                    info: $filter("translate")("AgreeAgreementRequire"),
+                    info: $filter("translate")("AgreeAgreementRequire")
                 });
             };
 
             this.getNoticeInfo = function () {
                 return JSON.stringify([
                     $filter("translate")("This_is_a_demo"),
-                    $filter("translate")("Please_enter_a_fake_data"),
+                    $filter("translate")("Please_enter_a_fake_data")
                 ]);
             };
 
