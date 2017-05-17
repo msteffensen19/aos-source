@@ -58,6 +58,8 @@
     <!--<Mix_pictures_in_home_page datatype="enum:[Yes,No]" description="No=(Default) Do nothing; Yes=Mix places of pictures in home page. Android Only (to show different pages in each device)." tools="LeanFT;MobileCenter;UFT" locationInAdvantage="">No</Mix_pictures_in_home_page>-->
     <Misplace_pictures_on_Android datatype="enum:[Yes,No]" description="Determines whether pictures are placed differently on the home page when viewed on an Android  device. Use this parameter to demonstrate how the application may function differently on different mobile OSs. Default = No. Yes = Pictures are placed differently on Android devices." tools="LeanFT;MobileCenter;UFT" locationInAdvantage="Home page">No</Misplace_pictures_on_Android>
 
+    <Mobile_crash datatype="enum:[Yes,No]" description="Determines whether crash will happen on click on checkout button." tools="LeanFT;MobileCenter;UFT" locationInAdvantage="Home page">Yes</Mobile_crash>
+
     <!-- "SLA: Add delay in add to cart response time (seconds)": 0 = (Default) Disabled; any other positive number = the number of seconds to add as a delay in response time -->
     <!-- Original Name = "SLA_Add_Delay_In_Add_To_Cart_Response_Time" ; Corrected Name = "SLA_add_delay_time" -->
     <!-- feature 1270 -->
