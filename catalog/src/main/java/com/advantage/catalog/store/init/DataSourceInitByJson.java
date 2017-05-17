@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -61,11 +62,14 @@ public class DataSourceInitByJson {
     public void init() throws Exception {
         logger.info("catalog.hibernate.db.hbm2ddlAuto=" + env.getProperty("catalog.hibernate.db.hbm2ddlAuto"));
 
-        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("catalog.hibernate.db.hbm2ddlAuto")).equals("validate")) {
-            logger.info("Start init procedure");
-            SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select a from Category a");
+        List l = query.list();
 
-            Session session = sessionFactory.openSession();
+        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("catalog.hibernate.db.hbm2ddlAuto")).equals("validate") || l.isEmpty()) {
+            logger.info("Start init procedure");
+
             logger.trace("Open session");
             Transaction transaction = session.beginTransaction();
             logger.trace("session.beginTransaction()");

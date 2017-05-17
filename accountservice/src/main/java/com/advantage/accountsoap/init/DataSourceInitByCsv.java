@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,9 +33,15 @@ public class DataSourceInitByCsv {
     private Environment env;
 
     public void init() throws Exception {
-        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("account.hibernate.db.hbm2ddlAuto")).equals("validate")) {
-            SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
-            Session session = sessionFactory.openSession();
+
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("select a from Account a where a.email=:email");
+        query.setParameter("email", "mercury@hpe.com");
+        List l = query.list();
+
+        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("account.hibernate.db.hbm2ddlAuto")).equals("validate") || l.isEmpty()) {
+
             Transaction transaction;
 
             //  Get countries list in CSV (Comma Separated Values) file
