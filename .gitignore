@@ -132,3 +132,4 @@ local.properties
 /accountservice/.gitignore
 /shipex/.gitignore
 rebel.xml
+liquibase/*

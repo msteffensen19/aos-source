@@ -37,7 +37,8 @@ public abstract class DataSourceCommonConfiguration {
             logger.debug("Start LIQUIBASE Bean");
             logger.debug(LoggerUtils.logEnvParam(environment, propertyPrefix + "hibernate.db.hbm2ddlAuto"));
         }
-        if (SystemParameters.getHibernateHbm2ddlAuto(environment.getProperty(propertyPrefix + "hibernate.db.hbm2ddlAuto")).equals("validate")) {
+        boolean a = false;
+        if (a) {
             logger.debug("Run LIQUIBASE Bean");
             if (logger.isTraceEnabled()) {
                 StringBuilder sb = new StringBuilder("Read properties").append(System.lineSeparator());
