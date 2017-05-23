@@ -8,6 +8,8 @@ services:
      placement:
        constraints:
          - node.hostname == HOST_NAME
+   volumes:
+   - data-volume-postgres:/var/lib/postgresql/data
   tomcat_6:
    env_file:
    - .env
@@ -18,6 +20,7 @@ services:
      placement:
        constraints:
          - node.hostname == HOST_NAME
+   command: ["./wait-for-it.sh", "postgresql:5432", "--", "python", "app.py"]
   tomcat_accountservice:
    env_file:
    - .env
@@ -28,3 +31,6 @@ services:
      placement:
        constraints:
          - node.hostname == HOST_NAME
+   command: ["./wait-for-it.sh", "postgresql:5432", "--", "python", "app.py"]
+volumes:
+ data-volume-postgres:
