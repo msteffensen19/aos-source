@@ -30,7 +30,7 @@
     <!--<Error_500_in_update_cart datatype="enum:[Yes,No]" description="No=(Default) Do Not Show; or Yes=Show HTTP error code 500 when trying to update cart." tools="AppPulse" locationInAdvantage="">No</Error_500_in_update_cart>-->
     <Error_500 datatype="enum:[Yes,No]" description="Determines whether to show an HTTP error code 500 when trying to update the cart. Default = No. Yes = Show error" tools="AppPulse" locationInAdvantage="Update cart page">No</Error_500>
 
-    <Mobile_crash datatype="enum:[Yes,No]" description="Determines whether crash will happen on click on checkout button." tools="AppPulse" locationInAdvantage="Home page">No</Mobile_crash>
+    <Mobile_crash datatype="enum:[Yes,No]" description="Determines whether crash will happen on click on checkout button" tools="AppPulse" locationInAdvantage="Checkout in Android native app">No</Mobile_crash>
 
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
     <!-- feature 1542 -->
