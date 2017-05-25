@@ -38,7 +38,8 @@ sed -i "s/TAG/${TAG}/g" docker-compose.yml
 ssh-keyscan ${ACCOUNT_IP} >> /root/.ssh/known_hosts
 echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | ssh root@"${ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
 ssh root@"${ACCOUNT_IP}" "service docker restart"
-echo echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/DEMOAPP-PIPLINE/build" > $workspace/.git/hooks/post-commit
+echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/DEMOAPP-PIPLINE/build" > $workspace/.git/hooks/post-commit
+chmod +x $workspace/.git/hooks/post-commit
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
