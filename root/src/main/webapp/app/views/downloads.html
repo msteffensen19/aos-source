@@ -1,3 +1,55 @@
-<div>
-    <p>DOWNLOADS</p>
+<style>
+    .download_div {
+        margin: 60px;
+    }
+
+    .download_paragra {
+        padding-top:20px;
+    }
+
+    .download_tab {
+        padding-left: 3em;
+    }
+
+    a {
+        color: blue;
+    }
+</style>
+
+<div class="download_div">
+    <p class="download_paragra"><b>Please note that the server advantageonlineshopping.com is our production server,
+        and as such, it is updated every night with the last changes.</b></p>
+
+    <p class="download_paragra"><b>Advantage Online Shopping Assets</b></p>
+
+    <p class="download_paragra">Mobile apps: <a href="https://hpe-my.sharepoint.com/personal/gilat_naor_hpe_com/_layouts/15/guestaccess.aspx?guestaccesstoken=ebHk8GCN6%2fGAGiZ5rcEuDkb7Is4II6ivJEg03fyl2U8%3d&docid=2_1c2ea2e3564174b86b1b04c54979e8f1b&rev=1">
+        <u>Android</u></a>, <a href="https://drive.google.com/open?id=0B9JlY0izIlF6QmFkSEVFcjc0OVU"><u>iOS</u></a>.
+        <span class="download_tab"></span> Both are instrumented for AppPulse Mobile.</p>
+
+    <p class="download_paragra">If you want your own instance, you can install it from <a href="https://hpe-my.sharepoint.com/personal/gilat_naor_hpe_com/_layouts/15/guestaccess.aspx?guestaccesstoken=Ra6GGeohOzbNCDYX%2bX0dzwUxgCnSoW4xhEIaUjf03p8%3d&docid=2_1bde74a65e9fc473ea8cc50fa030f2a4d&rev=1">
+        <u>here</u></a> or configure
+        AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
+        <span class="download_tab">git clone <a href="#"><u>https://github.hpe.com/avi-genshaft/new4Testing.git</u></a></span><br>
+        <span class="download_tab">cd new4Testing/Nimbus_aos/aos_all_in_one/</span><br>
+        <span class="download_tab">chmod +x startup.sh</span><br>
+        <span class="download_tab">./startup.sh</span></p>
+
+    <p class="download_paragra">For the DevOps story:<br>
+        <span class="download_tab">git clone <a href="#"><u>https://github.hpe.com/avi-genshaft/new4Testing.git</u></a></span><br>
+        <span class="download_tab">cd new4Testing/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>
+        <span class="download_tab">copy authorized_keys file to /root/.ssh on your machine (the host where you run the docker script from)</span><br>
+        <span class="download_tab">chmod +x startup.sh</span><br>
+        <span class="download_tab">./startup.sh</span></p>
+
+    <p class="download_paragra">This release’s source code can be downloaded from the same place in GitHub.</p>
+
+    <p class="download_paragra">.NET client for admin actions and for tweaking the system is included in the installation.
+        If you run it with docker, download the .NET client from <a href="https://hpe-my.sharepoint.com/personal/gilat_naor_hpe_com/_layouts/15/guestaccess.aspx?guestaccesstoken=XOtJHVwlCGkWnWrrqy0dFzT6uicHPvxG0gaWnuJGQwo%3d&docid=2_13674bf2a0b304efeade2c37b58794d02&rev=1">
+            <u>here</u></a></p>
+
+    <p class="download_paragra">Note: We will keep the old versions for another month (until the <b><i>end of June</i></b>):<br>
+        <span class="download_tab">1.0.5: 54.210.48.65:80</span><br>
+        <span class="download_tab">1.0.0: 54.210.48.65:8080</span></p>
+
+    </p>
 </div>
