@@ -24,9 +24,9 @@ workspace=${three_levels_up_workspace}
 three_levels_up_workspace=$(echo "$three_levels_up_workspace" | sed 's/\//\\\//g')
 command2="sed -i 's/WORKSPACE/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
 eval $command2
-chmod +x ${workspace}/.git/hooks/post-commit
 
 echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/DEMOAPP-PIPLINE/build" > $workspace/.git/hooks/post-commit
+chmod +x ${workspace}/.git/hooks/post-commit
 if [ ! -d "/root/.ssh" ]; then
   mkdir -p /root/.ssh
 fi
