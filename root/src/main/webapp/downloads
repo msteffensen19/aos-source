@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+
 <style>
     .download_div {
         margin: 60px;
@@ -53,3 +60,6 @@
 
     </p>
 </div>
+
+</body>
+</html>
