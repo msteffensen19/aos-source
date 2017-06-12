@@ -1,7 +1,8 @@
 <!DOCTYPE html >
 <html lang="en">
 <head>
-    <link href="css/main.css" rel="stylesheet">
+    <title>&nbsp;Advantage Shopping</title>
+    <link href="../../css/main.css" rel="stylesheet">
     <style>
         .logo {
             float: left;
