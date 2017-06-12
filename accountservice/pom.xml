@@ -519,7 +519,7 @@
         <repository>
             <id>nexus-demo-app</id>
             <name>nexus</name>
-            <url>http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/</url>
+            <url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/</url>
         </repository>
     </repositories>
     <distributionManagement>
@@ -527,14 +527,14 @@
             <id>demoapp-release</id>
             <name>ADM DemoApp Release Nexus repository</name>
             <url>
-                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
+                http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
             </url>
         </repository>
         <snapshotRepository>
             <id>demoapp-snapshot</id>
             <name>ADM DemoApp Snapshot Nexus repository</name>
             <url>
-                http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
+                http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
             </url>
         </snapshotRepository>
     </distributionManagement>
