@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <title>&nbsp;Advantage Shopping</title>
-    <link href="../../css/main.css" rel="stylesheet">
+    <!-- build:css css/main.min.css -->
+    <link href="css/main.css" rel="stylesheet">
     <style>
         .logo {
             float: left;
