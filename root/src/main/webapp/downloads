@@ -3,7 +3,7 @@
 <head>
     <title>&nbsp;Advantage Shopping</title>
     <!-- build:css css/main.min.css -->
-    <!--link href="css/main.css" rel="stylesheet"-->
+    <!--<link href="css/main.css" rel="stylesheet">-->
     <link href="css/main.min.css" rel="stylesheet">
     <style>
         .logo {
@@ -56,15 +56,22 @@
     <p class="download_paragra"><b>Please note that the server advantageonlineshopping.com is our production server,
         and as such, it is updated every night with the last changes.</b></p>
 
-    <p class="download_paragra"><b>Advantage Online Shopping Version 1.1.1 Assets</b></p>
+    <p class="download_paragra"><b>Advantage Online Shopping Version 1.1.1 Assets:</b></p>
 
     <p class="download_paragra">Mobile apps: <a href="https://hpe-my.sharepoint.com/personal/gilat_naor_hpe_com/_layouts/15/guestaccess.aspx?guestaccesstoken=ebHk8GCN6%2fGAGiZ5rcEuDkb7Is4II6ivJEg03fyl2U8%3d&docid=2_1c2ea2e3564174b86b1b04c54979e8f1b&rev=1">
         <u>Android</u></a>, <a href="https://drive.google.com/open?id=0B9JlY0izIlF6QmFkSEVFcjc0OVU"><u>iOS</u></a>.
         <span class="download_tab"></span> Both are instrumented for AppPulse Mobile.</p>
 
     <p class="download_paragra">If you want your own instance, you can install it from <a href="https://hpe-my.sharepoint.com/personal/gilat_naor_hpe_com/_layouts/15/guestaccess.aspx?guestaccesstoken=Ra6GGeohOzbNCDYX%2bX0dzwUxgCnSoW4xhEIaUjf03p8%3d&docid=2_1bde74a65e9fc473ea8cc50fa030f2a4d&rev=1">
-        <u>here</u></a> or configure
-        AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
+        <u>here</u></a><br>
+        <span class="download_tab">Prerequisites:</span><br>
+        <span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>
+        <span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><b>PostgresSQL</b> version 9.4.5 or up</a></span></span><br>
+        <span class="download_tab"><span class="download_tab"><span class="download_tab">User: postgres</span></span></span><br>
+        <span class="download_tab"><span class="download_tab"><span class="download_tab">Password: admin</span></span></span><br>
+        <span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>
+
+        or configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
         <span class="download_tab">git clone <a href="#"><u>https://github.hpe.com/avi-genshaft/new4Testing.git</u></a></span><br>
         <span class="download_tab">cd new4Testing/Nimbus_aos/aos_all_in_one/</span><br>
         <span class="download_tab">chmod +x startup.sh</span><br>
