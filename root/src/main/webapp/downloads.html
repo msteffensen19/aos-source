@@ -3,8 +3,8 @@
 <head>
     <title>&nbsp;Advantage Shopping</title>
     <!-- build:css css/main.min.css -->
-    <!--<link href="css/main.css" rel="stylesheet">-->
-    <link href="css/main.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <!--<link href="css/main.min.css" rel="stylesheet">-->
     <style>
         .logo {
             float: left;
@@ -13,7 +13,7 @@
 
         .download_div {
             float: left;
-            margin-top: 30px;
+            margin-top: 10px;
             margin-left: 60px;
         }
 
@@ -72,17 +72,19 @@
         <span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>
 
         or configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
-        <span class="download_tab">git clone <a href="#"><u>https://github.hpe.com/avi-genshaft/new4Testing.git</u></a></span><br>
-        <span class="download_tab">cd new4Testing/Nimbus_aos/aos_all_in_one/</span><br>
+        <span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>
+        <span class="download_tab">cd advantage/Nimbus_aos/aos_all_in_one/</span><br>
         <span class="download_tab">chmod +x startup.sh</span><br>
         <span class="download_tab">./startup.sh</span></p>
 
     <p class="download_paragra">For the DevOps story:<br>
-        <span class="download_tab">git clone <a href="#"><u>https://github.hpe.com/avi-genshaft/new4Testing.git</u></a></span><br>
-        <span class="download_tab">cd new4Testing/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>
+        <span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>
+        <span class="download_tab">cd advantage/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>
         <span class="download_tab">copy authorized_keys file to /root/.ssh on your machine (the host where you run the docker script from)</span><br>
         <span class="download_tab">chmod +x startup.sh</span><br>
         <span class="download_tab">./startup.sh</span></p>
+
+    <p class="download_paragra">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>
 
     <p class="download_paragra">This release's source code can be downloaded from the same place in GitHub.</p>
 
