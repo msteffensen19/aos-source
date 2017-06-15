@@ -117,13 +117,21 @@
                 <span class="download_tab">./startup.sh</span></p>
 
             <p class="download_paragra paddginLeft1">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>
+        </div>
 
+        <div class="borderedDiv">
+            <p class="borderedDivCaption">Source code: </p>
             <p class="download_paragra paddginLeft1">This release's source code can be downloaded from the same place in GitHub.</p>
+        </div>
 
+        <div class="borderedDiv">
+            <p class="borderedDivCaption">Admin client: </p>
             <p class="download_paragra paddginLeft1">.NET client for admin actions and for tweaking the system is included in the installation.
                 If you run it with docker, download the .NET client from <a href="https://hpe-my.sharepoint.com/personal/gilat_naor_hpe_com/_layouts/15/guestaccess.aspx?guestaccesstoken=XOtJHVwlCGkWnWrrqy0dFzT6uicHPvxG0gaWnuJGQwo%3d&docid=2_13674bf2a0b304efeade2c37b58794d02&rev=1">
                     <u>here</u></a></p>
+        </div>
 
+        <div class="borderedDiv">
             <p class="download_paragra paddginLeft1">Note: We will keep the old versions for another month (until the <b><i>end of June</i></b>):<br>
                 <span class="download_tab">1.0.5: 54.210.48.65:80</span><br>
                 <span class="download_tab">1.0.0: 54.210.48.65:8080</span></p>
