@@ -22,6 +22,7 @@ sed -i "s/REGISTRY_PORT/${REGISTRY_PORT}/g" docker-compose.yml
 sed -i "s/JENKINS_PORT/${JENKINS_PORT}/g" docker-compose.yml
 sed -i "s/TAG/${TAG}/g" docker-compose.yml
 
+if [ "$QUALI" == "NO" ];then
 # change host name
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | while read line; do command="sed -i '0,/HOST_NAME/{s/HOST_NAME/$line/}' docker-compose.yml"; echo $command; eval $command; done
 # change public ip
@@ -33,7 +34,7 @@ sed -i "s/TAG/${TAG}/g" docker-compose.yml
 # ip of the host
  command4="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env"
  eval $command4
-
+fi
 . .env
 ssh-keyscan ${ACCOUNT_IP} >> /root/.ssh/known_hosts
 echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | ssh root@"${ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
