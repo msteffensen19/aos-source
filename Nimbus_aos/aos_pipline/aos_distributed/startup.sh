@@ -34,6 +34,8 @@ if [ "$QUALI" == "NO" ];then
 # ip of the host
  command4="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env"
  eval $command4
+else
+ sed -i 's/.*WORKSPACE.*//g' docker-compose.yml
 fi
 . .env
 ssh-keyscan ${ACCOUNT_IP} >> /root/.ssh/known_hosts
