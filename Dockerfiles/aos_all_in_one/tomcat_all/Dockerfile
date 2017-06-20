@@ -4,7 +4,7 @@ MAINTAINER Michal Edery
 ENV http_proxy="http://proxy.il.hpecorp.net:8080"
 ENV https_proxy="http://proxy.il.hpecorp.net:8080"
 
-RUN apt-get update && apt-get -y install openjdk-8-jdk
+RUN apt-get update && apt-get -y install openjdk-8-jdk && apt-get install postgresql
 
 RUN rm -rf webapps/ROOT
 COPY wars.zip webapps
