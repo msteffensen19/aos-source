@@ -9,6 +9,7 @@ RUN apt-get update && apt-get -y install openjdk-8-jdk
 RUN rm -rf webapps/ROOT
 COPY accountservice.war webapps
 COPY updatewars.sh webapps
+COPY wait-for-it.sh webapps
 COPY startTomcat.sh /
 RUN chmod +x /startTomcat.sh
 ENTRYPOINT ["sh", "-c", "/startTomcat.sh"]

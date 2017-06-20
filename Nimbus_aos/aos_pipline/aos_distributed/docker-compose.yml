@@ -17,7 +17,7 @@ services:
    deploy:
      placement:
        constraints:
-         - node.hostname == HOST_NAME
+         - node.hostname == jill
   tomcat_accountservice:
    env_file:
    - .env
