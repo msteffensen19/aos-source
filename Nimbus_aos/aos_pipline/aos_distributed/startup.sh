@@ -62,8 +62,8 @@ else
 fi
 . .env
 ssh-keyscan ${ACCOUNT_IP} >> /root/.ssh/known_hosts
-echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | ssh root@"${ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
-ssh root@"${ACCOUNT_IP}" "service docker restart"
+echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | sshpass -p ${USER_PASSWORD} ssh root@"${ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
+sshpass -p ${USER_PASSWORD} ssh root@"${ACCOUNT_IP}" "service docker restart"
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
