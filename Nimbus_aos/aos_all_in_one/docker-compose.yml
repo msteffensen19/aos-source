@@ -16,7 +16,6 @@ services:
     - "${MAIN_PORT}:8080"
     depends_on:
     - "postgresql"
-    command: ["./wait-for-it.sh", "postgresql:5432", "--", "python", "app.py"]
     container_name: tomcat_6
     restart: always
   tomcat_account:
@@ -27,7 +26,6 @@ services:
     - "${ACCOUNT_PORT}:8080"
     depends_on:
     - "postgresql"
-    command: ["./wait-for-it.sh", "postgresql:5432", "--", "python", "app.py"]
     container_name: tomcat_account
     restart: always
 volumes:
