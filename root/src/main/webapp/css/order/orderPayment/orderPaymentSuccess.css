@@ -67,8 +67,11 @@
     width: 358px;
     height: 286px;
     display: inline-block;
-    border-right: solid #454545 2px;
     vertical-align: top;
+}
+
+#orderPaymentSuccess div.borderRight {
+    border-right: solid #454545 2px;
 }
 
 #orderPaymentSuccess > div > div.seccion .iconCss{
