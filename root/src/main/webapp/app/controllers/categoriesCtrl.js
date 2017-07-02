@@ -72,27 +72,27 @@ define(['./module'], function (controllers) {
             var _____continueShopping;
             s.sendSupportEmail = function () {
 
-                if (s.supportModel.subject.trim().toLowerCase() == "who are you" ||
-                    s.supportModel.subject.trim().toLowerCase() == "who are you?") {
-
-                    $("#team").fadeIn(500).css("display", "table");
-                    setTimeout(function () {
-                        $("#teamIdToAnimate").css({
-                            display: "block"
-                        });
-                        $("#teamIdToAnimate").addClass("zoomInDown");
-                        setTimeout(function () {
-                            $("#teamIdToAnimate").removeClass("zoomInDown");
-                        }, 3000);
-                    }, 300);
-                    s.supportModel = {
-                        "category": s.supportModel.category,
-                        "email": "",
-                        "product": s.supportModel.product,
-                        "subject": ""
-                    }
-                    return;
-                }
+                // if (s.supportModel.subject.trim().toLowerCase() == "who are you" ||
+                //     s.supportModel.subject.trim().toLowerCase() == "who are you?") {
+                //
+                //     $("#team").fadeIn(500).css("display", "table");
+                //     setTimeout(function () {
+                //         $("#teamIdToAnimate").css({
+                //             display: "block"
+                //         });
+                //         $("#teamIdToAnimate").addClass("zoomInDown");
+                //         setTimeout(function () {
+                //             $("#teamIdToAnimate").removeClass("zoomInDown");
+                //         }, 3000);
+                //     }, 300);
+                //     s.supportModel = {
+                //         "category": s.supportModel.category,
+                //         "email": "",
+                //         "product": s.supportModel.product,
+                //         "subject": ""
+                //     }
+                //     return;
+                // }
 
                 supportService.sendSupportEmail(s.supportModel).then(function (res) {
 

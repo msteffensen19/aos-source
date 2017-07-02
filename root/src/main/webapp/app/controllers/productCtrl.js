@@ -216,9 +216,9 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter',
-        '$rootScope', '$timeout', 'categoryService',
+        '$rootScope', '$timeout', 'categoryService', '$sce',
 
-        function (s, resolveParams, $state, $filter, $rootScope, $timeout, categoryService) {
+        function (s, resolveParams, $state, $filter, $rootScope, $timeout, categoryService, $sce) {
 
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
@@ -231,7 +231,14 @@ define(['./module'], function (controllers) {
 
             s.haveInternet = resolveParams.haveInternet;
 
-            s.showVideo = s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16;
+            if(s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16){
+                s.srcV1 = $sce.trustAsHtml("<video controls ><source src='../../css/videos/13543361_299823923688824_1410005144_n.mp4'></video>");
+                s.showVideo = true;
+            }
+            else{
+                s.showVideo = false;
+                s.srcV1 = "";}
+
             s.imageUrl = angular.copy(s.product.imageUrl);
 
             s.getFirstImageUrl = function () {
