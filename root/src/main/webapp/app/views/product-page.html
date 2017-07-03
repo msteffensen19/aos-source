@@ -114,15 +114,7 @@
     <div id="separator"></div>
 
     <article ng-if="showVideo" class="max-width" data-ng-switch="haveInternet" >
-        <div data-ng-switch-when="true" >
-            <video controls>
-                <source src="../../css/videos/13543361_299823923688824_1410005144_n.mp4">
-            </video>
-        </div>
-        <div data-ng-switch-default >
-            <video controls>
-                <source src="../../css/videos/productVideo.mp4">
-            </video>
+        <div ng-bind-html="srcV1">
         </div>
     </article>
 
