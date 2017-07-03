@@ -11,7 +11,7 @@ services:
   tomcat_6:
    env_file:
    - .env
-   image: performancetesting/aos-main-app-dev
+   image: performancetesting/aos-main-app
    ports:
    - "MAIN_PORT:8080"
    deploy:
@@ -21,7 +21,7 @@ services:
   tomcat_accountservice:
    env_file:
    - .env
-   image: performancetesting/aos-accountservice-dev
+   image: performancetesting/aos-accountservice
    ports:
    - "ACCOUNT_PORT:8080"
    deploy:
@@ -39,7 +39,7 @@ services:
   jenkins:
    env_file:
    - .env	
-   image: performancetesting/aos-jenkins-pipline-dev
+   image: performancetesting/aos-jenkins-pipline
    ports:
    - "JENKINS_PORT:8080"
    volumes:
