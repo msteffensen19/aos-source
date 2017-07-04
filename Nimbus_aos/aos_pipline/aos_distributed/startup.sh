@@ -74,8 +74,8 @@ fi
 echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" > /etc/docker/daemon.json
 service docker restart
 ssh-keyscan ${ACCOUNT_IP} >> "/${USER_NAME}/.ssh/known_hosts"
-echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | sshpass -p "${ACCOUNT_USER_PASSWORD}" ssh "${USER_NAME}"@$"{ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
-sshpass -p "${ACCOUNT_USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "service docker restart"
+echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
+sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "service docker restart"
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
