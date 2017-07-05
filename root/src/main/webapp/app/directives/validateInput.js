@@ -894,7 +894,10 @@ define(['./module'], function (directives) {
                     if (!a.aHint) {
                         hideLabel = "style='display:none'";
                     }
-
+                    var partOfName = "";
+                    if (a.aHintDescription != null) {
+                        partOfName = a.aHintDescription;
+                    }
                     var label = $("<label " + hideLabel + " data-ng-click='labelClicked()' data-ng-mouseout='labelOut()'>" + a.aHint + "</label>");
                     switch (type) {
                         case Types.select:
@@ -902,7 +905,7 @@ define(['./module'], function (directives) {
                             label.css("z-index", "-10");
                             label.addClass("animated");
                             var dot = (a.aShow ? "." + a.aShow : "");
-                            var format = "<select name='" + a.aHint.toLowerCase() + "Listbox' role='listbox' ng-model='secModel' ng-options='c as c" + dot
+                            var format = "<select name='" + a.aHint.toLowerCase() + 'Listbox' + partOfName + "' role='listbox' ng-model='secModel' ng-options='c as c" + dot
                                 + " for c in secSelectOptions' ><option value='' selected='selected'></select>";
 
                             //var dot = (a.aShow ? a.aShow : null);
@@ -915,7 +918,7 @@ define(['./module'], function (directives) {
 
                             break;
                         case Types.textarea:
-                            input = $("<textarea name='subject_textarea' data-ng-model='secModel' ></textarea>");
+                            input = $("<textarea name='\"subject_textarea\" + partOfName' data-ng-model='secModel' ></textarea>");
                             label.text(JSON.parse(s.secRequire).info);
                             label.addClass("checkboxText roboto-light" + animated);
                             div.css({
@@ -928,7 +931,7 @@ define(['./module'], function (directives) {
                             if (a.aHint == null) {
                                 a.aHint = "i_agree";
                             }
-                            input = $("<input name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + "' type='" + type + "' data-ng-model='secModel' />");
+                            input = $("<input name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + partOfName + "' type='" + type + "' data-ng-model='secModel' />");
                             if (type == Types.checkbox) {
                                 label.text(JSON.parse(s.secRequire).info);
                                 label.css({"display": "block"});

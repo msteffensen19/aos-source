@@ -4,27 +4,26 @@
     <label class="roboto-medium" translate="Already_have_an_account" ></label>
 
     <sec-form>
-
-
         <sec-view a-hint="{{'User_name' | translate}}"
+                  a-hint-description="InOrderPayment"
                   a-star="false"
                   sec-model="orderPaymenLogin.loginUser"
                   sec-require="mainCtrl.getRequire('User_name')"
-                  sec-disable-validation="true">
+                  sec-disable-validation="true" >
         </sec-view>
 
         <!--sec-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{0,12})" pattern-error-attr="Use_up_to_12_characters_Include_at_least_one_letter_and_one_number"-->
 
         <sec-view a-hint="{{'Password' | translate}}"
+                  a-hint-description="InOrderPayment"
                   a-star="false"
                   a-type="password"
                   sec-model="orderPaymenLogin.loginPassword"
-                  sec-disable-validation="true"
-                  >
+                  sec-disable-validation="true" >
         </sec-view>
 
-
         <sec-view a-hint="{{'Email' | translate}}"
+                  a-hint-description="InOrderPayment"
                   a-star="false"
                   ng-show="config.emailAddressInLogin"
                   sec-model="orderPaymenLogin.email"
@@ -40,38 +39,27 @@
 
         <br />
 
-        <sec-sender class="roboto-medium" a-value="{{'LOGIN' | translate}}"
+        <sec-sender class="roboto-medium"
+                    a-value="{{'LOGIN' | translate}}"
                     sec-send="orderPaymenLogin_signIn()"></sec-sender>
 
         <br />
 
-
-        <label ng-class="{ invalid : rsMessage._class == 'invalid' }" > {{ rsMessage.text }}</label>
-
+        <label ng-class="{ invalid : rsMessage._class == 'invalid' }">{{ rsMessage.text }}</label>
     </sec-form>
 </div>
 <div id="newClient" class="noUserSection .noUserLogin">
     <div class="cover">
         <div data-ng-class="{ noEmail : !config.emailAddressInLogin }">
-            <label class="roboto-medium" translate="New_client" ></label>
+            <label class="roboto-medium" translate="New_client"></label>
             <p translate="Create_your_account_easily"></p>
         </div>
         <sec-form>
-            <sec-sender style="margin: 18px 28px;" class="roboto-medium" a-value="{{'REGISTRATION' | translate}}"
+            <sec-sender style="margin: 18px 28px;"
+                        class="roboto-medium"
+                        a-value="{{'REGISTRATION' | translate}}"
                         sec-send="registrationRedirect()"></sec-sender>
         </sec-form>
     </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-

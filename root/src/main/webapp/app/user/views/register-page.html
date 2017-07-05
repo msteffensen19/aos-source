@@ -22,6 +22,7 @@
                             <div class="spliter">
 
                                 <sec-view a-hint="{{'User_name' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.username"
                                           sec-require="mainCtrl.getRequire('User_name')"
                                           sec-min-length="mainCtrl.getMin(5)"
@@ -30,7 +31,9 @@
                                           sec-name="userName">
                                 </sec-view>
 
-                                <sec-view sec-name="userEmail" a-hint="{{'Email' | translate}}"
+                                <sec-view sec-name="userEmail"
+                                          a-hint="{{'Email' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.email"
                                           sec-require="mainCtrl.getRequire('Email')"
                                           sec-pattern="mainCtrl.getPattern('Email')">
@@ -39,7 +42,9 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view sec-name="userPassword" a-hint="{{'Password' | translate}}"
+                                <sec-view sec-name="userPassword"
+                                          a-hint="{{'Password' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           a-type="password"
                                           sec-model="model.password"
                                           sec-require="mainCtrl.getRequire('Password')"
@@ -48,7 +53,9 @@
                                           sec-pattern="mainCtrl.getPattern('Password')">
                                 </sec-view>
 
-                                <sec-view sec-name="userPassword" a-hint="{{'Confirm_password' | translate}}"
+                                <sec-view sec-name="userPassword"
+                                          a-hint="{{'Confirm_password' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           a-type="password"
                                           sec-model="model.confirm_password"
                                           sec-require="mainCtrl.getRequire('Confirm_password')"
@@ -64,13 +71,17 @@
 
                             <div class="spliter">
 
-                                <sec-view sec-name="userFirstName" a-hint="{{'First_Name' | translate}}"
+                                <sec-view sec-name="userFirstName"
+                                          a-hint="{{'First_Name' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.firstName"
                                           sec-min-length="mainCtrl.getMin(2)"
                                           sec-max-length="mainCtrl.getMax(30)">
                                 </sec-view>
 
-                                <sec-view sec-name="userLastName" a-hint="{{'Last_Name' | translate}}"
+                                <sec-view sec-name="userLastName"
+                                          a-hint="{{'Last_Name' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.lastName"
                                           sec-min-length="mainCtrl.getMin(2)"
                                           sec-max-length="mainCtrl.getMax(30)">
@@ -79,7 +90,9 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view sec-name="userPhone" a-hint="{{'Phone_Number' | translate}}"
+                                <sec-view sec-name="userPhone"
+                                          a-hint="{{'Phone_Number' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-max-length="mainCtrl.getMax(20)"
                                           sec-model="model.phoneNumber">
                                 </sec-view>
@@ -95,6 +108,7 @@
 
                                 <sec-view sec-name="userCountry"
                                           a-hint="Country"
+                                          a-hint-description="RegisterPage"
                                           a-type="select"
                                           a-show="name"
                                           sec-model="model.country"
@@ -104,6 +118,7 @@
 
                                 <sec-view sec-name="userCity"
                                           a-hint="{{'City' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.city"
                                           sec-max-length="mainCtrl.getMax(25)">
                                 </sec-view>
@@ -111,7 +126,9 @@
                             </div>
                             <div class="spliter">
 
-                                <sec-view sec-name="userAdress" a-hint="{{'Address' | translate}}"
+                                <sec-view sec-name="userAdress"
+                                          a-hint="{{'Address' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.address"
                                           sec-max-length="mainCtrl.getMax(50)">
                                 </sec-view>
@@ -119,6 +136,7 @@
 
                                 <sec-view sec-name="userState"
                                           a-hint="{{'State__Province__Region' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.state"
                                           sec-max-length="mainCtrl.getMax(10)">
                                 </sec-view>
@@ -128,6 +146,7 @@
 
                                 <sec-view sec-name="userPostalCode"
                                           a-hint="{{'Postal_Code' | translate}}"
+                                          a-hint-description="RegisterPage"
                                           sec-model="model.postalCode"
                                           sec-max-length="mainCtrl.getMax(10)">
                                 </sec-view>
@@ -183,25 +202,4 @@
     </article>
 </section>
 
-
 <social-media-drtv></social-media-drtv>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
