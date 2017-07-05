@@ -15,44 +15,27 @@
         <h3 class="roboto-regular sticky fixed fixedImportant" translate="ORDER_PAYMENT"></h3>
 
         <div id="orderPayment" ng-switch="userCookie.response != undefined" ng-hide="paymentEnd">
-
             <div ng-switch-when="true">
                 <user-are-login paramsToPass="resolveParams"></user-are-login>
             </div>
             <div id="userCart" data-ng-show="(cart | productsCartCount) > 0" >
                 <h5 class="roboto-regular"> {{ mainCtrl.config.spellingMistakes ? 'ORDERR_SUMMARY' : 'ORDER_SUMMARY' | translate}}</h5>
-                <span class="itemsCount roboto-medium" >
-                    {{ cart | productsCartCount }} {{ (cart | productsCartCount) > 1 ? 'ITEMS' : 'ITEM' | translate }}
-                </span>
+                <span class="itemsCount roboto-medium" >{{ cart | productsCartCount }} {{ (cart | productsCartCount) > 1 ? 'ITEMS' : 'ITEM' | translate }}</span>
                 <div class="penetrationInCart">
-                    <span class="roboto-regular" > {{ 'PRODUCT' | translate }} </span>
-                    <span class="totalTitle roboto-regular"> {{ 'TOTAL' | translate }} </span>
+                    <span class="roboto-regular" >{{ 'PRODUCT' | translate }}</span>
+                    <span class="totalTitle roboto-regular">{{ 'TOTAL' | translate }}</span>
                 </div>
                 <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
                 <div class="penetrationInCart">
                     <label class="shippingText roboto-regular" ng-class=" { noShipping : shippingCost == null } " >
                         {{ 'SHIPPING' | translate }}
-                        <span class="shippingValue roboto-light">
-                            {{ shippingCost | currency: '$'}}
-                        </span>
+                        <span class="shippingValue roboto-light">{{ shippingCost | currency: '$'}}</span>
                     </label>
-                    <label class="roboto-bold totalText" > {{ 'TOTAL' | translate }}
-                        <span class="roboto-medium totalValue">
-                            {{ cart | productsCartSum:shippingCost | currency:'$' }}
-                        </span>
+                    <label class="roboto-bold totalText" >{{ 'TOTAL' | translate }}
+                        <span class="roboto-medium totalValue">{{ cart | productsCartSum:shippingCost | currency:'$' }}</span>
                     </label>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
         </div>
         <div ng-show="paymentEnd" >
             <order-payment-success id="orderPaymentSuccess">
@@ -64,11 +47,4 @@
     </article>
 </section>
 
-
 <social-media-drtv></social-media-drtv>
-
-
-
-
-
-
