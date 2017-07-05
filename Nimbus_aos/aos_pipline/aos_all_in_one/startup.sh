@@ -27,10 +27,15 @@ eval $command2
 
 echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/DEMOAPP-PIPLINE/build" > $workspace/.git/hooks/post-commit
 chmod +x ${workspace}/.git/hooks/post-commit
-if [ ! -d "/root/.ssh" ]; then
-  mkdir -p /root/.ssh
+if [ ! -d "/${USER_NAME}/.ssh" ]; then
+  mkdir -p /${USER_NAME}/.ssh
 fi
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVgtJmv2gShk05pz0Pzhrxuk+yv4uvIFoNfoUpd5/FWScl382hyUMp9CkRymtzjh4r/P6zlW2UX80kMUHiMmv3Khxz5eKTVpr/4C91GrdLvOYij5iQ1kbAoxmY+ih0NSds4AHyz/oNfCxgDnRPtapzL6Ionx6TY2t5lNMW1+OOnWsMMUe2pIqDBh+N7GlTwAjBbefBQdL397GrEXEuzV1ngw464d6Ea8yVTW7Kom6D2J3fIpEJo1PmF0XCzON3oOau9K9P6999WxijWI5PSkwIL+vGyDnmM9xkSXzNnwdwVWA7Uu1fbgE5c50iACHv5chYfAyr5f3vtV1ZMbVrDV5l AOS_DeVops" > /root/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVgtJmv2gShk05pz0Pzhrxuk+yv4uvIFoNfoUpd5/FWScl382hyUMp9CkRymtzjh4r/P6zlW2UX80kMUHiMmv3Khxz5eKTVpr/4C91GrdLvOYij5iQ1kbAoxmY+ih0NSds4AHyz/oNfCxgDnRPtapzL6Ionx6TY2t5lNMW1+OOnWsMMUe2pIqDBh+N7GlTwAjBbefBQdL397GrEXEuzV1ngw464d6Ea8yVTW7Kom6D2J3fIpEJo1PmF0XCzON3oOau9K9P6999WxijWI5PSkwIL+vGyDnmM9xkSXzNnwdwVWA7Uu1fbgE5c50iACHv5chYfAyr5f3vtV1ZMbVrDV5l AOS_DeVops" > /${USER_NAME}/.ssh/authorized_keys
+
+# if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
+if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env | grep -m 1 "http_proxy")" ];then
+ printf "\nhttp_proxy=\nhttps_proxy=">> .env
+fi
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker-compose pull
