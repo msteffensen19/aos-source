@@ -66,6 +66,9 @@ else
  command4="sed -i 's/JENKINS/$(docker node ls | grep -w Leader | awk '{print $3}')/' docker-compose.yml"
  eval $command4
 
+ # updated srl tenant
+ #sed -i 's/tenantId/604588673/g' .env
+ 
  sed -i 's/.*WORKSPACE.*//g' docker-compose.yml
 fi
 
