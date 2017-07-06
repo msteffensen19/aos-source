@@ -431,7 +431,7 @@ define(['./module'], function (controllers) {
                                 $('#toolTipCart tbody').animate({scrollTop: 0}, 500);
                             });
                         }
-                    }, 800);
+                    }, 3000);
                 }
             }
 

@@ -3,6 +3,7 @@
     <a translate="MY_ACCOUNT" href="#/myAccount"></a>
     <a class="select" translate="ACCOUNT_DETAILS"> </a>
 </nav>
+<!--TODO: change id from registerPage to accountDetails-page-->
 <section id="registerPage">
     <article>
         <h3 class="roboto-regular sticky fixedImportant fixed" translate="ACCOUNT_DETAILS"></h3>
@@ -21,10 +22,9 @@
 
                         <div>
                             <h3 translate="CONNECTION_DETAILS"></h3>
-
                             <div class="spliter">
-
                                 <sec-view a-hint="{{'Email' | translate}}"
+                                          a-hint-description="AccountDetails"
                                           sec-model="accountDetails.email"
                                           sec-require="mainCtrl.getRequire('Email')"
                                           sec-pattern="mainCtrl.getPattern('Email')">
@@ -37,115 +37,100 @@
                                    ng-show="mainCtrl.config.showChangePassword"></a>
 
                                 <div class="changePassword" ng-show="mainCtrl.config.showChangePassword">
-
                                     <sec-view a-hint="{{'Old_Password' | translate}}"
+                                              a-hint-description="AccountDetails"
                                               a-type="password"
                                               sec-model="passwords.old"
                                               sec-disable-validation="true"
                                               sec-min-length="mainCtrl.getMin(4)"
                                               sec-max-length="mainCtrl.getMax(12)">
                                     </sec-view>
-
                                     <sec-view a-hint="{{'New_Password' | translate}}"
+                                              a-hint-description="AccountDetails"
                                               a-type="password"
                                               sec-model="passwords.new"
                                               sec-min-length="mainCtrl.getMin(4)"
                                               sec-max-length="mainCtrl.getMax(12)"
                                               sec-pattern="mainCtrl.getPattern('Password')">
                                     </sec-view>
-
                                     <sec-view a-hint="{{'Confirm_New_password' | translate}}"
+                                              a-hint-description="AccountDetails"
                                               a-type="password"
                                               sec-model="passwords.confirm_new"
                                               sec-compare-to="mainCtrl.getCompare('New_password', passwords.new)"
                                               sec-model-compare-to="passwords.new">
                                     </sec-view>
-
                                 </div>
-
                             </div>
                         </div>
 
                         <div>
                             <h3 translate="PERSONAL_DETAILS"></h3>
-
                             <div class="spliter">
-
                                 <sec-view a-hint="{{'First_Name' | translate}}"
+                                          a-hint-description="AccountDetails"
                                           sec-model="accountDetails.firstName"
                                           sec-min-length="mainCtrl.getMin(2)"
                                           sec-max-length="mainCtrl.getMax(30)">
                                 </sec-view>
-
                                 <sec-view a-hint="{{'Last_Name' | translate}}"
+                                          a-hint-description="AccountDetails"
                                           sec-model="accountDetails.lastName"
                                           sec-min-length="mainCtrl.getMin(2)"
                                           sec-max-length="mainCtrl.getMax(30)">
                                 </sec-view>
-
                             </div>
                             <div class="spliter">
-
                                 <sec-view
                                         a-hint="{{ userSecondWsdl ? 'Phone_Number2' : 'Phone_Number' | translate }}"
+                                        a-hint-description="AccountDetails"
                                         sec-max-length="mainCtrl.getMax(20)"
                                         sec-model="accountDetails.mobilePhone">
                                 </sec-view>
-
                             </div>
                         </div>
-
                     </div>
 
                     <div>
-
                         <h3 translate="ADDRESS"></h3>
-
                         <div class="spliter">
-
                             <sec-view a-hint="Country"
+                                      a-hint-description="AccountDetails"
                                       a-type="select"
                                       a-show="name"
                                       sec-model="country"
                                       sec-select-options="countries">
                             </sec-view>
-
-
                             <sec-view a-hint="{{'City' | translate}}"
+                                      a-hint-description="AccountDetails"
                                       sec-model="accountDetails.cityName"
                                       sec-max-length="mainCtrl.getMax(25)">
                             </sec-view>
-
                         </div>
                         <div class="spliter">
-
                             <sec-view a-hint="{{'Address' | translate}}"
+                                      a-hint-description="AccountDetails"
                                       sec-model="accountDetails.homeAddress"
                                       sec-max-length="mainCtrl.getMax(50)">
                             </sec-view>
-
-
                             <sec-view a-hint="{{'Postal_Code' | translate}}"
+                                      a-hint-description="AccountDetails"
                                       sec-model="accountDetails.zipcode"
                                       sec-max-length="mainCtrl.getMax(10)">
                             </sec-view>
-
                         </div>
                         <div class="spliter">
-
                             <sec-view a-hint="{{'State__Province__Region' | translate}}"
+                                      a-hint-description="AccountDetails"
                                       sec-model="accountDetails.stateProvince"
                                       sec-max-length="mainCtrl.getMax(10)">
                             </sec-view>
-
                         </div>
                     </div>
-
                 </div>
             </div>
 
             <div class="center">
-
                 <sec-sender class="roboto-medium accountDetailsBtn" a-value="{{'SAVE' | translate}}"
                             sec-send="saveAccountDetails()"></sec-sender>
                 <br>
@@ -157,15 +142,4 @@
     </article>
 </section>
 
-
-
 <social-media-drtv></social-media-drtv>
-
-
-
-
-
-
-
-
-
