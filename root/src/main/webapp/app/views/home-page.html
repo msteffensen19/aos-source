@@ -174,39 +174,38 @@
                     <sec-form>
 
                         <div class="splitter">
-
                             <div class="inputMargin">
-
                                 <sec-view a-hint="Category"
+                                          a-hint-description="ContactUs"
                                           a-type="select"
                                           a-show="categoryName"
                                           sec-select-options="categories"
                                           sec-model="categories.category"
                                           sec-select-change="categoryChange(value)">
                                 </sec-view>
-
-
                                 <sec-view a-hint="Product"
+                                          a-hint-description="ContactUs"
                                           a-type="select"
                                           a-show="productName"
                                           sec-model="supportModel.product"
                                           sec-select-options="products"
                                           sec-select-change="productChange(value)">
                                 </sec-view>
-
-
                                 <sec-view a-hint="{{'Email' | translate}}"
+                                          a-hint-description="ContactUs"
                                           sec-model="supportModel.email"
                                           sec-require="mainCtrl.getRequire('Email')">
                                 </sec-view>
-
                             </div>
                         </div>
                         <div class="splitter" >
                             <div class="smollPadding  margin-right">
                                 <label class="Subject"><span class="star">*</span> {{'Subject' | translate }}</label>
 
-                                <sec-view class="textarea" a-type="textarea"
+                                <sec-view class="textarea"
+                                          a-hint="subjectTextarea"
+                                          a-hint-description="ContactUs"
+                                          a-type="textarea"
                                           a-star="false"
                                           sec-model="supportModel.subject"
                                           sec-require="mainCtrl.getRequire('Email')">

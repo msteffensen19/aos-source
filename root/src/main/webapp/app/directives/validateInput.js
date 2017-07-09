@@ -918,7 +918,7 @@ define(['./module'], function (directives) {
 
                             break;
                         case Types.textarea:
-                            input = $("<textarea name='\"subject_textarea\" + partOfName' data-ng-model='secModel' ></textarea>");
+                            input = $("<textarea name='" + a.aHint + partOfName + "' data-ng-model='secModel' ></textarea>");
                             label.text(JSON.parse(s.secRequire).info);
                             label.addClass("checkboxText roboto-light" + animated);
                             div.css({
