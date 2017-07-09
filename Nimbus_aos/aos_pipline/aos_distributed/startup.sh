@@ -28,8 +28,10 @@ if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env | grep -m 1 "http_proxy")" ]
 fi
 
 if [ "$QUALI" == "NO" ];then
- command1="sed -i 's/WORKSPACE/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
+ command1="sed -i 's/WORKSPACE_ACCOUNT/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
  eval $command1
+ command2="sed -i 's/WORKSPACE_LEANFT/${three_levels_up_workspace}\/LEANFT/g' docker-compose.yml"
+ eval $command2
 # we decide randomally where the containers will be deployed
 # change host name
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | while read line; do command="sed -i '0,/HOST_NAME/{s/HOST_NAME/$line/}' docker-compose.yml"; eval $command; done
@@ -37,11 +39,11 @@ if [ "$QUALI" == "NO" ];then
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | xargs docker inspect $1 | grep "Addr" | awk '{ gsub("\"",""); print $2}' | while read line; do command="sed -i '0,/PUBLIC_IP_CALCULATED/{s/PUBLIC_IP_CALCULATED/$line/}' .env"; eval $command; done
 
 # host name
- command2="sed -i 's/HOST_NAME/$(docker node ls | grep -w Leader | awk '{print $3}')/' docker-compose.yml"
- eval $command2
-# ip of the host
- command3="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env"
+ command3="sed -i 's/HOST_NAME/$(docker node ls | grep -w Leader | awk '{print $3}')/' docker-compose.yml"
  eval $command3
+# ip of the host
+ command4="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env"
+ eval $command4
 
  #edit .git/hooks
  echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/DEMOAPP-PIPLINE/build" > $workspace/.git/hooks/post-commit
@@ -63,13 +65,14 @@ else
   esac
  done
 
- command4="sed -i 's/JENKINS/$(docker node ls | grep -w Leader | awk '{print $3}')/' docker-compose.yml"
- eval $command4
+ command5="sed -i 's/JENKINS/$(docker node ls | grep -w Leader | awk '{print $3}')/' docker-compose.yml"
+ eval $command5
 
  # updated srl tenant
  #sed -i 's/tenantId/604588673/g' .env
  
- sed -i 's/.*WORKSPACE.*//g' docker-compose.yml
+ sed -i 's/.*WORKSPACE_ACCOUNT.*//g' docker-compose.yml
+ sed -i 's/.*WORKSPACE_LEANFT.*//g' docker-compose.yml
 fi
 
 . .env
@@ -83,5 +86,5 @@ sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "service docker
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
 
-command5="sed -i 's/performancetesting\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
-eval $command5
+command6="sed -i 's/performancetesting\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
+eval $command6
