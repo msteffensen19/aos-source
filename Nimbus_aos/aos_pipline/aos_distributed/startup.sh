@@ -30,7 +30,7 @@ fi
 if [ "$QUALI" == "NO" ];then
  command1="sed -i 's/WORKSPACE_ACCOUNT/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
  eval $command1
- command2="sed -i 's/WORKSPACE_LEANFT/${three_levels_up_workspace}\/LEANFT/g' docker-compose.yml"
+ command2="sed -i 's/WORKSPACE_LEANFT/${three_levels_up_workspace}\/leanft/g' docker-compose.yml"
  eval $command2
 # we decide randomally where the containers will be deployed
 # change host name
