@@ -23,14 +23,15 @@ define([
     './icon-home',
     './icon-x',
     './icon-cart-svg',
+    './icon-cart-svg-mobile',
     './icon-user-svg',
+    './icon-user-svg-mobile',
     './icon-search-svg',
+    './icon-search-svg-mobile',
     './icon-home-svg',
+    './icon-home-svg-mobile',
     './virtualFooter',
     './check-height',
     './orderSearch',
-    './confirmation-modal-drtv',
-
+    './confirmation-modal-drtv'
 ], function() {});
-
-

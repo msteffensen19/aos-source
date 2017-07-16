@@ -95,27 +95,24 @@
     <ul>
         <li data-ng-click="mobileRedirect('default')">
             <a href="javascript:void(0)" role="link" class="img">
-                <div icon-home-svg></div>
+                <div icon-home-svg-mobile></div>
             </a>
         </li>
         <li data-ng-click="mobileRedirect('shoppingCart')">
             <a href="javascript:void(0)" role="link" class="img">
-                <div icon-cart-svg></div>
+                <div icon-cart-svg-mobile></div>
                 <span class="cart" ng-show="(cart | productsCartCount) > 0">{{ cart | productsCartCount }}</span>
             </a>
         </li>
         <li class="pointer" data-ng-click="login('loginMobileMiniTitle')">
             <a href="javascript:void(0)" role="link" class="img center">
-                <p>some</p>
-                <div icon-user-svg></div>
-                <span data-ng-show="userCookie.response" class="hi-user">
-                    {{userCookie.name}}
-                </span>
+                <div icon-user-svg-mobile></div>
+                <span data-ng-show="userCookie.response" class="hi-user">{{userCookie.name}}</span>
             </a>
         </li>
         <li data-ng-click="mobileRedirect('searchPage')">
             <a href="javascript:void(0)" role="link" class="img">
-                <div icon-search-svg></div>
+                <div icon-search-svg-mobile></div>
             </a>
         </li>
     </ul>
