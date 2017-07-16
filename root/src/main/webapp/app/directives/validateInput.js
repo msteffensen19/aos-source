@@ -919,7 +919,9 @@ define(['./module'], function (directives) {
                             break;
                         case Types.textarea:
                             input = $("<textarea name='" + a.aHint + partOfName + "' data-ng-model='secModel' ></textarea>");
-                            label.text(JSON.parse(s.secRequire).info);
+                            // On main Page in Contact US section under subject visible hint subjectTextArea
+                            // label.text(JSON.parse(s.secRequire).info);
+                            label.text("");
                             label.addClass("checkboxText roboto-light" + animated);
                             div.css({
                                 "padding-top": "10px",
