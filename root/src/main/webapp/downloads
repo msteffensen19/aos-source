@@ -97,35 +97,21 @@
             <a href="http://advantageonlineshopping.com:8080/#/" ><p class="paddingTop5 paddginLeft3">www.advantageonlineshopping.com:8080</a><br>
         </div>
 
-        <!--<div class="borderedDiv">-->
-            <!--<p class="borderedDivCaption">Installation: </p>-->
-            <!--<p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.1/InstallAOS.exe">-->
-                <!--<u>here</u></a><br>-->
-                <!--<span class="download_tab">Prerequisites:</span><br>-->
-                <!--<span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>-->
-                <!--<span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><b>PostgresSQL</b> version 9.4.X or up</a></span></span><br>-->
-                <!--<span class="download_tab"><span class="download_tab"><span class="download_tab">User: postgres</span></span></span><br>-->
-                <!--<span class="download_tab"><span class="download_tab"><span class="download_tab">Password: admin</span></span></span><br>-->
-                <!--&lt;!&ndash;<span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>&ndash;&gt;-->
-
-                <!--or configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>-->
-                <!--<span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>-->
-                <!--<span class="download_tab">cd advantage/Nimbus_aos/aos_all_in_one/</span><br>-->
-                <!--<span class="download_tab">chmod +x startup.sh</span><br>-->
-                <!--<span class="download_tab">./startup.sh</span></p>-->
-
-            <!--<p class="download_paragra paddginLeft1">For the DevOps story:<br>-->
-                <!--<span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>-->
-                <!--<span class="download_tab">cd advantage/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>-->
-                <!--<span class="download_tab">chmod +x startup.sh</span><br>-->
-                <!--<span class="download_tab">./startup.sh</span></p>-->
-
-            <!--<p class="download_paragra paddginLeft1">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>-->
-        <!--</div>-->
-
         <div class="borderedDiv">
-            <p class="borderedDivCaption">Docker conf: </p>
-            <p class="download_paragra paddginLeft1">Configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
+            <p class="borderedDivCaption">Installation: </p>
+            <p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/InstallAOS_1.1.2.exe">
+                <u>here</u></a><br>
+                <span class="download_tab">System requirements:</span><br>
+                <span class="download_tab"><span class="download_tab">Recomended OS: Windows 7, Windows 10 and Windows 2008R2</span></span><br>
+                <span class="download_tab"><span class="download_tab">Hardware: 4 CPU and 16GB memory</span></span><br>
+                <span class="download_tab">Prerequisites:</span><br>
+                <span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>
+                <span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><b>PostgresSQL</b> version 9.4.X or up</a></span></span><br>
+                <span class="download_tab"><span class="download_tab"><span class="download_tab">User: postgres</span></span></span><br>
+                <span class="download_tab"><span class="download_tab"><span class="download_tab">Password: admin</span></span></span><br>
+                <!--<span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>-->
+
+                or configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
                 <span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>
                 <span class="download_tab">cd advantage/Nimbus_aos/aos_all_in_one/</span><br>
                 <span class="download_tab">chmod +x startup.sh</span><br>
@@ -139,6 +125,23 @@
 
             <p class="download_paragra paddginLeft1">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>
         </div>
+
+        <!--<div class="borderedDiv">-->
+            <!--<p class="borderedDivCaption">Docker conf: </p>-->
+            <!--<p class="download_paragra paddginLeft1">Configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>-->
+                <!--<span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>-->
+                <!--<span class="download_tab">cd advantage/Nimbus_aos/aos_all_in_one/</span><br>-->
+                <!--<span class="download_tab">chmod +x startup.sh</span><br>-->
+                <!--<span class="download_tab">./startup.sh</span></p>-->
+
+            <!--<p class="download_paragra paddginLeft1">For the DevOps story:<br>-->
+                <!--<span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>-->
+                <!--<span class="download_tab">cd advantage/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>-->
+                <!--<span class="download_tab">chmod +x startup.sh</span><br>-->
+                <!--<span class="download_tab">./startup.sh</span></p>-->
+
+            <!--<p class="download_paragra paddginLeft1">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>-->
+        <!--</div>-->
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">Source code: </p>
