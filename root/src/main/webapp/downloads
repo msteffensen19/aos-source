@@ -83,27 +83,49 @@
         <p class="download_paragra"><b>Please note that the server advantageonlineshopping.com is our production server,
             and as such, it is updated every night with the last changes.</b></p>
 
-        <p class="download_paragra"><b>Advantage Online Shopping Version 1.1.1 Assets:</b></p>
+        <p class="download_paragra"><b>Advantage Online Shopping Version 1.1.2 Assets:</b></p>
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">Mobile apps: </p>
-            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.1/app-release-1.1.1.signed.apk" ><p class="paddingTop5 paddginLeft3">Android</a><br>
-            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.1/Advantage+Shopping.ipa">iOS</p></a>
+            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.apk"><p class="paddingTop5 paddginLeft3">Android</a><br>
+            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.ipa">iOS</p></a>
             <span class="paddginLeft1"></span>* Both are instrumented for AppPulse Mobile.</p>
         </div>
 
         <div class="borderedDiv">
-            <p class="borderedDivCaption">Installation: </p>
-            <p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.1/InstallAOS.exe">
-                <u>here</u></a><br>
-                <span class="download_tab">Prerequisites:</span><br>
-                <span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>
-                <span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><b>PostgresSQL</b> version 9.4.5 or up</a></span></span><br>
-                <span class="download_tab"><span class="download_tab"><span class="download_tab">User: postgres</span></span></span><br>
-                <span class="download_tab"><span class="download_tab"><span class="download_tab">Password: admin</span></span></span><br>
-                <span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>
+            <p class="borderedDivCaption">WEB UI: </p>
+            <a href="http://advantageonlineshopping.com:8080/#/" ><p class="paddingTop5 paddginLeft3">www.advantageonlineshopping.com:8080</a><br>
+        </div>
 
-                or configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
+        <!--<div class="borderedDiv">-->
+            <!--<p class="borderedDivCaption">Installation: </p>-->
+            <!--<p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.1/InstallAOS.exe">-->
+                <!--<u>here</u></a><br>-->
+                <!--<span class="download_tab">Prerequisites:</span><br>-->
+                <!--<span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>-->
+                <!--<span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><b>PostgresSQL</b> version 9.4.X or up</a></span></span><br>-->
+                <!--<span class="download_tab"><span class="download_tab"><span class="download_tab">User: postgres</span></span></span><br>-->
+                <!--<span class="download_tab"><span class="download_tab"><span class="download_tab">Password: admin</span></span></span><br>-->
+                <!--&lt;!&ndash;<span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>&ndash;&gt;-->
+
+                <!--or configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>-->
+                <!--<span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>-->
+                <!--<span class="download_tab">cd advantage/Nimbus_aos/aos_all_in_one/</span><br>-->
+                <!--<span class="download_tab">chmod +x startup.sh</span><br>-->
+                <!--<span class="download_tab">./startup.sh</span></p>-->
+
+            <!--<p class="download_paragra paddginLeft1">For the DevOps story:<br>-->
+                <!--<span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>-->
+                <!--<span class="download_tab">cd advantage/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>-->
+                <!--<span class="download_tab">chmod +x startup.sh</span><br>-->
+                <!--<span class="download_tab">./startup.sh</span></p>-->
+
+            <!--<p class="download_paragra paddginLeft1">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>-->
+        <!--</div>-->
+
+        <div class="borderedDiv">
+            <p class="borderedDivCaption">Docker conf: </p>
+            <p class="download_paragra paddginLeft1">Configure AOS locally with Docker (Ubuntu OS is recommended) by running:<br>
                 <span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>
                 <span class="download_tab">cd advantage/Nimbus_aos/aos_all_in_one/</span><br>
                 <span class="download_tab">chmod +x startup.sh</span><br>
@@ -112,7 +134,6 @@
             <p class="download_paragra paddginLeft1">For the DevOps story:<br>
                 <span class="download_tab">git clone <a href=""><u>https://github.houston.softwaregrp.net/nimbus/advantage.git</u></a></span><br>
                 <span class="download_tab">cd advantage/Nimbus_aos/aos_pipline/aos_all_in_one/</span><br>
-                <span class="download_tab">copy authorized_keys file to /root/.ssh on your machine (the host where you run the docker script from)</span><br>
                 <span class="download_tab">chmod +x startup.sh</span><br>
                 <span class="download_tab">./startup.sh</span></p>
 
@@ -127,12 +148,12 @@
         <div class="borderedDiv">
             <p class="borderedDivCaption">Admin client: </p>
             <p class="download_paragra paddginLeft1">.NET client for admin actions and for tweaking the system is included in the installation.
-                If you run it with docker, download the .NET client from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.1/AOS_1.1.1_new.zip">
+                If you run it with docker, download the .NET client from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+admin+1.1.2.zip">
                     <u>here</u></a></p>
         </div>
 
         <div class="borderedDiv">
-            <p class="download_paragra paddginLeft1">Note: We will keep the old versions for another month (until the <b><i>end of June</i></b>):<br>
+            <p class="download_paragra paddginLeft1">Note: We will keep the old versions for another month (until the <b><i>end of July</i></b>):<br>
                 <span class="download_tab">1.0.5: 54.210.48.65:80</span><br>
                 <span class="download_tab">1.0.0: 54.210.48.65:8080</span></p>
         </div>
