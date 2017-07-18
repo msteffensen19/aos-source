@@ -82,8 +82,7 @@ public class ShippingExpressService {
     }
 
     private static long getStarterTrackNumber() {
-        String digits = String.valueOf(new Date().getTime()).substring(2, 12);
-
+        String digits = String.valueOf(new Date().getTime()).substring(0, 10);
         return Long.parseLong(digits);
     }
 }
