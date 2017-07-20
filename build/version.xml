@@ -2,6 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <version>1.1.3</version>
-<deliveryNumber>2</deliveryNumber>
-<commitId>4f749aa7e4a85874fa3463b785831a7de8acc658</commitId>
+<deliveryNumber>3</deliveryNumber>
+<commitId>eeb2f8089f218e38fd89201d3e98dc851cfd4b3a</commitId>
 </project>    
