@@ -13,5 +13,6 @@ fi
 command1="sed -i 's/HOST_IP_CALCULATED/$ip/g' .env_private"
 eval $command1
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
+docker-compose pull
 docker-compose up -d
 
