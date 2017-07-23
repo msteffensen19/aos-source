@@ -21,7 +21,7 @@ sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
 sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
 sed -i "s/REGISTRY_PORT/${REGISTRY_PORT}/g" docker-compose.yml
 sed -i "s/JENKINS_PORT/${JENKINS_PORT}/g" docker-compose.yml
-#sed -i "s/TAG/${TAG}/g" docker-compose.yml
+sed -i "s/TAG/${TAG}/g" docker-compose.yml
 
 # if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
 if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
