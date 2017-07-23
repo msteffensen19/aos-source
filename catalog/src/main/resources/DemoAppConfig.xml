@@ -127,7 +127,7 @@
     <Tips_regular_expression datatype="enum:[Tip]" description="The button text always starts with Pay to allow for demonstrating regular expressions in object identification." tools="LeanFT;UFT" locationInAdvantage="Pay button in cart sum">Tip</Tips_regular_expression>
 
     <!-- Feature 1372 -->
-    <Tips_correlation_example datatype="enum:[Tip]" description="To demonstrate correlation, make sure that you include a login step in your flow.  The correlation is implemented with the session ID." tools="LoadRunner" locationInAdvantage="Home Page">Tip</Tips_correlation_example>
+    <Tips_correlation_example datatype="enum:[Tip]" description="To demonstrate correlation, make sure that you include a login step in your flow.  The correlation is implemented with the session ID." tools="LoadRunner" locationInAdvantage="Web Application Login">Tip</Tips_correlation_example>
 
     <!-- Feature 1206 -->
     <Tips_async_example datatype="enum:[Tip]" description="ADM performance tools support asynchronous communication.  To demonstrate this feature, browse to any of the products in the HEADPHONES category, and record the comments (web only)." tools="LoadRunner" locationInAdvantage="">Tip</Tips_async_example>
@@ -142,5 +142,7 @@
 
     <!-- Feature 1207 -->
     <Tips_DFE datatype="enum:[Tip]" description="Send login request and response in Base-64 encoded, instead of in plain text, to show DFE in snapshot (display only)." tools="LoadRunner" locationInAdvantage="Web Application Login">Tip</Tips_DFE>
+
+    <Tips_validation_example datatype="enum:[Tip]" description="To demonstrate validation: Perform a flow where you buy the contents of the cart, then go to the My Orders page and look for the order by its order number (shows positive validation). Delete the order, then look for the order by its number again (shows negtive validation)a." tools="LoadRunner" locationInAdvantage="My Orders">Tip</Tips_validation_example>
 
 </Parameters>
