@@ -543,7 +543,10 @@ public class OrderManagementService {
             os.flush();
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "SafePay JSON string sent: '" + input + "'");
+                safePayResponse.setResponseCode("Rejected");
+                safePayResponse.setResponseReason("illegal username and/or password.");
+                conn.disconnect();
+                return safePayResponse;
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
