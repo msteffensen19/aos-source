@@ -203,6 +203,7 @@
                         <!--<a data-ng-click="firstTag = true" translate="Back_to_shipping_details"></a>-->
                         <label class="float_right">
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
+                                        a-hint="_SAFEPAY"
                                         sec-send="payNow_SafePay()"></sec-sender>
                         </label>
                     </div>
@@ -232,9 +233,7 @@
                 <div class="blueLink marginBottom">
                     <a href="javascript:void(0)" role="link" ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                     <label>
-                        <button name="pay_now_btn" class="roboto-medium float-button a-button" data-ng-click="payNow_manual()" role="button">
-                            {{'PAY_NOW' | translate}}
-                        </button>
+                        <button id="pay_now_btn_MasterCredit" name="pay_now_btn_MasterCredit" class="roboto-medium float-button a-button" data-ng-click="payNow_manual()" role="button">{{'PAY_NOW' | translate}}</button>
                     </label>
                 </div>
 
@@ -315,6 +314,7 @@
                         <a href="javascript:void(0)" role="link" ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                         <label>
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
+                                        a-hint="_ManualPayment"
                                         sec-send="payNow_masterCredit()"></sec-sender>
                         </label>
                     </div>

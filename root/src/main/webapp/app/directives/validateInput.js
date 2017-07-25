@@ -170,9 +170,10 @@ define(['./module'], function (directives) {
 
             }],
             link: {
-                pre: function (s, e, attr, ctrls) {
+                pre: function (s, e, a, ctrls) {
                     e.addClass("sec-sender");
-                    var button = $("<button name='" + attr.aValue.toLowerCase().replace(/ /g,"_") + "_btn' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()'>" + attr.aValue + "</button>");
+                    var description = a.aHint;
+                    var button = $("<button id='" + a.aValue.toLowerCase().replace(/ /g,"_") + "_btn" + description + "' type='button' class='sec-sender-a invalid' role='button' data-ng-click='senderCtrl.send()'>" + a.aValue + "</button>");
                     $compile(button)(s);
                     e.append(button);
 
