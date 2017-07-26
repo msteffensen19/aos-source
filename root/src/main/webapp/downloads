@@ -60,10 +60,10 @@
         }
     </style>
     <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-81334227-1', 'auto');ga('send', 'pageview');
-        </script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-81334227-1', 'auto');ga('send', 'pageview');
+    </script>
 </head>
 <body>
 <div class="logo">
@@ -92,8 +92,8 @@
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">Mobile apps: </p>
-            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.apk"><p class="paddingTop5 paddginLeft3">Android</a><br>
-            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.ipa">iOS</p></a>
+            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.apk" onclick="ga('send', 'event', 'Download', 'Android', 'apk');"><p class="paddingTop5 paddginLeft3">Android</a><br>
+            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.ipa" onclick="ga('send', 'event', 'Download', 'iOS', 'ipa');">iOS</p></a>
             <span class="paddginLeft1"></span>* Both are instrumented for AppPulse Mobile.</p>
         </div>
 
