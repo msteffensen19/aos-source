@@ -85,7 +85,7 @@
 </div>
 <div class="content">
     <div class="download_div">
-        <p class="download_paragra"><b>Please note that the server advantageonlineshopping.com is our production server,
+        <p class="download_paragra"><b>Please note that the server advantageonlineshopping.com:8080 is our production server,
             and as such, it is updated every night with the last changes.</b></p>
 
         <p class="download_paragra"><b>Advantage Online Shopping Version 1.1.2 Assets:</b></p>
@@ -99,7 +99,7 @@
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">WEB UI: </p>
-            <a href="http://advantageonlineshopping.com:8080/#/" ><p class="paddingTop5 paddginLeft3">www.advantageonlineshopping.com:8080</a><br>
+            <a href="http://advantageonlineshopping.com:8080/#/" ><p class="paddingTop5 paddginLeft3">www.advantageonlineshopping.com</a><br>
         </div>
 
         <div class="borderedDiv">
@@ -107,7 +107,7 @@
             <p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/InstallAOS_1.1.2.exe">
                 <u onclick="ga('send', 'event', 'Download', 'Installer', 'EXE');">here</u></a><br>
                 <span class="download_tab">System requirements:</span><br>
-                <span class="download_tab"><span class="download_tab">Recomended OS: Windows 7, Windows 10 and Windows 2008R2</span></span><br>
+                <span class="download_tab"><span class="download_tab">Recommended OS: Windows 7, Windows 10 and Windows 2008R2</span></span><br>
                 <span class="download_tab"><span class="download_tab">Hardware: 4 CPU and 16GB memory</span></span><br>
                 <span class="download_tab">Prerequisites:</span><br>
                 <span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>
