@@ -5,8 +5,8 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('registerCtrl', ['$scope', 'registerService', '$location',
-        '$timeout', '$filter', '$state',
-        function (s, registerService, $location, $timeout, $filter, $state) {
+        '$timeout', '$filter', '$state', 'Analytics',
+        function (s, registerService, $location, $timeout, $filter, $state, Analytics) {
 
 
             s.registerSuccess = false;
@@ -37,6 +37,8 @@ define(['./module'], function (controllers) {
                     s.registerAnswer.class = response.success ? 'valid' : 'invalid';
 
                     if (response.success) {
+
+                        Analytics.trackEvent('Account', 'register', s.model);
                         $('body, html').animate({scrollTop: 0}, 10);
                         s.WellcomeName = s.model.firstName.replace(/\s/g, "").length > 0 ? s.model.firstName :
                             s.model.lastName.replace(/\s/g, "").length > 0 ? s.model.lastName : s.model.username;

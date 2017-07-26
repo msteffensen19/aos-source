@@ -59,6 +59,11 @@
             background:white;
         }
     </style>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-81334227-1', 'auto');ga('send', 'pageview');
+    </script>
 </head>
 <body>
 <div class="logo">
@@ -100,7 +105,7 @@
         <div class="borderedDiv">
             <p class="borderedDivCaption">Installation: </p>
             <p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/InstallAOS_1.1.2.exe">
-                <u>here</u></a><br>
+                <u onclick="ga('send', 'event', 'Download', 'Installer', 'EXE');">here</u></a><br>
                 <span class="download_tab">System requirements:</span><br>
                 <span class="download_tab"><span class="download_tab">Recomended OS: Windows 7, Windows 10 and Windows 2008R2</span></span><br>
                 <span class="download_tab"><span class="download_tab">Hardware: 4 CPU and 16GB memory</span></span><br>
