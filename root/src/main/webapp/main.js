@@ -21,6 +21,7 @@ require.config({
 
         'bootstrap': 'vendor/bootstrap/dist/js/bootstrap.min',
         'ui-bootstrap': 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+        'angular-google-analytics': 'vendor/angular-google-analytics/dist/angular-google-analytics',
 
 
         'jPushMenu': 'utils/jPushMenu',
@@ -34,6 +35,7 @@ require.config({
         'jquery-soap': 'utils/jquery.soap',
 
         'englishLanguage': 'languages/english',
+
 
 
     },
@@ -101,7 +103,7 @@ require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
         'jquery', 'jquery-bez', 'jquery.animate-colors', 'jPushMenu', 'mainScript', 'server',
         'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
         'slider', 'uiRouter', 'angular-cookie', 'angularAutocomplete',
-        'angularAnimate', 'ui-bootstrap', 'jquery-soap', 'underscore',
+        'angularAnimate', 'ui-bootstrap', 'jquery-soap', 'underscore', 'angular-google-analytics',
     ], function (angular, app) {
             angular.bootstrap(document, ['aos']);
             angular.resumeBootstrap();

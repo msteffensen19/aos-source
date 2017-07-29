@@ -6,8 +6,8 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('userAreLogin', ['$rootScope', '$templateCache', 'orderService',
-        'registerService', '$timeout', 'accountService',
-        function (rs, $templateCache, orderService, registerService, $timeout, accountService) {
+        'registerService', '$timeout', 'accountService', 'Analytics',
+        function (rs, $templateCache, orderService, registerService, $timeout, accountService, Analytics) {
             return {
                 replace: true,
                 template: $templateCache.get('app/order/partials/user-are-login.html'),
@@ -132,6 +132,7 @@ define(['./module'], function (directives) {
                             orderService.SafePay(s.user, s.savePay, s.card, s.shipping, s.cart, accountNumber, TransPaymentMethod)
                                 .then(function (res) {
 
+                                    Analytics.trackEvent('Order', 'paymentCompleted', res);
                                         if (res.success) {
                                             rs.$broadcast('updatePaymentEnd', {
                                                 paymentEnd: true,

@@ -14,6 +14,7 @@ define([
     './app/user/userConfig',
     './app/order/orderConfig',
     './app/account/accountConfig',
+    './app/configuration/commonConfig',
 
 
     './app/controllers/index',
@@ -39,7 +40,7 @@ define([
 
     './app/templates/module',
 
-], function (angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig, accountConfig) {
+], function (angular, templates, bootstrap, jPushMenu, catalogConfig, userConfig, orderConfig, accountConfig, commonConfig) {
 
     return angular.module('aos', [
 
@@ -48,7 +49,7 @@ define([
         'ui.bootstrap',
         'ipCookie',
         'ngAnimate',
-
+        'angular-google-analytics',
 
         'aos.controllers',
         'aos.services',
@@ -80,7 +81,11 @@ define([
 
     config(accountConfig).
 
-    run(function ($rootScope, $state, ipCookie) {
+    config(commonConfig).
+
+
+
+    run(function ($rootScope, $state, ipCookie, Analytics) {
 
 
             //$http.defaults.headers.get = { 'Content-Type': "application/json", }

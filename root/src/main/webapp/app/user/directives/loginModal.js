@@ -4,9 +4,9 @@
 define(['./module'], function (directives) {
     'use strict';
     directives.directive('loginModal', ['$rootScope', 'userService', 'ipCookie',
-        '$templateCache', '$location', '$timeout', 'productsCartService', '$filter',
+        '$templateCache', '$location', '$timeout', 'productsCartService', '$filter', 'Analytics',
         function ($rootScope, userService, $cookie, $templateCache, $location,
-                  $timeout, productsCartService, $filter) {
+                  $timeout, productsCartService, $filter, Analytics) {
             return {
                 restrict: 'E',
                 replace: false,
@@ -58,6 +58,7 @@ define(['./module'], function (directives) {
 
                             if (response.userId != -1 && response.success) {
 
+                                Analytics.trackEvent('Account', 'signIn', user);
                                 if (response.userId === undefined) {
                                     $scope.setErrorMessage(response.reason);
                                     return user;
