@@ -3,8 +3,8 @@
 <head>
     <title>&nbsp;Advantage Shopping</title>
     <!-- build:css css/main.min.css -->
-    <!--<link href="css/main.css" rel="stylesheet">-->
-    <link href="css/main.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <!--<link href="css/main.min.css" rel="stylesheet">-->
     <style>
         .logo {
             float: left;
@@ -85,33 +85,35 @@
 </div>
 <div class="content">
     <div class="download_div">
-        <p class="download_paragra"><b>Please note that the server advantageonlineshopping.com:8080 is our production server,
+        <p class="download_paragra"><b>Please note that the server <a href="http://advantageonlineshopping.com:8080/#/"><u>advantageonlineshopping.com:8080</u></a> is our production server,
             and as such, it is updated every night with the last changes.</b></p>
-
+        <br>
         <p class="download_paragra"><b>Advantage Online Shopping Version 1.1.2 Assets:</b></p>
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">Mobile apps: </p>
-            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.apk" onclick="ga('send', 'event', 'Download', 'Android', 'apk');"><p class="paddingTop5 paddginLeft3">Android</a><br>
-            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.ipa" onclick="ga('send', 'event', 'Download', 'iOS', 'ipa');">iOS</p></a>
+            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.apk" onclick="ga('send', 'event', 'Download', 'Android', 'apk');"><p class="paddingTop5 paddginLeft3"><u>Android</u></a><br>
+            <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.ipa" onclick="ga('send', 'event', 'Download', 'iOS', 'ipa');"><u>iOS</u></p></a>
             <span class="paddginLeft1"></span>* Both are instrumented for AppPulse Mobile.</p>
         </div>
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">WEB UI: </p>
-            <a href="http://advantageonlineshopping.com:8080/#/" ><p class="paddingTop5 paddginLeft3">www.advantageonlineshopping.com</a><br>
+            <a href="http://advantageonlineshopping.com/#/" ><p class="paddingTop5 paddginLeft3"><u>www.advantageonlineshopping.com</u></a><br>
         </div>
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">Installation: </p>
             <p class="download_paragra paddginLeft1">If you want your own instance, you can install it from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/InstallAOS_1.1.2.exe">
-                <u onclick="ga('send', 'event', 'Download', 'Installer', 'EXE');">here</u></a> or from <a onclick="ga('send', 'event', 'Download', 'Installer', 'EXE');" href="https://marketplace.saas.hpe.com/appdelivery/content/advantage-online-shopping-aos-adm-demo-application">ADM Marketplace</a> <br>
+                <u onclick="ga('send', 'event', 'Download', 'Installer', 'EXE');">here</u></a> or from
+                <a href="https://marketplace.saas.hpe.com/appdelivery/content/advantage-online-shopping-aos-adm-demo-application">
+                    <u onclick="ga('send', 'event', 'Download', 'Installer', 'EXE');">ADM Marketplace</u></a> <br>
                 <span class="download_tab">System requirements:</span><br>
                 <span class="download_tab"><span class="download_tab">Recommended OS: Windows 7, Windows 10 and Windows 2008R2</span></span><br>
                 <span class="download_tab"><span class="download_tab">Hardware: 4 CPU and 16GB memory</span></span><br>
                 <span class="download_tab">Prerequisites:</span><br>
-                <span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><b>Java</b> version 8</a></span></span><br>
-                <span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><b>PostgresSQL</b> version 9.4.X or up</a></span></span><br>
+                <span class="download_tab"><span class="download_tab"><a href="https://www.java.com/en/download/"><u><b>Java</b> version 8</u></a></span></span><br>
+                <span class="download_tab"><span class="download_tab"><a href="https://www.postgresql.org/download/windows/"><u><b>PostgresSQL</b> version 9.4.X or up</u></a></span></span><br>
                 <span class="download_tab"><span class="download_tab"><span class="download_tab">User: postgres</span></span></span><br>
                 <span class="download_tab"><span class="download_tab"><span class="download_tab">Password: admin</span></span></span><br>
                 <!--<span class="download_tab"><span class="download_tab"><b>JRE_HOME</b> environment parameter (Control panel->Environment variables: add JRE_HOME variable under "System variables", variable value: java installation folder location, i.e. C:\Program Files\Java\jre1.8.0_131)</span></span><br>-->
@@ -148,20 +150,21 @@
             <!--<p class="download_paragra paddginLeft1">* if you configure AOS in AWS, change PUBLIC_IP=LOCAL to AMAZON in the relevant .env file</p>-->
         <!--</div>-->
 
-        <div class="borderedDiv">
-            <p class="borderedDivCaption">Source code: </p>
-            <p class="download_paragra paddginLeft1">This release's source code can be downloaded from the same place in GitHub.</p>
-        </div>
+        <!--<div class="borderedDiv">-->
+            <!--<p class="borderedDivCaption">Source code: </p>-->
+            <!--<p class="download_paragra paddginLeft1">This release's source code can be downloaded from the same place in GitHub.</p>-->
+        <!--</div>-->
 
         <div class="borderedDiv">
             <p class="borderedDivCaption">Admin client: </p>
             <p class="download_paragra paddginLeft1">.NET client for admin actions and for tweaking the system is included in the installation.
-                If you run it with docker, download the .NET client from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+admin+1.1.2.zip">
-                    <u>here</u></a></p>
+                <!--If you run it with docker, download the .NET client from <a href="https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+admin+1.1.2.zip">-->
+                    <!--<u>here</u></a></p>-->
+            </p>
         </div>
 
         <div class="borderedDiv">
-            <p class="download_paragra paddginLeft1">Note: We will keep the old versions for another month (until the <b><i>end of July</i></b>):<br>
+            <p class="download_paragra paddginLeft1">Note: We will keep the old versions for another month (until the <b><i>end of August</i></b>):<br>
                 <span class="download_tab">1.0.5: 54.210.48.65:80</span><br>
                 <span class="download_tab">1.0.0: 54.210.48.65:8080</span></p>
         </div>
