@@ -391,10 +391,12 @@ define(['./module'], function (controllers) {
                 }
             }
 
-            categoryService.getMostPopularComments(s.product.categoryId).then(function(res){
-                s.mostPopularComments = res;
-                reviewGo();
-            });
+            if(s.product.categoryId == 2)
+                categoryService.getMostPopularComments(s.product.categoryId).then(function(res){
+                    s.mostPopularComments = res;
+                    reviewGo();
+                });
+
 
 
 
