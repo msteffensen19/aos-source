@@ -119,6 +119,11 @@ define([], function () {
                                     }
 
                             });
+                        }, function(err){
+                            alert('An error occurred, please try again')
+                            Loger.Received(err);
+                            Helper.disableLoader(0);
+                            response.reject('error in load category');
                         });
                         return defer.promise;
                     },
@@ -210,6 +215,11 @@ define([], function () {
                                     }
                                     defer.resolve(paramsToReturn)
                                 });
+                        }, function(err){
+                            alert('An error occurred, please try again')
+                            Loger.Received(err);
+                            Helper.disableLoader(0);
+                            response.reject('error in load product');
                         });
                         return defer.promise;
                     }

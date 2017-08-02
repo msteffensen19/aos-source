@@ -484,9 +484,26 @@ public class CatalogController {
         }
 
         Long categoryId = Long.valueOf(id);
-        CategoryDto categoryDto = categoryService.getCategoryDto(categoryId);
 
-        return new ResponseEntity<>(categoryDto, HttpStatus.OK);
+        CategoryDto categoryDto = null;
+        ResponseEntity result = null;
+        try{
+            categoryDto = categoryService.getCategoryDto(categoryId);
+        } catch (Exception e){
+
+            e.printStackTrace();
+            logger.error(e);
+//            categoryDto = new CategoryDto();
+        }
+
+        if (categoryDto == null) {
+            result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            result = new ResponseEntity<>(categoryDto, HttpStatus.OK);
+        }
+
+        return result;
+//        return new ResponseEntity<>(categoryDto, httpStatus);
     }
 
     @RequestMapping(value = "/categories/all_data", method = RequestMethod.GET)

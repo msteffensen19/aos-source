@@ -57,7 +57,7 @@ define(['./module'], function (services) {
                         function (res) {
                             Helper.disableLoader();
                             Loger.Received(res);
-                            response.resolve(res);
+                            response.reject(res);
                         })
                 }
                 return response.promise;

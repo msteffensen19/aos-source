@@ -219,7 +219,7 @@ define(['./module'], function (services) {
                         }).error(function (err) {
                             Helper.disableLoader();
                             Loger.Received(err)
-                            defer.reject(null)
+                            defer.reject(err)
                         });
                     }
                 }
