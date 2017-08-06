@@ -54,12 +54,12 @@ public class SoapApiHelper {
 
     /**
      * The method is to send a previously generated SOAPMessage. Attention! You
-     * should close soapConnection after using the method!
+     * should close soapConnection after using the method if not closed inside!
      * @param request                                               SOAPMessage
      * @return                                             SOAPMessage responce
      * @throws SOAPException
      */
-    private static SOAPMessage sendSoapMessage(SOAPMessage request) throws SOAPException {
+    private static synchronized SOAPMessage sendSoapMessage(SOAPMessage request) throws SOAPException {
         URL accountServiceUrl = null;
         URL accountServicePrefixUrl = null;
         try {
@@ -78,7 +78,9 @@ public class SoapApiHelper {
 
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         soapConnection = soapConnectionFactory.createConnection();
-        return soapConnection.call(request, accountServicePrefixUrl);
+        SOAPMessage result = soapConnection.call(request, accountServicePrefixUrl);
+        soapConnection.close();
+        return result;
     }
 
     /**
@@ -132,7 +134,6 @@ public class SoapApiHelper {
         String userPassword = getResponseValue("loginPassword", root);
         int accountType = Integer.valueOf(getResponseValue("accountType", root));
         long userId = Long.valueOf(getResponseValue("id", root));
-        soapConnection.close();
         return new AppUserDto(userName, userPassword, userId, accountType);
     }
 
@@ -145,7 +146,6 @@ public class SoapApiHelper {
         SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("EncodePasswordRequest", data));
         NodeList root = getRoot(soapResponse, "EncodePasswordResponse");
         String encodedPassword = getResponseValue("password", root);
-        soapConnection.close();
         return encodedPassword;
     }
 }
