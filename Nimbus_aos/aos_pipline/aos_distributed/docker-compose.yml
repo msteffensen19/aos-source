@@ -64,8 +64,6 @@ services:
    - "JENKINS_PORT:8080"
    - "50000:50000"
    volumes:
-   - WORKSPACE_ACCOUNT:/var/jenkins_home/jobs/Adventage-Online-Shopping-Pipeline-Commit/workspace
-   - WORKSPACE_LEANFT:/var/jenkins_home/jobs/Adventage-Online-Shopping-Build-LEANFT-Jar/workspace
    - /var/run/docker.sock:/var/run/docker.sock
    deploy:
      placement:

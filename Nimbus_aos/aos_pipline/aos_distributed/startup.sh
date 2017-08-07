@@ -30,10 +30,10 @@ if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_pr
 fi
 
 if [ "$QUALI" == "NO" ];then
- command1="sed -i 's/WORKSPACE_ACCOUNT/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
- eval $command1
- command2="sed -i 's/WORKSPACE_LEANFT/${three_levels_up_workspace}\/leanft/g' docker-compose.yml"
- eval $command2
+# command1="sed -i 's/WORKSPACE_ACCOUNT/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
+# eval $command1
+# command2="sed -i 's/WORKSPACE_LEANFT/${three_levels_up_workspace}\/leanft/g' docker-compose.yml"
+# eval $command2
 # we decide randomally where the containers will be deployed
 # change host name
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | while read line; do command="sed -i '0,/HOST_NAME/{s/HOST_NAME/$line/}' docker-compose.yml"; eval $command; done
@@ -48,8 +48,8 @@ if [ "$QUALI" == "NO" ];then
  eval $command4
 
  #edit .git/hooks
- echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/Adventage-Online-Shopping-Pipeline-Commit/build" > $workspace/.git/hooks/post-commit
- chmod +x $workspace/.git/hooks/post-commit
+# echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/Adventage-Online-Shopping-Pipeline-Commit/build" > $workspace/.git/hooks/post-commit
+# chmod +x $workspace/.git/hooks/post-commit
 
 else
  #we assume the machins ip are already in .env
@@ -73,8 +73,8 @@ else
  # updated srl tenant
  #sed -i 's/tenantId/604588673/g' .env
  
- sed -i 's/.*WORKSPACE_ACCOUNT.*//g' docker-compose.yml
- sed -i 's/.*WORKSPACE_LEANFT.*//g' docker-compose.yml
+# sed -i 's/.*WORKSPACE_ACCOUNT.*//g' docker-compose.yml
+# sed -i 's/.*WORKSPACE_LEANFT.*//g' docker-compose.yml
 fi
 
 . .env_private
