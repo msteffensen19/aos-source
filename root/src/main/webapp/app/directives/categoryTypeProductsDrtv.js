@@ -226,7 +226,7 @@ define(['./module'], function (directives) {
 
                         slider = document.getElementById('slider');
                         var step = s.maxPriceToFilter - s.minPriceToFilter;
-                        step = step < 100 ? 5 : 100;
+                        step = step < 100 ? 2 : 100;
                         noUiSlider.create(slider, {
                             start: [s.minPriceToFilter, s.maxPriceToFilter],
                             connect: true,
