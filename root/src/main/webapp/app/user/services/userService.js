@@ -189,6 +189,9 @@ define(['./module'], function (services) {
                     url: params.path,
                     method: params.method,
                     namespaceURL: server.namespaceURL,
+                    HTTPHeaders: {
+                        'Authorization': 'Basic ' + btoa(user.loginUser + ":" + user.loginPassword)
+                    },
                     SOAPAction: server.namespaceURL + params.method,
                     data: user,
                     success: function (soapResponse) {
