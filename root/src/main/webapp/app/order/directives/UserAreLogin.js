@@ -152,6 +152,10 @@ define(['./module'], function (directives) {
                                         console.log(err);
                                         safePayBussy = false;
                                         s.paymentEnd = false;
+                                        var errorObj = JSON.parse(err);
+                                        if(errorObj && errorObj.data && errorObj.data.reason){
+                                            alert(errorObj.data.reason);
+                                        }
                                     }
                                 );
 

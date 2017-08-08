@@ -544,7 +544,10 @@ public class OrderManagementService {
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
                 safePayResponse.setResponseCode("Rejected");
-                safePayResponse.setResponseReason("illegal username and/or password.");
+                if(safePayRequest.getUserName().equals(safePayRequest.getPassword()))
+                    safePayResponse.setResponseReason("Username and password cannot be identical.");
+                else
+                    safePayResponse.setResponseReason("illegal username and/or password.");
                 conn.disconnect();
                 return safePayResponse;
             }
