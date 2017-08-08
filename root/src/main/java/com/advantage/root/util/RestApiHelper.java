@@ -120,6 +120,9 @@ public abstract class RestApiHelper {
                 //  Product not found
                 returnValue = "Not found";
                 break;
+            case org.apache.http.HttpStatus.SC_NOT_FOUND:
+                returnValue = "Not found";
+                break;
             default:
                 IOException e = new IOException(conn.getResponseMessage());
                 logger.fatal(e);
