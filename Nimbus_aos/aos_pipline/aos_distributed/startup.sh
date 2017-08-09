@@ -88,5 +88,5 @@ sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "service docker
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
 
-command6="sed -i 's/performancetesting\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
+command6="sed -i 's/advantageonlineshopping\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
 eval $command6

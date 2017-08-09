@@ -6,6 +6,12 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.NodeList;
 
 import javax.xml.soap.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -78,9 +84,38 @@ public class SoapApiHelper {
 
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         soapConnection = soapConnectionFactory.createConnection();
+        //logger.warn("sendSoapMessage request: " + convertSoapMessageToString(request));
         SOAPMessage result = soapConnection.call(request, accountServicePrefixUrl);
         soapConnection.close();
+        //logger.warn("sendSoapMessage response: " + convertSoapMessageToString(result));
         return result;
+    }
+
+    /**
+     * Function converts SOAPMessage object to string. Goal to use for debugging
+     *
+     * @param soapMessage
+     * @return
+     */
+    private static String convertSoapMessageToString(SOAPMessage soapMessage) {
+        String soapMessageStr = "";
+        ByteArrayOutputStream baos = null;
+        try
+        {
+            baos = new ByteArrayOutputStream();
+            soapMessage.writeTo(baos);
+            soapMessageStr = baos.toString();
+        } catch (Exception e) {
+        } finally {
+            if (baos != null)
+            {
+                try {
+                    baos.close();
+                } catch (IOException ioe) {
+                }
+            }
+        }
+        return soapMessageStr;
     }
 
     /**
@@ -145,8 +180,7 @@ public class SoapApiHelper {
         data.put("accountId", Long.toString(userId));
         SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("EncodePasswordRequest", data));
         NodeList root = getRoot(soapResponse, "EncodePasswordResponse");
-        String encodedPassword = getResponseValue("password", root);
-        return encodedPassword;
+        return getResponseValue("password", root);
     }
 }
 

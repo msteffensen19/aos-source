@@ -4,7 +4,7 @@ services:
    env_file:
    - .env
    - .env_private
-   image: performancetesting/aos-gitlab
+   image: advantageonlineshopping/aos-gitlab
    ports:
    - "GITLAB_PORT:5432"
    - "443:443"
@@ -18,7 +18,7 @@ services:
        constraints:
          - node.hostname == HOST_NAME
   postgresql:
-   image: performancetesting/aos-postgres
+   image: advantageonlineshopping/aos-postgres
    ports:
    - "POSTGRES_PORT:5432"
    deploy:
@@ -29,7 +29,7 @@ services:
    env_file:
    - .env
    - .env_private
-   image: performancetesting/aos-main-app
+   image: advantageonlineshopping/aos-main-app
    ports:
    - "MAIN_PORT:8080"
    deploy:
@@ -40,7 +40,7 @@ services:
    env_file:
    - .env
    - .env_private
-   image: performancetesting/aos-accountservice
+   image: advantageonlineshopping/aos-accountservice
    ports:
    - "ACCOUNT_PORT:8080"
    deploy:
@@ -59,7 +59,7 @@ services:
    env_file:
    - .env
    - .env_private
-   image: performancetesting/aos-jenkins-pipline
+   image: advantageonlineshopping/aos-jenkins-pipline
    ports:
    - "JENKINS_PORT:8080"
    - "50000:50000"

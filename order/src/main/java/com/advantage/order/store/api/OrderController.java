@@ -57,7 +57,7 @@ public class OrderController {
     private ShoppingCartResponse shoppingCartResponse;
 
     private static final String demoAppConfig = "DemoAppConfig/parameters/";
-    private static final String ParameterName = "Repeat_ShipEx_call";
+    private static final String ParameterName = "ShipEx_repeat_calls";
     private static final Logger logger = Logger.getLogger(OrderController.class);
     private HttpSession m_session;
     /*  =========================================================================================================   */
@@ -482,7 +482,7 @@ public class OrderController {
 
         try {
             String stringResponse = RestApiHelper.httpGet(parameterByNameUrl, "order");
-            logger.debug("stringResponse = \"" + stringResponse + "\"");
+            logger.warn("stringResponse = \"" + stringResponse + "\"");
 
             if (stringResponse.equalsIgnoreCase(Constants.NOT_FOUND)) {
                 //  tool not found (409)
@@ -496,7 +496,7 @@ public class OrderController {
             logger.error("Calling httpGet(\"" + parameterByNameUrl.toString() + "\") throws IOException: ", e);
             return repeat;
         } catch (NullPointerException e) {
-            logger.error("convert Repeat_ShipEx_call value to int throws NullPointerException: ", e);
+            logger.error("convert ShipEx_repeat_calls value to int throws NullPointerException: ", e);
             return repeat;
         }
 
