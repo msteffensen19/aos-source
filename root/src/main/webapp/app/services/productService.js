@@ -81,13 +81,19 @@ define(['./module'], function (services) {
                             categoryName: data.categoryName,
                             products: [],
                         };
-                        for (var j = 0; j < data.products.length; j++) {
-                            var product = allData[i].products[j];
-                            if (product.productName.toLowerCase().indexOf(word.toLowerCase()) != -1
-                            || data.categoryName.toLowerCase() == word.toLowerCase()) {
-                                category.products.push(product);
+                        //add the entire category products
+                        if(category.categoryName.toLowerCase() === word.toLowerCase())
+                            category.products = allData[i].products;
+                        else{
+                            for (var j = 0; j < data.products.length; j++) {
+                                var product = allData[i].products[j];
+                                if (product.productName.toLowerCase().indexOf(word.toLowerCase()) != -1
+                                    || data.categoryName.toLowerCase() == word.toLowerCase()) {
+                                    category.products.push(product);
+                                }
                             }
                         }
+
                         if(category.products.length > 0){
                             arr.push(category);
                         }
