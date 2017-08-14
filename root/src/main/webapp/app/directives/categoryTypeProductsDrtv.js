@@ -242,10 +242,10 @@ define(['./module'], function (directives) {
 
                         slider.noUiSlider.on('update', function (values, handle) {
                             s.$applyAsync(function () {
-                                if (handle == '0') {
-                                    s.minPriceToFilter = parseInt(values[handle]) + (step + 2) >= s.maxPriceToFilter ? s.maxPriceToFilter : values[handle];
-                                } else {
-                                    s.maxPriceToFilter = parseInt(values[handle]) - (step + 2) <= s.minPriceToFilter ? s.minPriceToFilter : values[handle];
+                                if (handle == '0' && parseInt(values[handle]) != s.maxPriceToFilter) {
+                                    s.minPriceToFilter = parseInt(values[handle]);
+                                } else if(parseInt(values[1]) != s.minPriceToFilter){
+                                    s.maxPriceToFilter = parseInt(values[handle]);
                                 }
                                 s.showClear =
                                     Object.keys(s.productsInclude).length > 0 ||
