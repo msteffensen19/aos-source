@@ -1,6 +1,10 @@
 #!/bin/bash
+set -a
+
 . .env
 . .env_private
+
+set +a
 
 # evaluate the path to accountservice to use as a workspace in the pipeline jenkins job
 workspace=`pwd`
@@ -16,13 +20,13 @@ three_levels_up_workspace=$(echo "$three_levels_up_workspace" | sed 's/\//\\\//g
 #command2="sed -i 's/WORKSPACE_PATH_CALCULATED/${workspace}\//g' .env_private"
 #eval $command2
 
-sed -i "s/POSTGRES_PORT/${POSTGRES_PORT}/g" docker-compose.yml
-sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
-sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
-sed -i "s/REGISTRY_PORT/${REGISTRY_PORT}/g" docker-compose.yml
-sed -i "s/JENKINS_PORT/${JENKINS_PORT}/g" docker-compose.yml
-sed -i "s/GITLAB_PORT/${GITLAB_PORT}/g" docker-compose.yml
-sed -i "s/TAG/${TAG}/g" docker-compose.yml
+#sed -i "s/POSTGRES_PORT/${POSTGRES_PORT}/g" docker-compose.yml
+#sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
+#sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
+#sed -i "s/REGISTRY_PORT/${REGISTRY_PORT}/g" docker-compose.yml
+#sed -i "s/JENKINS_PORT/${JENKINS_PORT}/g" docker-compose.yml
+#sed -i "s/GITLAB_PORT/${GITLAB_PORT}/g" docker-compose.yml
+#sed -i "s/TAG/${TAG}/g" docker-compose.yml
 
 # if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
 if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
@@ -30,10 +34,6 @@ if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_pr
 fi
 
 if [ "$QUALI" == "NO" ];then
-# command1="sed -i 's/WORKSPACE_ACCOUNT/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
-# eval $command1
-# command2="sed -i 's/WORKSPACE_LEANFT/${three_levels_up_workspace}\/leanft/g' docker-compose.yml"
-# eval $command2
 # we decide randomally where the containers will be deployed
 # change host name
  docker node ls | grep -v Leader | grep -v HOSTNAME | awk '{print $2}' | while read line; do command="sed -i '0,/HOST_NAME/{s/HOST_NAME/$line/}' docker-compose.yml"; eval $command; done
@@ -72,21 +72,31 @@ else
 
  # updated srl tenant
  #sed -i 's/tenantId/604588673/g' .env
- 
-# sed -i 's/.*WORKSPACE_ACCOUNT.*//g' docker-compose.yml
-# sed -i 's/.*WORKSPACE_LEANFT.*//g' docker-compose.yml
+
 fi
 
+set -a
 . .env_private
+set +a
+
 [ -f "/etc/docker/daemon.json" ] && rm -rf "/etc/docker/daemon.json"
 echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" > /etc/docker/daemon.json
 service docker restart
 ssh-keyscan ${ACCOUNT_IP} >> "/${USER_NAME}/.ssh/known_hosts"
 echo "{ \"insecure-registries\":[\"${REGISTRY_IP}:${REGISTRY_PORT}\"] }" | sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "cat > /etc/docker/daemon.json"
 sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${ACCOUNT_IP}" "service docker restart"
+echo "{ \"insecure-registries\":[\"16.19.203.77:5000\"] }" | sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${OCTANE_IP}" "cat > /etc/docker/daemon.json"
+sshpass -p "${USER_PASSWORD}" ssh "${USER_NAME}"@"${OCTANE_IP}" "service docker restart"
+
+# remove octane service if we dont want to use it
+if [ "${CREATE_OCTANE}" == "NO" ];then
+ sed -i '/octane/,$d' docker-compose.yml
+fi
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
 
 command6="sed -i 's/advantageonlineshopping\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
 eval $command6
+
+. configure_octane.sh
