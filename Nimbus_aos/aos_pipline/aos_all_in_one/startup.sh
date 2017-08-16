@@ -1,6 +1,10 @@
 #!/bin/bash
+set -a
+
 . .env
 . .env_private
+
+set +a
 
 if [ "${PUBLIC_IP}" = "LOCAL" ]; then
  interface=`route | grep -w "default" | awk '{print $8}'`
@@ -12,7 +16,13 @@ else
 fi
 command1="sed -i 's/HOST_IP_CALCULATED/$ip/g' .env_private"
 eval $command1
+
+set -a
+
 . .env_private
+
+set +a
+
 workspace=`pwd`
 
 docker_compose_path=$(echo "$workspace" | sed 's/\//\\\//g')
@@ -41,6 +51,13 @@ if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_pr
  printf "\nhttp_proxy=\nhttps_proxy=">> .env_private
 fi
 
+# remove octane service if we dont want to use it
+if [ "${CREATE_OCTANE}" == "NO" ];then
+ sed -i '/octane/,$d' docker-compose.yml
+fi
+
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker-compose pull
 docker-compose up -d
+
+. configure_octane.sh
