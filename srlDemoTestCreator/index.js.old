@@ -2,7 +2,6 @@
 
 let fs = require('fs'),
     argv = require('minimist')(process.argv.slice(2)),
-    path = require('path'),
     cookieJar = require('request').jar(),
     request = require('request').defaults({jar:cookieJar}),
     async = require('async'),
@@ -12,7 +11,6 @@ let fs = require('fs'),
 
 const baseUrl = 'https://stormrunner-load.saas.hpe.com/v1/', // 'https://ptalb002qtso.saas.hpe.com/v1/',
     cliArgs = {
-        scriptPath: argv.scriptPath,
         tenantId: argv.tenantId,
         user: argv.user,
         password: argv.password,
@@ -26,14 +24,11 @@ const baseUrl = 'https://stormrunner-load.saas.hpe.com/v1/', // 'https://ptalb00
     },
     ipData = 'AOS_URL\r\nhttp://' + cliArgs.autIP + ':' + cliArgs.autPort,
     tenantIdQuery = '?TENANTID=' + cliArgs.tenantId,
-    modifiedScriptFilePath = path.dirname(cliArgs.scriptPath) + '/temp/' + path.basename(cliArgs.scriptPath),
-    tempModifiedFolder = modifiedScriptFilePath.substring(0, modifiedScriptFilePath.lastIndexOf('.'));
+    baseScriptFilePath = './assets/TC_loginSearchAndBuy.zip',
+    modifiedScriptFilePath = './temp/TC_loginSearchAndBuy.zip';
 
 function validateInput(cb) {
     console.log('validateInput - start');
-    if (!cliArgs.scriptPath) {
-        return cb('Error: You must provide script path');
-    }
     if (!cliArgs.tenantId) {
         return cb('Error: You must provide tenant id');
     }
@@ -57,12 +52,12 @@ function validateInput(cb) {
 
 function replaceAutParams(cb) {
     console.log('replaceAutParams - start');
-    let origZip = new Zip(cliArgs.scriptPath);
-    origZip.extractAllTo(tempModifiedFolder, true);
-    fs.writeFile(tempModifiedFolder + '/AOS_URL.dat', ipData);
+    let origZip = new Zip(baseScriptFilePath);
+    origZip.extractAllTo('./temp/TC_loginSearchAndBuy', true);
+    fs.writeFile('./temp/TC_loginSearchAndBuy/AOS_URL.dat', ipData);
 
     let zip = new FolderZip();
-    zip.zipFolder(tempModifiedFolder, { excludeParentFolder: true }, () => {
+    zip.zipFolder('./temp/TC_loginSearchAndBuy', { excludeParentFolder: true }, () => {
         zip.writeToFile(modifiedScriptFilePath);
         cb();
     });
@@ -178,7 +173,7 @@ function attachScriptToTest(cb) {
 function createOutputFile(cb) {
     console.log('createOutputFile - start');
     try {
-        fs.writeFile('./temp/srlTest.properties', "testId=" + srlData.test.id);
+        fs.writeFile('./temp/srlTest.properties', srlData.test.id);
     } catch (e) {
         return cb('createOutputFile: ' + e);
     }
