@@ -8,6 +8,10 @@
     <!--<Email_address_in_login datatype="enum:[Yes,No]" description="No=(Default) Do Not; or Yes = e-mail address is mandatory in create-user and show it in login/sign-in page. With this feature (2 screens with one difference to show a change ), BPT shows that if there is one change in one page, if it was defined as a component, the user can change this component only, and not touch all tests like in UFT." tools="BPT" locationInAdvantage="">No</Email_address_in_login>-->
     <Email_in_login datatype="enum:[Yes,No]" description="Determines whether a mandatory Email field is added to the login screen. Use this parameter to demonstrate that in BPT, a single component can be modified without updating other tests. Default = No. Yes = Add the Email Address field." tools="BPT" locationInAdvantage="Login page">No</Email_in_login>
 
+
+    <!-- Original Name = "AppPulse_user" ; Corrected Name = "AppPulse_user" -->
+    <AppPulse_user datatype="string" description="User name:Password for AppPulse user to trigger the relevant AppPluse features." tools="AppPulse" locationInAdvantage="Entire site">AppPulse:AppPulse1</AppPulse_user>
+
     <!-- Original Name = "Repeat_ShipEx_call" ; Corrected Name = "ShipEx_repeat_calls" -->
     <!--<Repeat_ShipEx_call datatype="string" description="Perform the same call to ShipEx multiple times (place shipping order - from Order service to ShipEx). Parameter values: 0=(Default) Disabled; any other positive number is the number of repeat calls to ShipEx. The goal of this capability is to find multiple calls to the same methods usually done by multiple developers causing inefficient application." tools="LoadRunner;SV;StormRunner" locationInAdvantage="">0</Repeat_ShipEx_call>-->
     <ShipEx_repeat_calls datatype="string" description="Defines the number of times to repeat a call to ShipEx. Use this parameter to find unneccesary multiple calls to the same methods, and affects performance. Default = 0 (no repeat calling). " tools="NV" locationInAdvantage="Purchase">0</ShipEx_repeat_calls>
