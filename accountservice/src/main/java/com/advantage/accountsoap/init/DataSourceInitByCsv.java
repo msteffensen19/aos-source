@@ -76,7 +76,7 @@ public class DataSourceInitByCsv {
             session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Adminov", "Admin", "admin", "adm1n", countryMap.get(10L), "052-1234567", "Jerusalem1", "Jerusalem", "address", "9876543", "admin@admin.ad", true));
             session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Gilat", "Naor", "gilat", "gG123", countryMap.get(128L), "052-7654321", "Jerusalem1", "Jerusalem", "address", "9876543", "d0r1@gmail.com", true));
             session.persist(new Account(AccountType.USER.getAccountTypeCode(), "Bukhantsov", "Kostya", "kostya", "kostya", countryMap.get(10L), "052-22222222", "Jerusalem1", "Jerusalem", "address", "9876543", "kostya@gmail.com", true));
-            session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Brown", "John", "AppPluse", "AppPluse", countryMap.get(40L), "617-527-5555", "MA", "Newton", "826 Morseland Ave.", "02458", "AppPlusedemo@aos.ad", true));
+            session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Brown", "John", "AppPulse", "AppPulse1", countryMap.get(40L), "617-527-5555", "MA", "Newton", "826 Morseland Ave.", "02458", "AppPlusedemo@aos.ad", true));
             transaction.commit();
         }
     }
