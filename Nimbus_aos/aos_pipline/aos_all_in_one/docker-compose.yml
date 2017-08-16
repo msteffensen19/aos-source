@@ -101,10 +101,6 @@ services:
    tty: true
    image: ${IMAGE}
    stdin_open: true
-   deploy:
-    placement:
-      constraints:
-        - node.hostname == HOST_NAME
   octane_docker_oracle:
     networks:
       octanet:
