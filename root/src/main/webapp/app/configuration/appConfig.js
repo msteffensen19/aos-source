@@ -85,14 +85,14 @@ define([], function () {
                 }
             })
             .state('category', {
-                url: '/category/:id?viewAll',
+                url: '/category/:name/:id?viewAll',
                 templateUrl: 'app/views/category-page.html',
                 controller: 'categoryCtrl',
                 resolve: {
                     category: function (categoryService, productService,
                                         $stateParams, $q, userService) {
                         var defer = $q.defer();
-                        categoryService.getCategoryById($stateParams.id).
+                        categoryService.getCategoryById($stateParams.id, $stateParams.name).
                         then(function (category) {
                             productService.getAllCategoriesAttributes()
                                 .then(function (attributes) {

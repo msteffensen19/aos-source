@@ -9,7 +9,7 @@
         <div class="container ">
 
             <div class="rowSection">
-                <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryId)"
+                <div id="SpeakersImg" ng-click="redirect('/category/' + categories[3].categoryName + '/' + categories[3].categoryId)"
                      role="link" href="javascript:void(0)"
                      class="SpeaakersImg categoryCell"
                      a-sec-back-img="{{categories[3].managedImageId}}" a-slow-page="{{ mainCtrl.config.slowPage }}" >
@@ -18,7 +18,7 @@
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
-                <div id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryId)"
+                <div id="TabletsImg" ng-click="redirect('/category/' + categories[2].categoryName + '/' + categories[2].categoryId)"
                      role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[2].managedImageId}}" class="categoryCell">
                     <div class="shop_now_slider">
@@ -31,7 +31,7 @@
             </div>
 
             <div class="rowSection">
-                <div ng-click="redirect('/category/' + categories[0].categoryId)" class="laptopImg categoryCell"
+                <div ng-click="redirect('/category/' + categories[0].categoryName + '/' + categories[0].categoryId)" class="laptopImg categoryCell"
                      role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[0].managedImageId}}">
                     <div class="shop_now_slider">
@@ -39,7 +39,7 @@
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
-                <div ng-click="redirect('/category/' + categories[4].categoryId)" class="micesImg categoryCell"
+                <div ng-click="redirect('/category/' + categories[4].categoryName + '/' + categories[4].categoryId)" class="micesImg categoryCell"
                      role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[4].managedImageId}}">
                     <div class="shop_now_slider">
@@ -47,7 +47,7 @@
                         <label class="shop_nowSub roboto-regular" translate="Shop_Now"></label>
                     </div>
                 </div>
-                <div ng-click="redirect('/category/' + categories[1].categoryId)" class="twoRows categoryCell"
+                <div ng-click="redirect('/category/' + categories[1].categoryName + '/' + categories[1].categoryId)" class="twoRows categoryCell"
                      role="link" href="javascript:void(0)"
                      a-sec-back-img="{{categories[1].managedImageId}}">
                     <div class="shop_now_slider">
