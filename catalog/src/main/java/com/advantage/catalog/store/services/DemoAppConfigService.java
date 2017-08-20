@@ -1,16 +1,16 @@
 package com.advantage.catalog.store.services;
 
 import com.advantage.common.Constants;
-import com.advantage.common.dto.DemoAppConfigParameter;
-import com.advantage.common.dto.DemoAppConfigParameterDto;
-import com.advantage.common.dto.DemoAppConfigParametersDto;
-import com.advantage.common.dto.DemoAppConfigStatusResponse;
+import com.advantage.common.Url_resources;
+import com.advantage.common.dto.*;
+import com.advantage.common.utils.SoapApiHelper;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.xml.XmlHelper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 
+import javax.xml.soap.SOAPException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class DemoAppConfigService {
     public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
     public static final String ATTRIBUTE_DESCRIPTION_TAG_NAME = "description";
     public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "locationInAdvantage";
+    private static final String APP_PULSE_USER = "AppPulse_user";
     //  endregion
 
     //  region Class Properties
@@ -386,7 +387,18 @@ public class DemoAppConfigService {
         if(parameters != null) {
             String errorMessage = "";
             boolean result = true;
+            boolean appPulseUserUpdateSuccess = true;
             for (DemoAppConfigParameterDto parameter : parameters.getParameters()) {
+                if(parameter.getName().equals(APP_PULSE_USER) && !parameter.getNewValue().contains(":")){
+                    errorMessage += "Missing : seperator";
+                    result = false;
+                    continue;
+                }
+                if(parameter.getName().equals(APP_PULSE_USER)){
+                    if(!updateAppPulseUserParameter(parameter))
+                        continue;
+                }
+
                 DemoAppConfigStatusResponse demoAppConfigStatusResponse = updateParameterValue(parameter.getName(), parameter.getNewValue());
                 result = !result || !demoAppConfigStatusResponse.isSuccess() ? false : true;
                 errorMessage += !demoAppConfigStatusResponse.isSuccess() ? demoAppConfigStatusResponse.getReason() + "\r\n" : "";
@@ -401,6 +413,48 @@ public class DemoAppConfigService {
         logger.trace("updateParametersValues(...) - Ended: \"update failed with error: parameters is null\"");
         return new DemoAppConfigStatusResponse(false,"update failed with error: parameters is null");
 
+    }
+
+    /**
+     * Update AppPulse_user parameter
+     * in case of a new user name, we need to delete the current user from the DB and create a new one
+     * in case of a password change we need to use the change password API
+     */
+    private boolean updateAppPulseUserParameter(DemoAppConfigParameterDto parameter){
+
+        DemoAppConfigParameter currentParameter = getDemoAppConfigParametersByName(APP_PULSE_USER);
+        try {
+            if(!currentParameter.getParameterValue().equals(parameter)){
+                String[] currentValue = currentParameter.getParameterValue().split(":");
+                String[] newValue = parameter.getNewValue().split(":");
+                if(!currentValue[0].equals(newValue[0])){//check if the username changed
+                    return changeUserName(currentValue, newValue);
+
+                }else if(currentValue[0].equals(newValue[0]) && !currentValue[1].equals(newValue[1])){//check if the password changed
+                    return changeUserPassword(currentValue, newValue);
+                }
+            }
+        } catch (SOAPException e) {
+            e.printStackTrace();
+            logger.error(e);
+            return false;
+        } catch (Exception e){
+            e.printStackTrace();
+            logger.error(e);
+            return false;
+        }
+        return false;
+    }
+
+    private boolean changeUserPassword(String[] currentUserDetails, String[] newUserDetails) throws SOAPException {
+        NodeList loginResponse = SoapApiHelper.doLogin(currentUserDetails[0], currentUserDetails[1]);
+        return loginResponse != null && SoapApiHelper.changeUserPassword(currentUserDetails, loginResponse, newUserDetails[1]);
+    }
+
+    private boolean changeUserName(String[] currentUserDetails, String[] newUserDetails) throws SOAPException{
+        NodeList loginResponse = SoapApiHelper.doLogin(currentUserDetails[0], currentUserDetails[1]);
+        Boolean isDeleted = SoapApiHelper.deleteAccount(currentUserDetails[0], loginResponse);
+        return isDeleted != null && SoapApiHelper.createUser(newUserDetails);
     }
 
     /**

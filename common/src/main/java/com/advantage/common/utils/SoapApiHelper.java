@@ -172,6 +172,45 @@ public class SoapApiHelper {
         return new AppUserDto(userName, userPassword, userId, accountType);
     }
 
+    public static NodeList doLogin(String userName, String password) throws SOAPException  {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("loginUser", userName);
+        data.put("email", "");
+        data.put("loginPassword", password);
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountLoginRequest", data));
+        NodeList root = getRoot(soapResponse, "StatusMessage");
+
+        String success = getResponseValue("success", root);
+        if(success.equals("false"))
+            return null;
+        if(success.equals("true")){
+            return root;
+        }
+
+//        return new AppUserDto(userName, userPassword, userId, accountType);
+        return null;
+    }
+
+    public static AppUserDto changeUserName(String[] currentUser, String[] newUser) throws SOAPException{
+        return null;
+    }
+
+    public static boolean changeUserPassword(String[] currentUserDetails, NodeList loginResponse, String newPassword) throws SOAPException{
+        String basicToken = getResponseValue("t_authorization", loginResponse);
+        AppUserDto user = getUserByLogin(currentUserDetails[0], basicToken);
+
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("oldPassword", currentUserDetails[1]);
+        data.put("newPassword", newPassword);
+        data.put("base64Token", "Basic " + basicToken);
+        data.put("accountId", Long.toString(user.getUserId()));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("ChangePasswordRequest", data));
+        NodeList root = getRoot(soapResponse, "StatusMessage");
+
+        return getResponseValue("success", root).equals("true") ? true : false;
+    }
+
     public static String encodePassword(String userName, String password, long userId, String base64Token) throws SOAPException {
         HashMap<String, String> data = new HashMap<>();
         data.put("userName", userName);
@@ -181,6 +220,49 @@ public class SoapApiHelper {
         SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("EncodePasswordRequest", data));
         NodeList root = getRoot(soapResponse, "EncodePasswordResponse");
         return getResponseValue("password", root);
+    }
+
+    public static Boolean deleteAccount(String userName, NodeList loginResponse) throws SOAPException{
+        String basicToken = getResponseValue("t_authorization", loginResponse);
+        AppUserDto user = getUserByLogin(userName, basicToken);
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("base64Token", basicToken);
+        data.put("accountId", Long.toString(user.getUserId()));
+
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountDeleteRequest", data));
+        NodeList root = getRoot(soapResponse, "StatusMessage");
+        return root != null && getResponseValue("success", root).equals("true") ? true : false;
+    }
+
+    public static boolean createUser(String[] newUserDetails) throws SOAPException{
+        HashMap<String, String> data = getUserAccountData(newUserDetails);
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountCreateRequest", data));
+        NodeList root = getRoot(soapResponse, "StatusMessage");
+        return true;
+    }
+
+    private static HashMap<String, String> getUserAccountData(String[] newUserDetails) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("lastName", "Brown");
+        data.put("firstName", "John");
+        data.put("loginName", newUserDetails[0]);
+        data.put("accountType", "10");
+        data.put("countryId", "40");
+        data.put("stateProvince", "MA");
+        data.put("cityName", "Newton");
+        data.put("zipcode", "02458");
+        data.put("address", "826 Morseland Ave.");
+        data.put("phoneNumber", "617-527-5555");
+        data.put("email", "AppPlusedemo@aos.ad");
+        data.put("defaultPaymentMethodId", "10");
+        data.put("allowOffersPromotion", "true");
+        data.put("internalUnsuccessfulLoginAttempts", "");
+        data.put("internalUserBlockedFromLoginUntil", "");
+        data.put("internalLastSuccesssulLogin", "");
+        data.put("password", newUserDetails[1]);
+//        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Brown", "John", "AppPulse", "AppPulse1", countryMap.get(40L), "617-527-5555", "MA", "Newton", "826 Morseland Ave.", "02458", "AppPlusedemo@aos.ad", true));
+        return data;
     }
 }
 

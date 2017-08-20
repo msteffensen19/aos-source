@@ -1,5 +1,6 @@
 package com.advantage.catalog.store.config;
 
+import com.advantage.common.Url_resources;
 import org.apache.log4j.Logger;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -33,7 +34,8 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
                 DataJpaConfiguration.class,
                 JacksonObjectMapperConfiguration.class,
                 ImageManagementConfiguration.class,
-                AdvantageAspects.class
+                AdvantageAspects.class,
+                Url_resources.class,
                 //,SwaggerConfiguration.class //Because in this class added @Inject Environment
         };
     }
