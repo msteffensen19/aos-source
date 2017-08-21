@@ -149,4 +149,7 @@
 
     <Tips_validation_example datatype="enum:[Tip]" description="To demonstrate validation: Perform a flow where you buy the contents of the cart, then go to the My Orders page and look for the order by its order number (shows positive validation). Delete the order, then look for the order by its number again (shows negative validation)." tools="LoadRunner" locationInAdvantage="My Orders">Tip</Tips_validation_example>
 
+
+    <Error_403 datatype="enum:[Tip]" description="To generate error 403, click on the 'Sign in with Facebook' button" tools="AppPulse" locationInAdvantage="Login page">Tip</Error_403>
+
 </Parameters>
