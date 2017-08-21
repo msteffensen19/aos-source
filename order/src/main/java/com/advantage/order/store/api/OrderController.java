@@ -586,7 +586,8 @@ public class OrderController {
         //return ERROR 500 if this is an AppPulse user (US #118005)
         OrderPurchaseResponse purchaseResponse = null;
         if(isAppPulseUser(userId)){
-            purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "TBD");
+            logger.error("US #118005 - TBD");
+            purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An error occurred please try again later");
             return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
