@@ -5,9 +5,11 @@ import ShipExServiceClient.ShippingCostResponse;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.cef.CefHttpModel;
+import com.advantage.common.dto.AppUserDto;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.ErrorResponseDto;
 import com.advantage.common.security.AuthorizeAsUser;
+import com.advantage.common.utils.SoapApiHelper;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.soap.SOAPException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -580,7 +583,14 @@ public class OrderController {
 
         logger.debug("userId = " + userId);
 
-        OrderPurchaseResponse purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
+        //return ERROR 500 if this is an AppPulse user (US #118005)
+        OrderPurchaseResponse purchaseResponse = null;
+        if(isAppPulseUser(userId)){
+            purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "TBD");
+            return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
+
 
         if (purchaseResponse.isSuccess()) {
             return new ResponseEntity<>(purchaseResponse, HttpStatus.OK);
@@ -590,6 +600,17 @@ public class OrderController {
         }
     }
 
+
+    private boolean isAppPulseUser(long userId){
+        try {
+            AppUserDto user = SoapApiHelper.getUserById(userId);
+            String appPulseUserValue =  RestApiHelper.getDemoAppConfigParameterValue("AppPulse_user");
+            return appPulseUserValue.split(":").length > 1 ? appPulseUserValue.split(":")[0].equals(user.getLoginUser()) : false;
+        } catch (SOAPException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     //  endregion
 
