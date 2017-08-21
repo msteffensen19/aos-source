@@ -201,10 +201,11 @@
                     <div class="blueLink margin15px">
                         <a href="javascript:void(0)" role="link" data-ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
                         <!--<a data-ng-click="firstTag = true" translate="Back_to_shipping_details"></a>-->
-                        <label class="float_right">
-                            <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
+                        <label class="float_right" style="display: table">
+                            <sec-sender id="payNowSPDrtv" class="roboto-medium payNowButtonMarginWithError" a-value="{{'PAY_NOW' | translate}}"
                                         a-hint="_SAFEPAY"
-                                        sec-send="payNow_SafePay()"></sec-sender>
+                                        sec-send="payNow_SafePay()" style="margin-right: 20%;"></sec-sender>
+                            <label class="payNow_error_label" id="payNowSPErrorLabel"></label>
                         </label>
                     </div>
 

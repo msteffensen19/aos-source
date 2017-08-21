@@ -18,6 +18,7 @@ define(['./module'], function (directives) {
                         s.validSecValidate = function (valid) {
                             s.invalidUser = s.userDetailsEditMode = !valid;
                         }
+                        $("#payNowSPErrorLabel").html("");
                     },
                     post: function (s) {
 
@@ -134,6 +135,7 @@ define(['./module'], function (directives) {
 
                                     Analytics.trackEvent('Order', 'paymentCompleted', res);
                                         if (res.success) {
+                                            $("#payNowSPErrorLabel").html("");
                                             rs.$broadcast('updatePaymentEnd', {
                                                 paymentEnd: true,
                                                 orderNumber: res.orderNumber,
@@ -154,7 +156,7 @@ define(['./module'], function (directives) {
                                         s.paymentEnd = false;
                                         var errorObj = JSON.parse(err);
                                         if(errorObj && errorObj.data && errorObj.data.reason){
-                                            alert(errorObj.data.reason);
+                                            $("#payNowSPErrorLabel").html(errorObj.data.reason);
                                         }
                                     }
                                 );
@@ -207,6 +209,7 @@ define(['./module'], function (directives) {
                         s.imgRadioButtonClicked = function (num) {
                             s.imgRadioButton = num;
                             s.showMasterCart = s.noCards || (s.card && s.card.cartExpired);
+                            $("#payNowSPErrorLabel").html("");
                         }
 
                         s.paymentMethod_edit = function () {

@@ -534,3 +534,11 @@
     /*}*/
 }
 
+.payNow_error_label{
+    display: table-row;
+    color: #ff454f;
+}
+
+payNowButtonMarginWithError{
+    margin-right: 20%;
+}
