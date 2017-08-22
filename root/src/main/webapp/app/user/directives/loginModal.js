@@ -162,7 +162,11 @@ define(['./module'], function (directives) {
 
                     $scope.singWithFacebook = function (user) {
                         console.log("Sing With Facebook not done yet!");
-                        userService.facebookLogin();
+                        userService.facebookLogin().then(function(success){
+
+                        }, function (error){
+                            $scope.setErrorMessage(error.data.reason);
+                        } );
                     }
 
                 }

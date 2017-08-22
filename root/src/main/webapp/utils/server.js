@@ -261,11 +261,6 @@ var server = {
         }
         ,
 
-        facebookLogin : function(){
-            var paramToReturn = catalogKey + "facebookLogin";
-            Loger.Calling(paramToReturn);
-            return paramToReturn;
-        }
 
     }
     ,
@@ -521,6 +516,12 @@ var server = {
             }
             Loger.CallingWSDL(wsdlToReturn);
             return wsdlToReturn;
+        },
+
+        facebookLogin : function(){
+            var paramToReturn = catalogKey + "facebookLogin";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
         }
     }
     ,

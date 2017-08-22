@@ -214,10 +214,7 @@ define(['./module'], function (services) {
 
             function facebookLogin(){
                 var defer = $q.defer();
-
-
-
-                var paramsToSend = server.account.facebookLogin();
+                var paramsToSend = {};
                 var expectToReceive = {}
 
                 Helper.enableLoader();
@@ -225,7 +222,7 @@ define(['./module'], function (services) {
                 Loger.Params(expectToReceive, paramsToSend.method);
                 $http({
                     method: "post",
-                    url: server.catalog.facebookLogin(),
+                    url: server.account.facebookLogin(),
                     data: {},
                     headers: {
                         "content-type": "application/json",
@@ -238,7 +235,7 @@ define(['./module'], function (services) {
                 }, function (err) {
                     Helper.disableLoader();
                     Loger.Received(err);
-                    defer.reject(JSON.stringify(err))
+                    defer.reject(err)
                 })
                 return defer.promise;
             }
