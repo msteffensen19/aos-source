@@ -14,7 +14,8 @@ define(['./module'], function (services) {
                 getCartIncrement: getCartIncrement,
                 getDuplicateProductPrice: getDuplicateProductPrice,
                 nv_slowPage: nv_slowPage,
-                haveConfiguration: haveConfiguration
+                haveConfiguration: haveConfiguration,
+                facebookLogin : facebookLogin
             });
 
 
@@ -208,6 +209,37 @@ define(['./module'], function (services) {
                     enableLogging: true
                 });
 
+                return defer.promise;
+            }
+
+            function facebookLogin(){
+                var defer = $q.defer();
+
+
+
+                var paramsToSend = server.account.facebookLogin();
+                var expectToReceive = {}
+
+                Helper.enableLoader();
+
+                Loger.Params(expectToReceive, paramsToSend.method);
+                $http({
+                    method: "post",
+                    url: server.catalog.facebookLogin(),
+                    data: {},
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                }).
+                then(function (res) {
+                    Helper.disableLoader();
+                    Loger.Received(res);
+                    defer.resolve(res.data)
+                }, function (err) {
+                    Helper.disableLoader();
+                    Loger.Received(err);
+                    defer.reject(JSON.stringify(err))
+                })
                 return defer.promise;
             }
 

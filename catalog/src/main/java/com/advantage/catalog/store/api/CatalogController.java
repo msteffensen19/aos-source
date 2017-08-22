@@ -853,6 +853,19 @@ public class CatalogController {
 
         return new ResponseEntity<>(httpStatusCode + " " + httpStatus.getReasonPhrase(), httpStatus);
     }
+
+    @ApiOperation(value = "Get color-attribute by product-id and color-code")
+    @RequestMapping(value = "/facebookLogin", method = RequestMethod.POST)
+    public ResponseEntity<ErrorResponseDto> getColorAttributeByProductIdAndColorCode(HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+        } else {
+            logger.warn("cefData is null");
+        }
+        ErrorResponseDto erd = new ErrorResponseDto(false, "TBD");
+        return new ResponseEntity<>(erd, HttpStatus.FORBIDDEN);
+    }
     //  endregion
 
 }

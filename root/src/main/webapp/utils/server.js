@@ -261,6 +261,12 @@ var server = {
         }
         ,
 
+        facebookLogin : function(){
+            var paramToReturn = catalogKey + "facebookLogin";
+            Loger.Calling(paramToReturn);
+            return paramToReturn;
+        }
+
     }
     ,
     order: {

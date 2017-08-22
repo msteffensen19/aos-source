@@ -162,7 +162,7 @@ define(['./module'], function (directives) {
 
                     $scope.singWithFacebook = function (user) {
                         console.log("Sing With Facebook not done yet!");
-                        //$location.path('404');
+                        userService.facebookLogin();
                     }
 
                 }
