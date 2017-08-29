@@ -173,83 +173,75 @@ public class ShoppingCartService {
 
         shoppingCartResponse = new ShoppingCartResponse(false, "shoppingCartResponse", -1);
 
-        //  Get parameter "Error_500_in_update_cart" value from DemoAppConfig.xml
-        String parameterValue = RestApiHelper.getDemoAppConfigParameterValue("Error_500_in_update_cart");
+
 
 //        LOGGER.info("Updating product " + productId + " in cart.");
 //        LOGGER.info("Updating product details with color: " + ((hexColorNew.equals("-1"))? ColorPalletEnum.getColorByCode(hexColor).toString().toLowerCase() : ColorPalletEnum.getColorByCode(hexColorNew).toString().toLowerCase()) + " and quantity: " + quantity + ".");
 //        LOGGER.info("Verifying that updated product is available at vendor shop.");
-//        if (parameterValue.equalsIgnoreCase("No")) {
-        if ((parameterValue == null) || (parameterValue.equalsIgnoreCase("No"))) {
 
-            int color = ShoppingCart.convertHexColorToInt(hexColor);
+        int color = ShoppingCart.convertHexColorToInt(hexColor);
 
-            /*  Update COLOR CHANGE of product in user cart */
-            if ((ValidationHelper.isValidColorHexNumber(hexColor)) &&
-                    (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
-                    (!hexColor.equalsIgnoreCase(hexColorNew))) {
-                /*  *****************************************
-                    Color has changed for the product in cart
-                    *****************************************   */
+        /*  Update COLOR CHANGE of product in user cart */
+        if ((ValidationHelper.isValidColorHexNumber(hexColor)) &&
+                (ValidationHelper.isValidColorHexNumber(hexColorNew)) &&
+                (!hexColor.equalsIgnoreCase(hexColorNew))) {
+            /*  *****************************************
+                Color has changed for the product in cart
+                *****************************************   */
 
-                /*  Find a product with productId and new color in the user's cart  */
-                int totalQuantity = 0;
-                int newColor = ShoppingCart.convertHexColorToInt(hexColorNew);
-                ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, newColor);
+            /*  Find a product with productId and new color in the user's cart  */
+            int totalQuantity = 0;
+            int newColor = ShoppingCart.convertHexColorToInt(hexColorNew);
+            ShoppingCart shoppingCart = shoppingCartRepository.find(userId, productId, newColor);
 
-                if (shoppingCart != null) {
-                    /*
-                        There's already a product with the new color:
-                        1. Delete product with previous color, it's quantity is the parameter to the method.
-                        2. Add quantity of product with previous color to product with new color.
-                     */
-                    int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
-                    shoppingCartResponse = shoppingCartRepository.getShoppingCartResponse();
-                    if (shoppingCartResponse.isSuccess()) {
-                        totalQuantity = shoppingCart.getQuantity();
-                    } else {
-                        shoppingCartResponse.setReason("Error: failed to change product's color");
-                    }
-
-                    //  Add updated quantity to total
-                    totalQuantity += quantity;
-
-                    totalQuantity = validateProductInCartQuantityVsInStock(productId, newColor, totalQuantity);
-                    shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
-
+            if (shoppingCart != null) {
+                /*
+                    There's already a product with the new color:
+                    1. Delete product with previous color, it's quantity is the parameter to the method.
+                    2. Add quantity of product with previous color to product with new color.
+                 */
+                int result = shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+                shoppingCartResponse = shoppingCartRepository.getShoppingCartResponse();
+                if (shoppingCartResponse.isSuccess()) {
+                    totalQuantity = shoppingCart.getQuantity();
                 } else {
-                    /*
-                        product with productId and hexColorNew doesn't exists in the cart yet:
-                        Add a new product with the new color to user cart
-                     */
-                    quantity = validateProductInCartQuantityVsInStock(productId, newColor, quantity);
-                    shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
-                    shoppingCartRepository.add(new ShoppingCart(userId, productId, newColor, quantity));
+                    shoppingCartResponse.setReason("Error: failed to change product's color");
                 }
+
+                //  Add updated quantity to total
+                totalQuantity += quantity;
+
+                totalQuantity = validateProductInCartQuantityVsInStock(productId, newColor, totalQuantity);
+                shoppingCartRepository.update(userId, productId, newColor, totalQuantity);
+
             } else {
-                /*  Update QUANTITY of product in user cart - No change in product's color  */
-                if (quantity > 0) {
-
-                    quantity = validateProductInCartQuantityVsInStock(productId, color, quantity);
-
-                    /* Update product quantity in cart  */
-                    System.out.println("ShoppingCartService.update(" + userId + ", " + productId + ", " + color + ", " + quantity + ")");
-                    //shoppingCartResponse = shoppingCartRepository.update(userId, productId, color, quantity);
-                    shoppingCartRepository.update(userId, productId, color, quantity);
-
-                } else {
-                    //  Nothing to update - Bad Request
-                    shoppingCartResponse.setSuccess(false);
-                    shoppingCartResponse.setReason("Error: Bad request. Product's color was not changed");
-                    shoppingCartResponse.setId(productId);
-                }
+                /*
+                    product with productId and hexColorNew doesn't exists in the cart yet:
+                    Add a new product with the new color to user cart
+                 */
+                quantity = validateProductInCartQuantityVsInStock(productId, newColor, quantity);
+                shoppingCartRepository.removeProductFromUserCart(userId, productId, color);
+                shoppingCartRepository.add(new ShoppingCart(userId, productId, newColor, quantity));
             }
+        } else {
+            /*  Update QUANTITY of product in user cart - No change in product's color  */
+            if (quantity > 0) {
 
-        } else if (parameterValue.equalsIgnoreCase("Yes")) {
-			//  Simulate error 500
-            logger.error("A problem occurred while updating cart.");
-            throw new RuntimeException("A problem occurred while updating cart.");
+                quantity = validateProductInCartQuantityVsInStock(productId, color, quantity);
+
+                /* Update product quantity in cart  */
+                System.out.println("ShoppingCartService.update(" + userId + ", " + productId + ", " + color + ", " + quantity + ")");
+                //shoppingCartResponse = shoppingCartRepository.update(userId, productId, color, quantity);
+                shoppingCartRepository.update(userId, productId, color, quantity);
+
+            } else {
+                //  Nothing to update - Bad Request
+                shoppingCartResponse.setSuccess(false);
+                shoppingCartResponse.setReason("Error: Bad request. Product's color was not changed");
+                shoppingCartResponse.setId(productId);
+            }
         }
+
 
         return shoppingCartResponse;
     }
