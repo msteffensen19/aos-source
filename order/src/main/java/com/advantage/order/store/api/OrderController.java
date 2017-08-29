@@ -586,9 +586,16 @@ public class OrderController {
         //return ERROR 500 if this is an AppPulse user (US #118005)
         OrderPurchaseResponse purchaseResponse = null;
         if(isAppPulseUser(userId) && purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equalsIgnoreCase("safepay")){
-            logger.error("US #118005 - TBD");
-            purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An error occurred. Please try again later");
-            return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            if(purchaseRequest.getOrderPaymentInformation().getUsername().equals(purchaseRequest.getOrderPaymentInformation().getPassword())){
+                logger.error("US #118005 - ERROR 409");
+                purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.CONFLICT.toString(), "Error! Username and password cannot be identical");
+                return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
+            }
+            else{
+                logger.error("US #118005 - TBD");
+                purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An error occurred. Please try again later");
+                return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
         purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
 
