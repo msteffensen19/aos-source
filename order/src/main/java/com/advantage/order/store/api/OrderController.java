@@ -587,7 +587,7 @@ public class OrderController {
         OrderPurchaseResponse purchaseResponse = null;
         if(isAppPulseUser(userId) && purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equalsIgnoreCase("safepay")){
             logger.error("US #118005 - TBD");
-            purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An error occurred please try again later");
+            purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An error occurred. Please try again later");
             return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
