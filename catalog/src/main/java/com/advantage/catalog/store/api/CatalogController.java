@@ -863,7 +863,7 @@ public class CatalogController {
         } else {
             logger.warn("cefData is null");
         }
-        ErrorResponseDto erd = new ErrorResponseDto(false, "Sorry, connection with Facebook is unavailable. Please try again later");
+        ErrorResponseDto erd = new ErrorResponseDto(false, "Sorry, connecting to Facebook is currently unavailable. Please try again later.");
         return new ResponseEntity<>(erd, HttpStatus.FORBIDDEN);
     }
     //  endregion
