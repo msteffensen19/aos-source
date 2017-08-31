@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -458,7 +459,7 @@ public class OrderManagementService {
             os.write(input.getBytes());
             os.flush();
 
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED && conn.getResponseCode() != HttpURLConnection.HTTP_CONFLICT) {
                 RuntimeException e = new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode() + Constants.SPACE + "MasterCredit JSON string sent: '" + input + "'");
                 if (logger.isDebugEnabled()) {
                     logger.fatal(conn.getResponseCode(), e);
@@ -468,7 +469,14 @@ public class OrderManagementService {
                 throw e;
             }
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            BufferedReader br = null;
+
+            if(conn.getResponseCode() == HttpURLConnection.HTTP_CONFLICT)
+                br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            else
+                br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+
             StringBuilder sb = new StringBuilder();
             StringBuffer sbLog = new StringBuffer("Output from Server...").append(System.lineSeparator());
             String output;
