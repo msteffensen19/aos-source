@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.soap.SOAPException;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -571,7 +572,7 @@ public class OrderController {
             @ApiResponse(code = 409, message = "Conflict", response = OrderPurchaseResponse.class)})
     public ResponseEntity<OrderPurchaseResponse> doPurchase(@PathVariable("userId") long userId,
                                                             @RequestBody OrderPurchaseRequest purchaseRequest,
-                                                            HttpServletRequest request) {
+                                                            HttpServletRequest request) throws ConnectException {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
@@ -592,7 +593,9 @@ public class OrderController {
                 return new ResponseEntity<>(purchaseResponse, HttpStatus.CONFLICT);
             }
             else{
-                logger.error("US #118005 - TBD");
+                printAppPulseLogs();
+                ConnectException e = new ConnectException("An error occurred. Please try again later");
+                e.printStackTrace();
                 purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An error occurred. Please try again later");
                 return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -608,6 +611,18 @@ public class OrderController {
         }
     }
 
+
+    private void printAppPulseLogs(){
+        logger.error("Selected payment method is SafePay");
+        logger.error("Saving user profile ");
+        logger.error("Sending account validation request to SafePay");
+        logger.error("SafePay account validation ended successfully");
+        logger.error("Sending payment request to SafePay");
+        logger.error("Failed to connect SafePay. Server is unavailable.");
+        logger.error("Trying to reconnect SafePay");
+        logger.error("Failed to connect SafePay. Server is unavailable.");
+        logger.error("Internal server error 500. Server is unavailable.");
+    }
 
     private boolean isAppPulseUser(long userId){
         try {

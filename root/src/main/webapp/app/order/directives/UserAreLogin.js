@@ -157,12 +157,9 @@ define(['./module'], function (directives) {
                                         s.paymentEnd = false;
                                         var errorObj = JSON.parse(err);
                                         if(errorObj && errorObj.data && errorObj.data.reason){
-                                            if(s.saveMasterCredit){
+
                                                 $("#payNowMCErrorLabel").html(errorObj.data.reason);
                                                 $("#payNowMCErrorLabelExpended").html(errorObj.data.reason);
-                                            }
-
-                                            else
                                                 $("#payNowSPErrorLabel").html(errorObj.data.reason);
                                         }
                                     }
