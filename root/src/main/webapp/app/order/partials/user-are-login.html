@@ -233,8 +233,9 @@
 
                 <div class="blueLink marginBottom">
                     <a href="javascript:void(0)" role="link" ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
-                    <label>
-                        <button id="pay_now_btn_MasterCredit" name="pay_now_btn_MasterCredit" class="roboto-medium float-button a-button" data-ng-click="payNow_manual()" role="button">{{'PAY_NOW' | translate}}</button>
+                    <label style="float: right;display: table;">
+                        <button style="    margin-bottom: 5px;" id="pay_now_btn_MasterCredit" name="pay_now_btn_MasterCredit" class="roboto-medium float-button a-button" data-ng-click="payNow_manual()" role="button">{{'PAY_NOW' | translate}}</button>
+                        <label class="payNow_error_label" id="payNowMCErrorLabelExpended"></label>
                     </label>
                 </div>
 
@@ -313,10 +314,13 @@
 
                     <div class="blueLink">
                         <a href="javascript:void(0)" role="link" ng-click="Back_to_shipping_details()" translate="Back_to_shipping_details"></a>
-                        <label>
+                        <label class="float_right" style="display: table">
                             <sec-sender class="roboto-medium" a-value="{{'PAY_NOW' | translate}}"
                                         a-hint="_ManualPayment"
-                                        sec-send="payNow_masterCredit()"></sec-sender>
+                                        sec-send="payNow_masterCredit()"
+                                        style="margin-right: 30%;
+                                        padding-bottom: 5px;"></sec-sender>
+                            <label class="payNow_error_label" id="payNowMCErrorLabel"></label>
                         </label>
                     </div>
 

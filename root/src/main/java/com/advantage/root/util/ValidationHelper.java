@@ -150,6 +150,47 @@ public class ValidationHelper {
     }
 
     /**
+     * validate MasterCredit date isnt expired
+     */
+    public static boolean isMCDateExpired(final String stringDate){
+        StringBuilder sb = new StringBuilder();
+
+
+        switch (stringDate.substring(0, 2)) {
+            case "01":
+            case "03":
+            case "05":
+            case "07":
+            case "08":
+            case "10":
+            case "12":
+                sb = new StringBuilder("31.");
+                break;
+            case "04":
+            case "06":
+            case "09":
+            case "11":
+                sb = new StringBuilder("30.");
+                break;
+            default:
+                //  "02" is left - "28." or "29."
+                if (Integer.valueOf(stringDate.substring(2, 6))%4 == 0) {
+                    sb = new StringBuilder("29.");
+                } else {
+                    sb = new StringBuilder("28.");
+                }
+        }
+
+        sb.append(stringDate.substring(0, 2))
+                .append('.')
+                .append(stringDate.substring(2, 6));
+
+        Date mcExpirationDate = StringHelper.convertStringToDate(sb.toString(), "dd.MM.yyyy");
+
+        return mcExpirationDate.before(new Date());
+    }
+
+    /**
      * Check that {@code stringDate} is a valid date format, either EUROPEAN, AMERICAN or SCANDINAVIAN.
      */
     public static boolean isValidDate(final String stringDate) {

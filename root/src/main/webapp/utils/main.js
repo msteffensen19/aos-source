@@ -122,7 +122,7 @@ Helper.getMonthInYearForMasterCredit = function (year, months) {
         for (var i = date.getMonth() + 1; i <= 12; i++) {
             new_array.push(i < 10 ? "0" + i : i + "");
         }
-        return new_array;
+        return ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
     }
     if (months.length != 12) {
         return ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];

@@ -19,6 +19,7 @@ define(['./module'], function (directives) {
                             s.invalidUser = s.userDetailsEditMode = !valid;
                         }
                         $("#payNowSPErrorLabel").html("");
+                        $("#payNowMCErrorLabelExpended").html("");
                     },
                     post: function (s) {
 
@@ -107,10 +108,10 @@ define(['./module'], function (directives) {
 
                         if (now.getFullYear() == s.card.expirationDate.year) {
                             var currentMonth = now.getMonth() + 1;
-                            s.month = [];
-                            for(var i = currentMonth; i <= 12; i++){
-                                s.month.push((i < 10 ? "0" + i : "" + i))
-                            }
+                            // s.month = [];
+                            // for(var i = currentMonth; i <= 12; i++){
+                            //     s.month.push((i < 10 ? "0" + i : "" + i))
+                            // }
                         }
 
 
@@ -156,7 +157,13 @@ define(['./module'], function (directives) {
                                         s.paymentEnd = false;
                                         var errorObj = JSON.parse(err);
                                         if(errorObj && errorObj.data && errorObj.data.reason){
-                                            $("#payNowSPErrorLabel").html(errorObj.data.reason);
+                                            if(s.saveMasterCredit){
+                                                $("#payNowMCErrorLabel").html(errorObj.data.reason);
+                                                $("#payNowMCErrorLabelExpended").html(errorObj.data.reason);
+                                            }
+
+                                            else
+                                                $("#payNowSPErrorLabel").html(errorObj.data.reason);
                                         }
                                     }
                                 );
@@ -186,16 +193,31 @@ define(['./module'], function (directives) {
                         s.payNow_masterCredit = function () {
                             if (s.saveMasterCredit) {
                                 if (!alreadyHaveMasterCreditCart) {
-                                    accountService.addMasterCreditMethod(s.card)
+                                    accountService.addMasterCreditMethod(s.card).then(function(success){
+                                        s.doPayment();
+                                    }, function(error){
+                                        $("#payNowMCErrorLabelExpended").html(error);
+                                        $("#payNowMCErrorLabel").html(error);
+                                    })
                                 }
                                 else {
-                                    accountService.updateMasterCreditMethod(s.card);
+                                    accountService.updateMasterCreditMethod(s.card).then(function(success){
+                                        s.doPayment();
+
+                                    }, function(error){
+                                        $("#payNowMCErrorLabelExpended").html(error);
+                                        $("#payNowMCErrorLabel").html(error);
+                                    });
                                 }
                             }
+
+                        };
+
+                        s.doPayment = function(TransPaymentMethod, accountNumber){
                             var TransPaymentMethod = "MasterCredit";
                             var accountNumber = "112987298763";
                             safePay(TransPaymentMethod, accountNumber);
-                        }
+                        };
 
                         s.payNow_manual = function () {
                             s.payNow_masterCredit()
@@ -210,6 +232,8 @@ define(['./module'], function (directives) {
                             s.imgRadioButton = num;
                             s.showMasterCart = s.noCards || (s.card && s.card.cartExpired);
                             $("#payNowSPErrorLabel").html("");
+                            $("#payNowMCErrorLabel").html("");
+                            $("#payNowMCErrorLabelExpended").html("");
                         }
 
                         s.paymentMethod_edit = function () {

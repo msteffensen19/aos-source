@@ -80,6 +80,10 @@ public class PaymentPreferencesService implements Injectable{
             return new PaymentPreferencesStatusResponse(false, "addMasterCreditMethod: " + PaymentPreferences.MESSAGE_ERROR_EXPIRATION_DATE_FORMAT, -1);
         }
 
+        if (ValidationHelper.isMCDateExpired(expirationDate)) {
+            return new PaymentPreferencesStatusResponse(false, "MasterCredit card has expired. \'expiration date\' " + expirationDate, -1);
+        }
+
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.MASTER_CREDIT.getCode());
         if (paymentPreferences == null) {
             paymentPreferences = paymentPreferencesRepository.createMasterCredit(cardNumber, expirationDate,
@@ -133,6 +137,11 @@ public class PaymentPreferencesService implements Injectable{
                 .append(expirationDate.substring(0, 2))
                 .append('.')
                 .append(expirationDate.substring(2, 6));
+
+
+        if (ValidationHelper.isMCDateExpired(expirationDate)) {
+            return new PaymentPreferencesStatusResponse(false, "MasterCredit card has expired. \'expiration date\' " + expirationDate, -1);
+        }
 
         System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
         if(!ValidationHelper.isValidDate(ValidationHelper.getLastDayOfMonthDate(sb.toString()))) {
