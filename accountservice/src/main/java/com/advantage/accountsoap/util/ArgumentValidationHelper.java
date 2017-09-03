@@ -13,7 +13,7 @@ public abstract class ArgumentValidationHelper {
     private static final String STATUS_ERROR_STATE_VALUE = "ERROR. State value not valid";
     private static final String STATUS_ERROR_POSTAL_VALUE = "ERROR. Postal value valid";
     private static final String STATUS_ERROR_ADDRESS_LINE1 = "ERROR. Address value not valid";
-    private static final String STATUS_ERROR_NAME_VALUE = "ERROR. Name Value not valid";
+    private static final String STATUS_ERROR_NAME_VALUE = "ERROR. Name Value not valid, Use 2 character or longer";
     private static final int COUNTRY_PATTERN = 10;
     private static final int ADDRESS_LINE_PATTERN = 50;
     private static final int STATE_PATTERN = 10;

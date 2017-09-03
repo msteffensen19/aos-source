@@ -229,12 +229,20 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                                         String cityName, String address, String zipcode, String email,
                                         boolean allowOffersPromotion) {
         //Moti add validation fields
-        ArgumentValidationHelper.validateFirstAndLastName(lastName);
-        ArgumentValidationHelper.validateFirstAndLastName(firstName);
-        ArgumentValidationHelper.validateCityName(cityName);
-        ArgumentValidationHelper.validateStateProvice(stateProvince);
-        ArgumentValidationHelper.validateAddress(address);
-        ArgumentValidationHelper.validatePostalCode(zipcode);
+        try{
+            ArgumentValidationHelper.validateFirstAndLastName(lastName);
+            ArgumentValidationHelper.validateFirstAndLastName(firstName);
+            ArgumentValidationHelper.validateCityName(cityName);
+            ArgumentValidationHelper.validateStateProvice(stateProvince);
+            ArgumentValidationHelper.validateAddress(address);
+            ArgumentValidationHelper.validatePostalCode(zipcode);
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+            return new AccountStatusResponse(false,
+                    e.getMessage(),
+                    -1);
+        }
+        
         Account account = createAppUser(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber,
                 stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
