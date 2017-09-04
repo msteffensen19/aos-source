@@ -30,6 +30,7 @@ public class PaymentPreferences {
     public static final String MESSAGE_SAFE_PAY_DATA_UPDATED_SUCCESSFULLY = "SafePay data updated successfully";
     public static final String MESSAGE_SAFE_PAY_DATA_DELETED_SUCCESSFULLY = "SafePay data deleted successfully";
     public static final String MESSAGE_SAFE_PAY_DATA_FAILED_UPDATE = "SafePay data failed update";
+    public static final String MESSAGE_ERROR_IDENTICAL_USERNAME_OR_PASSWORD = "Error! Username and password cannot be identical";
 
     public static final String MESSAGE_ERROR_INVALID_CARD_NUMBER = "Error: Invalid card number";
     public static final String MESSAGE_ERROR_INVALID_CVV_NUMBER = "Error: Invalid CVV number";

@@ -39,6 +39,10 @@ public class PaymentPreferencesService implements Injectable{
         if ((safePayPassword.length() < 1) || (safePayPassword.length() > 20)) {
             return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
         }
+
+        if(safePayUsername.equals(safePayPassword)){
+            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_IDENTICAL_USERNAME_OR_PASSWORD, 0);
+        }
         //  endregion
 
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.SAFE_PAY.getCode());
@@ -110,6 +114,10 @@ public class PaymentPreferencesService implements Injectable{
 //        }
         if (safePayPassword.length() < 1) {
             return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_INVALID_USERNAME_OR_PASSWORD, 0);
+        }
+        
+        if(safePayUsername.equals(safePayPassword)){
+            return new PaymentPreferencesStatusResponse(false, PaymentPreferences.MESSAGE_ERROR_IDENTICAL_USERNAME_OR_PASSWORD, 0);
         }
         //  endregion
 
