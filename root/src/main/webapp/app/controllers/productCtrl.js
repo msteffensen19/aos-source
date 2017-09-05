@@ -231,6 +231,7 @@ define(['./module'], function (controllers) {
 
             s.haveInternet = resolveParams.haveInternet;
 
+            s.breadCrumbCategoryName = s.categoryName.substring(0,1) + s.categoryName.substring(1, s.categoryName.length-1).toLowerCase()
             if(s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16){
                 s.srcV1 = $sce.trustAsHtml("<video controls ><source src='../../css/videos/13543361_299823923688824_1410005144_n.mp4'></video>");
                 s.showVideo = true;
