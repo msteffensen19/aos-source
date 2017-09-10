@@ -115,7 +115,7 @@
                     <label translate="SHOP_NOW"></label>
                     <div icon-cart-svg style="width: 18px; height: 18px; "></div>
                 </div>
-                <img alt="" class="imgProduct"
+                <img id="{{product.productId}}" alt="" class="imgProduct"
                      data-ng-class="{ outOfStock : product.productStatus == 'OutOfStock' } "
                      data-ng-src="/catalog/fetchImage?image_id={{product.imageUrl}}">
                 <p><a class="productName">{{product.productName}}</a></p>
