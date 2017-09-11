@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <button id="check_out_btn" role="button" class="roboto-medium" data-ng-click="checkout($event)">{{'CHECK_OUT' | translate}}  ({{ cart | productsCartSum:shippingCost | currency:'$' }})</button>
+                    <button id="checkOutPopUp" name="check_out_btn" role="button" class="roboto-medium" data-ng-click="checkout($event)">{{'CHECK_OUT' | translate}}  ({{ cart | productsCartSum:shippingCost | currency:'$' }})</button>
                 </td>
             </tr>
         </tfoot>
