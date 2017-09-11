@@ -20,10 +20,7 @@
                 </div>
                 <tool-tip-cart id="toolTipCart" ></tool-tip-cart>
                 <div class="penetrationInCart">
-                    <label class="shippingText roboto-regular noShipping" >
-                        {{ 'SHIPPING' | translate }}
-                        <span class="shippingValue roboto-light" >{{ shippingCost | currency: '$'}}</span>
-                    </label>
+                    <label class="shippingText roboto-regular noShipping" >{{ 'SHIPPING' | translate }}<span class="shippingValue roboto-light" >{{ shippingCost | currency: '$'}}</span></label>
                     <label class="roboto-bold totalText" > {{ 'TOTAL' | translate }}
                         <span class="roboto-medium totalValue">{{ cart | productsCartSum:shippingCost | currency:'$' }}</span>
                     </label>
