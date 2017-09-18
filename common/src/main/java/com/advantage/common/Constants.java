@@ -65,6 +65,9 @@ public class Constants {
     public final static String ENV_PRODUCTION_HOST_IP = "production.host.ip";
     public final static String ENV_PRODUCTION_HOST_PORT_ACCOUNTSERVICE = "production.host.port.accountservice";
 
+    public final static String USER_LOGIN_NAME = "admin";
+    public final static String USER_LOGIN_PASSWORD = "adm1n";
+
     public static class UserSession {
         public static final String TOKEN = "token";
         public static final String IS_SUCCESS = "isSuccess";

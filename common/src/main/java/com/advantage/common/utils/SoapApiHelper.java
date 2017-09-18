@@ -262,5 +262,16 @@ public class SoapApiHelper {
 //        session.persist(new Account(AccountType.ADMIN.getAccountTypeCode(), "Brown", "John", "AppPulse", "AppPulse1", countryMap.get(40L), "617-527-5555", "MA", "Newton", "826 Morseland Ave.", "02458", "AppPlusedemo@aos.ad", true));
         return data;
     }
+
+    public static boolean getHealthCheck() throws SOAPException {
+        HashMap<String, String> data = new HashMap<>();
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetHealthcheckRequest", data));
+        NodeList root = getRoot(soapResponse, "GetHealthcheckRequest");
+
+        String status = getResponseValue("status", root);
+        if (status.equals("success"))
+            return true;
+        return false;
+    }
 }
 

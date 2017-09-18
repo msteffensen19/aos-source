@@ -61,6 +61,26 @@ public class SafePayController {
         }
     }
 
+
+    /**
+     * @param request
+     * @param response
+     * @return {String}
+     */
+    @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
+    public ResponseEntity<String> getHealthCheck(@RequestBody HttpServletRequest request,
+                                                     HttpServletResponse response) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/healthcheck".hashCode()),
+                    "Do payment", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
 //    /**
 //     * Sends <i>Refund</i> {@code request} to <b>MasterCredit</b> server and receives its {@code response}.
 //     * @see <a href="http://www.iana.org/assignments/http-status-codes">HTTP Status Code Registry</a>

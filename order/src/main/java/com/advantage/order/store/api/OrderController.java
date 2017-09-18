@@ -8,12 +8,14 @@ import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.AppUserDto;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.ErrorResponseDto;
+import com.advantage.common.dto.ProductDto;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.common.utils.SoapApiHelper;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
 import com.advantage.order.store.services.ShoppingCartService;
+import com.advantage.root.util.JsonHelper;
 import com.advantage.root.util.RestApiHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -21,24 +23,37 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Binyamin Regev on 09/12/2015.
@@ -64,6 +79,7 @@ public class OrderController {
     private static final String ParameterName = "ShipEx_repeat_calls";
     private static final Logger logger = Logger.getLogger(OrderController.class);
     private HttpSession m_session;
+
     /*  =========================================================================================================   */
 
     @ModelAttribute
@@ -742,6 +758,103 @@ public class OrderController {
 
         HistoryOrderLinesDto historyOrderLinesDto = orderManagementService.removeOrder(userId, orderId);
         return new ResponseEntity<>(historyOrderLinesDto, httpStatus);
+    }
+
+    @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
+    @ApiOperation(value = "Get application status")
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    public ResponseEntity<String> getHealthCheck(HttpServletRequest request,
+                                                 HttpServletResponse response) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+        } else {
+            logger.warn("cefData is null");
+        }
+
+        if (checkServicesStatus())
+            return new ResponseEntity<String>("", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    boolean checkServicesStatus(){
+
+        // catalog
+        URL urlCatalog = null;
+        URL urlSafePay = null;
+        URL urlMasterCredit = null;
+
+        try {
+
+            urlCatalog = new URL(Url_resources.getUrlSoapAccount(), "products");
+            HttpURLConnection conn = (HttpURLConnection) urlCatalog.openConnection();
+
+            conn.setRequestMethod(HttpMethod.GET.name());
+            conn.setRequestProperty(HttpHeaders.USER_AGENT, "AdvantageService/order");
+
+            StringBuilder sb = new StringBuilder();
+            StringBuffer sbLog = new StringBuffer("Output from Server ....").append(System.lineSeparator());
+
+            // get input from the connection
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    conn.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                sb.append(inputLine);
+                sbLog.append("\t").append(inputLine).append(System.lineSeparator());
+            }
+            logger.debug(sbLog.toString());
+
+            Map<String, Object> jsonMap = JsonHelper.jsonStringToMap(sb.toString());
+
+            in.close();
+            conn.disconnect();
+
+            // catalog is not up with data
+            if ((List<ProductDto>)jsonMap.get("products") == null)
+                return false;
+
+            // catalog ok - check accoutservice
+            if (SoapApiHelper.doLogin(Constants.USER_LOGIN_NAME,Constants.USER_LOGIN_PASSWORD) == null)
+                return false;
+
+            // accountservice ok - check safepay
+
+            urlSafePay = new URL(Url_resources.getUrlSafePay(), "healthcheck");
+            conn = (HttpURLConnection) urlSafePay.openConnection();
+
+            conn.setRequestMethod(HttpMethod.GET.name());
+
+            if (conn.getResponseCode() != 200 )
+                return false;
+
+            conn.disconnect();
+
+            // safepay ok - check mastercredit
+
+            urlMasterCredit = new URL(Url_resources.getUrlMasterCredit(), "healthcheck");
+            conn = (HttpURLConnection) urlMasterCredit.openConnection();
+
+            conn.setRequestMethod(HttpMethod.GET.name());
+            if (conn.getResponseCode() != 200 )
+                return false;
+
+            // mastercredit ok - check shipex
+            if (!SoapApiHelper.getHealthCheck())
+                return false;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (SOAPException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     //  endregion
