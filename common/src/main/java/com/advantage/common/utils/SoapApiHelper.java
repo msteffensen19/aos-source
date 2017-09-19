@@ -46,7 +46,10 @@ public class SoapApiHelper {
         SOAPMessage soapMessage = messageFactory.createMessage();
         SOAPPart soapPart = soapMessage.getSOAPPart();
         SOAPEnvelope envelope = soapPart.getEnvelope();
-        envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, DESTINATION);
+        if(requestName.contains("Healthcheck"))
+            envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, "https://www.AdvantageOnlineBanking.com/ShipEx/");
+        else
+            envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, DESTINATION);
         SOAPBody soapBody = envelope.getBody();
         SOAPElement soapBodyElem = soapBody.addChildElement(requestName, REQUEST_NAME_SPACE);
         for (Map.Entry<String, String> entry : data.entrySet()) {
@@ -65,7 +68,7 @@ public class SoapApiHelper {
      * @return                                             SOAPMessage responce
      * @throws SOAPException
      */
-    private static synchronized SOAPMessage sendSoapMessage(SOAPMessage request) throws SOAPException {
+    private static synchronized SOAPMessage sendSoapMessage(SOAPMessage request, String url) throws SOAPException {
         URL accountServiceUrl = null;
         URL accountServicePrefixUrl = null;
         try {
@@ -75,7 +78,10 @@ public class SoapApiHelper {
             System.out.println("accountServiceUrl=\"" + accountServiceUrl.toString() + "\"");
 
             String urlString = accountServiceUrl.toString().replace("/accountservice.wsdl", "/AccountLoginRequest");
-            accountServicePrefixUrl = new URL(urlString);
+            if(url.equals(""))
+                accountServicePrefixUrl = new URL(urlString);
+            else
+                accountServicePrefixUrl = new URL(url);
             logger.debug("accountServicePrefixUrl=\"" + accountServicePrefixUrl.toString() + "\"");
             System.out.println("accountServicePrefixUrl=\"" + accountServicePrefixUrl + "\"");
         } catch (MalformedURLException e) {
@@ -150,7 +156,7 @@ public class SoapApiHelper {
         HashMap<String, String> data = new HashMap<>();
         data.put("userName", userName);
         data.put("base64Token", base64Token);
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByLoginRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByLoginRequest", data), "");
         NodeList root = getRoot(soapResponse, "AccountResponse");
         String userPassword = getResponseValue("loginPassword", root);
         int accountType = Integer.valueOf(getResponseValue("accountType", root));
@@ -162,7 +168,7 @@ public class SoapApiHelper {
     public static AppUserDto getUserById(long userId) throws SOAPException  {
         HashMap<String, String> data = new HashMap<>();
         data.put("accountId", Long.toString(userId));
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByIdRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByIdRequest", data), "");
         NodeList root = getRoot(soapResponse, "AccountResponse");
         String userPassword = getResponseValue("loginPassword", root);
         int accountType = Integer.valueOf(getResponseValue("accountType", root));
@@ -175,7 +181,7 @@ public class SoapApiHelper {
         data.put("loginUser", userName);
         data.put("email", "");
         data.put("loginPassword", password);
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountLoginRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountLoginRequest", data), "");
         NodeList root = getRoot(soapResponse, "StatusMessage");
 
         String success = getResponseValue("success", root);
@@ -203,7 +209,7 @@ public class SoapApiHelper {
         data.put("newPassword", newPassword);
         data.put("base64Token", "Basic " + basicToken);
         data.put("accountId", Long.toString(user.getUserId()));
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("ChangePasswordRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("ChangePasswordRequest", data), "");
         NodeList root = getRoot(soapResponse, "StatusMessage");
 
         return getResponseValue("success", root).equals("true") ? true : false;
@@ -215,7 +221,7 @@ public class SoapApiHelper {
         data.put("password", password);
         data.put("base64Token", base64Token);
         data.put("accountId", Long.toString(userId));
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("EncodePasswordRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("EncodePasswordRequest", data), "");
         NodeList root = getRoot(soapResponse, "EncodePasswordResponse");
         return getResponseValue("password", root);
     }
@@ -228,14 +234,14 @@ public class SoapApiHelper {
         data.put("base64Token", basicToken);
         data.put("accountId", Long.toString(user.getUserId()));
 
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountDeleteRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountDeleteRequest", data), "");
         NodeList root = getRoot(soapResponse, "StatusMessage");
         return root != null && getResponseValue("success", root).equals("true") ? true : false;
     }
 
     public static boolean createUser(String[] newUserDetails) throws SOAPException{
         HashMap<String, String> data = getUserAccountData(newUserDetails);
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountCreateRequest", data));
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("AccountCreateRequest", data), "");
         NodeList root = getRoot(soapResponse, "StatusMessage");
         return true;
     }
@@ -265,8 +271,16 @@ public class SoapApiHelper {
 
     public static boolean getHealthCheck() throws SOAPException {
         HashMap<String, String> data = new HashMap<>();
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetHealthcheckRequest", data));
-        NodeList root = getRoot(soapResponse, "GetHealthcheckRequest");
+
+        URL shipexUrl = null;
+        shipexUrl = Url_resources.getUrlSoapShipEx();
+        //accountServiceUrl="http://localhost:8080/accountservice/accountservice.wsdl"
+
+
+        String urlString = shipexUrl.toString().replace("/shipex.wsdl", "/GetHealthcheckRequest");
+
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetHealthcheckRequest", data), urlString);
+        NodeList root = getRoot(soapResponse, "GetHealthCheckResponse");
 
         String status = getResponseValue("status", root);
         if (status.equals("success"))

@@ -77,7 +77,7 @@ public class MasterCreditController {
      * @return {String}
      */
     @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
-    public ResponseEntity<String> getHealthCheck(@RequestBody HttpServletRequest request,
+    public ResponseEntity<String> getHealthCheck(HttpServletRequest request,
                                                  HttpServletResponse response) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {

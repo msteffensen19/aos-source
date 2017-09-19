@@ -762,10 +762,8 @@ public class OrderController {
 
     @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
     @ApiOperation(value = "Get application status")
-    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
     @ApiResponses(value = {
-            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
-            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+            @ApiResponse(code = 500, message = "Internal server error", response = com.advantage.common.dto.ErrorResponseDto.class)})
     public ResponseEntity<String> getHealthCheck(HttpServletRequest request,
                                                  HttpServletResponse response) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
@@ -776,9 +774,9 @@ public class OrderController {
         }
 
         if (checkServicesStatus())
-            return new ResponseEntity<String>("", HttpStatus.OK);
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         else
-            return new ResponseEntity<String>("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>("FAILED", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     boolean checkServicesStatus(){
@@ -790,7 +788,7 @@ public class OrderController {
 
         try {
 
-            urlCatalog = new URL(Url_resources.getUrlSoapAccount(), "products");
+            urlCatalog = new URL(Url_resources.getUrlCatalog(), "products");
             HttpURLConnection conn = (HttpURLConnection) urlCatalog.openConnection();
 
             conn.setRequestMethod(HttpMethod.GET.name());

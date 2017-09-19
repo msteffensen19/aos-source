@@ -59,4 +59,10 @@ public interface ShipExPort {
         @WebParam(name = "ShippingCostRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "ShippingCostRequest")
         ShippingCostRequest shippingCostRequest);
 
+    @WebMethod(operationName = "Healthcheck")
+    @WebResult(name = "GetHealthcheckResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthcheckResponse")
+    public GetHealthcheckRequest healthCheck(
+            @WebParam(name = "GetHealthcheckRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthcheckRequest")
+                    GetHealthcheckRequest getHealthcheckRequest);
+
 }

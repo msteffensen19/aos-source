@@ -101,4 +101,20 @@ public class ObjectFactory {
         return new Product();
     }
 
+    /**
+     * Create an instance of {@link Product }
+     *
+     */
+    public GetHealthCheckResponse createGetHealthCheckResponse() {
+        return new GetHealthCheckResponse();
+    }
+
+    /**
+     * Create an instance of {@link Product }
+     *
+     */
+    public GetHealthcheckRequest createGetHealthcheckRequest() {
+        return new GetHealthcheckRequest();
+    }
+
 }
