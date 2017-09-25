@@ -118,9 +118,9 @@ public class ShipExEndpoint {
         logger.info(builder);
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetHealthcheckRequest")
+    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetHealthCheckRequest")
     @ResponsePayload
-    public GetHealthCheckResponse getHealthCheckResponse(@RequestPayload GetHealthcheckRequest request) {
+    public GetHealthCheckResponse getHealthCheckResponse(@RequestPayload GetHealthCheckRequest request) {
         GetHealthCheckResponse response = new GetHealthCheckResponse();
         response.setStatus("success");
 

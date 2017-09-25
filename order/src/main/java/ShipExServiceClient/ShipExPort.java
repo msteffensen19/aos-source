@@ -49,6 +49,18 @@ public interface ShipExPort {
 
     /**
      * 
+     * @param getHealthCheckRequest
+     * @return
+     *     returns ShipExServiceClient.GetHealthCheckResponse
+     */
+    @WebMethod(operationName = "GetHealthCheck")
+    @WebResult(name = "GetHealthCheckResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthCheckResponse")
+    public GetHealthCheckResponse getHealthCheck(
+        @WebParam(name = "GetHealthCheckRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthCheckRequest")
+        GetHealthCheckRequest getHealthCheckRequest);
+
+    /**
+     * 
      * @param shippingCostRequest
      * @return
      *     returns ShipExServiceClient.ShippingCostResponse
@@ -58,11 +70,5 @@ public interface ShipExPort {
     public ShippingCostResponse shippingCost(
         @WebParam(name = "ShippingCostRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "ShippingCostRequest")
         ShippingCostRequest shippingCostRequest);
-
-    @WebMethod(operationName = "Healthcheck")
-    @WebResult(name = "GetHealthcheckResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthcheckResponse")
-    public GetHealthcheckRequest healthCheck(
-            @WebParam(name = "GetHealthcheckRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthcheckRequest")
-                    GetHealthcheckRequest getHealthcheckRequest);
 
 }

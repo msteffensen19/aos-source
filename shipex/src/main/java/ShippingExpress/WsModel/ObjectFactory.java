@@ -101,11 +101,11 @@ public class ObjectFactory {
         return new Product();
     }
 
-    public GetHealthcheckRequest createGetHealthcheckRequest(){
-        return new GetHealthcheckRequest();
+    public GetHealthCheckRequest createGetHealthCheckRequest(){
+        return new GetHealthCheckRequest();
     }
 
-    public GetHealthCheckResponse createGetHealthcheckResponse(){
+    public GetHealthCheckResponse createGetHealthCheckResponse(){
         return new GetHealthCheckResponse();
     }
 

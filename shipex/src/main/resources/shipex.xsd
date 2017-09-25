@@ -38,14 +38,14 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetHealthcheckRequest">
+    <xs:element name="GetHealthCheckRequest">
         <xs:complexType>
             <xs:sequence>
 
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="GetHealthcheckResponse">
+    <xs:element name="GetHealthCheckResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="status" type="xs:string"/>

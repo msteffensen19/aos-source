@@ -46,7 +46,7 @@ public class SoapApiHelper {
         SOAPMessage soapMessage = messageFactory.createMessage();
         SOAPPart soapPart = soapMessage.getSOAPPart();
         SOAPEnvelope envelope = soapPart.getEnvelope();
-        if(requestName.contains("Healthcheck"))
+        if(requestName.contains("HealthCheck"))
             envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, "https://www.AdvantageOnlineBanking.com/ShipEx/");
         else
             envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, DESTINATION);
@@ -277,9 +277,9 @@ public class SoapApiHelper {
         //accountServiceUrl="http://localhost:8080/accountservice/accountservice.wsdl"
 
 
-        String urlString = shipexUrl.toString().replace("/shipex.wsdl", "/GetHealthcheckRequest");
+        String urlString = shipexUrl.toString().replace("/shipex.wsdl", "/GetHealthCheckRequest");
 
-        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetHealthcheckRequest", data), urlString);
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetHealthCheckRequest", data), urlString);
         NodeList root = getRoot(soapResponse, "GetHealthCheckResponse");
 
         String status = getResponseValue("status", root);

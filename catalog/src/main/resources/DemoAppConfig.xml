@@ -33,8 +33,6 @@
     <!-- Original Name = "Error_500_in_update_cart" ; Corrected Name = "Error_500" -->
     <!--<Error_500_in_update_cart datatype="enum:[Yes,No]" description="No=(Default) Do Not Show; or Yes=Show HTTP error code 500 when trying to update cart." tools="AppPulse" locationInAdvantage="">No</Error_500_in_update_cart>-->
 
-    <Mobile_crash datatype="enum:[Yes,No]" description="Determines whether crash will happen on click on checkout button" tools="AppPulse" locationInAdvantage="Checkout in Android native app">No</Mobile_crash>
-
     <!-- 0 = (Default) Disabled, any other number is the sum to add to cart calculation -->
     <!-- feature 1542 -->
     <!-- Original Name = "Sum_to_add_to_cart_calculation" ; Corrected Name = "Sum_added_to_cart" -->

@@ -1,4 +1,6 @@
-package ShipExServiceClient;
+package ShippingExpress.WsModel;
+
+import ShippingExpress.config.WebServiceConfig;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "GetHealthcheckRequest")
-public class GetHealthcheckRequest {
+@XmlRootElement(name = "GetHealthCheckRequest", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+public class GetHealthCheckRequest {
 
 }

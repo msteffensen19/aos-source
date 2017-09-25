@@ -62,6 +62,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetHealthCheckResponse }
+     * 
+     */
+    public GetHealthCheckResponse createGetHealthCheckResponse() {
+        return new GetHealthCheckResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetHealthCheckRequest }
+     * 
+     */
+    public GetHealthCheckRequest createGetHealthCheckRequest() {
+        return new GetHealthCheckRequest();
+    }
+
+    /**
      * Create an instance of {@link PlaceShippingOrderRequest }
      * 
      */
@@ -99,22 +115,6 @@ public class ObjectFactory {
      */
     public Product createProduct() {
         return new Product();
-    }
-
-    /**
-     * Create an instance of {@link Product }
-     *
-     */
-    public GetHealthCheckResponse createGetHealthCheckResponse() {
-        return new GetHealthCheckResponse();
-    }
-
-    /**
-     * Create an instance of {@link Product }
-     *
-     */
-    public GetHealthcheckRequest createGetHealthcheckRequest() {
-        return new GetHealthcheckRequest();
     }
 
 }
