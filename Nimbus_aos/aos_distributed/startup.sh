@@ -18,5 +18,10 @@ sed -i "s/TAG/${TAG}/g" docker-compose.yml
  command2="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env_private"
  eval $command2
 
+ # if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
+if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
+ printf "\nhttp_proxy=\nhttps_proxy=">> .env_private
+fi
+
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
