@@ -19,6 +19,6 @@ RUN sed -i -e '$i <role rolename="manager-gui"\/>\n<role rolename="manager-scrip
     cat /usr/local/tomcat/conf/tomcat-users.xml
 
 ENTRYPOINT ["sh", "-c", "/startTomcat.sh"]
-#HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
-#CMD /healthcheck.sh
+HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
+CMD /healthcheck.sh
 
