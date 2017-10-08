@@ -268,7 +268,17 @@ var english = {
     'ARE_U_SURE' : 'Are you sure you want to',
     'CANCEL_YOUR_ORDER': 'cancel your order?',
     'YES_CANCEL': 'YES, CANCEL',
-    'NO_KEEP_ORDER': 'NO, KEEP MY ORDER'
+    'NO_KEEP_ORDER': 'NO, KEEP MY ORDER',
+
+
+    // ABOUT PAGE
+    'ABOUT_PAGE': 'ABOUT',
+    'ABOUT': 'About',
+    'AOS_VERSIONS': 'AOS Versions',
+    'THE_APP_IS_AVAILABLE_IN_3_FORM_FACTORS': 'THE APPLICATION IS AVAILABLE IN 3 FORM FACTORS:',
+    'ABOUT_FIRST_PARAGRAPH': 'The ADM demo application provides one stop shop to demonstrate all ADM solutions:',
+    'ABOUT_SECOND_PARAGRAPH': 'ALM, OCTANE, UFT, LeanFT, Mobile Center, LR, PC, StormRunner, NV, SV, BPT and Sprinter, and anything new we will build in the future.'
+
 };
 
 

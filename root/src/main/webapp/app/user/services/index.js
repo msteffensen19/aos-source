@@ -5,4 +5,5 @@
 
 define(['./userService',
         './registerService',
+        './aboutService'
         ], function() {});

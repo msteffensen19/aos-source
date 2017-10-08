@@ -90,6 +90,7 @@ define(['./module'], function (directives) {
                                         //     $scope.cart = cart;
                                         // });
                                         $(".mini-title").css("display", "none");
+                                        $(".mini-title-help").css("display", "none");
                                     });
                                 });
 
@@ -153,6 +154,12 @@ define(['./module'], function (directives) {
                     }
                     /*================ end create to user new account in application  ========================*/
 
+                    /* go to about page */
+                    $scope.openAboutPage = function (user) {
+                        wellcome();
+                        $location.path('about');
+                    }
+                    /*================ end go to about page  ========================*/
 
                     $scope.forgotPassword = function () {
                         console.log("forgot Password not done yet!");

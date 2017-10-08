@@ -22,6 +22,8 @@ define([
     './icon-cart',
     './icon-home',
     './icon-x',
+    './icon-help-svg',
+    './icon-help-svg-mobile',
     './icon-cart-svg',
     './icon-cart-svg-mobile',
     './icon-user-svg',

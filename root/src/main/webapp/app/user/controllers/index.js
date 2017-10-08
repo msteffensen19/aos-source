@@ -6,5 +6,5 @@
 define([
     './userController',
     './registerCtrl',
-
+    './aboutCtrl'
 ], function() {});

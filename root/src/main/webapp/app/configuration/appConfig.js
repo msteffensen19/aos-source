@@ -56,6 +56,12 @@ define([], function () {
                 templateUrl: 'app/user/views/register-page.html',
                 controller: 'registerCtrl',
                 resolve: {}
+            })
+            .state('about', {
+                url: '/about',
+                templateUrl: 'app/user/views/about-page.html',
+                controller: 'aboutCtrl',
+                resolve: {}
             }).
             state('support', {
                 url: '/support',

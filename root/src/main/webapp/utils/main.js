@@ -161,6 +161,7 @@ Helper.mobileSectionHandler = function () {
 
     if ($("#mobile-section").css("left") == "0px") {
         $(".mobileTitle .mini-title").fadeOut();
+        $(".mobileTitle .mini-title-help").fadeOut();
     }
     $("#mobile-section").animate({
         left: $("#mobile-section").css("left") != "0px" ? "0px" : "-" + Helper.mobile_section_moved
@@ -175,6 +176,7 @@ Helper.mobileSectionClose = function () {
         left: "-" + Helper.mobile_section_moved
     }, 200);
     $("#loginMobileMiniTitle").fadeOut();
+    $("#helpMobileMiniTitle").fadeOut();
 }
 
 Helper.sortArrayByAbc = function (arr) {
@@ -216,8 +218,8 @@ $(document).ready(function () {
 
     _resize();
     function _resize() {
-
         $(".mini-title").css("display", "none");
+        $(".mini-title-help").css("display", "none");
         Helper.mobileSectionClose();
     }
 });

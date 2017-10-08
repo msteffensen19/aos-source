@@ -233,6 +233,10 @@ nav ul li > a .mini-title{
     white-space: normal;
 }
 
+nav ul li > a .mini-title-help{
+    white-space: normal;
+}
+
 nav ul li a.searchSectionEnabled{
     transform: scale(0);
     opacity: 0;
@@ -817,5 +821,25 @@ footer .splitter{
         top: 51px;
     }
 
+
+    #threeFormFactors {
+        border: none !important;
+        width: 400px !important;
+        height: 800px !important;
+        /*background: red;*/
+    }
+
+    #threeFormFactorsWeb, #threeFormFactorsWebMobile, #threeFormFactorsNativeMobile {
+        height: 200px !important;
+        width: 300px !important;
+    }
+
+    div.threeFormFactorsLines {
+        display: none;
+    }
+
+    div.aboutPagePaddingCaption {
+        padding-top: 0px !important;
+    }
 }
 

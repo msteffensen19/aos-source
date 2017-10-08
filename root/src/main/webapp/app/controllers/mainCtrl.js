@@ -81,13 +81,23 @@ define(['./module'], function (controllers) {
                     });
                 };
 
+                /* About section */
+
+                $scope.help = function (miniTitleId) {
+                    $("#loginMiniTitle").fadeOut(300);
+                    $("#loginMobileMiniTitle").fadeOut(300);
+                    $("#" + miniTitleId).fadeToggle(300);
+                };
+
 
                 /* User section */
 
 
                 $scope.login = function (miniTitleId) {
+                    $("#helpMiniTitle").fadeOut(300);
 
                     if ($rootScope.userCookie) {
+                        $("#helpMobileMiniTitle").fadeOut(300);
                         $("#" + miniTitleId).fadeToggle(300);
                         return;
                     }
@@ -155,6 +165,11 @@ define(['./module'], function (controllers) {
                     $state.go(path)
                 };
 
+                $scope.mobileRedirectHelp = function (path) {
+
+                    Helper.mobileSectionClose();
+                    $state.go(path)
+                };
 
                 //setTimeout(function(){
                 //    $scope.gotoElement("contact_us")
@@ -303,6 +318,7 @@ define(['./module'], function (controllers) {
                         $scope.checkCart();
                     });
                     $(".mini-title").css("display", "none");
+                    $(".mini-title-help").css("display", "none");
                 });
             };
 
