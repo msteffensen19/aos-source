@@ -629,11 +629,11 @@ public class OrderController {
 
 
     private void printAppPulseLogs(){
-        logger.error("Selected payment method is SafePay");
-        logger.error("Saving user profile ");
-        logger.error("Sending account validation request to SafePay");
-        logger.error("SafePay account validation ended successfully");
-        logger.error("Sending payment request to SafePay");
+        logger.info("Selected payment method is SafePay");
+        logger.info("Saving user profile ");
+        logger.info("Sending account validation request to SafePay");
+        logger.info("SafePay account validation ended successfully");
+        logger.info("Sending payment request to SafePay");
         logger.error("Failed to connect SafePay. Server is unavailable.");
         logger.error("Trying to reconnect SafePay");
         logger.error("Failed to connect SafePay. Server is unavailable.");

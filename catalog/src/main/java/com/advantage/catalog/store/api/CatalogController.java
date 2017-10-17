@@ -10,6 +10,7 @@ import com.advantage.common.Constants;
 import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.*;
 import com.advantage.common.security.AuthorizeAsAdmin;
+import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -854,7 +855,7 @@ public class CatalogController {
         return new ResponseEntity<>(httpStatusCode + " " + httpStatus.getReasonPhrase(), httpStatus);
     }
 
-    @ApiOperation(value = "Get color-attribute by product-id and color-code")
+    @ApiOperation(value = "AppPulse API that mimic a failed facebook login")
     @RequestMapping(value = "/facebookLogin", method = RequestMethod.POST)
     public ResponseEntity<ErrorResponseDto> getColorAttributeByProductIdAndColorCode(HttpServletRequest request) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
@@ -866,6 +867,64 @@ public class CatalogController {
         ErrorResponseDto erd = new ErrorResponseDto(false, "Sorry, connecting to Facebook is currently unavailable. Please try again later.");
         return new ResponseEntity<>(erd, HttpStatus.FORBIDDEN);
     }
+
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    @ApiOperation(value = "Upload a new image to a product")
+    @RequestMapping(value = "/product/image/{userId}", method = RequestMethod.POST)
+    public ResponseEntity<ProductResponseDto> addImageToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
+                                                                     @RequestParam("file") MultipartFile file,
+                                                                     HttpServletRequest request) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/product/image".hashCode()), "Create product with image", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        ProductDto dto = null;
+//        try {
+//            dto = objectMapper.readValue(product, ProductDto.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            new ResponseEntity<>(new ProductResponseDto(false, -1, "json not valid"), HttpStatus.BAD_REQUEST);
+//        }
+        Product product = productService.getProductById(productId);
+        dto = productService.getDtoByEntity(product);
+
+
+        if (dto == null) {
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, "Data not valid"), HttpStatus.NO_CONTENT);
+        }
+        if (file.isEmpty()) {
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, "File was empty"), HttpStatus.NO_CONTENT);
+        }
+
+        ImageUrlResponseDto imageResponseStatus = productService.fileUpload(file);
+
+        if (!imageResponseStatus.isSuccess()) {
+            return new ResponseEntity<>(new ProductResponseDto(false, -1, imageResponseStatus.getReason()),
+                    HttpStatus.BAD_REQUEST);
+        }
+        List<String> images = dto.getImages();
+        images.add(String.format("ABCDEF##%s", imageResponseStatus.getId()));
+        dto.setImages(images);
+
+        //dto.setImageUrl(imageResponseStatus.getId());
+        ProductResponseDto responseStatus = productService.updateProduct(dto, productId);
+        responseStatus.setImageId(imageResponseStatus.getId());
+
+        return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
+                new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
+    }
+
     //  endregion
 
 }

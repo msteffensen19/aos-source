@@ -73,8 +73,8 @@
                         <div ng-repeat="attrVal in attrib.values">
                             <div class="fill iconCss" >
                                 <input name='{{attrib.name.replace(" ", "_").toLowerCase()}}_{{$index}}' type="checkbox" ng-model="item.selected"
-                                       ng-click="includeProducts(attrVal, attrib.name)">
-                                <span class="roboto-regular" data-ng-click="item.selected = !item.selected; includeProducts(attrVal, attrib.name)">{{::attrVal}}</span>
+                                       ng-click="includeProducts(attrVal, attrib.name)" id='{{attrib.name.replace(" ", "_").toLowerCase()}}_{{$index}}'>
+                                <span for='{{attrib.name.replace(" ", "_").toLowerCase()}}_{{$index}}' class="roboto-regular" data-ng-click="item.selected = !item.selected; includeProducts(attrVal, attrib.name)">{{::attrVal}}</span>
                             </div>
                         </div>
                     </div>
