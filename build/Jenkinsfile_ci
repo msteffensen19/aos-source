@@ -32,6 +32,8 @@ echo "end edit commit id with $new_commitId"'''
 sh 'cat build/version.xml'
 }
 
+load "${WORKSPACE}/build/machines_ip.groovy"
+
 def v = version()
   if (v) {
     echo "Building version ${v}"
