@@ -374,6 +374,13 @@ input[type=checkbox]:checked {
     padding-left: 25px;
 }
 
+.option label{
+    font-size: 13px;
+    padding: 5px;
+    display: inline-block;
+    padding-left: 25px;
+}
+
 .colorSelected {
     box-shadow: 0 0 0 2px white , 0 0 0 4px #c1c1c1 !important;
 }

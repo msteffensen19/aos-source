@@ -112,9 +112,10 @@
     /*width: 184px;*/
 }
 
-.categoryLeft .option .fill span{
+.categoryLeft .option .fill label{
     color:#828282;
     cursor: pointer;
+    padding-left: 25px;
 }
 
 
