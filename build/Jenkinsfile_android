@@ -1,0 +1,128 @@
+try{
+node('UbuntuDemoApp'){
+
+checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-source'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'build/machines_ip.groovy']]], [$class: 'WipeWorkspace']], gitTool: 'Git version 2.8.0-rc4 Linux', submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'efc35e72-9a72-4102-9b83-f6b54683ca0b', url: 'https://github.houston.softwaregrp.net/nimbus/aos-source.git']]])
+
+load "${WORKSPACE}/build/machines_ip.groovy"
+
+stage('Checkout'){
+
+checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-android'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], gitTool: 'Git version 2.8.0-rc4 Linux', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-android.git']]])
+
+
+sh '''
+#!/bin/bash
+git checkout master
+chmod +x gradlew
+
+current_delivery_number=`cat version/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
+echo "current_delivery_number=$current_delivery_number"
+new_delivery_number=$(($current_delivery_number+1))
+echo "new_delivery_number=$new_delivery_number"
+sed -i "s/<deliveryNumber>.*/<deliveryNumber>$new_delivery_number<\\/deliveryNumber>/g" "version/version.xml"
+echo "end edit delivery number with $new_delivery_number"
+
+new_commitId=`git log --format="%H" -n 1`
+echo "new_commitId=$new_commitId"
+sed -i "s/<commitId>.*/<commitId>$new_commitId<\\/commitId>/g" "version/version.xml"
+echo "end edit commit id with $new_commitId"
+
+cat version/version.xml
+'''
+
+}
+
+stage('Build'){
+
+sh '''
+#!/bin/bash
+export ANDROID_HOME=/opt/sdk-tools-linux
+
+./gradlew --stacktrace  build
+'''
+}
+
+stage('Archive APK'){
+
+archive 'app/build/outputs/apk/app-release-unsigned.signed.debug.apk'
+}
+
+stage('Upload apk to MC'){
+
+build job: 'demoapp_Upload_APK_MC'
+
+}
+
+stage('MC Tests'){
+ build job: 'demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'Android'], [$class: 'StringParameterValue', name: 'URL', value: "$staging_ip"]]
+}
+
+stage('Promote to Release & latest'){
+
+withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'e1e6e164-d262-4718-93db-69a4b24caf0b',
+usernameVariable: 'USERNAME', passwordVariable: 'NEXUS_DEPLOY_PASSWORD']]) {
+ def NEXUS_DEPLOY_PASSWORD=env.NEXUS_DEPLOY_PASSWORD
+sh '''#!/bin/bash
+cat > nexus.sh <<EOFEOF
+#declare parameters
+REPOSITORY_ID="adm-demo-app-android-release"
+REPOSITORY_URL="http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/\\${REPOSITORY_ID}/"
+GROUP_ID=com.advantage.online.store
+VERSION=`cat version/version.xml | grep "<version>" | sed -e \'s/<[^>]*>//g\'`
+COMMIT_ID=`cat version/version.xml | grep "<commitId>" | sed -e \'s/<[^>]*>//g\'`
+ARTIFACT_ID="Advantage_Online_Shopping_Design_Release_\\$VERSION"
+ARTIFACT_ID_LATEST="Advantage_Online_Shopping_Design_Release"
+DELIVERY_NUMBER=`cat version/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
+DELIVERY_NUMBER_LATEST="latestVersion"
+PACKAGING=apk
+FILE_NAME="app/build/outputs/apk/app-release-unsigned.signed.debug.apk"
+VERSION_FILE_NAME="version/pom.xml"
+
+cp "version/version.xml" "version/pom.xml"
+#***************************************************************************UPLOAD TO RELEASE***************************************************************************
+curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID} -F v=\\${DELIVERY_NUMBER} -F p=zip -F file=@\\${FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+#upload the xml file with the version
+curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID} -F c=version -F v=\\${DELIVERY_NUMBER} -F p=pom -F file=@\\${VERSION_FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+
+
+#***************************************************************************UPLOAD TO LATEST****************************************************************************
+curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID_LATEST} -F v=\\${DELIVERY_NUMBER_LATEST} -F p=zip -F file=@\\${FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+#upload the xml file with the version
+curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID_LATEST} -F c=version -F v=\\${DELIVERY_NUMBER_LATEST} -F p=pom -F file=@\\${VERSION_FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+
+EOFEOF
+'''
+
+sh "bash nexus.sh ${NEXUS_DEPLOY_PASSWORD}"
+}
+}
+
+stage('Commit to Stash version/version.xml'){
+sh '''
+[ -f "./version/pom.xml" ] && rm -rf "./version/pom.xml"
+git pull -q
+git status
+git add "version/version.xml"
+git commit -m "updates version.xml" --quiet
+git push origin master
+'''
+}
+
+mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
+	subject: "Success: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
+	body: "Review the information at: ${env.JOB_URL}",
+	mimeType: 'text/html');
+	
+}	
+}catch(err){
+    node('UbuntuDemoApp'){
+	dir(""){
+
+    currentBuild.result = 'FAILURE'
+	mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
+		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
+		body: "Review the information at: ${env.JOB_URL}",
+		mimeType: 'text/html');
+	}
+	}
+}
