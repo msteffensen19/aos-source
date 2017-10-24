@@ -168,7 +168,7 @@ public class CatalogController {
             return new ResponseEntity<>(new ProductResponseDto(false, -1, "File was empty"), HttpStatus.NO_CONTENT);
         }
 
-        ImageUrlResponseDto imageResponseStatus = productService.fileUpload(file);
+        ImageUrlResponseDto imageResponseStatus = productService.fileUpload(file, null);
 
         if (!imageResponseStatus.isSuccess()) {
             return new ResponseEntity<>(new ProductResponseDto(false, -1, imageResponseStatus.getReason()),
@@ -595,7 +595,7 @@ public class CatalogController {
         }
 
         if (!file.isEmpty()) {
-            ImageUrlResponseDto responseStatus = productService.fileUpload(file);
+            ImageUrlResponseDto responseStatus = productService.fileUpload(file, null);
             return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
                     new ResponseEntity<>(responseStatus, HttpStatus.EXPECTATION_FAILED);
         } else {
@@ -874,9 +874,9 @@ public class CatalogController {
             @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
             @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
     @ApiOperation(value = "Upload a new image to a product")
-    @RequestMapping(value = "/product/image/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/product/image/{userId}/{source}", method = RequestMethod.POST)
     public ResponseEntity<ProductResponseDto> addImageToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
-                                                                     @RequestParam("file") MultipartFile file,
+                                                                     @RequestParam("file") MultipartFile file, @PathVariable("source") String source,
                                                                      HttpServletRequest request) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
@@ -907,7 +907,7 @@ public class CatalogController {
             return new ResponseEntity<>(new ProductResponseDto(false, -1, "File was empty"), HttpStatus.NO_CONTENT);
         }
 
-        ImageUrlResponseDto imageResponseStatus = productService.fileUpload(file);
+        ImageUrlResponseDto imageResponseStatus = productService.fileUpload(file, source);
 
         if (!imageResponseStatus.isSuccess()) {
             return new ResponseEntity<>(new ProductResponseDto(false, -1, imageResponseStatus.getReason()),

@@ -86,6 +86,18 @@ class XmlImageManagement implements ImageManagement {
     }
 
     @Override
+    public ManagedImage addManagedImage(byte[] byteArray, String originalFileName, boolean copyToRepository, String source) throws IOException {
+        final UUID uid = UUID.randomUUID();
+        String uidString = uid.toString();
+        uidString = "custom_image_" + source + "_" + uidString;
+        final XmlManagedImage managedImage = new XmlManagedImage(this, uidString, byteArray, originalFileName,
+                copyToRepository);
+        final String managedImageId = managedImage.getId();
+        managedImagesMap.put(managedImageId, managedImage);
+        return managedImage;
+    }
+
+    @Override
     public void removeManagedImage(final String managedImageId) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(managedImageId, "managed image id");
         final XmlManagedImage xmlManagedImage = managedImagesMap.get(managedImageId);

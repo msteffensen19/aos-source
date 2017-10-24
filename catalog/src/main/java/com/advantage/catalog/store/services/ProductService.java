@@ -168,7 +168,7 @@ public class ProductService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ImageUrlResponseDto fileUpload(MultipartFile file) {
+    public ImageUrlResponseDto fileUpload(MultipartFile file, String source) {
         String imageManagementRepository =
                 environment.getProperty(ImageManagementConfiguration.PROPERTY_IMAGE_MANAGEMENT_REPOSITORY);
         try {
@@ -181,7 +181,7 @@ public class ProductService {
             ImageManagement imageManagement = ImageManagementAccess.getImageManagement(
                     ImageManagementConfiguration.getPath(imageManagementRepository));
 
-            ManagedImage managedImage = imageManagement.addManagedImage(bytes, originalFileName, true);
+            ManagedImage managedImage = imageManagement.addManagedImage(bytes, originalFileName, true, source);
             imageManagement.persist();
 
             return new ImageUrlResponseDto(managedImage.getId(), true, "Image successfully uploaded");

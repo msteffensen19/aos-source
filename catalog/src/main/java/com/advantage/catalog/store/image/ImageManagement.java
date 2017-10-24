@@ -46,6 +46,9 @@ public interface ImageManagement {
     ManagedImage addManagedImage(final byte[] byteArray,
                                  String originalFileName, final boolean copyToRepository) throws IOException;
 
+    ManagedImage addManagedImage(final byte[] byteArray,
+                                 String originalFileName, final boolean copyToRepository, String source) throws IOException;
+
     /**
      * Remove the managed image with the given id, from the image management repository.
      * <br/>
