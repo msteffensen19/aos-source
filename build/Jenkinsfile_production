@@ -23,14 +23,14 @@ sh 'git checkout master'
 
 load "${WORKSPACE}/build/machines_ip.groovy"
 
-def v = version()
-  if (v) {
-    echo "Building version ${v}"
+env.v = version()
+  if (env.v) {
+    echo "Building version ${env.v}"
 }
 
-def d = deliveryNumber()
-  if (d) {
-    echo "Building deliveryMumber ${d}"
+env.d = deliveryNumber()
+  if (env.d) {
+    echo "Building deliveryMumber ${env.d}"
 }
 
 stage('Production'){
@@ -39,6 +39,7 @@ env.stageName="Production"
 sh '''#!/bin/bash
 
 #copy the docker-compose to production machine
+echo "production_ip=$production_ip"
 ssh "$production_ip" \"docker stack rm STACK\"
 sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_distributed/.env_private"
 scp "./Nimbus_aos/aos_distributed/docker-compose.yml" root@$production_ip:/root
@@ -187,19 +188,11 @@ mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
 }catch(err){
     node('UbuntuDemoApp'){
 	dir(""){
-	def v = version()
-    if (v) {
-    echo "Building version ${v}"
-    }
-
-    def d = deliveryNumber()
-    if (d) {
-    echo "Building deliveryMumber ${d}"
-    }
 
     if (env.stageName == "Production Tests"){
 	 stage('Redeploy last successful production images'){
 	  sh '''
+	   ehco "production_ip=$production_ip"
 	   ssh "$production_ip" \"docker stack rm STACK\"
 	   sleep 30
 	   ssh "$production_ip" \"sed -i 's/staging/production/g' /root/docker-compose.yml && /root/startup.sh\"
@@ -214,7 +207,7 @@ mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
 	}	
     currentBuild.result = 'FAILURE'
 	mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
-		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${v}, Delivery number ${d}",
+		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${env.v}, Delivery number ${env.d}",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');
 	}
