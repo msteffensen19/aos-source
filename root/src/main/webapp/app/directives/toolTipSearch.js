@@ -41,25 +41,32 @@ define(['./module'], function (directives) {
 
                         s.openSearchProducts = function () {
 
-                            var navsLinks = $("nav ul li a.navLinks");
-                            navsLinks.each(function (index) {
-                                setTimeout(function (_this) {
-                                    $(_this).stop().animate({opacity: 0.1}, 500);
-                                }, 200 * index, this);
-                            });
 
-                            setTimeout(function (navsLinks) {
-                                navsLinks.hide();
-                                $('#searchSection .autoCompleteCover').stop().animate({
-                                    width: getAutocompleateWidth() + "px",
-                                    margin: '0 6px'
-                                }, 500).animate({
-                                    opacity: 1
-                                }, 200, function () {
-                                    $('#autoComplete').focus();
+                            if($('.autoCompleteCover').width() > 0){//element is open, we search now
+                                this.checkEnterKey({which : 13});
+
+                            }else{
+                                var navsLinks = $("nav ul li a.navLinks");
+                                navsLinks.each(function (index) {
+                                    setTimeout(function (_this) {
+                                        $(_this).stop().animate({opacity: 0.1}, 500);
+                                    }, 200 * index, this);
                                 });
-                                $('#searchSection .autoCompleteCover .iconCss.iconX').fadeIn(300);
-                            }, (200 * navsLinks.length), navsLinks);
+
+                                setTimeout(function (navsLinks) {
+                                    navsLinks.hide();
+                                    $('#searchSection .autoCompleteCover').stop().animate({
+                                        width: getAutocompleateWidth() + "px",
+                                        margin: '0 6px'
+                                    }, 500).animate({
+                                        opacity: 1
+                                    }, 200, function () {
+                                        $('#autoComplete').focus();
+                                    });
+                                    $('#searchSection .autoCompleteCover .iconCss.iconX').fadeIn(300);
+                                }, (200 * navsLinks.length), navsLinks);
+                            }
+
                         }
 
                         s.closeSearchForce = function () {
