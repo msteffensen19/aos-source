@@ -46,12 +46,6 @@ scp "./Nimbus_aos/aos_distributed/docker-compose.yml" root@$production_ip:/root
 scp "./Nimbus_aos/aos_distributed/startup.sh" root@$production_ip:/root
 scp "./Nimbus_aos/aos_distributed/.env" root@$production_ip:/root
 scp "./Nimbus_aos/aos_distributed/.env_private" root@$production_ip:/root
-#copy trace to main
-scp "HPEAppPulseJava_1.60_AdvantageOnlineShopping.zip" root@$production_ip:/root
-scp "install_trace.sh" root@$production_ip:/root
-#copy trace to account
-scp "HPEAppPulseJava_1.60_AdvantageOnlineShopping.zip" root@$production_account_ip:/root
-scp "install_trace.sh" root@$production_account_ip:/root
 
 ssh "$production_ip" \"chmod +x /root/startup.sh\"
 
