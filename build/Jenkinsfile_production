@@ -57,12 +57,6 @@ ssh "$production_ip" \"chmod +x /root/startup.sh\"
 
 # docker compose pull the latest images, so if there is a newer image the service of that image will be stopped and recreated
 ssh "$production_ip" \"sed -i '/image/ s/$/-dev:staging/' /root/docker-compose.yml && sed -i 's/8081/8082/g' /root/.env && /root/startup.sh\"
-sleep 120
-#install trace on main
-ssh "$production_ip" \"chmod +x /root/install_trace.sh && /root/install_trace.sh "main-app" \"
-sleep 5
-#install trace on account
-ssh "$production_account_ip" \"chmod +x /root/install_trace.sh && /root/install_trace.sh "accountservice" \"
 '''
 
 }
