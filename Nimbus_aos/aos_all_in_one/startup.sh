@@ -3,8 +3,14 @@
 . .env_private
 
 if [ "${PUBLIC_IP}" = "LOCAL" ]; then
+ distributed_os=`cat /etc/*-release | grep -w "ID" | awk -F"=" '{print $2}' | tr -d '"'`
+ echo "distributed_os=$distributed_os"
  interface=`route | grep -w "default" | awk '{print $8}'`
- ip=`ifconfig | grep -A1 ${interface} | awk -F":" '/inet addr/ {print $2}' | awk '{print $1}'`
+ if [ "$distributed_os" == "centos" ]; then
+  ip=`ifconfig | grep -A1 ${interface} | awk -F" " '/inet/ {print $2}'`
+ elif [ "$distributed_os" == "ubuntu" ]; then
+  ip=`ifconfig | grep -A1 ${interface} | awk -F":" '/inet addr/ {print $2}' | awk '{print $1}'`
+ fi
 elif [ "${PUBLIC_IP}" = "AMAZON" ]; then
  ip=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
 else
