@@ -47,6 +47,8 @@ env.d = deliveryNumber()
 
 stage('Build'){
 
+if ( env.Create_new_release_images == "true" ){
+
 def mvnHome = tool name: 'Maven 3.3.9_Linux', type: 'hudson.tasks.Maven$MavenInstallation'
 env.PATH="${env.PATH}:${mvnHome}/bin"
 def WORKSPACE=pwd()
@@ -63,6 +65,8 @@ export npm_config_cache=./.cache
 export no_proxy="localhost,127.0.0.1,.hpeswlab.net,.hpswlabs.adapps.hp.com,.devlab.ad"
 
 mvn -P production,pack_wars_without_accountservices package install -am -ff -e -X'''
+}else
+ currentBuild.result = 'SUCCESS'
 }
 
 stage('Update Production Release'){
@@ -74,33 +78,38 @@ sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
 
 sh '''#!/bin/bash
 # copy wars 
-all_wars_path=./root/target/wars.zip
-accountservice_war_path=./accountservice/target/accountservice.war
-cp ${all_wars_path} ./Dockerfiles/aos_all_in_one/tomcat_all
-cp ${accountservice_war_path} ./Dockerfiles/aos_all_in_one/tomcat_account
+if ( "${Create_new_release_images}" == "true" );then
+ all_wars_path=./root/target/wars.zip
+ accountservice_war_path=./accountservice/target/accountservice.war
+ cp ${all_wars_path} ./Dockerfiles/aos_all_in_one/tomcat_all
+ cp ${accountservice_war_path} ./Dockerfiles/aos_all_in_one/tomcat_account
+fi
 
 # edited .evn & docker-compose.yml
 sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_all_in_one/.env_private"
 sed -i 's/8080/80/g' "./Nimbus_aos/aos_all_in_one/.env"
+sed -i "s/latest/${Release_Version}/g" "./Nimbus_aos/aos_all_in_one/.env"
 sed '/services:/,/tomcat_6:/{//!d}' docker-compose.yml
 sed -i '/depends_on:/,+1 d' ./Nimbus_aos/aos_all_in_one/docker-compose.yml
 sed -i '/advantageonlineshopping/ s/$/:${TAG}/' ./Nimbus_aos/aos_all_in_one/docker-compose.yml
 '''
 
 sh """#!/bin/bash
-export http_proxy="http://proxy.il.hpecorp.net:8080"
-export https_proxy="http://proxy.il.hpecorp.net:8080"
-
-cd ./Dockerfiles/aos_all_in_one/tomcat_all
-echo "docker build -t advantageonlineshopping/aos-main-app:${Release_version} ."
-docker build -t advantageonlineshopping/aos-main-app:${Release_version} .
-cd ../tomcat_account
-docker build -t advantageonlineshopping/aos-accountservice:${Release_version} .
-
-docker push advantageonlineshopping/aos-main-app:${Release_version}
-docker push advantageonlineshopping/aos-accountservice:${Release_version}
-
-cd ../../../
+if ( "${Create_new_release_images}" == "true" );then
+ export http_proxy="http://proxy.il.hpecorp.net:8080"
+ export https_proxy="http://proxy.il.hpecorp.net:8080"
+ 
+ cd ./Dockerfiles/aos_all_in_one/tomcat_all
+ echo "docker build -t advantageonlineshopping/aos-main-app:${Release_version} ."
+ docker build -t advantageonlineshopping/aos-main-app:${Release_version} .
+ cd ../tomcat_account
+ docker build -t advantageonlineshopping/aos-accountservice:${Release_version} .
+ 
+ docker push advantageonlineshopping/aos-main-app:${Release_version}
+ docker push advantageonlineshopping/aos-accountservice:${Release_version}
+ 
+ cd ../../../
+fi
 
 #copy the docker-compose to production machine
 scp "./Nimbus_aos/aos_all_in_one/docker-compose.yml" root@$production_ip:/root/aos_release
