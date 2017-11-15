@@ -277,7 +277,8 @@ var english = {
     'AOS_VERSIONS': 'AOS Versions',
     'THE_APP_IS_AVAILABLE_IN_3_FORM_FACTORS': 'THE APPLICATION IS AVAILABLE IN 3 FORM FACTORS:',
     'ABOUT_FIRST_PARAGRAPH': 'The ADM demo application provides one stop shop to demonstrate all ADM solutions:',
-    'ABOUT_SECOND_PARAGRAPH': 'ALM, OCTANE, UFT, LeanFT, Mobile Center, LR, PC, StormRunner, NV, SV, BPT and Sprinter, and anything new we will build in the future.'
+    'ABOUT_SECOND_PARAGRAPH': 'ALM, OCTANE, UFT, LeanFT, Mobile Center, LR, PC, StormRunner, NV, SV, BPT and Sprinter, and anything new we will build in the future.',
+    "PRODUCT_QUANTITY_ERROR_MESSAGE" : "Oops! We only have {0} in stock. We updated your order accordingly"
 
 };
 

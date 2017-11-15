@@ -296,9 +296,20 @@ define(['./module'], function (controllers) {
                 }
                 else {
                     var quantity = s.quantity;
-
                     var user = $rootScope.userCookie;
                     if (!(user && user.response && user.response.userId != -1)) {
+                        if(quantity > s.product.colors[0].inStock){
+                            s.message.text = $filter("translate")('PRODUCT_QUANTITY_ERROR_MESSAGE').format(s.product.colors[0].inStock); //s._class = res.success ? "valid" : "invalid";
+                            if(_____productAdded){
+                                $timeout.cancel(_____productAdded);
+                            }
+                            _____productAdded = $timeout(function(){
+                                s.message.text = "";
+                                s.message._class = "";
+                            }, 4000);
+                            quantity = s.product.colors[0].inStock;
+                        }
+
                         for (var i = 0; i < s.$parent.cart.productsInCart.length; i++) {
                             var prod = s.$parent.cart.productsInCart[i];
                             if (prod.productId == productToAdd.productId && prod.color.code == s.colorSelected.code) {
@@ -309,6 +320,7 @@ define(['./module'], function (controllers) {
                         }
                     }
                     if (quantity > 0) {
+
                         var request = s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
                         request.then(function (res) {
                             if(res.message){
