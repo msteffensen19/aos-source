@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.advantage.common.Constants.MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR;
+
 @Service
 public class PaymentPreferencesService implements Injectable{
 //    @Autowired
@@ -85,7 +87,7 @@ public class PaymentPreferencesService implements Injectable{
         }
 
         if (ValidationHelper.isMCDateExpired(expirationDate)) {
-            return new PaymentPreferencesStatusResponse(false, "MasterCredit card has expired. \'expiration date\' " + expirationDate, -1);
+            return new PaymentPreferencesStatusResponse(false, MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR, -1);
         }
 
         PaymentPreferences paymentPreferences = paymentPreferencesRepository.find(accountId, PaymentMethodEnum.MASTER_CREDIT.getCode());
@@ -148,7 +150,7 @@ public class PaymentPreferencesService implements Injectable{
 
 
         if (ValidationHelper.isMCDateExpired(expirationDate)) {
-            return new PaymentPreferencesStatusResponse(false, "MasterCredit card has expired. \'expiration date\' " + expirationDate, -1);
+            return new PaymentPreferencesStatusResponse(false, MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR, -1);
         }
 
         System.out.println("ExpirationDate converted to date format dd.MM.yyyy = \'" + sb.toString() + "\'");
