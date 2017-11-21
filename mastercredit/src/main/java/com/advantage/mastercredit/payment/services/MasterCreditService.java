@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.advantage.common.Constants.MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR;
 import static com.advantage.root.util.StringHelper.convertStringToDate;
 
 /**
@@ -125,7 +126,7 @@ public class MasterCreditService {
 
             if (expirationDate.before(new Date())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
-                responseStatus.setResponseReason("MasterCredit card has expired. \'expiration date\' " + masterCreditDto.getExpirationDate() + " has passed");
+                responseStatus.setResponseReason(MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR);
                 responseStatus.setReferenceNumber(0);
                 isValid = false;
             } else {
