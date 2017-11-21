@@ -425,9 +425,9 @@ input[type=checkbox]:checked {
 
 .mini-title-help {
     position: absolute;
-    top:45px;
+    top:47px;
     left:0px;
-    right:-22px;
+    right:10px;
     margin: 0 auto;
     z-index: 100;
     background-color: #ffffff;

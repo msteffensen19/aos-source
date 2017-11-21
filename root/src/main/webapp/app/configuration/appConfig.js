@@ -62,8 +62,14 @@ define([], function () {
                 templateUrl: 'app/user/views/about-page.html',
                 controller: 'aboutCtrl',
                 resolve: {}
-            }).
-            state('support', {
+            })
+            .state('version', {
+                url: '/version',
+                templateUrl: 'app/user/views/version-page.html',
+                controller: 'versionCtrl',
+                resolve: {}
+            })
+            .state('support', {
                 url: '/support',
                 templateUrl: 'app/views/support-page.html',
                 controller: 'supportCtrl',

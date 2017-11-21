@@ -32,6 +32,7 @@
 
 @import "user/login.css";
 @import "user/register.css";
+@import "user/version.css";
 
 @import "order/orderPayment/orderPayment.css";
 @import "order/orderPayment/userNotLogin.css";
