@@ -267,7 +267,7 @@ a.a_menu_side.selected {
     border-radius: 50%;
     width: 66px;
     height: 66px;
-    background-image: url('../../css/icons/Advantage_logo_white.svg');
+    background-image: url('../images/Advantage_logo_white.svg');
     background-color: #ce42f4;
     background-repeat: no-repeat;
     background-position: center;
