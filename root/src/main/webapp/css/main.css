@@ -155,6 +155,7 @@ div.mobile-btn-handler span{
     text-align: center;
     cursor: pointer;
     position: relative;
+    padding-left: 8px;/*BUG:#126004*/
 }
 
 #mobile-section .img:active{
