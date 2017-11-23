@@ -54,6 +54,7 @@
 #registerPage .invalid {
     color: #ff454f;
     margin-bottom: 10px;
+    white-space: nowrap;
 }
 
 #formCover .option {

@@ -152,6 +152,9 @@
 
     <Error_500 datatype="enum:[Tip]" description="To generate error 500, login with AppPulse user, add items to the the cart, checkout and click on pay now" tools="AppPulse" locationInAdvantage="Order Payment">Tip</Error_500>
 
+
+    <Error_403 datatype="enum:[Tip]" description="To generate error 403, click on the 'Sign in with Facebook' button." tools="AppPulse" locationInAdvantage="Login page">Tip</Error_403>
+
     <Use_Camera_Capability datatype="enum:[Tip]" description="Add an option to enable the user to take a picture with the camera . This picture will be added to the current product page. In offline mode, the picture is retained for the current session only.
 When using MC, if “Camera Sensor” is enabled, this picture will be replaced with the picture the user previously uploaded to MC." tools="MobileCenter" locationInAdvantage="Mobile apps: Product page">Tip</Use_Camera_Capability>
 
