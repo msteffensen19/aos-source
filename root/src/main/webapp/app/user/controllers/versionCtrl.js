@@ -6,9 +6,7 @@ define(['./module'], function (controllers) {
 
             /* record of the versions */
             $scope.records = [
-                "VERSION 1.1.3",
-                "VERSION 1.1.2",
-                "VERSION 1.1.1",
+                "VERSION 1.1.2"
             ]
 
             /* Set default value to release_version */

@@ -27,6 +27,7 @@ div.paragraph {
     line-height: 160%;
     vertical-align: top;
     display: table-cell;
+    width: 90%;
 }
 
 div.menu_side{
@@ -44,6 +45,7 @@ div.devices{
     padding-bottom: 14px;
     padding-left: 25px;
     padding-right: 25px;
+    cursor: pointer;
 }
 
 .devices_inner_line{
@@ -167,14 +169,6 @@ p.whats_new_width_paragraph_60{
 
 p.whats_new_width_paragraph_70{
     width: 70%;
-}
-
-p.whats_new_width_paragraph_80{
-    width: 80%;
-}
-
-p.whats_new_width_paragraph_50{
-    width: 50%;
 }
 
 .padding_bottom_5_px{

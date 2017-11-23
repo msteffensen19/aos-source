@@ -17,7 +17,7 @@
             </div>
 
             <div id="versionSection" class=mini_version_list>
-                <label class="option roboto-medium" ng-click="getVersion('0')">VERSION 1.1.3</label>
+               <!-- <label class="option roboto-medium" ng-click="getVersion('0')">VERSION 1.1.3</label>-->
                 <label class="option" ng-click="getVersion('1')">VERSION 1.1.2</label>
                 <!--
                 <label class="option" ng-click="getVersion('2')">VERSION 1.1.1</label>-->
@@ -43,7 +43,6 @@
                                             ng-click="gotoElement('APIs', 'APIs_link')">APIs</a></span>
         </div>
 
-        <div>
 
             <!-------------------- MC ----------------------->
             <div class="gather_left">
@@ -58,9 +57,10 @@
                 </div>
 
                 <div class="paragraph">
-                    <p class="whats_new_width_paragraph_60">The ADM demo application provide one stop shop to
-                        demonstrate all ADM solution (ALM, OCTANE, UFT, LeanFT, Mobile Center, LR, PC, StormRunner, NV,
-                        SV, BPT and Sprinter) and anything new we will build in the future.</p></div>
+                    <p class="whats_new_width_paragraph_70">- Offline mode – to enable demonstration of Mobile Center with Advantage native applications (iOS and Android), without internet connection.</p>
+                    <p class="whats_new_width_paragraph_70">- iPad support.</p>
+                    <p class="whats_new_width_paragraph_70">- UFT-MC - Element recognition improvements.</p>
+                </div>
 
             </div>
 
@@ -78,11 +78,8 @@
 
                 <div class="paragraph">
                     <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Significate improvements in our
-                        element recognition - allowing a better SPY recognition</p>
-                    <p class="whats_new_width_paragraph_70">- UI improvements<br>
-                        - Fixed various defects<br>
-                        - Static version of 1.1.2
-                    </p>
+                        element recognition - enabling a better SPY recognition</p>
+                    <p class="whats_new_width_paragraph_70">- UI improvements</p>
                 </div>
 
             </div>
@@ -95,15 +92,10 @@
                 </div>
 
                 <div class="paragraph">
-                    <p class="whats_new_width_paragraph_80 padding_bottom_5_px">- Downloads page including links to our
-                        assets:</p>
-                    <p class="whats_new_width_paragraph_80 padding_bottom_5_px">
-                        http://www.advantageonlineshopping/com/downloads</p>
-                    <p class="whats_new_width_paragraph_80 padding_bottom_5_px">- Static version for functional tools -
-                        Our Goal is to update this (static) version once at the end of each release with a heads-up
-                        alert for all the relevant stakholders
-                    <p>
-                    <p class="whats_new_width_paragraph_80 padding_bottom_5_px">- Quality improvements - more than 35
+                    <p class="whats_new_width_paragraph_70 padding_bottom_5_px">- Downloads page including links to all our
+                        assets: <a class="color_turquoise" href="http://www.advantageonlineshopping/com/downloads">http://www.advantageonlineshopping/com/downloads</a></p>
+                    <p class="whats_new_width_paragraph_70 padding_bottom_5_px">- Advantageonlineshopping.com is our production server, and as such, it is updated every night with the latest changes. For a static version go to: <a class="color_turquoise" href="http://www.advantageonlineshopping.com:8080">http://www.advantageonlineshopping.com:8080</a> this instance will be updated every major release, a heads-up alert will be sent to all the relevant stakeholders.<p>
+                    <p class="whats_new_width_paragraph_70 padding_bottom_5_px">- Quality improvements - more than 35
                         defects were closed
                     <p>
                 </div>
@@ -123,11 +115,10 @@
                 </div>
 
                 <div class="paragraph">
-                    <p class="whats_new_width_paragraph_50 padding_bottom_5_px">AOS installation - stabilizing the
-                        version, fixing critical defects.</p>
+                    <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Advantage installation – creating a stable installation</p>
                 </div>
+
             </div>
-        </div>
     </article>
 
     <!-------------------- Download Mobile Apps ----------------------->
@@ -137,7 +128,7 @@
             <div class="padding_bottom_60_px multiple_elements_overflow">
 
                 <!-------------------- Download ios ----------------------->
-                <div class="devices" style="float:left;">
+                <div class="devices" style="float:left;" onclick="location.href='https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.ipa';">
                     <div class="devices_pic">
                         <img src="../../css/images/AppleLogo.svg">
                     </div>
@@ -146,10 +137,8 @@
                         <span class="devices_font"><b>IOS</b></span>
                     </div>
                 </div>
-
                 <!-------------------- Download android ----------------------->
-
-                <div class="devices">
+                <div class="devices" onclick="location.href='https://s3.amazonaws.com/on-prem-downloads/1.1.2/Advantage+demo+1_1_2.apk';">
                     <div class="devices_pic">
                         <img src="../../css/images/Android_logo.svg">
                     </div>
@@ -174,14 +163,15 @@
             <div class="multiple_elements_overflow">
 
                 <!-------------------- ADM Market ----------------------->
-                <div class="devices">
+                <div class="devices" onclick="location.href='https://marketplace.saas.hpe.com/appdelivery/content/advantage-online-shopping-aos-adm-demo-application';">
                     <div class="devices_pic">
                         <img src="../../css/images/MicroFocus_logo_black.svg">
                     </div>
                     <div class="devices_inner_line" style="width: 145px">
                         <span>Get it from</span>
-                        <span class="devices_font"><b>ADM Market</b></span>
+                        <span class="devices_font"><b>ADM Marketplace</b></span>
                     </div>
+
                 </div>
 
                 <span class="installation_section_requirements"><b>SYSTEM REQUIREMENTS:</b></span>
