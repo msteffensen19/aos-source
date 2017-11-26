@@ -5,9 +5,10 @@ checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'G
 
 load "${WORKSPACE}/build/machines_ip.groovy"
 
+/*
 stage('Android Tests'){
  build job: 'demoapp_folder/demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'Android'], [$class: 'StringParameterValue', name: 'URL', value: "http://$staging_ip"]]
-}
+}*/
 
 try {
 stage('SRF Tests'){
