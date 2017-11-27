@@ -2,6 +2,13 @@
 . .env
 . .env_private
 
+if [ "${PUBLIC_IP}" = "LOCAL" ] && ([ -z "${PROXY_HOST}" ] || [ -z "${PROXY_PORT}" ]);then
+ echo "Please set Proxy host & port"
+ exit 1
+elif [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
+  printf "\nhttp_proxy=$PROXY_HOST:PROXY_PORT\nhttps_proxy=$PROXY_HOST:PROXY_PORT" >> .env_private
+fi
+
 sed -i "s/POSTGRES_PORT/${POSTGRES_PORT}/g" docker-compose.yml
 sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
 sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
@@ -18,10 +25,10 @@ sed -i "s/TAG/${TAG}/g" docker-compose.yml
  command2="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env_private"
  eval $command2
 
- # if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
-if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
- printf "\nhttp_proxy=\nhttps_proxy=">> .env_private
-fi
+# if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
+#if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
+# printf "\nhttp_proxy=\nhttps_proxy=">> .env_private
+#fi
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker stack deploy --with-registry-auth -c docker-compose.yml STACK
