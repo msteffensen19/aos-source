@@ -6,11 +6,11 @@ set -a
 
 set +a
 
-if [ "${PUBLIC_IP}" = "LOCAL" ] && ([ -z "${PROXY_HOST}" ] || [ -z "${PROXY_PORT}" ]);then
+if [ "${PUBLIC_IP}" = "LOCAL" ] && ([ -z "${PROXY_HOST}" ] || [ -z "${PROXY_PORT}" ] || [ "${PROXY_PORT}" = "proxy_port" ] || [ "${PROXY_HOST}" = "proxy_host" ]);then
  echo "Please set Proxy host & port"
  exit 1
 elif [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
-  printf "\nhttp_proxy=$PROXY_HOST:PROXY_PORT\nhttps_proxy=$PROXY_HOST:PROXY_PORT" >> .env_private
+  printf "\nhttp_proxy=${PROXY_HOST}:${PROXY_PORT}\nhttps_proxy=${PROXY_HOST}:${PROXY_PORT}" >> .env_private
 fi
 
 if [ "${PUBLIC_IP}" = "LOCAL" ]; then
