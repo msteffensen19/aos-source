@@ -88,4 +88,6 @@ docker stack deploy --with-registry-auth -c docker-compose.yml STACK
 command6="sed -i 's/advantageonlineshopping\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
 eval $command6
 
-. configure_octane.sh
+if [ "${CREATE_OCTANE}" == "YES" ];then
+ . configure_octane.sh
+fi

@@ -48,7 +48,7 @@ eval $command2
 #fi
 
 # remove octane service if we dont want to use it
-if [ "${CREATE_OCTANE}" == "NO" ];then
+if [ "${CREATE_OCTANE}" != "YES" ];then
  sed -i '/octane/,$d' docker-compose.yml
 fi
 
@@ -56,4 +56,6 @@ docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker-compose pull
 docker-compose up -d
 
-. configure_octane.sh
+if [ "${CREATE_OCTANE}" == "YES" ];then
+ . configure_octane.sh
+fi
