@@ -41,7 +41,7 @@ sh '''#!/bin/bash
 #copy the docker-compose to production machine
 echo "production_ip=$production_ip"
 ssh "$production_ip" \"docker stack rm STACK\"
-sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_distributed/.env_private"
+sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_distributed/.env"
 scp "./Nimbus_aos/aos_distributed/docker-compose.yml" root@$production_ip:/root
 scp "./Nimbus_aos/aos_distributed/startup.sh" root@$production_ip:/root
 scp "./Nimbus_aos/aos_distributed/.env" root@$production_ip:/root

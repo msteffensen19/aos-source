@@ -86,7 +86,7 @@ if ( "${Create_new_release_images}" == "true" );then
 fi
 
 # edited .evn & docker-compose.yml
-sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_all_in_one/.env_private"
+sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_all_in_one/.env"
 sed -i 's/8080/80/g' "./Nimbus_aos/aos_all_in_one/.env"
 sed -i "s/latest/${Release_Version}/g" "./Nimbus_aos/aos_all_in_one/.env"
 sed '/services:/,/tomcat_6:/{//!d}' docker-compose.yml
