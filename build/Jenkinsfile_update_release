@@ -16,7 +16,7 @@ stage('Checkout'){
 checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-source'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], gitTool: 'Git version 2.8.0-rc4 Linux', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-source.git']]])
 
 
-sh """git checkout ${Release_version}"""
+
 
 sh '''current_delivery_number=`cat build/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
 echo "current_delivery_number=$current_delivery_number"
