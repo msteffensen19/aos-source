@@ -88,8 +88,8 @@ fi
 # edited .evn & docker-compose.yml
 sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_all_in_one/.env"
 sed -i 's/8080/80/g' "./Nimbus_aos/aos_all_in_one/.env"
-sed -i "s/latest/${Release_Version}/g" "./Nimbus_aos/aos_all_in_one/.env"
-sed '/services:/,/tomcat_6:/{//!d}' docker-compose.yml
+sed -i "s/latest/${Release_version}/g" "./Nimbus_aos/aos_all_in_one/.env"
+sed '/services:/,/tomcat_6:/{//!d}' ./Nimbus_aos/aos_all_in_one/docker-compose.yml
 sed -i '/depends_on:/,+1 d' ./Nimbus_aos/aos_all_in_one/docker-compose.yml
 sed -i '/advantageonlineshopping/ s/$/:${TAG}/' ./Nimbus_aos/aos_all_in_one/docker-compose.yml
 '''
