@@ -126,7 +126,7 @@ ssh "$production_ip" \"chmod +x /root/aos_release/startup.sh && cd /root/aos_rel
 
 sleep 120
 #install trace on main & account
-ssh "$production_ip" \"chmod +x /root/install_trace.sh && /root/install_trace.sh "main-app" && root/install_trace.sh "accountservice" \"
+ssh "$production_ip" \"chmod +x /root/install_trace.sh && /root/install_trace.sh "main-app" "${Release_version}" && root/install_trace.sh "accountservice" "${Release_version}" \"
 
 """
 }
