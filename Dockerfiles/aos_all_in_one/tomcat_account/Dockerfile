@@ -16,5 +16,8 @@ RUN chmod +x /startTomcat.sh
 RUN sed -i -e '$i <role rolename="manager-gui"\/>\n<role rolename="manager-script"\/>\n<user username="tomcatadmin" password="Password1" roles="manager-gui,manager-script"\/>' /usr/local/tomcat/conf/tomcat-users.xml && \
     cat /usr/local/tomcat/conf/tomcat-users.xml
 	
+ENV http_proxy=""
+ENV https_proxy=""
+	
 ENTRYPOINT ["sh", "-c", "/startTomcat.sh"]
 

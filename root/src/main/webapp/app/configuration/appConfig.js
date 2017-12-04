@@ -45,12 +45,13 @@ define([], function () {
                     }
                 }
             })
+            /*
             .state('downloads', {
                 url: '/downloads',
                 templateUrl: 'app/views/downloads.html',
                 controller: 'downloadsCtrl',
                 resolve: {}
-            })
+            })*/
             .state('register', {
                 url: '/register',
                 templateUrl: 'app/user/views/register-page.html',

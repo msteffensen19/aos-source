@@ -108,6 +108,8 @@ cd ../../../
 #replace the postgres password to admin
 sed -i 's/password/admin/g' "./Nimbus_aos/aos_all_in_one/.env_private"
 sed -i 's/8080/80/g' "./Nimbus_aos/aos_all_in_one/.env"
+sed -i 's/proxy_host/proxy.il.hpecorp.net/g' "./Nimbus_aos/aos_all_in_one/.env"
+sed -i 's/proxy_port/8080/g' "./Nimbus_aos/aos_all_in_one/.env"
 sed -i 's/.*volume.*//g' "./Nimbus_aos/aos_all_in_one/docker-compose.yml"
 
 #copy files aside for staging machine
@@ -118,7 +120,7 @@ cp ./Nimbus_aos/aos_all_in_one/startup.sh ./Nimbus_aos/aos_all_in_one/staging/st
 cp ./Nimbus_aos/aos_all_in_one/.env ./Nimbus_aos/aos_all_in_one/staging/.env
 cp ./Nimbus_aos/aos_all_in_one/.env_private ./Nimbus_aos/aos_all_in_one/staging/.env_private
 #replace the env value to be on AMAZON
-sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_all_in_one/staging/.env_private"
+sed -i 's/LOCAL/AMAZON/g' "./Nimbus_aos/aos_all_in_one/staging/.env"
 sed -i 's/8080/80/g' "./Nimbus_aos/aos_all_in_one/staging/.env"
 
 #copy the docker-compose to ci machine

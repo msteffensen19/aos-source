@@ -6,6 +6,13 @@ set -a
 
 set +a
 
+if [ "${PUBLIC_IP}" = "LOCAL" ] && ([ -z "${PROXY_HOST}" ] || [ -z "${PROXY_PORT}" ] || [ "${PROXY_PORT}" = "proxy_port" ] || [ "${PROXY_HOST}" = "proxy_host" ]);then
+ echo "Please set Proxy host & port"
+ exit 1
+elif [ "${PUBLIC_IP}" = "LOCAL" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
+  printf "\nhttp_proxy=${PROXY_HOST}:${PROXY_PORT}\nhttps_proxy=${PROXY_HOST}:${PROXY_PORT}" >> .env_private
+fi
+
 # evaluate the path to accountservice to use as a workspace in the pipeline jenkins job
 workspace=`pwd`
 one_level_up_workspace="${workspace%/*}"
@@ -13,20 +20,6 @@ two_levels_up_workspace="${one_level_up_workspace%/*}"
 three_levels_up_workspace="${two_levels_up_workspace%/*}"
 workspace=${three_levels_up_workspace}
 three_levels_up_workspace=$(echo "$three_levels_up_workspace" | sed 's/\//\\\//g')
-#command1="sed -i 's/WORKSPACE/${three_levels_up_workspace}\/accountservice/g' docker-compose.yml"
-#eval $command1
-
-#workspace=$(echo "$workspace" | sed 's/\//\\\//g')
-#command2="sed -i 's/WORKSPACE_PATH_CALCULATED/${workspace}\//g' .env_private"
-#eval $command2
-
-#sed -i "s/POSTGRES_PORT/${POSTGRES_PORT}/g" docker-compose.yml
-#sed -i "s/MAIN_PORT/${MAIN_PORT}/g" docker-compose.yml
-#sed -i "s/ACCOUNT_PORT/${ACCOUNT_PORT}/g" docker-compose.yml
-#sed -i "s/REGISTRY_PORT/${REGISTRY_PORT}/g" docker-compose.yml
-#sed -i "s/JENKINS_PORT/${JENKINS_PORT}/g" docker-compose.yml
-#sed -i "s/GITLAB_PORT/${GITLAB_PORT}/g" docker-compose.yml
-#sed -i "s/TAG/${TAG}/g" docker-compose.yml
 
 # if we are in AMAZON we need to remove the proxy from the containers, so we add it to the .evn file
 if [ "$PUBLIC_IP" == "AMAZON" ] && [ -z "$(cat .env_private | grep -m 1 "http_proxy")" ];then
@@ -46,10 +39,6 @@ if [ "$QUALI" == "NO" ];then
 # ip of the host
  command4="sed -i 's/PUBLIC_IP_CALCULATED/$(docker node ls | grep -w Leader | docker inspect $(awk '{print $3}') | grep -m2 "Addr" | tail -n1 | awk '{ gsub("\"",""); print $2}' | awk -F":" '{print $1}')/' .env_private"
  eval $command4
-
- #edit .git/hooks
-# echo \#\!/bin/bash$'\n'"curl -X POST http://${JENKINS_IP}:${JENKINS_PORT}/job/Adventage-Online-Shopping-Pipeline-Commit/build" > $workspace/.git/hooks/post-commit
-# chmod +x $workspace/.git/hooks/post-commit
 
 else
  #we assume the machins ip are already in .env
@@ -99,4 +88,6 @@ docker stack deploy --with-registry-auth -c docker-compose.yml STACK
 command6="sed -i 's/advantageonlineshopping\/aos-accountservice.*/${REGISTRY_IP}:5000\/aos-accountservice/g' docker-compose.yml"
 eval $command6
 
-. configure_octane.sh
+if [ "${CREATE_OCTANE}" == "YES" ];then
+ . configure_octane.sh
+fi

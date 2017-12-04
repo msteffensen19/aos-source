@@ -7,17 +7,21 @@ define(['./module'], function (controllers) {
             /* record of the versions */
             $scope.records = [
                 "VERSION 1.1.3",
-                "VERSION 1.1.2",
-                "VERSION 1.1.1",
+                "VERSION 1.1.2"
             ]
+
 
             /* Set default value to release_version */
             var release_version;
+            var release_version_only;
             $scope.release_version=$scope.records[0];
+            $scope.release_version_only=$scope.records[0].split(' ')[1];
 
             /* Set value according to value chose from the list */
             $scope.getVersion = function (index) {
                 $scope.release_version=$scope.records[index];
+                $scope.release_version_only=$scope.records[index].split(' ')[1];
+                $scope.contentUrl = 'app/user/views/version-page-' + $scope.release_version_only + '.html';
             };
 
             /* show and hidden list of versions*/

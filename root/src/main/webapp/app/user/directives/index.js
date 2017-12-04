@@ -3,4 +3,7 @@
  */
 'use strict';
 
-define(['./loginModal'], function() {});
+define([
+    './version-content',
+    './loginModal'
+], function() {});
