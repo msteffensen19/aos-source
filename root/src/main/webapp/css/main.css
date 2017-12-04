@@ -743,7 +743,7 @@ footer .splitter{
 
     div.logo a{
         padding: 0;
-        padding-top: 6px;
+        padding-top: 0px;/*BUG:#126004 (was 6px)*/
     }
 
     div.logo svg{
