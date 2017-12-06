@@ -191,7 +191,6 @@ curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROU
 #upload the xml file with the version
 curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROUP_ID} -F a=${ARTIFACT_ID_LATEST} -F c=version -F v=${DELIVERY_NUMBER_LATEST} -F p=pom -F file=@${VERSION_FILE_NAME} --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
-EOFEOF
 '''
 }
 }
