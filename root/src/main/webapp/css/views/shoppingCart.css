@@ -232,15 +232,15 @@
     display: none;
 }
 
-#shoppingCart .smollCell > span a.remove{
+#shoppingCart .smollCell > span a.remove, span a.edit{
     font-size: 10px;
     display: inline-block;
     padding: 10px 0;
     cursor:pointer;
 }
 
-#shoppingCart .smollCell > span a.remove:hover{
-    color: #54b3ad
+#shoppingCart .smollCell > span a.remove:hover, #shoppingCart .smollCell > span a.edit:hover{
+    color: #54b3ad;
 }
 
 #shoppingCart > div.bigEmptyCart{
