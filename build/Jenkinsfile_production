@@ -88,6 +88,12 @@ node('Windows2008R2'){
 
 checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-installer.git'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'build']]], [$class: 'WipeWorkspace']], gitTool: 'Git version LeanFT Windows', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-installer.git']]])
 
+env.installer_delivery = (deliveryNumber().toInteger() + 1).toString()
+
+echo "Installer delivery ${installer_delivery}"
+
+currentBuild.description = "Installer version: ${v}.${installer_delivery}"
+
 sh '''
  pwd
  if [ ! -d "/c/LeanFTJavaRunner/installer_release" ];then
@@ -101,13 +107,13 @@ sh '''
  curl -sS -L -o installer.zip "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/redirect?g=com.advantage.online.store&a=installer&v=${v}-SNAPSHOT&r=adm-demo-app-snapshot&p=zip"
  unzip installer.zip
  rm -rf installer.zip
- mv InstallAOS_${v}.exe InstallAOS.exe
+ mv InstallAOS_${v}.exe InstallAOS_${v}_${installer_delivery}.exe
 '''
 }
 }
 
 stage('SignHP Installer'){
-  build job: 'demoapp_folder/demoapp_installer_signHp', propagate: false
+  build job: 'demoapp_folder/demoapp_installer_signHp', parameters: [[$class: 'StringParameterValue', name: 'installer_version', value: "$v"], [$class: 'StringParameterValue', name: 'installer_delivery', value: "$d"]], propagate: false
 }
 
 stage('Upload Installer to latest release'){
@@ -120,16 +126,13 @@ usernameVariable: 'USERNAME', passwordVariable: 'NEXUS_DEPLOY_PASSWORD']]) {
 sh '''#!/bin/bash	
 #declare parameters
 NEW_COMMIT_ID=`git log --format="%H" -n 1`
-DELIVERY_NUMBER=`cat build/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
-NEW_DELIVERY_NUMBER=$(($DELIVERY_NUMBER+1))
   
-sed -i "s/<deliveryNumber>.*/<deliveryNumber>$NEW_DELIVERY_NUMBER<\\/deliveryNumber>/g" "build/version.xml"
+sed -i "s/<deliveryNumber>.*/<deliveryNumber>$deliveryNumber<\\/deliveryNumber>/g" "build/version.xml"
 sed -i "s/<commitId>.*/<commitId>$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
 
 cp "build/version.xml" "build/pom.xml"
 
-mv /c/LeanFTJavaRunner/installer_release/InstallAOS.exe /c/LeanFTJavaRunner/installer_release/InstallAOS_${v}_${NEW_DELIVERY_NUMBER}.exe
-"/c/Program Files/7-Zip/7z.exe" a -tzip installer.zip /c/LeanFTJavaRunner/installer_release/InstallAOS_${v}_${NEW_DELIVERY_NUMBER}.exe
+"/c/Program Files/7-Zip/7z.exe" a -tzip installer.zip /c/LeanFTJavaRunner/installer_release/InstallAOS_${v}_${deliveryNumber}.exe
 
 #***************************************************************************UPLOAD TO LATEST***************************************************************************
 
@@ -139,9 +142,9 @@ curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online
 
 #***************************************************************************UPLOAD TO RELEASE****************************************************************************
 
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Installer_Release_${v} -F v=${NEW_DELIVERY_NUMBER} -F p=zip -F file=@installer.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Installer_Release_${v} -F v=${deliveryNumber} -F p=zip -F file=@installer.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 #upload the xml file with the version
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Installer_Release_${v} -F c=version -F v=${NEW_DELIVERY_NUMBER} -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Installer_Release_${v} -F c=version -F v=${deliveryNumber} -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
 [ -f "./build/pom.xml" ] && rm -rf "./build/pom.xml"
 git pull -q
