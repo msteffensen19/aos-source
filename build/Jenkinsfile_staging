@@ -5,10 +5,9 @@ checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'G
 
 load "${WORKSPACE}/build/machines_ip.groovy"
 
-/*
 stage('Android Tests'){
  build job: 'demoapp_folder/demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'Android'], [$class: 'StringParameterValue', name: 'URL', value: "http://$staging_ip"]]
-}*/
+}
 
 try {
 stage('SRF Tests'){
@@ -40,22 +39,18 @@ stage('SRL Tests'){
  build job: 'demoapp_folder/demoapp_tests_stormrunner'
 }
 
-stage('Dotnet Tests'){
+
 try {
- env.dotnet_test_status="Success"
+stage('Dotnet Tests'){
+ 
+ env.dotnet_test_status = "Success"
  
  node('Windows2008R2'){
+ 
+  checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-dotnet.git'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'build']]], [$class: 'WipeWorkspace']], gitTool: 'Git version LeanFT Windows', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-dotnet.git']]])
   
   sh '''
    pwd
-   rm -rf *
-   rm -rf .[^.] .??*
-   git init
-   git remote add -f origin ssh://git@mydtbld0005.hpeswlab.net:7999/ad/adm_demo_app_dotnet.git
-   git config core.sparseCheckout true
-   echo "build" >> .git/info/sparse-checkout
-   git pull origin master
-   VERSION=`cat build/version.xml | grep "<version>" | sed -e \'s/<[^>]*>//g\'`-SNAPSHOT
    if [ ! -d "/c/LeanFTJavaRunner/dotnet_release" ];then
     echo "in 1"   
     mkdir -p /c/LeanFTJavaRunner/dotnet_release
@@ -64,17 +59,23 @@ try {
     rm -rf /c/LeanFTJavaRunner/dotnet_release/*
    fi
    cd /c/LeanFTJavaRunner/dotnet_release/
-   curl -sS -L -o dotnet.zip "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/redirect?g=com.advantage.online.store&a=dotnet&v=${VERSION}&r=adm-demo-app-snapshot&p=zip"
+   curl -sS -L -o dotnet.zip "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/redirect?g=com.advantage.online.store&a=dotnet&v=${v}&r=adm-demo-app-snapshot&p=zip"
    unzip dotnet.zip
   '''
- build job: 'demoapp_folder/demoapp_tests_leanft', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'DotNet'], [$class: 'StringParameterValue', name: 'URL', value: "http://$staging_ip"]]
+  
+  def dotnet_tests = build job: 'demoapp_folder/demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'DotNet'], [$class: 'StringParameterValue', name: 'URL', value: "http://$staging_ip"]], propagate: false
+  
+  result = dotnet_tests.result
+      if (result.equals("SUCCESS")) {
+      } else {
+         sh "exit 1" // this fails the stage
+      }
  }
- }catch (Exception err) {
-        env.dotnet_test_status="Failed"
  }
- echo "RESULT: ${env.dotnet_test_status}"
- currentBuild.result = 'SUCCESS'
-}
+ }catch (e) {
+        result = "FAIL" // make sure other exceptions are recorded as failure too
+		env.dotnet_test_status = "Failed"
+ }
 
 stage('Upload Dotnet to latest release'){
 
@@ -84,32 +85,30 @@ node('Windows2008R2'){
  
 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'e1e6e164-d262-4718-93db-69a4b24caf0b',
 usernameVariable: 'USERNAME', passwordVariable: 'NEXUS_DEPLOY_PASSWORD']]) {
- def NEXUS_DEPLOY_PASSWORD=env.NEXUS_DEPLOY_PASSWORD
+
 sh '''#!/bin/bash
-cat > nexus.sh <<EOFEOF
 #declare parameters
-VERSION=`cat build/version.xml | grep "<version>" | sed -e \'s/<[^>]*>//g\'`
 COMMIT_ID=`cat build/version.xml | grep "<commitId>" | sed -e \'s/<[^>]*>//g\'`
 NEW_COMMIT_ID=`git log --format="%H" -n 1`
 DELIVERY_NUMBER=`cat build/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
-NEW_DELIVERY_NUMBER=\\$((\\$DELIVERY_NUMBER+1))
+NEW_DELIVERY_NUMBER=$(($DELIVERY_NUMBER+1))
   
-sed -i "s/<deliveryNumber>.*/<deliveryNumber>\\$NEW_DELIVERY_NUMBER<\\/deliveryNumber>/g" "build/version.xml"
-sed -i "s/<commitId>.*/<commitId>\\$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
+sed -i "s/<deliveryNumber>.*/<deliveryNumber>$NEW_DELIVERY_NUMBER<\\/deliveryNumber>/g" "build/version.xml"
+sed -i "s/<commitId>.*/<commitId>$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
 
 cp "build/version.xml" "build/pom.xml"
 
 #***************************************************************************UPLOAD TO LATEST***************************************************************************
 
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Dotnet_Release -F v=latestVersion -F p=zip -F file=@/c/LeanFTJavaRunner/dotnet_release/dotnet.zip --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Dotnet_Release -F v=latestVersion -F p=zip -F file=@/c/LeanFTJavaRunner/dotnet_release/dotnet.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 #upload the xml file with the version
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Dotnet_Release -F c=version -F v=latestVersion -F p=pom -F file=@build/pom.xml --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Dotnet_Release -F c=version -F v=latestVersion -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
 #***************************************************************************UPLOAD TO RELEASE****************************************************************************
 
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Dotnet_Release_\\${VERSION} -F v=\\${NEW_DELIVERY_NUMBER} -F p=zip -F file=@/c/LeanFTJavaRunner/dotnet_release/dotnet.zip --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Dotnet_Release_${v} -F v=${NEW_DELIVERY_NUMBER} -F p=zip -F file=@/c/LeanFTJavaRunner/dotnet_release/dotnet.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 #upload the xml file with the version
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Dotnet_Release_\\${VERSION} -F c=version -F v=\\${NEW_DELIVERY_NUMBER} -F p=pom -F file=@build/pom.xml --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Dotnet_Release_${v} -F c=version -F v=${NEW_DELIVERY_NUMBER} -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
 [ -f "./build/pom.xml" ] && rm -rf "./build/pom.xml"
 git pull -q
@@ -117,11 +116,8 @@ git status
 git add "build/version.xml"
 git commit -m "updates version.xml" --quiet
 git push origin master
-
-EOFEOF
 '''
 
-sh "bash nexus.sh ${NEXUS_DEPLOY_PASSWORD}"
 }
 }
 }
