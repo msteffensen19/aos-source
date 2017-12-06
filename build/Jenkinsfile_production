@@ -123,8 +123,8 @@ NEW_COMMIT_ID=`git log --format="%H" -n 1`
 DELIVERY_NUMBER=`cat build/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
 NEW_DELIVERY_NUMBER=$(($DELIVERY_NUMBER+1))
   
-sed -i "s/<deliveryNumber>.*/<deliveryNumber>\\$NEW_DELIVERY_NUMBER<\\/deliveryNumber>/g" "build/version.xml"
-sed -i "s/<commitId>.*/<commitId>\\$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
+sed -i "s/<deliveryNumber>.*/<deliveryNumber>$NEW_DELIVERY_NUMBER<\\/deliveryNumber>/g" "build/version.xml"
+sed -i "s/<commitId>.*/<commitId>$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
 
 cp "build/version.xml" "build/pom.xml"
 
