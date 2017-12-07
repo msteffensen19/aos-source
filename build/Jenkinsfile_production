@@ -113,7 +113,7 @@ sh '''
 }
 
 stage('SignHP Installer'){
-  build job: 'demoapp_folder/demoapp_installer_signHp', parameters: [[$class: 'StringParameterValue', name: 'installer_version', value: "$v"], [$class: 'StringParameterValue', name: 'installer_delivery', value: "$d"]], propagate: false
+  build job: 'demoapp_folder/demoapp_installer_signHp'
 }
 
 stage('Upload Installer to latest release'){
