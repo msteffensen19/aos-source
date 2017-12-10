@@ -44,6 +44,8 @@ def d = deliveryNumber()
     echo "Building deliveryMumber ${d}"
 }
 
+currentBuild.description = "Version: ${v}, Delivery: ${d}"
+
 stage('Build'){
 
 def mvnHome = tool name: 'Maven 3.3.9_Linux', type: 'hudson.tasks.Maven$MavenInstallation'
@@ -162,18 +164,14 @@ rm -rf temp
 
 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'e1e6e164-d262-4718-93db-69a4b24caf0b',
 usernameVariable: 'USERNAME', passwordVariable: 'NEXUS_DEPLOY_PASSWORD']]) {
- def NEXUS_DEPLOY_PASSWORD=env.NEXUS_DEPLOY_PASSWORD
+
 sh '''#!/bin/bash
-cat > nexus.sh <<EOFEOF
 #declare parameters
 REPOSITORY_ID="adm-demo-app-release"
-REPOSITORY_URL="http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/\\${REPOSITORY_ID}/"
+REPOSITORY_URL="http://mydtbld0028.hpeswlab.net:8081/nexus/content/repositories/${REPOSITORY_ID}/"
 GROUP_ID=com.advantage.online.store
-VERSION=`cat build/version.xml | grep "<version>" | sed -e \'s/<[^>]*>//g\'`
-COMMIT_ID=`cat build/version.xml | grep "<commitId>" | sed -e \'s/<[^>]*>//g\'`
-ARTIFACT_ID="Advantage_Online_Shopping_Design_Release_\\$VERSION"
+ARTIFACT_ID="Advantage_Online_Shopping_Design_Release_${v}"
 ARTIFACT_ID_LATEST="Advantage_Online_Shopping_Design_Release"
-DELIVERY_NUMBER=`cat build/version.xml | grep "<deliveryNumber>" | sed -e \'s/<[^>]*>//g\'`
 DELIVERY_NUMBER_LATEST="latestVersion"
 PACKAGING=zip
 FILE_NAME="root/target/wars.zip"
@@ -182,21 +180,18 @@ VERSION_FILE_NAME="build/pom.xml"
 cp "build/version.xml" "build/pom.xml"
 #***************************************************************************UPLOAD TO RELEASE***************************************************************************
 #upload the zip with all the wars
-curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID} -F v=\\${DELIVERY_NUMBER} -F p=zip -F file=@\\${FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROUP_ID} -F a=${ARTIFACT_ID} -F v=${d} -F p=zip -F file=@${FILE_NAME} --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 #upload the xml file with the version
-curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID} -F c=version -F v=\\${DELIVERY_NUMBER} -F p=pom -F file=@\\${VERSION_FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROUP_ID} -F a=${ARTIFACT_ID} -F c=version -F v=${d} -F p=pom -F file=@${VERSION_FILE_NAME} --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
 
 #***************************************************************************UPLOAD TO LATEST****************************************************************************
 #upload the zip with all the wars
-curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID_LATEST} -F v=\\${DELIVERY_NUMBER_LATEST} -F p=zip -F file=@\\${FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROUP_ID} -F a=${ARTIFACT_ID_LATEST} -F v=${DELIVERY_NUMBER_LATEST} -F p=zip -F file=@${FILE_NAME} --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 #upload the xml file with the version
-curl -f -v -F r=\\${REPOSITORY_ID} -F hasPom="false" -F e=\\${PACKAGING} -F g=\\${GROUP_ID} -F a=\\${ARTIFACT_ID_LATEST} -F c=version -F v=\\${DELIVERY_NUMBER_LATEST} -F p=pom -F file=@\\${VERSION_FILE_NAME} --user "deployment:\\${1}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROUP_ID} -F a=${ARTIFACT_ID_LATEST} -F c=version -F v=${DELIVERY_NUMBER_LATEST} -F p=pom -F file=@${VERSION_FILE_NAME} --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
-EOFEOF
 '''
-
-sh "bash nexus.sh ${NEXUS_DEPLOY_PASSWORD}"
 }
 }
 
