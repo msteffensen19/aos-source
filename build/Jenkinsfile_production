@@ -126,12 +126,12 @@ sh '''#!/bin/bash
 #declare parameters
 NEW_COMMIT_ID=`git log --format="%H" -n 1`
   
-sed -i "s/<deliveryNumber>.*/<deliveryNumber>$deliveryNumber<\\/deliveryNumber>/g" "build/version.xml"
+sed -i "s/<deliveryNumber>.*/<deliveryNumber>$installer_delivery <\\/deliveryNumber>/g" "build/version.xml"
 sed -i "s/<commitId>.*/<commitId>$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
 
 cp "build/version.xml" "build/pom.xml"
 
-"/c/Program Files/7-Zip/7z.exe" a -tzip installer.zip /c/LeanFTJavaRunner/installer_release/InstallAOS_${v}_${deliveryNumber}.exe
+"/c/Program Files/7-Zip/7z.exe" a -tzip installer.zip /c/LeanFTJavaRunner/installer_release/InstallAOS_${v}_${installer_delivery }.exe
 
 #***************************************************************************UPLOAD TO LATEST***************************************************************************
 
@@ -141,9 +141,9 @@ curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online
 
 #***************************************************************************UPLOAD TO RELEASE****************************************************************************
 
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Installer_Release_${v} -F v=${deliveryNumber} -F p=zip -F file=@installer.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Installer_Release_${v} -F v=${installer_delivery } -F p=zip -F file=@installer.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 #upload the xml file with the version
-curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Installer_Release_${v} -F c=version -F v=${deliveryNumber} -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Installer_Release_${v} -F c=version -F v=${installer_delivery } -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
 
 [ -f "./build/pom.xml" ] && rm -rf "./build/pom.xml"
 git pull -q
