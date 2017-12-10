@@ -878,6 +878,27 @@ public class CatalogController {
     public ResponseEntity<ProductResponseDto> addImageToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
                                                                      @RequestParam("file") MultipartFile file, @PathVariable("source") String source,
                                                                      HttpServletRequest request) {
+        return addImageToProduct(request, productId, file, source, null);
+    }
+
+
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    @ApiOperation(value = "Upload a new image to a product")
+    @RequestMapping(value = "/product/image/{userId}/{source}/{color}", method = RequestMethod.POST)
+    public ResponseEntity<ProductResponseDto> addImageToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
+                                                                @RequestParam("file") MultipartFile file, @PathVariable("source") String source,
+                                                                @PathVariable("color") String color, HttpServletRequest request) {
+        return addImageToProduct(request, productId, file, source, color);
+    }
+
+
+    private ResponseEntity<ProductResponseDto> addImageToProduct(HttpServletRequest request, Long productId, MultipartFile file,
+                                                                String source, String color){
+
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
             logger.trace("cefDataId=" + cefData.toString());
@@ -914,7 +935,8 @@ public class CatalogController {
                     HttpStatus.BAD_REQUEST);
         }
         List<String> images = dto.getImages();
-        images.add(String.format("ABCDEF##%s", imageResponseStatus.getId()));
+        color = color != null ? color : "ABCDEF";
+        images.add(String.format("%s##%s", color, imageResponseStatus.getId()));
         dto.setImages(images);
 
         //dto.setImageUrl(imageResponseStatus.getId());
@@ -924,7 +946,6 @@ public class CatalogController {
         return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
                 new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
     }
-
     //  endregion
 
 }
