@@ -145,6 +145,8 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   
   checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-installer.git'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'build']]], [$class: 'WipeWorkspace']], gitTool: 'Git version LeanFT Windows', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-installer.git']]])
   
+  sh 'git checkout master'
+  
   env.aos_installer_delivery = (deliveryNumber().toInteger() + 1).toString()
   
   echo "Installer delivery ${aos_installer_delivery}"
