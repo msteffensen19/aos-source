@@ -124,7 +124,7 @@ stage('Dotnet Tests'){
    
    echo "Dotnet delivery ${aos_dotnet_delivery}"
    
-   aos_description="Dotnet version: ${aos_dotnet_version}.${aos_dotnet_delivery}"
+   env.aos_description="Dotnet version: ${aos_dotnet_version}.${aos_dotnet_delivery}"
    //currentBuild.description = "Dotnet version: ${aos_dotnet_version}.${aos_dotnet_delivery}"
    
    sh '''

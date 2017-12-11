@@ -50,19 +50,19 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   
   load "${WORKSPACE}/build/machines_ip.groovy"
 
-  def aos_version = version()
+  env.aos_version = version()
     if (aos_version) {
       echo "Building version ${aos_version}"
   }
   
-  def aos_delivery = deliveryNumber()
+  env.aos_delivery = deliveryNumber()
     if (aos_delivery) {
       echo "Building deliveryMumber ${aos_delivery}"
   }
-  }
   
-  aos_description="Version: ${aos_version}, Delivery: ${aos_delivery}"
+  env.aos_description="Version: ${aos_version}, Delivery: ${aos_delivery}"
   //currentBuild.description = "Version: ${aos_version}, Delivery: ${aos_delivery}"
+}
 }
 
 stage('Build'){
