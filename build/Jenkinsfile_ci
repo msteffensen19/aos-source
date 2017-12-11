@@ -13,6 +13,9 @@ matcher ? matcher[0][1] : null
 try{
 node('UbuntuDemoApp'){
 
+def mvnHome = tool name: 'Maven 3.3.9_Linux', type: 'hudson.tasks.Maven$MavenInstallation'
+env.PATH="${env.PATH}:${mvnHome}/bin"
+
 if (env.Resumed == "true"){
  if (!fileExists("${WORKSPACE}/build/resumed_build_params.groovy"))
    echo "cannot resume after build success."
@@ -74,9 +77,6 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 }else{
 
   env.Resumed = "false"
-
-  def mvnHome = tool name: 'Maven 3.3.9_Linux', type: 'hudson.tasks.Maven$MavenInstallation'
-  env.PATH="${env.PATH}:${mvnHome}/bin"
   
   sh "bash edit_root_pom.sh"
   
