@@ -111,7 +111,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   
   sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
   sh """
-  ssh "$aos_aos_ci_ip" \"docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}\"
+  ssh "$aos_ci_ip" \"docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}\"
   """
   
   sh '''#!/bin/bash
