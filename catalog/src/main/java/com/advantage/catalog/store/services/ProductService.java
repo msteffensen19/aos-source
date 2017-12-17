@@ -136,7 +136,7 @@ public class ProductService {
         Category category = categoryService.getCategory(dto.getCategoryId());
         if (category == null) return new ProductResponseDto(false, -1, "Could not find category");
 
-        product.setColors(getColorAttributes(dto.getColors(), product));
+        //product.setColors(getColorAttributes(dto.getColors(), product));
 
         productRepository.update(dto, id);
 

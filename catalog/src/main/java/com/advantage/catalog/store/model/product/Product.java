@@ -78,11 +78,11 @@ public class Product {
     @OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductAttributes> productAttributes = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private Set<ColorAttribute> colors = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private Set<ImageAttribute> images = new HashSet<>();
 
@@ -174,7 +174,8 @@ public class Product {
     }
 
     public void setColors(Set<ColorAttribute> colors) {
-        this.colors = colors;
+        this.colors.clear();
+        this.colors.addAll(colors);
     }
 
     public Set<ImageAttribute> getImages() {
@@ -182,7 +183,8 @@ public class Product {
     }
 
     public void setImages(Set<ImageAttribute> images) {
-        this.images = images;
+        this.images.clear();
+        this.images.addAll(images);
     }
 
     @JsonIgnore

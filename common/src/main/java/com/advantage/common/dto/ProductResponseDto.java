@@ -5,6 +5,7 @@ public class ProductResponseDto {
     long id;        //  -1 = Invalid
     String reason;
     String imageId;
+    String imageColor;
 
     public ProductResponseDto(boolean success, long id, String reason) {
         this.success = success;
@@ -39,8 +40,14 @@ public class ProductResponseDto {
     public String getImageId() {
         return imageId;
     }
+    public String getImageColor() {
+        return imageColor;
+    }
 
     public void setImageId(String imageId) {
         this.imageId = imageId;
+    }
+    public void setImageColor(String imageColor) {
+        this.imageColor = imageColor;
     }
 }

@@ -157,19 +157,6 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setCategory(category);
         product.setProductStatus(dto.getProductStatus());
 
-        //  Binyamin Regev 2016-03-23: Try to save new images without dragging the old ones too
-        //Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
-        Set<ImageAttribute> imageAttributes = new HashSet<>();
-        for (String s : dto.getImages()) {
-            ImageAttribute imageAttribute = new ImageAttribute(s);
-            imageAttribute.setProduct(product);
-            imageAttributes.add(imageAttribute);
-        }
-        product.setImages(imageAttributes);
-
-        //product.setColors(productService.getColorAttributes(dto.getColors(), product));
-        product.setColors(this.getColorAttributes(dto.getColors(), product));
-
         for (AttributeItem item : dto.getAttributes()) {
             String attrName = item.getAttributeName();
             String attrValue = item.getAttributeValue();
@@ -197,6 +184,21 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             productAttributes.setAttribute(attribute);
             product.getProductAttributes().add(productAttributes);
         }
+
+        //  Binyamin Regev 2016-03-23: Try to save new images without dragging the old ones too
+        //Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        Set<ImageAttribute> imageAttributes = new HashSet<>();
+        for (String s : dto.getImages()) {
+            ImageAttribute imageAttribute = new ImageAttribute(s);
+            imageAttribute.setProduct(product);
+            imageAttributes.add(imageAttribute);
+        }
+        product.setImages(imageAttributes);
+
+        //product.setColors(productService.getColorAttributes(dto.getColors(), product));
+        product.setColors(this.getColorAttributes(dto.getColors(), product));
+
+
 
         entityManager.persist(product);
 

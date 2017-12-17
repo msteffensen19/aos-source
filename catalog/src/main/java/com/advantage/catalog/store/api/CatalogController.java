@@ -9,6 +9,7 @@ import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.*;
+import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.common.security.AuthorizeAsAdmin;
 import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.root.util.StringHelper;
@@ -24,14 +25,19 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.lang.System.in;
 
 /**
  * @author Binyamin Regev on 23/05/2016
@@ -878,7 +884,7 @@ public class CatalogController {
     public ResponseEntity<ProductResponseDto> addImageToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
                                                                      @RequestParam("file") MultipartFile file, @PathVariable("source") String source,
                                                                      HttpServletRequest request) {
-        return addImageToProduct(request, productId, file, source, null);
+        return addImageToProduct(request, productId, file, source, null, null);
     }
 
 
@@ -892,12 +898,74 @@ public class CatalogController {
     public ResponseEntity<ProductResponseDto> addImageToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
                                                                 @RequestParam("file") MultipartFile file, @PathVariable("source") String source,
                                                                 @PathVariable("color") String color, HttpServletRequest request) {
-        return addImageToProduct(request, productId, file, source, color);
+        return addImageToProduct(request, productId, file, source, color, null);
+    }
+
+    @AuthorizeAsUser
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = false, dataType = "string", paramType = "header", value = "JSON Web Token", defaultValue = "Bearer ")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 401, message = "Authorization token required", response = com.advantage.common.dto.ErrorResponseDto.class),
+            @ApiResponse(code = 403, message = "Wrong authorization token", response = com.advantage.common.dto.ErrorResponseDto.class)})
+    @ApiOperation(value = "Upload a new image to a product")
+    @RequestMapping(value = "/product/images/{userId}/{source}", method = RequestMethod.POST)
+    public ResponseEntity<ProductUploadImagesResponseDto> addMultipleImagesToProduct(@PathVariable("userId") Long userId, @RequestParam("product_id") Long productId,
+                                                                                     @RequestParam("new_colors_quantity") String newColorsQuantity,
+                                                                @RequestParam("file") List<MultipartFile> files, @PathVariable("source") String source,
+                                                                         HttpServletRequest request) {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        Set set = multipartRequest.getFileMap().entrySet();
+        Iterator i = set.iterator();
+        ResponseEntity<ProductResponseDto> response = null;
+        List<ProductResponseDto> productResponseDtos = new LinkedList<>();
+        ResponseEntity<ProductUploadImagesResponseDto> productUploadImagesResponseDtoRes = null;
+        Product product = productService.getProductById(productId);
+        ProductDto dto = productService.getDtoByEntity(product);
+        if(!newColorsQuantity.isEmpty()){
+
+            List<String> colors = Arrays.asList(newColorsQuantity.split("##"));
+            List<ColorAttributeDto> newColors = new LinkedList<>();
+            ColorAttributeDto color = null;
+            String colorCode = "";
+            int colorQuantity = 0;
+            for(String colorAndQuantity : colors){
+                colorCode = colorAndQuantity.split("_")[0];
+                colorQuantity = Integer.parseInt(colorAndQuantity.split("_")[1]);
+                String finalColorCode = colorCode;
+                color = dto.getColors().stream()
+                        .filter(d -> d.getCode().equals(finalColorCode))
+                        .findAny()
+                        .orElse(null);
+                if(color != null){
+                    //newColors.add(color);
+                }
+                else{
+                    newColors.add(new ColorAttributeDto(colorCode, ColorPalletEnum.getColorByCode(colorCode).toString(), colorQuantity));
+                }
+            }
+            dto.getColors().addAll(newColors);
+            //productService.updateProduct(dto, productId);
+        }
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            String color = (String)me.getKey();
+            MultipartFile multipartFile = (MultipartFile)me.getValue();
+            logger.info("Original fileName - " + multipartFile.getOriginalFilename());
+            logger.info("selected color - " + color);
+            response = addImageToProduct(request, productId, multipartFile, source, color, dto);
+            productResponseDtos.add(response.getBody());
+            if(!response.getStatusCode().equals(HttpStatus.OK)) {
+                productUploadImagesResponseDtoRes = new ResponseEntity<ProductUploadImagesResponseDto>(response.getStatusCode());
+                productUploadImagesResponseDtoRes.getBody().setImageId(productResponseDtos);
+                return productUploadImagesResponseDtoRes;
+            }
+        }
+
+        return new ResponseEntity<>(new ProductUploadImagesResponseDto(productResponseDtos), HttpStatus.OK);
     }
 
 
     private ResponseEntity<ProductResponseDto> addImageToProduct(HttpServletRequest request, Long productId, MultipartFile file,
-                                                                String source, String color){
+                                                                String source, String color, ProductDto pDto){
 
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
@@ -918,7 +986,7 @@ public class CatalogController {
 //            new ResponseEntity<>(new ProductResponseDto(false, -1, "json not valid"), HttpStatus.BAD_REQUEST);
 //        }
         Product product = productService.getProductById(productId);
-        dto = productService.getDtoByEntity(product);
+        dto = pDto != null ? pDto :productService.getDtoByEntity(product);
 
 
         if (dto == null) {
@@ -938,10 +1006,12 @@ public class CatalogController {
         color = color != null ? color : "ABCDEF";
         images.add(String.format("%s##%s", color, imageResponseStatus.getId()));
         dto.setImages(images);
-
+        ColorPalletEnum.getColorByCode(color);
+        //productService.getColorAttributeByProductIdAndColorCode(productId, color);
         //dto.setImageUrl(imageResponseStatus.getId());
         ProductResponseDto responseStatus = productService.updateProduct(dto, productId);
         responseStatus.setImageId(imageResponseStatus.getId());
+        responseStatus.setImageColor(color);
 
         return responseStatus.isSuccess() ? new ResponseEntity<>(responseStatus, HttpStatus.OK) :
                 new ResponseEntity<>(responseStatus, HttpStatus.BAD_REQUEST);
