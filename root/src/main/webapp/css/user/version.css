@@ -67,6 +67,7 @@ div.devices{
 div.devices_pic{
     display: table-cell;
     vertical-align: middle;
+    width: 30%;
 }
 
 div.section_line{
@@ -78,7 +79,7 @@ div.section_line{
 }
 
 div.section_line_padding{
-    padding-bottom: 54px;
+    padding-bottom: 56px;
 
 }
 
