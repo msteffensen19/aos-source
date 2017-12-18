@@ -224,7 +224,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   #upload the xml file with the version
   curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Installer_Release_${aos_version} -F c=version -F v=${aos_installer_delivery} -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
   
-  sed -i "s/<deliveryNumber>.*/<deliveryNumber>$aos_installer_new_delivery <\\/deliveryNumber>/g" "build/version.xml"
+  sed -i "s/<deliveryNumber>.*/<deliveryNumber>$aos_installer_new_delivery<\\/deliveryNumber>/g" "build/version.xml"
   
   [ -f "./build/pom.xml" ] && rm -rf "./build/pom.xml"
   git pull -q
