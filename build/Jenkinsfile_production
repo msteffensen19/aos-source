@@ -15,10 +15,10 @@ try{
 node('UbuntuDemoApp'){
 
 if (env.Resumed == "true"){
- if (!fileExists("${WORKSPACE}/build/resumed_build_params.groovy"))
+ if (!fileExists("${WORKSPACE}/resumed_build_params.groovy"))
    echo "cannot resume after build success."
  else 
-   load "${WORKSPACE}/build/resumed_build_params.groovy"
+   load "${WORKSPACE}/resumed_build_params.groovy"
 }
 
 stage('Checkout'){
@@ -143,11 +143,12 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 
   node('Windows2008R2'){
   
-  checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-installer.git'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'build']]], [$class: 'WipeWorkspace']], gitTool: 'Git version LeanFT Windows', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-installer.git']]])
+  checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-installer.git'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], gitTool: 'Git version LeanFT Windows', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-installer.git']]])
   
   sh 'git checkout master'
   
-  env.aos_installer_delivery = (deliveryNumber().toInteger() + 1).toString()
+  env.aos_installer_delivery = deliveryNumber()
+  env.aos_installer_new_delivery = (aos_installer_delivery.toInteger() + 1).toString()
   
   echo "Installer delivery ${aos_installer_delivery}"
   
@@ -205,12 +206,11 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   #declare parameters
   NEW_COMMIT_ID=`git log --format="%H" -n 1`
     
-  sed -i "s/<deliveryNumber>.*/<deliveryNumber>$aos_installer_delivery <\\/deliveryNumber>/g" "build/version.xml"
   sed -i "s/<commitId>.*/<commitId>$NEW_COMMIT_ID<\\/commitId>/g" "build/version.xml"
   
   cp "build/version.xml" "build/pom.xml"
   
-  "/c/Program Files/7-Zip/7z.exe" a -tzip installer.zip /c/LeanFTJavaRunner/installer_release/InstallAOS_${aos_version}_${aos_installer_delivery}.exe
+  "/c/Program Files/7-Zip/7z.exe" a -tzip installer.zip /c/LeanFTJavaRunner/installer_release/InstallAOS_${aos_version}_${aos_installer_delivery}.exe || exit 1
   
   #***************************************************************************UPLOAD TO LATEST***************************************************************************
   
@@ -223,6 +223,8 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F e=zip -F g=com.advantage.online.store -F a=Installer_Release_${aos_version} -F v=${aos_installer_delivery} -F p=zip -F file=@installer.zip --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
   #upload the xml file with the version
   curl -f -v -F r=adm-demo-app-release -F hasPom="false" -F g=com.advantage.online.store -F a=Installer_Release_${aos_version} -F c=version -F v=${aos_installer_delivery} -F p=pom -F file=@build/pom.xml --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
+  
+  sed -i "s/<deliveryNumber>.*/<deliveryNumber>$aos_installer_new_delivery <\\/deliveryNumber>/g" "build/version.xml"
   
   [ -f "./build/pom.xml" ] && rm -rf "./build/pom.xml"
   git pull -q
@@ -255,11 +257,11 @@ mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
 	
 	dir(""){
 
-	echo sh(returnStdout: true, script: 'env | grep "aos_" >${WORKSPACE}/build/resumed_build_params.groovy')
+	echo sh(returnStdout: true, script: 'env | grep "aos_" >${WORKSPACE}/resumed_build_params.groovy')
 	
-	sh 'sed -i \'s/^/env./g\' ${WORKSPACE}/build/resumed_build_params.groovy'
-    sh 'sed -i \'s/$/"/g\' ${WORKSPACE}/build/resumed_build_params.groovy'
-    sh 'sed -i \'s/=/="/g\' ${WORKSPACE}/build/resumed_build_params.groovy'
+	sh 'sed -i \'s/^/env./g\' ${WORKSPACE}/resumed_build_params.groovy'
+    sh 'sed -i \'s/$/"/g\' ${WORKSPACE}/resumed_build_params.groovy'
+    sh 'sed -i \'s/=/="/g\' ${WORKSPACE}/resumed_build_params.groovy'
 	
     if (env.aos_stageName == "Production_Tests"){
 	 stage('Redeploy last successful production images'){
