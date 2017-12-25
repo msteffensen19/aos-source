@@ -217,6 +217,7 @@ define([], function () {
 
                                 var category = res[0];
                                 var haveInternet = res[1];
+                                product.colors = product.colors.filter(function(col){return col.inStock > 0});
 
                                     var paramsToReturn = {
                                         selectedColor: $stateParams.color,

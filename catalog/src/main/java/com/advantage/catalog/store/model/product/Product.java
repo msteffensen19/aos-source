@@ -157,6 +157,7 @@ public class Product {
     }
 
     public void setManagedImageId(String managedImageId) {
+
         this.managedImageId = managedImageId;
     }
 
@@ -166,9 +167,7 @@ public class Product {
         Set<ColorAttribute> colorsWithoutEmpty = new HashSet<>();
         for (Iterator<ColorAttribute> it = colors.iterator(); it.hasNext(); ) {
             ColorAttribute color = it.next();
-            if (color.getInStock() > 0) {
-                colorsWithoutEmpty.add(color);
-            }
+            colorsWithoutEmpty.add(color);
         }
         return colorsWithoutEmpty;
     }

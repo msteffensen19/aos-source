@@ -57,6 +57,11 @@ define(['./module'], function (services) {
                             res[index1].products[index2].price *= duplicateProductPrice;
                         }
                     }
+                    res.forEach(function(cat){
+                        cat.products.forEach(function(d){
+                            d.colors = d.colors.filter(function(col){return col.inStock > 0});
+                        });
+                    });
                     allData = res;
                     response.resolve(allData);
                 }).error(function (err) {
@@ -215,6 +220,10 @@ define(['./module'], function (services) {
                             for (var index = 0; index < res.products.length; index++) {
                                 res.products[index].price *= duplicateProductPrice;
                             }
+                            res.products.forEach(function(d){
+                                d.colors = d.colors.filter(function(col){return col.inStock > 0});
+                            });
+
                             defer.resolve(res)
                         }).error(function (err) {
                             Helper.disableLoader();
