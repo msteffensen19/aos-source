@@ -153,6 +153,10 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         product.setProductName(dto.getProductName());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
+
+        String imageUrl = dto.getImageUrl();
+
+
         product.setManagedImageId(dto.getImageUrl());
         product.setCategory(category);
         product.setProductStatus(dto.getProductStatus());
@@ -187,11 +191,20 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         //  Binyamin Regev 2016-03-23: Try to save new images without dragging the old ones too
         //Set<ImageAttribute> imageAttributes = new HashSet<>(product.getImages());
+        boolean found = false;
         Set<ImageAttribute> imageAttributes = new HashSet<>();
         for (String s : dto.getImages()) {
             ImageAttribute imageAttribute = new ImageAttribute(s);
             imageAttribute.setProduct(product);
             imageAttributes.add(imageAttribute);
+            if(s.contains(imageUrl))
+                found = true;
+        }
+        if(!found){
+            if(dto.getImages().isEmpty())
+                product.setManagedImageId(Constants.NO_IMAGE_AVAILABLE_ID);
+            else
+                product.setManagedImageId(dto.getImages().get(0).split("##")[1]);
         }
         product.setImages(imageAttributes);
 

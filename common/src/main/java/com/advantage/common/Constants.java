@@ -69,6 +69,7 @@ public class Constants {
     public final static String USER_LOGIN_PASSWORD = "adm1n";
 
     public final static String MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR = "Expiration date has passed. Try another card.";
+    public final static String NO_IMAGE_AVAILABLE_ID = "no_image_available";
 
     public static class UserSession {
         public static final String TOKEN = "token";
