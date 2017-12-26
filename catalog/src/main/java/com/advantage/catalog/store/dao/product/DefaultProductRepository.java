@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.dao.product;
 
 import com.advantage.catalog.store.dao.AbstractRepository;
+import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
@@ -203,8 +204,12 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         if(!found){
             if(dto.getImages().isEmpty())
                 product.setManagedImageId(Constants.NO_IMAGE_AVAILABLE_ID);
-            else
-                product.setManagedImageId(dto.getImages().get(0).split("##")[1]);
+            else{
+                String managedImage = dto.getImages().get(0).split("##")[1];
+                managedImage = managedImage.contains("jpg") ? managedImage.split(".jpg")[0] : managedImage;
+                product.setManagedImageId(managedImage);
+            }
+
         }
         product.setImages(imageAttributes);
 
