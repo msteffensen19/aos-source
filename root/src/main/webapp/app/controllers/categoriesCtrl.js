@@ -114,7 +114,7 @@ define(['./module'], function (controllers) {
                         _____continueShopping = $timeout(function () {
                             s.supportSuccess = false;
                             s.registerAnswer = {class: "", message: ""}
-                        }, 10000)
+                        }, 60000)
                     }
 
                 }, function (err) {
