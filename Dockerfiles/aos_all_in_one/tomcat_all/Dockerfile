@@ -1,4 +1,4 @@
-FROM tomcat:8.0-jre8
+FROM tomcat:9.0.2-jre8
 MAINTAINER Michal Edery
 
 ENV http_proxy="http://proxy.il.hpecorp.net:8080"
