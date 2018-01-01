@@ -114,7 +114,8 @@ public class AccountService implements Injectable {
     private List<AccountDto> fillAccountsDto(List<Account> accounts) {
         List<AccountDto> dtos = new ArrayList<>();
         for (Account account : accounts) {
-            dtos.add(new AccountDto(account.getId(),
+            if (account.getAccountType() != 40)
+                dtos.add(new AccountDto(account.getId(),
                     account.getLastName(),
                     account.getFirstName(),
                     account.getLoginName(),

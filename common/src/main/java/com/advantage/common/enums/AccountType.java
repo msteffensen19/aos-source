@@ -7,7 +7,8 @@ public enum AccountType {
 
     ADMIN(10),
     USER(20),
-    GUEST(30);
+    GUEST(30),
+    SUPERUSER(40);
 
     private Integer accountTypeCode;
 
