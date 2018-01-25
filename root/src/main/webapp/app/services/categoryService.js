@@ -26,14 +26,15 @@ define(['./module'], function (services) {
             function haveInternet() {
 
                 var response = $q.defer();
-                $http({
-                    method: "get",
-                    url: server.getKey() + "catalog/api/v1/catalog/LastUpdate/timestamp"
-                }).success(function () {
-                    response.resolve(true);
-                }).error(function () {
-                    response.resolve(false);
-                });
+                // $http({
+                //     method: "get",
+                //     url: server.getKey() + "catalog/api/v1/catalog/LastUpdate/timestamp"
+                // }).success(function () {
+                //     response.resolve(true);
+                // }).error(function () {
+                //     response.resolve(false);
+                // });
+                response.resolve(true);
                 return response.promise;
             }
 
