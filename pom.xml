@@ -16,6 +16,7 @@
         <!--<url>http://mydtbld0005.isr.hp.com:7990/projects/AD/repos/adm-demo-app/browse</url>-->
         <url>http://mydtbld0005.hpeswlab.net:7990/projects/AD/repos/adm-demo-app/browse</url>
     </scm>
+
     <modules>
         <!-- Module shared_resources MUST!! be on the beginning-->
         <module>shared_resources</module>
