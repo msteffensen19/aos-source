@@ -156,13 +156,13 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   
   cd ./Dockerfiles/aos_all_in_one/tomcat_all
   
-  if [ $aos_build_both_wars || $aos_build_main_wars ];then
+  if $aos_build_both_wars || $aos_build_main_wars ;then
     all_wars_path=./root/target/wars.zip
 	cp ${all_wars_path} ./Dockerfiles/aos_all_in_one/tomcat_all
     docker build -t advantageonlineshopping/aos-main-app-dev .
 	docker push advantageonlineshopping/aos-main-app-dev:latest
   fi
-  if [ $aos_build_both_wars || $aos_build_accountservice_war ];then
+  if $aos_build_both_wars || $aos_build_accountservice_war ;then
     accountservice_war_path=./accountservice/target/accountservice.war
 	cp ${accountservice_war_path} ./Dockerfiles/aos_all_in_one/tomcat_account
     cd ../tomcat_account
@@ -172,7 +172,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   
   cd ../../../
   
-  if [ $aos_copy_Nimbus_files || $aos_copy_configuration_files ];then
+  if $aos_copy_Nimbus_files || $aos_force_copy_configuration_files ;then
     #replace the postgres password to admin
     sed -i 's/password/admin/g' "./Nimbus_aos/aos_all_in_one/.env_private"
     sed -i 's/8080/80/g' "./Nimbus_aos/aos_all_in_one/.env"
@@ -200,10 +200,12 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
     ssh "$aos_ci_ip" \"chmod +x /root/startup.sh && sed -i '/image/ s/$/-dev/' /root/docker-compose.yml\"
   fi
   
-  # docker compose pull the latest images, so if there is a newer image the service of that image will be stopped and recreated
-  ssh "$aos_ci_ip" \"cd /root && docker-compose down -v\"
-  #edit the docker-compose to take images of dev
-  ssh "$aos_ci_ip" \"/root/startup.sh\"
+  if $aos_build_both_wars || $aos_build_accountservice_war || $aos_build_main_wars || $aos_force_build_wars ;then
+    # docker compose pull the latest images, so if there is a newer image the service of that image will be stopped and recreated
+    ssh "$aos_ci_ip" \"cd /root && docker-compose down -v\"
+    #edit the docker-compose to take images of dev
+    ssh "$aos_ci_ip" \"/root/startup.sh\"
+  fi
   '''
   }
   }
@@ -289,24 +291,27 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 }else{
 
   env.Resumed = "false"
-
-  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
-  usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
   
-  sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
-  
-  sh '''
-  export http_proxy="http://proxy.il.hpecorp.net:8080"
-  export https_proxy="http://proxy.il.hpecorp.net:8080"
-  IMAGEID_6_wars=`docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep latest | awk -F" " '{ print $3 }'`
-  IMAGEID_accountservice_war=`docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep latest | awk -F" " '{ print $3 }'`
-  
-  docker tag ${IMAGEID_6_wars} advantageonlineshopping/aos-main-app-dev:ready_for_staging
-  docker tag ${IMAGEID_accountservice_war} advantageonlineshopping/aos-accountservice-dev:ready_for_staging
-  
-  docker push advantageonlineshopping/aos-main-app-dev:ready_for_staging
-  docker push advantageonlineshopping/aos-accountservice-dev:ready_for_staging
-  '''
+  if (env.aos_build_both_wars == "true" || env.aos_build_accountservice_war == "true" || env.aos_build_main_wars == "true" || env.aos_force_build_wars == "true"){
+    
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
+    usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
+    
+    sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
+    
+    sh '''
+    export http_proxy="http://proxy.il.hpecorp.net:8080"
+    export https_proxy="http://proxy.il.hpecorp.net:8080"
+    IMAGEID_6_wars=`docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep latest | awk -F" " '{ print $3 }'`
+    IMAGEID_accountservice_war=`docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep latest | awk -F" " '{ print $3 }'`
+    
+    docker tag ${IMAGEID_6_wars} advantageonlineshopping/aos-main-app-dev:ready_for_staging
+    docker tag ${IMAGEID_accountservice_war} advantageonlineshopping/aos-accountservice-dev:ready_for_staging
+    
+    docker push advantageonlineshopping/aos-main-app-dev:ready_for_staging
+    docker push advantageonlineshopping/aos-accountservice-dev:ready_for_staging
+    '''
+  }
   }
   }
 }
@@ -344,37 +349,41 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 }else{
 
   env.Resumed = "false"
+    
+    if (env.aos_copy_Nimbus_files == "true" || env.aos_force_copy_configuration_files == "true"){
 
-  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
-  usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
-  
-  sh '''
-   #copy the docker-compose to staging machine
-   scp "./Nimbus_aos/aos_all_in_one/staging/docker-compose.yml" root@$aos_staging_ip:/root
-   scp "./Nimbus_aos/aos_all_in_one/staging/startup.sh" root@$aos_staging_ip:/root
-   scp "./Nimbus_aos/aos_all_in_one/staging/.env" root@$aos_staging_ip:/root
-   scp "./Nimbus_aos/aos_all_in_one/staging/.env_private" root@$aos_staging_ip:/root
-  
-   docker pull advantageonlineshopping/aos-main-app-dev:staging
-   docker pull advantageonlineshopping/aos-accountservice-dev:staging
-   if [ "$(docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep "ready_for_staging" | awk '{print $3}')" != "$(docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep -w "staging" | awk '{print $3}')" ] || [ "$(docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep "ready_for_staging" | awk '{print $3}')" != "$(docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep -w "staging" | awk '{print $3}')" ]; then
-    echo "yes" >update_staging.txt
-   else
-    echo "no" >update_staging.txt
-   fi
-  '''
-  
-  def update_staging = readFile "update_staging.txt";
-  update_staging = update_staging.trim();
-  println update_staging
-  
-  sh """
-    if [ "$update_staging" = "yes" ];then
-     ssh "$aos_staging_ip" \'docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD} && cd /root && docker-compose down -v && docker-compose pull && chmod +x startup.sh && ./startup.sh\'
-    fi
-  """
-  
-  }
+      sh '''
+      #copy the docker-compose to staging machine
+      scp "./Nimbus_aos/aos_all_in_one/staging/docker-compose.yml" root@$aos_staging_ip:/root
+      scp "./Nimbus_aos/aos_all_in_one/staging/startup.sh" root@$aos_staging_ip:/root
+      scp "./Nimbus_aos/aos_all_in_one/staging/.env" root@$aos_staging_ip:/root
+      scp "./Nimbus_aos/aos_all_in_one/staging/.env_private" root@$aos_staging_ip:/root
+	  '''
+	}
+	 
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
+    usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
+	 
+    sh '''
+     docker pull advantageonlineshopping/aos-main-app-dev:staging
+     docker pull advantageonlineshopping/aos-accountservice-dev:staging
+     if [ "$(docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep "ready_for_staging" | awk '{print $3}')" != "$(docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep -w "staging" | awk '{print $3}')" ] || [ "$(docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep "ready_for_staging" | awk '{print $3}')" != "$(docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep -w "staging" | awk '{print $3}')" ]; then
+      echo "yes" >update_staging.txt
+     else
+      echo "no" >update_staging.txt
+     fi
+    '''
+    
+    def update_staging = readFile "update_staging.txt";
+    update_staging = update_staging.trim();
+    println update_staging
+    
+    sh """
+      if [ "$update_staging" = "yes" ];then
+       ssh "$aos_staging_ip" \'docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD} && cd /root && docker-compose down -v && docker-compose pull && chmod +x startup.sh && ./startup.sh\'
+      fi
+    """
+    }
   }
 }
 
