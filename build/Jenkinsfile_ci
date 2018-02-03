@@ -235,6 +235,8 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 
   env.Resumed = "false"
 
+  if (env.aos_build_both_wars == "true" || env.aos_build_accountservice_war == "true" || env.aos_build_main_wars == "true" || env.aos_force_build_wars == "true"){
+  
   sh """
   #create a new wars.zip including all the wars to upload to nexus
   cd root/target
@@ -278,6 +280,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   curl -f -v -F r=${REPOSITORY_ID} -F hasPom="false" -F e=${PACKAGING} -F g=${GROUP_ID} -F a=${ARTIFACT_ID_LATEST} -F c=version -F v=${DELIVERY_NUMBER_LATEST} -F p=pom -F file=@${VERSION_FILE_NAME} --user "deployment:${NEXUS_DEPLOY_PASSWORD}" "http://mydtbld0183.hpeswlab.net:8081/nexus/service/local/artifact/maven/content"
   
   '''
+  }
   }
   }
 }
