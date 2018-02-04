@@ -101,8 +101,8 @@ define(['./module'], function (directives) {
 
                         s.month = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
                         if(!(s.card && s.card.expirationDate && s.card.expirationDate.year)){
-                            s.card.expirationDate.month = (now.getMonth() < 10 ? "0" : "") +  now.getMonth();
-                            s.card.expirationDate.year = now.getFullYear() + "";
+                            s.card.expirationDate.month = "12"//BUG 166001
+                            s.card.expirationDate.year = "2027"//BUG 166001
                             s.calculateMonths(s.card.expirationDate.year)
                         }
 

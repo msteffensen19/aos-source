@@ -77,7 +77,10 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         //validate productStatus
         if(!ProductStatusEnum.contains(productStatus)) return null;
         Product product = new Product(name, description, price, category,productStatus);
-        product.setManagedImageId(imgUrl);
+        if(imgUrl.isEmpty())
+            product.setManagedImageId(Constants.NO_IMAGE_AVAILABLE_ID);
+        else
+            product.setManagedImageId(imgUrl);
         entityManager.persist(product);
 
         return product;

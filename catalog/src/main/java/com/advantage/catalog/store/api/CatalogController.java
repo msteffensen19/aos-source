@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.advantage.common.Constants.NO_IMAGE_AVAILABLE_ID;
 import static java.lang.System.in;
 
 /**
@@ -1009,6 +1010,10 @@ public class CatalogController {
         ColorPalletEnum.getColorByCode(color);
         //productService.getColorAttributeByProductIdAndColorCode(productId, color);
         //dto.setImageUrl(imageResponseStatus.getId());
+        if(dto.getImageUrl().equals(NO_IMAGE_AVAILABLE_ID)){
+            dto.setImageUrl(imageResponseStatus.getId());
+            dto.setImages(dto.getImages().stream().filter(d -> !NO_IMAGE_AVAILABLE_ID.equals(d)).collect(Collectors.toList()));
+        }
         ProductResponseDto responseStatus = productService.updateProduct(dto, productId);
         responseStatus.setImageId(imageResponseStatus.getId());
         responseStatus.setImageColor(color);

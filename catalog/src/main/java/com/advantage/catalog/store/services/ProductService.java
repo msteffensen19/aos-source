@@ -115,7 +115,7 @@ public class ProductService {
             product.getProductAttributes().add(productAttributes);
         }
 
-        if (dto.getImages().size() == 0) {
+        if (dto.getImages().size() == 0 && !product.getManagedImageId().isEmpty()) {
             dto.getImages().add(product.getManagedImageId());
         }
 
