@@ -1,6 +1,6 @@
 node ('UbuntuDemoApp'){
     stage "Create build output"
-
+    echo "cannot resume after build success."
     // Make the output directory.
     sh "mkdir -p output"
 
