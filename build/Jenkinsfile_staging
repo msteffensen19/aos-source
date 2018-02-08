@@ -91,7 +91,7 @@ stage('SRL Tests'){
 
 env.aos_stageName="SRL_Tests"
 
-if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) env.run_srl_tests == "false"){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_srl_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
