@@ -215,7 +215,7 @@ stage('CI Tests'){
 
 env.aos_stageName="CI_Tests"
 
-if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_CI_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
