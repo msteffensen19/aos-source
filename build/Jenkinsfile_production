@@ -82,7 +82,7 @@ stage('Production Tests'){
 
 env.aos_stageName="Production_Tests"
 
-if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_production_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
