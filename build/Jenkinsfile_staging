@@ -271,7 +271,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 
 currentBuild.description = "${aos_description}"
 
-mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
+mail (to: 'adm_demo_alerts@hpe.com',
 	subject: "Success: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
 	body: "Review the information at: ${env.JOB_URL}",
 	mimeType: 'text/html');
