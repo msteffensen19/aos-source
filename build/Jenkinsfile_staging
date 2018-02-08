@@ -30,8 +30,7 @@ if (env.Resumed == "true"){
 stage('Android Tests'){
 
 env.aos_stageName="Android_Tests"
-
-if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_android_test == "false"){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_android_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
