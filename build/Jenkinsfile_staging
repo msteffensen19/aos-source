@@ -46,7 +46,7 @@ stage('SRF Tests'){
 
 env.aos_stageName="SRF_Tests"
 
-if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_srf_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
@@ -69,7 +69,7 @@ stage('LeanFT Tests'){
 
 env.aos_stageName="LeanFT_Tests"
 
-if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_leanFT_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
@@ -91,7 +91,7 @@ stage('SRL Tests'){
 
 env.aos_stageName="SRL_Tests"
 
-if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) env.run_srl_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
@@ -106,7 +106,7 @@ stage('Dotnet Tests'){
  
  env.aos_stageName="Dotnet_Tests"
  
- if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+ if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_NET_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
