@@ -4,7 +4,7 @@
 
 var english = {
     "dvantage": "dvantage",
-    "DEMO": "DEMO",
+    "DEMO": "LIVE",
     'PRODUCT': 'PRODUCT',
     'OUR_PRODUCTS': 'OUR PRODUCTS',
     'HOT_PRODUCTS': 'Hot Products',

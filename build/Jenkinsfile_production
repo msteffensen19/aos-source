@@ -82,7 +82,7 @@ stage('Production Tests'){
 
 env.aos_stageName="Production_Tests"
 
-if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_production_tests == "false"){
  currentBuild.result = 'SUCCESS'
 }else{
 
@@ -274,7 +274,7 @@ mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
 	 }
 	}	
     currentBuild.result = 'FAILURE'
-	mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
+	mail (to: 'adm_demo_alerts@hpe.com',
 		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${aos_version}, Delivery number ${aos_delivery}",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');
