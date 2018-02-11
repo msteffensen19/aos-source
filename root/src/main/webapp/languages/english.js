@@ -4,7 +4,7 @@
 
 var english = {
     "dvantage": "dvantage",
-    "DEMO": "DEMO",
+    "DEMO": "Live",
     'PRODUCT': 'PRODUCT',
     'OUR_PRODUCTS': 'OUR PRODUCTS',
     'HOT_PRODUCTS': 'Hot Products',
@@ -14,7 +14,7 @@ var english = {
     'Login': 'Login',
     'LOGIN': 'LOGIN',
     'LOGOUT': 'This is a paragraph.',
-    'SPACIAL_OFFER': 'SPECIAL OFFER dont miss it!',
+    'SPACIAL_OFFER': 'SPECIAL OFFER',
     'POPULAR_ITEMS': 'POPULAR ITEMS',
     'FOLLOW_US': 'FOLLOW US',
     'LEGALS_FOOTER': '© Advantage Inc, 2017.',
