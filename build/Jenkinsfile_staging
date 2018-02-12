@@ -305,7 +305,7 @@ mail (to: 'adm_demo_alerts@hpe.com',
     sh 'sed -i \'s/$/"/g\' ${WORKSPACE}/resumed_build_params.groovy'
     sh 'sed -i \'s/=/="/g\' ${WORKSPACE}/resumed_build_params.groovy'
 	
-	mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
+	mail (to: 'adm_demo_alerts@hpe.com,
 		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');
