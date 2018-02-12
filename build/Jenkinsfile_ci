@@ -154,18 +154,17 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   export http_proxy="http://proxy.il.hpecorp.net:8080"
   export https_proxy="http://proxy.il.hpecorp.net:8080"
   
-  cd ./Dockerfiles/aos_all_in_one/tomcat_all
-  
-  if $aos_build_both_wars || $aos_build_main_wars ;then
+  if $aos_build_both_wars || $aos_build_main_wars || $aos_force_build_wars;then
     all_wars_path=./root/target/wars.zip
 	cp ${all_wars_path} ./Dockerfiles/aos_all_in_one/tomcat_all
+	cd ./Dockerfiles/aos_all_in_one/tomcat_all
     docker build -t advantageonlineshopping/aos-main-app-dev .
 	docker push advantageonlineshopping/aos-main-app-dev:latest
   fi
-  if $aos_build_both_wars || $aos_build_accountservice_war ;then
-    accountservice_war_path=./accountservice/target/accountservice.war
-	cp ${accountservice_war_path} ./Dockerfiles/aos_all_in_one/tomcat_account
-    cd ../tomcat_account
+  if $aos_build_both_wars || $aos_build_accountservice_war || $aos_force_build_wars;then
+    accountservice_war_path=$WORKSPACE/accountservice/target/accountservice.war
+	cp ${accountservice_war_path} $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_account
+    cd $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_account
     docker build -t advantageonlineshopping/aos-accountservice-dev .
 	docker push advantageonlineshopping/aos-accountservice-dev:latest
   fi
