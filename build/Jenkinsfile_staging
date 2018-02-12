@@ -40,6 +40,18 @@ if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || 
 }
 }
 
+stage('iOS Tests'){
+
+env.aos_stageName="iOS_Tests"
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_iOS_tests == "false"){
+ currentBuild.result = 'SUCCESS'
+}else{
+  env.Resumed = "false"
+
+  build job: 'demoapp_folder/demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'Ios'], [$class: 'StringParameterValue', name: 'URL', value: "http://$aos_staging_ip"]]
+}
+}
+
 
 try {
 stage('SRF Tests'){
