@@ -5,7 +5,7 @@
 
 var english = {
     "dvantage": "dvantage",
-    "DEMO": "LIVE",
+    "DEMO": "Demo",
     'PRODUCT': 'PRODUCT',
     'OUR_PRODUCTS': 'OUR PRODUCTS',
     'HOT_PRODUCTS': 'Hot Products',

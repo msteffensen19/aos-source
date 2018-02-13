@@ -40,6 +40,18 @@ if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || 
 }
 }
 
+stage('iOS Tests'){
+
+env.aos_stageName="iOS_Tests"
+if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || env.run_iOS_tests == "false"){
+ currentBuild.result = 'SUCCESS'
+}else{
+  env.Resumed = "false"
+
+  build job: 'demoapp_folder/demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'job_type', value: 'Ios'], [$class: 'StringParameterValue', name: 'URL', value: "http://$aos_staging_ip"]]
+}
+}
+
 
 try {
 stage('SRF Tests'){
@@ -293,7 +305,7 @@ mail (to: 'adm_demo_alerts@hpe.com',
     sh 'sed -i \'s/$/"/g\' ${WORKSPACE}/resumed_build_params.groovy'
     sh 'sed -i \'s/=/="/g\' ${WORKSPACE}/resumed_build_params.groovy'
 	
-	mail (to: 'adm_demo_alerts@hpe.com, avi.genshaft@hpe.com',
+	mail (to: 'adm_demo_alerts@hpe.com',
 		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');
