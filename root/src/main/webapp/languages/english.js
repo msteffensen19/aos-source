@@ -1,6 +1,7 @@
 /**
  * Created by correnti on 28/12/2015.
  */
+ 
 
 var english = {
     "dvantage": "dvantage",
