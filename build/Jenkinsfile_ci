@@ -45,18 +45,25 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 
   println(commits)
     
-  commits.eachLine { line ->
-    if (line.equals("catalog") || line.equals("mastercredit") || line.equals("order") || line.equals("safepay") || line.equals("shipex")) {
-        env.aos_build_main_wars=true
-    }
-    if (line.equals("accountservice")) {
-        env.aos_build_accountservice_war=true
-    }
-    if (line.equals("root") || line.equals("common") || line.equals("shared_resources")) {
-        env.aos_build_both_wars=true
-    }
-	if (line.equals("Nimbus_aos")) {
-        env.aos_copy_Nimbus_files=true
+  if (commits == "" || commits == null){
+     println("no commits were detected, aos_build_both_wars=true")
+	 env.aos_build_both_wars=true
+	 env.aos_copy_Nimbus_files=true
+  }else{
+  
+    commits.eachLine { line ->
+      if (line.equals("catalog") || line.equals("mastercredit") || line.equals("order") || line.equals("safepay") || line.equals("shipex")) {
+          env.aos_build_main_wars=true
+      }
+      if (line.equals("accountservice")) {
+          env.aos_build_accountservice_war=true
+      }
+      if (line.equals("root") || line.equals("common") || line.equals("shared_resources")) {
+          env.aos_build_both_wars=true
+      }
+	  if (line.equals("Nimbus_aos")) {
+          env.aos_copy_Nimbus_files=true
+      }
     }
   }
   
