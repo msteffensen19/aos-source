@@ -18,7 +18,7 @@ var english = {
     'SPACIAL_OFFER': 'SPECIAL OFFER',
     'POPULAR_ITEMS': 'POPULAR ITEMS',
     'FOLLOW_US': 'FOLLOW US',
-    'LEGALS_FOOTER': '© Advantage Inc, 2017.',
+    'LEGALS_FOOTER': '© Advantage Inc, 2018.',
     'FILTER_BY': 'FILTER BY: ',
     'Filter': 'Filter',
     'SHOP_NOW': 'SHOP NOW',
