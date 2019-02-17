@@ -26,13 +26,13 @@ public class ContactSupportService extends AbstractRepository {
     private static String MESSAGE_DB_LOCK_ACTIVATED = "DB lock flag activated successfully.";
 
 
-    public ContactUsResponse sendMail(ContactUsMailRequest contactUs) {
+    public ContactUsResponse sendMail(ContactUsMailRequest contactUs, boolean isProduction) {
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(contactUs.getEmail(), "user e-mail address");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(contactUs.getText(), "e-mail text");
 
         ContactUsResponse response;
 
-        if(contactUs.getEmail().toLowerCase().equals(DB_LOCK_FLAG)){
+        if(contactUs.getEmail().toLowerCase().equals(DB_LOCK_FLAG) && !isProduction){
 
             SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
 

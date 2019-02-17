@@ -30,12 +30,12 @@ public class ContactUsTests {
     public void testSendContactUsMail_EmailAndTextOnly() {
         System.out.println("ContactUsTests.testSendContactUsMail_EmailAndTextOnly - Start");
         ContactUsMailRequest request = new ContactUsMailRequest("a@b.com", "I love your products");
-        ContactUsResponse response = contactSupportService.sendMail(request);
+        ContactUsResponse response = contactSupportService.sendMail(request, false);
         Assert.assertEquals(true, response.isSuccess());
 
         /*  Has to fail - invalid email address */
         request = new ContactUsMailRequest("a#d@b.com", "I love your products");
-        response = contactSupportService.sendMail(request);
+        response = contactSupportService.sendMail(request, false);
         Assert.assertEquals(false, response.isSuccess());
         System.out.println("ContactUsTests.testSendContactUsMail_EmailAndTextOnly - Completed");
     }
@@ -44,12 +44,12 @@ public class ContactUsTests {
     public void testSendContactUsMail_CategoryEmailAndText() {
         System.out.println("ContactUsTests.testSendContactUsMail_CategoryEmailAndText - Start");
         ContactUsMailRequest request = new ContactUsMailRequest("a@b.com", 1L, 0L, "Cool products in this category.");
-        ContactUsResponse response = contactSupportService.sendMail(request);
+        ContactUsResponse response = contactSupportService.sendMail(request, false);
         Assert.assertEquals(true, response.isSuccess());
 
         /*  Has to fail - invalid email address */
         request = new ContactUsMailRequest("a#d@b.com", 1L, 0L, "Cool products in this category.");
-        response = contactSupportService.sendMail(request);
+        response = contactSupportService.sendMail(request, false);
         Assert.assertEquals(false, response.isSuccess());
         System.out.println("ContactUsTests.testSendContactUsMail_CategoryEmailAndText - Completed");
     }
@@ -58,12 +58,12 @@ public class ContactUsTests {
     public void testSendContactUsMail_CategoryProductEmailAndText() {
         System.out.println("ContactUsTests.testSendContactUsMail_CategoryProductEmailAndText - Start");
         ContactUsMailRequest request = new ContactUsMailRequest("a@b.com", 1L, 1L, "Awesome product.");
-        ContactUsResponse response = contactSupportService.sendMail(request);
+        ContactUsResponse response = contactSupportService.sendMail(request, false);
         Assert.assertEquals(true, response.isSuccess());
 
         /*  Has to fail - invalid email address */
         request = new ContactUsMailRequest("a#d@b.com", 1L, 1L, "Awesome product.");
-        response = contactSupportService.sendMail(request);
+        response = contactSupportService.sendMail(request, false);
         Assert.assertEquals(false, response.isSuccess());
         System.out.println("ContactUsTests.testSendContactUsMail_CategoryProductEmailAndText - Complited");
     }

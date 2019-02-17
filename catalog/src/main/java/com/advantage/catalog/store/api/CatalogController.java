@@ -788,8 +788,12 @@ public class CatalogController {
         ArgumentValidationHelper.validateArgumentIsNotNull(contactUsRequest, "Contact Us Mail Request");
         ArgumentValidationHelper.validateArgumentIsNotNull(request, "http servlet request");
         ArgumentValidationHelper.validateArgumentIsNotNull(response, "http servlet response");
-
-        ContactUsResponse contactUsResponse = contactSupportService.sendMail(contactUsRequest);
+        String remoteAddress = request.getHeader("X-FORWARDED-FOR");
+        if (remoteAddress == null) {
+            remoteAddress = request.getRemoteAddr();
+        }
+        boolean isProduction = remoteAddress.equals(Constants.ENV_PRODUCTION_HOST_IP)? true:false ;
+        ContactUsResponse contactUsResponse = contactSupportService.sendMail(contactUsRequest,isProduction);
 
         return new ResponseEntity<>(contactUsResponse, HttpStatus.OK);
     }
