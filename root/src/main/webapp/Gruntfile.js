@@ -5,6 +5,7 @@ module.exports = function (grunt) {
     'use strict';
     require('load-grunt-tasks')(grunt);
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.initConfig({
         requirejs: {
             js: {
@@ -170,6 +171,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        sass: {
+            dist: {
+                files: {
+                    'vendor/AngularJS-Toaster/toaster.css' : 'vendor/AngularJS-Toaster/toaster.scss'
+                }
+            }
+        },
+        watchSass: {
+            css: {
+                files: 'vendor/AngularJS-Toaster/*.scss',
+                tasks: ['sass']
+            }
+        },
 
         htmlmin: {                                     // Task
             dist: {                                      // Target
@@ -194,6 +208,7 @@ module.exports = function (grunt) {
     grunt.registerTask('ngt', ['ngtemplates']);
     grunt.registerTask('useminTest', ['copy', 'regex-replace', 'usemin']);
     grunt.registerTask('htmlminTest', ['htmlmin']);
+    grunt.registerTask('watchSass', ['watchSass']);
 
 };
 

@@ -9,7 +9,6 @@ define([
     'jquery',
     'bootstrap',
     'jPushMenu',
-
     './app/configuration/appConfig',
     './app/user/userConfig',
     './app/order/orderConfig',
@@ -50,7 +49,7 @@ define([
         'ipCookie',
         'ngAnimate',
         'angular-google-analytics',
-
+        'toaster',
         'aos.controllers',
         'aos.services',
         'aos.directives',
