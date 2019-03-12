@@ -53,10 +53,15 @@ define(['./module'], function (controllers) {
 
 
                 /* Get configuration */
-                userService.getConfiguration().then(function (response) {
-                    ctrl.config = response;
+                //BUG: #161001 - Remove duplicate requests
+                $scope.$on('configurationLoaded', function(event, data){
+                    ctrl.config = data.response;
                     $scope.refreshTimeOut();
                 });
+                // userService.getConfiguration().then(function (response) {
+                //     ctrl.config = response;
+                //     $scope.refreshTimeOut();
+                // });
                 /*===========================  end Get configuration ============================*/
 
                 /* loading Cart section  */
