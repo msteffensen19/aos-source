@@ -220,7 +220,7 @@ define(['./module'], function (services) {
                     Helper.enableLoader();
                     $http({
                         method: "post",
-                        url: server.order.getShippingCost(),
+                        url: server.order.getShippingCost(), //'https://91yjr5lzr7.execute-api.us-east-1.amazonaws.com/ShipEx'
                         data: paramsToPass,
                     }).
                     then(function (shippingCost) {

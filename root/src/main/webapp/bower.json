@@ -5,7 +5,9 @@
     "angularjs-slider": "~1.0.0",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-router": "~0.2.15",
-    "angular-google-analytics": "^1.1.9"
+    "angular-google-analytics": "^1.1.9",
+    "AngularJS-Toaster": "angularjs-toaster#^3.0.0",
+    "ngToast": "ngtoast#^2.0.0"
   },
   "devDependencies": {
     "angular": "~1.4.7",

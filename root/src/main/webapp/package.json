@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Advantage Online Shopping",
   "author": "Assaf Kubany",
-  "dependencies": {},
+  "dependencies": {
+    "angularjs-toast": "^2.0.3"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-angular-templatecache": "^0.2.5",
@@ -16,6 +18,7 @@
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-piece-modulejs": "~0.1.3",

@@ -158,6 +158,10 @@ define(['./module'], function (services) {
                                 config.userSecondWSDL = json.userSecondWsdl;
                                 appConfiguration = config;
                                // Helper.disableLoader();
+                                //BUG: #161001 - Remove duplicate requests
+                                $rootScope.$broadcast('configurationLoaded', {
+                                    response: config
+                                });
                                 defer.resolve(config);
                             },
                             error: function (response) {

@@ -2,6 +2,7 @@
 
 
 @import "../utils/noUiSlider.8.2.1/nouislider.css";
+@import "toaster.min.css";
 
 @import "UI.css";
 @import "animation.css";

@@ -5,8 +5,8 @@
 define(['./module'], function (services) {
     'use strict';
     services.service('productsCartService', ['$http', '$q', 'resHandleService', 'ipCookie',
-        '$rootScope',
-        function ($http, $q, responseService, $cookie, $rootScope) {
+        '$rootScope', 'toaster',
+        function ($http, $q, responseService, $cookie, $rootScope, toaster) {
 
             var cart = null;
 
@@ -177,6 +177,20 @@ define(['./module'], function (services) {
                         angular.forEach(guestCart.productsInCart, function (guestProduct) {
                             if (userProduct.productId == guestProduct.productId && userProduct.color.code == guestProduct.color.code) {
                                 find = true;
+                                //both user and guest product quantity exceeded
+                                if(guestProduct.quantity + userProduct.quantity > userProduct.color.inStock){
+                                    /*
+                                    PART OF BUG #142004
+                                    TODO - show popUp "One or more of the items in you cart exceed the quantity in stock. We have adjusted your cart accordingly"
+                                    * */
+                                    guestProduct.quantity = userProduct.color.inStock; //the user will get the max quantity allowed
+                                    toaster.pop({
+                                        type: 'info',
+                                        title: '',
+                                        body: "One or more of the items in you cart exceed the quantity in stock. " +
+                                            "We have adjusted your cart accordingly"
+                                    })
+                                }
                             }
                         });
                         if (!find) {

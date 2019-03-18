@@ -524,7 +524,7 @@ public class ShoppingCartService {
 
                         cartProduct.setColor(colorAttrib.getCode().toUpperCase(),
                                 colorAttrib.getName().toUpperCase(),
-                                quantity);
+                                colorAttrib.getInStock());
 
                         if (logger.isDebugEnabled()) {
                             StringBuilder sb = new StringBuilder("Received Product information: ");
