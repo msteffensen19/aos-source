@@ -3,8 +3,6 @@ package com.advantage.catalog.store.dao.category;
 import com.advantage.catalog.store.dao.DefaultCRUDOperations;
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
-import com.advantage.common.dto.CatalogResponse;
-import org.springframework.data.jpa.repository.query.Procedure;
 
 import java.util.List;
 

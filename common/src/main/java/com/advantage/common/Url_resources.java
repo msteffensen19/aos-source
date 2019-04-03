@@ -5,7 +5,6 @@ package com.advantage.common;
  */
 
 import org.apache.log4j.Logger;
-import org.junit.Before;
 import org.mockito.Mock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

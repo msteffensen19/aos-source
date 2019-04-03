@@ -69,7 +69,7 @@ public class AdvantageTestContextConfiguration {
             logger.trace("LocalContainerEntityManagerFactoryBean.jpaVendorAdapter.persistenceProviderRootPackage = " + entityManagerFactoryBean.getJpaVendorAdapter().getPersistenceProviderRootPackage());
         }
         Map<String, Object> jpaProperties = new HashMap<String, Object>();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "create");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         jpaProperties.put("hibernate.show_sql", "true");
         jpaProperties.put("hibernate.format_sql", "true");

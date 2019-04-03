@@ -115,7 +115,7 @@
         <!--<slf4j.version>1.7.13</slf4j.version>-->
         <log4j.version>1.2.17</log4j.version>
         <querydsl.version>3.6.0</querydsl.version>
-        <spring-framework-version>4.1.6.RELEASE</spring-framework-version>
+
         <spring-security.version>4.0.3.RELEASE</spring-security.version>
         <jsr250.version>1.0</jsr250.version>
         <spring-session.version>1.0.0.RELEASE</spring-session.version>
@@ -240,6 +240,12 @@
             <!--<classifier>resources</classifier>-->
             <type>zip</type>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>*</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--WAR-->
         <dependency>
@@ -348,6 +354,16 @@
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.20</version>
         </dependency>
     </dependencies>
 
@@ -511,34 +527,34 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>demoapp-release</id>
-            <name>ADM DemoApp Release Nexus repository</name>
-            <url>
-                http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
-            </url>
-        </repository>
-        <snapshotRepository>
-            <id>demoapp-snapshot</id>
-            <name>ADM DemoApp Snapshot Nexus repository</name>
-            <url>
-                http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
-            </url>
-        </snapshotRepository>
-    </distributionManagement>
-	
-	<repositories>
-        <repository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>nexus-demo-app</id>
-            <name>nexus</name>
-            <url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/</url>
-        </repository>
-    </repositories>
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>demoapp-release</id>-->
+            <!--<name>ADM DemoApp Release Nexus repository</name>-->
+            <!--<url>-->
+                <!--http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/-->
+            <!--</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>demoapp-snapshot</id>-->
+            <!--<name>ADM DemoApp Snapshot Nexus repository</name>-->
+            <!--<url>-->
+                <!--http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/-->
+            <!--</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
+	<!---->
+	<!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>nexus</id>-->
+            <!--<name>nexus</name>-->
+            <!--<url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>nexus-demo-app</id>-->
+            <!--<name>nexus</name>-->
+            <!--<url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 	
 </project>

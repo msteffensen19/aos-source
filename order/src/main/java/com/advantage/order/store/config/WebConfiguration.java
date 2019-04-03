@@ -2,7 +2,10 @@ package com.advantage.order.store.config;
 
 import com.advantage.common.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -46,6 +49,10 @@ public class WebConfiguration extends SpringDataWebConfiguration {
     private ObjectMapper objectMapper;
 
     private static final int BROWSER_CACHE_CONTROL = 604800;
+
+    public WebConfiguration(ApplicationContext context, ObjectFactory<ConversionService> conversionService) {
+        super(context, conversionService);
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
