@@ -1,9 +1,5 @@
 
 package com.advantage.accountsoap.dto.account;
-
-import accountservice.store.online.advantage.com.AccountStatusResponse;
-import org.springframework.http.HttpStatus;
-
 import javax.xml.bind.annotation.*;
 
 

@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!DOCTYPE xs:schema [
-        <!ELEMENT xs:schema (xs:element|xs:complexType)*>
-        <!ATTLIST xs:schema
-                version CDATA #REQUIRED
-                targetNamespace CDATA #REQUIRED
-                xmlns:tns CDATA #REQUIRED
-                xmlns:xs CDATA #REQUIRED>
-        <!ELEMENT xs:element (xs:complexType)*>
-        <!ATTLIST xs:element
-                form CDATA #IMPLIED
-                maxOccurs CDATA #IMPLIED
-                name CDATA #IMPLIED
-                nillable CDATA #IMPLIED
-                ref CDATA #IMPLIED
-                type CDATA #IMPLIED>
-        <!ELEMENT xs:complexType (xs:sequence)*>
-        <!ATTLIST xs:complexType
-                name CDATA #IMPLIED>
-        <!ELEMENT xs:sequence (xs:element)*>
-        ]>
 <xs:schema version="1.0" targetNamespace="com.advantage.online.store.accountservice" xmlns:tns="com.advantage.online.store.accountservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="AccountCreateRequest">

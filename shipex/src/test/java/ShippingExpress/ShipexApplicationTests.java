@@ -3,7 +3,6 @@ package ShippingExpress;
 import ShipExServiceClient.ShippingCostTransactionType;
 import ShipExServiceClient.TransactionType;
 import ShippingExpress.WsModel.*;
-import ShippingExpress.model.ShippingExpressRepository;
 import ShippingExpress.model.ShippingExpressService;
 import com.advantage.common.Url_resources;
 import com.advantage.common.enums.ResponseEnum;
@@ -12,19 +11,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ShipexApplication.class)
+@SpringBootTest(classes = ShipexApplication.class)
 public class ShipexApplicationTests {
 
     @Autowired
@@ -39,6 +41,7 @@ public class ShipexApplicationTests {
 
     @Before
     public void init() {
+        service = Mockito.mock(ShippingExpressService.class);
         costRequest = new ShippingCostRequest();
         orderRequest = new PlaceShippingOrderRequest();
         address = new SEAddress();
@@ -69,12 +72,23 @@ public class ShipexApplicationTests {
         orderRequest.setSECustomerName("name");
 
 
-//        when(service.getShippingCost("ua", 5))
-//                .thenReturn("3");
-//        when(service.getCurrency())
-//                .thenReturn("3");
-    }
+        when(service.getShippingCost("ua", 5))
+                .thenReturn("3");
+        when(service.getCurrency())
+                .thenReturn("3");
+        when(service.getFormatTimeNow())
+                .thenAnswer(invocationOnMock -> {
+                    LocalDate date = LocalDate.now();
+                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+                    return date.format(timeFormatter);
+                });
 
+        when(service.getTrackNumber())
+                .thenAnswer(invocationOnMock -> {
+                    String digits = String.valueOf(new Date().getTime()).substring(0, 10);
+                    return new AtomicLong(Long.parseLong(digits));
+                });
+    }
 //    @Test
 //    public void getShippingCostTest() throws IOException {
 //        ShippingCostResponse response = endpoint.getShippingCost(costRequest);

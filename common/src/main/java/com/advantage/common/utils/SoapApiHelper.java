@@ -6,10 +6,6 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.NodeList;
 
 import javax.xml.soap.*;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;

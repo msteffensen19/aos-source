@@ -104,14 +104,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.1.RELEASE</version>
+        <version>1.5.19.RELEASE</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
 
     <properties>
-        <aspectj.version>1.8.4</aspectj.version>
-        <java.version>1.8</java.version>
+        <java.version>12</java.version>
         <!--<slf4j.version>1.7.13</slf4j.version>-->
         <log4j.version>1.2.17</log4j.version>
         <querydsl.version>3.6.0</querydsl.version>
@@ -127,14 +126,13 @@
         <liquibase.version>3.5.1</liquibase.version>
         <liquibase.hibernate4.version>3.5</liquibase.hibernate4.version>
         <liquibase.postgres.version>3.0</liquibase.postgres.version>
-        <jackson.version>2.4.5</jackson.version>
         <modelmapper.version>0.7.3</modelmapper.version>
         <springfox.version>2.0.3</springfox.version>
         <!--<postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>-->
         <postgres.driver.version>9.4.1208</postgres.driver.version>
         <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
-        <plugin.maven.compiler.version>3.3</plugin.maven.compiler.version>
-        <plugin.maven.war.version>2.6</plugin.maven.war.version>
+        <plugin.maven.compiler.version>3.8.0</plugin.maven.compiler.version>
+        <plugin.maven.war.version>3.2.2</plugin.maven.war.version>
         <plugin.sql.version>1.5</plugin.sql.version>
         <plugin.properties.version>1.0.0</plugin.properties.version>
         <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
@@ -152,6 +150,11 @@
     <dependencyManagement>
         <dependencies>
             <!-- LIQUIBASE-->
+            <dependency>
+                <groupId>com.sun.xml.messaging.saaj</groupId>
+                <artifactId>saaj-impl</artifactId>
+                <version>1.5.1</version>
+            </dependency>
             <dependency>
                 <groupId>org.liquibase.ext</groupId>
                 <artifactId>liquibase-hibernate4</artifactId>
@@ -217,6 +220,11 @@
                 <artifactId>jjwt</artifactId>
                 <version>0.6.0</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.9.8</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -264,7 +272,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-ws</artifactId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
 
         <!-- Hibernate -->
@@ -277,10 +285,7 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -300,11 +305,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>${javax.inject.version}</version>
-        </dependency>
+
 
         <!--soap-->
         <dependency>
@@ -364,6 +365,42 @@
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.20</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api -->
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.5.1</version>
         </dependency>
     </dependencies>
 
@@ -499,7 +536,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>1.6</version>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
@@ -509,10 +546,32 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
-                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                    <sources>
+                        <source>${project.basedir}/src/main/resources/dummy.xsd</source>
+                        <source>${project.basedir}/src/main/resources/accountservice.xsd</source>
+                    </sources>
+                    <packageName>accountservice.store.online.advantage.com</packageName>
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.glassfish.jaxb</groupId>
+                        <artifactId>jaxb-xjc</artifactId>
+                        <version>2.3.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sun.activation</groupId>
+                        <artifactId>jakarta.activation</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                    <!-- https://mvnrepository.com/artifact/javax.xml.soap/javax.xml.soap-api -->
+                    <dependency>
+                        <groupId>com.sun.xml.ws</groupId>
+                        <artifactId>jaxws-ri</artifactId>
+                        <version>2.3.2</version>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
             </plugin>
             <!--shared resources-->
             <plugin>
@@ -523,6 +582,11 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${plugin.maven.war.version}</version>
             </plugin>
         </plugins>
     </build>

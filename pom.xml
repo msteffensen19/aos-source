@@ -32,16 +32,16 @@
     </modules>
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
-        <java.version>1.8</java.version>
+        <java.version>12</java.version>
         <!--<slf4j.version>1.7.13</slf4j.version>-->
 
-        <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
-        <plugin.maven.compiler.version>3.3</plugin.maven.compiler.version>
-        <plugin.maven.war.version>2.6</plugin.maven.war.version>
+        <plugin.maven.assembly.version>3.1.1</plugin.maven.assembly.version>
+        <plugin.maven.compiler.version>3.8.0</plugin.maven.compiler.version>
+        <plugin.maven.war.version>3.2.2</plugin.maven.war.version>
         <plugin.sql.version>1.5</plugin.sql.version>
         <plugin.properties.version>1.0.0</plugin.properties.version>
         <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
-        <plugin.maven.resources.version>2.7</plugin.maven.resources.version>
+        <plugin.maven.resources.version>3.1.0</plugin.maven.resources.version>
         <plugin.hibernate3.version>3.0</plugin.hibernate3.version>
         <maven.filtering.version>3.1.0</maven.filtering.version>
         <javax.servlet.version>3.1.0</javax.servlet.version>
