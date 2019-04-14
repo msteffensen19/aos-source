@@ -472,7 +472,7 @@
     <dependencies>
     </dependencies>
 
-    <!--<repositories>
+    <repositories>
         <repository>
             <id>nexus</id>
             <name>nexus</name>
@@ -494,6 +494,6 @@
                 http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
             </url>
         </snapshotRepository>
-    </distributionManagement>-->
+    </distributionManagement>
 
 </project>
