@@ -1,4 +1,4 @@
-FROM tomcat:9.0.2-jre8
+FROM tomcat:9.0.17-jre11
 MAINTAINER Assaf Kubany
 
 ENV http_proxy="http://proxy.il.hpecorp.net:8080"
