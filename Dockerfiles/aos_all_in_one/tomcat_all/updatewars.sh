@@ -25,6 +25,7 @@ if [[ "$i" == "order" || "$i" == "catalog" ]];then
 #sed -i 's/=validate/=create/g' "./WEB-INF/classes/properties/internal_config_for_env.properties"
    sed -i "s/=localhost/=${POSTGRES_IP}/g" ./WEB-INF/classes/properties/internal_config_for_env.properties
    sed -i "s/=5432/=${POSTGRES_PORT}/g" ./WEB-INF/classes/properties/internal_config_for_env.properties
+   sed -i "s/=postgres/=aos/g" ./WEB-INF/classes/properties/internal_config_for_env.properties
 fi
 if [ "$reverse_proxy" == "true" ];then
   echo "using nginx--------"
