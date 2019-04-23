@@ -23,6 +23,7 @@
         <module>shared_resources</module>
         <module>common</module>
         <module>root</module>
+        <module>configuration</module>
         <module>catalog</module>
         <module>order</module>
         <module>mastercredit</module>
