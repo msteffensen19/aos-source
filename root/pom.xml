@@ -23,25 +23,12 @@
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>exec-maven-plugin</artifactId>
                             <executions>
+
                                 <execution>
-                                    <id>exec-npm-install</id>
+                                    <id>exec-yarn-install</id>
                                     <phase>generate-sources</phase>
                                     <configuration>
-                                        <executable>npm.cmd</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-bower-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>bower.cmd</executable>
+                                        <executable>yarn.cmd</executable>
                                         <arguments>
                                             <argument>install</argument>
                                         </arguments>
@@ -95,25 +82,12 @@
                             <artifactId>exec-maven-plugin</artifactId>
                             <inherited>false</inherited>
                             <executions>
+
                                 <execution>
-                                    <id>exec-npm-install</id>
+                                    <id>exec-yarn-install</id>
                                     <phase>generate-sources</phase>
                                     <configuration>
-                                        <executable>npm.cmd</executable>
-                                        <arguments>
-                                            <argument>install</argument>
-                                        </arguments>
-                                        <workingDirectory>src/main/webapp</workingDirectory>
-                                    </configuration>
-                                    <goals>
-                                        <goal>exec</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>exec-bower-install</id>
-                                    <phase>generate-sources</phase>
-                                    <configuration>
-                                        <executable>bower.cmd</executable>
+                                        <executable>yarn.cmd</executable>
                                         <arguments>
                                             <argument>install</argument>
                                         </arguments>
@@ -170,10 +144,10 @@
                                     </goals>
                                 </execution>
                                 <execution>
-                                    <id>exec-bower-install</id>
+                                    <id>exec-yarn-install</id>
                                     <phase>generate-sources</phase>
                                     <configuration>
-                                        <executable>bower.cmd</executable>
+                                        <executable>yarn.cmd</executable>
                                         <arguments>
                                             <argument>install</argument>
                                         </arguments>
