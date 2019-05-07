@@ -49,5 +49,12 @@
             <directory>${parent.basedir}/shipex/target/</directory>
             <outputDirectory></outputDirectory>
         </fileSet>
+        <fileSet>
+            <includes>
+                <include>*.war</include>
+            </includes>
+            <directory>${parent.basedir}/configuration/target/</directory>
+            <outputDirectory></outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

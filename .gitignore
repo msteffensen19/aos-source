@@ -134,3 +134,4 @@ local.properties
 rebel.xml
 liquibase/*
 root/src/main/webapp/package-lock.json
+/configuration/npm/*
