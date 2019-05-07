@@ -33,7 +33,7 @@ public class DataSourceInitByCsv {
     private Environment env;
 
     public void init() throws Exception {
-
+//comment
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("select a from Account a where a.email=:email");
