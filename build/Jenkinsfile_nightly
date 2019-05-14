@@ -267,7 +267,7 @@ try {
 
         currentBuild.description = "${aos_description}"
 
-        mail(to: 'adm_demo_alerts@hpe.com',
+        mail(to: 'adm_demo_app_development@microfocus.com',
                 subject: "Success: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${aos_version}, Delivery number ${aos_delivery}",
                 body: "Review the information at: ${env.JOB_URL}",
                 mimeType: 'text/html');
@@ -301,7 +301,7 @@ try {
                 }
             }
             currentBuild.result = 'FAILURE'
-            mail(to: 'adm_demo_alerts@hpe.com',
+            mail(to: 'adm_demo_app_development@microfocus.com',
                     subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${aos_version}, Delivery number ${aos_delivery}",
                     body: "Review the information at: ${env.JOB_URL}",
                     mimeType: 'text/html');
