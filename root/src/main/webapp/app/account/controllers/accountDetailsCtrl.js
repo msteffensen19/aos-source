@@ -14,7 +14,7 @@ define(['./module'], function (controllers) {
                 if ($location.path().indexOf('/accountDetails') != -1) {
                     $timeout(checkLogin, 2000);
                 }
-            }
+            }//Moving to AWS!
 
             s.accountDetails = resolveParams.accountDetails;
             s.accountDetailsAnswer = {message: '', class: 'invalid'}
