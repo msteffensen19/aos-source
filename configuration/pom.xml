@@ -104,7 +104,7 @@
 
     <profiles>
         <profile>
-            <id>local</id>
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -126,7 +126,7 @@
         </profile>
 
         <profile>
-            <id>prod</id>
+            <id>production</id>
             <build>
                 <plugins>
                     <plugin>
@@ -135,7 +135,7 @@
 
                         <configuration>
                             <environmentVariables>
-                                <PUBLIC_URL>http://my-awesome-production-host/${project.artifactId}</PUBLIC_URL>
+                                <PUBLIC_URL>/${project.artifactId}</PUBLIC_URL>
                                 <REACT_APP_ROUTER_BASE>/${project.artifactId}</REACT_APP_ROUTER_BASE>
                             </environmentVariables>
                         </configuration>
