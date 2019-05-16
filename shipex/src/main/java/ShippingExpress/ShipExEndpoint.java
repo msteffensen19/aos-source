@@ -1,12 +1,12 @@
 package ShippingExpress;
 
+import ShipExServiceClient.ShippingCostTransactionType;
 import ShippingExpress.WsModel.*;
 import ShippingExpress.config.WebServiceConfig;
 import ShippingExpress.model.ShippingExpressService;
 import ShippingExpress.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.enums.ResponseEnum;
-import https.www_advantageonlinebanking_com.shipex.ShippingCostTransactionType;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
