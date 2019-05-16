@@ -20,7 +20,8 @@
                         if (serverKey == null) {
                             window.close();
                         }
-                        webSocket = new WebSocket("ws://" + serverKey + "websocketserverendpoint");
+                        var socketProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+                        webSocket = new WebSocket(socketProtocol + serverKey + "websocketserverendpoint");
 
                         var chat = $("#chat #chatBody");
                         chat.children().remove();
