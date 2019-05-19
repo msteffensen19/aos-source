@@ -1,4 +1,10 @@
 .App {
+  display: flex;
+  text-align: center;
+}
+.other {
+
+  width : 33%;
   text-align: center;
 }
 
