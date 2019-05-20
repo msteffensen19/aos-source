@@ -2,10 +2,7 @@ import React from 'react';
 import { Navbar } from 'react-bootstrap';
 
 export default class NavigationBar extends React.Component {
-    constructor(props) {
-        super(props);
 
-    }
     render() {
         return (
             <Navbar bg="light">

@@ -1,12 +1,4 @@
-.App {
-  display: flex;
-  text-align: center;
-}
-.other {
 
-  width : 33%;
-  text-align: center;
-}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -36,4 +28,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+.no-wrap{
+  flex-wrap: nowrap;
+}
+.no-max-width{
+  max-width: none;
 }
