@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from 'react-bootstrap';
+import NavUserGuide from './NavUserGuide'
 
 export default class NavigationBar extends React.Component {
 
@@ -7,6 +8,7 @@ export default class NavigationBar extends React.Component {
         return (
             <Navbar bg="light">
                 <Navbar.Brand href="#home">Brand link</Navbar.Brand>
+                <NavUserGuide></NavUserGuide>
             <br />
     <Navbar bg="light">
         <Navbar.Brand>Brand text</Navbar.Brand>
