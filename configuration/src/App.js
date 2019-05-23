@@ -2,7 +2,28 @@ import React, { Component } from 'react';
 import construction from './Under_construction.png';
 import './App.css';
 
+
+function ListItem(props) {
+
+    return <li>{props.value}</li>;
+}
+
+function NumberList(props) {
+    const numbers = [1, 2, 3, 4, 5];
+    const listItems = numbers.map((number) =>
+        // Correct! Key should be specified inside the array.
+        <ListItem key={number.toString()}
+                  value={number} />
+
+    );
+    return (
+        <ul>
+            {listItems}
+        </ul>
+    );
+}
 class App extends Component {
+
     render() {
         return (
             <div className="App">
@@ -10,7 +31,8 @@ class App extends Component {
                     <img src={construction} alt="logo" />
                     {/*<h2>Welcome to React</h2>*/}
                 </div>
-                {/*<BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>*/}
+                <NumberList />
+                    {/*<BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>*/}
                     {/*<div>*/}
                         {/*<ul className="nav">*/}
                             {/*<li><Link to="/">Homepage</Link></li>*/}
