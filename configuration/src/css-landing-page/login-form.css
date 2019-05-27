@@ -1,0 +1,47 @@
+.enter-details-to-log {
+    height: 20px;
+    width: 160px;
+    color: #FFFFFF;
+    font-family: Metric;
+    font-size: 20px;
+    line-height: 24px;
+}
+.login {
+    height: 215px;
+    width: 269px;
+    margin-top: 111px;
+}
+.user-name {
+    height: 16px;
+    /*width: 68px;*/
+    opacity: 0.82;
+    color: #A4A8BD;
+    font-family: Metric;
+    font-size: 16px;
+    line-height: 19px;
+}
+.input-style{
+    border: 0;
+    border-bottom: 1px solid #010101;
+    width: 269px;
+}
+.remember-me {
+    height: 14px;
+    /*width: 78px;*/
+    opacity: 0.82;
+    margin-left: 10px;
+    color: #A4A8BD;
+    font-family: Metric;
+    font-size: 14px;
+    line-height: 17px;
+}
+.rectangle-remember-me {
+    height: 14px;
+    width: 14px;
+    border: 2px solid #FFFFFF;
+    border-radius: 1px;
+}
+.remember-me-label{
+    display: flex;
+    justify-content: space-between;
+}

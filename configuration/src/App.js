@@ -4,6 +4,7 @@ import LoginForm from './landing-page/LoginForm.jsx';
 import VideoFrames from './landing-page/Video.jsx';
 import './App.css';
 import NavigationBar from "./landing-page/NavigetionBar";
+import {ReactComponent as AdvantageLogo} from "./Advantage_logo_white.svg"
 
 
 function ListItem(props) {
@@ -34,18 +35,19 @@ class App extends Component {
                 <Row>
                     <Col xs={8} sm={8} md={8} lg={8}>
                         <Container>
-                            <Row className= "no-warp">
+                            <Row className="no-wrap">
                                 <Col /*left section*/>
-                                    <i></i>
-                                    <h1>left section </h1>
+                                    <div className="icon-header-container">
+                                    <AdvantageLogo className="fill-3"/><h1 className= "dvantage">dvantage</h1>
+                                    </div>
+                                    <h1 className="management-console">Management Console</h1>
+
                                 </Col>
                                 <Col /*login section*/>
-                                    <h1>login section</h1>
+
                                     <LoginForm></LoginForm>
                                 </Col>
                                 <Col /*Videos section*/>
-                                    <h1>Right Section</h1>
-                                    <VideoFrames></VideoFrames>
                                     <VideoFrames></VideoFrames>
                                 </Col>
                             </Row>

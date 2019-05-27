@@ -31,7 +31,41 @@
 }
 .no-wrap{
   flex-wrap: nowrap;
+  /*background-color: #24273A;*/
 }
 .no-max-width{
   max-width: none;
+}
+
+.dvantage {
+  height: 34.8px;
+  width: 111.32px;
+  /*color: #FFFFFF;*/
+  color: black;
+  font-family: Metric;
+  font-size: 29px;
+  font-weight: 600;
+  letter-spacing: -0.03px;
+}
+.fill-3 {
+  height: 26.81px;
+  width: 19.63px;
+  background-color: #FFFFFF;
+}
+
+.icon-header-container{
+
+  display: flex;
+  margin-top: 28px;
+  margin-bottom: 43px;
+}
+.management-console {
+  height: 130px;
+  width: 287px;
+  /*color: #FFFFFF;*/
+  font-family: Metric;
+  font-size: 57px;
+  font-weight: bold;
+  line-height: 65px;
+  text-shadow: 0 0 38px -10px rgba(0,0,0,0.51);
 }

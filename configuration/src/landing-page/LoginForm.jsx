@@ -1,7 +1,8 @@
 
 import React from 'react';
 import *as  $ from 'jquery';
-import $soap from 'jquery.soap';
+import '../css-landing-page/login-form.css';
+
 
 
 export default class LoginForm extends React.Component {
@@ -29,19 +30,19 @@ export default class LoginForm extends React.Component {
                  loginUser:this.state.userName
         };
 
-        $soap({
+        $.soap({
             url: "http://localhost:8080/accountservice/",
             method: "AccountLoginRequest",
             namespaceURL: "com.advantage.online.store.accountservice",
             SOAPAction:"com.advantage.online.store.accountservice"+"AccountLoginRequest",
             data:user,
             success: function (soapResponse) {
-                let response = soapResponse;
+                //let response = soapResponse;
                 console.log("Login is successful");
 
             },
             error: function (response) {
-                let any = response;
+                //let any = response;
                 console.log("Failed to login");
             },
             enableLogging: true
@@ -52,22 +53,28 @@ export default class LoginForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+
+            <form className= "login" onSubmit={this.handleSubmit}>
+                <h1 className= "enter-details-to-log">Enter details to login</h1>
                 <label>
-                    Username:
-                    <input name="userName" value={this.state.value} onChange={this.handleInputChange} />
+                    <h3 className= "user-name">User Name</h3>
+                    <input name="userName" className="input-style" value={this.state.value} onChange={this.handleInputChange} />
                 </label>
                 <br />
                 <label>
-                    password:
+                    <h3 className= "user-name">Password</h3>
                     {/*type="password"*/}
-                    <input name="password" value={this.state.value} onChange={this.handleInputChange}/>
+                    <input name="password" className="input-style" value={this.state.value} onChange={this.handleInputChange}/>
                 </label>
-                <label>
-                    Is going:
+                <label className="remember-me-label">
+                    <div className="remember-me-label">
                     <input
+                        className="rectangle-remember-me"
                         type="checkbox"
                         onChange={this.handleInputChange} />
+                    <h3 className= "remember-me">Remember me</h3>
+                    </div>
+                    <div className= "remember-me">Forget Password?</div>
                 </label>
                     <input type="submit" value="Submit" />
             </form>
