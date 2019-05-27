@@ -56,17 +56,17 @@ export default class LoginForm extends React.Component {
 
             <form className= "login" onSubmit={this.handleSubmit}>
                 <h1 className= "enter-details-to-log">Enter details to login</h1>
-                <label>
+                <label className="margin-top-labels">
                     <h3 className= "user-name">User Name</h3>
                     <input name="userName" className="input-style" value={this.state.value} onChange={this.handleInputChange} />
                 </label>
                 <br />
-                <label>
+                <label className="margin-top-labels">
                     <h3 className= "user-name">Password</h3>
                     {/*type="password"*/}
                     <input name="password" className="input-style" value={this.state.value} onChange={this.handleInputChange}/>
                 </label>
-                <label className="remember-me-label">
+                <label className="margin-top-labels remember-me-label">
                     <div className="remember-me-label">
                     <input
                         className="rectangle-remember-me"
@@ -76,7 +76,7 @@ export default class LoginForm extends React.Component {
                     </div>
                     <div className= "remember-me">Forget Password?</div>
                 </label>
-                    <input type="submit" value="Submit" />
+                    <input className="sign-in-btn" type="submit" value="Sign In" />
             </form>
         );
     }

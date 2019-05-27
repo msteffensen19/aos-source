@@ -1,6 +1,9 @@
+
+.margin-top-labels{
+    margin-top: 21px;
+}
 .enter-details-to-log {
     height: 20px;
-    width: 160px;
     color: #FFFFFF;
     font-family: Metric;
     font-size: 20px;
@@ -9,7 +12,8 @@
 .login {
     height: 215px;
     width: 269px;
-    margin-top: 111px;
+    margin-top: 90px;
+    margin-left: 100px;
 }
 .user-name {
     height: 16px;
@@ -44,4 +48,14 @@
 .remember-me-label{
     display: flex;
     justify-content: space-between;
+}
+.sign-in-btn{
+    height: 35px;
+    width: 92px;
+    background-color: #5DB2C9;
+    color: #FFFFFF;
+    font-family: Metric;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
 }

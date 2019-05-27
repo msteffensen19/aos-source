@@ -33,21 +33,22 @@ class App extends Component {
 
             <Container className="no-max-width">
                 <Row>
-                    <Col xs={8} sm={8} md={8} lg={8}>
-                        <Container>
+                    <Col className="no-wrap" xs={8} sm={8} md={8} lg={8}>
+                        <Container className="main-container">
                             <Row className="no-wrap">
-                                <Col /*left section*/>
+                                <Col className="headers-container" /*left section*/>
                                     <div className="icon-header-container">
                                     <AdvantageLogo className="fill-3"/><h1 className= "dvantage">dvantage</h1>
                                     </div>
+                                    <div>
                                     <h1 className="management-console">Management Console</h1>
-
+                                    </div>
                                 </Col>
-                                <Col /*login section*/>
+                                <Col className="login-container" >
 
                                     <LoginForm></LoginForm>
                                 </Col>
-                                <Col /*Videos section*/>
+                                <Col className="video-frame-container" /*Videos section*/>
                                     <VideoFrames></VideoFrames>
                                 </Col>
                             </Row>
