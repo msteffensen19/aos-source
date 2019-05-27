@@ -31,11 +31,11 @@ class App extends Component {
     render() {
         return (
 
-            <Container className="no-max-width">
-                <Row>
-                    <Col className="no-wrap" xs={8} sm={8} md={8} lg={8}>
-                        <Container className="main-container">
-                            <Row className="no-wrap">
+            <Container className="main-container">
+                <Row className="main-row-container">
+                    <Col className="left-column" xs={8} sm={8} md={8} lg={8}>
+                        <Container className="left-main-container">
+                            <Row className="top-container">
                                 <Col className="headers-container" /*left section*/>
                                     <div className="icon-header-container">
                                     <AdvantageLogo className="fill-3"/><h1 className= "dvantage">dvantage</h1>
@@ -52,10 +52,14 @@ class App extends Component {
                                     <VideoFrames></VideoFrames>
                                 </Col>
                             </Row>
-                            <Row/>
-                            <i>Advantage icon</i>
-                            <h1>What's New </h1>
-                                <NumberList></NumberList>
+                            <Row className="left-bottom-container">
+                                    <div className="main-left-bottom-container">
+                                    <h3 className="what-s-new-in">What’s New In</h3>
+                                    <h1 className="version-number">v2.0</h1>
+                                    <i>Advantage icon</i>
+                                    <NumberList></NumberList>
+                                    </div>
+                            </Row>
                         </Container>;
                     </Col>
 
