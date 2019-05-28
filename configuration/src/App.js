@@ -5,27 +5,9 @@ import VideoFrames from './landing-page/Video.jsx';
 import './App.css';
 import NavigationBar from "./landing-page/NavigetionBar";
 import {ReactComponent as AdvantageLogo} from "./Advantage_logo_white.svg"
+import WhatsNewComponent from "./landing-page/WhatsNewComponent";
 
 
-function ListItem(props) {
-
-    return <li>{props.value}</li>;
-}
-
-function NumberList(props) {
-    const numbers = [10, 77, 3, 4, 5];
-    const listItems = numbers.map((number) =>
-
-        <ListItem key={number.toString()}
-                  value={number} />
-
-    );
-    return (
-        <ul>
-            {listItems}
-        </ul>
-    );
-}
 class App extends Component {
 
     render() {
@@ -57,7 +39,7 @@ class App extends Component {
                                     <h3 className="what-s-new-in">What’s New In</h3>
                                     <h1 className="version-number">v2.0</h1>
                                     <i>Advantage icon</i>
-                                    <NumberList></NumberList>
+                                        <WhatsNewComponent></WhatsNewComponent>
                                     </div>
                             </Row>
                         </Container>;

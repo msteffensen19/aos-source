@@ -1,0 +1,30 @@
+.title-style{
+    height: 20px;
+    width: 49px;
+    color: #FFFFFF;
+    font-family: Metric;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.content-style{
+    height: 48px;
+    width: 264px;
+    opacity: 0.82;
+    color: #B8BCCF;
+    font-family: Metric;
+    font-size: 14px;
+    line-height: 16px;
+}
+.make-scroll-ul{
+    white-space: nowrap;
+    width:960px;
+    margin:10px auto;
+    text-align:center;
+    overflow: auto;
+}
+.make-scroll-li{
+    list-style:none;
+    border:1px solid red;
+    padding:10px 0;
+}
