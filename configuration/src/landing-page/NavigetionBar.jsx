@@ -1,5 +1,4 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
 import NavUserGuide from './NavUserGuide'
 import NavDownloads from './NavDownloads'
 import NavInstallation from './NavInstallation'

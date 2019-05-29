@@ -15,7 +15,7 @@ export default class NavDownloads extends React.Component {
                 <p className="aos-nav-headline">Download Mobile Apps</p>
 
                         <div class="nav_download_wrapper">
-                            <div class="devices nav_download_container" style={{float:'left' ,'margin-bottom': '5px'}} onclick="location.href='https://s3.amazonaws.com/aos-on-prem-downloads/1.1.6/Advantage+demo+1_1_6.ipa';">
+                            <div onClick={ ()=> {window.location.href='https://s3.amazonaws.com/aos-on-prem-downloads/1.1.6/Advantage+demo+2_0.ipa'}  } class="devices nav_download_container" style={{float:'left' ,'margin-bottom': '20px'}} >
                                 <div class="devices_pic">
                                     <AppleLogo></AppleLogo>
                                 </div>
@@ -25,13 +25,13 @@ export default class NavDownloads extends React.Component {
                                 </div>
                             </div>
 
-                                <div class="devices nav_download_container" onclick="location.href='https://s3.amazonaws.com/aos-on-prem-downloads/1.1.6/Advantage+demo+1_1_6.apk';">
+                                <div onClick={ ()=> {window.location.href='https://s3.amazonaws.com/aos-on-prem-downloads/1.1.6/Advantage+demo+2_0.ipa'}  } class="devices nav_download_container" >
                                     <div class="devices_pic">
                                         <AndroidLogo></AndroidLogo>
                                     </div>
                                     <div class="devices_inner_line">
-                                        <span>Download</span>
-                                        <span class="devices_font"><b>Android</b></span>
+                                        <span className="download_span">Download</span>
+                                        <span className="os_span"><b>Android</b></span>
                                     </div>
                                 </div>
                         </div>
