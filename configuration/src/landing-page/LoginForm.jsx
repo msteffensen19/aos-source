@@ -34,7 +34,7 @@ export default class LoginForm extends React.Component {
             url: "http://localhost:8080/accountservice/",
             method: "AccountLoginRequest",
             namespaceURL: "com.advantage.online.store.accountservice",
-            SOAPAction:"com.advantage.online.store.accountservice"+"AccountLoginRequest",
+            SOAPAction:"com.advantage.online.store.accountserviceAccountLoginRequest",
             data:user,
             success: function (soapResponse) {
                 //let response = soapResponse;
