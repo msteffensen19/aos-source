@@ -15,10 +15,10 @@ class App extends Component {
 
             <Container className="main-container">
                 <Row className="main-row-container">
-                    <Col className="left-column" xs={8} sm={8} md={8} lg={8}>
+                    <Col className="left-column" xs={10}>
                         <Container className="left-main-container">
-                            <Row className="top-container">
-                                <Col className="headers-container" /*left section*/>
+                            <Row className="flex-sm-row top-container">
+                                <Col xs={4} className="headers-container">
                                     <div className="icon-header-container">
                                     <AdvantageLogo className="fill-3"/><h1 className= "dvantage">dvantage</h1>
                                     </div>
@@ -26,11 +26,11 @@ class App extends Component {
                                     <h1 className="management-console">Management Console</h1>
                                     </div>
                                 </Col>
-                                <Col className="login-container" >
+                                <Col xs={4} className="login-container" >
 
                                     <LoginForm></LoginForm>
                                 </Col>
-                                <Col className="video-frame-container" /*Videos section*/>
+                                <Col xs={4} className="video-frame-container" /*Videos section*/>
                                     <VideoFrames></VideoFrames>
                                 </Col>
                             </Row>
@@ -38,14 +38,13 @@ class App extends Component {
                                     <div className="main-left-bottom-container">
                                     <h3 className="what-s-new-in">What’s New In</h3>
                                     <h1 className="version-number">v2.0</h1>
-                                    <i>Advantage icon</i>
                                         <WhatsNewComponent></WhatsNewComponent>
                                     </div>
                             </Row>
                         </Container>;
                     </Col>
 
-                    <Col className="aos-nav-bar ">
+                    <Col className="aos-nav-bar" xs={2}>
                         <NavigationBar></NavigationBar>
                     </Col>
                 </Row>

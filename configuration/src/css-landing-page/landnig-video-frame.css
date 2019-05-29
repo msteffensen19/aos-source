@@ -1,4 +1,5 @@
 
 .video-frame{
     margin-top: 23px ;
+    display: grid;
 }

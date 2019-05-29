@@ -10,7 +10,7 @@
     line-height: 24px;
 }
 .login {
-    height: 215px;
+    /*height: 215px;*/
     width: 269px;
     margin-top: 90px;
     margin-left: 100px;
@@ -52,6 +52,7 @@
 .sign-in-btn{
     height: 35px;
     width: 92px;
+    margin-bottom: 160px;
     background-color: #5DB2C9;
     color: #FFFFFF;
     font-family: Metric;

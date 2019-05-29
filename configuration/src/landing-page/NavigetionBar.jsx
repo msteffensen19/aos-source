@@ -7,14 +7,14 @@ export default class NavigationBar extends React.Component {
 
     render() {
         return (
-            <ul className="nav flex-column ">
-                <li className="nav-item">
+            <ul className="nav flex-column navigation-ul">
+                <li className="nav-item anyClass">
                     <NavUserGuide></NavUserGuide>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item anyClass">
                   <NavDownloads></NavDownloads>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item anyClass">
                     <NavInstallation></NavInstallation>
                 </li>
             </ul>

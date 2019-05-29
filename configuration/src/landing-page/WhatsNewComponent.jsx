@@ -14,7 +14,15 @@ export default class WhatsNewComponent extends React.Component {
         //split array into 2 arrays.
         let whatsNewObj1 = whatsNewObj.slice(0,whatsNewObj.length/2);
         let whatsNewObj2 = whatsNewObj.slice(whatsNewObj.length/2, whatsNewObj.length);
-        this.content = whatsNewObj.map((whatsNew) =>
+        this.content1 = whatsNewObj1.map((whatsNew) =>
+            <li className="list-inline-item make-scroll-li" key={whatsNew.title}>
+                <h3 className="title-style">{whatsNew.title}</h3>
+                <div>
+                <p className="content-style">{whatsNew.content}</p>
+                </div>
+            </li>
+        );
+        this.content2 = whatsNewObj2.map((whatsNew) =>
             <li className="list-inline-item make-scroll-li" key={whatsNew.title}>
                 <h3 className="title-style">{whatsNew.title}</h3>
                 <p className="content-style">{whatsNew.content}</p>
@@ -69,10 +77,13 @@ export default class WhatsNewComponent extends React.Component {
     render() {
         return (
 <div>
+
     <button id="leftBtn"></button>
-    <br/>
     <button id="rightBtn"></button>
-            <ul id="content" className="list-inline make-scroll-ul">{this.content}</ul>
+    
+            <ul id="content" className="list-inline make-scroll-ul">{this.content1}</ul>
+    <br/>
+            <ul id="content" className="list-inline make-scroll-ul">{this.content2}</ul>
 </div>
         );
     }
