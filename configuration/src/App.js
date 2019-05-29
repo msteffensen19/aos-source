@@ -38,7 +38,9 @@ class App extends Component {
                                     <div className="main-left-bottom-container">
                                     <h3 className="what-s-new-in">What’s New In</h3>
                                     <h1 className="version-number">v2.0</h1>
-                                        <WhatsNewComponent></WhatsNewComponent>
+                                    <button id="leftBtn"></button>
+                                    <button id="rightBtn"></button>
+                                    <WhatsNewComponent></WhatsNewComponent>
                                     </div>
                             </Row>
                         </Container>;

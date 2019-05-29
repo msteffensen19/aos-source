@@ -36,18 +36,18 @@ export default class WhatsNewComponent extends React.Component {
 
     componentDidMount() {
         document.getElementById('leftBtn').onclick = function () {
-            scrollLeft(document.getElementById('content'), -300, 1000);
-        }
+            scrollLeft(document.getElementById('content1'), -300, 1000);
+            scrollLeft(document.getElementById('content2'), -300, 1000);
+        };
 
         document.getElementById('rightBtn').onclick = function () {
-            scrollLeft(document.getElementById('content'), 300, 1000);
-        }
+            scrollLeft(document.getElementById('content1'), 300, 1000);
+            scrollLeft(document.getElementById('content2'), 300, 1000);
+        };
         function scrollLeft(element, change, duration) {
             var start = element.scrollLeft,
                 currentTime = 0,
                 increment = 20;
-
-            console.log(start)
 
             var animateScroll = function(){
                 currentTime += increment;
@@ -77,10 +77,6 @@ export default class WhatsNewComponent extends React.Component {
     render() {
         return (
 <div>
-
-    <button id="leftBtn"></button>
-    <button id="rightBtn"></button>
-    
             <ul id="content" className="list-inline make-scroll-ul">{this.content1}</ul>
     <br/>
             <ul id="content" className="list-inline make-scroll-ul">{this.content2}</ul>
