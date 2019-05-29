@@ -6,7 +6,7 @@ import './App.css';
 import NavigationBar from "./landing-page/NavigetionBar";
 import {ReactComponent as AdvantageLogo} from "./Advantage_logo_white.svg"
 import WhatsNewComponent from "./landing-page/WhatsNewComponent";
-
+import './css-landing-page/navbar.css';
 
 class App extends Component {
 
@@ -45,9 +45,7 @@ class App extends Component {
                         </Container>;
                     </Col>
 
-                    <Col /*NavBar section*/>
-                        <i></i>
-                        <h1>Navigation-Bar </h1>
+                    <Col className="aos-nav-bar ">
                         <NavigationBar></NavigationBar>
                     </Col>
                 </Row>
