@@ -20,7 +20,7 @@
 }
 .make-scroll-ul{
     white-space: nowrap;
-    width:80%;
+    width: 93%;
     text-align:center;
     overflow: hidden;
 }
@@ -32,13 +32,17 @@
     display: inline-grid;
 }
 .scroll-btn-container{
+   position: absolute;
+    right: 12%;
+    bottom: 37%;
 
 }
 #leftBtn{
-    right: 10%;
-    position: absolute;
+    position: relative;
+    bottom: 15px;
+    right: 15px;
 }
 #rightBtn{
-    right: 8%;
+    bottom: 15px;
     position: absolute;
 }

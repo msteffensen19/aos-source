@@ -109,6 +109,11 @@ body {
   height: 26.81px;
   width: 19.63px;
 }
+.fill-arrows {
+  height: 26.81px;
+  width: 19.63px;
+  color: #FFFFFF;
+}
 
 .icon-header-container{
   display: flex;
@@ -126,7 +131,8 @@ body {
   font-size: 57px;
   font-weight: bold;
   line-height: 65px;
-  text-shadow: 0 0 38px -10px rgba(0,0,0,0.51);
+  color: #5DB2C9;
+  /*text-shadow: rgba(111, 189, 255, 0.51) 0 0 38px;*/
 }
 .what-s-new-in {
   margin-top: 80px;
@@ -141,7 +147,7 @@ body {
   font-size: 58px;
   font-weight: bold;
   line-height: 51px;
-  text-shadow: 0 0 38px -10px rgba(0,0,0,0.51);
+  /*text-shadow: rgba(111, 189, 255, 0.51) 0 0 38px;*/
 }
 .main-left-bottom-container{
   margin-top: 60px;

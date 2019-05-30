@@ -5,6 +5,8 @@ import VideoFrames from './landing-page/Video.jsx';
 import './App.css';
 import NavigationBar from "./landing-page/NavigetionBar";
 import {ReactComponent as AdvantageLogo} from "./Advantage_logo_white.svg"
+import {ReactComponent as ArrowIconLeft} from "./css-landing-page/Arrow_Arrow_left.svg"
+import {ReactComponent as ArrowIconRight} from "./css-landing-page/Arrow_Arrow_right.svg"
 import WhatsNewComponent from "./landing-page/WhatsNewComponent";
 import './css-landing-page/navbar.css';
 
@@ -38,8 +40,10 @@ class App extends Component {
                                     <div className="main-left-bottom-container">
                                     <h3 className="what-s-new-in">What’s New In</h3>
                                     <h1 className="version-number">v2.0</h1>
-                                    <button id="leftBtn"></button>
-                                    <button id="rightBtn"></button>
+                                        <div className="scroll-btn-container">
+                                            <ArrowIconLeft className="fill-arrows" id="leftBtn"></ArrowIconLeft>
+                                            <ArrowIconRight className="fill-arrows" id="rightBtn"></ArrowIconRight>
+                                        </div>
                                     <WhatsNewComponent></WhatsNewComponent>
                                     </div>
                             </Row>

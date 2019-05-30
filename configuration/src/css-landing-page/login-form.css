@@ -55,8 +55,8 @@
     margin-bottom: 160px;
     background-color: #5DB2C9;
     color: #FFFFFF;
-    font-family: Metric;
-    font-size: 16px;
+    border: none;
+    font-size: 14px;
     font-weight: 500;
     line-height: 19px;
 }

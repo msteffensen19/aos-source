@@ -77,9 +77,9 @@ export default class WhatsNewComponent extends React.Component {
     render() {
         return (
 <div>
-            <ul id="content" className="list-inline make-scroll-ul">{this.content1}</ul>
+            <ul id="content1" className="list-inline make-scroll-ul">{this.content1}</ul>
     <br/>
-            <ul id="content" className="list-inline make-scroll-ul">{this.content2}</ul>
+            <ul id="content2" className="list-inline make-scroll-ul">{this.content2}</ul>
 </div>
         );
     }
