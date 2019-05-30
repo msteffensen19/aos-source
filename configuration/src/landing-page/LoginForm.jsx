@@ -1,6 +1,6 @@
 
 import React from 'react';
-import * as  $ from 'jquery';
+// import * as  $ from 'jquery';
 import '../css-landing-page/login-form.css';
 
 
@@ -24,11 +24,11 @@ export default class LoginForm extends React.Component {
     handleSubmit(event) {
 
 
-        let user =  {
-            email:'',
-                 loginPassword:this.state.password,
-                 loginUser:this.state.userName
-        };
+        // let user =  {
+        //     email:'',
+        //          loginPassword:this.state.password,
+        //          loginUser:this.state.userName
+        // };
 
 
             var xmlhttp = new XMLHttpRequest();
