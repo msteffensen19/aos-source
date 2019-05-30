@@ -3,7 +3,7 @@ div.gather_left {
     overflow:hidden;
     display: table;
     padding-left: 23%;
-    width: 40%;
+    width: 76%;
 }
 
 div.gather_right {
@@ -165,7 +165,7 @@ div.multiple_elements_overflow{
 }
 
 p.whats_new_width_paragraph_60{
-    width: 60%;
+    width: 90%;
 }
 
 p.whats_new_width_paragraph_90{
