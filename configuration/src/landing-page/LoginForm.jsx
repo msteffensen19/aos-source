@@ -64,8 +64,8 @@ export default class LoginForm extends React.Component {
                 // '</soapenv:Envelope>';
 
             xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4) {
-                    if (xmlhttp.status == 200) {
+                if (xmlhttp.readyState === 4) {
+                    if (xmlhttp.status === 200) {
                         alert(xmlhttp.responseText);
                         // alert('done. use firebug/console to see network response');
                     }
