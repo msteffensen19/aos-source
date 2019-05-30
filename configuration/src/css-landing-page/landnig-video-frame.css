@@ -1,0 +1,7 @@
+
+.video-frame{
+    position: inherit;
+    right: -190px;
+    margin-top: 23px ;
+    display: grid;
+}

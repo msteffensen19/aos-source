@@ -1,0 +1,101 @@
+
+@font-face {
+    font-family: 'Metric';
+    src: url('Metric-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.aos-nav-bar{
+    opacity: 0.92;
+    background-image: url("nav_bg.png");
+    background-position-x: right;
+    padding: 0;
+    height: 100%;
+}
+.nav-spacer{
+    height: 4px;
+    width: 32px;
+    background-color: #292E44;
+    margin-bottom: 10px;
+    margin-left: 40px;
+}
+
+.aos-nav-headline{
+    color: #24273A;
+    font-family: Metric;	font-size: 21px;	font-weight: 700;	line-height: 25px;
+    padding-inline-start: 40px;
+}
+.aos-nav-bar ul{
+    list-style-type: none;
+    margin-top: 40px;
+}
+.devices{
+    display: table;
+    width:238px;
+    margin-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    cursor: pointer;
+}
+
+.devices_inner_line{
+    display: table-cell;
+    vertical-align: middle;
+    border-left:1px solid black ;
+    border-color: rgba(0,0,0,0.4);;
+    padding-left: 25px;
+    color: black;
+}
+
+.devices_inner_line > span{
+    display: block;
+
+}
+
+
+div.devices_pic{
+    display: table-cell;
+    vertical-align: middle;
+    width: 30%;
+    opacity: 0.4;
+}
+
+.os_span{
+    height: 20px;
+    color: #000000;
+    font-family: Metric;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+}
+.nav_download_container{
+    background: rgba(255,255,255,0.4);
+}
+.nav_download_wrapper{
+    padding-inline-start: 40px;
+}
+.nav_user_guide_list li{
+    font-family: Metric;
+    font-size: 18px;
+    line-height: 40px;
+
+}
+.nav_user_guide_list li a {
+    font-family: Metric;
+    text-underline: none;
+    color: black;
+}
+
+.nav_user_guide_list li a:hover{
+    font-family: Metric;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+.download_span{
+    font-size: 14px;
+}

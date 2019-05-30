@@ -1,0 +1,48 @@
+.title-style{
+    /*height: 20px;*/
+    /*width: 49px;*/
+    text-align: left;
+    color: #FFFFFF;
+    font-family: Metric;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.content-style{
+
+    opacity: 0.82;
+    color: #B8BCCF;
+    font-family: Metric;
+    font-size: 14px;
+    line-height: 16px;
+    white-space: normal;
+    text-align: left;
+}
+.make-scroll-ul{
+    white-space: nowrap;
+    width: 93%;
+    text-align:center;
+    overflow: hidden;
+}
+.make-scroll-li{
+    height: 120px;
+    width: 360px;
+    list-style:none;
+    padding:10px 0;
+    display: inline-grid;
+}
+.scroll-btn-container{
+   position: absolute;
+    right: 12%;
+    bottom: 37%;
+
+}
+#leftBtn{
+    position: relative;
+    bottom: 15px;
+    right: 15px;
+}
+#rightBtn{
+    bottom: 15px;
+    position: absolute;
+}
