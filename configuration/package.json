@@ -6,7 +6,7 @@
     "@types/jquery": "^3.3.29",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
-    "jquery.soap": "1.6.9",
+    "jquery.soap": "^1.7.3",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",

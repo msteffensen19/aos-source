@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="21.3668831%" y1="29.8257212%" x2="71.4879032%" y2="75.1742788%" id="linearGradient-1">
+            <stop stop-color="#A1CED1" offset="0%"></stop>
+            <stop stop-color="#ACD2D0" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-2" font-family="Metric-BoldItalic, Metric" font-size="101" font-style="italic" font-weight="bold" line-spacing="65">
+            <tspan x="0" y="66">S</tspan>
+        </text>
+        <filter x="-100.0%" y="-80.0%" width="300.0%" height="263.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="5" operator="erode" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="19" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.506392045 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="38.2817602%" y1="40.9194712%" x2="61.2056008%" y2="83.2692308%" id="linearGradient-4">
+            <stop stop-color="#A1CED1" offset="0%"></stop>
+            <stop stop-color="#C7DECE" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-5" font-family="Metric-BoldItalic, Metric" font-size="101" font-style="italic" font-weight="bold" line-spacing="65" letter-spacing="-4.76415094">
+            <tspan x="45" y="66">o</tspan>
+        </text>
+        <filter x="-8.7%" y="-3.1%" width="119.6%" height="115.4%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="-2" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.262745098   0 0 0 0 0.282352941   0 0 0 0 0.356862745  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="59.5132212%" x2="91.9277134%" y2="115.036058%" id="linearGradient-7">
+            <stop stop-color="#C7DECE" offset="0%"></stop>
+            <stop stop-color="#DCD9B8" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-8" font-family="Metric-BoldItalic, Metric" font-size="101" font-style="italic" font-weight="bold" line-spacing="65" letter-spacing="-4.76415094">
+            <tspan x="87" y="66">o</tspan>
+        </text>
+        <filter x="-8.7%" y="-3.1%" width="119.6%" height="115.4%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="-2" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.278431373   0 0 0 0 0.294117647   0 0 0 0 0.368627451  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="33.0221115%" y1="38.0769231%" x2="73.4023669%" y2="91.4603365%" id="linearGradient-10">
+            <stop stop-color="#D0DCC5" offset="0%"></stop>
+            <stop stop-color="#DCD9B8" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-11" font-family="Metric-BoldItalic, Metric" font-size="101" font-style="italic" font-weight="bold" line-spacing="65" letter-spacing="-4.76415094">
+            <tspan x="130" y="66">n</tspan>
+        </text>
+        <filter x="-8.3%" y="-3.1%" width="118.8%" height="113.8%" filterUnits="objectBoundingBox" id="filter-12">
+            <feOffset dx="-2" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.270588235   0 0 0 0 0.290196078   0 0 0 0 0.364705882  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Coming-soon" transform="translate(-462.000000, -191.000000)">
+            <g id="Group" transform="translate(462.000000, 190.000000)">
+                <g id="S">
+                    <use fill="#D8D8D8" fill-opacity="1" filter="url(#filter-3)" xlink:href="#text-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#text-2"></use>
+                    <use fill="#D8D8D8" fill-opacity="1" xlink:href="#text-2"></use>
+                </g>
+                <g id="o">
+                    <use fill="#D8D8D8" fill-opacity="1" filter="url(#filter-6)" xlink:href="#text-5"></use>
+                    <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#text-5"></use>
+                    <use fill="#D8D8D8" fill-opacity="1" xlink:href="#text-5"></use>
+                </g>
+                <g id="o-copy">
+                    <use fill="#D8D8D8" fill-opacity="1" filter="url(#filter-9)" xlink:href="#text-8"></use>
+                    <use fill="url(#linearGradient-7)" fill-rule="evenodd" xlink:href="#text-8"></use>
+                    <use fill="#D8D8D8" fill-opacity="1" xlink:href="#text-8"></use>
+                </g>
+                <g id="n">
+                    <use fill="#D8D8D8" fill-opacity="1" filter="url(#filter-12)" xlink:href="#text-11"></use>
+                    <use fill="url(#linearGradient-10)" fill-rule="evenodd" xlink:href="#text-11"></use>
+                    <use fill="#D8D8D8" fill-opacity="1" xlink:href="#text-11"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

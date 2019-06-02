@@ -1,9 +1,13 @@
 
 import React from 'react';
-// import * as  $ from 'jquery';
+import 'jquery';
+import 'jquery.soap';
+
+import 'bootstrap';
 import '../css-landing-page/login-form.css';
+// import { Link } from 'react-router-dom';
 
-
+//import { BrowserRouter as  Link } from 'react-router-dom';
 
 export default class LoginForm extends React.Component {
     constructor(props) {
@@ -23,60 +27,31 @@ export default class LoginForm extends React.Component {
     }
     handleSubmit(event) {
 
+        let user =
+        {email: "",
+        loginPassword: "adm1n",
+        loginUser: "admin"};
 
-        // let user =  {
-        //     email:'',
-        //          loginPassword:this.state.password,
-        //          loginUser:this.state.userName
-        // };
+        let $ = require('jquery');
+        require('jquery.soap');
+        $.soap({
+            url: 'http://localhost:8080/accountservice/',
+            method: 'AccountLoginRequest',
+            namespaceURL: 'com.advantage.online.store.accountservice',
+            SOAPAction: 'com.advantage.online.store.accountservice' + 'AccountLoginRequest' ,
+            data: user,
+            success: function (soapResponse) {
+                let response = soapResponse;
+                console.log(response);
+                window.location="/coming-soon"
 
+            },
+            error: function (response) {
+                console.log(response);
+            },
+            enableLogging: true
+        });
 
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open('POST', 'http://localhost:8080/accountservice/AccountLoginRequest', true);
-
-            // build SOAP request
-            var sr =
-                '<?xml version="1.0" encoding="UTF-8"?>' +
-                '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"' +
-                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">' +
-                '<soap:Body>' +
-                '<AccountLoginRequest xmlns="com.advantage.online.store.accountservice">' +
-                '<loginUser>admin</loginUser>' +
-                '<email></email>' +
-                '<loginPassword>adm1n</loginPassword>' +
-                '</AccountLoginRequest>' +
-                '</soap:Body>' +
-                '</soap:Envelope>';
-                // '<?xml version="1.0" encoding="utf-8"?>' +
-                // '<soapenv:Envelope ' +
-                // 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                // 'xmlns:api="http://127.0.0.1/Integrics/Enswitch/API" ' +
-                // 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
-                // 'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">' +
-                // '<soapenv:Body>' +
-                // '<AccountLoginRequest:xmlns="com.advantage.online.store.accountservice">' +
-                // '<email></email>'+
-                // '<loginPassword xsi:type="xsd:string">adm1n</loginPassword>' +
-                // '<loginUser xsi:type="xsd:string">admin</loginUser>' +
-                // '</AccountLoginRequest>' +
-                // '</soapenv:Body>' +
-                // '</soapenv:Envelope>';
-
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState === 4) {
-                    if (xmlhttp.status === 200) {
-                        alert(xmlhttp.responseText);
-                        // alert('done. use firebug/console to see network response');
-                    }
-                }
-            }
-            // Send the POST request
-            xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-            xmlhttp.setRequestHeader('Host', 'localhost:8080');
-            xmlhttp.send(sr);
-            // send request
-            // ...
 
 
         event.preventDefault();
