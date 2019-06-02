@@ -1,0 +1,17 @@
+
+
+.coming-soon{
+    background-color: #24273a;
+    background-image: url('./shapes.svg');
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.advantage-header{
+    display: flex;
+    position: absolute;
+    top: 65px;
+    left: 65px;
+}
