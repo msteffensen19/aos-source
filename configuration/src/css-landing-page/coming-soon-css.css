@@ -8,10 +8,14 @@
     background-size: cover;
     position: relative;
 }
-
 .advantage-header{
     display: flex;
     position: absolute;
     top: 65px;
     left: 65px;
+}
+.soon-svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
