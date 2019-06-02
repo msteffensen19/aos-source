@@ -17,7 +17,7 @@ export default class UnderConstruction extends React.Component {
 
     render() {
         return (
-            <Link to="/about">
+            <Link to="/coming-soon">
                  <div className="coming-soon regular-cursor">
                      <div className="advantage-header">
                          <AdvantageLogo className="soon-advantage-icon"/><h1 className= "dvantage more-size">dvantage</h1>

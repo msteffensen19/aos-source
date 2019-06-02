@@ -10,7 +10,7 @@ class App extends Component {
         return (
 <Router>
         <Route exact path="/configuration" component={LandingPage} />
-        <Route exact path="/about" component={UnderConstruction} />
+        <Route exact path="/coming-soon" component={UnderConstruction} />
 </Router>
 
         )
