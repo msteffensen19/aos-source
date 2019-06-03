@@ -24,11 +24,11 @@ export default class UnderConstruction extends React.Component {
     redirectToLinks(event){
         switch (event.target.id) {
             case "backToAOS":
-                window.open(window.location.origin.toString());
+                window.location.href = window.location.origin.toString();
                 break;
 
             case "backToManagement":
-                window.open(window.location.origin.toString()+'/admin');
+                window.location.href = window.location.origin.toString()+'/admin';
                 break;
 
             case "Fill-1" || "facebookIcon" :
