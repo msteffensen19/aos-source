@@ -50,7 +50,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 	 env.aos_copy_Nimbus_files=true
   }else{
 
-      if (commits.contains("catalog") || commits.contains("mastercredit") || commits.contains("order") || commits.contains("safepay") || commits.contains("shipex") || commits.contains("configuration")) {
+      if (commits.contains("catalog") || commits.contains("mastercredit") || commits.contains("order") || commits.contains("safepay") || commits.contains("shipex") || commits.contains("admin")) {
           env.aos_build_main_wars=true
       }
       if (commits.contains("accountservice")) {
