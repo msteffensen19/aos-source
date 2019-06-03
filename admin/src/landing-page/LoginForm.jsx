@@ -43,7 +43,7 @@ export default class LoginForm extends React.Component {
             success: function (soapResponse) {
                 let response = soapResponse;
                 console.log(response);
-                window.location="/coming-soon"
+                window.location="/admin/coming-soon"
 
             },
             error: function (response) {
