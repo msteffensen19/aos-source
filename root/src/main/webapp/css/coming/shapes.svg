@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1076px" height="557px" viewBox="0 0 1076 557" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>shapes</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.917759487">
+        <g id="Coming-soon" transform="translate(-26.000000, -25.000000)">
+            <g id="shapes" transform="translate(26.000000, 25.000000)">
+                <rect id="Rectangle" fill="#D3DBC1" x="219" y="166" width="7" height="7"></rect>
+                <rect id="Rectangle" fill="#D3DBC1" x="599" y="0" width="7" height="7"></rect>
+                <path d="M342,485 L345,485 L345,487 L342,487 L342,490 L340,490 L340,487 L337,487 L337,485 L340,485 L340,482 L342,482 L342,485 Z" id="Combined-Shape" fill="#D8D8D8"></path>
+                <path d="M961,205 L964,205 L964,207 L961,207 L961,210 L959,210 L959,207 L956,207 L956,205 L959,205 L959,202 L961,202 L961,205 Z" id="Combined-Shape-Copy-2" fill="#5DB2C9"></path>
+                <path d="M767,355 L772,355 L772,358 L767,358 L767,363 L764,363 L764,358 L759,358 L759,355 L764,355 L764,350 L767,350 L767,355 Z" id="Combined-Shape" fill="#5DB2C9"></path>
+                <path d="M342,485 L345,485 L345,487 L342,487 L342,490 L340,490 L340,487 L337,487 L337,485 L340,485 L340,482 L342,482 L342,485 Z" id="Combined-Shape" fill="#D8D8D8"></path>
+                <rect id="Rectangle-Copy-3" fill="#5DB2C9" x="365" y="36" width="10" height="10"></rect>
+                <rect id="Rectangle-Copy-3" fill="#5DB2C9" x="918" y="396" width="10" height="10"></rect>
+                <circle id="Oval" fill="#A28E3B" cx="850" cy="53" r="5"></circle>
+                <circle id="Oval" fill="#A28E3B" cx="68" cy="248" r="5"></circle>
+                <circle id="Oval" fill="#A28E3B" cx="285.5" cy="10.5" r="3.5"></circle>
+                <circle id="Oval" fill="#A28E3B" cx="795.5" cy="191.5" r="3.5"></circle>
+                <circle id="Oval" fill="#D3DBC1" cx="195.5" cy="410.5" r="3.5"></circle>
+                <circle id="Oval" fill="#D3DBC1" cx="827.5" cy="493.5" r="3.5"></circle>
+                <circle id="Oval" fill="#5DB2C9" cx="1024.5" cy="19.5" r="4.5"></circle>
+                <path d="M327,318.93797 C327.327787,318.978923 327.661509,319 328,319 C332.052416,319 335.421205,315.979016 336.107621,312 L341,312 C340.277057,318.749926 334.732557,324 328,324 C327.663548,324 327.330064,323.986889 327,323.961134 L327,318.93797 Z" id="Combined-Shape" fill="#A28E3B"></path>
+                <path d="M1074.17677,364 C1074.18607,363.834559 1074.19078,363.667847 1074.19078,363.5 C1074.19078,358.80558 1070.50365,355 1065.95533,355 C1065.6322,355 1065.31342,355.019208 1065,355.056577 L1065,350.03546 C1065.31548,350.011956 1065.63405,350 1065.95533,350 C1073.17912,350 1079.03516,356.044156 1079.03516,363.5 C1079.03516,363.667396 1079.03221,363.83408 1079.02636,364 L1074.17677,364 Z" id="Combined-Shape-Copy" fill="#A28E3B" transform="translate(1072.017581, 357.000000) rotate(-180.000000) translate(-1072.017581, -357.000000) "></path>
+                <path d="M99.0296422,557 C99.0359634,556.834159 99.0391542,556.667471 99.0391542,556.5 C99.0391542,549.719171 93.8081377,544.222222 87.3553518,544.222222 C86.8969222,544.222222 86.444659,544.249966 86,544.303944 L86,537.05122 C86.4475721,537.017269 86.8995428,537 87.3553518,537 C97.6038941,537 105.911979,545.730447 105.911979,556.5 C105.911979,556.667166 105.909977,556.833841 105.905998,557 L99.0296422,557 Z" id="Combined-Shape-Copy" fill="#5DB2C9"></path>
+                <path d="M785.086934,53 C785.113585,52.6702791 785.127175,52.3367646 785.127175,52 C785.127175,45.393038 779.896159,40.037037 773.443373,40.037037 C772.984943,40.037037 772.53268,40.0640699 772.088021,40.1166636 L772.088021,33.0499063 C772.535593,33.0168266 772.987564,33 773.443373,33 C783.691915,33 792,41.5065898 792,52 C792,52.3354345 791.99151,52.6688389 791.974739,53 L785.086934,53 Z" id="Combined-Shape-Copy" fill="#D8D8D8"></path>
+                <rect id="Rectangle-Copy" fill="#5DB2C9" x="0" y="394" width="13" height="13"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

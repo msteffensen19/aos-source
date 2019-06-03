@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Under Construction</title>
+    <style>
+
+
+        .coming-soon{
+            background-color: #24273a;
+            background-image: url('css/coming/shapes.svg');
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+        .advantage-header{
+            display: flex;
+            position: absolute;
+            top: 65px;
+            left: 65px;
+        }
+        .images-container-comingSoon{
+
+            position: absolute;
+            top: 32%;
+            left: 41%;
+            text-align: center
+        }
+        .soon-title{
+
+            position: absolute;
+            top: 62%;
+            left: 45%;
+            color: #FFFFFF;
+            font-family: Metric;
+            font-size: 23px;
+            line-height: 20px;
+
+        }
+        .back-buttons-container{
+            position: absolute;
+            top: 68%;
+            left: 44%;
+            width: 350px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .button-modification{
+            height: 60px;
+            width: 138px;
+            margin-bottom: 0;
+            text-align: center;
+        }
+        .regular-cursor{
+            cursor: default;
+        }
+        .left-space{
+            margin-left: 1%;
+        }
+        .social-links-container{
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            width: 73px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .prevent-pointer{
+            pointer-events: none;
+        }
+        .twitter-icon{
+            position: absolute;
+            left:67%;
+        }
+        .linkedin-icon{
+            fill:white;
+            position: absolute;
+            left: 141%;
+            bottom: 16%;
+        }
+        .soon-advantage-icon{
+            height: 36.81px;
+            width: 25.63px;
+        }
+        .more-size{
+            font-size: 44px;
+        }
+    </style>
+</head>
+<body>
+<div>
+<div class="coming-soon regular-cursor">
+    <div class="advantage-header">
+        <AdvantageLogo class="soon-advantage-icon"/><h1 class= "dvantage more-size">dvantage</h1>
+    </div>
+    <OvalSVG class="prevent-pointer" />
+    <div class="images-container-comingSoon">
+        <div>
+            <img class="coming-soon-images coming-position regular-cursor" src='/css/coming/Coming.png' ></img>
+        </div>
+        <div>
+            <img class="coming-soon-images soon-position regular-cursor" src='/css/coming/Group.png' ></img>
+        </div>
+    </div>
+    <div class="soon-title regular-cursor">
+        <RightFlag />
+        <span class="regular-cursor">We are still working on it</span>
+        <LeftFlag />
+    </div>
+    <div class="back-buttons-container">
+        <input class="sign-in-btn button-modification" value="Back To AOS" />
+        <button class="sign-in-btn button-modification left-space">
+            Back To
+            <br/>
+            Management Console
+        </button>
+    </div>
+    <div class="social-links-container">
+        <img src="/css/coming/Facebook.svg" />
+        <img src="/css/coming/Twitter.svg" class="twitter-icon"/>
+        <img src="/css/coming/LinkedinIcon.svg" class="linkedin-icon"/>
+    </div>
+</div>
+</div>
+</body>
+</html>
