@@ -6,10 +6,12 @@ import 'jquery.soap';
 import 'bootstrap';
 import '../css-landing-page/login-form.css';
 // import { Link } from 'react-router-dom';
+import {
+    withRouter
+} from 'react-router-dom'
 
 //import { BrowserRouter as  Link } from 'react-router-dom';
-
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,6 +36,7 @@ export default class LoginForm extends React.Component {
 
         let $ = require('jquery');
         require('jquery.soap');
+        let me = this;
         $.soap({
             url: 'http://localhost:8080/accountservice/',
             method: 'AccountLoginRequest',
@@ -43,7 +46,7 @@ export default class LoginForm extends React.Component {
             success: function (soapResponse) {
                 let response = soapResponse;
                 console.log(response);
-                window.location="/coming-soon"
+                me.props.history.push('/coming-soon')
 
             },
             error: function (response) {
@@ -53,12 +56,13 @@ export default class LoginForm extends React.Component {
         });
 
         event.preventDefault();
+
     }
 
     render() {
         return (
 
-            <form className= "login" onSubmit={this.handleSubmit}>
+            <form  className= "login" onSubmit={this.handleSubmit}>
                 <h1 className= "enter-details-to-log">Enter details to login</h1>
                 <label className="margin-top-labels">
                     <h3 className= "user-name">User Name</h3>
@@ -85,3 +89,5 @@ export default class LoginForm extends React.Component {
         );
     }
 }
+
+export default withRouter(LoginForm)

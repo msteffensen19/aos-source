@@ -1,6 +1,10 @@
 import React from 'react';
 import'../css-landing-page/coming-soon-css.css';
 import { Link } from 'react-router-dom';
+import {
+    withRouter
+} from 'react-router-dom'
+
 // noinspection ES6CheckImport
 import {ReactComponent as AdvantageLogo} from "../Advantage_logo_white.svg";
 import {ReactComponent as OvalSVG} from "../css-landing-page/Oval.svg";
@@ -13,7 +17,7 @@ import {ReactComponent as TwitterIcon} from "../css-landing-page/Twitter.svg";
 import {ReactComponent as LinkedinIcon} from "../css-landing-page/LinkedinIcon.svg";
 
 
-export default class UnderConstruction extends React.Component {
+class UnderConstruction extends React.Component {
 
     render() {
         return (
@@ -55,3 +59,5 @@ export default class UnderConstruction extends React.Component {
         );
     }
 }
+
+export default withRouter(UnderConstruction)
