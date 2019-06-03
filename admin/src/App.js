@@ -10,8 +10,8 @@ class App extends Component {
         return (
 <Router basename='/admin'>
     <switch>
-        <Route path="/" component={LandingPage} />
-        <Route path="/coming-soon" render={() => <UnderConstruction />}/>
+        <Route  path="/coming-soon" component={UnderConstruction}/>
+        <Route exact path="/" component={LandingPage} />
     </switch>
 
 </Router>
