@@ -5,12 +5,9 @@ import 'jquery.soap';
 
 import 'bootstrap';
 import '../css-landing-page/login-form.css';
-// import { Link } from 'react-router-dom';
-import {
-    withRouter
-} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
-//import { BrowserRouter as  Link } from 'react-router-dom';
+
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -46,7 +43,7 @@ class LoginForm extends React.Component {
             success: function (soapResponse) {
                 let response = soapResponse;
                 console.log(response);
-                me.props.history.push('/coming-soon')
+                me.props.history.push('/coming-soon');
 
             },
             error: function (response) {
@@ -89,5 +86,4 @@ class LoginForm extends React.Component {
         );
     }
 }
-
-export default withRouter(LoginForm)
+export default withRouter(LoginForm);
