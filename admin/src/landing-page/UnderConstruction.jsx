@@ -21,7 +21,7 @@ class UnderConstruction extends React.Component {
 
     render() {
         return (
-            <Link to="/coming-soon">
+            <Link to="/admin/coming-soon">
                  <div className="coming-soon regular-cursor">
                      <div className="advantage-header">
                          <AdvantageLogo className="soon-advantage-icon"/><h1 className= "dvantage more-size">dvantage</h1>
@@ -49,10 +49,9 @@ class UnderConstruction extends React.Component {
                              </button>
                      </div>
                      <div className="social-links-container">
-                                <FacebookIcon />
-                                <TwitterIcon className="twitter-icon"/>
-                                <LinkedinIcon className="linkedin-icon"/>
-
+                            <FacebookIcon />
+                            <TwitterIcon className="twitter-icon"/>
+                            <LinkedinIcon className="linkedin-icon"/>
                      </div>
                  </div>
             </Link>
