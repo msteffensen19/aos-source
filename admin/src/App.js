@@ -9,7 +9,7 @@ class App extends Component {
     render() {
         return (
 <Router>
-        <Route exact path="/configuration" component={LandingPage} />
+        <Route exact path="/admin" component={LandingPage} />
         <Route exact path="/coming-soon" component={UnderConstruction} />
 </Router>
 

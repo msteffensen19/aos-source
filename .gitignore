@@ -135,3 +135,4 @@ rebel.xml
 liquibase/*
 root/src/main/webapp/package-lock.json
 /configuration/npm/*
+/admin/npm/*
