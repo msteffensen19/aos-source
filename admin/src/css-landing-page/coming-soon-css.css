@@ -2,7 +2,7 @@
 
 .coming-soon{
     background-color: #24273a;
-    background-image: url('./shapes.svg');
+    background-image: url('../svg-png-ext/shapes.svg');
     height: 100%;
     background-position: center;
     background-size: cover;

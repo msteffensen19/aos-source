@@ -1,5 +1,5 @@
 import React from 'react';
-import {ReactComponent as MFLogo} from "../css-landing-page/MicroFocus_logo_black.svg";
+import {ReactComponent as MFLogo} from "../svg-png-ext/MicroFocus_logo_black.svg";
 
 export default class NavInstallation extends React.Component {
 

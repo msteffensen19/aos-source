@@ -5,8 +5,8 @@ import VideoFrames from './Video.jsx';
 import '../App.css';
 import NavigationBar from "./NavigetionBar";
 import {ReactComponent as AdvantageLogo} from "../Advantage_logo_white.svg"
-import {ReactComponent as ArrowIconLeft} from "../css-landing-page/Arrow_Arrow_left.svg"
-import {ReactComponent as ArrowIconRight} from "../css-landing-page/Arrow_Arrow_right.svg"
+import {ReactComponent as ArrowIconLeft} from "../svg-png-ext/Arrow_Arrow_left.svg"
+import {ReactComponent as ArrowIconRight} from "../svg-png-ext/Arrow_Arrow_right.svg"
 import WhatsNewComponent from "./WhatsNewComponent";
 import '../css-landing-page/navbar.css';
 
@@ -25,7 +25,7 @@ export default class LandingPageHome extends Component {
                                             <AdvantageLogo className="fill-3"/><h1 className= "dvantage">dvantage</h1>
                                         </div>
                                         <div>
-                                            <h1 className="management-console">Management Console</h1>
+                                            <h1 className="management-console">Management <br/>Console</h1>
                                         </div>
                                     </Col>
                                     <Col xs={4} className="login-container" >
@@ -47,7 +47,7 @@ export default class LandingPageHome extends Component {
                                         <WhatsNewComponent></WhatsNewComponent>
                                     </div>
                                 </Row>
-                            </Container>;
+                            </Container>
                         </Col>
 
                         <Col className="aos-nav-bar" xs={2}>

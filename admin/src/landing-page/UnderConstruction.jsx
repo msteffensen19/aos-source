@@ -1,14 +1,14 @@
 import React from 'react';
 import'../css-landing-page/coming-soon-css.css';
 import {ReactComponent as AdvantageLogo} from "../Advantage_logo_white.svg";
-import {ReactComponent as OvalSVG} from "../css-landing-page/Oval.svg";
-import soonPng from "../css-landing-page/Group.png";
-import comingPng from "../css-landing-page/Coming.png";
-import {ReactComponent as LeftFlag} from "../css-landing-page/left-flag.svg";
-import {ReactComponent as RightFlag} from "../css-landing-page/right-flag.svg";
-import {ReactComponent as FacebookIcon} from "../css-landing-page/Facebook.svg";
-import {ReactComponent as TwitterIcon} from "../css-landing-page/Twitter.svg";
-import {ReactComponent as LinkedinIcon} from "../css-landing-page/LinkedinIcon.svg";
+import {ReactComponent as OvalSVG} from "../svg-png-ext/Oval.svg";
+import soonPng from "../svg-png-ext/Group.png";
+import comingPng from "../svg-png-ext/Coming.png";
+import {ReactComponent as LeftFlag} from "../svg-png-ext/left-flag.svg";
+import {ReactComponent as RightFlag} from "../svg-png-ext/right-flag.svg";
+import {ReactComponent as FacebookIcon} from "../svg-png-ext/Facebook.svg";
+import {ReactComponent as TwitterIcon} from "../svg-png-ext/Twitter.svg";
+import {ReactComponent as LinkedinIcon} from "../svg-png-ext/LinkedinIcon.svg";
 
 
 export default class UnderConstruction extends React.Component {

@@ -8,7 +8,7 @@
 
 .aos-nav-bar{
     opacity: 0.92;
-    background-image: url("nav_bg.png");
+    background-image: url("../svg-png-ext/nav_bg.png");
     background-position-x: right;
     padding: 0;
     height: 100%;
@@ -32,12 +32,12 @@
 }
 .devices{
     display: table;
-    width:238px;
+    width:180px;
     margin-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 25px;
-    padding-right: 25px;
+    /*padding-right: 25px;*/
     cursor: pointer;
 }
 

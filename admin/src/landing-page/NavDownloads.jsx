@@ -1,6 +1,6 @@
 import React from 'react';
-import {ReactComponent as AppleLogo} from "../css-landing-page/AppleLogo.svg"
-import {ReactComponent as AndroidLogo} from "../css-landing-page/Android_logo.svg"
+import {ReactComponent as AppleLogo} from "../svg-png-ext/AppleLogo.svg"
+import {ReactComponent as AndroidLogo} from "../svg-png-ext/Android_logo.svg"
 
 
 export default class NavDownloads extends React.Component {
