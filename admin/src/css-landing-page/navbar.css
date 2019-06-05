@@ -29,12 +29,11 @@
 }
 .aos-nav-bar ul{
     list-style-type: none;
-    margin-top: 40px;
     display: list-item;
 }
 .devices{
     display: table;
-    width:180px;
+    width:215px;
     margin-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -81,7 +80,7 @@ div.devices_pic{
 }
 .nav_user_guide_list li{
     font-family: Metric;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 40px;
 
 }
@@ -101,3 +100,15 @@ div.devices_pic{
 .download_span{
     font-size: 14px;
 }
+.nav-space-between{
+    padding-top: 55px;
+}
+
+
+    @media only screen and (min-height: 950px) {
+
+        .nav-space-between{
+            padding-top: 85px;
+        }
+}
+

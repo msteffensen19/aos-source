@@ -25,15 +25,16 @@
     overflow: hidden;
 }
 .make-scroll-li{
-    height: 120px;
-    width: 360px;
+    height: 140px;
+    width: 295px;
     list-style:none;
     padding:10px 0;
     display: inline-grid;
 }
 .scroll-btn-container{
-   position: absolute;
-    right: 12%;
+    position: absolute;
+    top: 15%;
+    right: 10%;
 
 }
 #leftBtn{
@@ -44,4 +45,10 @@
 #rightBtn{
     bottom: 15px;
     position: absolute;
+}
+#content1 li{
+    margin-right: 72px;
+}
+#content2 li{
+    margin-right: 72px;
 }

@@ -28,6 +28,7 @@
     border: 0;
     border-bottom: 1px solid #010101;
     width: 269px;
+    background-color: #24273A;
 }
 .remember-me {
     height: 14px;
@@ -59,4 +60,10 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 19px;
+}
+.pop-up-design{
+
+    width: 200px;
+    height: 100px;
+    bottom: 150px;
 }

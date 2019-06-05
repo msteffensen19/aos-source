@@ -52,15 +52,12 @@ body {
           0 0,
           100% 0,
           100% 100%,
-          0 calc(100% - 5vw)
+          0 calc(100% - 7vw)
   );
   margin: 0;
 }
 .left-bottom-container{
   position: relative;
-  height: 100%;
-  width: 100%;
-  margin-top: -5vw;
   margin-left: 0;
   margin-right: 0;
 }
@@ -129,7 +126,9 @@ body {
   width: 287px;
   margin-top: 35px;
   margin-left: 60px;
-  color: #FFFFFF;
+  background: linear-gradient(#5DB2C9, #92F1EC);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
   font-family: Metric;
   font-size: 57px;
   font-weight: bold;
@@ -138,13 +137,16 @@ body {
   /*text-shadow: rgba(111, 189, 255, 0.51) 0 0 38px;*/
 }
 .what-s-new-in {
-  margin-top: 80px;
   color: #FFFFFF;
   font-family: Metric;
   font-size: 18px;
   line-height: 22px;
 }
 .version-number{
+  padding-top: 4px;
+  background: linear-gradient(#5DB2C9, #92F1EC);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
   color: #5DB2C9;
   font-family: Metric;
   font-size: 58px;

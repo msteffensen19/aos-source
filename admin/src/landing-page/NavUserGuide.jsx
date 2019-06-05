@@ -6,7 +6,7 @@ export default class NavUserGuide extends React.Component {
     render() {
 
         return (
-            <div>
+            <div style={{paddingTop:'45px'}}>
                 <div className="nav-spacer"></div>
                 <p className="aos-nav-headline">User Guides</p>
                 <ul className="nav_user_guide_list">

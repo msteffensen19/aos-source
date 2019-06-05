@@ -10,7 +10,7 @@ export default class NavDownloads extends React.Component {
 
         return (
 
-            <div style={{'paddingTop':"50px"}}>
+            <div className='nav-space-between'>
                 <div className="nav-spacer"></div>
                 <p className="aos-nav-headline">Download Mobile Apps</p>
 
