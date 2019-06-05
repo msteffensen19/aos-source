@@ -11,7 +11,8 @@
     background-image: url("../svg-png-ext/nav_bg.png");
     background-position-x: right;
     padding: 0;
-    height: 100%;
+    height: available;
+    height: -webkit-fill-available;;
 }
 .nav-spacer{
     height: 4px;
