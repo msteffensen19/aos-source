@@ -6,7 +6,6 @@ import coverPicture2 from'../svg-png-ext/Image_video2.jpg';
 export default class Contacts extends React.Component {
 
     putControls(){
-
        document.getElementById("videoOneTag").setAttribute("controls", "controls");
 
     };
@@ -29,7 +28,7 @@ export default class Contacts extends React.Component {
                         src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-e2e-flow.mp4" />
                     <video width="320" height="200"
                            preload
-                           controls
+                           //controls
                            poster={coverPicture2}
                         //autoPlay
                            src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-product-features.mp4" />
@@ -38,5 +37,3 @@ export default class Contacts extends React.Component {
         );
     }
 }
-
-//comment 4 push.

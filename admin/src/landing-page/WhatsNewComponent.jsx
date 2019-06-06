@@ -7,7 +7,7 @@ export default class WhatsNewComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        // let counter =0;
+        this.state = {counter :0};
         let whatsNewString = JSON.stringify(WhatIsNewJson)
         let whatsNewObj = JSON.parse(whatsNewString);
         //split array into 2 arrays.
@@ -27,20 +27,22 @@ export default class WhatsNewComponent extends React.Component {
                 <p className="content-style">{whatsNew.content}</p>
             </li>
         );
+
     }
-
-
     componentDidMount() {
+        let me = this;
         document.getElementById('leftBtn').onclick = function () {
             scrollLeft(document.getElementById('content1'), -300, 1000);
             scrollLeft(document.getElementById('content2'), -300, 1000);
-            // this.counter ++;
+            decrementCount();
+            toggleArrowsColor(document.getElementById('leftBtn'));
         };
 
         document.getElementById('rightBtn').onclick = function () {
             scrollLeft(document.getElementById('content1'), 300, 1000);
             scrollLeft(document.getElementById('content2'), 300, 1000);
-            // this.counter --;
+            incrementCount();
+            toggleArrowsColor(document.getElementById('rightBtn'));
         };
         function scrollLeft(element, change, duration) {
             var start = element.scrollLeft,
@@ -56,6 +58,50 @@ export default class WhatsNewComponent extends React.Component {
                 }
             };
             animateScroll();
+        }
+
+        function incrementCount() {
+
+            if (me.state.counter !== 4) {
+                me.setState((prevState) => ({
+                    counter: prevState.counter + 1
+                }));
+                console.log("counter-- " + me.state.counter);
+            }
+        }
+        function decrementCount() {
+
+            if (me.state.counter !== 0) {
+                me.setState((prevState) => ({
+                    counter: prevState.counter - 1
+                }));
+            }
+            console.log("counter-- "+ me.state.counter);
+        }
+        function toggleArrowsColor(e) {
+
+            switch (e.id) {
+                case "rightBtn":
+                    if(me.state.counter !== 0){
+                        document.getElementById('leftArrowScroll').style.fill = "#ffff";
+                    }
+                    if (me.state.counter === 4){
+                        document.getElementById('rightArrowScroll').style.fill = "gray";
+                    }
+                    break;
+
+                case "leftBtn":
+                    if (me.state.counter === 3){
+                        document.getElementById('rightArrowScroll').style.fill = "#ffff";
+                    }
+                    if(me.state.counter === 0){
+                        document.getElementById('leftArrowScroll').style.fill = "gray";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
 //t = current time
 //b = start value
