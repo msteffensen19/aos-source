@@ -128,3 +128,4 @@ export default class WhatsNewComponent extends React.Component {
         );
     }
 }
+//comment
