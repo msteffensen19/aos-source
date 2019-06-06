@@ -13,7 +13,7 @@ node('UbuntuDemoApp'){
 
 stage('Checkout'){
 
-checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-source'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], gitTool: 'Git version 2.8.0-rc4 Linux', submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'efc35e72-9a72-4102-9b83-f6b54683ca0b', url: 'https://github.houston.softwaregrp.net/nimbus/aos-source.git']]])
+checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-source'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], gitTool: 'Git version 2.8.0-rc4 Linux', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-source.git']]])
 
 
 sh """git checkout ${Release_version}"""
@@ -150,7 +150,7 @@ ssh "$production_ip" \"chmod +x /root/aos_release/startup.sh && cd /root/aos_rel
 }
 
 
-mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
+mail (to: 'adm_demo_app_development@microfocus.com',
 	subject: "Success: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${env.v}, Delivery number ${env.d}",
 	body: "Review the information at: ${env.JOB_URL}",
 	mimeType: 'text/html');
@@ -160,7 +160,7 @@ mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
     node('UbuntuDemoApp'){
 
     currentBuild.result = 'FAILURE'
-	mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
+	mail (to: 'adm_demo_app_development@microfocus.com',
 		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${env.v}, Delivery number ${env.d}",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');

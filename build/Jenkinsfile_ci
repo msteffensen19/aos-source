@@ -138,7 +138,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   else if(env.aos_build_accountservice_war == "true"){
     sh '''#!/bin/sh
     cd accountservice
-    mvn -P production package deploy -am -ff -e -X
+    mvn -P production package deploy -am -ff -e
     '''
   }
   }
