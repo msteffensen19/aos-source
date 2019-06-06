@@ -34,6 +34,8 @@ class LoginForm extends React.Component {
             case "rememberMe" :
                 this.setState({rememberMe: event.target.value});
                 break;
+            default:
+                break;
         }
 
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import '../css-landing-page/landnig-video-frame.css';
 import coverPicture1 from '../svg-png-ext/AOSCoverVideo1.jpg';
 import coverPicture2 from'../svg-png-ext/Image_video2.jpg';
-import any from 'jquery';
 
 export default class Contacts extends React.Component {
 
