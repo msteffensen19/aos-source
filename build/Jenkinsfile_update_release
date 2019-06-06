@@ -150,7 +150,7 @@ ssh "$production_ip" \"chmod +x /root/aos_release/startup.sh && cd /root/aos_rel
 }
 
 
-mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
+mail (to: 'adm_demo_app_development@microfocus.com',
 	subject: "Success: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${env.v}, Delivery number ${env.d}",
 	body: "Review the information at: ${env.JOB_URL}",
 	mimeType: 'text/html');
@@ -160,7 +160,7 @@ mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
     node('UbuntuDemoApp'){
 
     currentBuild.result = 'FAILURE'
-	mail (to: 'adm_demo_alerts@hpe.com, kubany@hpe.com',
+	mail (to: 'adm_demo_app_development@microfocus.com',
 		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER}) -Version: ${env.v}, Delivery number ${env.d}",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');
