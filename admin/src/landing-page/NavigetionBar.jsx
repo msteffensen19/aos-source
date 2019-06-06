@@ -7,17 +7,19 @@ export default class NavigationBar extends React.Component {
 
     render() {
         return (
-            <ul className="nav flex-column navigation-ul">
-                <li className="nav-item anyClass">
-                    <NavUserGuide></NavUserGuide>
-                </li>
-                <li className="nav-item anyClass">
-                  <NavDownloads></NavDownloads>
-                </li>
-                <li className="nav-item anyClass">
-                    <NavInstallation></NavInstallation>
-                </li>
-            </ul>
+            <div className="nav-ul-container">
+                <ul className="nav flex-column navigation-ul">
+                    <li className="nav-item ">
+                        <NavUserGuide></NavUserGuide>
+                    </li>
+                    <li className="nav-item">
+                      <NavDownloads></NavDownloads>
+                    </li>
+                    <li className="nav-item" style={{minHeight:"available"}}>
+                        <NavInstallation></NavInstallation>
+                    </li>
+                </ul>
+            </div>
         );
     }
 }

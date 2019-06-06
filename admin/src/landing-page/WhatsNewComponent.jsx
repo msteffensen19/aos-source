@@ -7,8 +7,7 @@ export default class WhatsNewComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
-
+        let counter =0;
         let whatsNewString = JSON.stringify(WhatIsNewJson)
         let whatsNewObj = JSON.parse(whatsNewString);
         //split array into 2 arrays.
@@ -29,20 +28,19 @@ export default class WhatsNewComponent extends React.Component {
             </li>
         );
     }
-    handleClick() {
-        console.log("any");
-        window.scrollBy(100, 0);
-    }
+
 
     componentDidMount() {
         document.getElementById('leftBtn').onclick = function () {
             scrollLeft(document.getElementById('content1'), -300, 1000);
             scrollLeft(document.getElementById('content2'), -300, 1000);
+            this.counter ++;
         };
 
         document.getElementById('rightBtn').onclick = function () {
             scrollLeft(document.getElementById('content1'), 300, 1000);
             scrollLeft(document.getElementById('content2'), 300, 1000);
+            this.counter --;
         };
         function scrollLeft(element, change, duration) {
             var start = element.scrollLeft,
