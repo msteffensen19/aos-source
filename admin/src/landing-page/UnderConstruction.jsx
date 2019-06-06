@@ -44,6 +44,7 @@ export default class UnderConstruction extends React.Component {
                 break;
 
             default:
+                window.location.href = window.location.origin.toString();
             // code block
         }
     };
@@ -52,7 +53,7 @@ export default class UnderConstruction extends React.Component {
         return (
                  <div className="coming-soon regular-cursor">
                      <div className="advantage-header">
-                         <AdvantageLogo className="soon-advantage-icon"/><h1 className= "dvantage more-size">dvantage</h1>
+                         <AdvantageLogo onClick={this.redirectToLinks} className="soon-advantage-icon pointer-cursor"/><h1 onClick={this.redirectToLinks} className= "dvantage more-size pointer-cursor">dvantage</h1>
                      </div>
                     <OvalSVG className="prevent-pointer" />
                      <div className="images-container-comingSoon">
@@ -69,7 +70,7 @@ export default class UnderConstruction extends React.Component {
                              <LeftFlag />
                          </div>
                      <div className="back-buttons-container">
-                             <input id="backToAOS" onClick={this.redirectToLinks} className="sign-in-btn button-modification" value="Back To AOS" />
+                             <input id="backToAOS" onClick={this.redirectToLinks} className="sign-in-btn button-modification pointer-cursor" value="Back To AOS" />
                              <button id="backToManagement" onClick={this.redirectToLinks} className="sign-in-btn button-modification left-space">
                                  {/*Back To*/}
                                  {/*<br/>*/}

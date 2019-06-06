@@ -26,7 +26,7 @@ export default class LandingPageHome extends Component {
                                 <Row className="flex-sm-row top-container">
                                     <Col xs={4} className="headers-container">
                                         <div className="icon-header-container">
-                                            <AdvantageLogo onClick={this.backToAOS} className="fill-3"/><h1 onClick={this.backToAOS} className= "dvantage">dvantage</h1>
+                                            <AdvantageLogo onClick={this.backToAOS} className="fill-3 pointer-cursor"/><h1 onClick={this.backToAOS} className= "dvantage pointer-cursor">dvantage</h1>
                                         </div>
                                         <div>
                                             <h1 className="management-console">Management <br/>Console</h1>

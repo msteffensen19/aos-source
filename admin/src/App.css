@@ -156,3 +156,6 @@ body {
   line-height: 51px;
   /*text-shadow: rgba(111, 189, 255, 0.51) 0 0 38px;*/
 }
+.pointer-cursor{
+  cursor: pointer;
+}

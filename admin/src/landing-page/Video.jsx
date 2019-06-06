@@ -21,13 +21,15 @@ export default class Contacts extends React.Component {
                         id="videoOneTag"
                         style={{marginBottom:'35px'}}
                         preload
-                           onMouseEnter={this.putControls}
-                           onMouseLeave={this.removeControls}
+                        onMouseEnter={this.putControls}
+                        onMouseLeave={this.removeControls}
                         poster={coverPicture1}
                         //autoPlay
                         src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-e2e-flow.mp4" />
                     <video width="320" height="200"
                            preload
+                           onMouseEnter={this.putControls}
+                           onMouseLeave={this.removeControls}
                            //controls
                            poster={coverPicture2}
                         //autoPlay
