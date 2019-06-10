@@ -13,6 +13,14 @@ export default class Contacts extends React.Component {
         document.getElementById("videoOneTag").removeAttribute("controls", "controls");
     };
 
+    putControlsSecond(){
+        document.getElementById("videoSecondTag").setAttribute("controls", "controls");
+
+    };
+    removeControlsSecond(){
+        document.getElementById("videoSecondTag").removeAttribute("controls", "controls");
+    };
+
     render() {
         return (
             <div className="video-frame">
@@ -27,9 +35,10 @@ export default class Contacts extends React.Component {
                         //autoPlay
                         src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-e2e-flow.mp4" />
                     <video width="320" height="200"
+                           id="videoSecondTag"
                            preload
-                           onMouseEnter={this.putControls}
-                           onMouseLeave={this.removeControls}
+                           onMouseEnter={this.putControlsSecond}
+                           onMouseLeave={this.removeControlsSecond}
                            //controls
                            poster={coverPicture2}
                         //autoPlay

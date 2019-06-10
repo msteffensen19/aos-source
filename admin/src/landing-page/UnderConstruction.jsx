@@ -54,33 +54,35 @@ export default class UnderConstruction extends React.Component {
                  <div className="coming-soon regular-cursor">
                      <div className="advantage-header">
                          <AdvantageLogo onClick={this.redirectToLinks} className="soon-advantage-icon pointer-cursor"/><h1 onClick={this.redirectToLinks} className= "dvantage more-size pointer-cursor">dvantage</h1>
-                     </div>
-                     <div className="images-container-comingSoon">
-                         <div>
-                             <img className="coming-soon-images coming-position regular-cursor" src={comingPng} alt="coming png"></img>
-                         </div>
-                         <div>
-                            <img className="coming-soon-images soon-position regular-cursor" src={soonPng} alt="soon png"></img>
-                         </div>
-                     </div>
-                         <div className="soon-title regular-cursor">
+                     </div >
+                     <ul className="middle-container-soon">
+                         <li className="images-container-comingSoon">
+                             <div>
+                                 <img className="coming-soon-images coming-position regular-cursor" src={comingPng} alt="coming png"></img>
+                             </div>
+                             <div>
+                                <img className="coming-soon-images soon-position regular-cursor" src={soonPng} alt="soon png"></img>
+                             </div>
+                         </li>
+                         <li className="soon-title regular-cursor">
                              <RightFlag />
                                   <span className="regular-cursor">We are still working on it</span>
                              <LeftFlag />
-                         </div>
-                     <div className="back-buttons-container">
-                             <input id="backToAOS" onClick={this.redirectToLinks} className="sign-in-btn button-modification pointer-cursor" value="Back To AOS" />
-                             <button id="backToManagement" onClick={this.redirectToLinks} className="sign-in-btn button-modification left-space">
-                                 {/*Back To*/}
-                                 {/*<br/>*/}
-                                 Management Console
-                             </button>
-                     </div>
-                     <div className="social-links-container">
-                            <FacebookIcon id="facebookIcon" onClick={this.redirectToLinks}/>
-                            <TwitterIcon id="twitterIcon" onClick={this.redirectToLinks} className="twitter-icon"/>
-                            <LinkedinIcon id="linkedinIcon" onClick={this.redirectToLinks} className="linkedin-icon"/>
-                     </div>
+                         </li>
+                         <li className="back-buttons-container">
+                                 <input id="backToAOS" onClick={this.redirectToLinks} className="sign-in-btn button-modification pointer-cursor" value="Back To AOS" />
+                                 <button id="backToManagement" onClick={this.redirectToLinks} className="sign-in-btn button-modification left-space">
+                                     {/*Back To*/}
+                                     {/*<br/>*/}
+                                     Management Console
+                                 </button>
+                         </li>
+                         <li className="social-links-container">
+                                <FacebookIcon id="facebookIcon" onClick={this.redirectToLinks}/>
+                                <TwitterIcon id="twitterIcon" onClick={this.redirectToLinks} className="twitter-icon"/>
+                                <LinkedinIcon id="linkedinIcon" onClick={this.redirectToLinks} className="linkedin-icon"/>
+                         </li>
+                     </ul>
                    </div>
 
         );
