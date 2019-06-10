@@ -137,7 +137,7 @@ body {
   background: linear-gradient(#5DB2C9, #92F1EC);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  font-family: Metric;
+  font-family: Metric Bold;
   font-size: 57px;
   font-weight: bold;
   line-height: 65px;
@@ -156,7 +156,7 @@ body {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   color: #5DB2C9;
-  font-family: Metric;
+  font-family: Metric Bold;
   font-size: 58px;
   font-weight: bold;
   line-height: 51px;

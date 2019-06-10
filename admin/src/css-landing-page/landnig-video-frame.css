@@ -1,7 +1,7 @@
 
 .video-frame{
     position: inherit;
-    right: -95px;
+    right: -161px;
     margin-top: 45px ;
     display: grid;
 }
@@ -14,4 +14,31 @@
 }
 .video-tag-css{
     object-fit: cover;
+}
+.wrapper-video-cover{
+    position: relative;
+}
+.video-tag-content{
+    position: absolute;
+    bottom: 34px;
+    left: 10px;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+.video-cover-svg{
+    position: absolute;
+    top: 157px;
+    left: 228px;
+}
+.second-video-cover-svg{
+    position: absolute;
+    top: 384px;
+    left: 225px;
+}
+.second-video-tag-content{
+    position: absolute;
+    bottom: -3px;
+    left: 10px;
+    color: #FFFFFF;
+    font-weight: 600;
 }
