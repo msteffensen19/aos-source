@@ -48,4 +48,3 @@ export default class Contacts extends React.Component {
         );
     }
 }
-//comment
