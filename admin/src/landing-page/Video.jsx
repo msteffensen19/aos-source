@@ -25,8 +25,9 @@ export default class Contacts extends React.Component {
         return (
             <div className="video-frame">
 
-                    <video width="320" height="200"
+                    <video width="260" height="190"
                         id="videoOneTag"
+                        className='video-tag-css'
                         style={{marginBottom:'35px'}}
                         preload
                         onMouseEnter={this.putControls}
@@ -34,14 +35,13 @@ export default class Contacts extends React.Component {
                         poster={coverPicture1}
                         //autoPlay
                         src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-e2e-flow.mp4" />
-                    <video width="320" height="200"
+                    <video width="260" height="190"
                            id="videoSecondTag"
+                           className='video-tag-css'
                            preload
                            onMouseEnter={this.putControlsSecond}
                            onMouseLeave={this.removeControlsSecond}
-                           //controls
                            poster={coverPicture2}
-                        //autoPlay
                            src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-product-features.mp4" />
             </div>
 
