@@ -15,6 +15,14 @@
     margin-top: 90px;
     margin-left: 100px;
 }
+
+@media screen and (max-width: 1630px) {
+
+    .login{
+        margin-left: 75px;
+    }
+
+}
 .user-name {
     height: 16px;
     /*width: 68px;*/

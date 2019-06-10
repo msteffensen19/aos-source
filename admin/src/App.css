@@ -36,6 +36,12 @@ body {
   min-height: -moz-available;
   min-height: -webkit-fill-available;
   background-color: #292E44;
+}
+@media screen and (max-width: 1630px) {
+
+  .left-column{
+    max-width: 81.3%;
+  }
 
 }
 .left-main-container{

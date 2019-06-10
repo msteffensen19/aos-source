@@ -15,7 +15,14 @@
     height: 100vh;
     height: available;
     height: -moz-available;
-    height: -webkit-fill-available;;
+    height: -webkit-fill-available;
+}
+@media screen and (max-width: 1630px) {
+
+    .aos-nav-bar{
+        max-width: 18.6%;
+    }
+
 }
 .nav-spacer{
     height: 4px;

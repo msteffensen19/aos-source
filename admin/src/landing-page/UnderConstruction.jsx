@@ -55,7 +55,6 @@ export default class UnderConstruction extends React.Component {
                      <div className="advantage-header">
                          <AdvantageLogo onClick={this.redirectToLinks} className="soon-advantage-icon pointer-cursor"/><h1 onClick={this.redirectToLinks} className= "dvantage more-size pointer-cursor">dvantage</h1>
                      </div>
-                    <OvalSVG className="prevent-pointer" />
                      <div className="images-container-comingSoon">
                          <div>
                              <img className="coming-soon-images coming-position regular-cursor" src={comingPng} alt="coming png"></img>
@@ -82,7 +81,8 @@ export default class UnderConstruction extends React.Component {
                             <TwitterIcon id="twitterIcon" onClick={this.redirectToLinks} className="twitter-icon"/>
                             <LinkedinIcon id="linkedinIcon" onClick={this.redirectToLinks} className="linkedin-icon"/>
                      </div>
-                 </div>
+                   </div>
+
         );
     }
 }
