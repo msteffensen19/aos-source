@@ -1,48 +1,55 @@
 import React from 'react';
 import '../css-landing-page/landnig-video-frame.css';
-import coverPicture1 from '../svg-png-ext/AOSCoverVideo1.jpg';
-import coverPicture2 from'../svg-png-ext/Image_video2.jpg';
+import {ReactComponent as CoverPlay} from '../svg-png-ext/Play.svg';
+
 
 export default class Contacts extends React.Component {
 
-    putControls(){
-       document.getElementById("videoOneTag").setAttribute("controls", "controls");
+    constructor(props) {
+        super(props);
 
-    };
-    removeControls(){
-        document.getElementById("videoOneTag").removeAttribute("controls", "controls");
-    };
+        this.videoPlaceholder = React.createRef();
+        this.secondVideoPlaceholder = React.createRef();
+        this.playFirstVideo = this.playFirstVideo.bind(this);
+        this.playSecondVideo = this.playSecondVideo.bind(this);
 
-    putControlsSecond(){
-        document.getElementById("videoSecondTag").setAttribute("controls", "controls");
-
-    };
-    removeControlsSecond(){
-        document.getElementById("videoSecondTag").removeAttribute("controls", "controls");
-    };
+    }
+    playFirstVideo(){
+        this.videoPlaceholder.current.innerHTML ='<iframe\n' +
+            '                    width="260" height="190" ' +
+            'src="https://www.youtube.com/embed/A_mbo8pzQVE?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+        document.getElementById("videoCoverElements").setAttribute("class", "none-visible");
+    }
+    playSecondVideo(){
+        this.secondVideoPlaceholder.current.innerHTML ='<iframe\n' +
+            '                    width="260" height="190" ' +
+            'src="https://www.youtube.com/embed/QVqk-GNbJSw?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+        document.getElementById("secondVideoCoverCss").setAttribute("class", "none-visible");
+    }
 
     render() {
+
         return (
             <div className="video-frame">
+                <div>
+                    <div className="video-placeholder"
+                         ref={this.videoPlaceholder}
+                         onClick={this.playFirstVideo}/>
+                </div>
+                    <div id="videoCoverElements">
+                        <p className="video-tag-content">About AOS</p>
+                        <CoverPlay className="video-cover-svg" />
+                    </div>
 
-                    <video width="320" height="200"
-                        id="videoOneTag"
-                        style={{marginBottom:'35px'}}
-                        preload
-                        onMouseEnter={this.putControls}
-                        onMouseLeave={this.removeControls}
-                        poster={coverPicture1}
-                        //autoPlay
-                        src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-e2e-flow.mp4" />
-                    <video width="320" height="200"
-                           id="videoSecondTag"
-                           preload
-                           onMouseEnter={this.putControlsSecond}
-                           onMouseLeave={this.removeControlsSecond}
-                           //controls
-                           poster={coverPicture2}
-                        //autoPlay
-                           src="https://s3.amazonaws.com/aos-on-prem-downloads/video/aos-product-features.mp4" />
+                <div style={{marginTop:"30px"}}>
+                    <div className="second-video-placeholder"
+                         ref={this.secondVideoPlaceholder}
+                         onClick={this.playSecondVideo}/>
+                </div>
+                    <div id="secondVideoCoverCss">
+                        <p className="second-video-tag-content">End To End Case</p>
+                        <CoverPlay className="second-video-cover-svg" />
+                    </div>
             </div>
 
         );

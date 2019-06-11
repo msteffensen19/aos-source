@@ -60,8 +60,8 @@ body {
   background-color: #24273A;
   width: 100%;
   /*height: 58%;*/
-  clip-path: polygon( 0 0, 100% 0, 100% 100%, 0 80% );
-  padding-bottom: 50px;
+  clip-path: polygon( 0 0, 100% 0, 100% 100%, 0 75% );
+  padding-bottom: 95px;
   margin: 0;
 }
 .left-bottom-container{
@@ -134,10 +134,10 @@ body {
   width: 310px;
   margin-top: 35px;
   margin-left: 60px;
-  background: linear-gradient(#5DB2C9, #92F1EC);
+  background: linear-gradient(#a1ced1, #92F1EC, #DCD9B8);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  font-family: Metric;
+  font-family: Metric Bold;
   font-size: 57px;
   font-weight: bold;
   line-height: 65px;
@@ -152,11 +152,11 @@ body {
 }
 .version-number{
   padding-top: 4px;
-  background: linear-gradient(#5DB2C9, #92F1EC);
+  background: linear-gradient(#a1ced1, #92F1EC, #DCD9B8);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   color: #5DB2C9;
-  font-family: Metric;
+  font-family: Metric Bold;
   font-size: 58px;
   font-weight: bold;
   line-height: 51px;

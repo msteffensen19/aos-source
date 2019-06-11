@@ -5,6 +5,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Metric Bold';
+    src: url('Metric-Bold.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 .aos-nav-bar{
     opacity: 0.92;

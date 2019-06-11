@@ -1,7 +1,7 @@
 
 .video-frame{
     position: inherit;
-    right: -95px;
+    right: -161px;
     margin-top: 45px ;
     display: grid;
 }
@@ -11,4 +11,65 @@
         right: -55px;
     }
 
+}
+.video-tag-css{
+    object-fit: fill;
+    box-shadow: 0 0 38px -10px rgba(0,0,0,0.51);
+}
+.wrapper-video-cover{
+    position: relative;
+}
+.video-tag-content{
+    position: absolute;
+    bottom: 218px;
+    left: 10px;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+.video-cover-svg{
+    position: absolute;
+    top: 157px;
+    left: 228px;
+}
+.second-video-cover-svg{
+    position: absolute;
+    top: 373px;
+    left: 225px;
+}
+.second-video-tag-content{
+    position: absolute;
+    bottom: -3px;
+    left: 10px;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+.none-visible{
+    visibility: hidden;
+}
+
+.video-placeholder {
+
+    background: url('../svg-png-ext/AOSCoverVideo1.jpg') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow:hidden;
+    background-repeat: no-repeat;
+    width: 260px;
+    height: 190px;
+    cursor:pointer;
+}
+.second-video-placeholder{
+
+    background: url('../svg-png-ext/Image_video2.jpg') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow:hidden;
+    background-repeat: no-repeat;
+    width: 260px;
+    height: 190px;
+    cursor:pointer;
 }
