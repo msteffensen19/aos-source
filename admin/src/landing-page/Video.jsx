@@ -1,8 +1,7 @@
 import React from 'react';
 import '../css-landing-page/landnig-video-frame.css';
 import {ReactComponent as CoverPlay} from '../svg-png-ext/Play.svg';
-import coverPicture1 from '../svg-png-ext/AOSCoverVideo1.jpg';
-import coverPicture2 from'../svg-png-ext/Image_video2.jpg';
+
 
 export default class Contacts extends React.Component {
 
@@ -24,8 +23,8 @@ export default class Contacts extends React.Component {
     playSecondVideo(){
         this.secondVideoPlaceholder.current.innerHTML ='<iframe\n' +
             '                    width="260" height="190" ' +
-            'src="https://www.youtube.com/embed/A_mbo8pzQVE?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-        document.getElementById("videoCoverElements").setAttribute("class", "none-visible");
+            'src="https://www.youtube.com/embed/QVqk-GNbJSw?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+        document.getElementById("secondVideoCoverCss").setAttribute("class", "none-visible");
     }
 
     render() {
@@ -42,7 +41,7 @@ export default class Contacts extends React.Component {
                         <CoverPlay className="video-cover-svg" />
                     </div>
 
-                <div>
+                <div style={{marginTop:"30px"}}>
                     <div className="second-video-placeholder"
                          ref={this.secondVideoPlaceholder}
                          onClick={this.playSecondVideo}/>
