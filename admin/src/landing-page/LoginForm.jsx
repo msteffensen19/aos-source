@@ -83,27 +83,29 @@ class LoginForm extends React.Component {
             <form  className= "login" onSubmit={this.handleSubmit}>
                 <h1 className= "enter-details-to-log">Enter details to login</h1>
                 <label className="margin-top-labels">
-                    <h3 className= "user-name">User Name</h3>
-                    <input name="userName" className="input-style" value={this.state.value} onChange={this.handleInputChange} />
+                    {/*<h3 className= "user-name">User Name</h3>*/}
+                    <input placeholder="User Name" name="userName" className="input-style" value={this.state.value} onChange={this.handleInputChange} />
                 </label>
                 <br />
                 <label className="margin-top-labels">
-                    <h3 className= "user-name">Password</h3>
+                    {/*<h3 className= "user-name">Password</h3>*/}
                     {/*type="password"*/}
-                    <input name="password" className="input-style" value={this.state.value} onChange={this.handleInputChange}/>
+                    <input placeholder="Password" name="password" className="input-style" value={this.state.value} onChange={this.handleInputChange}/>
                 </label>
                 <label className="margin-top-labels remember-me-label">
                     <div className="remember-me-label">
                     <input
+                        type="checkbox"
                         className="rectangle-remember-me"
                         name="rememberMe"
-                        type="checkbox"
                         onChange={this.handleInputChange} />
                     <h3 className= "remember-me">Remember me</h3>
                     </div>
                     <div className= "remember-me">Forget Password?</div>
                 </label>
-                    <input className="sign-in-btn" type="submit" value="Sign In" />*/}
+                <label style={{marginTop:"20px"}}>
+                    <input className="sign-in-btn" type="submit" value="Sign In" />
+                </label>
             </form>
         );
     }

@@ -12,7 +12,7 @@
 .login {
     /*height: 215px;*/
     width: 269px;
-    margin-top: 90px;
+    margin-top: 120px;
     margin-left: 100px;
 }
 
@@ -34,10 +34,18 @@
 }
 .input-style{
     border: 0;
-    border-bottom: 1px solid #010101;
+    border-bottom: 1px solid #7E85B1;
     width: 269px;
     background-color: #24273A;
     color: #ffff;
+}
+input::placeholder{
+    height: 16px;
+    opacity: 0.82;
+    color: #A4A8BD;
+    font-family: Metric;
+    font-size: 16px;
+    line-height: 19px;
 }
 .remember-me {
     height: 14px;
@@ -52,8 +60,13 @@
 .rectangle-remember-me {
     height: 14px;
     width: 14px;
-    border: 2px solid #FFFFFF;
-    border-radius: 1px;
+    /*background: #24273A;*/
+    /*-moz-appearance: none;*/
+    /*-webkit-appearance: none;*/
+    /*outline: 2px solid #ffff;*/
+}
+:checked{
+    color: red;
 }
 .remember-me-label{
     display: flex;
@@ -62,7 +75,6 @@
 .sign-in-btn{
     height: 35px;
     width: 92px;
-    margin-bottom: 160px;
     background-color: #5DB2C9;
     color: #FFFFFF;
     border: none;
