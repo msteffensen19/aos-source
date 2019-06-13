@@ -45,7 +45,7 @@ export default class UnderConstruction extends React.Component {
 
             default:
                 window.location.href = window.location.origin.toString();
-            // code block
+
         }
     };
 
