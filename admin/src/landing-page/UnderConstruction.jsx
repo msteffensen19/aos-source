@@ -1,7 +1,6 @@
 import React from 'react';
 import'../css-landing-page/coming-soon-css.css';
 import {ReactComponent as AdvantageLogo} from "../Advantage_logo_white.svg";
-import {ReactComponent as OvalSVG} from "../svg-png-ext/Oval.svg";
 import soonPng from "../svg-png-ext/Group.png";
 import comingPng from "../svg-png-ext/Coming.png";
 import {ReactComponent as LeftFlag} from "../svg-png-ext/left-flag.svg";
