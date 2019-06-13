@@ -303,7 +303,7 @@ if (env.aos_description != null){
     currentBuild.description = "${aos_description}"
 }
 
-mail (to: 'adm_demo_alerts@hpe.com',
+mail (to: 'adm_demo_app_development@microfocus.com',
 	subject: "Success: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
 	body: "Review the information at: ${env.JOB_URL}",
 	mimeType: 'text/html');
@@ -325,7 +325,7 @@ mail (to: 'adm_demo_alerts@hpe.com',
     sh 'sed -i \'s/$/"/g\' ${WORKSPACE}/resumed_build_params.groovy'
     sh 'sed -i \'s/=/="/g\' ${WORKSPACE}/resumed_build_params.groovy'
 	
-	mail (to: 'adm_demo_alerts@hpe.com',
+	mail (to: 'adm_demo_app_development@microfocus.com',
 		subject: "Failed: '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
 		body: "Review the information at: ${env.JOB_URL}",
 		mimeType: 'text/html');
