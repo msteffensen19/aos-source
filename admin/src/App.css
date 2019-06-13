@@ -73,6 +73,16 @@ body {
     margin-top: -15px;
   }
 }
+
+@media (max-height: 950px) {
+
+  .top-container{
+    padding-bottom: 53px;
+  }
+  .left-bottom-container{
+    margin-top: -15px;
+  }
+}
 .left-bottom-container{
   position: relative;
   margin-left: 0;
