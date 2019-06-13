@@ -15,7 +15,7 @@ export default class NavDownloads extends React.Component {
                 <p className="aos-nav-headline">Download Mobile Apps</p>
 
                         <div className="nav_download_wrapper">
-                            <a className="devices nav_download_container" style={{float:'left' ,'marginBottom': '5px'}} href='https://s3.amazonaws.com/aos-on-prem-downloads/1.1.6/Advantage+demo+1_1_6.ipa'>
+                            <a className="devices nav_download_container" style={{float:'left' ,'marginBottom': '16px'}} href='https://s3.amazonaws.com/aos-on-prem-downloads/1.1.6/Advantage+demo+1_1_6.ipa'>
                                 <div className="devices_pic">
                                     <AppleLogo></AppleLogo>
                                 </div>
