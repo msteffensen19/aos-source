@@ -54,13 +54,13 @@
     display: list-item;
 }
 .devices{
+    height: 60px;
     display: table;
     width:215px;
     margin-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 25px;
-    /*padding-right: 25px;*/
     cursor: pointer;
 }
 
