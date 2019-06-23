@@ -2,6 +2,7 @@ package com.advantage.catalog.store.api;
 
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
+import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
@@ -12,6 +13,7 @@ import com.advantage.common.dto.*;
 import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.common.security.AuthorizeAsAdmin;
 import com.advantage.common.security.AuthorizeAsUser;
+import com.advantage.root.util.RestApiHelper;
 import com.advantage.root.util.StringHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -507,6 +509,12 @@ public class CatalogController {
         if (categoryDto == null) {
             result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
+            String isInCorrectProduct = RestApiHelper.getDemoAppConfigParameterValue("Add_product_to_incorrect_category");
+            if (isInCorrectProduct.equals("Yes")){
+                Product product = productService.getProductById((long) 13);
+                ProductDto productTwo = productService.getDtoByEntity(product);
+                categoryDto.getProducts().add(productTwo);
+            }
             result = new ResponseEntity<>(categoryDto, HttpStatus.OK);
         }
 
