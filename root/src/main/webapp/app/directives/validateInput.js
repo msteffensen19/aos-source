@@ -945,7 +945,7 @@ define(['./module'], function (directives) {
                             });
                             break;
                         case Types.creditCard:
-                            input = $("<input id='creditCard' name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + partOfName + "' data-ng-model='secModel' />");
+                            input = $("<input id='creditCard' name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + partOfName + "' data-ng-model='secModel' maxlength='14' />");
                             break;
                         default:
                             if (a.aHint == null) {

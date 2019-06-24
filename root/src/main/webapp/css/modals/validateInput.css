@@ -162,11 +162,11 @@ input:-webkit-autofill {
 }
 
 .sec-view div input.card-number-four-digits{
-    text-indent:30px;
+    text-indent:35px;
 }
 
 .sec-view div.card-number-four-star .card-number-four-digits{
-    text-indent:22px;
+    text-indent:35px;
 }
 
 .sec-view div input.invalid {
