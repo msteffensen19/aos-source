@@ -85,7 +85,12 @@ define(['./module'], function (services) {
             var appConfiguration;
 
             function nv_slowPage(){
-                return appConfiguration.slowPage;
+                if(appConfiguration== undefined){
+                    return;
+                }else{
+                    return appConfiguration.slowPage;
+                }
+
             }
 
             function getConfiguration() {
