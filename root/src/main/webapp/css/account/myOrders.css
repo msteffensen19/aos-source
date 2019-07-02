@@ -23,6 +23,15 @@
     padding: 12px;
 }
 
+
+@media screen and (max-width: 850px) {
+
+    .mobile-order-element {
+        max-width: 280px;
+    }
+}
+
+
 .myOrderSection .cover .center{
     text-align: center;
 }
@@ -93,7 +102,7 @@
 .order-search-container{
     margin: 0 auto;
     max-width: 1100px;
-    padding-top: 135px;
+    /*padding-top: 135px;*/
     cursor: pointer;
 }
 
