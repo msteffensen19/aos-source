@@ -240,6 +240,7 @@ define(['./module'], function (directives) {
             select: "select",
             password: "password",
             creditCard: "creditCard",
+            ccvNumber: "ccvNumber",
             checkbox: "checkbox"
         };
 
@@ -335,8 +336,13 @@ define(['./module'], function (directives) {
                     if(secretField){
                         input.parent().removeClass('card-number-four-star');
                         secretField = false;
-                        //input.attr("type", "text");
-                        s.secModel = "";
+                        if(document.getElementById("creditCard").value.length > 1){
+                            s.secModel = "";
+                            if(window.location.href.toString().includes("accountPaymentEdit")){
+
+                                document.getElementsByName("cvv_number").item(0).setAttribute("maxlength", 3);
+                            }
+                        }
                     }
                 };
 
@@ -945,7 +951,10 @@ define(['./module'], function (directives) {
                             });
                             break;
                         case Types.creditCard:
-                            input = $("<input id='creditCard' name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + partOfName + "' data-ng-model='secModel' maxlength='14' />");
+                            input = $("<input id='creditCard' name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + partOfName + "' data-ng-model='secModel' maxlength='14'/>");
+                            break;
+                        case Types.ccvNumber:
+                            input = $("<input name='" + a.aHint.replace(/\s/g, "_").toLowerCase() + partOfName + "' type='" + type + "' data-ng-model='secModel' maxlength='3' />");
                             break;
                         default:
                             if (a.aHint == null) {
