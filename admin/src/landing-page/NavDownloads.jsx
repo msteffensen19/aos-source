@@ -30,8 +30,8 @@ export default class NavDownloads extends React.Component {
                                         <AndroidLogo></AndroidLogo>
                                     </div>
                                     <div className="devices_inner_line">
-                                        <span>Download</span>
-                                        <span className="devices_font"><b>Android</b></span>
+                                        <span className="download_span">Download</span>
+                                        <span className="devices_font" style={{fontSize:'20px'}}><b>Android</b></span>
                                     </div>
                                 </a>
                         </div>
