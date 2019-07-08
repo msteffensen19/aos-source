@@ -8,6 +8,7 @@
     font-family: Metric;
     font-size: 20px;
     line-height: 24px;
+    margin-bottom: 0px;
 }
 .login {
     /*height: 215px;*/
@@ -66,6 +67,7 @@ input::placeholder{
 .remember-me-label{
     display: flex;
     justify-content: space-between;
+    margin-top: 12px;
 }
 .sign-in-btn{
     height: 35px;

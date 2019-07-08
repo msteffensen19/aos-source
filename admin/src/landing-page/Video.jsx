@@ -41,7 +41,7 @@ export default class Contacts extends React.Component {
                         <CoverPlay className="video-cover-svg" />
                     </div>
 
-                <div style={{marginTop:"30px"}}>
+                <div style={{marginTop:"40px",}}>
                     <div className="second-video-placeholder"
                          ref={this.secondVideoPlaceholder}
                          onClick={this.playSecondVideo}/>

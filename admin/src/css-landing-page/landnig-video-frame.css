@@ -59,6 +59,7 @@
     width: 260px;
     height: 190px;
     cursor:pointer;
+    box-shadow: 0 2px 18px 0 rgba(0,0,0,0.06);
 }
 .second-video-placeholder{
 
@@ -72,4 +73,5 @@
     width: 260px;
     height: 190px;
     cursor:pointer;
+    box-shadow: 0 2px 18px 0 rgba(0,0,0,0.06);
 }

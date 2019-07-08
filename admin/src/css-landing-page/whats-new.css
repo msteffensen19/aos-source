@@ -14,7 +14,7 @@
     color: #B8BCCF;
     font-family: Metric;
     font-size: 14px;
-    line-height: 16px;
+    line-height: 18px;
     white-space: normal;
     text-align: left;
 }
@@ -23,6 +23,7 @@
     width: 95%;
     text-align:center;
     overflow: hidden;
+    margin: 0px;
 }
 .make-scroll-li{
     width: 295px;
