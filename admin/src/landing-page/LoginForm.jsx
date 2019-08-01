@@ -2,7 +2,6 @@
 import React from 'react';
 import 'jquery';
 import 'jquery.soap';
-
 import 'bootstrap';
 import '../css-landing-page/login-form.css';
 import {withRouter} from 'react-router-dom';
@@ -49,22 +48,23 @@ class LoginForm extends React.Component {
         let host = window.location.origin;
         let $ = require('jquery');
         require('jquery.soap');
+        var parseString = require('jquery.soap');
         let me = this;
         $.soap({
-            url: host+'/accountservice/',
+            url: 'http://localhost:8080/accountservice/', //host+'/accountservice/',
             method: 'AccountLoginRequest',
             namespaceURL: 'com.advantage.online.store.accountservice',
             SOAPAction: 'com.advantage.online.store.accountserviceAccountLoginRequest' ,
             data: user,
             success: function (soapResponse) {
-                let response = soapResponse;
+                let response = parseString(soapResponse);
                 console.log(response);
-                me.props.history.push('/coming-soon');
+                me.props.history.push('/management-console');
 
             },
             error: function (response) {
                 console.log(response);
-                me.props.history.push('/coming-soon');
+                me.props.history.push('/management-console');
                 // me.setState({ open: true });
             },
             enableLogging: true

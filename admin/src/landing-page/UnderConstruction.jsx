@@ -87,7 +87,6 @@ export default class UnderConstruction extends React.Component {
                          </li>
                      </ul>
                    </div>
-
         );
     }
 }

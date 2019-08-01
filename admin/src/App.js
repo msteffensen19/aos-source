@@ -4,12 +4,14 @@ import './css-landing-page/navbar.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LandingPage from './landing-page/LandingPageHome.jsx';
 import UnderConstruction from './landing-page/UnderConstruction';
+import ManagementConsole from './management-console/ManagementConsole';
 class App extends Component {
 
     render() {
         return (
 <Router basename='/admin'>
     <switch>
+        <Route  path="/management-console" component={ManagementConsole}/>
         <Route  path="/coming-soon" component={UnderConstruction}/>
         <Route exact path="/" component={LandingPage} />
     </switch>
