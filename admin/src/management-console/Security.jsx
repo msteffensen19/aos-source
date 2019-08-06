@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class General extends React.Component {
+export default class Security extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -29,7 +29,7 @@ export default class General extends React.Component {
                 });
         }
 
-}
+    }
     saveOldValue(event){
         this.oldvalue = event.target.value;
     }
@@ -53,13 +53,13 @@ export default class General extends React.Component {
         return (
             <table>
                 <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                        <th>Description</th>
-                        <th>AOS location</th>
-                    </tr>
-                    {this.renderTableData()}
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                    <th>AOS location</th>
+                </tr>
+                {this.renderTableData()}
                 </tbody>
             </table>
         );

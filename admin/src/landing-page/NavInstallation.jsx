@@ -13,7 +13,7 @@ export default class NavInstallation extends React.Component {
                 <div className="nav_download_wrapper">
                     <div style={{fontSize:'15px'}}>If you want your own instance,</div>
                     <div style={{fontSize:'15px'}}>you can install it from here:</div>
-                    <div onClick={ ()=> {window.open('https://marketplace.microfocus.com/appdelivery/content/advantage-online-shopping-aos-adm-demo-application')}  } className="devices nav_download_container" style={{float:'left' ,'margin-top': '20px'}}>
+                    <div onClick={ ()=> {window.open('https://marketplace.microfocus.com/appdelivery/content/advantage-online-shopping-aos-adm-demo-application')}  } className="devices nav_download_container" style={{float:'left' ,marginTop: '20px'}}>
                         <div>
                             <div className="devices_pic">
                                 <MFLogo></MFLogo>

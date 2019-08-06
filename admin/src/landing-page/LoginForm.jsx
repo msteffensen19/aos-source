@@ -59,12 +59,12 @@ class LoginForm extends React.Component {
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
                 console.log(response);
-                me.props.history.push('/management-console');
+                me.props.history.push('/coming-soon');
 
             },
             error: function (response) {
                 console.log(response);
-                me.props.history.push('/management-console');
+                me.props.history.push('/coming-soon');
                 // me.setState({ open: true });
             },
             enableLogging: true

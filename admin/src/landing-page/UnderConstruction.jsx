@@ -69,7 +69,7 @@ export default class UnderConstruction extends React.Component {
                              <LeftFlag />
                          </li>
                          <li className="coming-soon-btn-container">
-                                 <input id="backToAOS" onClick={this.redirectToLinks} className="coming-soon-buttons pointer-cursor" style={{marginBottom:"30px"}} value="Back To AOS" />
+                                 <input id="backToAOS" onClick={this.redirectToLinks} className="coming-soon-buttons pointer-cursor" style={{marginBottom:"30px"}} defaultValue="Back To AOS" />
                                  <button id="backToManagement" onClick={this.redirectToLinks} className="coming-soon-buttons">
                                      Management Console
                                  </button>
