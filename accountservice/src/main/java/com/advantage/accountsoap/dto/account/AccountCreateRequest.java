@@ -46,7 +46,7 @@ public class AccountCreateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String password;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Integer accountType;
+    protected AccountType accountType;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected boolean allowOffersPromotion;
 
@@ -139,10 +139,11 @@ public class AccountCreateRequest {
     }
 
     public Integer getAccountType() {
-        return accountType;
+        return accountType.AccountType();
+
     }
 
-    public void setAccountType(Integer accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema version="1.0" targetNamespace="com.advantage.online.store.accountservice" xmlns:tns="com.advantage.online.store.accountservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema version="1.0" targetNamespace="com.advantage.online.store.accountservice"
+           xmlns:tns="com.advantage.online.store.accountservice" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1">
 
   <xs:element name="AccountCreateRequest">
     <xs:complexType>
@@ -15,7 +17,7 @@
         <xs:element name="phoneNumber" type="xs:string" form="qualified"/>
         <xs:element name="email" type="xs:string" form="qualified"/>
         <xs:element name="password" type="xs:string" form="qualified"/>
-        <xs:element name="accountType" type="xs:int" form="qualified"/>
+        <xs:element name="accountType" type="tns:AccountType" form="qualified"/>
         <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
       </xs:sequence>
     </xs:complexType>
@@ -181,7 +183,7 @@
         <xs:element name="zipcode" type="xs:string" form="qualified"/>
         <xs:element name="phoneNumber" type="xs:string" form="qualified"/>
         <xs:element name="email" type="xs:string" form="qualified"/>
-        <xs:element name="accountType" type="xs:int" form="qualified"/>
+        <xs:element name="accountType" type="tns:AccountType" form="qualified"/>
         <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified"/>
       </xs:sequence>
     </xs:complexType>
@@ -412,7 +414,7 @@
               <xs:element name="lastName" type="xs:string" form="qualified"/>
               <xs:element name="firstName" type="xs:string" form="qualified"/>
               <xs:element name="loginName" type="xs:string" form="qualified"/>
-              <xs:element name="accountType" type="xs:int" form="qualified"/>
+              <xs:element name="accountType" type="tns:AccountType" form="qualified"/>
               <xs:element name="countryId" type="xs:long" form="qualified"/>
               <xs:element name="countryName" type="xs:string" form="qualified"/>
               <xs:element name="countryIsoName" type="xs:string" form="qualified"/>
@@ -815,6 +817,78 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:element name="GetBankChequeRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="cheque-no" type="xs:string"/>
+        <xs:element name="issue-date" type="xs:date"/>
+        <xs:element name="cheque-issued-for" type="xs:string"/>
+        <xs:element name="account-no">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="tns:Request">
+                <xs:attribute name="RequestType" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="saving"/>
+                      <xs:enumeration value="current"/>
+                      <xs:enumeration value="corporate"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
+  <xs:simpleType name="BranchType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sanjauli"/>
+      <xs:enumeration value="summer hill"/>
+      <xs:enumeration value="dhalli"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AccountType">
+    <xs:annotation>
+      <xs:appinfo>
+        <jaxb:typesafeEnumClass>
+          <jaxb:typesafeEnumMember value="10" name="USER" />
+          <jaxb:typesafeEnumMember value="20" name="ADMIN" />
+          <jaxb:typesafeEnumMember value="30" name="GUEST" />
+          <jaxb:typesafeEnumMember value="40" name="SUPER_USER" />
+        </jaxb:typesafeEnumClass>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="USER" />
+      <xs:enumeration value="ADMIN" />
+      <xs:enumeration value="GUEST" />
+      <xs:enumeration value="SUPER_USER" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:element name="RequestType" type="tns:Request"/>
+
+  <xs:simpleType name="Request">
+  <xs:annotation>
+    <xs:appinfo>
+      <jaxb:typesafeEnumClass>
+        <jaxb:typesafeEnumMember value="1" name="US" />
+        <jaxb:typesafeEnumMember value="2" name="IL" />
+        <jaxb:typesafeEnumMember value="3" name="DE" />
+      </jaxb:typesafeEnumClass>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="US" />
+    <xs:enumeration value="IL" />
+    <xs:enumeration value="DE" />
+  </xs:restriction>
+  </xs:simpleType>
 
 </xs:schema>
