@@ -3,7 +3,7 @@
     /*width: 49px;*/
     text-align: left;
     color: #FFFFFF;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 20px;
@@ -12,7 +12,7 @@
 
     opacity: 0.82;
     color: #B8BCCF;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 14px;
     line-height: 18px;
     white-space: normal;

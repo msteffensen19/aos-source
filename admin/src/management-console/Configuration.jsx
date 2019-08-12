@@ -7,15 +7,26 @@ import Security from './Security';
 
 export default class Configuration extends React.Component {
 
+    constructor() {
+        super();
+
+        this.navToOpen = this.navToOpen.bind(this);
+    }
 
         state = {
             generalItemsArray: [],
             allItemsArray: [],
             functionalItemsArray: [],
             securityItemsArray: [],
-            itomItemsArray:[]
+            itomItemsArray:[],
+            tabToShow:'General'
         };
 
+
+
+    navToOpen(e){
+        this.setState({tabToShow: e.target.name})
+    };
 
     componentDidMount(){
         let tempGeneralItemsArray=[];
@@ -56,27 +67,35 @@ export default class Configuration extends React.Component {
         return (
             <div>
                 <ul>
+                    <li className="nav-item">
+                        <button name='General' onClick={this.navToOpen}>General</button>
+                    </li>
+                    <li className="nav-item">
+                        <button name='Itom' onClick={this.navToOpen}>Itom</button>
+                    </li>
+                    <li className="nav-item">
+                        <button name='Security' onClick={this.navToOpen}>Security</button>
+                    </li>
+                    <li className="nav-item">
+                        <button name='Functional' onClick={this.navToOpen}>Functional</button>
+                    </li>
+                </ul>
+                <ul>
                     <li>
-                        {this.state.generalItemsArray && this.state.generalItemsArray.length > 0 ?
+                        {this.state.generalItemsArray && this.state.generalItemsArray.length && (this.state.tabToShow ==='General') > 0 ?
                             <General itemsToShow={this.state.generalItemsArray}/> : null}
                     </li>
                     <li>
-                        {this.state.itomItemsArray && this.state.itomItemsArray.length > 0 ?
+                        {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Itom') > 0 ?
                             <Itom itemsToShow={this.state.itomItemsArray} /> : null}
                     </li>
                     <li>
-                        {this.state.itomItemsArray && this.state.itomItemsArray.length > 0 ?
+                        {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Functional') > 0 ?
                             <Functional itemsToShow={this.state.itomItemsArray} /> : null}
                     </li>
                     <li>
-                        {this.state.itomItemsArray && this.state.itomItemsArray.length > 0 ?
+                        {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
                             <Security itemsToShow={this.state.itomItemsArray} /> : null}
-                    </li>
-                    <li className="nav-item">
-                        <button>Third button</button>
-                    </li>
-                    <li className="nav-item">
-                        <button>Third button</button>
                     </li>
                 </ul>
             </div>

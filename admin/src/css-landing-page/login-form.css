@@ -5,7 +5,7 @@
 .enter-details-to-log {
     height: 20px;
     color: #FFFFFF;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 0px;
@@ -29,7 +29,7 @@
     /*width: 68px;*/
     opacity: 0.82;
     color: #A4A8BD;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 16px;
     line-height: 19px;
 }
@@ -44,7 +44,7 @@ input::placeholder{
     height: 16px;
     opacity: 0.82;
     color: #A4A8BD;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 16px;
     line-height: 19px;
 }
@@ -54,7 +54,7 @@ input::placeholder{
     opacity: 0.82;
     margin-left: 10px;
     color: #A4A8BD;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 14px;
     line-height: 17px;
 }

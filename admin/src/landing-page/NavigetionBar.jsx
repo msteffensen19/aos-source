@@ -8,7 +8,7 @@ export default class NavigationBar extends React.Component {
     render() {
         return (
             <div className="nav-ul-container">
-                <ul className="nav flex-column navigation-ul">
+                <ul className="nav flex-column navigation-ul ie-modification">
                     <li className="nav-item ">
                         <NavUserGuide></NavUserGuide>
                     </li>
