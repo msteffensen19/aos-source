@@ -20,6 +20,12 @@
     min-height: 911px;
     height: 100vh;
 }
+@media screen and (max-height: 1050px)and (-ms-high-contrast: none),(-ms-high-contrast: active) {
+    /* IE10+ specific styles go here */
+    .aos-nav-bar{
+        min-height: 960px;
+    }
+}
 @media screen and (max-width: 1630px) {
 
     .aos-nav-bar{
@@ -142,6 +148,12 @@ div.devices_pic{
         .nav-space-between{
             padding-top: 85px;
         }
+}
+@media screen and (max-height: 1050px)and (-ms-high-contrast: none),(-ms-high-contrast: active) {
+    /* IE10+ specific styles go here */
+    .nav-space-between{
+        padding-top: 55px;
+    }
 }
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {

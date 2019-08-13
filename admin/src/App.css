@@ -38,19 +38,16 @@ html,body,#root {
   height: 100vh;
   background-color: #292E44;
 }
-/*@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {*/
-  /*!* IE10+ specific styles go here *!*/
-  /*.left-column{*/
-    /*height: auto;*/
-  /*}*/
-/*}*/
-
+@media screen and (max-height: 1050px)and (-ms-high-contrast: none),(-ms-high-contrast: active) {
+    /* IE10+ specific styles go here */
+    .left-column{
+        min-height: 960px;
+    }
+}
 @media screen and (max-width: 1630px) {
-
   .left-column{
     max-width: 81.3%;
   }
-
 }
 .left-main-container{
   padding-left: 0;
@@ -70,7 +67,7 @@ html,body,#root {
   padding-bottom: 120px;
   margin: 0;
 }
-@media (max-height: 950px) {
+@media only screen and (max-height: 1050px) {
 
   .top-container{
     padding-bottom: 53px;
@@ -79,15 +76,11 @@ html,body,#root {
     margin-top: -15px;
   }
 }
-
-@media (max-height: 950px) {
-
-  .top-container{
-    padding-bottom: 53px;
-  }
-  .left-bottom-container{
-    margin-top: -15px;
-  }
+@media screen and (max-height: 1050px)and (-ms-high-contrast: none),(-ms-high-contrast: active) {
+    /* IE10+ specific styles go here */
+    .top-container{
+        padding-bottom: 25px;
+    }
 }
 .left-bottom-container{
   position: relative;
@@ -159,7 +152,6 @@ html,body,#root {
   display: flex;
   margin-top: 28px;
   margin-left: 60px;
-  /*margin-bottom: 43px;*/
 }
 .management-console {
 
@@ -213,6 +205,11 @@ html,body,#root {
 
 .pointer-cursor{
   cursor: pointer;
+}
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    .ie-modification-btn{
+        margin-right: 15px;
+    }
 }
 .li-space{
   margin: 45px;
