@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
         loginPassword: this.state.password,
         loginUser: this.state.userName};
 
-        let host = window.location.origin;
+        //let host = window.location.origin;
         let $ = require('jquery');
         require('jquery.soap');
         var parseString = require('jquery.soap');
