@@ -1,6 +1,7 @@
 import React from 'react';
 import 'jquery';
 import 'jquery.soap';
+import 'bootstrap';
 
 export default class LeftNavBar extends React.Component {
 
@@ -10,17 +11,18 @@ export default class LeftNavBar extends React.Component {
 
     }
 
-    restoreDbToDefault(){
+    restoreDbToDefault(event){
 
             let $ = require('jquery');
             require('jquery.soap');
             var parseString = require('jquery.soap');
-            let me = this;
             $.soap({
-                       url: 'http://localhost:8080/accountservice/', //host+'/accountservice/',
-                       method: 'RestoreDBToFactorySettingRequest',
-                       namespaceURL: 'com.advantage.online.store.accountservice',
-                       SOAPAction: 'com.advantage.online.store.accountserviceRestoreDBToFactorySettingRequest',
+               timeout: 10000,
+               url: 'http://localhost:8080/accountservice/', //host+'/accountservice/',
+               method: 'RestoreDBToFactorySettingRequest',
+               namespaceURL: 'com.advantage.online.store.accountservice',
+               SOAPAction: 'com.advantage.online.store.accountserviceRestoreDBToFactorySettingRequest',
+                data: "1",
 
         success: function (soapResponse) {
             let response = parseString(soapResponse);
@@ -31,8 +33,10 @@ export default class LeftNavBar extends React.Component {
             console.log(response);
 
         },
+
         enableLogging: true
         });
+        event.preventDefault();
     }
 
     render() {
