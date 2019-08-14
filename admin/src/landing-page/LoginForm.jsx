@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
         loginPassword: this.state.password,
         loginUser: this.state.userName};
 
-        let host = window.location.origin;
+        //let host = window.location.origin;
         let $ = require('jquery');
         require('jquery.soap');
         var parseString = require('jquery.soap');
@@ -59,12 +59,12 @@ class LoginForm extends React.Component {
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
                 console.log(response);
-                me.props.history.push('/coming-soon');
+                me.props.history.push('/management-console');
 
             },
             error: function (response) {
                 console.log(response);
-                me.props.history.push('/coming-soon');
+                me.props.history.push('/management-console');
                 // me.setState({ open: true });
             },
             enableLogging: true

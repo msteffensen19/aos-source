@@ -190,7 +190,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
             String resultTruncate = (String) entityManager.createNativeQuery("SELECT public.truncate_order_tables()")
                     .getSingleResult();
             transaction.commit();
-            session.flush();
+//            session.flush();
             session.close();
 
             StringBuilder sb = new StringBuilder("Database Restore Factory Settings - CATALOG schema truncated successfully. ");
