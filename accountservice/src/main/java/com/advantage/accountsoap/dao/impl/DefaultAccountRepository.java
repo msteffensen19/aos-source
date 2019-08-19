@@ -4,6 +4,7 @@ import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.dao.*;
 import com.advantage.accountsoap.dto.DeleteOrderResponse;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
+import com.advantage.accountsoap.dto.country.CountryID;
 import com.advantage.accountsoap.model.*;
 import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
@@ -102,14 +103,14 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
      * <br/>
      */
     @Override
-    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, Long countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean allowOffersPromotion) {
+    public Account createAppUser(Integer appUserType, String lastName, String firstName, String loginName, String password, CountryID countryId, String phoneNumber, String stateProvince, String cityName, String address, String zipcode, String email, boolean allowOffersPromotion) {
 
         //  Validate Numeric Arguments
         ArgumentValidationHelper.validateArgumentIsNotNull(appUserType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(countryId, "country id");
 
         ArgumentValidationHelper.validateNumberArgumentIsPositive(appUserType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(countryId, "country id");
+//        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(countryId, "country id");
 
         //  Validate String Arguments - Mandatory columns
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(loginName, "login name");
@@ -162,8 +163,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     if (getAppUserByLogin(loginName) == null) {
 
                         //Moti Ostrovski: if not set countryID or equals 0=> set country USA
-                        countryId = countryId == 0 ? 40 : countryId;
-                        Country country = countryRepository.get(countryId);
+                        countryId = countryId.equals("") ? CountryID.UNITED_STATES_USA : countryId;
+                        Country country = countryRepository.get(countryId.getLong());
                         Account account = null;
                         try {
                             account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
@@ -264,7 +265,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     @Override
     public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
-                                        String password, Long countryId, String phoneNumber, String stateProvince,
+                                        String password, CountryID countryId, String phoneNumber, String stateProvince,
                                         String cityName, String address, String zipcode, String email,
                                         boolean allowOffersPromotion) {
         //Moti add validation fields

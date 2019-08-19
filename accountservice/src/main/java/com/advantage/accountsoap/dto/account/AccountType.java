@@ -48,9 +48,9 @@ public enum AccountType {
 
     public Integer AccountType(){
         switch (fromValue(this.value())){
-            case USER:
-                return 10;
             case ADMIN:
+                return 10;
+            case USER:
                 return 20;
             case GUEST:
                 return 30;

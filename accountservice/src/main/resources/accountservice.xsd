@@ -9,7 +9,7 @@
         <xs:element name="lastName" type="xs:string" form="qualified"/>
         <xs:element name="firstName" type="xs:string" form="qualified"/>
         <xs:element name="loginName" type="xs:string" form="qualified"/>
-        <xs:element name="countryId" type="xs:long" form="qualified"/>
+        <xs:element name="countryId" type="tns:CountryID" form="qualified"/>
         <xs:element name="stateProvince" type="xs:string" form="qualified"/>
         <xs:element name="cityName" type="xs:string" form="qualified"/>
         <xs:element name="address" type="xs:string" form="qualified"/>
@@ -871,6 +871,21 @@
     </xs:restriction>
   </xs:simpleType>
 
+
+  <xs:simpleType name="CountryID">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Uganda,ug"></xs:enumeration>
+      <xs:enumeration value="Uzbekistan,uz"></xs:enumeration>
+      <xs:enumeration value="Austria,at"></xs:enumeration>
+      <xs:enumeration value="Australia,au"></xs:enumeration>
+      <xs:enumeration value="Ukraine,ua"></xs:enumeration>
+      <xs:enumeration value="Uruguay,uy"></xs:enumeration>
+      <xs:enumeration value="Azerbaijan,az"></xs:enumeration>
+      <xs:enumeration value="United Arab Emirates,ae"></xs:enumeration>
+      <xs:enumeration value="Italy,it"></xs:enumeration>
+      <xs:enumeration value="United States,usa"></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:element name="RequestType" type="tns:Request"/>
 

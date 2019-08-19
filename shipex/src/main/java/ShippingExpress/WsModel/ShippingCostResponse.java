@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -55,7 +56,7 @@ public class ShippingCostResponse {
     @XmlElement(name = "Currency", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
     protected String currency;
     @XmlElement(name = "TransactionDate", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
-    protected String transactionDate;
+    protected XMLGregorianCalendar transactionDate;
 
     /**
      * Gets the value of the seTransactionType property.
@@ -185,7 +186,7 @@ public class ShippingCostResponse {
      *     {@link String }
      *     
      */
-    public String getTransactionDate() {
+    public XMLGregorianCalendar getTransactionDate() {
         return transactionDate;
     }
 
@@ -197,7 +198,7 @@ public class ShippingCostResponse {
      *     {@link String }
      *     
      */
-    public void setTransactionDate(String value) {
+    public void setTransactionDate(XMLGregorianCalendar value) {
         this.transactionDate = value;
     }
 

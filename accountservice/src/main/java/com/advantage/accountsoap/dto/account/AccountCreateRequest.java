@@ -2,6 +2,7 @@ package com.advantage.accountsoap.dto.account;
 //Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.country.CountryID;
 
 import javax.xml.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class AccountCreateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String loginName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Long countryId;
+    protected CountryID countryId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String stateProvince;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
@@ -74,11 +75,11 @@ public class AccountCreateRequest {
         this.loginName = loginName;
     }
 
-    public Long getCountry() {
+    public CountryID getCountry() {
         return countryId;
     }
 
-    public void setCountry(Long country) {
+    public void setCountry(CountryID country) {
         this.countryId = country;
     }
 
@@ -139,7 +140,7 @@ public class AccountCreateRequest {
     }
 
     public Integer getAccountType() {
-        return accountType.AccountType();
+        return accountType != null ? accountType.AccountType() : 0;
 
     }
 

@@ -48,7 +48,7 @@ define(['./module'], function (services) {
             function register(model) {
 
                 var expectToReceive = {
-                    "accountType": 20,
+                    "accountType": "USER",
                     "address": model.address,
                     "allowOffersPromotion": model.offers_promotion ? 'true' : 'false',
                     "cityName": model.city,
