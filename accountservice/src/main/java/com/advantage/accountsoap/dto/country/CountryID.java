@@ -58,16 +58,19 @@ public enum CountryID {
     @XmlEnumValue("Italy,it")
     ITALY_IT("Italy,it", 1L),
     @XmlEnumValue("United States,usa")
-    UNITED_STATES_USA("United States,usa", 1L);
+    UNITED_STATES_USA("United States,usa", 40L);
     private final String value;
+    private final Long lValue;
 
     CountryID(String v, long l) {
         value = v;
+        lValue = l;
     }
 
     public String value() {
         return value;
     }
+    public Long lValue(){ return lValue; }
 
     public static CountryID fromValue(String v) {
         for (CountryID c: CountryID.values()) {
@@ -76,6 +79,15 @@ public enum CountryID {
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public static CountryID fromValue(Long l) {
+        for (CountryID c: CountryID.values()) {
+            if (c.lValue.equals(l)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException();
     }
 
     public  static Long getLong(){

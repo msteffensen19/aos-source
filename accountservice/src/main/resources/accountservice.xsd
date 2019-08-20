@@ -874,16 +874,48 @@
 
   <xs:simpleType name="CountryID">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Uganda,ug"></xs:enumeration>
-      <xs:enumeration value="Uzbekistan,uz"></xs:enumeration>
-      <xs:enumeration value="Austria,at"></xs:enumeration>
-      <xs:enumeration value="Australia,au"></xs:enumeration>
-      <xs:enumeration value="Ukraine,ua"></xs:enumeration>
-      <xs:enumeration value="Uruguay,uy"></xs:enumeration>
-      <xs:enumeration value="Azerbaijan,az"></xs:enumeration>
-      <xs:enumeration value="United Arab Emirates,ae"></xs:enumeration>
       <xs:enumeration value="Italy,it"></xs:enumeration>
       <xs:enumeration value="United States,usa"></xs:enumeration>
+      <xs:enumeration value="Austria"></xs:enumeration>
+      <xs:enumeration value="Australia"></xs:enumeration>
+      <xs:enumeration value="Ukraine"></xs:enumeration>
+      <xs:enumeration value="Italy"></xs:enumeration>
+      <xs:enumeration value="England"></xs:enumeration>
+      <xs:enumeration value="United States"></xs:enumeration>
+      <xs:enumeration value="Brazil"></xs:enumeration>
+      <xs:enumeration value="Germany"></xs:enumeration>
+      <xs:enumeration value="Denmark"></xs:enumeration>
+      <xs:enumeration value="South Africa"></xs:enumeration>
+      <xs:enumeration value="India"></xs:enumeration>
+      <xs:enumeration value="Netherland"></xs:enumeration>
+      <xs:enumeration value="United Kingdom"></xs:enumeration>
+      <xs:enumeration value="Turkey"></xs:enumeration>
+      <xs:enumeration value="Greece"></xs:enumeration>
+      <xs:enumeration value="Japan"></xs:enumeration>
+      <xs:enumeration value="Israel"></xs:enumeration>
+      <xs:enumeration value="Egypt"></xs:enumeration>
+      <xs:enumeration value="Mexico"></xs:enumeration>
+      <xs:enumeration value="Norway"></xs:enumeration>
+      <xs:enumeration value="Nigeria"></xs:enumeration>
+      <xs:enumeration value="New Zealand"></xs:enumeration>
+      <xs:enumeration value="China"></xs:enumeration>
+      <xs:enumeration value="Spain"></xs:enumeration>
+      <xs:enumeration value="Portugal"></xs:enumeration>
+      <xs:enumeration value="France"></xs:enumeration>
+      <xs:enumeration value="South Korea"></xs:enumeration>
+      <xs:enumeration value="North Korea"></xs:enumeration>
+      <xs:enumeration value="Qatar"></xs:enumeration>
+      <xs:enumeration value="Canada"></xs:enumeration>
+      <xs:enumeration value="Croatia"></xs:enumeration>
+      <xs:enumeration value="Romania"></xs:enumeration>
+      <xs:enumeration value="Russia"></xs:enumeration>
+      <xs:enumeration value="Sweden"></xs:enumeration>
+      <xs:enumeration value="Switzerland"></xs:enumeration>
+      <xs:enumeration value="Thailand"></xs:enumeration>
+      <xs:enumeration value="Tunisia"></xs:enumeration>
+      <xs:enumeration value="Yemen"></xs:enumeration>
+
+
     </xs:restriction>
   </xs:simpleType>
 
