@@ -737,6 +737,24 @@ public class CatalogController {
         return new ResponseEntity<>(restoreFactorySettingsResponse, (restoreFactorySettingsResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
     }
 
+//    @RequestMapping(value = "/DemoAppConfig/Export_To_Excel", method = RequestMethod.GET)
+//    @ApiOperation(value = "Export Demo App Config To Excel file")
+//    public ResponseEntity<DemoAppConfigStatusResponse> exportDemoAppConfigToExcel(final HttpServletRequest request,
+//                                                                              final HttpServletResponse response) {
+//        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+//        if (cefData != null) {
+//            logger.trace("cefDataId=" + cefData.toString());
+//            cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/Export_To_Excel".hashCode()),
+//                    "Export Demo App Config To Excel file", 5);
+//        } else {
+//            logger.warn("cefData is null");
+//        }
+//
+//        DemoAppConfigStatusResponse exportDemoAppConfigToExcel = demoAppConfigService.exportDemoAppConfigToExcel();
+//
+//        return new ResponseEntity<>(exportDemoAppConfigToExcel, (exportDemoAppConfigToExcel.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
+//    }
+
     @RequestMapping(value = "/DemoAppConfig/update/parameter/{name}/value/{new_value}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update DemoAppConfig parameter value")
     public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameter(@PathVariable("name") String parameterName,

@@ -1,8 +1,10 @@
 package com.advantage.catalog.store.services;
 
 import com.advantage.common.Constants;
-import com.advantage.common.Url_resources;
-import com.advantage.common.dto.*;
+import com.advantage.common.dto.DemoAppConfigParameter;
+import com.advantage.common.dto.DemoAppConfigParameterDto;
+import com.advantage.common.dto.DemoAppConfigParametersDto;
+import com.advantage.common.dto.DemoAppConfigStatusResponse;
 import com.advantage.common.utils.SoapApiHelper;
 import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.xml.XmlHelper;
@@ -445,6 +447,49 @@ public class DemoAppConfigService {
         }
         return false;
     }
+//    public void exportDemoAppConfigToExcel ()  {
+//
+//        Sheet sheet = workbook.getSheetAt(0);
+//
+//        workbook = new XSSFWorkbook();
+//
+//        CellStyle style = workbook.createCellStyle();
+//        Font boldFont = workbook.createFont();
+//        boldFont.setBold(true);
+//        style.setFont(boldFont);
+//        style.setAlignment(CellStyle.ALIGN_CENTER);
+//
+//        Sheet sheet = workbook.createSheet();
+//        rowNum = 0;
+//        Row row = sheet.createRow(rowNum++);
+//        Cell cell = row.createCell(SUBSTANCE_NAME_COLUMN);
+//        cell.setCellValue("Substance name");
+//        cell.setCellStyle(style);
+//
+//        cell = row.createCell(SUBSTANCE_ENTRY_FORCE_COLUMN);
+//        cell.setCellValue("Substance entry_force");
+//        cell.setCellStyle(style);
+//
+//        cell = row.createCell(SUBSTANCE_DIRECTIVE_COLUMN);
+//        cell.setCellValue("Substance directive");
+//        cell.setCellStyle(style);
+//
+//        cell = row.createCell(PRODUCT_NAME_COLUMN);
+//        cell.setCellValue("Product name");
+//        cell.setCellStyle(style);
+//
+//        cell = row.createCell(PRODUCT_CODE_COLUMN);
+//        cell.setCellValue("Product code");
+//        cell.setCellStyle(style);
+//
+//        cell = row.createCell(PRODUCT_MRL_COLUMN);
+//        cell.setCellValue("MRL");
+//        cell.setCellStyle(style);
+//
+//        cell = row.createCell(APPLICATION_DATE_COLUMN);
+//        cell.setCellValue("Application Date");
+//        cell.setCellStyle(style);
+//    }
 
     private boolean changeUserPassword(String[] currentUserDetails, String[] newUserDetails) throws SOAPException {
         NodeList loginResponse = SoapApiHelper.doLogin(currentUserDetails[0], currentUserDetails[1]);
