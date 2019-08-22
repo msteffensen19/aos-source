@@ -76,7 +76,7 @@ public class AccountCreateRequest {
     }
 
     public CountryID getCountry() {
-        return countryId != null ? countryId : CountryID.UNITED_STATES_USA;
+        return countryId != null ? countryId : CountryID.UNITED_STATES_US;
     }
 
     public void setCountry(CountryID country) {

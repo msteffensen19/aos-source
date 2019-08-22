@@ -163,7 +163,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
                     if (getAppUserByLogin(loginName) == null) {
 
                         //Moti Ostrovski: if not set countryID or equals 0=> set country USA
-                        countryId = countryId.equals("") ? CountryID.UNITED_STATES_USA : countryId;
+                        countryId = countryId.equals("") ? CountryID.UNITED_STATES_US : countryId;
                         Country country = countryRepository.get(countryId.getLong());
                         Account account = null;
                         try {
