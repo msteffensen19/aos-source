@@ -164,7 +164,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
                         //Moti Ostrovski: if not set countryID or equals 0=> set country USA
                         countryId = countryId.equals("") ? CountryID.UNITED_STATES_US : countryId;
-                        Country country = countryRepository.get(countryId.getLong());
+                        Country country = countryRepository.get(countryId.lValue());
                         Account account = null;
                         try {
                             account = new Account(appUserType, lastName, firstName, loginName, password, country, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
@@ -209,16 +209,15 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
     @Override
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
-                                               Long countryId, String phoneNumber, String stateProvince, String cityName, String address,
+                                               CountryID countryId, String phoneNumber, String stateProvince, String cityName, String address,
                                                String zipcode, String email, boolean agreeToReceiveOffersAndPromotions) {
         ArgumentValidationHelper.validateArgumentIsNotNull(accountType, "application user type");
         ArgumentValidationHelper.validateArgumentIsNotNull(countryId, "country id");
         ArgumentValidationHelper.validateNumberArgumentIsPositive(accountType, "application user type");
-        ArgumentValidationHelper.validateNumberArgumentIsPositiveOrZero(countryId, "country id");
         //  Validate String Arguments - Mandatory columns
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(email, "email");
         ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(String.valueOf(agreeToReceiveOffersAndPromotions), "agree to receive offers and promotions");
-
+        ArgumentValidationHelper.validateArgumentIsNotNull(countryId, "country id");
         Account account = get(accountId);
 
         //Moti add validation fields
@@ -241,8 +240,8 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         }
 
         //Moti Ostrovski: if not set countryID or equals 0=> set country USA
-        countryId = countryId == 0 ? 40 : countryId;
-        Country country = countryRepository.get(countryId);
+        countryId = countryId == null || countryId.lValue() == 0  ? CountryID.UNITED_STATES_US : countryId;
+        Country country = countryRepository.get(countryId.lValue());
 
         account.setAccountType(accountType);
         account.setLastName(lastName);

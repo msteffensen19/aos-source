@@ -28,7 +28,7 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
 
     Account updateAppUser(Account account);
 
-    AccountStatusResponse updateAccount(long acccountId, Integer appUserType, String lastName, String firstName,Long country,
+    AccountStatusResponse updateAccount(long acccountId, Integer appUserType, String lastName, String firstName,CountryID country,
                                         String phoneNumber, String stateProvince, String cityName, String address,
                                         String zipcode, String email, boolean agreeToReceiveOffersAndPromotions);
 

@@ -35,8 +35,7 @@ public enum AccountType {
 
     USER,
     ADMIN,
-    GUEST,
-    SUPER_USER;
+    GUEST;
 
     public String value() {
         return name();
@@ -54,8 +53,6 @@ public enum AccountType {
                 return 20;
             case GUEST:
                 return 30;
-            case SUPER_USER:
-                return 40;
             default:
                 return 0;
         }

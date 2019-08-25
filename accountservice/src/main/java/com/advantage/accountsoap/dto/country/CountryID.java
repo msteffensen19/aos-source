@@ -39,70 +39,63 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum CountryID {
 
-    @XmlEnumValue("Italy,it")
-    ITALY_IT("Italy,it", 9L),
-    @XmlEnumValue("United States,us")
-    UNITED_STATES_US("United States,us", 40L),
-    @XmlEnumValue("Austria,at")
-    AUSTRIA_AT("Austria,at", 3L),
+
     @XmlEnumValue("Australia,au")
     AUSTRALIA_AU("Australia,au", 4L),
-    @XmlEnumValue("Ukraine,ua")
-    UKRAINE_UA("Ukraine,ua", 5L),
-    @XmlEnumValue("England,uk")
-    ENGLAND_UK("England,uk", 30L),
+    @XmlEnumValue("Austria,at")
+    AUSTRIA_AT("Austria,at", 3L),
     @XmlEnumValue("Brazil,br")
     BRAZIL_BR("Brazil,br", 58),
-    @XmlEnumValue("Germany,de")
-    GERMANY_DE("Germany,de", 78L),
+    @XmlEnumValue("Canada,ca")
+    CANADA_CA("Canada,ca", 227L),
+    @XmlEnumValue("China,cn")
+    CHINA_CN("China,cn", 177L),
+    @XmlEnumValue("Croatia,hr")
+    CROATIA_HR("Croatia,hr", 230L),
     @XmlEnumValue("Denmark,dk")
     DENMARK_DK("Denmark,dk", 82L),
-    @XmlEnumValue("South Africa,za")
-    SOUTH_AFRICA_ZA("South Africa,za", 83L),
-    @XmlEnumValue("India,in")
-    INDIA_IN("India,in", 92L),
-    @XmlEnumValue("Netherland,nl")
-    NETHERLAND_NL("Netherland,nl", 94L),
-    @XmlEnumValue("United Kingdom,uk")
-    UNITED_KINGDOM_UK("United Kingdom,uk", 98L),
-    @XmlEnumValue("Turkey,tr")
-    TURKEY_TR("Turkey,tr", 119L),
-    @XmlEnumValue("Greece,gr")
-    GREECE_GR("Greece,gr", 123L),
-    @XmlEnumValue("Japan,jp")
-    JAPAN_JP("Japan,jp", 124L),
-    @XmlEnumValue("Israel,il")
-    ISRAEL_IL("Israel,il", 126L),
     @XmlEnumValue("Egypt,eg")
     EGYPT_EG("Egypt,eg", 155L),
+    @XmlEnumValue("England,uk")
+    ENGLAND_UK("England,uk", 30L),
+    @XmlEnumValue("France,fr")
+    FRANCE_FR("France,fr", 212L),
+    @XmlEnumValue("Germany,de")
+    GERMANY_DE("Germany,de", 78L),
+    @XmlEnumValue("Greece,gr")
+    GREECE_GR("Greece,gr", 123L),
+    @XmlEnumValue("India,in")
+    INDIA_IN("India,in", 92L),
+    @XmlEnumValue("Israel,il")
+    ISRAEL_IL("Israel,il", 126L),
+    @XmlEnumValue("Italy,it")
+    ITALY_IT("Italy,it", 9L),
+    @XmlEnumValue("Japan,jp")
+    JAPAN_JP("Japan,jp", 124L),
     @XmlEnumValue("Mexico,mx")
     MEXICO_MX("Mexico,mx", 158L),
+    @XmlEnumValue("Netherland,nl")
+    NETHERLAND_NL("Netherland,nl", 94L),
     @XmlEnumValue("Norway,no")
     NORWAY_NO("Norway,no", 162L),
     @XmlEnumValue("New Zealand,nz")
     NEW_ZEALAND_NZ("New Zealand,nz", 164L),
-    @XmlEnumValue("China,cn")
-    CHINA_CN("China,cn", 177L),
     @XmlEnumValue("Spain,es")
     SPAIN_ES("Spain,es", 189L),
-    @XmlEnumValue("Portugal,pt")
-    PORTUGAL_PT("Portugal,pt", 200L),
-    @XmlEnumValue("France,fr")
-    FRANCE_FR("France,fr", 212L),
     @XmlEnumValue("South Korea,kr")
     SOUTH_KOREA_KR("South Korea,kr", 218L),
     @XmlEnumValue("North Korea,kp")
     NORTH_KOREA_KP("North Korea,kp", 219L),
+    @XmlEnumValue("Portugal,pt")
+    PORTUGAL_PT("Portugal,pt", 200L),
     @XmlEnumValue("Qatar,qa")
     QATAR_QA("Qatar,qa", 221L),
-    @XmlEnumValue("Canada,ca")
-    CANADA_CA("Canada,ca", 227L),
-    @XmlEnumValue("Croatia,hr")
-    CROATIA_HR("Croatia,hr", 230L),
     @XmlEnumValue("Romania,ro")
     ROMANIA_RO("Romania,ro", 235L),
     @XmlEnumValue("Russia,ru")
     RUSSIA_RU("Russia,ru", 236L),
+    @XmlEnumValue("South Africa,za")
+    SOUTH_AFRICA_ZA("South Africa,za", 83L),
     @XmlEnumValue("Sweden,se")
     SWEDEN_SE("Sweden,se", 237L),
     @XmlEnumValue("Switzerland,ch")
@@ -111,6 +104,14 @@ public enum CountryID {
     THAILAND_TH("Thailand,th", 239L),
     @XmlEnumValue("Tunisia,tn")
     TUNISIA_TN("Tunisia,tn", 240L),
+    @XmlEnumValue("Turkey,tr")
+    TURKEY_TR("Turkey,tr", 119L),
+    @XmlEnumValue("Ukraine,ua")
+    UKRAINE_UA("Ukraine,ua", 5L),
+    @XmlEnumValue("United Kingdom,uk")
+    UNITED_KINGDOM_UK("United Kingdom,uk", 98L),
+    @XmlEnumValue("United States,us")
+    UNITED_STATES_US("United States,us", 40L),
     @XmlEnumValue("Yemen,ye")
     YEMEN_YE("Yemen,ye", 241L);
     private final String value;

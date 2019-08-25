@@ -3,6 +3,7 @@ package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.IUserRequest;
+import com.advantage.accountsoap.dto.country.CountryID;
 
 import javax.xml.bind.annotation.*;
 
@@ -30,22 +31,22 @@ public class AccountUpdateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected long accountId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Long countryId;
+    protected CountryID countryId;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String stateProvince;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String cityName;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String address;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String zipcode;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String phoneNumber;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String email;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected AccountType accountType;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected boolean allowOffersPromotion;
 
     public String getLastName() {
@@ -72,11 +73,12 @@ public class AccountUpdateRequest {
         this.accountId = accountId;
     }
 
-    public Long getCountry() {
-        return countryId;
+    public CountryID getCountry() {
+
+        return countryId != null ? countryId : CountryID.UNITED_STATES_US;
     }
 
-    public void setCountry(Long country) {
+    public void setCountry(CountryID country) {
         this.countryId = country;
     }
 
@@ -129,7 +131,7 @@ public class AccountUpdateRequest {
     }
 
     public Integer getAccountType() {
-        return accountType.AccountType();
+        return accountType != null ? accountType.AccountType() : 10;
     }
 
     public void setAccountType(AccountType accountType) {

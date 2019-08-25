@@ -32,15 +32,15 @@ public class AccountCreateRequest {
     protected String loginName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected CountryID countryId;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String stateProvince;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String cityName;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String address;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String zipcode;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String phoneNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String email;
@@ -48,7 +48,7 @@ public class AccountCreateRequest {
     protected String password;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected AccountType accountType;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected boolean allowOffersPromotion;
 
     public String getLastName() {
@@ -140,7 +140,7 @@ public class AccountCreateRequest {
     }
 
     public Integer getAccountType() {
-        return accountType != null ? accountType.AccountType() : 0;
+        return accountType != null ? accountType.AccountType() : 10;
 
     }
 

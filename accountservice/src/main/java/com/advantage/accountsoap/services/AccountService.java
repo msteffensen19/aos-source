@@ -164,7 +164,7 @@ public class AccountService implements Injectable {
 
     @Transactional
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
-                                               Long countryId, String phoneNumber, String stateProvince, String cityName,
+                                               final CountryID countryId, String phoneNumber, String stateProvince, String cityName,
                                                String address, String zipcode, String email, boolean allowOffersPromotion) {
 
         AccountStatusResponse accountStatusResponse = accountRepository.updateAccount(accountId, accountType, lastName, firstName, countryId, phoneNumber,
