@@ -51,7 +51,7 @@ define(['./module'], function (directives) {
 
                         s.accountUpdate = function () {
 
-                            s.user.countryId = s.country.id;
+                            s.user.countryId = s.country.name + "," + s.country.isoName;
                             s.user.country = s.country.isoName;
                             if (s.agree_Agreement) {
                                 orderService.accountUpdate(s.user).then(function (res) {
