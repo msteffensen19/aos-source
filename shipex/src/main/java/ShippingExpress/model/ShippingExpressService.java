@@ -3,6 +3,9 @@ package ShippingExpress.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.file.Path;
@@ -68,10 +71,16 @@ public class ShippingExpressService {
      * Determines date in a specified format
      * @return {@link} formatted Date
      */
-    public String getFormatTimeNow() {
+    public XMLGregorianCalendar getFormatTimeNow() {
         LocalDate date = LocalDate.now();
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-        return date.format(timeFormatter);
+        XMLGregorianCalendar returnedDate = null;
+        try {
+            returnedDate =  DatatypeFactory.newInstance().newXMLGregorianCalendar(date.format(timeFormatter));
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+        return returnedDate;
     }
 
     private String getRandomNumber(int digitCount) {

@@ -61,7 +61,7 @@
                 <xs:element name="Reason" type="xs:string"/>
                 <xs:element name="Amount" type="xs:string"/>
                 <xs:element name="Currency" type="xs:string"/>
-                <xs:element name="TransactionDate" type="xs:string"/>
+                <xs:element name="TransactionDate" type="xs:dateTime"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -86,7 +86,7 @@
                 <xs:element name="Code" type="xs:string"/>
                 <xs:element name="Reason" type="xs:string"/>
                 <xs:element name="TransactionReference" type="xs:string"/>
-                <xs:element name="TransactionDate" type="xs:string"/>
+                <xs:element name="TransactionDate" type="xs:dateTime"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

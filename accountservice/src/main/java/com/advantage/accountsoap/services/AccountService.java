@@ -9,6 +9,7 @@ import com.advantage.accountsoap.dto.account.AccountPermanentDeleteResponse;
 import com.advantage.accountsoap.dto.account.AccountStatusResponse;
 import com.advantage.accountsoap.dto.account.internal.AccountDto;
 import com.advantage.accountsoap.dto.address.AddressDto;
+import com.advantage.accountsoap.dto.country.CountryID;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesDto;
 import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.model.Account;
@@ -69,7 +70,7 @@ public class AccountService implements Injectable {
     private static final Logger logger = Logger.getLogger(AccountService.class);
 
     @Transactional
-    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final Long countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion) {
+    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final CountryID countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion) {
 
         AccountStatusResponse accountStatusResponse = accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
 
@@ -78,7 +79,7 @@ public class AccountService implements Injectable {
             if ((!StringHelper.isNullOrEmpty(address)) ||
                     (!StringHelper.isNullOrEmpty(cityName)) ||
                     (!StringHelper.isNullOrEmpty(zipcode)) ||
-                    (countryId.intValue() > 0) ||
+                    (countryId.value() != null) ||
                     (!StringHelper.isNullOrEmpty(stateProvince))) {
 
                 //  Update Shipping Address based on address in user-account
@@ -163,7 +164,7 @@ public class AccountService implements Injectable {
 
     @Transactional
     public AccountStatusResponse updateAccount(long accountId, Integer accountType, String lastName, String firstName,
-                                               Long countryId, String phoneNumber, String stateProvince, String cityName,
+                                               final CountryID countryId, String phoneNumber, String stateProvince, String cityName,
                                                String address, String zipcode, String email, boolean allowOffersPromotion) {
 
         AccountStatusResponse accountStatusResponse = accountRepository.updateAccount(accountId, accountType, lastName, firstName, countryId, phoneNumber,

@@ -398,7 +398,7 @@ define(['./module'], function (controllers) {
                 s.imageUrl = img;
             };
 
-            s.setColor = function (color) {
+            s.setColor = function (color, e) {
                 s.imageUrl = s.product.imageUrl;
                 s.colorSelected = color;
                 s.getFirstImageUrl();

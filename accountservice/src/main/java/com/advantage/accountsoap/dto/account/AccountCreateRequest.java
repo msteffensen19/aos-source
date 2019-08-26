@@ -2,6 +2,7 @@ package com.advantage.accountsoap.dto.account;
 //Modify this class with resources/accountservice.xsd
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.country.CountryID;
 
 import javax.xml.bind.annotation.*;
 
@@ -30,24 +31,24 @@ public class AccountCreateRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String loginName;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Long countryId;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    protected CountryID countryId;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String stateProvince;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String cityName;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String address;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String zipcode;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected String phoneNumber;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String email;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     protected String password;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    protected Integer accountType;
-    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    protected AccountType accountType;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected boolean allowOffersPromotion;
 
     public String getLastName() {
@@ -74,11 +75,11 @@ public class AccountCreateRequest {
         this.loginName = loginName;
     }
 
-    public Long getCountry() {
-        return countryId;
+    public CountryID getCountry() {
+        return countryId != null ? countryId : CountryID.UNITED_STATES_US;
     }
 
-    public void setCountry(Long country) {
+    public void setCountry(CountryID country) {
         this.countryId = country;
     }
 
@@ -139,10 +140,11 @@ public class AccountCreateRequest {
     }
 
     public Integer getAccountType() {
-        return accountType;
+        return accountType != null ? accountType.AccountType() : 10;
+
     }
 
-    public void setAccountType(Integer accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 

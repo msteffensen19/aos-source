@@ -48,11 +48,11 @@ define(['./module'], function (services) {
             function register(model) {
 
                 var expectToReceive = {
-                    "accountType": 20,
+                    "accountType": "USER",
                     "address": model.address,
                     "allowOffersPromotion": model.offers_promotion ? 'true' : 'false',
                     "cityName": model.city,
-                    "countryId": model.country && model.country.id ? model.country.id : 40,
+                    "countryId": model.country && model.country.id ? model.country.name + "," + model.country.isoName : "United States,us",
                     "email": model.email,
                     "firstName": model.firstName,
                     "lastName": model.lastName,
