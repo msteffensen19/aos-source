@@ -21,6 +21,7 @@ define(['./module'], function (controllers) {
             s.saveAccountDetails = function () {
 
                 s.accountDetails.countryId = s.country.id;
+                s.accountDetails.countryId = s.country.name + "," + s.country.isoName;
                 s.accountDetails.countryIsoName = s.country.isoName;
                 s.accountDetails.countryName = s.country.name;
                 accountService.changeUserPassword(s.accountDetails.id, s.passwords)
