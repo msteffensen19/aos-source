@@ -1,6 +1,5 @@
 package com.advantage.accountsoap;
 
-import accountservice.store.online.advantage.com.GetBankChequeRequest;
 import com.advantage.accountsoap.dto.account.GetAccountFieldsRequest;
 import com.advantage.accountsoap.dto.account.GetAccountFieldsResponse;
 import com.advantage.accountsoap.config.WebServiceConfig;
@@ -276,17 +275,6 @@ public class AccountServiceEndpoint {
 
     }
 
-    @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "GetBankChequeRequest")
-    @ResponsePayload
-    public GetBankChequeRequest bankCheck(@RequestPayload GetBankChequeRequest request) throws TokenException {
-        logger.debug(AccountServiceEndpoint.class.getName() + ".doLogout(..) is calling method authorizeAsUser(..)");
-        //  TODO-Benny: Verify that .NET and mobile version support this authorization
-
-        loggedUsers = loggedUsers > 0 ? loggedUsers - 1 : 0;
-        logger.info("Current login users = " + loggedUsers);
-        return new GetBankChequeRequest();
-
-    }
 
     @PayloadRoot(namespace = WebServiceConfig.NAMESPACE_URI, localPart = "AccountCreateRequest")
     @ResponsePayload
