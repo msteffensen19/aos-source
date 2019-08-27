@@ -1,8 +1,9 @@
 package com.advantage.catalog.store.api;
 
+
+
 import com.advantage.catalog.store.model.category.Category;
 import com.advantage.catalog.store.model.deal.Deal;
-import com.advantage.catalog.store.model.product.ColorAttribute;
 import com.advantage.catalog.store.model.product.LastUpdate;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.services.*;
@@ -21,22 +22,26 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
+import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.http.HTTPException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -736,6 +741,49 @@ public class CatalogController {
 
         return new ResponseEntity<>(restoreFactorySettingsResponse, (restoreFactorySettingsResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
     }
+    @RequestMapping(value = "/DemoAppConfig/Export_To_Excel", method = RequestMethod.GET)
+    @ApiOperation(value = "Export Demo App Config To Excel file")
+    public void exportDemoAppConfigToExcel(final HttpServletRequest request,
+                                                          final HttpServletResponse response) throws IOException {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/Export_To_Excel".hashCode()),
+                    "Export Demo App Config To Excel file", 5);
+        } else {
+            logger.warn("cefData is null");
+        }
+
+        File any = null;
+        try {
+            any = demoAppConfigService.exportDemoAppConfigToExcel();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FileInputStream inStream = new FileInputStream(any);
+
+        response.setContentType("application/octet-stream");
+        response.setContentLength((int) any.length());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", any.getName());
+        response.setHeader(headerKey, headerValue);
+
+        // obtains response's output stream
+        OutputStream outStream = response.getOutputStream();
+
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, bytesRead);
+        }
+
+        inStream.close();
+        outStream.close();
+
+    }
 
     @RequestMapping(value = "/DemoAppConfig/update/parameter/{name}/value/{new_value}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update DemoAppConfig parameter value")
@@ -750,7 +798,7 @@ public class CatalogController {
                     "Update DemoAppConfig parameter value", 5);
         } else {
             logger.warn("cefData is null");
-        }
+        };
 
         DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParameterValue(parameterName, parameterValue);
 
