@@ -1,5 +1,10 @@
 package com.advantage.catalog.store.services;
 
+import  java.io.*;
+import  org.apache.poi.hssf.usermodel.HSSFSheet;
+import  org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import  org.apache.poi.hssf.usermodel.HSSFRow;
+
 import com.advantage.common.Constants;
 import com.advantage.common.dto.DemoAppConfigParameter;
 import com.advantage.common.dto.DemoAppConfigParameterDto;
@@ -447,49 +452,40 @@ public class DemoAppConfigService {
         }
         return false;
     }
-//    public void exportDemoAppConfigToExcel ()  {
-//
-//        Sheet sheet = workbook.getSheetAt(0);
-//
-//        workbook = new XSSFWorkbook();
-//
-//        CellStyle style = workbook.createCellStyle();
-//        Font boldFont = workbook.createFont();
-//        boldFont.setBold(true);
-//        style.setFont(boldFont);
-//        style.setAlignment(CellStyle.ALIGN_CENTER);
-//
-//        Sheet sheet = workbook.createSheet();
-//        rowNum = 0;
-//        Row row = sheet.createRow(rowNum++);
-//        Cell cell = row.createCell(SUBSTANCE_NAME_COLUMN);
-//        cell.setCellValue("Substance name");
-//        cell.setCellStyle(style);
-//
-//        cell = row.createCell(SUBSTANCE_ENTRY_FORCE_COLUMN);
-//        cell.setCellValue("Substance entry_force");
-//        cell.setCellStyle(style);
-//
-//        cell = row.createCell(SUBSTANCE_DIRECTIVE_COLUMN);
-//        cell.setCellValue("Substance directive");
-//        cell.setCellStyle(style);
-//
-//        cell = row.createCell(PRODUCT_NAME_COLUMN);
-//        cell.setCellValue("Product name");
-//        cell.setCellStyle(style);
-//
-//        cell = row.createCell(PRODUCT_CODE_COLUMN);
-//        cell.setCellValue("Product code");
-//        cell.setCellStyle(style);
-//
-//        cell = row.createCell(PRODUCT_MRL_COLUMN);
-//        cell.setCellValue("MRL");
-//        cell.setCellStyle(style);
-//
-//        cell = row.createCell(APPLICATION_DATE_COLUMN);
-//        cell.setCellValue("Application Date");
-//        cell.setCellStyle(style);
-//    }
+    public File exportDemoAppConfigToExcel () throws IOException {
+try {
+
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet sheet = workbook.createSheet("FirstSheet");
+
+    HSSFRow rowhead = sheet.createRow((short) 0);
+    rowhead.createCell(0).setCellValue("No.");
+    rowhead.createCell(1).setCellValue("Name");
+    rowhead.createCell(2).setCellValue("Address");
+    rowhead.createCell(3).setCellValue("Email");
+
+    HSSFRow row = sheet.createRow((short) 1);
+    row.createCell(0).setCellValue("1");
+    row.createCell(1).setCellValue("Sankumarsingh");
+    row.createCell(2).setCellValue("India");
+    row.createCell(3).setCellValue("sankumarsingh@gmail.com");
+
+    File currDir = new File(".");
+    String path = currDir.getAbsolutePath();
+    String fileLocation = path.substring(0, path.length() - 1) + "mandingo.csv";
+    FileOutputStream outputStream = new FileOutputStream(fileLocation);
+    workbook.write(outputStream);
+    outputStream.close();
+    workbook.close();
+    System.out.println("Your excel file has been generated!");
+    return currDir;
+    }catch (Exception e){
+        System.out.println(e.toString());
+    }
+        return null;
+    }
+
+
 
     private boolean changeUserPassword(String[] currentUserDetails, String[] newUserDetails) throws SOAPException {
         NodeList loginResponse = SoapApiHelper.doLogin(currentUserDetails[0], currentUserDetails[1]);

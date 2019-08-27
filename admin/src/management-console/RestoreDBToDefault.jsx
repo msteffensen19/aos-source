@@ -58,10 +58,9 @@ export default class RestoreDBToDefault extends React.Component {
 
     render() {
         return (
-                    <li className="nav-item">
-                        <button onClick={this.restoreDbToDefault}>Fourth button</button>
-                    </li>
 
+            <h3 className="navbar-headline-console-restore" onClick={this.restoreDbToDefault}>Restore DB to Factory Settings</h3>
+            
         );
     }
 }

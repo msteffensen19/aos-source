@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import '../css-management-console/managment-main.css';
 import LeftNavBar from './LeftNavBar';
 import Configuration from './Configuration';
+import HeaderDiv from './HeaderDiv';
 
 
 export default class LandingPageHome extends Component {
@@ -14,7 +15,9 @@ export default class LandingPageHome extends Component {
     render() {
         return (
             <section id="grid-container-main">
-                <header></header>
+                <header className="configurationHeader">
+                    <HeaderDiv/>
+                </header>
                 <main>
                     <Configuration></Configuration>
                 </main>
@@ -23,8 +26,6 @@ export default class LandingPageHome extends Component {
                 </nav>
                 <footer></footer>
             </section>
-
         )
-
     }
 }
