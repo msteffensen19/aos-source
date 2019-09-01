@@ -1,5 +1,5 @@
 import React from 'react';
-
+import TableHeaders from './TableHeaders';
 
 export default class Security extends React.Component {
     constructor(props) {
@@ -51,14 +51,9 @@ export default class Security extends React.Component {
 
     render() {
         return (
-            <table>
+            <table className={"configuration-table-style"}>
                 <tbody>
-                <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                    <th>Description</th>
-                    <th>AOS location</th>
-                </tr>
+                <TableHeaders/>
                 {this.renderTableData()}
                 </tbody>
             </table>

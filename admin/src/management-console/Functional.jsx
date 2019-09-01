@@ -1,4 +1,5 @@
 import React from 'react';
+import TableHeaders from './TableHeaders';
 
 
 export default class Functional extends React.Component {
@@ -6,6 +7,7 @@ export default class Functional extends React.Component {
         super(props);
         this.state = {};
         this.changeFlagValue = this.changeFlagValue.bind(this);
+        this.setInputAttributes = this.setInputAttributes.bind(this);
         this.saveOldValue = this.saveOldValue.bind(this);
 
     }
@@ -33,14 +35,51 @@ export default class Functional extends React.Component {
     saveOldValue(event){
         this.oldvalue = event.target.value;
     }
+    setInputAttributes(datatype){
+        switch (datatype) {
+            case "string":
+                console.log(datatype+"string");
+                return "input";
+            case "enum:[Tip]":
+                console.log(datatype+"tip");
+                return "span";
+            case "enum:[Yes,No]":
+                console.log(datatype+"enum");
+                return "select";
+            default:
+                console.log('default');
+        }
+
+    }
     renderTableData() {
         return this.props.itemsToShow.map((item, index) => {
-            const {description, locationInAdvantage, parameterName, parameterValue } = item;
+            const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
+            let TagType = this.setInputAttributes(datatype);
+            let inputTag;
+            switch (TagType) {
+                case "input":
+                    inputTag = <TagType className="configuration-input-style" name={parameterName} defaultValue={parameterValue} value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}/>;
+                    break;
+                case "span":
+                    inputTag = <span className="configuration-input-style" name={parameterName}>Tip</span>;
+                    break;
+                case "select":
+                    inputTag =<select onChange={this.changeFlagValue}>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>;
+                    break;
+
+                default:
+                    console.log('default');
+
+            }
+
             return (
                 <tr key={parameterName} name={parameterName}>
                     <td>{parameterName}</td>
                     <td>
-                        <input onFocus={this.saveOldValue} name={parameterName} defaultValue={parameterValue} value={this.state.parameterName} onBlur={this.changeFlagValue}></input>
+                        {inputTag}
                     </td>
                     <td>{description}</td>
                     <td>{locationInAdvantage}</td>
@@ -51,14 +90,9 @@ export default class Functional extends React.Component {
 
     render() {
         return (
-            <table>
+            <table className={"configuration-table-style"}>
                 <tbody>
-                <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                    <th>Description</th>
-                    <th>AOS location</th>
-                </tr>
+                    <TableHeaders/>
                 {this.renderTableData()}
                 </tbody>
             </table>

@@ -48,6 +48,9 @@ input::placeholder{
     font-size: 16px;
     line-height: 19px;
 }
+#userNameInput{
+    background-color: #24273a !important;
+}
 .remember-me {
     height: 14px;
     /*width: 78px;*/
@@ -67,7 +70,7 @@ input::placeholder{
 .remember-me-label{
     display: flex;
     justify-content: space-between;
-    margin-top: 12px;
+    /*margin-top: 12px;*/
 }
 .sign-in-btn{
     height: 35px;
@@ -84,4 +87,14 @@ input::placeholder{
     width: 200px;
     height: 100px;
     bottom: 150px;
+}
+
+.failed-login{
+    color: brown;
+    font-family: Metric, sans-serif;
+}
+
+.wrong-signIn-for-btn{
+    display: block;
+    margin-top: 0;
 }

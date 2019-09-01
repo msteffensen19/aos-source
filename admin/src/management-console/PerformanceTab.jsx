@@ -1,7 +1,7 @@
 import React from 'react';
 import TableHeaders from './TableHeaders';
 
-export default class Itom extends React.Component {
+export default class PerformanceTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};

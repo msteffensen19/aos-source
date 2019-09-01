@@ -1,5 +1,5 @@
 import React from 'react';
-
+import TableHeaders from './TableHeaders';
 
 export default class General extends React.Component {
     constructor(props) {
@@ -40,7 +40,7 @@ export default class General extends React.Component {
                 <tr key={parameterName} name={parameterName}>
                     <td>{parameterName}</td>
                     <td>
-                        <input onFocus={this.saveOldValue} name={parameterName} defaultValue={parameterValue} value={this.state.parameterName} onBlur={this.changeFlagValue}></input>
+                        <input onFocus={this.saveOldValue} name={parameterName} defaultValue={parameterValue} value={this.state.parameterName} onBlur={this.changeFlagValue}/>
                     </td>
                     <td>{description}</td>
                     <td>{locationInAdvantage}</td>
@@ -51,14 +51,9 @@ export default class General extends React.Component {
 
     render() {
         return (
-            <table>
+            <table className={"configuration-table-style"}>
                 <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                        <th>Description</th>
-                        <th>AOS location</th>
-                    </tr>
+                <TableHeaders/>
                     {this.renderTableData()}
                 </tbody>
             </table>
