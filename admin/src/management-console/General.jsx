@@ -5,6 +5,7 @@ export default class General extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.setInputAttributes = this.setInputAttributes.bind(this);
         this.changeFlagValue = this.changeFlagValue.bind(this);
         this.saveOldValue = this.saveOldValue.bind(this);
 
@@ -33,28 +34,65 @@ export default class General extends React.Component {
     saveOldValue(event){
         this.oldvalue = event.target.value;
     }
+    setInputAttributes(datatype){
+        switch (datatype) {
+            case "string":
+                return "input";
+            case "enum:[Tip]":
+                return "span";
+            case "enum:[Yes,No]":
+                return "yesNoSelect";
+            default:
+                console.log('default');
+        }
+
+    }
     renderTableData() {
         return this.props.itemsToShow.map((item, index) => {
-            const {description, locationInAdvantage, parameterName, parameterValue } = item;
-            return (
-                <tr key={parameterName} name={parameterName}>
-                    <td>{parameterName}</td>
-                    <td>
-                        <input onFocus={this.saveOldValue} name={parameterName} defaultValue={parameterValue} value={this.state.parameterName} onBlur={this.changeFlagValue}/>
-                    </td>
-                    <td>{description}</td>
-                    <td>{locationInAdvantage}</td>
-                </tr>
-            )
+            const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
+            let TagType = this.setInputAttributes(datatype);
+            let inputTag;
+            switch (TagType) {
+                case "input":
+                    inputTag = <select className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
+                                       value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
+                        {[...Array(1000).keys()].map((i) =>
+                            <option key={i.toString()} value={i}>{i}</option>
+                        )}
+                    </select>;
+                    break;
+                case "span":
+                    inputTag = <TagType className="configuration-input-style" name={parameterName}>Tip</TagType>;
+                    break;
+                case "yesNoSelect":
+                    inputTag =<select className="configuration-input-style" name={parameterName} onChange={this.changeFlagValue}>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>;
+                    break;
+
+                default:
+                    console.log('default');
+
+            }
+
+            return <tr className="data-rows-style" key={parameterName} name={parameterName}>
+                <td>{parameterName}</td>
+                <td>{inputTag}</td>
+                <td className="description-style-config">{description}</td>
+                <td>{locationInAdvantage}</td>
+            </tr>
         })
     }
 
     render() {
         return (
             <table className={"configuration-table-style"}>
-                <tbody>
+                <thead>
                 <TableHeaders/>
-                    {this.renderTableData()}
+                </thead>
+                <tbody>
+                {this.renderTableData()}
                 </tbody>
             </table>
         );

@@ -34,8 +34,8 @@ class LeftNavBar extends React.Component {
                     <li>
                         <div className="item-popular" onClick={this.moveToPage}>Popular Items</div>
                     </li>
-                    <li>
-                        <div className="item-configuration" onClick={this.moveToPage}>Configuration</div>
+                    <li className="add-opacity" style={{marginLeft:'-40px'}}>
+                        <div className="item-configuration">Configuration</div>
                     </li>
                     <li>
                         <div className="item-management" onClick={this.moveToPage}>User Management</div>

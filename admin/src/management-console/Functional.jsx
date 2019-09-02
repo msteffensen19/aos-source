@@ -6,13 +6,13 @@ export default class Functional extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.changeFlagValue = this.changeFlagValue.bind(this);
         this.setInputAttributes = this.setInputAttributes.bind(this);
+        this.changeFlagValue = this.changeFlagValue.bind(this);
         this.saveOldValue = this.saveOldValue.bind(this);
 
     }
 
-    changeFlagValue(event){
+        changeFlagValue(event){
         if(this.oldvalue !== event.target.value){
             this.setState({[event.target.key]:event.target.value});
             fetch('http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value, {
@@ -38,14 +38,11 @@ export default class Functional extends React.Component {
     setInputAttributes(datatype){
         switch (datatype) {
             case "string":
-                console.log(datatype+"string");
                 return "input";
             case "enum:[Tip]":
-                console.log(datatype+"tip");
                 return "span";
             case "enum:[Yes,No]":
-                console.log(datatype+"enum");
-                return "select";
+                return "yesNoSelect";
             default:
                 console.log('default');
         }
@@ -58,13 +55,18 @@ export default class Functional extends React.Component {
             let inputTag;
             switch (TagType) {
                 case "input":
-                    inputTag = <TagType className="configuration-input-style" name={parameterName} defaultValue={parameterValue} value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}/>;
+                    inputTag = <select className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
+                                        value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
+                        {[...Array(1000).keys()].map((i) =>
+                            <option key={i.toString()} value={i}>{i}</option>
+                        )}
+                    </select>;
                     break;
                 case "span":
-                    inputTag = <span className="configuration-input-style" name={parameterName}>Tip</span>;
+                    inputTag = <TagType className="configuration-input-style" name={parameterName}>Tip</TagType>;
                     break;
-                case "select":
-                    inputTag =<select onChange={this.changeFlagValue}>
+                case "yesNoSelect":
+                    inputTag =<select className="configuration-input-style" name={parameterName} onChange={this.changeFlagValue}>
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>
                     </select>;
@@ -75,25 +77,23 @@ export default class Functional extends React.Component {
 
             }
 
-            return (
-                <tr key={parameterName} name={parameterName}>
-                    <td>{parameterName}</td>
-                    <td>
-                        {inputTag}
-                    </td>
-                    <td>{description}</td>
-                    <td>{locationInAdvantage}</td>
-                </tr>
-            )
-        })
+            return <tr className="data-rows-style" key={parameterName} name={parameterName}>
+                <td>{parameterName}</td>
+                <td>{inputTag}</td>
+                <td className="description-style-config">{description}</td>
+                <td>{locationInAdvantage}</td>
+            </tr>
+    })
     }
 
     render() {
         return (
             <table className={"configuration-table-style"}>
-                <tbody>
+                <thead>
                     <TableHeaders/>
-                {this.renderTableData()}
+                </thead>
+                <tbody>
+                    {this.renderTableData()}
                 </tbody>
             </table>
         );

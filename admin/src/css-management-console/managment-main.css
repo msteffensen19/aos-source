@@ -32,24 +32,23 @@
 }
 .configurationHeader{
 
-    background-color: blueviolet;
+    background-image: url('../svg-png-ext/cofiguration-image.png') ;
 }
 .confHeaderTitle{
-    padding-top: 10px;
+    padding-top: 20px;
+    padding-left: 40px;
     height: 40px;
     width: 197px;
     margin-top: 25px;
     color: #24273A;
-    font-family: Metric;
+    font-family: Metric, sans-serif;
     font-size: 28px;
     font-weight: 600;
     line-height: 29px;
 }
 .admin-logout{
-    background-color: white;
+
     display: table;
-    height: 27px;
-    width: 144px;
     float: right;
     position: relative;
     bottom: 35px;
@@ -64,11 +63,26 @@
 }
 .admin-logout-buttons{
     color: #000000;
-    display: table-cell;
-    font-family: Metric;
-    font-size: 26px;
-    line-height: 19px;
+    font-size: 20px;
+    line-height: 20px;
 }
 .left-btn{
+    display: table-cell;
     float:left;
+    padding-right: 20px;
+    font-family: Metric, sans-serif;
+}
+.right-logout-btn{
+    display: table-cell;
+    padding-top: 22px;
+    padding-left: 20px;
+    position: relative;
+    top: -6px;
+    font-family: Metric, sans-serif;
+}
+.left-icon-header{
+    display: table-cell;
+    padding-right: 15px;
+    width: 41px;
+
 }

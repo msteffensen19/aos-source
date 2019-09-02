@@ -88,7 +88,19 @@
     background-repeat:no-repeat;
     padding-left: 1.7em;
 }
+.add-opacity{
+    width: 90%;
+    background: rgba(216, 216, 216, 0.14);
+    border-radius: 0 100px 100px 0;
+}
+.item-configuration{
+    position: relative;
+    left: 40px;
+    z-index: 2;
+}
 .item-configuration:before{
+    position: relative;
+    z-index: 2;
     content:'';
     display:inline-block;
     height:1em;
