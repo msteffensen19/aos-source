@@ -57,10 +57,10 @@ export default class UnderConstruction extends React.Component {
                      <ul className="middle-container-soon">
                          <li className="li-space images-container-comingSoon">
                              <div>
-                                 <img className="image-size regular-cursor" src={comingPng} alt="coming png"></img>
+                                 <img className="image-size regular-cursor" src={comingPng} alt="coming png"/>
                              </div>
                              <div>
-                                <img className="image-size soon-position regular-cursor" src={soonPng} alt="soon png"></img>
+                                <img className="image-size soon-position regular-cursor" src={soonPng} alt="soon png"/>
                              </div>
                          </li>
                          <li className="li-space soon-title">

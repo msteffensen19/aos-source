@@ -1,0 +1,14 @@
+
+
+.search-bar-style {
+    border: none;
+    border-bottom-color: #DBDBDB;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+
+}
+
+.search-bar-style:focus{
+    outline: none;
+
+}

@@ -12,11 +12,11 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {userName: '', password: '', rememberMe: false, open:false};
+        this.state = {userName: '', password: '', rememberMe: false, isLoggedIn:false};
 
+        LoginForm.addWornSignInElement = LoginForm.addWornSignInElement.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.closeModal = this.closeModal.bind(this);
     }
 
     handleInputChange(event) {
@@ -38,7 +38,27 @@ class LoginForm extends React.Component {
         }
 
     }
+
+    static addWornSignInElement(message){
+        let para = document.createElement("h3");
+        para.setAttribute("id", "failedLoginText");
+        para.style.fontSize = "20px";
+        let node = document.createTextNode(message);
+        para.appendChild(node);
+        let element = document.getElementById("failedLogin");
+        element.appendChild(para);
+
+        let signInElement = document.getElementById("signInBtn");
+        signInElement.classList.add("wrong-signIn-for-btn");
+        document.getElementById("signInBtn").style.marginTop = "0px";
+    }
     handleSubmit(event) {
+
+        if (document.getElementById("failedLoginText")) {
+            document.getElementById("failedLoginText").remove();
+
+            document.getElementById("signInBtn").classList.remove("wrong-signIn-for-btn");
+        }
 
         let user =
         {email: "",
@@ -48,7 +68,7 @@ class LoginForm extends React.Component {
         //let host = window.location.origin;
         let $ = require('jquery');
         require('jquery.soap');
-        var parseString = require('jquery.soap');
+        let parseString = require('jquery.soap');
         let me = this;
         $.soap({
             url: 'http://localhost:8080/accountservice/', //host+'/accountservice/',
@@ -59,13 +79,17 @@ class LoginForm extends React.Component {
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
                 console.log(response);
+                if(response.content.all[5].innerHTML === "false"){
+                    LoginForm.addWornSignInElement("Wrong Username or password");
+                }else{
+                    me.props.history.push('/management-console');
+                }
+                //remove in production push
                 me.props.history.push('/management-console');
-
             },
             error: function (response) {
+                LoginForm.addWornSignInElement("Server responded with error code different from 200");
                 console.log(response);
-                me.props.history.push('/management-console');
-                // me.setState({ open: true });
             },
             enableLogging: true
         });
@@ -73,24 +97,22 @@ class LoginForm extends React.Component {
         event.preventDefault();
 
     }
-    closeModal () {
-        this.setState({ open: false })
-    }
+
 
     render(){
         return (
 
-            <form  className= "login" onSubmit={this.handleSubmit}>
+            <form autoComplete="off" className= "login" onSubmit={this.handleSubmit}>
                 <h1 className= "enter-details-to-log">Enter details to login</h1>
                 <label className="margin-top-labels">
                     {/*<h3 className= "user-name">User Name</h3>*/}
-                    <input placeholder="User Name" name="userName" className="input-style" value={this.state.value} onChange={this.handleInputChange} />
+                    <input id="userNameInput" placeholder="User Name" type="text" name="userName" className="input-style" value={this.state.value} onChange={this.handleInputChange} />
                 </label>
                 <br />
                 <label className="margin-top-labels">
                     {/*<h3 className= "user-name">Password</h3>*/}
                     {/*type="password"*/}
-                    <input placeholder="Password" name="password" className="input-style" value={this.state.value} onChange={this.handleInputChange}/>
+                    <input placeholder="Password" type="password" name="password" className="input-style" value={this.state.value} onChange={this.handleInputChange}/>
                 </label>
                 <label className="margin-top-labels remember-me-label">
                     <div className="remember-me-label">
@@ -103,8 +125,10 @@ class LoginForm extends React.Component {
                     </div>
                     <div className= "remember-me">Forget Password?</div>
                 </label>
-                <label style={{marginTop:"20px"}}>
-                    <input className="sign-in-btn" type="submit" value="Sign In" />
+                <label id={"failedLogin"} className="failed-login">
+                </label>
+                <label id={'signInBtn'} style={{marginTop:"20px"}}>
+                    <input className="sign-in-btn"  type="submit" value="Sign In" />
                 </label>
             </form>
         );

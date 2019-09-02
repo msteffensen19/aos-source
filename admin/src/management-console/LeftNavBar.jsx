@@ -2,7 +2,6 @@ import React from 'react';
 import RestoreDBToDefault from "./RestoreDBToDefault";
 import '../css-management-console/nav-management-css.css';
 import {ReactComponent as AdvantageLogo} from "../svg-png-ext/Advantage-logo.svg";
-import {ReactComponent as PopularItemsLogo} from "../svg-png-ext/Menu_Popular_Items.svg";
 import {withRouter} from 'react-router-dom';
 
 class LeftNavBar extends React.Component {
@@ -35,8 +34,8 @@ class LeftNavBar extends React.Component {
                     <li>
                         <div className="item-popular" onClick={this.moveToPage}>Popular Items</div>
                     </li>
-                    <li>
-                        <div className="item-configuration" onClick={this.moveToPage}>Configuration</div>
+                    <li className="add-opacity" style={{marginLeft:'-40px'}}>
+                        <div className="item-configuration">Configuration</div>
                     </li>
                     <li>
                         <div className="item-management" onClick={this.moveToPage}>User Management</div>
