@@ -4,9 +4,12 @@ import Itom from './Itom';
 import Functional from './Functional';
 import Security from './Security';
 import '../css-management-console/configuration-style.css';
-import ConfigurationIconsList from "./configurationIconsList";
 import MobileTab from "./MobileTab";
 import PerformanceTab from "./PerformanceTab";
+import SearchInConfiguration from "./SearchInConfiguration"
+import {ReactComponent as ExportIcon} from "../svg-png-ext/exportToExcel.svg";
+import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
+import {ReactComponent as FilterIcon} from "../svg-png-ext/filterIconConfig.svg";
 
 
 export default class Configuration extends React.Component {
@@ -14,6 +17,7 @@ export default class Configuration extends React.Component {
     constructor() {
         super();
 
+        this.handleSearch = this.handleSearch.bind(this);
         this.navToOpen = this.navToOpen.bind(this);
     }
 
@@ -33,6 +37,11 @@ export default class Configuration extends React.Component {
     navToOpen(e){
         this.setState({tabToShow: e.target.id})
     };
+
+    handleSearch(searchTerm){
+
+        console.log("got to config!" + searchTerm);
+    }
 
     componentDidMount(){
         let tempGeneralItemsArray=[];
@@ -80,7 +89,19 @@ export default class Configuration extends React.Component {
     render() {
         return (
             <div>
-                <ConfigurationIconsList/>
+                <ul className="configuration-icons">
+
+                    <SearchInConfiguration onUserSearch={this.handleSearch}/>
+                    <li>
+                        <FilterIcon/>
+                    </li>
+                    <li>
+                        <ExportIcon/>
+                    </li>
+                    <li>
+                        <RestoreIcon/>
+                    </li>
+                </ul>
                 <ul className="configuration-headlines">
                     <li>
                         <div id='General' onClick={this.navToOpen}>General</div>
