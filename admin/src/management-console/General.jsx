@@ -31,6 +31,15 @@ export default class General extends React.Component {
         }
 
 }
+    getHighlightedText(text, higlight) {
+        // Split on higlight term and include term into parts, ignore case
+        let parts = text.split(new RegExp(`(${higlight})`, 'gi'));
+        return <span> { parts.map((part, i) =>
+            <span key={i} style={part.toLowerCase() === higlight.toLowerCase() ? { backgroundColor: '#FFFF00' } : {} }>
+            { part }
+        </span>)
+        } </span>;
+    }
     saveOldValue(event){
         this.oldvalue = event.target.value;
     }
@@ -51,6 +60,7 @@ export default class General extends React.Component {
         return this.props.itemsToShow.map((item, index) => {
             const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
             let TagType = this.setInputAttributes(datatype);
+            let someVar = this.getHighlightedText(description,"the");
             let inputTag;
             switch (TagType) {
                 case "input":
@@ -70,7 +80,6 @@ export default class General extends React.Component {
                         <option value="Yes">Yes</option>
                     </select>;
                     break;
-
                 default:
                     console.log('default');
 
@@ -79,7 +88,7 @@ export default class General extends React.Component {
             return <tr className="data-rows-style" key={parameterName} name={parameterName}>
                 <td>{parameterName}</td>
                 <td>{inputTag}</td>
-                <td className="description-style-config">{description}</td>
+                <td className="description-style-config">{someVar}</td>
                 <td>{locationInAdvantage}</td>
             </tr>
         })

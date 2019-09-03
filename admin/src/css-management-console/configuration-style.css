@@ -1,5 +1,7 @@
 
-
+.configuration-table-style{
+    width:95% ;
+}
 .configuration-headlines{
     display:inline-flex;
     list-style: none;

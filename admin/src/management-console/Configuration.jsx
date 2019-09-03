@@ -29,7 +29,9 @@ export default class Configuration extends React.Component {
             itomItemsArray:[],
             mobileItemsArray:[],
             performanceItemsArray:[],
-            tabToShow:'General'
+            tabToShow:'General',
+            isSearchMode:false,
+            searchTerm:''
         };
 
 
@@ -41,9 +43,50 @@ export default class Configuration extends React.Component {
     handleSearch(searchTerm){
 
         console.log("got to config!" + searchTerm);
+        this.setState({isSearchMode:true});
+        this.setState({searchTerm:searchTerm});
+        this.searchInItems(searchTerm);
+    }
+    searchInItems(searchTerm) {
+
+        let tempGeneralItemsArray = [];
+        let tempFunctionalItemsArray = [];
+        let tempSecurityItemsArray = [];
+        let tempItomItemsArray = [];
+        let tempPerformanceItemsArray = [];
+        let tempMobileItemsArray = [];
+
+            this.state.allItemsArray.forEach((item) => {
+                let itemPropValues = [item.parameterName, item.description, item.locationInAdvantage];
+                let doesContainedSearchTerm = (itemPropValues.indexOf(searchTerm) > -1);
+                if(doesContainedSearchTerm){
+                    if (item.attributeTools.includes("LeanFT")  || item.attributeTools.includes("UFT")) {
+                        tempGeneralItemsArray.push(item);
+                    }if (item.attributeTools.includes("LoadRunner")) {
+                        tempItomItemsArray.push(item);
+                    }if (item.attributeTools.includes("AppPulse")) {
+                        tempSecurityItemsArray.push(item);
+                    }if (item.attributeTools.includes("Fortify") || item.attributeTools.includes("StormRunner")) {
+                        tempFunctionalItemsArray.push(item);
+                    }if (item.attributeTools.includes("BPT")) {
+                        tempPerformanceItemsArray.push(item);
+                    }if (item.attributeTools.includes("NV")) {
+                        tempMobileItemsArray.push(item);
+                    }
+                }
+            });
+            this.setState({
+                generalItemsArray: tempGeneralItemsArray,
+                itomItemsArray: tempItomItemsArray,
+                functionalItemsArray: tempFunctionalItemsArray,
+                securityItemsArray: tempSecurityItemsArray,
+                performanceItemsArray: tempPerformanceItemsArray,
+                mobileItemsArray: tempMobileItemsArray
+            });
     }
 
-    componentDidMount(){
+
+        componentDidMount(){
         let tempGeneralItemsArray=[];
         let tempFunctionalItemsArray=[];
         let tempSecurityItemsArray=[];
@@ -80,7 +123,8 @@ export default class Configuration extends React.Component {
                     functionalItemsArray:tempFunctionalItemsArray,
                     securityItemsArray:tempSecurityItemsArray,
                     performanceItemsArray:tempPerformanceItemsArray,
-                    mobileItemsArray:tempMobileItemsArray
+                    mobileItemsArray:tempMobileItemsArray,
+                    allItemsArray:tempAllItemsArray
                 });
             })
             .catch(console.log)
