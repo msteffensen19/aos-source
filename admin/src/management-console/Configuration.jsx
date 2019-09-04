@@ -20,7 +20,6 @@ export default class Configuration extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.navToOpen = this.navToOpen.bind(this);
     }
-
         state = {
             generalItemsArray: [],
             allItemsArray: [],
@@ -32,8 +31,7 @@ export default class Configuration extends React.Component {
             tabToShow:'General',
             isSearchMode:false,
             searchTerm:''
-        };
-
+    };
 
 
     navToOpen(e){
@@ -58,7 +56,12 @@ export default class Configuration extends React.Component {
 
             this.state.allItemsArray.forEach((item) => {
                 let itemPropValues = [item.parameterName, item.description, item.locationInAdvantage];
-                let doesContainedSearchTerm = (itemPropValues.indexOf(searchTerm) > -1);
+                let doesContainedSearchTerm = false;
+                itemPropValues.forEach((element) => {
+                    if (element.includes(searchTerm)){
+                        doesContainedSearchTerm = true
+                    }
+                });
                 if(doesContainedSearchTerm){
                     if (item.attributeTools.includes("LeanFT")  || item.attributeTools.includes("UFT")) {
                         tempGeneralItemsArray.push(item);
@@ -175,25 +178,25 @@ export default class Configuration extends React.Component {
                 <div className="config-line-separator"/>
                 <div>
                     {this.state.generalItemsArray && this.state.generalItemsArray.length && (this.state.tabToShow ==='General') > 0 ?
-                    <General itemsToShow={this.state.generalItemsArray}/> : null}
+                    <General searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.generalItemsArray}/> : null}
 
 
                     {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Itom') > 0 ?
-                        <Itom itemsToShow={this.state.itomItemsArray} /> : null}
+                        <Itom searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.itomItemsArray} /> : null}
 
 
                     {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Functional') > 0 ?
-                        <Functional itemsToShow={this.state.functionalItemsArray} /> : null}
+                        <Functional searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.functionalItemsArray} /> : null}
 
 
                     {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
-                        <Security itemsToShow={this.state.securityItemsArray} /> : null}
+                        <Security searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.securityItemsArray} /> : null}
 
                     {this.state.mobileItemsArray && this.state.mobileItemsArray.length && (this.state.tabToShow ==='Mobile') > 0 ?
                         <MobileTab itemsToShow={this.state.mobileItemsArray} /> : null}
 
                     {this.state.performanceItemsArray && this.state.performanceItemsArray.length && (this.state.tabToShow ==='Performance') > 0 ?
-                        <PerformanceTab itemsToShow={this.state.performanceItemsArray} /> : null}
+                        <PerformanceTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode}itemsToShow={this.state.performanceItemsArray} /> : null}
                 </div>
             </div>
         );

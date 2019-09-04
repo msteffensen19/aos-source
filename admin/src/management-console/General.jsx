@@ -19,7 +19,7 @@ export default class General extends React.Component {
             }).then( (response) => {
                 return response.json()
             })
-                .then( (json) => {
+                .then((json) => {
                     this.setState({
                         data: json
                     });
@@ -60,7 +60,7 @@ export default class General extends React.Component {
         return this.props.itemsToShow.map((item, index) => {
             const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
             let TagType = this.setInputAttributes(datatype);
-            let someVar = this.getHighlightedText(description,"the");
+            let descriptionWithHighlight = this.getHighlightedText(description,this.props.searchTerm);
             let inputTag;
             switch (TagType) {
                 case "input":
@@ -88,7 +88,7 @@ export default class General extends React.Component {
             return <tr className="data-rows-style" key={parameterName} name={parameterName}>
                 <td>{parameterName}</td>
                 <td>{inputTag}</td>
-                <td className="description-style-config">{someVar}</td>
+                <td className="description-style-config">{this.props.isSearchMode?descriptionWithHighlight:description}</td>
                 <td>{locationInAdvantage}</td>
             </tr>
         })

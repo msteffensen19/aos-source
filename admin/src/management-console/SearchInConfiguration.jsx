@@ -31,7 +31,7 @@ export default class SearchInConfiguration extends React.Component {
     enterPressed(event) {
         let code = event.keyCode || event.which;
         if(code === 13) { //13 is the enter keycode
-            console.log("hjsahk")
+
         }
     }
 
