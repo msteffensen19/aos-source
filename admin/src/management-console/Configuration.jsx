@@ -40,10 +40,15 @@ export default class Configuration extends React.Component {
 
     handleSearch(searchTerm){
 
-        console.log("got to config!" + searchTerm);
-        this.setState({isSearchMode:true});
-        this.setState({searchTerm:searchTerm});
-        this.searchInItems(searchTerm);
+        if(searchTerm !== ""){
+            this.setState({isSearchMode:true});
+            this.setState({searchTerm:searchTerm});
+            this.searchInItems(searchTerm);
+        }else{
+            this.setState({isSearchMode:false});
+            this.setState({searchTerm:searchTerm});
+        }
+
     }
     searchInItems(searchTerm) {
 
@@ -151,27 +156,33 @@ export default class Configuration extends React.Component {
                 </ul>
                 <ul className="configuration-headlines">
                     <li>
-                        <div id='General' onClick={this.navToOpen}>General</div>
+                        <div id='General' onClick={this.navToOpen} className = {this.state.isSearchMode &&
+                        this.state.generalItemsArray.length >0? "search-dot": null}>General</div>
                         <div className={this.state.tabToShow === 'General'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Itom' onClick={this.navToOpen}>Itom</div>
+                        <div id='Itom' onClick={this.navToOpen}>Itom</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot": null}/>
                         <div className={this.state.tabToShow === 'Itom'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Security' onClick={this.navToOpen}>Security</div>
+                        <div id='Security' onClick={this.navToOpen}>Security</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot": null}/>
                         <div className={this.state.tabToShow === 'Security'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Functional' onClick={this.navToOpen}>Functional</div>
+                        <div id='Functional' onClick={this.navToOpen}>Functional</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot": null}/>
                         <div className={this.state.tabToShow === 'Functional'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Performance' onClick={this.navToOpen}>Performance</div>
+                        <div id='Performance' onClick={this.navToOpen}>Performance</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot": null}/>
                         <div className={this.state.tabToShow === 'Performance'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Mobile' onClick={this.navToOpen}>Mobile</div>
+                        <div id='Mobile' onClick={this.navToOpen}>Mobile</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot": null}/>
                         <div className={this.state.tabToShow === 'Mobile'? "focus-line" : null}/>
                     </li>
                 </ul>
@@ -193,10 +204,10 @@ export default class Configuration extends React.Component {
                         <Security searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.securityItemsArray} /> : null}
 
                     {this.state.mobileItemsArray && this.state.mobileItemsArray.length && (this.state.tabToShow ==='Mobile') > 0 ?
-                        <MobileTab itemsToShow={this.state.mobileItemsArray} /> : null}
+                        <MobileTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.mobileItemsArray} /> : null}
 
                     {this.state.performanceItemsArray && this.state.performanceItemsArray.length && (this.state.tabToShow ==='Performance') > 0 ?
-                        <PerformanceTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode}itemsToShow={this.state.performanceItemsArray} /> : null}
+                        <PerformanceTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.performanceItemsArray} /> : null}
                 </div>
             </div>
         );

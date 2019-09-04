@@ -22,6 +22,8 @@ export default class SearchInConfiguration extends React.Component {
     handleOutsideClick(event){
         if(event.target.value === ""){
             this.setState({openSearchBar:false});
+            this.setState({searchTerm:""});
+            this.props.onUserSearch(event.target.value);
         }else{
             this.setState({searchTerm:event.target.value});
             console.log(event.target.value);
@@ -35,7 +37,7 @@ export default class SearchInConfiguration extends React.Component {
         }
     }
 
-    render() {
+    render(){
         return (
                 <li>
                     <SearchIcon onClick={this.handleClick}/>

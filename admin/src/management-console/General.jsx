@@ -60,7 +60,7 @@ export default class General extends React.Component {
         return this.props.itemsToShow.map((item, index) => {
             const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
             let TagType = this.setInputAttributes(datatype);
-            let descriptionWithHighlight = this.getHighlightedText(description,this.props.searchTerm);
+            let descriptionWithHighlight = this.props.isSearchMode?this.getHighlightedText(description,this.props.searchTerm):null;
             let inputTag;
             switch (TagType) {
                 case "input":

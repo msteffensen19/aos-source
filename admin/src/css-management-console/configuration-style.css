@@ -93,3 +93,13 @@
 .data-rows-style{
     border-bottom: 1px solid #B7B7B7;
 }
+.search-dot::after{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: 1px;
+    float: right;
+    bottom: 23px;
+}
