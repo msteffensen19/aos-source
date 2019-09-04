@@ -47,6 +47,7 @@ export default class Configuration extends React.Component {
         }else{
             this.setState({isSearchMode:false});
             this.setState({searchTerm:searchTerm});
+            this.searchInItems(searchTerm);
         }
 
     }
@@ -63,7 +64,7 @@ export default class Configuration extends React.Component {
                 let itemPropValues = [item.parameterName, item.description, item.locationInAdvantage];
                 let doesContainedSearchTerm = false;
                 itemPropValues.forEach((element) => {
-                    if (element.includes(searchTerm)){
+                    if (element.toLowerCase().includes(searchTerm.toLowerCase())){
                         doesContainedSearchTerm = true
                     }
                 });
@@ -156,33 +157,33 @@ export default class Configuration extends React.Component {
                 </ul>
                 <ul className="configuration-headlines">
                     <li>
-                        <div id='General' onClick={this.navToOpen} className = {this.state.isSearchMode &&
-                        this.state.generalItemsArray.length >0? "search-dot": null}>General</div>
+                        <div id='General' onClick={this.navToOpen}>General</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot-gen": null}/>
                         <div className={this.state.tabToShow === 'General'? "focus-line" : null}/>
                     </li>
                     <li>
                         <div id='Itom' onClick={this.navToOpen}>Itom</div><div className = {this.state.isSearchMode &&
-                    this.state.generalItemsArray.length >0? "search-dot": null}/>
+                    this.state.itomItemsArray.length >0? "search-dot-ito": null}/>
                         <div className={this.state.tabToShow === 'Itom'? "focus-line" : null}/>
                     </li>
                     <li>
                         <div id='Security' onClick={this.navToOpen}>Security</div><div className = {this.state.isSearchMode &&
-                    this.state.generalItemsArray.length >0? "search-dot": null}/>
+                    this.state.securityItemsArray.length >0? "search-dot-sec": null}/>
                         <div className={this.state.tabToShow === 'Security'? "focus-line" : null}/>
                     </li>
                     <li>
                         <div id='Functional' onClick={this.navToOpen}>Functional</div><div className = {this.state.isSearchMode &&
-                    this.state.generalItemsArray.length >0? "search-dot": null}/>
+                    this.state.functionalItemsArray.length >0? "search-dot-func": null}/>
                         <div className={this.state.tabToShow === 'Functional'? "focus-line" : null}/>
                     </li>
                     <li>
                         <div id='Performance' onClick={this.navToOpen}>Performance</div><div className = {this.state.isSearchMode &&
-                    this.state.generalItemsArray.length >0? "search-dot": null}/>
+                    this.state.performanceItemsArray.length >0? "search-dot-per": null}/>
                         <div className={this.state.tabToShow === 'Performance'? "focus-line" : null}/>
                     </li>
                     <li>
                         <div id='Mobile' onClick={this.navToOpen}>Mobile</div><div className = {this.state.isSearchMode &&
-                    this.state.generalItemsArray.length >0? "search-dot": null}/>
+                    this.state.mobileItemsArray.length >0? "search-dot-mob": null}/>
                         <div className={this.state.tabToShow === 'Mobile'? "focus-line" : null}/>
                     </li>
                 </ul>
@@ -196,11 +197,11 @@ export default class Configuration extends React.Component {
                         <Itom searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.itomItemsArray} /> : null}
 
 
-                    {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Functional') > 0 ?
+                    {this.state.functionalItemsArray && this.state.functionalItemsArray.length && (this.state.tabToShow ==='Functional') > 0 ?
                         <Functional searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.functionalItemsArray} /> : null}
 
 
-                    {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
+                    {this.state.securityItemsArray && this.state.securityItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
                         <Security searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.securityItemsArray} /> : null}
 
                     {this.state.mobileItemsArray && this.state.mobileItemsArray.length && (this.state.tabToShow ==='Mobile') > 0 ?

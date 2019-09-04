@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css-management-console/configuration-icons.css';
+import closeDark from "../svg-png-ext/closeDark.png"
 import {ReactComponent as SearchIcon} from "../svg-png-ext/SearchIcon.svg";
 
 export default class SearchInConfiguration extends React.Component {
@@ -26,7 +27,6 @@ export default class SearchInConfiguration extends React.Component {
             this.props.onUserSearch(event.target.value);
         }else{
             this.setState({searchTerm:event.target.value});
-            console.log(event.target.value);
             this.props.onUserSearch(event.target.value);
         }
     }
@@ -42,9 +42,12 @@ export default class SearchInConfiguration extends React.Component {
                 <li>
                     <SearchIcon onClick={this.handleClick}/>
                     {this.state.openSearchBar === true?
+                        <div className="search-bar-config">
                         <input autoFocus className={"search-bar-style"} placeholder={"Search"}
-                               onBlur={this.handleOutsideClick}
-                               onKeyPress={this.enterPressed.bind(this)}/>:null }
+                               //onBlur={this.handleOutsideClick}
+                               onKeyPress={this.enterPressed.bind(this)}/>
+                            <img onClick={} src={closeDark} className={"close-png"}/></div>:null }
+
                 </li>
         );
     }

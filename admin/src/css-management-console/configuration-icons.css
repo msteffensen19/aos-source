@@ -5,10 +5,15 @@
     border-bottom-color: #DBDBDB;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-
+    min-width: 200px;
 }
-
 .search-bar-style:focus{
     outline: none;
+
+}
+.close-png{
+    height: 14px;
+}
+.search-bar-config{
 
 }
