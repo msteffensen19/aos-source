@@ -350,8 +350,8 @@ define(['./module'], function (controllers) {
                     var quantity = s.quantity;
                     var user = $rootScope.userCookie;
                     if (!(user && user.response && user.response.userId != -1)) {
-                        if(quantity > s.product.colors[0].inStock){
-                            s.message.text = $filter("translate")('PRODUCT_QUANTITY_ERROR_MESSAGE').format(s.product.colors[0].inStock); //s._class = res.success ? "valid" : "invalid";
+                        if(s.product.colors[0] == null || quantity > s.product.colors[0].inStock){
+                            s.message.text = $filter("translate")('PRODUCT_QUANTITY_ERROR_MESSAGE').format(s.product.colors[0] == null ? 0 : s.product.colors[0].inStock); //s._class = res.success ? "valid" : "invalid";
                             if(_____productAdded){
                                 $timeout.cancel(_____productAdded);
                             }
