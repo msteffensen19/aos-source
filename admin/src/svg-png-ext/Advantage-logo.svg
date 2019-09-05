@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="noIdHere" width="35px" height="45px" viewBox="0 0 26 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Advantage_logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient id="logoGradient" gradientTransform="rotate(90)">
+            <stop offset="0%"  stop-color="#A1CED1" />
+            <stop offset="85%" stop-color="#C7DECE" />
+            <stop offset="100%" stop-color="#DCD9B8" />
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="black" fill-rule="evenodd">
+        <g id="ProductName-logo-AOS" transform="translate(-22.000000, -16.000000)" fill="url('#logoGradient')">
+            <g id="Advantage_logo" transform="translate(22.000000, 16.000000)">
+                <path d="M12.282843,24.7572816 L6.93965059,24.7572816 C6.09809102,24.7572816 5.41631266,24.0921359 5.41631266,23.2718447 L5.41631266,5.2815534 L7.88276604,5.2815534 C8.44978627,5.2815534 8.95756558,5.62386408 9.15763063,6.14145631 L19.4574262,32.7644466 C19.7451678,33.5078252 20.4750159,34 21.2898325,34 L25.5,34 L13.1000292,1.32533981 C12.7977313,0.528815534 12.0187978,0 11.147787,0 L0,0 L0,25.0322524 C0,27.7974757 2.29854768,30.038835 5.13398736,30.038835 L15.6538206,30.038835 L14.1230353,26.0063689 C13.8380018,25.2557282 13.1037529,24.7572816 12.282843,24.7572816" id="Fill-1"></path>
+            </g>
+        </g>
+    </g>
+</svg>

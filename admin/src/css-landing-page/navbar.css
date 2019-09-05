@@ -6,6 +6,12 @@
     font-style: normal;
 }
 @font-face {
+    font-family: 'Metric-light';
+    src: url('Metric-Regular.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
     font-family: 'Metric Bold';
     src: url('Metric-Bold.ttf') format('opentype');
     font-weight: normal;

@@ -1,8 +1,7 @@
 import React from 'react';
 import TableHeaders from './TableHeaders';
 
-
-export default class Functional extends React.Component {
+export default class MobileTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -12,7 +11,7 @@ export default class Functional extends React.Component {
 
     }
 
-        changeFlagValue(event){
+    changeFlagValue(event){
         if(this.oldvalue !== event.target.value){
             this.setState({[event.target.key]:event.target.value});
             fetch('http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value, {
@@ -56,7 +55,7 @@ export default class Functional extends React.Component {
             switch (TagType) {
                 case "input":
                     inputTag = <select className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
-                                        value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
+                                       value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
                         {[...Array(1000).keys()].map((i) =>
                             <option key={i.toString()} value={i}>{i}</option>
                         )}
@@ -83,17 +82,17 @@ export default class Functional extends React.Component {
                 <td className="description-style-config">{description}</td>
                 <td>{locationInAdvantage}</td>
             </tr>
-    })
+        })
     }
 
     render() {
         return (
             <table className={"configuration-table-style"}>
                 <thead>
-                    <TableHeaders/>
+                <TableHeaders/>
                 </thead>
                 <tbody>
-                    {this.renderTableData()}
+                {this.renderTableData()}
                 </tbody>
             </table>
         );
