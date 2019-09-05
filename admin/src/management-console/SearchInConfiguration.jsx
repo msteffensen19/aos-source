@@ -9,7 +9,8 @@ export default class SearchInConfiguration extends React.Component {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
-        this.handleOutsideClick = this.handleOutsideClick.bind(this);
+        this.handleOnBlur = this.handleOnBlur.bind(this);
+        this.handleCloseClick=this.handleCloseClick.bind(this);
     }
     state ={
         openSearchBar:false,
@@ -18,22 +19,30 @@ export default class SearchInConfiguration extends React.Component {
 
     handleClick(){
         this.setState({openSearchBar:true});
+        if(document.getElementById("searchInConfiguration") !== null){
+            this.props.onUserSearch(document.getElementById("searchInConfiguration").value);
+        }
 
     }
-    handleOutsideClick(event){
+    handleOnBlur(event){
         if(event.target.value === ""){
             this.setState({openSearchBar:false});
-            this.setState({searchTerm:""});
-            this.props.onUserSearch(event.target.value);
-        }else{
-            this.setState({searchTerm:event.target.value});
-            this.props.onUserSearch(event.target.value);
         }
     }
+    handleCloseClick(){
+        if(this.props.isSearchMode){
+            this.setState({openSearchBar:false});
+            this.setState({searchTerm:""});
+            this.props.onUserSearch("");
+        }
+        this.setState({openSearchBar:false});
+        this.setState({searchTerm:""});
+    }
+
     enterPressed(event) {
         let code = event.keyCode || event.which;
         if(code === 13) { //13 is the enter keycode
-
+            this.handleClick();
         }
     }
 
@@ -44,9 +53,10 @@ export default class SearchInConfiguration extends React.Component {
                     {this.state.openSearchBar === true?
                         <div className="search-bar-config">
                         <input autoFocus className={"search-bar-style"} placeholder={"Search"}
-                               //onBlur={this.handleOutsideClick}
+                               id="searchInConfiguration"
+                               onBlur={this.handleOnBlur}
                                onKeyPress={this.enterPressed.bind(this)}/>
-                            <img onClick={} src={closeDark} className={"close-png"}/></div>:null }
+                            <img onClick={this.handleCloseClick} src={closeDark} className={"close-png"}/></div>:null }
 
                 </li>
         );

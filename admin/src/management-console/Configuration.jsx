@@ -19,6 +19,7 @@ export default class Configuration extends React.Component {
 
         this.handleSearch = this.handleSearch.bind(this);
         this.navToOpen = this.navToOpen.bind(this);
+        this.isSearchMode=this.isSearchMode.bind(this);
     }
         state = {
             generalItemsArray: [],
@@ -37,6 +38,10 @@ export default class Configuration extends React.Component {
     navToOpen(e){
         this.setState({tabToShow: e.target.id})
     };
+
+    isSearchMode(){
+        return this.state.isSearchMode;
+    }
 
     handleSearch(searchTerm){
 
@@ -92,6 +97,11 @@ export default class Configuration extends React.Component {
                 performanceItemsArray: tempPerformanceItemsArray,
                 mobileItemsArray: tempMobileItemsArray
             });
+            if(searchTerm ==""){
+                this.setState({isSearchMode:false});
+            }else{
+                this.setState({isSearchMode:true});
+            }
     }
 
 
@@ -144,7 +154,7 @@ export default class Configuration extends React.Component {
             <div>
                 <ul className="configuration-icons">
 
-                    <SearchInConfiguration onUserSearch={this.handleSearch}/>
+                    <SearchInConfiguration onUserSearch={this.handleSearch} isSearchMode={this.state.isSearchMode}/>
                     <li>
                         <FilterIcon/>
                     </li>
