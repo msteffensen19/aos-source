@@ -56,7 +56,7 @@ export default class SearchInConfiguration extends React.Component {
                                id="searchInConfiguration"
                                onBlur={this.handleOnBlur}
                                onKeyPress={this.enterPressed.bind(this)}/>
-                            <img onClick={this.handleCloseClick} src={closeDark} className={"close-png"}/></div>:null }
+                            <img onClick={this.handleCloseClick} src={closeDark} alt={"search-glass "} className={"close-png"}/></div>:null }
 
                 </li>
         );

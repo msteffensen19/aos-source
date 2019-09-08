@@ -65,13 +65,13 @@ class LoginForm extends React.Component {
         loginPassword: this.state.password,
         loginUser: this.state.userName};
 
-        //let host = window.location.origin;
+        let host = window.location.origin;
         let $ = require('jquery');
         require('jquery.soap');
         let parseString = require('jquery.soap');
         let me = this;
         $.soap({
-            url: 'http://localhost:8080/accountservice/', //host+'/accountservice/',
+            url: host+'/accountservice/',
             method: 'AccountLoginRequest',
             namespaceURL: 'com.advantage.online.store.accountservice',
             SOAPAction: 'com.advantage.online.store.accountserviceAccountLoginRequest' ,
@@ -85,10 +85,10 @@ class LoginForm extends React.Component {
                     me.props.history.push('/management-console');
                 }
                 //remove in production push
-                me.props.history.push('/management-console');
+                //me.props.history.push('/management-console');
             },
             error: function (response) {
-                LoginForm.addWornSignInElement("Server responded with error code different from 200");
+                LoginForm.addWornSignInElement("Server responded with error");
                 console.log(response);
             },
             enableLogging: true

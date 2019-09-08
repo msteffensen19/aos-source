@@ -1,6 +1,6 @@
 
 .configuration-table-style{
-    width:95% ;
+    width:99% ;
 }
 .configuration-headlines{
     display:inline-flex;
@@ -14,7 +14,7 @@
 .configuration-headlines li{
     margin: 0 40px;
     height: 16px;
-    width: 90px;
+    width: 105px;
     color: #6C6C6C;
     font-family: Metric, sans-serif;
     font-size: 21px;
@@ -40,6 +40,7 @@
     width: 90px;
     background-color: #53ADC3;
     bottom: -11px;
+    left: 9%;
 }
 .configuration-icons{
     display: flex;
