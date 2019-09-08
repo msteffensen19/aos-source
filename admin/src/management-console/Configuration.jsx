@@ -17,7 +17,6 @@ export default class Configuration extends React.Component {
     constructor() {
         super();
 
-        this.getPort = this.getPort.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.navToOpen = this.navToOpen.bind(this);
         this.isSearchMode=this.isSearchMode.bind(this);
@@ -105,23 +104,6 @@ export default class Configuration extends React.Component {
             }
     }
 
-    getPort(location){
-        if (location.includes("localhost")) {//local
-            return "8080";
-        } else if (location.includes("18.212.178.84")) {//stage
-            return "8081";
-        } else if (location.includes("16.60.158.84")) {//CI
-            return "8081";
-        }else if (location.includes("advantageonlineshopping")) {//CI
-            return "8080";
-        }else if (location.includes("ec2-54-157-232-206")) {//nightly
-            return "8082";
-        } else {
-            console.log('did not find port in location!');
-        }
-
-    }
-
         componentDidMount(){
         let tempGeneralItemsArray=[];
         let tempFunctionalItemsArray=[];
@@ -132,10 +114,9 @@ export default class Configuration extends React.Component {
         let tempAllItemsArray=[];
 
         let host = window.location.origin;
-        let port = this.getPort(host);
 
             let urlString = host.includes("localhost")? "http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL":
-                host+ ':' + port+'/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
+                host+'/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
 
         fetch(urlString)
             .then(res => res.json())
@@ -210,7 +191,7 @@ export default class Configuration extends React.Component {
                         <div className={this.state.tabToShow === 'Mobile'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Itom' onClick={this.navToOpen}>Itom</div><div className = {this.state.isSearchMode &&
+                        <div id='Itom' onClick={this.navToOpen}>ITOM</div><div className = {this.state.isSearchMode &&
                     this.state.itomItemsArray.length >0? "search-dot-ito": null}/>
                         <div className={this.state.tabToShow === 'Itom'? "focus-line" : null}/>
                     </li>
