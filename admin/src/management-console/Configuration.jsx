@@ -66,7 +66,7 @@ export default class Configuration extends React.Component {
         let tempMobileItemsArray = [];
 
             this.state.allItemsArray.forEach((item) => {
-                let itemPropValues = [item.parameterName, item.description, item.locationInAdvantage];
+                let itemPropValues = [item.parameterName, item.description, item.locationInAdminTool];
                 let doesContainedSearchTerm = false;
                 itemPropValues.forEach((element) => {
                     if (element.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -74,17 +74,17 @@ export default class Configuration extends React.Component {
                     }
                 });
                 if(doesContainedSearchTerm){
-                    if (item.attributeTools.includes("LeanFT")  || item.attributeTools.includes("UFT")) {
+                    if (item.locationInAdminTool.includes("General")){
                         tempGeneralItemsArray.push(item);
-                    }if (item.attributeTools.includes("LoadRunner")) {
+                    }if (item.locationInAdminTool.includes("ITOM")) {
                         tempItomItemsArray.push(item);
-                    }if (item.attributeTools.includes("AppPulse")) {
+                    }if (item.locationInAdminTool.includes("Security")) {
                         tempSecurityItemsArray.push(item);
-                    }if (item.attributeTools.includes("Fortify") || item.attributeTools.includes("StormRunner")) {
+                    }if (item.locationInAdminTool.includes("Functional")) {
                         tempFunctionalItemsArray.push(item);
-                    }if (item.attributeTools.includes("BPT")) {
+                    }if (item.locationInAdminTool.includes("Performance")) {
                         tempPerformanceItemsArray.push(item);
-                    }if (item.attributeTools.includes("NV")) {
+                    }if (item.locationInAdminTool.includes("Mobile")) {
                         tempMobileItemsArray.push(item);
                     }
                 }
@@ -123,17 +123,17 @@ export default class Configuration extends React.Component {
 
                 tempAllItemsArray.forEach((item)=>{
 
-                    if(item.attributeTools.includes("LeanFT") || item.attributeTools.includes("UFT")){
+                    if (item.locationInAdminTool.includes("General")){
                         tempGeneralItemsArray.push(item);
-                    }if(item.attributeTools.includes("LoadRunner")){
+                    }if (item.locationInAdminTool.includes("ITOM")) {
                         tempItomItemsArray.push(item);
-                    }if(item.attributeTools.includes("AppPulse")){
+                    }if (item.locationInAdminTool.includes("Security")) {
                         tempSecurityItemsArray.push(item);
-                    }if(item.attributeTools.includes("Fortify") || item.attributeTools.includes("StormRunner") ){
+                    }if (item.locationInAdminTool.includes("Functional")) {
                         tempFunctionalItemsArray.push(item);
-                    }if(item.attributeTools.includes("BPT")){
+                    }if (item.locationInAdminTool.includes("Performance")) {
                         tempPerformanceItemsArray.push(item);
-                    }if(item.attributeTools.includes("NV")){
+                    }if (item.locationInAdminTool.includes("Mobile")) {
                         tempMobileItemsArray.push(item);
                     }
                 });
@@ -172,6 +172,21 @@ export default class Configuration extends React.Component {
                         <div className={this.state.tabToShow === 'General'? "focus-line" : null}/>
                     </li>
                     <li>
+                        <div id='Performance' onClick={this.navToOpen}>Performance</div><div className = {this.state.isSearchMode &&
+                    this.state.performanceItemsArray.length >0? "search-dot-per": null}/>
+                        <div className={this.state.tabToShow === 'Performance'? "focus-line" : null}/>
+                    </li>
+                    <li>
+                        <div id='Functional' onClick={this.navToOpen}>Functional</div><div className = {this.state.isSearchMode &&
+                    this.state.functionalItemsArray.length >0? "search-dot-func": null}/>
+                        <div className={this.state.tabToShow === 'Functional'? "focus-line" : null}/>
+                    </li>
+                    <li>
+                        <div id='Mobile' onClick={this.navToOpen}>Mobile</div><div className = {this.state.isSearchMode &&
+                    this.state.mobileItemsArray.length >0? "search-dot-mob": null}/>
+                        <div className={this.state.tabToShow === 'Mobile'? "focus-line" : null}/>
+                    </li>
+                    <li>
                         <div id='Itom' onClick={this.navToOpen}>Itom</div><div className = {this.state.isSearchMode &&
                     this.state.itomItemsArray.length >0? "search-dot-ito": null}/>
                         <div className={this.state.tabToShow === 'Itom'? "focus-line" : null}/>
@@ -181,44 +196,26 @@ export default class Configuration extends React.Component {
                     this.state.securityItemsArray.length >0? "search-dot-sec": null}/>
                         <div className={this.state.tabToShow === 'Security'? "focus-line" : null}/>
                     </li>
-                    <li>
-                        <div id='Functional' onClick={this.navToOpen}>Functional</div><div className = {this.state.isSearchMode &&
-                    this.state.functionalItemsArray.length >0? "search-dot-func": null}/>
-                        <div className={this.state.tabToShow === 'Functional'? "focus-line" : null}/>
-                    </li>
-                    <li>
-                        <div id='Performance' onClick={this.navToOpen}>Performance</div><div className = {this.state.isSearchMode &&
-                    this.state.performanceItemsArray.length >0? "search-dot-per": null}/>
-                        <div className={this.state.tabToShow === 'Performance'? "focus-line" : null}/>
-                    </li>
-                    <li>
-                        <div id='Mobile' onClick={this.navToOpen}>Mobile</div><div className = {this.state.isSearchMode &&
-                    this.state.mobileItemsArray.length >0? "search-dot-mob": null}/>
-                        <div className={this.state.tabToShow === 'Mobile'? "focus-line" : null}/>
-                    </li>
                 </ul>
                 <div className="config-line-separator"/>
                 <div>
                     {this.state.generalItemsArray && this.state.generalItemsArray.length && (this.state.tabToShow ==='General') > 0 ?
                     <General searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.generalItemsArray}/> : null}
 
-
-                    {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Itom') > 0 ?
-                        <Itom searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.itomItemsArray} /> : null}
-
+                    {this.state.performanceItemsArray && this.state.performanceItemsArray.length && (this.state.tabToShow ==='Performance') > 0 ?
+                        <PerformanceTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.performanceItemsArray} /> : null}
 
                     {this.state.functionalItemsArray && this.state.functionalItemsArray.length && (this.state.tabToShow ==='Functional') > 0 ?
                         <Functional searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.functionalItemsArray} /> : null}
 
-
-                    {this.state.securityItemsArray && this.state.securityItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
-                        <Security searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.securityItemsArray} /> : null}
-
                     {this.state.mobileItemsArray && this.state.mobileItemsArray.length && (this.state.tabToShow ==='Mobile') > 0 ?
                         <MobileTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.mobileItemsArray} /> : null}
 
-                    {this.state.performanceItemsArray && this.state.performanceItemsArray.length && (this.state.tabToShow ==='Performance') > 0 ?
-                        <PerformanceTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.performanceItemsArray} /> : null}
+                    {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Itom') > 0 ?
+                        <Itom searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.itomItemsArray} /> : null}
+
+                    {this.state.securityItemsArray && this.state.securityItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
+                        <Security searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.securityItemsArray} /> : null}
                 </div>
             </div>
         );

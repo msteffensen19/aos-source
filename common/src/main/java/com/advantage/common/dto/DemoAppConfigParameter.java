@@ -18,6 +18,8 @@ public class DemoAppConfigParameter {
     private String attributeTools;
     @JsonProperty("locationInAdvantage")
     private String locationInAdvantage;
+    @JsonProperty("locationInAdminTool")
+    private String locationInAdminTool;
     @JsonProperty("parameterValue")
     private String parameterValue;
 
@@ -71,6 +73,16 @@ public class DemoAppConfigParameter {
         this.attributeTools = attributeTools;
         this.locationInAdvantage = locationInAdvantage;
         this.parameterValue = parameterValue;
+    }
+    public DemoAppConfigParameter(String parameterName, String datatype, String description, String attributeTools, String locationInAdvantage, String locationInAdminTool, String parameterValue) {
+        this.parameterName = parameterName;
+        this.datatype = datatype;
+        this.description = description;
+        this.attributeTools = attributeTools;
+        this.locationInAdvantage = locationInAdvantage;
+        this.locationInAdminTool =locationInAdminTool;
+        this.parameterValue = parameterValue;
+
     }
 
     /**

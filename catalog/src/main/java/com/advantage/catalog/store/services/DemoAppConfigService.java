@@ -35,6 +35,7 @@ public class DemoAppConfigService {
     public static final String ATTRIBUTE_DATA_TYPE_TAG_NAME = "datatype";
     public static final String ATTRIBUTE_DESCRIPTION_TAG_NAME = "description";
     public static final String ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME = "locationInAdvantage";
+    public static final String ATTRIBUTE_LOCATION_IN_ADMIN_TOOL_TAG_NAME = "locationInAdminTool";
     private static final String APP_PULSE_USER = "AppPulse_user";
     //  endregion
 
@@ -227,8 +228,12 @@ public class DemoAppConfigService {
             Node nodeAttrLocation = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADVANTAGE_TAG_NAME);
             String attributeLocationInAdvantageValue = nodeAttrLocation.getTextContent();
 
+            System.out.println("ATTRIBUTE_TOOLS_TAG_NAME --"+ node.getNodeName());
+            Node nodeAttrPlaceInAdminTool = attr.getNamedItem(ATTRIBUTE_LOCATION_IN_ADMIN_TOOL_TAG_NAME);
+            String attributeLocationInAdminToolValue = nodeAttrPlaceInAdminTool.getTextContent();
+
             //parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeToolsValue, node.getTextContent()));
-            parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, node.getTextContent()));
+            parameters.add(new DemoAppConfigParameter(node.getNodeName(), attributeDataTypeValue, attributeDescriptionValue, attributeToolsValue, attributeLocationInAdvantageValue, attributeLocationInAdminToolValue, node.getTextContent()));
 
             if (logger.isDebugEnabled()) {
                 logger.debug("<" + node.getNodeName() + Constants.SPACE + ATTRIBUTE_DATA_TYPE_TAG_NAME + "\"" + attributeDataTypeValue + "\"" + Constants.SPACE + ATTRIBUTE_DESCRIPTION_TAG_NAME + "\"" + attributeDescriptionValue + "\"" + Constants.SPACE + ATTRIBUTE_TOOLS_TAG_NAME + "=\"" + attributeToolsValue + "\">" + node.getTextContent() + "</" + node.getNodeName() + ">");
