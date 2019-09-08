@@ -17,13 +17,13 @@ export default class Contacts extends React.Component {
     playFirstVideo(){
         this.videoPlaceholder.current.innerHTML ='<iframe\n' +
             '                    width="260" height="190" ' +
-            'src="https://www.youtube.com/embed/A_mbo8pzQVE?autoplay=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>';
+            'src="https://www.youtube.com/embed/QVqk-GNbJSw?autoplay=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>';
         document.getElementById("videoCoverElements").setAttribute("class", "none-visible");
     }
     playSecondVideo(){
         this.secondVideoPlaceholder.current.innerHTML ='<iframe\n' +
             '                    width="260" height="190" ' +
-            'src="https://www.youtube.com/embed/QVqk-GNbJSw?autoplay=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>';
+            'src="https://www.youtube.com/embed/A_mbo8pzQVE?autoplay=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>';
         document.getElementById("secondVideoCoverCss").setAttribute("class", "none-visible");
     }
 
