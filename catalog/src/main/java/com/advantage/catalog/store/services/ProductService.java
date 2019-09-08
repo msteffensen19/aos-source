@@ -465,8 +465,7 @@ public class ProductService {
         List<CategoryProductAttributeItem> items = new ArrayList<>(productAttributes.size());
         for (ProductAttributes attribute : productAttributes) {
             CategoryAttributeFilter categoryAttributeFilter = categoryService.findCategoryAttributeFilter(product.getCategory().getCategoryId(), attribute.getAttribute().getId());
-
-            items.add(new CategoryProductAttributeItem(attribute.getAttribute().getName(), attribute.getAttributeValue(), categoryAttributeFilter.isShowInFilter()));
+            items.add(new CategoryProductAttributeItem(attribute.getAttribute().getName(), attribute.getAttributeValue(), categoryAttributeFilter != null ? categoryAttributeFilter.isShowInFilter() : false));
         }
 
         return items;
