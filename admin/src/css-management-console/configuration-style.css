@@ -1,5 +1,7 @@
 
-
+.configuration-table-style{
+    width:95% ;
+}
 .configuration-headlines{
     display:inline-flex;
     list-style: none;
@@ -57,7 +59,7 @@
     padding-bottom: 20px;
     color: #333333;
     font-family: Metric, sans-serif;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 24px;
 }
 .configuration-table-style th:first-child{
@@ -82,10 +84,72 @@
 }
 .configuration-input-style{
     width: 55px;
+    padding-top: 4px;
+
 }
 .config-input{
     border: 1px solid #B7B7B7;
 }
 .data-rows-style{
     border-bottom: 1px solid #B7B7B7;
+}
+.search-dot-gen{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: 1px;
+    float: right;
+    bottom: 23px;
+}
+.search-dot-ito{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: -12px;
+    float: right;
+    bottom: 23px;
+}
+.search-dot-sec{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: 1px;
+    float: right;
+    bottom: 23px;
+}
+.search-dot-func{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: 13px;
+    float: right;
+    bottom: 23px;
+}
+.search-dot-per{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: 26px;
+    float: right;
+    bottom: 23px;
+}
+.search-dot-mob{
+    height: 8px;
+    width: 8px;
+    background-color: #FFC600;
+    border-radius: 50%;
+    position: relative;
+    left: -4px;
+    float: right;
+    bottom: 23px;
 }
