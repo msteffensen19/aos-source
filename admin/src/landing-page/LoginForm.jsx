@@ -17,6 +17,7 @@ class LoginForm extends React.Component {
         LoginForm.addWornSignInElement = LoginForm.addWornSignInElement.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getPort = this.getPort.bind(this);
     }
 
     handleInputChange(event) {
@@ -52,6 +53,23 @@ class LoginForm extends React.Component {
         signInElement.classList.add("wrong-signIn-for-btn");
         document.getElementById("signInBtn").style.marginTop = "0px";
     }
+
+    getPort(location){
+        if (location.includes("localhost")) {//local
+            return "8080";
+        } else if (location.includes("18.212.178.84")) {//stage
+            return "8081";
+        } else if (location.includes("16.60.158.84")) {//CI
+            return "8081";
+        }else if (location.includes("advantageonlineshopping")) {//CI
+            return "8082";
+        } else if (location.includes("ec2-54-157-232-206")) {//nightly
+            return "8082";
+        } else {
+            console.log('did not find port in location!');
+        }
+
+    }
     handleSubmit(event) {
 
         if (document.getElementById("failedLoginText")) {
@@ -66,12 +84,15 @@ class LoginForm extends React.Component {
         loginUser: this.state.userName};
 
         let host = window.location.origin;
+        let port = this.getPort(host);
+        let urlString = host.includes("localhost")? "http://localhost:8080/accountservice/": host + ':' + port + '/accountservice/';
+
         let $ = require('jquery');
         require('jquery.soap');
         let parseString = require('jquery.soap');
         let me = this;
         $.soap({
-            url: host+'/accountservice/',
+            url: urlString,
             method: 'AccountLoginRequest',
             namespaceURL: 'com.advantage.online.store.accountservice',
             SOAPAction: 'com.advantage.online.store.accountserviceAccountLoginRequest' ,

@@ -52,7 +52,7 @@ export default class General extends React.Component {
             case "enum:[Yes,No]":
                 return "yesNoSelect";
             default:
-                console.log('default');
+                console.log('no data type!');
         }
 
     }
