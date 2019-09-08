@@ -97,7 +97,7 @@ export default class Configuration extends React.Component {
                 performanceItemsArray: tempPerformanceItemsArray,
                 mobileItemsArray: tempMobileItemsArray
             });
-            if(searchTerm ==""){
+            if(searchTerm ===""){
                 this.setState({isSearchMode:false});
             }else{
                 this.setState({isSearchMode:true});
