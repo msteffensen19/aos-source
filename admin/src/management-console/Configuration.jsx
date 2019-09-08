@@ -114,7 +114,9 @@ export default class Configuration extends React.Component {
         let tempMobileItemsArray=[];
         let tempAllItemsArray=[];
 
-        fetch('http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL')
+        let host = window.location.origin;
+
+        fetch(host+'/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL')
             .then(res => res.json())
             .then((data) => {
                 data.parameters.forEach((item) =>{
