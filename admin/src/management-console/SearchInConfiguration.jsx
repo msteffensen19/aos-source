@@ -49,14 +49,14 @@ export default class SearchInConfiguration extends React.Component {
     render(){
         return (
                 <li>
-                    <SearchIcon onClick={this.handleClick}/>
+                    <SearchIcon className="pointer-cursor" onClick={this.handleClick}/>
                     {this.state.openSearchBar === true?
                         <div className="search-bar-config">
                         <input autoFocus className={"search-bar-style"} placeholder={"Search"}
                                id="searchInConfiguration"
                                onBlur={this.handleOnBlur}
                                onKeyPress={this.enterPressed.bind(this)}/>
-                            <img onClick={this.handleCloseClick} src={closeDark} alt={"search-glass"} className={"close-png"}/></div>:null }
+                            <img onClick={this.handleCloseClick} src={closeDark} alt={"search-glass"} className={"close-png pointer-cursor"}/></div>:null }
 
                 </li>
         );

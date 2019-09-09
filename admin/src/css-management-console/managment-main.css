@@ -77,12 +77,135 @@
     padding-top: 22px;
     padding-left: 20px;
     position: relative;
-    top: -6px;
+    top: -7px;
     font-family: Metric, sans-serif;
 }
 .left-icon-header{
     display: table-cell;
     padding-right: 15px;
     width: 41px;
+    position: relative;
+    bottom: 8px;
+}
+.user-icon-background{
+    background-color: #292E44;
+    width: 40px;
+    height: 40px;
+    border: 5px solid #292E44;
+    border-radius: 100%;
+}
+.pop-up-cover{
 
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 9999;
+    visibility: visible;
+}
+.pop-up-style{
+    height: 218px;
+    width: 445px;
+    position: relative;
+    left: 43%;
+    top: 33%;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 14px 0 rgba(0,0,0,0.26);
+}
+.popup-title{
+    color: #000000;
+    font-family: Metric, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    line-height: 22px;
+    position: relative;
+    bottom: 18px;
+    left: 9%;
+}
+.popup-content{
+    color: #000000;
+    font-family: Metric, sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    line-height: 20px;
+    position: relative;
+    top: 50px;
+    left: -23px;
+}
+.popup-line-separator{
+
+    height: 1px;
+    width: 444px;
+    border: 1px solid #DCDEDF;
+    position: absolute;
+    left: 0;
+    bottom: 20%;
+}
+.popup-yes-btn{
+    position: absolute;
+    bottom: 5%;
+    right: 6%;
+    cursor: pointer;
+    color: #000000;
+    font-family: Metric, sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    line-height: 17px;
+}
+.popup-no-btn{
+    position: absolute;
+    bottom: 5%;
+    right: 17%;
+    cursor: pointer;
+    color: #53ADC3;
+    font-family: Metric, sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    line-height: 17px;
+}
+.popup-image{
+    height: 52px;
+    width: 52px;
+    background-color: #FCDB29;
+    position: relative;
+    right: 52px;
+}
+.svg-popup-style{
+
+    position: relative;
+    height: 42px;
+    left: 16px;
+    top: 8px;
+}
+.dev-popup-content{
+
+    color: #000000;
+    font-family: Metric, sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    line-height: 20px;
+    position: relative;
+    top: 17px;
+    float: left;
+    left: 44px;
+}
+.pointer-cursor{
+    cursor: pointer;
+}
+.saved-popup-title{
+    color: #000000;
+    font-family: Metric, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    line-height: 22px;
+    position: relative;
+    bottom: -36px;
+    left: 26%;
 }

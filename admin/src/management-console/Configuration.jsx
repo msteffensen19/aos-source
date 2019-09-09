@@ -6,6 +6,7 @@ import Security from './Security';
 import '../css-management-console/configuration-style.css';
 import MobileTab from "./MobileTab";
 import PerformanceTab from "./PerformanceTab";
+import Popup from'./DevPopupWindow';
 import SearchInConfiguration from "./SearchInConfiguration"
 import {ReactComponent as ExportIcon} from "../svg-png-ext/exportToExcel.svg";
 import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
@@ -20,6 +21,8 @@ export default class Configuration extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.navToOpen = this.navToOpen.bind(this);
         this.isSearchMode=this.isSearchMode.bind(this);
+        this.handleDevIconClick=this.handleDevIconClick.bind(this);
+        this.handleCloseDevIcon=this.handleCloseDevIcon.bind(this);
     }
         state = {
             generalItemsArray: [],
@@ -31,17 +34,23 @@ export default class Configuration extends React.Component {
             performanceItemsArray:[],
             tabToShow:'General',
             isSearchMode:false,
-            searchTerm:''
+            searchTerm:'',
+            openDevPopup:false
     };
 
-
+    handleDevIconClick(){
+        this.setState({openDevPopup:true})
+    };
+    handleCloseDevIcon(){
+        this.setState({openDevPopup:false})
+    };
     navToOpen(e){
         this.setState({tabToShow: e.target.id})
     };
 
     isSearchMode(){
         return this.state.isSearchMode;
-    }
+    };
 
     handleSearch(searchTerm){
 
@@ -55,7 +64,7 @@ export default class Configuration extends React.Component {
             this.searchInItems(searchTerm);
         }
 
-    }
+    };
     searchInItems(searchTerm) {
 
         let tempGeneralItemsArray = [];
@@ -156,17 +165,18 @@ export default class Configuration extends React.Component {
     render() {
         return (
             <div>
+                {this.state.openDevPopup?<Popup closePopUp = {this.handleCloseDevIcon}/>:null}
                 <ul className="configuration-icons">
 
                     <SearchInConfiguration onUserSearch={this.handleSearch} isSearchMode={this.state.isSearchMode}/>
                     <li>
-                        <FilterIcon/>
+                        <FilterIcon className="pointer-cursor" onClick={this.handleDevIconClick}/>
                     </li>
                     <li>
-                        <ExportIcon/>
+                        <ExportIcon className="pointer-cursor" onClick={this.handleDevIconClick}/>
                     </li>
                     <li>
-                        <RestoreIcon/>
+                        <RestoreIcon className="pointer-cursor" onClick={this.handleDevIconClick}/>
                     </li>
                 </ul>
                 <ul className="configuration-headlines">
