@@ -24,7 +24,7 @@ export default class General extends React.Component {
         if (location.includes("localhost")) {//local
             return "8080";
         } else if (location.includes("18.212.178.84")) {//stage
-            return "8081";
+            return "80";
         } else if (location.includes("16.60.158.84")) {//CI
             return "8081";
         }else if (location.includes("advantageonlineshopping")) {//CI
@@ -43,7 +43,6 @@ export default class General extends React.Component {
         let port = this.getPort(host);
         let urlString ="";
         if (host.includes("localhost")){
-
             urlString ='http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
         }else if(host.includes("ec2-54-157-232-206")){
             urlString = host+'/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
