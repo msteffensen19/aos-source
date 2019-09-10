@@ -13,16 +13,46 @@ export default class General extends React.Component {
         this.changeFlagValue = this.changeFlagValue.bind(this);
         this.saveOldValue = this.saveOldValue.bind(this);
         this.closePopUp=this.closePopUp.bind(this);
+        this.getPort = this.getPort.bind(this);
     }
+
     closePopUp(){
         this.setState({isUpdateSuccess:false});
     }
 
+    getPort(location){
+        if (location.includes("localhost")) {//local
+            return "8080";
+        } else if (location.includes("18.212.178.84")) {//stage
+            return "8081";
+        } else if (location.includes("16.60.158.84")) {//CI
+            return "8081";
+        }else if (location.includes("advantageonlineshopping")) {//CI
+            return "8082";
+        } else if (location.includes("ec2-54-157-232-206")) {//nightly
+            return "8082";
+        } else {
+            console.log('did not find port in location!');
+        }
+
+    }
+
     changeFlagValue(event){
         let self = this;
+        let host = window.location.origin;
+        let port = this.getPort(host);
+        let urlString ="";
+        if (host.includes("localhost")){
+
+            urlString ='http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
+        }else if(host.includes("ec2-54-157-232-206")){
+            urlString = host+'/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
+        }else {
+            urlString = host + ':' + port + '/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
+        }
         if(this.oldvalue !== event.target.value){
             this.setState({[event.target.key]:event.target.value});
-            fetch('http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value, {
+            fetch(urlString, {
                 method: 'put'
             }).then( (response) => {
                 return response.json()
@@ -61,7 +91,7 @@ export default class General extends React.Component {
             case "enum:[Yes,No]":
                 return "yesNoSelect";
             default:
-                console.log('default');
+                console.log('no data type!');
         }
 
     }
