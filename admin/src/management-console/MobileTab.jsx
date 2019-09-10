@@ -1,17 +1,26 @@
 import React from 'react';
 import TableHeaders from './TableHeaders';
+import Popup from'./SavedPopup';
 
 export default class General extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            data:{},
+            isUpdateSuccess:false
+        };
         this.setInputAttributes = this.setInputAttributes.bind(this);
         this.changeFlagValue = this.changeFlagValue.bind(this);
         this.saveOldValue = this.saveOldValue.bind(this);
+        this.closePopUp=this.closePopUp.bind(this);
+    }
 
+    closePopUp(){
+        this.setState({isUpdateSuccess:false});
     }
 
     changeFlagValue(event){
+        let self = this;
         if(this.oldvalue !== event.target.value){
             this.setState({[event.target.key]:event.target.value});
             fetch('http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value, {
@@ -20,9 +29,10 @@ export default class General extends React.Component {
                 return response.json()
             })
                 .then((json) => {
-                    this.setState({
+                    self.setState({
                         data: json
                     });
+                    json.success? self.setState({isUpdateSuccess:true}):self.setState({isUpdateSuccess:false});
                     console.log('parsed json', json)
                 })
                 .catch( (ex) => {
@@ -52,7 +62,7 @@ export default class General extends React.Component {
             case "enum:[Yes,No]":
                 return "yesNoSelect";
             default:
-                console.log('default');
+                console.log('no data type!');
         }
 
     }
@@ -97,6 +107,7 @@ export default class General extends React.Component {
     render() {
         return (
             <table className={"configuration-table-style"}>
+                {this.state.isUpdateSuccess?<Popup closePopUp = {this.closePopUp}/>:null}
                 <thead>
                 <TableHeaders/>
                 </thead>

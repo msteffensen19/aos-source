@@ -85,7 +85,15 @@ class LoginForm extends React.Component {
 
         let host = window.location.origin;
         let port = this.getPort(host);
-        let urlString = host.includes("localhost")? "http://localhost:8080/accountservice/": host + ':' + port + '/accountservice/';
+        let urlString ="";
+        if (host.includes("localhost")){
+
+            urlString ="http://localhost:8080/accountservice/";
+        }else if(host.includes("ec2-54-157-232-206")){
+            urlString = host+ '/accountservice/';
+        }else {
+            urlString = host + ':' + port + '/accountservice/';
+        }
 
         let $ = require('jquery');
         require('jquery.soap');

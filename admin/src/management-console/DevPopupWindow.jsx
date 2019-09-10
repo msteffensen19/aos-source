@@ -29,12 +29,13 @@ export default class DevPopupWindow extends React.Component {
                     <div className={"popup-image"}>
                         <UserIcon className={"svg-popup-style"}/>
                     </div>
-                    <span className={"popup-title"}>Development Mode</span>
+                    <span className={"popup-title"}>Module Under Development</span>
 
-                    <span className={"dev-popup-content"}>This module is still being developed it will be available soon.</span>
+                    <p className={"dev-popup-content"}>The module is currently under development <br/> and is not yet available.
+                    </p>
                     <line className={"popup-line-separator"}/>
                     <span className={"popup-yes-btn"} onClick={this.yesClick}>
-                    Alright
+                    Close
                     </span>
 
                 </div>
