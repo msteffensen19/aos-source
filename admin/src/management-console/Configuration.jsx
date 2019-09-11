@@ -1,13 +1,9 @@
 import React from 'react';
 import General from './General';
-import Itom from './Itom';
-import Functional from './Functional';
-import Security from './Security';
 import '../css-management-console/configuration-style.css';
-import MobileTab from "./MobileTab";
-import PerformanceTab from "./PerformanceTab";
 import Popup from'./DevPopupWindow';
-import SearchInConfiguration from "./SearchInConfiguration"
+import SearchInConfiguration from "./SearchInConfiguration";
+import NoSearchResult from "./NoSearchResult";
 import {ReactComponent as ExportIcon} from "../svg-png-ext/exportToExcel.svg";
 import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
 import {ReactComponent as FilterIcon} from "../svg-png-ext/filterIconConfig.svg";
@@ -17,12 +13,11 @@ export default class Configuration extends React.Component {
 
     constructor() {
         super();
-
-        this.handleSearch = this.handleSearch.bind(this);
-        this.navToOpen = this.navToOpen.bind(this);
-        this.isSearchMode=this.isSearchMode.bind(this);
         this.handleDevIconClick=this.handleDevIconClick.bind(this);
         this.handleCloseDevIcon=this.handleCloseDevIcon.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.isSearchMode=this.isSearchMode.bind(this);
+        this.navToOpen = this.navToOpen.bind(this);
     }
         state = {
             generalItemsArray: [],
@@ -32,6 +27,7 @@ export default class Configuration extends React.Component {
             itomItemsArray:[],
             mobileItemsArray:[],
             performanceItemsArray:[],
+            bodyItemsToShow:[],
             tabToShow:'General',
             isSearchMode:false,
             searchTerm:'',
@@ -45,7 +41,30 @@ export default class Configuration extends React.Component {
         this.setState({openDevPopup:false})
     };
     navToOpen(e){
-        this.setState({tabToShow: e.target.id})
+        this.setState({tabToShow: e.target.id});
+
+        switch (e.target.id) {
+            case "General":
+                this.setState({bodyItemsToShow:this.state.generalItemsArray});
+                break;
+            case "Performance":
+                this.setState({bodyItemsToShow:this.state.performanceItemsArray});
+                break;
+            case "Functional":
+                this.setState({bodyItemsToShow:this.state.functionalItemsArray});
+                break;
+            case "Mobile":
+                this.setState({bodyItemsToShow:this.state.mobileItemsArray});
+                break;
+            case "Itom":
+                this.setState({bodyItemsToShow:this.state.itomItemsArray});
+                break;
+            case "Security":
+                this.setState({bodyItemsToShow:this.state.securityItemsArray});
+                break;
+            default:
+                console.log('default');
+        }
     };
 
     isSearchMode(){
@@ -73,6 +92,7 @@ export default class Configuration extends React.Component {
         let tempItomItemsArray = [];
         let tempPerformanceItemsArray = [];
         let tempMobileItemsArray = [];
+        let allArraysArray = [];
 
             this.state.allItemsArray.forEach((item) => {
                 let itemPropValues = [item.parameterName, item.description, item.locationInAdminTool];
@@ -106,11 +126,42 @@ export default class Configuration extends React.Component {
                 performanceItemsArray: tempPerformanceItemsArray,
                 mobileItemsArray: tempMobileItemsArray
             });
+            if(tempGeneralItemsArray.length !==0){
+                this.setState({tabToShow:"General"});
+                this.setState({bodyItemsToShow:tempGeneralItemsArray});
+                return;
+            }
+            if(tempPerformanceItemsArray.length !==0){
+                this.setState({tabToShow:"Performance"});
+                this.setState({bodyItemsToShow:tempPerformanceItemsArray});
+                return;
+            }
+            if(tempFunctionalItemsArray.length !==0){
+                this.setState({tabToShow:"Functional"});
+                this.setState({bodyItemsToShow:tempFunctionalItemsArray});
+                return;
+            }
+            if(tempMobileItemsArray.length !==0){
+                this.setState({tabToShow:"Mobile"});
+                this.setState({bodyItemsToShow:tempMobileItemsArray});
+                return;
+            }
+            if(tempItomItemsArray.length !==0){
+                this.setState({tabToShow:"Itom"});
+                this.setState({bodyItemsToShow:tempItomItemsArray});
+                return;
+            }
+            if(tempSecurityItemsArray.length !==0){
+                this.setState({tabToShow:"Security"});
+                this.setState({bodyItemsToShow:tempSecurityItemsArray});
+                return;
+            }
             if(searchTerm ===""){
                 this.setState({isSearchMode:false});
             }else{
                 this.setState({isSearchMode:true});
             }
+
     }
 
         componentDidMount(){
@@ -156,10 +207,11 @@ export default class Configuration extends React.Component {
                     securityItemsArray:tempSecurityItemsArray,
                     performanceItemsArray:tempPerformanceItemsArray,
                     mobileItemsArray:tempMobileItemsArray,
+                    bodyItemsToShow:tempGeneralItemsArray,
                     allItemsArray:tempAllItemsArray
                 });
             })
-            .catch(console.log)
+            .catch(console.log);
     }
 
     render() {
@@ -181,55 +233,40 @@ export default class Configuration extends React.Component {
                 </ul>
                 <ul className="configuration-headlines">
                     <li>
-                        <div id='General' onClick={this.navToOpen}>General</div><div className = {this.state.isSearchMode &&
-                    this.state.generalItemsArray.length >0? "search-dot-gen": null}/>
+                        <div id='General' onClick={this.navToOpen} className="pointer-cursor">General</div><div className = {this.state.isSearchMode &&
+                    this.state.generalItemsArray.length >0? "search-dot-gen": null} />
                         <div className={this.state.tabToShow === 'General'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Performance' onClick={this.navToOpen}>Performance</div><div className = {this.state.isSearchMode &&
+                        <div id='Performance' onClick={this.navToOpen} className="pointer-cursor">Performance</div><div className = {this.state.isSearchMode &&
                     this.state.performanceItemsArray.length >0? "search-dot-per": null}/>
                         <div className={this.state.tabToShow === 'Performance'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Functional' onClick={this.navToOpen}>Functional</div><div className = {this.state.isSearchMode &&
+                        <div id='Functional' onClick={this.navToOpen} className="pointer-cursor">Functional</div><div className = {this.state.isSearchMode &&
                     this.state.functionalItemsArray.length >0? "search-dot-func": null}/>
                         <div className={this.state.tabToShow === 'Functional'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Mobile' onClick={this.navToOpen}>Mobile</div><div className = {this.state.isSearchMode &&
+                        <div id='Mobile' onClick={this.navToOpen} className="pointer-cursor">Mobile</div><div className = {this.state.isSearchMode &&
                     this.state.mobileItemsArray.length >0? "search-dot-mob": null}/>
                         <div className={this.state.tabToShow === 'Mobile'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Itom' onClick={this.navToOpen}>ITOM</div><div className = {this.state.isSearchMode &&
+                        <div id='Itom' onClick={this.navToOpen} className="pointer-cursor">ITOM</div><div className = {this.state.isSearchMode &&
                     this.state.itomItemsArray.length >0? "search-dot-ito": null}/>
                         <div className={this.state.tabToShow === 'Itom'? "focus-line" : null}/>
                     </li>
                     <li>
-                        <div id='Security' onClick={this.navToOpen}>Security</div><div className = {this.state.isSearchMode &&
+                        <div id='Security' onClick={this.navToOpen} className="pointer-cursor">Security</div><div className = {this.state.isSearchMode &&
                     this.state.securityItemsArray.length >0? "search-dot-sec": null}/>
                         <div className={this.state.tabToShow === 'Security'? "focus-line" : null}/>
                     </li>
                 </ul>
                 <div className="config-line-separator"/>
                 <div>
-                    {this.state.generalItemsArray && this.state.generalItemsArray.length && (this.state.tabToShow ==='General') > 0 ?
-                    <General searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.generalItemsArray}/> : null}
-
-                    {this.state.performanceItemsArray && this.state.performanceItemsArray.length && (this.state.tabToShow ==='Performance') > 0 ?
-                        <PerformanceTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.performanceItemsArray} /> : null}
-
-                    {this.state.functionalItemsArray && this.state.functionalItemsArray.length && (this.state.tabToShow ==='Functional') > 0 ?
-                        <Functional searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.functionalItemsArray} /> : null}
-
-                    {this.state.mobileItemsArray && this.state.mobileItemsArray.length && (this.state.tabToShow ==='Mobile') > 0 ?
-                        <MobileTab searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.mobileItemsArray} /> : null}
-
-                    {this.state.itomItemsArray && this.state.itomItemsArray.length && (this.state.tabToShow ==='Itom') > 0 ?
-                        <Itom searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.itomItemsArray} /> : null}
-
-                    {this.state.securityItemsArray && this.state.securityItemsArray.length && (this.state.tabToShow ==='Security') > 0 ?
-                        <Security searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.securityItemsArray} /> : null}
+                    {this.state.bodyItemsToShow && this.state.bodyItemsToShow.length > 0 ?
+                    <General searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.bodyItemsToShow}/> : this.state.isSearchMode?<NoSearchResult/>:null}
                 </div>
             </div>
         );

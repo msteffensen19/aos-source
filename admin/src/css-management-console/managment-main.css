@@ -209,3 +209,20 @@
     bottom: -36px;
     left: 26%;
 }
+.no-search-result-svg{
+
+    margin-top: 140px;
+    position: relative;
+    left: 47%;
+}
+.title-no-search{
+    position: relative;
+    top: 79px;
+    left: 25px;
+    color: #6C6C6C;
+    font-family: Metric, sans-serif;
+    font-size: 39px;
+    font-weight: 500;
+    line-height: 19px;
+    text-align: center;
+}

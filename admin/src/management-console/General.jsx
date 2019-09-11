@@ -100,6 +100,7 @@ export default class General extends React.Component {
             const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
             let TagType = this.setInputAttributes(datatype);
             let descriptionWithHighlight = this.props.isSearchMode?this.getHighlightedText(description,this.props.searchTerm):null;
+            let parameterNameWithHighlight = this.props.isSearchMode?this.getHighlightedText(parameterName,this.props.searchTerm):null;
             let inputTag;
             switch (TagType) {
                 case "input":
@@ -121,11 +122,10 @@ export default class General extends React.Component {
                     break;
                 default:
                     console.log('default');
-
             }
 
             return <tr className="data-rows-style" key={parameterName} name={parameterName}>
-                <td>{parameterName}</td>
+                <td>{this.props.isSearchMode?parameterNameWithHighlight:parameterName}</td>
                 <td>{inputTag}</td>
                 <td className="description-style-config">{this.props.isSearchMode?descriptionWithHighlight:description}</td>
                 <td>{locationInAdvantage}</td>
@@ -135,15 +135,17 @@ export default class General extends React.Component {
 
     render() {
         return (
-            <table className={"configuration-table-style"}>
+            <div>
                 {this.state.isUpdateSuccess?<Popup closePopUp = {this.closePopUp}/>:null}
-                <thead>
-                <TableHeaders/>
-                </thead>
-                <tbody>
-                {this.renderTableData()}
-                </tbody>
-            </table>
+                <table className={"configuration-table-style"}>
+                    <thead>
+                    <TableHeaders/>
+                    </thead>
+                    <tbody>
+                    {this.renderTableData()}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }
