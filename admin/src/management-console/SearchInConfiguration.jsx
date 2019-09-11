@@ -37,6 +37,7 @@ export default class SearchInConfiguration extends React.Component {
         }
         this.setState({openSearchBar:false});
         this.setState({searchTerm:""});
+        this.props.onUserSearch("");
     }
 
     enterPressed(event) {

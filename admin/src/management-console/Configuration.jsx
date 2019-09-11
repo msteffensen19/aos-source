@@ -92,7 +92,6 @@ export default class Configuration extends React.Component {
         let tempItomItemsArray = [];
         let tempPerformanceItemsArray = [];
         let tempMobileItemsArray = [];
-        let allArraysArray = [];
 
             this.state.allItemsArray.forEach((item) => {
                 let itemPropValues = [item.parameterName, item.description, item.locationInAdminTool];
@@ -126,6 +125,11 @@ export default class Configuration extends React.Component {
                 performanceItemsArray: tempPerformanceItemsArray,
                 mobileItemsArray: tempMobileItemsArray
             });
+            if(searchTerm ===""){
+                this.setState({isSearchMode:false});
+            }else{
+                this.setState({isSearchMode:true});
+            }
             if(tempGeneralItemsArray.length !==0){
                 this.setState({tabToShow:"General"});
                 this.setState({bodyItemsToShow:tempGeneralItemsArray});
@@ -154,13 +158,8 @@ export default class Configuration extends React.Component {
             if(tempSecurityItemsArray.length !==0){
                 this.setState({tabToShow:"Security"});
                 this.setState({bodyItemsToShow:tempSecurityItemsArray});
-                return;
             }
-            if(searchTerm ===""){
-                this.setState({isSearchMode:false});
-            }else{
-                this.setState({isSearchMode:true});
-            }
+            this.setState({bodyItemsToShow:[]});
 
     }
 
