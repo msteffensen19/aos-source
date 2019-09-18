@@ -10,11 +10,9 @@ class App extends Component {
     render() {
         return (
 <Router basename='/admin'>
-    <switch>
         <Route  path="/management-console" component={ManagementConsole}/>
         <Route  path="/coming-soon" component={UnderConstruction}/>
         <Route exact path="/" component={LandingPage} />
-    </switch>
 
 </Router>
 
