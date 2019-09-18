@@ -5,28 +5,26 @@
     box-shadow: 0 2px 18px 0 rgba(0,0,0,0.06);
 }
 .navbar-advantage-icon{
-    display: table;
+    display: flex;
     position: relative;
     top:50px;
     left: 50px;
 }
-.nav-logo-css{
-    display: table-cell;
-}
 
 .nav-headline-logo{
-    display: table-cell;
     color: #C4DDCE;
     font-family: Metric, serif;
     font-size: 42px;
     font-weight: 600;
     letter-spacing: -0.03px;
+    position: relative;
+    bottom: -11px;
 }
 .nav-ul-css{
     position: relative;
     top:150px;
     color: #FFFFFF;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 100;
     letter-spacing: 1px;
     line-height: 42px;

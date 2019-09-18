@@ -21,7 +21,7 @@ class LeftNavBar extends React.Component {
         return (
             <div className="nav-management-container">
                 <div className="navbar-advantage-icon">
-                    <AdvantageLogo className="nav-logo-css"/><h1 className="nav-headline-logo">dvantage</h1>
+                    <AdvantageLogo /><h1 className="nav-headline-logo">dvantage</h1>
                 </div>
                 <h3 className="navbar-headline-console">Management-Console</h3>
                 <ul className="nav-ul-css">

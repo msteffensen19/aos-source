@@ -55,7 +55,7 @@
 .aos-nav-headline{
     color: #24273A;
     font-family: Metric, sans-serif;	font-size: 21px;	font-weight: 700;	line-height: 25px;
-    padding-inline-start: 40px;
+    padding-left: 40px;
 }
 .aos-nav-bar ul{
 
@@ -115,7 +115,7 @@ div.devices_pic{
     background: rgba(255,255,255,0.4);
 }
 .nav_download_wrapper{
-    padding-inline-start: 40px;
+    padding-left: 40px;
 }
 .nav_user_guide_list li{
     font-family: Metric, sans-serif;

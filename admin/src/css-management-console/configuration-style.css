@@ -17,7 +17,7 @@
     width: 105px;
     color: #6C6C6C;
     font-family: Metric, sans-serif;
-    font-size: 21px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 19px;
     text-align: center;
@@ -25,8 +25,7 @@
 .config-line-separator{
 
     box-sizing: border-box;
-    height: 2px;
-    width: 90%;
+    width: 96%;
     border: 1px solid #A7A7A7;
     opacity: 0.41;
     position: relative;
@@ -60,7 +59,7 @@
     padding-bottom: 20px;
     color: #333333;
     font-family: Metric, sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 24px;
 }
 .configuration-table-style th:first-child{
@@ -79,9 +78,9 @@
     height: 33px;
     opacity: 0.7;
     border-left: 30px solid;
+    border-right: 15px solid;
     border-color: white;
     background-color: #E4EFF3;
-    box-shadow: 10px 0 14px 0 rgba(0,0,0,0.09);
 }
 .configuration-input-style{
     width: 55px;
@@ -153,4 +152,19 @@
     left: -4px;
     float: right;
     bottom: 23px;
+}
+@supports (-ms-ime-align: auto) {
+    .config-line-separator {
+        left: 0;
+        transform: none;
+        width: 99%;
+    }
+    .configuration-headlines{
+        transform: none;
+        left: 0;
+        right:15%;
+    }
+    .configuration-headlines li{
+        margin: 0 55px;
+    }
 }

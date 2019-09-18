@@ -40,13 +40,24 @@
     background-color: #24273A;
     color: #ffff;
 }
-input::placeholder{
+input::-webkit-input-placeholder {
     height: 16px;
     opacity: 0.82;
     color: #A4A8BD;
     font-family: Metric, sans-serif;
     font-size: 16px;
     line-height: 19px;
+}
+input::-ms-input-placeholder {
+    height: 16px;
+    opacity: 0.82;
+    color: #A4A8BD;
+    font-family: Metric, sans-serif;
+    font-size: 16px;
+    line-height: 19px;
+}
+input::-ms-value{
+    color: white;
 }
 #userNameInput{
     background-color: #24273a !important;
@@ -64,7 +75,6 @@ input::placeholder{
 .rectangle-remember-me {
     height: 14px;
     width: 14px;
-
 }
 
 .remember-me-label{
@@ -90,11 +100,16 @@ input::placeholder{
 }
 
 .failed-login{
-    color: brown;
+    color: rgba(243, 68, 68, 1);
+
     font-family: Metric, sans-serif;
 }
 
 .wrong-signIn-for-btn{
     display: block;
     margin-top: 0;
+}
+#failedLoginText{
+    letter-spacing: 0.5px;
+    font-size: 14px;
 }

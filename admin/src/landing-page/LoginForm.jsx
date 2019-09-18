@@ -43,7 +43,6 @@ class LoginForm extends React.Component {
     static addWornSignInElement(message){
         let para = document.createElement("h3");
         para.setAttribute("id", "failedLoginText");
-        para.style.fontSize = "20px";
         let node = document.createTextNode(message);
         para.appendChild(node);
         let element = document.getElementById("failedLogin");
