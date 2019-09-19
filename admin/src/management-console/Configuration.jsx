@@ -4,6 +4,7 @@ import '../css-management-console/configuration-style.css';
 import Popup from'./DevPopupWindow';
 import SearchInConfiguration from "./SearchInConfiguration";
 import NoSearchResult from "./NoSearchResult";
+import TableHeaders from './TableHeaders';
 import {ReactComponent as ExportIcon} from "../svg-png-ext/exportToExcel.svg";
 import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
 import {ReactComponent as FilterIcon} from "../svg-png-ext/filterIconConfig.svg";
@@ -215,7 +216,8 @@ export default class Configuration extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
+                <div className="table-header-div">
                 {this.state.openDevPopup?<Popup closePopUp = {this.handleCloseDevIcon}/>:null}
                 <ul className="configuration-icons">
 
@@ -263,11 +265,11 @@ export default class Configuration extends React.Component {
                     </li>
                 </ul>
                 <div className="config-line-separator"/>
-                <div>
+                    <TableHeaders/>
+                </div>
                     {this.state.bodyItemsToShow && this.state.bodyItemsToShow.length > 0 ?
                     <General searchTerm={this.state.searchTerm} isSearchMode={this.state.isSearchMode} itemsToShow={this.state.bodyItemsToShow}/> : this.state.isSearchMode?<NoSearchResult/>:null}
-                </div>
-            </div>
+            </>
         );
     }
 }

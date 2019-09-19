@@ -1,5 +1,4 @@
 import React from 'react';
-import TableHeaders from './TableHeaders';
 import Popup from'./SavedPopup';
 
 export default class General extends React.Component {
@@ -135,17 +134,14 @@ export default class General extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
                 {this.state.isUpdateSuccess?<Popup closePopUp = {this.closePopUp}/>:null}
-                <table className={"configuration-table-style"}>
-                    <thead>
-                    <TableHeaders/>
-                    </thead>
+                <table className="configuration-table-style">
                     <tbody>
                     {this.renderTableData()}
                     </tbody>
                 </table>
-            </div>
+            </>
         );
     }
 }

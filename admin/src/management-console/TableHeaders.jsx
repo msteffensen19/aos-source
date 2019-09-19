@@ -10,12 +10,12 @@ export default class TableHeaders extends Component {
 
     render() {
         return (
-            <tr className="table-row-style">
-                <th className="specific-class">Name</th>
-                <th>Value</th>
-                <th>Description</th>
-                <th>AOS location</th>
-            </tr>
+            <ul className="table-row-style">
+                <li>Name</li>
+                <li>Value</li>
+                <li>Description</li>
+                <li>AOS location</li>
+            </ul>
         )
     }
 }
