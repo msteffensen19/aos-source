@@ -3,6 +3,7 @@ import React from 'react';
 import 'jquery';
 import 'jquery.soap';
 import 'bootstrap';
+import  xml2jsonImpl from './Parser';
 import '../css-landing-page/login-form.css';
 import {withRouter} from 'react-router-dom';
 
@@ -69,6 +70,7 @@ class LoginForm extends React.Component {
         }
 
     }
+
     handleSubmit(event) {
 
         if (document.getElementById("failedLoginText")) {
@@ -96,6 +98,7 @@ class LoginForm extends React.Component {
 
         let $ = require('jquery');
         require('jquery.soap');
+        require('xml2js');
         let parseString = require('jquery.soap');
         let me = this;
         $.soap({
@@ -106,8 +109,9 @@ class LoginForm extends React.Component {
             data: user,
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
-                console.log(response);
-                if(response.content.all[5].innerHTML === "false"){
+                //console.log(response);
+                let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse");
+                if(statusMessage.StatusMessage.success === "false"){
                     LoginForm.addWornSignInElement("Wrong Username or password");
                 }else{
                     me.props.history.push('/management-console');
