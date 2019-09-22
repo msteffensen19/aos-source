@@ -80,6 +80,7 @@
     display:-ms-grid;
     margin-left: 90px;
 }
+/*IE only*/
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     .coming-soon-btn-container{
         margin-left: -30px;
@@ -91,4 +92,137 @@
 }
 .image-size{
     height: 100px;
+}
+
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+
+    .middle-container-soon{
+        left: 28%;
+    }
+}
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .middle-container-soon{
+        left: 26%;
+    }
+
+}
+
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+    .middle-container-soon{
+        left: 26%;
+    }
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 420px) and (max-width: 767px) {
+    .coming-soon{
+        min-height: auto;
+        height: 106vh;
+    }
+    .advantage-header{
+        left: 25px;
+        top: 15px;
+    }
+    .more-size {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    .middle-container-soon{
+        left: 26%;
+        background-image: none;
+        top: 4%;
+    }
+    .image-size {
+        height: 29px;
+    }
+    .soon-position {
+        margin-left: 17px;
+    }
+    .soon-title{
+        font-size: 15px;
+        margin-left: 6px;
+        margin-top: -27px;
+    }
+    .coming-soon-btn-container{
+        margin-left: 15px;
+        margin-top: -23px;
+    }
+    .social-links-container{
+        margin-left: 3%;
+        height: 23px;
+    }
+    .coming-soon-buttons{
+        height: 30px;
+        width: 208px;
+        font-size: 11px;
+    }
+    .soon-advantage-icon{
+        height: 24.81px;
+        width: 16.63px;
+    }
+    .social-icon{
+        margin-top: -2px;
+        margin-left: 27px;
+    }
+
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .coming-soon{
+        min-height: auto;
+    }
+    .advantage-header{
+        left: 25px;
+    }
+    .more-size {
+        font-size: 27px;
+        margin-top: 10px;
+    }
+    .middle-container-soon{
+        left: -20px;
+        background-image: none;
+    }
+    .image-size {
+        height: 57px;
+    }
+    .soon-position {
+        margin-left: 32px;
+    }
+    .soon-title{
+        font-size: 20px;
+        margin-left: 25px;
+    }
+    .coming-soon-btn-container{
+        margin-left: 27px;
+    }
+    .social-links-container{
+        margin-left: 15%;
+    }
+
 }
