@@ -5,7 +5,6 @@ export default class DevPopupWindow extends React.Component {
     constructor() {
         super();
 
-        this.state = { modalOpened: false };
         this.cancelClick = this.cancelClick.bind(this);
         this.yesClick = this.yesClick.bind(this);
 
