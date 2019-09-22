@@ -4,6 +4,7 @@
     right: -161px;
     margin-top: 45px ;
     display: grid;
+    display:-ms-grid;
 }
 @media screen and (max-width: 1600px) {
 

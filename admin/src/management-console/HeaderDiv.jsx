@@ -11,7 +11,7 @@ export default class HeaderDiv extends React.Component {
                 <h1 className="confHeaderTitle">CONFIGURATION</h1>
                 <div className="admin-logout">
                     <div className="left-icon-header">
-                        <UserIcon/>
+                        <UserIcon className="ie-style-user-icon"/>
                     </div>
                     <div className="admin-logout-buttons left-btn">Admin</div>
                     <div className="vertical-line"/>
