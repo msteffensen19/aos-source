@@ -8,7 +8,7 @@ import TableHeaders from './TableHeaders';
 import {ReactComponent as ExportIcon} from "../svg-png-ext/exportToExcel.svg";
 import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
 import {ReactComponent as FilterIcon} from "../svg-png-ext/filterIconConfig.svg";
-
+import ContextProvider from '../landing-page/ConsoleContext';
 
 export default class Configuration extends React.Component {
 
@@ -165,6 +165,8 @@ export default class Configuration extends React.Component {
     }
 
         componentDidMount(){
+        //context is not detracted see https://github.com/facebook/react/issues/16250.
+        console.log(this.context);
         let tempGeneralItemsArray=[];
         let tempFunctionalItemsArray=[];
         let tempSecurityItemsArray=[];
@@ -273,3 +275,4 @@ export default class Configuration extends React.Component {
         );
     }
 }
+Configuration.contextType = ContextProvider;

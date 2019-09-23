@@ -31,7 +31,7 @@ class PopupWindow extends React.Component {
                     <span className={"popup-title"}>Logout</span>
 
                     <span className={"popup-content"}>Do you wish to logout?</span>
-                    <line className={"popup-line-separator"}/>
+                    <div className={"popup-line-separator"}/>
                    <span className={"popup-yes-btn"} onClick={this.yesClick}>
                     Yes
                     </span>
