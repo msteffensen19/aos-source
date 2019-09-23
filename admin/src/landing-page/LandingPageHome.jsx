@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container , Row, Col } from 'react-bootstrap';
 import LoginForm from './LoginForm.jsx';
 import VideoFrames from './Video.jsx';
@@ -11,11 +11,13 @@ import WhatsNewComponent from "./WhatsNewComponent";
 import '../css-landing-page/navbar.css';
 
 
-export default class LandingPageHome extends Component {
+export default class LandingPageHome extends React.Component {
+
 
     backToAOS(){
         window.location.href = window.location.origin.toString();
     }
+
 
     render() {
         return (

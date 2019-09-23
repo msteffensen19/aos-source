@@ -5,14 +5,30 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LandingPage from './landing-page/LandingPageHome.jsx';
 import UnderConstruction from './landing-page/UnderConstruction';
 import ManagementConsole from './management-console/ManagementConsole';
+
+
+
+
 class App extends Component {
+
+
+        detectMobile =()=> {
+
+            return window.innerWidth < 1024;
+        };
 
     render() {
         return (
 <Router basename='/admin'>
-        <Route  path="/management-console" component={ManagementConsole}/>
+    {this.detectMobile() ?
+        <Route exact path="/management-console" component={UnderConstruction}/> :
+        <Route path="/management-console" component={ManagementConsole}/>
+    }
         <Route  path="/coming-soon" component={UnderConstruction}/>
-        <Route exact path="/" component={LandingPage} />
+    {this.detectMobile()?
+        <Route exact path="/" component={UnderConstruction}/>:
+        <Route exact path="/" component={LandingPage}/>
+    }
 
 </Router>
 

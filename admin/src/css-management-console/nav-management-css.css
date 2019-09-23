@@ -20,6 +20,7 @@
     position: relative;
     bottom: -11px;
 }
+
 .nav-ul-css{
     position: relative;
     top:150px;
@@ -126,5 +127,14 @@
 
     .nav-headline-logo{
         bottom: 0;
+    }
+}
+
+@media (max-width:1220px) {
+    .nav-headline-logo{
+        font-size: 35px;
+    }
+    .add-opacity{
+        width: 112%;
     }
 }
