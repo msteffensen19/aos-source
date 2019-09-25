@@ -6,6 +6,7 @@ import 'bootstrap';
 import  xml2jsonImpl from './Parser';
 import '../css-landing-page/login-form.css';
 import {withRouter} from 'react-router-dom';
+import ContextProvider from "./ConsoleContext";
 
 
 
@@ -18,7 +19,6 @@ class LoginForm extends React.Component {
         LoginForm.addWornSignInElement = LoginForm.addWornSignInElement.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getPort = this.getPort.bind(this);
     }
 
     handleInputChange(event) {
@@ -54,23 +54,6 @@ class LoginForm extends React.Component {
         document.getElementById("signInBtn").style.marginTop = "0px";
     }
 
-    getPort(location){
-        if (location.includes("localhost")) {//local
-            return "8080";
-        } else if (location.includes("18.212.178.84")) {//stage
-            return "8081";
-        } else if (location.includes("16.60.158.84")) {//CI
-            return "8081";
-        }else if (location.includes("advantageonlineshopping")) {//CI
-            return "8082";
-        } else if (location.includes("ec2-54-157-232-206")) {//nightly
-            return "8082";
-        } else {
-            console.log('did not find port in location!');
-        }
-
-    }
-
     handleSubmit(event) {
 
         if (document.getElementById("failedLoginText")) {
@@ -85,17 +68,10 @@ class LoginForm extends React.Component {
         loginUser: this.state.userName};
 
         let host = window.location.origin;
-        let port = this.getPort(host);
-        let urlString ="";
-        if (host.includes("localhost")){
+        let port = this.context.accountService;
 
-            urlString ="http://localhost:8080/accountservice/";
-        }else if(host.includes("ec2-54-157-232-206")){
-            urlString = host+ '/accountservice/';
-        }else {
-            urlString = host + ':' + port + '/accountservice/';
-        }
-
+        let urlString = host.includes("localhost")? "http://localhost:8080/accountservice/"://this line is used for developing on localhost:3000.
+            host + ':' + port+'/accountservice/';
         let $ = require('jquery');
         require('jquery.soap');
         require('xml2js');
@@ -109,15 +85,13 @@ class LoginForm extends React.Component {
             data: user,
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
-                //console.log(response);
+                console.log(response);
                 let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse");
                 if(statusMessage.StatusMessage.success === "false"){
                     LoginForm.addWornSignInElement("Wrong Username or password");
                 }else{
                     me.props.history.push('/management-console');
                 }
-                //remove in production push
-                //me.props.history.push('/management-console');
             },
             error: function (response) {
                 LoginForm.addWornSignInElement("Server responded with error");
@@ -166,4 +140,5 @@ class LoginForm extends React.Component {
         );
     }
 }
+LoginForm.contextType = ContextProvider;
 export default withRouter(LoginForm);
