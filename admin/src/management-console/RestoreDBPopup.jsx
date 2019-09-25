@@ -1,8 +1,8 @@
 import React from "react";
 import {ReactComponent as UserIcon} from "../svg-png-ext/Advantage_logo_blck.svg";
-import {withRouter} from 'react-router-dom';
 
-class PopupWindow extends React.Component {
+
+export default class RestoreDBPopup extends React.Component {
     constructor() {
         super();
         this.cancelClick = this.cancelClick.bind(this);
@@ -12,10 +12,9 @@ class PopupWindow extends React.Component {
     cancelClick() {
         this.props.closePopUp();
     }
-    yesClick(){
+    yesClick(event){
         this.props.closePopUp();
-        let me = this;
-        me.props.history.push('/');
+        this.props.onYesClick(event);
     }
 
 
@@ -26,11 +25,11 @@ class PopupWindow extends React.Component {
                     <div className={"popup-image"}>
                         <UserIcon className={"svg-popup-style"}/>
                     </div>
-                    <span className={"popup-title"}>Logout</span>
+                    <span className={"restore-popup-title"}>Restore DB</span>
 
-                    <span className={"popup-content"}>Do you wish to logout?</span>
+                    <span className="restore-DB-popup-content">Are you sure you want to restore DB to factory setting?</span>
                     <div className={"popup-line-separator"}/>
-                   <span className={"popup-yes-btn"} onClick={this.yesClick}>
+                    <span className={"popup-yes-btn"} onClick={this.yesClick}>
                     Yes
                     </span>
                     <span className={"popup-no-btn"} onClick={this.cancelClick}>
@@ -42,4 +41,3 @@ class PopupWindow extends React.Component {
     }
 }
 
-export default withRouter(PopupWindow);

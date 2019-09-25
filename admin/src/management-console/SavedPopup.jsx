@@ -16,7 +16,8 @@ export default class SavedPopup extends React.Component {
                     <div className={"popup-image"}>
                         <UserIcon className={"svg-popup-style"}/>
                     </div>
-                    <span className="saved-popup-title">Saved Successfully!</span>
+                    {this.props.textForPopup?<span className="saved-popup-title">{this.props.textForPopup}</span>:
+                        <span className="saved-popup-title">Saved Successfully!</span>}
                 </div>
             </div>
         );

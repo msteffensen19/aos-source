@@ -21,8 +21,7 @@ export default class ContextProvider extends React.Component {
     getServicesProperties = ()=>{
 
         let host = window.location.origin;
-//.then(res => res.json())
-//             .then((data) => {
+
         fetch(host+'/services.properties')
             .then(response=>response.text())
             .then((data)=> {
