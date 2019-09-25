@@ -165,8 +165,6 @@ export default class Configuration extends React.Component {
     }
 
         componentDidMount(){
-        //context is not detracted see https://github.com/facebook/react/issues/16250.
-        console.log(this.context);
         let tempGeneralItemsArray=[];
         let tempFunctionalItemsArray=[];
         let tempSecurityItemsArray=[];

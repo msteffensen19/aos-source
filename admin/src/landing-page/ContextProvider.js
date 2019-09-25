@@ -26,10 +26,7 @@ export default class ContextProvider extends React.Component {
         fetch(host+'/services.properties')
             .then(response=>response.text())
             .then((data)=> {
-
-            console.log(data); // this will be a string
             let servicesProperties = Parser.parse(data);
-            console.log(servicesProperties);
             this.setState(prevState => {
                 let portsForRouting = { ...prevState.portsForRouting };  // creating copy of state variable portsForRouting
                 portsForRouting.accountService = servicesProperties["account.soapservice.url.port"];

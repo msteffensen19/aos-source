@@ -1,5 +1,6 @@
 import React from 'react';
 import Popup from'./SavedPopup';
+import ContextProvider from "../landing-page/ConsoleContext";
 
 export default class General extends React.Component {
     constructor(props) {
@@ -74,16 +75,24 @@ export default class General extends React.Component {
         }
 
     }
+    isProductionFunc = ()=>{
+        let host = window.location.host;
+        if(host.includes("advantageonlineshopping") || host.includes("107.23.171.213") || host.includes("ec2-107-23-171-213.compute-1.amazonaws.com")){
+            return true;
+        }else return false;
+    };
+
     renderTableData() {
         return this.props.itemsToShow.map((item, index) => {
             const {datatype, description, locationInAdvantage, parameterName, parameterValue } = item;
             let TagType = this.setInputAttributes(datatype);
             let descriptionWithHighlight = this.props.isSearchMode?this.getHighlightedText(description,this.props.searchTerm):null;
             let parameterNameWithHighlight = this.props.isSearchMode?this.getHighlightedText(parameterName,this.props.searchTerm):null;
+            let isProduction = this.isProductionFunc();
             let inputTag;
             switch (TagType) {
                 case "input":
-                    inputTag = <select className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
+                    inputTag = <select disabled={isProduction} className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
                                        value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
                         {[...Array(1000).keys()].map((i) =>
                             <option key={i.toString()} value={i}>{i}</option>
@@ -94,7 +103,7 @@ export default class General extends React.Component {
                     inputTag = <TagType className="configuration-input-style" name={parameterName}>Tip</TagType>;
                     break;
                 case "yesNoSelect":
-                    inputTag =<select className="configuration-input-style" name={parameterName} onChange={this.changeFlagValue}>
+                    inputTag =<select disabled={isProduction} className="configuration-input-style" name={parameterName} onChange={this.changeFlagValue}>
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>
                     </select>;
@@ -125,3 +134,4 @@ export default class General extends React.Component {
         );
     }
 }
+General.contextType = ContextProvider;
