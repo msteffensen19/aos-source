@@ -174,9 +174,16 @@ export default class Configuration extends React.Component {
         let tempAllItemsArray=[];
 
         let host = window.location.origin;
-
-            let urlString = host.includes("localhost")? "http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL"://this line is used for developing on localhost:3000.
-                host + ':' + this.context.catalog +'/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
+            let port = this.context.catalog;
+            let urlString="";
+            let isReversedProxy = this.context.isReverseProxy;
+            if (host.includes("localhost")){
+                urlString = "http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL";
+            }else if(isReversedProxy){
+                urlString = host + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
+            }else{
+                urlString = host + ':' + port + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
+            }
 
         fetch(urlString)
             .then(res => res.json())

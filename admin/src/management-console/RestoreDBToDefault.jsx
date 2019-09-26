@@ -24,7 +24,18 @@ export default class RestoreDBToDefault extends React.Component {
         this.restoreDbToDefault(event);
     };
 
+    isProductionFunc = ()=>{
+        let host = window.location.host.toLowerCase();
+        if(host.includes("advantageonlineshopping") || host.includes("107.23.171.213") || host.includes("ec2-107-23-171-213.compute-1.amazonaws.com")){
+            return true;
+        }else return false;
+    };
     openDialog = ()=>{
+        if(this.isProductionFunc()){
+            this.setState({openDonePopup:true});
+            this.setState({textForPopup:"Not available here!"})
+            return;
+        }
         this.setState({openPopUp:true});
     };
     closeDonePopup = ()=>{
@@ -40,8 +51,15 @@ export default class RestoreDBToDefault extends React.Component {
         let parseString = require('jquery.soap');
         let host = window.location.origin;
         let port = this.context.accountService;
-        let urlString = host.includes("localhost")? "http://localhost:8080/accountservice/"://this line is used for developing on localhost:3000.
-            host + ':' + port +'/accountservice/';
+        let urlString="";
+        let isReversedProxy = this.context.isReverseProxy;
+        if (host.includes("localhost")){
+            urlString ="http://localhost:8080/accountservice/";
+        }else if(isReversedProxy){
+            urlString = host + "http://localhost:8080/accountservice/";
+        }else{
+            urlString = host + ':' + port + '/accountservice/';
+        }
         $.soap({
             timeout: 10000,
             url: urlString,

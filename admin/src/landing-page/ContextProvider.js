@@ -28,7 +28,8 @@ export default class ContextProvider extends React.Component {
             let servicesProperties = Parser.parse(data);
             let catalogPort ='';
             let accountServicePort='';
-            if(servicesProperties["reverse.proxy"]){
+            let isReversedProxy = (servicesProperties["reverse.proxy"] === "true");
+            if(isReversedProxy){
                 catalogPort ='';
                 accountServicePort='';
             }else{
@@ -40,7 +41,7 @@ export default class ContextProvider extends React.Component {
                 portsForRouting.accountService = accountServicePort;
                 portsForRouting.catalog = catalogPort;
                 portsForRouting.isSingleMachineDeployment = servicesProperties["single.machine.deployment"];
-                portsForRouting.isReverseProxy = servicesProperties["reverse.proxy"];// update the port property, assign a new value
+                portsForRouting.isReverseProxy = isReversedProxy;// update the port property, assign a new value
                 return { portsForRouting };                                 // return new object portsForRouting object
             })
 

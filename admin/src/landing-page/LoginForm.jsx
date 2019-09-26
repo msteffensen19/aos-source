@@ -69,9 +69,15 @@ class LoginForm extends React.Component {
 
         let host = window.location.origin;
         let port = this.context.accountService;
-
-        let urlString = host.includes("localhost")? "http://localhost:8080/accountservice/"://this line is used for developing on localhost:3000.
-            host + ':' + port+'/accountservice/';
+        let urlString="";
+        let isReversedProxy = this.context.isReverseProxy;
+        if (host.includes("localhost")){
+            urlString ="http://localhost:8080/accountservice/";
+        }else if(isReversedProxy){
+            urlString = host + "http://localhost:8080/accountservice/";
+        }else{
+            urlString = host + ':' + port + '/accountservice/';
+        }
         let $ = require('jquery');
         require('jquery.soap');
         require('xml2js');
