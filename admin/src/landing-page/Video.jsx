@@ -12,7 +12,6 @@ export default class Contacts extends React.Component {
         this.secondVideoPlaceholder = React.createRef();
         this.playFirstVideo = this.playFirstVideo.bind(this);
         this.playSecondVideo = this.playSecondVideo.bind(this);
-
     }
     playFirstVideo(){
         this.videoPlaceholder.current.innerHTML ='<iframe\n' +

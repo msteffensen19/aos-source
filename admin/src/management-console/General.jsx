@@ -76,7 +76,7 @@ export default class General extends React.Component {
 
     }
     isProductionFunc = ()=>{
-        let host = window.location.host;
+        let host = window.location.host.toLowerCase();
         if(host.includes("advantageonlineshopping") || host.includes("107.23.171.213") || host.includes("ec2-107-23-171-213.compute-1.amazonaws.com")){
             return true;
         }else return false;

@@ -4,6 +4,7 @@ import 'jquery.soap';
 import 'bootstrap';
 import PopupWindow from './RestoreDBPopup';
 import DonePopup from './SavedPopup';
+import ContextProvider from "../landing-page/ConsoleContext";
 
 export default class RestoreDBToDefault extends React.Component {
 
@@ -96,3 +97,4 @@ export default class RestoreDBToDefault extends React.Component {
         );
     }
 }
+RestoreDBToDefault.contextType = ContextProvider;

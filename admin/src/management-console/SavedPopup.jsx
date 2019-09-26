@@ -5,7 +5,7 @@ export default class SavedPopup extends React.Component {
 
 
     componentDidMount(){
-        setTimeout(this.props.closePopUp, 1000)
+        setTimeout(this.props.closePopUp, 2000)
     }
 
 

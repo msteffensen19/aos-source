@@ -45,13 +45,13 @@ export default class WhatsNewComponent extends React.Component {
             toggleArrowsColor(document.getElementById('rightBtn'));
         };
         function scrollLeft(element, change, duration) {
-            var start = element.scrollLeft,
+            let start = element.scrollLeft,
                 currentTime = 0,
                 increment = 20;
 
-            var animateScroll = function(){
+            let animateScroll = function(){
                 currentTime += increment;
-                var val = Math.easeInOutQuad(currentTime, start, change, duration);
+                let val = Math.easeInOutQuad(currentTime, start, change, duration);
                 element.scrollLeft = val;
                 if(currentTime < duration) {
                     setTimeout(animateScroll, increment);
