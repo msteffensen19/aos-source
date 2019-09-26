@@ -6,22 +6,19 @@ import {withRouter} from 'react-router-dom';
 
 class LeftNavBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.moveToPage = this.moveToPage.bind(this);
-    }
+    backToLandingPage =()=>{
+        this.props.history.push('/');
+    };
 
-    moveToPage(){
-
-        let me = this;
-        me.props.history.push('/coming-soon');
-    }
+    moveToPage=()=>{
+        this.props.history.push('/coming-soon');
+    };
 
     render() {
         return (
             <div className="nav-management-container">
                 <div className="navbar-advantage-icon">
-                    <AdvantageLogo /><h1 className="nav-headline-logo">dvantage</h1>
+                    <AdvantageLogo onClick={this.backToLandingPage} /><h1 onClick={this.backToLandingPage} className="nav-headline-logo">dvantage</h1>
                 </div>
                 <h3 className="navbar-headline-console">Management-Console</h3>
                 <ul className="nav-ul-css">

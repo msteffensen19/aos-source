@@ -39,7 +39,7 @@ export default class RestoreDBToDefault extends React.Component {
         require('jquery.soap');
         let parseString = require('jquery.soap');
         let host = window.location.origin;
-        let port = this.context.catalog;
+        let port = this.context.accountService;
         let urlString = host.includes("localhost")? "http://localhost:8080/accountservice/"://this line is used for developing on localhost:3000.
             host + ':' + port +'/accountservice/';
         $.soap({
@@ -53,12 +53,12 @@ export default class RestoreDBToDefault extends React.Component {
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
                 console.log("adv_account had successfully restored to default--" + response);
-                fetch("http://localhost:8080/catalog/api/v1/catalog/Restore_db_factory_settings")
+                fetch(urlString)
                     .then(res => res.json())
                     .then(
                         (result) => {
                             console.log("result--" + result.reason);
-                            fetch("http://localhost:8080/order/api/v1/order/Restore_db_factory_settings")
+                            fetch(urlString)
                                 .then(res => res.json())
                                 .then(
                                     (result) => {
@@ -74,6 +74,8 @@ export default class RestoreDBToDefault extends React.Component {
                         },
                         (error) => {
                             console.log("ERROR--" + error);
+                            me.setState({openDonePopup:true});
+                            me.setState({textForPopup:"Restore Failed!"})
                         });
 
             },

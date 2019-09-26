@@ -19,10 +19,6 @@ export default class LandingPageHome extends Component {
         this.setState({openPopUp:false});
     };
 
-    backToAOS(){
-        window.location.href = window.location.origin.toString();
-    }
-
     render() {
         return (
             <section id="grid-container-main">
