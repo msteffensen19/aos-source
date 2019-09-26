@@ -10,6 +10,7 @@ export default class ContextProvider extends React.Component {
         portsForRouting:{
             accountService:80,
             catalog:80,
+            order:80,
             isSingleMachineDeployment:false,
             isReverseProxy:false
         }
@@ -28,18 +29,22 @@ export default class ContextProvider extends React.Component {
             let servicesProperties = Parser.parse(data);
             let catalogPort ='';
             let accountServicePort='';
+            let orderPort='';
             let isReversedProxy = (servicesProperties["reverse.proxy"] === "true");
             if(isReversedProxy){
                 catalogPort ='';
                 accountServicePort='';
+                orderPort='';
             }else{
                 catalogPort = servicesProperties["catalog.service.url.port"];
                 accountServicePort = servicesProperties["account.soapservice.url.port"];
+                orderPort = servicesProperties["order.service.url.port"];
             }
             this.setState(prevState => {
                 let portsForRouting = { ...prevState.portsForRouting };  // creating copy of state variable portsForRouting
                 portsForRouting.accountService = accountServicePort;
                 portsForRouting.catalog = catalogPort;
+                portsForRouting.order = orderPort;
                 portsForRouting.isSingleMachineDeployment = servicesProperties["single.machine.deployment"];
                 portsForRouting.isReverseProxy = isReversedProxy;// update the port property, assign a new value
                 return { portsForRouting };                                 // return new object portsForRouting object

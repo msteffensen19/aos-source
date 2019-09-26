@@ -54,15 +54,33 @@ export default class RestoreDBToDefault extends React.Component {
         let urlString="";
         let isReversedProxy = this.context.isReverseProxy;
         if (host.includes("localhost")){
-            urlString ="http://localhost:8080/accountservice/";
+            urlString ="http://localhost:8080";
         }else if(isReversedProxy){
-            urlString = host + "http://localhost:8080/accountservice/";
+            urlString = host;
         }else{
-            urlString = host + ':' + port + '/accountservice/';
+            urlString = host + ':' + port;
+        }
+        let urlStringForCatalog = "";
+
+        if (host.includes("localhost")){
+            urlStringForCatalog ="http://localhost:8080";
+        }else if(isReversedProxy){
+            urlStringForCatalog = host;
+        }else{
+            urlStringForCatalog = host + ':' + this.context.catalog;
+        }
+        let urlStringForOrder = "";
+
+        if (host.includes("localhost")){
+            urlStringForOrder ="http://localhost:8080";
+        }else if(isReversedProxy){
+            urlStringForOrder = host;
+        }else{
+            urlStringForOrder = host + ':' + this.context.order;
         }
         $.soap({
             timeout: 10000,
-            url: urlString,
+            url: urlString+'/accountservice/',
             method: 'RestoreDBToFactorySettingRequest',
             namespaceURL: 'com.advantage.online.store.accountservice',
             SOAPAction: 'com.advantage.online.store.accountserviceRestoreDBToFactorySettingRequest',
@@ -71,12 +89,12 @@ export default class RestoreDBToDefault extends React.Component {
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
                 console.log("adv_account had successfully restored to default--" + response);
-                fetch(urlString)
+                fetch(urlStringForCatalog+'/catalog/api/v1/catalog/Restore_db_factory_settings')
                     .then(res => res.json())
                     .then(
                         (result) => {
                             console.log("result--" + result.reason);
-                            fetch(urlString)
+                            fetch(urlStringForOrder + '/order/api/v1/order/Restore_db_factory_settings')
                                 .then(res => res.json())
                                 .then(
                                     (result) => {
