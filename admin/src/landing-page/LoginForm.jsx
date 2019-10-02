@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
         if (host.includes("localhost")){
             urlString ="http://localhost:8080/accountservice/";
         }else if(isReversedProxy){
-            urlString = host + "http://localhost:8080/accountservice/";
+            urlString = host + "/accountservice/";
         }else{
             urlString = host + ':' + port + '/accountservice/';
         }
