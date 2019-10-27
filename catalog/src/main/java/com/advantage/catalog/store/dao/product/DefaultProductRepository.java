@@ -497,7 +497,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             System.out.println("Database Restore Factory Settings successful - table 'attribute'");
             logger.info("Database Restore Factory Settings successful - table 'attribute'");
         } else {
-            sb.append("Table 'attribute' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+            sb.append("Table 'attribute' - FAILED. attributeService.getAllAttributes().size() = " + attributeService.getAllAttributes().size()).append(Constants.COMMA).append(Constants.SPACE);
             System.out.println("Database Restore Factory Settings - table 'attribute' - FAILED");
             logger.warn("Database Restore Factory Settings - table 'attribute' - FAILED");
             return new CatalogResponse(false, "Restore factory settings FAILED - table 'attribute'", -2);

@@ -872,7 +872,7 @@ public class CatalogController {
 
         CatalogResponse response = productService.dbRestoreFactorySettings();
         if (!response.isSuccess()) {
-            httpStatus = HttpStatus.BAD_REQUEST;
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 
             return new ResponseEntity<>(response, httpStatus);
         }

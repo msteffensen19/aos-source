@@ -5,6 +5,7 @@ import 'bootstrap';
 import PopupWindow from './RestoreDBPopup';
 import DonePopup from './SavedPopup';
 import ContextProvider from "../landing-page/ConsoleContext";
+import  xml2jsonImpl from '../landing-page/Parser';
 
 export default class RestoreDBToDefault extends React.Component {
 
@@ -88,16 +89,37 @@ export default class RestoreDBToDefault extends React.Component {
 
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
-                console.log("adv_account had successfully restored to default--" + response);
+                let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse");
+                console.log(statusMessage);
+                if(statusMessage.StatusMessage.success !== true){
+                    console.log("ERROR--" + statusMessage.StatusMessage.reason);
+                    me.setState({openDonePopup:true});
+                    me.setState({textForPopup:"Restore Failed!"})
+                    return;
+                }else{
+                    console.log("adv_account had successfully restored to default--" + response);
+                }
                 fetch(urlStringForCatalog+'/catalog/api/v1/catalog/Restore_db_factory_settings')
                     .then(res => res.json())
                     .then(
                         (result) => {
+                            if(result.success !== true){
+                                console.log("ERROR--" + result.reason);
+                                me.setState({openDonePopup:true});
+                                me.setState({textForPopup:"Restore Failed!"});
+                                return;
+                            }
                             console.log("result--" + result.reason);
                             fetch(urlStringForOrder + '/order/api/v1/order/Restore_db_factory_settings')
                                 .then(res => res.json())
                                 .then(
                                     (result) => {
+                                        if(result.success !== true){
+                                            console.log("ERROR--" + result.reason);
+                                            me.setState({openDonePopup:true});
+                                            me.setState({textForPopup:"Restore Failed!"})
+                                            return;
+                                        }
                                         console.log("result--" + result.details);
                                         me.setState({openDonePopup:true});
                                         me.setState({textForPopup:"Restored Successfully!"})
@@ -112,6 +134,7 @@ export default class RestoreDBToDefault extends React.Component {
                             console.log("ERROR--" + error);
                             me.setState({openDonePopup:true});
                             me.setState({textForPopup:"Restore Failed!"})
+                            return;
                         });
 
             },
