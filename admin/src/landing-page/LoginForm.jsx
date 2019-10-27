@@ -91,9 +91,9 @@ class LoginForm extends React.Component {
             data: user,
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
-                console.log(response);
                 let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse");
-                if(statusMessage.StatusMessage.success === "false"){
+                console.log(statusMessage);
+                if(statusMessage.StatusMessage.success !== true){
                     LoginForm.addWornSignInElement("Wrong Username or password");
                 }else{
                     me.props.history.push('/management-console');
