@@ -2,10 +2,18 @@
 import 'jquery';
 import 'jquery.soap';
 
-        let jsonResult;
-        let jsonString;
+let jsonString;
+let jsonResult;
 
-        function xml2jsonImpl(xml, rootNode) {
+
+
+        function xml2jsonImpl(xml, rootNode, isReset) {
+
+            if(isReset){
+                jsonResult = null;
+                jsonString = null;
+                return;
+            }
 
             for (let i = 0; i < xml.childNodes.length; i++) {
                 let node = xml.childNodes[i];
@@ -18,16 +26,16 @@ import 'jquery.soap';
                         }
                     }
 
-                    const name = node.nodeName;
-                    if (name.toLowerCase() !== (node.prefix + ":" + rootNode).toLowerCase()) {
+                    let name = node.nodeName;
+                    if (name.toLowerCase() != (node.prefix + ":" + rootNode).toLowerCase()) {
                         continue;
                     }
+
                     jsonString = "";
-                    if (node.childNodes && node.childNodes.length > 0) {
+                    if(node.childNodes && node.childNodes.length > 0){
                         buildJson(node.childNodes);
                     }
-                    jsonResult = JSON.parse("{" + jsonString + "}");
-
+                    jsonResult = JSON.parse("{" + jsonString+ "}");
                 }
             }
         }

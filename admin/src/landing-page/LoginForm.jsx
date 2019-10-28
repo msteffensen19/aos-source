@@ -91,12 +91,14 @@ class LoginForm extends React.Component {
             data: user,
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
-                let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse");
+                let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse", false);
                 console.log(statusMessage);
                 if(statusMessage.StatusMessage.success !== true){
                     LoginForm.addWornSignInElement("Wrong Username or password");
+                    xml2jsonImpl(null, null, true);
                 }else{
                     me.props.history.push('/management-console');
+                    xml2jsonImpl(null, null, true);
                 }
             },
             error: function (response) {
