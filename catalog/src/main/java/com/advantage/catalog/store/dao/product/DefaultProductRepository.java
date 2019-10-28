@@ -488,7 +488,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         for (String attrib : attributes) {
             Attribute attribute = new Attribute(attrib);
-            entityManager.persist(attribute);
+            //entityManager.persist(attribute);
             defAttributes.put(attrib.toUpperCase(), attribute);
         }
 
@@ -500,7 +500,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             sb.append("Table 'attribute' - FAILED.").append(Constants.COMMA).append(Constants.SPACE);
             System.out.println("Database Restore Factory Settings - table 'attribute' - FAILED");
             logger.warn("Database Restore Factory Settings - table 'attribute' - FAILED");
-            return new CatalogResponse(false, "Restore factory settings FAILED - table 'attribute'. attributeService.getAllAttributes().size() " + attributeService.getAllAttributes().size(), -2);
+            return new CatalogResponse(false, "Restore factory settings FAILED - table 'attribute'.", -2);
         }
         //  endregion
 
