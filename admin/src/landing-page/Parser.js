@@ -27,7 +27,7 @@ let jsonResult;
                     }
 
                     let name = node.nodeName;
-                    if (name.toLowerCase() != (node.prefix + ":" + rootNode).toLowerCase()) {
+                    if (name.toLowerCase() !== (node.prefix + ":" + rootNode).toLowerCase()) {
                         continue;
                     }
 

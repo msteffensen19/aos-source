@@ -89,12 +89,13 @@ export default class RestoreDBToDefault extends React.Component {
 
             success: function (soapResponse) {
                 let response = parseString(soapResponse);
-                let statusMessage = xml2jsonImpl(response.content,"AccountLoginResponse");
+                let statusMessage = xml2jsonImpl(response.content,"RestoreDBToFactorySettingResponse", false);
+                xml2jsonImpl(null, null, true);
                 console.log(statusMessage);
-                if(statusMessage.StatusMessage.success !== true){
-                    console.log("ERROR--" + statusMessage.StatusMessage.reason);
+                if(statusMessage.success !== true){
+                    console.log("ERROR--" + statusMessage.reason);
                     me.setState({openDonePopup:true});
-                    me.setState({textForPopup:"Restore Failed!"})
+                    me.setState({textForPopup:"Restore Failed!"});
                     return;
                 }else{
                     console.log("adv_account had successfully restored to default--" + response);
