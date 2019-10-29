@@ -542,34 +542,34 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
             //  Initializr Category Products
             ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
             File json = filePath.getFile();
-            System.out.println("Line 545");
             ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-            System.out.println("Line 548");
             CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
             //Transaction transaction = session.beginTransaction();
-            System.out.println("Line 551");
             Map<Long, Product> productMap = new HashMap<>();
             for (CategoryDto categoryDto : categoryDtos) {
                 Category category = categoryService.getCategory(categoryDto.getCategoryId());
 
                 /*PRODUCT*/
                 ProductService productService = new ProductService();
-                System.out.println("Line 558");
                 for (ProductDto productDto : categoryDto.getProducts()) {
                     Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
                     product.setManagedImageId(productDto.getImageUrl());
                     entityManager.persist(product);
-                    System.out.println("Line 563");
                     //load attributes
-                    for (AttributeItem attributeItem : productDto.getAttributes()) {
-                        ProductAttributes productAttributes = new ProductAttributes();
-                        productAttributes.setProduct(product);
-                        productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
-                        productAttributes.setAttributeValue(attributeItem.getAttributeValue());
-                        System.out.println("Line 570");
-                        entityManager.persist(productAttributes);
-                        System.out.println("Line 572");
+                    try {
+                        for (AttributeItem attributeItem : productDto.getAttributes()) {
+                            ProductAttributes productAttributes = new ProductAttributes();
+                            productAttributes.setProduct(product);
+                            productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
+                            productAttributes.setAttributeValue(attributeItem.getAttributeValue());
+                            System.out.println("Line 570");
+                            System.out.println(productAttributes.getAttributeValue());
+                            entityManager.persist(productAttributes);
+                            System.out.println("Line 572");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     System.out.println("Line 574");
                     if (productDto.getImages().size() == 0) {
