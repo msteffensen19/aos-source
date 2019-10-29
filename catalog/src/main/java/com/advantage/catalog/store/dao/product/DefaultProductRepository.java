@@ -563,19 +563,22 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                             productAttributes.setProduct(product);
                             productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
                             productAttributes.setAttributeValue(attributeItem.getAttributeValue());
+                            System.out.println("Line 566");
                             entityManager.persist(productAttributes);
                         }
 
                     if (productDto.getImages().size() == 0) {
+                        System.out.println("Line 571");
                         productDto.getImages().add(product.getManagedImageId());
                     }
                     try {
-                    System.out.println("Line 573");
+                            //line of code
+                    System.out.println("Line 576");
                     System.out.println("product--"+product.getProductName()+"productDto.getColors()--"+productDto.getColors().toString());
                     product.setColors(productService.getColorAttributes(productDto.getColors(), product));
-                        System.out.println("Line 576");
+                        System.out.println("Line 579");
                     product.setImages(productService.getImageAttribute(productDto.getImages(), product));
-                        System.out.println("Line 578");
+                        System.out.println("Line 581");
 
                     productMap.put(product.getId(), product);
                     } catch (Exception e) {
