@@ -564,15 +564,20 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                             productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
                             productAttributes.setAttributeValue(attributeItem.getAttributeValue());
                             System.out.println("Line 566");
-                            entityManager.persist(productAttributes);
+                            try {
+                                System.out.println("one-"+productAttributes.getAttributeValue());
+                                System.out.println("one-"+productAttributes.getProduct().getProductName());
+                                System.out.println("one-"+productAttributes.toString());
+                                entityManager.persist(productAttributes);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                     if (productDto.getImages().size() == 0) {
                         System.out.println("Line 571");
                         productDto.getImages().add(product.getManagedImageId());
                     }
-                    try {
-                            //line of code
                     System.out.println("Line 576");
                     System.out.println("product--"+product.getProductName()+"productDto.getColors()--"+productDto.getColors().toString());
                     product.setColors(productService.getColorAttributes(productDto.getColors(), product));
@@ -581,9 +586,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                         System.out.println("Line 581");
 
                     productMap.put(product.getId(), product);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
                 }
                 System.out.println("Line 583");
                 //  Initialize Promoted products
