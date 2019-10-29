@@ -557,30 +557,30 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                     product.setManagedImageId(productDto.getImageUrl());
                     entityManager.persist(product);
                     //load attributes
-                    try {
+
                         for (AttributeItem attributeItem : productDto.getAttributes()) {
                             ProductAttributes productAttributes = new ProductAttributes();
                             productAttributes.setProduct(product);
                             productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
                             productAttributes.setAttributeValue(attributeItem.getAttributeValue());
-                            System.out.println("Line 570");
-                            System.out.println(productAttributes.getAttributeValue());
                             entityManager.persist(productAttributes);
-                            System.out.println("Line 572");
                         }
+
+                    if (productDto.getImages().size() == 0) {
+                        productDto.getImages().add(product.getManagedImageId());
+                    }
+                    try {
+                    System.out.println("Line 573");
+                    System.out.println("product--"+product.getProductName()+"productDto.getColors()--"+productDto.getColors().toString());
+                    product.setColors(productService.getColorAttributes(productDto.getColors(), product));
+                        System.out.println("Line 576");
+                    product.setImages(productService.getImageAttribute(productDto.getImages(), product));
+                        System.out.println("Line 578");
+
+                    productMap.put(product.getId(), product);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Line 574");
-                    if (productDto.getImages().size() == 0) {
-                        productDto.getImages().add(product.getManagedImageId());
-                        System.out.println("Line 577");
-                    }
-                    System.out.println("Line 579");
-                    product.setColors(productService.getColorAttributes(productDto.getColors(), product));
-                    product.setImages(productService.getImageAttribute(productDto.getImages(), product));
-
-                    productMap.put(product.getId(), product);
                 }
                 System.out.println("Line 583");
                 //  Initialize Promoted products
