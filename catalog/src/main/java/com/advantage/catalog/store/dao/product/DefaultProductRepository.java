@@ -569,12 +569,14 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
                         productAttributes.setAttributeValue(attributeItem.getAttributeValue());
                         System.out.println("Line 570");
                         entityManager.persist(productAttributes);
+                        System.out.println("Line 572");
                     }
-
+                    System.out.println("Line 574");
                     if (productDto.getImages().size() == 0) {
                         productDto.getImages().add(product.getManagedImageId());
+                        System.out.println("Line 577");
                     }
-
+                    System.out.println("Line 579");
                     product.setColors(productService.getColorAttributes(productDto.getColors(), product));
                     product.setImages(productService.getImageAttribute(productDto.getImages(), product));
 
