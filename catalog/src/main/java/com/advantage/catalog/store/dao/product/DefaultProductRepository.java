@@ -488,7 +488,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         for (String attrib : attributes) {
             Attribute attribute = new Attribute(attrib);
-            entityManager.persist(attribute);//!!!!!Do not push!!!!!!
+            //entityManager.persist(attribute);//!!!!!Do not push uncommented!!!!!!
             defAttributes.put(attrib.toUpperCase(), attribute);
         }
 
