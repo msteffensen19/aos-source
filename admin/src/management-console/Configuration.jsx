@@ -9,13 +9,18 @@ import {ReactComponent as ExportIcon} from "../svg-png-ext/exportToExcel.svg";
 import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
 import {ReactComponent as FilterIcon} from "../svg-png-ext/filterIconConfig.svg";
 import ContextProvider from '../landing-page/ConsoleContext';
+import DonePopup from './SavedPopup';
 
 export default class Configuration extends React.Component {
 
     constructor() {
         super();
+
+        this.handleRestoreConfiguration=this.handleRestoreConfiguration.bind(this);
         this.handleDevIconClick=this.handleDevIconClick.bind(this);
         this.handleCloseDevIcon=this.handleCloseDevIcon.bind(this);
+        this.closeRestorePopUp=this.closeRestorePopUp.bind(this);
+        this.isProductionFunc=this.isProductionFunc.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.isSearchMode=this.isSearchMode.bind(this);
         this.navToOpen = this.navToOpen.bind(this);
@@ -163,6 +168,54 @@ export default class Configuration extends React.Component {
             this.setState({bodyItemsToShow:[]});
 
     }
+    closeRestorePopUp (){
+        this.setState({openDonePopup:false});
+    };
+    handleRestoreConfiguration (){
+
+        if(this.isProductionFunc()){
+            this.setState({openDonePopup:true});
+            this.setState({textForPopup:"Not available here!"})
+            return;
+        }
+
+        let urlStringForCatalog = "";
+        let host = window.location.origin;
+        let isReversedProxy = this.context.isReverseProxy;
+
+        if (host.includes("localhost")){
+            urlStringForCatalog ="http://localhost:8080";
+        }else if(isReversedProxy){
+            urlStringForCatalog = host;
+        }else{
+            urlStringForCatalog = host + ':' + this.context.catalog;
+        }
+        fetch(urlStringForCatalog+'/catalog/api/v1/DemoAppConfig/Restore_Factory_Settings')
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    if(result.success !== true) {
+                        console.log("ERROR--" + result.reason);
+                        this.setState({openDonePopup:true});
+                        this.setState({textForPopup:"Restore Failed!"})
+                    }else{
+                        console.log("success--" + result.reason);
+                        this.setState({openDonePopup:true});
+                        this.setState({textForPopup:"Restored Successfully!"})
+                    }
+                },
+                    (error) => {
+                        console.log("ERROR--" + error);
+
+                    });
+    };
+
+    isProductionFunc (){
+        let host = window.location.host.toLowerCase();
+        if(host.includes("advantageonlineshopping") || host.includes("107.23.171.213") || host.includes("ec2-107-23-171-213.compute-1.amazonaws.com")){
+            return true;
+        }else return false;
+    };
 
         componentDidMount(){
         let tempGeneralItemsArray=[];
@@ -224,19 +277,20 @@ export default class Configuration extends React.Component {
     render() {
         return (
             <>
+                {this.state.openDonePopup?<DonePopup closePopUp={this.closeRestorePopUp} textForPopup={this.state.textForPopup}/>:null}
                 <div className="table-header-div">
                 {this.state.openDevPopup?<Popup closePopUp = {this.handleCloseDevIcon}/>:null}
                 <ul className="configuration-icons">
 
                     <SearchInConfiguration onUserSearch={this.handleSearch} isSearchMode={this.state.isSearchMode}/>
-                    <li>
+                    <li title={"filter results"}>
                         <FilterIcon className="pointer-cursor" onClick={this.handleDevIconClick}/>
                     </li>
-                    <li>
+                    <li title={"export to excel"}>
                         <ExportIcon className="pointer-cursor" onClick={this.handleDevIconClick}/>
                     </li>
-                    <li>
-                        <RestoreIcon className="pointer-cursor" onClick={this.handleDevIconClick}/>
+                    <li title={"restore all configuration to initial state"}>
+                        <RestoreIcon className="pointer-cursor" onClick={this.handleRestoreConfiguration}/>
                     </li>
                 </ul>
                 <ul className="configuration-headlines">

@@ -4,6 +4,7 @@ import 'jquery.soap';
 import 'bootstrap';
 import PopupWindow from './RestoreDBPopup';
 import DonePopup from './SavedPopup';
+import DevPopup from'./DevPopupWindow';
 import ContextProvider from "../landing-page/ConsoleContext";
 import  xml2jsonImpl from '../landing-page/Parser';
 
@@ -148,13 +149,20 @@ export default class RestoreDBToDefault extends React.Component {
         });
         event.preventDefault();
     }
+    handleDevIconClick=()=>{
+        this.setState({openDevPopup:true})
+    };
+    handleCloseDevIcon=()=>{
+        this.setState({openDevPopup:false})
+    };
 
     render() {
         return (
             <>
             {this.state.openDonePopup?<DonePopup closePopUp={this.closeDonePopup} textForPopup={this.state.textForPopup}/>:null}
             {this.state.openPopUp?<PopupWindow closePopUp = {this.closePopUp} onYesClick={this.onYesClick}/>:null}
-            <h3 className="navbar-headline-console-restore" onClick={this.openDialog}>Restore DB to Factory Settings</h3>
+            {this.state.openDevPopup?<DevPopup closePopUp = {this.handleCloseDevIcon}/>:null}
+            <h3 className="navbar-headline-console-restore" onClick={this.handleDevIconClick}>Restore DB to Factory Settings</h3>
             </>
         );
     }

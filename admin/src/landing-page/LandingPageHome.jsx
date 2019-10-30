@@ -45,7 +45,7 @@ export default class LandingPageHome extends React.Component {
                                 <Row className="left-bottom-container">
                                     <div className="main-left-bottom-container">
                                         <h3 className="what-s-new-in">What’s New In</h3>
-                                        <h1 className="version-number">v2.0</h1>
+                                        <h1 className="version-number">v2.1</h1>
                                         <div className="scroll-btn-container">
                                             <ArrowIconLeft className="fill-arrows" id="leftBtn"></ArrowIconLeft>
                                             <ArrowIconRight className="fill-arrows" id="rightBtn"></ArrowIconRight>
