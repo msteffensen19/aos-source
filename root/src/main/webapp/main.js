@@ -17,7 +17,6 @@ require.config({
         "uiRouter": 'vendor/angular-ui-router/release/angular-ui-router.min',
         'angularAnimate': 'vendor/angular-animate/angular-animate.min',
         'angularAutocomplete': 'vendor/ngAutocomplete/src/ngAutocomplete',
-        'ncy-angular-breadcrumb': 'vendor/angular-breadcrumb/release/angular-breadcrumb.min',
         'underscore' : 'vendor/underscore/underscore-min',
 
         'bootstrap': 'vendor/bootstrap/dist/js/bootstrap.min',
@@ -56,9 +55,6 @@ require.config({
             deps: ['angular', 'angularAnimate']
         },
         'angular-translate': {
-            deps: ['angular']
-        },
-        'ncy-angular-breadcrumb': {
             deps: ['angular']
         },
         'nouislider': {},
@@ -105,7 +101,7 @@ window.name = "NG_DEFER_BOOTSTRAP!";
 
 require(['angular', 'app', 'angular-translate', 'bootstrap', 'englishLanguage',
         'jquery', 'jquery-bez', 'jquery.animate-colors', 'jPushMenu', 'mainScript', 'server',
-        'nouislider', 'accordion', 'wrongDirection', 'UserCookie', 'ncy-angular-breadcrumb',
+        'nouislider', 'accordion', 'wrongDirection', 'UserCookie',
         'slider', 'uiRouter', 'angular-cookie', 'toaster', 'angularAutocomplete',
         'angularAnimate', 'ui-bootstrap', 'jquery-soap', 'underscore', 'angular-google-analytics',
     ], function (angular, app) {

@@ -113,10 +113,6 @@
   version "0.14.3"
   resolved "https://codeload.github.com/angular-ui/bootstrap-bower/tar.gz/b5e11f5861a1591a300e78a9902c1a7e7918d75b"
 
-"@bower_components/angular-breadcrumb@ncuillery/angular-breadcrumb#~0.4.1":
-  version "0.4.1"
-  resolved "https://codeload.github.com/ncuillery/angular-breadcrumb/tar.gz/b291e06f4010ebebbb41ea2c14e73e236aa70930"
-
 "@bower_components/angular-cookie@ivpusic/angular-cookie#~4.0.9":
   version "4.0.9"
   resolved "https://codeload.github.com/ivpusic/angular-cookie/tar.gz/01da31947ea9f1493340855ed50455e69bfe4c62"
