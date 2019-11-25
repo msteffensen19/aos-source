@@ -356,7 +356,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   git status
   git add "build/version.xml"
   git commit -m "updates version.xml" --quiet
-  git push master
+  git push
   '''
   }
 }
