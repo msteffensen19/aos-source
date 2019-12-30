@@ -95,12 +95,13 @@ public class Url_resources {
             }
 
             String isAOSDomain = environment.getProperty("AOS.Domain.url.host");
-            int port = isAOSDomain != null && isAOSDomain.equalsIgnoreCase("Yes")
+            int port = (isAOSDomain != null && isAOSDomain.equalsIgnoreCase("Yes"))
+                    || host.charAt(0) == '@'
                     ? 80
                     : Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".service.url.port"));
 
             String suffix = '/' + environment.getProperty(serviceName.toLowerCase() + ".service.url.suffix") + "/";
-
+            host = host.charAt(0) == '@' ? "localhost" : host;
             url = new URL(schema, host, port, suffix);
 
         } catch (Throwable e) {
@@ -125,10 +126,12 @@ public class Url_resources {
                 host = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.host");
             }
 
-            int port = Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.port"));
+            int port = host.charAt(0) == '@'
+                    ? 80 : Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.port"));
             String suffix = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.suffix");
             String wsdl = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.wsdl");
             if (! wsdl.contains("/")) { suffix += '/'; }
+            host = host.charAt(0) == '@' ? "localhost" : host;
             urlWithWsdl = new URL(new URL(schema, host, port, suffix), suffix + wsdl);
 
         } catch (Throwable e) {

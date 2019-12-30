@@ -4,7 +4,8 @@
   "description": "Advantage Online Shopping",
   "author": "Assaf Kubany",
   "dependencies": {
-    "angularjs-toast": "^2.0.3",
+    "@bower_components/AngularJS-Toaster": "jirikavi/AngularJS-Toaster#^3.0.0",
+    "@bower_components/SVG-Loaders": "SamHerbert/SVG-Loaders#~1.0.2",
     "@bower_components/angular": "angular/bower-angular#1.4.14",
     "@bower_components/angular-animate": "angular/bower-angular-animate#~1.4.7",
     "@bower_components/angular-bootstrap": "angular-ui/bootstrap-bower#~0.14.3",
@@ -15,7 +16,6 @@
     "@bower_components/angular-translate": "PascalPrecht/bower-angular-translate#~2.7.2",
     "@bower_components/angular-ui-router": "angular-ui/angular-ui-router-bower#~0.2.15",
     "@bower_components/angularjs-slider": "rzajac/angularjs-slider#~1.0.0",
-    "@bower_components/AngularJS-Toaster": "jirikavi/AngularJS-Toaster#^3.0.0",
     "@bower_components/bootstrap": "twbs/bootstrap#~3.3.5",
     "@bower_components/jquery": "jquery/jquery-dist#2.1.4",
     "@bower_components/jquery-bez": "rdallasgray/bez#1.0.11",
@@ -23,8 +23,9 @@
     "@bower_components/ngAutocomplete": "wpalahnuk/ngAutocomplete#~1.0.0",
     "@bower_components/ngToast": "tameraydin/ngToast#^2.0.0",
     "@bower_components/requirejs": "jrburke/requirejs-bower#~2.1.20",
-    "@bower_components/SVG-Loaders": "SamHerbert/SVG-Loaders#~1.0.2",
-    "@bower_components/underscore": "jashkenas/underscore#~1.8.3"
+    "@bower_components/underscore": "jashkenas/underscore#~1.8.3",
+    "@bower_components/angular-mocks": "angular/bower-angular-mocks#~1.4.14",
+    "karma-requirejs": "~1.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
@@ -44,8 +45,18 @@
     "grunt-piece-modulejs": "~0.1.3",
     "grunt-regex-replace": "^0.2.6",
     "grunt-usemin": "~3.1.1",
+    "jasmine-core": "^3.5.0",
     "jquery.soap": "^1.6.7",
-    "load-grunt-tasks": "~0.1.0"
+
+
+
+    "load-grunt-tasks": "~0.1.0",
+    "requirejs": "^2.3.6",
+    "karma": "~2.0.5",
+    "karma-chrome-launcher": "~1.0.1",
+    "karma-firefox-launcher": "~1.1.0",
+    "karma-jasmine": "~1.1.2",
+    "karma-junit-reporter": "~1.2.0"
   },
   "engines": {
     "yarn": ">= 1.0.0"

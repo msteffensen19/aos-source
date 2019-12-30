@@ -138,3 +138,5 @@ root/src/main/webapp/package-lock.json
 /admin/npm/*
 /shipex/src/main/resources/generated/*
 /accountservice/src/main/resources/generated/*
+/root/src/main/webapp/.scannerwork/**
+/root/.scannerwork/*
