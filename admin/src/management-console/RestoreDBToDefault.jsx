@@ -162,7 +162,7 @@ export default class RestoreDBToDefault extends React.Component {
             {this.state.openDonePopup?<DonePopup closePopUp={this.closeDonePopup} textForPopup={this.state.textForPopup}/>:null}
             {this.state.openPopUp?<PopupWindow closePopUp = {this.closePopUp} onYesClick={this.onYesClick}/>:null}
             {this.state.openDevPopup?<DevPopup closePopUp = {this.handleCloseDevIcon}/>:null}
-            <h3 className="navbar-headline-console-restore" onClick={this.handleDevIconClick}>Restore DB to Factory Settings</h3>
+            <h3 className="navbar-headline-console-restore" onClick={this.openDialog}>Restore DB to Factory Settings</h3>
             </>
         );
     }

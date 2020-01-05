@@ -1,6 +1,7 @@
 package com.advantage.catalog.store.dao.product;
 
 import com.advantage.catalog.store.dao.AbstractRepository;
+import com.advantage.catalog.store.dao.category.CategoryRepository;
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.category.Category;
@@ -74,6 +75,8 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     public AttributeService attributeService;
     @Autowired
     private Environment environment;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public Product create(String name, String description, double price, String imgUrl, Category category, String productStatus) {
@@ -444,11 +447,11 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
         //  region TRUNCATE_CATALOG_TABLES()
         //entityManager.createNativeQuery(statement).executeUpdate();
         //int result = session.createSQLQuery(statement).executeUpdate();
-        String resultTruncate = (String) entityManager.createNativeQuery("SELECT public.truncate_catalog_tables()")
+        String resultTruncate = (String) session.createNativeQuery("SELECT public.truncate_catalog_tables()")
                 .getSingleResult();
         transaction.commit();
 //        session.flush();
-        session.close();
+        //session.close();
 
         StringBuilder sb = new StringBuilder("Database Restore Factory Settings - CATALOG schema truncated successfully. ");
         logger.info("Database Restore Factory Settings - CATALOG schema truncated successfully.");
@@ -457,155 +460,306 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
 
         sb.append("Database Restore Factory Settings: ");
 
-        //  region CATEGORY
+
+        session.beginTransaction();
+        logger.trace("session.beginTransaction()");
+
         final Category category1 = new Category("LAPTOPS", "1235");
+        session.saveOrUpdate(category1);
+        logger.trace("Category 1 persist success");
+
         final Category category2 = new Category("HEADPHONES", "1234");
+        session.persist(category2);
+        logger.trace("Category 2 persist success");
+
         final Category category3 = new Category("TABLETS", "1236");
+        session.persist(category3);
+        logger.trace("Category 3 persist success");
+
         final Category category4 = new Category("SPEAKERS", "1237");
+        session.persist(category4);
+        logger.trace("Category 4 persist success");
+
         final Category category5 = new Category("MICE", "1238");
+        session.persist(category5);
+        logger.trace("Category 5 persist success");
 
-        entityManager.persist(category1);
-        entityManager.persist(category2);
-        entityManager.persist(category3);
-        entityManager.persist(category4);
-        entityManager.persist(category5);
+//        final Category category6 = new Category("BAGS & CASES", "1239");
+//        session.persist(category6);
 
-        if (categoryService.getAllCategories().size() == TOTAL_CATEGORIES_COUNT) {
-            sb.append("Category").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings successful - table 'category'");
-            logger.info("Database Restore Factory Settings successful - table 'category'");
-        } else {
-            sb.append("Table 'category' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings - table 'category' - FAILED");
-            logger.warn("Database Restore Factory Settings - table 'category' - FAILED");
-            return new CatalogResponse(false, "Database Restore Factory Settings - table 'category'", -1);
-        }
-        //  endregion
+        /*Attributes INIT*/
 
-        //  region ATTRIBUTE
-        String[] attributes = new String[] {"Graphics", "Customization", "Operating System", "Processor", "Memory", "Display", "Connector", "Compatibility", "Weight", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen" };
+        String[] newAttributes = new String[]{"GRAPHICS", "Customization", "Operating System", "Processor", "Memory", "Display", "CONNECTOR", "COMPATIBILITY", "WEIGHT", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen"};
+
         Map<String, Attribute> defAttributes = new HashMap<>();
 
-        for (String attrib : attributes) {
-            Attribute attribute = new Attribute(attrib);
-            //entityManager.persist(attribute);//!!!!!Do not push uncommented!!!!!!
+        for (String attrib : newAttributes) {
+            Attribute attribute = new Attribute();
+            attribute.setName(attrib);
+            session.persist(attribute);
+            logger.trace("Attribute " + attrib + " persist success");
             defAttributes.put(attrib.toUpperCase(), attribute);
         }
+        transaction.commit();
 
-        if (attributeService.getAllAttributes().size() == TOTAL_ATTRIBUTES_COUNT) {
-            sb.append("Attribute").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings successful - table 'attribute'");
-            logger.info("Database Restore Factory Settings successful - table 'attribute'");
-        } else {
-            sb.append("Table 'attribute' - FAILED.").append(Constants.COMMA).append(Constants.SPACE);
-            System.out.println("Database Restore Factory Settings - table 'attribute' - FAILED");
-            logger.warn("Database Restore Factory Settings - table 'attribute' - FAILED");
-            return new CatalogResponse(false, "Restore factory settings FAILED - table 'attribute'.", -2);
+        for (Map.Entry<String, Attribute> entry : defAttributes.entrySet()) {
+            session.save(entry.getValue());
+            logger.trace("Session save success");
         }
-        //  endregion
 
-        //  region CATEGORY_ATTRIBUTES_FILTER
+        //for categories-attributes show filter
+        final List<Category> categories = categoryRepository.getAll();
+
+        //  Initialize "category_attributes_filter"
+        ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
+        File json = null;
         try {
-            ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
-
-            File json = filePath.getFile();
-
-            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-            CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
-
-            for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
-                entityManager.persist(categoryAttributeFilter);
-            }
-
-            if (categoryService.getAllCategoryAttributesFilter().getCategoriesAttributes().size() > 0) {
-                sb.append("Category_Attribute_Filter").append(Constants.COMMA).append(Constants.SPACE);
-                System.out.println("Database Restore Factory Settings successful - table 'category_attributes_filter'");
-            } else {
-                sb.append("Table 'category_attribute_filter' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
-                System.out.println("Database Restore Factory Settings - table 'category_attribute_filter' - FAILED");
-                return new CatalogResponse(false, "Restore factory settings FAILED - table 'category_attribute_filter'", -3);
-            }
-
-            //transaction.commit();
-            //session.flush();
-            //session.close();
-
+            json = filePath.getFile();
         } catch (IOException e) {
             e.printStackTrace();
-            return new CatalogResponse(false, "Restore factory settings FAILED - table 'Category_Attribute_Filter'", -99999);
         }
-        //  endregion
 
-        //  region Product (colors, attributes, images, etc)
+        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        CategoryAttributeFilter[] categoryAttributeFilters = new CategoryAttributeFilter[0];
         try {
-            //  Initializr Category Products
-            ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
-            File json = filePath.getFile();
-            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-            CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
-            //Transaction transaction = session.beginTransaction();
-            Map<Long, Product> productMap = new HashMap<>();
-            for (CategoryDto categoryDto : categoryDtos) {
-                Category category = categoryService.getCategory(categoryDto.getCategoryId());
+            categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                /*PRODUCT*/
-                ProductService productService = new ProductService();
-                for (ProductDto productDto : categoryDto.getProducts()) {
-                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
-                    product.setManagedImageId(productDto.getImageUrl());
-                    entityManager.persist(product);
-                    //load attributes
+        transaction = session.beginTransaction();
+        logger.trace("session.beginTransaction()");
 
-                        for (AttributeItem attributeItem : productDto.getAttributes()) {
-                            ProductAttributes productAttributes = new ProductAttributes();
-                            productAttributes.setProduct(product);
-                            productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
-                            productAttributes.setAttributeValue(attributeItem.getAttributeValue());
-                            System.out.println("Line 566");
-                            try {
-                                System.out.println("one-"+productAttributes.getAttributeValue());
-                                System.out.println("one-"+productAttributes.getProduct().getProductName());
-                                System.out.println("one-"+productAttributes.toString());
-                                entityManager.persist(productAttributes);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+        for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
+            session.persist(categoryAttributeFilter);
+        }
 
-                    if (productDto.getImages().size() == 0) {
-                        System.out.println("Line 571");
-                        productDto.getImages().add(product.getManagedImageId());
-                    }
-                    System.out.println("Line 576");
-                    System.out.println("product--"+product.getProductName()+"productDto.getColors()--"+productDto.getColors().toString());
-                    product.setColors(productService.getColorAttributes(productDto.getColors(), product));
-                        System.out.println("Line 579");
-                    product.setImages(productService.getImageAttribute(productDto.getImages(), product));
-                        System.out.println("Line 581");
+        transaction.commit();
+        logger.debug("Transaction commit successful");
 
-                    productMap.put(product.getId(), product);
+        //  Initializr Category Products
+        filePath = new ClassPathResource("categoryProducts_4.json");
+        try {
+            json = filePath.getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        //Changed by Evgeney
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        CategoryDto[] categoryDtos = new CategoryDto[0];
+        try {
+            categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        transaction = session.beginTransaction();
+        logger.trace("session.beginTransaction()");
+        Map<Long, Product> productMap = new HashMap<>();
+        for (CategoryDto categoryDto : categoryDtos) {
+            Category category = categoryRepository.get(categoryDto.getCategoryId());
+
+            /*PRODUCT*/
+            for (ProductDto productDto : categoryDto.getProducts()) {
+                Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
+                product.setManagedImageId(productDto.getImageUrl());
+                session.persist(product);
+                logger.trace("Product persist success");
+                //load attributes
+                for (AttributeItem attributeItem : productDto.getAttributes()) {
+                    ProductAttributes attributes = new ProductAttributes();
+                    attributes.setProduct(product);
+
+                    attributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
+                    attributes.setAttributeValue(attributeItem.getAttributeValue());
+
+                    session.save(attributes);
+                    logger.trace("Session save success");
                 }
-                System.out.println("Line 583");
-                //  Initialize Promoted products
-                PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
-                Long prodId = promotedProductDto.getId();
-                Product product = productMap.get(prodId);
-                System.out.println("Line 588");
-                Assert.notNull(product, "\nPromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
-                Deal deal = new Deal(10, product.getDescription(), promotedProductDto.getPromotionHeader(), promotedProductDto.getPromotionSubHeader(), promotedProductDto.getStaringPrice(),
-                        promotedProductDto.getPromotionImageId(), 0, "", "", product);
 
-                entityManager.persist(deal);
+                if (productDto.getImages().size() == 0) {
+                    productDto.getImages().add(product.getManagedImageId());
+                }
 
+                //TODO-EVG move to the productService ?
+                product.setColors(productService.getColorAttributes(productDto.getColors(), product));
+                product.setImages(productService.getImageAttribute(productDto.getImages(), product));
+
+                productMap.put(product.getId(), product);
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new CatalogResponse(false, "Restore factory settings FAILED - table 'Product'", -1);
+            //  Initialize Promoted products
+            PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
+            Long prodId = promotedProductDto.getId();
+            Product product = productMap.get(prodId);
+            Assert.notNull(product, "\nPromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
+            Deal deal = new Deal(10, product.getDescription(), promotedProductDto.getPromotionHeader(), promotedProductDto.getPromotionSubHeader(), promotedProductDto.getStaringPrice(),
+                    promotedProductDto.getPromotionImageId(), 0, "", "", product);
+
+            session.persist(deal);
+            logger.debug("Deal persist success");
+
         }
+        transaction.commit();
+        logger.debug("Transaction commit successful");
+        //  Added by Binyamin Regev for Android and iOs mobile devices
+        transaction = session.beginTransaction();
+        session.persist(new LastUpdate("Data", new Date().getTime()));
+        transaction.commit();
+        logger.debug("Transaction commit successful");
+
+        //  region CATEGORY
+//        final Category category1 = new Category("LAPTOPS", "1235");
+//        final Category category2 = new Category("HEADPHONES", "1234");
+//        final Category category3 = new Category("TABLETS", "1236");
+//        final Category category4 = new Category("SPEAKERS", "1237");
+//        final Category category5 = new Category("MICE", "1238");
+//
+//        entityManager.persist(category1);
+//        entityManager.persist(category2);
+//        entityManager.persist(category3);
+//        entityManager.persist(category4);
+//        entityManager.persist(category5);
+//
+//        if (categoryService.getAllCategories().size() == TOTAL_CATEGORIES_COUNT) {
+//            sb.append("Category").append(Constants.COMMA).append(Constants.SPACE);
+//            System.out.println("Database Restore Factory Settings successful - table 'category'");
+//            logger.info("Database Restore Factory Settings successful - table 'category'");
+//        } else {
+//            sb.append("Table 'category' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+//            System.out.println("Database Restore Factory Settings - table 'category' - FAILED");
+//            logger.warn("Database Restore Factory Settings - table 'category' - FAILED");
+//            return new CatalogResponse(false, "Database Restore Factory Settings - table 'category'", -1);
+//        }
+//        //  endregion
+//
+//        //  region ATTRIBUTE
+//        String[] attributes = new String[] {"Graphics", "Customization", "Operating System", "Processor", "Memory", "Display", "Connector", "Compatibility", "Weight", "Wireless technology", "Sensor resolution", "Type", "Manufacturer", "Scroller Type", "Display Size", "Display Resolution", "Touchscreen" };
+//        Map<String, Attribute> defAttributes = new HashMap<>();
+//
+//        for (String attrib : attributes) {
+//            Attribute attribute = new Attribute(attrib);
+//            //entityManager.persist(attribute);//!!!!!Do not push uncommented!!!!!!
+//            defAttributes.put(attrib.toUpperCase(), attribute);
+//        }
+//
+//        if (attributeService.getAllAttributes().size() == TOTAL_ATTRIBUTES_COUNT) {
+//            sb.append("Attribute").append(Constants.COMMA).append(Constants.SPACE);
+//            System.out.println("Database Restore Factory Settings successful - table 'attribute'");
+//            logger.info("Database Restore Factory Settings successful - table 'attribute'");
+//        } else {
+//            sb.append("Table 'attribute' - FAILED.").append(Constants.COMMA).append(Constants.SPACE);
+//            System.out.println("Database Restore Factory Settings - table 'attribute' - FAILED");
+//            logger.warn("Database Restore Factory Settings - table 'attribute' - FAILED");
+//            return new CatalogResponse(false, "Restore factory settings FAILED - table 'attribute'.", -2);
+//        }
+//        //  endregion
+//
+//        //  region CATEGORY_ATTRIBUTES_FILTER
+//        try {
+//            ClassPathResource filePath = new ClassPathResource("categoryAttributes_4.json");
+//
+//            File json = filePath.getFile();
+//
+//            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+//            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+//            CategoryAttributeFilter[] categoryAttributeFilters = objectMapper.readValue(json, CategoryAttributeFilter[].class);
+//
+//            for (CategoryAttributeFilter categoryAttributeFilter : categoryAttributeFilters) {
+//                entityManager.persist(categoryAttributeFilter);
+//            }
+//
+//            if (categoryService.getAllCategoryAttributesFilter().getCategoriesAttributes().size() > 0) {
+//                sb.append("Category_Attribute_Filter").append(Constants.COMMA).append(Constants.SPACE);
+//                System.out.println("Database Restore Factory Settings successful - table 'category_attributes_filter'");
+//            } else {
+//                sb.append("Table 'category_attribute_filter' - FAILED").append(Constants.COMMA).append(Constants.SPACE);
+//                System.out.println("Database Restore Factory Settings - table 'category_attribute_filter' - FAILED");
+//                return new CatalogResponse(false, "Restore factory settings FAILED - table 'category_attribute_filter'", -3);
+//            }
+//
+//            //transaction.commit();
+//            //session.flush();
+//            //session.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return new CatalogResponse(false, "Restore factory settings FAILED - table 'Category_Attribute_Filter'", -99999);
+//        }
+//        //  endregion
+//
+//        //  region Product (colors, attributes, images, etc)
+//        try {
+//            //  Initializr Category Products
+//            ClassPathResource filePath = new ClassPathResource("categoryProducts_4.json");
+//            File json = filePath.getFile();
+//            ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+//            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+//            CategoryDto[] categoryDtos = objectMapper.readValue(json, CategoryDto[].class);
+//            //Transaction transaction = session.beginTransaction();
+//            Map<Long, Product> productMap = new HashMap<>();
+//            for (CategoryDto categoryDto : categoryDtos) {
+//                Category category = categoryService.getCategory(categoryDto.getCategoryId());
+//
+//                /*PRODUCT*/
+//                ProductService productService = new ProductService();
+//                for (ProductDto productDto : categoryDto.getProducts()) {
+//                    Product product = new Product(productDto.getProductName(), productDto.getDescription(), productDto.getPrice(), category, productDto.getProductStatus());
+//                    product.setManagedImageId(productDto.getImageUrl());
+//                    entityManager.persist(product);
+//                    //load attributes
+//
+//                        for (AttributeItem attributeItem : productDto.getAttributes()) {
+//                            ProductAttributes productAttributes = new ProductAttributes();
+//                            productAttributes.setProduct(product);
+//                            productAttributes.setAttribute(defAttributes.get(attributeItem.getAttributeName().toUpperCase()));
+//                            productAttributes.setAttributeValue(attributeItem.getAttributeValue());
+//                            System.out.println("Line 566");
+//                            try {
+//                                System.out.println("one-"+productAttributes.getAttributeValue());
+//                                System.out.println("one-"+productAttributes.getProduct().getProductName());
+//                                System.out.println("one-"+productAttributes.toString());
+//                                entityManager.persist(productAttributes);
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                    if (productDto.getImages().size() == 0) {
+//                        System.out.println("Line 571");
+//                        productDto.getImages().add(product.getManagedImageId());
+//                    }
+//                    System.out.println("Line 576");
+//                    System.out.println("product--"+product.getProductName()+"productDto.getColors()--"+productDto.getColors().toString());
+//                    product.setColors(productService.getColorAttributes(productDto.getColors(), product));
+//                        System.out.println("Line 579");
+//                    product.setImages(productService.getImageAttribute(productDto.getImages(), product));
+//                        System.out.println("Line 581");
+//
+//                    productMap.put(product.getId(), product);
+//
+//                }
+//                System.out.println("Line 583");
+//                //  Initialize Promoted products
+//                PromotedProductDto promotedProductDto = categoryDto.getPromotedProduct();
+//                Long prodId = promotedProductDto.getId();
+//                Product product = productMap.get(prodId);
+//                System.out.println("Line 588");
+//                Assert.notNull(product, "\nPromotedProduct null, promoted product id=" + prodId + ", category number=" + categoryDto.getCategoryId());
+//                Deal deal = new Deal(10, product.getDescription(), promotedProductDto.getPromotionHeader(), promotedProductDto.getPromotionSubHeader(), promotedProductDto.getStaringPrice(),
+//                        promotedProductDto.getPromotionImageId(), 0, "", "", product);
+//
+//                entityManager.persist(deal);
+//
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return new CatalogResponse(false, "Restore factory settings FAILED - table 'Product'", -1);
+//        }
         //  endregion
 
         return new CatalogResponse(true, sb.toString(), 1);
