@@ -144,7 +144,7 @@ stage('Dotnet Tests'){
  
   env.aos_dotnet_test_status = "Success"
  
-  node('Windows2008R2'){
+  node('aos_windows_runner'){
  
    checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-dotnet.git'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'build']]], [$class: 'WipeWorkspace']], gitTool: 'Git version LeanFT Windows', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-dotnet.git']]])
    
@@ -197,7 +197,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 
   if (env.aos_dotnet_test_status == "Success"){
   
-  node('Windows2008R2'){
+  node('aos_windows_runner'){
    
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'e1e6e164-d262-4718-93db-69a4b24caf0b',
   usernameVariable: 'USERNAME', passwordVariable: 'NEXUS_DEPLOY_PASSWORD']]) {
