@@ -174,12 +174,18 @@ public class MasterCreditService {
             if (masterCreditDto.getTransactionDate() == null) {
                 masterCreditDto.setTransactionDate(new SimpleDateFormat("ddMMyyyy").format(new Date()));
             }
-
-            sb = new StringBuilder(masterCreditDto.getTransactionDate().substring(0, 2))
-                    .append('.')
-                    .append(masterCreditDto.getTransactionDate().substring(2, 4))
-                    .append('.')
-                    .append(masterCreditDto.getTransactionDate().substring(4, 8));
+            if(masterCreditDto.getTransactionDate().length() == 8)
+                sb = new StringBuilder(masterCreditDto.getTransactionDate().substring(0, 2))
+                        .append('.')
+                        .append(masterCreditDto.getTransactionDate().substring(2, 4))
+                        .append('.')
+                        .append(masterCreditDto.getTransactionDate().substring(4, 8));
+            else
+                sb = new StringBuilder(masterCreditDto.getTransactionDate().substring(0, 1))
+                        .append('.')
+                        .append(masterCreditDto.getTransactionDate().substring(1, 3))
+                        .append('.')
+                        .append(masterCreditDto.getTransactionDate().substring(3, 7));
             if (!ValidationHelper.isValidDate(sb.toString())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());
                 responseStatus.setResponseReason("Wrong field value. Field \'transaction date\' value=" + masterCreditDto.getTransactionDate());
