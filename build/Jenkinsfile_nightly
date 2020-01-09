@@ -216,7 +216,7 @@ try {
 
                     env.Resumed = "false"
 
-                    node('Windows2008R2') {
+                    node('aos_windows_runner') {
 
                         withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'e1e6e164-d262-4718-93db-69a4b24caf0b',
                                           usernameVariable: 'USERNAME', passwordVariable: 'NEXUS_DEPLOY_PASSWORD']]) {
