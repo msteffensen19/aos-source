@@ -34,7 +34,10 @@ import javax.persistence.*;
         name = OrderHeader.QUERY_DELETE_ORDER_BY_USER_PK,
         query = "delete from OrderHeader o " +
                 "where " + OrderHeader.FIELD_USER_ID + " = :" + OrderHeader.PARAM_USER_ID
-)
+        )
+        , @NamedQuery(name = OrderHeader.QUERY_DELETE_ORDER_BY_ORDER_PK,
+        query = "delete from OrderHeader o " +
+        "where " + OrderHeader.FIELD_ORDER_NUMBER + " = :" + OrderHeader.PARAM_ORDER_NUMBER)
 })
 public class OrderHeader {
 

@@ -121,11 +121,18 @@ public class SafePayService {
 
         if (isValid) {
             /*  Transaction Date    */
-            sb = new StringBuilder(safePayDto.getTransactionDate().substring(0, 2))
+            if(safePayDto.getTransactionDate().length() == 8)
+                sb = new StringBuilder(safePayDto.getTransactionDate().substring(0, 2))
+                        .append('.')
+                        .append(safePayDto.getTransactionDate().substring(2, 4))
+                        .append('.')
+                        .append(safePayDto.getTransactionDate().substring(4, 8));
+            else
+                sb = new StringBuilder(safePayDto.getTransactionDate().substring(0, 1))
                     .append('.')
-                    .append(safePayDto.getTransactionDate().substring(2, 4))
+                    .append(safePayDto.getTransactionDate().substring(1, 3))
                     .append('.')
-                    .append(safePayDto.getTransactionDate().substring(4, 8));
+                    .append(safePayDto.getTransactionDate().substring(3, 7));
 
             if (!ValidationHelper.isValidDate(sb.toString())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());

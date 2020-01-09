@@ -129,7 +129,7 @@ public final class Feature1779OrdersHistoryLeak {
         ClassLoader childClassLoader = new ChildOnlyClassLoader();
         Class<?> childClass = Class.forName(
                 LoadedInChildClassLoader.class.getName(), true, childClassLoader);
-        childClass.newInstance();
+        childClass.getDeclaredConstructor().newInstance();
         // When this method returns, there will be no way to reference
         // childClassLoader or childClass at all, but they will still be
         // rooted for GC purposes!
