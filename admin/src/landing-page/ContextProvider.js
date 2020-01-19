@@ -9,6 +9,7 @@ export default class ContextProvider extends React.Component {
     state = {
         portsForRouting:{
             accountService:80,
+            accountServiceHost:'',
             catalog:80,
             order:80,
             isSingleMachineDeployment:false,
@@ -46,6 +47,7 @@ export default class ContextProvider extends React.Component {
             this.setState(prevState => {
                 let portsForRouting = { ...prevState.portsForRouting };  // creating copy of state variable portsForRouting
                 portsForRouting.accountService = accountServicePort;
+                portsForRouting.accountServiceHost = accountServiceHost;
                 portsForRouting.catalog = catalogPort;
                 portsForRouting.order = orderPort;
                 portsForRouting.isSingleMachineDeployment = servicesProperties["single.machine.deployment"];

@@ -77,7 +77,7 @@ class LoginForm extends React.Component {
         }else if(isReversedProxy){
             urlString = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/accountservice/";
         }else{
-            urlString = host + ':' + port + '/accountservice/';
+            urlString = protocol + "//" + this.context.accountServiceHost + ':' + port + '/accountservice/';
         }
         let $ = require('jquery');
         require('jquery.soap');
