@@ -180,16 +180,19 @@ export default class Configuration extends React.Component {
         }
 
         let urlStringForCatalog = "";
-        let host = window.location.origin;
+        let protocol = window.location.protocol;
+        let host = window.location.hostname;
+        let port = this.context.catalog;
         let isReversedProxy = this.context.isReverseProxy;
-
         if (host.includes("localhost")){
-            urlStringForCatalog ="http://localhost:8080";
+            urlStringForCatalog = protocol + "//" + host +  (port.length > 0 ? ":" + port : "");
         }else if(isReversedProxy){
-            urlStringForCatalog = host;
+            urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "");
         }else{
-            urlStringForCatalog = host + ':' + this.context.catalog;
+            urlStringForCatalog = protocol + "//" + host + ':' + port;
         }
+
+
         fetch(urlStringForCatalog+'/catalog/api/v1/DemoAppConfig/Restore_Factory_Settings')
             .then(res => res.json())
             .then(
