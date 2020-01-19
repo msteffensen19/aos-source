@@ -229,19 +229,20 @@ export default class Configuration extends React.Component {
         let tempMobileItemsArray=[];
         let tempAllItemsArray=[];
 
-        let host = window.location.origin;
+            let urlStringForCatalog = "";
+            let protocol = window.location.protocol;
+            let host = window.location.hostname;
             let port = this.context.catalog;
-            let urlString="";
             let isReversedProxy = this.context.isReverseProxy;
             if (host.includes("localhost")){
-                urlString = "http://localhost:8080/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL";
+                urlStringForCatalog = protocol + "//" + host +  (port.length > 0 ? ":" + port : "") + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
             }else if(isReversedProxy){
-                urlString = host + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
+                urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
             }else{
-                urlString = host + ':' + port + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
+                urlStringForCatalog = protocol + "//" + host + ':' + port + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
             }
 
-        fetch(urlString)
+        fetch(urlStringForCatalog)
             .then(res => res.json())
             .then((data) => {
                 data.parameters.forEach((item) =>{
