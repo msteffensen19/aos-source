@@ -67,14 +67,15 @@ class LoginForm extends React.Component {
         loginPassword: this.state.password,
         loginUser: this.state.userName};
 
-        let host = window.location.origin;
+        let protocol = window.location.protocol;
+        let host = window.location.hostname;
         let port = this.context.accountService;
         let urlString="";
         let isReversedProxy = this.context.isReverseProxy;
         if (host.includes("localhost")){
-            urlString ="http://localhost:8080/accountservice/";
+            urlString = protocol + "//" + host +  (port.length > 0 ? ":" + port : "") + "/accountservice/";
         }else if(isReversedProxy){
-            urlString = host + "/accountservice/";
+            urlString = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/accountservice/";
         }else{
             urlString = host + ':' + port + '/accountservice/';
         }

@@ -29,15 +29,18 @@ export default class ContextProvider extends React.Component {
             let servicesProperties = Parser.parse(data);
             let catalogPort ='';
             let accountServicePort='';
+            let accountServiceHost='';
             let orderPort='';
             let isReversedProxy = (servicesProperties["reverse.proxy"] === "true");
             if(isReversedProxy){
                 catalogPort ='';
                 accountServicePort='';
                 orderPort='';
+                accountServiceHost='';
             }else{
                 catalogPort = servicesProperties["catalog.service.url.port"];
                 accountServicePort = servicesProperties["account.soapservice.url.port"];
+                accountServiceHost = servicesProperties["account.soapservice.url.host"];
                 orderPort = servicesProperties["order.service.url.port"];
             }
             this.setState(prevState => {
