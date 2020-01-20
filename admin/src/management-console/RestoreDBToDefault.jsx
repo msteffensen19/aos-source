@@ -51,7 +51,8 @@ export default class RestoreDBToDefault extends React.Component {
         let $ = require('jquery');
         require('jquery.soap');
         let parseString = require('jquery.soap');
-
+        let catalogServiceUrl = this.context.catalogServiceUrl;
+        let orderServiceUrl = this.context.orderServiceUrl;
         $.soap({
             timeout: 10000,
             url: this.context.accountServiceUrl,
@@ -73,7 +74,7 @@ export default class RestoreDBToDefault extends React.Component {
                 }else{
                     console.log("adv_account had successfully restored to default--" + response);
                 }
-                fetch(this.context.catalogServiceUrl+'/catalog/Restore_db_factory_settings')
+                fetch(catalogServiceUrl+'/catalog/Restore_db_factory_settings')
                     .then(res => res.json())
                     .then(
                         (result) => {
@@ -84,7 +85,7 @@ export default class RestoreDBToDefault extends React.Component {
                                 return;
                             }
                             console.log("result--" + result.reason);
-                            fetch(this.context.orderServiceUrl + '/order/Restore_db_factory_settings')
+                            fetch(orderServiceUrl + '/order/Restore_db_factory_settings')
                                 .then(res => res.json())
                                 .then(
                                     (result) => {
