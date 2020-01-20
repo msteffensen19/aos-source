@@ -51,38 +51,10 @@ export default class RestoreDBToDefault extends React.Component {
         let $ = require('jquery');
         require('jquery.soap');
         let parseString = require('jquery.soap');
-        let host = window.location.origin;
-        let port = this.context.accountService;
-        let urlString="";
-        let isReversedProxy = this.context.isReverseProxy;
-        if (host.includes("localhost")){
-            urlString ="http://localhost:8080";
-        }else if(isReversedProxy){
-            urlString = host;
-        }else{
-            urlString = host + ':' + port;
-        }
-        let urlStringForCatalog = "";
 
-        if (host.includes("localhost")){
-            urlStringForCatalog ="http://localhost:8080";
-        }else if(isReversedProxy){
-            urlStringForCatalog = host;
-        }else{
-            urlStringForCatalog = host + ':' + this.context.catalog;
-        }
-        let urlStringForOrder = "";
-
-        if (host.includes("localhost")){
-            urlStringForOrder ="http://localhost:8080";
-        }else if(isReversedProxy){
-            urlStringForOrder = host;
-        }else{
-            urlStringForOrder = host + ':' + this.context.order;
-        }
         $.soap({
             timeout: 10000,
-            url: urlString+'/accountservice/',
+            url: this.context.accountServiceUrl,
             method: 'RestoreDBToFactorySettingRequest',
             namespaceURL: 'com.advantage.online.store.accountservice',
             SOAPAction: 'com.advantage.online.store.accountserviceRestoreDBToFactorySettingRequest',
@@ -101,7 +73,7 @@ export default class RestoreDBToDefault extends React.Component {
                 }else{
                     console.log("adv_account had successfully restored to default--" + response);
                 }
-                fetch(urlStringForCatalog+'/catalog/api/v1/catalog/Restore_db_factory_settings')
+                fetch(this.context.catalogServiceUrl+'/catalog/Restore_db_factory_settings')
                     .then(res => res.json())
                     .then(
                         (result) => {
@@ -112,7 +84,7 @@ export default class RestoreDBToDefault extends React.Component {
                                 return;
                             }
                             console.log("result--" + result.reason);
-                            fetch(urlStringForOrder + '/order/api/v1/order/Restore_db_factory_settings')
+                            fetch(this.context.orderServiceUrl + '/order/Restore_db_factory_settings')
                                 .then(res => res.json())
                                 .then(
                                     (result) => {

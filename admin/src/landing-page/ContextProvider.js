@@ -15,7 +15,8 @@ export default class ContextProvider extends React.Component {
             isSingleMachineDeployment:false,
             isReverseProxy:false,
             accountServiceUrl : '',
-            catalogServiceUrl : ''
+            catalogServiceUrl : '',
+            orderServiceUrl : ''
         }
     };
 
@@ -35,6 +36,7 @@ export default class ContextProvider extends React.Component {
             let accountServicePort='';
             let accountServiceHost='';
             let orderPort='';
+            let orderHost='';
             let isReversedProxy = (servicesProperties["reverse.proxy"] === "true");
             if(isReversedProxy){
                 catalogPort ='';
@@ -42,26 +44,32 @@ export default class ContextProvider extends React.Component {
                 orderPort='';
                 accountServiceHost='';
                 catalogHost = '';
+                orderHost = '';
             }else{
                 catalogPort = servicesProperties["catalog.service.url.port"];
                 catalogHost = servicesProperties["catalog.service.url.host"];
                 accountServicePort = servicesProperties["account.soapservice.url.port"];
                 accountServiceHost = servicesProperties["account.soapservice.url.host"];
                 orderPort = servicesProperties["order.service.url.port"];
+                orderHost = servicesProperties["order.service.url.host"];
             }
 
                 let urlStringForCatalog = "";
+                let urlStringForOrder = "";
                 let accountServiceUrl = "";
                 let protocol = window.location.protocol;
                 let host = window.location.hostname;
                 if (host.includes("localhost")){
                     urlStringForCatalog = protocol + "//" + host +  (catalogPort.length > 0 ? ":" + catalogPort : "") + '/catalog/api/v1';
+                    urlStringForOrder = protocol + "//" + host +  (orderPort.length > 0 ? ":" + orderPort : "") + '/order/api/v1';
                     accountServiceUrl = protocol + "//" + host +  (accountServicePort.length > 0 ? ":" + accountServicePort : "") + '/accountservice/';
                 }else if(isReversedProxy){
                     urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1';
+                    urlStringForOrder = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/order/api/v1';
                     accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/accountservice/';
                 }else{
                     urlStringForCatalog = protocol + "//" + catalogHost + ':' + catalogPort + '/catalog/api/v1';
+                    urlStringForOrder = protocol + "//" + orderHost + ':' + orderPort + '/order/api/v1';
                     accountServiceUrl = protocol + "//" + accountServiceHost + ':' + accountServicePort + '/accountservice/';
                 }
             this.setState(prevState => {
@@ -74,6 +82,7 @@ export default class ContextProvider extends React.Component {
                 portsForRouting.isReverseProxy = isReversedProxy;// update the port property, assign a new value
                 portsForRouting.catalogServiceUrl = urlStringForCatalog;
                 portsForRouting.accountServiceUrl = accountServiceUrl;
+                portsForRouting.orderServiceUrl = urlStringForOrder;
                 return { portsForRouting };                                 // return new object portsForRouting object
             })
 
