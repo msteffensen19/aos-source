@@ -31,6 +31,7 @@ export default class ContextProvider extends React.Component {
             .then((data)=> {
             let servicesProperties = Parser.parse(data);
             let catalogPort ='';
+            let catalogHost ='';
             let accountServicePort='';
             let accountServiceHost='';
             let orderPort='';
@@ -40,8 +41,10 @@ export default class ContextProvider extends React.Component {
                 accountServicePort='';
                 orderPort='';
                 accountServiceHost='';
+                catalogHost = '';
             }else{
                 catalogPort = servicesProperties["catalog.service.url.port"];
+                catalogHost = servicesProperties["catalog.service.url.host"];
                 accountServicePort = servicesProperties["account.soapservice.url.port"];
                 accountServiceHost = servicesProperties["account.soapservice.url.host"];
                 orderPort = servicesProperties["order.service.url.port"];
@@ -58,8 +61,8 @@ export default class ContextProvider extends React.Component {
                     urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1';
                     accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/accountservice/';
                 }else{
-                    urlStringForCatalog = protocol + "//" + catalogPort + ':' + catalogPort + '/catalog/api/v1';
-                    accountServiceUrl = protocol + "//" + accountServicePort + ':' + accountServicePort + '/accountservice/';
+                    urlStringForCatalog = protocol + "//" + catalogHost + ':' + catalogPort + '/catalog/api/v1';
+                    accountServiceUrl = protocol + "//" + accountServiceHost + ':' + accountServicePort + '/accountservice/';
                 }
             this.setState(prevState => {
                 let portsForRouting = { ...prevState.portsForRouting };  // creating copy of state variable portsForRouting
