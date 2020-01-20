@@ -22,20 +22,10 @@ export default class General extends React.Component {
     changeFlagValue(event){
         let self = this;
 
-        let host = window.location.origin;
-        let port = this.context.catalog;
-        let urlString ="";
-        let isReversedProxy = this.context.isReverseProxy;
-        if (host.includes("localhost")){
-            urlString ='http://localhost:8080/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
-        }else if(isReversedProxy){
-            urlString = host + '/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
-        }else{
-            urlString = host + ':' + port + '/catalog/api/v1/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value;
-        }
+
         if(this.oldvalue !== event.target.value){
             this.setState({[event.target.key]:event.target.value});
-            fetch(urlString, {
+            fetch(this.context.catalogServiceUrl + '/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value , {
                 method: 'put'
             }).then( (response) => {
                 return response.json()

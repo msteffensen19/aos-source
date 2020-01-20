@@ -13,7 +13,9 @@ export default class ContextProvider extends React.Component {
             catalog:80,
             order:80,
             isSingleMachineDeployment:false,
-            isReverseProxy:false
+            isReverseProxy:false,
+            accountServiceUrl : '',
+            catalogServiceUrl : ''
         }
     };
 
@@ -44,6 +46,21 @@ export default class ContextProvider extends React.Component {
                 accountServiceHost = servicesProperties["account.soapservice.url.host"];
                 orderPort = servicesProperties["order.service.url.port"];
             }
+
+                let urlStringForCatalog = "";
+                let accountServiceUrl = "";
+                let protocol = window.location.protocol;
+                let host = window.location.hostname;
+                if (host.includes("localhost")){
+                    urlStringForCatalog = protocol + "//" + host +  (catalogPort.length > 0 ? ":" + catalogPort : "") + '/catalog/api/v1';
+                    accountServiceUrl = protocol + "//" + host +  (accountServicePort.length > 0 ? ":" + accountServicePort : "") + '/accountservice/';
+                }else if(isReversedProxy){
+                    urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1';
+                    accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/accountservice/';
+                }else{
+                    urlStringForCatalog = protocol + "//" + catalogPort + ':' + catalogPort + '/catalog/api/v1';
+                    accountServiceUrl = protocol + "//" + accountServicePort + ':' + accountServicePort + '/accountservice/';
+                }
             this.setState(prevState => {
                 let portsForRouting = { ...prevState.portsForRouting };  // creating copy of state variable portsForRouting
                 portsForRouting.accountService = accountServicePort;
@@ -52,6 +69,8 @@ export default class ContextProvider extends React.Component {
                 portsForRouting.order = orderPort;
                 portsForRouting.isSingleMachineDeployment = servicesProperties["single.machine.deployment"];
                 portsForRouting.isReverseProxy = isReversedProxy;// update the port property, assign a new value
+                portsForRouting.catalogServiceUrl = urlStringForCatalog;
+                portsForRouting.accountServiceUrl = accountServiceUrl;
                 return { portsForRouting };                                 // return new object portsForRouting object
             })
 

@@ -179,21 +179,8 @@ export default class Configuration extends React.Component {
             return;
         }
 
-        let urlStringForCatalog = "";
-        let protocol = window.location.protocol;
-        let host = window.location.hostname;
-        let port = this.context.catalog;
-        let isReversedProxy = this.context.isReverseProxy;
-        if (host.includes("localhost")){
-            urlStringForCatalog = protocol + "//" + host +  (port.length > 0 ? ":" + port : "");
-        }else if(isReversedProxy){
-            urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "");
-        }else{
-            urlStringForCatalog = protocol + "//" + host + ':' + port;
-        }
 
-
-        fetch(urlStringForCatalog+'/catalog/api/v1/DemoAppConfig/Restore_Factory_Settings')
+        fetch( this.context.catalogServiceUrl +'/DemoAppConfig/Restore_Factory_Settings')
             .then(res => res.json())
             .then(
                 (result) => {
@@ -229,20 +216,7 @@ export default class Configuration extends React.Component {
         let tempMobileItemsArray=[];
         let tempAllItemsArray=[];
 
-            let urlStringForCatalog = "";
-            let protocol = window.location.protocol;
-            let host = window.location.hostname;
-            let port = this.context.catalog;
-            let isReversedProxy = this.context.isReverseProxy;
-            if (host.includes("localhost")){
-                urlStringForCatalog = protocol + "//" + host +  (port.length > 0 ? ":" + port : "") + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
-            }else if(isReversedProxy){
-                urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
-            }else{
-                urlStringForCatalog = protocol + "//" + host + ':' + port + '/catalog/api/v1/DemoAppConfig/parameters/by_tool/ALL';
-            }
-
-        fetch(urlStringForCatalog)
+        fetch(this.context.catalogServiceUrl + '/DemoAppConfig/parameters/by_tool/ALL')
             .then(res => res.json())
             .then((data) => {
                 data.parameters.forEach((item) =>{

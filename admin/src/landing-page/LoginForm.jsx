@@ -67,25 +67,14 @@ class LoginForm extends React.Component {
         loginPassword: this.state.password,
         loginUser: this.state.userName};
 
-        let protocol = window.location.protocol;
-        let host = window.location.hostname;
-        let port = this.context.accountService;
-        let urlString="";
-        let isReversedProxy = this.context.isReverseProxy;
-        if (host.includes("localhost")){
-            urlString = protocol + "//" + host +  (port.length > 0 ? ":" + port : "") + "/accountservice/";
-        }else if(isReversedProxy){
-            urlString = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/accountservice/";
-        }else{
-            urlString = protocol + "//" + this.context.accountServiceHost + ':' + port + '/accountservice/';
-        }
+
         let $ = require('jquery');
         require('jquery.soap');
         require('xml2js');
         let parseString = require('jquery.soap');
         let me = this;
         $.soap({
-            url: urlString,
+            url: this.context.accountServiceUrl,
             method: 'AccountLoginRequest',
             namespaceURL: 'com.advantage.online.store.accountservice',
             SOAPAction: 'com.advantage.online.store.accountserviceAccountLoginRequest' ,
