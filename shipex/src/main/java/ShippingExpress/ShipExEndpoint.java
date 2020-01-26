@@ -1,6 +1,5 @@
 package ShippingExpress;
 
-import ShipExServiceClient.ShippingCostTransactionType;
 import ShippingExpress.WsModel.*;
 import ShippingExpress.config.WebServiceConfig;
 import ShippingExpress.model.ShippingExpressService;

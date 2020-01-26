@@ -4,7 +4,7 @@ import ShipExServiceClient.ShippingCostTransactionType;
 import ShipExServiceClient.TransactionType;
 import ShippingExpress.WsModel.*;
 import ShippingExpress.model.ShippingExpressService;
-import com.advantage.common.Url_resources;
+
 import com.advantage.common.enums.ResponseEnum;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,13 +15,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
-
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -37,7 +32,6 @@ public class ShipexApplicationTests {
     private PlaceShippingOrderRequest orderRequest;
     private SEAddress address;
     private ShipExEndpoint endpoint;
-    private Url_resources url_resources;
 
     @Before
     public void init() {
