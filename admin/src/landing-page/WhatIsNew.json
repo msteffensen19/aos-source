@@ -1,16 +1,13 @@
 [
-	{"title":"Java11","content":"We upgraded from Java 8 to Java 11 after many requests to align AOS with the latest back-end technology."},
-	{"title":"PostgreSQL 10.0","content":"We upgraded the PostgreSQL database to version 10.0 to align with the Java 11 upgrade."},
-	{"title":"Front-End Dependency Management","content":"We switched the JavaScript package manager from Bower to Yarn after Bower was deprecated. Yarn is more secure, faster, and super reliable"},
-	{"title":"Nginx new version (1.14.0-0)","content":"We upgraded Nginx to the latest version in keeping with our promise to align with the latest technology."},
-	{"title":"Monitoring","content":"We added a health check to the PostgreSQL Docker container. This makes the application more stable."},
-	{"title":"Security","content":"We added an internal tool called STAT scan to run a security scan once a week. This makes the application more secure."},
-	{"title":"Spring Framework","content":"We upgraded the back-end jars from Spring version 4 to version 5."},
-	{"title":"User Guide","content":"We now have real documentation for our users. This PDF guide helps you understand the architecture and interface of the Advantage Online Shopping application and Manage Console. It also shows you how to configure AOS to demonstrate other Micro Focus products."},
-	{"title":"Video","content":"We produced two short videos. The first explains the AOS features and the second shows you how to use AOS to demonstrate end-to-end flow with other products in the Micro Focus portfolio"},
-	{"title":"New Web Management Console ","content":"Our users asked us to provide our Management Console on the Web so they could quickly access its administrative features. We answered their request by implementing a new separate Console, using React. This is an ongoing and fully Agile project; for this version we are delivering only the Landing Page and the Configuration Management"},
-	{"title":"WebSockets","content":"We now have WebSocket API so you can send messages to AOS server and receive event-driven responses without polling the server for a reply"},
-	{"title":"LoadRunner","content":"Following LoadRunner analysis, we improved AOS by removing duplicate requests."},
-	{"title":"UFT","content":"To make UFT/LeanFT object recognition more robust, we gave unique values to several attributes that used to have blank values, Specifically, these new attributes help with the shopping cart link because the number of items in the cart is dynamic"},
-	{"title":"Installer ","content":"We improved the installer to make installation fast and smooth. For the first time, we embedded Java 11 inside the installer."}
+	{"title":"Management Console","content":"Admin user is now able to restore the entire AOS system to factory settings.\nThe option is available through the Web Management Console, the API, and the .NET Management Console."},
+	{"title":"DevOps",
+		"content":"Functional tests – The suite has been upgrade to UFT v15.0 and the tests have been refactored as we notice a problem with the verification step. "
+	},
+	{
+		"title":"DevOps",
+		"content":"Performance tests – The LRC Jenkins job has been improved. "},
+	{
+		"title":"Critical defect fixes","content":"Shipping Express – A date format issue caused an exception during checkout, preventing the Payment transaction from completing."},
+	{"title":"Critical defect fixes","content":"Nimbus  - The ‘admin’ user can now log in to the Management console."},
+	{"title":"LFT","content":"our test suite has been upgrade to UFT v15.0"}
 ]
