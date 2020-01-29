@@ -19,7 +19,7 @@ class App extends Component {
     render() {
         return (
             <ContextProvider>
-                <Router basename='/admin'>
+                <Router basename='/admin' forceRefresh={false}>
                     {this.detectMobile() ?
                         <Route exact path="/management-console" component={UnderConstruction}/> :
                         <Route path="/management-console" component={ManagementConsole}/>
