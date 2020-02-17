@@ -37,7 +37,7 @@ public class DataSourceInitByCsv {
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("select a from Account a where a.email=:email");
-        query.setParameter("email", "mercury@hpe.com");
+        query.setParameter("email", "mercury@microfocus.com");
         List l = query.list();
 
         if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("account.hibernate.db.hbm2ddlAuto")).equals("validate") || l.isEmpty()) {
