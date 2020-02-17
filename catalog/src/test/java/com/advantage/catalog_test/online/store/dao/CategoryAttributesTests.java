@@ -13,12 +13,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,14 +45,31 @@ public class CategoryAttributesTests extends GenericRepositoryTests{
 
 
 
+    @PersistenceContext
+    protected EntityManager entityManager;
+
+
     @Test
     public void testCategoriesFilled() throws IOException {
         final TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-        final TransactionStatus transactionForCreation = transactionManager.getTransaction(transactionDefinition);
 
+        final TransactionStatus transactionStatusForInitialDeletion = transactionManager.getTransaction(transactionDefinition);
+
+        //delete categories -
+        List<Category> categories = categoryRepository.getAll();
+        if(categories != null){
+            for(Category selected : categories) {
+                categoryRepository.delete(selected);
+            }
+        }
+        int numOfCategories = categories != null ? categories.size() : 0;
+        transactionManager.commit(transactionStatusForInitialDeletion);
+        Assert.assertEquals("Error! Expecting " + 0 + " categories, but got " + numOfCategories, 0, numOfCategories);
+        final TransactionStatus transactionForCreation = transactionManager.getTransaction(transactionDefinition);
         //create categories
         System.out.println("creating 5 categories...");
         Category category = null;
+
         category = categoryRepository.createCategory("HEADPHONES", "1234");
         category = categoryRepository.createCategory("LAPTOPS", "1235");
         category = categoryRepository.createCategory("TABLETS", "1236");
@@ -61,8 +80,7 @@ public class CategoryAttributesTests extends GenericRepositoryTests{
         transactionManager.commit(transactionForCreation);
 
         System.out.println("Going to retrieve categories from table...");
-        List<Category> categories = categoryRepository.getAll();
-
+        categories = categoryRepository.getAll();
         System.out.println("Retrieved " + categories.size() + " categories from table");
 
         Assert.assertEquals("Error! Expecting " + CATEGORIES_NUMBER + " categories, but got " + categories.size(), CATEGORIES_NUMBER, categories.size());

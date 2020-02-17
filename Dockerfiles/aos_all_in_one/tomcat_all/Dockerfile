@@ -1,4 +1,4 @@
-FROM tomcat:9.0.17-jre11
+FROM tomcat:9.0-jdk11-adoptopenjdk-hotspot
 MAINTAINER Assaf Kubany
 
 ENV http_proxy="http://proxy.il.hpecorp.net:8080"
@@ -7,8 +7,10 @@ ENV https_proxy="http://proxy.il.hpecorp.net:8080"
 RUN apt-get update && \
     apt-get install -y \
     openjdk-8-jdk \
-    postgresql \
-    vim
+    vim \
+    zip unzip
+
+RUN apt-get install -y postgresql
 
 RUN rm -rf webapps/ROOT webapps/docs
 COPY wars.zip webapps
