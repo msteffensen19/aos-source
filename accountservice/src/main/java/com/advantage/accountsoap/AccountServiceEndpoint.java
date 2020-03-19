@@ -197,6 +197,7 @@ public class AccountServiceEndpoint {
     @ResponsePayload
     public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
         //todo set header
+        logger.debug("User " + account.getLoginUser() + "Is trying to login");
         int delayRequest = dynamicConfiguration.getDelayLength(loggedUsers + 1);
         logger.debug("delayRequest = " + delayRequest + " sec.");
         try {

@@ -434,6 +434,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
             if (account.getInternalUserBlockedFromLoginUntil() >= currentTimestamp) {
                 //  User is still blocked from login attempt
+                logger.debug("User " + loginUser + " is currently blocked");
                 return new AccountStatusResponse(false, Account.MESSAGE_USER_IS_BLOCKED_FROM_LOGIN, -1);
             }
         }
@@ -564,12 +565,13 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     @Override
     public Account addUnsuccessfulLoginAttempt(Account account) {
         //  Another unsuccessful (failed) login attempt
+        logger.debug("Logon attempt for user " + account.getLoginName() + " = " + (account.getInternalUnsuccessfulLoginAttempts() + 1));
         account.setInternalUnsuccessfulLoginAttempts(account.getInternalUnsuccessfulLoginAttempts() + 1);
 
         //  Check the number of unsuccessful login attempts, block user if reached the limit
         //if (accountsoap.getInternalUnsuccessfulLoginAttempts() == ENV_DEFAULT_NUMBER_OF_FAILED_LOGIN_ATTEMPTS_LIMIT) {
         if (account.getInternalUnsuccessfulLoginAttempts() == AccountConfiguration.getNumberOfLoginAttemptsBeforeBlocking()) {
-
+            logger.debug("User " + account.getLoginName() + " is blocked after " + (account.getInternalUnsuccessfulLoginAttempts() + 1) + " unsuccessful logon attempts ");
             //  Update Account class with timestamp when user can attempt login again according to configuration interval
             account.setInternalUserBlockedFromLoginUntil(Account.addMillisecondsIntervalToTimestamp((AccountConfiguration.getLoginBlockingIntervalInSeconds() * 1000)));
         }
