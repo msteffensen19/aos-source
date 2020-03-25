@@ -37,7 +37,12 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -63,6 +68,13 @@ public class AccountServiceEndpoint {
 
     @Autowired
     private DynamicConfiguration dynamicConfiguration;
+
+    private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    public void setRequest(HttpServletRequest request) {
+        this.httpServletRequest = request;
+    }
 
     private static final Logger logger = Logger.getLogger(AccountServiceEndpoint.class);
     private int loggedUsers;
@@ -197,7 +209,22 @@ public class AccountServiceEndpoint {
     @ResponsePayload
     public AccountLoginResponse doLogin(@RequestPayload AccountLoginRequest account) {
         //todo set header
+//       org.slf4j.MDC.put("source_ip", this.httpServletRequest.getRemoteAddr());
+
         logger.debug("User " + account.getLoginUser() + "Is trying to login");
+
+        String format = "%s  Source Ip = %s --- Destination Ip = %s --- User %s     %s      %s";
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        String logDate = simpleDateFormat.format(new Date());
+        String hostName = "";
+        try {
+            hostName = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
+                hostName, account.getLoginUser(), "doLogin",
+                "attempt"));
         int delayRequest = dynamicConfiguration.getDelayLength(loggedUsers + 1);
         logger.debug("delayRequest = " + delayRequest + " sec.");
         try {
@@ -227,14 +254,23 @@ public class AccountServiceEndpoint {
                                 .getById(response.getUserId())
                                 .getAccountType());
                 loggedUsers++;
+                logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
+                        hostName, account.getLoginUser(), "doLogin",
+                        "success"));
                 return new AccountLoginResponse(response);
             } else {
+                logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
+                        hostName, account.getLoginUser(), "doLogin",
+                        "failed"));
                 return new AccountLoginResponse(response);
             }
 
         } else {
             //TODO-EVG change message
             logger.warn("Reject login request");
+            logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
+                    hostName, account.getLoginUser(), "doLogin",
+                    "Maximum number logged users"));
             return new AccountLoginResponse(new AccountStatusResponse(false, "Maximum number logged users", -1));
         }
     }
@@ -246,6 +282,18 @@ public class AccountServiceEndpoint {
         logger.debug(AccountServiceEndpoint.class.getName() + ".doLogout(..) is calling method authorizeAsUser(..)");
         //  TODO-Benny: Verify that .NET and mobile version support this authorization
         //authorizeAsUser(request);
+        String format = "%s  Source Ip = %s --- Destination Ip = %s --- User %s     %s      %s";
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        String logDate = simpleDateFormat.format(new Date());
+        String hostName = "";
+        try {
+            hostName = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
+                hostName, accountService.getById(request.getAccountId()), "doLogin",
+                "attempt"));
         AccountStatusResponse response = accountService.doLogout(request.getStrAccountId(),
                 request.getBase64Token());
 
@@ -268,6 +316,9 @@ public class AccountServiceEndpoint {
 //            }
         loggedUsers = loggedUsers > 0 ? loggedUsers - 1 : 0;
         logger.info("Current login users = " + loggedUsers);
+        logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
+                hostName, accountService.getById(request.getAccountId()), "doLogin",
+                response.isSuccess() ? "success" : "fail"));
         return new AccountLogoutResponse(response);
 
     }
