@@ -218,12 +218,14 @@ public class AccountServiceEndpoint {
         String logDate = simpleDateFormat.format(new Date());
         String hostName = "";
         try {
-            hostName = InetAddress.getLocalHost().getHostName();
+            hostName = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
-                hostName, account.getLoginUser(), "doLogin",
+        logger.warn(String.format(format, logDate, hostName,
+                this.httpServletRequest.getRemoteAddr(),
+                account.getLoginUser(),
+                AccountServiceEndpoint.class.getName() + ".doLogin",
                 "attempt"));
         int delayRequest = dynamicConfiguration.getDelayLength(loggedUsers + 1);
         logger.debug("delayRequest = " + delayRequest + " sec.");
@@ -254,13 +256,19 @@ public class AccountServiceEndpoint {
                                 .getById(response.getUserId())
                                 .getAccountType());
                 loggedUsers++;
-                logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
-                        hostName, account.getLoginUser(), "doLogin",
+                logger.warn(String.format(format, logDate,
+                        hostName,
+                        this.httpServletRequest.getRemoteAddr(),
+                        account.getLoginUser(),
+                        AccountServiceEndpoint.class.getName() + ".doLogin",
                         "success"));
                 return new AccountLoginResponse(response);
             } else {
-                logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
-                        hostName, account.getLoginUser(), "doLogin",
+                logger.warn(String.format(format, logDate,
+                        hostName,
+                        this.httpServletRequest.getRemoteAddr(),
+                        account.getLoginUser(),
+                        AccountServiceEndpoint.class.getName() + ".doLogin",
                         "failed"));
                 return new AccountLoginResponse(response);
             }
@@ -268,8 +276,11 @@ public class AccountServiceEndpoint {
         } else {
             //TODO-EVG change message
             logger.warn("Reject login request");
-            logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
-                    hostName, account.getLoginUser(), "doLogin",
+            logger.warn(String.format(format, logDate,
+                    hostName,
+                    this.httpServletRequest.getRemoteAddr(),
+                    account.getLoginUser(),
+                    AccountServiceEndpoint.class.getName() + ".doLogin",
                     "Maximum number logged users"));
             return new AccountLoginResponse(new AccountStatusResponse(false, "Maximum number logged users", -1));
         }
@@ -287,12 +298,15 @@ public class AccountServiceEndpoint {
         String logDate = simpleDateFormat.format(new Date());
         String hostName = "";
         try {
-            hostName = InetAddress.getLocalHost().getHostName();
+            hostName = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
-                hostName, accountService.getById(request.getAccountId()), "doLogin",
+        logger.warn(String.format(format, logDate,
+                hostName,
+                this.httpServletRequest.getRemoteAddr(),
+                accountService.getById(request.getAccountId()).getLoginName(),
+                AccountServiceEndpoint.class.getName() + ".doLogout",
                 "attempt"));
         AccountStatusResponse response = accountService.doLogout(request.getStrAccountId(),
                 request.getBase64Token());
@@ -316,8 +330,11 @@ public class AccountServiceEndpoint {
 //            }
         loggedUsers = loggedUsers > 0 ? loggedUsers - 1 : 0;
         logger.info("Current login users = " + loggedUsers);
-        logger.info(String.format(format, logDate, this.httpServletRequest.getRemoteAddr(),
-                hostName, accountService.getById(request.getAccountId()), "doLogin",
+        logger.warn(String.format(format, logDate,
+                hostName,
+                this.httpServletRequest.getRemoteAddr(),
+                accountService.getById(request.getAccountId()).getLoginName(),
+                AccountServiceEndpoint.class.getName() + ".doLogout",
                 response.isSuccess() ? "success" : "fail"));
         return new AccountLogoutResponse(response);
 
