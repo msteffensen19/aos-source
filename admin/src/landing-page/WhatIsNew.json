@@ -1,13 +1,21 @@
 [
-	{"title":"Management Console","content":"Admin user is now able to restore the entire AOS system to factory settings.\nThe option is available through the Web Management Console, the API, and the .NET Management Console."},
-	{"title":"DevOps",
-		"content":"Functional tests – The suite has been upgrade to UFT v15.0 and the tests have been refactored as we notice a problem with the verification step. "
+	{
+		"title":"DevOps",
+		"content":"Refactor AOS repo, Use a clean tool to remove unwanted history from aos-source git repository"
 	},
 	{
 		"title":"DevOps",
-		"content":"Performance tests – The LRC Jenkins job has been improved. "},
+		"content":"Use STAT recommendation to fix vulnerabilities discovered from static code scans"},
 	{
-		"title":"Critical defect fixes","content":"Shipping Express – A date format issue caused an exception during checkout, preventing the Payment transaction from completing."},
-	{"title":"Critical defect fixes","content":"Nimbus  - The ‘admin’ user can now log in to the Management console."},
-	{"title":"LFT","content":"our test suite has been upgrade to UFT v15.0"}
+		"title":"DevOps",
+		"content":"AOS is now using Adopt SDK"
+	},
+	{
+		"title":"Critical defect fixes",
+		"content":"Fix Issue with AOS for Windows, restore factory settings failed"
+	},
+	{
+		"title": "Account service",
+		"content": "Enhance the accountservice SOAP service"
+	}
 ]
