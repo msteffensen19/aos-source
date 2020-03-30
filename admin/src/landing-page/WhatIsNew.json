@@ -1,46 +1,23 @@
 [
 	{
-		"title":"DevOps",
-		"content":"Refactor AOS repo, Use a clean tool to remove unwanted git repository"
+		"title":"Web Management Console",
+		"content":"Admin user can restore all the AOS system to factory setting"
 	},
 	{
 		"title":"DevOps",
-		"content":"Migrate From Oracle Java to OpenJDK"},
-	{
-		"title":"DevOps",
-		"content":"Enhance the accountservice SOAP service"
+		"content":"Refactor AOS repo, Use a clean tool to remove unwanted git repository. Name convention for the downloadable files. •\tUse STAT recommendation to fix vulnerabilities discovered from static code scans."
 	},
 	{
-		"title":"DevOps",
-		"content":"Name convention for the downloadable files"
-	},
-	{
-		"title": "Account service",
-		"content": "Fix a critical Issue with AOS for Windows"
-	},
-	{
-		"title": "Management Console",
-		"content": "Admin user is now able to restore the entire AOS system to factory settings"
-	},
-	{
-		"title": "Codeless AI",
-		"content": "Modify AOS UI for better Mobile Testing"
-	},
-	{
-		"title": "Codeless AI",
-		"content": "New Demo Narrative"
+		"title": "General",
+		"content": "Migrate From Oracle Java to OpenJDK. Fix issue with AOS for Windows. Enhance the accountservice SOAP service"
 	},
 	{
 		"title": "Mobile",
-		"content": "Fingerprint authentication (iOS & Android)"
+		"content": "Fingerprint authentication (iOS & Android). Codeless AI - Modify AOS UI for better Mobile Testing. New Demo Narrative is currently available - http://mf-te.com/2020/03/25/mobile-testing-with-codeless-ai-2/"
 	},
 	{
 		"title": "Security",
-		"content": "Leverage accountserivce logs"
-	},
-	{
-		"title": "Security",
-		"content": "Use STAT recommendation to fix vulnerabilities discovered from static code scans"
+		"content": "Authentication events are now logged, so these can be utilized within a security context for ArcSight ESM, Interset, Logger and others. For CEF format, we will shortly release a Flex Connector, or you can write your own."
 	},
 	{
 		"title": "LRC",
@@ -49,5 +26,9 @@
 	{
 		"title": "COBOL",
 		"content": "Design new feature leveraging COBOL, stay tuned for next version"
+	},
+	{
+		"title": "ITOM",
+		"content": "Leverage AOS for monitoring end user inter-container traffic "
 	}
 ]
