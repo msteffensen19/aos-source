@@ -96,7 +96,7 @@ export default class General extends React.Component {
                     inputTag = <TagType className="configuration-input-style" name={parameterName}>Tip</TagType>;
                     break;
                 case "yesNoSelect":
-                    inputTag =<select disabled={isProduction} className="configuration-input-style" name={parameterName} onChange={this.changeFlagValue}>
+                    inputTag =<select defaultValue={parameterValue} disabled={isProduction} className="configuration-input-style" name={parameterName} onChange={this.changeFlagValue}>
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>
                     </select>;
