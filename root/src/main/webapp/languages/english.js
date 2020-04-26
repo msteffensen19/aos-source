@@ -147,6 +147,7 @@ var english = {
     'Thank_you_for_buying_with_Advantage': 'Thank you for buying with Advantage',
     'Yor_tracking_number_is': 'Your tracking number is',
     'Your_order_number_is': 'Your order number is',
+    'Your_warranty_number_is': 'Your warranty number is',
     'Shipping_to': 'Shipping to',
     'Payment_Method': 'Payment method',
 
@@ -186,6 +187,7 @@ var english = {
     'Product_removed': 'Product removed',
     'USER': 'USER',
     'SEARCH': 'SEARCH',
+    'add_warranty': 'Add Warranty',
 
 
 
@@ -260,7 +262,7 @@ var english = {
     'ORDER_DATE': 'ORDER DATE',
     'ORDER_TIME': 'ORDER TIME',
     'TOTAL_PRICE': 'TOTAL PRICE',
-
+'WARRANTY' : 'WARRANTY',
     'COLOR': 'COLOR',
 
     'My_Orders': 'My orders',

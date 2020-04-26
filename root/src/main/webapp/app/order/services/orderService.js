@@ -37,7 +37,8 @@ define(['./module'], function (services) {
                     purchasedProducts.push({
                         "hexColor": product.color.code,
                         "productId": product.productId,
-                        "quantity": product.quantity
+                        "quantity": product.quantity,
+                        "hasWarranty" : product.hasWarranty
                     });
                 })
 

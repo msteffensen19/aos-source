@@ -15,7 +15,9 @@ define(['./module'], function (services) {
                 getDuplicateProductPrice: getDuplicateProductPrice,
                 nv_slowPage: nv_slowPage,
                 haveConfiguration: haveConfiguration,
-                facebookLogin : facebookLogin
+                facebookLogin : facebookLogin,
+                getWarrantyProperties: getWarrantyProperties
+
             });
 
 
@@ -38,6 +40,14 @@ define(['./module'], function (services) {
 
             function getDuplicateProductPrice() {
                 return appConfiguration && appConfiguration.duplicateProductPrice ? appConfiguration.duplicateProductPrice : 1;
+            }
+
+            function getWarrantyProperties() {
+                return appConfiguration && appConfiguration.enableWarranty ?
+                    {
+                        enableWarranty: appConfiguration.enableWarranty == 2 ? true : false,
+                        warrantyUrl: appConfiguration.warrantyUrl
+                    } : {};
             }
 
             function singOut() {
@@ -142,6 +152,14 @@ define(['./module'], function (services) {
                                         config.duplicateProductPrice = res.data.parameters[i].parameterValue &&
                                         res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
                                         break;
+                                    case "Enable_Warranty":
+                                        config.enableWarranty = res.data.parameters[i].parameterValue &&
+                                        res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
+                                        config.warrantyUrl = '';
+                                        break;
+                                    // case "Warranty_location":
+                                    //     config.warrantyUrl = res.data.parameters[i].parameterValue == 'default' ? '' : res.data.parameters[i].parameterValue;
+                                    //     break;
                                 }
                             }
                         }

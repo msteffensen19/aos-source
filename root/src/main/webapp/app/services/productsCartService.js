@@ -5,11 +5,11 @@
 define(['./module'], function (services) {
     'use strict';
     services.service('productsCartService', ['$http', '$q', 'resHandleService', 'ipCookie',
-        '$rootScope', 'toaster',
-        function ($http, $q, responseService, $cookie, $rootScope, toaster) {
+        '$rootScope', 'toaster', 'userService',
+        function ($http, $q, responseService, $cookie, $rootScope, toaster, userService) {
 
             var cart = null;
-
+            var enableWarranty = false;
             function getTempCart() {
                 return {"userId": -1, "productsInCart": [],}
             }
@@ -25,6 +25,7 @@ define(['./module'], function (services) {
                 saveCart: saveCart,
                 clearCart: clearCart,
                 checkOutOfStockProductsInCart: checkOutOfStockProductsInCart,
+                setEnableWarranty: setEnableWarranty
             });
 
             /* returned functions */
@@ -331,7 +332,7 @@ define(['./module'], function (services) {
                 return response.promise;
             }
 
-            function addProduct(product, quantity) {
+            function addProduct(product, quantity, hasWarranty) {
 
                 var response = $q.defer();
                 var user = $rootScope.userCookie;
@@ -355,7 +356,7 @@ define(['./module'], function (services) {
                             data: {sessionId: $rootScope.orderSessionId,},
                             async: false,
                             url: server.order.addProductToUser(user.response.userId,
-                                product.productId, product.colors[0].code, quantity),
+                                product.productId, product.colors[0].code, quantity, hasWarranty ? true : false),
                         });
                         request.then(function (newCart) {
                             Helper.disableLoader();
@@ -458,6 +459,10 @@ define(['./module'], function (services) {
                 });
                 return defer.promise;
 
+            }
+
+            function setEnableWarranty(isEnabledWarranty){
+                enableWarranty = isEnabledWarranty;
             }
 
         }]);

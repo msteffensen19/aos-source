@@ -143,7 +143,9 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
                     ShoppingCart.convertHexColorToInt(purchasedProduct.getHexColor()),
                     purchasedProduct.getPricePerItem(),
                     purchasedProduct.getQuantity(),
-                    purchasedProduct.getProductImageUrl());
+                    purchasedProduct.getProductImageUrl(),
+                    purchasedProduct.isHasWarranty(),
+                    purchasedProduct.getWarrantyNumber());
 
             entityManager.persist(orderLines);
         }

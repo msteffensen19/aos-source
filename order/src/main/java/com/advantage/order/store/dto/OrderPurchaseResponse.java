@@ -13,6 +13,25 @@ public class OrderPurchaseResponse {
     private long paymentConfirmationNumber;
     private long trackingNumber;
 
+    public boolean isHasWarranty() {
+        return hasWarranty;
+    }
+
+    public void setHasWarranty(boolean hasWarranty) {
+        this.hasWarranty = hasWarranty;
+    }
+
+    public String getWarrantyNumber() {
+        return warrantyNumber;
+    }
+
+    public void setWarrantyNumber(String warrantyNumber) {
+        this.warrantyNumber = warrantyNumber;
+    }
+
+    private boolean hasWarranty;
+    private String warrantyNumber;
+
     public OrderPurchaseResponse() {  }
 
     public OrderPurchaseResponse(boolean success) {

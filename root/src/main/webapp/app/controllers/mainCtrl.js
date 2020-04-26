@@ -384,10 +384,10 @@ define(['./module'], function (controllers) {
                 });
             };
 
-            $scope.addProduct = function (product, quantity, toastMessage) {
+            $scope.addProduct = function (product, quantity, hasWarranty, toastMessage) {
                 clearInterval(Helper.____closeTooTipCart);
                 var defer = $q.defer();
-                productsCartService.addProduct(product, quantity).then(function (cart) {
+                productsCartService.addProduct(product, quantity, hasWarranty).then(function (cart) {
                     $scope.cart = cart;
                     animateToolTipCart(toastMessage);
                     fixToolTipCartHeight();

@@ -216,9 +216,9 @@
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('productCtrl', ['$scope', 'resolveParams', '$state', '$filter',
-        '$rootScope', '$timeout', 'categoryService', '$sce', '$document', '$window',
+        '$rootScope', '$timeout', 'categoryService', '$sce', '$document', '$window', 'userService',
 
-        function (s, resolveParams, $state, $filter, $rootScope, $timeout, categoryService, $sce, document, $window) {
+        function (s, resolveParams, $state, $filter, $rootScope, $timeout, categoryService, $sce, document, $window, userService) {
 
             s.pageState = resolveParams.pageState;
             var resolveParams_selectedColor = resolveParams.selectedColor;
@@ -228,9 +228,17 @@ define(['./module'], function (controllers) {
             s.categoryName = resolveParams.categoryName;
             s.product = resolveParams.product;
             s.mostPopularComments = [];
-
+            s.warrantyPrice = 100;
             s.haveInternet = resolveParams.haveInternet;
+            s.warrantyProperties = {enableWarranty : false}
+            userService.haveConfiguration().then(function(res){
+                    s.warrantyProperties = userService.getWarrantyProperties();
+                },
+                function(err){
 
+                });
+
+            s.warrantyCheckbox = false;
             s.breadCrumbCategoryName = s.categoryName.substring(0,1) + s.categoryName.substring(1, s.categoryName.length-1).toLowerCase()
             if(s.product.productId == 22 || s.product.productId == 15 || s.product.productId == 16){
                 s.srcV1 = $sce.trustAsHtml("<video controls ><source src='../../css/videos/13543361_299823923688824_1410005144_n.mp4'></video>");
@@ -373,7 +381,7 @@ define(['./module'], function (controllers) {
                     }
                     if (quantity > 0) {
 
-                        var request = s.$parent.addProduct(productToAdd, quantity, $filter("translate")("toast_Product_Added_Successfully"));
+                        var request = s.$parent.addProduct(productToAdd, quantity, s.warrantyCheckbox, $filter("translate")("toast_Product_Added_Successfully"));
                         request.then(function (res) {
                             if(res.message){
                                 s.message.text = res.message; //s._class = res.success ? "valid" : "invalid";
@@ -463,7 +471,15 @@ define(['./module'], function (controllers) {
                 });
 
 
+            s.addWarrenty = function(){
+                if(s.warrantyCheckbox){
+                    s.product.price += s.warrantyPrice;
+                }
+                else{
+                    s.product.price -= s.warrantyPrice;
+                }
 
+            }
 
 
         }]);

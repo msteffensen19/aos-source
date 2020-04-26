@@ -16,6 +16,16 @@ public class ShoppingCartDto {
     private String hexColor;
     private int quantity;
 
+    public boolean isHasWarranty() {
+        return hasWarranty;
+    }
+
+    public void setHasWarranty(boolean hasWarranty) {
+        this.hasWarranty = hasWarranty;
+    }
+
+    private boolean hasWarranty;
+
     public ShoppingCartDto() {
     }
 
@@ -23,6 +33,13 @@ public class ShoppingCartDto {
         this.productId = productId;
         this.hexColor = hexColor;
         this.quantity = quantity;
+    }
+
+    public ShoppingCartDto(Long productId, String hexColor, int quantity, boolean hasWarranty) {
+        this.productId = productId;
+        this.hexColor = hexColor;
+        this.quantity = quantity;
+        this.hasWarranty = hasWarranty;
     }
 
     public Long getProductId() {

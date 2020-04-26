@@ -110,6 +110,30 @@ public class OrderLines {
     @Column(name = "product_image_url")
     private String productImageUrl;
 
+
+
+    public boolean isHasWarranty() {
+        return hasWarranty;
+    }
+
+    public void setHasWarranty(boolean hasWarranty) {
+        this.hasWarranty = hasWarranty;
+    }
+
+    public String getWarrantyNumber() {
+        return warrantyNumber;
+    }
+
+    public void setWarrantyNumber(String warrantyNumber) {
+        this.warrantyNumber = warrantyNumber;
+    }
+
+    @Column(name = "has_warranty")
+    private boolean hasWarranty;
+
+    @Column(name = "warranty_number")
+    private String warrantyNumber;
+
     public OrderLines() { }
 
     public OrderLines(long userId, long orderNumber, Long productId, int productColor) {
@@ -149,6 +173,19 @@ public class OrderLines {
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
         this.productImageUrl = productImageUrl;
+    }
+
+    public OrderLines(long userId, long orderNumber, Long productId, String productName, int convertHexColorToInt, double pricePerItem, int quantity, String productImageUrl, boolean hasWarranty, String warrantyNumber) {
+        this.userId = userId;
+        this.orderNumber = orderNumber;
+        this.productId = productId;
+        this.productName = productName;
+        this.productColor = productColor;
+        this.pricePerItem = pricePerItem;
+        this.quantity = quantity;
+        this.productImageUrl = productImageUrl;
+        this.hasWarranty = hasWarranty;
+        this.warrantyNumber = warrantyNumber;
     }
 
     public long getUserId() {

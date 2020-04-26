@@ -66,7 +66,7 @@
             <div id="Description" class="half">
                 <h1 class="roboto-regular screen768"> {{::product.productName | uppercase}} </h1>
 
-                <h2 class="roboto-thin screen768"> {{::product.price | currency:'$'}}
+                <h2 class="roboto-thin screen768"> {{product.price | currency:'$'}}
                 <span class="roboto-medium" data-ng-show="product.productStatus == 'OutOfStock'" translate="SOUL_OUT"></span>
                 </h2>
 
@@ -105,6 +105,16 @@
                     <div class="smoolMargin">
                         <label class="Quantity roboto-light" translate="Quantity:"></label>
                         <e-sec-plus-minus num-attr="quantity" a-disable="product.productStatus == 'OutOfStock'"></e-sec-plus-minus>
+                    </div>
+                    <div class="option notPromotionCheckbox" data-ng-show="warrantyProperties.enableWarranty && product.categoryId == 1">
+                        <input style="z-index: 999;top:8px" name="purchase_warranty" data-ng-model="warrantyCheckbox" type="checkbox"
+                               data-ng-click="addWarrenty()">
+                        <label style="top:-5px" class="Quantity roboto-light ng-scope" translate="add_warranty"></label>
+                        <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  width="24px" height="24px" x="0px" y="0px"
+                             viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+<path fill="#666666" d="M8,14.4c-3.5,0-6.4-2.9-6.4-6.4S4.5,1.6,8,1.6s6.4,2.9,6.4,6.4S11.5,14.4,8,14.4z M8,0C3.6,0,0,3.6,0,8
+	s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M7,7h2v5H7V7z M7,6V4h2v2H7z"/>
+</svg>                        <h2 style="    float: right;top: -3px;padding: 0; font-size: 20px;" class="roboto-thin screen768 ng-binding">{{::warrantyPrice | currency:'$'}}</h2>
                     </div>
                     <div class="fixedBtn">
                         <button name="save_to_cart" class="roboto-medium" role="button"

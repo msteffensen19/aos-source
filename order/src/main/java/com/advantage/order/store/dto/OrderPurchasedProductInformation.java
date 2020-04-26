@@ -28,9 +28,36 @@ public class OrderPurchasedProductInformation {
     @JsonProperty("PurchasedProduct.ProductImageUrl")
     private String productImageUrl;
 
+    public String getWarrantyNumber() {
+        return warrantyNumber;
+    }
+
+    public void setWarrantyNumber(String warrantyNumber) {
+        this.warrantyNumber = warrantyNumber;
+    }
+
+    public boolean isHasWarranty() {
+        return hasWarranty;
+    }
+
+    public void setHasWarranty(boolean hasWarranty) {
+        this.hasWarranty = hasWarranty;
+    }
+
+    @JsonProperty("PurchasedProduct.HasWarranty")
+    private boolean hasWarranty;
+
+    @JsonProperty("PurchasedProduct.WarrantyNumber")
+    private String warrantyNumber;
+
     public OrderPurchasedProductInformation() { }
 
-    public OrderPurchasedProductInformation(Long productId, String productName, String hexColor, String colorName, double pricePerItem, int quantity, String productImageUrl) {
+    public OrderPurchasedProductInformation(Long productId,
+                                            String productName,
+                                            String hexColor, String colorName,
+                                            double pricePerItem,
+                                            int quantity,
+                                            String productImageUrl, boolean hasWarranty, String warrantyNumber) {
         this.productId = productId;
         this.productName = productName;
         this.hexColor = hexColor;
@@ -38,6 +65,9 @@ public class OrderPurchasedProductInformation {
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
         this.productImageUrl = productImageUrl;
+        this.hasWarranty = hasWarranty;
+        this.warrantyNumber = warrantyNumber;
+
     }
 
     public Long getProductId() { return productId; }

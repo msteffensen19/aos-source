@@ -20,6 +20,9 @@
                     <th>
                         <label class="roboto-light" translate="PRODUCT_NAME"></label>
                     </th>
+                    <th class="smollCell" data-ng-show="enableWarranty">
+                        <label class="roboto-light" translate="WARRANTY"></label>
+                    </th>
                     <th class="smollCell">
                         <label class="roboto-light" translate="COLOR"></label>
                     </th>
@@ -39,6 +42,11 @@
                     </td>
                     <td>
                         <label class="roboto-regular productName">{{product.productName | uppercase}}</label>
+                    </td>
+                    <td class="smollCell quantityMobile" data-ng-show="enableWarranty">
+                        <label class="roboto-light mobileViewer" translate="WARRANTY"></label>
+                        <input style="z-index: 999;position: static;" name="purchase_warranty"  disabled ng-checked="product.hasWarranty" type="checkbox">
+
                     </td>
                     <td class="smollCell">
                         <label class="roboto-light mobileViewer">
@@ -60,7 +68,7 @@
                         </p>
                         <span class="actions">
                             <a class="edit"
-                               href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit"
+                               href="#/product/{{product.productId}}?color={{product.color.code}}&quantity={{product.quantity}}&pageState=edit&warranty={{product.warrantyProperties}}"
                                translate="EDIT"></a>
                             <a class="separator">|</a>
                             <a class="remove red" data-ng-click="removeProduct($index)" translate="REMOVE"></a>
@@ -81,13 +89,13 @@
                             </li>
                         </ul>
                     </td>
-                    <td colspan="2">
+                    <td colspan="{{enableWarranty ? 3 : 2}}">
                         <span class="roboto-light">{{'TOTAL' + ': ' | translate}}</span>
                         <span class="roboto-medium">{{cart | productsCartSum:shippingCost | currency:'$'}}</span>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="{{enableWarranty ? 6 : 5}}">
                         <button role="button" class="roboto-medium tami uft-class" data-ng-click="checkout()">{{'CHECK_OUT' | translate}} ({{ cart | productsCartSum:shippingCost | currency:'$' }})</button>
                     </td>
                 </tr>

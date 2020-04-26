@@ -59,6 +59,7 @@ public class ShoppingCart {
     public static final String FIELD_USER_ID = "user_id";
     public static final String FIELD_PRODUCT_ID = "product_id";
     public static final String FIELD_COLOR_ID = "color_id";
+    public static final String FIELD_HAS_WARRANTY = "has_warranty";
 
     public static final String PARAM_USER_ID = "PARAM_USER_ID";
     public static final String PARAM_PRODUCT_ID = "PARAM_PRODUCT_ID";
@@ -82,6 +83,18 @@ public class ShoppingCart {
     @Column(name = "quantity")
     private int quantity;
 
+
+    public boolean isHasWarranty() {
+        return hasWarranty;
+    }
+
+    public void setHasWarranty(boolean hasWarranty) {
+        this.hasWarranty = hasWarranty;
+    }
+
+    @Column(name = "has_warranty")
+    private boolean hasWarranty;
+
     public ShoppingCart() {
     }
 
@@ -99,6 +112,15 @@ public class ShoppingCart {
         this.productId = productId;
         this.color = color;
         this.quantity = quantity;
+    }
+
+    public ShoppingCart(long userId, long lastUpdate, Long productId, int color, int quantity, boolean hasWarranty) {
+        this.userId = userId;
+        this.lastUpdate = lastUpdate;
+        this.productId = productId;
+        this.color = color;
+        this.quantity = quantity;
+        this.hasWarranty = hasWarranty;
     }
 
     public long getUserId() {

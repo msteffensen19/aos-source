@@ -63,7 +63,7 @@ public class ShoppingCartService {
      * @return
      */
     @Transactional
-    public ShoppingCartResponse addProductToCart(long userId, Long productId, String stringColor, int quantity) {
+    public ShoppingCartResponse addProductToCart(long userId, Long productId, String stringColor, int quantity, boolean hasWarranty) {
 
         int color = ShoppingCart.convertHexColorToInt(stringColor);
 
@@ -92,7 +92,7 @@ public class ShoppingCartService {
             if (shoppingCart != null) {
                 shoppingCartRepository.update(userId, productId, color, totalQuantity);
             } else {
-                shoppingCartRepository.add(new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, totalQuantity));
+                shoppingCartRepository.add(new ShoppingCart(userId, Calendar.getInstance().getTime().getTime(), productId, color, totalQuantity, hasWarranty));
                 shoppingCartResponse.setId(productId);
             }
 
@@ -446,7 +446,11 @@ public class ShoppingCartService {
                     ShoppingCartResponseDto.CartProduct cartProduct = getCartProductDetails(cart.getProductId(),
                             ShoppingCart.convertIntColorToHex(cart.getColor()).toUpperCase(),
                             cart.getQuantity());
-
+                    if(cart.isHasWarranty()){
+                        //TODO create dynamic price value
+                        cartProduct.setPrice(cartProduct.getPrice() + 100);
+                        cartProduct.setHasWarranty(true);
+                    }
                     if (cartProduct != null) {
                         if (!cartProduct.getProductName().equalsIgnoreCase(Constants.NOT_FOUND)) {
                             /*  Add a product to user shopping cart response class  */
@@ -457,7 +461,9 @@ public class ShoppingCartService {
                                     cartProduct.getImageUrl(),
                                     cartProduct.getColor().getCode(),
                                     cartProduct.getColor().getName(),
-                                    cartProduct.getColor().getInStock());
+                                    cartProduct.getColor().getInStock(),
+                                    true,
+                                    cartProduct.isHasWarranty());
                         } else {
 //                          /*  Product in cart not found in catalog database schema    */
 //                          userCart.addCartProduct(cartProduct.getProductId(),

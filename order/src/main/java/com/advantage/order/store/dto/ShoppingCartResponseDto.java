@@ -77,6 +77,16 @@ public class ShoppingCartResponseDto {
         private ProductColor color;     //  Inner class of ShoppingCartResponseDto
         private boolean exists;
 
+        public boolean isHasWarranty() {
+            return hasWarranty;
+        }
+
+        public void setHasWarranty(boolean hasWarranty) {
+            this.hasWarranty = hasWarranty;
+        }
+
+        private boolean hasWarranty;
+
         /*  inner class CartProduct - Construtors  */
         public CartProduct(Long productId) { this.productId = productId; }
 
@@ -126,6 +136,20 @@ public class ShoppingCartResponseDto {
             this.imageUrl = imageUrl;
             this.color = new ProductColor(colorCode, colorName, inStock);
             this.exists = exists;
+        }
+
+        public CartProduct(Long productId, String productName,
+                           double price, int quantity, String imageUrl,
+                           String colorCode, String colorName,
+                           int inStock, boolean exists, boolean hasWarranty) {
+            this.productId = productId;
+            this.productName = productName;
+            this.price = price;
+            this.quantity = quantity;
+            this.imageUrl = imageUrl;
+            this.color = new ProductColor(colorCode, colorName, inStock);
+            this.exists = exists;
+            this.hasWarranty = hasWarranty;
         }
 
         /*  inner class CartProduct - Getters and Setters  */
@@ -262,8 +286,8 @@ public class ShoppingCartResponseDto {
         return this.getProductsInCart().add(cartProduct);
     }
 
-    public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock, boolean exists) {
-        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock, exists);
+    public boolean addCartProduct(Long productId, String productName, double pricePerItem, int quantity, String imageUrl, String colorHexCode, String colorName, int inStock, boolean exists, boolean hasWarranty) {
+        CartProduct cartProduct = new CartProduct(productId, productName, pricePerItem, quantity, imageUrl, colorHexCode, colorName, inStock, exists, hasWarranty);
         return this.getProductsInCart().add(cartProduct);
     }
 

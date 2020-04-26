@@ -290,9 +290,9 @@ var server = {
         }
         ,
 
-        addProductToUser: function (userId, productId, color, quantity) {
+        addProductToUser: function (userId, productId, color, quantity, hasWarranty) {
             var paramToReturn = orderKey + "carts/" + userId + "/product/" + productId +
-                "/color/" + color + "?quantity=" + quantity;
+                "/color/" + color + "?quantity=" + quantity + (hasWarranty != null && hasWarranty ? "&hasWarranty=true" : "");
             Loger.Calling(paramToReturn);
             return paramToReturn;
         }

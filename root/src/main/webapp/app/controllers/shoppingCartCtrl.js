@@ -4,11 +4,17 @@
 
 define(['./module'], function(controllers){
     'use strict';
-    controllers.controller('shoppingCartCtrl', ['$scope', 'productsCartService',
-        function(s, cartService){
+    controllers.controller('shoppingCartCtrl', ['$scope', 'productsCartService', 'userService',
+        function(s, cartService, userService){
 
             Helper.forAllPage();
+            s.enableWarranty = false;
+            userService.haveConfiguration().then(function(res){
+                    s.enableWarranty = userService.getWarrantyProperties().enableWarranty;
+                },
+                function(err){
 
+                });
             angular.element(document).ready(function () {
 
                 var result = document.getElementsByClassName("uft-class");

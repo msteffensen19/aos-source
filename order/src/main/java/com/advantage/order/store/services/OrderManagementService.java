@@ -16,6 +16,7 @@ import com.advantage.root.util.ArgumentValidationHelper;
 import com.advantage.root.util.JsonHelper;
 import com.advantage.root.util.RestApiHelper;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.http.HttpException;
 import org.apache.log4j.Logger;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -282,6 +283,10 @@ public class OrderManagementService {
                     int index = products.getProduct().size() - 1;
                     products.getProduct().get(index).setProductQuantity(products.getProduct().get(index).getProductQuantity() + purchasedProduct.getQuantity());
                 }
+                if(!purchaseResponse.isHasWarranty() && purchasedProduct.isHasWarranty()){
+                    purchaseResponse.setHasWarranty(true);
+                    purchaseResponse.setWarrantyNumber(purchasedProduct.getWarrantyNumber());
+                }
             }
 
             PlaceShippingOrderRequest orderRequest = new PlaceShippingOrderRequest();
@@ -333,6 +338,23 @@ public class OrderManagementService {
 
         for (ShoppingCartDto cartProduct : cartProducts) {
 
+
+            /*TODO - this is the COBOL API
+            * - check if a user bought a warranty
+            * - if yes - call the COBOL service
+            * - get the warranty number
+            * handle service down/bad gateway
+            * */
+
+            String warrantyNum = "{\"WarrantyID\":\"00-00-00-00-00-0\",\"WarrantyExpDate\":\"00000000\"}";
+            if(cartProduct.isHasWarranty()){
+                logger.info("Calling Warranty service");
+                try{
+                    warrantyNum = getProductWarranty();
+                } catch (IOException e){
+                    logger.error("Unable to get warranty - ", e);
+                }
+            }
             //ShoppingCartResponseDto.CartProduct product =
             //        shoppingCartRepository.getCartProductDetails(cartProduct.getProductId(),
             //                                                    cartProduct.getHexColor().toUpperCase());
@@ -347,7 +369,9 @@ public class OrderManagementService {
                         product.getColor().getName(),
                         product.getPrice(),
                         cartProduct.getQuantity(),
-                        product.getImageUrl()));
+                        product.getImageUrl(),
+                        cartProduct.isHasWarranty(),
+                        warrantyNum));
 
                 totalAmount += product.getPrice() * cartProduct.getQuantity();
 
@@ -359,11 +383,25 @@ public class OrderManagementService {
                         "BLACK",
                         -999999.99,                     //  Price-per-item
                         cartProduct.getQuantity(),
-                        ""));
+                        "",
+                        cartProduct.isHasWarranty(),
+                        warrantyNum));
             }
         }
 
         return purchasedProducts;
+    }
+
+    private String getProductWarranty() throws IOException {
+        URL warrantyServiceUrl = null;
+        try {
+            warrantyServiceUrl = new URL("https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=abc123");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        logger.info("Warranty Service URL=" + "https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=abc123");
+        String response = RestApiHelper.httpGet(warrantyServiceUrl);
+        return response;
     }
 
     /**

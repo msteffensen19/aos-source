@@ -142,6 +142,7 @@ public class OrderController {
                                                                     @PathVariable("productId") Long productId,
                                                                     @PathVariable("color") String hexColor,
                                                                     @RequestParam(value = "quantity", defaultValue = "1", required = false) int quantity,
+                                                                    @RequestParam(value = "hasWarranty", defaultValue = "false", required = false) boolean hasWarranty,
                                                                     HttpServletRequest request) {
         CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
         if (cefData != null) {
@@ -156,7 +157,7 @@ public class OrderController {
             return new ResponseEntity<>(new ShoppingCartResponseDto(), HttpStatus.UNAUTHORIZED);
         }
 
-        shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity);
+        shoppingCartResponse = shoppingCartService.addProductToCart(userId, productId, hexColor, quantity, hasWarranty);
         if (shoppingCartResponse == null) {
             logger.fatal(String.format("shoppingCartResponse = shoppingCartService.addProductToCart(%d, %d, %s, %d) is NULL", userId, productId, hexColor, quantity));
         }
@@ -690,7 +691,7 @@ public class OrderController {
                 historyOrderResponseDto.getOrdersHistory().forEach(
                         order -> {
                             order.getProducts().forEach(product -> {
-                                shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity());
+                                shoppingCartResponse = shoppingCartService.addProductToCart(userId, product.getProductId(), String.valueOf(product.getProductColor()), product.getProductQuantity(), false);
                             });
                         }
                 );

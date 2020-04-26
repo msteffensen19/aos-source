@@ -109,6 +109,25 @@ public abstract class RestApiHelper {
         return returnValue;
     }
 
+    /**
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public static String httpGet(URL url) throws IOException {
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        logger.debug("HttpURLConnection = " + conn.getURL().toString());
+        int responseCode = conn.getResponseCode();
+
+        logger.debug("responseCode = " + responseCode);
+        String returnValue = responseSolver(responseCode, conn);
+
+        conn.disconnect();
+
+        return returnValue;
+    }
+
     public static String httpGetWithAuthorization(URL url, String serviceName, String key, String value ) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         logger.debug("HttpURLConnection = " + conn.getURL().toString());

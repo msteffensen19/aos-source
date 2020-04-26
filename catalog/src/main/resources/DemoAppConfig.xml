@@ -171,4 +171,10 @@ The user opens a defect, fixes the code, and commits the change. This triggers a
 
 To achieve this, you must edit the accountservice\src\main\java\com\advantage\accountsoap\dao\impl\DefaultAccountRepository file. In this file, first uncomment the code that is located between the 'SQL injection vulnerability' tags.  Then, comment out the code that is located between the 'Code without SQL injection vulnerability' tags. Note that there are 2 locations in the code in which you need to make these changes." tools="Fortify, LeanFT, UFT" locationInAdvantage="Create Account page" locationInAdminTool="Security">Tip</Tips_SQL_injection_vulnerability>
 
+
+    <!-- AOS COBOL Integration -->
+    <Enable_Warranty datatype="enum:[Yes,No]" description="TBD" tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">No</Enable_Warranty>
+<!--    <Warranty_location datatype="string" description="TBD" tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">http://localhost:8080</Warranty_location>-->
+
+
 </Parameters>

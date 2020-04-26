@@ -24,6 +24,8 @@ define(['./module'], function (controllers) {
                 s.paymentEnd = args.paymentEnd;
                 s.orderNumber = args.orderNumber;
                 s.trackingNumber = args.trackingNumber;
+                s.hasWarranty = args.hasWarranty;
+                s.warrantyNumber = args.warrantyNumber;
                 s.cardNumber = ['0000', '0000', '0000', args.cardNumber.substring(args.cardNumber.length - 4)];
                 s.subTotal = ($filter("productsCartSum")(s.cart));
                 s.total = ($filter("productsCartSum")(s.cart, s.shippingCost));
