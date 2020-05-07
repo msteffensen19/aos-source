@@ -394,7 +394,8 @@ define(['./module'], function (services) {
                             "productName": product.productName,
                             "color": product.colors.length > 0 ? product.colors[0] : 'FFF',
                             "quantity": quantity,
-                            "price": product.price
+                            "price": product.price,
+                            "hasWarranty" : hasWarranty
                         });
                     }
                     else {

@@ -173,7 +173,7 @@ To achieve this, you must edit the accountservice\src\main\java\com\advantage\a
 
 
     <!-- AOS COBOL Integration -->
-    <Enable_Warranty datatype="enum:[Yes,No]" description="TBD" tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">No</Enable_Warranty>
+    <Enable_Warranty datatype="enum:[Yes,No]" description="Determines whether a warranty checkbox is added to each laptop product screen. Use this parameter to demonstrate an integration between AOS and COBOL, during checkout AOS backend invoke a COBOL service to activate a warranty for laptop. Default = No. Yes = Add a checkbox to the laptop product page." tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">No</Enable_Warranty>
 <!--    <Warranty_location datatype="string" description="TBD" tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">http://localhost:8080</Warranty_location>-->
 
 
