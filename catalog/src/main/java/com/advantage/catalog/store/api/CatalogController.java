@@ -804,6 +804,26 @@ public class CatalogController {
 
         return new ResponseEntity<>(statusResponse, (statusResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
     }
+
+    @RequestMapping(value = "/DemoAppConfig/update/parameter/{name}/value", method = RequestMethod.PUT)
+    @ApiOperation(value = "Update DemoAppConfig parameter value")
+    public ResponseEntity<DemoAppConfigStatusResponse> updateDemoAppConfigParameter(@PathVariable("name") String parameterName,
+                                                                                    final HttpServletRequest request,
+                                                                                    final HttpServletResponse response,
+                                                                                    @RequestParam("param") String param) {
+        CefHttpModel cefData = (CefHttpModel) request.getAttribute("cefData");
+        if (cefData != null) {
+            logger.trace("cefDataId=" + cefData.toString());
+            cefData.setEventRequiredParameters(String.valueOf("/DemoAppConfig/update/parameter/{name}/value?param=" + param + "".hashCode()),
+                    "Update DemoAppConfig parameter value", 5);
+        } else {
+            logger.warn("cefData is null");
+        };
+
+        DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParameterValue(parameterName, param);
+
+        return new ResponseEntity<>(statusResponse, (statusResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
+    }
     //  endregion
 
     @RequestMapping(value = "/DemoAppConfig/update/parameters", method = RequestMethod.PUT)

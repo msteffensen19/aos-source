@@ -117,6 +117,7 @@ public abstract class RestApiHelper {
      */
     public static String httpGet(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setConnectTimeout(120000);
         logger.debug("HttpURLConnection = " + conn.getURL().toString());
         int responseCode = conn.getResponseCode();
 

@@ -345,12 +345,12 @@ public class OrderManagementService {
             * - get the warranty number
             * handle service down/bad gateway
             * */
-
+            String cobolServiceUrl = RestApiHelper.getDemoAppConfigParameterValue("Warranty_Service_URL");
             String warrantyNum = "{\"WarrantyID\":\"00-00-00-00-00-0\",\"WarrantyExpDate\":\"00000000\"}";
             if(cartProduct.isHasWarranty()){
                 logger.info("Calling Warranty service");
                 try{
-                    warrantyNum = getProductWarranty();
+                    warrantyNum = getProductWarranty(cartProduct.getProductId(), cobolServiceUrl);
                 } catch (IOException e){
                     logger.error("Unable to get warranty - ", e);
                 }
@@ -392,14 +392,15 @@ public class OrderManagementService {
         return purchasedProducts;
     }
 
-    private String getProductWarranty() throws IOException {
+    private String getProductWarranty(Long productId, String cobolServiceUrl) throws IOException {
         URL warrantyServiceUrl = null;
         try {
-            warrantyServiceUrl = new URL("https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=abc123");
+            warrantyServiceUrl = new URL(cobolServiceUrl + "&prodid=" + productId);
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            warrantyServiceUrl = new URL("https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=" + productId);
         }
-        logger.info("Warranty Service URL=" + "https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=abc123");
+        logger.info("Warranty Service URL=" + "https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=" + productId);
         String response = RestApiHelper.httpGet(warrantyServiceUrl);
         return response;
     }

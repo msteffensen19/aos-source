@@ -7,17 +7,23 @@ export default class General extends React.Component {
         super(props);
         this.state = {
             data:{},
-            isUpdateSuccess:false
+            isUpdateSuccess:false,
+            failedToSaveUrl:false
         };
         this.setInputAttributes = this.setInputAttributes.bind(this);
         this.changeFlagValue = this.changeFlagValue.bind(this);
         this.saveOldValue = this.saveOldValue.bind(this);
         this.closePopUp=this.closePopUp.bind(this);
+        this.closeFailedPopUp = this.closeFailedPopUp.bind(this);
     }
 
     closePopUp(){
         this.setState({isUpdateSuccess:false});
     }
+    closeFailedPopUp(){
+        this.setState({failedToSaveUrl:false});
+    }
+
 
     changeFlagValue(event){
         let self = this;
@@ -25,7 +31,21 @@ export default class General extends React.Component {
 
         if(this.oldvalue !== event.target.value){
             this.setState({[event.target.key]:event.target.value});
-            fetch(this.context.catalogServiceUrl + '/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value , {
+            var url;
+            if(event.target.name === "Warranty_Service_URL"){
+                try{
+                    url  = new URL(event.target.value)
+                } catch (e) {
+                    console.error(e);
+                    self.setState({failedToSaveUrl:true});
+                    event.target.value = this.oldvalue;
+                    return;
+                }
+                url = this.context.catalogServiceUrl + '/DemoAppConfig/update/parameter/'+event.target.name+'/value?param='+event.target.value;
+            }
+            else
+                url = this.context.catalogServiceUrl + '/DemoAppConfig/update/parameter/'+event.target.name+'/value/'+event.target.value
+            fetch(url , {
                 method: 'put'
             }).then( (response) => {
                 return response.json()
@@ -85,12 +105,13 @@ export default class General extends React.Component {
             let inputTag;
             switch (TagType) {
                 case "input":
-                    inputTag = <select disabled={isProduction} className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
-                                       value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
-                        {[...Array(1000).keys()].map((i) =>
-                            <option key={i.toString()} value={i}>{i}</option>
-                        )}
-                    </select>;
+                    // inputTag = <select disabled={isProduction} className="configuration-input-style config-input" name={parameterName} defaultValue={parameterValue}
+                    //                    value={this.state.parameterName} onFocus={this.saveOldValue}  onBlur={this.changeFlagValue}>
+                    //     {[...Array(1000).keys()].map((i) =>
+                    //         <option key={i.toString()} value={i}>{i}</option>
+                    //     )}
+                    // </select>;
+                    inputTag = <input key={parameterValue} title={parameterValue} className="configuration-input-style"  disabled={isProduction} name={parameterName} onFocus={this.saveOldValue} type="text" defaultValue={parameterValue} value={this.state.parameterName} onBlur={this.changeFlagValue}/>
                     break;
                 case "span":
                     inputTag = <TagType className="configuration-input-style" name={parameterName}>Tip</TagType>;
@@ -118,12 +139,14 @@ export default class General extends React.Component {
         return (
             <>
                 {this.state.isUpdateSuccess?<Popup closePopUp = {this.closePopUp}/>:null}
+                {this.state.failedToSaveUrl?<Popup closePopUp = {this.closeFailedPopUp} textForPopup='Failed to parse URL: Invalid URL'/>:null}
                 <table className="configuration-table-style">
                     <tbody>
                     {this.renderTableData()}
                     </tbody>
                 </table>
             </>
+
         );
     }
 }
