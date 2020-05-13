@@ -596,6 +596,12 @@ try {
         logger.warn("updateParametersValues(...) - Resetting \"Implement_DevOps_Process\"");
         this.updateParameterValue("Implement_DevOps_Process", "No");
 
+        logger.warn("updateParametersValues(...) - Resetting \"Warranty_Service_URL\"");
+        this.updateParameterValue("Implement_DevOps_Process", "https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==");
+
+        logger.warn("updateParametersValues(...) - Resetting \"Enable_Warranty\"");
+        this.updateParameterValue("Enable_Warranty", "No");
+
         logger.trace("restoreFactorySettingsDemoAppConfig() - \"DemoAppConfig.xml\" restore factory settings successful");
         return new DemoAppConfigStatusResponse(true, "\"DemoAppConfig.xml\" restore factory settings successful");
     }
