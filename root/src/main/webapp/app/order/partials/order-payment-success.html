@@ -6,7 +6,7 @@
         <span class="separator">|</span>
         {{ 'Your_order_number_is' | translate }} <label id="orderNumberLabel">{{orderNumber}}</label>
         <span class="separator" data-ng-show="hasWarranty">|</span>
-        {{ 'Your_warranty_number_is' | translate }} <label data-ng-show="hasWarranty" id="warrantyNumber">{{warrantyNumber}}</label>
+        <label data-ng-show="hasWarranty">{{ 'Your_warranty_number_is' | translate }} </label><label data-ng-show="hasWarranty" id="warrantyNumber">{{warrantyNumber}}</label>
     </p>
 
     <div>

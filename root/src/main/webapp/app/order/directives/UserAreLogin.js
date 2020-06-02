@@ -137,7 +137,7 @@ define(['./module'], function (directives) {
                                     Analytics.trackEvent('Order', 'paymentCompleted', res);
                                         if (res.success) {
                                             $("#payNowSPErrorLabel").html("");
-                                            var warrantyResponse = JSON.parse(res.warrantyNumber);
+                                            var warrantyResponse = res.warrantyNumber ? JSON.parse(res.warrantyNumber) : null;
                                             rs.$broadcast('updatePaymentEnd', {
                                                 paymentEnd: true,
                                                 orderNumber: res.orderNumber,
@@ -145,7 +145,7 @@ define(['./module'], function (directives) {
                                                 cardNumber: +s.card.number + '',
                                                 TransPaymentMethod: TransPaymentMethod,
                                                 hasWarranty: res.hasWarranty ? true : false,
-                                                warrantyNumber : warrantyResponse.WarrantyID != null ? warrantyResponse.WarrantyID : "0"
+                                                warrantyNumber : warrantyResponse && warrantyResponse.WarrantyID != null ? warrantyResponse.WarrantyID : "0"
                                             });
                                             Helper.scrollPageUp();
                                             safePayBussy = false;
