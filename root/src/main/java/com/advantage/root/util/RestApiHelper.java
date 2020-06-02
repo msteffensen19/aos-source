@@ -13,9 +13,7 @@ import org.springframework.http.HttpHeaders;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 
 /**
  * @author Binyamin Regev on on 22/06/2016.
@@ -116,7 +114,19 @@ public abstract class RestApiHelper {
      * @throws IOException
      */
     public static String httpGet(URL url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        Proxy proxy = null;
+        try{
+            proxy = getProxyFromProperties();
+        } catch (Exception e){
+            logger.error("Unable to build proxy", e);
+        }
+
+        HttpURLConnection conn = null;
+        if(proxy == null){
+            conn = (HttpURLConnection) url.openConnection();
+        }
+        else
+            conn = (HttpURLConnection) url.openConnection(proxy);
         conn.setConnectTimeout(120000);
         logger.debug("HttpURLConnection = " + conn.getURL().toString());
         int responseCode = conn.getResponseCode();
@@ -127,6 +137,16 @@ public abstract class RestApiHelper {
         conn.disconnect();
 
         return returnValue;
+    }
+
+    public static Proxy getProxyFromProperties() throws Exception{
+
+        String host = System.getProperty("aos.cobol.proxy.host");
+        String port = System.getProperty("aos.cobol.proxy.port");
+
+        if(host == null || port == null)
+            return null;
+        return new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, Integer.parseInt(port)));
     }
 
     public static String httpGetWithAuthorization(URL url, String serviceName, String key, String value ) throws IOException {
