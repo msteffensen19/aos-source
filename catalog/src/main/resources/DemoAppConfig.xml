@@ -174,7 +174,7 @@ To achieve this, you must edit the accountservice\src\main\java\com\advantage\a
 
     <!-- AOS COBOL Integration -->
     <Enable_Warranty datatype="enum:[Yes,No]" description="Determines whether a warranty checkbox is added to each laptop product screen. Use this parameter to demonstrate an integration between AOS and COBOL, during checkout AOS backend invoke a COBOL service to activate a warranty for laptop. Default = No. Yes = Add a checkbox to the laptop product page." tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">No</Enable_Warranty>
-    <Warranty_Service_URL datatype="string" description="The URL of the COBOL web service to be used for the warranty, the default service is located on AZURE" tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==</Warranty_Service_URL>
+    <Warranty_Service_URL datatype="string" description="The URL of the COBOL web service to be used for the warranty, the default service is located on AZURE. the default URL is: https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg== note: mouse over on the text field to view the current URL." tools="AMC" locationInAdvantage="Laptops" locationInAdminTool="General">https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==</Warranty_Service_URL>
 
 
 </Parameters>
