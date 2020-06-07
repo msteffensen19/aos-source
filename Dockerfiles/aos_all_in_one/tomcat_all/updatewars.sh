@@ -16,12 +16,18 @@ if [ "$i" == "ROOT" ];then
   path_to_services="./services.properties"
 fi
 sed -i 's/\.\./\/opt/g' "./WEB-INF/classes/log4j.properties"
-sed -i "s/account\.soapservice\.url\.host=localhost/account\.soapservice\.url\.host=${ACCOUNT_IP}/g" ${path_to_services}
+if [ "$1" == "accountservice" ];then
+  sed -i "s/account\.soapservice\.url\.host=localhost/account\.soapservice\.url\.host=${ACCOUNT_IP}/g" ${path_to_services}
+  sed -i "s/account\.soapservice\.url\.port=8080/account\.soapservice\.url\.port=${ACCOUNT_PORT}/g" ${path_to_services}
+fi
+if [ "$1" == "order" ];then
+  sed -i "s/order\.service\.url\.host=localhost/order\.service\.url\.host=${ACCOUNT_IP}/g" ${path_to_services}
+  sed -i "s/order\.service\.url\.port=8080/order\.service\.url\.port=${ACCOUNT_PORT}/g" ${path_to_services}
+fi
 sed -i "s/=localhost/=${MAIN_IP}/g" ${path_to_services}
-sed -i "s/account\.soapservice\.url\.port=8080/account\.soapservice\.url\.port=${ACCOUNT_PORT}/g" ${path_to_services}
 sed -i "s/=8080/=${MAIN_PORT}/g" ${path_to_services}
 sed -i 's/single\.machine\.deployment=true/single\.machine\.deployment=false/g' "${path_to_services}"
-if [[ "$i" == "order" || "$i" == "catalog" ]];then
+if [[ "$i" == "$1" || "$i" == "catalog" ]];then
 #sed -i 's/=validate/=create/g' "./WEB-INF/classes/properties/internal_config_for_env.properties"
    sed -i "s/=localhost/=${POSTGRES_IP}/g" ./WEB-INF/classes/properties/internal_config_for_env.properties
    sed -i "s/=5432/=${POSTGRES_PORT}/g" ./WEB-INF/classes/properties/internal_config_for_env.properties
