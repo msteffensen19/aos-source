@@ -96,6 +96,36 @@
 			</plugins>
 		</build>
 	</profile>
-	
+		<profile>
+			<id>pack_wars_without_orderservice</id>
+			<build>
+				<finalName>res</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>package-6-wars-to-zip-for-prod</id>
+								<goals>
+									<goal>single</goal>
+								</goals>
+								<phase>package</phase>
+								<configuration>
+									<appendAssemblyId>false</appendAssemblyId>
+									<finalName>wars</finalName>
+									<descriptors>
+										<descriptor>
+											${project.basedir}/all-wars-without-orderservice-to-zip.xml
+										</descriptor>
+									</descriptors>
+									<outputDirectory>../root/target</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
