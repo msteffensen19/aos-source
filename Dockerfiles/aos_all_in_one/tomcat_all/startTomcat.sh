@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ ! -f /initialized.txt ]; then # Run initialization logic
     cd webapps
-    bash updatewars.sh service_to_separate
+    bash updatewars.sh
 
     sed -i '0,/RE/s/<Connector port="8080"/<!--\n&/' /usr/local/tomcat/conf/server.xml
 
