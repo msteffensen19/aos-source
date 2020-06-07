@@ -184,11 +184,11 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 	cp ${all_wars_path} ./Dockerfiles/aos_all_in_one/tomcat_all
 	cd ./Dockerfiles/aos_all_in_one/tomcat_all
 	
-	if [ $service_to_separate == "account_service"];then
+	if [ $service_to_separate == "account_service" ];then
 	    echo "separate account service war"
 	    sed -i 's/service_to_separate/accountservice/g' "startTomcat.sh"
 	fi
-	if [ $service_to_separate == "order_service"];then
+	if [ $service_to_separate == "order_service" ];then
         echo "separate order service war"
         sed -i 's/service_to_separate/order/g' "startTomcat.sh"
     fi
@@ -197,10 +197,10 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
 	docker push advantageonlineshopping/aos-main-app-dev:latest
   fi
   if $aos_build_both_wars || $aos_build_accountservice_war || $aos_force_build_wars;then
-    if [ $service_to_separate == "account_service"];then
+    if [ $service_to_separate == "account_service" ];then
         accountservice_war_path=$WORKSPACE/accountservice/target/accountservice.war
     fi
-    if [ $service_to_separate == "order_service"];then
+    if [ $service_to_separate == "order_service" ];then
         accountservice_war_path=$WORKSPACE/order/target/order.war
     fi
 	cp ${accountservice_war_path} $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_account
