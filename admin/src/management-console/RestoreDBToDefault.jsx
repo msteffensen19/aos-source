@@ -7,6 +7,7 @@ import DonePopup from './SavedPopup';
 import DevPopup from'./DevPopupWindow';
 import ContextProvider from "../landing-page/ConsoleContext";
 import  xml2jsonImpl from '../landing-page/Parser';
+import ReactGA from 'react-ga';
 
 export default class RestoreDBToDefault extends React.Component {
 
@@ -97,7 +98,11 @@ export default class RestoreDBToDefault extends React.Component {
                                         }
                                         console.log("result--" + result.details);
                                         me.setState({openDonePopup:true});
-                                        me.setState({textForPopup:"Restored Successfully!"})
+                                        me.setState({textForPopup:"Restored Successfully!"});
+                                        ReactGA.event({
+                                            category: 'Management Console',
+                                            action: 'Restore DB'
+                                        });
                                     },
                                     (error) => {
                                         console.log("ERROR--" + error);

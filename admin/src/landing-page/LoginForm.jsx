@@ -7,6 +7,7 @@ import  xml2jsonImpl from './Parser';
 import '../css-landing-page/login-form.css';
 import {withRouter} from 'react-router-dom';
 import ContextProvider from "./ConsoleContext";
+import ReactGA from 'react-ga';
 
 
 
@@ -88,6 +89,10 @@ class LoginForm extends React.Component {
                     LoginForm.addWornSignInElement("Wrong Username or password");
                 }else{
                     me.props.history.push('/management-console');
+                    ReactGA.event({
+                        category: 'Management Console',
+                        action: 'Admin Console Login'
+                    });
                 }
             },
             error: function (response) {

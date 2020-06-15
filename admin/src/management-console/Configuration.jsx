@@ -10,6 +10,7 @@ import {ReactComponent as RestoreIcon} from "../svg-png-ext/RestoreIcon.svg";
 import {ReactComponent as FilterIcon} from "../svg-png-ext/filterIconConfig.svg";
 import ContextProvider from '../landing-page/ConsoleContext';
 import DonePopup from './SavedPopup';
+import ReactGA from 'react-ga';
 
 export default class Configuration extends React.Component {
 
@@ -192,6 +193,10 @@ export default class Configuration extends React.Component {
                         console.log("success--" + result.reason);
                         this.setState({openDonePopup:true});
                         this.setState({textForPopup:"Restored Successfully!"})
+                        ReactGA.event({
+                            category: 'Management Console',
+                            action: 'Restore Factory Settings'
+                        });
                     }
                 },
                     (error) => {

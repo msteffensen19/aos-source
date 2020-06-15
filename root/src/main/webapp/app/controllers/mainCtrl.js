@@ -7,8 +7,9 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('mainCtrl', ['$scope', '$q', 'productService', 'smoothScroll', 'userService', 'orderService',
         '$location', 'ipCookie', '$rootScope', 'productsCartService', '$filter', '$state', '$timeout', 'categoryService',
+        'Analytics',
         function ($scope, $q, productService, smoothScroll, userService, orderService, $location, $cookie, $rootScope,
-                  productsCartService, $filter, $state, $timeout, categoryService) {
+                  productsCartService, $filter, $state, $timeout, categoryService, Analytics) {
 
             var ctrl = this;
             ctrl.config = {};
@@ -312,6 +313,11 @@ define(['./module'], function (controllers) {
 
             $scope.accountSection = function () {
                 $state.go('myAccount');
+            };
+
+            $scope.openAdminClient = function(){
+                Analytics.trackEvent('Management Console', 'Navigate');
+                window.open('/admin');
             };
 
             $scope.signOut = function (even) {

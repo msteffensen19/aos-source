@@ -1,6 +1,7 @@
 import React from "react";
 import {ReactComponent as UserIcon} from "../svg-png-ext/Advantage_logo_blck.svg";
 import {withRouter} from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 class PopupWindow extends React.Component {
     constructor() {
@@ -16,6 +17,10 @@ class PopupWindow extends React.Component {
         this.props.closePopUp();
         let me = this;
         me.props.history.push('/');
+        ReactGA.event({
+            category: 'Management Console',
+            action: 'Admin Console Logout'
+        });
     }
 
 

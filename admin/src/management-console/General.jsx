@@ -1,6 +1,7 @@
 import React from 'react';
 import Popup from'./SavedPopup';
 import ContextProvider from "../landing-page/ConsoleContext";
+import ReactGA from 'react-ga';
 
 export default class General extends React.Component {
     constructor(props) {
@@ -55,7 +56,12 @@ export default class General extends React.Component {
                         data: json
                     });
                     json.success? self.setState({isUpdateSuccess:true}):self.setState({isUpdateSuccess:false});
-                    console.log('parsed json', json)
+                    console.log('parsed json', json);
+                    ReactGA.event({
+                        category: 'Management Console',
+                        action: 'Update Parameter',
+
+                    });
                 })
                 .catch( (ex) => {
                     console.log('parsing failed', ex)
