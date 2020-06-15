@@ -95,7 +95,7 @@
     <div class="mini-title-help mini-title-help-mobile" id="helpMobileMiniTitle">
         <label class="option" translate="ABOUT" ng-click="mobileRedirectHelp('about')"></label>
         <label class="option" translate="AOS_VERSIONS" ng-click="mobileRedirectHelp('version')"></label>
-        <label class="option" translate="CONFIG_TOOL" onclick="window.open('/admin')"></label>
+        <label class="option" translate="CONFIG_TOOL" ng-click="openAdminClient()"></label>
     </div>
 </span>
 
@@ -142,7 +142,7 @@
                     <div id="helpMiniTitle" class="mini-title-help">
                         <label class="option roboto-medium" translate="ABOUT" ng-click="mobileRedirectHelp('about')" href="javascript:void(0)" role="link"></label>
                         <label class="option" translate="AOS_VERSIONS" ng-click="mobileRedirectHelp('version')" href="javascript:void(0)" role="link"></label>
-                        <label class="option" translate="CONFIG_TOOL" onclick="window.open('/admin')" href="javascript:void(0)" role="link"></label>
+                        <label class="option" translate="CONFIG_TOOL" ng-click="openAdminClient()" href="javascript:void(0)" role="link"></label>
                     </div>
                 </a>
             </li>
