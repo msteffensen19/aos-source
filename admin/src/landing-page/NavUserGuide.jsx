@@ -32,7 +32,7 @@ export default class NavUserGuide extends React.Component {
                         <a href="https://s3.amazonaws.com/aos-on-prem-downloads/doc/6_Troubleshooting.pdf" target='_blank' rel='noopener noreferrer'>Troubleshooting</a>
                     </li>
                     <li>
-                        <a href="https://s3.amazonaws.com/aos-on-prem-downloads/doc/7.AOS_COBOL_INTEGRATION.pdf" target='_blank' rel='noopener noreferrer'>COBOL Integration</a>
+                        <a href="https://s3.amazonaws.com/aos-on-prem-downloads/doc/7_AOS_COBOL_INTEGRATION.pdf" target='_blank' rel='noopener noreferrer'>COBOL Integration</a>
                     </li>
 
                 </ul>
