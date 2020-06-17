@@ -1,34 +1,35 @@
 [
 	{
-		"title":"Web Management Console",
-		"content":"Admin user can restore all the AOS system to factory setting"
+		"title":"AMC COBOL",
+		"content":"We have developed a new feature that integrates AOS and AMC Visual COBOL! The AOS backend will trigger a COBOL service that generates a warranty for a laptop during the purchase process."
 	},
 	{
-		"title":"DevOps",
-		"content":"Refactor AOS repo, Use a clean tool to remove unwanted git repository. Name convention for the downloadable files. •\tUse STAT recommendation to fix vulnerabilities discovered from static code scans."
+		"title":"AMC COBOL",
+		"content":"COBOL pre-sales users can now attach the Eclipse debugger to demonstrate executing the called COBOL web service."
+	},
+	{
+		"title": "Management Console",
+		"content": "Admin users can modify the location of the warranty service so they can use on-premise or cloud warranty service."
+	},
+	{
+		"title": "DevOps",
+		"content": "Silent installation."
+	},
+	{
+		"title": "Web",
+		"content": "When the Enable Warranty setting is ON, you now see a new checkbox (Add Warranty) on the page displaying any laptop."
+	},
+	{
+		"title": "API",
+		"content": "Added a new API, the COBOL service URL that generates the warranty calculation."
+	},
+
+	{
+		"title": "DevOps",
+		"content": "Pipeline improvements."
 	},
 	{
 		"title": "General",
-		"content": "Migrate From Oracle Java to OpenJDK. Fix issue with AOS for Windows. Enhance the accountservice SOAP service"
-	},
-	{
-		"title": "Mobile",
-		"content": "Fingerprint authentication (iOS & Android). Codeless AI - Modify AOS UI for better Mobile Testing. New Demo Narrative is currently available - http://mf-te.com/2020/03/25/mobile-testing-with-codeless-ai-2/"
-	},
-	{
-		"title": "Security",
-		"content": "Authentication events are now logged, so these can be utilized within a security context for ArcSight ESM, Interset, Logger and others. For CEF format, we will shortly release a Flex Connector, or you can write your own."
-	},
-	{
-		"title": "LRC",
-		"content": "Deploy a Nimbus docker container, On-premises LG"
-	},
-	{
-		"title": "COBOL",
-		"content": "Design new feature leveraging COBOL, stay tuned for next version"
-	},
-	{
-		"title": "ITOM",
-		"content": "Leverage AOS for monitoring end user inter-container traffic "
+		"content": "Bug fixes and performance improvements."
 	}
 ]
