@@ -231,7 +231,7 @@ if ((env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) || 
 
   env.Resumed = "false"
  
-  build job: 'demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'URL', value: "http://$aos_ci_ip"]], propagate: true
+  build job: 'demoapp_tests_leanft_maven', parameters: [[$class: 'StringParameterValue', name: 'URL', value: "http://$aos_ci_ip"], [$class: 'StringParameterValue', name: 'aos.proxy.host', value: "proxy.il.hpecorp.net"], [$class: 'StringParameterValue', name: 'aos.proxy.port', value: "8080"]], propagate: true
 }
 }
 
