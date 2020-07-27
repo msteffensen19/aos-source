@@ -180,7 +180,7 @@ public class OrderLines {
         this.orderNumber = orderNumber;
         this.productId = productId;
         this.productName = productName;
-        this.productColor = productColor;
+        this.productColor = convertHexColorToInt;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
         this.productImageUrl = productImageUrl;
