@@ -43,7 +43,7 @@ public class SoapApiHelper {
         SOAPPart soapPart = soapMessage.getSOAPPart();
         SOAPEnvelope envelope = soapPart.getEnvelope();
         if(requestName.contains("HealthCheck"))
-            envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, "https://www.AdvantageOnlineBanking.com/ShipEx/");
+            envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, "https://www.AdvantageOnlineShopping.com/ShipEx/");
         else
             envelope.addNamespaceDeclaration(REQUEST_NAME_SPACE, DESTINATION);
         SOAPBody soapBody = envelope.getBody();

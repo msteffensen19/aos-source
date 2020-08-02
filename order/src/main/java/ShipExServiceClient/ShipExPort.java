@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "ShipExPort", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@WebService(name = "ShipExPort", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -30,9 +30,9 @@ public interface ShipExPort {
      *     returns ShipExServiceClient.TrackNumberResponse
      */
     @WebMethod(operationName = "TrackNumber")
-    @WebResult(name = "TrackNumberResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "TrackNumberResponse")
+    @WebResult(name = "TrackNumberResponse", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "TrackNumberResponse")
     public TrackNumberResponse trackNumber(
-        @WebParam(name = "TrackNumberRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "TrackNumberRequest")
+        @WebParam(name = "TrackNumberRequest", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "TrackNumberRequest")
         TrackNumberRequest trackNumberRequest);
 
     /**
@@ -42,9 +42,9 @@ public interface ShipExPort {
      *     returns ShipExServiceClient.PlaceShippingOrderResponse
      */
     @WebMethod(operationName = "PlaceShippingOrder")
-    @WebResult(name = "PlaceShippingOrderResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "PlaceShippingOrderResponse")
+    @WebResult(name = "PlaceShippingOrderResponse", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "PlaceShippingOrderResponse")
     public PlaceShippingOrderResponse placeShippingOrder(
-        @WebParam(name = "PlaceShippingOrderRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "PlaceShippingOrderRequest")
+        @WebParam(name = "PlaceShippingOrderRequest", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "PlaceShippingOrderRequest")
         PlaceShippingOrderRequest placeShippingOrderRequest);
 
     /**
@@ -54,9 +54,9 @@ public interface ShipExPort {
      *     returns ShipExServiceClient.GetHealthCheckResponse
      */
     @WebMethod(operationName = "GetHealthCheck")
-    @WebResult(name = "GetHealthCheckResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthCheckResponse")
+    @WebResult(name = "GetHealthCheckResponse", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "GetHealthCheckResponse")
     public GetHealthCheckResponse getHealthCheck(
-        @WebParam(name = "GetHealthCheckRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "GetHealthCheckRequest")
+        @WebParam(name = "GetHealthCheckRequest", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "GetHealthCheckRequest")
         GetHealthCheckRequest getHealthCheckRequest);
 
     /**
@@ -66,9 +66,9 @@ public interface ShipExPort {
      *     returns ShipExServiceClient.ShippingCostResponse
      */
     @WebMethod(operationName = "ShippingCost")
-    @WebResult(name = "ShippingCostResponse", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "ShippingCostResponse")
+    @WebResult(name = "ShippingCostResponse", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "ShippingCostResponse")
     public ShippingCostResponse shippingCost(
-        @WebParam(name = "ShippingCostRequest", targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", partName = "ShippingCostRequest")
+        @WebParam(name = "ShippingCostRequest", targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", partName = "ShippingCostRequest")
         ShippingCostRequest shippingCostRequest);
 
 }

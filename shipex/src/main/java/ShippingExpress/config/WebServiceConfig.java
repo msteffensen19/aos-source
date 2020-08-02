@@ -16,7 +16,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @PropertySources(value = {
         @PropertySource("classpath:/shipex-mock-for-db.properties")})
 public class WebServiceConfig extends WsConfigurerAdapter {
-    public static final String NAMESPACE_URI = "https://www.AdvantageOnlineBanking.com/ShipEx/";
+    public static final String NAMESPACE_URI = "https://www.AdvantageOnlineShopping.com/ShipEx/";
 
     @Bean
     public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {

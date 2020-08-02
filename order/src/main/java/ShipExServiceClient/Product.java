@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "product", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", propOrder = {
+@XmlType(name = "product", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", propOrder = {
     "productName",
     "productQuantity"
 })
 public class Product {
 
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+    @XmlElement(namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
     protected String productName;
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+    @XmlElement(namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
     protected int productQuantity;
 
     /**

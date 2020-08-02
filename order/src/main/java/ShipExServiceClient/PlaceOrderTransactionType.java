@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "PlaceOrderTransactionType", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@XmlType(name = "PlaceOrderTransactionType", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 @XmlEnum
 public enum PlaceOrderTransactionType {
 

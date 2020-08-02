@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="product" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}product" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="product" type="{https://www.AdvantageOnlineShopping.com/ShipEx/}product" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,12 +29,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SEProducts", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", propOrder = {
+@XmlType(name = "SEProducts", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", propOrder = {
     "product"
 })
 public class SEProducts {
 
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+    @XmlElement(namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
     protected List<Product> product;
 
     /**

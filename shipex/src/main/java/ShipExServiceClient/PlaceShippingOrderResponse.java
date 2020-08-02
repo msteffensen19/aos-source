@@ -39,18 +39,18 @@ import javax.xml.bind.annotation.XmlType;
     "transactionReference",
     "transactionDate"
 })
-@XmlRootElement(name = "PlaceShippingOrderResponse", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@XmlRootElement(name = "PlaceShippingOrderResponse", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 public class PlaceShippingOrderResponse {
 
-    @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String seTransactionType;
-    @XmlElement(name = "Code", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "Code", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String code;
-    @XmlElement(name = "Reason", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "Reason", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String reason;
-    @XmlElement(name = "TransactionReference", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "TransactionReference", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String transactionReference;
-    @XmlElement(name = "TransactionDate", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "TransactionDate", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String transactionDate;
 
     /**

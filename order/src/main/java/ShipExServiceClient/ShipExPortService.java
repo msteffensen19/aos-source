@@ -18,7 +18,7 @@ import javax.xml.ws.WebServiceFeature;
  * 
  */
 @WebServiceClient(name = "ShipExPortService",
-                    targetNamespace = "https://www.AdvantageOnlineBanking.com/ShipEx/",
+                    targetNamespace = "https://www.AdvantageOnlineShopping.com/ShipEx/",
                     wsdlLocation = "http://localhost:8080/ShipEx/shipex.wsdl")
 public class ShipExPortService
     extends Service
@@ -26,7 +26,7 @@ public class ShipExPortService
 
     private final static URL SHIPEXPORTSERVICE_WSDL_LOCATION;
     private final static WebServiceException SHIPEXPORTSERVICE_EXCEPTION;
-    private final static QName SHIPEXPORTSERVICE_QNAME = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
+    private final static QName SHIPEXPORTSERVICE_QNAME = new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortService");
 
     static {
         URL url = null;
@@ -71,7 +71,7 @@ public class ShipExPortService
      */
     @WebEndpoint(name = "ShipExPortSoap11")
     public ShipExPort getShipExPortSoap11() {
-        return super.getPort(new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortSoap11"), ShipExPort.class);
+        return super.getPort(new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortSoap11"), ShipExPort.class);
     }
 
     /**
@@ -83,7 +83,7 @@ public class ShipExPortService
      */
     @WebEndpoint(name = "ShipExPortSoap11")
     public ShipExPort getShipExPortSoap11(WebServiceFeature... features) {
-        return super.getPort(new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortSoap11"), ShipExPort.class, features);
+        return super.getPort(new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortSoap11"), ShipExPort.class, features);
     }
 
     private static URL __getWsdlLocation() {

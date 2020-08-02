@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="SETransactionType" type="{https://www.AdvantageOnlineBanking.com/ShipEx/}PlaceOrderTransactionType"/>
+ *         &lt;element name="SETransactionType" type="{https://www.AdvantageOnlineShopping.com/ShipEx/}PlaceOrderTransactionType"/>
  *         &lt;element name="Code" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="TransactionReference" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -40,19 +40,19 @@ import javax.xml.bind.annotation.XmlType;
     "transactionReference",
     "transactionDate"
 })
-@XmlRootElement(name = "PlaceShippingOrderResponse", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@XmlRootElement(name = "PlaceShippingOrderResponse", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 public class PlaceShippingOrderResponse {
 
-    @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "SETransactionType", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     @XmlSchemaType(name = "string")
     protected PlaceOrderTransactionType seTransactionType;
-    @XmlElement(name = "Code", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "Code", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String code;
-    @XmlElement(name = "Reason", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "Reason", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String reason;
-    @XmlElement(name = "TransactionReference", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "TransactionReference", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String transactionReference;
-    @XmlElement(name = "TransactionDate", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(name = "TransactionDate", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String transactionDate;
 
     /**

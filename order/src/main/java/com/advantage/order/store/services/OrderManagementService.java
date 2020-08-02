@@ -107,7 +107,7 @@ public class OrderManagementService {
 
         URL urlWsdlLocation = Url_resources.getUrlSoapShipEx();
 
-        //QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
+        //QName serviceName = new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortService");
         //ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation, serviceName);
         ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation);
 
@@ -639,7 +639,7 @@ public class OrderManagementService {
         if (orderResponse == null) {
             URL urlWsdlLocation = Url_resources.getUrlSoapShipEx();
 
-            //QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
+            //QName serviceName = new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortService");
             //ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation, serviceName);
             ShipExPortService shipExPortService = new ShipExPortService(urlWsdlLocation);
 

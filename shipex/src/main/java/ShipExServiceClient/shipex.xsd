@@ -1,6 +1,6 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://www.AdvantageOnlineBanking.com/ShipEx/"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://www.AdvantageOnlineShopping.com/ShipEx/"
            xmlns:sx="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="https://www.AdvantageOnlineBanking.com/ShipEx/" elementFormDefault="qualified">
+           targetNamespace="https://www.AdvantageOnlineShopping.com/ShipEx/" elementFormDefault="qualified">
 
     <xs:complexType name="product">
         <xs:sequence>

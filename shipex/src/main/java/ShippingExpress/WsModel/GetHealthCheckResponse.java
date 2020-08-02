@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "status"
 })
-@XmlRootElement(name = "GetHealthCheckResponse", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@XmlRootElement(name = "GetHealthCheckResponse", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 public class GetHealthCheckResponse {
-        @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+        @XmlElement(namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
         protected String status;
 
         /**

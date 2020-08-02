@@ -31,10 +31,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "track"
 })
-@XmlRootElement(name = "TrackNumberResponse", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@XmlRootElement(name = "TrackNumberResponse", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 public class TrackNumberResponse {
 
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+    @XmlElement(namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
     protected long track;
 
     /**

@@ -24,8 +24,8 @@ public class WSDLFile_fordev {
         String stringWsdlFile = WSDLHelper.getWsdlFile(url);
         System.out.println("WSDL File=\'" + stringWsdlFile + "\'");
 
-        QName serviceName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortService");
-        QName portName = new QName("https://www.AdvantageOnlineBanking.com/ShipEx/", "ShipExPortSoap11");
+        QName serviceName = new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortService");
+        QName portName = new QName("https://www.AdvantageOnlineShopping.com/ShipEx/", "ShipExPortSoap11");
 
         //Service service = Service.create(url, serviceName);
         //Dispatch<SOAPMessage> dispatch = service.createDispatch(portName, SOAPMessage.class, Service.Mode.MESSAGE);

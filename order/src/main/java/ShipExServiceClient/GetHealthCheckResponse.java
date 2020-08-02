@@ -31,10 +31,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "status"
 })
-@XmlRootElement(name = "GetHealthCheckResponse", namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/")
+@XmlRootElement(name = "GetHealthCheckResponse", namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/")
 public class GetHealthCheckResponse {
 
-    @XmlElement(namespace = "https://www.AdvantageOnlineBanking.com/ShipEx/", required = true)
+    @XmlElement(namespace = "https://www.AdvantageOnlineShopping.com/ShipEx/", required = true)
     protected String status;
 
     /**
