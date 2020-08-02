@@ -33,6 +33,7 @@ define(['./module'], function (services) {
                 var defer = $q.defer();
 
                 var purchasedProducts = [];
+                var usingWarranty = false;
                 angular.forEach(cart.productsInCart, function (product) {
                     purchasedProducts.push({
                         "hexColor": product.color.code,
@@ -40,8 +41,11 @@ define(['./module'], function (services) {
                         "quantity": product.quantity,
                         "hasWarranty" : product.hasWarranty
                     });
-                })
-
+                    if(!usingWarranty){
+                        usingWarranty = product.product.hasWarranty;
+                    }
+                });
+                usingWarranty ? Analytics.trackEvent('SafePay', 'Warranty activated', cart.productsInCart) : "";
                 var paramsToPass = {
                     "orderPaymentInformation": {
                         "Transaction_AccountNumber": accountNumber,
