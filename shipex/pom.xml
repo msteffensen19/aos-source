@@ -5,7 +5,7 @@
 
     <groupId>com.advantage.online.store.shipex</groupId>
     <artifactId>shipex</artifactId>
-    <version>2.4-SNAPSHOT</version>
+    <version>2.5-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>shipex</name>
@@ -39,7 +39,7 @@
         <modelmapper.version>0.7.3</modelmapper.version>
         <springfox.version>2.0.3</springfox.version>
         <!--<postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>-->
-        <postgres.driver.version>9.4.1208</postgres.driver.version>
+        <postgres.driver.version>42.2.14</postgres.driver.version>
         <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
         <plugin.maven.compiler.version>3.8.0</plugin.maven.compiler.version>
         <plugin.maven.war.version>3.2.2</plugin.maven.war.version>
@@ -322,7 +322,7 @@
                         <source>${project.basedir}/src/main/resources/dummy.xsd</source>
                         <source>${project.basedir}/src/main/resources/shipex.xsd</source>
                     </sources>
-                    <packageName>https.www_advantageonlinebanking_com.shipex</packageName>
+                    <packageName>https.www_AdvantageOnlineShopping_com.shipex</packageName>
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
                 <dependencies>
