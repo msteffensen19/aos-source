@@ -12,11 +12,6 @@ define(['./module'], function (controllers) {
                 "VERSION 2.1",
                 "VERSION 2.0",
                 "VERSION 1.1.7",
-                "VERSION 1.1.6",
-                "VERSION 1.1.5",
-                "VERSION 1.1.4",
-                "VERSION 1.1.3",
-                "VERSION 1.1.2"
             ]
 
 

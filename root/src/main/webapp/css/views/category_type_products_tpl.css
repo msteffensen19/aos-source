@@ -443,3 +443,11 @@
     }
 
 }
+.searchPunchout{
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid black;
+    margin-top: 30px;
+    padding: 15px;
+    overflow: hidden;
+}
