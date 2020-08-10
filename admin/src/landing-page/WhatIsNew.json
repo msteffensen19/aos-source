@@ -1,35 +1,47 @@
 [
 	{
-		"title":"AMC COBOL",
-		"content":"We have developed a new feature that integrates AOS and AMC Visual COBOL! The AOS backend will trigger a COBOL service that generates a warranty for a laptop during the purchase process."
+		"title":"Mobile",
+		"content":"Made bug fixes and performance improvements, both on Android and iOS."
 	},
 	{
-		"title":"AMC COBOL",
-		"content":"COBOL pre-sales users can now attach the Eclipse debugger to demonstrate executing the called COBOL web service."
+		"title":"Mobile",
+		"content":"Improved the fingerprint authentication."
 	},
 	{
-		"title": "Management Console",
-		"content": "Admin users can modify the location of the warranty service so they can use on-premise or cloud warranty service."
+		"title": "Mobile",
+		"content": "Added a Remove button to the product Shopping cart view."
+	},
+	{
+		"title": "Mobile",
+		"content": "Allowed a user to add an item to cart by long pressing it on the category screen."
 	},
 	{
 		"title": "DevOps",
-		"content": "Silent installation."
+		"content": "Shortened UFTD build time."
 	},
 	{
-		"title": "Web",
-		"content": "When the Enable Warranty setting is ON, you now see a new checkbox (Add Warranty) on the page displaying any laptop."
-	},
-	{
-		"title": "API",
-		"content": "Added a new API, the COBOL service URL that generates the warranty calculation."
+		"title": "DevOps",
+		"content": "Upgraded AOS AWS machines (packages and docker version)."
 	},
 
 	{
 		"title": "DevOps",
-		"content": "Pipeline improvements."
+		"content": "Added Windows server 2019 to the supported list."
 	},
 	{
-		"title": "General",
-		"content": "Bug fixes and performance improvements."
+		"title": "DevOps",
+		"content": "Improved the analytic capabilities."
+	},
+	{
+		"title": "SAP",
+		"content": "Integrated with Public SAP Fiori Demo Site to support a full demo of SAP and non-SAP assets in the same script."
+	},
+	{
+		"title": "SAP",
+		"content": "Provided a way to search for items that are not in the AOS catalog. Every time a user searches for an item and it’s not in the AOS catalog, an option becomes available to extend the search through the new SAP UI (uses SAPUI5)."
+	},
+	{
+		"title": "Web",
+		"content": "Fixed an issue with the unsecured chat."
 	}
 ]

@@ -25,7 +25,7 @@ export default class NavDownloads extends React.Component {
                                 </div>
                             </a>
 
-                                <a className="devices nav_download_container" href='https://s3.amazonaws.com/aos-on-prem-downloads/2.4/Advantage+demo+2.4.apk'>
+                                <a className="devices nav_download_container" href='https://s3.amazonaws.com/aos-on-prem-downloads/2.5/Advantage+demo+2.5.apk'>
                                     <div className="devices_pic">
                                         <AndroidLogo></AndroidLogo>
                                     </div>
