@@ -1,0 +1,33 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8760/eureka/
+    registerWithEureka: false
+# spring cloud config repo settings.
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: C:\\Users\\bzhang\\git-repo\\development\\config-repo # default repo
+          repos:
+            development:
+              pattern:
+                - '*/development'
+                - '*/qa'
+              uri: C:\\Users\\bzhang\\git-repo\\development\\config-repo
+            staging:
+              pattern:
+                - '*/staging'
+              uri: C:\\Users\\bzhang\\git-repo\\staging\\config-repo
+            production:
+              pattern:
+                - '*/production'
+              uri: C:\\Users\\bzhang\\git-repo\\production\\config-repo
+            local:
+              pattern:
+                - '*/local'
+              uri: C:\\Users\\bzhang\\git-repo\\development\\config-repo
