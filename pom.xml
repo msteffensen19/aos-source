@@ -30,6 +30,8 @@
         <module>safepay</module>
         <module>accountservice</module>
         <module>shipex</module>
+        <module>config</module>
+        <module>aoseureka</module>
     </modules>
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
@@ -325,8 +327,7 @@
                             <configuration>
                                 <files>
                                     <file>${project.build.directory}/generated-resources/services.properties</file>
-                                    <file>${project.build.directory}/generated-resources/global.properties</file>
-                                    <file>
+                                    <file>${project.build.directory}/generated-resources/global.properties</file><file>
                                         ${project.build.directory}/generated-resources/internal_config_for_env.properties
                                     </file>
                                 </files>

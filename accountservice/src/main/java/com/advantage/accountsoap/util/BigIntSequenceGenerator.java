@@ -2,23 +2,29 @@ package com.advantage.accountsoap.util;
 
 import com.advantage.accountsoap.model.Account;
 import org.apache.log4j.Logger;
+import org.hibernate.MappingException;
 import org.hibernate.Session;
-import org.hibernate.engine.spi.SessionImplementor;
 
-import org.hibernate.id.SequenceGenerator;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.Configurable;
+import org.hibernate.id.IdentifierGenerator;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.type.Type;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
+import java.util.Properties;
 
 /**
  * Created by kubany on 2/13/2017.
  */
-public class BigIntSequenceGenerator extends SequenceGenerator {
+public class BigIntSequenceGenerator  implements IdentifierGenerator {
     Session m_session;
     private static final Logger logger = Logger.getLogger(BigIntSequenceGenerator.class);
 
+
     @Override
-    public Serializable generate(SessionImplementor sessionImplementor, Object obj) {
+    public Serializable generate(SharedSessionContractImplementor sessionImplementor, Object obj) {
         this.m_session = (Session) sessionImplementor;
         long id = generateRandomIndex();
         return id;
@@ -54,4 +60,5 @@ public class BigIntSequenceGenerator extends SequenceGenerator {
         long aNumber = (long) ((Math.random() * 900000000) + 100000000);
         return aNumber;
     }
+
 }
