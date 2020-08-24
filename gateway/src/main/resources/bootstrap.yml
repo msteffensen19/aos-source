@@ -1,0 +1,9 @@
+spring:
+  application:
+     name: aos-gateway
+  cloud:
+    config:
+      uri: http://localhost:8888
+      enabled: true
+  profiles:
+    active: dev

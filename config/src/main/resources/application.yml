@@ -11,6 +11,8 @@ spring:
           searchLocations: file:///C:/Users/akubany/dev/configuration/dev/config-repo
   profiles:
     active: native
+  application:
+    name: aos-config
 logging:
   level:
     root: DEBUG
