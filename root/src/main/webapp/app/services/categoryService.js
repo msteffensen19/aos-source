@@ -336,8 +336,10 @@ define(['./module'], function (services) {
                             var reverseProxy = services_properties['reverse_proxy'] === 'true';
                             var hostKey = window.location.hostname;
                             var protocol = window.location.protocol;
+                            var port = window.location.port;
+                            var gatewayOn = services_properties['aos_gateway'] === 'true';
 
-                            if(services_properties['single_machine_deployment'] === 'true'){
+                            if(services_properties['single_machine_deployment'] === 'true' && !gatewayOn){
 
                                 server.setKey(protocol + "//" + hostKey +
                                     (reverseProxy ? "" : ":" +
@@ -358,13 +360,19 @@ define(['./module'], function (services) {
                                     services_properties['account_soapservice_url_suffix'] + "/");
 
 
-                            }else if(reverseProxy){
+                            }else if(reverseProxy && !gatewayOn){
                                 server.setKey(protocol + "//" + hostKey + "/");
                                 server.setCatalogKey(protocol + "//" + hostKey + "/"  + services_properties['catalog_service_url_suffix'] + "/");
                                 server.setOrderKey(protocol + "//" + hostKey + "/"  + services_properties['order_service_url_suffix'] + "/");
                                 server.setWsdlPath(protocol + "//" + hostKey + "/" +
                                     services_properties['account_soapservice_url_suffix'] + "/");
-                            }else{
+                            }else if(gatewayOn){
+                                server.setKey(protocol + "//" + hostKey + ":" + port +  "/");
+                                server.setCatalogKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['catalog_service_url_suffix'] + "/");
+                                server.setOrderKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['order_service_url_suffix'] + "/");
+                                server.setWsdlPath(protocol + "//" + hostKey + ":" + port + "/" +
+                                    services_properties['account_soapservice_url_suffix'] + "/");
+                            } else{
                                 server.setKey("http://" + services_properties['catalog_service_url_host'] + ":" +
                                     services_properties['catalog_service_url_port'] + "/");
 

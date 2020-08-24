@@ -30,6 +30,8 @@
         <module>safepay</module>
         <module>accountservice</module>
         <module>shipex</module>
+        <module>config</module>
+        <module>gateway</module>
     </modules>
     <properties>
         <aspectj.version>1.8.4</aspectj.version>
