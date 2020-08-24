@@ -14,10 +14,10 @@ import javax.inject.Inject;
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @ComponentScan
 @PropertySources({
-        @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
         @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
         @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
         @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})
+
 public class AccountserviceApplication {
 
 

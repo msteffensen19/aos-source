@@ -1,34 +1,10 @@
-# Thymeleaf
-server:
-  port: 9099
-# Database
-#EVG db.driver: org.postgresql.Driver
-# ?????
-#EVG db.url: jdbc:postgresql://localhost:5432/adv-account
-#EVG db.username: postgres
-#EVG db.password: admin
-
-# Hibernate
-#hibernate.dialect: org.hibernate.dialect.PostgreSQL94Dialect
-hibernate:
-  dialect: org.hibernate.dialect.PostgreSQLDialect
-#hibernate.hbm2ddl.auto: create-drop
-#?????
-#HARDCODED by Alex entitymanager.packagesToScan: com.advantage.accaunt
-eureka:
-  client:
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8760/eureka/
-    healthcheck:
-      enabled: true
-    lease:
-      duration: 5
-
 spring:
   application:
     name: accountservice
-  thymeleaf:
-    cache: true
-  jpa:
-    show-sql: true
+  cloud:
+    config:
+      uri: http://localhost:8888
+      enabled: true
+      name: aos
+  profiles:
+    active: dev

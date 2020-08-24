@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.advantage.online.store</groupId>
     <artifactId>accountservice</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>2.5-SNAPSHOT</version>
 
     <name>accountservice</name>
@@ -317,7 +317,11 @@
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+            <version>2.2.4.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -459,6 +463,7 @@
                 <targetPath>${project.build.outputDirectory}/properties</targetPath>
                 <includes>
                     <include>*.properties</include>
+                    <include>*.yml</include>
                 </includes>
                 <excludes>
                     <exclude>log4j.properties</exclude>
