@@ -1,8 +1,9 @@
 package com.advantage.accountsoap.services;
 
 import com.advantage.accountsoap.config.AccountConfiguration;
+import com.advantage.accountsoap.util.UrlResources;
 import com.advantage.common.Constants;
-import com.advantage.common.Url_resources;
+
 import com.advantage.root.util.JsonHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,9 +157,9 @@ public class DynamicConfiguration {
         String value = null;
         URL urlConfig;
         try {
-            logger.debug("Url_resources.getUrlCatalog()=\"" + Url_resources.getUrlCatalog().toString() + "\"");
+            logger.debug("UrlResources.getUrlCatalog()=\"" + UrlResources.getUrlCatalog().toString() + "\"");
 
-            urlConfig = new URL(Url_resources.getUrlCatalog(), "DemoAppConfig/parameters/" + requestPart);
+            urlConfig = new URL(UrlResources.getUrlCatalog(), "DemoAppConfig/parameters/" + requestPart);
             logger.debug("urlConfig = " + urlConfig);
 
             HttpURLConnection conn = (HttpURLConnection) urlConfig.openConnection();

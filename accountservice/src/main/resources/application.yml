@@ -5,6 +5,5 @@ spring:
     config:
       uri: http://localhost:8888
       enabled: true
-      name: aos
   profiles:
     active: dev

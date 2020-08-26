@@ -9,9 +9,9 @@ import com.advantage.accountsoap.model.*;
 import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
+import com.advantage.accountsoap.util.UrlResources;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
-import com.advantage.common.Url_resources;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
@@ -718,7 +718,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         String stringResponse = null;
         URL deleteOrdersForUser = null;
-        URL orderApiUrl = Url_resources.getUrlOrder();
+        URL orderApiUrl = UrlResources.getUrlOrder();
 
         try {
 

@@ -16,7 +16,8 @@ import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.PaymentPreferences;
 import com.advantage.accountsoap.model.ShippingAddress;
 import com.advantage.accountsoap.util.AccountPassword;
-import com.advantage.common.Url_resources;
+
+import com.advantage.accountsoap.util.UrlResources;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.ContentTokenException;
 import com.advantage.common.exceptions.token.TokenException;
@@ -251,7 +252,7 @@ public class AccountService implements Injectable {
         String stringResponse = null;
         URL deleteOrdersForUser = null;
         String authorizationKey = encode64(account.getLoginName() + ":" + data);
-        URL orderApiUrl = Url_resources.getUrlOrder();
+        URL orderApiUrl = UrlResources.getUrlOrder();
 
         try {
 

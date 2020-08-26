@@ -474,95 +474,95 @@
         </resources>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
-                    <!-- Provide access to .properties files for use it by maven-->
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>properties-maven-plugin</artifactId>
-                    <version>${plugin.properties.version}</version>
-                    <executions>
-                        <!-- Associate the read-project-properties goal with the process-resources phase, to read the properties file. -->
-                        <execution>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>read-project-properties</goal>
-                            </goals>
-                            <configuration>
-                                <files>
-                                    <file>${project.build.directory}/generated-resources/services.properties</file>
-                                    <file>${project.build.directory}/generated-resources/global.properties</file>
-                                    <file>
-                                        ${project.build.directory}/generated-resources/internal_config_for_env.properties
-                                    </file>
-                                </files>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>unpack-shared-resources</id>
-                            <goals>
-                                <goal>unpack-dependencies</goal>
-                            </goals>
-                            <phase>generate-resources</phase>
-                            <configuration>
-                                <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
-                                <includeArtifactIds>shared_resources</includeArtifactIds>
-                                <includeGroupIds>${project.groupId}</includeGroupIds>
-                                <excludeTransitive>true</excludeTransitive>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+<!--                <plugin>-->
+<!--                    &lt;!&ndash; Copy of main pom cause the AccountSoapService pom isn't a child of main pom&ndash;&gt;-->
+<!--                    &lt;!&ndash; Provide access to .properties files for use it by maven&ndash;&gt;-->
+<!--                    <groupId>org.codehaus.mojo</groupId>-->
+<!--                    <artifactId>properties-maven-plugin</artifactId>-->
+<!--                    <version>${plugin.properties.version}</version>-->
+<!--                    <executions>-->
+<!--                        &lt;!&ndash; Associate the read-project-properties goal with the process-resources phase, to read the properties file. &ndash;&gt;-->
+<!--                        <execution>-->
+<!--                            <phase>process-resources</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>read-project-properties</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <files>-->
+<!--                                    <file>${project.build.directory}/generated-resources/services.properties</file>-->
+<!--                                    <file>${project.build.directory}/generated-resources/global.properties</file>-->
+<!--                                    <file>-->
+<!--                                        ${project.build.directory}/generated-resources/internal_config_for_env.properties-->
+<!--                                    </file>-->
+<!--                                </files>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+<!--                <plugin>-->
+<!--                    &lt;!&ndash; Copy of main pom cause the AccountSoapService pom isn't a child of main pom&ndash;&gt;-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>unpack-shared-resources</id>-->
+<!--                            <goals>-->
+<!--                                <goal>unpack-dependencies</goal>-->
+<!--                            </goals>-->
+<!--                            <phase>generate-resources</phase>-->
+<!--                            <configuration>-->
+<!--                                <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>-->
+<!--                                <includeArtifactIds>shared_resources</includeArtifactIds>-->
+<!--                                <includeGroupIds>${project.groupId}</includeGroupIds>-->
+<!--                                <excludeTransitive>true</excludeTransitive>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
                 <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${plugin.maven.resources.version}</version>
-                    <configuration>
-                        <delimiters>
-                            <delimiter>${*}</delimiter>
-                        </delimiters>
-                        <useDefaultDelimiters>false</useDefaultDelimiters>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <configuration>
-                                <encoding>${project.build.sourceEncoding}</encoding>
-                                <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.build.directory}/generated-resources</directory>
-                                        <filtering>true</filtering>
-                                        <!--<excludes>-->
-                                        <!--<exclude>/*.properties</exclude>-->
-                                        <!--</excludes>-->
-                                        <includes>
-                                            <include>ver.txt</include>
-                                        </includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                            <id>copy-shared-resources-into-webapp</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-resources-plugin</artifactId>-->
+<!--                    <version>${plugin.maven.resources.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <delimiters>-->
+<!--                            <delimiter>${*}</delimiter>-->
+<!--                        </delimiters>-->
+<!--                        <useDefaultDelimiters>false</useDefaultDelimiters>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <configuration>-->
+<!--                                <encoding>${project.build.sourceEncoding}</encoding>-->
+<!--                                <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>-->
+<!--                                <resources>-->
+<!--                                    <resource>-->
+<!--                                        <directory>${project.build.directory}/generated-resources</directory>-->
+<!--                                        <filtering>true</filtering>-->
+<!--                                        &lt;!&ndash;<excludes>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<exclude>/*.properties</exclude>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;</excludes>&ndash;&gt;-->
+<!--                                        <includes>-->
+<!--                                            <include>ver.txt</include>-->
+<!--                                        </includes>-->
+<!--                                    </resource>-->
+<!--                                </resources>-->
+<!--                            </configuration>-->
+<!--                            <id>copy-shared-resources-into-webapp</id>-->
+<!--                            <phase>process-resources</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>copy-resources</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-resources-plugin</artifactId>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

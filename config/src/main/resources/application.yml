@@ -5,7 +5,10 @@ spring:
     config:
       server:
         git:
-          uri: C:\\Users\\akubany\\dev\\configuration\\dev\\config-repo
+          uri: file:///C:/Users/akubany/dev/configuration/dev/config-repo
+          #          clone-on-start: true
+          strict-host-key-checking: false
+          search-paths: '*,{application},dev/{application},{profile}/{application}'
         # Use the File System Backend to avoid git pulling. Enable "native" profile in the Config Server.
         native:
           searchLocations: file:///C:/Users/akubany/dev/configuration/dev/config-repo
@@ -15,4 +18,4 @@ spring:
     name: aos-config
 logging:
   level:
-    root: DEBUG
+    root: TRACE
