@@ -28,7 +28,7 @@
                                     <id>exec-yarn-install</id>
                                     <phase>generate-sources</phase>
                                     <configuration>
-                                        <executable>yarn.cmd</executable>
+                                        <executable>yarn</executable>
                                         <arguments>
                                             <argument>install</argument>
                                         </arguments>
