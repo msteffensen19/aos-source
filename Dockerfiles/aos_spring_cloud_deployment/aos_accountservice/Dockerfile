@@ -6,9 +6,9 @@ MAINTAINER Assaf Kubany
 ENV http_proxy="http://proxy.il.hpecorp.net:8080"
 ENV https_proxy="http://proxy.il.hpecorp.net:8080"
 
-RUN apt-get update && \
-    apt-get install -y \
-    openjdk-8-jdk \
+RUN apk  update && \
+    apk  add \
+    openjdk8 \
     postgresql \
     vim
 
@@ -18,10 +18,10 @@ COPY wait-for-it.sh /accountservice
 COPY startAccountservice.sh /accountservice
 COPY healthcheck.sh /accountservice
 COPY healthcheck.xml /accountservice
-RUN chmod +x /healthcheck.sh
-RUN chmod +x /startAccountservice.sh
+RUN chmod +x /accountservice/healthcheck.sh
+RUN chmod +x /accountservice/startAccountservice.sh
 
 
-ENTRYPOINT ["sh", "-c", "/startAccountservice.sh"]
+ENTRYPOINT ["sh", "-c", "/accountservice/startAccountservice.sh"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
-CMD /healthcheck.sh
+CMD /accountservice/healthcheck.sh
