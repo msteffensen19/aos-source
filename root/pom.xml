@@ -42,7 +42,7 @@
                                     <id>exec-grunt</id>
                                     <phase>process-resources</phase>
                                     <configuration>
-                                        <executable>grunt.cmd</executable>
+                                        <executable>grunt</executable>
                                         <workingDirectory>src/main/webapp</workingDirectory>
                                     </configuration>
                                     <goals>
