@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: ${CONFIG_FILE_URI}/microservices
+          uri: file://${CONFIG_FILE_URI}/microservices
           #          clone-on-start: true
           strict-host-key-checking: false
           search-paths: '*,{application},dev/{application},{profile}/{application}'
