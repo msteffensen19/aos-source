@@ -13,6 +13,7 @@ RUN mkdir /configservice
 COPY configservice.jar /configservice
 COPY startConfigservice.sh /configservice
 COPY healthcheck.sh /configservice
+COPY microservices /configservice/microservices
 RUN chmod +x /configservice/healthcheck.sh
 RUN chmod +x /configservice/startConfigservice.sh
 

@@ -244,7 +244,7 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
     config_service_yaml_files=$WORKSPACE/configurationFiles/microservices
 	cp ${accountservice_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_accountservice
 	cp ${config_service_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
-	cp -r config_service_yaml_files $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
+	cp -r ${config_service_yaml_files} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
     cd $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_accountservice
     docker build -t advantageonlineshopping/aos-accountservice-dev:aos_config_deployment .
 	docker push advantageonlineshopping/aos-accountservice-dev:aos_config_deployment
