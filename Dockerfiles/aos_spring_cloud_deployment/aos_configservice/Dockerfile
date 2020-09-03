@@ -1,4 +1,3 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.8_10-alpine-slim
 MAINTAINER Assaf Kubany
 
 ENV http_proxy="http://proxy.il.hpecorp.net:8080"
@@ -18,6 +17,6 @@ RUN chmod +x /configservice/healthcheck.sh
 RUN chmod +x /configservice/startConfigservice.sh
 
 
-ENTRYPOINT ["sh", "-c", "/configservice/startConfigservice.sh"]
+ENTRYPOINT ["sh","/configservice/startConfigservice.sh"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
 CMD /configservice/healthcheck.sh

@@ -34,8 +34,8 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   env.Resumed = "false"
 
   checkout([$class: 'GitSCM', branches: [[name: '*/master']], browser: [$class: 'GithubWeb', repoUrl: 'https://github.houston.softwaregrp.net/nimbus/aos-source'], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], gitTool: 'Git version 2.8.0-rc4 Linux', submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.houston.softwaregrp.net:nimbus/aos-source.git']]])
-  
-  sh 'git checkout master'
+    sh 'git checkout $aos_branch_to_build'
+
   
   env.aos_build_main_wars=false
   env.aos_build_both_wars=false
@@ -106,7 +106,7 @@ env.aos_stageName="Build"
 
 if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
  currentBuild.result = 'SUCCESS'
-}else{
+}else if (env.aos_spring_build == "false"){
 
   env.Resumed = "false"
   
@@ -140,7 +140,15 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
     mvn -P production package deploy -am -ff -e
     '''
   }
-  }
+  }else{
+    env.Resumed = "false"
+    echo "BUILD SPRING CLOUD DEPLOYMENT"
+    sh '''#!/bin/sh
+    mvn -P production package -am -ff -e
+    mkdir configurationFiles && cd configurationFiles
+    git clone git@github.houston.softwaregrp.net:nimbus/microservices.git 
+    '''
+}
 }
 
 stage('CI'){
@@ -149,13 +157,13 @@ env.aos_stageName="CI"
 
 if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
  currentBuild.result = 'SUCCESS'
-}else{
+}else if(env.aos_spring_build == "false"){
 
   env.Resumed = "false"
 
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
   usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
-  
+
   sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
   sh """
   ssh "$aos_ci_ip" \"docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}\"
@@ -218,7 +226,41 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   fi
   '''
   }
-  }
+  }else{
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
+                      usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
+
+        sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
+        sh """
+  ssh "$aos_ci_ip" \"docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}\"
+  """
+
+        sh '''#!/bin/bash
+  export http_proxy="http://proxy.il.hpecorp.net:8080"
+  export https_proxy="http://proxy.il.hpecorp.net:8080"
+  
+    accountservice_jar_path=$WORKSPACE/accountservice/target/accountservice.jar
+    config_service_jar_path=$WORKSPACE/config/target/configservice.jar
+    config_service_yaml_files=$WORKSPACE/configurationFiles/microservices
+	cp ${accountservice_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_accountservice
+	cp ${config_service_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
+	cp -r config_service_yaml_files $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
+    cd $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_accountservice
+    docker build -t advantageonlineshopping/aos-accountservice-dev:aos_config_deployment .
+	docker push advantageonlineshopping/aos-accountservice-dev:aos_config_deployment
+	
+	cd ../../../
+	
+	cd $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
+    docker build -t advantageonlineshopping/aos-configservice-dev:aos_config_deployment .
+    docker push advantageonlineshopping/aos-configservice-dev:aos_config_deployment
+	
+  
+  
+  '''
+
+    }
+}
 }
 
 stage('CI Tests'){
@@ -241,7 +283,7 @@ env.aos_stageName="Promote_to_Release_and_latest"
 
 if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
  currentBuild.result = 'SUCCESS'
-}else{
+}else if(env.aos_spring_build == "false"){
 
   env.Resumed = "false"
   echo "check if accountservice build"
@@ -299,7 +341,9 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   '''
   }
   }
-  }
+  }else{
+
+}
 }
 
 stage('Promote ready_for_staging tag to Dockerhub'){
@@ -308,7 +352,7 @@ env.stageName="Promote_to_Dockerhub"
 
 if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
  currentBuild.result = 'SUCCESS'
-}else{
+}else if(env.aos_spring_build == "false"){
 
   env.Resumed = "false"
   
@@ -333,7 +377,9 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
     '''
   }
   }
-  }
+  }else{
+
+}
 }
 
 stage('Commit to Stash build/version.xml'){
@@ -342,7 +388,7 @@ env.aos_stageName="Commit_to_Stash_version.xml"
 
 if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
  currentBuild.result = 'SUCCESS'
-}else{
+}else if(env.aos_branch_to_build == "master"){
 
   env.Resumed = "false"
 
@@ -357,7 +403,9 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   git commit -m "updates version.xml" --quiet
   git push
   '''
-  }
+  }else{
+    currentBuild.result = 'SUCCESS'
+}
 }
 
 stage('Staging'){
@@ -366,7 +414,7 @@ env.aos_stageName="Staging"
 
 if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
  currentBuild.result = 'SUCCESS'
-}else{
+}else if(env.aos_branch_to_build == "master"){
 
   env.Resumed = "false"
     
@@ -404,7 +452,9 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
       fi
     """
     }
-  }
+  }else{
+    currentBuild.result = 'SUCCESS'
+}
 }
 
 currentBuild.description = "${aos_description}"
