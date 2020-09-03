@@ -1,9 +1,7 @@
 spring:
   application:
     name: accountservice
-  cloud:
-    config:
-      uri: ${CONFIG_SERVICE_URI}
-      enabled: true
-  profiles:
-    active: ${ACTIVE_PROFILE}
+    cloud:
+      config:
+        uri: ${CONFIG_SERVICE_URI}
+        enabled: true

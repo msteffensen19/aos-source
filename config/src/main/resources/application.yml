@@ -5,15 +5,16 @@ spring:
     config:
       server:
         git:
-          uri: file://${CONFIG_FILE_URI}/microservices
+          uri: ${CONFIG_REPO_URI}
+          # file:///C:/Users/akubany/dev/microservices
           #          clone-on-start: true
           strict-host-key-checking: false
-          search-paths: '*,{application},dev/{application},{profile}/{application}'
+          search-paths: '*,{application},dev/{application},{profile}/{application},{application}-{profile}'
+          clone-on-start: true
         # Use the File System Backend to avoid git pulling. Enable "native" profile in the Config Server.
         native:
-          searchLocations: file://${CONFIG_FILE_URI}/microservices
-  profiles:
-    active: native
+          searchLocations: ${CONFIG_REPO_FILE_SYSTEM}
+
   application:
     name: aos-config
 management:
