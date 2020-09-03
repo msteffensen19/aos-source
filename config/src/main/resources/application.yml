@@ -16,6 +16,13 @@ spring:
     active: native
   application:
     name: aos-config
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 logging:
   level:
-    root: TRACE
+    root: DEBUG
