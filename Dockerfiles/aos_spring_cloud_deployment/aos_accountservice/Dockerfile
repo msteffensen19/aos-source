@@ -22,6 +22,6 @@ RUN chmod +x /accountservice/healthcheck.sh
 RUN chmod +x /accountservice/startAccountservice.sh
 
 
-ENTRYPOINT ["sh", "-c", "/accountservice/startAccountservice.sh"]
+ENTRYPOINT ["sh", "/accountservice/startAccountservice.sh"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
 CMD /accountservice/healthcheck.sh
