@@ -14,6 +14,8 @@ spring:
         # Use the File System Backend to avoid git pulling. Enable "native" profile in the Config Server.
         native:
           searchLocations: ${CONFIG_REPO_FILE_SYSTEM}
+      allow-override: true
+      override-none: false
 
   application:
     name: aos-config

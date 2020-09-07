@@ -1,21 +1,23 @@
-version: '3'
+version: '3.2'
 services:
-  configservice:
-    image: advantageonlineshopping/aos-configservice:aos-spring-deployment
+  config-service:
+    image: advantageonlineshopping/aos-configservice-dev:aos_config_deployment
     ports:
-      - "${CONFIG_SERVICE_PORT}:8888"
+      - "8888:8888"
     container_name: aos_config_service
     restart: always
+    environment:
+      - CONFIG_REPO_URI=file://configservice/microservices
     volumes:
-      - data-volume-config-service:/config-repo
+      - type: bind
+        source: data-volume-config-service
+        target: /configservice/microservices
   postgresql:
-    image: advantageonlineshopping/aos-postgres
+    image: advantageonlineshopping/aos-postgres-dev
     ports:
       - "${POSTGRES_PORT}:5432"
     container_name: postgresql
     restart: always
-    volumes:
-      - data-volume-postgres:/var/lib/postgresql/data
   tomcat_6:
     env_file:
       - .env
@@ -31,16 +33,16 @@ services:
     env_file:
       - .env
       - .env_private
-    image: advantageonlineshopping/aos-accountservice:aos-spring-deployment
+    image: advantageonlineshopping/aos-accountservice-dev:aos_config_deployment
     ports:
       - "${ACCOUNT_PORT}:8080"
     depends_on:
       - "postgresql"
+      - "config-service"
     container_name: aos_account
     restart: always
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://configservice:${CONFIG_SERVICE_PORT}
-      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVICE_URI=http://config-service:8888
+      - ACTIVE_PROFILE=dev
 volumes:
-  data-volume-postgres:
   data-volume-config-service:
