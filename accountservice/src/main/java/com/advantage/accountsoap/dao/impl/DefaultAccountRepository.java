@@ -781,10 +781,14 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         Map<Long, Country> countryMap = new HashMap<>();
         try {
             ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
-            File countriesCSV = filePathCSV.getFile();
+            String protocol = this.getClass().getResource("").getProtocol();
 
-            List<String> countries = FileSystemHelper.readFileCsv(countriesCSV.getAbsolutePath());
-
+            List<String> countries;
+            if(protocol.contains("jar")){
+                countries = FileSystemHelper.readFileCsv(null, true, filePathCSV.getInputStream());
+            } else {
+                countries = FileSystemHelper.readFileCsv(filePathCSV.getFile().getAbsolutePath(), false, null);
+            }
             for (String str : countries) {
                 String[] substrings = str.split(",");
                 Country country = new Country(substrings[1], substrings[2], Integer.valueOf(substrings[3]));

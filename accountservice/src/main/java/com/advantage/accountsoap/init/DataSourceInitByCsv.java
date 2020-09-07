@@ -20,9 +20,11 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class DataSourceInitByCsv {
@@ -46,7 +48,9 @@ public class DataSourceInitByCsv {
 
             //  Get countries list in CSV (Comma Separated Values) file
             ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
-            File countriesCSV = filePathCSV.getFile();
+            String protocol = this.getClass().getResource("").getProtocol();
+
+
 
             ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -54,7 +58,12 @@ public class DataSourceInitByCsv {
             transaction = session.beginTransaction();
 
         /* Countries */
-            List<String> countries = FileSystemHelper.readFileCsv(countriesCSV.getAbsolutePath());
+            List<String> countries;
+            if(protocol.contains("jar")){
+                countries = FileSystemHelper.readFileCsv(null, true, filePathCSV.getInputStream());
+            } else {
+                countries = FileSystemHelper.readFileCsv(filePathCSV.getFile().getAbsolutePath(), false, null);
+            }
             Map<Long, Country> countryMap = new HashMap<>();
 
             for (String str : countries) {

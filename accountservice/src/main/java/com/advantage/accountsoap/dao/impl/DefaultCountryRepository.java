@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -100,10 +101,23 @@ public class DefaultCountryRepository extends AbstractRepository implements Coun
 
         //Country country;
         String csvSplitBy = ",";    // use comma as separator
-
-        List<String> countries = FileSystemHelper.readFileCsv("/Users/regevb/Downloads/countries_20150630.csv");
+        ClassPathResource filePathCSV = new ClassPathResource("/Users/regevb/Downloads/countries_20150630.csv");
+        String protocol = this.getClass().getResource("").getProtocol();
+        List<String> countries = null;
         //List<String> countries = Country.readFileCsv("/Users/regevb/Downloads/countries_20150630.csv");
-
+        if(protocol.contains("jar")){
+            try {
+                countries = FileSystemHelper.readFileCsv(null, true, filePathCSV.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                countries = FileSystemHelper.readFileCsv(filePathCSV.getFile().getAbsolutePath(), false, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         if (countries == null) {
             return 0;
         }

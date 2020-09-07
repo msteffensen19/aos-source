@@ -15,6 +15,7 @@ spring:
           searchLocations: ${CONFIG_REPO_FILE_SYSTEM}
 #      allow-override: true
 #      override-none: false
+  # when using localfile system the uri should have 3 /// (file:///dir)
   profiles:
     active: ${CONFIG_SERVICE_ACTIVE_PROFILE}
 
