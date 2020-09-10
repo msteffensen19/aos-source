@@ -241,11 +241,11 @@ try{
   
     accountservice_jar_path=$WORKSPACE/accountservice/target/accountservice.jar
     config_service_jar_path=$WORKSPACE/config/target/configservice.jar
-    gateway_service_jar_path=$WORKSPACE/gateway/target/configservice.jar
+    gateway_service_jar_path=$WORKSPACE/gateway/target/gateway.jar
     config_service_yaml_files=$WORKSPACE/configurationFiles/microservices
 	cp ${accountservice_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_accountservice
 	cp ${config_service_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
-	cp ${gateway_service_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/gateway_service_jar_path
+	cp ${gateway_service_jar_path} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_gateway
 	cp -r ${config_service_yaml_files} $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_configservice
 	
     cd $WORKSPACE/Dockerfiles/aos_spring_cloud_deployment/aos_accountservice

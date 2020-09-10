@@ -52,6 +52,18 @@
 			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 			<version>2.1.2.RELEASE</version>
 		</dependency>
+		<!-- for auto retry -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+			<version>1.2.4.RELEASE</version>
+		</dependency>
+		<!-- for auto retry -->
 	</dependencies>
 
 	<dependencyManagement>
@@ -72,6 +84,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<environmentVariables>
+						<ACTIVE_PROFILE>dev</ACTIVE_PROFILE>
+						<CONFIG_SERVICE_URI>http://localhost:8888</CONFIG_SERVICE_URI>
+					</environmentVariables>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
