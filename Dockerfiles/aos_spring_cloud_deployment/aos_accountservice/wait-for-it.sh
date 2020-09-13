@@ -6,11 +6,16 @@ shift
 echo "starting"
 cmd="$@"
 status=status=$(curl -s "$config_service_uri"/actuator/health)
-while [[ ! $status = *"UP"*  ]]
+x=0
+while [[ "$x" == 0 ]]
+    do
     echo "Waiting for config service"
     status=$(curl -s "$config_service_uri"/actuator/health)
     echo $status
-    do true; done
+    case "$status" in *UP*)
+    x=1
+     ;; esac
+    done
 
 >&2 echo "config service is up - executing command"
 exec $cmd
