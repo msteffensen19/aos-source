@@ -6,11 +6,11 @@ ENV https_proxy="http://proxy.il.hpecorp.net:8080"
 
 RUN apk  update && \
     apk  add \
-    openjdk8 \
-    postgresql \
-    vim
+    curl \
+    vim \
 
 RUN mkdir /gateway
+COPY wait-for-it.sh /gateway
 COPY gateway.jar /gateway
 COPY startGateway.sh /gateway
 COPY healthcheck.sh /gateway

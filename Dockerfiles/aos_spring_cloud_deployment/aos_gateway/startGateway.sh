@@ -1,5 +1,5 @@
 #!/bin/bash
-ash wait-for-it.sh "${POSTGRES_IP}" "${POSTGRES_PORT}"
-
-java -jar gateway/gateway.jar
+cd gateway
+ash wait-for-it.sh "${CONFIG_SERVICE_URI}"
+java -jar gateway.jar
 tail -f /dev/null
