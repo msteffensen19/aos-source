@@ -20,6 +20,8 @@ COPY healthcheck.xml /accountservice
 RUN chmod +x /accountservice/healthcheck.sh
 RUN chmod +x /accountservice/startAccountservice.sh
 
+ENV http_proxy=""
+ENV https_proxy=""
 
 ENTRYPOINT ["sh", "/accountservice/startAccountservice.sh"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \

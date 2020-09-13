@@ -18,6 +18,8 @@ COPY microservices /configservice/microservices
 RUN chmod +x /configservice/healthcheck.sh
 RUN chmod +x /configservice/startConfigservice.sh
 
+ENV http_proxy=""
+ENV https_proxy=""
 
 ENTRYPOINT ["sh","/configservice/startConfigservice.sh"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \

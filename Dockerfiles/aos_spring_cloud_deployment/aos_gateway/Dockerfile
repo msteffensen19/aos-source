@@ -17,6 +17,8 @@ COPY healthcheck.sh /gateway
 RUN chmod +x /gateway/healthcheck.sh
 RUN chmod +x /gateway/startGateway.sh
 
+ENV http_proxy=""
+ENV https_proxy=""
 
 ENTRYPOINT ["sh","/gateway/startGateway.sh"]
 HEALTHCHECK --interval=60s --timeout=30s --retries=5 \
