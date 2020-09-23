@@ -5,7 +5,7 @@ config_service_uri="$1"
 shift
 echo "starting"
 cmd="$@"
-status=status=$(curl -s "$config_service_uri"/actuator/health)
+status=$(curl -s "$config_service_uri"/actuator/health)
 x=0
 while [[ "$x" == 0 ]]
     do

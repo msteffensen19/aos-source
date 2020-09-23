@@ -3,9 +3,12 @@ package com.advantage.root.store.config;
 import com.advantage.common.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.env.Environment;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -38,6 +41,7 @@ import java.util.List;
                         })
         }
 )
+
 @Import(SwaggerConfiguration.class)
 public class WebConfiguration extends SpringDataWebConfiguration {
 
@@ -57,7 +61,10 @@ public class WebConfiguration extends SpringDataWebConfiguration {
 
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
+//        registry.addResourceHandler("services.properties")
+//                .addResourceLocations(System.getenv("CONFIG_SERVICE_URI") + "/services-" + System.getenv("ACTIVE_PROFILE") + ".properties");
     }
+
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

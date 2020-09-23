@@ -1,14 +1,12 @@
 package com.advantage.catalog.store.services;
 
-import com.advantage.common.dto.AttributeDto;
-import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.dao.attribute.AttributeRepository;
+import com.advantage.catalog.store.model.attribute.Attribute;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.store.model.product.ProductAttributes;
-import com.advantage.common.dto.CatalogResponse;
-import com.advantage.common.dto.ColorAttributeDto;
+import com.advantage.catalog.util.ArgumentValidationHelper;
+import com.advantage.common.dto.AttributeDto;
 import com.advantage.common.enums.ColorPalletEnum;
-import com.advantage.root.util.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,3 +1,4 @@
+version: '3.2'
 services:
   config-service:
     image: advantageonlineshopping/aos-configservice-dev:aos_config_deployment

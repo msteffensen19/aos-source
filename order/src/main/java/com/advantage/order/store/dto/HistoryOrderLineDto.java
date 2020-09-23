@@ -2,7 +2,8 @@ package com.advantage.order.store.dto;
 
 import com.advantage.common.enums.ColorPalletEnum;
 import com.advantage.order.store.model.ShoppingCart;
-import com.advantage.root.util.StringHelper;
+
+import com.advantage.order.store.utils.StringHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

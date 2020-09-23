@@ -1,25 +1,19 @@
 package com.advantage.catalog.util.xml;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.IOHelper;
+import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -120,6 +114,80 @@ public abstract class XmlHelper {
         } catch (final ParserConfigurationException ex) {
 
             throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Get XML {@link Document} from the file in the given path.
+     * @param xmlFilePath
+     * @return XML {@link Document} from the file in the given path.
+     * @throws IOException              if an I/O error occurs.
+     * @throws IllegalArgumentException if the given file path argument references
+     *                                  <b>null</b>, or if it <b>is</b> a blank string.
+     */
+    public static Document getXmlDocument(final String xmlFilePath) {
+
+        ArgumentValidationHelper.validateStringArgumentIsNotNullAndNotBlank(xmlFilePath, "file path");
+        FileInputStream fileInputStream = null;
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            ClassPathResource filePath = new ClassPathResource(xmlFilePath);
+            File xmlFile = filePath.getFile();
+
+            fileInputStream = new FileInputStream(xmlFile);
+            InputSource in = new InputSource(fileInputStream);
+            //Document document = docBuilder.parse(xmlFilePath);
+            Document document = docBuilder.parse(in);
+            document.getDocumentElement().normalize();
+
+            return document;
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (SAXException sae) {
+            sae.printStackTrace();
+        }
+        finally {
+            if(fileInputStream != null)
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+
+                }
+        }
+        return null;
+    }
+
+    /**
+     * Write the content stored in {@link Document} into the XML file.
+     * @param doc
+     * @param xmlFileName
+     */
+    public static void writeXmlDocumentContent(Document doc, String xmlFileName) {
+        try {
+            //TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            //Transformer transformer = transformerFactory.newTransformer();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            DOMSource source = new DOMSource(doc);
+
+            ClassPathResource filePath = new ClassPathResource(xmlFileName);
+
+            /*File xmlFile = filePath.getFile();*/
+            /*xmlFile = new File(xmlFileName);*/
+            /*StreamResult result = new StreamResult(xmlFile);  */
+            StreamResult result = new StreamResult(filePath.getFile());
+
+            transformer.transform(source, result);
+
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

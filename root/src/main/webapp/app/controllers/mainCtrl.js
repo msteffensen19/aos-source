@@ -24,7 +24,7 @@ define(['./module'], function (controllers) {
             };
             var enterInFocus = "";
 
-            categoryService.loadServer().then(function () {
+
 
                 $(document).on({
                     keydown: function (event) {
@@ -272,8 +272,6 @@ define(['./module'], function (controllers) {
                 $scope.$on('$viewContentLoaded', function (event) {
                     Helper.forAllPage();
                 });
-
-            });
 
             $scope.loginUser = {email: '', loginPassword: '', loginUser: ''};
             this.rememberMe = false;

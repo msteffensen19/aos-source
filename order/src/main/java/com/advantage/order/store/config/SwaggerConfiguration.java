@@ -10,6 +10,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 import static springfox.documentation.builders.PathSelectors.regex;
 
 /**
@@ -43,9 +44,9 @@ public class SwaggerConfiguration {
             apiInfoDescription = "";
         }
         ApiInfo apiInfo = new ApiInfo(
-                "Advantage - " + env.getProperty("mvn.project.build.finalName") + ".war REST API",
+                "Advantage - " + env.getProperty("order.project.build.finalName") + ".war REST API",
                 apiInfoDescription,
-                env.getProperty("mvn.project.version"),
+                env.getProperty("project.version"),
                 null,
                 null,
                 null,

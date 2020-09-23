@@ -1,10 +1,11 @@
 package com.advantage.catalog.store.services;
 
 import com.advantage.catalog.store.dao.AbstractRepository;
+import com.advantage.catalog.util.ArgumentValidationHelper;
+import com.advantage.catalog.util.ValidationHelper;
 import com.advantage.common.dto.ContactUsMailRequest;
 import com.advantage.common.dto.ContactUsResponse;
-import com.advantage.root.util.ArgumentValidationHelper;
-import com.advantage.root.util.ValidationHelper;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

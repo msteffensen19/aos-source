@@ -14,9 +14,10 @@ import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.services.OrderManagementService;
 import com.advantage.order.store.services.ShoppingCartService;
-import com.advantage.root.util.JsonHelper;
-import com.advantage.root.util.RestApiHelper;
-import com.advantage.root.util.ValidationHelper;
+
+import com.advantage.order.store.utils.JsonHelper;
+import com.advantage.order.store.utils.RestApiHelper;
+import com.advantage.order.store.utils.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;

@@ -1,7 +1,7 @@
 package com.advantage.order.store.dao;
 
 import com.advantage.order.store.model.OrderLines;
-import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.order.store.utils.ArgumentValidationHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

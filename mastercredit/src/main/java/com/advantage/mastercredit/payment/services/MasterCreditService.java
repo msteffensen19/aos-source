@@ -1,12 +1,12 @@
 package com.advantage.mastercredit.payment.services;
 
+import com.advantage.common.utils.StringHelper;
+import com.advantage.common.utils.ValidationHelper;
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.enums.TransactionTypeEnum;
 import com.advantage.mastercredit.util.ArgumentValidationHelper;
-import com.advantage.root.util.StringHelper;
-import com.advantage.root.util.ValidationHelper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static com.advantage.common.Constants.MASTER_CREDIT_IDENTICAL_CREDENTIALS_ERROR;
-import static com.advantage.root.util.StringHelper.convertStringToDate;
+import static com.advantage.common.utils.StringHelper.convertStringToDate;
 
 /**
  * <b>MasterCredit</b> MOCK server service. <br/>
@@ -122,7 +122,7 @@ public class MasterCreditService {
                     .append('.')
                     .append(masterCreditDto.getExpirationDate().substring(2, 6));
 
-            Date expirationDate = StringHelper.convertStringToDate(sb.toString(), "dd.MM.yyyy");
+            Date expirationDate = convertStringToDate(sb.toString(), "dd.MM.yyyy");
 
             if (expirationDate.before(new Date())) {
                 responseStatus.setResponseCode(ResponseEnum.ERROR.getStringCode());

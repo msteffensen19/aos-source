@@ -282,117 +282,184 @@ define(['./module'], function (services) {
                 var file = 'services.properties'
                 console.log("Extracting file: " + file);
 
-                var rawFile = new XMLHttpRequest();
+                // var rawFile = new XMLHttpRequest();
+                if(server.getKey() !== 'undefined'){
+                    response.resolve("OK");
+                }else{
+                    $http({
+                        method: "get",
+                        url: file,
+                    }).success(function (res) {
+                        services_properties = JSON.parse(res);
+                        var reverseProxy = services_properties['reverse.proxy'].value === 'true';
+                        var hostKey = window.location.hostname;
+                        var protocol = window.location.protocol;
+                        var port = window.location.port;
+                        var gatewayOn = services_properties['aos.gateway'].value === 'true';
 
-                rawFile.open("GET", file, false);
-                rawFile.onreadystatechange = function () {
+                        if(services_properties['single.machine.deployment'].value === 'true' && !gatewayOn){
 
-                    if (rawFile.readyState === 4) {
-                        if (rawFile.status === 200 || rawFile.status == 0) {
-                            var fileText = rawFile.responseText;
-                            var rawFile_responseText = fileText;
-                            fileText = fileText.split('');
-                            var _param = '';
-                            var _value = '';
-                            var attr = true;
-                            var arrayApi = [];
-                            var invalidChars = '#';
-                            fileText.forEach(function (a) {
-                                switch (a.charCodeAt(0)) {
-                                    case 10:
-                                    case 13:
-                                        var validParam = true;
-                                        for (var i = 0; i < invalidChars.length; i++) {
-                                            if (_param.indexOf(invalidChars[i]) != -1) {
-                                                validParam = false;
-                                                break;
-                                            }
-                                        }
-                                        if (validParam && _param != '' && _value != '') {
-                                            arrayApi.push("{\"" + _param.split(".").join("_") + "\":\"" + _value + "\"}");
-                                            _param = '';
-                                            _value = '';
-                                        }
-                                        attr = true;
-                                        break;
-                                    case 61:
-                                        attr = false;
-                                        break;
-                                    default:
-                                        if (attr) {
-                                            _param += a;
-                                        } else {
-                                            _value += a;
-                                        }
-                                        break;
-                                }
-                            });
+                            server.setKey(protocol + "//" + hostKey +
+                                (reverseProxy ? "" : ":" +
+                                    services_properties['catalog.service.url.port'].value)+ "/");
 
-                            arrayApi.forEach(function (a) {
-                                var jsonObj = JSON.parse(a);
-                                services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
-                            });
+                            server.setCatalogKey(protocol + "//" + hostKey +
+                                (reverseProxy ? "" : ":" +
+                                    services_properties['catalog.service.url.port'].value) + "/" + services_properties['catalog.service.url.suffix'].value + "/");
 
-                            var reverseProxy = services_properties['reverse_proxy'] === 'true';
-                            var hostKey = window.location.hostname;
-                            var protocol = window.location.protocol;
-                            var port = window.location.port;
-                            var gatewayOn = services_properties['aos_gateway'] === 'true';
+                            server.setOrderKey(protocol + "//" + hostKey +
+                                (reverseProxy ? "" : ":" +
+                                    services_properties['order.service.url.port'].value) + "/" + services_properties['order.service.url.suffix'].value + "/");
 
-                            if(services_properties['single_machine_deployment'] === 'true' && !gatewayOn){
+                            server.setWsdlPath(protocol + "//" +
+                                hostKey +
+                                (reverseProxy ? "" : ":" +
+                                    services_properties['account.soapservice.url.port'].value) + "/" +
+                                services_properties['account.soapservice.url.suffix'].value + "/");
+                        }else if(reverseProxy && !gatewayOn){
+                            server.setKey(protocol + "//" + hostKey + "/");
+                            server.setCatalogKey(protocol + "//" + hostKey + "/"  + services_properties['catalog.service.url.suffix'].value + "/");
+                            server.setOrderKey(protocol + "//" + hostKey + "/"  + services_properties['order.service.url.suffix'].value + "/");
+                            server.setWsdlPath(protocol + "//" + hostKey + "/" +
+                                services_properties['account.soapservice.url.suffix'].value + "/");
+                        }else if(gatewayOn){
+                            server.setKey(protocol + "//" + hostKey + ":" + port +  "/");
+                            server.setCatalogKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['catalog.service.url.suffix'].value + "/");
+                            server.setOrderKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['order.service.url.suffix'].value + "/");
+                            server.setWsdlPath(protocol + "//" + hostKey + ":" + port + "/" +
+                                services_properties['account.soapservice.url.suffix'].value + "/");
+                        } else{
+                            server.setKey("http://" + services_properties['catalog.service.url.host'].value + ":" +
+                                services_properties['catalog.service.url.port'].value + "/");
 
-                                server.setKey(protocol + "//" + hostKey +
-                                    (reverseProxy ? "" : ":" +
-                                    services_properties['catalog_service_url_port'])+ "/");
+                            server.setCatalogKey("http://" + services_properties['catalog.service.url.host'].value + ":" +
+                                services_properties['catalog.service.url.port'].value + "/" + services_properties['catalog.service.url.suffix'].value + "/");
 
-                                server.setCatalogKey(protocol + "//" + hostKey +
-                                    (reverseProxy ? "" : ":" +
-                                    services_properties['catalog_service_url_port']) + "/" + services_properties['catalog_service_url_suffix'] + "/");
+                            server.setOrderKey("http://" + services_properties['order.service.url.host'].value + ":" +
+                                services_properties['order.service.url.port'].value + "/" + services_properties['order.service.url.suffix'].value + "/");
 
-                                server.setOrderKey(protocol + "//" + hostKey +
-                                    (reverseProxy ? "" : ":" +
-                                    services_properties['order_service_url_port']) + "/" + services_properties['order_service_url_suffix'] + "/");
-
-                                server.setWsdlPath(protocol + "//" +
-                                    hostKey +
-                                    (reverseProxy ? "" : ":" +
-                                    services_properties['account_soapservice_url_port']) + "/" +
-                                    services_properties['account_soapservice_url_suffix'] + "/");
-
-
-                            }else if(reverseProxy && !gatewayOn){
-                                server.setKey(protocol + "//" + hostKey + "/");
-                                server.setCatalogKey(protocol + "//" + hostKey + "/"  + services_properties['catalog_service_url_suffix'] + "/");
-                                server.setOrderKey(protocol + "//" + hostKey + "/"  + services_properties['order_service_url_suffix'] + "/");
-                                server.setWsdlPath(protocol + "//" + hostKey + "/" +
-                                    services_properties['account_soapservice_url_suffix'] + "/");
-                            }else if(gatewayOn){
-                                server.setKey(protocol + "//" + hostKey + ":" + port +  "/");
-                                server.setCatalogKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['catalog_service_url_suffix'] + "/");
-                                server.setOrderKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['order_service_url_suffix'] + "/");
-                                server.setWsdlPath(protocol + "//" + hostKey + ":" + port + "/" +
-                                    services_properties['account_soapservice_url_suffix'] + "/");
-                            } else{
-                                server.setKey("http://" + services_properties['catalog_service_url_host'] + ":" +
-                                    services_properties['catalog_service_url_port'] + "/");
-
-                                server.setCatalogKey("http://" + services_properties['catalog_service_url_host'] + ":" +
-                                    services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'] + "/");
-
-                                server.setOrderKey("http://" + services_properties['order_service_url_host'] + ":" +
-                                    services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'] + "/");
-
-                                server.setWsdlPath("http://" +
-                                    services_properties['account_soapservice_url_host'] + ":" +
-                                    services_properties['account_soapservice_url_port'] + "/" +
-                                    services_properties['account_soapservice_url_suffix'] + "/");
-                            }
-                            response.resolve("OK");
-
+                            server.setWsdlPath("http://" +
+                                services_properties['account.soapservice.url.host'].value + ":" +
+                                services_properties['account.soapservice.url.port'].value + "/" +
+                                services_properties['account.soapservice.url.suffix'].value + "/");
                         }
-                    }
+                        response.resolve("OK");
+                    }).error(function (err) {
+
+                    });
                 }
-                rawFile.send(null)
+
+
+
+                //rawFile.open("GET", file, false);
+                // rawFile.onreadystatechange = function () {
+                //
+                //     if (rawFile.readyState === 4) {
+                //         if (rawFile.status === 200 || rawFile.status == 0) {
+                //             var fileText = rawFile.responseText;
+                //             var rawFile_responseText = fileText;
+                //             fileText = fileText.split('');
+                //             var _param = '';
+                //             var _value = '';
+                //             var attr = true;
+                //             var arrayApi = [];
+                //             var invalidChars = '#';
+                //             fileText.forEach(function (a) {
+                //                 switch (a.charCodeAt(0)) {
+                //                     case 10:
+                //                     case 13:
+                //                         var validParam = true;
+                //                         for (var i = 0; i < invalidChars.length; i++) {
+                //                             if (_param.indexOf(invalidChars[i]) != -1) {
+                //                                 validParam = false;
+                //                                 break;
+                //                             }
+                //                         }
+                //                         if (validParam && _param != '' && _value != '') {
+                //                             arrayApi.push("{\"" + _param.split(".").join("_") + "\":\"" + _value + "\"}");
+                //                             _param = '';
+                //                             _value = '';
+                //                         }
+                //                         attr = true;
+                //                         break;
+                //                     case 61:
+                //                         attr = false;
+                //                         break;
+                //                     default:
+                //                         if (attr) {
+                //                             _param += a;
+                //                         } else {
+                //                             _value += a;
+                //                         }
+                //                         break;
+                //                 }
+                //             });
+                //
+                //             arrayApi.forEach(function (a) {
+                //                 var jsonObj = JSON.parse(a);
+                //                 services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
+                //             });
+                //
+                //             var reverseProxy = services_properties['reverse_proxy'] === 'true';
+                //             var hostKey = window.location.hostname;
+                //             var protocol = window.location.protocol;
+                //             var port = window.location.port;
+                //             var gatewayOn = services_properties['aos_gateway'] === 'true';
+                //
+                //             if(services_properties['single_machine_deployment'] === 'true' && !gatewayOn){
+                //
+                //                 server.setKey(protocol + "//" + hostKey +
+                //                     (reverseProxy ? "" : ":" +
+                //                     services_properties['catalog_service_url_port'])+ "/");
+                //
+                //                 server.setCatalogKey(protocol + "//" + hostKey +
+                //                     (reverseProxy ? "" : ":" +
+                //                     services_properties['catalog_service_url_port']) + "/" + services_properties['catalog_service_url_suffix'] + "/");
+                //
+                //                 server.setOrderKey(protocol + "//" + hostKey +
+                //                     (reverseProxy ? "" : ":" +
+                //                     services_properties['order_service_url_port']) + "/" + services_properties['order_service_url_suffix'] + "/");
+                //
+                //                 server.setWsdlPath(protocol + "//" +
+                //                     hostKey +
+                //                     (reverseProxy ? "" : ":" +
+                //                     services_properties['account_soapservice_url_port']) + "/" +
+                //                     services_properties['account_soapservice_url_suffix'] + "/");
+                //
+                //
+                //             }else if(reverseProxy && !gatewayOn){
+                //                 server.setKey(protocol + "//" + hostKey + "/");
+                //                 server.setCatalogKey(protocol + "//" + hostKey + "/"  + services_properties['catalog_service_url_suffix'] + "/");
+                //                 server.setOrderKey(protocol + "//" + hostKey + "/"  + services_properties['order_service_url_suffix'] + "/");
+                //                 server.setWsdlPath(protocol + "//" + hostKey + "/" +
+                //                     services_properties['account_soapservice_url_suffix'] + "/");
+                //             }else if(gatewayOn){
+                //                 server.setKey(protocol + "//" + hostKey + ":" + port +  "/");
+                //                 server.setCatalogKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['catalog_service_url_suffix'] + "/");
+                //                 server.setOrderKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['order_service_url_suffix'] + "/");
+                //                 server.setWsdlPath(protocol + "//" + hostKey + ":" + port + "/" +
+                //                     services_properties['account_soapservice_url_suffix'] + "/");
+                //             } else{
+                //                 server.setKey("http://" + services_properties['catalog_service_url_host'] + ":" +
+                //                     services_properties['catalog_service_url_port'] + "/");
+                //
+                //                 server.setCatalogKey("http://" + services_properties['catalog_service_url_host'] + ":" +
+                //                     services_properties['catalog_service_url_port'] + "/" + services_properties['catalog_service_url_suffix'] + "/");
+                //
+                //                 server.setOrderKey("http://" + services_properties['order_service_url_host'] + ":" +
+                //                     services_properties['order_service_url_port'] + "/" + services_properties['order_service_url_suffix'] + "/");
+                //
+                //                 server.setWsdlPath("http://" +
+                //                     services_properties['account_soapservice_url_host'] + ":" +
+                //                     services_properties['account_soapservice_url_port'] + "/" +
+                //                     services_properties['account_soapservice_url_suffix'] + "/");
+                //             }
+                //             response.resolve("OK");
+                //
+                //         }
+                //     }
+                // }
+                // rawFile.send(null)
 
 
                 //$http({

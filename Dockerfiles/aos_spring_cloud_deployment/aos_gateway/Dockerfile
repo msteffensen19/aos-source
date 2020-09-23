@@ -7,7 +7,7 @@ ENV https_proxy="http://proxy.il.hpecorp.net:8080"
 RUN apk  update && \
     apk  add \
     curl \
-    vim \
+    vim
 
 RUN mkdir /gateway
 COPY wait-for-it.sh /gateway
