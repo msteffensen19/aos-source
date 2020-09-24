@@ -144,7 +144,10 @@ try{
                 env.Resumed = "false"
                 echo "BUILD SPRING CLOUD DEPLOYMENT"
                 sh '''#!/bin/sh
+    mvn -P production,pack_wars_without_accountservices package deploy -am -ff -e
+    cd accountservice
     mvn -P production package -am -ff -e
+    cd ../
     mkdir configurationFiles && cd configurationFiles
     git clone git@github.houston.softwaregrp.net:nimbus/microservices.git 
     '''
@@ -239,6 +242,12 @@ try{
   export http_proxy="http://proxy.il.hpecorp.net:8080"
   export https_proxy="http://proxy.il.hpecorp.net:8080"
   
+    all_wars_path=$WORKSPACE/root/target/wars.zip
+	cp ${all_wars_path} $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
+	cd $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
+    docker build -t advantageonlineshopping/aos-main-app-dev .
+	docker push advantageonlineshopping/aos-main-app-dev:latest
+	
     accountservice_jar_path=$WORKSPACE/accountservice/target/accountservice.jar
     config_service_jar_path=$WORKSPACE/config/target/configservice.jar
     gateway_service_jar_path=$WORKSPACE/gateway/target/gateway.jar
