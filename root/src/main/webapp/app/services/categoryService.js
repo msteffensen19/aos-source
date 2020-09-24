@@ -291,13 +291,13 @@ define(['./module'], function (services) {
                         url: file,
                     }).success(function (res) {
                         services_properties = JSON.parse(res);
-                        var reverseProxy = services_properties['reverse.proxy'].value === 'true';
+                        var reverseProxy = services_properties['reverse.proxy'].value;
                         var hostKey = window.location.hostname;
                         var protocol = window.location.protocol;
                         var port = window.location.port;
-                        var gatewayOn = services_properties['aos.gateway'].value === 'true';
+                        var gatewayOn = services_properties['aos.gateway'].value;
 
-                        if(services_properties['single.machine.deployment'].value === 'true' && !gatewayOn){
+                        if(services_properties['single.machine.deployment'].value && !gatewayOn){
 
                             server.setKey(protocol + "//" + hostKey +
                                 (reverseProxy ? "" : ":" +
