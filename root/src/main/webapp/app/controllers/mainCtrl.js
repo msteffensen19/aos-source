@@ -49,7 +49,7 @@ define(['./module'], function (controllers) {
                 });
 
                 /* Get all products data */
-                categoryService.getAllData();
+                //categoryService.getAllData();
                 /*===========================  end Get all products data ============================*/
 
 
