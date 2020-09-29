@@ -14,6 +14,7 @@ while [[ "$x" == 0 ]]
     case "$status" in *UP*)
     x=1
      ;; esac
+     sleep 2m
     done
 
 >&2 echo "config service is up - executing command"
