@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 config_service_uri="$1"
 shift
