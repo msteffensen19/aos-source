@@ -10,7 +10,9 @@
         <version>2.5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
+    <properties>
+        <applicationName>mastercredit</applicationName>
+    </properties>
     <build>
         <finalName>MasterCredit</finalName>
         <resources>

@@ -10,6 +10,9 @@
         <version>2.5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    <properties>
+        <applicationName>safepay</applicationName>
+    </properties>
     <build>
         <finalName>SafePay</finalName>
         <resources>
