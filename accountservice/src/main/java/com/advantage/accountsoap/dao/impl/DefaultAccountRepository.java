@@ -16,7 +16,8 @@ import com.advantage.common.enums.AccountType;
 import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
-import com.advantage.root.util.RestApiHelper;
+
+import com.advantage.common.utils.RestApiHelper;
 import com.advantage.root.util.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

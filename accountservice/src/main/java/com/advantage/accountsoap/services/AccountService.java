@@ -25,7 +25,7 @@ import com.advantage.common.exceptions.token.VerificationTokenException;
 import com.advantage.common.exceptions.token.WrongTokenTypeException;
 import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.TokenJWT;
-import com.advantage.root.util.RestApiHelper;
+import com.advantage.common.utils.RestApiHelper;
 import com.advantage.root.util.StringHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
