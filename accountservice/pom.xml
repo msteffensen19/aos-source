@@ -447,6 +447,10 @@
             <artifactId>spring-retry</artifactId>
             <version>1.2.4.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+        </dependency>
         <!-- for auto retry -->
     </dependencies>
 
