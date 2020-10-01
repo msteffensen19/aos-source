@@ -7,13 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 
-import javax.inject.Inject;
-
 @SpringBootApplication
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass=true)
-@ComponentScan
 @PropertySources({
+        @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
         @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
         @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
         @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})

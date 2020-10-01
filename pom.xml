@@ -154,6 +154,10 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+            <id>gateway</id>
+            <build></build>
+        </profile>
     </profiles>
     <build>
         <!--<filters>-->
