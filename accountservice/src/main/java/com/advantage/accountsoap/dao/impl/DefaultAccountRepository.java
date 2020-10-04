@@ -18,7 +18,7 @@ import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
 
 import com.advantage.accountsoap.util.RestApiHelper;
-import com.advantage.root.util.ValidationHelper;
+import com.advantage.common.utils.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;

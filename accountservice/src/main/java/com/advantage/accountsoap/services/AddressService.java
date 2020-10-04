@@ -11,7 +11,7 @@ import com.advantage.accountsoap.dto.address.AddressStatusResponse;
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
 import com.advantage.accountsoap.model.ShippingAddress;
-import com.advantage.root.util.StringHelper;
+import com.advantage.common.utils.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

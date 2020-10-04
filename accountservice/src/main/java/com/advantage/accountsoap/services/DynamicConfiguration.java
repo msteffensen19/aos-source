@@ -4,7 +4,8 @@ import com.advantage.accountsoap.config.AccountConfiguration;
 import com.advantage.accountsoap.util.UrlResources;
 import com.advantage.common.Constants;
 
-import com.advantage.root.util.JsonHelper;
+
+import com.advantage.common.utils.JsonHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

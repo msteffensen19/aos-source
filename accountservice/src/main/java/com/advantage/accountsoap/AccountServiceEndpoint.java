@@ -25,7 +25,8 @@ import com.advantage.common.security.AuthorizeAsUser;
 import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
-import com.advantage.root.util.StringHelper;
+
+import com.advantage.common.utils.StringHelper;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;

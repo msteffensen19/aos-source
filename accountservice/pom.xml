@@ -269,6 +269,30 @@
             <properties>
                 <packaging.type>jar</packaging.type>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-netflix-eureka-client</artifactId>
+                    <version>2.2.2.RELEASE</version>
+                    <scope>compile</scope>
+                </dependency>
+                <!-- for auto retry -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-aop</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-config-client</artifactId>
+                    <version>2.2.4.RELEASE</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.retry</groupId>
+                    <artifactId>spring-retry</artifactId>
+                    <version>1.2.4.RELEASE</version>
+                </dependency>
+                <!-- for auto retry -->
+            </dependencies>
         </profile>
     </profiles>
 
@@ -506,19 +530,19 @@
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
         </dependency>
-        <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
-            <groupId>com.advantage.online.store</groupId>
-            <artifactId>root</artifactId>
-            <version>${project.version}</version>
-            <classifier>classes</classifier>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>&lt;!&ndash; Use root.WAR with classes - for sharing with WARs&ndash;&gt;-->
+<!--            <groupId>com.advantage.online.store</groupId>-->
+<!--            <artifactId>root</artifactId>-->
+<!--            <version>${project.version}</version>-->
+<!--            <classifier>classes</classifier>-->
+<!--            <scope>compile</scope>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>*</groupId>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -600,31 +624,9 @@
             <version>5.4.10.Final</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
-            <version>2.2.2.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- for auto retry -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
-            <version>2.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-            <version>1.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
         </dependency>
-        <!-- for auto retry -->
     </dependencies>
 
 
