@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>root</artifactId>
-    <packaging>war</packaging>
+    <packaging>${packaging.type}</packaging>
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
@@ -21,6 +21,29 @@
                 <filtering>true</filtering>
             </properties>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                    <!-- Do not copy *.properties files and ver.txt to WEB-INF\classes (in ROOT project)-->
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <excludes>
+                            <exclude>
+                                *.properties
+                            </exclude>
+                            <exclude>
+                                *.properties.*
+                            </exclude>
+                            <exclude>ver.txt</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -68,6 +91,57 @@
                                     </resource>
                                 </webResources>
                             </configuration>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>2.7</version>
+                            <executions>
+                                <execution>
+                                    <id>copy-shared-resources-into-webapp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>${filtering}</filtering>
+                                                <!--<excludes>-->
+                                                <!--<exclude>/*.*</exclude>-->
+                                                <!--</excludes>-->
+                                                <includes combine.self="override">
+                                                    <include>/services.properties</include>
+                                                    <!--<include>/global.properties</include>-->
+                                                    <include>/ver.txt</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>copy-log4j_properties-into-classes</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>${filtering}</filtering>
+                                                <includes combine.self="override">
+                                                    <include>/log4j.properties</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </execution>
+
+                            </executions>
+
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -119,6 +193,17 @@
                         </plugin>
                     </plugins>
                 </pluginManagement>
+                <resources>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                        <excludes>
+                            <exclude>*.properties</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
             </build>
         </profile>
         <profile>
@@ -178,24 +263,77 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+            <id>gateway</id>
+            <properties>
+                <packaging.type>war</packaging.type>
+            </properties>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-config-client</artifactId>
+                        <version>2.2.4.RELEASE</version>
+                    </dependency>
+                </dependencies>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>exec-maven-plugin</artifactId>
+                            <executions>
+
+                                <execution>
+                                    <id>exec-yarn-install</id>
+                                    <phase>generate-sources</phase>
+                                    <configuration>
+                                        <executable>yarn</executable>
+                                        <arguments>
+                                            <argument>install</argument>
+                                        </arguments>
+                                        <workingDirectory>src/main/webapp</workingDirectory>
+                                    </configuration>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                </execution>
+                                <execution>
+                                    <id>exec-grunt</id>
+                                    <phase>process-resources</phase>
+                                    <configuration>
+                                        <executable>grunt</executable>
+                                        <workingDirectory>src/main/webapp</workingDirectory>
+                                    </configuration>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <version>3.2.2</version>
+                            <configuration>
+                                <warSourceExcludes>app/,node_modules/,target/,css/</warSourceExcludes>
+                                <failOnMissingWebXml>false</failOnMissingWebXml>
+                                <webResources>
+                                    <resource>
+                                        <directory>${basedir}/src/main/webapp/target</directory>
+                                    </resource>
+                                </webResources>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
     </profiles>
     <build>
         <finalName>ROOT</finalName>
-<!--        <resources>-->
-<!--            &lt;!&ndash; Do not copy *.properties files and ver.txt to WEB-INF\classes (in ROOT project)&ndash;&gt;-->
-<!--            <resource>-->
-<!--                <directory>${project.build.directory}/generated-resources</directory>-->
-<!--                <excludes>-->
-<!--                    <exclude>-->
-<!--                        *.properties-->
-<!--                    </exclude>-->
-<!--                    <exclude>-->
-<!--                        *.properties.*-->
-<!--                    </exclude>-->
-<!--                    <exclude>ver.txt</exclude>-->
-<!--                </excludes>-->
-<!--            </resource>-->
-<!--        </resources>-->
+        <resources>
+
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -211,57 +349,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
             </plugin>
-<!--            <plugin>-->
-<!--                <artifactId>maven-resources-plugin</artifactId>-->
-<!--                <version>2.7</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>copy-shared-resources-into-webapp</id>-->
-<!--                        <phase>process-resources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-resources</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>-->
-<!--                            <resources>-->
-<!--                                <resource>-->
-<!--                                    <directory>${project.build.directory}/generated-resources</directory>-->
-<!--                                    <filtering>${filtering}</filtering>-->
-<!--                                    &lt;!&ndash;<excludes>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;<exclude>/*.*</exclude>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;</excludes>&ndash;&gt;-->
-<!--                                    <includes combine.self="override">-->
-<!--                                        <include>/services.properties</include>-->
-<!--                                        &lt;!&ndash;<include>/global.properties</include>&ndash;&gt;-->
-<!--                                        <include>/ver.txt</include>-->
-<!--                                    </includes>-->
-<!--                                </resource>-->
-<!--                            </resources>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>copy-log4j_properties-into-classes</id>-->
-<!--                        <phase>process-resources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-resources</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>-->
-<!--                            <resources>-->
-<!--                                <resource>-->
-<!--                                    <directory>${project.build.directory}/generated-resources</directory>-->
-<!--                                    <filtering>${filtering}</filtering>-->
-<!--                                    <includes combine.self="override">-->
-<!--                                        <include>/log4j.properties</include>-->
-<!--                                    </includes>-->
-<!--                                </resource>-->
-<!--                            </resources>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
 
-<!--                </executions>-->
-
-<!--            </plugin>-->
             <!--read properties from zip-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -354,11 +442,7 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
-            <version>2.2.4.RELEASE</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

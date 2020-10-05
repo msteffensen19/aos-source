@@ -5,10 +5,12 @@ import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertySource;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-
+@ConditionalOnProperty(
+        value="aos.gateway.mode",
+        havingValue = "true",
+        matchIfMissing = false)
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
