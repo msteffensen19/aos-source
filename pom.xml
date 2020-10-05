@@ -259,6 +259,9 @@
                 <directory>src/main/resources</directory>
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>services.properties</exclude>
+                </excludes>
             </resource>
             <!--shared resources-->
             <resource>
