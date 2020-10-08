@@ -6,8 +6,6 @@ ENV https_proxy="http://proxy.il.hpecorp.net:8080"
 
 RUN apk  update && \
     apk  add \
-    openjdk8 \
-    postgresql \
     vim
 
 RUN mkdir /configservice

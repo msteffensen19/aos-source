@@ -8,6 +8,52 @@
     <version>2.5-SNAPSHOT</version>
 
     <name>accountservice</name>
+    <description></description>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.1.RELEASE</version>
+        <relativePath/>
+        <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>11</java.version>
+        <!--<slf4j.version>1.7.13</slf4j.version>-->
+        <log4j.version>1.2.17</log4j.version>
+        <querydsl.version>3.6.0</querydsl.version>
+
+        <spring-security.version>4.0.3.RELEASE</spring-security.version>
+        <jsr250.version>1.0</jsr250.version>
+        <spring-session.version>1.0.0.RELEASE</spring-session.version>
+        <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
+        <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
+        <!--<hibernate.version>5.1.0.Final</hibernate.version>-->
+        <hibernate.version>4.3.9.Final</hibernate.version>
+        <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+        <liquibase.version>3.5.1</liquibase.version>
+        <liquibase.hibernate4.version>3.5</liquibase.hibernate4.version>
+        <liquibase.postgres.version>3.0</liquibase.postgres.version>
+        <modelmapper.version>0.7.3</modelmapper.version>
+        <springfox.version>2.0.3</springfox.version>
+        <!--<postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>-->
+        <postgres.driver.version>42.2.14</postgres.driver.version>
+        <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
+        <plugin.maven.compiler.version>3.8.0</plugin.maven.compiler.version>
+        <plugin.maven.war.version>3.2.2</plugin.maven.war.version>
+        <plugin.sql.version>1.5</plugin.sql.version>
+        <plugin.properties.version>1.0.0</plugin.properties.version>
+        <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
+        <plugin.maven.resources.version>2.7</plugin.maven.resources.version>
+        <plugin.hibernate3.version>3.0</plugin.hibernate3.version>
+        <maven.filtering.version>3.1.0</maven.filtering.version>
+        <javax.servlet.version>3.1.0</javax.servlet.version>
+        <javax.inject.version>1</javax.inject.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
+        <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
+    </properties>
     <profiles>
         <profile>
             <id>production</id>
@@ -296,52 +342,7 @@
         </profile>
     </profiles>
 
-    <description></description>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.1.RELEASE</version>
-        <relativePath/>
-        <!-- lookup parent from repository -->
-    </parent>
 
-    <properties>
-        <java.version>11</java.version>
-        <!--<slf4j.version>1.7.13</slf4j.version>-->
-        <log4j.version>1.2.17</log4j.version>
-        <querydsl.version>3.6.0</querydsl.version>
-
-        <spring-security.version>4.0.3.RELEASE</spring-security.version>
-        <jsr250.version>1.0</jsr250.version>
-        <spring-session.version>1.0.0.RELEASE</spring-session.version>
-        <spring-framework-data-version>1.9.2.RELEASE</spring-framework-data-version>
-        <spring-framework-data-jpa-version>1.7.2.RELEASE</spring-framework-data-jpa-version>
-        <!--<hibernate.version>5.1.0.Final</hibernate.version>-->
-        <hibernate.version>4.3.9.Final</hibernate.version>
-        <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
-        <liquibase.version>3.5.1</liquibase.version>
-        <liquibase.hibernate4.version>3.5</liquibase.hibernate4.version>
-        <liquibase.postgres.version>3.0</liquibase.postgres.version>
-        <modelmapper.version>0.7.3</modelmapper.version>
-        <springfox.version>2.0.3</springfox.version>
-        <!--<postgres.driver.version>9.3-1100-jdbc41</postgres.driver.version>-->
-        <postgres.driver.version>42.2.14</postgres.driver.version>
-        <plugin.maven.assembly.version>2.5.4</plugin.maven.assembly.version>
-        <plugin.maven.compiler.version>3.8.0</plugin.maven.compiler.version>
-        <plugin.maven.war.version>3.2.2</plugin.maven.war.version>
-        <plugin.sql.version>1.5</plugin.sql.version>
-        <plugin.properties.version>1.0.0</plugin.properties.version>
-        <plugin.buildnumber.version>1.4</plugin.buildnumber.version>
-        <plugin.maven.resources.version>2.7</plugin.maven.resources.version>
-        <plugin.hibernate3.version>3.0</plugin.hibernate3.version>
-        <maven.filtering.version>3.1.0</maven.filtering.version>
-        <javax.servlet.version>3.1.0</javax.servlet.version>
-        <javax.inject.version>1</javax.inject.version>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <baseNexusURL>http://mydtbld0051.isr.hp.com:8081/nexus</baseNexusURL>
-        <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
-    </properties>
 
     <dependencyManagement>
         <dependencies>

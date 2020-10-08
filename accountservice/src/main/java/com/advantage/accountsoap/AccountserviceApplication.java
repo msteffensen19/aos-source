@@ -14,7 +14,7 @@ import org.springframework.context.annotation.*;
         @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
         @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
         @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
-        @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})
+        @PropertySource(value = Constants.FILE_PROPERTIES_GLOBAL, ignoreResourceNotFound = true)})
 
 public class AccountserviceApplication {
 

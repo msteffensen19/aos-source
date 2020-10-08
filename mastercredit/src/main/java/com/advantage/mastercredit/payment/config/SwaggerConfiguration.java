@@ -44,7 +44,7 @@ public class SwaggerConfiguration {
             apiInfoDescription = "";
         }
         ApiInfo apiInfo = new ApiInfo(
-                "Advantage - " + env.getProperty("spring.application.name") + ".war REST API",
+                "Advantage - " + env.getProperty("mvn.application.name") + ".war REST API",
                 apiInfoDescription,
                 env.getProperty("mvn.project.version"),
                 null,

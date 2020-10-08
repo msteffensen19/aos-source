@@ -85,6 +85,20 @@
         <profile>
             <id>development</id>
             <build>
+                <resources>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                        <includes>
+                            <include>*.properties</include>
+                        </includes>
+                        <excludes>
+                            <exclude>log4j.properties</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -122,6 +136,20 @@
                 <packaging.type>war</packaging.type>
             </properties>
             <build>
+                <resources>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                        <includes>
+                            <include>*.properties</include>
+                        </includes>
+                        <excludes>
+                            <exclude>log4j.properties</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -205,6 +233,19 @@
                 <module>gateway</module>
             </modules>
             <build>
+                <resources>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                        <excludes>
+                            <exclude>*.properties</exclude>
+                            <exclude>*.properties.*</exclude>
+                        </excludes>
+                        
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -273,18 +314,7 @@
                 <!-- _v_ Replace ${parameters} to his real value in all resources files-->
                 <filtering>true</filtering>
             </resource>
-            <resource>
-                <directory>${project.build.directory}/generated-resources</directory>
-                <targetPath>${project.build.outputDirectory}/properties</targetPath>
-                <includes>
-                    <include>*.properties</include>
-                </includes>
-                <excludes>
-                    <exclude>log4j.properties</exclude>
-                </excludes>
-                <!-- _v_ Replace ${parameters} to his real value in all resources files-->
-                <filtering>true</filtering>
-            </resource>
+
             <!--<resource>-->
             <!--<directory>${project.parent.directory}/shared_resources/ver.txt</directory>-->
             <!--<filtering>true</filtering>-->

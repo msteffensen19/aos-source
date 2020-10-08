@@ -42,7 +42,7 @@ define(['./module'], function (services) {
                         "hasWarranty" : product.hasWarranty
                     });
                     if(!usingWarranty){
-                        usingWarranty = product.product.hasWarranty;
+                        usingWarranty = product.hasWarranty;
                     }
                 });
                 usingWarranty ? Analytics.trackEvent('SafePay', 'Warranty activated', cart.productsInCart) : "";

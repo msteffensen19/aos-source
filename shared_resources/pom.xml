@@ -21,6 +21,12 @@
             </properties>
         </profile>
         <profile>
+            <id>gateway</id>
+            <properties>
+                <resources.source.path>prod</resources.source.path>
+            </properties>
+        </profile>
+        <profile>
             <id>development</id>
             <properties>
                 <resources.source.path>dev</resources.source.path>
