@@ -12,8 +12,8 @@ import org.springframework.context.annotation.*;
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @PropertySources({
         @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
-        @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
-        @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
+        @PropertySource(value = Constants.FILE_PROPERTIES_INTERNAL, ignoreResourceNotFound = true),
+        @PropertySource(value = Constants.FILE_PROPERTIES_EXTERNAL, ignoreResourceNotFound = true),
         @PropertySource(value = Constants.FILE_PROPERTIES_GLOBAL, ignoreResourceNotFound = true)})
 
 public class AccountserviceApplication {
