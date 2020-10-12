@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertySource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +39,7 @@ public class rootApplication extends SpringBootServletInitializer {
     private static final Logger logger = Logger.getLogger(rootApplication.class);
 
     @RequestMapping("/services.properties")
+    @CrossOrigin
     public String getServicesProperties(HttpServletResponse response) {
         logger.info("Writing services properties from spring cloud config");
         Map<String, String> map = new HashMap();
