@@ -231,6 +231,7 @@
             <modules>
                 <module>config</module>
                 <module>gateway</module>
+                <module>pack_wars</module>
             </modules>
             <build>
                 <resources>
