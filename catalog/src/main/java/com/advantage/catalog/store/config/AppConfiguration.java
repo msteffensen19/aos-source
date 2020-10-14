@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @PropertySources(value = {
         @PropertySource(Constants.FILE_PROPERTIES_APP),
         //@PropertySource("classpath:/database.properties"),
-        @PropertySource(Constants.FILE_PROPERTIES_GLOBAL),
-        @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL),
-        @PropertySource(Constants.FILE_PROPERTIES_INTERNAL),
+        @PropertySource(value = Constants.FILE_PROPERTIES_GLOBAL, ignoreResourceNotFound = true),
+        @PropertySource(value = Constants.FILE_PROPERTIES_EXTERNAL, ignoreResourceNotFound = true),
+        @PropertySource(value = Constants.FILE_PROPERTIES_INTERNAL, ignoreResourceNotFound = true),
         //@PropertySource(Constants.FILE_PROPERTIES_DEMO_APP),
-        @PropertySource(Constants.FILE_PROPERTIES_VER_TXT)
+        @PropertySource(value = Constants.FILE_PROPERTIES_VER_TXT, ignoreResourceNotFound = true)
 })
 public class AppConfiguration {
 

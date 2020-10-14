@@ -1,4 +1,5 @@
-mvn.buildTime=${timestamp}
+mvn.buildTime=${applicationName}
+mvn.application.name=${applicationName}
 mvn.scmBranch=${scmBranch}
 mvn.commit.revision=${buildNumber}
 mvn.project.build.finalName=${project.build.finalName}

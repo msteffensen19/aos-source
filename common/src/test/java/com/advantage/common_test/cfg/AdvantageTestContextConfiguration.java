@@ -14,7 +14,6 @@ import org.springframework.core.env.Environment;
 //        "com.advantage.order.store.user.model",
 //        "com.advantage.order.store.init"})
 @PropertySources(value = {/*@PropertySource("classpath:imageManagement.properties"),*/ @PropertySource(Constants.FILE_PROPERTIES_EXTERNAL), @PropertySource(Constants.FILE_PROPERTIES_INTERNAL), @PropertySource(Constants.FILE_PROPERTIES_GLOBAL)})
-
 public class AdvantageTestContextConfiguration {
 
     @Autowired

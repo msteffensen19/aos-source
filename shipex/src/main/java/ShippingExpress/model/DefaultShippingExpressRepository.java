@@ -1,6 +1,8 @@
 package ShippingExpress.model;
 
-import com.advantage.root.util.RestApiHelper;
+
+
+import com.advantage.common.utils.RestApiHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;

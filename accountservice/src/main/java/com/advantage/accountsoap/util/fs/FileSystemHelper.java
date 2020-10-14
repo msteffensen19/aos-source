@@ -215,14 +215,19 @@ public abstract class FileSystemHelper {
      * @param csvFilePath e.g. "/Users/regevb/Downloads/countries_20150630.csv"
      * @return
      */
-    public static ArrayList<String> readFileCsv(final String csvFilePath) {
+    public static ArrayList<String> readFileCsv(final String csvFilePath, boolean bufferReadingType, InputStream csvInputStream) {
 
         BufferedReader csvBuffer = null;
         ArrayList<String> linesResult = new ArrayList<String>();
 
         try {
             String csvLine;
-            csvBuffer = new BufferedReader(new FileReader(csvFilePath));
+            if(bufferReadingType){
+                csvBuffer = new BufferedReader(new InputStreamReader(csvInputStream));
+            }else{
+                csvBuffer = new BufferedReader(new FileReader(csvFilePath));
+            }
+
 
             // How to read file in java line by line?
             while ((csvLine = csvBuffer.readLine()) != null) {

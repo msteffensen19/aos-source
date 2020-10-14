@@ -9,15 +9,16 @@ import com.advantage.accountsoap.model.*;
 import com.advantage.accountsoap.util.AccountPassword;
 import com.advantage.accountsoap.util.ArgumentValidationHelper;
 import com.advantage.accountsoap.util.JPAQueryHelper;
+import com.advantage.accountsoap.util.UrlResources;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
 import com.advantage.common.Constants;
-import com.advantage.common.Url_resources;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.security.SecurityTools;
 import com.advantage.common.security.Token;
 import com.advantage.common.security.TokenJWT;
-import com.advantage.root.util.RestApiHelper;
-import com.advantage.root.util.ValidationHelper;
+
+import com.advantage.accountsoap.util.RestApiHelper;
+import com.advantage.common.utils.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -718,7 +719,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
 
         String stringResponse = null;
         URL deleteOrdersForUser = null;
-        URL orderApiUrl = Url_resources.getUrlOrder();
+        URL orderApiUrl = UrlResources.getUrlOrder();
 
         try {
 
@@ -781,10 +782,14 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
         Map<Long, Country> countryMap = new HashMap<>();
         try {
             ClassPathResource filePathCSV = new ClassPathResource("countries_20150630.csv");
-            File countriesCSV = filePathCSV.getFile();
+            String protocol = this.getClass().getResource("").getProtocol();
 
-            List<String> countries = FileSystemHelper.readFileCsv(countriesCSV.getAbsolutePath());
-
+            List<String> countries;
+            if(protocol.contains("jar")){
+                countries = FileSystemHelper.readFileCsv(null, true, filePathCSV.getInputStream());
+            } else {
+                countries = FileSystemHelper.readFileCsv(filePathCSV.getFile().getAbsolutePath(), false, null);
+            }
             for (String str : countries) {
                 String[] substrings = str.split(",");
                 Country country = new Country(substrings[1], substrings[2], Integer.valueOf(substrings[3]));

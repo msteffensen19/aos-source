@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Configuration
-@PropertySources(value = {@PropertySource(Constants.FILE_PROPERTIES_EXTERNAL)})
+@PropertySources(value = {@PropertySource(value = Constants.FILE_PROPERTIES_EXTERNAL, ignoreResourceNotFound = true)})
 public class Url_resources {
 
     private static URL urlPrefixCatalog;

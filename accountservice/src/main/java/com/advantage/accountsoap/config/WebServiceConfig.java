@@ -17,8 +17,7 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-@PropertySources(value = {
-        @PropertySource(Constants.FILE_PROPERTIES_DEMO_APP)})
+
 public class WebServiceConfig extends WsConfigurerAdapter {
     public static final String NAMESPACE_URI = "com.advantage.online.store.accountservice";
 

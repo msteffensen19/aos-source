@@ -6,11 +6,10 @@ import com.advantage.order.store.dto.ShoppingCartResponse;
 import com.advantage.order.store.dto.ShoppingCartResponseDto;
 import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.model.ShoppingCartPK;
-import com.advantage.root.util.ArgumentValidationHelper;
+import com.advantage.order.store.utils.ArgumentValidationHelper;
 
-import com.advantage.order.store.services.*;
 
-import com.advantage.root.util.RestApiHelper;
+import com.advantage.order.store.utils.RestApiHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

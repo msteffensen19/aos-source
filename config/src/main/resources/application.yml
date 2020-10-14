@@ -1,0 +1,33 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${CONFIG_REPO_URI}
+          # file:///C:/Users/akubany/dev/microservices
+          #          clone-on-start: true
+          strict-host-key-checking: false
+          search-paths: '*,{application},dev/{application},{profile}/{application},{application}-{profile}'
+        # Use the File System Backend to avoid git pulling. Enable "native" profile in the Config Server.
+        native:
+          searchLocations: ${CONFIG_REPO_FILE_SYSTEM}
+#      allow-override: true
+#      override-none: false
+  # when using localfile system the uri should have 3 /// (file:///dir)
+  profiles:
+    active: ${CONFIG_SERVICE_ACTIVE_PROFILE}
+
+  application:
+    name: aos-config
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    root: DEBUG

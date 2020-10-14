@@ -27,8 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
         }
 )
 
-@PropertySources(value = {@PropertySource(Constants.FILE_PROPERTIES_VER_TXT)})
 
 public class AppConfiguration {
+
+    AppConfiguration(){
+        super();
+    }
 
 }

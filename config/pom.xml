@@ -1,147 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>config</artifactId>
-    <packaging>jar</packaging>
-    <name>config</name>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.3.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.advantage</groupId>
+	<artifactId>config</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>config</name>
+	<description>AOS config service</description>
 
-    <parent>
-        <groupId>com.advantage.online.store</groupId>
-        <artifactId>main_project</artifactId>
-        <version>2.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+	<properties>
+		<java.version>11</java.version>
+		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
+	</properties>
 
-    <profiles>
-        <profile>
-            <id>production</id>
-            <build>
-                <plugins>
-                    <!--prod plugins vvv-->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                    </plugin>
-                    <!--prod plugins ^^^-->
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>development</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <!--<plugin>-->
-                        <!--<groupId>org.codehaus.mojo</groupId>-->
-                        <!--<artifactId>sql-maven-plugin</artifactId>-->
-                        <!--<configuration>-->
-                        <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
-                        <!--<url>-->
-                        <!--${db.url.prefix}://${catalog.hibernate.db.url.host}:${catalog.hibernate.db.url.port}/postgres-->
-                        <!--</url>-->
-                        <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
-                        <!--<username>${catalog.hibernate.db.login}</username>-->
-                        <!--&lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
-                        <!--<password>${catalog.hibernate.db.password}</password>-->
-                        <!--<sqlCommand>create database "${catalog.hibernate.db.name}"</sqlCommand>-->
-                        <!--</configuration>-->
-                        <!--</plugin>-->
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <!--run sql-->
-                    <!--<plugin>-->
-                    <!--<groupId>org.codehaus.mojo</groupId>-->
-                    <!--<artifactId>sql-maven-plugin</artifactId>-->
-                    <!--</plugin>-->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
-    <dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>2.3.1.RELEASE</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-server -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-server</artifactId>
-            <version>2.2.2.RELEASE</version>
-        </dependency>
+	<build>
+		<finalName>configservice</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<environmentVariables>
+						<CONFIG_REPO_URI>file://microservices</CONFIG_REPO_URI>
+					</environmentVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-        <dependency>
-            <groupId>com.advantage.online.store</groupId>
-            <artifactId>shared_resources</artifactId>
-            <version>2.5-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-            <!--<classifier>resources</classifier>-->
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.thetransactioncompany</groupId>
-            <artifactId>cors-filter</artifactId>
-            <version>2.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
-            <version>2.2.2.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>2.3.1.RELEASE</version>
-        </dependency>
-    </dependencies>
+	<distributionManagement>
+		<repository>
+			<id>demoapp-release</id>
+			<name>ADM DemoApp Release Nexus repository</name>
+			<url>
+				http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-release/
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>demoapp-snapshot</id>
+			<name>ADM DemoApp Snapshot Nexus repository</name>
+			<url>
+				http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/
+			</url>
+		</snapshotRepository>
+	</distributionManagement>
 
-    <build>
-        <finalName>config</finalName>
-        <plugins>
-            <!--shared resources-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <!--read properties from zip-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-            </plugin>
-        </plugins>
-    </build>
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>nexus</name>
+			<url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>nexus-demo-app</id>
+			<name>nexus</name>
+			<url>http://mydtbld0183.hpeswlab.net:8081/nexus/content/repositories/adm-demo-app-snapshot/</url>
+		</repository>
+	</repositories>
+
 </project>
