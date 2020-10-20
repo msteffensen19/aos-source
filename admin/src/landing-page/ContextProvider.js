@@ -140,7 +140,6 @@ export default class ContextProvider extends React.Component {
     getServicesProperties = ()=>{
 
         let host = window.location.origin;
-host = "http://localhost:8080";
         fetch(host+'/services.properties',{mode:'cors',
             headers: {
                 'Access-Control-Allow-Origin': '*'

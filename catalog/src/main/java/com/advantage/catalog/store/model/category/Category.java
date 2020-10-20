@@ -42,7 +42,7 @@ public class Category {
     public Category(final String categoryName, final String managedImageId) {
 
         this.categoryName = categoryName.toUpperCase();
-        this.managedImageId = managedImageId.toUpperCase();
+        this.managedImageId = managedImageId;
     }
 
     public Category() {

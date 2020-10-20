@@ -74,23 +74,23 @@ public class DataSourceInitByJson {
             Transaction transaction = session.beginTransaction();
             logger.trace("session.beginTransaction()");
 
-            final Category category1 = new Category("LAPTOPS", "1235");
+            final Category category1 = new Category("LAPTOPS", "laptops");
             session.persist(category1);
             logger.trace("Category 1 persist success");
 
-            final Category category2 = new Category("HEADPHONES", "1234");
+            final Category category2 = new Category("HEADPHONES", "headphones");
             session.persist(category2);
             logger.trace("Category 2 persist success");
 
-            final Category category3 = new Category("TABLETS", "1236");
+            final Category category3 = new Category("TABLETS", "tablets");
             session.persist(category3);
             logger.trace("Category 3 persist success");
 
-            final Category category4 = new Category("SPEAKERS", "1237");
+            final Category category4 = new Category("SPEAKERS", "speakers");
             session.persist(category4);
             logger.trace("Category 4 persist success");
 
-            final Category category5 = new Category("MICE", "1238");
+            final Category category5 = new Category("MICE", "mice");
             session.persist(category5);
             logger.trace("Category 5 persist success");
 
