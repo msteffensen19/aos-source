@@ -3,12 +3,15 @@ services:
   config-service:
     image: advantageonlineshopping/aos-configservice-dev:aos_config_deployment
     ports:
-      - "8888:8888"
+      - "${CONFIG_SERVICE_PORT}:${CONFIG_SERVICE_PORT}"
     container_name: aos_config_service
     restart: always
     environment:
       - CONFIG_REPO_FILE_SYSTEM=file:///configservice/microservices
       - CONFIG_SERVICE_ACTIVE_PROFILE=native
+      - POSTGRES_SERVICE_NAME=postgresql
+      - MAIN_SERVICE_NAME=aos-web
+      - ACCOUNT_SERVICE_NAME=account-service
     volumes:
       - type: bind
         source: data-volume-config-service
@@ -20,7 +23,7 @@ services:
     container_name: aos_gateway
     restart: always
     environment:
-      - CONFIG_SERVICE_URI=http://config-service:8888
+      - CONFIG_SERVICE_URI=http://config-service:${CONFIG_SERVICE_PORT}
       - ACTIVE_PROFILE=dev
     depends_on:
       - "config-service"
