@@ -144,9 +144,9 @@ try{
                 env.Resumed = "false"
                 echo "BUILD SPRING CLOUD DEPLOYMENT"
                 sh '''#!/bin/sh
-    mvn -P production,pack_wars_without_accountservices package deploy -am -ff -e
+    mvn -P gateway,pack_wars_without_accountservices package deploy -am -ff -e
     cd accountservice
-    mvn -P production package -am -ff -e
+    mvn -P gateway package -am -ff -e
     cd ../
     mkdir configurationFiles && cd configurationFiles
     git clone git@github.houston.softwaregrp.net:nimbus/microservices.git 
@@ -235,18 +235,18 @@ try{
 
                     sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
                     sh """
-  ssh "$aos_ci_ip" \"docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}\"
-  """
+                    ssh "$aos_ci_ip" \"docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}\"
+                      """
 
                     sh '''#!/bin/bash
-  export http_proxy="http://proxy.il.hpecorp.net:8080"
-  export https_proxy="http://proxy.il.hpecorp.net:8080"
+                  export http_proxy="http://proxy.il.hpecorp.net:8080"
+                  export https_proxy="http://proxy.il.hpecorp.net:8080"
   
-    all_wars_path=$WORKSPACE/root/target/wars.zip
-	cp ${all_wars_path} $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
-	cd $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
-    docker build -t advantageonlineshopping/aos-main-app-dev .
-	docker push advantageonlineshopping/aos-main-app-dev:latest
+                    all_wars_path=$WORKSPACE/root/target/wars.zip
+                    cp ${all_wars_path} $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
+                    cd $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
+                    docker build -t advantageonlineshopping/aos-main-app-dev .
+                    docker push advantageonlineshopping/aos-main-app-dev:latest
 	
     accountservice_jar_path=$WORKSPACE/accountservice/target/accountservice.jar
     config_service_jar_path=$WORKSPACE/config/target/configservice.jar
@@ -271,8 +271,16 @@ try{
     docker build -t advantageonlineshopping/aos-gateway-dev:aos_config_deployment .
     docker push advantageonlineshopping/aos-gateway-dev:aos_config_deployment
 	
+	cd ../../../
+	 #copy the docker-compose to ci machine
+    scp "./Nimbus_aos/aos_spring_cloud_deployment/docker-compose.yml" root@$aos_ci_ip:/root/spring
+    scp "./Nimbus_aos/aos_spring_cloud_deployment/.env" root@$aos_ci_ip:/root/spring
+    scp "./Nimbus_aos/aos_spring_cloud_deployment/.env_private" root@$aos_ci_ip:/root/spring
   
-  
+  ssh "$aos_ci_ip" 'cd /root/spring &&  docker-compose down'
+  ssh "$aos_ci_ip" 'cd /root &&  docker-compose down -d'
+    ssh "$aos_ci_ip" 'cd /root/spring && docker-compose pull &&  docker-compose up -d'
+
   '''
 
                 }
