@@ -224,6 +224,7 @@ try{
   if $aos_build_both_wars || $aos_build_accountservice_war || $aos_build_main_wars || $aos_force_build_wars ;then
     # docker compose pull the latest images, so if there is a newer image the service of that image will be stopped and recreated
     ssh "$aos_ci_ip" \"cd /root && docker-compose down -v\"
+    ssh "$aos_ci_ip" \"cd /root/spring && docker-compose down -v\"
     #edit the docker-compose to take images of dev
     ssh "$aos_ci_ip" \"/root/startup.sh\"
   fi
@@ -277,8 +278,8 @@ try{
     scp "./Nimbus_aos/aos_spring_cloud_deployment/.env" root@$aos_ci_ip:/root/spring
     scp "./Nimbus_aos/aos_spring_cloud_deployment/.env_private" root@$aos_ci_ip:/root/spring
   
-  ssh "$aos_ci_ip" 'cd /root/spring &&  docker-compose down'
-  ssh "$aos_ci_ip" 'cd /root &&  docker-compose down -d'
+  ssh "$aos_ci_ip" 'cd /root/spring &&  docker-compose down -v'
+  ssh "$aos_ci_ip" 'cd /root &&  docker-compose down -v'
     ssh "$aos_ci_ip" 'cd /root/spring && docker-compose pull &&  docker-compose up -d'
 
   '''
