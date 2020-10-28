@@ -282,23 +282,36 @@ define(['./module'], function (services) {
                 var file = 'services.properties'
                 console.log("Extracting file: " + file);
 
-                // var rawFile = new XMLHttpRequest();
-                if(server.getKey() !== 'undefined'){
-                    response.resolve("OK");
-                }else{
-                    $http({
-                        method: "get",
-                        url: file,
-                    }).success(function (res) {
-                        if(isJsonString(res))
-                            parseServicesAsJSON(res);
-                        else
-                            parseServicesAsTxt(res);
-                        response.resolve("OK");
-                    }).error(function (err) {
-
-                    });
+                var rawFile = new XMLHttpRequest();
+                rawFile.open("GET", file, false);
+                rawFile.onreadystatechange = function(){
+                    if(rawFile.readyState === 4){
+                        if(rawFile.status === 200 || rawFile.status == 0){
+                            if(isJsonString(rawFile.responseText))
+                                parseServicesAsJSON(rawFile.responseText);
+                            else
+                                parseServicesAsTxt(rawFile.responseText);
+                            response.resolve("OK");
+                        }
+                    }
                 }
+                rawFile.send(null);
+                // if(server.getKey() !== 'undefined'){
+                //     response.resolve("OK");
+                // }else{
+                //     $http({
+                //         method: "get",
+                //         url: file,
+                //     }).success(function (res) {
+                //         if(isJsonString(res))
+                //             parseServicesAsJSON(res);
+                //         else
+                //             parseServicesAsTxt(res);
+                //         response.resolve("OK");
+                //     }).error(function (err) {
+                //
+                //     });
+                // }
 
 
 
@@ -350,7 +363,7 @@ define(['./module'], function (services) {
             }
 
             function parseServicesAsJSON(json){
-                services_properties = JSON.parse(json);
+                services_properties = JSON.parse(JSON.parse(json));
                 var reverseProxy = services_properties['reverse.proxy'].value;
                 var hostKey = window.location.hostname;
                 var protocol = window.location.protocol;

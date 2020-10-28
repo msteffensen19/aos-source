@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
-        <version>2.5-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <properties>
@@ -389,7 +389,7 @@
         <dependency><!--Use shared resources-->
             <groupId>com.advantage.online.store</groupId>
             <artifactId>shared_resources</artifactId>
-            <version>2.5-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <!--<classifier>resources</classifier>-->
             <type>zip</type>
             <scope>provided</scope>
@@ -397,7 +397,7 @@
         <dependency><!-- Use root.WAR with classes - for sharing with WARs-->
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
-            <version>2.5-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

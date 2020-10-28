@@ -370,19 +370,19 @@ try{
             }
         }
 
-        stage('Promote ready_for_staging tag to Dockerhub'){
+        stage('Promote ready_for_staging tag to Dockerhub') {
 
-            env.stageName="Promote_to_Dockerhub"
+            env.stageName = "Promote_to_Dockerhub"
 
-            if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
+            if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName) {
                 currentBuild.result = 'SUCCESS'
-            }else if(env.aos_spring_build == "false"){
+            } else if (env.aos_spring_build == "false") {
 
                 env.Resumed = "false"
 
-                if (env.aos_build_both_wars == "true" || env.aos_build_accountservice_war == "true" || env.aos_build_main_wars == "true" || env.aos_force_build_wars == "true"){
+                if (env.aos_build_both_wars == "true" || env.aos_build_accountservice_war == "true" || env.aos_build_main_wars == "true" || env.aos_force_build_wars == "true") {
 
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
+                    withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
                                       usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
 
                         sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
@@ -401,8 +401,32 @@ try{
     '''
                     }
                 }
-            }else{
+            } else {
+                env.Resumed = "false"
+                withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: 'c3de99a2-ff92-4a6a-873b-5f866bc60977',
+                                  usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
 
+                    sh "docker login -u=${env.DOCKERHUB_USERNAME} -p=${env.DOCKERHUB_PASSWORD}"
+
+                    sh '''
+                    export http_proxy="http://proxy.il.hpecorp.net:8080"
+                    export https_proxy="http://proxy.il.hpecorp.net:8080"
+                    IMAGEID_6_wars=`docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep latest | awk -F" " '{ print $3 }'`
+                    IMAGEID_accountservice_jar=`docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep aos_config_deployment | awk -F" " '{ print $3 }'`
+                    IMAGEID_configservice=`docker images | grep "advantageonlineshopping/aos-configservice-dev" | grep aos_config_deployment | awk -F" " '{ print $3 }'`
+                    IMAGEID_gatewayservice=`docker images | grep "advantageonlineshopping/aos-gateway-dev" | grep aos_config_deployment | awk -F" " '{ print $3 }'`
+                    
+                    docker tag ${IMAGEID_6_wars} advantageonlineshopping/aos-main-app-dev:ready_for_staging_gateway
+                    docker tag ${IMAGEID_accountservice_jar} advantageonlineshopping/aos-accountservice-dev:ready_for_staging_gateway
+                    docker tag ${IMAGEID_configservice} advantageonlineshopping/aos-configservice-dev:ready_for_staging_gateway
+                    docker tag ${IMAGEID_gatewayservice} advantageonlineshopping/aos-gateway-dev:ready_for_staging_gateway
+                    
+                    docker push advantageonlineshopping/aos-main-app-dev:ready_for_staging_gateway
+                    docker push advantageonlineshopping/aos-accountservice-dev:ready_for_staging_gateway
+                    docker push advantageonlineshopping/aos-configservice-dev:ready_for_staging_gateway
+                    docker push advantageonlineshopping/aos-gateway-dev:ready_for_staging_gateway
+                    '''
+                }
             }
         }
 

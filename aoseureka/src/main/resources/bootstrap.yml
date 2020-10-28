@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: 'registry-Server'
-server:
-  port: 8760

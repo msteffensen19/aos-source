@@ -24,7 +24,7 @@ define(['./module'], function (controllers) {
             };
             var enterInFocus = "";
 
-
+            categoryService.loadServer().then(function () {
 
                 $(document).on({
                     keydown: function (event) {
@@ -34,8 +34,7 @@ define(['./module'], function (controllers) {
                                 case EnterInFocus.login:
                                     if ($scope.loginUser.loginPassword != "" && $scope.loginUser.loginUser != "") {
                                         if ($scope.loginUser.email == "" && ctrl.config.emailAddressInLogin) {
-                                        }
-                                        else {
+                                        } else {
                                             $scope.signIn($scope.loginUser, ctrl.rememberMe);
                                         }
                                     }
@@ -55,7 +54,7 @@ define(['./module'], function (controllers) {
 
                 /* Get configuration */
                 //BUG: #161001 - Remove duplicate requests
-                $scope.$on('configurationLoaded', function(event, data){
+                $scope.$on('configurationLoaded', function (event, data) {
                     ctrl.config = data.response;
                     $scope.refreshTimeOut();
                 });
@@ -109,7 +108,7 @@ define(['./module'], function (controllers) {
 
                     enterInFocus = EnterInFocus.login;
                     var userInfo = localStorage.getItem('rememberMe');
-                    if(userInfo){
+                    if (userInfo) {
                         var parsedUserInfo = JSON.parse(userInfo);
                         $scope.loginUser.loginUser = parsedUserInfo.name;
                         $scope.loginUser.loginPassword = parsedUserInfo.userPassword;
@@ -122,8 +121,7 @@ define(['./module'], function (controllers) {
                     var top = "5%";
                     if (windowsWidth < 480) {
                         top = "0";
-                    }
-                    else if (windowsWidth < 700) {
+                    } else if (windowsWidth < 700) {
                         top = "18%";
                     }
 
@@ -253,8 +251,7 @@ define(['./module'], function (controllers) {
                             if ($(".autoCompleteCover").width() < 100) {
                                 $("nav .navLinks").css("display", "block");
                             }
-                        }
-                        else {
+                        } else {
                             $("nav .navLinks").css("display", "none");
                         }
                     }, 1050);
@@ -272,6 +269,8 @@ define(['./module'], function (controllers) {
                 $scope.$on('$viewContentLoaded', function (event) {
                     Helper.forAllPage();
                 });
+
+            });
 
             $scope.loginUser = {email: '', loginPassword: '', loginUser: ''};
             this.rememberMe = false;
