@@ -15,6 +15,8 @@ import com.advantage.order.store.model.*;
 import com.advantage.order.store.utils.ArgumentValidationHelper;
 import com.advantage.order.store.utils.JsonHelper;
 import com.advantage.order.store.utils.RestApiHelper;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.http.HttpException;
 import org.apache.log4j.Logger;
@@ -25,10 +27,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
@@ -187,9 +186,25 @@ public class OrderManagementService {
         //  Step #3: Do payment MasterCredit / SafePay
         boolean paymentSuccessful = true;
         if (purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.MASTER_CREDIT.getName())) {
+            String isVoltageEnabled = RestApiHelper.getDemoAppConfigParameterValue("Enable_Voltage_Encryption");
+            String decryptedCardNumber = "";
+            Long decryptedCardNumberLong = null;
+
+            if ((isVoltageEnabled != null) && (!isVoltageEnabled.isEmpty()) && (isVoltageEnabled.equals("Yes"))) {
+                decryptedCardNumber = decryptCardNumUsingVoltage(paymentInfo.getCardNumber());
+                try{
+                    JsonObject jsonObject = JsonParser.parseString(decryptedCardNumber).getAsJsonObject();
+                    decryptedCardNumberLong = jsonObject.get("fields").getAsJsonArray().get(0).getAsJsonObject().get("data").getAsJsonArray().get(0).getAsLong();
+                } catch (Exception e){
+                    logger.error("Failed to parse decrypted JSON from voltage");
+                    logger.error(e);
+                }
+            }
+
+
             MasterCreditRequest masterCreditRequest = new MasterCreditRequest(
                     paymentInfo.getTransactionType(),
-                    Long.valueOf(paymentInfo.getCardNumber()),
+                    decryptedCardNumberLong != null ? decryptedCardNumberLong : Long.valueOf(paymentInfo.getCardNumber()),
                     paymentInfo.getExpirationDate(),
                     paymentInfo.getCustomerName(),
                     paymentInfo.getCustomerPhone(),
@@ -328,6 +343,32 @@ public class OrderManagementService {
         return purchaseResponse;
     }
 
+
+
+    private String decryptCardNumUsingVoltage(String cardNumber) {
+        String voltageUrlString = RestApiHelper.getDemoAppConfigParameterValue("Voltage_Service_URL");
+        URL voltageUrl = null;
+        String result = "";
+        try {
+            voltageUrl = new URL(voltageUrlString + "/vibesimple/rest/v1/access-fields");
+            String reqMethod = "POST";
+            HashMap<String, String> reqProp = new HashMap<>();
+            reqProp.put("authorization",
+                    "VSAuth vsauth_method=\"sharedSecret\",vsauth_data=\"dm9sdGFnZTEyMw==\",vsauth_identity_ascii=\"accounts22@dataprotection.voltage.com\",vsauth_version=\"200\"");
+            reqProp.put("content-type", "application/json");
+            String reqBody = "{" +
+                    "\"fields\":[{" +
+                    "\"fieldName\": \"CreditCardNumber\"," +
+                    "\"format\": \"cc-fpe2\"," +
+                    "\"data\": [\"" + cardNumber + "\"]}]}";
+            result = RestApiHelper.httpGet(voltageUrl, reqMethod, reqProp, reqBody);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     /**
      * For each purchased product:
      * Retrieve product-name, product-color-name and price-per-item.
@@ -401,7 +442,7 @@ public class OrderManagementService {
             warrantyServiceUrl = new URL("https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=" + productId);
         }
         logger.info("Warranty Service URL=" + "https://aoswarrantyfunction.azurewebsites.net/api/Function1?code=KEK/GaiTZ0lfJdRkJGgNdsn8qfenPseDGaS3j3n8noI6AGtSIriLAg==&prodid=" + productId);
-        String response = RestApiHelper.httpGet(warrantyServiceUrl);
+        String response = RestApiHelper.httpGet(warrantyServiceUrl, null, null, null);
         return response;
     }
 

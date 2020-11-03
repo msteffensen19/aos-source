@@ -9,11 +9,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Binyamin Regev on on 22/06/2016.
@@ -113,7 +117,7 @@ public abstract class RestApiHelper {
      * @return
      * @throws IOException
      */
-    public static String httpGet(URL url) throws IOException {
+    public static String httpGet(URL url, String method, HashMap<String, String> reqProp, String reqBody) throws IOException {
         Proxy proxy = null;
         try{
             proxy = getProxyFromProperties();
@@ -128,6 +132,20 @@ public abstract class RestApiHelper {
         else
             conn = (HttpURLConnection) url.openConnection(proxy);
         conn.setConnectTimeout(120000);
+        if(method != null){
+            conn.setRequestMethod(method);
+        }
+        if(reqProp != null){
+            for(Map.Entry<String, String> pair: reqProp.entrySet()){
+                conn.setRequestProperty(pair.getKey(), pair.getValue());
+            }
+        }
+        if(reqBody != null){
+            conn.setDoOutput(true);
+            OutputStream os = conn.getOutputStream();
+            byte[] input = reqBody.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
         logger.debug("HttpURLConnection = " + conn.getURL().toString());
         int responseCode = conn.getResponseCode();
 

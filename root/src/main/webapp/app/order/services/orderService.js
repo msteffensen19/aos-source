@@ -11,9 +11,9 @@
 
 define(['./module'], function (services) {
     'use strict';
-    services.service('orderService', ['$rootScope', '$q', '$http', '$filter', 'productsCartService',
+    services.service('orderService', ['$rootScope', '$q', '$http', '$filter', 'productsCartService', 'userService',
 
-        function ($rootScope, $q, $http, $filter, productsCartService) {
+        function ($rootScope, $q, $http, $filter, productsCartService, userService) {
 
             return ({
                 getAccountById: getAccountById,
@@ -78,6 +78,36 @@ define(['./module'], function (services) {
                 }
                 Loger.Params(paramsToPass, server.order.safePay(user.id));
                 Helper.enableLoader();
+                var voltageProp = userService.getVoltageProperties();
+                if(voltageProp.enableVoltage){
+                    encryptCreditCardNumber(paramsToPass.orderPaymentInformation.Transaction_MasterCredit_CardNumber, accountNumber, voltageProp).then(function(res){
+                        if(res.status == 200){
+                            paramsToPass.orderPaymentInformation.Transaction_MasterCredit_CardNumber = res.data.fields[0].data[0];
+                        }
+
+                        doPay(user, paramsToPass).then(function(res){
+                            defer.resolve(res);
+                        }, function(err){
+                            defer.reject(err);
+                        });
+                    }, function(err){
+                        doPay(user, paramsToPass).then(function(res){
+                            defer.resolve(res);
+                        },function(err){
+                            defer.reject(err);
+                        });
+                    });
+                } else{
+                    doPay(user, paramsToPass).then(function(res){
+                        defer.resolve(res);
+                    });;
+                }
+
+                return defer.promise;
+            }
+
+            function doPay(user, paramsToPass){
+                var defer = $q.defer();
                 $http({
                     method: "post",
                     url: server.order.safePay(user.id),
@@ -95,7 +125,7 @@ define(['./module'], function (services) {
                     Helper.disableLoader();
                     Loger.Received(err);
                     defer.reject(JSON.stringify(err))
-                })
+                });
                 return defer.promise;
             }
 
@@ -298,6 +328,31 @@ define(['./module'], function (services) {
                         Helper.disableLoader();
                         defer.reject(JSON.stringify(err))
                     });
+
+                return defer.promise;
+            }
+
+            function encryptCreditCardNumber(cardNum, account, voltageProp){
+                var defer = $q.defer();
+                var paramsToPass = '{"fields": [{"fieldName": "CreditCardNumber", "format": "cc-fpe2", "data": ["' + cardNum + '"]}]}';
+                $http({
+                    method: "post",
+                    url: 'https://voltage-pp-0000.dataprotection.voltage.com/vibesimple/rest/v1/protect-fields',
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": 'VSAuth vsauth_method="sharedSecret",vsauth_data="dm9sdGFnZTEyMw==",vsauth_identity_ascii="accounts22@dataprotection.voltage.com",vsauth_version="200"',
+                        'rejectUnauthorized': 'false',
+                    },
+                    data: paramsToPass
+                }).then(function (res) {
+                    Loger.Received(res);
+                    Helper.disableLoader();
+                    defer.resolve(res);
+                }, function (err) {
+                    Loger.Received(err);
+                    Helper.disableLoader();
+                    defer.reject(JSON.stringify(err))
+                });
 
                 return defer.promise;
             }

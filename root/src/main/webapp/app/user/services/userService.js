@@ -16,7 +16,8 @@ define(['./module'], function (services) {
                 nv_slowPage: nv_slowPage,
                 haveConfiguration: haveConfiguration,
                 facebookLogin : facebookLogin,
-                getWarrantyProperties: getWarrantyProperties
+                getWarrantyProperties: getWarrantyProperties,
+                getVoltageProperties: getVoltageProperties
 
             });
 
@@ -47,6 +48,14 @@ define(['./module'], function (services) {
                     {
                         enableWarranty: appConfiguration.enableWarranty == 2 ? true : false,
                         warrantyUrl: appConfiguration.warrantyUrl
+                    } : {};
+            }
+
+            function getVoltageProperties() {
+                return appConfiguration && appConfiguration.enableVoltage ?
+                    {
+                        enableVoltage: appConfiguration.enableVoltage == 2 ? true : false,
+                        voltageUrl: appConfiguration.voltageUrl + '/vibesimple/rest/v1/protect-fields'
                     } : {};
             }
 
@@ -156,6 +165,13 @@ define(['./module'], function (services) {
                                         config.enableWarranty = res.data.parameters[i].parameterValue &&
                                         res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
                                         config.warrantyUrl = '';
+                                        break;
+                                    case "Enable_Voltage_Encryption":
+                                        config.enableVoltage = res.data.parameters[i].parameterValue &&
+                                        res.data.parameters[i].parameterValue.toLowerCase() == "yes" ? 2 : 1;
+                                        break;
+                                    case "Voltage_Service_URL":
+                                        config.voltageUrl = res.data.parameters[i].parameterValue;
                                         break;
                                     // case "Warranty_location":
                                     //     config.warrantyUrl = res.data.parameters[i].parameterValue == 'default' ? '' : res.data.parameters[i].parameterValue;

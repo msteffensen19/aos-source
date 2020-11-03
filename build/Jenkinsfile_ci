@@ -246,7 +246,7 @@ try{
                     all_wars_path=$WORKSPACE/root/target/wars.zip
                     cp ${all_wars_path} $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
                     cd $WORKSPACE/Dockerfiles/aos_all_in_one/tomcat_all
-                    docker build -t advantageonlineshopping/aos-main-app-dev .
+                    docker build -t advantageonlineshopping/aos-main-app-dev:latest_spring .
                     docker push advantageonlineshopping/aos-main-app-dev:latest_spring
 	
     accountservice_jar_path=$WORKSPACE/accountservice/target/accountservice.jar
