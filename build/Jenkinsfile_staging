@@ -258,8 +258,8 @@ if (env.Resumed == "true" && env.aos_failed_stageName != env.aos_stageName){
   sh '''
   export http_proxy="http://proxy.il.hpecorp.net:8080"
   export https_proxy="http://proxy.il.hpecorp.net:8080"
-  IMAGEID_6_wars=`docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep "ready_for_staging" | awk -F" " '{ print $3 }'`
-  IMAGEID_accountservice_war=`docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep "ready_for_staging" | awk -F" " '{ print $3 }'`
+  IMAGEID_6_wars=`docker images | grep "advantageonlineshopping/aos-main-app-dev" | grep -w "ready_for_staging" | awk -F" " '{ print $3 }'`
+  IMAGEID_accountservice_war=`docker images | grep "advantageonlineshopping/aos-accountservice-dev" | grep -w "ready_for_staging" | awk -F" " '{ print $3 }'`
   
   docker tag ${IMAGEID_6_wars} advantageonlineshopping/aos-main-app-dev:staging
   docker tag ${IMAGEID_accountservice_war} advantageonlineshopping/aos-accountservice-dev:staging
