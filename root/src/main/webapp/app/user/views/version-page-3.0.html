@@ -24,22 +24,31 @@
     </div>
 
     <!-------------------- Mobile ----------------------->
+    <span style="padding-bottom: 15px;
+    overflow: hidden;
+    display: table;
+    padding-left: 30%;
+    width: 45%;">In this release, we introduce a new type of deployment to AOS – using the latest Spring cloud architecture, we added 2 additional services: configuration service and gateway service.
+</span>
+    <span style="padding-bottom: 40px;
+    overflow: hidden;
+    display: table;
+    padding-left: 30%;
+    width: 45%;">This will improve accessibility by using a single endpoint. AOS configuration (changing log level, services location and more) can now be done from a single file
+This release includes the following updates and enhancements:
+</span>
     <div class="gather_left">
 
         <div class="whats_new_section_pic">
-            <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66">
-                <g>
-                    <circle cx="33" cy="33" r="33" fill="#ce42f4"></circle>
-                    <text x="50%" y="50%" fill="#fff" text-anchor="middle" dy=".35em" font-size="19px">Mobile</text>
-                    <title>Mobile</title>
-                </g>
-            </svg>
         </div>
         <div class="paragraph">
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Made bug fixes and performance improvements, both on Android and iOS.</p>
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Improved the fingerprint authentication.</p>
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Added a Remove button to the product Shopping cart view.</p>
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Allowed a user to add an item to cart by long pressing it on the category screen.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- The AOS gateway service acts as a load balancer. This means application access now occurs using a single endpoint.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- The entire application configuration is managed inside the AOS configuration service. This means no more complicated changes to AOS services endpoints.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- The account service artifact changed from war to jar. This means it can be deployed outside a web server (tomcat), inside a container, or in a full operating system.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- The application log level configuration is now managed in a single file.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- We made various network topology changes.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- We upgraded to the services jars using the latest spring version. </p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- We added an option to the build process to decide which type of deployment should be built (gateway or non-gateway).</p>
         </div>
     </div>
 
@@ -51,16 +60,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66">
                 <g>
                     <circle cx="33" cy="33" r="33" fill="#ce42f4"></circle>
-                    <text x="50%" y="50%" fill="#fff" text-anchor="middle" dy=".35em" font-size="19px">DevOps</text>
-                    <title>DevOps</title>
+                    <text x="50%" y="50%" fill="#fff" text-anchor="middle" dy=".35em" font-size="19px">UFT AI</text>
+                    <title>UFT AI</title>
                 </g>
             </svg>
         </div>
         <div class="paragraph">
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Shortened UFTD build time.</p>
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Upgraded AOS AWS machines (packages and docker version).</p>
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Added Windows server 2019 to the supported list.</p>
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Improved the analytic capabilities.</p>
+            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- We improved the login module for better object identification.</p>
         </div>
     </div>
 
@@ -71,38 +77,16 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66">
                 <g>
                     <circle cx="33" cy="33" r="33" fill="#ce42f4"></circle>
-                    <text x="50%" y="50%" fill="#fff" text-anchor="middle" dy=".35em" font-size="20px">SAP</text>
-                    <title>SAP</title>
+                    <text x="50%" y="50%" fill="#fff" text-anchor="middle" dy=".35em" font-size="20px">Voltage</text>
+                    <title>Voltage</title>
                 </g>
             </svg>
         </div>
 
         <div class="paragraph">
-            <p class="whats_new_width_paragraph_90">- Integrated with Public SAP Fiori Demo Site to support a full demo of SAP and non-SAP assets in the same scrip.</p>
-            <p class="whats_new_width_paragraph_90">- Provided a way to search for items that are not in the AOS catalog. Every time a user searches for an item and it’s not in the AOS catalog, an option becomes available to extend the search through the new SAP UI (uses SAPUI5).</p>
+            <p class="whats_new_width_paragraph_90">- Integrated with Voltage Data Encryption, Purchases using Master Credit can be encrypted using voltage service.</p>
         </div>
 
-    </div>
-
-
-
-
-    <!------------------ web -------------------->
-    <div class="gather_left">
-
-        <div class="whats_new_section_pic">
-            <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66">
-                <g>
-                    <circle cx="33" cy="33" r="33" fill="#ce42f4"></circle>
-                    <text x="50%" y="50%" fill="#fff" text-anchor="middle" dy=".35em" font-size="20px">Web</text>
-                    <title>Web</title>
-                </g>
-            </svg>
-        </div>
-
-        <div class="paragraph">
-            <p class="whats_new_width_paragraph_60 padding_bottom_5_px">- Fixed an issue with the unsecured chat.</p>
-        </div>
     </div>
 
 
