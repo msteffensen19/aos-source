@@ -116,8 +116,6 @@ input:-webkit-autofill {
 
 .sec-view div label.invalid {
     color: #ff454f;
-    top: 47px;
-    font-size: 13px;
 }
 
 .sec-view div input, .sec-view div select {

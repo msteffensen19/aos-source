@@ -550,6 +550,7 @@ define(['./module'], function (directives) {
                         return;
                     }
                     if ((val+"").trim() == "") {
+                        input[0].removeAttribute("placeholder");
                         label.removeClass(animated);
                         if (isCardNumber) {
                             removeCardNumberFourDigits()
@@ -567,6 +568,7 @@ define(['./module'], function (directives) {
                 ctrl.focus = function () {
                     label.addClass(animated);
                     input.addClass(in_focus);
+                    input[0].setAttribute("placeholder", label.text());
                     if (isCardNumber) {
                         addCardNumberFourDigits()
                     }
