@@ -281,7 +281,7 @@ try{
   
   ssh "$aos_ci_ip" 'cd /root/spring &&  docker-compose down -v'
   ssh "$aos_ci_ip" 'cd /root &&  docker-compose down -v'
-    ssh "$aos_ci_ip" "/root/spring/startup.sh"
+    ssh "$aos_ci_ip" "chmod +x /root/spring/startup.sh && /root/spring/startup.sh"
 
   '''
 
