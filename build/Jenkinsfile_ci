@@ -278,7 +278,9 @@ try{
     scp "./Nimbus_aos/aos_spring_cloud_deployment/.env" root@$aos_ci_ip:/root/spring
     scp "./Nimbus_aos/aos_spring_cloud_deployment/.env_private" root@$aos_ci_ip:/root/spring
     scp "./Nimbus_aos/aos_spring_cloud_deployment/startup.sh" root@$aos_ci_ip:/root/spring
-  
+  export http_proxy="http://proxy.il.hpecorp.net:8080"
+  export https_proxy="http://proxy.il.hpecorp.net:8080"
+  echo "Shutting down AOS containers"
   ssh "$aos_ci_ip" 'cd /root/spring &&  docker-compose down -v'
   ssh "$aos_ci_ip" 'cd /root &&  docker-compose down -v'
     ssh "$aos_ci_ip" "chmod +x /root/spring/startup.sh && /root/spring/startup.sh"
