@@ -277,10 +277,11 @@ try{
     scp "./Nimbus_aos/aos_spring_cloud_deployment/docker-compose.yml" root@$aos_ci_ip:/root/spring
     scp "./Nimbus_aos/aos_spring_cloud_deployment/.env" root@$aos_ci_ip:/root/spring
     scp "./Nimbus_aos/aos_spring_cloud_deployment/.env_private" root@$aos_ci_ip:/root/spring
+    scp "./Nimbus_aos/aos_spring_cloud_deployment/startup.sh" root@$aos_ci_ip:/root/spring
   
   ssh "$aos_ci_ip" 'cd /root/spring &&  docker-compose down -v'
   ssh "$aos_ci_ip" 'cd /root &&  docker-compose down -v'
-    ssh "$aos_ci_ip" 'cd /root/spring && docker-compose pull &&  docker-compose up -d'
+    ssh "$aos_ci_ip" "/root/spring/startup.sh"
 
   '''
 
