@@ -43,10 +43,11 @@ public class SwaggerConfiguration {
             //e.printStackTrace();
             apiInfoDescription = "";
         }
+        String projectVersion = env.getProperty("mvn.project.version") != null ? env.getProperty("mvn.project.version") : env.getProperty("project.version");
         ApiInfo apiInfo = new ApiInfo(
                 "Advantage - " + env.getProperty("mvn.application.name") + ".war REST API",
                 apiInfoDescription,
-                env.getProperty("mvn.project.version"),
+                projectVersion,
                 null,
                 null,
                 null,

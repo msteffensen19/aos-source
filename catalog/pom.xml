@@ -22,6 +22,40 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>${plugin.maven.resources.version}</version>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <encoding>${project.build.sourceEncoding}</encoding>
+                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.build.directory}/generated-resources</directory>
+                                            <filtering>true</filtering>
+                                            <!--<excludes>-->
+                                            <!--<exclude>/*.properties</exclude>-->
+                                            <!--</excludes>-->
+                                            <includes>
+                                                <include>ver.txt</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                    <delimiters>
+                                        <delimiter>${*}</delimiter>
+                                    </delimiters>
+                                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                                </configuration>
+                                <id>copy-shared-resources-into-webapp</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <!--prod plugins ^^^-->
                 </plugins>
             </build>
@@ -46,6 +80,41 @@
                         <!--<sqlCommand>create database "${catalog.hibernate.db.name}"</sqlCommand>-->
                         <!--</configuration>-->
                         <!--</plugin>-->
+
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>${plugin.maven.resources.version}</version>
+                            <executions>
+                                <execution>
+                                    <configuration>
+                                        <encoding>${project.build.sourceEncoding}</encoding>
+                                        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>true</filtering>
+                                                <!--<excludes>-->
+                                                <!--<exclude>/*.properties</exclude>-->
+                                                <!--</excludes>-->
+                                                <includes>
+                                                    <include>ver.txt</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                        <delimiters>
+                                            <delimiter>${*}</delimiter>
+                                        </delimiters>
+                                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                                    </configuration>
+                                    <id>copy-shared-resources-into-webapp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
                     </plugins>
                 </pluginManagement>
                 <plugins>
@@ -85,7 +154,7 @@
         </profile>
     </profiles>
     <properties>
-
+        <applicationName>catalog</applicationName>
     </properties>
     <dependencyManagement>
         <dependencies>

@@ -10,9 +10,52 @@
         <version>3.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    <properties>
+        <applicationName>order</applicationName>
+    </properties>
     <profiles>
         <profile>
             <id>production</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>${plugin.maven.resources.version}</version>
+                            <executions>
+                                <execution>
+                                    <configuration>
+                                        <encoding>${project.build.sourceEncoding}</encoding>
+                                        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>true</filtering>
+                                                <!--<excludes>-->
+                                                <!--<exclude>/*.properties</exclude>-->
+                                                <!--</excludes>-->
+                                                <includes>
+                                                    <include>ver.txt</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                        <delimiters>
+                                            <delimiter>${*}</delimiter>
+                                        </delimiters>
+                                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                                    </configuration>
+                                    <id>copy-shared-resources-into-webapp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
         </profile>
         <profile>
             <id>gateway</id>
@@ -33,6 +76,49 @@
                     <version>2.2.4.RELEASE</version>
                 </dependency>
             </dependencies>
+        </profile>
+        <profile>
+            <id>development</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>${plugin.maven.resources.version}</version>
+                            <executions>
+                                <execution>
+                                    <configuration>
+                                        <encoding>${project.build.sourceEncoding}</encoding>
+                                        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>true</filtering>
+                                                <!--<excludes>-->
+                                                <!--<exclude>/*.properties</exclude>-->
+                                                <!--</excludes>-->
+                                                <includes>
+                                                    <include>ver.txt</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                        <delimiters>
+                                            <delimiter>${*}</delimiter>
+                                        </delimiters>
+                                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                                    </configuration>
+                                    <id>copy-shared-resources-into-webapp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
         </profile>
     </profiles>
     <build>

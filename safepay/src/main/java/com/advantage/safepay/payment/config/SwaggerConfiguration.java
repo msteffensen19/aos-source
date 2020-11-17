@@ -51,11 +51,17 @@ public class SwaggerConfiguration {
             //e.printStackTrace();
             apiInfoDescription = "";
         }
-
+        String projectVersion;
+        try{
+            projectVersion = env.getProperty("mvn.project.version") != null ? env.getProperty("mvn.project.version") : env.getProperty("project.version");
+        }catch (Exception e){
+            projectVersion = "";
+        }
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("Advantage - " + env.getProperty("spring.application.name") + ".war REST API")
+                .title("Advantage - " + env.getProperty("mvn.application.name") + ".war REST API")
                 .description(apiInfoDescription)
-                .license(null).version(env.getProperty("project.version")).build();
+                .version(projectVersion)
+                .license(null).build();
         return apiInfo;
     }
 }
