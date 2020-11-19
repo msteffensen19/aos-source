@@ -247,8 +247,9 @@ define(['./module'], function (directives) {
         var invalid = "invalid";
         var animated = "animated";
         var in_focus = "in-focus";
+        var hidden = "hidden";
+        var displayed = "displayed";
         var select_value = "select-value";
-
         return {
             restrict: 'E',
             require: ['secView', '^secForm'],
@@ -281,6 +282,7 @@ define(['./module'], function (directives) {
                 var disableValidation = false;
                 var isCardNumber = false;
                 var ctrl = this;
+                var staticlabel;
 
                 ctrl.compareTo;
                 s.validations = [];
@@ -550,11 +552,15 @@ define(['./module'], function (directives) {
                         return;
                     }
                     if ((val+"").trim() == "") {
-                        input[0].removeAttribute("placeholder");
+                        staticlabel.addClass(displayed);
+                        staticlabel.removeClass(hidden);
                         label.removeClass(animated);
                         if (isCardNumber) {
                             removeCardNumberFourDigits()
                         }
+                    }else{
+                        staticlabel.addClass(hidden);
+                        staticlabel.removeClass(displayed);
                     }
                     var valid = getValidation(true);
                     if (isFieldValid) {
@@ -568,7 +574,8 @@ define(['./module'], function (directives) {
                 ctrl.focus = function () {
                     label.addClass(animated);
                     input.addClass(in_focus);
-                    input[0].setAttribute("placeholder", label.text());
+                    staticlabel.addClass(hidden);
+                    staticlabel.removeClass(displayed);
                     if (isCardNumber) {
                         addCardNumberFourDigits()
                     }
@@ -622,11 +629,12 @@ define(['./module'], function (directives) {
                 };
 
 
-                ctrl.setItems = function (_input, _label, _ul, _form, _id) {
+                ctrl.setItems = function (_input, _label, _ul, _form, _id, _staticLabel) {
 
                     id = _id;
                     input = _input;
                     label = _label;
+                    staticlabel = _staticLabel;
                     ul = _ul;
                     hint = label.text();
                     form = _form;
@@ -984,6 +992,8 @@ define(['./module'], function (directives) {
                     }
                     $compile(input)(s);
 
+                    var staticlabel = $("<div class='hidden'>" + a.aHint  + "</div>");
+                    div.append(staticlabel);
                     div.append(input);
                     div.append(label);
 
@@ -1007,7 +1017,7 @@ define(['./module'], function (directives) {
                     e.append(ul);
 
                     var _form = ctrls[1];
-                    ctrl.setItems(input, label, ul, _form, s.$id);
+                    ctrl.setItems(input, label, ul, _form, s.$id, staticlabel);
 
                 },
 

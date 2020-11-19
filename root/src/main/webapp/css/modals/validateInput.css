@@ -4,9 +4,8 @@
 }
 
 .sec-view div.inputContainer {
-    margin: 2px 0;
     padding-top: 22px;
-    height: 54px;
+    height: 83px;
 }
 
 .sec-view div label,
@@ -116,10 +115,12 @@ input:-webkit-autofill {
 
 .sec-view div label.invalid {
     color: #ff454f;
+    top: 51px;
+    font-size: 13px;
 }
 
 .sec-view div input, .sec-view div select {
-    margin: 0;
+    margin: 4px 0 0;
     outline: none;
     cursor: text;
     border: none;

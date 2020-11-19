@@ -80,7 +80,7 @@
     margin: 0 auto;
     transform: scale(1.6);
 
-/*background-color: red;*/
+    /*background-color: red;*/
 }
 
 .loader div:before{
@@ -499,6 +499,19 @@ footer .splitter{
     animation-fill-mode: both;
     -webkit-animation-duration: 3s;
     animation-duration: 3s;
+}
+
+.hidden {
+    display: none;
+}
+
+.displayed {
+    display: block;
+    position: absolute;
+    transform-origin:0;
+    transform: scale(0.8, 1);
+    top: 7px;
+    color: #2a2a2a;
 }
 
 .animated.zoomInDown {
