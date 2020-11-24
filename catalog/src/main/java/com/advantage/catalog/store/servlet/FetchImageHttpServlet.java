@@ -68,7 +68,8 @@ public class FetchImageHttpServlet extends HttpServlet {
         final String imageId = req.getParameter(FetchImageHttpServlet.REQUEST_PARAM_IMAGE_ID);
         final ManagedImage managedImage = imageManagement.getManagedImage(imageId);
         final StringBuilder contentType = new StringBuilder("image/");
-        final String imageType = managedImage.getType();
+        String imageType = managedImage.getType();
+        imageType = imageType.equalsIgnoreCase("jpg") ? "jpeg" : imageType;//IE fix
         contentType.append(imageType);
         final String contentTypeString = contentType.toString();
         res.setContentType(contentTypeString);

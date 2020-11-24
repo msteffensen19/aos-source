@@ -3,6 +3,9 @@ spring:
     active: ${ACTIVE_PROFILE}
   application:
     name: catalog
+mvn:
+  application:
+    name: catalog
   cloud:
     config:
       uri: ${CONFIG_SERVICE_URI}

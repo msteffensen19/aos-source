@@ -3,6 +3,9 @@ spring:
     active: ${ACTIVE_PROFILE}
   application:
     name: order
+mvn:
+  application:
+    name: order
   cloud:
     config:
       uri: ${CONFIG_SERVICE_URI}
