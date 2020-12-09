@@ -31,6 +31,7 @@ export default class ContextProvider extends React.Component {
         let accountServiceHost='';
         let orderPort='';
         let orderHost='';
+        let gatewayOn = servicesProperties["aos.gateway"].value;
         let isReversedProxy = (servicesProperties["reverse.proxy"].value);
         if(isReversedProxy){
             catalogPort ='';
@@ -57,10 +58,15 @@ export default class ContextProvider extends React.Component {
             urlStringForCatalog = protocol + "//" + host +  (catalogPort.toString().length > 0 ? ":" + catalogPort : "") + '/catalog/api/v1';
             urlStringForOrder = protocol + "//" + host +  (orderPort.toString().length > 0 ? ":" + orderPort : "") + '/order/api/v1';
             accountServiceUrl = protocol + "//" + host +  (accountServicePort.toString().length > 0 ? ":" + accountServicePort : "") + '/accountservice/';
-        }else if(isReversedProxy){
+        }else if(isReversedProxy && !gatewayOn){
             urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1';
             urlStringForOrder = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/order/api/v1';
             accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/accountservice/';
+        }else if(gatewayOn){
+            urlStringForCatalog = (protocol + "//" + hostKey + ":" + port + "/"  + services_properties['catalog.service.url.suffix'].value + "/");
+            urlStringForOrder = (protocol + "//" + hostKey + ":" + port + "/"  + services_properties['order.service.url.suffix'].value + "/");
+            accountServiceUrl = (protocol + "//" + hostKey + ":" + port + "/" +
+                services_properties['account.soapservice.url.suffix'].value + "/");
         }else{
             urlStringForCatalog = protocol + "//" + catalogHost + ':' + catalogPort + '/catalog/api/v1';
             urlStringForOrder = protocol + "//" + orderHost + ':' + orderPort + '/order/api/v1';
