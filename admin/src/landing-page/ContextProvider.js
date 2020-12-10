@@ -31,7 +31,7 @@ export default class ContextProvider extends React.Component {
         let accountServiceHost='';
         let orderPort='';
         let orderHost='';
-        let gatewayOn = servicesProperties["aos.gateway"].value;
+        let gatewayOn = (servicesProperties["reverse.proxy"].value);
         let isReversedProxy = (servicesProperties["reverse.proxy"].value);
         if(isReversedProxy){
             catalogPort ='';
