@@ -144,9 +144,9 @@ try{
                 env.Resumed = "false"
                 echo "BUILD SPRING CLOUD DEPLOYMENT"
                 sh '''#!/bin/sh
-    mvn -P gateway,pack_wars_without_accountservices package deploy -am -ff -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+    mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P gateway,pack_wars_without_accountservices package deploy -am -ff -e 
     cd accountservice
-    mvn -P gateway package -am -ff -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+    mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -P gateway package -am -ff -e 
     cd ../
     mkdir configurationFiles && cd configurationFiles
     git clone git@github.houston.softwaregrp.net:nimbus/microservices.git 
