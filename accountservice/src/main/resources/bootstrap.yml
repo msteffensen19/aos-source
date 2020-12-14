@@ -16,3 +16,6 @@ spring:
 dynamic:
   port:
     bean: true
+mvn:
+  application:
+    name: accountservice

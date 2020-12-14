@@ -3,9 +3,6 @@ spring:
     active: ${ACTIVE_PROFILE}
   application:
     name: order
-mvn:
-  application:
-    name: order
   cloud:
     config:
       uri: ${CONFIG_SERVICE_URI}
@@ -18,3 +15,6 @@ mvn:
       max-interval: 1000
   jpa:
     properties.hibernate.temp.use_jdbc_metadata_defaults: false
+mvn:
+  application:
+    name: order
