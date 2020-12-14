@@ -63,9 +63,9 @@ export default class ContextProvider extends React.Component {
             urlStringForOrder = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/order/api/v1';
             accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/accountservice/';
         }else if(gatewayOn){
-            urlStringForCatalog = (protocol + "//" + host + ":" + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/"  + (servicesProperties["catalog.service.url.suffix"].value) + "/");
-            urlStringForOrder = (protocol + "//" + host + ":" + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/"  + (servicesProperties["order.service.url.suffix"].value) + "/");
-            accountServiceUrl = (protocol + "//" + host + ":" + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/" +
+            urlStringForCatalog = (protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/"  + (servicesProperties["catalog.service.url.suffix"].value) + "/");
+            urlStringForOrder = (protocol + "//" + host + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/"  + (servicesProperties["order.service.url.suffix"].value) + "/");
+            accountServiceUrl = (protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/" +
                 (servicesProperties["account.soapservice.url.suffix"].value) + "/");
         }else{
             urlStringForCatalog = protocol + "//" + catalogHost + ':' + catalogPort + '/catalog/api/v1';
