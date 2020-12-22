@@ -4,6 +4,7 @@ package com.advantage.accountsoap.dto.account;
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.IAdminRequest;
 import com.advantage.accountsoap.dto.IUserRequest;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class AccountDeleteRequest implements IAdminRequest {
     public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
-
+    @ApiModelProperty(name = "Login token", notes = "Use the returned token value from /login request.")
     public String getBase64Token() {
         return base64Token;
     }

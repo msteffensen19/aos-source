@@ -1,0 +1,200 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script src='../lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+    <script>
+      let accountRestUrl = ''
+      isJsonString = function (str) {
+        try {
+          var obj = JSON.parse(str);
+
+        } catch (e) {
+          return false;
+        }
+        return true;
+      }
+
+
+       parseServicesAsJSON = function(json){
+        services_properties = JSON.parse(JSON.parse(json));
+        var reverseProxy = services_properties['reverse.proxy'].value;
+        var hostKey = window.location.hostname;
+        var protocol = window.location.protocol;
+        var port = window.location.port;
+        var gatewayOn = services_properties['aos.gateway'].value;
+
+        if(services_properties['single.machine.deployment'].value && !gatewayOn){
+          return (protocol + "//" +
+                  hostKey +
+                  (reverseProxy ? "" : ":" +
+                          services_properties['account.soapservice.url.port'].value) + "/");
+        }else if(reverseProxy && !gatewayOn){
+          return (protocol + "//" + hostKey + "/");
+        }else if(gatewayOn){
+          return (protocol + "//" + hostKey + ":" + port + "/");
+        } else{
+          return ("http://" +
+                  services_properties['account.soapservice.url.host'].value + ":" +
+                  services_properties['account.soapservice.url.port'].value + "/");
+        }
+      }
+      parseServicesAsTxt = function(txt){
+        var fileText = txt;
+        var rawFile_responseText = fileText;
+        fileText = fileText.split('');
+        var _param = '';
+        var _value = '';
+        var attr = true;
+        var arrayApi = [];
+        var invalidChars = '#';
+        services_properties = [];
+        fileText.forEach(function (a) {
+          switch (a.charCodeAt(0)) {
+            case 10:
+            case 13:
+              var validParam = true;
+              for (var i = 0; i < invalidChars.length; i++) {
+                if (_param.indexOf(invalidChars[i]) != -1) {
+                  validParam = false;
+                  break;
+                }
+              }
+              if (validParam && _param != '' && _value != '') {
+                arrayApi.push("{\"" + _param.split(".").join("_") + "\":\"" + _value + "\"}");
+                _param = '';
+                _value = '';
+              }
+              attr = true;
+              break;
+            case 61:
+              attr = false;
+              break;
+            default:
+              if (attr) {
+                _param += a;
+              } else {
+                _value += a;
+              }
+              break;
+          }
+        });
+
+        arrayApi.forEach(function (a) {
+          var jsonObj = JSON.parse(a);
+          services_properties[Object.keys(jsonObj)] = jsonObj[Object.keys(jsonObj)];
+        });
+
+        var reverseProxy = services_properties['reverse_proxy'] === 'true';
+        var hostKey = window.location.hostname;
+        var protocol = window.location.protocol;
+        var port = window.location.port;
+        var gatewayOn = services_properties['aos_gateway'] === 'true';
+
+        if(services_properties['single_machine_deployment'] === 'true' && !gatewayOn){
+          return (protocol + "//" +
+                  hostKey +
+                  (reverseProxy ? "" : ":" +
+                          services_properties['account_soapservice_url_port'])+ "/accountservice/");
+
+
+        }else if(reverseProxy && !gatewayOn){
+          return (protocol + "//" + hostKey + "/accountservice/");
+        }else if(gatewayOn){
+          return(protocol + "//" + hostKey + ":" + port + "/accountservice/");
+        } else{
+          return ("http://" +
+                  services_properties['account_soapservice_url_host'] + ":" +
+                  services_properties['account_soapservice_url_port'] + "/accountservice/");
+        }
+      }
+
+    window.onload = function() {
+
+
+      let file = '/services.properties'
+      console.log("Extracting file: " + file);
+
+      let rawFile = new XMLHttpRequest();
+      rawFile.open("GET", file, false);
+      rawFile.onreadystatechange = function(){
+        if(rawFile.readyState === 4){
+          if(rawFile.status === 200 || rawFile.status == 0){
+            if(isJsonString(rawFile.responseText))
+              accountRestUrl = parseServicesAsJSON(rawFile.responseText);
+            else
+              accountRestUrl = parseServicesAsTxt(rawFile.responseText);
+          }
+        }
+      }
+      rawFile.send(null);
+
+
+      // $.ajax({
+      //   url: '/services.properties',
+      //   success: function(data){
+      //     result = data.leader;
+      //     return result;
+      //   }
+      // });
+      var url = window.location.search.match(/url=([^&]+)/);
+      if (url && url.length > 1) {
+        url = decodeURIComponent(url[1]);
+      } else {
+        // url = "/accountservice/v2/api-docs";
+        url = accountRestUrl + "v2/api-docs";
+      }
+      // Begin Swagger UI call region
+      const ui = SwaggerUIBundle({
+        url: url,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      })
+      // End Swagger UI call region
+
+      window.ui = ui
+    }
+  </script>
+  </body>
+</html>

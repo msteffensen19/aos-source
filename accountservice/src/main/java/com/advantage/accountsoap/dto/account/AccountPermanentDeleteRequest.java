@@ -4,6 +4,7 @@ package com.advantage.accountsoap.dto.account;
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.IAdminRequest;
 import com.advantage.accountsoap.dto.IUserRequest;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class AccountPermanentDeleteRequest implements IAdminRequest {
     public String getData() {
         return data;
     }
-
+    @ApiModelProperty(hidden=true)
     public void setData(String data) {
         this.data = data;
     }
@@ -44,7 +45,7 @@ public class AccountPermanentDeleteRequest implements IAdminRequest {
     public String getBase64Token() {
         return base64Token;
     }
-
+    @ApiModelProperty(hidden=true)
     public void setBase64Token(String base64Token) {
         this.base64Token = base64Token;
     }

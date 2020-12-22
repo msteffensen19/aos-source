@@ -9,7 +9,6 @@ services:
     environment:
       - CONFIG_REPO_FILE_SYSTEM=file:///configservice/microservices
       - CONFIG_SERVICE_ACTIVE_PROFILE=native
-      # refers to the name inside the docker-compose file
       - POSTGRES_SERVICE_NAME=postgresql
       - MAIN_SERVICE_NAME=aos-web
       - ACCOUNT_SERVICE_NAME=account-service

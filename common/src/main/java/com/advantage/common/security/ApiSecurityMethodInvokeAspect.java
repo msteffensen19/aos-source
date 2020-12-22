@@ -51,7 +51,12 @@ public class ApiSecurityMethodInvokeAspect {
         String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         try {
             //SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER);
-            SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER, AccountType.ADMIN, AccountType.SUPERUSER);
+            if(joinPoint.getStaticPart().toString().contains("removeAllOrdersForUser")){
+                SecurityTools.isAuthorized(authorizationHeader, AccountType.USER, AccountType.ADMIN, AccountType.SUPERUSER);
+            }else{
+                SecurityTools.isAuthorized(authorizationHeader, userId, AccountType.USER, AccountType.ADMIN, AccountType.SUPERUSER);
+
+            }
             logger.debug("Authorization for request " + httpServletRequest.getMethod() + " " + httpServletRequest.getRequestURI() + " success");
             response = (ResponseEntity) joinPoint.proceed();
         } catch (AuthorizationException e) {

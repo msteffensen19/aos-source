@@ -128,6 +128,16 @@
                         <artifactId>exec-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
             </build>
         </profile>
         <profile>
@@ -139,18 +149,18 @@
                     <version>2.2.4.RELEASE</version>
                 </dependency>
             </dependencies>
-<!--            <build>-->
-<!--                <resources>-->
-<!--                    <resource>-->
-<!--                        <directory>src/main/resources</directory>-->
-<!--                        &lt;!&ndash; _v_ Replace ${parameters} to his real value in all resources files&ndash;&gt;-->
-<!--                        <filtering>true</filtering>-->
-<!--                        <excludes>-->
-<!--                            <exclude>services.properties</exclude>-->
-<!--                        </excludes>-->
-<!--                    </resource>-->
-<!--                </resources>-->
-<!--            </build>-->
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>services.properties</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
         </profile>
     </profiles>
     <properties>

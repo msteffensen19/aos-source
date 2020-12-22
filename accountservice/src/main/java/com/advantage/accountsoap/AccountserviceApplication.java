@@ -5,9 +5,11 @@ import com.advantage.common.Constants;
 import com.sun.xml.messaging.saaj.soap.AttachmentPartImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.*;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.advantage.accountsoap", "com.advantage.accountrest"},
+        exclude = { SecurityAutoConfiguration.class})
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @PropertySources({

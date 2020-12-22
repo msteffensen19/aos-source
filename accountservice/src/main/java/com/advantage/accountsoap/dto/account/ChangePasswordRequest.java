@@ -3,6 +3,7 @@ package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.IUserRequest;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.bind.annotation.*;
 
@@ -20,8 +21,10 @@ public class ChangePasswordRequest implements IUserRequest {
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String oldPassword;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @ApiModelProperty(notes = "Password must contain at least one upper case letter and one lower case letter")
     private String newPassword;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @ApiModelProperty(hidden = true)
     private String base64Token;
 
     @Override
@@ -40,7 +43,7 @@ public class ChangePasswordRequest implements IUserRequest {
     public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
     }
-
+    @ApiModelProperty(notes = "Password must contain at least one upper case letter and one lower case letter")
     public String getNewPassword() {
         return newPassword;
     }
@@ -50,10 +53,11 @@ public class ChangePasswordRequest implements IUserRequest {
     }
 
     @Override
+    @ApiModelProperty(hidden = true)
     public String getBase64Token() {
         return base64Token;
     }
-
+    @ApiModelProperty(hidden = true)
     public void setBase64Token(String base64Token) {
         this.base64Token = base64Token;
     }

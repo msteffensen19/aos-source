@@ -170,6 +170,13 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="AccountStatusRequest">
+    <xs:complexType>
+      <xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="AccountUpdateRequest">
     <xs:complexType>
       <xs:sequence>
@@ -271,6 +278,7 @@
   <xs:element name="Address" nillable="true" type="xs:anyType"/>
 
   <xs:element name="AddressStatusResponse" nillable="true" type="xs:anyType"/>
+  <xs:element name="AddressStatusRequest" nillable="true" type="xs:anyType"/>
 
   <xs:element name="AddressUpdateRequest">
     <xs:complexType>
@@ -377,6 +385,13 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="DeletePaymentPreferenceRequest">
+    <xs:complexType>
+      <xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="DeletePaymentPreferenceResponse">
     <xs:complexType>
       <xs:sequence>
@@ -473,6 +488,13 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAccountConfigurationRequest">
+    <xs:complexType>
+      <xs:sequence>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -579,6 +601,8 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="GetCountriesRequest" nillable="true" type="xs:anyType"/>
+
   <xs:element name="PaymentMethodUpdateRequest">
     <xs:complexType>
       <xs:sequence>
@@ -644,6 +668,7 @@
   </xs:element>
 
   <xs:element name="PaymentPreferencesStatusResponse" nillable="true" type="xs:anyType"/>
+  <xs:element name="PaymentPreferencesStatusRequest" nillable="true" type="xs:anyType"/>
 
   <xs:element name="UpdateMasterCreditMethodRequest">
     <xs:complexType>

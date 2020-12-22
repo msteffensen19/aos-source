@@ -309,7 +309,7 @@ public class AccountServiceEndpoint {
                 accountService.getById(request.getAccountId()).getLoginName(),
                 AccountServiceEndpoint.class.getName() + ".doLogout",
                 "attempt"));
-        AccountStatusResponse response = accountService.doLogout(request.getStrAccountId(),
+        AccountStatusResponse response = accountService.doLogout(request.getUserId(),
                 request.getBase64Token());
 
         //if (response.isSuccess()) {
@@ -413,7 +413,8 @@ public class AccountServiceEndpoint {
         List<PaymentPreferencesDto> deleteCheckPP = paymentPreferencesService.getPaymentPreferencesByUserId(request.getAccountId());
         accountService.deleteShippingAddress(request.getAccountId());
         List<AddressDto> deleteCheckSA = addressService.getByAccountId(request.getAccountId());
-        AccountStatusResponse deleteOrdersResponse = accountService.deleteUserOrders(request.getAccountId(), request.getBase64Token());
+        String bearedHeader = request.getBase64Token().contains("Bearer") ? request.getBase64Token() : "Bearer " + request.getBase64Token();
+        AccountStatusResponse deleteOrdersResponse = accountService.deleteUserOrders(request.getAccountId(), bearedHeader);
         AccountStatusResponse deleteAccountResponse = accountService.accountPermanentDelete(request.getAccountId());
 
         if(deleteCheckPP == null && deleteCheckSA == null && deleteOrdersResponse.isSuccess()== true

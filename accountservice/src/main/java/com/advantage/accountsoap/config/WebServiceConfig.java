@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
@@ -26,14 +27,14 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
-        return new ServletRegistrationBean(servlet, "/*");
+        return new ServletRegistrationBean(servlet, "/ws/*");
     }
 
     @Bean(name = "accountservice")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema serviceSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("AccountServicePort");
-        wsdl11Definition.setLocationUri("/");
+        wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace(NAMESPACE_URI);
         wsdl11Definition.setSchema(serviceSchema);
         return wsdl11Definition;
@@ -43,4 +44,11 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     public XsdSchema serviceSchema() {
         return new SimpleXsdSchema(new ClassPathResource("accountservice.xsd"));
     }
+
+//    @Bean
+//    public ServletRegistrationBean mvcDispatcherServlet(ApplicationContext context){
+//        DispatcherServlet servlet = new DispatcherServlet();
+//        servlet.setApplicationContext(context);
+//        return new ServletRegistrationBean(servlet, "/accountrest");
+//    }
 }

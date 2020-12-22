@@ -187,8 +187,121 @@
                 <packaging.type>war</packaging.type>
             </properties>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <includes>
+                            <include>log4j.properties</include>
+                            <include>ver.txt</include>
+                        </includes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                        <includes>
+                            <include>*.properties</include>
+                        </includes>
+                        <excludes>
+                            <exclude>log4j.properties</exclude>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
+                        <plugin>
+                            <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                            <!-- Provide access to .properties files for use it by maven-->
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>properties-maven-plugin</artifactId>
+                            <version>${plugin.properties.version}</version>
+                            <executions>
+                                <!-- Associate the read-project-properties goal with the process-resources phase, to read the properties file. -->
+                                <execution>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>read-project-properties</goal>
+                                    </goals>
+                                    <configuration>
+                                        <files>
+                                            <file>${project.build.directory}/generated-resources/services.properties</file>
+                                            <file>${project.build.directory}/generated-resources/global.properties</file>
+                                            <file>
+                                                ${project.build.directory}/generated-resources/internal_config_for_env.properties
+                                            </file>
+                                        </files>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <!-- Copy of main pom cause the AccountSoapService pom isn't a child of main pom-->
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-dependency-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>unpack-shared-resources</id>
+                                    <goals>
+                                        <goal>unpack-dependencies</goal>
+                                    </goals>
+                                    <phase>generate-resources</phase>
+                                    <configuration>
+                                        <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+                                        <includeArtifactIds>shared_resources</includeArtifactIds>
+                                        <includeGroupIds>${project.groupId}</includeGroupIds>
+                                        <excludeTransitive>true</excludeTransitive>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>${plugin.maven.resources.version}</version>
+                            <configuration>
+                                <delimiters>
+                                    <delimiter>${*}</delimiter>
+                                </delimiters>
+                                <useDefaultDelimiters>false</useDefaultDelimiters>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <configuration>
+                                        <encoding>${project.build.sourceEncoding}</encoding>
+                                        <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>true</filtering>
+                                                <!--<excludes>-->
+                                                <!--<exclude>/*.properties</exclude>-->
+                                                <!--</excludes>-->
+                                                <includes>
+                                                    <include>ver.txt</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                    <id>copy-shared-resources-into-webapp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
                         <plugin>
                             <groupId>com.soebes.maven.plugins</groupId>
                             <artifactId>echo-maven-plugin</artifactId>
@@ -269,6 +382,7 @@
                         <groupId>com.soebes.maven.plugins</groupId>
                         <artifactId>echo-maven-plugin</artifactId>
                     </plugin>
+
                 </plugins>
             </build>
             <dependencies>
@@ -628,6 +742,21 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.3.2</version>
+        </dependency>
     </dependencies>
 
 
@@ -640,10 +769,10 @@
             </plugins>
         </pluginManagement>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-resources-plugin</artifactId>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

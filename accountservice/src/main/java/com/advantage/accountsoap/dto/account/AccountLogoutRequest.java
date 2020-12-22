@@ -3,6 +3,7 @@ package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.IUserRequest;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "loginUser",
-        "base64Token"
+        "token"
 })
 @XmlRootElement(name = "AccountLogoutRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountLogoutRequest implements IUserRequest {
@@ -20,7 +21,8 @@ public class AccountLogoutRequest implements IUserRequest {
     @XmlElement(name = "loginUser", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginUser;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-    private String base64Token;
+
+    private String token;
 
     public AccountLogoutRequest() {
     }
@@ -29,17 +31,17 @@ public class AccountLogoutRequest implements IUserRequest {
         this.setAccountId(loginUser);
         this.setToken(base64Token);
     }
-
-    public String getStrAccountId() {
+    @ApiModelProperty(name = "userId")
+    public String getUserId() {
         return this.loginUser;
     }
-
-    public void setAccountId(String strAccountId) {
-        this.loginUser = strAccountId;
+    @ApiModelProperty(hidden=true)
+    public void setAccountId(String accountId) {
+        this.loginUser = accountId;
     }
-
+    @ApiModelProperty(name = "Login token", notes = "Use the returned token value from /login request.")
     public void setToken(String base64Token) {
-        this.base64Token = base64Token;
+        this.token = base64Token;
     }
 
     @Override
@@ -47,16 +49,17 @@ public class AccountLogoutRequest implements IUserRequest {
         return Long.valueOf(loginUser);
     }
 
+    @ApiModelProperty(hidden=true)
     @Override
     public String getBase64Token() {
-        return base64Token;
+        return token;
     }
 
     @Override
     public String toString() {
         return "AccountLogoutRequest{" +
                 "loginUser='" + loginUser + '\'' +
-                ", base64Token='" + base64Token + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

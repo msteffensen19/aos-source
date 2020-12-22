@@ -130,7 +130,9 @@ public class Url_resources {
                     ? 80 : Integer.parseInt(environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.port"));
             String suffix = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.suffix");
             String wsdl = environment.getProperty(serviceName.toLowerCase() + ".soapservice.url.wsdl");
-            if (! wsdl.contains("/")) { suffix += '/'; }
+            if (! wsdl.contains("/")) {
+                suffix += '/';
+            }
             host = host.charAt(0) == '@' ? "localhost" : host;
             urlWithWsdl = new URL(new URL(schema, host, port, suffix), suffix + wsdl);
 
