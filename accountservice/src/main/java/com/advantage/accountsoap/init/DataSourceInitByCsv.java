@@ -2,6 +2,7 @@ package com.advantage.accountsoap.init;
 
 import com.advantage.accountsoap.model.Account;
 import com.advantage.accountsoap.model.Country;
+import com.advantage.accountsoap.util.RestApiHelper;
 import com.advantage.accountsoap.util.fs.FileSystemHelper;
 import com.advantage.common.SystemParameters;
 import com.advantage.common.enums.AccountType;
@@ -34,6 +35,11 @@ public class DataSourceInitByCsv {
     @Autowired
     private Environment env;
 
+    public void setRunSmokingGunScenario(boolean runSmokingGunScenario) {
+        this.runSmokingGunScenario = runSmokingGunScenario;
+    }
+
+    private boolean runSmokingGunScenario = false;
     public void init() throws Exception {
 //comment
         SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
@@ -42,7 +48,7 @@ public class DataSourceInitByCsv {
         query.setParameter("email", "mercury@microfocus.com");
         List l = query.list();
 
-        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("account.hibernate.db.hbm2ddlAuto")).equals("validate") || l.isEmpty()) {
+        if (!SystemParameters.getHibernateHbm2ddlAuto(env.getProperty("account.hibernate.db.hbm2ddlAuto")).equals("validate") || l.isEmpty() || runSmokingGunScenario) {
 
             Transaction transaction;
 

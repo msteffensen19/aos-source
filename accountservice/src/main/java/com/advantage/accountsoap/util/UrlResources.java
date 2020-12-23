@@ -1,5 +1,6 @@
 package com.advantage.accountsoap.util;
 
+import com.advantage.accountsoap.config.SmokingGunInit;
 import com.advantage.common.Constants;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,9 @@ public class UrlResources {
     @Inject
     private Environment env;
 
+    @Inject
+    private SmokingGunInit smokingGunInit;
+
     @Bean
     public int setConfiguration(){
         urlPrefixCatalog = generateUrlPrefix("Catalog");
@@ -64,6 +68,11 @@ public class UrlResources {
             sb.append("   Account (SOAP)=\'" + getUrlSoapAccount() + "\'").append(System.lineSeparator());
             sb.append("   ShipEx (SOAP)=\'" + getUrlSoapShipEx() + "\'");
             logger.info(sb.toString());
+        }
+        try {
+            smokingGunInit.init();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return 1;
     }

@@ -179,6 +179,7 @@ To achieve this, you must edit the accountservice\src\main\java\com\advantage\a
     <!-- AOS Voltage Integration -->
     <Enable_Voltage_Encryption datatype="enum:[Yes,No]" description="Use this parameter to demonstrate an integration between Voltage Data Encryption And AOS. The MasterCredit number is encrypted when the flag is set to 'Yes'" tools="AMC" locationInAdvantage="Payment page" locationInAdminTool="General">No</Enable_Voltage_Encryption>
     <Voltage_Service_URL datatype="string" description="The URL of the Voltage Data Encryption service to be used for the encryption, the default service is located on AZURE. the default URL is: https://voltage-pp-0000.dataprotection.voltage.com note: mouse over on the text field to view the current URL." tools="ITOM" locationInAdvantage="Payment page" locationInAdminTool="General">https://voltage-pp-0000.dataprotection.voltage.com</Voltage_Service_URL>
+    <duplicate_countries datatype="string" description="Duplicates the countries in adv_account DB, causing error during registration. Note: Restart required." tools="ITOM" locationInAdvantage="Registration page" locationInAdminTool="General">No</duplicate_countries>
 
 
 </Parameters>
