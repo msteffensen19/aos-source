@@ -13,7 +13,6 @@ public class SmokingGunInit {
 
     public void init() throws Exception{
         String runSmokingGunScenario = RestApiHelper.getDemoAppConfigParameterValue("duplicate_countries");
-        dataSourceInitByCsv.setRunSmokingGunScenario(runSmokingGunScenario.equals("Yes"));
-        dataSourceInitByCsv.init();
+        dataSourceInitByCsv.init(runSmokingGunScenario.equals("Yes"));
     }
 }
