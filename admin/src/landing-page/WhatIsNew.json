@@ -14,6 +14,10 @@
 	{
 		"title":"BUG",
 		"content":"Swagger - missing version number in the description caused UFT scripts to break."
+	},
+	{
+		"title":"BUG",
+		"content":"Admin client - hardcoded account service url cause invalid login attempts to AOS backend."
 	}
 
 ]
