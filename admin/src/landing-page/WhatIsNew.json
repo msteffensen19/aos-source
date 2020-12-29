@@ -1,39 +1,19 @@
 [
 	{
-		"title":"",
-		"content":"The AOS gateway service acts as a load balancer. This means application access now occurs using a single endpoint."
+		"title":"API",
+		"content":"Account service REST API, include login, logout, register, delete and deactivate user directly using AOS swagger"
 	},
 	{
-		"title":"",
-		"content":"The entire application configuration is managed inside the AOS configuration service. This means no more complicated changes to AOS services endpoints."
+		"title":"API",
+		"content":"Upgrade swagger libraries to the latest version (new look and feel)"
 	},
 	{
-		"title":"",
-		"content":"The account service artifact changed from war to jar. This means it can be deployed outside a web server (tomcat), inside a container, or in a full operating system."
+		"title":"ITOM",
+		"content":"SMAX Integration: perform user management activities as part of Help Desk responsibility, by using the account service REST API"
 	},
 	{
-		"title":"",
-		"content":"The application log level configuration is now managed in a single file."
-	},
-	{
-		"title":"",
-		"content":"We made various network topology changes."
-	},
-	{
-		"title":"",
-		"content":"We upgraded to the services jars using the latest spring version. "
-	},
-	{
-		"title":"",
-		"content":"We added an option to the build process to decide which type of deployment should be built (gateway or non-gateway)."
-	},
-	{
-		"title":"Codeless",
-		"content":"We improved the login module for better object identification."
-	},
-	{
-		"title":"CyberRes",
-		"content":"We improved the login module for better object identification."
+		"title":"BUG",
+		"content":"Swagger - missing version number in the description caused UFT scripts to break."
 	}
 
 ]

@@ -58,7 +58,7 @@ public class AccountServiceController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ApiOperation(value = "Login to the AOS instance")
+    @ApiOperation(value = "Login to AOS")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Login successful", response = com.advantage.accountrest.AccountserviceClient.AccountLoginResponse.class),
             @ApiResponse(code = 403, message = "Wrong user name or password", response = com.advantage.accountrest.AccountserviceClient.AccountLoginResponse.class),
@@ -94,7 +94,7 @@ public class AccountServiceController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ApiOperation(value = "Create a new User account on this AOS instance")
+    @ApiOperation(value = "Create a new User account")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Login successful", response = com.advantage.accountrest.AccountserviceClient.AccountLoginResponse.class),
             @ApiResponse(code = 403, message = "Wrong user name or password", response = com.advantage.accountrest.AccountserviceClient.AccountLoginResponse.class),
@@ -125,7 +125,7 @@ public class AccountServiceController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    @ApiOperation(value = "Logout from the AOS instance")
+    @ApiOperation(value = "Logout from AOS")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Logout successful", response = com.advantage.accountrest.AccountserviceClient.AccountLogoutResponse.class),
             @ApiResponse(code = 403, message = "Wrong user name or password", response = com.advantage.accountrest.AccountserviceClient.AccountLogoutResponse.class),
@@ -222,7 +222,7 @@ public class AccountServiceController {
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token, Use the returned token value from /login request.", defaultValue = "Bearer ", example = "Bearer xxxxxxxxxxxxxxxxxxxxxxx")})
-    @ApiOperation(value = "Change a password, admins can change everyone, users can change their own")
+    @ApiOperation(value = "Change user password, admins can change everyone, users can change their own")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful deactivation", response = com.advantage.accountrest.AccountserviceClient.AccountLogoutResponse.class),
             @ApiResponse(code = 403, message = "Wrong user name or password", response = com.advantage.accountrest.AccountserviceClient.AccountLogoutResponse.class),
