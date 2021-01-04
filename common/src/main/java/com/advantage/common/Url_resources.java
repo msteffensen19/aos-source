@@ -26,6 +26,7 @@ public class Url_resources {
     private static URL urlPrefixMasterCredit;
     private static URL urlPrefixOrder;
     private static URL urlPrefixSafePay;
+    private static URL urlPrefixRestAccount;
 
     private static URL urlPrefixSoapAccount;
     private static URL urlPrefixSoapShipEx;
@@ -64,6 +65,7 @@ public class Url_resources {
         //urlPrefixService = generateUrlPrefix("Service");
 
         urlPrefixSoapAccount = generateUrlSoapPrefix("Account");
+        urlPrefixRestAccount = generateAccountRestPrefix();
         urlPrefixSoapShipEx = generateUrlSoapPrefix("ShipEx");
 
 
@@ -79,7 +81,35 @@ public class Url_resources {
         }
         return 1;
     }
+    public URL generateAccountRestPrefix(){
+        URL urlWithWsdl = null;
 
+        try {
+            String schema = Constants.URI_SCHEMA;
+            String host = "";
+
+            if(environment.getProperty(Constants.SINGLE_MACHINE_DEPLOYMENT).equals("true")){
+                host = "localhost";
+            }
+            else{
+                host = environment.getProperty("account.soapservice.url.host");
+            }
+
+            int port = host.charAt(0) == '@'
+                    ? 80 : Integer.parseInt(environment.getProperty("account.soapservice.url.port"));
+            String suffix = environment.getProperty("account.soapservice.url.suffix");
+            String wsdl = environment.getProperty("account.soapservice.url.wsdl");
+
+            host = host.charAt(0) == '@' ? "localhost" : host;
+            suffix = suffix.replace("ws", "accountrest");
+            urlWithWsdl = new URL(new URL(schema, host, port, suffix), suffix + "/api/v1");
+
+        } catch (Throwable e) {
+            logger.fatal("Wrong properties file", e);
+        }
+        logger.debug("URL = " + urlWithWsdl.toString());
+        return urlWithWsdl;
+    }
     public URL generateUrlPrefix(String serviceName) {
         URL url = null;
 
@@ -161,6 +191,8 @@ public class Url_resources {
     public static URL getUrlSafePay() { return urlPrefixSafePay; }
 
     public static URL getUrlSoapShipEx() { return urlPrefixSoapShipEx; }
+
+    public static URL getUrlPrefixRestAccount() { return urlPrefixRestAccount; }
 
 
 //    @Ignore

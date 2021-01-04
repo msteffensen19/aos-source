@@ -12,6 +12,7 @@ import com.advantage.catalog.util.RestApiHelper;
 import com.advantage.catalog.util.StringHelper;
 import com.advantage.catalog.util.ValidationHelper;
 import com.advantage.common.Constants;
+import com.advantage.common.Url_resources;
 import com.advantage.common.cef.CefHttpModel;
 import com.advantage.common.dto.*;
 import com.advantage.common.enums.ColorPalletEnum;
@@ -42,6 +43,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -801,7 +803,13 @@ public class CatalogController {
         };
 
         DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParameterValue(parameterName, parameterValue);
-
+        if(parameterName.equals("duplicate_countries") && parameterValue.equals("Yes")){
+            try {
+                String result = RestApiHelper.httpGet( new URL(Url_resources.getUrlPrefixRestAccount() + "start-smoking-gun-scenario"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return new ResponseEntity<>(statusResponse, (statusResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
     }
 
@@ -821,7 +829,13 @@ public class CatalogController {
         };
 
         DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParameterValue(parameterName, param);
-
+//        if(parameterName.equals("duplicate_countries") && param.equals("Yes")){
+//            try {
+//                RestApiHelper.httpGet(Url_resources.getUrlPrefixRestAccount());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         return new ResponseEntity<>(statusResponse, (statusResponse.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST));
     }
     //  endregion

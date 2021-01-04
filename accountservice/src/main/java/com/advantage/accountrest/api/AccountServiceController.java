@@ -3,6 +3,7 @@ package com.advantage.accountrest.api;
 import com.advantage.accountrest.AccountserviceClient.AccountLoginResponse;
 import com.advantage.accountrest.AccountserviceClient.AccountServicePort;
 import com.advantage.accountrest.AccountserviceClient.AccountServicePortService;
+import com.advantage.accountsoap.config.SmokingGunInit;
 import com.advantage.accountsoap.dto.account.*;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.util.UrlResources;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -154,6 +156,7 @@ public class AccountServiceController {
         }
         return new ResponseEntity<>(alr, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @AuthorizeAsAdmin
     @RequestMapping(value = "/deactivate", method = RequestMethod.POST)
     @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token, Use the returned token value from /login request.", defaultValue = "Bearer ", example = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cuYWR2YW50YWdlb25saW5lc2hvcHBpbmcuY29tIiwidXNlcklkIjoxNjA0Njg2MTUsInN1YiI6ImFkbWluIiwicm9sZSI6IkFETUlOIn0.f7QRYrfpyvxKXDRhWAdocBnuldtQtj-rklmjKn1V80E")})
@@ -249,6 +252,28 @@ public class AccountServiceController {
             cpr.setResponse(createAccountStatusRes(e.getMessage()));
             return new ResponseEntity<>(cpr, HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
+
+    @Autowired
+    SmokingGunInit smokingGunInit;
+
+    @ApiIgnore
+    @RequestMapping(value = "/start-smoking-gun-scenario", method = RequestMethod.GET)
+    @ApiOperation(value = "Create a 'smoking gun' scenario. duplicating countries and default user, causing unstable AOS backend")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Scenario activated successfully", response = String.class),
+            @ApiResponse(code = 403, message = "Wrong user name or password", response = String.class),
+            @ApiResponse(code = 500, message = "Internal server error", response = String.class)})
+    public ResponseEntity<String> startSmokingGunScenario(HttpServletRequest request) throws MalformedURLException {
+        setCefLogData(request,"start-smoking-gun-scenario");
+        try {
+            smokingGunInit.activate();
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

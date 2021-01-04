@@ -44,8 +44,6 @@ public class UrlResources {
     @Inject
     private Environment env;
 
-    @Inject
-    private SmokingGunInit smokingGunInit;
 
     @Bean
     public int setConfiguration(){
@@ -68,11 +66,6 @@ public class UrlResources {
             sb.append("   Account (SOAP)=\'" + getUrlSoapAccount() + "\'").append(System.lineSeparator());
             sb.append("   ShipEx (SOAP)=\'" + getUrlSoapShipEx() + "\'");
             logger.info(sb.toString());
-        }
-        try {
-            smokingGunInit.init();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return 1;
     }
