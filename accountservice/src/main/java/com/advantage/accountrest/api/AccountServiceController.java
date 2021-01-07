@@ -268,6 +268,7 @@ public class AccountServiceController {
     public ResponseEntity<String> startSmokingGunScenario(HttpServletRequest request) throws MalformedURLException {
         setCefLogData(request,"start-smoking-gun-scenario");
         try {
+            logger.info("Activating smoking-gun-scenario");
             smokingGunInit.activate();
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
