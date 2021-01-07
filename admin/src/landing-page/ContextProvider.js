@@ -57,11 +57,11 @@ export default class ContextProvider extends React.Component {
         if (host.includes("localhost")){
             urlStringForCatalog = protocol + "//" + host +  (catalogPort.toString().length > 0 ? ":" + catalogPort : "") + '/catalog/api/v1';
             urlStringForOrder = protocol + "//" + host +  (orderPort.toString().length > 0 ? ":" + orderPort : "") + '/order/api/v1';
-            accountServiceUrl = protocol + "//" + host +  (accountServicePort.toString().length > 0 ? ":" + accountServicePort : "") + servicesProperties['account.soapservice.url.suffix'] + '/';
+            accountServiceUrl = protocol + "//" + host +  (accountServicePort.toString().length > 0 ? ":" + accountServicePort : "") + servicesProperties['account.soapservice.url.suffix'].value + '/';
         }else if(isReversedProxy && !gatewayOn){
             urlStringForCatalog = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/catalog/api/v1';
             urlStringForOrder = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + '/order/api/v1';
-            accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + servicesProperties['account.soapservice.url.suffix'] + '/';
+            accountServiceUrl = protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + servicesProperties['account.soapservice.url.suffix'].value + '/';
         }else if(gatewayOn){
             urlStringForCatalog = (protocol + "//" + host  + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/"  + (servicesProperties["catalog.service.url.suffix"].value) + "/");
             urlStringForOrder = (protocol + "//" + host + (window.location.port.length > 0 ? ":" + window.location.port : "") + "/"  + (servicesProperties["order.service.url.suffix"].value) + "/");
@@ -70,7 +70,7 @@ export default class ContextProvider extends React.Component {
         }else{
             urlStringForCatalog = protocol + "//" + catalogHost + ':' + catalogPort + '/catalog/api/v1';
             urlStringForOrder = protocol + "//" + orderHost + ':' + orderPort + '/order/api/v1';
-            accountServiceUrl = protocol + "//" + accountServiceHost + ':' + accountServicePort + servicesProperties['account.soapservice.url.suffix'] + '/';
+            accountServiceUrl = protocol + "//" + accountServiceHost + ':' + accountServicePort + servicesProperties['account.soapservice.url.suffix'].value + '/';
         }
         this.setState(prevState => {
             let portsForRouting = { ...prevState.portsForRouting };  // creating copy of state variable portsForRouting

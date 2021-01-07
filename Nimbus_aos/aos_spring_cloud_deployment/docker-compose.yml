@@ -14,10 +14,6 @@ services:
       - MAIN_SERVICE_NAME=aos-web
       - ACCOUNT_SERVICE_NAME=account-service
       - ACTIVE_PROFILE=prod
-    volumes:
-      - type: bind
-        source: data-volume-config-service
-        target: /configservice/microservices
   gateway:
     image: advantageonlineshopping/aos-gateway-dev:aos_config_deployment
     ports:
@@ -62,5 +58,3 @@ services:
       - "${POSTGRES_PORT}:5432"
     container_name: postgresql
     restart: always
-volumes:
-  data-volume-config-service:
