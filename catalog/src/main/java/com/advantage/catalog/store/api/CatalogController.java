@@ -805,7 +805,8 @@ public class CatalogController {
         DemoAppConfigStatusResponse statusResponse = demoAppConfigService.updateParameterValue(parameterName, parameterValue);
         if(parameterName.equals("duplicate_countries") && parameterValue.equals("Yes")){
             try {
-                String result = RestApiHelper.httpGet( new URL(Url_resources.getUrlPrefixRestAccount() + "start-smoking-gun-scenario"));
+                logger.info("Activating smoking-gun-scenario, account service URL: " + Url_resources.getUrlPrefixRestAccount());
+                String result = RestApiHelper.httpGet( new URL(Url_resources.getUrlPrefixRestAccount() + "/start-smoking-gun-scenario"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
