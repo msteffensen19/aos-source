@@ -26,4 +26,4 @@ ind=1
 
 docker login -u=advantageonlineshoppingapp -p=W3lcome1
 docker-compose config > docker-compose-processed.yml
-docker stack deploy --with-registry-auth -c docker-compose-processed.yml STACK
+docker stack deploy -prune --with-registry-auth --resolve-image=always -c docker-compose-processed.yml STACK
