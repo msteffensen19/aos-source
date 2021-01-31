@@ -31,11 +31,11 @@ public class AccountLogoutRequest implements IUserRequest {
         this.setAccountId(loginUser);
         this.setToken(base64Token);
     }
-    @ApiModelProperty(name = "userId")
+    @ApiModelProperty(name = "userId", hidden = true)
     public String getUserId() {
         return this.loginUser;
     }
-    @ApiModelProperty(hidden=true)
+
     public void setAccountId(String accountId) {
         this.loginUser = accountId;
     }
