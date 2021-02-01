@@ -18,22 +18,26 @@ public class AccountSwaggerCustomZuulFilter extends ZuulFilter
 
     @Override
     public int filterOrder() {
-        return 1;
+        return PreDecorationFilter.FILTER_ORDER + 1;
     }
 
     @Override
     public boolean shouldFilter() {
-        RequestContext context = RequestContext.getCurrentContext();
-        String serviceId = context.get(PROXY_KEY).toString();
-        return serviceId != null && serviceId.equalsIgnoreCase("swagger");
+        return true;
     }
 
     @Override
     public Object run() {
         RequestContext context = RequestContext.getCurrentContext();
         String originalRequestPath = context.get(REQUEST_URI_KEY).toString();
-        if(originalRequestPath.contains("/accountrest/")){
-            String modifiedRequestPath = originalRequestPath.split("/accountrest")[1];
+        String serviceId = null;
+        try{
+            serviceId = context.get(PROXY_KEY).toString();
+        } catch (Exception e){
+
+        }
+        if(serviceId.equalsIgnoreCase("swagger") && originalRequestPath.contains("/accountrest/")){
+            String modifiedRequestPath = ((String) originalRequestPath).split("/accountrest")[1];
             context.put(REQUEST_URI_KEY, modifiedRequestPath);
         }
         return null;
