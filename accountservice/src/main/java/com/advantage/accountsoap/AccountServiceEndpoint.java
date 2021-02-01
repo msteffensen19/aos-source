@@ -309,7 +309,7 @@ public class AccountServiceEndpoint {
                 accountService.getById(request.getAccountId()).getLoginName(),
                 AccountServiceEndpoint.class.getName() + ".doLogout",
                 "attempt"));
-        AccountStatusResponse response = accountService.doLogout(request.getUserId(),
+        AccountStatusResponse response = accountService.doLogout(request.getStrAccountId(),
                 request.getBase64Token());
 
         //if (response.isSuccess()) {

@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "loginUser",
-        "token"
+        "base64Token"
 })
 @XmlRootElement(name = "AccountLogoutRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountLogoutRequest implements IUserRequest {
@@ -21,8 +21,8 @@ public class AccountLogoutRequest implements IUserRequest {
     @XmlElement(name = "loginUser", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginUser;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
-
-    private String token;
+    @ApiModelProperty(hidden = true)
+    private String base64Token;
 
     public AccountLogoutRequest() {
     }
@@ -31,17 +31,17 @@ public class AccountLogoutRequest implements IUserRequest {
         this.setAccountId(loginUser);
         this.setToken(base64Token);
     }
-    @ApiModelProperty(name = "userId", hidden = true)
-    public String getUserId() {
+    @ApiModelProperty(hidden = true)
+    public String getStrAccountId() {
         return this.loginUser;
     }
 
-    public void setAccountId(String accountId) {
-        this.loginUser = accountId;
+    public void setAccountId(String strAccountId) {
+        this.loginUser = strAccountId;
     }
-    @ApiModelProperty(name = "Login token", notes = "Use the returned token value from /login request.")
+
     public void setToken(String base64Token) {
-        this.token = base64Token;
+        this.base64Token = base64Token;
     }
 
     @Override
@@ -49,17 +49,16 @@ public class AccountLogoutRequest implements IUserRequest {
         return Long.valueOf(loginUser);
     }
 
-    @ApiModelProperty(hidden=true)
     @Override
     public String getBase64Token() {
-        return token;
+        return base64Token;
     }
 
     @Override
     public String toString() {
         return "AccountLogoutRequest{" +
                 "loginUser='" + loginUser + '\'' +
-                ", token='" + token + '\'' +
+                ", base64Token='" + base64Token + '\'' +
                 '}';
     }
 }
