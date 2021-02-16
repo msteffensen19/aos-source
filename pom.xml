@@ -209,6 +209,20 @@
                 <packaging.type>war</packaging.type>
             </properties>
             <build>
+                <resources>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <targetPath>${project.build.outputDirectory}/properties</targetPath>
+                        <includes>
+                            <include>*.properties</include>
+                        </includes>
+                        <excludes>
+                            <exclude>log4j.properties</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -218,6 +232,42 @@
                             <configuration>
                                 <failOnMissingWebXml>false</failOnMissingWebXml>
                             </configuration>
+                        </plugin>
+                        <plugin>
+                            <!-- Provide access to .properties files for use it by maven-->
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>properties-maven-plugin</artifactId>
+                            <version>${plugin.properties.version}</version>
+                            <executions>
+                                <!-- Associate the read-project-properties goal with the initialize phase, to read the properties file. -->
+                                <execution>
+                                    <id>read-properties-into-maven-process</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>read-project-properties</goal>
+                                    </goals>
+                                    <configuration>
+                                        <files>
+                                            <file>${project.build.directory}/generated-resources/services.properties</file>
+                                            <file>${project.build.directory}/generated-resources/global.properties</file>
+                                            <file>${project.build.directory}/generated-resources/internal_config_for_env.properties</file>
+                                        </files>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>write-all-maven-variables-into-file</id>
+                                    <!--<phase>generate-resources</phase>-->
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>write-project-properties</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputFile>
+                                            ${project.basedir}/${project.artifactId}_maven_generated_variables.txt
+                                        </outputFile>
+                                    </configuration>
+                                </execution>
+                            </executions>
                         </plugin>
                     </plugins>
                 </pluginManagement>
