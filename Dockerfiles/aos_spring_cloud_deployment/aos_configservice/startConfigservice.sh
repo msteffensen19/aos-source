@@ -8,5 +8,5 @@ if [ ! -f /initialized.txt ]; then # Run initialization logic
     sed -i "s/ACCOUNT_SERVICE_NAME/${ACCOUNT_SERVICE_NAME}/g" configservice/microservices/aos-gateway-${ACTIVE_PROFILE}.yml
     touch /initialized.txt
 fi
-java -jar configservice/configservice.jar -DCONFIG_FILE_URI=${CONFIG_FILE_URI}
+java -Dhttp.proxyHost="${JAVA_PROXY_HOST}" -Dhttp.proxyPort="${JAVA_PROXY_PORT}" -Dhttp.nonProxyHosts="${JAVA_NO_PROXY}" -jar configservice/configservice.jar -DCONFIG_FILE_URI=${CONFIG_FILE_URI}
 tail -f /dev/null
