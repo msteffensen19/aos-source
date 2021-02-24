@@ -275,6 +275,29 @@
                 <filtering>false</filtering>
             </properties>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                        <!-- _v_ Replace ${parameters} to his real value in all resources files-->
+                        <filtering>true</filtering>
+                    </resource>
+                    <!-- Do not copy *.properties files and ver.txt to WEB-INF\classes (in ROOT project)-->
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <excludes>
+                            <exclude>
+                                *.properties
+                            </exclude>
+                            <exclude>
+                                *.properties.*
+                            </exclude>
+                            <exclude>ver.txt</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -321,6 +344,57 @@
                                     </resource>
                                 </webResources>
                             </configuration>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>2.7</version>
+                            <executions>
+                                <execution>
+                                    <id>copy-shared-resources-into-webapp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>${filtering}</filtering>
+                                                <!--<excludes>-->
+                                                <!--<exclude>/*.*</exclude>-->
+                                                <!--</excludes>-->
+                                                <includes combine.self="override">
+                                                    <include>/services.properties</include>
+                                                    <!--<include>/global.properties</include>-->
+                                                    <include>/ver.txt</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>copy-log4j_properties-into-classes</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.build.directory}/generated-resources</directory>
+                                                <filtering>${filtering}</filtering>
+                                                <includes combine.self="override">
+                                                    <include>/log4j.properties</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </execution>
+
+                            </executions>
+
                         </plugin>
                     </plugins>
                 </pluginManagement>
