@@ -24,6 +24,8 @@ if [ ! -f /initialized.txt ]; then # Run initialization logic
     touch /initialized.txt
 fi
 bash wait-for-it.sh "${POSTGRES_IP}" "${POSTGRES_PORT}"
-export JAVA_OPTS="-Dhttp.proxyHost=${JAVA_PROXY_HOST} -Dhttp.proxyPort=${JAVA_PROXY_PORT} -Dhttp.nonProxyHosts='${JAVA_NO_PROXY}' $JAVA_OPTS"
+touch /usr/local/tomcat/bin/setenv.sh
+chmod +x /usr/local/tomcat/bin/setenv.sh
+echo "export JAVA_OPTS='"-Dhttp.proxyHost=${JAVA_PROXY_HOST} -Dhttp.proxyPort=${JAVA_PROXY_PORT} -Dhttp.nonProxyHosts=\"${JAVA_NO_PROXY}\" $JAVA_OPTS"'" >> /usr/local/tomcat/bin/setenv.sh
 catalina.sh run
 tail -f /dev/null
