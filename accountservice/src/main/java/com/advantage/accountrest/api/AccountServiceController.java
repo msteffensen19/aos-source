@@ -1,10 +1,16 @@
 package com.advantage.accountrest.api;
 
+import com.advantage.accountrest.AccountserviceClient.*;
 import com.advantage.accountrest.AccountserviceClient.AccountLoginResponse;
-import com.advantage.accountrest.AccountserviceClient.AccountServicePort;
-import com.advantage.accountrest.AccountserviceClient.AccountServicePortService;
 import com.advantage.accountsoap.config.SmokingGunInit;
 import com.advantage.accountsoap.dto.account.*;
+import com.advantage.accountsoap.dto.account.AccountCreateResponse;
+import com.advantage.accountsoap.dto.account.AccountDeleteResponse;
+import com.advantage.accountsoap.dto.account.AccountLogoutResponse;
+import com.advantage.accountsoap.dto.account.AccountPermanentDeleteResponse;
+import com.advantage.accountsoap.dto.account.ChangePasswordResponse;
+import com.advantage.accountsoap.dto.payment.PaymentMethodUpdateRequest;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 import com.advantage.accountsoap.services.AccountService;
 import com.advantage.accountsoap.util.UrlResources;
 import com.advantage.common.Constants;
@@ -253,6 +259,50 @@ public class AccountServiceController {
             return new ResponseEntity<>(cpr, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
+    }
+
+
+    @RequestMapping(value = "/addMasterCredit", method = RequestMethod.POST)
+    @ApiImplicitParams({@ApiImplicitParam(name = "Authorization", required = true, dataType = "string", paramType = "header", value = "JSON Web Token, Use the returned token value from /login request.", defaultValue = "Bearer ", example = "Bearer xxxxxxxxxxxxxxxxxxxxxxx")})
+    @ApiOperation(value = "add Master Credit to user payment method")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful updated", response = com.advantage.accountrest.AccountserviceClient.AddMasterCreditMethodResponse.class),
+            @ApiResponse(code = 403, message = "Wrong user name or password", response = com.advantage.accountrest.AccountserviceClient.AddMasterCreditMethodResponse.class),
+            @ApiResponse(code = 500, message = "Internal server error", response = com.advantage.accountrest.AccountserviceClient.AddMasterCreditMethodResponse.class)})
+    public ResponseEntity<AddMasterCreditMethodResponse> addMasterCredit(HttpServletRequest request,
+                                                                        HttpServletResponse response,
+                                                                        @RequestBody AddMasterCreditMethodRequest addMasterCreditMethodRequest) throws MalformedURLException {
+
+        setCefLogData(request,"add master credit");
+        URL urlWsdlLocation = UrlResources.getUrlSoapAccount();
+        AddMasterCreditMethodResponse amcmr = new AddMasterCreditMethodResponse();
+        try{
+            AccountServicePortService asps = new AccountServicePortService(urlWsdlLocation);
+            AccountServicePort asPort = asps.getAccountServicePortSoap11();
+            amcmr = asPort.addMasterCreditMethod(addMasterCreditMethodRequest);
+            if(amcmr.getResponse().isSuccess()){
+                logger.info("master credit card creation success" + amcmr.toString());
+                return new ResponseEntity<>(amcmr, HttpStatus.OK);
+            }
+            else{
+                logger.error("Failed to create master credit card" + amcmr.toString());
+                return new ResponseEntity<>(amcmr, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            amcmr.setResponse(createUpdateMCResponse(e.getMessage()));
+            return new ResponseEntity<>(amcmr, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+    private PaymentPreferencesStatusResponse createUpdateMCResponse(String message) {
+        PaymentPreferencesStatusResponse ppsr = new PaymentPreferencesStatusResponse();
+        ppsr.setSuccess(false);
+        ppsr.setReason(message);
+        return ppsr;
     }
 
     @Autowired

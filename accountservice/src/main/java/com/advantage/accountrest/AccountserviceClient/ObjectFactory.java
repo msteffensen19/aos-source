@@ -1,8 +1,6 @@
 
 package com.advantage.accountrest.AccountserviceClient;
 
-import accountservice.store.online.advantage.com.AccountStatusRequest;
-import accountservice.store.online.advantage.com.PaymentPreferencesStatusRequest;
 import com.advantage.accountsoap.dto.account.*;
 import com.advantage.accountsoap.dto.address.*;
 import com.advantage.accountsoap.dto.country.*;
@@ -563,11 +561,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PaymentPreferencesStatusRequest }
+     * Create an instance of {@link accountservice.store.online.advantage.com.PaymentPreferencesStatusRequest }
      *
      */
-    public PaymentPreferencesStatusRequest createPaymentPreferencesStatusRequest() {
-        return new PaymentPreferencesStatusRequest();
+    public accountservice.store.online.advantage.com.PaymentPreferencesStatusRequest createPaymentPreferencesStatusRequest() {
+        return new accountservice.store.online.advantage.com.PaymentPreferencesStatusRequest();
     }
 
     /**

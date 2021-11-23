@@ -210,8 +210,8 @@ public interface AccountServicePort {
      * @param addMasterCreditMethodRequest
      */
     @WebMethod(operationName = "AddMasterCreditMethod")
-    @Oneway
-    public void addMasterCreditMethod(
+    @WebResult(name = "AddMasterCreditMethodResponse", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddMasterCreditMethodResponse")
+    public AddMasterCreditMethodResponse addMasterCreditMethod(
             @WebParam(name = "AddMasterCreditMethodRequest", targetNamespace = "com.advantage.online.store.accountservice", partName = "AddMasterCreditMethodRequest")
                     AddMasterCreditMethodRequest addMasterCreditMethodRequest);
 

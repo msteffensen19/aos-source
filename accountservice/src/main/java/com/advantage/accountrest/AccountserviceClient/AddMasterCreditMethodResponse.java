@@ -1,18 +1,18 @@
-package com.advantage.accountsoap.dto.payment;
+package com.advantage.accountrest.AccountserviceClient;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
+import com.advantage.accountsoap.dto.payment.PaymentPreferencesStatusResponse;
 
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "",
-        namespace = WebServiceConfig.NAMESPACE_URI,
         propOrder = {
                 "response"
         })
-@XmlRootElement(name = "AddMasterCreditMethodResponse", namespace = WebServiceConfig.NAMESPACE_URI)
+@XmlRootElement(name = "PaymentPreferencesStatusResponse")
 public class AddMasterCreditMethodResponse {
-    @XmlElement(name = "StatusMessage", namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    @XmlElement(name = "StatusMessage", required = true)
     private PaymentPreferencesStatusResponse response;
 
     public AddMasterCreditMethodResponse() {
