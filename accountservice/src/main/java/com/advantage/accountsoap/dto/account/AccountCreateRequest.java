@@ -3,6 +3,8 @@ package com.advantage.accountsoap.dto.account;
 
 import com.advantage.accountsoap.config.WebServiceConfig;
 import com.advantage.accountsoap.dto.country.CountryID;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.bind.annotation.*;
 
@@ -20,7 +22,8 @@ import javax.xml.bind.annotation.*;
         "email",
         "password",
         "accountType",
-        "allowOffersPromotion"
+        "allowOffersPromotion",
+        "aobUser"
 })
 @XmlRootElement(name = "AccountCreateRequest", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountCreateRequest {
@@ -50,6 +53,8 @@ public class AccountCreateRequest {
     protected AccountType accountType;
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true, nillable = true)
     protected boolean allowOffersPromotion;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = false, nillable = true, defaultValue = "false")
+    protected boolean aobUser;
 
     public String getLastName() {
         return lastName;
@@ -156,6 +161,14 @@ public class AccountCreateRequest {
         this.allowOffersPromotion = allowOffersPromotion;
     }
 
+    public boolean isAobUser() {
+        return aobUser;
+    }
+
+    public void setAobUser(boolean aobUser) {
+        this.aobUser = aobUser;
+    }
+
     @Override
     public String toString() {
         return "AccountCreateRequest{" +
@@ -172,6 +185,7 @@ public class AccountCreateRequest {
                 ", password='" + password + '\'' +
                 ", accountType=" + accountType +
                 ", allowOffersPromotion=" + allowOffersPromotion +
+                ", aobUser=" + aobUser +
                 '}';
     }
 }

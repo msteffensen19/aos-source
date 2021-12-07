@@ -132,7 +132,8 @@ public class AccountServiceEndpoint {
                 account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin(),
-                account.getPassword());
+                account.getPassword(),
+                account.isAobUser());
 
         return new GetAccountByIdResponse(dto);
     }
@@ -165,7 +166,8 @@ public class AccountServiceEndpoint {
                 account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
                 account.getInternalLastSuccesssulLogin(),
-                account.getPassword());
+                account.getPassword(),
+                account.isAobUser());
 
         return new GetAccountByLoginResponse(dto);
     }
@@ -200,7 +202,8 @@ public class AccountServiceEndpoint {
                 account.isAllowOffersPromotion(),
                 account.getInternalUnsuccessfulLoginAttempts(),
                 account.getInternalUserBlockedFromLoginUntil(),
-                account.getInternalLastSuccesssulLogin());
+                account.getInternalLastSuccesssulLogin(),
+                account.isAobUser());
 
         GetAccountByIdNewResponse getAccountByIdNewResponse = new GetAccountByIdNewResponse(dto);
         return getAccountByIdNewResponse;
@@ -358,7 +361,8 @@ public class AccountServiceEndpoint {
                 account.getAddress(),
                 account.getZipcode(),
                 account.getEmail(),
-                account.isAllowOffersPromotion());
+                account.isAllowOffersPromotion(),
+                account.isAobUser());
 
         return new AccountCreateResponse(response);
     }

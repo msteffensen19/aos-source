@@ -19,6 +19,7 @@
         <xs:element name="password" type="xs:string" form="qualified"/>
         <xs:element name="accountType" type="tns:AccountType" form="qualified"/>
         <xs:element name="allowOffersPromotion" type="xs:boolean" form="qualified" nillable="true"/>
+        <xs:element name="aobUser" type="xs:boolean" form="qualified" nillable="true" default="false"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -460,6 +461,7 @@
               <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int" form="qualified"/>
               <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long" form="qualified"/>
               <xs:element name="internalLastSuccesssulLogin" type="xs:long" form="qualified"/>
+              <xs:element name="aobUser" type="xs:boolean" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -501,6 +503,7 @@
               <xs:element name="internalUnsuccessfulLoginAttempts" type="xs:int" form="qualified"/>
               <xs:element name="internalUserBlockedFromLoginUntil" type="xs:long" form="qualified"/>
               <xs:element name="internalLastSuccesssulLogin" type="xs:long" form="qualified"/>
+              <xs:element name="aobUser" type="xs:boolean" form="qualified"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -20,7 +20,7 @@ public interface AccountRepository extends DefaultCRUDOperations<Account> {
     AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
                                  String password, CountryID country, String phoneNumber, String stateProvince,
                                  String cityName, String address, String zipcode, String email,
-                                 boolean agreeToReceiveOffersAndPromotions);
+                                 boolean agreeToReceiveOffersAndPromotions, boolean aobUser);
 
     Account addUnsuccessfulLoginAttempt(Account account);
 

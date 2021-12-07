@@ -3,6 +3,7 @@ package com.advantage.order.store.services;
 import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
+import com.advantage.common.dto.AppUserDto;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.utils.LoggerUtils;
@@ -159,7 +160,7 @@ public class OrderManagementService {
      * (V)  Step #6: UPDATE: Save shipping express tracking number to order header.
      */
     @Transactional
-    public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest purchaseRequest) {
+    public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest purchaseRequest, AppUserDto userDto) {
         //Moti Ostrovski: reset total Amount before new purchase
         totalAmount = 0.0;
 

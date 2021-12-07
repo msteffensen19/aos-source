@@ -26,7 +26,8 @@ import javax.xml.bind.annotation.*;
                 "allowOffersPromotion",
                 "internalUnsuccessfulLoginAttempts",
                 "internalUserBlockedFromLoginUntil",
-                "internalLastSuccesssulLogin"
+                "internalLastSuccesssulLogin",
+                "aobUser"
         })
 @XmlRootElement(name = "AccountDto", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountDtoNew {
@@ -68,6 +69,8 @@ public class AccountDtoNew {
     private long internalUserBlockedFromLoginUntil; //  Managed Internally
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private long internalLastSuccesssulLogin;   //  Managed Internally
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private boolean aobUser;
 
     public AccountDtoNew() {
     }
@@ -90,7 +93,8 @@ public class AccountDtoNew {
                          boolean allowOffersPromotion,
                          int internalUnsuccessfulLoginAttempts,
                          long internalUserBlockedFromLoginUntil,
-                         long internalLastSuccesssulLogin) {
+                         long internalLastSuccesssulLogin,
+                         boolean aobUser) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -110,6 +114,7 @@ public class AccountDtoNew {
         this.internalUnsuccessfulLoginAttempts = internalUnsuccessfulLoginAttempts;
         this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
+        this.aobUser = aobUser;
     }
 
     public long getId() {
@@ -262,5 +267,13 @@ public class AccountDtoNew {
 
     public void setInternalLastSuccesssulLogin(long internalLastSuccesssulLogin) {
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
+    }
+
+    public boolean isAobUser() {
+        return aobUser;
+    }
+
+    public void getAobUser(boolean aobUser) {
+        this.aobUser = aobUser;
     }
 }

@@ -267,7 +267,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     public AccountStatusResponse create(Integer appUserType, String lastName, String firstName, String loginName,
                                         String password, CountryID countryId, String phoneNumber, String stateProvince,
                                         String cityName, String address, String zipcode, String email,
-                                        boolean allowOffersPromotion) {
+                                        boolean allowOffersPromotion, boolean aobUser) {
         //Moti add validation fields
         try{
             ArgumentValidationHelper.validateFirstAndLastName(lastName);

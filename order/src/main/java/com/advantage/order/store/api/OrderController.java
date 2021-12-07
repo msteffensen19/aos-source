@@ -593,7 +593,13 @@ public class OrderController {
 
         //return ERROR 500 if this is an AppPulse user (US #118005)
         OrderPurchaseResponse purchaseResponse = null;
-        if(isAppPulseUser(userId) && purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equalsIgnoreCase("safepay")){
+        AppUserDto userDto = null;
+        try {
+            userDto = SoapApiHelper.getUserById(userId);
+        } catch (SOAPException e) {
+            e.printStackTrace();
+        }
+        if(isAppPulseUser(userDto) && purchaseRequest.getOrderPaymentInformation().getPaymentMethod().equalsIgnoreCase("safepay")){
             if(purchaseRequest.getOrderPaymentInformation().getUsername().equals(purchaseRequest.getOrderPaymentInformation().getPassword())){
                 logger.error("US #118005 - ERROR 409");
                 purchaseResponse = new OrderPurchaseResponse(false, HttpStatus.CONFLICT.toString(), "Error! Username and password cannot be identical");
@@ -608,7 +614,7 @@ public class OrderController {
                 return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest);
+        purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest, userDto);
 
 
         if (purchaseResponse.isSuccess()) {
@@ -632,12 +638,15 @@ public class OrderController {
         logger.error("Internal server error 500. Server is unavailable.");
     }
 
-    private boolean isAppPulseUser(long userId){
+    private boolean isAppPulseUser(AppUserDto userDto){
         try {
-            AppUserDto user = SoapApiHelper.getUserById(userId);
-            String appPulseUserValue =  RestApiHelper.getDemoAppConfigParameterValue("AppPulse_user");
-            return appPulseUserValue.split(":").length > 1 ? appPulseUserValue.split(":")[0].equals(user.getLoginUser()) : false;
-        } catch (SOAPException e) {
+                if(userDto != null){
+                    String appPulseUserValue =  RestApiHelper.getDemoAppConfigParameterValue("AppPulse_user");
+                    return appPulseUserValue.split(":").length > 1 ? appPulseUserValue.split(":")[0].equals(userDto.getLoginUser()) : false;
+
+                }else
+                    return false;
+            } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

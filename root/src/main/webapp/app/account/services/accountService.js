@@ -378,6 +378,8 @@ define(['./module'], function (services) {
                         data: expectToReceive,
                         success: function (soapResponse) {
                             var response = soapResponse.toJSON(params.response);
+                            if(!response)
+                                response = soapResponse.toJSON('AddMasterCreditMethodResponse');
                             Helper.disableLoader();
                             Loger.Received(response);
                             if(response.StatusMessage.success){

@@ -140,3 +140,4 @@ root/src/main/webapp/package-lock.json
 /accountservice/src/main/resources/generated/*
 /root/src/main/webapp/.scannerwork/**
 /root/.scannerwork/*
+/target/**

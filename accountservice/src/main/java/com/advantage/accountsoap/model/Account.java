@@ -145,6 +145,17 @@ public class Account {
     @Column
     private char active;
 
+    public boolean isAobUser() {
+        return aobUser;
+    }
+
+    public void setAobUser(boolean aobUser) {
+        this.aobUser = aobUser;
+    }
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean aobUser;
+
     public Account() {
 
     }

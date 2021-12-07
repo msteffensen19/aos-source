@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.*;
                 "internalUnsuccessfulLoginAttempts",
                 "internalUserBlockedFromLoginUntil",
                 "internalLastSuccesssulLogin",
-                "loginPassword"
+                "loginPassword",
+                "aobUser"
         })
 @XmlRootElement(name = "AccountDto", namespace = WebServiceConfig.NAMESPACE_URI)
 public class AccountDto {
@@ -71,6 +72,8 @@ public class AccountDto {
     private long internalLastSuccesssulLogin;   //  Managed Internally
     @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
     private String loginPassword;
+    @XmlElement(namespace = WebServiceConfig.NAMESPACE_URI, required = true)
+    private boolean aobUser;
 
     public AccountDto() {
     }
@@ -94,7 +97,8 @@ public class AccountDto {
                       int internalUnsuccessfulLoginAttempts,
                       long internalUserBlockedFromLoginUntil,
                       long internalLastSuccesssulLogin,
-                      String loginPassword
+                      String loginPassword,
+                      boolean aobUser
                       ) {
         this.id = id;
         this.lastName = lastName;
@@ -116,6 +120,7 @@ public class AccountDto {
         this.internalUserBlockedFromLoginUntil = internalUserBlockedFromLoginUntil;
         this.internalLastSuccesssulLogin = internalLastSuccesssulLogin;
         this.loginPassword=loginPassword;
+        this.aobUser = aobUser;
     }
 
     public long getId() {
@@ -277,4 +282,13 @@ public class AccountDto {
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
     }
+
+    public boolean isAobUser() {
+        return aobUser;
+    }
+
+    public void setAobUser(boolean aobUser) {
+        this.aobUser = aobUser;
+    }
+
 }

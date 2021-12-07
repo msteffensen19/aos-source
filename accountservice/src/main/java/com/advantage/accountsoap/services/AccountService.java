@@ -72,9 +72,9 @@ public class AccountService implements Injectable {
     private static final Logger logger = Logger.getLogger(AccountService.class);
 
     @Transactional
-    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final CountryID countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion) {
+    public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final CountryID countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion, final boolean aobUser) {
 
-        AccountStatusResponse accountStatusResponse = accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion);
+        AccountStatusResponse accountStatusResponse = accountRepository.create(appUserType, lastName, firstName, loginName, password, countryId, phoneNumber, stateProvince, cityName, address, zipcode, email, allowOffersPromotion, aobUser);
 
         if (accountStatusResponse.isSuccess()) {
             //  Add user-account address to Shipping address (CountryId can be default 40L = United States of America)
@@ -146,7 +146,8 @@ public class AccountService implements Injectable {
                     account.isAllowOffersPromotion(), account.getInternalUnsuccessfulLoginAttempts(),
                     account.getInternalUserBlockedFromLoginUntil(),
                     account.getInternalLastSuccesssulLogin(),
-                    account.getPassword()));
+                    account.getPassword(),
+                        account.isAobUser()));
 
         }
 
