@@ -20,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -54,7 +55,7 @@ public class DefaultProductRepository extends AbstractRepository implements Prod
     private static final int TOTAL_ATTRIBUTES_COUNT = 17;
     private static final int MAX_NUM_OF_PRODUCTS = 100;
 
-    private static final Logger logger = Logger.getLogger(DefaultProductRepository.class);
+    private static final Logger logger = LogManager.getLogger(DefaultProductRepository.class);
 
     /**
      * Create Product entity

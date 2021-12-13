@@ -6,7 +6,8 @@ import com.advantage.common.enums.ResponseEnum;
 import com.advantage.mastercredit.payment.dto.MasterCreditDto;
 import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
 import com.advantage.mastercredit.payment.services.MasterCreditService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = Constants.URI_API + "/v1")
 public class MasterCreditController {
 
-    private Logger logger = Logger.getLogger(MasterCreditController.class);
+    private Logger logger = LogManager.getLogger(MasterCreditController.class);
 
     @Autowired
     private MasterCreditService masterCreditService;

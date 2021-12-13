@@ -1,7 +1,9 @@
 package com.advantage.catalog.store.model.attribute;
 
 import com.advantage.catalog.store.model.product.ProductAttributes;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -21,7 +23,7 @@ import java.util.Set;
 })
 public class Attribute {
 
-    private static Logger logger = Logger.getLogger(Attribute.class);
+    private static Logger logger = LogManager.getLogger(Attribute.class);
     public static final String FIELD_ID = "attribute_id";
     public static final String PARAM_ID = "ATTRIBUTE_PARAM_ID";
     public static final String QUERY_GET_ALL = "attribute.GetAll";

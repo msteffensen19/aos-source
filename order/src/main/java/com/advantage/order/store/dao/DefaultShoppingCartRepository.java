@@ -17,7 +17,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Order services - Data Manager
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 @Repository
 public class DefaultShoppingCartRepository extends AbstractRepository implements ShoppingCartRepository {
 
-    private static final Logger logger = Logger.getLogger(DefaultShoppingCartRepository.class);
+    private static final Logger logger = LogManager.getLogger(DefaultShoppingCartRepository.class);
 
     private static String NOT_FOUND = "NOT FOUND";
 

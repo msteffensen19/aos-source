@@ -1,7 +1,8 @@
 //package com.advantage.order.store.config;
 //
 //import com.advantage.common.Url_resources;
-//import org.apache.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 //import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.context.annotation.ComponentScan;
@@ -19,7 +20,7 @@
 //@Configuration
 //@SpringBootApplication
 //public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-//    private static final Logger logger = Logger.getLogger(AppInitializer.class);
+//    private static final Logger logger = LogManager.getLogger(AppInitializer.class);
 //
 //    @Override
 //    protected Class<?>[] getRootConfigClasses() {

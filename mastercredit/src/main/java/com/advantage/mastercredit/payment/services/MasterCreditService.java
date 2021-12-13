@@ -7,7 +7,8 @@ import com.advantage.mastercredit.payment.dto.MasterCreditResponse;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.enums.TransactionTypeEnum;
 import com.advantage.mastercredit.util.ArgumentValidationHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,7 @@ public class MasterCreditService {
 
     private static AtomicLong masterCreditRefNumber;
 
-    private Logger logger = Logger.getLogger(MasterCreditService.class);
+    private Logger logger = LogManager.getLogger(MasterCreditService.class);
 
     public MasterCreditService() {
 

@@ -3,7 +3,8 @@ package com.advantage.order.store.model;
 /**
  * Created by kubany on 10/8/2018.
  */
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,7 +34,7 @@ public final class Feature1779OrdersHistoryLeak {
 
     static volatile boolean running = true;
 
-    private static final Logger logger = Logger.getLogger(Feature1779OrdersHistoryLeak.class);
+    private static final Logger logger = LogManager.getLogger(Feature1779OrdersHistoryLeak.class);
     public static void main(String[] args) throws Exception {
         Thread thread = new LongRunningThread();
         try {

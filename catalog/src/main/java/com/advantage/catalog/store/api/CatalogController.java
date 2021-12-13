@@ -24,7 +24,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
@@ -70,8 +71,8 @@ public class CatalogController {
     @Autowired
     private Environment environment;
 
-    private static final Logger logger = Logger.getLogger(CatalogController.class);
-    private static final Logger cefLogger = Logger.getLogger("CEF");
+    private static final Logger logger = LogManager.getLogger(CatalogController.class);
+    private static final Logger cefLogger = LogManager.getLogger("CEF");
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {

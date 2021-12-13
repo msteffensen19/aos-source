@@ -2,7 +2,9 @@ package com.advantage.root.store;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,7 +38,7 @@ public class rootApplication extends SpringBootServletInitializer {
     @Autowired
     private Environment environment;
 
-    private static final Logger logger = Logger.getLogger(rootApplication.class);
+    private static final Logger logger = LogManager.getLogger(rootApplication.class);
 
     @RequestMapping("/services.properties")
     @CrossOrigin

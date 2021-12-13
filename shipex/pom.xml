@@ -23,7 +23,7 @@
         <applicationName>shipex</applicationName>
         <java.version>11</java.version>
         <!--<slf4j.version>1.7.13</slf4j.version>-->
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>2.15.0</log4j.version>
         <querydsl.version>3.6.0</querydsl.version>
 
         <spring-security.version>4.0.3.RELEASE</spring-security.version>
@@ -265,9 +265,14 @@
 
         <!--LOG4J-->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.15.0</version>
         </dependency>
         <dependency>
             <groupId>com.advantage.online.store</groupId>

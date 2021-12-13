@@ -8,7 +8,8 @@ import com.advantage.catalog.util.IOHelper;
 import com.advantage.catalog.util.xml.XmlHelper;
 import com.advantage.common.cef.CefHttpModel;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Document;
 
@@ -28,7 +29,7 @@ public class FetchImageHttpServlet extends HttpServlet {
     public static final String REQUEST_PARAM_IMAGE_ID = "image_id";
 
     private ImageManagement imageManagement;
-    private static final Logger logger = Logger.getLogger(FetchImageHttpServlet.class);
+    private static final Logger logger = LogManager.getLogger(FetchImageHttpServlet.class);
 
     @Override
     public void init() throws ServletException {

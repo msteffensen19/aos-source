@@ -2,7 +2,8 @@ package com.advantage.catalog.store.config;
 
 import com.advantage.catalog.store.image.ImageManagement;
 import com.advantage.catalog.store.image.ImageManagementAccess;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class ImageManagementConfiguration {
 
     public static final String PROPERTY_IMAGE_MANAGEMENT_REPOSITORY = "advantage.imageManagement.repository";
 
-    private static final Logger logger = Logger.getLogger(ImageManagementConfiguration.class);
+    private static final Logger logger = LogManager.getLogger(ImageManagementConfiguration.class);
 
     @Autowired
     private Environment environment;

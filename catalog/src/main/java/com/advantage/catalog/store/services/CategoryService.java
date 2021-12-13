@@ -7,7 +7,8 @@ import com.advantage.catalog.store.model.category.CategoryAttributeFilter;
 import com.advantage.catalog.store.model.product.Product;
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.common.dto.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class CategoryService {
     @Autowired
     DealService dealService;
 
-    private static final Logger logger = Logger.getLogger(CategoryService.class);
+    private static final Logger logger = LogManager.getLogger(CategoryService.class);
 
     @Transactional
     public Category createCategory(final String name, final String managedImageId) {

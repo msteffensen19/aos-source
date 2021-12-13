@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
  * @author Binyamin Regev on 10/01/2016.
  */
 public class JsonHelper {
-    private static final Logger logger = Logger.getLogger(JsonHelper.class);
+    private static final Logger logger = LogManager.getLogger(JsonHelper.class);
 
     public static Map<String, Object> jsonStringToMap(String jsonString) {
         Map<String, Object> jsonMap = new HashMap<>();

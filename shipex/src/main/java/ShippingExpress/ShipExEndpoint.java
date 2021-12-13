@@ -6,7 +6,8 @@ import ShippingExpress.model.ShippingExpressService;
 import ShippingExpress.util.ArgumentValidationHelper;
 import com.advantage.common.Constants;
 import com.advantage.common.enums.ResponseEnum;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -15,7 +16,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class ShipExEndpoint {
-    final static Logger logger = Logger.getLogger(ShipExEndpoint.class);
+    final static Logger logger = LogManager.getLogger(ShipExEndpoint.class);
     public static final String TRANSACTION_TYPE_SHIPPING_COST = "ShippingCost";
     public static final String TRANSACTION_TYPE_PLACE_SHIPPING_ORDER = "PlaceShippingOrder";
     private ShippingExpressService shippingService;

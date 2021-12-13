@@ -23,9 +23,10 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +68,7 @@ public class OrderController {
 
     private static final String demoAppConfig = "DemoAppConfig/parameters/";
     private static final String ParameterName = "ShipEx_repeat_calls";
-    private static final Logger logger = Logger.getLogger(OrderController.class);
+    private static final Logger logger = LogManager.getLogger(OrderController.class);
     private HttpSession m_session;
 
     /*  =========================================================================================================   */
@@ -256,7 +257,7 @@ public class OrderController {
         }
 
         HttpStatus httpStatus;
-        Priority logPriority;
+        Level logPriority;
         if (userId != null) {
             shoppingCartResponse = shoppingCartService.replaceUserCart(Long.valueOf(userId), shoopingCartProducts);
             if (shoppingCartResponse == null) {
@@ -588,7 +589,7 @@ public class OrderController {
         } else {
             logger.warn("cefData is null");
         }
-
+        String authToken = request.getHeader("Authorization");
         logger.debug("userId = " + userId);
 
         //return ERROR 500 if this is an AppPulse user (US #118005)
@@ -614,7 +615,7 @@ public class OrderController {
                 return new ResponseEntity<>(purchaseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest, userDto);
+        purchaseResponse = orderManagementService.doPurchase(userId, purchaseRequest, userDto, authToken);
 
 
         if (purchaseResponse.isSuccess()) {

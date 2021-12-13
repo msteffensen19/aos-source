@@ -4,9 +4,12 @@ import ShipExServiceClient.*;
 import com.advantage.common.Constants;
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.AppUserDto;
+import com.advantage.common.dto.PaymentPreferencesDto;
+import com.advantage.common.dto.UserDetailsDto;
 import com.advantage.common.enums.PaymentMethodEnum;
 import com.advantage.common.enums.ResponseEnum;
 import com.advantage.common.utils.LoggerUtils;
+import com.advantage.common.utils.SoapApiHelper;
 import com.advantage.order.store.dao.HistoryOrderLineRepository;
 import com.advantage.order.store.dao.HistoryOrderHeaderRepository;
 import com.advantage.order.store.dao.OrderManagementRepository;
@@ -14,13 +17,15 @@ import com.advantage.order.store.dao.ShoppingCartRepository;
 import com.advantage.order.store.dto.*;
 import com.advantage.order.store.model.*;
 import com.advantage.order.store.utils.ArgumentValidationHelper;
+import com.advantage.order.store.utils.AuthHelper;
 import com.advantage.order.store.utils.JsonHelper;
 import com.advantage.order.store.utils.RestApiHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.http.HttpException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,6 +57,7 @@ public class OrderManagementService {
     public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_DATE_IS_EMPTY = "Get ShipEx response failure, transaction date is empty";
     public static final String ERROR_SHIPEX_RESPONSE_FAILURE_TRANSACTION_REFERENCE_IS_EMPTY = "Get ShipEx response failure, transaction reference is empty";
     public static final String ERROR_SHIPEX_RESPONSE_FAILURE_INVALID_TRANSACTION_REFERENCE_LENGTH = "Get ShipEx response failure, invalid transaction reference length";
+    public static final String DEMO_APP_CONFIG_AOB_ENDPOINT = "AOB_Endpoint";
 
     final String charset = "UTF-8";
     final String contentType = "application/json";
@@ -59,7 +65,7 @@ public class OrderManagementService {
     private static AtomicLong orderNumber;
     private double totalAmount = 0.0;
 
-    private static final Logger logger = Logger.getLogger(OrderManagementService.class);
+    private static final Logger logger = LogManager.getLogger(OrderManagementService.class);
 
     @Autowired
     @Qualifier("orderManagementRepository")
@@ -160,7 +166,7 @@ public class OrderManagementService {
      * (V)  Step #6: UPDATE: Save shipping express tracking number to order header.
      */
     @Transactional
-    public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest purchaseRequest, AppUserDto userDto) {
+    public OrderPurchaseResponse doPurchase(long userId, OrderPurchaseRequest purchaseRequest, AppUserDto userDto, String authToken) {
         //Moti Ostrovski: reset total Amount before new purchase
         totalAmount = 0.0;
 
@@ -330,6 +336,12 @@ public class OrderManagementService {
                     logger.info(orderResponse.toString());
                     logger.info(purchaseResponse);
                 }
+                try{
+                    checkIfAobUserAndCreateTransactionInAOB(purchaseRequest, userDto, authToken);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    logger.error("Cant create AOB transaction", e);
+                }
             } else {
                 purchaseResponse.setSuccess(false);
                 purchaseResponse.setCode(orderResponse.getCode());
@@ -344,7 +356,49 @@ public class OrderManagementService {
         return purchaseResponse;
     }
 
+    private void checkIfAobUserAndCreateTransactionInAOB(OrderPurchaseRequest orderPurchaseRequest, AppUserDto userDto, String authToken) throws Exception{
+        if(orderPurchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.MASTER_CREDIT.getName())){
+            UserDetailsDto userDetailsDto = SoapApiHelper.getAccountDetails(userDto.getLoginUser(), authToken);
 
+            //userDetailsDto.setAobUser(true);//TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+
+            if(userDetailsDto.isAobUser()){
+                PaymentPreferencesDto paymentPreferencesDto = SoapApiHelper.getAccountPaymentPreferences(userDetailsDto.getId(), authToken);
+                String AOBEndpoint = RestApiHelper.getDemoAppConfigParameterValue(DEMO_APP_CONFIG_AOB_ENDPOINT);
+
+                //AOBEndpoint = "http://advantageonlinebanking.com/api";//TESTTTTTTTTTTTTTTTTTTTTTTTT
+
+                String aobAuthToken = aobAuth(new URL(AOBEndpoint + "/users/login"), authToken);
+
+
+
+
+
+                logger.info(aobAuthToken);
+            }
+        }
+
+    }
+
+    private String aobAuth(URL authUrl, String aosAuthToken) throws Exception {
+        String credentials = AuthHelper.decodeBasicAuth(aosAuthToken);
+        String[] creds = credentials.split(":", 2);
+
+        //creds[1] = "demo";//TESTTTTTTTTTTTTTTTTTTTT
+
+        String aobAuthBody = "{\n" +
+                "  \"password\": \"" +  creds[1] + "\",\n" +
+                "  \"username\": \"" + creds[0] + "\"\n" +
+                "}";
+        HashMap<String, String> aobLoginHeader = new HashMap();
+        aobLoginHeader.put("Accept", "application/json");
+        aobLoginHeader.put("Content-type", "application/json");
+
+        String aobAuthRes = RestApiHelper.httpGet(authUrl, "POST", aobLoginHeader, aobAuthBody);
+        JsonObject jsonObject = JsonParser.parseString(aobAuthRes).getAsJsonObject();
+        String aobAuthToken = jsonObject.get("token").getAsString();
+        return aobAuthToken;
+    }
 
     private String decryptCardNumUsingVoltage(String cardNumber) {
         String voltageUrlString = RestApiHelper.getDemoAppConfigParameterValue("Voltage_Service_URL");

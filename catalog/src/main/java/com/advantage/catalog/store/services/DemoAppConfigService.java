@@ -4,6 +4,8 @@ import  java.io.*;
 
 import com.advantage.catalog.util.ArgumentValidationHelper;
 import com.advantage.catalog.util.xml.XmlHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import  org.apache.poi.hssf.usermodel.HSSFSheet;
 import  org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import  org.apache.poi.hssf.usermodel.HSSFRow;
@@ -15,7 +17,6 @@ import com.advantage.common.dto.DemoAppConfigParametersDto;
 import com.advantage.common.dto.DemoAppConfigStatusResponse;
 import com.advantage.common.utils.SoapApiHelper;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 
@@ -43,7 +44,7 @@ public class DemoAppConfigService {
 
     //  region Class Properties
     private File xmlFile = new File(DEMO_APP_CONFIG_XML_FILE_NAME);
-    private static final Logger logger = Logger.getLogger(DemoAppConfigService.class);
+    private static final Logger logger = LogManager.getLogger(DemoAppConfigService.class);
     private Document doc;
 
     private Node parameters;        //  Root Element

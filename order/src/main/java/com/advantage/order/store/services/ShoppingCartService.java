@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class ShoppingCartService {
 
     private static final String CATALOG_PRODUCT = "products/";
     private static final String CATALOG_PRODUCT_COLOR_ATTRIBUTE = "%s/color/%s";
-    private static final Logger logger = Logger.getLogger(ShoppingCartService.class);
+    private static final Logger logger = LogManager.getLogger(ShoppingCartService.class);
 
     ShoppingCartResponse shoppingCartResponse;
 

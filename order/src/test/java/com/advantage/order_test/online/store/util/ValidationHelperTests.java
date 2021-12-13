@@ -3,7 +3,8 @@ package com.advantage.order_test.online.store.util;
 import com.advantage.order.store.utils.ValidationHelper;
 import com.advantage.order_test.cfg.AdvantageTestContextConfiguration;
 import com.advantage.order_test.online.store.dao.GenericRepositoryTests;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = {AdvantageTestContextConfiguration.class})
 public class ValidationHelperTests extends GenericRepositoryTests {
 
-    private static final Logger logger = Logger.getLogger(ValidationHelperTests.class);
+    private static final Logger logger = LogManager.getLogger(ValidationHelperTests.class);
 
     @Test
     public void testIsValidPhoneNumber() {

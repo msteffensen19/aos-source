@@ -1,7 +1,8 @@
 //package com.advantage.catalog.store.config;
 //
 //import com.advantage.common.Url_resources;
-//import org.apache.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 //import org.springframework.web.filter.CharacterEncodingFilter;
 //import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 //
@@ -16,7 +17,7 @@
 //public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 //    @Override
 //    protected Class<?>[] getRootConfigClasses() {
-//        Logger logger = Logger.getLogger(this.getClass());
+//        Logger logger = LogManager.getLogger(this.getClass());
 //        logger.info(" *********************************** \n" +
 //                " ****** Catalog service start ****** \n" +
 //                " *********************************** ");

@@ -11,7 +11,8 @@ import com.advantage.order.store.model.ShoppingCart;
 import com.advantage.order.store.utils.ArgumentValidationHelper;
 import com.advantage.order.store.utils.StringHelper;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,7 +34,7 @@ public class DefaultOrderManagementRepository extends AbstractRepository impleme
 
     private static final String MESSAGE_SHIPPING_TRACKING_NUMBER_UPDATED_SUCCESSFULLY = "Purchase order, shipping tracking number was updated successfully";
     private static final String MESSAGE_ORDER_NOT_FOUND_TRACKING_NUMBER_NOT_UPDATED = "Purchase order not found, tracking number not updated";
-    private static final Logger logger = Logger.getLogger(DefaultOrderManagementRepository.class);
+    private static final Logger logger = LogManager.getLogger(DefaultOrderManagementRepository.class);
 
     @Autowired
     @Qualifier("historyOrderHeaderRepository")

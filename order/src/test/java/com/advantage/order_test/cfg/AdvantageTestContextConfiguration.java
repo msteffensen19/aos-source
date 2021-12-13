@@ -1,6 +1,7 @@
 package com.advantage.order_test.cfg;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -28,7 +29,7 @@ public class AdvantageTestContextConfiguration {
     @Autowired
     private Environment environment;
 
-    private static final Logger logger = Logger.getLogger(AdvantageTestContextConfiguration.class);
+    private static final Logger logger = LogManager.getLogger(AdvantageTestContextConfiguration.class);
 
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory,

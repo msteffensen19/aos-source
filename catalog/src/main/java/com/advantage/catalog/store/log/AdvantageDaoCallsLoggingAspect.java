@@ -1,7 +1,8 @@
 package com.advantage.catalog.store.log;
 
 import com.advantage.catalog.util.ArgumentValidationHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
@@ -30,7 +31,7 @@ public class AdvantageDaoCallsLoggingAspect {
         assert joinPoint != null;
 
         final Signature signature = joinPoint.getSignature();
-        final Logger logger = Logger.getLogger(signature.getDeclaringType());
+        final Logger logger = LogManager.getLogger(signature.getDeclaringType());
         final String daoMethodName = signature.getName();
         final StringBuilder info;
 

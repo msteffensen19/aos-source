@@ -1,6 +1,8 @@
 package com.advantage.mastercredit.payment.log;
 
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,7 +18,7 @@ public class ApiCallsLoggingAspect {
 
     @Before("execution(* com.advantage.mastercredit.payment.api.*.*(..))")
     public void logApiRequest(JoinPoint joinPoint) {
-        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
+        logger = LogManager.getLogger(joinPoint.getSignature().getDeclaringType());
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = null;
         for (Object arg : args) {
@@ -31,7 +33,7 @@ public class ApiCallsLoggingAspect {
 
     @AfterReturning(value = "execution(* com.advantage.mastercredit.payment.api.*.*(..))", returning = "result")
     public void logApiResponse(JoinPoint joinPoint, Object result) {
-        logger = Logger.getLogger(joinPoint.getSignature().getDeclaringType());
+        logger = LogManager.getLogger(joinPoint.getSignature().getDeclaringType());
         String builder = joinPoint.getSignature().getName() +
                 " - Response StatusCode: " + ((ResponseEntity) result).getStatusCode();
 
