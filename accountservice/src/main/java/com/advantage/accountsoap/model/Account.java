@@ -153,7 +153,7 @@ public class Account {
         this.aobUser = aobUser;
     }
 
-    @Column(columnDefinition = "boolean default false")
+    @Column(name = "aob_user", columnDefinition = "boolean default false")
     private boolean aobUser;
 
     public Account() {
