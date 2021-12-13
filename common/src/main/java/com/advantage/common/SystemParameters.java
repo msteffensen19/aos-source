@@ -1,8 +1,8 @@
 package com.advantage.common;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by Evgeney Fiskin on May-2016.
@@ -11,12 +11,12 @@ public class SystemParameters {
 
     public static String getHibernateHbm2ddlAuto(String hbm2ddlAutoMode) {
         String result;
-        Logger logger = Logger.getLogger(SystemParameters.class);
+        Logger logger = LogManager.getLogger(SystemParameters.class);
         if (hbm2ddlAutoMode == null || hbm2ddlAutoMode.isEmpty()) {
             result = "validate";
             logger.warn("Argument is " + (hbm2ddlAutoMode == null ? "null" : "empty") + ", result=" + result);
         } else {
-            Priority level = Level.DEBUG;
+            Level level = Level.DEBUG;
             switch (hbm2ddlAutoMode.toLowerCase()) {
                 case "create":
                     result = "create";

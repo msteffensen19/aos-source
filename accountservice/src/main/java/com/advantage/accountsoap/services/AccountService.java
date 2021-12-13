@@ -31,7 +31,8 @@ import com.advantage.common.utils.StringHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class AccountService implements Injectable {
     @Autowired
     private AddressService addressService;
 
-    private static final Logger logger = Logger.getLogger(AccountService.class);
+    private static final Logger logger = LogManager.getLogger(AccountService.class);
 
     @Transactional
     public AccountStatusResponse create(final Integer appUserType, final String lastName, final String firstName, final String loginName, final String password, final CountryID countryId, final String phoneNumber, final String stateProvince, final String cityName, final String address, final String zipcode, final String email, final boolean allowOffersPromotion, final boolean aobUser) {

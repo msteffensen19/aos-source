@@ -2,7 +2,8 @@ package com.advantage.accountsoap.config;
 
 import com.advantage.accountsoap.dto.account.GetAccountConfigurationResponse;
 import com.advantage.common.Constants;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -18,7 +19,7 @@ public class AccountConfiguration {
     @Inject
     private Environment env;
 
-    private static final Logger logger = Logger.getLogger(AccountConfiguration.class);
+    private static final Logger logger = LogManager.getLogger(AccountConfiguration.class);
     //private AppUserConfig appUserConfig = new AppUserConfig();
 
     private static int numberOfFailedLoginAttemptsBeforeBlocking;  //numberOfFailedLoginAttemptsBeforeBlocking

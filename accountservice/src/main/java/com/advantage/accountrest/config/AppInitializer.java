@@ -1,6 +1,7 @@
 package com.advantage.accountrest.config;//package com.advantage.safepay.payment.config;
 //
-//import org.apache.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 //import org.springframework.web.filter.CharacterEncodingFilter;
 //import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 //
@@ -14,7 +15,7 @@ package com.advantage.accountrest.config;//package com.advantage.safepay.payment
 //public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 //    @Override
 //    protected Class<?>[] getRootConfigClasses() {
-//        Logger logger = Logger.getLogger(this.getClass());
+//        Logger logger = LogManager.getLogger(this.getClass());
 //        logger.info(" *********************************** \n" +
 //                " ****** SafePay service start ****** \n" +
 //                " *********************************** ");

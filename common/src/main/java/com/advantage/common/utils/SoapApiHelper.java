@@ -2,7 +2,10 @@ package com.advantage.common.utils;
 
 import com.advantage.common.Url_resources;
 import com.advantage.common.dto.AppUserDto;
-import org.apache.log4j.Logger;
+import com.advantage.common.dto.PaymentPreferencesDto;
+import com.advantage.common.dto.UserDetailsDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.NodeList;
 
 import javax.xml.soap.*;
@@ -20,7 +23,7 @@ import java.util.NoSuchElementException;
 
 public class SoapApiHelper {
 
-    private static final Logger logger = Logger.getLogger(SoapApiHelper.class);
+    private static final Logger logger = LogManager.getLogger(SoapApiHelper.class);
 
     private final static String REQUEST_NAME_SPACE = "com";
     private final static String RESPONSE_NAME_SPACE = "ns2";
@@ -282,6 +285,53 @@ public class SoapApiHelper {
         if (status.equals("success"))
             return true;
         return false;
+    }
+
+    public static UserDetailsDto getAccountDetails(String loginUser, String authToken) throws SOAPException {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("userName", loginUser);
+        data.put("base64Token", authToken);
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountByLoginRequest", data), "");
+        NodeList root = getRoot(soapResponse, "AccountResponse");
+        String userPassword = getResponseValue("loginPassword", root);
+        int accountType = Integer.valueOf(getResponseValue("accountType", root));
+        long userId = Long.valueOf(getResponseValue("id", root));
+        return new UserDetailsDto(Long.valueOf(getResponseValue("id", root)),
+                getResponseValue("lastName", root),
+                getResponseValue("firstName", root),
+                getResponseValue("loginName", root),
+                Integer.valueOf(getResponseValue("accountType", root)),
+                Long.valueOf(getResponseValue("countryId", root)),
+                getResponseValue("countryName", root),
+                getResponseValue("countryIsoName", root),
+                getResponseValue("stateProvince", root),
+                getResponseValue("cityName", root),
+                getResponseValue("address", root),
+                getResponseValue("zipcode", root),
+                getResponseValue("phoneNumber", root),
+                getResponseValue("email", root),
+                Long.valueOf(getResponseValue("defaultPaymentMethodId", root)),
+                Boolean.valueOf(getResponseValue("allowOffersPromotion", root)),
+                Integer.valueOf(getResponseValue("internalUnsuccessfulLoginAttempts", root)),
+                Long.valueOf(getResponseValue("internalUserBlockedFromLoginUntil", root)),
+                Long.valueOf(getResponseValue("internalLastSuccesssulLogin", root)),
+                getResponseValue("loginPassword", root),
+                Boolean.valueOf(getResponseValue("aobUser", root)));
+
+    }
+
+    public static PaymentPreferencesDto getAccountPaymentPreferences(long userId, String authToken) throws SOAPException {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("accountId", Long.toString(userId));
+        data.put("base64Token", authToken);
+        SOAPMessage soapResponse = sendSoapMessage(createSOAPRequest("GetAccountPaymentPreferencesRequest", data), "");
+        NodeList root = getRoot(soapResponse, "preference");
+        return new PaymentPreferencesDto(Integer.valueOf(getResponseValue("paymentMethod", root)),
+                getResponseValue("cardNumber", root),
+                getResponseValue("expirationDate", root),
+                getResponseValue("cvvNumber", root),
+                getResponseValue("customerName", root));
+
     }
 }
 

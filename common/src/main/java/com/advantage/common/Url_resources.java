@@ -4,7 +4,8 @@ package com.advantage.common;
  * @author Evgeney Fiskin on 31-12-2015.
  */
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mockito.Mock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ public class Url_resources {
     private static URL urlPrefixSoapAccount;
     private static URL urlPrefixSoapShipEx;
 
-    private static final Logger logger = Logger.getLogger(Url_resources.class);
+    private static final Logger logger = LogManager.getLogger(Url_resources.class);
     @Inject
     @Mock
     private Environment environment;

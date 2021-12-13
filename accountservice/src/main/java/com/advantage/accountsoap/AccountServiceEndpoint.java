@@ -29,7 +29,8 @@ import com.advantage.common.security.TokenJWT;
 import com.advantage.common.utils.StringHelper;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -77,7 +78,7 @@ public class AccountServiceEndpoint {
         this.httpServletRequest = request;
     }
 
-    private static final Logger logger = Logger.getLogger(AccountServiceEndpoint.class);
+    private static final Logger logger = LogManager.getLogger(AccountServiceEndpoint.class);
     private int loggedUsers;
 
     public AccountServiceEndpoint() {

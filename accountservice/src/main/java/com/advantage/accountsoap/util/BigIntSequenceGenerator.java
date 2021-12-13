@@ -1,7 +1,8 @@
 package com.advantage.accountsoap.util;
 
 import com.advantage.accountsoap.model.Account;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.MappingException;
 import org.hibernate.Session;
 
@@ -20,7 +21,7 @@ import java.util.Properties;
  */
 public class BigIntSequenceGenerator  implements IdentifierGenerator {
     Session m_session;
-    private static final Logger logger = Logger.getLogger(BigIntSequenceGenerator.class);
+    private static final Logger logger = LogManager.getLogger(BigIntSequenceGenerator.class);
 
 
     @Override

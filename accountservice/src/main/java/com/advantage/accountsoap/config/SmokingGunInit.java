@@ -2,7 +2,8 @@ package com.advantage.accountsoap.config;
 
 import com.advantage.accountrest.api.AccountServiceController;
 import com.advantage.accountsoap.init.DataSourceInitByCsv;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class SmokingGunInit {
     @Autowired
     DataSourceInitByCsv dataSourceInitByCsv;
     private boolean isDirty = false;
-    private static final Logger logger = Logger.getLogger(SmokingGunInit.class);
+    private static final Logger logger = LogManager.getLogger(SmokingGunInit.class);
     public void activate() throws Exception{
         logger.info("isDirty: " + isDirty);
         if(isDirty)

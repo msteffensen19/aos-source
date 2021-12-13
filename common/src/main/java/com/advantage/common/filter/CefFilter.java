@@ -1,7 +1,8 @@
 package com.advantage.common.filter;
 
 import com.advantage.common.cef.CefHttpModel;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.*;
@@ -15,8 +16,8 @@ import java.util.Enumeration;
  */
 public class CefFilter implements Filter {
 
-    private static final Logger cefLogger = Logger.getLogger("CEF");
-    private static final Logger logger = Logger.getLogger(CefFilter.class);
+    private static final Logger cefLogger = LogManager.getLogger("CEF");
+    private static final Logger logger = LogManager.getLogger(CefFilter.class);
 
     protected String serviceName;
     private boolean formatStartEnd = false;

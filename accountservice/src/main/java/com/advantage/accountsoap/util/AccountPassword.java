@@ -1,6 +1,7 @@
 package com.advantage.accountsoap.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tomcat.jni.Error;
 
 import java.security.NoSuchAlgorithmException;
@@ -8,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 public class AccountPassword {
     private String salt;
     private String password;
-    private static final Logger logger = Logger.getLogger(AccountPassword.class);
+    private static final Logger logger = LogManager.getLogger(AccountPassword.class);
 
     public AccountPassword(String userName, String password) {
         this.salt = setSalt(userName);

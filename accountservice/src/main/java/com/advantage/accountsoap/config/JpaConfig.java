@@ -2,7 +2,8 @@ package com.advantage.accountsoap.config;
 
 import com.advantage.common.SystemParameters;
 import com.advantage.common.Constants;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +47,7 @@ public class JpaConfig {
 //    @Value("${entitymanager.packagesToScan}")
 //    private String ENTITYMANAGER_PACKAGES_TO_SCAN_VALUE;
 
-    private static Logger logger = Logger.getLogger(JpaConfig.class);
+    private static Logger logger = LogManager.getLogger(JpaConfig.class);
 
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

@@ -22,7 +22,8 @@ import com.advantage.common.utils.ValidationHelper;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -50,7 +51,7 @@ public class DefaultAccountRepository extends AbstractRepository implements Acco
     private AccountStatusResponse accountStatusResponse;
     private AccountRepository accountRepository;
     private String failureMessage;
-    private static final Logger logger = Logger.getLogger(DefaultAccountRepository.class);
+    private static final Logger logger = LogManager.getLogger(DefaultAccountRepository.class);
 
     @Autowired
     CountryRepository countryRepository;

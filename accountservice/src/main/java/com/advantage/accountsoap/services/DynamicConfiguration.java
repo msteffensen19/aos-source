@@ -6,7 +6,8 @@ import com.advantage.common.Constants;
 
 
 import com.advantage.common.utils.JsonHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
@@ -30,7 +31,7 @@ public class DynamicConfiguration {
     private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_DELAY = 20;
     private static final int DEFAULT_NUMBER_OF_SESSIONS_TO_REJECT = 1000;
 
-    private static final Logger logger = Logger.getLogger(DynamicConfiguration.class);
+    private static final Logger logger = LogManager.getLogger(DynamicConfiguration.class);
 
     @Autowired
     @Qualifier("accountConfiguration")

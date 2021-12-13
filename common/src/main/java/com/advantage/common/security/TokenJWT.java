@@ -3,7 +3,7 @@ package com.advantage.common.security;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.token.*;
 import io.jsonwebtoken.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class TokenJWT extends Token {
 
-    private static final Logger logger = Logger.getLogger(TokenJWT.class);
+    private static final Logger logger = org.apache.logging.log4j.LogManager.getLogger(TokenJWT.class);
 
     private Claims tokenClaims;
     private Header tokenHeader;

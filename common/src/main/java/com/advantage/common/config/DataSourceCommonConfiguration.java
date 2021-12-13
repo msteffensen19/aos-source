@@ -6,7 +6,8 @@ import com.advantage.common.utils.LoggerUtils;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -27,7 +28,7 @@ public abstract class DataSourceCommonConfiguration {
     protected Environment environment;
 
     public DataSourceCommonConfiguration(String propertyPrefix) {
-        logger = Logger.getLogger(DataSourceCommonConfiguration.super.getClass());
+        logger = LogManager.getLogger(DataSourceCommonConfiguration.super.getClass());
         this.propertyPrefix = propertyPrefix;
     }
 

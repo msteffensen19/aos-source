@@ -2,7 +2,8 @@ package com.advantage.accountsoap.util;
 
 import com.advantage.accountsoap.config.SmokingGunInit;
 import com.advantage.common.Constants;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -39,7 +40,7 @@ public class UrlResources {
 
     public static URL getUrlSoapShipEx() { return urlPrefixSoapShipEx; }
 
-    private static final Logger logger = Logger.getLogger(UrlResources.class);
+    private static final Logger logger = LogManager.getLogger(UrlResources.class);
 
     @Inject
     private Environment env;

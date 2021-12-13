@@ -20,7 +20,8 @@ import com.advantage.common.exceptions.authorization.AuthorizationException;
 import com.advantage.common.security.AuthorizeAsAdmin;
 import com.advantage.common.security.SecurityTools;
 import io.swagger.annotations.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class AccountServiceController {
     @Autowired
     private AccountService accountService;
 
-    private static final Logger logger = Logger.getLogger(AccountServiceController.class);
+    private static final Logger logger = LogManager.getLogger(AccountServiceController.class);
 
     @ModelAttribute
     public void setResponseHeaderForAllRequests(HttpServletResponse response) {

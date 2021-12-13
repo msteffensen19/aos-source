@@ -3,7 +3,8 @@ package com.advantage.common.security;
 import com.advantage.common.dto.ErrorResponseDto;
 import com.advantage.common.enums.AccountType;
 import com.advantage.common.exceptions.authorization.AuthorizationException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class ApiSecurityMethodInvokeAspect {
 
-    private static final Logger logger = Logger.getLogger("SecurityRequestsLogger");
+    private static final Logger logger = LogManager.getLogger("SecurityRequestsLogger");
 
     @Around("execution(* *(..)) && @annotation(com.advantage.common.security.AuthorizeAsAdmin)")
     public ResponseEntity authorizeAsAdmin(ProceedingJoinPoint joinPoint) throws Throwable {
