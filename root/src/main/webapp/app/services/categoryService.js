@@ -494,8 +494,10 @@ define(['./module'], function (services) {
                     server.setKey(protocol + "//" + hostKey + "/");
                     server.setCatalogKey(protocol + "//" + hostKey + "/"  + services_properties['catalog_service_url_suffix'] + "/");
                     server.setOrderKey(protocol + "//" + hostKey + "/"  + services_properties['order_service_url_suffix'] + "/");
-                    server.setWsdlPath(protocol + "//" + hostKey + "/" +
-                        services_properties['account_soapservice_url_suffix'] + "/");
+                    var tempWsdlPath = protocol + "//" + hostKey + "/" +
+                        services_properties['account_soapservice_url_suffix'] + "/";
+
+                    server.setWsdlPath(tempWsdlPath.replace(/([^:]\/)\/+/g, "$1"));
                 }else if(gatewayOn){
                     server.setKey(protocol + "//" + hostKey + ":" + port +  "/");
                     server.setCatalogKey(protocol + "//" + hostKey + ":" + port + "/"  + services_properties['catalog_service_url_suffix'] + "/");
