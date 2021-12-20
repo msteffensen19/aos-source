@@ -1,23 +1,23 @@
 [
 	{
 		"title":"API",
-		"content":"Account service REST API, include login, logout, register, delete and deactivate user directly using AOS swagger"
+		"content":"Account service REST API, new endpoints added."
 	},
 	{
-		"title":"API",
-		"content":"Upgrade swagger libraries to the latest version (new look and feel)"
+		"title":"Backend",
+		"content":"Critical zero day exploit - Upgrade log4j to the latest version."
 	},
 	{
-		"title":"ITOM",
-		"content":"SMAX Integration: perform user management activities as part of Help Desk responsibility, by using the account service REST API"
+		"title":"AOB",
+		"content":"AOB users can now create an AOS user during the registration process in AOB."
 	},
 	{
-		"title":"BUG",
-		"content":"Swagger - missing version number in the description caused UFT scripts to break."
+		"title":"Admin",
+		"content":"AOB endpoint url added to the management console settings."
 	},
 	{
-		"title":"BUG",
-		"content":"Admin client - hardcoded account service url cause invalid login attempts to AOS backend."
+		"title":"Mobile",
+		"content":"iOS - allow authentication using faceID"
 	}
 
 ]

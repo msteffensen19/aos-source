@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.advantage.online.store</groupId>
         <artifactId>main_project</artifactId>
-        <version>3.1-SNAPSHOT</version>
+        <version>3.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <properties>
@@ -211,7 +211,7 @@
         <dependency>
             <groupId>com.advantage.online.store</groupId>
             <artifactId>shared_resources</artifactId>
-            <version>3.1-SNAPSHOT</version>
+            <version>3.2-SNAPSHOT</version>
             <!--<classifier>resources</classifier>-->
             <type>zip</type>
             <scope>provided</scope>
@@ -231,7 +231,7 @@
         <dependency>
             <groupId>com.advantage.online.store</groupId>
             <artifactId>common</artifactId>
-            <version>3.1-SNAPSHOT</version>
+            <version>3.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
