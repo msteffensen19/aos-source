@@ -20,6 +20,7 @@ import com.advantage.order.store.utils.ArgumentValidationHelper;
 import com.advantage.order.store.utils.AuthHelper;
 import com.advantage.order.store.utils.JsonHelper;
 import com.advantage.order.store.utils.RestApiHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -337,7 +338,7 @@ public class OrderManagementService {
                     logger.info(purchaseResponse);
                 }
                 try{
-                    checkIfAobUserAndCreateTransactionInAOB(purchaseRequest, userDto, authToken);
+                    checkIfAobUserAndCreateTransactionInAOB(purchaseRequest, userDto, authToken, totalAmount);
                 }catch (Exception e){
                     e.printStackTrace();
                     logger.error("Cant create AOB transaction", e);
@@ -356,43 +357,96 @@ public class OrderManagementService {
         return purchaseResponse;
     }
 
-    private void checkIfAobUserAndCreateTransactionInAOB(OrderPurchaseRequest orderPurchaseRequest, AppUserDto userDto, String authToken) throws Exception{
+    private void checkIfAobUserAndCreateTransactionInAOB(OrderPurchaseRequest orderPurchaseRequest, AppUserDto userDto, String authToken, double totalAmount) throws Exception{
         if(orderPurchaseRequest.getOrderPaymentInformation().getPaymentMethod().equals(PaymentMethodEnum.MASTER_CREDIT.getName())){
             UserDetailsDto userDetailsDto = SoapApiHelper.getAccountDetails(userDto.getLoginUser(), authToken);
 
-            //userDetailsDto.setAobUser(true);//TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+//            userDetailsDto.setAobUser(true);//TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+
 
             if(userDetailsDto.isAobUser()){
                 PaymentPreferencesDto paymentPreferencesDto = SoapApiHelper.getAccountPaymentPreferences(userDetailsDto.getId(), authToken);
                 String AOBEndpoint = RestApiHelper.getDemoAppConfigParameterValue(DEMO_APP_CONFIG_AOB_ENDPOINT);
 
-                //AOBEndpoint = "http://advantageonlinebanking.com/api";//TESTTTTTTTTTTTTTTTTTTTTTTTT
+//                AOBEndpoint = "http://localhost:8080/api";//TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 
                 String aobAuthToken = aobAuth(new URL(AOBEndpoint + "/users/login"), authToken);
+                String aobCards = getAOBCards(new URL(AOBEndpoint + "/cards"), aobAuthToken);
+                String aobMerchants = getAOBMerchants(new URL(AOBEndpoint + "/users/merchants"), null);
+
+                ObjectMapper objectMapper = new ObjectMapper();
+
+                AOBCardDetails[] cardDetails = objectMapper.readValue(aobCards, AOBCardDetails[].class);
+                AOBMerchantDto[] merchants = objectMapper.readValue(aobMerchants, AOBMerchantDto[].class);
 
 
+//                orderPurchaseRequest.getOrderPaymentInformation().setCardNumber("5277163837881235");//TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+                AOBCardDetails aobCard = Arrays.stream(cardDetails).filter(card -> card.getCardNumber() == Long.valueOf(orderPurchaseRequest.getOrderPaymentInformation().getCardNumber())).findAny().orElse(null);
+                AOBMerchantDto aobMerchant = Arrays.stream(merchants).filter(merchant -> merchant.getName().equalsIgnoreCase("Advantage Online Shopping")).findAny().orElse(null);
 
 
-
+                if(aobCard != null){
+                    String endpointUrl = String.format("/accounts/%s/transactions/true", aobCard.getBankAccountNumber());
+                    String createTransactionRes = createAOBTransaction(new URL("http://localhost:8080/api" + endpointUrl),
+                            aobAuthToken,
+                            aobCard,
+                            orderPurchaseRequest, totalAmount, aobMerchant);
+                }
                 logger.info(aobAuthToken);
             }
         }
 
     }
 
+    private String createAOBTransaction(URL url, String aobAuthToken, AOBCardDetails aobCard, OrderPurchaseRequest orderPurchaseRequest, double totalAmount, AOBMerchantDto aobMerchant) throws IOException {
+        HashMap<String, String> aobHeader = createAobHash(aobAuthToken);
+        String aobCreateTransBody = "{\n  " +
+                "\"amount\": " + totalAmount + ",\n" +
+                "  \"description\": \"Purchase AOS Products\",\n  " +
+                "\"recipient\": {\n    " +
+                "\"bankName\": \""+ aobMerchant.getBankName() +"\",\n    " +
+                "\"bic\": \""+ aobMerchant.getBankBic() +"\",\n    " +
+                "\"company_id\": \""+ aobMerchant.getId() +"\",\n    " +
+                "\"company_type\": \""+ aobMerchant.getType() +"\",\n    " +
+                "\"iban\": \""+ aobMerchant.getIban() +"\",\n    " +
+                "\"name\": \""+ aobMerchant.getName() +"\"\n  },\n  " +
+                "\"transaction_type\": \"debit\"\n}";
+
+        String aobCreateTransRes = RestApiHelper.httpGet(url, "POST", aobHeader, aobCreateTransBody);
+        return aobCreateTransRes;
+    }
+
+    public HashMap createAobHash(String aobAuth){
+        HashMap<String, String> aobHeader = new HashMap();
+        aobHeader.put("Accept", "application/json");
+        aobHeader.put("Content-type", "application/json");
+        if(aobAuth != null)
+            aobHeader.put("Authorization", "Bearer " + aobAuth);
+        return aobHeader;
+    }
+
+    private String getAOBCards(URL cardsUrl, String aobAuthToken) throws Exception{
+        HashMap<String, String> aobGetCardsHeader = createAobHash(aobAuthToken);
+        String aobCards = RestApiHelper.httpGet(cardsUrl, "GET", aobGetCardsHeader, null);
+        return aobCards;
+    }
+
+    private String getAOBMerchants(URL cardsUrl, String aobAuthToken) throws Exception{
+        HashMap<String, String> aobHeader = createAobHash(aobAuthToken);
+        String aobMerchants = RestApiHelper.httpGet(cardsUrl, "GET", aobHeader, null);
+        return aobMerchants;
+    }
+
+
     private String aobAuth(URL authUrl, String aosAuthToken) throws Exception {
         String credentials = AuthHelper.decodeBasicAuth(aosAuthToken);
         String[] creds = credentials.split(":", 2);
-
-        //creds[1] = "demo";//TESTTTTTTTTTTTTTTTTTTTT
 
         String aobAuthBody = "{\n" +
                 "  \"password\": \"" +  creds[1] + "\",\n" +
                 "  \"username\": \"" + creds[0] + "\"\n" +
                 "}";
-        HashMap<String, String> aobLoginHeader = new HashMap();
-        aobLoginHeader.put("Accept", "application/json");
-        aobLoginHeader.put("Content-type", "application/json");
+        HashMap<String, String> aobLoginHeader = createAobHash(null);
 
         String aobAuthRes = RestApiHelper.httpGet(authUrl, "POST", aobLoginHeader, aobAuthBody);
         JsonObject jsonObject = JsonParser.parseString(aobAuthRes).getAsJsonObject();
